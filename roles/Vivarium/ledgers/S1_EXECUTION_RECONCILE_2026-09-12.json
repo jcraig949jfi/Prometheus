@@ -1,0 +1,2623 @@
+{
+ "schema": "viv.reconcile.v1",
+ "at": "2026-09-12T16:57:42.584337+00:00",
+ "selection": {
+  "se": null,
+  "request_key_prefix": "rk-s1-",
+  "ids": null
+ },
+ "sfe_db": "D:/Prometheus-data/sfe/engine.db",
+ "rows": [
+  {
+   "experiment_id": "1a3d785f-0012-4ef3-bb86-8fdb05a71822",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-077e98645638-F",
+   "family_id": "fam-s1-077e98645638",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:4ddd10133e3cc7fca76fb07db0f5d0404f82db602d0e4d0ad502a99690300a60",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:55.233585-04:00",
+    "claimed_at": "2026-09-12T12:56:57.381257-04:00",
+    "started_at": "2026-09-12T12:56:58.470012-04:00",
+    "finished_at": "2026-09-12T12:56:58.658019-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:56:57.381257-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:56:58.470012-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:56:58.600051-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:56:58.657438-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:56:58.658019-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-1c0f32cfab454c31",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_fee0a5a5314765638e5790df",
+   "sfe_experiment_id": "exp_6ef7a024bbcd6542d2a74e85",
+   "sfe": {
+    "exp_id": "exp_6ef7a024bbcd6542d2a74e85",
+    "found": true,
+    "world_id": "wld_47923dcff1c7fa2368d03670",
+    "world_name": "viv-4ddd10133e3cc7fc",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:4ddd10133e3cc7fca76fb07db0f5d0404f82db602d0e4d0ad502a99690300a60",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_c46679826e8ca72efe45338d",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_a7247f53c64a5e1480cb7e04",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-56041e6c97cbbc9f:exp_6ef7a024bbcd6542d2a74e85:wrk_a7247f53c64a5e1480cb7e04",
+   "pew": {
+    "encounter_id": "ENC-archaeon-56041e6c97cbbc9f",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_47923dcff1c7fa2368d03670",
+    "run_id": "exp_6ef7a024bbcd6542d2a74e85:wrk_a7247f53c64a5e1480cb7e04",
+    "sfe_event_id": "evt_727947b48dd8c597debcfa39",
+    "created_at": "2026-09-12T12:56:58.651437-04:00",
+    "points_back_to": "1a3d785f-0012-4ef3-bb86-8fdb05a71822"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "00c23f05-5364-4199-852e-6a99dd056f3e",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-077e98645638-C",
+   "family_id": "fam-s1-077e98645638",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:64459888c7fb8c5d17d41ccddbe4f7474b5cc292b132c95ea06b118e30400487",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:55.523708-04:00",
+    "claimed_at": "2026-09-12T12:56:58.666503-04:00",
+    "started_at": "2026-09-12T12:56:58.823043-04:00",
+    "finished_at": "2026-09-12T12:56:59.106861-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:56:58.666503-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:56:58.823043-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:56:58.997023-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:56:59.106350-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:56:59.106861-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-966b3d7bf7ae405f",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_c51a1d47b979b6e5cf05b524",
+   "sfe_experiment_id": "exp_5814bb62ef3030e96f0bd166",
+   "sfe": {
+    "exp_id": "exp_5814bb62ef3030e96f0bd166",
+    "found": true,
+    "world_id": "wld_ba233d1035c084b69a16f36f",
+    "world_name": "viv-64459888c7fb8c5d",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:64459888c7fb8c5d17d41ccddbe4f7474b5cc292b132c95ea06b118e30400487",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_e988645667a0c5b719af1604",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_ad684d1ba0bfa4688badb1df",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-9382533bc215e083:exp_5814bb62ef3030e96f0bd166:wrk_ad684d1ba0bfa4688badb1df",
+   "pew": {
+    "encounter_id": "ENC-archaeon-9382533bc215e083",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_ba233d1035c084b69a16f36f",
+    "run_id": "exp_5814bb62ef3030e96f0bd166:wrk_ad684d1ba0bfa4688badb1df",
+    "sfe_event_id": "evt_35698d8aefc31a4a41daedc0",
+    "created_at": "2026-09-12T12:56:59.099763-04:00",
+    "points_back_to": "00c23f05-5364-4199-852e-6a99dd056f3e"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "652e6eaa-6019-4377-8bd7-aebc633558f6",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-0925a93fb0c4-F",
+   "family_id": "fam-s1-0925a93fb0c4",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:e505dcec88844a98756655f45ea2d8abe8c3e2b1ad7d3d2b4a0d13b79cf64129",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:55.680603-04:00",
+    "claimed_at": "2026-09-12T12:56:59.109980-04:00",
+    "started_at": "2026-09-12T12:56:59.245181-04:00",
+    "finished_at": "2026-09-12T12:56:59.464935-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:56:59.109980-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:56:59.245181-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:56:59.389506-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:56:59.464280-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:56:59.464935-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-2bbbb3c1296e41f4",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_59a43cef265874c83348f32f",
+   "sfe_experiment_id": "exp_3bb3c49dd11eaa46efadc7ee",
+   "sfe": {
+    "exp_id": "exp_3bb3c49dd11eaa46efadc7ee",
+    "found": true,
+    "world_id": "wld_1e4901e4e98187d52ff7c04e",
+    "world_name": "viv-e505dcec88844a98",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:e505dcec88844a98756655f45ea2d8abe8c3e2b1ad7d3d2b4a0d13b79cf64129",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_697c3898130e6e69c50a1608",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_d73624a8ba8f69a9eb59f6df",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-d81a8ba8a7362c2d:exp_3bb3c49dd11eaa46efadc7ee:wrk_d73624a8ba8f69a9eb59f6df",
+   "pew": {
+    "encounter_id": "ENC-archaeon-d81a8ba8a7362c2d",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_1e4901e4e98187d52ff7c04e",
+    "run_id": "exp_3bb3c49dd11eaa46efadc7ee:wrk_d73624a8ba8f69a9eb59f6df",
+    "sfe_event_id": "evt_16075cc851427d704128a725",
+    "created_at": "2026-09-12T12:56:59.446281-04:00",
+    "points_back_to": "652e6eaa-6019-4377-8bd7-aebc633558f6"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "82b74b07-e20b-4331-bd7a-31e2794c237c",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-0925a93fb0c4-C",
+   "family_id": "fam-s1-0925a93fb0c4",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:6207262b0d665aa1e4ee666bdc9ae2e5f27a693e3a880903249bc5772c1efe6f",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:55.945317-04:00",
+    "claimed_at": "2026-09-12T12:56:59.467767-04:00",
+    "started_at": "2026-09-12T12:56:59.586766-04:00",
+    "finished_at": "2026-09-12T12:56:59.828707-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:56:59.467767-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:56:59.586766-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:56:59.763549-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:56:59.828141-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:56:59.828707-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-3310ed815af84950",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_e435033a37e0efa0fbac32b0",
+   "sfe_experiment_id": "exp_463d36c5e18e7651c59e0e65",
+   "sfe": {
+    "exp_id": "exp_463d36c5e18e7651c59e0e65",
+    "found": true,
+    "world_id": "wld_1a7e43a44274b711d48fd6af",
+    "world_name": "viv-6207262b0d665aa1",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:6207262b0d665aa1e4ee666bdc9ae2e5f27a693e3a880903249bc5772c1efe6f",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_458a17fad717f57c830ff0d9",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_352da9babac79ce5abfb48dd",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-ac3ab654b2e16d30:exp_463d36c5e18e7651c59e0e65:wrk_352da9babac79ce5abfb48dd",
+   "pew": {
+    "encounter_id": "ENC-archaeon-ac3ab654b2e16d30",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_1a7e43a44274b711d48fd6af",
+    "run_id": "exp_463d36c5e18e7651c59e0e65:wrk_352da9babac79ce5abfb48dd",
+    "sfe_event_id": "evt_18bbb0478c799b6c8887780f",
+    "created_at": "2026-09-12T12:56:59.822860-04:00",
+    "points_back_to": "82b74b07-e20b-4331-bd7a-31e2794c237c"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "7fe15571-035d-46f0-b7f0-bd42b2736fe5",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-2bf078e25cad-F",
+   "family_id": "fam-s1-2bf078e25cad",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:87ea90d4e2f460af17c830cce05d1649b2360b9085bdc17bb323ef00f6c77b0b",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:56.121757-04:00",
+    "claimed_at": "2026-09-12T12:56:59.831679-04:00",
+    "started_at": "2026-09-12T12:57:00.004193-04:00",
+    "finished_at": "2026-09-12T12:57:00.216946-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:56:59.831679-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:00.004193-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:00.151469-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:00.216506-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:00.216946-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-6b66232399cb4993",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_c1d4f15f861ddb1b002b3df5",
+   "sfe_experiment_id": "exp_9af0b39cb719b43eda3e92a3",
+   "sfe": {
+    "exp_id": "exp_9af0b39cb719b43eda3e92a3",
+    "found": true,
+    "world_id": "wld_7603f522a03c499b4da962e9",
+    "world_name": "viv-87ea90d4e2f460af",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:87ea90d4e2f460af17c830cce05d1649b2360b9085bdc17bb323ef00f6c77b0b",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_dffdaa0240e5b377271e1873",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_ce22399efd05091934646cc8",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-87349c881fbca957:exp_9af0b39cb719b43eda3e92a3:wrk_ce22399efd05091934646cc8",
+   "pew": {
+    "encounter_id": "ENC-archaeon-87349c881fbca957",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_7603f522a03c499b4da962e9",
+    "run_id": "exp_9af0b39cb719b43eda3e92a3:wrk_ce22399efd05091934646cc8",
+    "sfe_event_id": "evt_049ba73aef46180d2d271881",
+    "created_at": "2026-09-12T12:57:00.185398-04:00",
+    "points_back_to": "7fe15571-035d-46f0-b7f0-bd42b2736fe5"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "a5ba8c6d-d096-4812-adc7-2243ba14c5bd",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-2bf078e25cad-C",
+   "family_id": "fam-s1-2bf078e25cad",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:d0cb323327a3a90765bcc56865aa3b6432cc9489e13a2edeb477828e4bee4974",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:56.263870-04:00",
+    "claimed_at": "2026-09-12T12:57:00.219810-04:00",
+    "started_at": "2026-09-12T12:57:00.293871-04:00",
+    "finished_at": "2026-09-12T12:57:00.506512-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:00.219810-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:00.293871-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:00.443006-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:00.506083-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:00.506512-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-37961236247b4916",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_581e633b269631dcba6d8821",
+   "sfe_experiment_id": "exp_5ba7c38f714f48c2a8e16ba8",
+   "sfe": {
+    "exp_id": "exp_5ba7c38f714f48c2a8e16ba8",
+    "found": true,
+    "world_id": "wld_6c07bc231bfa0293cc47f603",
+    "world_name": "viv-d0cb323327a3a907",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:d0cb323327a3a90765bcc56865aa3b6432cc9489e13a2edeb477828e4bee4974",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_add7fef1a5f77e27b9e1132f",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_d261b713ac06a54c9058816d",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-629d2d3d52ed61ce:exp_5ba7c38f714f48c2a8e16ba8:wrk_d261b713ac06a54c9058816d",
+   "pew": {
+    "encounter_id": "ENC-archaeon-629d2d3d52ed61ce",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_6c07bc231bfa0293cc47f603",
+    "run_id": "exp_5ba7c38f714f48c2a8e16ba8:wrk_d261b713ac06a54c9058816d",
+    "sfe_event_id": "evt_56d44c6790b5410f970a7ab2",
+    "created_at": "2026-09-12T12:57:00.500798-04:00",
+    "points_back_to": "a5ba8c6d-d096-4812-adc7-2243ba14c5bd"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "72a72235-ae07-497c-92d7-f69a1f649b87",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-2ec826044b1a-F",
+   "family_id": "fam-s1-2ec826044b1a",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:9798ece1ed1e863d31f6c95b00e19b008ee642a2d658967be58a8c6fb8f75cd9",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:56.420865-04:00",
+    "claimed_at": "2026-09-12T12:57:00.509436-04:00",
+    "started_at": "2026-09-12T12:57:00.700566-04:00",
+    "finished_at": "2026-09-12T12:57:00.936573-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:00.509436-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:00.700566-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:00.864988-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:00.936072-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:00.936573-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-331ab90b2ee042ba",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_148a67764e0e7da4ed5fc7d8",
+   "sfe_experiment_id": "exp_57401d751f4d1fc06dfdb253",
+   "sfe": {
+    "exp_id": "exp_57401d751f4d1fc06dfdb253",
+    "found": true,
+    "world_id": "wld_23f7861dc0693553f0c226a2",
+    "world_name": "viv-9798ece1ed1e863d",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:9798ece1ed1e863d31f6c95b00e19b008ee642a2d658967be58a8c6fb8f75cd9",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_59f0389e89c656873b5adf53",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_6d1f79bd10d08d45f105a4a9",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-e3e4b1fb0ba2db44:exp_57401d751f4d1fc06dfdb253:wrk_6d1f79bd10d08d45f105a4a9",
+   "pew": {
+    "encounter_id": "ENC-archaeon-e3e4b1fb0ba2db44",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_23f7861dc0693553f0c226a2",
+    "run_id": "exp_57401d751f4d1fc06dfdb253:wrk_6d1f79bd10d08d45f105a4a9",
+    "sfe_event_id": "evt_d366db385a468fe739bf75cf",
+    "created_at": "2026-09-12T12:57:00.919144-04:00",
+    "points_back_to": "72a72235-ae07-497c-92d7-f69a1f649b87"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "98ff28aa-2dc8-4b04-997f-c78b48cd8017",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-2ec826044b1a-C",
+   "family_id": "fam-s1-2ec826044b1a",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:a655168ca26402d9bb17ec1e676ed64557ca8ea737ed634c29d4faba0069c4a5",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:56.559042-04:00",
+    "claimed_at": "2026-09-12T12:57:00.939756-04:00",
+    "started_at": "2026-09-12T12:57:01.079383-04:00",
+    "finished_at": "2026-09-12T12:57:01.312925-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:00.939756-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:01.079383-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:01.225000-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:01.312114-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:01.312925-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-f969539c1a9647bf",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_bf52509e74b13e5fa96f9dc1",
+   "sfe_experiment_id": "exp_d84b72fc13126aba7650ad56",
+   "sfe": {
+    "exp_id": "exp_d84b72fc13126aba7650ad56",
+    "found": true,
+    "world_id": "wld_f6737422007965f82a0d5905",
+    "world_name": "viv-a655168ca26402d9",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:a655168ca26402d9bb17ec1e676ed64557ca8ea737ed634c29d4faba0069c4a5",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_db495e90b9811a8c879af5a5",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_da02a6e62a9d0374f3683e6d",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-de4b070717cbffa4:exp_d84b72fc13126aba7650ad56:wrk_da02a6e62a9d0374f3683e6d",
+   "pew": {
+    "encounter_id": "ENC-archaeon-de4b070717cbffa4",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_f6737422007965f82a0d5905",
+    "run_id": "exp_d84b72fc13126aba7650ad56:wrk_da02a6e62a9d0374f3683e6d",
+    "sfe_event_id": "evt_15b6395c2e114a65faa6d171",
+    "created_at": "2026-09-12T12:57:01.281863-04:00",
+    "points_back_to": "98ff28aa-2dc8-4b04-997f-c78b48cd8017"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "26d6f433-6d2f-4a77-acbf-05b845561593",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-3022a1177d73-F",
+   "family_id": "fam-s1-3022a1177d73",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:b644414753bb608304021abb53ad55b37c806d375cde6e07657e80d390538d4b",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:56.722956-04:00",
+    "claimed_at": "2026-09-12T12:57:01.316078-04:00",
+    "started_at": "2026-09-12T12:57:01.435601-04:00",
+    "finished_at": "2026-09-12T12:57:01.624498-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:01.316078-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:01.435601-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:01.562453-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:01.624000-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:01.624498-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-5d048a922eae4f37",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_6c01e6ed1accb7e04ed5133b",
+   "sfe_experiment_id": "exp_e3dd835db2808391aa55039b",
+   "sfe": {
+    "exp_id": "exp_e3dd835db2808391aa55039b",
+    "found": true,
+    "world_id": "wld_09201e8b48946a7f0e716c07",
+    "world_name": "viv-b644414753bb6083",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:b644414753bb608304021abb53ad55b37c806d375cde6e07657e80d390538d4b",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_148ae672dd2cb87b54507dd1",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_75adddd72a6142ceb021d7f2",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-07f8b72e4b578ef7:exp_e3dd835db2808391aa55039b:wrk_75adddd72a6142ceb021d7f2",
+   "pew": {
+    "encounter_id": "ENC-archaeon-07f8b72e4b578ef7",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_09201e8b48946a7f0e716c07",
+    "run_id": "exp_e3dd835db2808391aa55039b:wrk_75adddd72a6142ceb021d7f2",
+    "sfe_event_id": "evt_a0ae67ad7125280ddd05a9bb",
+    "created_at": "2026-09-12T12:57:01.595036-04:00",
+    "points_back_to": "26d6f433-6d2f-4a77-acbf-05b845561593"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "1f7f88e4-2ed7-42cb-a534-c58f915964fa",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-3022a1177d73-C",
+   "family_id": "fam-s1-3022a1177d73",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:ddc2a158fcf1186d7e170c5d0c157ac959c9751394109db164010d8a70fe695a",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:56.880792-04:00",
+    "claimed_at": "2026-09-12T12:57:01.627740-04:00",
+    "started_at": "2026-09-12T12:57:01.706495-04:00",
+    "finished_at": "2026-09-12T12:57:01.935571-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:01.627740-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:01.706495-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:01.862881-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:01.934923-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:01.935571-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-897f88c09b57481a",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_17de81c7f5c321fa9632eecb",
+   "sfe_experiment_id": "exp_6d50f4bfd09b322e91f37b2f",
+   "sfe": {
+    "exp_id": "exp_6d50f4bfd09b322e91f37b2f",
+    "found": true,
+    "world_id": "wld_7f64d65c46ac93024c55f170",
+    "world_name": "viv-ddc2a158fcf1186d",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:ddc2a158fcf1186d7e170c5d0c157ac959c9751394109db164010d8a70fe695a",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_20f3281bd4a0f17b59bf2eb4",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_456d1c62bcc6cdbe15fb2739",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-7a80ecef0286d6b4:exp_6d50f4bfd09b322e91f37b2f:wrk_456d1c62bcc6cdbe15fb2739",
+   "pew": {
+    "encounter_id": "ENC-archaeon-7a80ecef0286d6b4",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_7f64d65c46ac93024c55f170",
+    "run_id": "exp_6d50f4bfd09b322e91f37b2f:wrk_456d1c62bcc6cdbe15fb2739",
+    "sfe_event_id": "evt_9ea1b404f7848426290c3b68",
+    "created_at": "2026-09-12T12:57:01.905098-04:00",
+    "points_back_to": "1f7f88e4-2ed7-42cb-a534-c58f915964fa"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "144f117f-2b2b-4ed9-ab2d-d7fe883b09ff",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-5d4755b13960-F",
+   "family_id": "fam-s1-5d4755b13960",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:7902de4060cd48ab70d147c77ee67d2c163824bd76b93e1b7df1213b753a294f",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:57.051025-04:00",
+    "claimed_at": "2026-09-12T12:57:01.940384-04:00",
+    "started_at": "2026-09-12T12:57:02.030800-04:00",
+    "finished_at": "2026-09-12T12:57:02.202605-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:01.940384-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:02.030800-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:02.159598-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:02.202021-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:02.202605-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-724fc646355a4df0",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_53429973da0a273dd19d0406",
+   "sfe_experiment_id": "exp_0f56c5f5f85be08682caba67",
+   "sfe": {
+    "exp_id": "exp_0f56c5f5f85be08682caba67",
+    "found": true,
+    "world_id": "wld_ef388ddeaf655dae3049500d",
+    "world_name": "viv-7902de4060cd48ab",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:7902de4060cd48ab70d147c77ee67d2c163824bd76b93e1b7df1213b753a294f",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_d7a200bab4ea3f5a25ccf18a",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_97f27e77ca801881cf6efab2",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-8d90bc81f673c084:exp_0f56c5f5f85be08682caba67:wrk_97f27e77ca801881cf6efab2",
+   "pew": {
+    "encounter_id": "ENC-archaeon-8d90bc81f673c084",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_ef388ddeaf655dae3049500d",
+    "run_id": "exp_0f56c5f5f85be08682caba67:wrk_97f27e77ca801881cf6efab2",
+    "sfe_event_id": "evt_7976efbb465e1facce64c039",
+    "created_at": "2026-09-12T12:57:02.195675-04:00",
+    "points_back_to": "144f117f-2b2b-4ed9-ab2d-d7fe883b09ff"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "9bec4245-0c25-4a44-b344-a508f5c6b9f1",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-5d4755b13960-C",
+   "family_id": "fam-s1-5d4755b13960",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:a7900c6d7a60ff444953803fcd4b144726b2190f8f57960bef5f18c9b7110685",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:57.215895-04:00",
+    "claimed_at": "2026-09-12T12:57:02.206134-04:00",
+    "started_at": "2026-09-12T12:57:02.309195-04:00",
+    "finished_at": "2026-09-12T12:57:02.516659-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:02.206134-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:02.309195-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:02.454863-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:02.516024-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:02.516659-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-63bed81a3f9546f9",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_448bc672e731cd3c6d6307ef",
+   "sfe_experiment_id": "exp_316d43128714b9103d2dff28",
+   "sfe": {
+    "exp_id": "exp_316d43128714b9103d2dff28",
+    "found": true,
+    "world_id": "wld_0dc35dca8bf0e9a331263d65",
+    "world_name": "viv-a7900c6d7a60ff44",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:a7900c6d7a60ff444953803fcd4b144726b2190f8f57960bef5f18c9b7110685",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_a52efbae9fba4ac74d39a26b",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_2ffc42a829e5c08c5c213013",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-8583350f64736b89:exp_316d43128714b9103d2dff28:wrk_2ffc42a829e5c08c5c213013",
+   "pew": {
+    "encounter_id": "ENC-archaeon-8583350f64736b89",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_0dc35dca8bf0e9a331263d65",
+    "run_id": "exp_316d43128714b9103d2dff28:wrk_2ffc42a829e5c08c5c213013",
+    "sfe_event_id": "evt_c22f009c9651b5c8dd1e852d",
+    "created_at": "2026-09-12T12:57:02.508012-04:00",
+    "points_back_to": "9bec4245-0c25-4a44-b344-a508f5c6b9f1"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "0376e253-6a49-44b5-9e46-ebb8ac4bf0ee",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-8a73fde58b05-F",
+   "family_id": "fam-s1-8a73fde58b05",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:a70ec13cbd15c07dd0f186bf7d7353c385d3539bf51224a37bb6155faf965283",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:57.357456-04:00",
+    "claimed_at": "2026-09-12T12:57:02.520349-04:00",
+    "started_at": "2026-09-12T12:57:02.656180-04:00",
+    "finished_at": "2026-09-12T12:57:02.887299-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:02.520349-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:02.656180-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:02.825895-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:02.886551-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:02.887299-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-7c31323ef63e4fc0",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_987fbf9122329e78a9c5cfc9",
+   "sfe_experiment_id": "exp_1bbbb4cf81f9305be10c47e5",
+   "sfe": {
+    "exp_id": "exp_1bbbb4cf81f9305be10c47e5",
+    "found": true,
+    "world_id": "wld_f5b6e34f941fb40b497646ac",
+    "world_name": "viv-a70ec13cbd15c07d",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:a70ec13cbd15c07dd0f186bf7d7353c385d3539bf51224a37bb6155faf965283",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_e0788728417da0378e59eedc",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_41fc289ba7202010655bbd0a",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-8c381bbbf668d17c:exp_1bbbb4cf81f9305be10c47e5:wrk_41fc289ba7202010655bbd0a",
+   "pew": {
+    "encounter_id": "ENC-archaeon-8c381bbbf668d17c",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_f5b6e34f941fb40b497646ac",
+    "run_id": "exp_1bbbb4cf81f9305be10c47e5:wrk_41fc289ba7202010655bbd0a",
+    "sfe_event_id": "evt_f624da91c2e1fa15b3d0deec",
+    "created_at": "2026-09-12T12:57:02.868103-04:00",
+    "points_back_to": "0376e253-6a49-44b5-9e46-ebb8ac4bf0ee"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "829d1506-0540-4b6c-85c2-7845516b69fd",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-8a73fde58b05-C",
+   "family_id": "fam-s1-8a73fde58b05",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:9067697d13a9b692fe35ae8fe9d8f4c36555bca94e422061ced5cd0ab017d840",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:57.505252-04:00",
+    "claimed_at": "2026-09-12T12:57:02.890449-04:00",
+    "started_at": "2026-09-12T12:57:03.013953-04:00",
+    "finished_at": "2026-09-12T12:57:03.216056-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:02.890449-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:03.013953-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:03.121669-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:03.215519-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:03.216056-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-76164ea607f74751",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_d488b595e0ba624f6c6f0dd1",
+   "sfe_experiment_id": "exp_f6cc475b618fbef2768f708f",
+   "sfe": {
+    "exp_id": "exp_f6cc475b618fbef2768f708f",
+    "found": true,
+    "world_id": "wld_2b60c5bfa5a71bd99464395d",
+    "world_name": "viv-9067697d13a9b692",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:9067697d13a9b692fe35ae8fe9d8f4c36555bca94e422061ced5cd0ab017d840",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_c9c71644e34194ddf3edeac5",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_6473dda370366bf3142e7fd3",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-4ce7078f13bd189b:exp_f6cc475b618fbef2768f708f:wrk_6473dda370366bf3142e7fd3",
+   "pew": {
+    "encounter_id": "ENC-archaeon-4ce7078f13bd189b",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_2b60c5bfa5a71bd99464395d",
+    "run_id": "exp_f6cc475b618fbef2768f708f:wrk_6473dda370366bf3142e7fd3",
+    "sfe_event_id": "evt_bc3b1cd76ff82aa712124a6a",
+    "created_at": "2026-09-12T12:57:03.197906-04:00",
+    "points_back_to": "829d1506-0540-4b6c-85c2-7845516b69fd"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "9f9497d1-77dd-44ab-81ba-4fd83d34d6bd",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-8e73e722b2b2-F",
+   "family_id": "fam-s1-8e73e722b2b2",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:0a7e127da0d2aa0e95944e5af793fbb21c8573a462f023a82eab209632d4837d",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:57.653856-04:00",
+    "claimed_at": "2026-09-12T12:57:03.219564-04:00",
+    "started_at": "2026-09-12T12:57:03.327370-04:00",
+    "finished_at": "2026-09-12T12:57:03.541952-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:03.219564-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:03.327370-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:03.460807-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:03.541472-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:03.541952-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-7781bd77e00545ff",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_6c7488e6d0ef45742177629b",
+   "sfe_experiment_id": "exp_4760391792983344c2f6b1ff",
+   "sfe": {
+    "exp_id": "exp_4760391792983344c2f6b1ff",
+    "found": true,
+    "world_id": "wld_12417d6ad51fe524d553bb65",
+    "world_name": "viv-0a7e127da0d2aa0e",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:0a7e127da0d2aa0e95944e5af793fbb21c8573a462f023a82eab209632d4837d",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_a58baea1a2b77655a572d40b",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_3d7ed463a78b17cf62e5913c",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-fd4da633d88425ed:exp_4760391792983344c2f6b1ff:wrk_3d7ed463a78b17cf62e5913c",
+   "pew": {
+    "encounter_id": "ENC-archaeon-fd4da633d88425ed",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_12417d6ad51fe524d553bb65",
+    "run_id": "exp_4760391792983344c2f6b1ff:wrk_3d7ed463a78b17cf62e5913c",
+    "sfe_event_id": "evt_d3ac7ab61935c571c0d62c2d",
+    "created_at": "2026-09-12T12:57:03.523889-04:00",
+    "points_back_to": "9f9497d1-77dd-44ab-81ba-4fd83d34d6bd"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "88279c9b-f58e-4ff5-99bb-a94809a41b68",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-8e73e722b2b2-C",
+   "family_id": "fam-s1-8e73e722b2b2",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:a278a77281389712fdfb44727790b8674f3efa8f380259ce782a31a98e68b58d",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:57.813348-04:00",
+    "claimed_at": "2026-09-12T12:57:03.545178-04:00",
+    "started_at": "2026-09-12T12:57:03.690385-04:00",
+    "finished_at": "2026-09-12T12:57:03.948095-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:03.545178-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:03.690385-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:03.816935-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:03.947477-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:03.948095-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-ffdcef5fbc1947a0",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_1de7e6d641dbc32ed2f951d2",
+   "sfe_experiment_id": "exp_08a300cfe96618e3174c2704",
+   "sfe": {
+    "exp_id": "exp_08a300cfe96618e3174c2704",
+    "found": true,
+    "world_id": "wld_f74615911e621fd787f6eeae",
+    "world_name": "viv-a278a77281389712",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:a278a77281389712fdfb44727790b8674f3efa8f380259ce782a31a98e68b58d",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_85bda61413d53fa4c061767a",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_f9f1a448e974de3d82520a55",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-2849efafeab34319:exp_08a300cfe96618e3174c2704:wrk_f9f1a448e974de3d82520a55",
+   "pew": {
+    "encounter_id": "ENC-archaeon-2849efafeab34319",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_f74615911e621fd787f6eeae",
+    "run_id": "exp_08a300cfe96618e3174c2704:wrk_f9f1a448e974de3d82520a55",
+    "sfe_event_id": "evt_8d1336ac2ec6b6951d741382",
+    "created_at": "2026-09-12T12:57:03.912486-04:00",
+    "points_back_to": "88279c9b-f58e-4ff5-99bb-a94809a41b68"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "d65f0216-1bb0-4ee2-9757-1fe7f6209eb8",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-c3b29870d70a-F",
+   "family_id": "fam-s1-c3b29870d70a",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:42890bae3c27e0498fad1825a640b1037cc850fca66fcd6c6856a846604387ce",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:57.993803-04:00",
+    "claimed_at": "2026-09-12T12:57:03.951552-04:00",
+    "started_at": "2026-09-12T12:57:04.135186-04:00",
+    "finished_at": "2026-09-12T12:57:04.435428-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:03.951552-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:04.135186-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:04.295588-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:04.434729-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:04.435428-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-63bf5bc03bf54231",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_c746f555207f6f822f6e32a8",
+   "sfe_experiment_id": "exp_9db8aed7f0eb5832032181fc",
+   "sfe": {
+    "exp_id": "exp_9db8aed7f0eb5832032181fc",
+    "found": true,
+    "world_id": "wld_2eace61c2b5492f78d1a9450",
+    "world_name": "viv-42890bae3c27e049",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:42890bae3c27e0498fad1825a640b1037cc850fca66fcd6c6856a846604387ce",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_cd8353d978147d51f458d01e",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_a9b05cc2b1ae187abe2116c4",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-2a28281adcaed2d9:exp_9db8aed7f0eb5832032181fc:wrk_a9b05cc2b1ae187abe2116c4",
+   "pew": {
+    "encounter_id": "ENC-archaeon-2a28281adcaed2d9",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_2eace61c2b5492f78d1a9450",
+    "run_id": "exp_9db8aed7f0eb5832032181fc:wrk_a9b05cc2b1ae187abe2116c4",
+    "sfe_event_id": "evt_fd6834531819ec492947c7b8",
+    "created_at": "2026-09-12T12:57:04.369951-04:00",
+    "points_back_to": "d65f0216-1bb0-4ee2-9757-1fe7f6209eb8"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "96016ac4-6de2-403f-84be-9908c8ecbf5f",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-c3b29870d70a-C",
+   "family_id": "fam-s1-c3b29870d70a",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:80a5f769031032f5146424c4406ffa122f3f3f99382a25eca2c2b32d982b47ec",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:58.143942-04:00",
+    "claimed_at": "2026-09-12T12:57:04.438614-04:00",
+    "started_at": "2026-09-12T12:57:04.542143-04:00",
+    "finished_at": "2026-09-12T12:57:04.793020-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:04.438614-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:04.542143-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:04.728593-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:04.792477-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:04.793020-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-85f4078789564be9",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_1786ca83cfdca3974f2f4339",
+   "sfe_experiment_id": "exp_269de8376afaccb9812b69ff",
+   "sfe": {
+    "exp_id": "exp_269de8376afaccb9812b69ff",
+    "found": true,
+    "world_id": "wld_74daf7ab0f541efaf7f1432e",
+    "world_name": "viv-80a5f769031032f5",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:80a5f769031032f5146424c4406ffa122f3f3f99382a25eca2c2b32d982b47ec",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_084de4895494c8aec028877c",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_138562b861ec39870fb41acf",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-55d580d05b9bc8a5:exp_269de8376afaccb9812b69ff:wrk_138562b861ec39870fb41acf",
+   "pew": {
+    "encounter_id": "ENC-archaeon-55d580d05b9bc8a5",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_74daf7ab0f541efaf7f1432e",
+    "run_id": "exp_269de8376afaccb9812b69ff:wrk_138562b861ec39870fb41acf",
+    "sfe_event_id": "evt_46ef1a5ebc4f530e0d55d7ae",
+    "created_at": "2026-09-12T12:57:04.771957-04:00",
+    "points_back_to": "96016ac4-6de2-403f-84be-9908c8ecbf5f"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "0c7bffdf-1267-4b21-89f7-4ca2c302834a",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-f723f9e3d632-F",
+   "family_id": "fam-s1-f723f9e3d632",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:7409572b1339df2e8821f11e12ca059f2edb258530e95c7d3db7e95635ff8f56",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:58.295861-04:00",
+    "claimed_at": "2026-09-12T12:57:04.796470-04:00",
+    "started_at": "2026-09-12T12:57:04.883903-04:00",
+    "finished_at": "2026-09-12T12:57:05.138592-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:04.796470-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:04.883903-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:05.062838-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:05.138080-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:05.138592-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-e857b20776f54a39",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_02524f03bc9cb99892812d1d",
+   "sfe_experiment_id": "exp_bc2c915fd9e2804649f50f7c",
+   "sfe": {
+    "exp_id": "exp_bc2c915fd9e2804649f50f7c",
+    "found": true,
+    "world_id": "wld_0ddef60d4317f2243b46110a",
+    "world_name": "viv-7409572b1339df2e",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:7409572b1339df2e8821f11e12ca059f2edb258530e95c7d3db7e95635ff8f56",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_dc029b2b318e2881d6cd3043",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_74c751c5e02b0009245ca4dd",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-0f103c3fa478d676:exp_bc2c915fd9e2804649f50f7c:wrk_74c751c5e02b0009245ca4dd",
+   "pew": {
+    "encounter_id": "ENC-archaeon-0f103c3fa478d676",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_0ddef60d4317f2243b46110a",
+    "run_id": "exp_bc2c915fd9e2804649f50f7c:wrk_74c751c5e02b0009245ca4dd",
+    "sfe_event_id": "evt_5d4cc3b587bc3b942f5e57bc",
+    "created_at": "2026-09-12T12:57:05.133085-04:00",
+    "points_back_to": "0c7bffdf-1267-4b21-89f7-4ca2c302834a"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "28ee438a-5a76-4e34-bcf8-4f2f3a22e3fc",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-f723f9e3d632-C",
+   "family_id": "fam-s1-f723f9e3d632",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:4f8617fd908843b0ccf6218d19a98712aea4792b52d29bc600f989a50b43a354",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:58.461706-04:00",
+    "claimed_at": "2026-09-12T12:57:05.141568-04:00",
+    "started_at": "2026-09-12T12:57:05.214476-04:00",
+    "finished_at": "2026-09-12T12:57:05.452892-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:05.141568-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:05.214476-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:05.354940-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:05.452113-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:05.452892-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-abf78c21dfda46fa",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_8383e93e8fef2f2f6c434bf8",
+   "sfe_experiment_id": "exp_f1b0ce97987594c92ac35bd2",
+   "sfe": {
+    "exp_id": "exp_f1b0ce97987594c92ac35bd2",
+    "found": true,
+    "world_id": "wld_86a6cb04be3ff45f84aeea25",
+    "world_name": "viv-4f8617fd908843b0",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:4f8617fd908843b0ccf6218d19a98712aea4792b52d29bc600f989a50b43a354",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_453a55ccd91dc0b0f5d220d5",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_52d8332a2df84bf5887b058c",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-4d7d5693df0cd62e:exp_f1b0ce97987594c92ac35bd2:wrk_52d8332a2df84bf5887b058c",
+   "pew": {
+    "encounter_id": "ENC-archaeon-4d7d5693df0cd62e",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_86a6cb04be3ff45f84aeea25",
+    "run_id": "exp_f1b0ce97987594c92ac35bd2:wrk_52d8332a2df84bf5887b058c",
+    "sfe_event_id": "evt_bc85524fcae510f1b4aa3553",
+    "created_at": "2026-09-12T12:57:05.411749-04:00",
+    "points_back_to": "28ee438a-5a76-4e34-bcf8-4f2f3a22e3fc"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "843243e9-58ef-4d94-a1e4-7805e4a53d92",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-f89308ab64c2-F",
+   "family_id": "fam-s1-f89308ab64c2",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:d1523de67dde15d147e5bdf651f99299e473f04f232215b0448e1045c3f9d46f",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:58.609098-04:00",
+    "claimed_at": "2026-09-12T12:57:05.456149-04:00",
+    "started_at": "2026-09-12T12:57:05.574992-04:00",
+    "finished_at": "2026-09-12T12:57:05.783813-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:05.456149-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:05.574992-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:05.718336-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:05.783168-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:05.783813-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-d8e0792fcff14367",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_df9fc9756087e1233c0d7597",
+   "sfe_experiment_id": "exp_0bb7fe6ad5f1180a533f6d43",
+   "sfe": {
+    "exp_id": "exp_0bb7fe6ad5f1180a533f6d43",
+    "found": true,
+    "world_id": "wld_999f49e72b6697d30dfbf72b",
+    "world_name": "viv-d1523de67dde15d1",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:d1523de67dde15d147e5bdf651f99299e473f04f232215b0448e1045c3f9d46f",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_4410fff92b22be8fe5e5503e",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_c0ec94457516c53f8c2265a6",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-b3be191de7ac77c0:exp_0bb7fe6ad5f1180a533f6d43:wrk_c0ec94457516c53f8c2265a6",
+   "pew": {
+    "encounter_id": "ENC-archaeon-b3be191de7ac77c0",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_999f49e72b6697d30dfbf72b",
+    "run_id": "exp_0bb7fe6ad5f1180a533f6d43:wrk_c0ec94457516c53f8c2265a6",
+    "sfe_event_id": "evt_3f506d70ab93ff9d700f7b31",
+    "created_at": "2026-09-12T12:57:05.777778-04:00",
+    "points_back_to": "843243e9-58ef-4d94-a1e4-7805e4a53d92"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "e7f204f9-feb9-43e0-bb23-b20eef536575",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-f89308ab64c2-C",
+   "family_id": "fam-s1-f89308ab64c2",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:4e4f09e972d36c4d538268c7f424bc8dab9c5096b051a61d105fe227c966307f",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:58.766505-04:00",
+    "claimed_at": "2026-09-12T12:57:05.787360-04:00",
+    "started_at": "2026-09-12T12:57:05.897099-04:00",
+    "finished_at": "2026-09-12T12:57:06.148769-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:05.787360-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:05.897099-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:06.053941-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:06.148185-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:06.148769-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-ff9c940b62a241ff",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_5e439759ab8c68fd49196688",
+   "sfe_experiment_id": "exp_374db2ebad9872ac444bb4ea",
+   "sfe": {
+    "exp_id": "exp_374db2ebad9872ac444bb4ea",
+    "found": true,
+    "world_id": "wld_47684f825e76dd47ba86fa88",
+    "world_name": "viv-4e4f09e972d36c4d",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:4e4f09e972d36c4d538268c7f424bc8dab9c5096b051a61d105fe227c966307f",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_8afd3fb2c25be955b9869d6a",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_078200f8c2cb4332ce02b35a",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-bb2ab62f548413d0:exp_374db2ebad9872ac444bb4ea:wrk_078200f8c2cb4332ce02b35a",
+   "pew": {
+    "encounter_id": "ENC-archaeon-bb2ab62f548413d0",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_47684f825e76dd47ba86fa88",
+    "run_id": "exp_374db2ebad9872ac444bb4ea:wrk_078200f8c2cb4332ce02b35a",
+    "sfe_event_id": "evt_014890a576596cd084377d1e",
+    "created_at": "2026-09-12T12:57:06.118435-04:00",
+    "points_back_to": "e7f204f9-feb9-43e0-bb23-b20eef536575"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "0e4c7a01-b07b-4ccf-aa4a-043e0406fd85",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-fadefe18a56b-F",
+   "family_id": "fam-s1-fadefe18a56b",
+   "arm_id": "F",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:5596c693608e0a6ab53556361b5503e78d0bf337a97cc9016b50a16d4f977bb3",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:58.930787-04:00",
+    "claimed_at": "2026-09-12T12:57:06.151839-04:00",
+    "started_at": "2026-09-12T12:57:06.302083-04:00",
+    "finished_at": "2026-09-12T12:57:06.527625-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:06.151839-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:06.302083-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:06.432540-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:06.527094-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:06.527625-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-b9b507a7ee294239",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_22c26f5e220cafb73fa585bb",
+   "sfe_experiment_id": "exp_a44219b685d4005ac3d14481",
+   "sfe": {
+    "exp_id": "exp_a44219b685d4005ac3d14481",
+    "found": true,
+    "world_id": "wld_aefebebc747ec94db5df2db8",
+    "world_name": "viv-5596c693608e0a6a",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:5596c693608e0a6ab53556361b5503e78d0bf337a97cc9016b50a16d4f977bb3",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_77db45f77cfbcab292182df7",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_103f324cee3d0868ac9d9c80",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-d8b17de599d7dc58:exp_a44219b685d4005ac3d14481:wrk_103f324cee3d0868ac9d9c80",
+   "pew": {
+    "encounter_id": "ENC-archaeon-d8b17de599d7dc58",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_aefebebc747ec94db5df2db8",
+    "run_id": "exp_a44219b685d4005ac3d14481:wrk_103f324cee3d0868ac9d9c80",
+    "sfe_event_id": "evt_11d7fcd7d145d833082b4fca",
+    "created_at": "2026-09-12T12:57:06.502727-04:00",
+    "points_back_to": "0e4c7a01-b07b-4ccf-aa4a-043e0406fd85"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  },
+  {
+   "experiment_id": "9d3ad26c-82af-48b9-abe7-667808dc8ce8",
+   "status": "completed",
+   "kind": "evaluate_bitstring",
+   "created_by": "archaeon",
+   "source_reason": "human",
+   "request_key": "rk-s1-fadefe18a56b-C",
+   "family_id": "fam-s1-fadefe18a56b",
+   "arm_id": "C",
+   "treatment": null,
+   "pair": null,
+   "experiment": null,
+   "spec_hash": "sha256:c26f832c785072ff209fa8cd72f15c7e3c73ced7c8ef697ccf0ac662f3ecc55a",
+   "priority": 100,
+   "transitions": {
+    "created_at": "2026-09-12T12:56:59.092275-04:00",
+    "claimed_at": "2026-09-12T12:57:06.530508-04:00",
+    "started_at": "2026-09-12T12:57:06.633432-04:00",
+    "finished_at": "2026-09-12T12:57:06.882334-04:00"
+   },
+   "claimed_by": "vivarium@m1",
+   "events": [
+    [
+     "claimed",
+     "2026-09-12T12:57:06.530508-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "running",
+     "2026-09-12T12:57:06.633432-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "selection_bound",
+     "2026-09-12T12:57:06.777740-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "pew_written",
+     "2026-09-12T12:57:06.881675-04:00",
+     "vivarium@m1"
+    ],
+    [
+     "completed",
+     "2026-09-12T12:57:06.882334-04:00",
+     "vivarium@m1"
+    ]
+   ],
+   "claim_events": 1,
+   "candidate_set_id": "cs-251e4d6347ab4eb5",
+   "set_members": 1,
+   "alternatives_recorded": 0,
+   "selection_bound": true,
+   "selection_family": "fam_1b41f7c19b098b48ba96c3d4",
+   "sfe_experiment_id": "exp_99d508360207f2b3288cad92",
+   "sfe": {
+    "exp_id": "exp_99d508360207f2b3288cad92",
+    "found": true,
+    "world_id": "wld_d0c37ddcc377c1b67ee6e31f",
+    "world_name": "viv-c26f832c785072ff",
+    "world_state": "RUNNING",
+    "world_client": "cli_5680df5896815e185078c9c6",
+    "exp_state": "OBSERVED",
+    "spec_hash": "sha256:c26f832c785072ff209fa8cd72f15c7e3c73ced7c8ef697ccf0ac662f3ecc55a",
+    "experiments_in_world": 1,
+    "observed_in_world": 1,
+    "observations": [
+     {
+      "obs_id": "obs_97efd14d36cc61f11fcd27a7",
+      "outcome": "SURVIVED",
+      "role": "ORIGINAL"
+     }
+    ],
+    "work": {
+     "work_id": "wrk_53e6091974c662ad912df104",
+     "status": "COMPLETED",
+     "attempts": 1,
+     "claimed_by": "vivarium@m1"
+    }
+   },
+   "engine": {
+    "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "conformance_state": "CONFORMANT",
+   "pew_reference": "pew:encounter/ENC-archaeon-2d03588f79e6fbc3:exp_99d508360207f2b3288cad92:wrk_53e6091974c662ad912df104",
+   "pew": {
+    "encounter_id": "ENC-archaeon-2d03588f79e6fbc3",
+    "found": true,
+    "outcome": "SURVIVED",
+    "namespace": "prod",
+    "sfe_world_id": "wld_d0c37ddcc377c1b67ee6e31f",
+    "run_id": "exp_99d508360207f2b3288cad92:wrk_53e6091974c662ad912df104",
+    "sfe_event_id": "evt_35af75cd07023c90737be874",
+    "created_at": "2026-09-12T12:57:06.853965-04:00",
+    "points_back_to": "9d3ad26c-82af-48b9-abe7-667808dc8ce8"
+   },
+   "outcome": "SURVIVED",
+   "failure": null,
+   "ties": {
+    "spec_hash_matches_engine": true,
+    "pew_points_back": true,
+    "one_experiment_in_world": true
+   }
+  }
+ ],
+ "integrity": {
+  "selected": 24,
+  "terminal": 24,
+  "missing_not_terminal": [],
+  "duplicates_spec_hash_executed_twice": [],
+  "retries_attempts_gt_1": [],
+  "multi_claim": [],
+  "alternatives_nonzero": [],
+  "parks_in_var_dir": [],
+  "refusals": "not observable here by design: a refused candidate_set append leaves no row; the writer holds the typed exception",
+  "contamination_rows_claimed_inside_window_not_in_set": [],
+  "execution_order": [
+   "1a3d785f-0012-4ef3-bb86-8fdb05a71822",
+   "00c23f05-5364-4199-852e-6a99dd056f3e",
+   "652e6eaa-6019-4377-8bd7-aebc633558f6",
+   "82b74b07-e20b-4331-bd7a-31e2794c237c",
+   "7fe15571-035d-46f0-b7f0-bd42b2736fe5",
+   "a5ba8c6d-d096-4812-adc7-2243ba14c5bd",
+   "72a72235-ae07-497c-92d7-f69a1f649b87",
+   "98ff28aa-2dc8-4b04-997f-c78b48cd8017",
+   "26d6f433-6d2f-4a77-acbf-05b845561593",
+   "1f7f88e4-2ed7-42cb-a534-c58f915964fa",
+   "144f117f-2b2b-4ed9-ab2d-d7fe883b09ff",
+   "9bec4245-0c25-4a44-b344-a508f5c6b9f1",
+   "0376e253-6a49-44b5-9e46-ebb8ac4bf0ee",
+   "829d1506-0540-4b6c-85c2-7845516b69fd",
+   "9f9497d1-77dd-44ab-81ba-4fd83d34d6bd",
+   "88279c9b-f58e-4ff5-99bb-a94809a41b68",
+   "d65f0216-1bb0-4ee2-9757-1fe7f6209eb8",
+   "96016ac4-6de2-403f-84be-9908c8ecbf5f",
+   "0c7bffdf-1267-4b21-89f7-4ca2c302834a",
+   "28ee438a-5a76-4e34-bcf8-4f2f3a22e3fc",
+   "843243e9-58ef-4d94-a1e4-7805e4a53d92",
+   "e7f204f9-feb9-43e0-bb23-b20eef536575",
+   "0e4c7a01-b07b-4ccf-aa4a-043e0406fd85",
+   "9d3ad26c-82af-48b9-abe7-667808dc8ce8"
+  ],
+  "engine_hashes_in_execution_order": [
+   "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+  ],
+  "build_boundary_crossed": false,
+  "ties_failed": []
+ }
+}
