@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.bound.double_the_wait_after_each_collision",
+  "name": "double the random wait after each collision",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "after a failed attempt wait a random time drawn from a window that doubles with each consecutive failure (capped), so contending parties spread out without coordination",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Exponential backoff' in section Networking: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Truncated binary exponential backoff': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "BOUND",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "a failure signal",
+    "a cap (policy)"
+  ],
+  "fails_when": [
+    "capture effect: a lucky party keeps winning"
+  ],
+  "instances": [
+    "Exponential backoff",
+    "Truncated binary exponential backoff"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

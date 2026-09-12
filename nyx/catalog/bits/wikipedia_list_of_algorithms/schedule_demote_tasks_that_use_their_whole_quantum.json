@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.schedule.demote_tasks_that_use_their_whole_quantum",
+  "name": "demote tasks that use their whole quantum",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "keep several ready queues of increasing quantum and decreasing priority; a task that uses its whole slice drops a level, one that blocks early stays or rises, so interactive tasks stay responsive without knowing service times",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Multi level feedback queue' in section Operating systems algorithms / Scheduling: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SCHEDULE",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "NONE",
+  "strategy": "ADAPTIVE_SWITCH",
+  "iteration": "PRIORITY",
+  "cost": "CONSTANT",
+  "requires": [
+    "several queues and quanta (policy)"
+  ],
+  "fails_when": [
+    "gaming by yielding just before the slice ends; starvation without periodic boosts"
+  ],
+  "instances": [
+    "Multi level feedback queue"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

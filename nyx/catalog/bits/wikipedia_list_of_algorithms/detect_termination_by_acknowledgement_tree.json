@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.detect.termination_by_acknowledgement_tree",
+  "name": "detect termination by an acknowledgement tree",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "every message that activates a node makes the sender its parent; a node acknowledges its parent only when it is idle and has received acknowledgements for every message it sent; the root's last acknowledgement means the whole computation has terminated",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Dijkstra-Scholten algorithm' in section Distributed systems algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "DETECT",
+  "in_geometry": "STREAM",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "SOUND",
+  "strategy": "INCREMENTAL",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "reliable messages"
+  ],
+  "fails_when": [
+    "one lost acknowledgement means never detecting termination"
+  ],
+  "instances": [
+    "Dijkstra-Scholten algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

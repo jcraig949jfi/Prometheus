@@ -258,3 +258,4 @@ Layout: nyx/catalog/ (schema, search, seed, loop); records under nyx/catalog/bit
     Fitness (adapted anti-collection law): every planted behavioural query retrieves its bit
     without the name -- YES at this checkpoint. Bits with no behavioural query yet: most;
     the planted set grows only from real query needs, not per bit.
+    checkpoint after batch 6: bits 190; pending in list_of_algorithms shrinking; loop self-paced (ScheduleWakeup), one batch per wake.

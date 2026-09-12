@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.synchronize.agree_by_majority_promises_then_majority_accepts",
+  "name": "agree by collecting majority promises, then majority accepts",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "a proposer picks a round number higher than any it has used, collects promises from a majority not to accept lower rounds (learning any value they already accepted), then asks the majority to accept the highest such value or its own; a value accepted by a majority is chosen and can never be changed",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Paxos algorithm' in section Distributed systems algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Raft (computer science)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Chandra–Toueg consensus algorithm': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SYNCHRONIZE",
+  "in_geometry": "SET",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "REACTIVE",
+  "guarantee": "SOUND",
+  "strategy": "INCREMENTAL",
+  "iteration": "FIFO",
+  "cost": "LINEAR",
+  "requires": [
+    "a majority of non-faulty nodes that respond",
+    "durable storage of promises"
+  ],
+  "fails_when": [
+    "duelling proposers may never terminate (liveness needs a leader or randomness)"
+  ],
+  "instances": [
+    "Paxos algorithm",
+    "Raft (computer science)",
+    "Chandra–Toueg consensus algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

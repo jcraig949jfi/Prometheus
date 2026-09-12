@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.verify.grant_only_if_a_safe_completion_order_exists",
+  "name": "grant a request only if some completion order remains safe",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "before granting a resource request, simulate granting it and check that the remaining processes can all finish in some order given their maximum claims; grant only if such an order exists",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Banker's algorithm' in section Operating systems algorithms: algorithm used for deadlock avoidance",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "VERIFY",
+  "in_geometry": "MATRIX",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "CALLBACK",
+  "guarantee": "SOUND",
+  "strategy": "GREEDY",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "declared maximum claims per process"
+  ],
+  "fails_when": [
+    "conservative: refuses requests that would have been fine"
+  ],
+  "instances": [
+    "Banker's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}
