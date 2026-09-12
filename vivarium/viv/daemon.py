@@ -168,6 +168,8 @@ class Daemon:
         self.log = log
         self._stop = False
         self._reports: list = []
+        self._scope_reconciles: list = []
+        self._productive_run = False
         self.var = _vardir.resolve(cfg)
         self.notify = notify or comms_notify
         self.configure_bound(cfg)
@@ -383,7 +385,12 @@ class Daemon:
                      "--worker-id %s   (flag: %s)"
                      % (self.viv.worker_id, self.stop_file))
             self._preflight_pew()
+            # B1 recurrence, once at start: worlds created while this
+            # consumer was down are not this consumer's fault but are still
+            # invisible until an owner adds them.
+            self._reconcile_scopes("start")
             n = 0
+            self._productive_run = False
             while not self._stop and (max_ticks is None or n < max_ticks):
                 # BETWEEN ticks, never during one. A stop that landed mid-
                 # attempt would strand the row, which is the thing this
@@ -411,6 +418,14 @@ class Daemon:
                     self.log("[viv] BLOCKED mid-run; stopping. %s"
                              % report.detail.get("note", ""))
                     return EXIT_BLOCKED
+                # B1 recurrence at the BATCH BOUNDARY: the first IDLE tick
+                # after productive ticks. Exactly once per boundary, between
+                # ticks, with the queue already empty.
+                if report.did_work:
+                    self._productive_run = True
+                elif report.outcome == IDLE and self._productive_run:
+                    self._productive_run = False
+                    self._reconcile_scopes("batch_boundary")
                 park = self._account(report)
                 if park is not None:
                     # Between ticks, nothing claimed: the park lands on the
@@ -428,6 +443,19 @@ class Daemon:
             self.log("[viv] daemon down %s" % json.dumps(self.viv.health(),
                                                          default=str))
             conn.close()
+
+    def _reconcile_scopes(self, trigger: str) -> None:
+        """Owner-side scope extension (viv/scope.py). A failure here is
+        logged and receipted and never reaches a row or stops the loop."""
+        fn = getattr(self.viv, "reconcile_scopes", None)
+        if not callable(fn):
+            return
+        try:
+            rec = fn(trigger=trigger)
+            self._scope_reconciles.append(rec)
+        except Exception as exc:                                    # noqa: BLE001
+            self.log("[viv] scope reconcile (%s) raised, ignored: %s"
+                     % (trigger, str(exc)[:200]))
 
     def _preflight_pew(self) -> None:
         """Say at STARTUP whether fossils can be written.

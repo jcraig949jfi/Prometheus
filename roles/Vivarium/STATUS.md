@@ -4,33 +4,39 @@
 > (operator, D-23, 2026-09-11); this file adds to them and may not
 > contradict them.
 
-**Currency: 2026-09-11 17:3x local (21:3x UTC).** Updated at least every four
+**Currency: 2026-09-12 14:0x local (18:0x UTC).** Updated at least every four
 hours of activity, per base role s3. Instance for this pass: `m1-416d588d`.
 
 ## Is Vivarium alive
 
-Yes, since 17:13:02 local. Consumer `vivarium@m1`, pid 26348, launched by the
-Task Scheduler on-demand task `VivariumConsumer` (launcher
-`F:\Prometheus-data\vivarium\vivarium_consumer.cmd`, far-future trigger, run
-by hand), so it is a child of the scheduler and not of any chat session. It
-runs from the pinned detached worktree `F:/Prometheus-worktrees/vivarium-consumer`
-at **`2f84603e5`** (origin/main at launch; carries fa14903d7, the rule-10 bound,
-and Daedalus's d96b15fda). The heartbeat says so itself now:
-`build.code.base_sha = 2f84603e5...`, `build.instance.tag = m1-nosession`,
-`build.var_dir = F:\Prometheus-data\vivarium\var`.
+Yes. Consumer `vivarium@m1`, pid 26164, launched 2026-09-12 13:44:18 local
+by the Task Scheduler task `VivariumConsumer` after a clean stop of pid
+26348 (flag honoured between ticks, nothing claimed). Pinned detached
+worktree `F:/Prometheus-worktrees/vivarium-consumer` at **`fb7aa5bed`**
+(origin/main). Heartbeat carries build.code.base_sha, build.instance.tag,
+build.var_dir; state dir `F:\Prometheus-dataivariumar`; own flushed
+log there. Engine `eng_8a37a5d305969034d488c43e`, schema 8, hash
+sha256:5380cb90...; ledger at D:\Prometheus-data\sfe\engine.db since
+2026-09-12 11:58 (Daedalus's move, identity unchanged).
 
-**The previous consumer (pid 28032) died at 13:30:00 local with no record.**
-873 ticks, 871 idle, 2 executed; its stdout file was 0 bytes because the
-launcher had shell-redirected it. Cause of death UNRECORDED; the most likely
-candidate (parent chat session ended) is a guess and is written as one. The
-new daemon writes its own per-line-flushed log,
-`<var_dir>/consumer-vivarium@m1.log`.
+## B1 read scope (owner-side, recurrent since fb7aa5bed)
 
-Engine at launch: CONFORMANT 9/9 at 17:11 local (Harmonia's checker WITH
-`--cacert`; without it the same checker prints UNREACHABLE against an engine
-answering /v2/version in 70 ms -- a label, not the property). Engine
-`eng_8a37a5d305969034d488c43e`, schema 8, source d5be5ec4b, pid 7268 since
-13:34 local.
+Scope `scp_1be32ffbe7c9bf3b29ec8d85` "archaeon-campaigns", grant
+`gnt_1ecdeae69f800240e03221ed` to `cli_1029e9255a074157a1b3ba1e` (archaeon),
+read-only. 617 worlds = every owner world named viv-*; the consumer extends
+it at start and at every batch boundary (viv/scope.py; add-only,
+idempotent; "added N" / "no-op: scope complete" in the log; receipts in the
+state dir); `viv.cli scope-reconcile` by hand. Archaeon cut over to the
+grant 2026-09-12 13:44 (#223); raw-ledger read retired on their side.
+
+## Seasons
+
+S1 (fossil-directed F vs uniform C, 12 pairs, 24 rows): executed
+2026-09-12 12:56:57-12:57:06, EXECUTION_CLEAN
+(roles/Vivarium/ledgers/S1_SEASON_RECEIPT_2026-09-12.md). Archaeon's
+readout: NO_DETECTABLE_ADVANTAGE (theirs). S2: Archaeon's census says
+NOT_LICENSED (archaeon/docs/h0h5/S2_CENSUS_2026-09-12.md, a4695a518);
+nothing run, nothing queued for it.
 
 ## Rule 10 (D-27): declared, enforced, registered
 

@@ -62,6 +62,13 @@ def recent_fossils(chart: Optional[str] = None, lookback_rows: int = 2000):
     quiet substrate, and tick() must be able to tell those apart.
     """
     from .. import config as cfg
+    # B1 cutover (operator 2026-09-12): the read grant is the operational
+    # evidence source; the raw ledger read is the legacy path and is used only
+    # when evidence_source is not "b1". NEVER a fallback: a failed B1 read
+    # returns an errored, empty corpus.
+    from .. import fossils_b1
+    if fossils_b1.evidence_source() == "b1":
+        return fossils_b1.read_b1(cfg.CHARTS[chart or cfg.DEFAULT.chart] if isinstance(chart or cfg.DEFAULT.chart, str) else (chart or cfg.DEFAULT.chart), lookback_rows)
     return fossils.read(chart or cfg.DEFAULT.chart,
                         lookback_rows=lookback_rows)
 
