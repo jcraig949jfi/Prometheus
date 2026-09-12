@@ -21,6 +21,16 @@ PRESENTATIONS = {
     # terminating, NON-confluent rewriting system; traps then arise from committing to the wrong normal form
     # (critical-pair divergence), not from targeting a non-normal-form word.
     "BRAID_B3_ONEWAY": ([("xyx", "yxy"), ("XYX", "YXY")], False),
+    # U-A3 ONE-WAY BRAID (lookahead gate, 2026-09-12): exactly the relator xyx -> yxy, one way, plus cancel.
+    # Terminating by the measure (len, #x) in lexicographic order: cancel lowers len; the relator keeps len and
+    # replaces two x and one y by one x and two y, so #x drops by one.  Termination is intrinsic, not cap-induced.
+    # Non-confluent: 'xyxX' -> 'xy' (cancel) or -> 'yxyX' (relator), and 'yxyX' is terminal.
+    "U_A3_ONEWAY_BRAID": ([("xyx", "yxy")], False),
+    # PC1 CANDIDATES for the gate (measured, not adopted): one-way commutation.
+    # ONEWAY_ABELIAN_ALL4 moves every y-letter left past every x-letter; expected confluent (no divergence).
+    # ONEWAY_ABELIAN_XY has only xy -> yx; expected non-confluent ('xyY' -> 'x' or -> 'yxY' terminal).
+    "ONEWAY_ABELIAN_ALL4": ([("xy", "yx"), ("xY", "Yx"), ("Xy", "yX"), ("XY", "YX")], False),
+    "ONEWAY_ABELIAN_XY": ([("xy", "yx")], False),
 }
 
 
