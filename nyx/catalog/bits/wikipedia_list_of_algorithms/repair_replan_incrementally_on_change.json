@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.replan_incrementally_on_change",
+  "name": "replan incrementally when costs change",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "keep the previous search's cost information and, when an edge cost changes, repair only the affected part of the plan instead of searching from scratch",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'D*' in section Combinatorial algorithms / Graph algorithms / Graph search: an incremental heuristic search algorithm",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "REACTIVE",
+  "guarantee": "OPTIMAL",
+  "strategy": "INCREMENTAL",
+  "cost": "UNKNOWN",
+  "requires": [
+    "a stored prior search",
+    "change notifications"
+  ],
+  "fails_when": [
+    "many simultaneous changes approach a full replan"
+  ],
+  "instances": [
+    "D*"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.tree_to_sequence_by_leaf_removal",
+  "name": "tree to sequence by leaf removal",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "repeatedly remove the smallest-labelled leaf and record its neighbour, producing a sequence two shorter than the vertex count that determines the tree uniquely and can be decoded back",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Prüfer coding' in section Combinatorial algorithms / Graph algorithms: conversion between a labeled tree and its Prüfer sequence",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "TREE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "labelled vertices with a total order on labels"
+  ],
+  "fails_when": [
+    "unlabelled trees have no canonical code this way"
+  ],
+  "instances": [
+    "Prüfer coding"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

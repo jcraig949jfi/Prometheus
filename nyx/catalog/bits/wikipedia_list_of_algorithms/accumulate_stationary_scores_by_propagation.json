@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.accumulate.stationary_scores_by_propagation",
+  "name": "stationary scores by repeated propagation",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "give every node a score, repeatedly replace each node's score by a damped sum of the scores flowing in along its edges, and stop when scores no longer change; the fixed point is the stationary distribution of a random walk",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'PageRank' in section Combinatorial algorithms / Graph algorithms / Network theory: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hyperlink-Induced Topic Search (HITS) (also known as Hubs and authorities)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'TrustRank': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ACCUMULATE",
+  "in_geometry": "GRAPH",
+  "out_geometry": "MAP",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "EXACT",
+  "strategy": "FIXPOINT_ITERATION",
+  "cost": "LINEAR",
+  "requires": [
+    "a damping/teleport rule for dead ends (policy)"
+  ],
+  "fails_when": [
+    "dangling nodes and disconnected parts need the teleport",
+    "convergence rate depends on the spectral gap"
+  ],
+  "instances": [
+    "PageRank",
+    "Hyperlink-Induced Topic Search (HITS) (also known as Hubs and authorities)",
+    "TrustRank"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

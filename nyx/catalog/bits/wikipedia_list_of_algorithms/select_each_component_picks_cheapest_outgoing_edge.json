@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.each_component_picks_cheapest_outgoing_edge",
+  "name": "each component picks its cheapest outgoing edge",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "in rounds, every component selects the cheapest edge leaving it and all selected edges are added at once, at least halving the number of components per round",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Borůvka's algorithm' in section Combinatorial algorithms / Graph algorithms / Routing for graphs: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "GRAPH",
+  "out_geometry": "TREE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "distinct edge weights or a tie-break"
+  ],
+  "fails_when": [
+    "ties without a tie-break can create cycles"
+  ],
+  "instances": [
+    "Borůvka's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

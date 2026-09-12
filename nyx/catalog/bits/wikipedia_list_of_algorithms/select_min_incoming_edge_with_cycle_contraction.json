@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.min_incoming_edge_with_cycle_contraction",
+  "name": "minimum incoming edge per node with cycle contraction",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "for every node keep its cheapest incoming edge; if the chosen edges form a cycle, contract the cycle into one node with adjusted edge costs and repeat; expanding the contractions yields a minimum spanning arborescence",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Edmonds' algorithm (also known as Chu–Liu/Edmonds' algorithm)' in section Combinatorial algorithms / Graph algorithms / Routing for graphs: find maximum or minimum branchings",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "GRAPH",
+  "out_geometry": "TREE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a root",
+    "directed edge costs"
+  ],
+  "fails_when": [
+    "cycle contraction bookkeeping dominates the implementation"
+  ],
+  "instances": [
+    "Edmonds' algorithm (also known as Chu–Liu/Edmonds' algorithm)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

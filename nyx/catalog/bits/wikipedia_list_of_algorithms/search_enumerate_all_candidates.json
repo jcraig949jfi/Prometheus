@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.enumerate_all_candidates",
+  "name": "enumerate all candidates",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "generate every candidate in the space and test each, keeping the ones that satisfy the property",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Brute-force search' in section Combinatorial algorithms / Graph algorithms / Graph search: an exhaustive and reliable search method, but computationally inefficient in many applications",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "DIRECT",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a finite enumerable space"
+  ],
+  "fails_when": [
+    "exponential in the space size"
+  ],
+  "instances": [
+    "Brute-force search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.spanning_tree_plus_matching_shortcut",
+  "name": "spanning tree plus odd-degree matching, then shortcut",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "build a minimum spanning tree, add a minimum perfect matching on its odd-degree vertices to make every degree even, walk the resulting closed trail, and skip repeated vertices to get a tour within a factor of the optimum",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Christofides algorithm' in section Combinatorial algorithms / Graph algorithms / Routing for graphs: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "metric (triangle inequality) costs"
+  ],
+  "fails_when": [
+    "non-metric instances lose the guarantee"
+  ],
+  "instances": [
+    "Christofides algorithm"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.select.grow_tree_by_cheapest_crossing_edge"
+    },
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.augment_along_alternating_paths"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

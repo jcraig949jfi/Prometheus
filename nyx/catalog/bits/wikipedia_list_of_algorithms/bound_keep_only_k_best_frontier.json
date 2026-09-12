@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.bound.keep_only_k_best_frontier",
+  "name": "keep only the k best of each frontier",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "expand a frontier level by level but after each level keep only the k best-scoring nodes and discard the rest",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Beam search' in section Combinatorial algorithms / Graph algorithms / Graph search: is a heuristic search algorithm that is an optimization of best-first search that reduces its memory requirement",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "BOUND",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "cost": "LINEAR",
+  "requires": [
+    "a score per node",
+    "a width k (policy)"
+  ],
+  "fails_when": [
+    "the optimum may be pruned; no completeness"
+  ],
+  "instances": [
+    "Beam search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

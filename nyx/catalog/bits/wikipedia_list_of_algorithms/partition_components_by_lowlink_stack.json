@@ -1,0 +1,53 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.components_by_lowlink_stack",
+  "name": "strong components by low-links on a single pass",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "during one depth-first traversal keep each vertex's smallest reachable discovery index and a stack of the current path; when a vertex's low-link equals its own index, pop the stack down to it as one component",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Tarjan's strongly connected components algorithm' in section Combinatorial algorithms / Graph algorithms / Subgraphs: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Path-based strong component algorithm': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PARTITION",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "cost": "LINEAR",
+  "requires": [
+    "discovery indices"
+  ],
+  "fails_when": [
+    "recursion depth on deep graphs"
+  ],
+  "instances": [
+    "Tarjan's strongly connected components algorithm",
+    "Path-based strong component algorithm"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.expand_deepest_first"
+    },
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.partition.components_by_reverse_pass"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

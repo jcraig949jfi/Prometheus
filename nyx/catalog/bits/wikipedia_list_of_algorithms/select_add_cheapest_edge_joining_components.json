@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.add_cheapest_edge_joining_components",
+  "name": "add the cheapest edge that joins two components",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "consider edges in increasing weight and keep each one that connects two different components, tracking components with disjoint-set union",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Kruskal's algorithm' in section Combinatorial algorithms / Graph algorithms / Routing for graphs: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Euclidean minimum spanning tree': algorithms for computing the minimum spanning tree of a set of points in the plane",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "GRAPH",
+  "out_geometry": "TREE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "sorted edges",
+    "disjoint-set union"
+  ],
+  "fails_when": [
+    "sorting dominates"
+  ],
+  "instances": [
+    "Kruskal's algorithm",
+    "Euclidean minimum spanning tree"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.remember.disjoint_set_union"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

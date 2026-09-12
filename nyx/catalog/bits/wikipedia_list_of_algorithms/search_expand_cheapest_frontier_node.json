@@ -1,0 +1,76 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.expand_cheapest_frontier_node",
+  "name": "expand the cheapest frontier node",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "keep a frontier of discovered nodes with their best-known cost, repeatedly remove the cheapest, finalise it, and relax its neighbours' costs; adding an admissible estimate of remaining cost to the priority steers the expansion toward a goal",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Dijkstra's algorithm' in section Combinatorial algorithms / Graph algorithms / Routing for graphs: computes shortest paths in a graph with non-negative edge weights",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Uniform-cost search': a tree search that finds the lowest-cost route where costs vary",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Best-first search': traverses a graph in the order of likely importance using a priority queue",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'A*': special case of best-first search that uses heuristics to improve speed",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'B*': a best-first graph search algorithm that finds the least-cost path from a given initial node to any goal node (out of on",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'SSS*': state space search traversing a game tree in a best-first fashion similar to that of the A* search algorithm",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Jump point search': an optimization to A* which may reduce computation time by an order of magnitude using further heuristics",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Johnson's algorithm': all pairs shortest path algorithm in sparse weighted directed graph",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "GRAPH",
+  "out_geometry": "MAP",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "non-negative edge costs",
+    "a priority structure"
+  ],
+  "fails_when": [
+    "negative edges break finalisation",
+    "an inadmissible heuristic loses optimality"
+  ],
+  "instances": [
+    "Dijkstra's algorithm",
+    "Uniform-cost search",
+    "Best-first search",
+    "A*",
+    "B*",
+    "SSS*",
+    "Jump point search",
+    "Johnson's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

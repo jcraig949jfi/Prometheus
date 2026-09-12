@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.depth_first_with_undo",
+  "name": "depth-first choice with undo",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "extend a partial solution one choice at a time; when a partial solution cannot be completed, undo the last choice and try the next alternative",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Backtracking' in section Combinatorial algorithms / Graph algorithms / Graph search: abandons partial solutions when they are found not to satisfy a complete solution",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Beam stack search': integrates backtracking with beam search",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "RECORD",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "BACKTRACKING",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a feasibility test on partial solutions"
+  ],
+  "fails_when": [
+    "exponential without pruning"
+  ],
+  "instances": [
+    "Backtracking",
+    "Beam stack search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.bound.raise_depth_limit_and_restart",
+  "name": "raise the depth limit and restart",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "run a depth-limited search, and if it fails increase the limit by one and start again from scratch, so memory stays linear while the order found is breadth-like",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Iterative deepening depth-first search (IDDFS)' in section Combinatorial algorithms / Graph algorithms / Graph search: a state space search strategy",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "BOUND",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "FUNCTION",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "COMPLETE",
+  "strategy": "ADAPTIVE_SWITCH",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a depth-limited search"
+  ],
+  "fails_when": [
+    "repeats shallow work each round (a constant factor)"
+  ],
+  "instances": [
+    "Iterative deepening depth-first search (IDDFS)"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.expand_deepest_first"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

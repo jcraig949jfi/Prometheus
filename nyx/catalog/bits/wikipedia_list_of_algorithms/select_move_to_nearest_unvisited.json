@@ -1,0 +1,38 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.move_to_nearest_unvisited",
+  "name": "always move to the nearest unvisited",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "from the current position repeatedly go to the closest not-yet-visited element until all are visited",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Nearest neighbour algorithm' in section Combinatorial algorithms / Graph algorithms / Routing for graphs: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a distance"
+  ],
+  "fails_when": [
+    "the last legs can be arbitrarily long; no approximation bound"
+  ],
+  "instances": [
+    "Nearest neighbour algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

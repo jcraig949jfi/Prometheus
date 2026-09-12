@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.merge_routes_by_largest_saving",
+  "name": "merge routes by largest saving",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "start with one route per customer and repeatedly merge the two route ends whose joining saves the most distance, subject to capacity",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Clarke and Wright Saving algorithm' in section Combinatorial algorithms / Graph algorithms / Routing for graphs: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a distance",
+    "capacities"
+  ],
+  "fails_when": [
+    "greedy merges lock in early mistakes"
+  ],
+  "instances": [
+    "Clarke and Wright Saving algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}

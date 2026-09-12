@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.grow_tree_by_cheapest_crossing_edge",
+  "name": "grow one tree by its cheapest crossing edge",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "start from one vertex and repeatedly add the cheapest edge that connects the tree to a vertex outside it, using a priority structure over the frontier",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Prim's algorithm' in section Combinatorial algorithms / Graph algorithms / Routing for graphs: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "GRAPH",
+  "out_geometry": "TREE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a total order on edge weights",
+    "a priority structure"
+  ],
+  "fails_when": [
+    "ties need a rule for uniqueness"
+  ],
+  "instances": [
+    "Prim's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+}
