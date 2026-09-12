@@ -211,3 +211,17 @@ survive, not <= 2).
 
 No CUT-3: no consumer return on N1 and no patched-build ablation; the
 stopping rule says CUT-3 waits. Natural stopping point reached.
+
+## 2026-09-12 NYX-38 (in-lane under the HOLD ruling): attack on the c19 scope claim
+
+All 45 Techne-scored targets re-run with Techne's settings and the pass profile on (nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_targets24_2026-09-12.json).
+    scored 45; minimal here 19; not minimal here 26 (Techne: 24; excess agrees on 41/45)
+    pass_to_descendant ZERO calls on 42/45 -- on 23 of the non-minimal AND on all 19 minimal
+    passes that shrank on >= 1 target: {"reorder_spans": 29, "minimize_individual_choices": 15, "try_trivial_spans": 4, "redistribute_numeric_pairs": 9, "node_program_X": 12, "node_program_XXX": 2, "node_program_XX": 1}
+Reading: c19 (label alignment) is a property of solving_programs as a whole -- the
+structural pass is effectively inert on this strategy -- and therefore CANNOT be the
+discriminating explanation of which targets end non-minimal (the minimal ones show the
+same zero). What decides minimality here is whatever reorder_spans / minimize_individual_
+choices / node_program can reach from the encoding; the double-negation class is one
+symptom. The delivered sentence "one target, not 24" is superseded. No organ changed;
+no inventory created; the CLAIM shrank.
