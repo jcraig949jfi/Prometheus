@@ -1,0 +1,234 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "compact-4.2bsd-1983",
+  "canonical_name": "compact / uncompact (4.2BSD, 1983) -- adaptive Huffman file compression, the LOSER superseded by compress",
+  "aliases": [
+    "compact",
+    "uncompact",
+    "ccat"
+  ],
+  "lineage": "Compression lineage, the SUPERSEDED DESIGN: compact (Colin McMaster, 1980; shipped in 4.xBSD ucb/) used Gallager's adaptive Huffman coding -- one-pass, no table transmitted, but slow and ~38% savings. compress (Thomas et al. 1984, LZW) beat it decisively on speed and ratio, then LZW's Unisys patent pressure produced gzip/DEFLATE (1992-93). Preserved from the unix-history-repo at tag BSD-4_2 (ucb/compact: compact.c, uncompact.c, tree.c, compact.h, Makefile, ccat.sh).",
+  "domain": [
+    "compression",
+    "entropy-coding",
+    "superseded-design",
+    "loser"
+  ],
+  "era": "1980-1983",
+  "version": "4.2BSD usr/src/ucb/compact (unix-history-repo tag BSD-4_2)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "Makefile",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/Makefile"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "ccat.sh",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/ccat.sh"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "compact.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/compact.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "compact.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/compact.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tree.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/tree.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "uncompact.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/uncompact.c"
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "repo": "dspinellis/unix-history-repo",
+    "tag": "BSD-4_2",
+    "path": "usr/src/ucb/compact"
+  },
+  "hashes": {
+    "tree_sha256": "6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d",
+    "n_files": 6,
+    "bytes": 15084,
+    "artifacts": [
+      {
+        "filename": "Makefile",
+        "sha256": "4879c253db9e11ea40cc2a39c3df5a265cf1af8efd9981ece6d4580ff5682179",
+        "commit": null
+      },
+      {
+        "filename": "ccat.sh",
+        "sha256": "dd0f859958876e0a0fdf8b0b033f2922da8e1ea3ef59c98f05fa7e9886fe1b98",
+        "commit": null
+      },
+      {
+        "filename": "compact.c",
+        "sha256": "25aabb7398a4a4648dc646549bacecdc112769bc892c2ecb6f86da57e891f3af",
+        "commit": null
+      },
+      {
+        "filename": "compact.h",
+        "sha256": "36249c3e18988ff74dcbd32fc2689d73b8a0991f4ef6e373b24b4151320f5cb5",
+        "commit": null
+      },
+      {
+        "filename": "tree.c",
+        "sha256": "1cb5a8e00565c058afd0e06a884341dd088bfc9c2a3cfa03d8f14dcb8c07732e",
+        "commit": null
+      },
+      {
+        "filename": "uncompact.c",
+        "sha256": "076ef0682506bbdfbf076f53dcbec75867d3f83aab7683c39181e096d0eb169a",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\compact-4.2bsd-1983",
+    "hash_list": "techne/fossils/specimens/compact-4.2bsd-1983/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-4-Clause",
+    "status": "permissive (Regents of the University of California)",
+    "evidence": "file headers"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C (pre-ANSI, K&R)"
+  ],
+  "build_system": "cc (K&R); Techne compiles with gcc -std=gnu89 -fcommon -w",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm), with pre-ANSI accommodations recorded",
+  "dependencies": [
+    "libc"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "compact file  -> file.C ; uncompact file.C ; tree.c holds the adaptive Huffman tree update"
+  ],
+  "example": {
+    "command": "gcc -std=gnu89 -fcommon -w -o compact compact.c tree.c; ... compact sample; uncompact sample.C; cmp",
+    "input": "a text file",
+    "output": "round trip byte-identical; the size ratio (weaker than compress on the same input, which the vault can measure with ncompress-5.0)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Gallager, Variations on a Theme by Huffman, IEEE IT 1978",
+    "compact(1) manual, 4.2BSD"
+  ],
+  "human_capability_summary": {
+    "built_to": "shrink files on 1980 disks with one pass and no side table, by adapting the Huffman tree as symbols arrive",
+    "pressure": "disk scarcity; CPU cost; the arrival of LZW, which did better on both counts",
+    "success_means": "round trip exact; the human record: the ratio and speed lost to compress within two years"
+  },
+  "known_human_problem_solved": "lossless file compression (1980)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "storage scarcity, CPU cost, competition from a better algorithm",
+  "human_failure_condition": "corrupt round trip; or -- historically -- being out-competed",
+  "behavioral_entry_point": "compress the same corpus with compact, ncompress-5.0 (LZW) and gzip-1.2.4 (DEFLATE) and record ratio and time: the lineage's selection pressure made measurable",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded",
+      "to": "ncompress-5.0-lzw-1985",
+      "note": "compress (LZW, 1984) displaced compact in BSD"
+    },
+    {
+      "relation": "algorithm_from",
+      "to": "Gallager 1978 (adaptive Huffman)",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "depth:compression",
+    "failed_branch",
+    "loser",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T210106Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T210240Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T210457Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T210705Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T210757Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T211011Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T211247Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T211434Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\compact-4.2bsd-1983 ; tracked techne/fossils/specimens/compact-4.2bsd-1983",
+    "where_it_came_from": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/Makefile ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run compact-4.2bsd-1983",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T211434Z.json",
+    "what_humans_used_it_for": "shrink files on 1980 disks with one pass and no side table, by adapting the Huffman tree as symbols arrive"
+  },
+  "seat": "Techne"
+}

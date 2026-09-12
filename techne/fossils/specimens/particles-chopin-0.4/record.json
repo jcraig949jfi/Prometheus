@@ -1,0 +1,144 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "particles-chopin-0.4",
+  "canonical_name": "particles 0.4 -- sequential Monte Carlo / particle filtering in Python (Nicolas Chopin)",
+  "aliases": [
+    "particles",
+    "SMC",
+    "bootstrap filter"
+  ],
+  "lineage": "Particle filtering (Gordon, Salmond, Smith 1993 bootstrap filter; Doucet et al.) as the companion code to Chopin & Papaspiliopoulos, An Introduction to Sequential Monte Carlo (2020): state-space models, resampling schemes (multinomial, residual, stratified, systematic), SMC samplers, particle MCMC.",
+  "domain": [
+    "estimation",
+    "hidden-state",
+    "Monte-Carlo",
+    "filtering",
+    "resampling"
+  ],
+  "era": "2018-",
+  "version": "v0.4 (2024)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/nchopin/particles/archive/refs/tags/v0.4.tar.gz",
+        "filename": "particles-0.4.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/nchopin/particles",
+    "tag": "v0.4"
+  },
+  "hashes": {
+    "tree_sha256": "e27cbce29e5f876c07ff42487879d9ee04db7b1b2d59fad93336834c9a15be6c",
+    "n_files": 101,
+    "bytes": 5583872,
+    "artifacts": [
+      {
+        "filename": "particles-0.4.tar.gz",
+        "sha256": "67809fce81af51a99a04ba5d437565f330cae18e5dd123a3d50c92a74ec2bbf1",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\particles-chopin-0.4",
+    "hash_list": "techne/fossils/specimens/particles-chopin-0.4/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "pip install . (numpy, scipy, numba)",
+  "compiler_or_interpreter": "python 3.11 (docker python:3.11-slim)",
+  "dependencies": [
+    "numpy",
+    "scipy",
+    "numba",
+    "joblib"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "particles.SMC(fk=Bootstrap(ssm, data), N, resampling); state_space_models.StateSpaceModel; resampling.*"
+  ],
+  "example": {
+    "command": "python harness: simulate a linear-Gaussian model, run the bootstrap filter, compare filtering means to the Kalman filter",
+    "input": "T observations from a known model",
+    "output": "particle filter mean within tolerance of the exact Kalman mean (the ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Chopin & Papaspiliopoulos, An Introduction to Sequential Monte Carlo, Springer 2020",
+    "Gordon, Salmond, Smith, Novel approach to nonlinear/non-Gaussian Bayesian state estimation, IEE Proc F 1993"
+  ],
+  "human_capability_summary": {
+    "built_to": "track a hidden state through nonlinear, non-Gaussian dynamics by propagating and reweighting a cloud of hypotheses",
+    "pressure": "hidden state, noisy observations, models where the Kalman filter's Gaussian assumption fails; weight degeneracy fought by resampling",
+    "success_means": "the weighted cloud's mean tracks the true posterior mean; on the linear-Gaussian case it matches the Kalman filter to Monte-Carlo error"
+  },
+  "known_human_problem_solved": "nonlinear Bayesian filtering",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "hidden state, observation noise, nonlinearity, particle degeneracy",
+  "human_failure_condition": "weight degeneracy: one particle carries all the weight and the estimate collapses",
+  "behavioral_entry_point": "reduce N or switch resampling off (resampling=None) and watch the ESS collapse; change the observation noise",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Gordon, Salmond, Smith 1993",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "filterpy-labbe",
+      "note": "Bayesian filtering: Kalman (linear) vs particle (nonlinear)"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityC",
+    "estimation",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260912T214514Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260912T215641Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\particles-chopin-0.4 ; tracked techne/fossils/specimens/particles-chopin-0.4",
+    "where_it_came_from": "https://github.com/nchopin/particles/archive/refs/tags/v0.4.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run particles-chopin-0.4",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260912T215641Z.json",
+    "what_humans_used_it_for": "track a hidden state through nonlinear, non-Gaussian dynamics by propagating and reweighting a cloud of hypotheses"
+  },
+  "seat": "Techne"
+}

@@ -1,0 +1,147 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "zchaff-2007",
+  "receipt_id": "run-zchaff-2007-20260912T210513Z",
+  "written_utc": "20260912T210513Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/zchaff64",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "sat.cnf": "f3eff25183d4a35bc87d8fa78c1e06b41d14a8b3bc80237a7eb165b41a8014d9",
+    "unsat.cnf": "b053174e857acd404f0dd06bec5d81149e7bb87080e8d3219b466f280f037e22"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "3e95242e880b29d8ab9201f6a74451710f5d9819a5bb44e7c1f2be5911e06cdf",
+  "recipe_sha256": "a02a6982b10eb9bb995be9c53909e530fca856b418dc69021fecbeae51ef2b3e",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.72,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make (2007 C++; modern libstdc++ no longer provides <cstring>/<cstdlib> transitively -- injected through CFLAGS, no source change)",
+      "cmd": "make -s CFLAGS='-O2 -w -include cstring -include cstdlib -include cstdio -include climits -fpermissive' 2>&1 | grep -iE '\\berror' | head -5; test -x ./zchaff && echo built",
+      "exit": 0,
+      "seconds": 4.74,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "satisfiable CNF (the vault's shared fixture)",
+      "cmd": "./zchaff $HARNESS/sat.cnf 2>&1 | grep -E 'RESULT|Instance|Decisions|Conflicts' | head -6",
+      "exit": 0,
+      "seconds": 0.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Instance Satisfiable\nNum. of Decisions\t\t\t\t2\n( Stack + Vsids + Shrinking Decisions )\t\t0 + 1 + 0\nRESULT:\tSAT\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "unsatisfiable CNF",
+      "cmd": "./zchaff $HARNESS/unsat.cnf 2>&1 | grep -E 'RESULT|Instance|Decisions|Conflicts' | head -6",
+      "exit": 0,
+      "seconds": 0.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Instance Unsatisfiable\nNum. of Decisions\t\t\t\t1\n( Stack + Vsids + Shrinking Decisions )\t\t0 + 1 + 0\nRESULT:\tUNSAT\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "libsat.a",
+      "sha256": "71a5f2b59a1f0b2e62e41c79286705812b0d6396e4860b9e323f6f4c23fbf071",
+      "bytes": 195792
+    },
+    {
+      "path": "sat_solver.o",
+      "sha256": "c24478711c1f84adcb04729079299763c2bd52d5f50e91248cdae8f45b97a3e3",
+      "bytes": 30744
+    },
+    {
+      "path": "zchaff",
+      "sha256": "6c3e9e2b0a85a064e700702ddf65bd0a983ae5bcc7f0ee928dabb71e37ab47af",
+      "bytes": 92880
+    },
+    {
+      "path": "zchaff_base.o",
+      "sha256": "30e8354e1030af8f887d41c9ad1a4cb4c1f9e6aed9f0bbabb016cf873bfcac89",
+      "bytes": 7648
+    },
+    {
+      "path": "zchaff_c_wrapper.cpp",
+      "sha256": "10df5086c811354a18254d3ddd971d43a4d6111eb306a03193649da78b8e30c6",
+      "bytes": 15235
+    },
+    {
+      "path": "zchaff_c_wrapper.o",
+      "sha256": "9175a7f741234f15bf3f88d1de860bde529d208774f612a6ac78a358f8d7498e",
+      "bytes": 28920
+    },
+    {
+      "path": "zchaff_cpp_wrapper.cpp",
+      "sha256": "f6567d08b3e306e9cc2ee4852617d2122977f45ae22b523f7fb4aa7c391a1f3a",
+      "bytes": 14575
+    },
+    {
+      "path": "zchaff_cpp_wrapper.o",
+      "sha256": "c19ddaf7c53084674997ff8c6f02a98343ad4540f60c2f9d2d82a5635ce88553",
+      "bytes": 29488
+    },
+    {
+      "path": "zchaff_dbase.o",
+      "sha256": "38470bb9ce4041c4744b9fbd62c2ffe527f7a565ffba099882027e4fb2f7511b",
+      "bytes": 25552
+    },
+    {
+      "path": "zchaff_solver.o",
+      "sha256": "8ff9aa151a02754b9027674f241fd40ba66d7edcdf5224678f87236ea9cfff7a",
+      "bytes": 88920
+    },
+    {
+      "path": "zchaff_utils.o",
+      "sha256": "fa449b491682a40d38a23e4d34eaa27a5990ac1d4e5209fa7c2fb4ae641337f5",
+      "bytes": 3736
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "3e95242e880b29d8ab9201f6a74451710f5d9819a5bb44e7c1f2be5911e06cdf",
+  "body_preserved": true
+}

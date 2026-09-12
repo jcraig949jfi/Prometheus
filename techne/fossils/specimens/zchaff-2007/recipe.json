@@ -1,0 +1,41 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/zchaff64",
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make (2007 C++; modern libstdc++ no longer provides <cstring>/<cstdlib> transitively -- injected through CFLAGS, no source change)",
+      "cmd": "make -s CFLAGS='-O2 -w -include cstring -include cstdlib -include cstdio -include climits -fpermissive' 2>&1 | grep -iE '\\berror' | head -5; test -x ./zchaff && echo built",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "satisfiable CNF (the vault's shared fixture)",
+      "cmd": "./zchaff $HARNESS/sat.cnf 2>&1 | grep -E 'RESULT|Instance|Decisions|Conflicts' | head -6",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "RESULT:\\s*SAT"
+      }
+    },
+    {
+      "name": "unsatisfiable CNF",
+      "cmd": "./zchaff $HARNESS/unsat.cnf 2>&1 | grep -E 'RESULT|Instance|Decisions|Conflicts' | head -6",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "RESULT:\\s*UNSAT"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: agreement with minisat-2.2.0 and picosat-965 on the same two CNFs (their receipts hold the answers)."
+}

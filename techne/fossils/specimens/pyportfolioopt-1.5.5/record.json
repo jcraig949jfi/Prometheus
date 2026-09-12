@@ -1,0 +1,141 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "pyportfolioopt-1.5.5",
+  "canonical_name": "PyPortfolioOpt 1.5.5 -- Markowitz mean-variance and related portfolio optimisation (Robert Martin)",
+  "aliases": [
+    "PyPortfolioOpt",
+    "pypfopt"
+  ],
+  "lineage": "Modern portfolio theory (Markowitz 1952) as a convex program: efficient frontier, maximum Sharpe, minimum volatility, plus shrinkage covariance (Ledoit-Wolf), Black-Litterman views and hierarchical risk parity (Lopez de Prado 2016) -- a compact library over cvxpy with a bundled price dataset.",
+  "domain": [
+    "finance",
+    "portfolio-optimization",
+    "convex-optimization",
+    "risk"
+  ],
+  "era": "1952 (theory); 2018- (package)",
+  "version": "v1.5.5 (2023)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://files.pythonhosted.org/packages/5f/e3/922d2279adc6e965c5aacce89ff317d6c9f8cabbbb70fa604a84443c6b1e/pyportfolioopt-1.5.5.tar.gz",
+        "filename": "pyportfolioopt-1.5.5.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/robertmartin8/PyPortfolioOpt",
+    "sdist": "PyPI pyportfolioopt 1.5.5 (the author's release artifact)"
+  },
+  "hashes": {
+    "tree_sha256": "cca30e0a1098599fff465b3e1095135aebf17b69541a9d2237ef52013c23a726",
+    "n_files": 22,
+    "bytes": 314093,
+    "artifacts": [
+      {
+        "filename": "pyportfolioopt-1.5.5.tar.gz",
+        "sha256": "371ade1fed1deeea7042ba3178b3cf9aac9cd0b1700e949cab8a8c2e72e5566a",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\pyportfolioopt-1.5.5",
+    "hash_list": "techne/fossils/specimens/pyportfolioopt-1.5.5/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE.txt"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "pip install . (numpy, pandas, scipy, cvxpy)",
+  "compiler_or_interpreter": "python 3.11 (docker python:3.11-slim)",
+  "dependencies": [
+    "cvxpy (+ a conic solver such as Clarabel/ECOS)",
+    "pandas",
+    "scipy"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "pypfopt.EfficientFrontier(mu, S).max_sharpe() / .min_volatility(); expected_returns, risk_models; tests/resources/stock_prices.csv"
+  ],
+  "example": {
+    "command": "python harness on tests/resources/stock_prices.csv: min-volatility weights; check sum(w)=1, w>=0, and that the minimum variance is below the equal-weight variance",
+    "input": "the bundled 20-asset price history",
+    "output": "weights and the two variances (ORACLE: feasibility + dominance of equal weights)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Markowitz, Portfolio Selection, J. Finance 1952",
+    "Ledoit & Wolf, Honey, I Shrunk the Sample Covariance Matrix, 2004"
+  ],
+  "human_capability_summary": {
+    "built_to": "choose asset weights that minimise variance for a target return (or maximise Sharpe) given estimated means and covariances",
+    "pressure": "estimation error in means/covariances that the optimiser amplifies; constraints (long-only, sector caps)",
+    "success_means": "a feasible weight vector whose in-sample risk is not worse than naive alternatives; profitability is NOT the oracle"
+  },
+  "known_human_problem_solved": "portfolio allocation under risk",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "uncertainty (estimation error), constraints, competition",
+  "human_failure_condition": "error maximisation: the optimiser concentrates in the assets whose returns were most over-estimated",
+  "behavioral_entry_point": "swap sample covariance for Ledoit-Wolf shrinkage and compare the weight concentration",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Markowitz 1952",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "glpk-5.0",
+      "note": "mathematical programming lineage (LP -> convex)"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityJ",
+    "finance",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/pyportfolioopt-1.5.5/receipts/run-pyportfolioopt-1.5.5-20260912T214745Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/pyportfolioopt-1.5.5/receipts/run-pyportfolioopt-1.5.5-20260912T215859Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\pyportfolioopt-1.5.5 ; tracked techne/fossils/specimens/pyportfolioopt-1.5.5",
+    "where_it_came_from": "https://files.pythonhosted.org/packages/5f/e3/922d2279adc6e965c5aacce89ff317d6c9f8cabbbb70fa604a84443c6b1e/pyportfolioopt-1.5.5.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run pyportfolioopt-1.5.5",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/pyportfolioopt-1.5.5/receipts/run-pyportfolioopt-1.5.5-20260912T215859Z.json",
+    "what_humans_used_it_for": "choose asset weights that minimise variance for a target return (or maximise Sharpe) given estimated means and covariances"
+  },
+  "seat": "Techne"
+}

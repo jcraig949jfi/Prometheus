@@ -1,0 +1,79 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "emcee-3.1.6",
+  "receipt_id": "run-emcee-3.1.6-20260912T214502Z",
+  "written_utc": "20260912T214502Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/emcee-3.1.6",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "gaussian.py": "77bff89425a412fe1d17bb14f7e3d66b8e0b81dc9684dd257849bb7bc04033e6"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "76553717948133319415caed8d583fac4b4d41d56515f1761b67d59a618eeb7f",
+  "recipe_sha256": "27a39fbf3bd829110a7f0e4c6b565785febd11aaf0f960ea77e3246b98f93fcd",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 1.02,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 4.39,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "hint: See above for details.\n\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "gaussian (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/gaussian.py",
+      "exit": 1,
+      "seconds": 4.66,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0",
+        "stdout lacks 'RESULT OK'"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "Traceback (most recent call last):\n  File \"/w/harness/gaussian.py\", line 1, in <module>\n    import numpy as np, emcee\nModuleNotFoundError: No module named 'numpy'\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "76553717948133319415caed8d583fac4b4d41d56515f1761b67d59a618eeb7f",
+  "body_preserved": true
+}

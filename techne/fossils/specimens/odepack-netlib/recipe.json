@@ -1,0 +1,49 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile ODEPACK (3 files) + Techne's Robertson driver",
+      "cmd": "gfortran -O1 -std=legacy -w -o $BODY/build/rob $HARNESS/robertson.f opkdmain.f opkda1.f opkda2.f 2>&1 | grep -iE '\\berror' | head -3; test -x $BODY/build/rob && echo built",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "MF=21 (BDF, stiff, analytic Jacobian): Robertson to t=4e10",
+      "cmd": "$BODY/build/rob 21 | tail -6",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESULT OK MF=",
+          "21"
+        ],
+        "stdout_regex": "T =\\s*0\\.4000D\\+11"
+      }
+    },
+    {
+      "name": "PATHOLOGY MF=10 (Adams, non-stiff) on the same stiff problem: step budget exhausted (ISTATE=-1)",
+      "cmd": "$BODY/build/rob 10 2>&1 | tail -6",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESULT FAILED MF=",
+          "10"
+        ],
+        "stdout_regex": "ISTATE\\s*=\\s*-1"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_NATIVE",
+  "notes": "The failing run is the specimen's documented behaviour, not a bug: a non-stiff method on a stiff problem exhausts MXSTEP (ISTATE=-1). The corrected descendant is the same code with MF=21. Oracle for MF=21: reaching T=4e10 with y1 ~ 0 (Hindmarsh's demo values)."
+}

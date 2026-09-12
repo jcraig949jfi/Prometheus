@@ -1,0 +1,102 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "tinyekf-levy",
+  "receipt_id": "run-tinyekf-levy-20260912T210255Z",
+  "written_utc": "20260912T210255Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/examples/GPS",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "1591ee24d60213fd596524e0cfc32ccf549e535e2d4f899872833adce3aa67f4",
+  "recipe_sha256": "d6f82aa711b73ef340bceef62d6a0d5d4bd7fcbcf742b09af4505e6e37eac0a5",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make the GPS example (header-only EKF)",
+      "cmd": "make -s gps 2>&1 | grep -iE '\\berror' | head -3; test -x ./gps && echo built",
+      "exit": 0,
+      "seconds": 0.96,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "run the EKF over the shipped pseudorange data",
+      "cmd": "./gps | tail -2",
+      "exit": 0,
+      "seconds": 0.89,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "-2168839.402538 4386633.018873 4077153.767335\nWrote file ekf.csv\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "plausibility oracle: the estimated receiver position converges to Earth's surface radius (6.35e6..6.40e6 m) and the estimate moves less than 100 m over the last 10 epochs",
+      "cmd": "awk -F, 'NR>1{r=sqrt($1*$1+$2*$2+$3*$3); n++; R[n]=r} END{d=R[n]-R[n-10]; if(d<0)d=-d; printf(\"epochs=%d final_r=%.1f m drift_last10=%.2f m\\n\", n, R[n], d); exit (R[n]>6.35e6 && R[n]<6.40e6 && d<100)?0:1}' ekf.csv",
+      "exit": 1,
+      "seconds": 0.86,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "epochs=25 final_r=3.1 m drift_last10=7.50 m\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "ekf.csv",
+      "sha256": "f9fb0ad0a378d70f5da6c9bd35841659100ca84c3742f38f2cf6ca0c3f344086",
+      "bytes": 729
+    },
+    {
+      "path": "gps",
+      "sha256": "9a458836676c7777cbef5ad16124ea03971fff7c5d6fcee0862deedee802d0cd",
+      "bytes": 21744
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_FAIL",
+  "ok": false,
+  "tree_sha256_after": "1591ee24d60213fd596524e0cfc32ccf549e535e2d4f899872833adce3aa67f4",
+  "body_preserved": true
+}

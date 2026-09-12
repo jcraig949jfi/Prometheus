@@ -1,0 +1,262 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "bsd-tcp-4.3-tahoe-1988",
+  "canonical_name": "4.3BSD-Tahoe TCP (1988) -- slow start, congestion avoidance, Karn's algorithm, RTT variance (Jacobson/Karels)",
+  "aliases": [
+    "TCP Tahoe",
+    "4.3BSD-Tahoe netinet/tcp"
+  ],
+  "lineage": "TCP congestion-control lineage, the HISTORICAL REDESIGN: Van Jacobson and Mike Karels added a congestion window (snd_cwnd), slow start, congestion avoidance (additive increase / multiplicative decrease), Karn's retransmission-timer rule and the mean+variance RTT estimator to 4.3BSD-Tahoe in response to the 1986 collapse. Preserved from unix-history-repo tag BSD-4_3_Tahoe.",
+  "domain": [
+    "networks",
+    "congestion-control",
+    "retransmission",
+    "contention",
+    "failure"
+  ],
+  "era": "1988",
+  "version": "4.3BSD-Tahoe (June 1988), sys/netinet/tcp_*.{c,h}; unix-history-repo tag BSD-4_3_Tahoe",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_debug.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_debug.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_debug.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_debug.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_fsm.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_fsm.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_input.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_input.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_output.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_output.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_seq.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_seq.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_subr.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_subr.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_timer.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_timer.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_timer.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_timer.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_usrreq.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_usrreq.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_var.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp_var.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcpip.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcpip.h"
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "repo": "dspinellis/unix-history-repo",
+    "tag": "BSD-4_3_Tahoe",
+    "path": "usr/src/sys/netinet/tcp_*"
+  },
+  "hashes": {
+    "tree_sha256": "fd02c4ae618544b857d1dc8a12bac1409b8af4f8618d6a439807bbed38d52ffe",
+    "n_files": 13,
+    "bytes": 99324,
+    "artifacts": [
+      {
+        "filename": "tcp.h",
+        "sha256": "70de38020628f3b90ff09badb7f8d8ca55698d54aaf706daf1babeb347e843d3",
+        "commit": null
+      },
+      {
+        "filename": "tcp_debug.c",
+        "sha256": "b640c24979b0d551cadb11bb145a1d04a359f91c49d3086421e17a54291c9508",
+        "commit": null
+      },
+      {
+        "filename": "tcp_debug.h",
+        "sha256": "d597bf3535d0a8ba6cb172bb962e58f1f3542866eb418b11055ba96bdd172398",
+        "commit": null
+      },
+      {
+        "filename": "tcp_fsm.h",
+        "sha256": "e4bcc6642d55a2f97c814a33361e8f2097d3fc1d0c457bf2aa4e55462d00e494",
+        "commit": null
+      },
+      {
+        "filename": "tcp_input.c",
+        "sha256": "300160c938e1d6988e1c9696e5a696c7df64331748b800b7a6ef3d90312c6612",
+        "commit": null
+      },
+      {
+        "filename": "tcp_output.c",
+        "sha256": "7ca10faeca908efa90324305d146987602e0a2c5dad4cb6c07989409c5f9ad81",
+        "commit": null
+      },
+      {
+        "filename": "tcp_seq.h",
+        "sha256": "9758d0aaeb07e34beaafd55e06d7312ff43f456059b48045a3924e801b7669f5",
+        "commit": null
+      },
+      {
+        "filename": "tcp_subr.c",
+        "sha256": "1055b17b23c0ad54f4eab19a07ce2b752b957fa9466b3fc0150afb891921abbd",
+        "commit": null
+      },
+      {
+        "filename": "tcp_timer.c",
+        "sha256": "1d550b1d1983338b90ff15a69738ee1f4a917be317bf0c86be14a5c95fd42131",
+        "commit": null
+      },
+      {
+        "filename": "tcp_timer.h",
+        "sha256": "d1e7a3c7d3dc9b9dc6a4d33ce51bc00c42f9175efca70162b91e3a13bc8670ff",
+        "commit": null
+      },
+      {
+        "filename": "tcp_usrreq.c",
+        "sha256": "d29fcd7f01c14601fd88ef907d8385d0d83bf03ce1648c74b0b5b724b60b319a",
+        "commit": null
+      },
+      {
+        "filename": "tcp_var.h",
+        "sha256": "9e745d34016d45958eeeff6d62c6098821f7d58fca1946d8686e1d28b77359bd",
+        "commit": null
+      },
+      {
+        "filename": "tcpip.h",
+        "sha256": "9ab2570d38a1d18ac6ebd5239f9b87c7eea2e7082e86bdb98a7fdc7e6af5aaa0",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.3-tahoe-1988",
+    "hash_list": "techne/fossils/specimens/bsd-tcp-4.3-tahoe-1988/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-4-Clause",
+    "status": "permissive (original BSD licence, advertising clause)",
+    "evidence": "file headers; Regents of the University of California"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C (BSD kernel)"
+  ],
+  "build_system": "none standalone (kernel netinet)",
+  "compiler_or_interpreter": "4.xBSD kernel build (NOT built standalone; SOURCE_ONLY)",
+  "dependencies": [
+    "the BSD kernel: mbufs, socket layer, IP"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "tcp_input() in tcp_input.c; tcp_output() in tcp_output.c; tcp_timers() in tcp_timer.c"
+  ],
+  "example": {
+    "command": "",
+    "input": "",
+    "output": ""
+  },
+  "environment": {
+    "runner": "none",
+    "note": "kernel code; preserved and hashed, not executed"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Jacobson, Congestion Avoidance and Control, SIGCOMM 1988",
+    "Karn & Partridge, Improving Round-Trip Time Estimates in Reliable Transport Protocols, SIGCOMM 1987"
+  ],
+  "human_capability_summary": {
+    "built_to": "make every sender probe for its share of a shared link and back off multiplicatively when loss signals congestion",
+    "pressure": "the 1986 congestion collapse: many senders, shared scarce links, loss as the only feedback",
+    "success_means": "aggregate throughput stays near link capacity; senders converge to a fair share; no collapse"
+  },
+  "known_human_problem_solved": "congestion control by end hosts",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "bandwidth scarcity, loss as the only congestion signal, competing flows",
+  "human_failure_condition": "the 4.2 collapse recurs; or a single sender starves others",
+  "behavioral_entry_point": "diff tcp_output.c/tcp_input.c against BSD-4_2: snd_cwnd, snd_ssthresh, the slow-start branch in tcp_input's ack processing",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "historical_version_of",
+      "to": "bsd-tcp-4.2-1983",
+      "note": "same files, redesigned under pressure"
+    },
+    {
+      "relation": "superseded",
+      "to": "bsd-tcp-4.3-reno-1990",
+      "note": "fast recovery added"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityB",
+    "historical_redesign",
+    "depth:tcp",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.3-tahoe-1988 ; tracked techne/fossils/specimens/bsd-tcp-4.3-tahoe-1988",
+    "where_it_came_from": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Tahoe/usr/src/sys/netinet/tcp.h ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "SOURCE_ONLY: 4.3BSD-Tahoe kernel netinet/tcp_* -- as above; the diff against BSD-4_2 is the redesign.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 fd02c4ae618544b8 pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "make every sender probe for its share of a shared link and back off multiplicatively when loss signals congestion"
+  },
+  "seat": "Techne"
+}

@@ -1,0 +1,128 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "pybreaker-1.2.0",
+  "canonical_name": "pybreaker 1.2.0 -- the Circuit Breaker pattern in Python (Daniel Fernandes Martins)",
+  "aliases": [
+    "pybreaker",
+    "circuit breaker"
+  ],
+  "lineage": "Nygard's Circuit Breaker (Release It!, 2007): a failure counter trips an OPEN state that fails fast for a reset timeout, then HALF-OPEN probes the dependency. pybreaker (2010-) is a compact, widely-copied Python implementation; the Java relative is Netflix Hystrix (2012, retired 2018).",
+  "domain": [
+    "retry",
+    "recovery",
+    "fault-tolerance",
+    "state-machine",
+    "distributed-systems"
+  ],
+  "era": "2010-",
+  "version": "1.2.0 (2024)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/danielfm/pybreaker/archive/refs/tags/1.2.0.tar.gz",
+        "filename": "pybreaker-1.2.0.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/danielfm/pybreaker",
+    "tag": "1.2.0"
+  },
+  "hashes": {
+    "tree_sha256": "c76f5023265bc8f7e5818353e8858aa020563eb686c95ecf5a520772e12101f5",
+    "n_files": 18,
+    "bytes": 119757,
+    "artifacts": [
+      {
+        "filename": "pybreaker-1.2.0.tar.gz",
+        "sha256": "45e588556260e0decdf577dca7d2ef65b31f04354028d27dc27a30405beef017",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\pybreaker-1.2.0",
+    "hash_list": "techne/fossils/specimens/pybreaker-1.2.0/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "none (pure python)",
+  "compiler_or_interpreter": "python 3.11 (docker python:3.11-slim)",
+  "dependencies": [
+    "none for the core; redis optional for shared state"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "pybreaker.CircuitBreaker(fail_max, reset_timeout); states CLOSED -> OPEN -> HALF_OPEN"
+  ],
+  "example": {
+    "command": "python harness: call a failing function fail_max times, observe OPEN, wait reset_timeout, observe HALF_OPEN then CLOSED",
+    "input": "a dependency that fails then heals",
+    "output": "the state trace"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Nygard, Release It!, 2007, ch. 5 (Circuit Breaker)"
+  ],
+  "human_capability_summary": {
+    "built_to": "stop a caller from pounding a failing dependency, and let it recover by probing instead of flooding",
+    "pressure": "a downstream service that fails or slows; retry storms that turn one failure into many",
+    "success_means": "fast failure while the dependency is down, automatic recovery when it heals, no cascading overload"
+  },
+  "known_human_problem_solved": "cascading failure containment in service call chains",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "partial failure of a dependency, latency, retry storms",
+  "human_failure_condition": "callers keep retrying a dead dependency until the caller itself falls over",
+  "behavioral_entry_point": "vary fail_max and reset_timeout; make the dependency heal at a chosen call; read the state transitions",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Nygard 2007",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityA",
+    "small_mechanism",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/pybreaker-1.2.0/receipts/run-pybreaker-1.2.0-20260912T214424Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\pybreaker-1.2.0 ; tracked techne/fossils/specimens/pybreaker-1.2.0",
+    "where_it_came_from": "https://github.com/danielfm/pybreaker/archive/refs/tags/1.2.0.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run pybreaker-1.2.0",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/pybreaker-1.2.0/receipts/run-pybreaker-1.2.0-20260912T214424Z.json",
+    "what_humans_used_it_for": "stop a caller from pounding a failing dependency, and let it recover by probing instead of flooding"
+  },
+  "seat": "Techne"
+}

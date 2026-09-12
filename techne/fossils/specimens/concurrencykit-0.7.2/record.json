@@ -1,0 +1,129 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "concurrencykit-0.7.2",
+  "canonical_name": "Concurrency Kit 0.7.2 -- lock-free data structures, spinlocks with backoff, hazard pointers (Samy Al Bahra)",
+  "aliases": [
+    "ck",
+    "libck"
+  ],
+  "lineage": "A C library of the classic concurrent-memory-model machinery: ck_spinlock (ticket, MCS, CLH, anderson, hclh; with ck_backoff exponential backoff), ck_ring/ck_fifo/ck_stack lock-free structures, ck_hp hazard pointers and ck_epoch safe memory reclamation (2011-). Reference rivals: liblfds, Boost.Lockfree.",
+  "domain": [
+    "concurrency",
+    "lock-free",
+    "backoff",
+    "contention",
+    "memory-reclamation"
+  ],
+  "era": "2011-",
+  "version": "0.7.2 (2024)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/concurrencykit/ck/archive/refs/tags/0.7.2.tar.gz",
+        "filename": "ck-0.7.2.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/concurrencykit/ck",
+    "tag": "0.7.2"
+  },
+  "hashes": {
+    "tree_sha256": "594921ff1c45e0f8e122f1c0e0fc0b7a963f70f59c9524b491842e1db027de52",
+    "n_files": 504,
+    "bytes": 2123987,
+    "artifacts": [
+      {
+        "filename": "ck-0.7.2.tar.gz",
+        "sha256": "568ebe0bc1988a23843fce6426602e555b7840bf6714edcdf0ed530214977f1b",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\concurrencykit-0.7.2",
+    "hash_list": "techne/fossils/specimens/concurrencykit-0.7.2/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-2-Clause",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "./configure && make; regressions/*/validate",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [
+    "pthreads; x86-64 atomics"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "include/ck_backoff.h (ck_backoff_eb: exponential backoff), include/spinlock/*.h, include/ck_ring.h, include/ck_hp.h; regressions/<module>/validate"
+  ],
+  "example": {
+    "command": "./configure && make && make -C regressions/ck_spinlock/validate && ./regressions/ck_spinlock/validate/ck_ticket 4 1",
+    "input": "N threads contending",
+    "output": "validation counts; no lost update"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "doc/ man pages in the tree; Al Bahra, Nonblocking Algorithms and Scalable Multicore Programming, ACM Queue 2013"
+  ],
+  "human_capability_summary": {
+    "built_to": "let many threads share structures without a global lock, and make contending threads back off instead of hammering a cache line",
+    "pressure": "cache-line contention, memory reordering, reclamation while readers are live",
+    "success_means": "linearizable operations under contention; no lost updates; freed memory never dereferenced"
+  },
+  "known_human_problem_solved": "scalable synchronization on multicore machines",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "resource contention (cache lines, locks), memory-model weakness, reclamation hazards",
+  "human_failure_condition": "lost updates, torn reads, use-after-free, or a convoy of spinning threads starving the holder",
+  "behavioral_entry_point": "run a spinlock validate binary with more threads than cores; switch spinlock implementation (ticket vs MCS vs anderson) and compare",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Mellor-Crummey & Scott 1991 (MCS lock); Michael 2004 (hazard pointers); Fraser 2004 (epoch reclamation)",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityA",
+    "priorityE",
+    "backoff",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/concurrencykit-0.7.2/receipts/run-concurrencykit-0.7.2-20260912T211117Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\concurrencykit-0.7.2 ; tracked techne/fossils/specimens/concurrencykit-0.7.2",
+    "where_it_came_from": "https://github.com/concurrencykit/ck/archive/refs/tags/0.7.2.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run concurrencykit-0.7.2",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/concurrencykit-0.7.2/receipts/run-concurrencykit-0.7.2-20260912T211117Z.json",
+    "what_humans_used_it_for": "let many threads share structures without a global lock, and make contending threads back off instead of hammering a cache line"
+  },
+  "seat": "Techne"
+}

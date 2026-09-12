@@ -1,0 +1,90 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "odepack-netlib",
+  "receipt_id": "run-odepack-netlib-20260912T210100Z",
+  "written_utc": "20260912T210100Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "robertson.f": "22ddb8c68b6bcf3a0907e47aefafadd7e080e1afe11bcdeb86bfe3d1a775a5da"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "a241fb44842769e5e21f24ab7b2d0731cf197f10959c1b910e0738df4b2008fc",
+  "recipe_sha256": "14e2183e56b8add8bd20e237667cc72e07f8fe812a6789fcbd603b318b188a1a",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 0,
+      "seconds": 0.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Fortran (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile ODEPACK (3 files) + Techne's Robertson driver",
+      "cmd": "gfortran -O1 -std=legacy -w -o $BODY/build/rob $HARNESS/robertson.f opkdmain.f opkda1.f opkda2.f 2>&1 | grep -iE '\\berror' | head -3; test -x $BODY/build/rob && echo built",
+      "exit": 0,
+      "seconds": 3.0,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "MF=21 (BDF, stiff, analytic Jacobian): Robertson to t=4e10",
+      "cmd": "$BODY/build/rob 21 | tail -6",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": " T =  0.4000D+08   Y =  0.530641D-04  0.212268D-09  0.999947D+00   ISTATE=  2\n T =  0.4000D+09   Y =  0.549453D-05  0.219782D-10  0.999995D+00   ISTATE=  2\n T =  0.4000D+10   Y =  0.512946D-06  0.205178D-11  0.999999D+00   ISTATE=  2\n T =  0.4000D+11   Y = -0.717056D-07 -0.286822D-12  0.100000D+01   ISTATE=  2\n NSTEP =   330  NFE =   405  NJE =    69\n RESULT OK MF=          21\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "PATHOLOGY MF=10 (Adams, non-stiff) on the same stiff problem: step budget exhausted (ISTATE=-1)",
+      "cmd": "$BODY/build/rob 10 2>&1 | tail -6",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "       taken on this call before reaching TOUT                                   \n      In above message,  I1 =       500\n      In above message,  R1 =  0.1108682443063D+00\n T =  0.1109D+00   Y =  0.995661D+00  0.357286D-04  0.430354D-02   ISTATE= -1\n ERROR HALT.. ISTATE = -1\n RESULT FAILED MF=          10  NSTEP=         500\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "a241fb44842769e5e21f24ab7b2d0731cf197f10959c1b910e0738df4b2008fc",
+  "body_preserved": true
+}

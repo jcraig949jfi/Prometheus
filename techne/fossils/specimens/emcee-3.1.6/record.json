@@ -1,0 +1,136 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "emcee-3.1.6",
+  "canonical_name": "emcee 3.1.6 -- the MCMC Hammer: affine-invariant ensemble sampler (Foreman-Mackey, Hogg, Lang, Goodman)",
+  "aliases": [
+    "emcee",
+    "ensemble sampler",
+    "stretch move"
+  ],
+  "lineage": "Markov chain Monte Carlo (Metropolis et al. 1953; Hastings 1970) via Goodman & Weare's affine-invariant ensemble 'stretch move' (2010), implemented for astronomy (2012) and used in thousands of papers. A compact, inspectable sampler: walkers, proposals, acceptance fractions, autocorrelation time.",
+  "domain": [
+    "estimation",
+    "MCMC",
+    "Bayesian-inference",
+    "Monte-Carlo",
+    "astronomy"
+  ],
+  "era": "2012-",
+  "version": "v3.1.6 (2024)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/dfm/emcee/archive/refs/tags/v3.1.6.tar.gz",
+        "filename": "emcee-3.1.6.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/dfm/emcee",
+    "tag": "v3.1.6"
+  },
+  "hashes": {
+    "tree_sha256": "76553717948133319415caed8d583fac4b4d41d56515f1761b67d59a618eeb7f",
+    "n_files": 105,
+    "bytes": 7031833,
+    "artifacts": [
+      {
+        "filename": "emcee-3.1.6.tar.gz",
+        "sha256": "1a8997b2b80c86deeafb7bd78450ef570ea58e04fe2a790f651348ba1e35f540",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\emcee-3.1.6",
+    "hash_list": "techne/fossils/specimens/emcee-3.1.6/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "pip install . (numpy)",
+  "compiler_or_interpreter": "python 3.11 (docker python:3.11-slim)",
+  "dependencies": [
+    "numpy"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "emcee.EnsembleSampler(nwalkers, ndim, log_prob).run_mcmc(); get_chain(); get_autocorr_time(); acceptance_fraction"
+  ],
+  "example": {
+    "command": "python harness: sample a 5-d correlated Gaussian, compare sample covariance to the truth",
+    "input": "a known log-density",
+    "output": "sample mean/covariance within tolerance of the analytic ORACLE; acceptance fraction in (0.2, 0.5)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Foreman-Mackey, Hogg, Lang, Goodman, emcee: The MCMC Hammer, PASP 2013",
+    "Goodman & Weare, Ensemble samplers with affine invariance, CAMCoS 2010"
+  ],
+  "human_capability_summary": {
+    "built_to": "draw samples from a posterior known only up to a constant, using an ensemble of walkers that adapts to the posterior's scale and orientation",
+    "pressure": "high-dimensional, correlated, expensive likelihoods; hand-tuned proposal scales that fail when the posterior is anisotropic",
+    "success_means": "sample moments match the target; autocorrelation time short relative to chain length"
+  },
+  "known_human_problem_solved": "posterior sampling for parameter inference",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "hidden parameters, expensive/black-box likelihood, anisotropic scales",
+  "human_failure_condition": "the chain never mixes: acceptance ~0 or ~1, autocorrelation time longer than the run, moments wrong",
+  "behavioral_entry_point": "shrink nwalkers to 2*ndim or stretch the target's condition number; watch acceptance and autocorrelation time",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Goodman & Weare 2010; Metropolis et al. 1953",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityC",
+    "estimation",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260912T214502Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260912T215619Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\emcee-3.1.6 ; tracked techne/fossils/specimens/emcee-3.1.6",
+    "where_it_came_from": "https://github.com/dfm/emcee/archive/refs/tags/v3.1.6.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run emcee-3.1.6",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260912T215619Z.json",
+    "what_humans_used_it_for": "draw samples from a posterior known only up to a constant, using an ensemble of walkers that adapts to the posterior's scale and orientation"
+  },
+  "seat": "Techne"
+}

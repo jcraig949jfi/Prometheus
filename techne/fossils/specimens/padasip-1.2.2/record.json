@@ -1,0 +1,133 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "padasip-1.2.2",
+  "canonical_name": "padasip 1.2.2 -- adaptive filters (LMS, NLMS, RLS, AP, GNGD) and adaptive system identification in Python (Matous Cejnek)",
+  "aliases": [
+    "padasip"
+  ],
+  "lineage": "Widrow & Hoff's LMS (1960; the ADALINE rule) and its descendants -- normalised LMS, recursive least squares, affine projection -- as a small library for adaptive filtering, prediction and system identification. Genuinely ADAPTIVE: weights change online in response to error. Recorded honestly as an adaptive FILTER/identifier, not a closed-loop controller (the charter's 'genuinely adaptive controller' with pinned provenance was not found this batch; see the report).",
+  "domain": [
+    "adaptation",
+    "estimation",
+    "signal-processing",
+    "online-learning",
+    "system-identification"
+  ],
+  "era": "2016-",
+  "version": "v1.2.2 (2021)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/matousc89/padasip/archive/refs/tags/v1.2.2.tar.gz",
+        "filename": "padasip-1.2.2.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/matousc89/padasip",
+    "tag": "v1.2.2"
+  },
+  "hashes": {
+    "tree_sha256": "843358e3a62ec8653536c70a7643f346053c661288287c1a303596792c371ab8",
+    "n_files": 81,
+    "bytes": 201892,
+    "artifacts": [
+      {
+        "filename": "padasip-1.2.2.tar.gz",
+        "sha256": "d0a1302312c07ba64bc907df48d4fc9ed0f9305ef4392a5788501d53a07cb58c",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\padasip-1.2.2",
+    "hash_list": "techne/fossils/specimens/padasip-1.2.2/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "pip install . (numpy)",
+  "compiler_or_interpreter": "python 3.11 (docker python:3.11-slim)",
+  "dependencies": [
+    "numpy"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "padasip.filters.FilterLMS / FilterNLMS / FilterRLS (.run(d, x), .adapt)"
+  ],
+  "example": {
+    "command": "python harness: identify an unknown 4-tap FIR plant from input/output pairs with NLMS and RLS",
+    "input": "a known plant driven by noise",
+    "output": "recovered taps within tolerance of the true plant (the ORACLE); the error trajectory"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Widrow & Hoff, Adaptive switching circuits, IRE WESCON 1960",
+    "Haykin, Adaptive Filter Theory"
+  ],
+  "human_capability_summary": {
+    "built_to": "fit a model to a system whose parameters are unknown or drifting, one sample at a time, from the error alone",
+    "pressure": "unknown/drifting plant, noise, step-size stability limits",
+    "success_means": "the weights converge to the plant's; tracking resumes after the plant changes"
+  },
+  "known_human_problem_solved": "online system identification and adaptive filtering",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "unknown or time-varying plant, noise, real-time budget",
+  "human_failure_condition": "step size too large: the weights diverge; too small: the filter cannot track the drift",
+  "behavioral_entry_point": "change the plant's taps mid-run and watch re-convergence; raise mu past the stability bound",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Widrow & Hoff 1960 (LMS / ADALINE)",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "genann",
+      "note": "the delta rule is LMS applied to a perceptron"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityD",
+    "adaptive",
+    "connectionist_lineage"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/padasip-1.2.2/receipts/run-padasip-1.2.2-20260912T214445Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\padasip-1.2.2 ; tracked techne/fossils/specimens/padasip-1.2.2",
+    "where_it_came_from": "https://github.com/matousc89/padasip/archive/refs/tags/v1.2.2.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run padasip-1.2.2",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/padasip-1.2.2/receipts/run-padasip-1.2.2-20260912T214445Z.json",
+    "what_humans_used_it_for": "fit a model to a system whose parameters are unknown or drifting, one sample at a time, from the error alone"
+  },
+  "seat": "Techne"
+}

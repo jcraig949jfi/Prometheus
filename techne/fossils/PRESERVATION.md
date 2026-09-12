@@ -36,6 +36,17 @@ The bodies themselves live under `<vault>/fossils/<id>/upstream/` (default
 `<canonical checkout>/vault/fossils`, `$TECHNE_FOSSIL_VAULT` overridable) and are gitignored.
 They survive on this host. They do NOT survive the host dying.
 
+## The mirror mechanism is built; the destination is not (2026-09-12, TECHNE-65)
+`python -m techne.fossils.harvest mirror --dest <D> [--dry-run]` copies each VERIFIED body to
+`<D>/<tree_sha256>/upstream/` (content-addressed), re-hashes the copy, and writes a tracked receipt
+under `techne/fossils/mirror/` with source hash, destination hash, bytes and a per-body status
+(COPIED_VERIFIED / ALREADY_PRESENT_VERIFIED / REFUSED_SOURCE_DRIFTED / BODY_MISSING_ON_THIS_HOST /
+COPY_DIFFERS_LEFT_AS_PARTIAL). A drifted body is never mirrored; a destination inside the repository
+is refused (bodies never enter git). Controls: techne/tests/test_fossil_isolation.py (copy+verify,
+idempotence, refusal of drift and of an in-repo destination). It has NOT been run against a real
+destination: naming one is the operator's decision. Until then THE VAULT HAS ONE HOST AS ITS
+PRESERVATION DEPENDENCY -- 90 bodies, ~1 GB, on this machine only.
+
 ## The gap, and whose call it is
 Full immutable preservation -- a specimen reconstructible if its upstream repository, an
 academic website, or a package registry disappears -- needs an off-host immutable store keyed

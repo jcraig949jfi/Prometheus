@@ -31,6 +31,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import pathlib
 import platform
 import re
@@ -227,10 +228,23 @@ def _rm_readonly(func, path, _exc):
 
 
 def _rmtree(p: pathlib.Path):
-    if sys.version_info >= (3, 12):
-        shutil.rmtree(p, onexc=_rm_readonly)
-    else:
-        shutil.rmtree(p, onerror=_rm_readonly)
+    """Destroy a directory tree that Linux builds may have filled with names Windows cannot address
+    by ordinary path (a trailing dot: the Ada sorter's "WORK."). First the extended-length prefix,
+    then, if residue remains, `wsl rm -rf` on the same directory (the runners that created the
+    names can delete them). Never returns with the directory still present."""
+    p = pathlib.Path(p)
+    target = ("\\\\?\\" + str(p.resolve())) if os.name == "nt" else str(p)
+    try:
+        if sys.version_info >= (3, 12):
+            shutil.rmtree(target, onexc=_rm_readonly)
+        else:
+            shutil.rmtree(target, onerror=_rm_readonly)
+    except OSError:
+        pass
+    if p.exists() and os.name == "nt" and shutil.which("wsl.exe"):
+        subprocess.run(["wsl.exe", "-e", "rm", "-rf", vault.to_wsl(p)], timeout=600)
+    if p.exists():
+        raise OSError("could not remove %s (residue: %s)" % (p, [x.name for x in p.rglob("*")][:5]))
 
 
 def _prune_empty_dirs(root: pathlib.Path):

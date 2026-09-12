@@ -1,0 +1,61 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "erfa-2.0.1",
+  "receipt_id": "run-erfa-2.0.1-20260912T211855Z",
+  "written_utc": "20260912T211855Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/erfa-2.0.1",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "18f011416105d6315dd709d19a22e46265109fc93bedcdfe7756280c2b8334e7",
+  "recipe_sha256": "bf890134ce4aee91230898360a3f2e83def3c2e313bb6553b07d4083aca6a7d6",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 6.3,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "configure + make",
+      "cmd": "./configure -q >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; test -f src/.libs/liberfa.a -o -f src/liberfa.la && echo built",
+      "exit": 1,
+      "seconds": 0.75,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "NO_TESTS",
+  "ok": false,
+  "tree_sha256_after": "18f011416105d6315dd709d19a22e46265109fc93bedcdfe7756280c2b8334e7",
+  "body_preserved": true
+}

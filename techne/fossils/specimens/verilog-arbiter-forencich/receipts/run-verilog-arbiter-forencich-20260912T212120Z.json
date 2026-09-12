@@ -1,0 +1,76 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "verilog-arbiter-forencich",
+  "receipt_id": "run-verilog-arbiter-forencich-20260912T212120Z",
+  "written_utc": "20260912T212120Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "tb_arbiter.v": "0e7d9412a066488e9bcb27bc6f306f91349e58e658675c25e1c66a869c9220e2"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "d4a077c09b5d6bfa8705d70a5d10e329725b33e849b67a5ce5d31652399a54ad",
+  "recipe_sha256": "3c65c5398ff8135a7e6d11690cf47fea15fb30eca66c3d4319832a8729c1bf7b",
+  "patches": [],
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V | head -1",
+      "exit": 0,
+      "seconds": 0.91,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Icarus Verilog version 11.0 (stable) ()\n"
+      },
+      "stderr": {
+        "text": "Unable to get version from \"/usr/lib/x86_64-linux-gnu/ivl/ivlpp -V\"\nUnable to get version from \"/usr/lib/x86_64-linux-gnu/ivl/ivl -V -C\"/tmp/ivrlh1a7dd803\" -C\"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf\"\"\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile arbiter + priority_encoder with Techne's testbench (two instances: round-robin and fixed-priority)",
+      "cmd": "iverilog -g2012 -o $BODY/build/sim $HARNESS/tb_arbiter.v arbiter.v priority_encoder.v 2>&1 | head -5; test -f $BODY/build/sim && echo built",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "16 cycles of all-four-requesting: grant trace and per-port counts",
+      "cmd": "vvp -n $BODY/build/sim | tail -24",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "cycle req=1111  RR grant=0001 (port 0)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0010 (port 1)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0100 (port 2)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=1000 (port 3)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0001 (port 0)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0010 (port 1)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0100 (port 2)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=1000 (port 3)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0001 (port 0)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0010 (port 1)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0100 (port 2)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=1000 (port 3)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0001 (port 0)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0010 (port 1)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=0100 (port 2)  PRIORITY grant=0001 (port 0)\ncycle req=1111  RR grant=1000 (port 3)  PRIORITY grant=0001 (port 0)\nsingle requester (port 2): RR grant=0100 PRIORITY grant=0100\nRR grants per port: 4 4 4 4\nPRIORITY grants per port: 16 0 0 0\nRESULT    OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "d4a077c09b5d6bfa8705d70a5d10e329725b33e849b67a5ce5d31652399a54ad",
+  "body_preserved": true
+}

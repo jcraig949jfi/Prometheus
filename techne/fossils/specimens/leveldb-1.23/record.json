@@ -1,0 +1,133 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "leveldb-1.23",
+  "canonical_name": "LevelDB 1.23 -- log-structured merge key-value store (Jeff Dean, Sanjay Ghemawat; Google)",
+  "aliases": [
+    "leveldb"
+  ],
+  "lineage": "LSM-tree storage (O'Neil et al. 1996) as Google built it for Chrome/IndexedDB in 2011: a write-ahead log, an in-memory memtable, sorted on-disk tables, and background compaction; RECOVERY replays the log. Ancestor of RocksDB (Facebook fork, 2012).",
+  "domain": [
+    "database",
+    "recovery",
+    "write-ahead-log",
+    "compaction",
+    "contention"
+  ],
+  "era": "2011-",
+  "version": "1.23 (2021)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/google/leveldb/archive/refs/tags/1.23.tar.gz",
+        "filename": "leveldb-1.23.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/google/leveldb",
+    "tag": "1.23"
+  },
+  "hashes": {
+    "tree_sha256": "9f24633cc601cdeb2bc7ee6edf135b093c305da050cd88f47681a7871debc983",
+    "n_files": 153,
+    "bytes": 1224794,
+    "artifacts": [
+      {
+        "filename": "leveldb-1.23.tar.gz",
+        "sha256": "9a37f8a6174f09bd622bc723b55881dc541cd50747cbd08831c2a82d620f6d76",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\leveldb-1.23",
+    "hash_list": "techne/fossils/specimens/leveldb-1.23/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C++"
+  ],
+  "build_system": "cmake",
+  "compiler_or_interpreter": "g++ 12 (docker bookworm)",
+  "dependencies": [
+    "a C++11 compiler; tests need googletest (submodule, NOT in the release tarball -- Techne's harness replaces them)"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "leveldb::DB::Open / Put / Get; db/log_reader.cc + db/db_impl.cc RecoverLogFile; db/version_set.cc compaction"
+  ],
+  "example": {
+    "command": "cmake -DLEVELDB_BUILD_TESTS=OFF .. && make leveldb; harness: write N keys, close, reopen, read back",
+    "input": "keys written before a close",
+    "output": "all keys present after reopen (log replay + table read)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "doc/impl.md, doc/log_format.md (in the tree)",
+    "O'Neil, Cheng, Gawlick, O'Neil, The Log-Structured Merge-Tree, Acta Informatica 1996"
+  ],
+  "human_capability_summary": {
+    "built_to": "absorb writes fast by appending to a log and merging later, and recover the unflushed tail of the log after a crash",
+    "pressure": "write bursts, bounded memory (memtable), background compaction competing with foreground I/O, crash mid-write",
+    "success_means": "every acknowledged write is readable after reopen; compaction keeps read cost bounded"
+  },
+  "known_human_problem_solved": "durable ordered key-value storage under heavy write load",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "write bursts, bounded memory, crash mid-write, foreground/background contention",
+  "human_failure_condition": "lost acknowledged writes after a crash, or unbounded read amplification",
+  "behavioral_entry_point": "write without closing cleanly (leave the .log) and reopen; vary write_buffer_size to force memtable flushes and compactions",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "O'Neil et al. 1996 LSM-tree",
+      "note": ""
+    },
+    {
+      "relation": "superseded",
+      "to": "RocksDB (Facebook fork 2012)",
+      "note": "human history: the fork became the mainstream LSM engine; LevelDB continues"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityA",
+    "recovery",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/leveldb-1.23/receipts/run-leveldb-1.23-20260912T211026Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\leveldb-1.23 ; tracked techne/fossils/specimens/leveldb-1.23",
+    "where_it_came_from": "https://github.com/google/leveldb/archive/refs/tags/1.23.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run leveldb-1.23",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/leveldb-1.23/receipts/run-leveldb-1.23-20260912T211026Z.json",
+    "what_humans_used_it_for": "absorb writes fast by appending to a log and merging later, and recover the unflushed tail of the log after a crash"
+  },
+  "seat": "Techne"
+}

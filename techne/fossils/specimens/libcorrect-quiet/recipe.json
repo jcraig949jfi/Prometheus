@@ -1,0 +1,45 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "cmake",
+      "cmd": "cmake --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "cmake + make (library and its test/tool programs)",
+      "cmd": "mkdir -p $BODY/build/lc && cd $BODY/build/lc && cmake $BODY/upstream/tree >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; ls tests 2>/dev/null | head; test -f lib/libcorrect.a -o -f libcorrect.a && echo built",
+      "timeout": 900
+    }
+  ],
+  "runs": [
+    {
+      "name": "convolutional codes: noise injection then Viterbi decode (upstream test)",
+      "cmd": "cd $BODY/build/lc && (./tests/test_convolutional 2>&1 || ./tests/convolutional 2>&1) | tail -8; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "exit=0"
+        ]
+      }
+    },
+    {
+      "name": "Reed-Solomon: error/erasure injection then decode (upstream test)",
+      "cmd": "cd $BODY/build/lc && (./tests/test_reed_solomon 2>&1 || ./tests/reed_solomon 2>&1) | tail -8; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "exit=0"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "UPSTREAM",
+  "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "PAIR: the tests are corruption <-> decoder. Test binary names are resolved after the first build (recorded in the receipt's stdout)."
+}

@@ -1,0 +1,148 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "biriscv-branch-predictor",
+  "canonical_name": "biRISC-V next-PC / branch prediction unit (biriscv_npc.v: BTB, bimodal or gshare, RAS; Ultra-Embedded)",
+  "aliases": [
+    "biriscv_npc",
+    "gshare",
+    "BTB"
+  ],
+  "lineage": "Dynamic branch prediction (Smith 1981 bimodal; McFarling 1993 gshare; Yeh & Patt two-level) as one Verilog module inside a small dual-issue RISC-V core: a branch target buffer, a bimodal/gshare pattern table, a return-address stack. The DECISION machinery is small and its state (counters, history) is exposed; the vault's picorv32 has no predictor at all -- this is the contrasting design point.",
+  "domain": [
+    "hardware",
+    "branch-prediction",
+    "speculation",
+    "hidden-state",
+    "verilog"
+  ],
+  "era": "2019-",
+  "version": "github.com/ultraembedded/biriscv master as of 2026-09-12 (commit in hashes); file src/core/biriscv_npc.v",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/ultraembedded/biriscv",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/ultraembedded/biriscv",
+    "file": "src/core/biriscv_npc.v"
+  },
+  "hashes": {
+    "tree_sha256": "7ba854a7912cd236c743bd857c47695486a65aa07dcb97480881c41aa85f0e8b",
+    "n_files": 91,
+    "bytes": 2946427,
+    "artifacts": [
+      {
+        "filename": "https://github.com/ultraembedded/biriscv",
+        "sha256": null,
+        "commit": "6af9c4be5a0807d368eaad5e49af52322e31d073"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\biriscv-branch-predictor",
+    "hash_list": "techne/fossils/specimens/biriscv-branch-predictor/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Verilog"
+  ],
+  "build_system": "iverilog (module + Techne testbench)",
+  "compiler_or_interpreter": "Icarus Verilog 11 (docker prometheus-fossil-hw:bookworm)",
+  "dependencies": [
+    "iverilog; src/core/biriscv_defs.v"
+  ],
+  "run_classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "module biriscv_npc #(SUPPORT_BRANCH_PREDICTION, NUM_BTB_ENTRIES, NUM_BHT_ENTRIES, GSHARE_ENABLE, RAS_ENABLE)"
+  ],
+  "example": {
+    "command": "iverilog -I src/core -o sim $HARNESS/tb_npc.v src/core/biriscv_npc.v && vvp sim",
+    "input": "a synthetic branch stream: a loop branch taken N-1 times then not-taken, repeated",
+    "output": "predicted next PC per cycle vs the actual outcome; misprediction count falls after warm-up (the trace)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-hw:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "biRISC-V README (github.com/ultraembedded/biriscv)",
+    "McFarling, Combining Branch Predictors, DEC WRL TN-36, 1993"
+  ],
+  "human_capability_summary": {
+    "built_to": "guess the next instruction address before the branch resolves, so the pipeline never waits",
+    "pressure": "pipeline depth (a wrong guess costs a flush), tiny tables, hidden program behaviour",
+    "success_means": "misprediction rate falls to a few percent on loops; the RAS predicts returns exactly"
+  },
+  "known_human_problem_solved": "speculative instruction fetch",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "hard timing bound (one guess per cycle), bounded table memory, hidden state (program control flow)",
+  "human_failure_condition": "aliasing in the pattern table makes two branches poison each other's counters",
+  "behavioral_entry_point": "shrink NUM_BHT_ENTRIES to force aliasing; toggle GSHARE_ENABLE; compare misprediction traces on the same branch stream",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Smith 1981 (bimodal); McFarling 1993 (gshare)",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "picorv32",
+      "note": "RISC-V cores: one predicts, one does not"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityH",
+    "hardware",
+    "hidden_state",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/biriscv-branch-predictor/receipts/run-biriscv-branch-predictor-20260912T211742Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/biriscv-branch-predictor/receipts/run-biriscv-branch-predictor-20260912T211906Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/biriscv-branch-predictor/receipts/run-biriscv-branch-predictor-20260912T212123Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_EMULATED",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\biriscv-branch-predictor ; tracked techne/fossils/specimens/biriscv-branch-predictor",
+    "where_it_came_from": "https://github.com/ultraembedded/biriscv ; ORIGINAL_AUTHORITATIVE_RELEASE @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run biriscv-branch-predictor",
+    "how_we_know_it_runs": "RUNNABLE_EMULATED / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/biriscv-branch-predictor/receipts/run-biriscv-branch-predictor-20260912T212123Z.json",
+    "what_humans_used_it_for": "guess the next instruction address before the branch resolves, so the pipeline never waits"
+  },
+  "seat": "Techne"
+}

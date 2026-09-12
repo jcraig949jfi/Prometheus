@@ -1,0 +1,79 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "pyportfolioopt-1.5.5",
+  "receipt_id": "run-pyportfolioopt-1.5.5-20260912T214745Z",
+  "written_utc": "20260912T214745Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/pyportfolioopt-1.5.5",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "minvol.py": "0babd59d9d59999bfeffeb5ecea4b56be23e8c30d4830a4b6041d77bacfa5c95"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "cca30e0a1098599fff465b3e1095135aebf17b69541a9d2237ef52013c23a726",
+  "recipe_sha256": "8efd3bbbc7282e8a4409384162793c563075e26f53d9cd6c9ed2a8c2add1c117",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.94,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 18.39,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "minvol (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/minvol.py",
+      "exit": 1,
+      "seconds": 19.69,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0",
+        "stdout lacks 'RESULT OK'"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "Traceback (most recent call last):\n  File \"/w/harness/minvol.py\", line 3, in <module>\n    path = (glob.glob(\"tests/resources/stock_prices.csv\") + glob.glob(\"**/stock_prices.csv\", recursive=True))[0]\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^\nIndexError: list index out of range\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "cca30e0a1098599fff465b3e1095135aebf17b69541a9d2237ef52013c23a726",
+  "body_preserved": true
+}

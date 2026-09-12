@@ -1,0 +1,141 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "tinystm-marlier",
+  "canonical_name": "TinySTM -- a lightweight word-based software transactional memory (Felber, Fetzer, Riegel, Marlier; 2007-)",
+  "aliases": [
+    "TinySTM",
+    "tinystm"
+  ],
+  "lineage": "Software transactional memory (Shavit & Touitou 1995) as the research lineage that competed with lock-based concurrency in the multicore decade: TinySTM (2007, Univ. Neuchatel / TU Dresden) uses time-based validation (Riegel), encounter- or commit-time locking, and ships micro-benchmarks (bank, intset) that count aborts/commits. The human record: STM lost the mainstream to fine-grained locks and lock-free structures, survived in Haskell/Clojure and Intel TSX -- a partly SUPERSEDED design, preserved.",
+  "domain": [
+    "concurrency",
+    "transactional-memory",
+    "contention",
+    "abort-retry",
+    "superseded-design"
+  ],
+  "era": "2007-",
+  "version": "github.com/patrickmarlier/tinystm master as of 2026-09-12 (commit in hashes; 1.0.5 lineage)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/patrickmarlier/tinystm",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/patrickmarlier/tinystm",
+    "authors": "Felber, Fetzer, Riegel, Marlier"
+  },
+  "hashes": {
+    "tree_sha256": "9fd0d198dbefbcdb02daff6b26a88bc3417cd009f8e80dcfa84275bad04f4f8a",
+    "n_files": 111,
+    "bytes": 940665,
+    "artifacts": [
+      {
+        "filename": "https://github.com/patrickmarlier/tinystm",
+        "sha256": null,
+        "commit": "02c10ccb26ef68845dc97e4a4e7fc81be02eed42"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\tinystm-marlier",
+    "hash_list": "techne/fossils/specimens/tinystm-marlier/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-2.0",
+    "status": "copyleft",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make (Makefile.common; test/bank, test/intset)",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [
+    "pthreads; its bundled atomic_ops"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "stm_init / stm_start / stm_load / stm_store / stm_commit; test/bank/bank (accounts transferring under contention)"
+  ],
+  "example": {
+    "command": "make && ./test/bank/bank -n 4 -d 2000 -a 256",
+    "input": "4 threads transferring between 256 accounts for 2 s",
+    "output": "commits, aborts, and the invariant: total balance unchanged"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Felber, Fetzer, Riegel, Dynamic Performance Tuning of Word-Based Software Transactional Memory, PPoPP 2008",
+    "Riegel, Felber, Fetzer, A Lazy Snapshot Algorithm with Eager Validation, DISC 2006"
+  ],
+  "human_capability_summary": {
+    "built_to": "let threads compose memory operations into atomic transactions that abort and retry on conflict instead of holding locks",
+    "pressure": "contention (conflicting transactions abort), memory reordering, the cost of validation",
+    "success_means": "the bank's total balance is invariant under any interleaving; aborts are bounded and retried"
+  },
+  "known_human_problem_solved": "composable atomic memory updates without locks",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "resource contention, competing writers, retry cost",
+  "human_failure_condition": "abort storms under high contention (livelock-like) or a validation bug that commits a conflicting transaction",
+  "behavioral_entry_point": "shrink the number of accounts (-a 8) with many threads to drive the abort rate up; switch the locking design flags in Makefile.common",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Shavit & Touitou 1995 (STM); Riegel 2006 (LSA)",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "concurrencykit-0.7.2",
+      "note": "rival answers to multicore synchronization: transactions vs lock-free + backoff"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityE",
+    "concurrency",
+    "superseded_design",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/tinystm-marlier/receipts/run-tinystm-marlier-20260912T211133Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/tinystm-marlier/receipts/run-tinystm-marlier-20260912T211303Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\tinystm-marlier ; tracked techne/fossils/specimens/tinystm-marlier",
+    "where_it_came_from": "https://github.com/patrickmarlier/tinystm ; ORIGINAL_AUTHORITATIVE_RELEASE @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run tinystm-marlier",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/tinystm-marlier/receipts/run-tinystm-marlier-20260912T211303Z.json",
+    "what_humans_used_it_for": "let threads compose memory operations into atomic transactions that abort and retry on conflict instead of holding locks"
+  },
+  "seat": "Techne"
+}

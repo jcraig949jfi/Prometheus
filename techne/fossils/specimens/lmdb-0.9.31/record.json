@@ -1,0 +1,128 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "lmdb-0.9.31",
+  "canonical_name": "LMDB 0.9.31 -- Lightning Memory-Mapped Database (Howard Chu, Symas / OpenLDAP)",
+  "aliases": [
+    "liblmdb",
+    "Lightning MDB"
+  ],
+  "lineage": "B+tree key-value store with single-writer/multi-reader MVCC and copy-on-write pages: crash consistency WITHOUT a write-ahead log (two meta pages, the last committed root wins). Descends from OpenLDAP's back-mdb work (2011); rival to Berkeley DB and to log-structured stores such as LevelDB.",
+  "domain": [
+    "database",
+    "recovery",
+    "contention",
+    "memory-mapped",
+    "MVCC"
+  ],
+  "era": "2011-",
+  "version": "LMDB_0.9.31 (2023)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/LMDB/lmdb/archive/refs/tags/LMDB_0.9.31.tar.gz",
+        "filename": "lmdb-LMDB_0.9.31.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/LMDB/lmdb",
+    "tag": "LMDB_0.9.31"
+  },
+  "hashes": {
+    "tree_sha256": "c4a064d6d711367624fa19b7b57c333c0e6da891ef8da31f6b24dc012c296fe0",
+    "n_files": 29,
+    "bytes": 680873,
+    "artifacts": [
+      {
+        "filename": "lmdb-LMDB_0.9.31.tar.gz",
+        "sha256": "dd70a8c67807b3b8532b3e987b0a4e998962ecc28643e1af5ec77696b081c9b0",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\lmdb-0.9.31",
+    "hash_list": "techne/fossils/specimens/lmdb-0.9.31/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "OLDAP-2.8",
+    "status": "permissive (OpenLDAP Public License)",
+    "evidence": "libraries/liblmdb/LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make (libraries/liblmdb)",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [
+    "POSIX mmap, pthreads"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "mdb_env_open / mdb_txn_begin / mdb_put / mdb_txn_commit; mtest.c .. mtest6.c drivers; mdb_stat, mdb_dump"
+  ],
+  "example": {
+    "command": "make && ./mtest && ./mtest3",
+    "input": "the shipped random put/get/del drivers",
+    "output": "verified cursor scans; a testdb/ file"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Chu, The Lightning Memory-Mapped Database (LMDB), 2012-; libraries/liblmdb/lmdb.h"
+  ],
+  "human_capability_summary": {
+    "built_to": "give readers a consistent snapshot while one writer commits, and survive a crash at any instant without replaying a log",
+    "pressure": "concurrent readers and a writer on one file; power loss mid-write; bounded memory via the OS page cache",
+    "success_means": "every reader sees a committed root; after a crash the database opens at the last committed state with no repair step"
+  },
+  "known_human_problem_solved": "crash-consistent concurrent key-value storage without a log",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "competing writers/readers, partial failure (crash mid-commit), bounded memory",
+  "human_failure_condition": "a torn write corrupts the tree, or a reader observes a half-committed page",
+  "behavioral_entry_point": "kill the process between mdb_put and mdb_txn_commit (or run mtest with a small map size) and reopen: the previous root is what comes back",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "leveldb-1.23",
+      "note": "rival designs for the same problem: copy-on-write B+tree vs log-structured merge"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityA",
+    "recovery",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/lmdb-0.9.31/receipts/run-lmdb-0.9.31-20260912T210038Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\lmdb-0.9.31 ; tracked techne/fossils/specimens/lmdb-0.9.31",
+    "where_it_came_from": "https://github.com/LMDB/lmdb/archive/refs/tags/LMDB_0.9.31.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run lmdb-0.9.31",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/lmdb-0.9.31/receipts/run-lmdb-0.9.31-20260912T210038Z.json",
+    "what_humans_used_it_for": "give readers a consistent snapshot while one writer commits, and survive a crash at any instant without replaying a log"
+  },
+  "seat": "Techne"
+}

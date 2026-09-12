@@ -1,0 +1,130 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "cobol-programming-course-omp",
+  "canonical_name": "COBOL Programming Course (Open Mainframe Project / IBM, 2020-): CBL0001..CBL0014, PAYROL00 -- real mainframe COBOL with EBCDIC packed-decimal data, run under GnuCOBOL 3",
+  "aliases": [
+    "cobol-programming-course",
+    "CBL0001",
+    "PAYROL00"
+  ],
+  "lineage": "The business-computing culture as it still runs: fixed-format COBOL (IDENTIFICATION/ENVIRONMENT/DATA/PROCEDURE divisions, PICTURE clauses, COMP-3 packed decimal, FD/SELECT/ASSIGN to JCL DDNAMEs), reading a 170-byte fixed-record EBCDIC account file and writing a formatted report. Written for z/OS; here compiled by GnuCOBOL 3.1.2 with DDNAME-to-file mapping through the environment. Chosen after the NIST COBOL-85 validation suite (newcob.val) proved UNAVAILABLE at its origin (see the batch report: ORIGIN_UNAVAILABLE).",
+  "domain": [
+    "cobol",
+    "business-computing",
+    "batch-processing",
+    "legacy-culture",
+    "record-io"
+  ],
+  "era": "1959- (COBOL); 2020- (course)",
+  "version": "github.com/openmainframeproject/cobol-programming-course master as of 2026-09-12 (commit in hashes); Course #2 Labs/cbl + Labs/data",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/openmainframeproject/cobol-programming-course",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/openmainframeproject/cobol-programming-course",
+    "path": "COBOL Programming Course #2 - Learning COBOL/Labs"
+  },
+  "hashes": {
+    "tree_sha256": "0a6956ecb5b2776117d325c6e64ed657fb38ca8fd29e2991ce27396f21c6eb40",
+    "n_files": 360,
+    "bytes": 36412318,
+    "artifacts": [
+      {
+        "filename": "https://github.com/openmainframeproject/cobol-programming-course",
+        "sha256": null,
+        "commit": "1f037d24326124f4f2c5cd2d31e5220ceb549580"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\cobol-programming-course-omp",
+    "hash_list": "techne/fossils/specimens/cobol-programming-course-omp/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "CC-BY-4.0",
+    "status": "permissive (attribution)",
+    "evidence": "LICENSE; SPDX header in each program"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "COBOL (IBM Enterprise COBOL dialect, fixed format)"
+  ],
+  "build_system": "cobc -x (GnuCOBOL)",
+  "compiler_or_interpreter": "GnuCOBOL 3.1.2 (docker prometheus-fossil-legacy:bookworm)",
+  "dependencies": [
+    "GnuCOBOL; the EBCDIC data file Labs/data/data (170-byte fixed records, COMP-3 fields)"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "Labs/cbl/CBL0001.cobol (read ACCTREC, write PRTLINE); CBL0002..CBL0014 (headers, totals, conditionals, PERFORM); PAYROL00.cobol; SRCHBIN/SRCHSER (SEARCH ALL vs SEARCH)"
+  ],
+  "example": {
+    "command": "cobc -x -free? no: fixed format; cobc -x CBL0001.cobol; DD_ACCTREC=../data/data DD_PRTLINE=out.txt ./CBL0001",
+    "input": "the 45-record EBCDIC account file",
+    "output": "a report whose packed-decimal limits/balances format as $ amounts (encoding-independent) while EBCDIC names appear untranslated -- recorded as such"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-legacy:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Open Mainframe Project, COBOL Programming Course (the course PDF in the tree)",
+    "ISO/IEC 1989:2014 (COBOL)"
+  ],
+  "human_capability_summary": {
+    "built_to": "process fixed-format business records -- accounts, balances, limits, payroll -- in batch and print formatted reports, exactly as mainframe shops have since the 1960s",
+    "pressure": "decades-old data formats (EBCDIC, packed decimal) that must keep working; auditability of money arithmetic (decimal, not float)",
+    "success_means": "every record read, every amount formatted exactly (PICTURE editing), totals correct to the cent"
+  },
+  "known_human_problem_solved": "batch business record processing",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "format longevity, exact decimal arithmetic, regulatory auditability",
+  "human_failure_condition": "a truncated or mis-edited amount in a financial report",
+  "behavioral_entry_point": "run CBL0006 (conditional totals) and CBL0033 on the same data; corrupt one COMP-3 field in a copy of the data and watch the report",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "batch05",
+    "priorityG",
+    "legacy_culture:cobol",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/cobol-programming-course-omp/receipts/run-cobol-programming-course-omp-20260912T213713Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/cobol-programming-course-omp/receipts/run-cobol-programming-course-omp-20260912T214221Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\cobol-programming-course-omp ; tracked techne/fossils/specimens/cobol-programming-course-omp",
+    "where_it_came_from": "https://github.com/openmainframeproject/cobol-programming-course ; ORIGINAL_AUTHORITATIVE_RELEASE @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run cobol-programming-course-omp",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/cobol-programming-course-omp/receipts/run-cobol-programming-course-omp-20260912T214221Z.json",
+    "what_humans_used_it_for": "process fixed-format business records -- accounts, balances, limits, payroll -- in batch and print formatted reports, exactly as mainframe shops have since the 1960s"
+  },
+  "seat": "Techne"
+}

@@ -1,0 +1,41 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "sbcl",
+      "cmd": "sbcl --version"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "GPS (means-ends analysis) solves the book's 'drive son to school' problem",
+      "cmd": "sbcl --script $HARNESS/run_gps.lisp 2>&1 | tail -15",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "DRIVE-SON-TO-SCHOOL",
+          "SHOP-INSTALLS-BATTERY"
+        ]
+      }
+    },
+    {
+      "name": "pattern matcher + unifier (the substrate of ELIZA and the Prolog interpreter)",
+      "cmd": "sbcl --script $HARNESS/run_patmatch.lisp 2>&1 | tail -8",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "VACATION"
+        ],
+        "stdout_regex": "\\?X"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: the book's printed GPS plan (chapter 4). Programs loaded unmodified from lisp/."
+}

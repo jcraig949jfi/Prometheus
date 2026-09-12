@@ -1,0 +1,139 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "py-vollib-lets-be-rational",
+  "canonical_name": "py_vollib + py_lets_be_rational -- Black-Scholes(-Merton) pricing and Jaeckel's 'Let's Be Rational' implied volatility (vollib)",
+  "aliases": [
+    "py_vollib",
+    "lets_be_rational",
+    "implied volatility"
+  ],
+  "lineage": "Option pricing (Black & Scholes 1973; Merton 1973) and the inverse problem -- implied volatility -- solved to machine precision in two iterations by Peter Jaeckel's 'Let's Be Rational' (2013/2015), a precision-engineering algorithm (rational approximations per branch, careful handling of extreme moneyness). vollib wraps Jaeckel's reference C++ as Python (py_lets_be_rational is the translation).",
+  "domain": [
+    "finance",
+    "option-pricing",
+    "root-finding",
+    "precision",
+    "volatility"
+  ],
+  "era": "1973 (model); 2015 (algorithm); 2017- (package)",
+  "version": "github.com/vollib/py_vollib master as of 2026-09-12 (commit in hashes); py_lets_be_rational from PyPI at run time (recorded)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/vollib/py_vollib",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/vollib/py_vollib"
+  },
+  "hashes": {
+    "tree_sha256": "b0220057275c417bd1ac94a20829fe481c80bfb9beedb5cd50ef21810de2bb9e",
+    "n_files": 249,
+    "bytes": 13188465,
+    "artifacts": [
+      {
+        "filename": "https://github.com/vollib/py_vollib",
+        "sha256": null,
+        "commit": "11f2058f709328339e3906d99cb04ff41af97776"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\py-vollib-lets-be-rational",
+    "hash_list": "techne/fossils/specimens/py-vollib-lets-be-rational/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "pip install . (numpy, scipy, py_lets_be_rational)",
+  "compiler_or_interpreter": "python 3.11 (docker python:3.11-slim)",
+  "dependencies": [
+    "py_lets_be_rational",
+    "numpy",
+    "scipy",
+    "simplejson"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "py_vollib.black_scholes.black_scholes(flag, S, K, t, r, sigma); py_vollib.black_scholes.implied_volatility.implied_volatility(price, S, K, t, r, flag)"
+  ],
+  "example": {
+    "command": "python harness: price a grid of options at known sigma, invert, compare",
+    "input": "a grid over moneyness/maturity/sigma",
+    "output": "max |sigma_implied - sigma| ~ 1e-12 (ORACLE: the round trip), including deep OTM cases"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Jaeckel, Let's Be Rational, Wilmott 2015",
+    "Black & Scholes, The Pricing of Options and Corporate Liabilities, JPE 1973"
+  ],
+  "human_capability_summary": {
+    "built_to": "price European options and, more demandingly, recover the volatility a market price implies, to full double precision, in constant time",
+    "pressure": "markets quoting prices at extreme strikes where naive root-finders lose all digits or fail to converge; latency budgets",
+    "success_means": "the round trip price -> implied vol -> price closes to ~1e-12 across the grid"
+  },
+  "known_human_problem_solved": "option pricing and implied volatility",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "numerical ill-conditioning at extreme moneyness, latency",
+  "human_failure_condition": "the inversion fails or returns a volatility off by percent for deep out-of-the-money options",
+  "behavioral_entry_point": "push strikes to 5-10 standard deviations and maturities to days; compare against a bisection reference",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Black & Scholes 1973; Jaeckel 2015",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityJ",
+    "finance",
+    "precision",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/py-vollib-lets-be-rational/receipts/run-py-vollib-lets-be-rational-20260912T214612Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/py-vollib-lets-be-rational/receipts/run-py-vollib-lets-be-rational-20260912T215734Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\py-vollib-lets-be-rational ; tracked techne/fossils/specimens/py-vollib-lets-be-rational",
+    "where_it_came_from": "https://github.com/vollib/py_vollib ; ORIGINAL_AUTHORITATIVE_RELEASE @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run py-vollib-lets-be-rational",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/py-vollib-lets-be-rational/receipts/run-py-vollib-lets-be-rational-20260912T215734Z.json",
+    "what_humans_used_it_for": "price European options and, more demandingly, recover the volatility a market price implies, to full double precision, in constant time"
+  },
+  "seat": "Techne"
+}

@@ -1,0 +1,36 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/particles-0.4",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "timeout": 1500
+    }
+  ],
+  "runs": [
+    {
+      "name": "pf_vs_kalman (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/pf_vs_kalman.py",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESULT OK"
+        ]
+      },
+      "timeout": 2400
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: on a linear-Gaussian state-space model the bootstrap particle filter's filtering means must agree with the exact Kalman filter to Monte-Carlo error (RMSE < 0.1 with N=5000 particles)."
+}

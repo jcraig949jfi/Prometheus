@@ -1,0 +1,49 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-legacy:bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "bas (Haardt 2.5) and bwbasic",
+      "cmd": "which bas; bwbasic --version 2>&1 | head -1"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "HAMURABI under Bas 2.5: a scripted starvation policy (feed 500 of the 2000 bushels 100 people need) -> the program's own impeachment end state",
+      "cmd": "bas hammurabi.bas < $HARNESS/hamurabi_policy.txt 2>&1 | tr -d '\\r' | grep -v '^\\s*$' | tail -22",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "HAMURABI:  I BEG TO REPORT TO YOU",
+          "PEOPLE STARVED"
+        ],
+        "stdout_regex": "(NATIONAL FINK|IMPEACHED|SO LONG FOR NOW)"
+      }
+    },
+    {
+      "name": "HAMURABI under bwBASIC 2.20: the same program, a later interpreter -- runs, but passes PRINT:PRINT lines to the shell and mis-evaluates line 990 (dialect gap recorded)",
+      "cmd": "bwbasic hammurabi.bas < $HARNESS/hamurabi_policy.txt 2>&1 | tr -d '\\r' | grep -E 'HAMURABI|FINK|IMPEACHED|ERROR in line|sh: 1:' | head -8",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(HAMURABI|FINK|IMPEACHED)"
+      }
+    },
+    {
+      "name": "SUPER STAR TREK under Bas 2.5: DIALECT REFUSAL at line 4060 (the 1978 listing's crunched keyword 'TOQ1+1'); recorded, not patched",
+      "cmd": "bas superstartrek.bas < $HARNESS/startrek_moves.txt 2>&1 | tr -d '\\r' | grep -v '^\\s*$' | tail -4",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "line 4060"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Two later interpreters, one fossil. Bas 2.5 (pinned source in the legacy world) runs HAMURABI faithfully; bwBASIC 2.20 runs it with dialect errors. SUPER STAR TREK does not parse under either (Bas: crunched 'TOQ1+1' at 4060; bwBASIC: apostrophe inside a string at 6170): its listing is preserved and hashed, its run status is this refusal. Nothing in the listings was edited. The scripted policy deliberately starves the city: the impeachment is the program's own end state under scarcity."
+}

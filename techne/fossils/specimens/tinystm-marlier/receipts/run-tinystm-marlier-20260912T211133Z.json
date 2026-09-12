@@ -1,0 +1,146 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "tinystm-marlier",
+  "receipt_id": "run-tinystm-marlier-20260912T211133Z",
+  "written_utc": "20260912T211133Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "9fd0d198dbefbcdb02daff6b26a88bc3417cd009f8e80dcfa84275bad04f4f8a",
+  "recipe_sha256": "071221529c8e49a4a7b74ac1efb07449a372b8e5b7fa16a1e51b4625c94d8a12",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1; nproc",
+      "exit": 0,
+      "seconds": 0.74,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make the STM library and the bank benchmark",
+      "cmd": "make -s 2>&1 | grep -iE '\\berror' | head -3; make -s -C test/bank 2>&1 | grep -iE '\\berror' | head -3; test -x test/bank/bank && echo built",
+      "exit": 0,
+      "seconds": 3.09,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "bank: 4 threads transferring among 256 accounts for 1 s (invariant: total balance unchanged)",
+      "cmd": "./test/bank/bank -n 4 -d 1000 -a 256 2>&1 | tail -12",
+      "exit": 0,
+      "seconds": 1.74,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(commit|abort|transfer|total)/"
+      ],
+      "stdout": {
+        "text": "  50th perc.  : 270.000000\n  90th perc.  : 540.000000\n  95th perc.  : 630.000000\nAtomic block  : 1\n  #samples    : 1936\n  Mean        : 2879.185950\n  Variance    : 227469.965405\n  Min         : 1935.000000\n  Max         : 5985.000000\n  50th perc.  : 2835.000000\n  90th perc.  : 3465.000000\n  95th perc.  : 3780.000000\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "contention knob: 8 threads on 8 accounts (abort rate up)",
+      "cmd": "./test/bank/bank -n 8 -d 1000 -a 8 2>&1 | tail -12",
+      "exit": 0,
+      "seconds": 1.76,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "  50th perc.  : 1260.000000\n  90th perc.  : 2250.000000\n  95th perc.  : 2565.000000\nAtomic block  : 1\n  #samples    : 697\n  Mean        : 671.962697\n  Variance    : 87848.544584\n  Min         : 90.000000\n  Max         : 2250.000000\n  50th perc.  : 630.000000\n  90th perc.  : 1035.000000\n  95th perc.  : 1215.000000\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "lib/libstm.a",
+      "sha256": "e93d2b91eec9e3a4a5908e219a1d59b39c26c8e03b8f8690b48d80df94527f55",
+      "bytes": 83512
+    },
+    {
+      "path": "src/mod_ab.o",
+      "sha256": "714526380e01ebf876365d9ec33c0cf0b333d68a48df9a83682a9c0b2d3c78d5",
+      "bytes": 8416
+    },
+    {
+      "path": "src/mod_cb_mem.o",
+      "sha256": "23e6fa05f441ee89da979a554959218ee592d78026ed2bb3f1a2272e2efc79dc",
+      "bytes": 9864
+    },
+    {
+      "path": "src/mod_log.o",
+      "sha256": "366a88578e1f56aec9cc0d9d5a66b8ad8dcfb10ad1beb9d32ab8dde9ac542da8",
+      "bytes": 13312
+    },
+    {
+      "path": "src/mod_order.o",
+      "sha256": "8b260a10b72b65927126e5a4c0d7310f7fddc732dbe8b643438692e0c3c9f8d4",
+      "bytes": 3728
+    },
+    {
+      "path": "src/mod_print.o",
+      "sha256": "8bf3dc57c739980fcb4c2815a485b8d66463d01a4eea07631077469c9d95fda8",
+      "bytes": 3192
+    },
+    {
+      "path": "src/mod_stats.o",
+      "sha256": "beda8cea3408d9427c5461921e4510de4f2820cad66347f627f1f6044d0c4c79",
+      "bytes": 5872
+    },
+    {
+      "path": "src/stm.o",
+      "sha256": "cf8af338c5c356e7ab3c8c49b75d1cc0608caea183c92c9af6d0f68a4d2ffb9e",
+      "bytes": 27680
+    },
+    {
+      "path": "src/wrappers.o",
+      "sha256": "f33c8af12afd0e58f3fe097b15b222a9d576f2effde7b62786a7fcfefdfb3cd0",
+      "bytes": 8672
+    },
+    {
+      "path": "test/bank/bank",
+      "sha256": "fd5b81f5be1dccfc25967a0782cadf967d633e8dc14b408633823978a66386ec",
+      "bytes": 54544
+    },
+    {
+      "path": "test/bank/bank.o",
+      "sha256": "bfde6d0fc73d31e1f913f58bd7768bb2ff2be5d65ecfba3a378b61e0efd22220",
+      "bytes": 24928
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false,
+  "tree_sha256_after": "9fd0d198dbefbcdb02daff6b26a88bc3417cd009f8e80dcfa84275bad04f4f8a",
+  "body_preserved": true
+}

@@ -1,0 +1,36 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/sgp4-2.23",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [
+    {
+      "name": "apt build-essential + pip install the acquired source (+ pinned deps)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y build-essential >/dev/null 2>&1; pip install -q numpy . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "timeout": 1200
+    }
+  ],
+  "runs": [
+    {
+      "name": "verify (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y build-essential >/dev/null 2>&1; pip install -q numpy . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/verify.py",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESULT OK"
+        ]
+      },
+      "timeout": 2100
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Runs the package's own test suite (Vallado's tcppver.out verification vectors) and prints the count. The C++ accelerator is compiled (build-essential installed in the run container, recorded)."
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "compact-4.2bsd-1983",
+  "receipt_id": "run-compact-4.2bsd-1983-20260912T211434Z",
+  "written_utc": "20260912T211434Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d",
+  "recipe_sha256": "3d6129fe6f30d29eb354da9ae075e94a2eb210a0bf53632737c3060302013081",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 7.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "ONE container: apt gcc-multilib + libc6-dev-i386 (the 1983 code assumes ILP32: undeclared char *malloc() is implicit int and truncates pointers on x86-64 -> segfault observed), then compile as 32-bit STATIC K&R (-m32 -static -std=gnu89 -fcommon -w; static so the binary runs in the next container without lib32; -Dvax selects the little-endian byte order the source keys on the VAX/PDP-11 symbols; no source change). compact(1) exits 1 after a successful run (1983 convention), so the round trip is judged by cmp, not by its exit status",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y gcc-multilib libc6-dev-i386 >/dev/null 2>&1; gcc -m32 -static -Dvax -std=gnu89 -fcommon -w -o $BODY/build/compact compact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; gcc -m32 -static -Dvax -std=gnu89 -fcommon -w -o $BODY/build/uncompact uncompact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; test -x $BODY/build/compact && test -x $BODY/build/uncompact && echo built",
+      "exit": 0,
+      "seconds": 8.58,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "round trip a 200 KB text sample; report the ratio",
+      "cmd": "cd $BODY/build && awk 'BEGIN{for(i=0;i<4000;i++) printf(\"the quick brown fox %d jumps over the lazy dog %d\\n\", i, i*7)}' > sample && cp sample s.txt && ./compact s.txt; ls -l s.txt.C | awk '{print \"compacted bytes:\", $5}'; ./uncompact s.txt.C; cmp s.txt sample && echo ROUNDTRIP OK && echo original bytes: $(wc -c < sample)",
+      "exit": 0,
+      "seconds": 0.98,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "compacted bytes: 131897\nROUNDTRIP OK\noriginal bytes: 217301\n"
+      },
+      "stderr": {
+        "text": "s.txt:  Compression :   39.31%\ns.txt.C uncompacted to s.txt\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d",
+  "body_preserved": true
+}

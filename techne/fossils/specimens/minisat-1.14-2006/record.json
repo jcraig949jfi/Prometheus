@@ -1,0 +1,131 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "minisat-1.14-2006",
+  "canonical_name": "MiniSat 1.14 (2006) -- the small CDCL solver in its pre-2.0 form (Een & Sorensson)",
+  "aliases": [
+    "MiniSat v1.14",
+    "MiniSat_v1.14.2006-Aug-29"
+  ],
+  "lineage": "SAT lineage, the PREDECESSOR of the vault's minisat-2.2.0: 1.14 is the version described in 'An Extensible SAT-solver' (SAT 2003) as it stood in 2006 -- ~600 lines of core, before 2.0's rewrite (SimpSolver, new restart/reduce policies). Beside zchaff-2007 (the rival it displaced) and 2.2.0 (its successor) the vault holds the transition.",
+  "domain": [
+    "SAT",
+    "search",
+    "CDCL",
+    "predecessor"
+  ],
+  "era": "2003-2006",
+  "version": "MiniSat_v1.14.2006-Aug-29.src.zip (minisat.se/downloads)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "http://minisat.se/downloads/MiniSat_v1.14.2006-Aug-29.src.zip",
+        "filename": "MiniSat_v1.14.2006-Aug-29.src.zip"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "publisher": "minisat.se (Een & Sorensson)"
+  },
+  "hashes": {
+    "tree_sha256": "e98aa45b9bfa07254073a643dd74e657bde052a6846da76f02849501e2400bcf",
+    "n_files": 13,
+    "bytes": 111312,
+    "artifacts": [
+      {
+        "filename": "MiniSat_v1.14.2006-Aug-29.src.zip",
+        "sha256": "51204648e6e35d7f53c3bb8753e1e4171e6268fe94e3a83caa6a7b16c0d4c14c",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\minisat-1.14-2006",
+    "hash_list": "techne/fossils/specimens/minisat-1.14-2006/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE in the zip"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C++ (2006)"
+  ],
+  "build_system": "make",
+  "compiler_or_interpreter": "g++ 4.9 (docker gcc:4.9 -- the preserved historical toolchain used for 2.2.0) or g++ 12 (recorded)",
+  "dependencies": [
+    "zlib (for gzipped CNF input)"
+  ],
+  "run_classification": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "minisat <cnf>; Solver.C (the CDCL core), Main.C"
+  ],
+  "example": {
+    "command": "make rs; ./minisat_static $HARNESS/sat.cnf",
+    "input": "the vault's small SAT/UNSAT CNFs",
+    "output": "SATISFIABLE / UNSATISFIABLE (ORACLE: agreement with 2.2.0, picosat, zchaff)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "gcc:4.9"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Een & Sorensson, An Extensible SAT-solver, SAT 2003"
+  ],
+  "human_capability_summary": {
+    "built_to": "be the smallest complete CDCL solver competitive with the large ones, so others could extend it",
+    "pressure": "the SAT competitions; the size and opacity of Chaff-era solvers",
+    "success_means": "correct SAT/UNSAT; extensibility that made it the base of a generation of solvers"
+  },
+  "known_human_problem_solved": "extensible SAT solving",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "combinatorial explosion, competition, code complexity",
+  "human_failure_condition": "a wrong answer; a heuristic regression versus rivals",
+  "behavioral_entry_point": "compare decisions/conflicts on one CNF across minisat 1.14, 2.2.0 and zchaff",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "historical_version_of",
+      "to": "minisat-2.2.0",
+      "note": "1.14 (2006) -> 2.2.0 (2010)"
+    },
+    {
+      "relation": "superseded",
+      "to": "zchaff-2007",
+      "note": "direction: MiniSat superseded zChaff (recorded on both records)"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "depth:sat",
+    "predecessor",
+    "historical_version"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/minisat-1.14-2006/receipts/run-minisat-1.14-2006-20260912T211731Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\minisat-1.14-2006 ; tracked techne/fossils/specimens/minisat-1.14-2006",
+    "where_it_came_from": "http://minisat.se/downloads/MiniSat_v1.14.2006-Aug-29.src.zip ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run minisat-1.14-2006",
+    "how_we_know_it_runs": "RUNNABLE_HISTORICAL_TOOLCHAIN / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/minisat-1.14-2006/receipts/run-minisat-1.14-2006-20260912T211731Z.json",
+    "what_humans_used_it_for": "be the smallest complete CDCL solver competitive with the large ones, so others could extend it"
+  },
+  "seat": "Techne"
+}

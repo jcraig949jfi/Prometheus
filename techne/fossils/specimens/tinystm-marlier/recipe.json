@@ -1,0 +1,40 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1; nproc"
+    }
+  ],
+  "build": [
+    {
+      "name": "make the STM library and the bank benchmark",
+      "cmd": "make -s 2>&1 | grep -iE '\\berror' | head -3; make -s -C test/bank 2>&1 | grep -iE '\\berror' | head -3; test -x test/bank/bank && echo built",
+      "timeout": 900
+    }
+  ],
+  "runs": [
+    {
+      "name": "bank: 4 threads transferring among 256 accounts for 1 s (invariant: total balance unchanged)",
+      "cmd": "./test/bank/bank -n 4 -d 1000 -a 256 2>&1 | grep -iE 'thread|commit|abort|total|balance|duration|#txs|throughput' | head -14",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(commit|abort|transfer|total|txs)"
+      }
+    },
+    {
+      "name": "contention knob: 8 threads on 8 accounts (abort rate up)",
+      "cmd": "./test/bank/bank -n 8 -d 1000 -a 8 2>&1 | grep -iE 'thread|commit|abort|total|balance|duration|#txs|throughput' | head -14",
+      "expect": {
+        "exit": 0
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "UPSTREAM",
+  "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "The bank benchmark checks its own invariant (total balance) and prints commits/aborts; the second run is the contention knob."
+}

@@ -1,0 +1,139 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "spin-pathfinder-priority-inversion-1997",
+  "canonical_name": "Mars Pathfinder priority inversion (1997) as Holzmann's Promela model, checked with SPIN 6.5.2",
+  "aliases": [
+    "pathfinder.pml",
+    "Pathfinder reset bug"
+  ],
+  "lineage": "A REAL historical failure: the Mars Pathfinder lander (1997) suffered repeated system resets because a low-priority meteorological task held a mutex needed by the high-priority bus-management task while a medium-priority task starved it -- classic priority inversion under VxWorks, fixed by enabling priority inheritance. Holzmann's Promela model (Examples/pathfinder.pml in the SPIN distribution) reproduces the invalid end state (deadlock) and the fix. The failing model is preserved AS FAILING; SPIN is the instrument.",
+  "domain": [
+    "concurrency",
+    "scheduling",
+    "priority-inversion",
+    "deadlock",
+    "failure",
+    "model-checking"
+  ],
+  "era": "1997 (event); model in SPIN distributions since the 2000s",
+  "version": "Spin version-6.5.2 tarball, Examples/pathfinder.pml (same artifact as spin-6.5.2-holzmann)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/nimble-code/Spin/archive/refs/tags/version-6.5.2.tar.gz",
+        "filename": "Spin-version-6.5.2.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/nimble-code/Spin",
+    "tag": "version-6.5.2",
+    "file": "Examples/pathfinder.pml"
+  },
+  "hashes": {
+    "tree_sha256": "30afd80d875d786f950a59d0ccbac8b19eebc1e2c5c4138f678fc3139cd15de5",
+    "n_files": 171,
+    "bytes": 13505633,
+    "artifacts": [
+      {
+        "filename": "Spin-version-6.5.2.tar.gz",
+        "sha256": "e46a3bd308c4cd213cc466a8aaecfd5cedc02241190f3cb9a1d1b87e5f37080a",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\spin-pathfinder-priority-inversion-1997",
+    "hash_list": "techne/fossils/specimens/spin-pathfinder-priority-inversion-1997/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "LICENSE in the Spin tree"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Promela",
+    "C (SPIN)"
+  ],
+  "build_system": "make (Src/) then spin -a + gcc pan.c",
+  "compiler_or_interpreter": "SPIN 6.5.2 + gcc 12 (docker bookworm)",
+  "dependencies": [
+    "bison (yacc) for SPIN's parser"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "spin -a Examples/pathfinder.pml; gcc -o pan pan.c; ./pan  -> 'invalid end state' with the failing schedule; spin -t -p replays it"
+  ],
+  "example": {
+    "command": "cd Src && make; cd ../Examples && ../Src/spin -a pathfinder.pml && gcc -o pan pan.c && ./pan",
+    "input": "the model with priority inheritance off",
+    "output": "pan: invalid end state (system deadlock); the trail shows the inversion"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Holzmann, The SPIN Model Checker, 2003 (the Pathfinder example)",
+    "Reeves, What really happened on Mars?, JPL 1997 (the incident account)",
+    "Sha, Rajkumar, Lehoczky, Priority Inheritance Protocols, IEEE TC 1990"
+  ],
+  "human_capability_summary": {
+    "built_to": "share a resource between tasks of different priority on a real-time scheduler without the high-priority task being blocked indefinitely",
+    "pressure": "hard deadlines (the watchdog resets the system), a shared bus with a mutex, three priority levels competing for the CPU",
+    "success_means": "the high-priority task always gets the mutex within its deadline; the human record: without priority inheritance it did not, and the spacecraft reset"
+  },
+  "known_human_problem_solved": "real-time mutual exclusion across priority levels",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "hard timing bounds, resource contention across priorities, a watchdog that treats delay as failure",
+  "human_failure_condition": "priority inversion: the medium task runs, the low task holds the lock, the high task misses its deadline; the watchdog resets the lander",
+  "behavioral_entry_point": "toggle the priority-inheritance option in pathfinder.pml (the model's own switch) and re-run pan: deadlock present vs absent",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "derived_from",
+      "to": "spin-6.5.2-holzmann",
+      "note": "the same tarball; this specimen is the failing model, that one is the checker"
+    },
+    {
+      "relation": "algorithm_from",
+      "to": "Sha, Rajkumar, Lehoczky 1990 (the fix: priority inheritance)",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityB",
+    "pathology",
+    "real_historical_failure",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/spin-pathfinder-priority-inversion-1997/receipts/run-spin-pathfinder-priority-inversion-1997-20260912T211155Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\spin-pathfinder-priority-inversion-1997 ; tracked techne/fossils/specimens/spin-pathfinder-priority-inversion-1997",
+    "where_it_came_from": "https://github.com/nimble-code/Spin/archive/refs/tags/version-6.5.2.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run spin-pathfinder-priority-inversion-1997",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/spin-pathfinder-priority-inversion-1997/receipts/run-spin-pathfinder-priority-inversion-1997-20260912T211155Z.json",
+    "what_humans_used_it_for": "share a resource between tasks of different priority on a real-time scheduler without the high-priority task being blocked indefinitely"
+  },
+  "seat": "Techne"
+}

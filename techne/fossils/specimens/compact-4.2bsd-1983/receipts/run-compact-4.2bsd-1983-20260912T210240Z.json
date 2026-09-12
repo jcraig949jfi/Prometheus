@@ -1,0 +1,77 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "compact-4.2bsd-1983",
+  "receipt_id": "run-compact-4.2bsd-1983-20260912T210240Z",
+  "written_utc": "20260912T210240Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d",
+  "recipe_sha256": "f11ea95ca353aa7623036bbe53dc2b010fb11b17f9d6e4ecf2b22f773ef6f673",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 7.97,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile the 1983 K&R sources with modern gcc in gnu89 mode (accommodations: -fcommon -w; no source change)",
+      "cmd": "gcc -std=gnu89 -fcommon -w -o $BODY/build/compact compact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; gcc -std=gnu89 -fcommon -w -o $BODY/build/uncompact uncompact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; test -x $BODY/build/compact && test -x $BODY/build/uncompact && echo built",
+      "exit": 0,
+      "seconds": 1.15,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "round trip a 200 KB text sample; report the ratio",
+      "cmd": "cd $BODY/build && python3 -c 1 2>/dev/null; awk 'BEGIN{for(i=0;i<4000;i++) printf(\"the quick brown fox %d jumps over the lazy dog %d\\n\", i, i*7)}' > sample && cp sample s.txt && ./compact s.txt && ls -l s.txt.C | awk '{print \"compacted bytes:\", $5}' && ./uncompact s.txt.C && cmp s.txt sample && echo ROUNDTRIP OK && wc -c < sample",
+      "exit": 139,
+      "seconds": 0.89,
+      "ok": false,
+      "why_not": [
+        "exit 139 != expected 0",
+        "stdout lacks 'ROUNDTRIP OK'"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1:    12 Segmentation fault      (core dumped) ./compact s.txt\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d",
+  "body_preserved": true
+}

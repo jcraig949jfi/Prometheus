@@ -1,0 +1,61 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "cobol-programming-course-omp",
+  "receipt_id": "run-cobol-programming-course-omp-20260912T213713Z",
+  "written_utc": "20260912T213713Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-legacy:bookworm",
+  "workdir": "upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "0a6956ecb5b2776117d325c6e64ed657fb38ca8fd29e2991ce27396f21c6eb40",
+  "recipe_sha256": "20d30c35fcfed54279d94176f14a312d3d20f02d85fd3b4c0fa258dae423135c",
+  "patches": [],
+  "probe": [
+    {
+      "name": "cobc",
+      "cmd": "cobc --version | head -1",
+      "exit": 0,
+      "seconds": 1.12,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "cobc (GnuCOBOL) 3.1.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile CBL0001 (read ACCTREC, write PRTLINE) and CBL0006 (conditional totals) with GnuCOBOL, fixed format",
+      "cmd": "cobc -x -o $BODY/build/cbl0001 CBL0001.cobol 2>&1 | tail -3; cobc -x -o $BODY/build/cbl0006 CBL0006.cobol 2>&1 | tail -3; test -x $BODY/build/cbl0001 && echo built",
+      "exit": 1,
+      "seconds": 1.05,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "CBL0001.cobol:10: error: syntax error, unexpected ENVIRONMENT, expecting COMMON or EXTERNAL or RECURSIVE or INITIAL\nCBL0006.cobol:10: error: syntax error, unexpected ENVIRONMENT, expecting COMMON or EXTERNAL or RECURSIVE or INITIAL\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "0a6956ecb5b2776117d325c6e64ed657fb38ca8fd29e2991ce27396f21c6eb40",
+  "body_preserved": true
+}

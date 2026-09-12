@@ -1,0 +1,262 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "bsd-tcp-4.3-reno-1990",
+  "canonical_name": "4.3BSD-Reno TCP (1990) -- fast retransmit and fast recovery",
+  "aliases": [
+    "TCP Reno",
+    "4.3BSD-Reno netinet/tcp"
+  ],
+  "lineage": "TCP congestion-control lineage, the SUCCESSOR: Reno keeps Tahoe's slow start/avoidance and adds fast retransmit on three duplicate ACKs and fast recovery (halve cwnd instead of collapsing to one segment). 'Reno' is the name later analyses (Fall & Floyd 1996) attach to this behaviour; NewReno, SACK, CUBIC descend from it. Preserved from unix-history-repo tag BSD-4_3_Reno.",
+  "domain": [
+    "networks",
+    "congestion-control",
+    "retransmission",
+    "contention",
+    "failure"
+  ],
+  "era": "1990",
+  "version": "4.3BSD-Reno (June 1990), sys/netinet/tcp_*.{c,h}; unix-history-repo tag BSD-4_3_Reno",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_debug.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_debug.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_debug.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_debug.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_fsm.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_fsm.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_input.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_input.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_output.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_output.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_seq.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_seq.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_subr.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_subr.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_timer.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_timer.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_timer.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_timer.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_usrreq.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_usrreq.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_var.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp_var.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcpip.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcpip.h"
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "repo": "dspinellis/unix-history-repo",
+    "tag": "BSD-4_3_Reno",
+    "path": "usr/src/sys/netinet/tcp_*"
+  },
+  "hashes": {
+    "tree_sha256": "0489c44ba9804179ca45d17805a3d710738bf91794b0dd3bf958a25b29b0912a",
+    "n_files": 13,
+    "bytes": 114172,
+    "artifacts": [
+      {
+        "filename": "tcp.h",
+        "sha256": "47f534e60e4fa2dbadda46cc178bbf44de2401ed193433f5e7425696a27f1a70",
+        "commit": null
+      },
+      {
+        "filename": "tcp_debug.c",
+        "sha256": "35ebc4e6b9b41184a519b3aa21d235d890eb54c4d116f153213b419bc29da9dc",
+        "commit": null
+      },
+      {
+        "filename": "tcp_debug.h",
+        "sha256": "443dd71d82deaa89efff3f79092c51aaf4b1a24f66ab56101657efc661e3b0b2",
+        "commit": null
+      },
+      {
+        "filename": "tcp_fsm.h",
+        "sha256": "1c3166c33164126a66b55be6a8728e8d52a430bcee78180d46199f0a2edeb534",
+        "commit": null
+      },
+      {
+        "filename": "tcp_input.c",
+        "sha256": "7ea4382b3c81123ffc30720f2f7934e823b7b81c70a14d558e2f0925d8f0bb61",
+        "commit": null
+      },
+      {
+        "filename": "tcp_output.c",
+        "sha256": "11bb2a7e17f61a51ae20df2d2df88d748483165c9a3144a107fb2523c89bd11e",
+        "commit": null
+      },
+      {
+        "filename": "tcp_seq.h",
+        "sha256": "59a739ae4ebf73266249a67ab15fd2e11f73d6ff2170e362a06db6ff83283ab7",
+        "commit": null
+      },
+      {
+        "filename": "tcp_subr.c",
+        "sha256": "23fe6e569d5bad6329d094d85c86609e773b56aa3cf3e84be004f80b0e6d9480",
+        "commit": null
+      },
+      {
+        "filename": "tcp_timer.c",
+        "sha256": "137b3524c2e38ca0dbce984cac15276a2e13aacf47fb806f4640ea0280819817",
+        "commit": null
+      },
+      {
+        "filename": "tcp_timer.h",
+        "sha256": "d2ef9a4af3e6c8e24f7ae71e85bdbf369f4b7c255e44e8d2a5d8d598e8ab5826",
+        "commit": null
+      },
+      {
+        "filename": "tcp_usrreq.c",
+        "sha256": "6a3e2133cf01bfa7c672d503cf2675c431d1bdda722883c93c02197f6fa04e0e",
+        "commit": null
+      },
+      {
+        "filename": "tcp_var.h",
+        "sha256": "b0cec3340a6a8835c95abffb7d559d8217d89d066eb2a38e555167d91f431ff8",
+        "commit": null
+      },
+      {
+        "filename": "tcpip.h",
+        "sha256": "0bab1be6f5547b22a9f33ed9c182adc07e83f59caea85d79815076645a91a9c8",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.3-reno-1990",
+    "hash_list": "techne/fossils/specimens/bsd-tcp-4.3-reno-1990/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-4-Clause",
+    "status": "permissive (original BSD licence, advertising clause)",
+    "evidence": "file headers; Regents of the University of California"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C (BSD kernel)"
+  ],
+  "build_system": "none standalone (kernel netinet)",
+  "compiler_or_interpreter": "4.xBSD kernel build (NOT built standalone; SOURCE_ONLY)",
+  "dependencies": [
+    "the BSD kernel: mbufs, socket layer, IP"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "tcp_input() in tcp_input.c; tcp_output() in tcp_output.c; tcp_timers() in tcp_timer.c"
+  ],
+  "example": {
+    "command": "",
+    "input": "",
+    "output": ""
+  },
+  "environment": {
+    "runner": "none",
+    "note": "kernel code; preserved and hashed, not executed"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Fall & Floyd, Simulation-based Comparisons of Tahoe, Reno, and SACK TCP, CCR 1996",
+    "Jacobson, Modified TCP Congestion Avoidance Algorithm, end2end-interest 1990"
+  ],
+  "human_capability_summary": {
+    "built_to": "recover from a single lost segment without draining the pipe: retransmit on duplicate ACKs and keep sending at half rate",
+    "pressure": "the cost of Tahoe's full slow-start restart on every loss on high bandwidth-delay paths",
+    "success_means": "one loss costs a halving, not a restart; throughput on long fat pipes roughly doubles versus Tahoe"
+  },
+  "known_human_problem_solved": "loss recovery without pipe drain",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "high bandwidth-delay product, isolated losses",
+  "human_failure_condition": "multiple losses in one window still collapse it (the NewReno/SACK pressure)",
+  "behavioral_entry_point": "the dup-ack counter (t_dupacks) and fast-recovery branch in tcp_input.c; absent in Tahoe",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "historical_version_of",
+      "to": "bsd-tcp-4.3-tahoe-1988",
+      "note": ""
+    },
+    {
+      "relation": "superseded",
+      "to": "linux-tcp-congestion",
+      "note": "NewReno -> CUBIC -> BBR"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityB",
+    "successor",
+    "depth:tcp",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.3-reno-1990 ; tracked techne/fossils/specimens/bsd-tcp-4.3-reno-1990",
+    "where_it_came_from": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_3_Reno/usr/src/sys/netinet/tcp.h ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "SOURCE_ONLY: 4.3BSD-Reno kernel netinet/tcp_* -- as above; the diff against Tahoe is fast retransmit/recovery.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 0489c44ba9804179 pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "recover from a single lost segment without draining the pipe: retransmit on duplicate ACKs and keep sending at half rate"
+  },
+  "seat": "Techne"
+}

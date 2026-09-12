@@ -1,0 +1,46 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/erfa-2.0.1",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "bootstrap (autoreconf: the GitHub release tarball ships no generated configure) + configure + make",
+      "cmd": "./bootstrap.sh >/dev/null 2>&1; ./configure -q >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; test -f src/.libs/liberfa.a -o -f src/liberfa.la && echo built",
+      "timeout": 900
+    }
+  ],
+  "runs": [
+    {
+      "name": "version + a sample transformation (t_erfa_c is the test)",
+      "cmd": "grep -m1 'ERFA_VERSION ' src/erfa.h src/erfam.h 2>/dev/null | head -1; echo ok",
+      "expect": {
+        "exit": 0
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "make check: t_erfa_c validates every routine against IAU reference values",
+      "cmd": "make -s check 2>&1 | grep -E '^# (TOTAL|PASS|FAIL|ERROR)' | head -6",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "# TOTAL: 2",
+          "# PASS:  2",
+          "# FAIL:  0",
+          "# ERROR: 0"
+        ]
+      },
+      "timeout": 900
+    }
+  ],
+  "test_kind": "UPSTREAM",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "ORACLE-backed by the library's own validation program (reference values to ~1e-12)."
+}

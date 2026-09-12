@@ -1,0 +1,45 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/radamsa-v0.6",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "build Owl Lisp from the pinned companion, then compile radamsa (Scheme -> C -> binary)",
+      "cmd": "cp $BODY/upstream/ol-0.1.19.c.gz ol.c.gz && make -s bin/radamsa 2>&1 | grep -iE '\\berror' | head -3; test -x bin/radamsa && echo built",
+      "timeout": 1800
+    }
+  ],
+  "runs": [
+    {
+      "name": "200 deterministic mutations of a JSON seed (seed 1)",
+      "cmd": "mkdir -p $BODY/build/cases && ./bin/radamsa -n 200 -s 1 -o $BODY/build/cases/%n.json $HARNESS/seed.json && ls $BODY/build/cases | wc -l && head -c 300 $BODY/build/cases/7.json; echo",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "200"
+        ]
+      }
+    },
+    {
+      "name": "determinism: the same seed reproduces case 7 byte-for-byte",
+      "cmd": "./bin/radamsa -n 200 -s 1 -o $BODY/build/cases2/%n.json $HARNESS/seed.json 2>/dev/null || (mkdir -p $BODY/build/cases2 && ./bin/radamsa -n 200 -s 1 -o $BODY/build/cases2/%n.json $HARNESS/seed.json); cmp $BODY/build/cases/7.json $BODY/build/cases2/7.json && echo DETERMINISTIC",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "DETERMINISTIC"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "PAIR half 1 (pressure). The 200 cases from seed 1 are copied into cjson-1.7.18/harness/cases/ as the tracked fixture the parser is attacked with (provenance: radamsa v0.6, -s 1, seed.json sha in the harness)."
+}
