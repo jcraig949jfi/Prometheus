@@ -1,0 +1,950 @@
+{
+ "parity": {
+  "b1_rows": 22,
+  "raw_rows": 1029,
+  "shared": 22,
+  "b1_only": [],
+  "raw_only_count": 1007,
+  "agree_metric_seq_region_family": true,
+  "b1_corpus_hash": "corpus:1990639d3745db0ade4bc859",
+  "raw_corpus_hash": "corpus:aac154426cd3ab09234beec3",
+  "raw_only_accounting": {
+   "outside_ruling_scope:harmonia-m2": 979,
+   "viv-prefixed_but_not_in_scope:vivarium": 25,
+   "outside_ruling_scope:vivarium@skullport": 2,
+   "viv-prefixed_but_not_in_scope:vivarium@m1": 1
+  },
+  "viv_prefixed_worlds_not_in_scope": 101
+ },
+ "census_b1": {
+  "landscapes_total": 20,
+  "landscapes_multi_fossil": 1,
+  "single_fossil_landscapes": 19,
+  "records": [
+   {
+    "seed_root": 926994,
+    "length": 24,
+    "n_fossils": 2,
+    "n_distinct": 2,
+    "fossils": [
+     {
+      "world_id": "wld_8e73e722b2b2d883d917b5c0",
+      "obs_id": "obs_d57501bd03d010e1c7c12797",
+      "exp_id": "exp_4a36b0ad58fbc0e1de90a6d5",
+      "seq": 35690,
+      "bits": "000111101010100111011110",
+      "score": 0.75
+     },
+     {
+      "world_id": "wld_13b3caf41573e37f015bf9ff",
+      "obs_id": "obs_52ac5c2564a0deaf0d3ed303",
+      "exp_id": "exp_8d968652a8a6b0c9885ec716",
+      "seq": 129400,
+      "bits": "001001000001100110000100",
+      "score": 0.5416666666666666
+     }
+    ],
+    "feasible_targets": 47190,
+    "log2_feasible": 15,
+    "prior_log2": 24,
+    "prefix_feasible_sizes_ledger_order": [
+     134596,
+     47190
+    ],
+    "status": "AMBIGUOUS",
+    "fixed_bits": {},
+    "n_fixed": 0,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 4,
+    "best_fossil": {
+     "world_id": "wld_8e73e722b2b2d883d917b5c0",
+     "obs_id": "obs_d57501bd03d010e1c7c12797",
+     "exp_id": "exp_4a36b0ad58fbc0e1de90a6d5",
+     "seq": 35690,
+     "bits": "000111101010100111011110",
+     "score": 0.75
+    },
+    "posterior_mode": "000111101010100111011110",
+    "E_score_mode": 0.75,
+    "E_score_best_fossil_as_proposal": 0.75,
+    "E_score_onebit_rule": 0.7291666666666666,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": false,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 0,
+    "F2_advantage_over_onebit": 0.02083333333333337,
+    "F2_advantage_over_uniform": 0.25
+   }
+  ],
+  "summary": {
+   "contradictions": 0,
+   "with_fixed_bits": 0,
+   "mode_differs_from_onebit": 1,
+   "F2_beats_onebit_by_ge_1_over_L": 0,
+   "median_log2_feasible": 15
+  }
+ },
+ "census_raw_accounting_only": {
+  "landscapes_total": 23,
+  "landscapes_multi_fossil": 12,
+  "single_fossil_landscapes": 11,
+  "records": [
+   {
+    "seed_root": 103485,
+    "length": 32,
+    "n_fossils": 3,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_077e9864563840117a59c0db",
+      "obs_id": "obs_c8dcaeb4ebad940a75859d56",
+      "exp_id": "exp_032d873e907bc4a09429347a",
+      "seq": 35309,
+      "bits": "11111010010100100010111111111011",
+      "score": 0.5625
+     },
+     {
+      "world_id": "wld_47923dcff1c7fa2368d03670",
+      "obs_id": "obs_c46679826e8ca72efe45338d",
+      "exp_id": "exp_6ef7a024bbcd6542d2a74e85",
+      "seq": 129413,
+      "bits": "11111010010000100010111111111011",
+      "score": 0.53125
+     },
+     {
+      "world_id": "wld_ba233d1035c084b69a16f36f",
+      "obs_id": "obs_e988645667a0c5b719af1604",
+      "exp_id": "exp_5814bb62ef3030e96f0bd166",
+      "seq": 129426,
+      "bits": "00011111110000010001100100100100",
+      "score": 0.5625
+     }
+    ],
+    "feasible_targets": 45727110,
+    "log2_feasible": 25,
+    "prior_log2": 32,
+    "prefix_feasible_sizes_ledger_order": [
+     471435600,
+     265182525,
+     45727110
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "11": 1
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 4,
+    "best_fossil": {
+     "world_id": "wld_077e9864563840117a59c0db",
+     "obs_id": "obs_c8dcaeb4ebad940a75859d56",
+     "exp_id": "exp_032d873e907bc4a09429347a",
+     "seq": 35309,
+     "bits": "11111010010100100010111111111011",
+     "score": 0.5625
+    },
+    "posterior_mode": "00011111110100010001100100100100",
+    "E_score_mode": 0.59375,
+    "E_score_best_fossil_as_proposal": 0.5625,
+    "E_score_onebit_rule": 0.55859375,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": true,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 19,
+    "F2_advantage_over_onebit": 0.03515625,
+    "F2_advantage_over_uniform": 0.09375
+   },
+   {
+    "seed_root": 233204,
+    "length": 32,
+    "n_fossils": 3,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_f89308ab64c2e629bfe7415f",
+      "obs_id": "obs_a9440b0bdafa1ec3bc441615",
+      "exp_id": "exp_75733ecfd05887acce103c95",
+      "seq": 35591,
+      "bits": "00110011100100001110011000111110",
+      "score": 0.5625
+     },
+     {
+      "world_id": "wld_999f49e72b6697d30dfbf72b",
+      "obs_id": "obs_4410fff92b22be8fe5e5503e",
+      "exp_id": "exp_0bb7fe6ad5f1180a533f6d43",
+      "seq": 129673,
+      "bits": "00110011100100000110011000111110",
+      "score": 0.53125
+     },
+     {
+      "world_id": "wld_47684f825e76dd47ba86fa88",
+      "obs_id": "obs_8afd3fb2c25be955b9869d6a",
+      "exp_id": "exp_374db2ebad9872ac444bb4ea",
+      "seq": 129686,
+      "bits": "10000000010101000110111011011110",
+      "score": 0.40625
+     }
+    ],
+    "feasible_targets": 45727110,
+    "log2_feasible": 25,
+    "prior_log2": 32,
+    "prefix_feasible_sizes_ledger_order": [
+     471435600,
+     265182525,
+     45727110
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "16": 1
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 4,
+    "best_fossil": {
+     "world_id": "wld_f89308ab64c2e629bfe7415f",
+     "obs_id": "obs_a9440b0bdafa1ec3bc441615",
+     "exp_id": "exp_75733ecfd05887acce103c95",
+     "seq": 35591,
+     "bits": "00110011100100001110011000111110",
+     "score": 0.5625
+    },
+    "posterior_mode": "01111111101010111001000100100001",
+    "E_score_mode": 0.59375,
+    "E_score_best_fossil_as_proposal": 0.5625,
+    "E_score_onebit_rule": 0.55859375,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": true,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 19,
+    "F2_advantage_over_onebit": 0.03515625,
+    "F2_advantage_over_uniform": 0.09375
+   },
+   {
+    "seed_root": 255307,
+    "length": 16,
+    "n_fossils": 3,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_0925a93fb0c4dde28dc6dbef",
+      "obs_id": "obs_24e0cac2498d33919fb6de13",
+      "exp_id": "exp_21c7a74ab59974b0a0ab056e",
+      "seq": 35703,
+      "bits": "1110101110100001",
+      "score": 0.625
+     },
+     {
+      "world_id": "wld_1e4901e4e98187d52ff7c04e",
+      "obs_id": "obs_697c3898130e6e69c50a1608",
+      "exp_id": "exp_3bb3c49dd11eaa46efadc7ee",
+      "seq": 129439,
+      "bits": "1111101110100001",
+      "score": 0.6875
+     },
+     {
+      "world_id": "wld_1a7e43a44274b711d48fd6af",
+      "obs_id": "obs_458a17fad717f57c830ff0d9",
+      "exp_id": "exp_463d36c5e18e7651c59e0e65",
+      "seq": 129452,
+      "bits": "0100110111010011",
+      "score": 0.625
+     }
+    ],
+    "feasible_targets": 490,
+    "log2_feasible": 8,
+    "prior_log2": 16,
+    "prefix_feasible_sizes_ledger_order": [
+     8008,
+     3003,
+     490
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "3": 1
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 4,
+    "best_fossil": {
+     "world_id": "wld_1e4901e4e98187d52ff7c04e",
+     "obs_id": "obs_697c3898130e6e69c50a1608",
+     "exp_id": "exp_3bb3c49dd11eaa46efadc7ee",
+     "seq": 129439,
+     "bits": "1111101110100001",
+     "score": 0.6875
+    },
+    "posterior_mode": "1111101110100001",
+    "E_score_mode": 0.6875,
+    "E_score_best_fossil_as_proposal": 0.6875,
+    "E_score_onebit_rule": 0.6640625,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": false,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 0,
+    "F2_advantage_over_onebit": 0.0234375,
+    "F2_advantage_over_uniform": 0.1875
+   },
+   {
+    "seed_root": 392707,
+    "length": 16,
+    "n_fossils": 3,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_2ec826044b1ad42eaec2f7aa",
+      "obs_id": "obs_ebd97a9026621e932d0bbcca",
+      "exp_id": "exp_12f2aafb977045eaedc6d9e5",
+      "seq": 128392,
+      "bits": "0100000010110001",
+      "score": 0.75
+     },
+     {
+      "world_id": "wld_23f7861dc0693553f0c226a2",
+      "obs_id": "obs_59f0389e89c656873b5adf53",
+      "exp_id": "exp_57401d751f4d1fc06dfdb253",
+      "seq": 129491,
+      "bits": "0100001010110001",
+      "score": 0.8125
+     },
+     {
+      "world_id": "wld_f6737422007965f82a0d5905",
+      "obs_id": "obs_db495e90b9811a8c879af5a5",
+      "exp_id": "exp_d84b72fc13126aba7650ad56",
+      "seq": 129504,
+      "bits": "1110101110111111",
+      "score": 0.5
+     }
+    ],
+    "feasible_targets": 196,
+    "log2_feasible": 7,
+    "prior_log2": 16,
+    "prefix_feasible_sizes_ledger_order": [
+     1820,
+     455,
+     196
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "6": 1
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [
+     {
+      "positions": [
+       0,
+       2,
+       4,
+       7,
+       12,
+       13,
+       14
+      ],
+      "ones": 1,
+      "size": 7
+     }
+    ],
+    "ambiguous_blocks": 2,
+    "best_fossil": {
+     "world_id": "wld_23f7861dc0693553f0c226a2",
+     "obs_id": "obs_59f0389e89c656873b5adf53",
+     "exp_id": "exp_57401d751f4d1fc06dfdb253",
+     "seq": 129491,
+     "bits": "0100001010110001",
+     "score": 0.8125
+    },
+    "posterior_mode": "0100001010110001",
+    "E_score_mode": 0.8125,
+    "E_score_best_fossil_as_proposal": 0.8125,
+    "E_score_onebit_rule": 0.7734375,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": false,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 0,
+    "F2_advantage_over_onebit": 0.0390625,
+    "F2_advantage_over_uniform": 0.3125
+   },
+   {
+    "seed_root": 424242,
+    "length": 24,
+    "n_fossils": 4,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_f1b7d69a9152c38ec7b53406",
+      "obs_id": "obs_e59246e73746b48c28346644",
+      "exp_id": "exp_ad069bd1dbd8500464508177",
+      "seq": 34736,
+      "bits": "000000000000000000000000",
+      "score": 0.625
+     },
+     {
+      "world_id": "wld_8a73fde58b05914c8db35ff4",
+      "obs_id": "obs_fbd9d40ee2ae6a1b07d7c87b",
+      "exp_id": "exp_a76deb678c425d4b5767ef0c",
+      "seq": 34749,
+      "bits": "000000000000000000000000",
+      "score": 0.625
+     },
+     {
+      "world_id": "wld_f5b6e34f941fb40b497646ac",
+      "obs_id": "obs_e0788728417da0378e59eedc",
+      "exp_id": "exp_1bbbb4cf81f9305be10c47e5",
+      "seq": 129569,
+      "bits": "000100000000000000000000",
+      "score": 0.5833333333333334
+     },
+     {
+      "world_id": "wld_2b60c5bfa5a71bd99464395d",
+      "obs_id": "obs_c9c71644e34194ddf3edeac5",
+      "exp_id": "exp_f6cc475b618fbef2768f708f",
+      "seq": 129582,
+      "bits": "110110000101110011111100",
+      "score": 0.625
+     }
+    ],
+    "feasible_targets": 77220,
+    "log2_feasible": 16,
+    "prior_log2": 24,
+    "prefix_feasible_sizes_ledger_order": [
+     1307504,
+     1307504,
+     817190,
+     77220
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "3": 0
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [
+     {
+      "positions": [
+       2,
+       5,
+       6,
+       7,
+       8,
+       10,
+       14,
+       15,
+       22,
+       23
+      ],
+      "ones": 2,
+      "size": 10
+     },
+     {
+      "positions": [
+       0,
+       1,
+       4,
+       9,
+       11,
+       12,
+       13,
+       16,
+       17,
+       18,
+       19,
+       20,
+       21
+      ],
+      "ones": 7,
+      "size": 13
+     }
+    ],
+    "ambiguous_blocks": 0,
+    "best_fossil": {
+     "world_id": "wld_f1b7d69a9152c38ec7b53406",
+     "obs_id": "obs_e59246e73746b48c28346644",
+     "exp_id": "exp_ad069bd1dbd8500464508177",
+     "seq": 34736,
+     "bits": "000000000000000000000000",
+     "score": 0.625
+    },
+    "posterior_mode": "110010000101110011111100",
+    "E_score_mode": 0.6666666666666666,
+    "E_score_best_fossil_as_proposal": 0.625,
+    "E_score_onebit_rule": 0.6145833333333334,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": true,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 13,
+    "F2_advantage_over_onebit": 0.05208333333333326,
+    "F2_advantage_over_uniform": 0.16666666666666663
+   },
+   {
+    "seed_root": 445930,
+    "length": 32,
+    "n_fossils": 3,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_f723f9e3d63221a4d7d858d9",
+      "obs_id": "obs_4952aa219ddaae4dc7b70500",
+      "exp_id": "exp_86174e4089968bdc55d242a1",
+      "seq": 35565,
+      "bits": "10010110000100110100111001000111",
+      "score": 0.5625
+     },
+     {
+      "world_id": "wld_0ddef60d4317f2243b46110a",
+      "obs_id": "obs_dc029b2b318e2881d6cd3043",
+      "exp_id": "exp_bc2c915fd9e2804649f50f7c",
+      "seq": 129647,
+      "bits": "10010110000100110110111001000111",
+      "score": 0.53125
+     },
+     {
+      "world_id": "wld_86a6cb04be3ff45f84aeea25",
+      "obs_id": "obs_453a55ccd91dc0b0f5d220d5",
+      "exp_id": "exp_f1b0ce97987594c92ac35bd2",
+      "seq": 129660,
+      "bits": "00001100000110011110000100001011",
+      "score": 0.46875
+     }
+    ],
+    "feasible_targets": 73002930,
+    "log2_feasible": 26,
+    "prior_log2": 32,
+    "prefix_feasible_sizes_ledger_order": [
+     471435600,
+     265182525,
+     73002930
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "18": 0
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 4,
+    "best_fossil": {
+     "world_id": "wld_f723f9e3d63221a4d7d858d9",
+     "obs_id": "obs_4952aa219ddaae4dc7b70500",
+     "exp_id": "exp_86174e4089968bdc55d242a1",
+     "seq": 35565,
+     "bits": "10010110000100110100111001000111",
+     "score": 0.5625
+    },
+    "posterior_mode": "10010110000100110100111001000111",
+    "E_score_mode": 0.5625,
+    "E_score_best_fossil_as_proposal": 0.5625,
+    "E_score_onebit_rule": 0.55859375,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": false,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 0,
+    "F2_advantage_over_onebit": 0.00390625,
+    "F2_advantage_over_uniform": 0.0625
+   },
+   {
+    "seed_root": 504263,
+    "length": 32,
+    "n_fossils": 3,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_2bf078e25cad4054eafd0c49",
+      "obs_id": "obs_fe401230370a9afae9b77cd8",
+      "exp_id": "exp_d5adb2f66b1df88dceb060b9",
+      "seq": 35604,
+      "bits": "10101100111100110001100000011010",
+      "score": 0.5625
+     },
+     {
+      "world_id": "wld_7603f522a03c499b4da962e9",
+      "obs_id": "obs_dffdaa0240e5b377271e1873",
+      "exp_id": "exp_9af0b39cb719b43eda3e92a3",
+      "seq": 129465,
+      "bits": "10101100110100110001100000011010",
+      "score": 0.53125
+     },
+     {
+      "world_id": "wld_6c07bc231bfa0293cc47f603",
+      "obs_id": "obs_add7fef1a5f77e27b9e1132f",
+      "exp_id": "exp_5ba7c38f714f48c2a8e16ba8",
+      "seq": 129478,
+      "bits": "01000110001110110100111111001101",
+      "score": 0.59375
+     }
+    ],
+    "feasible_targets": 45727110,
+    "log2_feasible": 25,
+    "prior_log2": 32,
+    "prefix_feasible_sizes_ledger_order": [
+     471435600,
+     265182525,
+     45727110
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "10": 1
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 4,
+    "best_fossil": {
+     "world_id": "wld_6c07bc231bfa0293cc47f603",
+     "obs_id": "obs_add7fef1a5f77e27b9e1132f",
+     "exp_id": "exp_5ba7c38f714f48c2a8e16ba8",
+     "seq": 129478,
+     "bits": "01000110001110110100111111001101",
+     "score": 0.59375
+    },
+    "posterior_mode": "01000110001110110100111111001101",
+    "E_score_mode": 0.59375,
+    "E_score_best_fossil_as_proposal": 0.59375,
+    "E_score_onebit_rule": 0.587890625,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": false,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 0,
+    "F2_advantage_over_onebit": 0.005859375,
+    "F2_advantage_over_uniform": 0.09375
+   },
+   {
+    "seed_root": 518743,
+    "length": 16,
+    "n_fossils": 3,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_c3b29870d70acc7519d8bb88",
+      "obs_id": "obs_3f3a3d90d274b969e4d83367",
+      "exp_id": "exp_b00d86f76ca56aca68d24c5e",
+      "seq": 35578,
+      "bits": "1110100000101000",
+      "score": 0.625
+     },
+     {
+      "world_id": "wld_2eace61c2b5492f78d1a9450",
+      "obs_id": "obs_cd8353d978147d51f458d01e",
+      "exp_id": "exp_9db8aed7f0eb5832032181fc",
+      "seq": 129621,
+      "bits": "1110100000100000",
+      "score": 0.5625
+     },
+     {
+      "world_id": "wld_74daf7ab0f541efaf7f1432e",
+      "obs_id": "obs_084de4895494c8aec028877c",
+      "exp_id": "exp_269de8376afaccb9812b69ff",
+      "seq": 129634,
+      "bits": "1101001100000010",
+      "score": 0.625
+     }
+    ],
+    "feasible_targets": 980,
+    "log2_feasible": 9,
+    "prior_log2": 16,
+    "prefix_feasible_sizes_ledger_order": [
+     8008,
+     5005,
+     980
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "12": 1
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 4,
+    "best_fossil": {
+     "world_id": "wld_c3b29870d70acc7519d8bb88",
+     "obs_id": "obs_3f3a3d90d274b969e4d83367",
+     "exp_id": "exp_b00d86f76ca56aca68d24c5e",
+     "seq": 35578,
+     "bits": "1110100000101000",
+     "score": 0.625
+    },
+    "posterior_mode": "1101001100001010",
+    "E_score_mode": 0.6875,
+    "E_score_best_fossil_as_proposal": 0.625,
+    "E_score_onebit_rule": 0.609375,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": true,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 7,
+    "F2_advantage_over_onebit": 0.078125,
+    "F2_advantage_over_uniform": 0.1875
+   },
+   {
+    "seed_root": 550655,
+    "length": 24,
+    "n_fossils": 3,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_5d4755b139609c472c8fb1f7",
+      "obs_id": "obs_9316f1e44ff4938a62779782",
+      "exp_id": "exp_280e9608e04cbb247d8ba3e7",
+      "seq": 129348,
+      "bits": "011110111110110011110001",
+      "score": 0.5833333333333334
+     },
+     {
+      "world_id": "wld_ef388ddeaf655dae3049500d",
+      "obs_id": "obs_d7a200bab4ea3f5a25ccf18a",
+      "exp_id": "exp_0f56c5f5f85be08682caba67",
+      "seq": 129543,
+      "bits": "011110111110110011010001",
+      "score": 0.5416666666666666
+     },
+     {
+      "world_id": "wld_0dc35dca8bf0e9a331263d65",
+      "obs_id": "obs_a52efbae9fba4ac74d39a26b",
+      "exp_id": "exp_316d43128714b9103d2dff28",
+      "seq": 129556,
+      "bits": "110101111101011001110100",
+      "score": 0.375
+     }
+    ],
+    "feasible_targets": 130680,
+    "log2_feasible": 16,
+    "prior_log2": 24,
+    "prefix_feasible_sizes_ledger_order": [
+     1961256,
+     1144066,
+     130680
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "18": 1
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 4,
+    "best_fossil": {
+     "world_id": "wld_5d4755b139609c472c8fb1f7",
+     "obs_id": "obs_9316f1e44ff4938a62779782",
+     "exp_id": "exp_280e9608e04cbb247d8ba3e7",
+     "seq": 129348,
+     "bits": "011110111110110011110001",
+     "score": 0.5833333333333334
+    },
+    "posterior_mode": "001010000010100110101011",
+    "E_score_mode": 0.6666666666666666,
+    "E_score_best_fossil_as_proposal": 0.5833333333333334,
+    "E_score_onebit_rule": 0.576388888888889,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": true,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 12,
+    "F2_advantage_over_onebit": 0.09027777777777768,
+    "F2_advantage_over_uniform": 0.16666666666666663
+   },
+   {
+    "seed_root": 864844,
+    "length": 16,
+    "n_fossils": 3,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_fadefe18a56bca922c8bfb7e",
+      "obs_id": "obs_7efb6a657c29212b52a084cf",
+      "exp_id": "exp_176ff548e06ddf24a217a9fc",
+      "seq": 35552,
+      "bits": "1011011010010101",
+      "score": 0.6875
+     },
+     {
+      "world_id": "wld_aefebebc747ec94db5df2db8",
+      "obs_id": "obs_77db45f77cfbcab292182df7",
+      "exp_id": "exp_a44219b685d4005ac3d14481",
+      "seq": 129699,
+      "bits": "1011011011010101",
+      "score": 0.75
+     },
+     {
+      "world_id": "wld_d0c37ddcc377c1b67ee6e31f",
+      "obs_id": "obs_97efd14d36cc61f11fcd27a7",
+      "exp_id": "exp_99d508360207f2b3288cad92",
+      "seq": 129712,
+      "bits": "1100001110101100",
+      "score": 0.375
+     }
+    ],
+    "feasible_targets": 540,
+    "log2_feasible": 9,
+    "prior_log2": 16,
+    "prefix_feasible_sizes_ledger_order": [
+     4368,
+     1365,
+     540
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "9": 1
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 4,
+    "best_fossil": {
+     "world_id": "wld_aefebebc747ec94db5df2db8",
+     "obs_id": "obs_77db45f77cfbcab292182df7",
+     "exp_id": "exp_a44219b685d4005ac3d14481",
+     "seq": 129699,
+     "bits": "1011011011010101",
+     "score": 0.75
+    },
+    "posterior_mode": "1011011011010101",
+    "E_score_mode": 0.75,
+    "E_score_best_fossil_as_proposal": 0.75,
+    "E_score_onebit_rule": 0.71875,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": false,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 0,
+    "F2_advantage_over_onebit": 0.03125,
+    "F2_advantage_over_uniform": 0.25
+   },
+   {
+    "seed_root": 881203,
+    "length": 16,
+    "n_fossils": 3,
+    "n_distinct": 3,
+    "fossils": [
+     {
+      "world_id": "wld_3022a1177d73831f11c721dd",
+      "obs_id": "obs_2be2f70a1adc3d3fe0a2101e",
+      "exp_id": "exp_aa06e7c785a697fc5897c054",
+      "seq": 35716,
+      "bits": "0101101111010011",
+      "score": 0.6875
+     },
+     {
+      "world_id": "wld_09201e8b48946a7f0e716c07",
+      "obs_id": "obs_148ae672dd2cb87b54507dd1",
+      "exp_id": "exp_e3dd835db2808391aa55039b",
+      "seq": 129517,
+      "bits": "0101100111010011",
+      "score": 0.625
+     },
+     {
+      "world_id": "wld_7f64d65c46ac93024c55f170",
+      "obs_id": "obs_20f3281bd4a0f17b59bf2eb4",
+      "exp_id": "exp_6d50f4bfd09b322e91f37b2f",
+      "seq": 129530,
+      "bits": "1101011000001001",
+      "score": 0.5
+     }
+    ],
+    "feasible_targets": 1260,
+    "log2_feasible": 10,
+    "prior_log2": 16,
+    "prefix_feasible_sizes_ledger_order": [
+     4368,
+     3003,
+     1260
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "6": 1
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 4,
+    "best_fossil": {
+     "world_id": "wld_3022a1177d73831f11c721dd",
+     "obs_id": "obs_2be2f70a1adc3d3fe0a2101e",
+     "exp_id": "exp_aa06e7c785a697fc5897c054",
+     "seq": 35716,
+     "bits": "0101101111010011",
+     "score": 0.6875
+    },
+    "posterior_mode": "0101101111010011",
+    "E_score_mode": 0.6875,
+    "E_score_best_fossil_as_proposal": 0.6875,
+    "E_score_onebit_rule": 0.6640625,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": false,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 0,
+    "F2_advantage_over_onebit": 0.0234375,
+    "F2_advantage_over_uniform": 0.1875
+   },
+   {
+    "seed_root": 926994,
+    "length": 24,
+    "n_fossils": 4,
+    "n_distinct": 4,
+    "fossils": [
+     {
+      "world_id": "wld_8e73e722b2b2d883d917b5c0",
+      "obs_id": "obs_d57501bd03d010e1c7c12797",
+      "exp_id": "exp_4a36b0ad58fbc0e1de90a6d5",
+      "seq": 35690,
+      "bits": "000111101010100111011110",
+      "score": 0.75
+     },
+     {
+      "world_id": "wld_13b3caf41573e37f015bf9ff",
+      "obs_id": "obs_52ac5c2564a0deaf0d3ed303",
+      "exp_id": "exp_8d968652a8a6b0c9885ec716",
+      "seq": 129400,
+      "bits": "001001000001100110000100",
+      "score": 0.5416666666666666
+     },
+     {
+      "world_id": "wld_12417d6ad51fe524d553bb65",
+      "obs_id": "obs_a58baea1a2b77655a572d40b",
+      "exp_id": "exp_4760391792983344c2f6b1ff",
+      "seq": 129595,
+      "bits": "000111101010101111011110",
+      "score": 0.7083333333333334
+     },
+     {
+      "world_id": "wld_f74615911e621fd787f6eeae",
+      "obs_id": "obs_85bda61413d53fa4c061767a",
+      "exp_id": "exp_08a300cfe96618e3174c2704",
+      "seq": 129608,
+      "bits": "101111110001001010100101",
+      "score": 0.4583333333333333
+     }
+    ],
+    "feasible_targets": 13080,
+    "log2_feasible": 13,
+    "prior_log2": 24,
+    "prefix_feasible_sizes_ledger_order": [
+     134596,
+     47190,
+     36300,
+     13080
+    ],
+    "status": "PARTIALLY_IDENTIFIED",
+    "fixed_bits": {
+     "14": 0
+    },
+    "n_fixed": 1,
+    "count_known_blocks": [],
+    "ambiguous_blocks": 7,
+    "best_fossil": {
+     "world_id": "wld_8e73e722b2b2d883d917b5c0",
+     "obs_id": "obs_d57501bd03d010e1c7c12797",
+     "exp_id": "exp_4a36b0ad58fbc0e1de90a6d5",
+     "seq": 35690,
+     "bits": "000111101010100111011110",
+     "score": 0.75
+    },
+    "posterior_mode": "000111101010100111011110",
+    "E_score_mode": 0.75,
+    "E_score_best_fossil_as_proposal": 0.75,
+    "E_score_onebit_rule": 0.7291666666666666,
+    "E_score_uniform": 0.5,
+    "mode_differs_from_best": false,
+    "mode_differs_from_onebit": true,
+    "hamming_mode_vs_best": 0,
+    "F2_advantage_over_onebit": 0.02083333333333337,
+    "F2_advantage_over_uniform": 0.25
+   }
+  ],
+  "summary": {
+   "contradictions": 0,
+   "with_fixed_bits": 12,
+   "mode_differs_from_onebit": 12,
+   "F2_beats_onebit_by_ge_1_over_L": 5,
+   "median_log2_feasible": 16
+  }
+ },
+ "note": "census_b1 is the operational source; census_raw exists only to account for what the enumerated scope does not yet carry (viv- worlds created after the grant's enumeration)"
+}
