@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.step_along_conjugate_directions",
+  "name": "step along mutually conjugate directions",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "choose each search direction as the current negative gradient corrected to be conjugate to the previous directions with respect to the curvature, so on a quadratic each direction is never undone and the exact optimum is reached in as many steps as dimensions",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Conjugate gradient methods (see more https' in section Computational mathematics / Optimization algorithms: //doi.org/10.1016/j.jksus.2022.101923)",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "GREEDY",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "a symmetric positive-definite curvature (or a nonlinear extension with restarts)"
+  ],
+  "fails_when": [
+    "loss of conjugacy on non-quadratics; needs restarts"
+  ],
+  "instances": [
+    "Conjugate gradient methods (see more https"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

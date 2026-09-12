@@ -1,0 +1,55 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.step_to_minimum_of_local_quadratic",
+  "name": "step to the minimum of the local quadratic model",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "approximate the objective near the current point by a quadratic from its gradient and curvature and jump to that quadratic's minimum, repeating",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Newton's method in optimization' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'BFGS method': a nonlinear optimization algorithm",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gauss–Newton algorithm': an algorithm for solving nonlinear least squares problems",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Levenberg–Marquardt algorithm': an algorithm for solving nonlinear least squares problems",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "LOCAL_OPTIMUM",
+  "strategy": "GREEDY",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "second derivatives (or an approximation built from gradient differences)"
+  ],
+  "fails_when": [
+    "indefinite curvature steps to a saddle or maximum",
+    "cubic cost per step in dimension"
+  ],
+  "instances": [
+    "Newton's method in optimization",
+    "BFGS method",
+    "Gauss–Newton algorithm",
+    "Levenberg–Marquardt algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

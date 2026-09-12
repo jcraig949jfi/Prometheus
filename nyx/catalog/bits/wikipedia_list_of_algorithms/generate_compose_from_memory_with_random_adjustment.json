@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.compose_from_memory_with_random_adjustment",
+  "name": "compose a candidate from memory with random adjustment",
+  "lineage": [
+    "evolutionary computation",
+    "optimization"
+  ],
+  "mechanism": "build each new candidate coordinate-wise by copying a value from a remembered set of good candidates with some probability (then nudging it) or drawing it fresh, and replace the worst remembered candidate if the new one is better",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Harmony search (HS)' in section Computational mathematics / Optimization algorithms: a metaheuristic algorithm mimicking the improvisation process of musicians",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "LINEAR",
+  "requires": [
+    "a memory size and copy/nudge rates (policy)"
+  ],
+  "fails_when": [
+    "shown to be a re-parametrised evolution strategy; nothing mechanistically new beyond the memory-replacement rule"
+  ],
+  "instances": [
+    "Harmony search (HS)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}
