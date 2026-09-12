@@ -1,0 +1,623 @@
+{
+  "schema": "techne.donor_disposition/1",
+  "built_at": "2026-09-12T00:43:24Z",
+  "head": "01e4812a5d2bdaefa65768f44c8519571b24dbd7",
+  "interpreter": "3.12.10",
+  "executable": "H:\\Python312\\python.exe",
+  "label_rule": "ACQUIRED+IMPORT-TESTED iff the distribution is installed in THIS interpreter and imports in a fresh process; WRAPPED iff a listed wrapper file exists; CONTROLLED iff a listed control artefact exists on the tree; CONSUMED iff a tracked non-test .py outside techne/ imports the donor or a wrapper; BLOCKED iff a blocker is recorded. Hand overrides are named in classify().",
+  "gen0_adapter_contract_consumers_outside_techne": [],
+  "rows": [
+    {
+      "name": "tensorly",
+      "dist": "tensorly",
+      "module": "tensorly",
+      "upstream": "github.com/tensorly/tensorly",
+      "license": "BSD-3 (modified)",
+      "origin": "Gen-0 2026-08-31",
+      "wrapper": [
+        "techne/lib/donors/tensorly_adapter.py",
+        "prometheus_math/symbolic_tensor_decomp.py"
+      ],
+      "controls": [
+        "techne/donor_tensor_parity_2026-08-31.json",
+        "prometheus_math/tests/test_tensor_decomposition.py",
+        "techne/tests/test_donor_adapters.py"
+      ],
+      "blockers": [],
+      "notes": "TT parity 5/5 vs quimb with ground truth by construction (NATIVE_EARNS_DISTINCT_ROLE)",
+      "installed_version": "0.9.0",
+      "import": {
+        "status": "IMPORTS",
+        "seconds": 0.5
+      },
+      "wrapper_present": [
+        "techne/lib/donors/tensorly_adapter.py",
+        "prometheus_math/symbolic_tensor_decomp.py"
+      ],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/donor_tensor_parity_2026-08-31.json",
+        "prometheus_math/tests/test_tensor_decomposition.py",
+        "techne/tests/test_donor_adapters.py"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [
+          "cartography/shared/scripts/dissection_tensor.py",
+          "evidence_wiki/benchmarks/run_benchmarks.py",
+          "evidence_wiki/ew/compiler.py",
+          "prometheus_math/symbolic_tensor_decomp.py"
+        ],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {
+        "techne/lib/donors/tensorly_adapter.py": "3e9c5b064 2026-08-31",
+        "prometheus_math/symbolic_tensor_decomp.py": "d854ff0b3 2026-04-25"
+      },
+      "labels": [
+        "ACQUIRED",
+        "IMPORT-TESTED",
+        "WRAPPED",
+        "CONTROLLED",
+        "CONSUMED"
+      ]
+    },
+    {
+      "name": "pyribs",
+      "dist": "ribs",
+      "module": "ribs",
+      "upstream": "github.com/icaros-usc/pyribs",
+      "license": "MIT",
+      "origin": "Gen-0 2026-08-31; H3 adapter 2026-09-10",
+      "wrapper": [
+        "techne/lib/donors/pyribs_adapter.py",
+        "techne/h3_retention/adapter.py",
+        "techne/h3_retention/archaeon_seam.py"
+      ],
+      "controls": [
+        "techne/acquisition/receipts/adapter_qualification-pyribs-20260911T065018Z.json",
+        "techne/tests/test_h3_retention.py",
+        "techne/tests/test_donor_adapters.py"
+      ],
+      "blockers": [],
+      "notes": "H3 GridArchive adapter retains the IDENTICAL set to Archaeon's independent behavioral policy on cs-c3-2 (150 rows, 12 sealed queries); CVT and SlidingBoundaries archives NOT qualified (TECHNE-03/04 open)",
+      "installed_version": "0.12.0",
+      "import": {
+        "status": "IMPORTS",
+        "seconds": 2.8
+      },
+      "wrapper_present": [
+        "techne/lib/donors/pyribs_adapter.py",
+        "techne/h3_retention/adapter.py",
+        "techne/h3_retention/archaeon_seam.py"
+      ],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/acquisition/receipts/adapter_qualification-pyribs-20260911T065018Z.json",
+        "techne/tests/test_h3_retention.py",
+        "techne/tests/test_donor_adapters.py"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [
+          "agents/hephaestus/src/diversity_forge.py"
+        ],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {
+        "techne/lib/donors/pyribs_adapter.py": "3e9c5b064 2026-08-31",
+        "techne/h3_retention/adapter.py": "75e92a69e 2026-09-10",
+        "techne/h3_retention/archaeon_seam.py": "2baf0680f 2026-09-11"
+      },
+      "labels": [
+        "ACQUIRED",
+        "IMPORT-TESTED",
+        "WRAPPED",
+        "CONTROLLED",
+        "CONSUMED"
+      ]
+    },
+    {
+      "name": "discopy",
+      "dist": "discopy",
+      "module": "discopy",
+      "upstream": "github.com/discopy/discopy",
+      "license": "BSD-3",
+      "origin": "Gen-0 2026-08-31",
+      "wrapper": [
+        "techne/lib/donors/discopy_adapter.py"
+      ],
+      "controls": [
+        "techne/tests/test_donor_adapters.py"
+      ],
+      "blockers": [],
+      "notes": "compose + tensor_eval only; Gen-0 B5 said: no consumer within a generation or two = arsenal weight",
+      "installed_version": "1.2.2",
+      "import": {
+        "status": "IMPORTS",
+        "seconds": 0.5
+      },
+      "wrapper_present": [
+        "techne/lib/donors/discopy_adapter.py"
+      ],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/tests/test_donor_adapters.py"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {
+        "techne/lib/donors/discopy_adapter.py": "3e9c5b064 2026-08-31"
+      },
+      "labels": [
+        "ACQUIRED",
+        "IMPORT-TESTED",
+        "WRAPPED",
+        "CONTROLLED"
+      ]
+    },
+    {
+      "name": "egglog",
+      "dist": "egglog",
+      "module": "egglog",
+      "upstream": "github.com/egraphs-good/egglog-python",
+      "license": "MIT",
+      "origin": "pre-Gen-0 install, reconciled 2026-08-31",
+      "wrapper": [
+        "techne/lib/donors/egglog_adapter.py",
+        "techne/loop/egglog_saturation_demo.py"
+      ],
+      "controls": [
+        "techne/tests/test_donor_adapters.py"
+      ],
+      "blockers": [
+        "B2 Family A vs Family B (Lexis) -- see notes"
+      ],
+      "notes": "only Python-reachable member of the UW PLSE e-graph family; Ergon's gen0/family_b_probe.py (2026-08-31) recorded FAMILY_B_REQUIRES_NEW_SYNTHESIS_LAYER on the RM genotype question",
+      "installed_version": "13.2.0",
+      "import": {
+        "status": "IMPORTS",
+        "seconds": 0.3
+      },
+      "wrapper_present": [
+        "techne/lib/donors/egglog_adapter.py",
+        "techne/loop/egglog_saturation_demo.py"
+      ],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/tests/test_donor_adapters.py"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [
+          "ergon/gen0/family_b_probe.py"
+        ],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {
+        "techne/lib/donors/egglog_adapter.py": "3e9c5b064 2026-08-31",
+        "techne/loop/egglog_saturation_demo.py": "631ee060e 2026-08-21"
+      },
+      "labels": [
+        "ACQUIRED",
+        "IMPORT-TESTED",
+        "WRAPPED",
+        "CONTROLLED",
+        "CONSUMED",
+        "BLOCKED"
+      ]
+    },
+    {
+      "name": "cvc5",
+      "dist": "cvc5",
+      "module": "cvc5",
+      "upstream": "github.com/cvc5/cvc5",
+      "license": "BSD-3",
+      "origin": "Gen-0 2026-08-31",
+      "wrapper": [
+        "techne/lib/donors/cvc5_adapter.py"
+      ],
+      "controls": [
+        "techne/donor_smt_comparison_2026-08-31.json",
+        "techne/tests/test_donor_adapters.py"
+      ],
+      "blockers": [
+        "B3 teardown segfault worked around by ordering, not enforced by a test"
+      ],
+      "notes": "REDUNDANT_AT_GEN0: 6/6 QF_LIA agreement with z3; z3 has since been qualified as H1's oracle (2048/2048) and has 6 direct consumers",
+      "installed_version": "1.3.4",
+      "import": {
+        "status": "IMPORTS",
+        "seconds": 0.0
+      },
+      "wrapper_present": [
+        "techne/lib/donors/cvc5_adapter.py"
+      ],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/donor_smt_comparison_2026-08-31.json",
+        "techne/tests/test_donor_adapters.py"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {
+        "techne/lib/donors/cvc5_adapter.py": "3e9c5b064 2026-08-31"
+      },
+      "labels": [
+        "ACQUIRED",
+        "IMPORT-TESTED",
+        "WRAPPED",
+        "CONTROLLED",
+        "BLOCKED",
+        "SUPERSEDED (by z3, qualified 2026-09-10)"
+      ]
+    },
+    {
+      "name": "stitch",
+      "dist": "stitch_core",
+      "module": "stitch_core",
+      "upstream": "github.com/mlb2251/stitch (core) + mlb2251/stitch_bindings (wheel)",
+      "license": "core MIT @0ef5ec7f1709; bindings UNRESOLVED @v0.1.29",
+      "origin": "held 2026-08-31; acquired 2026-09-09/10 (H0-H5 lane)",
+      "wrapper": [
+        "techne/acquisition/checks/stitch_first_check.py",
+        "techne/acquisition/exports"
+      ],
+      "controls": [
+        "techne/acquisition/receipts/adapter_qualification-stitch_rust_core-20260911T074111Z.json",
+        "techne/acquisition/receipts/paper_reproduction-stitch_rust_core-20260910T161201Z.json"
+      ],
+      "blockers": [
+        "D-17 v1 amendment (operator): bindings dev-only on licence; core MIT export route",
+        "TECHNE-43: section-1 declaration + 8 boundary fixtures (Vivarium contract v1.1: a scientific kind may NOT call an external executable at 1.0)"
+      ],
+      "notes": "on the only held-out-legal corpus (PHASE1_3) stitch returns 0 abstractions and Archaeon's own extractor also returns 0; on ALL_17 every abstraction has arity 0; installed in the ISOLATED tool env (TECHNE_TOOL_CACHE), not the default interpreter",
+      "installed_version": null,
+      "import": {
+        "status": "FAILS",
+        "seconds": 0.0,
+        "error": "ModuleNotFoundError: No module named 'stitch_core'"
+      },
+      "wrapper_present": [
+        "techne/acquisition/checks/stitch_first_check.py",
+        "techne/acquisition/exports"
+      ],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/acquisition/receipts/adapter_qualification-stitch_rust_core-20260911T074111Z.json",
+        "techne/acquisition/receipts/paper_reproduction-stitch_rust_core-20260910T161201Z.json"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {
+        "techne/acquisition/checks/stitch_first_check.py": "8a03fdb1a 2026-09-09",
+        "techne/acquisition/exports": "8a03fdb1a 2026-09-09"
+      },
+      "labels": [
+        "ACQUIRED (isolated env; see stitch lock + installation receipts)",
+        "IMPORT-TESTED (isolated env)",
+        "WRAPPED",
+        "CONTROLLED",
+        "BLOCKED"
+      ]
+    },
+    {
+      "name": "z3",
+      "dist": "z3-solver",
+      "module": "z3",
+      "upstream": "github.com/Z3Prover/z3",
+      "license": "MIT",
+      "origin": "pre-existing; qualified 2026-09-10",
+      "wrapper": [
+        "techne/acquisition/checks/z3_h1_oracle.py",
+        "harmonia/experiments/z3_backend.py"
+      ],
+      "controls": [
+        "techne/acquisition/receipts/adapter_qualification-z3-20260910T222642Z.json"
+      ],
+      "blockers": [
+        "TECHNE-22 UNKNOWN-by-incompleteness never elicited on this build"
+      ],
+      "notes": "exhaustive parity 2048/2048 vs proteus.eval.boolean.truth_table, 32,640 pairs, every witness independently validated",
+      "installed_version": "5.0.0.0",
+      "import": {
+        "status": "IMPORTS",
+        "seconds": 0.1
+      },
+      "wrapper_present": [
+        "techne/acquisition/checks/z3_h1_oracle.py",
+        "harmonia/experiments/z3_backend.py"
+      ],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/acquisition/receipts/adapter_qualification-z3-20260910T222642Z.json"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [
+          "charon/agents/erebos/generators/_predicate_handles.py",
+          "harmonia/experiments/m0_anticalibration.py",
+          "harmonia/experiments/z3_backend.py",
+          "harmonia/soak/falsecert_z3_battery.py",
+          "prometheus_math/optimization.py"
+        ],
+        "via_wrapper": [
+          {
+            "wrapper": "harmonia/experiments/z3_backend.py",
+            "consumer": "harmonia/experiments/verifier_lens.py"
+          },
+          {
+            "wrapper": "harmonia/experiments/z3_backend.py",
+            "consumer": "harmonia/soak/denominator_impact.py"
+          },
+          {
+            "wrapper": "harmonia/experiments/z3_backend.py",
+            "consumer": "harmonia/soak/falsecert_z3_battery.py"
+          }
+        ]
+      },
+      "wrapper_git_last": {
+        "techne/acquisition/checks/z3_h1_oracle.py": "35be9ad4a 2026-09-10",
+        "harmonia/experiments/z3_backend.py": "830a83a3f 2026-06-09"
+      },
+      "labels": [
+        "ACQUIRED",
+        "IMPORT-TESTED",
+        "WRAPPED",
+        "CONTROLLED",
+        "CONSUMED",
+        "BLOCKED"
+      ]
+    },
+    {
+      "name": "hypothesis",
+      "dist": "hypothesis",
+      "module": "hypothesis",
+      "upstream": "github.com/HypothesisWorks/hypothesis",
+      "license": "MPL-2.0",
+      "origin": "pre-existing; qualified 2026-09-11",
+      "wrapper": [
+        "techne/acquisition/checks/hypothesis_program_minimiser.py",
+        "techne/ladder_circuits/adversarial_registry.py"
+      ],
+      "controls": [
+        "techne/acquisition/receipts/adapter_qualification-hypothesis-20260911T065703Z.json"
+      ],
+      "blockers": [],
+      "notes": "SOUND 45/45, NOT MINIMAL 24/45 (max excess 4 nodes); usefulness over enumeration not established",
+      "installed_version": "6.165.10",
+      "import": {
+        "status": "IMPORTS",
+        "seconds": 0.2
+      },
+      "wrapper_present": [
+        "techne/acquisition/checks/hypothesis_program_minimiser.py",
+        "techne/ladder_circuits/adversarial_registry.py"
+      ],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/acquisition/receipts/adapter_qualification-hypothesis-20260911T065703Z.json"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [
+          "prometheus_math/adversarial_fixtures.py",
+          "proteus/eval/hypothesis_strategy.py"
+        ],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {
+        "techne/acquisition/checks/hypothesis_program_minimiser.py": "a8e52d45a 2026-09-11",
+        "techne/ladder_circuits/adversarial_registry.py": "39ec02891 2026-08-22"
+      },
+      "labels": [
+        "ACQUIRED",
+        "IMPORT-TESTED",
+        "WRAPPED",
+        "CONTROLLED",
+        "CONSUMED"
+      ]
+    },
+    {
+      "name": "cvxpy+CLARABEL+SCS",
+      "dist": "cvxpy",
+      "module": "cvxpy",
+      "upstream": "github.com/cvxpy/cvxpy; oxfordcontrol/Clarabel.rs; cvxgrp/scs",
+      "license": "Apache-2.0 all three",
+      "origin": "pre-existing; gap fixture 2026-09-10/11",
+      "wrapper": [
+        "prometheus_math/optimization_sdp.py",
+        "techne/scripts/capability_gap_fixture.py"
+      ],
+      "controls": [
+        "techne/tests/test_capability_gap_fixture.py",
+        "techne/acquisition/GAP_FIXTURE_SDP.json"
+      ],
+      "blockers": [
+        "TECHNE-46 no accuracy requirement declared (Harmonia/Aporia)"
+      ],
+      "notes": "every arm correctness-scored (TECHNE-45); SCS default tolerance is silently wrong at cond >= 1e4, eps=1e-9 fixes it",
+      "installed_version": "1.9.2",
+      "import": {
+        "status": "IMPORTS",
+        "seconds": 0.8
+      },
+      "wrapper_present": [
+        "prometheus_math/optimization_sdp.py",
+        "techne/scripts/capability_gap_fixture.py"
+      ],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/tests/test_capability_gap_fixture.py",
+        "techne/acquisition/GAP_FIXTURE_SDP.json"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [
+          "prometheus_math/optimization.py",
+          "prometheus_math/optimization_qp.py",
+          "prometheus_math/optimization_sdp.py",
+          "prometheus_math/optimization_socp.py",
+          "roles/Elenchus/investigations/2026-09-11_epistemic_debt/verify_sdp_family.py"
+        ],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {
+        "prometheus_math/optimization_sdp.py": "b58d6bfb9 2026-04-29",
+        "techne/scripts/capability_gap_fixture.py": "99628d759 2026-09-11"
+      },
+      "labels": [
+        "ACQUIRED",
+        "IMPORT-TESTED",
+        "WRAPPED",
+        "CONTROLLED",
+        "CONSUMED",
+        "BLOCKED"
+      ]
+    },
+    {
+      "name": "dreamcoder",
+      "dist": null,
+      "module": null,
+      "upstream": "github.com/ellisk42/ec",
+      "license": "only notice is AngularJS MIT text (TECHNE-16 UNRESOLVED)",
+      "origin": "H0-H5 lane 2026-09-09",
+      "wrapper": [
+        "techne/acquisition/checks/dreamcoder_smoke.py"
+      ],
+      "controls": [
+        "techne/acquisition/receipts/first_useful_check-dreamcoder-20260910T222933Z.json"
+      ],
+      "blockers": [
+        "TECHNE-15 build in WSL2 (docker + opam 4.06.1); 14 of 38 requirement pins have a wheel here",
+        "TECHNE-16 licence"
+      ],
+      "notes": "Nyx delivered a DreamCoder-shaped organ independently (memory note 2026-09-11); Techne's receipt is the obstruction record, not a build",
+      "installed_version": null,
+      "import": {
+        "status": "N/A"
+      },
+      "wrapper_present": [
+        "techne/acquisition/checks/dreamcoder_smoke.py"
+      ],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/acquisition/receipts/first_useful_check-dreamcoder-20260910T222933Z.json"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {
+        "techne/acquisition/checks/dreamcoder_smoke.py": "d3ce43c24 2026-09-11"
+      },
+      "labels": [
+        "CANDIDATE",
+        "BLOCKED (TECHNE-15 build, TECHNE-16 licence)"
+      ]
+    },
+    {
+      "name": "POET",
+      "dist": null,
+      "module": null,
+      "upstream": "github.com/uber-research/poet",
+      "license": "Apache-2.0",
+      "origin": "H0-H5 lane",
+      "wrapper": [],
+      "controls": [],
+      "blockers": [
+        "TECHNE-17 PARKED to 2026-12-11: H4 1.1 reference arm by design (Harmonia ruling)"
+      ],
+      "notes": "the acquisition command's REFUSAL is the artifact until H4 1.0 closes; supply-chain rule: PyPI 'poet' is an unrelated package",
+      "installed_version": null,
+      "import": {
+        "status": "N/A"
+      },
+      "wrapper_present": [],
+      "wrapper_missing": [],
+      "controls_present": [],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {},
+      "labels": [
+        "CANDIDATE",
+        "PARKED to 2026-12-11"
+      ]
+    },
+    {
+      "name": "SDPA-GMP",
+      "dist": null,
+      "module": null,
+      "upstream": "sdpa.sourceforge.net (SDPA-GMP)",
+      "license": "GPL",
+      "origin": "TECHNE-39 (unbuilt)",
+      "wrapper": [],
+      "controls": [],
+      "blockers": [
+        "TECHNE-39 L: no consumer has declared a certificate requirement (report_95 / report_166 are the certificate-shaped candidates, not queued)"
+      ],
+      "notes": "the only route to a verifiable certificate beyond double precision; not a purchase",
+      "installed_version": null,
+      "import": {
+        "status": "N/A"
+      },
+      "wrapper_present": [],
+      "wrapper_missing": [],
+      "controls_present": [],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {},
+      "labels": [
+        "CANDIDATE (no consumer has declared the requirement)"
+      ]
+    },
+    {
+      "name": "MOSEK",
+      "dist": null,
+      "module": null,
+      "upstream": "mosek.com",
+      "license": "commercial ($4,300 perpetual)",
+      "origin": "REQ-029 roadmap row",
+      "wrapper": [],
+      "controls": [
+        "techne/acquisition/GAP_FIXTURE_SDP.json"
+      ],
+      "blockers": [],
+      "notes": "STRUCK 2026-09-11: no roadmap SDP at 1e10 (Harmonia), the 1e10 instance was Techne's own defect (ELEN-TECHNE-38), and the free path handles every regime tested",
+      "installed_version": null,
+      "import": {
+        "status": "N/A"
+      },
+      "wrapper_present": [],
+      "wrapper_missing": [],
+      "controls_present": [
+        "techne/acquisition/GAP_FIXTURE_SDP.json"
+      ],
+      "controls_missing": [],
+      "consumers": {
+        "direct": [],
+        "via_wrapper": []
+      },
+      "wrapper_git_last": {},
+      "labels": [
+        "REJECTED (struck 2026-09-11)"
+      ]
+    }
+  ]
+}

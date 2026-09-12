@@ -1,5 +1,8 @@
 # Donor inventory -- Techne Gen-0
 
+> SUPERSEDED IN PART, 2026-09-12 (Techne): the dispositions below are the 2026-08-31 snapshot. The measured state today is techne/acquisition/DONOR_DISPOSITION_2026-09-11.json (script techne/scripts/donor_disposition.py) and the closeout roles/Techne/DONOR_FOUNDRY_CLOSEOUT_2026-09-12.md. Headline: the donors acquired direct consumers (tensorly, ribs, egglog, z3, hypothesis, cvxpy); the adapter contract techne.lib.donors acquired NONE outside techne/; discopy and cvc5 have no consumer anywhere (TECHNE-51, operator); the usage exemplars this file implied were never written and are not being written now. Nothing below is rewritten.
+
+
 Generated 2026-08-31. Machine-readable source: `techne/donor_inventory.json`.
 
 Every field below was measured on this machine. Installation is not adoption: a donor listed as WRAPPED_AND_TESTED is callable, replayable and honest about its own selection relation, and nothing more. Whether any of it earns rent is for the benches to find out.

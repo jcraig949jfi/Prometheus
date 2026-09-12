@@ -1,0 +1,163 @@
+DONOR DISPOSITION -- built 2026-09-12T00:43:24Z at 01e4812a5, interpreter 3.12.10
+
+donor                installed  import   wrap ctrl direct via  labels
+--------------------------------------------------------------------------------------------------------------
+tensorly             0.9.0      IMPORTS  2    3    4      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED
+pyribs               0.12.0     IMPORTS  3    3    1      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED
+discopy              1.2.2      IMPORTS  1    1    0      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED
+egglog               13.2.0     IMPORTS  2    1    1      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED, BLOCKED
+cvc5                 1.3.4      IMPORTS  1    2    0      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, BLOCKED, SUPERSEDED (by z3, qualified 2026-09-10)
+stitch               -          FAILS    2    2    0      0    ACQUIRED (isolated env; see stitch lock + installation receipts), IMPORT-TESTED (isolated env), WRAPPED, CONTROLLED, BLOCKED
+z3                   5.0.0.0    IMPORTS  2    1    5      3    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED, BLOCKED
+hypothesis           6.165.10   IMPORTS  2    1    2      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED
+cvxpy+CLARABEL+SCS   1.9.2      IMPORTS  2    2    5      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED, BLOCKED
+dreamcoder           -          N/A      1    1    0      0    CANDIDATE, BLOCKED (TECHNE-15 build, TECHNE-16 licence)
+POET                 -          N/A      0    0    0      0    CANDIDATE, PARKED to 2026-12-11
+SDPA-GMP             -          N/A      0    0    0      0    CANDIDATE (no consumer has declared the requirement)
+MOSEK                -          N/A      0    1    0      0    REJECTED (struck 2026-09-11)
+
+Gen-0 adapter contract (techne.lib.donors) importers outside techne/: NONE
+
+==============================================================================================================
+tensorly   upstream github.com/tensorly/tensorly   licence BSD-3 (modified)
+  origin      Gen-0 2026-08-31
+  installed   0.9.0   import IMPORTS
+  wrappers    techne/lib/donors/tensorly_adapter.py (3e9c5b064 2026-08-31), prometheus_math/symbolic_tensor_decomp.py (d854ff0b3 2026-04-25)
+  controls    techne/donor_tensor_parity_2026-08-31.json, prometheus_math/tests/test_tensor_decomposition.py, techne/tests/test_donor_adapters.py
+  direct use  cartography/shared/scripts/dissection_tensor.py, evidence_wiki/benchmarks/run_benchmarks.py, evidence_wiki/ew/compiler.py, prometheus_math/symbolic_tensor_decomp.py
+  via wrapper NONE outside techne/
+  blockers    none
+  notes       TT parity 5/5 vs quimb with ground truth by construction (NATIVE_EARNS_DISTINCT_ROLE)
+  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED
+==============================================================================================================
+pyribs   upstream github.com/icaros-usc/pyribs   licence MIT
+  origin      Gen-0 2026-08-31; H3 adapter 2026-09-10
+  installed   0.12.0   import IMPORTS
+  wrappers    techne/lib/donors/pyribs_adapter.py (3e9c5b064 2026-08-31), techne/h3_retention/adapter.py (75e92a69e 2026-09-10), techne/h3_retention/archaeon_seam.py (2baf0680f 2026-09-11)
+  controls    techne/acquisition/receipts/adapter_qualification-pyribs-20260911T065018Z.json, techne/tests/test_h3_retention.py, techne/tests/test_donor_adapters.py
+  direct use  agents/hephaestus/src/diversity_forge.py
+  via wrapper NONE outside techne/
+  blockers    none
+  notes       H3 GridArchive adapter retains the IDENTICAL set to Archaeon's independent behavioral policy on cs-c3-2 (150 rows, 12 sealed queries); CVT and SlidingBoundaries archives NOT qualified (TECHNE-03/04 open)
+  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED
+==============================================================================================================
+discopy   upstream github.com/discopy/discopy   licence BSD-3
+  origin      Gen-0 2026-08-31
+  installed   1.2.2   import IMPORTS
+  wrappers    techne/lib/donors/discopy_adapter.py (3e9c5b064 2026-08-31)
+  controls    techne/tests/test_donor_adapters.py
+  direct use  NONE outside techne/
+  via wrapper NONE outside techne/
+  blockers    none
+  notes       compose + tensor_eval only; Gen-0 B5 said: no consumer within a generation or two = arsenal weight
+  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED
+==============================================================================================================
+egglog   upstream github.com/egraphs-good/egglog-python   licence MIT
+  origin      pre-Gen-0 install, reconciled 2026-08-31
+  installed   13.2.0   import IMPORTS
+  wrappers    techne/lib/donors/egglog_adapter.py (3e9c5b064 2026-08-31), techne/loop/egglog_saturation_demo.py (631ee060e 2026-08-21)
+  controls    techne/tests/test_donor_adapters.py
+  direct use  ergon/gen0/family_b_probe.py
+  via wrapper NONE outside techne/
+  blockers    B2 Family A vs Family B (Lexis) -- see notes
+  notes       only Python-reachable member of the UW PLSE e-graph family; Ergon's gen0/family_b_probe.py (2026-08-31) recorded FAMILY_B_REQUIRES_NEW_SYNTHESIS_LAYER on the RM genotype question
+  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED, BLOCKED
+==============================================================================================================
+cvc5   upstream github.com/cvc5/cvc5   licence BSD-3
+  origin      Gen-0 2026-08-31
+  installed   1.3.4   import IMPORTS
+  wrappers    techne/lib/donors/cvc5_adapter.py (3e9c5b064 2026-08-31)
+  controls    techne/donor_smt_comparison_2026-08-31.json, techne/tests/test_donor_adapters.py
+  direct use  NONE outside techne/
+  via wrapper NONE outside techne/
+  blockers    B3 teardown segfault worked around by ordering, not enforced by a test
+  notes       REDUNDANT_AT_GEN0: 6/6 QF_LIA agreement with z3; z3 has since been qualified as H1's oracle (2048/2048) and has 6 direct consumers
+  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, BLOCKED, SUPERSEDED (by z3, qualified 2026-09-10)
+==============================================================================================================
+stitch   upstream github.com/mlb2251/stitch (core) + mlb2251/stitch_bindings (wheel)   licence core MIT @0ef5ec7f1709; bindings UNRESOLVED @v0.1.29
+  origin      held 2026-08-31; acquired 2026-09-09/10 (H0-H5 lane)
+  installed   None   import FAILS  -- ModuleNotFoundError: No module named 'stitch_core'
+  wrappers    techne/acquisition/checks/stitch_first_check.py (8a03fdb1a 2026-09-09), techne/acquisition/exports (8a03fdb1a 2026-09-09)
+  controls    techne/acquisition/receipts/adapter_qualification-stitch_rust_core-20260911T074111Z.json, techne/acquisition/receipts/paper_reproduction-stitch_rust_core-20260910T161201Z.json
+  direct use  NONE outside techne/
+  via wrapper NONE outside techne/
+  blockers    D-17 v1 amendment (operator): bindings dev-only on licence; core MIT export route; TECHNE-43: section-1 declaration + 8 boundary fixtures (Vivarium contract v1.1: a scientific kind may NOT call an external executable at 1.0)
+  notes       on the only held-out-legal corpus (PHASE1_3) stitch returns 0 abstractions and Archaeon's own extractor also returns 0; on ALL_17 every abstraction has arity 0; installed in the ISOLATED tool env (TECHNE_TOOL_CACHE), not the default interpreter
+  labels      ACQUIRED (isolated env; see stitch lock + installation receipts), IMPORT-TESTED (isolated env), WRAPPED, CONTROLLED, BLOCKED
+==============================================================================================================
+z3   upstream github.com/Z3Prover/z3   licence MIT
+  origin      pre-existing; qualified 2026-09-10
+  installed   5.0.0.0   import IMPORTS
+  wrappers    techne/acquisition/checks/z3_h1_oracle.py (35be9ad4a 2026-09-10), harmonia/experiments/z3_backend.py (830a83a3f 2026-06-09)
+  controls    techne/acquisition/receipts/adapter_qualification-z3-20260910T222642Z.json
+  direct use  charon/agents/erebos/generators/_predicate_handles.py, harmonia/experiments/m0_anticalibration.py, harmonia/experiments/z3_backend.py, harmonia/soak/falsecert_z3_battery.py, prometheus_math/optimization.py
+  via wrapper harmonia/experiments/verifier_lens.py <- harmonia/experiments/z3_backend.py, harmonia/soak/denominator_impact.py <- harmonia/experiments/z3_backend.py, harmonia/soak/falsecert_z3_battery.py <- harmonia/experiments/z3_backend.py
+  blockers    TECHNE-22 UNKNOWN-by-incompleteness never elicited on this build
+  notes       exhaustive parity 2048/2048 vs proteus.eval.boolean.truth_table, 32,640 pairs, every witness independently validated
+  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED, BLOCKED
+==============================================================================================================
+hypothesis   upstream github.com/HypothesisWorks/hypothesis   licence MPL-2.0
+  origin      pre-existing; qualified 2026-09-11
+  installed   6.165.10   import IMPORTS
+  wrappers    techne/acquisition/checks/hypothesis_program_minimiser.py (a8e52d45a 2026-09-11), techne/ladder_circuits/adversarial_registry.py (39ec02891 2026-08-22)
+  controls    techne/acquisition/receipts/adapter_qualification-hypothesis-20260911T065703Z.json
+  direct use  prometheus_math/adversarial_fixtures.py, proteus/eval/hypothesis_strategy.py
+  via wrapper NONE outside techne/
+  blockers    none
+  notes       SOUND 45/45, NOT MINIMAL 24/45 (max excess 4 nodes); usefulness over enumeration not established
+  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED
+==============================================================================================================
+cvxpy+CLARABEL+SCS   upstream github.com/cvxpy/cvxpy; oxfordcontrol/Clarabel.rs; cvxgrp/scs   licence Apache-2.0 all three
+  origin      pre-existing; gap fixture 2026-09-10/11
+  installed   1.9.2   import IMPORTS
+  wrappers    prometheus_math/optimization_sdp.py (b58d6bfb9 2026-04-29), techne/scripts/capability_gap_fixture.py (99628d759 2026-09-11)
+  controls    techne/tests/test_capability_gap_fixture.py, techne/acquisition/GAP_FIXTURE_SDP.json
+  direct use  prometheus_math/optimization.py, prometheus_math/optimization_qp.py, prometheus_math/optimization_sdp.py, prometheus_math/optimization_socp.py, roles/Elenchus/investigations/2026-09-11_epistemic_debt/verify_sdp_family.py
+  via wrapper NONE outside techne/
+  blockers    TECHNE-46 no accuracy requirement declared (Harmonia/Aporia)
+  notes       every arm correctness-scored (TECHNE-45); SCS default tolerance is silently wrong at cond >= 1e4, eps=1e-9 fixes it
+  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED, BLOCKED
+==============================================================================================================
+dreamcoder   upstream github.com/ellisk42/ec   licence only notice is AngularJS MIT text (TECHNE-16 UNRESOLVED)
+  origin      H0-H5 lane 2026-09-09
+  installed   None   import N/A
+  wrappers    techne/acquisition/checks/dreamcoder_smoke.py (d3ce43c24 2026-09-11)
+  controls    techne/acquisition/receipts/first_useful_check-dreamcoder-20260910T222933Z.json
+  direct use  NONE outside techne/
+  via wrapper NONE outside techne/
+  blockers    TECHNE-15 build in WSL2 (docker + opam 4.06.1); 14 of 38 requirement pins have a wheel here; TECHNE-16 licence
+  notes       Nyx delivered a DreamCoder-shaped organ independently (memory note 2026-09-11); Techne's receipt is the obstruction record, not a build
+  labels      CANDIDATE, BLOCKED (TECHNE-15 build, TECHNE-16 licence)
+==============================================================================================================
+POET   upstream github.com/uber-research/poet   licence Apache-2.0
+  origin      H0-H5 lane
+  installed   None   import N/A
+  wrappers    NONE
+  controls    NONE
+  direct use  NONE outside techne/
+  via wrapper NONE outside techne/
+  blockers    TECHNE-17 PARKED to 2026-12-11: H4 1.1 reference arm by design (Harmonia ruling)
+  notes       the acquisition command's REFUSAL is the artifact until H4 1.0 closes; supply-chain rule: PyPI 'poet' is an unrelated package
+  labels      CANDIDATE, PARKED to 2026-12-11
+==============================================================================================================
+SDPA-GMP   upstream sdpa.sourceforge.net (SDPA-GMP)   licence GPL
+  origin      TECHNE-39 (unbuilt)
+  installed   None   import N/A
+  wrappers    NONE
+  controls    NONE
+  direct use  NONE outside techne/
+  via wrapper NONE outside techne/
+  blockers    TECHNE-39 L: no consumer has declared a certificate requirement (report_95 / report_166 are the certificate-shaped candidates, not queued)
+  notes       the only route to a verifiable certificate beyond double precision; not a purchase
+  labels      CANDIDATE (no consumer has declared the requirement)
+==============================================================================================================
+MOSEK   upstream mosek.com   licence commercial ($4,300 perpetual)
+  origin      REQ-029 roadmap row
+  installed   None   import N/A
+  wrappers    NONE
+  controls    techne/acquisition/GAP_FIXTURE_SDP.json
+  direct use  NONE outside techne/
+  via wrapper NONE outside techne/
+  blockers    none
+  notes       STRUCK 2026-09-11: no roadmap SDP at 1e10 (Harmonia), the 1e10 instance was Techne's own defect (ELEN-TECHNE-38), and the free path handles every regime tested
+  labels      REJECTED (struck 2026-09-11)
