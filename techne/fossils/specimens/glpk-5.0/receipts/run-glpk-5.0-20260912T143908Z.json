@@ -1,0 +1,97 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "glpk-5.0",
+  "receipt_id": "run-glpk-5.0-20260912T143908Z",
+  "written_utc": "20260912T143908Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/glpk-5.0",
+  "harness_sha256": {
+    "lp.mod": "f201383568282e39f5dc3a8445cdc40fc480c16929b6b04756fc05c76e6c52cc"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "c0b0bdcab06c9d5c21cbde9e4d07275fd2b382206cca70afd0bf6fa8c85820d2",
+  "recipe_sha256": "39b3a86cd7e208fb5ea34e226aa5eb871232bd46debba65e5f539ca4f50a64e3",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 6.22,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "configure",
+      "cmd": "./configure --disable-shared >/dev/null 2>&1; echo configured",
+      "exit": 0,
+      "seconds": 4.8,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "configured\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | tail -2; test -x examples/glpsol || test -x src/glpsol || find . -name glpsol -type f",
+      "exit": 0,
+      "seconds": 1.61,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Making all in src\nMaking all in examples\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "solve a 2-var LP to its known optimum (10 at x=3,y=1)",
+      "cmd": "G=$(find $BODY/upstream/tree -name glpsol -type f | head -1); $G --math $HARNESS/lp.mod 2>&1 | tail -15",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "3 rows, 2 columns, 6 non-zeros\nPreprocessing...\n2 rows, 2 columns, 4 non-zeros\nScaling...\n A: min|aij| =  1.000e+00  max|aij| =  3.000e+00  ratio =  3.000e+00\nProblem data seem to be well scaled\nConstructing initial basis...\nSize of triangular part is 2\n*     0: obj =  -0.000000000e+00 inf =   0.000e+00 (2)\n*     1: obj =   1.200000000e+01 inf =   0.000e+00 (0)\nOPTIMAL LP SOLUTION FOUND\nTime used:   0.0 secs\nMemory used: 0.1 Mb (102258 bytes)\nOBJECTIVE 12 x 4 y 0\nModel has been successfully processed\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "config.log",
+      "sha256": "bd315006ef66ba335d7fdcbc42bbe964795a362297f1a9b6eeb7831db8aaf9a6",
+      "bytes": 22590
+    },
+    {
+      "path": "libtool",
+      "sha256": "dfe9ea4a2c7cce9b48735f0c95c0f53642f26a8496a962f8830b92e3ee66aa41",
+      "bytes": 294380
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

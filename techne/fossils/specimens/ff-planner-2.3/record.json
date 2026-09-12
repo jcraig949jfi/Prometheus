@@ -1,0 +1,151 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "ff-planner-2.3",
+  "canonical_name": "FF (Fast-Forward) planner v2.3 -- Joerg Hoffmann",
+  "aliases": [
+    "FF",
+    "Fast-Forward",
+    "Metric-FF ancestor"
+  ],
+  "lineage": "FF (2000, Hoffmann & Nebel): forward heuristic-search STRIPS/ADL planner -- the relaxed-plan (ignore-delete-lists) heuristic guiding enforced hill-climbing, then best-first; won AIPS-2000 and reset classical planning after Graphplan",
+  "domain": [
+    "planning",
+    "search",
+    "heuristic-search",
+    "strips",
+    "symbolic-ai"
+  ],
+  "era": "2000 (v2.3)",
+  "version": "FF-v2.3 from the author's Saarland page",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://fai.cs.uni-saarland.de/hoffmann/ff/FF-v2.3.tgz",
+        "filename": "FF-v2.3.tgz",
+        "sha256": "3d80fa30bb64b14de3a5156e202fc764301efbbb777fe3b703e67139a6150c88",
+        "bytes": 71350,
+        "extracted_to": "upstream/tree/FF-v2.3"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "site": "fai.cs.uni-saarland.de/hoffmann/ff",
+    "release": "v2.3"
+  },
+  "hashes": {
+    "tree_sha256": "a771bb5de2d01b712da6b7497fde0f42c25fd2d949d34209698ef1be083c70e0",
+    "n_files": 29,
+    "bytes": 435418,
+    "artifacts": [
+      {
+        "filename": "FF-v2.3.tgz",
+        "sha256": "3d80fa30bb64b14de3a5156e202fc764301efbbb777fe3b703e67139a6150c88",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\ff-planner-2.3",
+    "hash_list": "techne/fossils/specimens/ff-planner-2.3/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-2.0-or-later (FF's COPYRIGHT)",
+    "status": "copyleft",
+    "evidence": "source header"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "flex",
+    "bison"
+  ],
+  "build_system": "make (needs flex + bison for the PDDL parser)",
+  "compiler_or_interpreter": "gcc 12 + flex + bison (docker bookworm)",
+  "dependencies": [
+    "flex",
+    "bison"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./ff -o <domain.pddl> -f <facts.pddl>"
+  ],
+  "example": {
+    "command": "./ff -o gripper_domain.pddl -f gripper_prob.pddl",
+    "input": "PDDL domain + problem",
+    "output": "a step-by-step plan and the relaxed-plan heuristic trace"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Hoffmann, Nebel, The FF Planning System, JAIR 14 (2001)",
+    "fai.cs.uni-saarland.de/hoffmann/ff.html"
+  ],
+  "human_capability_summary": {
+    "built_to": "find a plan from initial state to goal in STRIPS/ADL by heuristic forward search, using the relaxed (delete-free) plan length as the guiding heuristic",
+    "pressure": "the huge branching of forward search; the relaxed-plan heuristic makes it tractable where blind or Graphplan-style search stalls",
+    "success_means": "a valid plan found fast on the AIPS/IPC benchmark domains (gripper, logistics, blocksworld)"
+  },
+  "known_human_problem_solved": "classical planning by relaxed-plan heuristic forward search",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/ff-planner-2.3/receipts/run-ff-planner-2.3-20260912T143441Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/ff-planner-2.3/receipts/run-ff-planner-2.3-20260912T143519Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/ff-planner-2.3/receipts/run-ff-planner-2.3-20260912T143553Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\ff-planner-2.3 ; tracked record+hashes at techne/fossils/specimens/ff-planner-2.3/",
+    "where_it_came_from": "{'site': 'fai.cs.uni-saarland.de/hoffmann/ff', 'release': 'v2.3'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; GPL-2.0-or-later (FF's COPYRIGHT)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run ff-planner-2.3",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/ff-planner-2.3/receipts/run-ff-planner-2.3-20260912T143553Z.json",
+    "what_humans_used_it_for": "find a plan from initial state to goal in STRIPS/ADL by heuristic forward search, using the relaxed (delete-free) plan length as the guiding heuristic"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "graphplan-blum-furst-1995",
+      "note": "both STRIPS planners; FF is forward heuristic search, Graphplan is planning-graph"
+    },
+    {
+      "relation": "algorithm_from",
+      "to": "Hoffmann & Nebel, JAIR 2001",
+      "note": "relaxed-plan (ignore-delete-lists) heuristic + enforced hill-climbing"
+    }
+  ],
+  "acquisition_tags": [
+    "planning",
+    "search",
+    "heuristic-search",
+    "strips",
+    "symbolic-ai"
+  ],
+  "hardware_assumptions": ""
+}

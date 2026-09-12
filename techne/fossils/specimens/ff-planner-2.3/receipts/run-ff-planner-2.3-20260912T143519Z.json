@@ -1,0 +1,60 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "ff-planner-2.3",
+  "receipt_id": "run-ff-planner-2.3-20260912T143519Z",
+  "written_utc": "20260912T143519Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/FF-v2.3",
+  "harness_sha256": {
+    "gripper_domain.pddl": "f980ce40ac71a64e68199ee1c57fd94ef3ae9c459239fd70f484a6263673e47d",
+    "gripper_prob.pddl": "9d0dfa13e42d6b118ec34b9fba31fc132a9ba3bacca433db3bba230ef1834114"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "a771bb5de2d01b712da6b7497fde0f42c25fd2d949d34209698ef1be083c70e0",
+  "recipe_sha256": "59ce5f1f009ceb76d5f6fb1895b515dfc0486c4cf84d737d085704b6fde68240",
+  "patches": [],
+  "probe": [
+    {
+      "name": "toolchain",
+      "cmd": "gcc --version | head -1; bison --version | head -1; flex --version",
+      "exit": 0,
+      "seconds": 6.09,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\nbison (GNU Bison) 3.8.2\nflex 2.6.4\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make (CC=gcc -fcommon: the GCC-10+ -fno-common default breaks 2000-era tentative definitions; a COMPILER FLAG, not a source change)",
+      "cmd": "make -s CC='gcc -fcommon' 2>&1 | grep -viE 'warning|deprecat' | tail -3; test -x ./ff",
+      "exit": 1,
+      "seconds": 0.85,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "/usr/bin/ld: scan-fct_pddl.tab.o:/w/upstream/tree/FF-v2.3/lex-fct_pddl.l:9: multiple definition of `gbracket_count'; main.o:/w/upstream/tree/FF-v2.3/main.c:147: first defined here\ncollect2: error: ld returned 1 exit status\nmake: *** [makefile:74: ff] Error 1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

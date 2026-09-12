@@ -1,0 +1,70 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "reed-solomon-rockliff-1991",
+  "receipt_id": "run-reed-solomon-rockliff-1991-20260912T143343Z",
+  "written_utc": "20260912T143343Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "5a38a755ff062098c8a9730f2a3bb3e3baa434fc874d2643bd8eea5851f54744",
+  "recipe_sha256": "f017bd7ed91c5280c3a32b385fbf03f7c5ff635dd64efea7aef4f3e6e5ea5466",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 6.54,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile (K&R)",
+      "cmd": "gcc -w -std=gnu89 -o $BODY/rs rs.c -lm 2>&1 | grep -i error; test -x $BODY/rs",
+      "exit": 0,
+      "seconds": 0.96,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "encode, corrupt, decode a Reed-Solomon codeword",
+      "cmd": "$BODY/rs 2>&1 | tail -25",
+      "exit": 0,
+      "seconds": 0.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": " 11       14            7\n 12       15            6\n 13       13           13\n 14        9           11\n 15        0           12\n\n\nResults for Reed-Solomon code (n= 15, k=  9, t=   3)\n\n  i  data[i]   recd[i](decoded)   (data, recd in polynomial form)\n  0     15       15\n  1     13       13\n  2     10       10\n  3      0        0\n  4      6        6\n  5     13       13\n  6      8        8\n  7      6        6\n  8      8        8\n  9      1        1\n 10      2        2\n 11      4        4\n 12     15       15\n 13      9        9\n 14      3        9\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

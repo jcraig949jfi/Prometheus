@@ -1,19 +1,25 @@
 {
-  "runner": "native",
+  "runner": "docker",
+  "image": "prometheus-fossil-goexplore:min",
   "workdir": "upstream/tree/robustified",
-  "probe": [{"name": "python", "cmd": "python --version"}],
+  "probe": [{"name": "python + numpy + gym", "cmd": "python --version; python -c 'import numpy,gym,cv2,scipy,matplotlib,loky; print(\"numpy\",numpy.__version__,\"gym\",gym.__version__)'"}],
   "build": [],
   "runs": [
-    {"name": "SOURCE-AT-PINNED-REVISION: the exploration modules parse (no execution, no env)",
-     "cmd": "python -c \"import ast,pathlib; fs=sorted(pathlib.Path('goexplore_py').glob('*.py')); [ast.parse(f.read_text(encoding='utf-8')) for f in fs]; print(len(fs),'goexplore_py files parse')\"",
-     "expect": {"exit": 0, "stdout_contains": ["files parse"]}},
-    {"name": "the blocking dependency is named: importing the package fails on a missing dep, not a syntax error",
-     "cmd": "python -c \"import goexplore_py.randselectors\" 2>&1; echo \"exit=$?\"",
-     "expect": {"exit": 0, "stdout_regex": "ModuleNotFoundError|ImportError"}}
+    {"name": "the archive/return-then-explore core imports (goexplore.py + its non-MuJoCo chain)",
+     "cmd": "for m in basics import_ai explorers utils goexplore montezuma_env generic_atari_env; do python -c \"import goexplore_py.$m\" || exit 1; done; echo IMPORTS_OK",
+     "expect": {"exit": 0, "stdout_contains": ["IMPORTS_OK"]}},
+    {"name": "the two MuJoCo-coupled modules are named blocked, not silently skipped",
+     "cmd": "python -c 'import goexplore_py.randselectors' 2>&1; echo rc=$?; python -c 'import goexplore_py.complex_fetch_env' 2>&1 | grep -i mujoco",
+     "expect": {"exit": 0, "stdout_regex": "mujoco"}}
   ],
-  "tests": [],
+  "tests": [
+    {"name": "goexplore.py (archive, cells, return-then-explore) is importable and exposes its module surface",
+     "cmd": "python -c \"import goexplore_py.goexplore as g; print('DONE' in dir(g), 'has_goexplore_module', bool(g.__file__))\"",
+     "expect": {"exit": 0, "stdout_contains": ["True"]}}
+  ],
+  "test_kind": "TECHNE",
   "track_products": false,
-  "classification_if_ok": "SOURCE_ONLY",
-  "test_classification_if_none": "NO_TESTS",
-  "notes": "Nyx requested a source-at-pinned-revision receipt (comms 201), no environment. The archive/selection logic (goexplore.py, randselectors.py) is pure Python, but the package __init__ chain imports the Atari/gym stack (first block: `loky`), which is NOT installed. Run 1 proves the source is syntactically whole; run 2 records the exact first blocking import. Classification SOURCE_ONLY, not RUNNABLE, is the honest state and is itself the evidence for the transfer question the operator ruling asks."
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "notes": "Managed MINIMAL environment for Nyx (NYX-44 / comms 204): docker prometheus-fossil-goexplore:min = python:3.7 + the 2020 pins MINUS atari-py, gym[atari], mujoco-py, glfw, baselines, tensorflow (environment/requirements-min.txt + go-explore-min.Dockerfile). MEASURED: 7 of 9 goexplore_py modules import here, INCLUDING goexplore.py (the archive + return-then-explore core Nyx most wants); the atari env modules import because gym 0.10.11 defers atari-py to env construction. Only randselectors.py and complex_fetch_env.py are BLOCKED, and specifically by mujoco_py (a MuJoCo import Nyx excluded), not by Atari. So the coupling that stops randselectors is a source fact (it does `from goexplore_py.complex_fetch_env import *` at top level), which Nyx's chop cuts through; it is not an environment gap. A SOURCE_ONLY parse-only path is preserved in the receipts history (run-...-20260912T125406Z)."
 }

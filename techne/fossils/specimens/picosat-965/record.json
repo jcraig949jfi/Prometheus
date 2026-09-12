@@ -1,0 +1,127 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "picosat-965",
+  "canonical_name": "PicoSAT 965 -- Armin Biere",
+  "aliases": [
+    "picosat"
+  ],
+  "lineage": "PicoSAT (2007-, JKU Linz, Armin Biere): compact CDCL SAT solver with aggressive clause learning, phase saving and a trace/proof mode; a distinct CDCL lineage from MiniSat and the ancestor of PrecoSAT/Lingeling",
+  "domain": [
+    "sat",
+    "logic",
+    "search",
+    "constraint-solving",
+    "proof-trace"
+  ],
+  "era": "2007 (965 rel. 2014)",
+  "version": "965 from fmv.jku.at (the author's site)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "http://fmv.jku.at/picosat/picosat-965.tar.gz",
+        "filename": "picosat-965.tar.gz",
+        "sha256": "15169b4f28ba8f628f353f6f75a100845cdef4a2244f101a02b6e5a26e46a754",
+        "bytes": 64386,
+        "extracted_to": "upstream/tree/picosat-965"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "site": "fmv.jku.at/picosat",
+    "release": "965"
+  },
+  "hashes": {
+    "tree_sha256": "e68ea1cb95417c291146d86d447b20a8a3b271c3b89b13e1648f38a4ff58cd94",
+    "n_files": 16,
+    "bytes": 318406,
+    "artifacts": [
+      {
+        "filename": "picosat-965.tar.gz",
+        "sha256": "15169b4f28ba8f628f353f6f75a100845cdef4a2244f101a02b6e5a26e46a754",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\picosat-965",
+    "hash_list": "techne/fossils/specimens/picosat-965/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE in tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "./configure.sh && make",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./picosat <cnf>"
+  ],
+  "example": {
+    "command": "./picosat sat.cnf",
+    "input": "DIMACS CNF",
+    "output": "s SATISFIABLE + v model, or s UNSATISFIABLE"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Biere, PicoSAT Essentials, JSAT 2008",
+    "fmv.jku.at/picosat"
+  ],
+  "human_capability_summary": {
+    "built_to": "decide propositional satisfiability and emit a model or an UNSAT proof trace, in a small self-contained solver",
+    "pressure": "the same industrial CNF pressure as MiniSat, plus a demand for checkable UNSAT proofs (the trace mode)",
+    "success_means": "correct SAT/UNSAT, models that satisfy the clauses, and a replayable resolution proof on UNSAT"
+  },
+  "known_human_problem_solved": "propositional satisfiability with proof tracing",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/picosat-965/receipts/run-picosat-965-20260912T143236Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\picosat-965 ; tracked record+hashes at techne/fossils/specimens/picosat-965/",
+    "where_it_came_from": "{'site': 'fmv.jku.at/picosat', 'release': '965'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; MIT",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run picosat-965",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/picosat-965/receipts/run-picosat-965-20260912T143236Z.json",
+    "what_humans_used_it_for": "decide propositional satisfiability and emit a model or an UNSAT proof trace, in a small self-contained solver"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "minisat-2.2.0",
+      "note": "both are CDCL SAT solvers descending from the Chaff/GRASP CDCL line; DIFFERENT implementations"
+    }
+  ],
+  "acquisition_tags": [
+    "sat",
+    "logic",
+    "search",
+    "constraint-solving",
+    "proof-trace"
+  ],
+  "hardware_assumptions": ""
+}

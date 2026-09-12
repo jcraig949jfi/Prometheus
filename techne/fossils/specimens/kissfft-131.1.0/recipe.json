@@ -1,0 +1,32 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/kissfft-131.1.0",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make all",
+      "cmd": "make -s all 2>&1 | grep -viE 'warning' | tail -3; ls kiss_fft.c.o"
+    }
+  ],
+  "runs": [
+    {
+      "name": "forward-then-inverse round trip via a tiny driver",
+      "cmd": "cat > $BODY/rt.c <<'CEOF'\n#include \"kiss_fft.h\"\n#include <math.h>\n#include <stdio.h>\nint main(){int N=32;kiss_fft_cfg f=kiss_fft_alloc(N,0,0,0),i=kiss_fft_alloc(N,1,0,0);kiss_fft_cpx x[32],X[32],y[32];for(int k=0;k<N;k++){x[k].r=cos(2*M_PI*3*k/N);x[k].i=0;}kiss_fft(f,x,X);kiss_fft(i,X,y);double e=0;for(int k=0;k<N;k++){double dr=y[k].r/N-x[k].r,di=y[k].i/N-x[k].i;e+=dr*dr+di*di;}printf(\"roundtrip_l2 %.3e\\n\", sqrt(e));return e<1e-12?0:1;}\nCEOF\ngcc -I. -O2 -o $BODY/rt $BODY/rt.c kiss_fft.c -lm && $BODY/rt",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "roundtrip_l2 \\d"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Techne's 8-line driver builds a pure cosine, forward + inverse FFT, and checks the L2 reconstruction error is at the floor (<1e-12). It exercises kiss_fft only; it is a smoke of the transform, not a decomposition."
+}

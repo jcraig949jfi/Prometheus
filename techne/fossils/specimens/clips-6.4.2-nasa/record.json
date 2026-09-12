@@ -95,11 +95,27 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\clips-6.4.2-nasa ; tracked record + hashes at techne/fossils/specimens/clips-6.4.2-nasa/",
-    "where_it_came_from": "{'project': 'sourceforge.net/projects/clipsrules', 'release': '6.4.2'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; public-domain (CLIPS is released into the public domain; see the release notes)",
-    "how_to_run_it": "techne/fossils/specimens/clips-6.4.2-nasa/recipe.json (runner wsl) ; `python -m techne.fossils.harvest run clips-6.4.2-nasa` reproduces the receipt",
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\clips-6.4.2-nasa ; tracked record+hashes at techne/fossils/specimens/clips-6.4.2-nasa/",
+    "where_it_came_from": "{'project': 'sourceforge.net/projects/clipsrules', 'release': '6.4.2'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; public-domain (CLIPS is released into the public domain; see the release notes)",
+    "how_to_run_it": "recipe.json (runner wsl); python -m techne.fossils.harvest run clips-6.4.2-nasa",
     "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/clips-6.4.2-nasa/receipts/run-clips-6.4.2-nasa-20260912T124643Z.json",
     "what_humans_used_it_for": "let domain experts encode knowledge as if-then rules over facts and have the machine chain them forward to conclusions, without writing procedural code"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "expert-systems",
+    "production-rules",
+    "symbolic-ai",
+    "pattern-matching"
+  ],
+  "hardware_assumptions": ""
 }

@@ -1,0 +1,126 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "swipl-9.2.9",
+  "canonical_name": "SWI-Prolog 9.2.9 -- Jan Wielemaker",
+  "aliases": [
+    "swipl",
+    "SWI-Prolog"
+  ],
+  "lineage": "SWI-Prolog (1987-, Wielemaker): a full ISO Prolog with a WAM-style virtual machine, garbage collection, constraint (CLP) libraries, tabling and modules; the most widely used free Prolog and a living WAM lineage (Warren 1983)",
+  "domain": [
+    "logic-programming",
+    "prolog",
+    "wam",
+    "unification",
+    "resolution",
+    "languages"
+  ],
+  "era": "1987 (9.2.9 rel. 2024)",
+  "version": "git tag V9.2.9, github.com/SWI-Prolog/swipl-devel",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/SWI-Prolog/swipl-devel/archive/refs/tags/V9.2.9.tar.gz",
+        "filename": "swipl-9.2.9.tar.gz",
+        "sha256": "adf85a87acb382d2c7a670f68f25736f9a737b97f731d8821358de68e6b84c77",
+        "bytes": 4307285,
+        "extracted_to": "upstream/tree/swipl-devel-9.2.9"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/SWI-Prolog/swipl-devel",
+    "tag": "V9.2.9"
+  },
+  "hashes": {
+    "tree_sha256": "f025c50c8cb2bb360223ed5a80052a38cf2a1f4ee980efd2fb98a93e0ac6d78b",
+    "n_files": 1869,
+    "bytes": 20042064,
+    "artifacts": [
+      {
+        "filename": "swipl-9.2.9.tar.gz",
+        "sha256": "adf85a87acb382d2c7a670f68f25736f9a737b97f731d8821358de68e6b84c77",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\swipl-9.2.9",
+    "hash_list": "techne/fossils/specimens/swipl-9.2.9/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-2-Clause (core; some components differ)",
+    "status": "permissive core",
+    "evidence": "LICENSE in tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "Prolog"
+  ],
+  "build_system": "cmake (many submodules)",
+  "compiler_or_interpreter": "gcc + cmake (heavy; NOT built this pass)",
+  "dependencies": [
+    "cmake",
+    "libgmp",
+    "libreadline",
+    "many optional packages"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "UPSTREAM_TESTS_NOT_RUN",
+  "entry_points": [
+    "swipl (REPL); swipl -g goal -t halt script.pl"
+  ],
+  "example": {
+    "command": "swipl -g \"append(X,[c],[a,b,c]), write(X), nl\" -t halt",
+    "input": "Prolog goals/clauses",
+    "output": "unified bindings"
+  },
+  "environment": {
+    "runner": "none this pass -- SOURCE pinned; build is a heavy cmake tree deferred to a later pass or on demand"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "swi-prolog.org",
+    "Warren, An Abstract Prolog Instruction Set, SRI 1983 (the WAM)"
+  ],
+  "human_capability_summary": {
+    "built_to": "execute logic programs -- resolution (SLD) over Horn clauses with unification and backtracking -- as a practical, full-featured programming system",
+    "pressure": "the WAM exists because naive resolution is too slow; GC, indexing and tabling exist because real Prolog programs exhaust memory and loop",
+    "success_means": "goals succeed with correct bindings, deterministically where possible, on real programs"
+  },
+  "known_human_problem_solved": "logic programming (Prolog / resolution) at production scale",
+  "versions_preserved": [
+    {
+      "note": "GNU Prolog and a bare WAM implementation queued as lighter, buildable WAM-lineage companions"
+    }
+  ],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\swipl-9.2.9 ; tracked record+hashes at techne/fossils/specimens/swipl-9.2.9/",
+    "where_it_came_from": "{'repo': 'github.com/SWI-Prolog/swipl-devel', 'tag': 'V9.2.9'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; BSD-2-Clause (core; some components differ)",
+    "how_to_run_it": "SOURCE_ONLY this pass; heavy build deferred (see record.environment)",
+    "how_we_know_it_runs": "NOT_ATTEMPTED / NOT_ATTEMPTED ; receipt none (SOURCE pinned; no receipt)",
+    "what_humans_used_it_for": "execute logic programs -- resolution (SLD) over Horn clauses with unification and backtracking -- as a practical, full-featured programming system"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "logic-programming",
+    "prolog",
+    "wam",
+    "unification",
+    "resolution",
+    "languages"
+  ],
+  "hardware_assumptions": ""
+}

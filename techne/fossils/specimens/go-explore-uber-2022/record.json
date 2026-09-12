@@ -62,8 +62,8 @@
   "dependencies": [
     "robustified/requirements.txt (gym, atari, tensorflow pins -- NOT installed: exploration-phase source pin only, per Nyx's request)"
   ],
-  "run_classification": "SOURCE_ONLY",
-  "test_classification": "NO_TESTS",
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
   "entry_points": [
     "robustified/goexplore_py/main.py (orchestration)",
     "robustified/goexplore_py/goexplore.py (archive, cells, return-then-explore loop)",
@@ -78,7 +78,13 @@
   },
   "environment": {
     "note": "source-at-pinned-revision receipt; no environment built. The Atari/MuJoCo requirements are recorded, not installed.",
-    "measured_2026-09-12": "the first blocking import from a clean CPython 3.12 is `loky` (basics.py line 24), before any gym/atari import; randselectors -> import_ai -> basics -> loky. A source-at-pinned-revision receipt was requested and no dependency was installed."
+    "measured_2026-09-12": "the first blocking import from a clean CPython 3.12 is `loky` (basics.py line 24), before any gym/atari import; randselectors -> import_ai -> basics -> loky. A source-at-pinned-revision receipt was requested and no dependency was installed.",
+    "managed_minimal": {
+      "image": "prometheus-fossil-goexplore:min",
+      "dockerfile": "techne/fossils/specimens/go-explore-uber-2022/environment/... (host-local vault) ; committed copy in the record notes",
+      "requirements": "environment/requirements-min.txt (python:3.7 + non-Atari/non-MuJoCo subset of the 2020 pins)",
+      "measured_2026-09-12": "7/9 goexplore_py modules import incl. goexplore.py; randselectors.py and complex_fetch_env.py blocked by mujoco_py (excluded by Nyx)"
+    }
   },
   "patches": [],
   "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
@@ -112,14 +118,37 @@
       "ok": true,
       "classification": "SOURCE_ONLY",
       "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T142512Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022 ; tracked record + hashes at techne/fossils/specimens/go-explore-uber-2022/",
-    "where_it_came_from": "{'repo': 'github.com/uber-research/go-explore', 'commit': '702fb9c7a9aeecf2872d07ced236c730d5536a8f'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; Apache-2.0 (root LICENSE text is the Apache License 2.0 boilerplate; verify against the hash row before relying on it)",
-    "how_to_run_it": "techne/fossils/specimens/go-explore-uber-2022/recipe.json (runner native) ; `python -m techne.fossils.harvest run go-explore-uber-2022` reproduces the receipt",
-    "how_we_know_it_runs": "SOURCE_ONLY / NO_TESTS ; receipt techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T125406Z.json",
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022 ; tracked record+hashes at techne/fossils/specimens/go-explore-uber-2022/",
+    "where_it_came_from": "{'repo': 'github.com/uber-research/go-explore', 'commit': '702fb9c7a9aeecf2872d07ced236c730d5536a8f'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; Apache-2.0 (root LICENSE text is the Apache License 2.0 boilerplate; verify against the hash row before relying on it)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run go-explore-uber-2022",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T142512Z.json",
     "what_humans_used_it_for": "solve hard-exploration reinforcement-learning problems (Montezuma's Revenge, Pitfall) by keeping an archive of visited states ('cells'), deterministically returning to promising cells, exploring from them, and later robustifying the discovered trajectories into a policy"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "search",
+    "exploration",
+    "reinforcement-learning",
+    "quality-diversity",
+    "archive"
+  ],
+  "hardware_assumptions": ""
 }
