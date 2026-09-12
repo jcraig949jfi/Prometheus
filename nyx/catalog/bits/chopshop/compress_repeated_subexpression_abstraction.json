@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.repeated_subexpression_abstraction",
+  "name": "library compression by repeated-subexpression search",
+  "lineage": [
+    "program synthesis",
+    "abstraction and compression"
+  ],
+  "mechanism": "search a corpus of program trees for a subtree pattern with holes whose extraction as a named abstraction most reduces the total description length, add it to the library, rewrite the corpus, repeat",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "nyx/specimens/dreamcoder/organs/library_compression.json",
+      "grade": "T1-LOCAL"
+    },
+    {
+      "ref": "techne stitch paper_reproduction 3 abstractions 6.06x",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "COMPRESS",
+  "in_geometry": "TREE",
+  "out_geometry": "TREE",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "LOCAL_OPTIMUM",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a corpus with recurring syntactic structure"
+  ],
+  "fails_when": [
+    "empty on small or non-repetitive corpora (0 on the H1 split)",
+    "abstracts syntax, not semantics"
+  ],
+  "instances": [
+    "Stitch compress",
+    "DreamCoder abstraction sleep"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/dreamcoder/organs/library_compression.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it"
+}

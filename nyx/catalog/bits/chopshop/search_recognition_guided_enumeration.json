@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.recognition_guided_enumeration",
+  "name": "recognition-guided enumeration",
+  "lineage": [
+    "program synthesis",
+    "search"
+  ],
+  "mechanism": "enumerate candidate programs in order of probability under a model conditioned on the task, so that likely solutions are reached before the enumeration budget runs out",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "nyx/specimens/dreamcoder/organs/recognition_guided_enumeration.json",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "GENERATE",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "STREAM",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a grammar with a prior",
+    "a model from task to prior"
+  ],
+  "fails_when": [
+    "a wrong model orders the budget away from the solution"
+  ],
+  "instances": [
+    "DreamCoder recognition model + enumerator"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/dreamcoder/organs/recognition_guided_enumeration.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it"
+}

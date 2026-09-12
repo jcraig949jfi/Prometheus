@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.rewrite.rule_canonicalization",
+  "name": "rule canonicalization",
+  "lineage": [
+    "theorem proving",
+    "symbolic reasoning"
+  ],
+  "mechanism": "given a proved statement of any logical shape, destructure it by shape and emit a list of oriented equations that a single equation rewriter can apply; conjunctions split, negations and disequalities become equations to false, bare statements become equations to true",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "nyx/specimens/lean_simp/organs/rule_canonicalization.cut2.json",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "TRANSFORM",
+  "in_geometry": "PROOF",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "CALLBACK",
+  "guarantee": "DETERMINISTIC",
+  "cost": "LINEAR",
+  "requires": [
+    "a logic with equality, propositional extensionality, true/false"
+  ],
+  "fails_when": [
+    "a fact stated as a disjunction or existential only becomes 'fact = true'",
+    "orientation is inherited from how the author wrote the statement"
+  ],
+  "instances": [
+    "Lean 4 simp SimpTheorems.preprocess"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/lean_simp/organs/rule_canonicalization.cut2.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it"
+}

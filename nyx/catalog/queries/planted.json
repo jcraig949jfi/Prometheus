@@ -1,0 +1,89 @@
+{
+  "schema": "nyx.bit.queries/0",
+  "note": "planted before any external ingestion; used as the catalogue's positive/negative/cheat controls",
+  "queries": [
+    {
+      "id": "q.recurrence.archive_admission",
+      "story": "an organism keeps one best example per behaviour key and swaps it only when a better one arrives",
+      "query": {
+        "verb": "SELECT",
+        "in_geometry": "MAP",
+        "order_req": "TOTAL",
+        "state_req": "GLOBAL",
+        "guarantee": "MONOTONE"
+      },
+      "expect_top": [
+        "bit.archive.cell_replacement_by_fitness"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q.minimise_flat_value",
+      "story": "an organism found a smaller flat sequence that still satisfies a check, by trying deletions and sorted rearrangements",
+      "query": {
+        "verb": "SEARCH",
+        "in_geometry": [
+          "SEQUENCE",
+          "STRING"
+        ],
+        "order_req": "TOTAL",
+        "guarantee": "LOCAL_OPTIMUM"
+      },
+      "expect_top": [
+        "bit.search.value_shrinkers",
+        "bit.search.coupled_value_moves"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q.learned_discretisation",
+      "story": "an organism re-binned its observations so each bin was visited about equally often",
+      "query": {
+        "verb": "PARTITION",
+        "in_geometry": "SEQUENCE",
+        "out_geometry": "FUNCTION",
+        "control": "SCHEDULED"
+      },
+      "expect_top": [
+        "bit.partition.representation_selection_by_occupancy"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q.doubling_probe",
+      "story": "an organism found how many steps it could take at once by doubling then halving",
+      "query": {
+        "verb": "SEARCH",
+        "in_geometry": "PREDICATE",
+        "out_geometry": "SCALAR",
+        "cost": "LOG"
+      },
+      "expect_top": [
+        "bit.search.adaptive_step_search"
+      ],
+      "kind": "positive"
+    },
+    {
+      "id": "q.nonsense",
+      "story": "a query at a point no bit occupies",
+      "query": {
+        "verb": "SYNCHRONIZE",
+        "in_geometry": "PROOF",
+        "guarantee": "OPTIMAL",
+        "control": "REACTIVE"
+      },
+      "expect_top": [],
+      "max_score": 0.5,
+      "kind": "negative"
+    },
+    {
+      "id": "q.name_cheat",
+      "story": "a query that tries to use the name",
+      "query": {
+        "name": "Go-Explore"
+      },
+      "expect_error": true,
+      "kind": "cheat"
+    }
+  ]
+}

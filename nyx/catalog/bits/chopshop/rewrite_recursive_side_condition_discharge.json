@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.rewrite.recursive_side_condition_discharge",
+  "name": "recursive side-condition discharge",
+  "lineage": [
+    "theorem proving"
+  ],
+  "mechanism": "prove a conditional rule's hypothesis by re-entering the same normaliser on the hypothesis with a depth cap, accepting when it reduces to true or a reflexive equation",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "nyx/specimens/lean_simp/organs/recursive_side_condition_discharge.cut2.json",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "VERIFY",
+  "in_geometry": "PREDICATE",
+  "out_geometry": "PROOF",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "CALLBACK",
+  "guarantee": "SOUND",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "the normaliser itself",
+    "a depth budget"
+  ],
+  "fails_when": [
+    "depth exhaustion is indistinguishable from a false condition",
+    "cost unbounded by goal size"
+  ],
+  "instances": [
+    "Lean 4 simp dischargeDefault?"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/lean_simp/organs/recursive_side_condition_discharge.cut2.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it"
+}

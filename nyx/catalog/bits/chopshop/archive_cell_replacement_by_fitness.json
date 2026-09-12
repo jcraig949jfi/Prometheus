@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.archive.cell_replacement_by_fitness",
+  "name": "cell replacement by fitness in a behaviour-keyed archive",
+  "lineage": [
+    "quality diversity"
+  ],
+  "mechanism": "keep one record per behaviour key and replace it only when a new candidate with the same key is better under the fitness order, so the archive holds the best known example of each behaviour",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "nyx/specimens/map_elites/organs/ (cell replacement)",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "SELECT",
+  "in_geometry": "MAP",
+  "out_geometry": "MAP",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "CALLBACK",
+  "guarantee": "MONOTONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "a behaviour key per candidate",
+    "a fitness order"
+  ],
+  "fails_when": [
+    "ties under the order",
+    "keys that change under the world's regime shift"
+  ],
+  "instances": [
+    "MAP-Elites archive update",
+    "archaeon h3_replay admission",
+    "Go-Explore should_accept_cell + write block"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/map_elites/organs/",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it"
+}

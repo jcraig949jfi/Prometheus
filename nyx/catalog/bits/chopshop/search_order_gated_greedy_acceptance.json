@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.order_gated_greedy_acceptance",
+  "name": "order-gated greedy acceptance",
+  "lineage": [
+    "search",
+    "optimization"
+  ],
+  "mechanism": "reject a candidate before evaluating it unless it is strictly smaller under the order; adopt it only if the property holds and the transition is allowed, so the current best descends monotonically",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "nyx/specimens/hypothesis_shrinker/organs/order_gated_acceptance.cut2.json",
+      "grade": "T1-LOCAL"
+    },
+    {
+      "ref": "RECEIPT_N1 P-a5 strict decrease",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "SELECT",
+  "in_geometry": "RECORD",
+  "out_geometry": "BOOLEAN",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "CALLBACK",
+  "guarantee": "MONOTONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "a strict order",
+    "a Boolean property"
+  ],
+  "fails_when": [
+    "a local minimum under the move set is a fixed point",
+    "candidates simpler under a different order are rejected unseen"
+  ],
+  "instances": [
+    "hypothesis shrinking.common.Shrinker.consider",
+    "hypothesis Shrinker.incorporate_test_data"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/hypothesis_shrinker/organs/order_gated_acceptance.cut2.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it"
+}

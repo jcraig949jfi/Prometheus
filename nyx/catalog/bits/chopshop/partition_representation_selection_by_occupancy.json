@@ -1,0 +1,48 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.representation_selection_by_occupancy",
+  "name": "representation selection by occupancy",
+  "lineage": [
+    "reinforcement learning",
+    "search"
+  ],
+  "mechanism": "search a family of observation-to-key functions for the one under which a sample of recent observations partitions into near-uniformly occupied parts at a target count, then re-key the archive under it",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "nyx/specimens/go_explore/organs/representation_selection.cut1.json",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "PARTITION",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "FUNCTION",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "SCHEDULED",
+  "guarantee": "LOCAL_OPTIMUM",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a parametrised key family",
+    "a sample of observations",
+    "a target granularity"
+  ],
+  "fails_when": [
+    "rewards uniform occupancy, not exploration value",
+    "a unique-key setting must be refused by the target penalty (untested)",
+    "the shipped family is image-only"
+  ],
+  "instances": [
+    "Go-Explore try_split_frames (dynamic state)"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.archive.descriptor_keyed_niching"
+    }
+  ],
+  "organ_record": "nyx/specimens/go_explore/organs/representation_selection.cut1.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it"
+}

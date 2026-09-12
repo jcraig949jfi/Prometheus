@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.archive.descriptor_keyed_niching",
+  "name": "descriptor-keyed niching",
+  "lineage": [
+    "quality diversity"
+  ],
+  "mechanism": "map a candidate's measured behaviour descriptors to a discrete cell by a declared fixed discretisation so that candidates compete only within their cell",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "nyx/specimens/map_elites/organs/ (niching)",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "PARTITION",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "cost": "CONSTANT",
+  "requires": [
+    "declared descriptor dimensions and bin edges"
+  ],
+  "fails_when": [
+    "descriptors correlated with the objective make niches redundant",
+    "the discretisation is never learned"
+  ],
+  "instances": [
+    "MAP-Elites grid",
+    "Go-Explore domain-knowledge cell"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.partition.representation_selection_by_occupancy"
+    }
+  ],
+  "organ_record": "nyx/specimens/map_elites/organs/",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it"
+}

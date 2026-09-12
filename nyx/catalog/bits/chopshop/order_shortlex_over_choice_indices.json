@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.shortlex_over_choice_indices",
+  "name": "simplicity order with inverse",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "map each bounded typed choice to a non-negative index within its constraint space and order sequences shortlex over those indices, with an inverse from index to value so the simplest value is constructible",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "nyx/specimens/hypothesis_shrinker/organs/simplicity_order.cut1.json",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "cost": "LINEAR",
+  "requires": [
+    "per-type constraint descriptions"
+  ],
+  "fails_when": [
+    "orders the encoding, not the decoded value",
+    "length-first rejects longer encodings of simpler values"
+  ],
+  "instances": [
+    "hypothesis choice_to_index / sort_key"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/hypothesis_shrinker/organs/simplicity_order.cut1.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it"
+}
