@@ -106,7 +106,7 @@ def main():
                 for arm in arms:
                     w["arms"][arm] = run_arm(arm, L, t, E0, BUDGET[L], seed)
                 w["counterfactual_along_G"] = counterfactual_gains(L, t, E0, BUDGET[L], seed)
-                worlds.append(w); print("world", L, n0, seed, {a: round(w["arms"][a]["nAUC"], 3) for a in arms}, "t=%ds" % (time.time() - t_start), flush=True)
+                worlds.append(w); print("world", L, n0, seed, {a: (round(w["arms"][a]["nAUC"], 3) if w["arms"][a]["nAUC"] is not None else "INTRACTABLE") for a in arms}, "t=%ds" % (time.time() - t_start), flush=True)
     # producer x regime table
     table = {}
     for L in LENGTHS:
