@@ -48,7 +48,7 @@ DONORS = [
          controls=["techne/acquisition/receipts/adapter_qualification-pyribs-20260911T065018Z.json", "techne/tests/test_h3_retention.py", "techne/tests/test_donor_adapters.py"],
          blockers=[], notes="H3 GridArchive adapter retains the IDENTICAL set to Archaeon's independent behavioral policy on cs-c3-2 (150 rows, 12 sealed queries); CVT and SlidingBoundaries archives NOT qualified (TECHNE-03/04 open)"),
     dict(name="discopy", dist="discopy", module="discopy", upstream="github.com/discopy/discopy", license="BSD-3",
-         origin="Gen-0 2026-08-31", wrapper=["techne/lib/donors/discopy_adapter.py"],
+         origin="Gen-0 2026-08-31", wrapper=["techne/lib/donors/retired/discopy_adapter.py"],
          controls=["techne/tests/test_donor_adapters.py"], blockers=[],
          notes="compose + tensor_eval only; Gen-0 B5 said: no consumer within a generation or two = arsenal weight"),
     dict(name="egglog", dist="egglog", module="egglog", upstream="github.com/egraphs-good/egglog-python", license="MIT",
@@ -56,7 +56,7 @@ DONORS = [
          controls=["techne/tests/test_donor_adapters.py"], blockers=["B2 Family A vs Family B (Lexis) -- see notes"],
          notes="only Python-reachable member of the UW PLSE e-graph family; Ergon's gen0/family_b_probe.py (2026-08-31) recorded FAMILY_B_REQUIRES_NEW_SYNTHESIS_LAYER on the RM genotype question"),
     dict(name="cvc5", dist="cvc5", module="cvc5", upstream="github.com/cvc5/cvc5", license="BSD-3",
-         origin="Gen-0 2026-08-31", wrapper=["techne/lib/donors/cvc5_adapter.py"],
+         origin="Gen-0 2026-08-31", wrapper=["techne/lib/donors/retired/cvc5_adapter.py"],
          controls=["techne/donor_smt_comparison_2026-08-31.json", "techne/tests/test_donor_adapters.py"],
          blockers=["B3 teardown segfault worked around by ordering, not enforced by a test"],
          notes="REDUNDANT_AT_GEN0: 6/6 QF_LIA agreement with z3; z3 has since been qualified as H1's oracle (2048/2048) and has 6 direct consumers"),
@@ -176,7 +176,9 @@ def classify(row):
     if row["blockers"]:
         labels.append("BLOCKED")
     if row["name"] == "cvc5":
-        labels += ["SUPERSEDED (by z3, qualified 2026-09-10)"]
+        labels += ["SUPERSEDED (by z3, qualified 2026-09-10)", "ADAPTER RETIRED 2026-09-12 (TECHNE-51)"]
+    if row["name"] == "discopy":
+        labels += ["ADAPTER RETIRED 2026-09-12 (TECHNE-51); donor stays a CANDIDATE"]
     if row["name"] == "MOSEK":
         labels = ["REJECTED (struck 2026-09-11)"]
     if row["name"] == "POET":

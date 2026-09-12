@@ -1,7 +1,6 @@
 # Donor inventory -- Techne Gen-0
 
-> SUPERSEDED IN PART, 2026-09-12 (Techne): the dispositions below are the 2026-08-31 snapshot. The measured state today is techne/acquisition/DONOR_DISPOSITION_2026-09-11.json (script techne/scripts/donor_disposition.py) and the closeout roles/Techne/DONOR_FOUNDRY_CLOSEOUT_2026-09-12.md. Headline: the donors acquired direct consumers (tensorly, ribs, egglog, z3, hypothesis, cvxpy); the adapter contract techne.lib.donors acquired NONE outside techne/; discopy and cvc5 have no consumer anywhere (TECHNE-51, operator); the usage exemplars this file implied were never written and are not being written now. Nothing below is rewritten.
-
+> SUPERSEDED IN PART, 2026-09-12 (Techne, operator ruling TECHNE-51): this file is the Gen-0 adapter view. The measured state of every donor is techne/acquisition/DONOR_DISPOSITION_2026-09-11.json (techne/scripts/donor_disposition.py) and the closeout roles/Techne/DONOR_FOUNDRY_CLOSEOUT_2026-09-12.md. The universal adapter contract is no longer the required consumption route (0 importers outside techne/ in 11 days); the discopy and cvc5 ADAPTERS are retired (techne/lib/donors/retired/RETIREMENT.md), the donors are not. Usage exemplars implied here were never written and are not being written now.
 
 Generated 2026-08-31. Machine-readable source: `techne/donor_inventory.json`.
 
@@ -9,7 +8,7 @@ Every field below was measured on this machine. Installation is not adoption: a 
 
 ## Donors
 
-### cvc5 -- REDUNDANT_AT_GEN0
+### cvc5 -- ADAPTER_RETIRED_2026-09-12 (TECHNE-51; donor NOT retired): 0 consumers anywhere; SUPERSEDED as an SMT route by z3 5.0.0.0, qualified 2026-09-10 (2048/2048 parity, 5 direct consumers); the donor itself is not retired
 - distribution: `cvc5` 1.3.4  |  licence: BSD-3-Clause
 - upstream: github.com/cvc5/cvc5  (identity evidence: declared_url, gate: RESOLVED)
 - provenance: sha256 217e67ed2c4c912a..., digest matches PyPI: True, runs code at install: False, releases: 19
@@ -21,7 +20,7 @@ Every field below was measured on this machine. Installation is not adoption: a 
 - limitation: raising an error while a live TermManager/Solver is in the frame segfaults the interpreter at teardown on this platform (exit 139 AFTER all tests report PASS). The adapter validates its whole payload before constructing any cvc5 object, and drops native handles before returning. Any future cvc5 code must preserve that ordering.
 - limitation: REDUNDANT_AT_GEN0 against installed z3 5.0.0.0
 
-### discopy -- WRAPPED_AND_TESTED
+### discopy -- ADAPTER_RETIRED_2026-09-12 (TECHNE-51; donor NOT retired): 0 consumers anywhere on the tree after 11 days (measured 2026-09-12, techne/scripts/donor_disposition.py); the donor itself is not retired
 - distribution: `discopy` 1.2.2  |  licence: BSD-3-Clause
 - upstream: github.com/discopy/discopy  (identity evidence: declared_url, gate: RESOLVED)
 - provenance: sha256 4ea88180844ba737..., digest matches PyPI: True, runs code at install: False, releases: 48

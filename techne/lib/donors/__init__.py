@@ -1,8 +1,14 @@
 """techne.lib.donors -- the donor adapter surface.
 
-A DONOR is external machinery Prometheus did not write: tensorly, pyribs, DisCoPy, cvc5,
-egglog. Standing Order #1 says wrap rather than rewrite. This package is where wrapping
-happens, and it exists to enforce one distinction that a plain wrapper would erase:
+A DONOR is external machinery Prometheus did not write: tensorly, pyribs, egglog (live
+adapters); DisCoPy and cvc5 (adapters RETIRED 2026-09-12, see retired/). Standing Order #1
+says wrap rather than rewrite. This package is where wrapping happens when a consumer needs
+an interface Prometheus does not already have -- and ONLY then, since the operator's ruling
+of 2026-09-12 (roles/Techne/prompts/2026-09-12_techne51_ruling/OPERATOR.md): "the donor
+foundry survives; the universal adapter contract does not." Eleven days with zero external
+importers of this package was the evidence. Direct donor consumption is acceptable where it
+is cleaner; Techne's durable product is the acquisition RECEIPT, not the adapter. The
+distinction this package still enforces, for the adapters that remain:
 
     what the donor can GENERATE          -- capabilities() / propose()
     what the donor itself VALUES         -- native_score() / native_selection_relation
@@ -47,8 +53,9 @@ __all__ = [
 
 # Adapter modules register themselves on import. Each guards its donor import lazily, so a
 # missing donor produces a status (VETTED_NOT_INSTALLED) rather than breaking this package.
-from . import cvc5_adapter as _cvc5          # noqa: E402,F401
-from . import discopy_adapter as _discopy    # noqa: E402,F401
+# RETIRED 2026-09-12 (operator ruling TECHNE-51): cvc5_adapter and discopy_adapter moved
+# verbatim to techne/lib/donors/retired/ and are NOT imported here. The donors are not
+# retired; the unused adapters are. Evidence: techne/lib/donors/retired/RETIREMENT.md.
 from . import egglog_adapter as _egglog      # noqa: E402,F401
 from . import pyribs_adapter as _pyribs      # noqa: E402,F401
 from . import tensorly_adapter as _tensorly  # noqa: E402,F401

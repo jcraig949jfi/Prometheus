@@ -298,7 +298,7 @@ CANDIDATES = [
          identity="Prometheus adapters over tensorly 0.9.0, ribs 0.12.0, discopy 1.2.2, egglog 13.2.0, cvc5 1.3.4",
          license="BSD-3 / MIT / BSD-3 / MIT / BSD-3", wrapper="is the wrapper", control="techne/tests/test_donor_adapters.py T1-T10 (58 passed, 4 skipped on 2026-08-31)",
          last_exec="techne/donor_inventory.json (2026-08-31)", artifacts=["techne/donor_inventory.json", "techne/donor_*_2026-08-31.json"],
-         known_failures="cvc5 teardown segfault worked around by ordering (B3); zero callers outside Techne (B5)",
+         known_failures="cvc5 teardown segfault worked around by ordering (B3); zero callers outside Techne (B5). 2026-09-12: discopy and cvc5 ADAPTERS RETIRED (TECHNE-51, techne/lib/donors/retired/); the contract is no longer a required route",
          consumers="NONE outside techne/ as of 2026-08-31 (re-measured in callers field)", necropolis_use="deterministic, provenance-carrying donor calls with the native selection relation declared"),
     dict(id="library_leak", lead="other", path="vivarium/viv/library_leak.py", module="vivarium.viv.library_leak",
          invocation="from vivarium.viv.library_leak import ... (semantic leak check over a held-out split)", verbs="falsify validate",

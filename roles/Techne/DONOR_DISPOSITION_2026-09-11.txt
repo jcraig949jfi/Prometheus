@@ -1,15 +1,15 @@
-DONOR DISPOSITION -- built 2026-09-12T00:43:24Z at 01e4812a5, interpreter 3.12.10
+DONOR DISPOSITION -- built 2026-09-12T03:24:49Z at a57c94d9c, interpreter 3.12.10
 
 donor                installed  import   wrap ctrl direct via  labels
 --------------------------------------------------------------------------------------------------------------
 tensorly             0.9.0      IMPORTS  2    3    4      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED
 pyribs               0.12.0     IMPORTS  3    3    1      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED
-discopy              1.2.2      IMPORTS  1    1    0      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED
+discopy              1.2.2      IMPORTS  1    1    0      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, ADAPTER RETIRED 2026-09-12 (TECHNE-51); donor stays a CANDIDATE
 egglog               13.2.0     IMPORTS  2    1    1      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED, BLOCKED
-cvc5                 1.3.4      IMPORTS  1    2    0      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, BLOCKED, SUPERSEDED (by z3, qualified 2026-09-10)
+cvc5                 1.3.4      IMPORTS  1    2    0      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, BLOCKED, SUPERSEDED (by z3, qualified 2026-09-10), ADAPTER RETIRED 2026-09-12 (TECHNE-51)
 stitch               -          FAILS    2    2    0      0    ACQUIRED (isolated env; see stitch lock + installation receipts), IMPORT-TESTED (isolated env), WRAPPED, CONTROLLED, BLOCKED
 z3                   5.0.0.0    IMPORTS  2    1    5      3    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED, BLOCKED
-hypothesis           6.165.10   IMPORTS  2    1    2      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED
+hypothesis           6.165.10   IMPORTS  2    1    3      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED
 cvxpy+CLARABEL+SCS   1.9.2      IMPORTS  2    2    5      0    ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, CONSUMED, BLOCKED
 dreamcoder           -          N/A      1    1    0      0    CANDIDATE, BLOCKED (TECHNE-15 build, TECHNE-16 licence)
 POET                 -          N/A      0    0    0      0    CANDIDATE, PARKED to 2026-12-11
@@ -44,13 +44,13 @@ pyribs   upstream github.com/icaros-usc/pyribs   licence MIT
 discopy   upstream github.com/discopy/discopy   licence BSD-3
   origin      Gen-0 2026-08-31
   installed   1.2.2   import IMPORTS
-  wrappers    techne/lib/donors/discopy_adapter.py (3e9c5b064 2026-08-31)
+  wrappers    techne/lib/donors/retired/discopy_adapter.py (None)
   controls    techne/tests/test_donor_adapters.py
   direct use  NONE outside techne/
   via wrapper NONE outside techne/
   blockers    none
   notes       compose + tensor_eval only; Gen-0 B5 said: no consumer within a generation or two = arsenal weight
-  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED
+  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, ADAPTER RETIRED 2026-09-12 (TECHNE-51); donor stays a CANDIDATE
 ==============================================================================================================
 egglog   upstream github.com/egraphs-good/egglog-python   licence MIT
   origin      pre-Gen-0 install, reconciled 2026-08-31
@@ -66,13 +66,13 @@ egglog   upstream github.com/egraphs-good/egglog-python   licence MIT
 cvc5   upstream github.com/cvc5/cvc5   licence BSD-3
   origin      Gen-0 2026-08-31
   installed   1.3.4   import IMPORTS
-  wrappers    techne/lib/donors/cvc5_adapter.py (3e9c5b064 2026-08-31)
+  wrappers    techne/lib/donors/retired/cvc5_adapter.py (None)
   controls    techne/donor_smt_comparison_2026-08-31.json, techne/tests/test_donor_adapters.py
   direct use  NONE outside techne/
   via wrapper NONE outside techne/
   blockers    B3 teardown segfault worked around by ordering, not enforced by a test
   notes       REDUNDANT_AT_GEN0: 6/6 QF_LIA agreement with z3; z3 has since been qualified as H1's oracle (2048/2048) and has 6 direct consumers
-  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, BLOCKED, SUPERSEDED (by z3, qualified 2026-09-10)
+  labels      ACQUIRED, IMPORT-TESTED, WRAPPED, CONTROLLED, BLOCKED, SUPERSEDED (by z3, qualified 2026-09-10), ADAPTER RETIRED 2026-09-12 (TECHNE-51)
 ==============================================================================================================
 stitch   upstream github.com/mlb2251/stitch (core) + mlb2251/stitch_bindings (wheel)   licence core MIT @0ef5ec7f1709; bindings UNRESOLVED @v0.1.29
   origin      held 2026-08-31; acquired 2026-09-09/10 (H0-H5 lane)
@@ -101,7 +101,7 @@ hypothesis   upstream github.com/HypothesisWorks/hypothesis   licence MPL-2.0
   installed   6.165.10   import IMPORTS
   wrappers    techne/acquisition/checks/hypothesis_program_minimiser.py (a8e52d45a 2026-09-11), techne/ladder_circuits/adversarial_registry.py (39ec02891 2026-08-22)
   controls    techne/acquisition/receipts/adapter_qualification-hypothesis-20260911T065703Z.json
-  direct use  prometheus_math/adversarial_fixtures.py, proteus/eval/hypothesis_strategy.py
+  direct use  nyx/specimens/hypothesis_shrinker/ablations/n1_controls.py, prometheus_math/adversarial_fixtures.py, proteus/eval/hypothesis_strategy.py
   via wrapper NONE outside techne/
   blockers    none
   notes       SOUND 45/45, NOT MINIMAL 24/45 (max excess 4 nodes); usefulness over enumeration not established

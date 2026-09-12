@@ -1,7 +1,7 @@
 {
   "schema": "techne.donor_disposition/1",
-  "built_at": "2026-09-12T00:43:24Z",
-  "head": "01e4812a5d2bdaefa65768f44c8519571b24dbd7",
+  "built_at": "2026-09-12T03:24:49Z",
+  "head": "a57c94d9c85f453692a8439b49089b39299f315c",
   "interpreter": "3.12.10",
   "executable": "H:\\Python312\\python.exe",
   "label_rule": "ACQUIRED+IMPORT-TESTED iff the distribution is installed in THIS interpreter and imports in a fresh process; WRAPPED iff a listed wrapper file exists; CONTROLLED iff a listed control artefact exists on the tree; CONSUMED iff a tracked non-test .py outside techne/ imports the donor or a wrapper; BLOCKED iff a blocker is recorded. Hand overrides are named in classify().",
@@ -84,7 +84,7 @@
       "installed_version": "0.12.0",
       "import": {
         "status": "IMPORTS",
-        "seconds": 2.8
+        "seconds": 3.0
       },
       "wrapper_present": [
         "techne/lib/donors/pyribs_adapter.py",
@@ -125,7 +125,7 @@
       "license": "BSD-3",
       "origin": "Gen-0 2026-08-31",
       "wrapper": [
-        "techne/lib/donors/discopy_adapter.py"
+        "techne/lib/donors/retired/discopy_adapter.py"
       ],
       "controls": [
         "techne/tests/test_donor_adapters.py"
@@ -135,10 +135,10 @@
       "installed_version": "1.2.2",
       "import": {
         "status": "IMPORTS",
-        "seconds": 0.5
+        "seconds": 0.6
       },
       "wrapper_present": [
-        "techne/lib/donors/discopy_adapter.py"
+        "techne/lib/donors/retired/discopy_adapter.py"
       ],
       "wrapper_missing": [],
       "controls_present": [
@@ -150,13 +150,14 @@
         "via_wrapper": []
       },
       "wrapper_git_last": {
-        "techne/lib/donors/discopy_adapter.py": "3e9c5b064 2026-08-31"
+        "techne/lib/donors/retired/discopy_adapter.py": null
       },
       "labels": [
         "ACQUIRED",
         "IMPORT-TESTED",
         "WRAPPED",
-        "CONTROLLED"
+        "CONTROLLED",
+        "ADAPTER RETIRED 2026-09-12 (TECHNE-51); donor stays a CANDIDATE"
       ]
     },
     {
@@ -180,7 +181,7 @@
       "installed_version": "13.2.0",
       "import": {
         "status": "IMPORTS",
-        "seconds": 0.3
+        "seconds": 0.2
       },
       "wrapper_present": [
         "techne/lib/donors/egglog_adapter.py",
@@ -218,7 +219,7 @@
       "license": "BSD-3",
       "origin": "Gen-0 2026-08-31",
       "wrapper": [
-        "techne/lib/donors/cvc5_adapter.py"
+        "techne/lib/donors/retired/cvc5_adapter.py"
       ],
       "controls": [
         "techne/donor_smt_comparison_2026-08-31.json",
@@ -234,7 +235,7 @@
         "seconds": 0.0
       },
       "wrapper_present": [
-        "techne/lib/donors/cvc5_adapter.py"
+        "techne/lib/donors/retired/cvc5_adapter.py"
       ],
       "wrapper_missing": [],
       "controls_present": [
@@ -247,7 +248,7 @@
         "via_wrapper": []
       },
       "wrapper_git_last": {
-        "techne/lib/donors/cvc5_adapter.py": "3e9c5b064 2026-08-31"
+        "techne/lib/donors/retired/cvc5_adapter.py": null
       },
       "labels": [
         "ACQUIRED",
@@ -255,7 +256,8 @@
         "WRAPPED",
         "CONTROLLED",
         "BLOCKED",
-        "SUPERSEDED (by z3, qualified 2026-09-10)"
+        "SUPERSEDED (by z3, qualified 2026-09-10)",
+        "ADAPTER RETIRED 2026-09-12 (TECHNE-51)"
       ]
     },
     {
@@ -410,6 +412,7 @@
       "controls_missing": [],
       "consumers": {
         "direct": [
+          "nyx/specimens/hypothesis_shrinker/ablations/n1_controls.py",
           "prometheus_math/adversarial_fixtures.py",
           "proteus/eval/hypothesis_strategy.py"
         ],

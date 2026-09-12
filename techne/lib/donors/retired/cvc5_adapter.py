@@ -24,7 +24,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping
 
-from .contract import (
+from ..contract import (  # retired 2026-09-12 (TECHNE-51); only this import line changed
     NO_SELECTION, DonorAdapter, DonorCapability, DonorError, DonorIdentity, register,
 )
 
