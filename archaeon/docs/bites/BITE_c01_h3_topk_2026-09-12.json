@@ -1,0 +1,42 @@
+{
+ "schema": "archaeon.organ_bite.v0",
+ "at": "2026-09-12T15:59:22.558370+00:00",
+ "organ": "c01 order-gated greedy acceptance (nyx/specimens/hypothesis_shrinker/organs/order_gated_acceptance.cut1|cut2.json); interface Shrinker subclass with left_is_better + consider(value)->bool",
+ "consumer": "archaeon/producer/h3_replay.py h3.top_k.v0 (Archive.try_insert with better_than/evict) at K=1",
+ "stream": "archaeon/tests/test_h3_replay.py::_stream(n=200, seed=1, fail_every=17), the existing fixture generator",
+ "predicate": "birth_status != 'failed' (H3's own; failed candidates carry no score)",
+ "order": "score, strict (a tie is not an improvement) -- H3's rule",
+ "baseline_final": [
+  60,
+  "sha256:c00060",
+  0.987
+ ],
+ "c01_final": [
+  60,
+  "sha256:c00060",
+  0.987
+ ],
+ "identical_final": true,
+ "baseline_admission_ids": [
+  1,
+  2,
+  3,
+  11,
+  13,
+  15,
+  60
+ ],
+ "c01_accepted_ids": [
+  1,
+  2,
+  3,
+  11,
+  13,
+  15,
+  60
+ ],
+ "identical_admission_sequence": true,
+ "shuffled_identical_final": true,
+ "cheat_control_ties_rule_differs": true,
+ "scope_limit": "K=1 only: c01 holds ONE current value; H3's archive holds K with eviction, so for K>1 the organ is not the same mechanism and no comparison is well-posed without an adapter (not built)"
+}

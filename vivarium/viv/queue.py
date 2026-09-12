@@ -55,6 +55,31 @@ class QueueBusy(RuntimeError):
     """Another experiment already holds the single v0 execution slot."""
 
 
+class CandidateSetReused(RuntimeError):
+    """This candidate_set_id already has registered rows.
+
+    A candidate set is ONE atomic registration (every member in one
+    transaction) with one selection; naming an existing id again is an APPEND,
+    and an appended set is how 85,727 phantom "alternative" experiments reached
+    the engine on 2026-09-10/11. Refused here before the INSERT for a clear
+    message, and by the database (migrations/005, SQLSTATE VIV01) for every
+    writer and every race. Same principle as Archaeon's writer
+    (archaeon/vivqueue.py CandidateSetReused); one definition, in the
+    database, that both meet."""
+
+    SQLSTATE = "VIV01"
+
+    def __init__(self, candidate_set_id: str, prior: int):
+        self.candidate_set_id = candidate_set_id
+        self.prior = prior
+        super().__init__(
+            "candidate_set_id %r already has %d registered row(s); a set is "
+            "registered in ONE transaction and never appended. For a campaign "
+            "whose rows all execute, pass no candidate_set_id and carry the "
+            "campaign id in source_evidence.campaign_set."
+            % (candidate_set_id, prior))
+
+
 class DuplicateRequest(RuntimeError):
     """This request_key is already in the register.
 
@@ -100,6 +125,19 @@ def record_event(conn, experiment_id, *, actor: str, event_type: str,
 # ---------------------------------------------------------------------------
 # Admission
 # ---------------------------------------------------------------------------
+
+def candidate_set_committed_rows(conn, candidate_set_id: str, *,
+                                 schema=None) -> int:
+    """Rows already registered under this id by OTHER transactions -- the
+    same test the 005 trigger applies (xmin <> current xact), so the Python
+    pre-check and the database never disagree about what counts as prior."""
+    s = schema or _db.schema()
+    with conn.cursor() as cur:
+        cur.execute("SELECT count(*) FROM " + _q(s) + " WHERE candidate_set_id"
+                    " = %s AND xmin <> pg_current_xact_id()::xid",
+                    (candidate_set_id,))
+        return int(cur.fetchone()[0])
+
 
 def by_request_key(conn, request_key: str, *, schema=None):
     s = schema or _db.schema()
@@ -157,6 +195,13 @@ def enqueue(conn, *, created_by: str, source_reason: str,
         if target is None:
             raise ValueError("replication_of names no row in this register: %s"
                              % (replication_of,))
+    if candidate_set_id is not None:
+        # Typed refusal BEFORE the write. The database trigger (005) is the
+        # invariant; this is the readable message, and it lets a caller that
+        # has not started a transaction of its own fail without one.
+        prior = candidate_set_committed_rows(conn, candidate_set_id, schema=s)
+        if prior > 0:
+            raise CandidateSetReused(candidate_set_id, prior)
 
     with conn.cursor() as cur:
         try:
@@ -183,6 +228,17 @@ def enqueue(conn, *, created_by: str, source_reason: str,
                     raise DuplicateRequest(
                         request_key, str(prior["experiment_id"]),
                         prior["status"]) from exc
+            raise
+        except psycopg2.Error as exc:
+            # The database refused the append (005, SQLSTATE VIV01): another
+            # writer registered this set between our pre-check and our INSERT.
+            # Nothing landed; report it as the typed refusal it is. psycopg2
+            # has no class for a custom SQLSTATE, so match on pgcode.
+            if getattr(exc, "pgcode", None) == CandidateSetReused.SQLSTATE:
+                conn.rollback()
+                prior = candidate_set_committed_rows(conn, candidate_set_id,
+                                                     schema=s)
+                raise CandidateSetReused(candidate_set_id, prior) from exc
             raise
         eid = cur.fetchone()[0]
     record_event(conn, eid, actor=created_by,

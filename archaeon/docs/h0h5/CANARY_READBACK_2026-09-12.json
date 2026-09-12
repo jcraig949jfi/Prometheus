@@ -1,0 +1,792 @@
+{
+ "submitted_at": "2026-09-12T15:56:46.685581+00:00",
+ "submit_result": {
+  "candidate_set_id": "cs-40a8239f45904b56",
+  "registered": 1,
+  "selected_experiment_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+  "cancelled_experiment_ids": [],
+  "decision": {
+   "admitted": true,
+   "decision": "ADMITTED",
+   "day_ordinal": null,
+   "detail": {
+    "note": "human row; autonomous quota does not apply",
+    "created_by": "archaeon",
+    "queue": "viv.research_experiment_queue"
+   }
+  }
+ },
+ "row": {
+  "request_key": "rk-canary-2026-09-12-1",
+  "candidate_set_id": "cs-40a8239f45904b56",
+  "family_id": "fam-canary-2026-09-12",
+  "arm_id": "resample_best",
+  "spec_hash": "sha256:3caf3b11e0229257cd5f626bdb0afd9425c815896da7a8f2675bf497ef2e2174",
+  "sfe_experiment_id": "exp_8d968652a8a6b0c9885ec716",
+  "status": "completed",
+  "error": null,
+  "created_at": "2026-09-12 15:56:46.688243",
+  "finished_at": "2026-09-12 15:57:00.705427"
+ },
+ "events": [
+  {
+   "type": "claimed",
+   "at": "2026-09-12 15:56:51.651616",
+   "payload": {
+    "spec_hash": "sha256:3caf3b11e0229257cd5f626bdb0afd9425c815896da7a8f2675bf497ef2e2174"
+   }
+  },
+  {
+   "type": "running",
+   "at": "2026-09-12 15:56:53.069105",
+   "payload": {
+    "engine": {
+     "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+     "schema_version": 8,
+     "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+     "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+    },
+    "hyp_id": "hyp_185940a3f65493f7894f4289",
+    "pred_id": "prd_471b65e2c9390e782dea020c",
+    "world_id": "wld_13b3caf41573e37f015bf9ff",
+    "sfe_experiment_id": "exp_8d968652a8a6b0c9885ec716"
+   }
+  },
+  {
+   "type": "selection_bound",
+   "at": "2026-09-12 15:56:57.709560",
+   "payload": {
+    "bound": true,
+    "errors": [],
+    "complete": true,
+    "selected": {
+     "exp_id": "exp_8d968652a8a6b0c9885ec716",
+     "queue_experiment_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2"
+    },
+    "family_id": "fam_0c130ce17314326b264a8db5",
+    "alternatives": [],
+    "planned_members": 1,
+    "candidate_set_id": "cs-40a8239f45904b56",
+    "selection_visible": false,
+    "alternatives_expected": 0,
+    "alternatives_recorded": 0
+   }
+  },
+  {
+   "type": "pew_written",
+   "at": "2026-09-12 15:57:00.704878",
+   "payload": {
+    "encounter": {
+     "body": {
+      "run_id": "exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+      "status": "inserted",
+      "inserted": true,
+      "read_back": "/api/v1/fossil/encounters/ENC-archaeon-4f6625f91b2e304b",
+      "encounter_id": "ENC-archaeon-4f6625f91b2e304b"
+     },
+     "http": 200
+    },
+    "read_back": {
+     "http": 200
+    },
+    "world_anchor": {
+     "body": {
+      "status": "inserted",
+      "world_id": "wld_13b3caf41573e37f015bf9ff"
+     },
+     "http": 200
+    },
+    "failure_class": null,
+    "pew_reference": "pew:encounter/ENC-archaeon-4f6625f91b2e304b:exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+    "write_outcome": "inserted",
+    "indexed_in_pew": true,
+    "recorded_in_sfe": true,
+    "idempotent_replay": false
+   }
+  },
+  {
+   "type": "completed",
+   "at": "2026-09-12 15:57:00.705427",
+   "payload": {
+    "pew_reference": "pew:encounter/ENC-archaeon-4f6625f91b2e304b:exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+    "result_summary": {
+     "pew": {
+      "written": true,
+      "encounter": {
+       "body": {
+        "run_id": "exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+        "status": "inserted",
+        "inserted": true,
+        "read_back": "/api/v1/fossil/encounters/ENC-archaeon-4f6625f91b2e304b",
+        "encounter_id": "ENC-archaeon-4f6625f91b2e304b"
+       },
+       "http": 200
+      },
+      "read_back": {
+       "http": 200
+      },
+      "world_anchor": {
+       "body": {
+        "status": "inserted",
+        "world_id": "wld_13b3caf41573e37f015bf9ff"
+       },
+       "http": 200
+      },
+      "failure_class": null,
+      "pew_reference": "pew:encounter/ENC-archaeon-4f6625f91b2e304b:exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+      "write_outcome": "inserted",
+      "indexed_in_pew": true,
+      "recorded_in_sfe": true,
+      "idempotent_replay": false
+     },
+     "lease": {
+      "lost": false,
+      "error": null,
+      "lease_s": 120.0,
+      "renewals": 0,
+      "interval_s": 40.0
+     },
+     "anchor": {
+      "binds": {
+       "exp_id": "exp_8d968652a8a6b0c9885ec716",
+       "obs_id": "obs_52ac5c2564a0deaf0d3ed303"
+      },
+      "resolved": true,
+      "event_type": "OBSERVATION_RECORDED",
+      "sfe_event_id": "evt_b0812852d9e94de0d430ca06",
+      "sfe_event_seq": 129400,
+      "sfe_entry_hash": "sha256:6100e0201ec9ad745c4311a36ef18001ca31fc135bceb1bdaacac132ebb0617d",
+      "work_completed_event": {
+       "result_hash": "sha256:f70b04c048b46de8c5f29d26ef451549ae5d787c594ed205ddbd5e7959d79feb",
+       "sfe_event_id": "evt_a17b00fd81b6889c2829a193",
+       "sfe_event_seq": 129399,
+       "sfe_entry_hash": "sha256:e8e345f15625107ae91753851a82ee4048636b1c98ba44b715aa42e94b63bc00"
+      }
+     },
+     "engine": {
+      "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+      "schema_version": 8,
+      "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+      "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+     },
+     "exp_id": "exp_8d968652a8a6b0c9885ec716",
+     "hyp_id": "hyp_185940a3f65493f7894f4289",
+     "obs_id": "obs_52ac5c2564a0deaf0d3ed303",
+     "repeat": {
+      "note": "spec_version 2: one observation, the world seed",
+      "count": 1,
+      "order": "sequential",
+      "seeds": [
+       926994
+      ],
+      "state": "reset",
+      "budget": null,
+      "elapsed_s": 3.0976,
+      "order_check": {
+       "n": 1,
+       "note": "fewer than two observations; order is trivial",
+       "checked": true,
+       "in_order": true
+      },
+      "seed_derivation": "legacy_v2_world_seed",
+      "degenerate_by_construction": false
+     },
+     "result": {
+      "repeats": [
+       {
+        "seed": 926994,
+        "result": {
+         "bits": "001001000001100110000100",
+         "score": 0.5416666666666666,
+         "length": 24,
+         "solved": false,
+         "executor": "evaluate_bitstring",
+         "reproducibility": "BIT_DETERMINISTIC"
+        },
+        "seconds": 7.9e-05,
+        "state_mode": "reset",
+        "repeat_index": 0
+       }
+      ],
+      "executor": "evaluate_bitstring",
+      "resources": {
+       "stage": "execution",
+       "_limits": {
+        "note": "an enforceable limit is one that REFUSED the act; a measured one is a number. wall_seconds is checked between repeats and cannot interrupt one already running.",
+        "wall_seconds": null,
+        "artifact_bytes": null
+       },
+       "attempt_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+       "cpu_seconds": {
+        "unit": "s",
+        "scope": "attempt",
+        "method": "process_time delta (PROCESS-scoped, one attempt at a time)",
+        "additive": true,
+        "quantity": 0.015625,
+        "enforcement_class": "measured"
+       },
+       "gpu_seconds": {
+        "unit": "s",
+        "scope": "attempt",
+        "method": "no GPU accounting exists on this host",
+        "additive": false,
+        "quantity": null,
+        "enforcement_class": "unavailable"
+       },
+       "wall_seconds": {
+        "unit": "s",
+        "scope": "attempt",
+        "method": "perf_counter around the attempt",
+        "additive": true,
+        "quantity": 2.902218,
+        "enforcement_class": "measured"
+       },
+       "peak_memory_bytes": {
+        "unit": "bytes",
+        "scope": "process",
+        "method": "K32GetProcessMemoryInfo (PROCESS peak, never summed)",
+        "additive": false,
+        "quantity": 50601984,
+        "enforcement_class": "measured"
+       },
+       "observations_written": {
+        "unit": "count",
+        "scope": "attempt",
+        "method": "counted in the loader/runner",
+        "additive": true,
+        "quantity": 1,
+        "enforcement_class": "measured"
+       }
+      },
+      "repeat_plan": {
+       "count": 1,
+       "order": "sequential",
+       "state": "reset",
+       "seed_derivation": "legacy_v2_world_seed",
+       "degenerate_by_construction": false
+      },
+      "reproducibility": "BIT_DETERMINISTIC"
+     },
+     "run_id": "exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+     "obs_ids": [
+      "obs_52ac5c2564a0deaf0d3ed303"
+     ],
+     "outcome": "SURVIVED",
+     "pred_id": "prd_471b65e2c9390e782dea020c",
+     "science": {
+      "profile_findings": []
+     },
+     "session": {
+      "sfe_session_id": "ses_cc9ca60a42b0b98766d9ad37",
+      "sfe_session_key_fp": "sfp_ceb382b18a67292f"
+     },
+     "work_id": "wrk_0741fa4c800b927bb1322dd0",
+     "world_id": "wld_13b3caf41573e37f015bf9ff",
+     "aggregate": "first",
+     "resources": {
+      "stage": "execution",
+      "_limits": {
+       "note": "an enforceable limit is one that REFUSED the act; a measured one is a number. wall_seconds is checked between repeats and cannot interrupt one already running.",
+       "wall_seconds": null,
+       "artifact_bytes": null
+      },
+      "attempt_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+      "cpu_seconds": {
+       "unit": "s",
+       "scope": "attempt",
+       "method": "process_time delta (PROCESS-scoped, one attempt at a time)",
+       "additive": true,
+       "quantity": 0.015625,
+       "enforcement_class": "measured"
+      },
+      "gpu_seconds": {
+       "unit": "s",
+       "scope": "attempt",
+       "method": "no GPU accounting exists on this host",
+       "additive": false,
+       "quantity": null,
+       "enforcement_class": "unavailable"
+      },
+      "wall_seconds": {
+       "unit": "s",
+       "scope": "attempt",
+       "method": "perf_counter around the attempt",
+       "additive": true,
+       "quantity": 2.902218,
+       "enforcement_class": "measured"
+      },
+      "peak_memory_bytes": {
+       "unit": "bytes",
+       "scope": "process",
+       "method": "K32GetProcessMemoryInfo (PROCESS peak, never summed)",
+       "additive": false,
+       "quantity": 50601984,
+       "enforcement_class": "measured"
+      },
+      "observations_written": {
+       "unit": "count",
+       "scope": "attempt",
+       "method": "counted in the loader/runner",
+       "additive": true,
+       "quantity": 1,
+       "enforcement_class": "measured"
+      }
+     },
+     "selection": {
+      "bound": true,
+      "errors": [],
+      "complete": true,
+      "selected": {
+       "exp_id": "exp_8d968652a8a6b0c9885ec716",
+       "queue_experiment_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2"
+      },
+      "family_id": "fam_0c130ce17314326b264a8db5",
+      "alternatives": [],
+      "planned_members": 1,
+      "candidate_set_id": "cs-40a8239f45904b56",
+      "selection_visible": false,
+      "alternatives_expected": 0,
+      "alternatives_recorded": 0
+     },
+     "spec_hash": "sha256:3caf3b11e0229257cd5f626bdb0afd9425c815896da7a8f2675bf497ef2e2174",
+     "attempt_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+     "world_name": "viv-3caf3b11e0229257",
+     "conformance": {
+      "at": "2026-09-12T15:56:51+00:00",
+      "live": {
+       "schema_version": 8,
+       "science_profile": "warn",
+       "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+       "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+       "session_enforcement": "advisory"
+      },
+      "state": "CONFORMANT",
+      "halted": false,
+      "schema": "vivarium.conformance.v1",
+      "gate_at": "2026-09-11T16:22:10+00:00",
+      "contract": {
+       "hash": "sha256:07706e7082e025c2af728042b630ef40bac5962af79ea1a8aaeebaac8b99072f",
+       "path": "roles\\Harmonia\\contracts\\sfe_contract.json",
+       "schema_version": 8,
+       "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+       "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+      },
+      "gate_exit": 0,
+      "gate_mode": "cached",
+      "consumer_routes": [
+       "GET /v2/version",
+       "GET /v2/worlds/{wid}/artifacts/{aid}/content",
+       "GET /v2/worlds/{wid}/events",
+       "GET /v2/worlds/{wid}/experiments/{eid}/audit-envelope",
+       "GET /v2/worlds/{wid}/status",
+       "POST /v2/budget/reservations/{rid}/release",
+       "POST /v2/clients",
+       "POST /v2/families",
+       "POST /v2/families/{fid}/members",
+       "POST /v2/sessions",
+       "POST /v2/work/claim",
+       "POST /v2/work/{work_id}/complete",
+       "POST /v2/work/{work_id}/fail",
+       "POST /v2/work/{work_id}/heartbeat",
+       "POST /v2/worlds",
+       "POST /v2/worlds/{wid}/budget/consume",
+       "POST /v2/worlds/{wid}/budget/reserve",
+       "POST /v2/worlds/{wid}/cost-events",
+       "POST /v2/worlds/{wid}/experiments",
+       "POST /v2/worlds/{wid}/hypotheses",
+       "POST /v2/worlds/{wid}/import",
+       "POST /v2/worlds/{wid}/observations",
+       "POST /v2/worlds/{wid}/predictions",
+       "POST /v2/worlds/{wid}/start"
+      ]
+     },
+     "enforcement": {
+      "measured": [
+       "cpu_seconds",
+       "observations_written",
+       "peak_memory_bytes",
+       "wall_seconds"
+      ],
+      "estimated": [],
+      "enforceable": [],
+      "unavailable": [
+       "gpu_seconds"
+      ]
+     },
+     "load_receipt": {},
+     "audit_envelope": {
+      "work_status": "COMPLETED",
+      "envelope_hash": "sha256:683c1e92e80f33aefbe834411a93eb97c62fdd5232f9558d4b4417870f838cde",
+      "ledger_head_hash": "sha256:16675dae7d5fc376b39eb6a7f0d1b63d6a19995d127ee9ef8c2e13bcc2e427c0"
+     },
+     "per_repeat_outcomes": [
+      "SURVIVED"
+     ],
+     "outcome_rule_provenance": {
+      "n": 1,
+      "branch": "if_true",
+      "reason": "the rule applied to repeat 0",
+      "aggregate": "first",
+      "per_repeat_outcomes": [
+       "SURVIVED"
+      ],
+      "per_repeat_provenance": [
+       {
+        "rule": {
+         "op": "==",
+         "field": "solved",
+         "value": false,
+         "if_true": "SURVIVED",
+         "if_false": "FALSIFIED",
+         "if_indeterminate": "INCONCLUSIVE"
+        },
+        "branch": "if_true",
+        "observed": false,
+        "predicate_held": true
+       }
+      ]
+     }
+    },
+    "sfe_experiment_id": "exp_8d968652a8a6b0c9885ec716"
+   }
+  }
+ ],
+ "result_summary": {
+  "pew": {
+   "written": true,
+   "encounter": {
+    "body": {
+     "run_id": "exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+     "status": "inserted",
+     "inserted": true,
+     "read_back": "/api/v1/fossil/encounters/ENC-archaeon-4f6625f91b2e304b",
+     "encounter_id": "ENC-archaeon-4f6625f91b2e304b"
+    },
+    "http": 200
+   },
+   "read_back": {
+    "http": 200
+   },
+   "world_anchor": {
+    "body": {
+     "status": "inserted",
+     "world_id": "wld_13b3caf41573e37f015bf9ff"
+    },
+    "http": 200
+   },
+   "failure_class": null,
+   "pew_reference": "pew:encounter/ENC-archaeon-4f6625f91b2e304b:exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+   "write_outcome": "inserted",
+   "indexed_in_pew": true,
+   "recorded_in_sfe": true,
+   "idempotent_replay": false
+  },
+  "lease": {
+   "lost": false,
+   "error": null,
+   "lease_s": 120.0,
+   "renewals": 0,
+   "interval_s": 40.0
+  },
+  "anchor": {
+   "binds": {
+    "exp_id": "exp_8d968652a8a6b0c9885ec716",
+    "obs_id": "obs_52ac5c2564a0deaf0d3ed303"
+   },
+   "resolved": true,
+   "event_type": "OBSERVATION_RECORDED",
+   "sfe_event_id": "evt_b0812852d9e94de0d430ca06",
+   "sfe_event_seq": 129400,
+   "sfe_entry_hash": "sha256:6100e0201ec9ad745c4311a36ef18001ca31fc135bceb1bdaacac132ebb0617d",
+   "work_completed_event": {
+    "result_hash": "sha256:f70b04c048b46de8c5f29d26ef451549ae5d787c594ed205ddbd5e7959d79feb",
+    "sfe_event_id": "evt_a17b00fd81b6889c2829a193",
+    "sfe_event_seq": 129399,
+    "sfe_entry_hash": "sha256:e8e345f15625107ae91753851a82ee4048636b1c98ba44b715aa42e94b63bc00"
+   }
+  },
+  "engine": {
+   "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+   "schema_version": 8,
+   "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+   "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+  },
+  "exp_id": "exp_8d968652a8a6b0c9885ec716",
+  "hyp_id": "hyp_185940a3f65493f7894f4289",
+  "obs_id": "obs_52ac5c2564a0deaf0d3ed303",
+  "repeat": {
+   "note": "spec_version 2: one observation, the world seed",
+   "count": 1,
+   "order": "sequential",
+   "seeds": [
+    926994
+   ],
+   "state": "reset",
+   "budget": null,
+   "elapsed_s": 3.0976,
+   "order_check": {
+    "n": 1,
+    "note": "fewer than two observations; order is trivial",
+    "checked": true,
+    "in_order": true
+   },
+   "seed_derivation": "legacy_v2_world_seed",
+   "degenerate_by_construction": false
+  },
+  "result": {
+   "repeats": [
+    {
+     "seed": 926994,
+     "result": {
+      "bits": "001001000001100110000100",
+      "score": 0.5416666666666666,
+      "length": 24,
+      "solved": false,
+      "executor": "evaluate_bitstring",
+      "reproducibility": "BIT_DETERMINISTIC"
+     },
+     "seconds": 7.9e-05,
+     "state_mode": "reset",
+     "repeat_index": 0
+    }
+   ],
+   "executor": "evaluate_bitstring",
+   "resources": {
+    "stage": "execution",
+    "_limits": {
+     "note": "an enforceable limit is one that REFUSED the act; a measured one is a number. wall_seconds is checked between repeats and cannot interrupt one already running.",
+     "wall_seconds": null,
+     "artifact_bytes": null
+    },
+    "attempt_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+    "cpu_seconds": {
+     "unit": "s",
+     "scope": "attempt",
+     "method": "process_time delta (PROCESS-scoped, one attempt at a time)",
+     "additive": true,
+     "quantity": 0.015625,
+     "enforcement_class": "measured"
+    },
+    "gpu_seconds": {
+     "unit": "s",
+     "scope": "attempt",
+     "method": "no GPU accounting exists on this host",
+     "additive": false,
+     "quantity": null,
+     "enforcement_class": "unavailable"
+    },
+    "wall_seconds": {
+     "unit": "s",
+     "scope": "attempt",
+     "method": "perf_counter around the attempt",
+     "additive": true,
+     "quantity": 2.902218,
+     "enforcement_class": "measured"
+    },
+    "peak_memory_bytes": {
+     "unit": "bytes",
+     "scope": "process",
+     "method": "K32GetProcessMemoryInfo (PROCESS peak, never summed)",
+     "additive": false,
+     "quantity": 50601984,
+     "enforcement_class": "measured"
+    },
+    "observations_written": {
+     "unit": "count",
+     "scope": "attempt",
+     "method": "counted in the loader/runner",
+     "additive": true,
+     "quantity": 1,
+     "enforcement_class": "measured"
+    }
+   },
+   "repeat_plan": {
+    "count": 1,
+    "order": "sequential",
+    "state": "reset",
+    "seed_derivation": "legacy_v2_world_seed",
+    "degenerate_by_construction": false
+   },
+   "reproducibility": "BIT_DETERMINISTIC"
+  },
+  "run_id": "exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+  "obs_ids": [
+   "obs_52ac5c2564a0deaf0d3ed303"
+  ],
+  "outcome": "SURVIVED",
+  "pred_id": "prd_471b65e2c9390e782dea020c",
+  "science": {
+   "profile_findings": []
+  },
+  "session": {
+   "sfe_session_id": "ses_cc9ca60a42b0b98766d9ad37",
+   "sfe_session_key_fp": "sfp_ceb382b18a67292f"
+  },
+  "work_id": "wrk_0741fa4c800b927bb1322dd0",
+  "world_id": "wld_13b3caf41573e37f015bf9ff",
+  "aggregate": "first",
+  "resources": {
+   "stage": "execution",
+   "_limits": {
+    "note": "an enforceable limit is one that REFUSED the act; a measured one is a number. wall_seconds is checked between repeats and cannot interrupt one already running.",
+    "wall_seconds": null,
+    "artifact_bytes": null
+   },
+   "attempt_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+   "cpu_seconds": {
+    "unit": "s",
+    "scope": "attempt",
+    "method": "process_time delta (PROCESS-scoped, one attempt at a time)",
+    "additive": true,
+    "quantity": 0.015625,
+    "enforcement_class": "measured"
+   },
+   "gpu_seconds": {
+    "unit": "s",
+    "scope": "attempt",
+    "method": "no GPU accounting exists on this host",
+    "additive": false,
+    "quantity": null,
+    "enforcement_class": "unavailable"
+   },
+   "wall_seconds": {
+    "unit": "s",
+    "scope": "attempt",
+    "method": "perf_counter around the attempt",
+    "additive": true,
+    "quantity": 2.902218,
+    "enforcement_class": "measured"
+   },
+   "peak_memory_bytes": {
+    "unit": "bytes",
+    "scope": "process",
+    "method": "K32GetProcessMemoryInfo (PROCESS peak, never summed)",
+    "additive": false,
+    "quantity": 50601984,
+    "enforcement_class": "measured"
+   },
+   "observations_written": {
+    "unit": "count",
+    "scope": "attempt",
+    "method": "counted in the loader/runner",
+    "additive": true,
+    "quantity": 1,
+    "enforcement_class": "measured"
+   }
+  },
+  "selection": {
+   "bound": true,
+   "errors": [],
+   "complete": true,
+   "selected": {
+    "exp_id": "exp_8d968652a8a6b0c9885ec716",
+    "queue_experiment_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2"
+   },
+   "family_id": "fam_0c130ce17314326b264a8db5",
+   "alternatives": [],
+   "planned_members": 1,
+   "candidate_set_id": "cs-40a8239f45904b56",
+   "selection_visible": false,
+   "alternatives_expected": 0,
+   "alternatives_recorded": 0
+  },
+  "spec_hash": "sha256:3caf3b11e0229257cd5f626bdb0afd9425c815896da7a8f2675bf497ef2e2174",
+  "attempt_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+  "world_name": "viv-3caf3b11e0229257",
+  "conformance": {
+   "at": "2026-09-12T15:56:51+00:00",
+   "live": {
+    "schema_version": 8,
+    "science_profile": "warn",
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+    "session_enforcement": "advisory"
+   },
+   "state": "CONFORMANT",
+   "halted": false,
+   "schema": "vivarium.conformance.v1",
+   "gate_at": "2026-09-11T16:22:10+00:00",
+   "contract": {
+    "hash": "sha256:07706e7082e025c2af728042b630ef40bac5962af79ea1a8aaeebaac8b99072f",
+    "path": "roles\\Harmonia\\contracts\\sfe_contract.json",
+    "schema_version": 8,
+    "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+    "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e"
+   },
+   "gate_exit": 0,
+   "gate_mode": "cached",
+   "consumer_routes": [
+    "GET /v2/version",
+    "GET /v2/worlds/{wid}/artifacts/{aid}/content",
+    "GET /v2/worlds/{wid}/events",
+    "GET /v2/worlds/{wid}/experiments/{eid}/audit-envelope",
+    "GET /v2/worlds/{wid}/status",
+    "POST /v2/budget/reservations/{rid}/release",
+    "POST /v2/clients",
+    "POST /v2/families",
+    "POST /v2/families/{fid}/members",
+    "POST /v2/sessions",
+    "POST /v2/work/claim",
+    "POST /v2/work/{work_id}/complete",
+    "POST /v2/work/{work_id}/fail",
+    "POST /v2/work/{work_id}/heartbeat",
+    "POST /v2/worlds",
+    "POST /v2/worlds/{wid}/budget/consume",
+    "POST /v2/worlds/{wid}/budget/reserve",
+    "POST /v2/worlds/{wid}/cost-events",
+    "POST /v2/worlds/{wid}/experiments",
+    "POST /v2/worlds/{wid}/hypotheses",
+    "POST /v2/worlds/{wid}/import",
+    "POST /v2/worlds/{wid}/observations",
+    "POST /v2/worlds/{wid}/predictions",
+    "POST /v2/worlds/{wid}/start"
+   ]
+  },
+  "enforcement": {
+   "measured": [
+    "cpu_seconds",
+    "observations_written",
+    "peak_memory_bytes",
+    "wall_seconds"
+   ],
+   "estimated": [],
+   "enforceable": [],
+   "unavailable": [
+    "gpu_seconds"
+   ]
+  },
+  "load_receipt": {},
+  "audit_envelope": {
+   "work_status": "COMPLETED",
+   "envelope_hash": "sha256:683c1e92e80f33aefbe834411a93eb97c62fdd5232f9558d4b4417870f838cde",
+   "ledger_head_hash": "sha256:16675dae7d5fc376b39eb6a7f0d1b63d6a19995d127ee9ef8c2e13bcc2e427c0"
+  },
+  "per_repeat_outcomes": [
+   "SURVIVED"
+  ],
+  "outcome_rule_provenance": {
+   "n": 1,
+   "branch": "if_true",
+   "reason": "the rule applied to repeat 0",
+   "aggregate": "first",
+   "per_repeat_outcomes": [
+    "SURVIVED"
+   ],
+   "per_repeat_provenance": [
+    {
+     "rule": {
+      "op": "==",
+      "field": "solved",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "branch": "if_true",
+     "observed": false,
+     "predicate_held": true
+    }
+   ]
+  }
+ }
+}
