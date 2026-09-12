@@ -42,6 +42,28 @@ def test_kind_change_is_material_and_not_verbosity():
     assert t["survived_same_kind"].startswith("1/2")
 
 
+def test_boundary_categories_cross_origin_with_support():
+    l = _base()
+    l["candidates"][0]["boundary_support"] = "FALSIFIED"; l["candidates"][0]["boundary_support_ref"] = "receipt.json"
+    l["candidates"][1]["boundary_support"] = "SUPPORTED"; l["candidates"][1]["boundary_support_ref"] = "receipt.json"
+    l["knife_application"] = {"K1": {"status": "FIRED", "evidence": "rate fell"}, "K7": {"status": "NOT_APPLICABLE", "evidence": ""}}
+    assert cutledger.check(l) == []
+    b = cutledger.metrics(l)["per_cut"]["CUT-2"]["boundary_categories_over_live"]
+    assert b == {"inherited": 1, "independently_supported": 1, "inherited_and_supported": 0,
+                 "inherited_and_falsified": 1, "not_inherited_and_supported": 1,
+                 "not_inherited_and_falsified": 0, "untested": 0}
+
+
+def test_support_and_knife_status_need_evidence():
+    l = _base()
+    l["candidates"][0]["boundary_support"] = "SUPPORTED"  # no ref
+    l["knife_application"] = {"K3": {"status": "FIRED", "evidence": ""}, "K9": {"status": "MAYBE"}}
+    d = cutledger.check(l)
+    assert any("boundary_support SUPPORTED without a ref" in x for x in d)
+    assert any("K3" in x and "without evidence" in x for x in d)
+    assert any("K9" in x for x in d)
+
+
 def test_defects_withhold_metrics():
     l = _base()
     l["candidates"][0]["independent_test"] = "run"  # no ref

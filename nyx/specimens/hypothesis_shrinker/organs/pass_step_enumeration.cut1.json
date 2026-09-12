@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.hypothesis_shrinker.pass_step_enumeration.cut1",
+  "specimen": "hypothesis_shrinker",
+  "name": "pass-step enumeration: a nondeterministic search procedure's decisions are recorded in a tree so that each decision path is tried once, exhausted paths are pruned, and the procedure can be resumed from where it stopped or jumped to a random unexplored path",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "hypothesis shrinking/choicetree.py (ChoiceTree, Chooser, TreeNode, DeadBranch) + Shrinker.step",
+    "sources": [
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinking/choicetree.py (prefix_selection_order, random_selection_order, Chooser.choose: walk the trail, skip exhausted children, mark a child DEAD when its condition fails; Chooser.finish: kill the leaf and collapse exhausted ancestors; ChoiceTree.step)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinker.py 833-857 (step: one tree per pass; selection order = last prefix or random; stats)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/hypothesis_shrinker/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Module boundary in the pinned bytes; INHERITED. Nyx notes the module boundary appears to be the mechanistic one: nothing in it knows about choice sequences or shrinking; it is a generic 'enumerate a procedure's decision points once' device.",
+    "mechanism": "A pass is written as a function of a chooser; each chooser.choose(values, condition) picks an element whose subtree is not exhausted, in an order that either resumes from the previous run's prefix (moving left, then wrapping) or is random. When the pass returns, the leaf is marked dead and every ancestor whose children are all dead collapses. Choosing among values that all fail the condition raises DeadBranch and the step ends. The tree per pass is discarded when the shrink target changes (it is a derived value).",
+    "input": "a pass function taking a chooser; a selection-order policy; the pass's own value lists and conditions at each decision",
+    "output": "the prefix of decisions taken (for resumption); side effects of the pass; exhaustion state of the tree",
+    "state": "the tree of decisions taken so far for this pass at this shrink target; last_prefix per pass. Invalidated wholesale when the target changes (shrink_pass_choice_trees is @derived_value).",
+    "assumptions": "that a pass's decisions are the only source of nondeterminism (so 'tried once' means once); that the value lists at each decision point are the same on re-entry at the same target (the pass must be deterministic in shape); that invalidating everything on target change is affordable",
+    "interface": "tree.step(selection_order, f) -> prefix; chooser.choose(values, condition) -> value | DeadBranch",
+    "fitness_value": "unknown -- claimed: this is what makes 'whether a pass makes progress is deterministic' (the Shrinker docstring's main invariant) achievable while still trying decisions in a random order; it lets fixate stop when every pass is exhausted rather than after a fixed budget. Not measured; the count of steps ending in DeadBranch vs in a shrink is available from the stats.",
+    "failure_landscape": "(a) all trees reset on every successful shrink, so a long sequence of small shrinks re-enumerates from scratch each time (cost, not incorrectness); (b) a pass whose value lists depend on something other than the target breaks the 'once' guarantee silently; (c) the condition-fails-mark-dead rule means a condition that is false now and true later (after a different pass changes the target) is fine only because of (a).",
+    "ablation": "unknown -- designed: replace the tree by a random chooser with no memory. Prediction: same shrinks, more repeated attempts, and fixate can no longer detect exhaustion (it would rely on the 20-failure cap alone). Needs a patch; not run.",
+    "decomposability": "(1) the decision tree with exhaustion collapse, (2) the selection-order policies (prefix-resume vs random -- POLICY), (3) the per-target reset (a policy of the host).",
+    "composability": "Any search procedure written against a chooser interface; ancestor-free (imports only LazySequenceCopy). Nearest Prometheus host: Archaeon's H3 behavioural policies enumerate moves and could record them this way; no consumer asked.",
+    "human_prior": "That decisions should be resumed leftward from the last prefix ('preferring to move left then wrapping') -- an authorial guess about where progress is likely next.",
+    "control": "Positive: a pass with two binary decisions is stepped exactly 4 times before the tree is exhausted. Negative: a pass whose condition rejects everything exhausts in one step. Cheat: a chooser that forgets (no tree) makes 'exhausted' never true; assert exhaustion after the enumerated count.",
+    "cheat": "Reporting a pass as 'exhausted' by a step budget rather than by the tree; control: count steps to exhaustion against the product of decision arities."
+  },
+  "alternative_cuts": [
+    "CUTS.md c05: the tree is inseparable from the schedule that steps it (cut B)"
+  ],
+  "pressure_refs": []
+}

@@ -99,3 +99,28 @@ K8  ORIGIN IS STAMPED AT DRAWING, NOT AT WRITE-UP. The INHERITED /
     CUT-3         on a consumer return or a patched-build ablation
     ASSESS        cutledger; the preregistered composite; predictions
                   scored; this file amended only from a new failure
+
+## Rules added 2026-09-11 evening (ancestry: Vivarium return #182 on #44/#52/#175)
+
+K9  ROUTE TO THE SUBSTRATE OWNER. A pressure names, in its world
+    requirements, a substrate (a term language, a stream format, a task
+    generator). Before delivery, name the SEAT that owns that substrate; if
+    none does, mark the pressure UNHOSTABLE_TODAY in the record and say so
+    in the delivery. Deliver to (Vivarium + owner) in ONE message. A
+    pressure sent to Vivarium alone always waits on a third seat -- that is
+    the seat boundary, knowable in advance, not a backlog.
+      Ancestry: #182 -- six Nyx pressures reached Vivarium; zero buildable by
+      Vivarium alone; all four lean_simp pressures blocked on requirement 1
+      (a rewriting substrate nobody on Prometheus owns).
+
+K10 AN INVARIANCE CHEAT CONTROL IS ONE-SIDED; WRITE THE READ-OUT. A
+    control of the form "two copies under a symmetry must agree" proves the
+    defect when they DISAGREE and proves only equivariance when they agree.
+    The record must state what agreement does NOT show and name the second
+    check that credits the capability.
+      Ancestry: #182 on orientation_is_a_choice; the program already held
+      this doctrine (feedback: invariance null is asymmetric, 2026-08-25) and
+      Nyx did not apply it. Not new knowledge; a new place it must be applied.
+
+REVISION BOUNDARY: N1 (hypothesis shrinker) had not begun when #182 was
+processed. N1 begins under K1-K10. No part of N1 was done under K1-K8 only.

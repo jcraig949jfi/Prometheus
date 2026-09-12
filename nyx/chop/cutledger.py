@@ -43,9 +43,21 @@ cuts.json shape (one per specimen directory):
             # committed artifact path in independent_test_ref
         "independent_test_ref": "<path or 'none'>",
         "ancestor_free_contract": true | false | "unknown",
-        "consumer_returns": [{"seat": "Vivarium", "msg": 52, "verdict": "vacuous", "date": "..."}]
+        "consumer_returns": [{"seat": "Vivarium", "msg": 52, "verdict": "vacuous", "date": "..."}],
+        "boundary_support": "UNTESTED" | "SUPPORTED" | "FALSIFIED",
+            # operator ruling 2026-09-11 evening ("do not optimize inherited-boundary rate
+            # toward zero"): whether the boundary has INDEPENDENT evidence -- an intervention
+            # or a consumer return -- that it is mechanistic (SUPPORTED) or is not (FALSIFIED).
+            # Reported crossed with origin: inherited / independently supported /
+            # inherited-and-supported / inherited-and-falsified. Default UNTESTED.
+        "boundary_support_ref": "<path or msg id, or 'none'>"
       }
     ],
+    "knife_application": {"K1": {"status": "FIRED", "evidence": "..."}, ...},
+        # operator ruling 2026-09-11 evening: per specimen, each K-rule in nyx/KNIFE.md is
+        # scored APPLICABLE | NOT_APPLICABLE | FIRED | DID_NOT_FIRE | AMBIGUOUS with evidence.
+        # FIRED = the rule changed what Nyx did or found; DID_NOT_FIRE = applicable, applied,
+        # changed nothing. Printed, never summed.
     "deliveries": [{"seat": "Archaeon", "msg": 53, "posted": "2026-09-11T15:20Z", "cut": "CUT-1",
                     "first_substantive_return": null | "2026-09-12T09:00Z"}],
     "cheat_controls": [{"candidate": "c03", "fired": true | false | "not_run", "ref": "<path>"}]
@@ -65,6 +77,8 @@ DISPOSITIONS = ("ORGAN", "PRESSURE", "DATA", "POLICY", "SCAFFOLDING", "COUPLED_C
                 "UNRESOLVED", "DEAD_CUT")
 ORIGINS = ("INHERITED", "DISCOVERED", "PERTURBED")
 RELATIONS = ("NEW", "SURVIVED", "SPLIT", "MERGED", "DEMOTED", "PROMOTED", "KILLED")
+SUPPORT = ("UNTESTED", "SUPPORTED", "FALSIFIED")
+KNIFE_STATUS = ("APPLICABLE", "NOT_APPLICABLE", "FIRED", "DID_NOT_FIRE", "AMBIGUOUS")
 VERBOSITY_GROWTH_FAIL = 0.20  # record bytes grew by more than this with zero kind changes
 
 
@@ -101,6 +115,16 @@ def check(ledger: Dict[str, Any]) -> List[str]:
             out.append("{}: introduced_in {} not a listed cut".format(cid, intro))
         elif intro not in (c.get("dispositions") or {}):
             out.append("{}: no disposition at its introducing cut {}".format(cid, intro))
+        sup = c.get("boundary_support", "UNTESTED")
+        if sup not in SUPPORT:
+            out.append("{}: boundary_support {} not in {}".format(cid, sup, SUPPORT))
+        if sup != "UNTESTED" and c.get("boundary_support_ref") in (None, "", "none"):
+            out.append("{}: boundary_support {} without a ref is an assertion".format(cid, sup))
+    for k, v in (ledger.get("knife_application") or {}).items():
+        if not isinstance(v, dict) or v.get("status") not in KNIFE_STATUS:
+            out.append("knife_application[{}]: status must be one of {}".format(k, KNIFE_STATUS))
+        elif v["status"] in ("FIRED", "DID_NOT_FIRE", "AMBIGUOUS") and not str(v.get("evidence", "")).strip():
+            out.append("knife_application[{}]: {} without evidence".format(k, v["status"]))
     return out
 
 
@@ -117,11 +141,24 @@ def metrics(ledger: Dict[str, Any]) -> Dict[str, Any]:
         by_kind: Dict[str, int] = {}
         for c in present:
             by_kind[c["dispositions"][cut]] = by_kind.get(c["dispositions"][cut], 0) + 1
+        # operator ruling 2026-09-11 evening: origin crossed with independent support, over the
+        # candidates LIVE at this cut (support is a property of the candidate, read at the latest cut)
+        inh_live = [c for c in live if c["origin"] == "INHERITED"]
+        sup_live = [c for c in live if c.get("boundary_support") == "SUPPORTED"]
         m["per_cut"][cut] = {
             "candidates": len(present),
             "live": len(live),
             "by_disposition": dict(sorted(by_kind.items())),
             "inherited_boundary_rate_of_introduced": _ratio(len(inherited), len(introduced)),
+            "boundary_categories_over_live": {
+                "inherited": len(inh_live),
+                "independently_supported": len(sup_live),
+                "inherited_and_supported": sum(1 for c in inh_live if c.get("boundary_support") == "SUPPORTED"),
+                "inherited_and_falsified": sum(1 for c in inh_live if c.get("boundary_support") == "FALSIFIED"),
+                "not_inherited_and_supported": sum(1 for c in sup_live if c["origin"] != "INHERITED"),
+                "not_inherited_and_falsified": sum(1 for c in live if c["origin"] != "INHERITED" and c.get("boundary_support") == "FALSIFIED"),
+                "untested": sum(1 for c in live if c.get("boundary_support", "UNTESTED") == "UNTESTED"),
+            },
             "organs": by_kind.get("ORGAN", 0),
             "unresolved": by_kind.get("UNRESOLVED", 0),
             "record_bytes": sum(int((c.get("record_bytes") or {}).get(cut, 0)) for c in present),
@@ -191,6 +228,7 @@ def metrics(ledger: Dict[str, Any]) -> Dict[str, Any]:
         "returns_rejecting_or_revising": sum(1 for r in returns if any(k in r.get("verdict", "").lower() for k in rejecting)),
         "pressures_operationalized_without_organ": sum(1 for r in returns if "operationalized" in r.get("verdict", "").lower() and "cannot" not in r.get("verdict", "").lower()),
     }
+    m["knife_application"] = ledger.get("knife_application", {})  # printed, never summed
     cc = ledger.get("cheat_controls", [])
     m["cheat_controls"] = {
         "declared": len(cc),
