@@ -93,7 +93,16 @@ def reconcile(client, scopes: List[Dict[str, Any]], *, dry_run: bool = False,
                        grantee_client_id=s["grantee"], world_filter=flt,
                        note=s.get("note"), dry_run=dry_run)
             r["name_prefix"] = prefix
-            added = int(r.get("worlds_added_this_run", r.get("would_add", 0)) or 0)
+            if dry_run:
+                # ensure_grant's dry run reports the OWNED MATCHING count,
+                # not a delta (it does not open the scope); say so.
+                log("[viv] scope reconcile (%s, DRY RUN): %s -- %s owner worlds "
+                    "match %r; scope %s; nothing written"
+                    % (trigger, s["scope_name"], r.get("would_add"), prefix,
+                       "exists" if r.get("scope_existed") else "absent"))
+                rec["scopes"].append(r)
+                continue
+            added = int(r.get("worlds_added_this_run", 0) or 0)
             rec["added_total"] += added
             if added > 0:
                 log("[viv] scope reconcile (%s): %s added %d -> %s in scope (grantee %s)"
