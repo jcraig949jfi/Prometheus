@@ -249,3 +249,12 @@ How this sits against the standing rulings, stated plainly:
   - Recurrence (N2/N3 rulings) becomes the catalogue's core operation: two bits with
     the same behavioural signature are one bit with two ancestries.
 Layout: nyx/catalog/ (schema, search, seed, loop); records under nyx/catalog/bits/.
+
+## Catalogue loop state (refreshed at each checkpoint)
+
+    2026-09-12 ~05:45Z  bits 140 (T1 16 / T2 124); sources: wikipedia_list_of_algorithms 917
+    (601 pending), wikipedia_list_of_data_structures 220 (pending); vocabulary v0.4; planted
+    controls 10/10; residual recurrence pairs 6 (named in schema changelog / LOOP_LOG).
+    Fitness (adapted anti-collection law): every planted behavioural query retrieves its bit
+    without the name -- YES at this checkpoint. Bits with no behavioural query yet: most;
+    the planted set grows only from real query needs, not per bit.
