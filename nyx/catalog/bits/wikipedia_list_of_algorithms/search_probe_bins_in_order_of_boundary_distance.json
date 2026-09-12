@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.probe_bins_in_order_of_boundary_distance",
+  "name": "probe bins in order of boundary distance",
+  "lineage": [
+    "memory and retrieval",
+    "search"
+  ],
+  "mechanism": "descend a space-partitioning tree to the query's leaf, then visit other branches in order of how close the query is to their splitting boundaries using a priority queue, stopping after a fixed number of probes for an approximate nearest neighbour",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Best Bin First' in section Computational mathematics / Optimization algorithms: find an approximate solution to the nearest neighbor search problem in very-high-dimensional spaces",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "TREE",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "BRANCH_AND_BOUND",
+  "iteration": "PRIORITY",
+  "cost": "LOG",
+  "requires": [
+    "a space-partitioning tree",
+    "a probe budget (policy)"
+  ],
+  "fails_when": [
+    "high dimension makes the boundary order uninformative"
+  ],
+  "instances": [
+    "Best Bin First"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

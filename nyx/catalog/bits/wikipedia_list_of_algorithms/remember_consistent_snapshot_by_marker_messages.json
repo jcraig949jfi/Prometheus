@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.remember.consistent_snapshot_by_marker_messages",
+  "name": "consistent snapshot by marker messages",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "an initiator records its state and sends a marker on every channel; a node receiving its first marker records its state, then records every message arriving on other channels until a marker arrives there too; the recorded states and channel contents form a consistent global cut",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Chandy–Lamport algorithm' in section Distributed systems algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REMEMBER",
+  "in_geometry": "STREAM",
+  "out_geometry": "RECORD",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "REACTIVE",
+  "guarantee": "SOUND",
+  "strategy": "INCREMENTAL",
+  "iteration": "FIFO",
+  "cost": "LINEAR",
+  "requires": [
+    "ordered reliable channels"
+  ],
+  "fails_when": [
+    "unordered channels break the cut"
+  ],
+  "instances": [
+    "Chandy–Lamport algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.fit_the_unique_polynomial_through_all_the_points",
+  "name": "fit the unique polynomial through all the points",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "through n+1 points there is exactly one polynomial of degree at most n; construct it (by a basis of products that vanish at all other points, or by solving for coefficients) and evaluate it at the query",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Polynomial interpolation' in section Computational mathematics / Numerical algorithms / Interpolation and extrapolation: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lagrange interpolation': interpolation using Lagrange polynomials",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "FUNCTION",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "distinct sample positions"
+  ],
+  "fails_when": [
+    "wild oscillation between equally spaced points as the degree grows"
+  ],
+  "instances": [
+    "Polynomial interpolation",
+    "Lagrange interpolation"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

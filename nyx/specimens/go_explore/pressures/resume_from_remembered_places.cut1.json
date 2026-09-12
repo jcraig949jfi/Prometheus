@@ -1,0 +1,68 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "PRESSURE",
+  "id": "pressure.go_explore.resume_from_remembered_places.cut1",
+  "specimen": "go_explore",
+  "name": "the world lets the organism resume exactly from any place it has remembered, for a fixed cost, and pays for reaching places it has not been",
+  "condition": "The organism acts in a world with many reachable situations and a per-run step budget. The world offers exact resumption: the organism may name any situation it previously recorded and continue from it as if it had never left, at a fixed cost per resumption charged to the budget. Fitness is paid for the number of DISTINCT situations reached (as the world counts them) and for the best score found, over the whole run; nothing is paid for revisiting.",
+  "capability_rewarded": "Choosing WHICH remembered situation to resume from, and how to act after resuming, so that the budget buys new situations rather than repeats -- while remembering situations in a form the world accepts for resumption.",
+  "world_requirements": [
+    "exact resumption: the world can reproduce a previously recorded situation bit-for-bit on request (determinism + a record the world will accept back)",
+    "a world-owned notion of DISTINCT situations that the organism cannot redefine (the world counts novelty; the organism only proposes)",
+    "a per-run step budget with resumption charged to it",
+    "a stream of runs long enough that remembering pays (eligibility: the number of situations reachable only via resumption from a non-initial situation must be > 0 and reported)",
+    "a log of resumptions so the world can tell exploration-from-memory from exploration-from-start"
+  ],
+  "vacuity_condition": "Vacuous if every situation is reachable from the start within the budget (then resumption buys nothing), OR if the world cannot reproduce a recorded situation exactly (then 'resume' is a restart in disguise), OR if the world's novelty count is the organism's own memory (circular). Eligibility count required before a run: situations reachable only via resumption, > 0.",
+  "trivial_shortcuts": [
+    "never resume; explore from the start each run (closed by eligibility: some situations need resumption)",
+    "resume always from the most recent situation (closed by scoring DISTINCT situations: depth-first repetition earns nothing after the first pass)",
+    "record every situation and resume uniformly at random (partially closable: cost per resumption plus a budget that makes uniform resumption lose to selective resumption on worlds with many dead ends -- the world must contain dead ends and report their count)",
+    "redefine 'distinct' to make revisits count (closed: the world owns the count)"
+  ],
+  "cheat_control": "Two copies: one with the world's resumption enabled, one for which every resumption is silently replaced by a restart from the initial situation. The enabled copy must reach more distinct situations at equal budget on worlds where the eligibility count is > 0; if it does not, the world is not paying for resumption and the pressure is not operational. Second arm: a copy handed the world's full list of situations must hit the novelty ceiling at zero exploration cost. READ-OUT (K10): the disabled-vs-enabled comparison is one-sided -- 'no difference' proves the world does not reward resumption here; a difference proves only that resumption helps, not that the organism CHOSE well; choosing is measured by the cost per new situation across copies with different memories.",
+  "negative_control": "A world where the eligibility count is 0 (everything reachable from the start within budget): enabled and disabled copies score the same.",
+  "cost_class": "CPU_SCALE",
+  "organ_refs": [
+    "c03 (COUPLED_CLUSTER: the ancestor meets this condition with the emulator's save/restore, an opaque token carried with each elite, and a count-weighted choice of where to resume)"
+  ],
+  "expressible_without_organ": true,
+  "forbidden_terms": [
+    "Go-Explore",
+    "Go Explore",
+    "goexplore",
+    "first return then explore",
+    "return then explore",
+    "deterministic reset",
+    "restore state",
+    "cell",
+    "cells",
+    "archive",
+    "downscale",
+    "downscaled",
+    "domain knowledge",
+    "robustification",
+    "Montezuma",
+    "Pitfall",
+    "Atari",
+    "trajectory",
+    "trajectories",
+    "selection weight",
+    "exploration phase",
+    "emulator",
+    "clone_state",
+    "restore_state",
+    "checkpoint",
+    "snapshot",
+    "save state",
+    "load state"
+  ],
+  "hosting": {
+    "substrate_required": "a deterministic, exactly resumable world with a world-owned novelty count and a step budget",
+    "substrate_owner": "CANDIDATE Archaeon (H5 cellular-automaton worlds are deterministic and their state IS the record; H3 streams are not resumable); not claimed by anyone",
+    "current_executor": "Vivarium (a kind with a budget, an artifact slot for the recorded situation, and a preflight eligibility count) -- resumption as a kind operation does not exist today",
+    "hostable_today": "UNKNOWN -- scientific validity does not depend on it; the world requirement 'exact resumption' is exactly what the ancestor's environment supplies and Prometheus's kinds do not yet"
+  },
+  "duplicate_control": "compared against the 7 inventory pressures on world requirements + fitness condition: niche persistence (regime shift, no resumption), recurring structure (budget, no resumption), growing store / retrieval / conditional facts / orientation (rewriting substrate), smallest witness (reduction under an order). None requires exact resumption or pays for distinct situations. NEW, not recurrent.",
+  "notes": "Extracted from the coupled cluster c03: 'deterministic reset' is primarily a property demanded of the world. The ancestor's answer (emulator save/restore + token-carrying elites + count-weighted selection) is not named in the condition."
+}

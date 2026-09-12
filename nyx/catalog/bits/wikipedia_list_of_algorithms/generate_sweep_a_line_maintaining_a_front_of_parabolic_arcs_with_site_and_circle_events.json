@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.sweep_a_line_maintaining_a_front_of_parabolic_arcs_with_site_and_circle_events",
+  "name": "sweep a line while maintaining a front of parabolic arcs, handling site and circle events",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "as a line sweeps across the sites, maintain the curve of points equidistant from the line and the nearest site behind it (a chain of parabolic arcs); a new site splits an arc, and three consecutive arcs whose sites are co-circular predict a vertex where the middle arc vanishes; processing these two event types in order builds all cell boundaries",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fortune's Algorithm' in section Computational mathematics / Geometry: create voronoi diagram",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "SET",
+  "out_geometry": "GRAPH",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "iteration": "PRIORITY",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "an ordered structure for the arc front",
+    "a priority queue of events"
+  ],
+  "fails_when": [
+    "numerical fragility in the circle events"
+  ],
+  "instances": [
+    "Fortune's Algorithm"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.detect.sweep_a_line_and_test_only_neighbours_in_the_active_order_at_each_event"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

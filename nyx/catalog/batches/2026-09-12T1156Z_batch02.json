@@ -1,0 +1,1510 @@
+[
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Coloring algorithm",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Network analysis",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Link analysis",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Web link analysis",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Flow networks",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Minimum spanning tree",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Shortest path problem",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Traveling salesman problem",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Vehicle routing problem",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Longest path problem",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Transitive closure problem",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cliques",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Strongly connected components",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Subgraph isomorphism problem",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Coin graph drawing algorithms for finite connected planar graphs (approximately computing the theoretical circle-packing",
+  "decision": "DEFER",
+  "reason": "empty description; circle-packing computation not characterised from the list alone"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Nonblocking minimal spanning switch say, for a telephone exchange",
+  "decision": "DEFER",
+  "reason": "a network design, not characterised from the list alone"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hopcroft–Karp algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.augment_along_alternating_paths",
+   "name": "augment a matching along alternating paths",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "repeatedly find a path that alternates between unmatched and matched edges from a free vertex to another free vertex and flip its edges, growing the matching by one each time until no such path exists",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "INCREMENTAL",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a graph",
+    "for weighted variants: dual potentials"
+   ],
+   "fails_when": [
+    "general graphs need odd-cycle contraction to find the paths",
+    "phases and shortest paths are the difference between quadratic and better"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Blossom algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.augment_along_alternating_paths"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hungarian algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.augment_along_alternating_paths"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Prüfer coding",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.tree_to_sequence_by_leaf_removal",
+   "name": "tree to sequence by leaf removal",
+   "lineage": [
+    "symbolic reasoning"
+   ],
+   "mechanism": "repeatedly remove the smallest-labelled leaf and record its neighbour, producing a sequence two shorter than the vertex count that determines the tree uniquely and can be decoded back",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "TREE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "labelled vertices with a total order on labels"
+   ],
+   "fails_when": [
+    "unlabelled trees have no canonical code this way"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Tarjan's off-line lowest common ancestors algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.remember.disjoint_set_union",
+   "name": "disjoint-set union with path compression",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "keep a forest of sets where each element points toward a representative; find follows pointers and flattens them on the way, union links one representative under the other by rank, so many merges and membership tests cost near-constant time each",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REMEMBER",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "cost": "LOG",
+   "requires": [
+    "elements with identity"
+   ],
+   "fails_when": [
+    "no deletion or split of sets",
+    "the near-constant bound is amortised, not per-operation"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Force-based algorithms (also known as force-directed algorithms or spring-based algorithms)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.iterate_pairwise_forces_to_equilibrium",
+   "name": "iterate pairwise forces to equilibrium",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "treat connected nodes as attracting and all nodes as repelling, move each node a small step along the net force, and repeat until movement is small",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MATRIX",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "LOCAL_OPTIMUM",
+   "strategy": "FIXPOINT_ITERATION",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a distance in the embedding space",
+    "force laws (policy)"
+   ],
+   "fails_when": [
+    "local minima; sensitive to initial positions",
+    "quadratic per iteration without approximation"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Spectral layout",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.embed_by_laplacian_eigenvectors",
+   "name": "embed by Laplacian eigenvectors",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "form the graph's Laplacian matrix and place each vertex at the coordinates given by its entries in the eigenvectors of the smallest nonzero eigenvalues",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MATRIX",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "DIRECT",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "an eigensolver"
+   ],
+   "fails_when": [
+    "disconnected graphs need per-component handling",
+    "cubic eigensolve on dense graphs"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Girvan–Newman algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.remove_most_central_edge_repeatedly",
+   "name": "remove the most central edge repeatedly",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "compute for every edge how many shortest paths pass through it, remove the edge with the largest count, recompute, and repeat; the components that appear are the communities",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "shortest-path counts (all pairs)"
+   ],
+   "fails_when": [
+    "cubic or worse per removal",
+    "no principled stopping point (modularity is a separate policy)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "PageRank",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.accumulate.stationary_scores_by_propagation",
+   "name": "stationary scores by repeated propagation",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "give every node a score, repeatedly replace each node's score by a damped sum of the scores flowing in along its edges, and stop when scores no longer change; the fixed point is the stationary distribution of a random walk",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ACCUMULATE",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MAP",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "EXACT",
+   "strategy": "FIXPOINT_ITERATION",
+   "cost": "LINEAR",
+   "requires": [
+    "a damping/teleport rule for dead ends (policy)"
+   ],
+   "fails_when": [
+    "dangling nodes and disconnected parts need the teleport",
+    "convergence rate depends on the spectral gap"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hyperlink-Induced Topic Search (HITS) (also known as Hubs and authorities)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.accumulate.stationary_scores_by_propagation"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "TrustRank",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.accumulate.stationary_scores_by_propagation"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Ford–Fulkerson algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.augment_flow_along_residual_paths",
+   "name": "augment flow along residual paths",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "while a path from source to sink exists with spare capacity on every edge (counting reverse edges as undo capacity), push the bottleneck amount along it; the sum of pushes is a maximum flow",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MAP",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "INCREMENTAL",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "capacities",
+    "a rule for which path (shortest by edges gives the polynomial bound; level graphs with blocking flows give better)"
+   ],
+   "fails_when": [
+    "arbitrary path choice may not terminate on irrational capacities"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Edmonds–Karp algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.augment_flow_along_residual_paths"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Dinic's algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.augment_flow_along_residual_paths"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Push–relabel algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.push_excess_and_relabel_heights",
+   "name": "push excess and relabel heights",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "give each node a height and let nodes with excess flow push it downhill to neighbours with spare capacity; a node that cannot push raises its height; repeat until no node but the sink has excess",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MAP",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "FIXPOINT_ITERATION",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "capacities",
+    "a node selection rule (highest label, FIFO: policy)"
+   ],
+   "fails_when": [
+    "excess may wander before draining; heuristics (gap, global relabel) matter in practice"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Karger's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.sample.contract_random_edges_until_two",
+   "name": "contract random edges until two vertices remain",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "repeatedly pick a uniformly random edge and merge its endpoints (keeping parallel edges) until two vertices remain; the edges between them are a cut that is minimum with a known probability, so repeat and keep the best",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SAMPLE",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a uniform random edge choice"
+   ],
+   "fails_when": [
+    "needs many repetitions for high confidence"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Edmonds' algorithm (also known as Chu–Liu/Edmonds' algorithm)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.min_incoming_edge_with_cycle_contraction",
+   "name": "minimum incoming edge per node with cycle contraction",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "for every node keep its cheapest incoming edge; if the chosen edges form a cycle, contract the cycle into one node with adjusted edge costs and repeat; expanding the contractions yields a minimum spanning arborescence",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "GRAPH",
+   "out_geometry": "TREE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "GREEDY",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a root",
+    "directed edge costs"
+   ],
+   "fails_when": [
+    "cycle contraction bookkeeping dominates the implementation"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Prim's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.grow_tree_by_cheapest_crossing_edge",
+   "name": "grow one tree by its cheapest crossing edge",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "start from one vertex and repeatedly add the cheapest edge that connects the tree to a vertex outside it, using a priority structure over the frontier",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "GRAPH",
+   "out_geometry": "TREE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "GREEDY",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "a total order on edge weights",
+    "a priority structure"
+   ],
+   "fails_when": [
+    "ties need a rule for uniqueness"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Kruskal's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.add_cheapest_edge_joining_components",
+   "name": "add the cheapest edge that joins two components",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "consider edges in increasing weight and keep each one that connects two different components, tracking components with disjoint-set union",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "GRAPH",
+   "out_geometry": "TREE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "GREEDY",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "sorted edges",
+    "disjoint-set union"
+   ],
+   "fails_when": [
+    "sorting dominates"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.remember.disjoint_set_union"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Euclidean minimum spanning tree",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.select.add_cheapest_edge_joining_components"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Borůvka's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.each_component_picks_cheapest_outgoing_edge",
+   "name": "each component picks its cheapest outgoing edge",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "in rounds, every component selects the cheapest edge leaving it and all selected edges are added at once, at least halving the number of components per round",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "GRAPH",
+   "out_geometry": "TREE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "GREEDY",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "distinct edge weights or a tie-break"
+   ],
+   "fails_when": [
+    "ties without a tie-break can create cycles"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Reverse-delete algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.remove_heaviest_edge_preserving_connectivity",
+   "name": "remove the heaviest edge that keeps the graph connected",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "consider edges in decreasing weight and delete each one whose removal leaves the graph connected",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "GRAPH",
+   "out_geometry": "TREE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "GREEDY",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a connectivity test per deletion"
+   ],
+   "fails_when": [
+    "each connectivity test is a traversal; slow"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Dijkstra's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.expand_cheapest_frontier_node",
+   "name": "expand the cheapest frontier node",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "keep a frontier of discovered nodes with their best-known cost, repeatedly remove the cheapest, finalise it, and relax its neighbours' costs; adding an admissible estimate of remaining cost to the priority steers the expansion toward a goal",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MAP",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "GREEDY",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "non-negative edge costs",
+    "a priority structure"
+   ],
+   "fails_when": [
+    "negative edges break finalisation",
+    "an inadmissible heuristic loses optimality"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Uniform-cost search",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.expand_cheapest_frontier_node"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Best-first search",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.expand_cheapest_frontier_node"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "A*",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.expand_cheapest_frontier_node"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "B*",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.expand_cheapest_frontier_node"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "SSS*",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.expand_cheapest_frontier_node"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Jump point search",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.expand_cheapest_frontier_node"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Johnson's algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.expand_cheapest_frontier_node"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bellman–Ford algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.relax_all_edges_repeatedly",
+   "name": "relax every edge repeatedly",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "start with infinite costs except the source and repeat, once per vertex, a pass that lowers each edge's head cost to the tail cost plus the edge weight when that is smaller; a change on the final pass reveals a negative cycle",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MAP",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "FIXPOINT_ITERATION",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "edge weights (negative allowed)"
+   ],
+   "fails_when": [
+    "quadratic-ish; early exit when a pass changes nothing"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Floyd–Warshall algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.all_pairs_via_intermediate_vertices",
+   "name": "all pairs via allowed intermediate vertices",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "for each vertex k in turn, update every pair's best cost to the better of the current value and going through k, so after all k every pair holds its shortest path cost",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MATRIX",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "DYNAMIC_PROGRAMMING",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a dense pair matrix"
+   ],
+   "fails_when": [
+    "cubic; negative cycles show as negative diagonals"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Christofides algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.spanning_tree_plus_matching_shortcut",
+   "name": "spanning tree plus odd-degree matching, then shortcut",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "build a minimum spanning tree, add a minimum perfect matching on its odd-degree vertices to make every degree even, walk the resulting closed trail, and skip repeated vertices to get a tour within a factor of the optimum",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "metric (triangle inequality) costs"
+   ],
+   "fails_when": [
+    "non-metric instances lose the guarantee"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.select.grow_tree_by_cheapest_crossing_edge"
+    },
+    {
+     "rel": "REQUIRES",
+     "id": "bit.search.augment_along_alternating_paths"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Nearest neighbour algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.move_to_nearest_unvisited",
+   "name": "always move to the nearest unvisited",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "from the current position repeatedly go to the closest not-yet-visited element until all are visited",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a distance"
+   ],
+   "fails_when": [
+    "the last legs can be arbitrarily long; no approximation bound"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Clarke and Wright Saving algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.merge_routes_by_largest_saving",
+   "name": "merge routes by largest saving",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "start with one route per customer and repeatedly merge the two route ends whose joining saves the most distance, subject to capacity",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a distance",
+    "capacities"
+   ],
+   "fails_when": [
+    "greedy merges lock in early mistakes"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Warnsdorff's rule",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.move_to_fewest_onward_options",
+   "name": "move where the fewest options remain",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "at each step choose the move that leaves the fewest onward moves, so dead ends are consumed early rather than left stranded",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "cost": "LINEAR",
+   "requires": [
+    "a count of onward options per move"
+   ],
+   "fails_when": [
+    "ties decide success on some boards; not guaranteed"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Backtracking",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.depth_first_with_undo",
+   "name": "depth-first choice with undo",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "extend a partial solution one choice at a time; when a partial solution cannot be completed, undo the last choice and try the next alternative",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "RECORD",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "BACKTRACKING",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a feasibility test on partial solutions"
+   ],
+   "fails_when": [
+    "exponential without pruning"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Beam stack search",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.depth_first_with_undo"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Beam search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.bound.keep_only_k_best_frontier",
+   "name": "keep only the k best of each frontier",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "expand a frontier level by level but after each level keep only the k best-scoring nodes and discard the rest",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "BOUND",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "cost": "LINEAR",
+   "requires": [
+    "a score per node",
+    "a width k (policy)"
+   ],
+   "fails_when": [
+    "the optimum may be pruned; no completeness"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bidirectional search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.meet_in_the_middle",
+   "name": "meet in the middle",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "grow one frontier from the start and one from the goal and stop when they touch, so each side explores roughly the square root of the one-sided space",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "DIVIDE_CONQUER",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "reversible edges or a backward model"
+   ],
+   "fails_when": [
+    "the meeting test must be careful about optimality"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Breadth-first search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.expand_frontier_level_by_level",
+   "name": "expand the frontier level by level",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "visit all nodes at distance one, then two, and so on, using a queue, so the first time a node is reached is by a fewest-edges path",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MAP",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "INCREMENTAL",
+   "cost": "LINEAR",
+   "requires": [
+    "a queue",
+    "a visited set"
+   ],
+   "fails_when": [
+    "memory grows with the frontier width"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lexicographic breadth-first search (also known as Lex-BFS)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.expand_frontier_level_by_level"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Depth-first search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.expand_deepest_first",
+   "name": "expand the deepest node first",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "follow one branch as far as it goes before returning to try the next, using a stack; discovery and finishing times give low-links, components and topological orders",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MAP",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "INCREMENTAL",
+   "cost": "LINEAR",
+   "requires": [
+    "a stack",
+    "a visited set"
+   ],
+   "fails_when": [
+    "recursion depth on deep graphs",
+    "not shortest paths"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Brute-force search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.enumerate_all_candidates",
+   "name": "enumerate all candidates",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "generate every candidate in the space and test each, keeping the ones that satisfy the property",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "DIRECT",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a finite enumerable space"
+   ],
+   "fails_when": [
+    "exponential in the space size"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Iterative deepening depth-first search (IDDFS)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.bound.raise_depth_limit_and_restart",
+   "name": "raise the depth limit and restart",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "run a depth-limited search, and if it fails increase the limit by one and start again from scratch, so memory stays linear while the order found is breadth-like",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "BOUND",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "FUNCTION",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "COMPLETE",
+   "strategy": "ADAPTIVE_SWITCH",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a depth-limited search"
+   ],
+   "fails_when": [
+    "repeats shallow work each round (a constant factor)"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.search.expand_deepest_first"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "D*",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.replan_incrementally_on_change",
+   "name": "replan incrementally when costs change",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "keep the previous search's cost information and, when an edge cost changes, repair only the affected part of the plan instead of searching from scratch",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "REACTIVE",
+   "guarantee": "OPTIMAL",
+   "strategy": "INCREMENTAL",
+   "cost": "UNKNOWN",
+   "requires": [
+    "a stored prior search",
+    "change notifications"
+   ],
+   "fails_when": [
+    "many simultaneous changes approach a full replan"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "General Problem Solver",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.reduce_difference_to_goal_by_operator",
+   "name": "reduce the difference to the goal by choosing an operator",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "compare the current state to the goal, pick the largest difference, choose an operator known to reduce that kind of difference, recursively make its preconditions true, apply it, and repeat",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "RECORD",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a difference table from differences to operators (a human prior)"
+   ],
+   "fails_when": [
+    "interacting subgoals undo each other",
+    "the difference table is the whole intelligence"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bron–Kerbosch algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.enumerate_maximal_cliques_with_pivot",
+   "name": "enumerate maximal cliques with a pivot",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "grow a clique by adding candidates adjacent to all its members, tracking which vertices have already been excluded, and choosing a pivot so that only non-neighbours of the pivot need be branched on",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "BACKTRACKING",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "adjacency queries"
+   ],
+   "fails_when": [
+    "exponentially many cliques exist in the worst case"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "MaxCliqueDyn maximum clique algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.enumerate_maximal_cliques_with_pivot"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Kosaraju's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.components_by_reverse_pass",
+   "name": "strong components by a second pass on the reversed graph",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "run a depth-first traversal to order vertices by finishing time, then traverse the reversed graph in decreasing finishing order; each traversal from an unvisited vertex collects exactly one strongly connected component",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "cost": "LINEAR",
+   "requires": [
+    "the reversed graph"
+   ],
+   "fails_when": [
+    "two passes and a reversal"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.search.expand_deepest_first"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Tarjan's strongly connected components algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.components_by_lowlink_stack",
+   "name": "strong components by low-links on a single pass",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "during one depth-first traversal keep each vertex's smallest reachable discovery index and a stack of the current path; when a vertex's low-link equals its own index, pop the stack down to it as one component",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "cost": "LINEAR",
+   "requires": [
+    "discovery indices"
+   ],
+   "fails_when": [
+    "recursion depth on deep graphs"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.search.expand_deepest_first"
+    },
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.partition.components_by_reverse_pass"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch02 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Path-based strong component algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.partition.components_by_lowlink_stack"
+ }
+]

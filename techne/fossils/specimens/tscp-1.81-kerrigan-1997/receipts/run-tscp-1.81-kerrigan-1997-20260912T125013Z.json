@@ -1,0 +1,85 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "tscp-1.81-kerrigan-1997",
+  "receipt_id": "run-tscp-1.81-kerrigan-1997-20260912T125013Z",
+  "written_utc": "20260912T125013Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree/tscp181",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "3f85294cf11763e5e0a43e9c4c38b4e2db151142bce1295f931d744ba7010ec4",
+  "recipe_sha256": "0af599f41a93249d1f83faaa1fd3a53246cdba22a7562331b869b3a2b7d4a46d",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 5.57,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile",
+      "cmd": "gcc -O2 -o tscp *.c 2>&1 | grep -i error; test -x ./tscp",
+      "exit": 0,
+      "seconds": 0.7,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "built-in fixed-depth benchmark (iterative deepening 1..5 from the opening)",
+      "cmd": "printf 'bench\\nquit\\n' | ./tscp | tail -12",
+      "exit": 0,
+      "seconds": 0.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "  1        130     20  c1e3\n  2       3441      5  g5e4 d6c7\n  3       8911     30  g5e4 d6c7 c1e3\n  4     141367     10  g5e4 d6c7 c1e3 c8d7\n  5     550778     26  c2a4 d6c7 g2d5 e6d5 c1e3\nTime: 232 ms\n\nNodes: 550778\nBest time: 231 ms\nNodes per second: 2384320 (Score: 9.805)\ntscp> Illegal move.\ntscp> "
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "the benchmark node count is deterministic across two runs",
+      "cmd": "a=$(printf 'bench\\nquit\\n' | ./tscp | grep -i '^Nodes:'); b=$(printf 'bench\\nquit\\n' | ./tscp | grep -i '^Nodes:'); echo \"$a\"; test \"$a\" = \"$b\" && echo DETERMINISTIC",
+      "exit": 0,
+      "seconds": 1.5,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Nodes: 550778\nDETERMINISTIC\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

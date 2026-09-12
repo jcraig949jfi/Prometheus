@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.replace_pair_by_remainder_until_zero",
+  "name": "replace the larger by the remainder until zero",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "repeatedly replace the pair (a, b) by (b, a mod b) until the second is zero; the first is then the greatest common divisor, and carrying the quotient coefficients along expresses it as an integer combination of the inputs",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Euclidean algorithm' in section Computational mathematics / Number theoretic algorithms: computes the greatest common divisor",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Extended Euclidean algorithm': also solves the equation ax&nbsp;+&nbsp;by&nbsp;=&nbsp;c",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Binary GCD algorithm': Efficient way of calculating GCD.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "division with remainder"
+  ],
+  "fails_when": [
+    "none for integers; polynomial variants need a field"
+  ],
+  "instances": [
+    "Euclidean algorithm",
+    "Extended Euclidean algorithm",
+    "Binary GCD algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

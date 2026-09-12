@@ -1,0 +1,48 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.accumulate.best_segment_ending_here",
+  "name": "best segment ending here",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "scan once keeping the best value of a segment that ends at the current position (extend or restart) and the best seen overall",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Kadane's algorithm' in section Combinatorial algorithms / Sequence algorithms / Substrings: finds the contiguous subarray with largest sum in an array of numbers",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Ruzzo–Tompa algorithm': Find all non-overlapping, contiguous, maximal scoring subsequences in a sequence of real numbers",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ACCUMULATE",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "cost": "LINEAR",
+  "requires": [
+    "an additive score"
+  ],
+  "fails_when": [
+    "all-negative inputs need a convention for the empty segment"
+  ],
+  "instances": [
+    "Kadane's algorithm",
+    "Ruzzo–Tompa algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "STREAMING",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

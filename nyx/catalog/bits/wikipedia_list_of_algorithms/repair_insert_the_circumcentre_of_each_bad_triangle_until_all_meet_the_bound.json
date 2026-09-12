@@ -1,0 +1,48 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.insert_the_circumcentre_of_each_bad_triangle_until_all_meet_the_bound",
+  "name": "insert the circumcentre of each bad triangle until all meet the quality bound",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "scientific software"
+  ],
+  "mechanism": "while any triangle has an angle below the bound, insert its circumcentre as a new vertex and re-triangulate locally; if the new point would land too close to an input segment, split that segment at its midpoint instead; termination follows because inserted points are never closer than the local feature size allows",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Ruppert's algorithm (also known as Delaunay refinement)' in section Computational mathematics / Geometry: create quality Delaunay triangulations",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Chew's second algorithm': create quality constrained Delaunay triangulations",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "GRAPH",
+  "out_geometry": "GRAPH",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "TERMINATES",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "PRIORITY",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "an input with no very small angles between segments",
+    "a quality bound (policy)"
+  ],
+  "fails_when": [
+    "small input angles can prevent termination"
+  ],
+  "instances": [
+    "Ruppert's algorithm (also known as Delaunay refinement)",
+    "Chew's second algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

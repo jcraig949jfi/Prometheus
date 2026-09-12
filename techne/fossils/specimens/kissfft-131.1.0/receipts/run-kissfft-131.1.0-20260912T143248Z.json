@@ -1,0 +1,126 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "kissfft-131.1.0",
+  "receipt_id": "run-kissfft-131.1.0-20260912T143248Z",
+  "written_utc": "20260912T143248Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/kissfft-131.1.0",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "6c7e606fdfe451894b91e4f2f4d7e910aae6988ea1c1396a74a133b414214338",
+  "recipe_sha256": "51ac529459288cf0bb25366802cd73756304f9daf4aff7fcb8db31bf29d10a02",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make all",
+      "cmd": "make -s all 2>&1 | grep -viE 'warning' | tail -3; ls kiss_fft.c.o",
+      "exit": 0,
+      "seconds": 1.53,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "collect2: error: ld returned 1 exit status\nMakefile:75: *** ERROR: no libpng development files found!.  Stop.\nmake: *** [Makefile:201: all] Error 2\nkiss_fft.c.o\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "forward-then-inverse round trip via a tiny driver",
+      "cmd": "cat > $BODY/rt.c <<'CEOF'\n#include \"kiss_fft.h\"\n#include <math.h>\n#include <stdio.h>\nint main(){int N=32;kiss_fft_cfg f=kiss_fft_alloc(N,0,0,0),i=kiss_fft_alloc(N,1,0,0);kiss_fft_cpx x[32],X[32],y[32];for(int k=0;k<N;k++){x[k].r=cos(2*M_PI*3*k/N);x[k].i=0;}kiss_fft(f,x,X);kiss_fft(i,X,y);double e=0;for(int k=0;k<N;k++){double dr=y[k].r/N-x[k].r,di=y[k].i/N-x[k].i;e+=dr*dr+di*di;}printf(\"roundtrip_l2 %.3e\\n\", sqrt(e));return e<1e-12?0:1;}\nCEOF\ngcc -I. -O2 -o $BODY/rt $BODY/rt.c kiss_fft.c -lm && $BODY/rt",
+      "exit": 0,
+      "seconds": 0.91,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "roundtrip_l2 8.941e-08\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "kfc.c.o",
+      "sha256": "7df11e87957ac9ba465ddc305b0812b4f37fb726c47bb148b6260c808ee7126b",
+      "bytes": 2480
+    },
+    {
+      "path": "kiss_fft.c.o",
+      "sha256": "a50a8f91dc07e42387a34f16fa63ba62c53eb502aba6a4c33e3f09d8c2b86d86",
+      "bytes": 10944
+    },
+    {
+      "path": "kiss_fftnd.c.o",
+      "sha256": "b794686879e98555e6f10e93fb04879e8ee77560ef3c8008e105de4fc78e3e70",
+      "bytes": 3072
+    },
+    {
+      "path": "kiss_fftndr.c.o",
+      "sha256": "f2f9361d3c9d8a34c64eb1c9a8291005eae989d4448ac8cf7cf26666f957922c",
+      "bytes": 3336
+    },
+    {
+      "path": "kiss_fftr.c.o",
+      "sha256": "a143aee77cb580706c6f362591110b4631a7c46f88d7b9c35c210e027c0b36bc",
+      "bytes": 5400
+    },
+    {
+      "path": "libkissfft-float.so",
+      "sha256": "5e01cf420e981d48da9a2b2c66f0cd9110357b67297626687cd4b260993284f8",
+      "bytes": 29264
+    },
+    {
+      "path": "libkissfft-float.so.131",
+      "sha256": "5e01cf420e981d48da9a2b2c66f0cd9110357b67297626687cd4b260993284f8",
+      "bytes": 29264
+    },
+    {
+      "path": "libkissfft-float.so.131.1.0",
+      "sha256": "5e01cf420e981d48da9a2b2c66f0cd9110357b67297626687cd4b260993284f8",
+      "bytes": 29264
+    },
+    {
+      "path": "tools/fastconv-float",
+      "sha256": "3cac375597d246b12ebb6149af53e57a12c2291c0b5f7542a5a5bc77446a267b",
+      "bytes": 21224
+    },
+    {
+      "path": "tools/fastconvr-float",
+      "sha256": "ae7dbb7ad2af57ef448d2187b15b280ed8a3ccda9e4b43f5ef2f320d383692bf",
+      "bytes": 21272
+    },
+    {
+      "path": "tools/fft-float",
+      "sha256": "ce22e69bd2fe922563fe9039e4797595431cf2cf748de854bd33c77c43fd22a3",
+      "bytes": 17184
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

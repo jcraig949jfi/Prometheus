@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.allocate.mark_reachable_then_free_unmarked",
+  "name": "mark everything reachable, then free the unmarked",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "starting from the roots, mark every object reachable by following references, then sweep the heap freeing every object not marked",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Mark and sweep' in section Distributed systems algorithms / Memory allocation and deallocation algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Mark-compact algorithm': a combination of the mark-sweep algorithm and Cheney's copying algorithm",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ALLOCATE",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "SCHEDULED",
+  "guarantee": "SOUND",
+  "strategy": "DIRECT",
+  "iteration": "LIFO",
+  "cost": "LINEAR",
+  "requires": [
+    "known roots",
+    "a stop or a concurrent protocol"
+  ],
+  "fails_when": [
+    "pauses proportional to the heap; fragmentation unless compacted"
+  ],
+  "instances": [
+    "Mark and sweep",
+    "Mark-compact algorithm"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.expand_deepest_first"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

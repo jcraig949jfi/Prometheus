@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.repeatedly_blend_adjacent_control_points_at_the_parameter",
+  "name": "repeatedly blend adjacent control points at the parameter until one remains",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "games"
+  ],
+  "mechanism": "replace each adjacent pair of control points by their weighted average at the parameter value (weights from the knot positions), then repeat on the shorter list until a single point remains; that point is the curve value, and only convex combinations are ever formed",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'De Boor algorithm' in section Computational mathematics / Numerical algorithms / Interpolation and extrapolation: B-splines",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'De Casteljau's algorithm': Bézier curves",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DYNAMIC_PROGRAMMING",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "control points and (for the general form) a knot vector"
+  ],
+  "fails_when": [
+    "quadratic in the degree per evaluation"
+  ],
+  "instances": [
+    "De Boor algorithm",
+    "De Casteljau's algorithm"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.predict.build_higher_degree_interpolants_from_pairs_of_lower_ones"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

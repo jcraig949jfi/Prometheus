@@ -1,0 +1,138 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "tinycc",
+  "canonical_name": "TinyCC (tcc) -- Fabrice Bellard's small C compiler",
+  "aliases": [
+    "tcc",
+    "tinycc"
+  ],
+  "lineage": "TinyCC (2001-, Bellard): a tiny, fast C99 compiler with its own back end (parse -> in-memory code generation -> ELF/executable) that can compile-and-run C in one step; a whole compiler pipeline small enough to read",
+  "domain": [
+    "compilers",
+    "code-generation",
+    "parsing",
+    "languages",
+    "representation-transformation"
+  ],
+  "era": "2001-",
+  "version": "repo.or.cz/tinycc.git mob branch as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://repo.or.cz/tinycc.git",
+        "commit": "0fb54300b56512754221d80adda85ddb9815bceb",
+        "commit_resolved": "0fb54300b56512754221d80adda85ddb9815bceb",
+        "commit_date": "2026-09-04T18:46:13+02:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "repo.or.cz/tinycc.git"
+  },
+  "hashes": {
+    "tree_sha256": "926f8626193eebf953c48cb590cb5d1b0bb51cbe7cd653df1557f16efb5a460c",
+    "n_files": 546,
+    "bytes": 4544205,
+    "artifacts": [
+      {
+        "filename": "https://repo.or.cz/tinycc.git",
+        "sha256": null,
+        "commit": "0fb54300b56512754221d80adda85ddb9815bceb"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\tinycc",
+    "hash_list": "techne/fossils/specimens/tinycc/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "LGPL-2.1-or-later",
+    "status": "copyleft",
+    "evidence": "COPYING in repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "./configure && make",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "tcc -run prog.c (compile and execute in memory); tcc -o prog prog.c"
+  ],
+  "example": {
+    "command": "make && echo 'int main(){return 42;}' > t.c && ./tcc -run t.c; echo exit=$?",
+    "input": "a C program",
+    "output": "the program's behaviour (exit 42)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "bellard.org/tcc",
+    "repo.or.cz/tinycc.git"
+  ],
+  "human_capability_summary": {
+    "built_to": "compile C to machine code very fast, in one small program that parses, type-checks, allocates registers and emits an executable (or runs it directly in memory)",
+    "pressure": "gcc's size and slowness; tcc trades optimisation for a compiler that is tiny, fast, and can be used as a scripting back end",
+    "success_means": "correct compilation and execution of C programs; tcc can even compile itself"
+  },
+  "known_human_problem_solved": "fast, tiny C compilation (a full front-to-back compiler)",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T152725Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T152920Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T153025Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T153231Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T153347Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\tinycc ; tracked techne/fossils/specimens/tinycc/",
+    "where_it_came_from": "{'repo': 'repo.or.cz/tinycc.git'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; LGPL-2.1-or-later",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run tinycc",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T153347Z.json",
+    "what_humans_used_it_for": "compile C to machine code very fast, in one small program that parses, type-checks, allocates registers and emits an executable (or runs it directly in memory)"
+  },
+  "seat": "Techne"
+}

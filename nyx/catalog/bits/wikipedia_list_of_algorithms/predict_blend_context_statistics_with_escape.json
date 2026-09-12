@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.blend_context_statistics_with_escape",
+  "name": "predict from the longest matching context, escaping to shorter ones",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "keep symbol counts for every recent context of several lengths; to predict the next symbol use the longest context seen before, and if it has never seen the symbol emit an escape and fall back to a shorter context, feeding the probabilities to an entropy coder",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Prediction by partial matching (PPM)' in section Information theory and signal processing / Coding theory / Lossless compression algorithms: an adaptive statistical data compression technique based on context modeling and prediction",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "DISTRIBUTION",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "an entropy coder downstream",
+    "an escape probability rule (policy)"
+  ],
+  "fails_when": [
+    "memory grows with contexts; slow"
+  ],
+  "instances": [
+    "Prediction by partial matching (PPM)"
+  ],
+  "related": [
+    {
+      "rel": "COMPOSES_WITH",
+      "id": "bit.compress.narrow_interval_by_symbol_probabilities"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

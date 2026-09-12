@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.bucket_one_side_then_probe_with_the_other",
+  "name": "bucket one side by key, then probe with the other",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "build a hash table on the join key from the smaller collection, then scan the larger one probing the table for matches",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hash join' in section Database algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "DISTRIBUTION",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "an equality join key",
+    "memory for the build side (or partitioning to disk)"
+  ],
+  "fails_when": [
+    "only equality conditions; skewed keys overflow buckets"
+  ],
+  "instances": [
+    "Hash join"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

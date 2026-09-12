@@ -1,0 +1,55 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.merge_two_least_probable_into_a_tree",
+  "name": "merge the two least probable symbols into a tree",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "repeatedly join the two least probable symbols into a node whose probability is their sum until one tree remains; the path to each leaf is its code, so frequent symbols get short codes and no code is a prefix of another",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Huffman coding' in section Information theory and signal processing / Coding theory / Lossless compression algorithms: simple lossless compression taking advantage of relative character frequencies",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Adaptive Huffman coding': adaptive coding technique based on Huffman coding",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Package-merge algorithm': Optimizes Huffman coding subject to a length restriction on code strings",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Shannon–Fano coding': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPRESS",
+  "in_geometry": "DISTRIBUTION",
+  "out_geometry": "TREE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "symbol probabilities (or counts)"
+  ],
+  "fails_when": [
+    "whole-bit code lengths lose against arithmetic coding on skewed sources",
+    "the table must be known to the decoder"
+  ],
+  "instances": [
+    "Huffman coding",
+    "Adaptive Huffman coding",
+    "Package-merge algorithm",
+    "Shannon–Fano coding"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

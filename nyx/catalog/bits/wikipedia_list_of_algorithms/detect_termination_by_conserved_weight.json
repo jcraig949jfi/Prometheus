@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.detect.termination_by_conserved_weight",
+  "name": "detect termination by a conserved weight",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "the controller holds weight 1; every message carries a share of the sender's weight; an idle node returns its weight to the controller; when the controller's weight returns to 1 nothing is active or in flight",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Huang's algorithm' in section Distributed systems algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "DETECT",
+  "in_geometry": "STREAM",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "REACTIVE",
+  "guarantee": "SOUND",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "exact arithmetic on weights (or rational shares)"
+  ],
+  "fails_when": [
+    "floating weights lose exactness"
+  ],
+  "instances": [
+    "Huang's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

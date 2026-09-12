@@ -1,0 +1,1489 @@
+[
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Combinatorial optimization",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Constraint satisfaction",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Exact cover problem",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Dynamic Programming",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Evolutionary computation",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Swarm intelligence",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Linear programming",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Integer linear programming",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Nonlinear optimization",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Local search",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Nearest neighbor search (NNS)",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Subset sum algorithm",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Minimax used in game programming",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem class, field or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "A hybrid BFGS-Like method (see more https",
+  "decision": "NOT_A_BIT",
+  "reason": "a citation fragment (DOI link) parsed as an entry; not a catalogue item"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "A hybrid HS-LS conjugate gradient algorithm (see https",
+  "decision": "NOT_A_BIT",
+  "reason": "a citation fragment (DOI link) parsed as an entry; not a catalogue item"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bruss algorithm",
+  "decision": "NOT_A_BIT",
+  "reason": "a cross-reference to the odds algorithm entry"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Chain matrix multiplication",
+  "decision": "DEFER",
+  "reason": "an application of interval dynamic programming; classified with the DP bit if a DP-over-intervals bit appears"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Difference map algorithm general algorithms for the constraint satisfaction",
+  "decision": "DEFER",
+  "reason": "projection-based constraint solving; not characterised from the list alone"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Benson's algorithm",
+  "decision": "DEFER",
+  "reason": "vector linear optimisation; not characterised from the list alone"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Odds algorithm (Bruss algorithm)",
+  "decision": "DEFER",
+  "reason": "optimal stopping via summed odds; needs a source read to state the mechanism honestly"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Alpha–beta pruning",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.bound.prune_branches_outside_window",
+   "name": "prune branches outside the value window",
+   "lineage": [
+    "search",
+    "planning"
+   ],
+   "mechanism": "while evaluating a two-player game tree with alternating maximiser and minimiser, carry the best values each side is already guaranteed and stop exploring any branch that cannot improve on them",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "BOUND",
+   "in_geometry": "TREE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "BRANCH_AND_BOUND",
+   "iteration": "LIFO",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a two-player zero-sum evaluation",
+    "move ordering (policy; decides the saving)"
+   ],
+   "fails_when": [
+    "poor move ordering gives no saving"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Branch and bound",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.branch_and_prune_by_bound",
+   "name": "branch and prune by a bound",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "split the feasible set into parts, compute for each part a bound on the best value it could contain, discard parts whose bound cannot beat the best complete solution found, and recurse into the rest",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "RECORD",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "BRANCH_AND_BOUND",
+   "iteration": "PRIORITY",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a bounding function",
+    "a branching rule (policy)"
+   ],
+   "fails_when": [
+    "weak bounds prune nothing"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Branch and cut",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.branch_and_prune_by_bound"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "AC-3 algorithm general algorithms for the constraint satisfaction",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.prune_domains_until_arc_consistent",
+   "name": "prune domains until every arc is consistent",
+   "lineage": [
+    "constraint solving"
+   ],
+   "mechanism": "keep a queue of constraint arcs; for each, remove from one variable's domain every value that has no supporting value in the other variable's domain, and re-queue the arcs of any variable whose domain shrank, until no domain changes",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MAP",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "MONOTONE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "FIFO",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "binary constraints",
+    "finite domains"
+   ],
+   "fails_when": [
+    "arc consistency is not a solution; empty domains detect failure only"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Davis–Putnam–Logemann–Loveland algorithm (DPLL)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.assign_propagate_backtrack",
+   "name": "assign a variable, propagate forced consequences, backtrack on conflict",
+   "lineage": [
+    "constraint solving",
+    "theorem proving"
+   ],
+   "mechanism": "choose an unassigned variable and a value, repeatedly assign every literal forced by a clause with one unassigned literal, and on an empty clause undo to the last choice and try the other value",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SET",
+   "out_geometry": "MAP",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "BACKTRACKING",
+   "iteration": "LIFO",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "clauses in conjunctive normal form",
+    "a variable-choice rule (policy; the whole practical difference)"
+   ],
+   "fails_when": [
+    "exponential without learning; clause learning and watched literals are the engineering (Chaff)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Chaff algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.assign_propagate_backtrack"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Davis–Putnam algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.assign_propagate_backtrack"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Min conflicts algorithm general algorithms for the constraint satisfaction",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.reassign_conflicting_variable_to_least_conflict_value",
+   "name": "reassign a conflicting variable to its least-conflicting value",
+   "lineage": [
+    "constraint solving"
+   ],
+   "mechanism": "start from a complete assignment, pick a variable that violates a constraint, give it the value that violates the fewest constraints, and repeat until no violations remain or a step budget is spent",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "MAP",
+   "out_geometry": "MAP",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "iteration": "RANDOM",
+   "cost": "LINEAR",
+   "requires": [
+    "a conflict count per value"
+   ],
+   "fails_when": [
+    "plateaus and cycles; no completeness"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Algorithm X",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.cover_by_choosing_column_with_fewest_options",
+   "name": "exact cover by choosing the column with fewest options",
+   "lineage": [
+    "constraint solving",
+    "search"
+   ],
+   "mechanism": "to cover every column exactly once, pick the column with the fewest candidate rows, try each such row, remove the rows and columns it conflicts with, recurse, and undo the removals when returning",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "BACKTRACKING",
+   "iteration": "LIFO",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a 0/1 incidence matrix",
+    "constant-time removal and restoration (the doubly linked implementation)"
+   ],
+   "fails_when": [
+    "exponential; the fewest-options heuristic is what keeps it usable"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Dancing Links",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.cover_by_choosing_column_with_fewest_options"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cross-entropy method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.sample.refit_distribution_to_elite_samples",
+   "name": "refit a sampling distribution to its elite samples",
+   "lineage": [
+    "evolutionary computation",
+    "optimization"
+   ],
+   "mechanism": "draw candidates from a parametrised distribution, keep the best fraction, refit the distribution's parameters to those elites, and repeat so the distribution concentrates on good regions",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SAMPLE",
+   "in_geometry": "DISTRIBUTION",
+   "out_geometry": "DISTRIBUTION",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "NONE",
+   "strategy": "RANDOMIZED",
+   "iteration": "PARALLEL_ROUNDS",
+   "cost": "UNKNOWN",
+   "requires": [
+    "a parametrised distribution family (a human prior)",
+    "an elite fraction (policy)"
+   ],
+   "fails_when": [
+    "premature concentration; the family may not contain the optimum's neighbourhood"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Evolution strategy",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.sample.refit_distribution_to_elite_samples"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Differential evolution",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.perturb_by_scaled_difference_of_others",
+   "name": "perturb a candidate by a scaled difference of two others",
+   "lineage": [
+    "evolutionary computation",
+    "optimization"
+   ],
+   "mechanism": "for each member of a population form a trial by adding a scaled difference of two other members to a third, mix it with the member coordinate-wise, and keep whichever of trial and member scores better",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "NONE",
+   "strategy": "RANDOMIZED",
+   "iteration": "PARALLEL_ROUNDS",
+   "cost": "LINEAR",
+   "requires": [
+    "a real-valued vector encoding",
+    "a scale factor and crossover rate (policy)"
+   ],
+   "fails_when": [
+    "step scale is tied to population spread; collapses when the population converges"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Genetic algorithms",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.recombine_and_mutate_selected_parents",
+   "name": "recombine and mutate selected parents",
+   "lineage": [
+    "evolutionary computation",
+    "optimization"
+   ],
+   "mechanism": "select parents in proportion to fitness, produce children by exchanging segments of their encodings and randomly altering positions, and replace the population, so useful segments spread while variation continues",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "NONE",
+   "strategy": "RANDOMIZED",
+   "iteration": "PARALLEL_ROUNDS",
+   "cost": "LINEAR",
+   "requires": [
+    "an encoding where segments carry meaning (a human prior)",
+    "selection, crossover and mutation rules (policy)"
+   ],
+   "fails_when": [
+    "disruptive crossover when the encoding does not localise meaning",
+    "loss of diversity"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gene expression programming",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.generate.recombine_and_mutate_selected_parents"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Memetic algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.generate.recombine_and_mutate_selected_parents"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Fitness proportionate selection",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.sample.draw_in_proportion_to_score",
+   "name": "draw in proportion to score",
+   "lineage": [
+    "evolutionary computation",
+    "optimization"
+   ],
+   "mechanism": "choose members at random with probability proportional to their score, so better members are chosen more often but none is excluded",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SAMPLE",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "LINEAR",
+   "requires": [
+    "non-negative scores"
+   ],
+   "fails_when": [
+    "a dominant member takes over; scale of scores changes pressure"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Stochastic universal sampling",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.sample.draw_in_proportion_to_score"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Tournament selection",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.sample.pick_best_of_random_subset",
+   "name": "pick the best of a random subset",
+   "lineage": [
+    "evolutionary computation",
+    "optimization"
+   ],
+   "mechanism": "draw a small random subset and choose its best member, so selection pressure is set by the subset size rather than by score scale",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SAMPLE",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "CONSTANT",
+   "requires": [
+    "a total order on scores",
+    "a subset size (policy)"
+   ],
+   "fails_when": [
+    "size 1 is random search; size n is truncation"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Truncation selection",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.keep_top_fraction",
+   "name": "keep the top fraction",
+   "lineage": [
+    "evolutionary computation",
+    "optimization"
+   ],
+   "mechanism": "rank all members by score and keep only the best fixed fraction as parents for the next round",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "DETERMINISTIC",
+   "strategy": "GREEDY",
+   "iteration": "SORTED_GLOBAL",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "a fraction (policy)"
+   ],
+   "fails_when": [
+    "rapid diversity loss"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Ant colony optimization",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.accumulate.deposit_and_evaporate_shared_trail",
+   "name": "deposit and evaporate a shared trail",
+   "lineage": [
+    "evolutionary computation",
+    "optimization"
+   ],
+   "mechanism": "many agents build solutions step by step choosing components with probability rising with a shared per-component trail value; good solutions deposit trail on their components and all trail evaporates each round, so the population's history biases future construction",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ACCUMULATE",
+   "in_geometry": "GRAPH",
+   "out_geometry": "MAP",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "NONE",
+   "strategy": "RANDOMIZED",
+   "iteration": "PARALLEL_ROUNDS",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a component graph",
+    "deposit and evaporation rates (policy)"
+   ],
+   "fails_when": [
+    "stagnation on one trail; rates decide everything"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Particle swarm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.move_toward_own_and_group_best",
+   "name": "move toward own best and group best",
+   "lineage": [
+    "evolutionary computation",
+    "optimization"
+   ],
+   "mechanism": "each candidate keeps a velocity updated toward its own best-seen position and the group's best-seen position with random weights, and moves by that velocity each round",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "NONE",
+   "strategy": "RANDOMIZED",
+   "iteration": "PARALLEL_ROUNDS",
+   "cost": "LINEAR",
+   "requires": [
+    "a continuous space with a distance",
+    "inertia and attraction weights (policy)"
+   ],
+   "fails_when": [
+    "premature convergence to the group best"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bees algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.move_toward_own_and_group_best"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Harmony search (HS)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.compose_from_memory_with_random_adjustment",
+   "name": "compose a candidate from memory with random adjustment",
+   "lineage": [
+    "evolutionary computation",
+    "optimization"
+   ],
+   "mechanism": "build each new candidate coordinate-wise by copying a value from a remembered set of good candidates with some probability (then nudging it) or drawing it fresh, and replace the worst remembered candidate if the new one is better",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "NONE",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "LINEAR",
+   "requires": [
+    "a memory size and copy/nudge rates (policy)"
+   ],
+   "fails_when": [
+    "shown to be a re-parametrised evolution strategy; nothing mechanistically new beyond the memory-replacement rule"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Greedy randomized adaptive search procedure (GRASP)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.randomised_greedy_construction_then_local_improvement",
+   "name": "randomised greedy construction then local improvement",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "build a solution by repeatedly choosing at random among the few best-scoring next elements, then improve it by local moves, and repeat from scratch keeping the best",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "RECORD",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "NONE",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "UNKNOWN",
+   "requires": [
+    "a greedy scoring of next elements",
+    "a local move set"
+   ],
+   "fails_when": [
+    "independent restarts learn nothing across rounds"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gradient descent",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.step_against_gradient",
+   "name": "step against the gradient",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "from the current point move a step in the direction that decreases the objective fastest (the negative gradient), scaled by a step size, and repeat until the change is small",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "LOCAL_OPTIMUM",
+   "strategy": "GREEDY",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "a differentiable objective",
+    "a step size rule (policy)"
+   ],
+   "fails_when": [
+    "saddles and ravines; step size too large diverges, too small crawls"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Conjugate gradient methods (see more https",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.step_along_conjugate_directions",
+   "name": "step along mutually conjugate directions",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "choose each search direction as the current negative gradient corrected to be conjugate to the previous directions with respect to the curvature, so on a quadratic each direction is never undone and the exact optimum is reached in as many steps as dimensions",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "GREEDY",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "a symmetric positive-definite curvature (or a nonlinear extension with restarts)"
+   ],
+   "fails_when": [
+    "loss of conjugacy on non-quadratics; needs restarts"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Newton's method in optimization",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.step_to_minimum_of_local_quadratic",
+   "name": "step to the minimum of the local quadratic model",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "approximate the objective near the current point by a quadratic from its gradient and curvature and jump to that quadratic's minimum, repeating",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "LOCAL_OPTIMUM",
+   "strategy": "GREEDY",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "second derivatives (or an approximation built from gradient differences)"
+   ],
+   "fails_when": [
+    "indefinite curvature steps to a saddle or maximum",
+    "cubic cost per step in dimension"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "BFGS method",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.step_to_minimum_of_local_quadratic"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gauss–Newton algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.step_to_minimum_of_local_quadratic"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Levenberg–Marquardt algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.step_to_minimum_of_local_quadratic"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Frank-Wolfe algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.move_toward_linearised_vertex",
+   "name": "move toward the vertex that minimises the linearisation",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "at the current feasible point minimise the linear approximation of the objective over the feasible set (a vertex), then move a fraction of the way toward that vertex, staying feasible without projection",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "LOCAL_OPTIMUM",
+   "strategy": "GREEDY",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a linear minimisation oracle over the feasible set"
+   ],
+   "fails_when": [
+    "slow zig-zag near the boundary"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Golden-section search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.shrink_bracket_by_golden_ratio",
+   "name": "shrink a bracket by the golden ratio",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "keep three points bracketing a unimodal optimum, place the next probe so that the two sub-intervals keep the golden ratio, and discard the outer part that cannot contain the optimum, reusing one probe per step",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "unimodality"
+   ],
+   "fails_when": [
+    "multimodal functions bracket a local optimum"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.search.unimodal_bracket"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Line search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.bound.choose_step_length_by_sufficient_decrease",
+   "name": "choose a step length by sufficient decrease",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "given a descent direction, try a step and shrink it until the objective decreases by at least a fraction of what the gradient predicts, so each step is neither too long to diverge nor accepted blindly",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "BOUND",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "NONE",
+   "control": "CALLBACK",
+   "guarantee": "MONOTONE",
+   "strategy": "ADAPTIVE_SWITCH",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "a descent direction",
+    "a decrease fraction (policy)"
+   ],
+   "fails_when": [
+    "many objective evaluations per step on badly scaled problems"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Nelder–Mead method (downhill simplex method)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.reflect_expand_contract_simplex",
+   "name": "reflect, expand or contract a simplex of points",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "keep a set of one more point than the dimension, replace the worst by its reflection through the centroid of the others, expanding if that helped a lot and contracting toward the best if it did not, shrinking the whole set when nothing helps",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SET",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "iteration": "SORTED_GLOBAL",
+   "cost": "LINEAR",
+   "requires": [
+    "only objective values (no gradient)"
+   ],
+   "fails_when": [
+    "can converge to a non-stationary point; degenerates in high dimension"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Grid Search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.evaluate_on_a_lattice",
+   "name": "evaluate on a lattice",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "evaluate the objective at every point of a fixed lattice over the parameter box and take the best",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a bounded box and a resolution (policy)"
+   ],
+   "fails_when": [
+    "exponential in dimension"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.search.enumerate_all_candidates"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Random Search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.evaluate_at_random_points",
+   "name": "evaluate at random points",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "draw points at random from the parameter space, evaluate each, and keep the best seen",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "LINEAR",
+   "requires": [
+    "a sampling distribution (policy)"
+   ],
+   "fails_when": [
+    "no use of structure; but it is the baseline every smarter method must beat"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Random-restart hill climbing",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.climb_then_restart_from_random",
+   "name": "climb to a local optimum, then restart at random",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "repeatedly move to a better neighbour until none exists, record the result, restart from a random point, and keep the best over restarts",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "LOCAL_OPTIMUM",
+   "strategy": "GREEDY",
+   "iteration": "RANDOM",
+   "cost": "UNKNOWN",
+   "requires": [
+    "a neighbourhood"
+   ],
+   "fails_when": [
+    "restarts are independent; no memory across them"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Tabu search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.forbid_recent_moves",
+   "name": "forbid recently made moves",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "move to the best neighbour even if worse, but keep a short list of recent moves or attributes that may not be reversed for a number of steps, so the search is pushed out of the basin it just left",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "iteration": "PRIORITY",
+   "cost": "UNKNOWN",
+   "requires": [
+    "a neighbourhood",
+    "a tabu tenure (policy)"
+   ],
+   "fails_when": [
+    "tenure too short cycles, too long blocks the return to good regions"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Simulated annealing",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.accept_worse_moves_with_cooling_probability",
+   "name": "accept worse moves with a cooling probability",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "propose a random neighbour; accept it if better, and if worse accept it with a probability that decreases with how much worse it is and with a temperature that is lowered over time, so early search roams and late search settles",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "UNKNOWN",
+   "requires": [
+    "a neighbourhood",
+    "a cooling schedule (policy; decides everything)"
+   ],
+   "fails_when": [
+    "schedule too fast freezes in a poor basin"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Stochastic tunneling",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.accept_worse_moves_with_cooling_probability"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Simplex algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.walk_polytope_vertices_along_improving_edges",
+   "name": "walk polytope vertices along improving edges",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "start at a vertex of the feasible polytope and repeatedly move along an edge to an adjacent vertex with better objective until no adjacent vertex improves, which at a vertex of a linear program is the optimum",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "GREEDY",
+   "iteration": "PRIORITY",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "linear objective and constraints",
+    "a pivot rule (policy; anti-cycling)"
+   ],
+   "fails_when": [
+    "exponential worst case; degenerate vertices cycle without a rule"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Dantzig–Wolfe decomposition",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.walk_polytope_vertices_along_improving_edges"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Delayed column generation",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.walk_polytope_vertices_along_improving_edges"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Interior point method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.follow_central_path_with_barrier",
+   "name": "follow the central path with a barrier",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "add to the objective a barrier term that grows without bound at the constraint boundary, minimise the sum from inside the feasible region, and shrink the barrier weight in steps, following the path of minimisers to the constrained optimum",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "GREEDY",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a strictly feasible start",
+    "a barrier and a weight schedule (policy)"
+   ],
+   "fails_when": [
+    "each step is a full linear solve"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Karmarkar's algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.follow_central_path_with_barrier"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Ellipsoid method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.shrink_enclosing_ellipsoid_by_separating_cut",
+   "name": "shrink an enclosing ellipsoid by a separating cut",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "keep an ellipsoid known to contain the optimum, query a separating hyperplane at its centre, and replace it by the smallest ellipsoid containing the half that remains, so the volume shrinks by a fixed factor each step",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a separation oracle"
+   ],
+   "fails_when": [
+    "slow in practice despite polynomial bound"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cutting-plane method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.add_violated_constraint_and_resolve",
+   "name": "add the violated constraint and re-solve",
+   "lineage": [
+    "optimization"
+   ],
+   "mechanism": "solve a relaxed problem, find a constraint of the true problem that the relaxed solution violates, add it, and re-solve, repeating until the relaxed solution is feasible",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "MATRIX",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "MONOTONE",
+   "strategy": "INCREMENTAL",
+   "iteration": "NONE",
+   "cost": "UNKNOWN",
+   "requires": [
+    "a separation oracle for the true constraints"
+   ],
+   "fails_when": [
+    "many cuts, slow convergence"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hungarian method",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.augment_along_alternating_paths"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Best Bin First",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.probe_bins_in_order_of_boundary_distance",
+   "name": "probe bins in order of boundary distance",
+   "lineage": [
+    "memory and retrieval",
+    "search"
+   ],
+   "mechanism": "descend a space-partitioning tree to the query's leaf, then visit other branches in order of how close the query is to their splitting boundaries using a priority queue, stopping after a fixed number of probes for an approximate nearest neighbour",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "TREE",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "BRANCH_AND_BOUND",
+   "iteration": "PRIORITY",
+   "cost": "LOG",
+   "requires": [
+    "a space-partitioning tree",
+    "a probe budget (policy)"
+   ],
+   "fails_when": [
+    "high dimension makes the boundary order uninformative"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+  }
+ }
+]

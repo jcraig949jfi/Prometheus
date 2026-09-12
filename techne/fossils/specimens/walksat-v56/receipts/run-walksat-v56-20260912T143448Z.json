@@ -1,0 +1,91 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "walksat-v56",
+  "receipt_id": "run-walksat-v56-20260912T143448Z",
+  "written_utc": "20260912T143448Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/Walksat-master/Walksat_v56",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "b65452d65d50b26e27f8185d7a0d430eca3c9dc6c34bd8df2ead372f8aba7bd2",
+  "recipe_sha256": "076b6ecbe97bdb3fffe52bf515893fde789507341aa5bf5b447ef77651229069",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -vi warning | tail -3; test -x ./walksat && test -x ./makewff",
+      "exit": 0,
+      "seconds": 1.26,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "generate a satisfiable random 3-SAT and solve it by local search",
+      "cmd": "./makewff -seed 1 -cnf 3 50 210 > $BODY/build_w.cnf 2>/dev/null || ./makewff 3 50 210 > $BODY/build_w.cnf; ./walksat -seed 1 -numsol 1 < $BODY/build_w.cnf 2>&1 | tail -20",
+      "exit": 0,
+      "seconds": 0.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\ntotal elapsed seconds = 0.100000\naverage flips per second = 10000000.000000\nnumber solutions found = 0\nfinal success rate = 0.000000\naverage length successful tries = 0\nfinal numbad level statistics\n    statistics over all runs:\n      overall mean average numbad = 4.964559\n      overall mean meanbad std deviation = 2.494869\n      overall ratio mean numbad to mean std dev = 1.989908\n    statistics on successful runs:\n      successful mean average numbad = 0.000000\n      successful mean numbad std deviation = 0.000000\n      successful ratio mean numbad to mean std dev = 0.000000\n    statistics on nonsuccessful runs:\n      nonsuccessful mean average numbad level = 4.964559\n      nonsuccessful mean numbad std deviation = 2.494869\n      nonsuccessful ratio mean numbad to mean std dev = 1.989908\nASSIGNMENT NOT FOUND\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "makequeens",
+      "sha256": "82755e55ee3bef6349c64cbd194a9e04b32484af39acb3af0874703d963f8053",
+      "bytes": 16128
+    },
+    {
+      "path": "makewff",
+      "sha256": "a8f7b43f1a508881d6afe74a5eba09bcae56e364efd1915db7cf61a7570bd7a8",
+      "bytes": 16912
+    },
+    {
+      "path": "walksat",
+      "sha256": "ee674cb87dcf9fd3569b5393438a09115a91c2dfbb6c62ef43fdbbb49606263b",
+      "bytes": 52376
+    },
+    {
+      "path": "walksat.o",
+      "sha256": "f9425fd2ca6831faa580334092acab2da40fcef875c349807ffbd1c2194edaef",
+      "bytes": 77680
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

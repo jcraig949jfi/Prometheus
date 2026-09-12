@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.scale_numerator_and_denominator_by_a_common_factor_toward_one",
+  "name": "scale numerator and denominator by a common factor that drives the denominator to one",
+  "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+  ],
+  "mechanism": "multiply both numerator and denominator by the same factor (two minus the denominator) each round; the denominator converges quadratically to one and the numerator to the quotient; the two multiplications per round are independent and can run in parallel",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Goldschmidt division' in section Computational mathematics / Numerical algorithms / Elementary and special functions: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "a denominator scaled into a fixed interval near one"
+  ],
+  "fails_when": [
+    "rounding errors accumulate (no self-correction, unlike the reciprocal-refinement route)"
+  ],
+  "instances": [
+    "Goldschmidt division"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

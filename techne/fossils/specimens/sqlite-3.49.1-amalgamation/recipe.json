@@ -1,0 +1,46 @@
+{
+  "runner": "wsl",
+  "workdir": "upstream/tree/sqlite-amalgamation-3490100",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile shell",
+      "cmd": "mkdir -p $BODY/build && gcc -O2 -DSQLITE_THREADSAFE=0 -o $BODY/build/sqlite3 shell.c sqlite3.c -lm -ldl 2>&1 | grep -i error; test -x $BODY/build/sqlite3"
+    }
+  ],
+  "runs": [
+    {
+      "name": "version",
+      "cmd": "$BODY/build/sqlite3 -version",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "3.49.1"
+        ]
+      }
+    },
+    {
+      "name": "transactions, join, index, rollback",
+      "cmd": "$BODY/build/sqlite3 :memory: < $HARNESS/smoke.sql",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "x|21",
+          "z|30",
+          "3",
+          "USING INDEX b_aid"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_NATIVE",
+  "notes": "the amalgamation carries no test suite; SQLite's TCL/TH3 tests live in the source tree (queued as a separate artefact)."
+}

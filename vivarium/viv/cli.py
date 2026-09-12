@@ -175,6 +175,13 @@ def cmd_enqueue(args, conn) -> int:
         conn.rollback()
         print(str(exc), file=sys.stderr)
         return 3
+    except _q.CandidateSetReused as exc:
+        # An APPEND to a registered candidate set. Refused before any write
+        # (and by the database if the pre-check is raced); exit 4 so a script
+        # can tell it from a duplicate request.
+        conn.rollback()
+        print("REFUSED: %s" % exc, file=sys.stderr)
+        return 4
     conn.commit()
     h = _spec.spec_hash(spec)
     print("%s  spec_hash=%s  world=%s" % (eid, h, _spec.world_name(h)))

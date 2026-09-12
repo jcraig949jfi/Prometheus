@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.separating_hyperplane_of_maximum_margin",
+  "name": "separating hyperplane of maximum margin",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "find the hyperplane that separates two classes with the largest distance to the nearest examples, by solving a quadratic program whose solution depends only on those nearest examples, optionally in a feature space reached through a kernel",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Support Vector Machine (SVM)' in section Computer science / Machine learning and statistical classification: a set of methods which divide multidimensional data by finding a dividing hyperplane with the maximum margin between the two sets",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SET",
+  "out_geometry": "FUNCTION",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a kernel or feature map (policy)",
+    "a slack penalty (policy)"
+  ],
+  "fails_when": [
+    "quadratic in examples; kernel choice is the model"
+  ],
+  "instances": [
+    "Support Vector Machine (SVM)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

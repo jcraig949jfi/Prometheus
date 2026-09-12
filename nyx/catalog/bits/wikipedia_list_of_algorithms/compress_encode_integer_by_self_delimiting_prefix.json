@@ -1,0 +1,69 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.encode_integer_by_self_delimiting_prefix",
+  "name": "encode an integer as a self-delimiting bit pattern",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "write an integer as a fixed pattern that the decoder can end without a length field -- a run of ones ending in zero, a length prefix followed by the value's bits, or a quotient in unary and a remainder in binary -- so small integers cost few bits",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Unary coding' in section Information theory and signal processing / Coding theory / Lossless compression algorithms: code that represents a number n with n ones followed by a zero",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Golomb coding': form of entropy coding that is optimal for alphabets following geometric distributions",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Rice coding': form of entropy coding that is optimal for alphabets following geometric distributions",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Truncated binary encoding': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Elias delta, gamma, and omega coding': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Exponential-Golomb coding': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fibonacci coding': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPRESS",
+  "in_geometry": "SCALAR",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "a distribution that favours small values (the code is a prior over integers)"
+  ],
+  "fails_when": [
+    "large values cost more than fixed width"
+  ],
+  "instances": [
+    "Unary coding",
+    "Golomb coding",
+    "Rice coding",
+    "Truncated binary encoding",
+    "Elias delta, gamma, and omega coding",
+    "Exponential-Golomb coding",
+    "Fibonacci coding"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

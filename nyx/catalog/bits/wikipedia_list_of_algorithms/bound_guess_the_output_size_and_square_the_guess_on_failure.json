@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.bound.guess_the_output_size_and_square_the_guess_on_failure",
+  "name": "guess the output size, run an output-sensitive procedure against it, and square the guess on failure",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "run a procedure whose cost depends on an assumed output size (here: hull the input in groups of that size, then wrap over the group hulls for that many steps); if the output is not finished within the guess, square the guess and start over; the doubling-of-exponents makes the total cost proportional to the final successful run",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Chan's algorithm' in section Computational mathematics / Geometry: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "BOUND",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "LOOP_OWNER",
+  "guarantee": "OPTIMAL",
+  "strategy": "ADAPTIVE_SWITCH",
+  "iteration": "NONE",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "an inner procedure whose cost is controlled by the guess"
+  ],
+  "fails_when": [
+    "the wasted runs are cheap only because the guess grows so fast"
+  ],
+  "instances": [
+    "Chan's algorithm"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.bound.raise_depth_limit_and_restart"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

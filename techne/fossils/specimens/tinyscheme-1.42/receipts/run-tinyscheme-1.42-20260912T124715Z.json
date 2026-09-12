@@ -1,0 +1,98 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "tinyscheme-1.42",
+  "receipt_id": "run-tinyscheme-1.42-20260912T124715Z",
+  "written_utc": "20260912T124715Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree/tinyscheme-1.42",
+  "harness_sha256": {
+    "smoke.scm": "b2c2081630a039a4d78d7c3e39b60368ca1fd2cb10a2153145d12232529eb901"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "134ca51590fd79bbcc7549318aa450540f39980f5b7bb22af4cff199f69921ce",
+  "recipe_sha256": "d47797e2e2bbc37f19c77393be753b9c3b871a1ac13c91d3da53078a871f4190",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -i -E ' error' ; test -x ./scheme",
+      "exit": 0,
+      "seconds": 0.97,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "tail recursion 100000 deep, call/cc, closure",
+      "cmd": "./scheme $HARNESS/smoke.scm",
+      "exit": 0,
+      "seconds": 0.23,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "100000\n42\n3\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "dynload.o",
+      "sha256": "6fc2a1145147bb099990175873da9a9551dff944aa7404d08b7bfb0432ca6c58",
+      "bytes": 23448
+    },
+    {
+      "path": "libtinyscheme.a",
+      "sha256": "b197c4e81cb6ed11964b6a4b46a216d3c6b7a9ad04875fa7702ac88e9f2ef9f7",
+      "bytes": 351362
+    },
+    {
+      "path": "libtinyscheme.so",
+      "sha256": "cee29332bb6467f00398e45a0c4da6aebd4e84741e6ce5432734ef5dbe74824a",
+      "bytes": 223024
+    },
+    {
+      "path": "scheme",
+      "sha256": "05884361a3cced59538ca9044a43f7fa703cd0494f2f9d762bc5a2f26499def4",
+      "bytes": 214448
+    },
+    {
+      "path": "scheme.o",
+      "sha256": "1bb004e2604673979980de95000b477da9ae03b43291536ad678c59cbf4b4dee",
+      "bytes": 326640
+    }
+  ],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

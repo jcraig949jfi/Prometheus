@@ -1,0 +1,119 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "dlmalloc",
+  "canonical_name": "dlmalloc -- Doug Lea's memory allocator",
+  "aliases": [
+    "dlmalloc",
+    "Doug Lea malloc",
+    "malloc.c"
+  ],
+  "lineage": "dlmalloc (1987-, Doug Lea): the boundary-tag, binned free-list general-purpose allocator behind glibc's ptmalloc and countless embedded mallocs; a whole lineage of heap management in one file",
+  "domain": [
+    "operating-systems",
+    "memory-allocation",
+    "data-structures",
+    "resource-management"
+  ],
+  "era": "1987-",
+  "version": "gee.cs.oswego.edu/pub/misc/malloc.c as served 2026-09-12 (the file carries its own version string)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://gee.cs.oswego.edu/pub/misc/malloc.c",
+        "filename": "malloc.c",
+        "extract": false
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "site": "gee.cs.oswego.edu/pub/misc",
+    "author": "Doug Lea"
+  },
+  "hashes": {
+    "tree_sha256": "957081e882ffec000899ea57dbb7f7cada0c5457aa959497d18bfc819b344c4d",
+    "n_files": 1,
+    "bytes": 222021,
+    "artifacts": [
+      {
+        "filename": "malloc.c",
+        "sha256": "be7be56b40b4b31417e74e77687f9b96127ea6cae534cf236aee40a4c739508d",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\dlmalloc",
+    "hash_list": "techne/fossils/specimens/dlmalloc/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "CC0-1.0 / public-domain (Lea released it to the public domain)",
+    "status": "unrestricted",
+    "evidence": "malloc.c header"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "cc (compile as a translation unit and link, or #define USE_DL_PREFIX)",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "dlmalloc / dlfree / dlrealloc (the allocator API)"
+  ],
+  "example": {
+    "command": "a Techne driver: many random malloc/free of varied sizes, then check no corruption and report peak",
+    "input": "an allocation workload",
+    "output": "all pointers distinct+writable, freed cleanly"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "gee.cs.oswego.edu/dl/html/malloc.html"
+  ],
+  "human_capability_summary": {
+    "built_to": "hand out and reclaim variable-size blocks of memory from a heap, fast, with low fragmentation, using boundary tags and size-binned free lists",
+    "pressure": "fragmentation vs speed vs footprint under adversarial allocation patterns; every general program depends on it being fast and not leaking",
+    "success_means": "correct non-overlapping blocks, quick allocation/free, and low fragmentation across real workloads"
+  },
+  "known_human_problem_solved": "general-purpose dynamic memory allocation",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/dlmalloc/receipts/run-dlmalloc-20260912T152655Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/dlmalloc/receipts/run-dlmalloc-20260912T152908Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\dlmalloc ; tracked techne/fossils/specimens/dlmalloc/",
+    "where_it_came_from": "{'site': 'gee.cs.oswego.edu/pub/misc', 'author': 'Doug Lea'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; CC0-1.0 / public-domain (Lea released it to the public domain)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run dlmalloc",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/dlmalloc/receipts/run-dlmalloc-20260912T152908Z.json",
+    "what_humans_used_it_for": "hand out and reclaim variable-size blocks of memory from a heap, fast, with low fragmentation, using boundary tags and size-binned free lists"
+  },
+  "seat": "Techne"
+}

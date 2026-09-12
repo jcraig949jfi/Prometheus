@@ -1,0 +1,32 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc/cmake",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "build via platforms/unix make",
+      "cmd": "cd platforms/unix && make -s 2>&1 | grep -viE 'warning' | tail -3; ls pforth pforth_standalone 2>/dev/null; test -x pforth || test -x pforth_standalone"
+    }
+  ],
+  "runs": [
+    {
+      "name": "square and a loop",
+      "cmd": "cd platforms/unix && (./pforth_standalone < $HARNESS/t.fth 2>&1 || ./pforth < $HARNESS/t.fth 2>&1) | tail -6",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "49"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "7 sq -> 49 checks the threaded inner interpreter and the data stack. pforth builds a dictionary image (pforth.dic) at first run; the standalone binary embeds it."
+}

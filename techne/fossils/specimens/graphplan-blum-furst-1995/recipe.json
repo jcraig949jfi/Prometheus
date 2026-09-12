@@ -1,0 +1,44 @@
+{
+  "runner": "wsl",
+  "workdir": "upstream/tree/Source",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s graphplan 2>&1 | grep -i -E 'error' ; test -x ./graphplan"
+    }
+  ],
+  "runs": [
+    {
+      "name": "rocket domain, facts2 (a two-rocket logistics problem)",
+      "cmd": "mkdir -p $BODY/build && cp ./graphplan $BODY/upstream/domains/rocket_ops $BODY/upstream/domains/rocket_facts2 $BODY/build/ && cd $BODY/build && ./graphplan -o rocket_ops -f rocket_facts2 -d 2>&1 | tail -25",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "Goals first reachable",
+          "LOAD_",
+          "MOVE_",
+          "UNLOAD_"
+        ]
+      }
+    },
+    {
+      "name": "monkey-and-bananas domain",
+      "cmd": "cd $BODY/build && cp $BODY/upstream/domains/monkey_ops $BODY/upstream/domains/monkey_facts1 . && ./graphplan -o monkey_ops -f monkey_facts1 -d 2>&1 | tail -15",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(reachable|not solvable|steps)"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_NATIVE",
+  "notes": "graphplan reads operator/fact files from the cwd by name (its lexer does not take a path), so the recipe copies the binary and the two domain files into $BODY/build and runs there; upstream/ is untouched. 1995 K&R-era C compiled clean under gcc 13 with only warnings."
+}

@@ -1,0 +1,1490 @@
+[
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Clock synchronization",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Consensus (computer science)",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Detection of Process Termination",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Leader election",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Mutual exclusion",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Snapshot algorithm",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Garbage collectors",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Page replacement algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Network congestion",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Join algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Top-nodes algorithm",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "The Chase",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Naimi-Trehel's log(n) Algorithm",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Maekawa's Algorithm",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Luleå algorithm",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Intersection algorithm",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cristian's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.synchronize.estimate_offset_by_round_trip_halving",
+   "name": "estimate clock offset as reference time plus half the round trip",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "ask a reference for its time, measure the round trip, and set the local clock to the reply plus half the round trip, assuming symmetric delays",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SYNCHRONIZE",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "EXTERNAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "a reference clock",
+    "roughly symmetric delays"
+   ],
+   "fails_when": [
+    "asymmetric routes bias the offset by half the asymmetry"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Berkeley algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.synchronize.average_reported_clocks_and_send_adjustments",
+   "name": "average the reported clocks and send each node its adjustment",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "a coordinator polls every clock, discards outliers, averages the rest, and sends each node the signed adjustment it should apply, so no single clock is the truth",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SYNCHRONIZE",
+   "in_geometry": "SET",
+   "out_geometry": "MAP",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "SCHEDULED",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "iteration": "PARALLEL_ROUNDS",
+   "cost": "LINEAR",
+   "requires": [
+    "a coordinator",
+    "an outlier rule (policy)"
+   ],
+   "fails_when": [
+    "the coordinator is a single point of failure"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Marzullo's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.largest_intersection_of_intervals",
+   "name": "the interval where the most sources agree",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "given intervals from several sources, sort their endpoints, sweep counting how many intervals cover each point, and return the region covered by the most sources (tolerating a stated number of faulty ones)",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "SET",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "intervals with error bounds"
+   ],
+   "fails_when": [
+    "a majority of liars wins"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lamport ordering",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.timestamp_by_max_seen_plus_one",
+   "name": "timestamp each event as max(seen) + 1",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "each process keeps a counter, increments it for each local event, attaches it to every message, and on receipt sets the counter to the maximum of its own and the received value plus one, so causally later events always carry larger stamps",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "STREAM",
+   "out_geometry": "SCALAR",
+   "order_req": "PARTIAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "MONOTONE",
+   "strategy": "INCREMENTAL",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "a counter per process",
+    "stamps carried on messages"
+   ],
+   "fails_when": [
+    "concurrent events are also ordered, so the stamp cannot tell concurrency from causality (the vector form can)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Vector clocks",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.vector_of_per_process_counters",
+   "name": "a vector of per-process counters carried on every message",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "each process keeps a vector with one counter per process, increments its own entry per event, attaches the vector to messages, and on receipt takes the elementwise maximum; one event precedes another exactly when its vector is elementwise no greater and somewhere smaller",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "STREAM",
+   "out_geometry": "SEQUENCE",
+   "order_req": "PARTIAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "a known process set"
+   ],
+   "fails_when": [
+    "vector size grows with the number of processes"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "GENERALIZES",
+     "id": "bit.order.timestamp_by_max_seen_plus_one"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Paxos algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.synchronize.agree_by_majority_promises_then_majority_accepts",
+   "name": "agree by collecting majority promises, then majority accepts",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "a proposer picks a round number higher than any it has used, collects promises from a majority not to accept lower rounds (learning any value they already accepted), then asks the majority to accept the highest such value or its own; a value accepted by a majority is chosen and can never be changed",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SYNCHRONIZE",
+   "in_geometry": "SET",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "REACTIVE",
+   "guarantee": "SOUND",
+   "strategy": "INCREMENTAL",
+   "iteration": "FIFO",
+   "cost": "LINEAR",
+   "requires": [
+    "a majority of non-faulty nodes that respond",
+    "durable storage of promises"
+   ],
+   "fails_when": [
+    "duelling proposers may never terminate (liveness needs a leader or randomness)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Raft (computer science)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.synchronize.agree_by_majority_promises_then_majority_accepts"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Chandra–Toueg consensus algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.synchronize.agree_by_majority_promises_then_majority_accepts"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bully algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.highest_id_that_answers_becomes_coordinator",
+   "name": "the highest identifier that answers becomes coordinator",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "a node that suspects the coordinator failed sends an election to all higher identifiers; any that answer take over the election; a node that hears no higher answer within a timeout declares itself coordinator to all",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "SET",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "REACTIVE",
+   "guarantee": "TERMINATES",
+   "strategy": "DIRECT",
+   "iteration": "PRIORITY",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "unique ordered identifiers",
+    "timeouts"
+   ],
+   "fails_when": [
+    "message storms; a slow high node is presumed dead"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Ricart–Agrawala Algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.synchronize.enter_after_all_replies_deferring_lower_priority",
+   "name": "enter after all peers reply, deferring replies to lower-priority requests",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "to enter a critical section broadcast a timestamped request and wait for a reply from every peer; a peer replies at once unless it is inside or wants in with an earlier timestamp, in which case it defers its reply until it leaves",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SYNCHRONIZE",
+   "in_geometry": "STREAM",
+   "out_geometry": "BOOLEAN",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "REACTIVE",
+   "guarantee": "SOUND",
+   "strategy": "INCREMENTAL",
+   "iteration": "PRIORITY",
+   "cost": "LINEAR",
+   "requires": [
+    "logical timestamps",
+    "reliable messaging"
+   ],
+   "fails_when": [
+    "a crashed peer blocks everyone"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.order.timestamp_by_max_seen_plus_one"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lamport's Distributed Mutual Exclusion Algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.synchronize.enter_after_all_replies_deferring_lower_priority"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Raymond's Algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.synchronize.pass_a_single_token_along_a_tree",
+   "name": "pass a single token along a tree toward requesters",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "one token grants entry; each node knows only which neighbour is toward the token, forwards requests that way, and the token travels back along the request path, so messages are logarithmic and only one holder exists",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SYNCHRONIZE",
+   "in_geometry": "TREE",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "SOUND",
+   "strategy": "DIRECT",
+   "iteration": "FIFO",
+   "cost": "LOG",
+   "requires": [
+    "a spanning tree",
+    "a single token"
+   ],
+   "fails_when": [
+    "token loss needs regeneration"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Dijkstra-Scholten algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.detect.termination_by_acknowledgement_tree",
+   "name": "detect termination by an acknowledgement tree",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "every message that activates a node makes the sender its parent; a node acknowledges its parent only when it is idle and has received acknowledgements for every message it sent; the root's last acknowledgement means the whole computation has terminated",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "DETECT",
+   "in_geometry": "STREAM",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "SOUND",
+   "strategy": "INCREMENTAL",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "reliable messages"
+   ],
+   "fails_when": [
+    "one lost acknowledgement means never detecting termination"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Huang's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.detect.termination_by_conserved_weight",
+   "name": "detect termination by a conserved weight",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "the controller holds weight 1; every message carries a share of the sender's weight; an idle node returns its weight to the controller; when the controller's weight returns to 1 nothing is active or in flight",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "DETECT",
+   "in_geometry": "STREAM",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "REACTIVE",
+   "guarantee": "SOUND",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "exact arithmetic on weights (or rational shares)"
+   ],
+   "fails_when": [
+    "floating weights lose exactness"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Chandy–Lamport algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.remember.consistent_snapshot_by_marker_messages",
+   "name": "consistent snapshot by marker messages",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "an initiator records its state and sends a marker on every channel; a node receiving its first marker records its state, then records every message arriving on other channels until a marker arrives there too; the recorded states and channel contents form a consistent global cut",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REMEMBER",
+   "in_geometry": "STREAM",
+   "out_geometry": "RECORD",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "REACTIVE",
+   "guarantee": "SOUND",
+   "strategy": "INCREMENTAL",
+   "iteration": "FIFO",
+   "cost": "LINEAR",
+   "requires": [
+    "ordered reliable channels"
+   ],
+   "fails_when": [
+    "unordered channels break the cut"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Buddy memory allocation",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.allocate.split_power_of_two_blocks_and_coalesce_buddies",
+   "name": "split power-of-two blocks and coalesce buddies",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "keep free lists per power-of-two size; serve a request by splitting a larger block in halves until the size fits; on free, merge a block with its buddy (the other half of its parent) whenever the buddy is also free",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ALLOCATE",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "CALLBACK",
+   "guarantee": "EXACT",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "a power-of-two size ladder"
+   ],
+   "fails_when": [
+    "internal fragmentation up to half a block"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Mark and sweep",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.allocate.mark_reachable_then_free_unmarked",
+   "name": "mark everything reachable, then free the unmarked",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "starting from the roots, mark every object reachable by following references, then sweep the heap freeing every object not marked",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ALLOCATE",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "SCHEDULED",
+   "guarantee": "SOUND",
+   "strategy": "DIRECT",
+   "iteration": "LIFO",
+   "cost": "LINEAR",
+   "requires": [
+    "known roots",
+    "a stop or a concurrent protocol"
+   ],
+   "fails_when": [
+    "pauses proportional to the heap; fragmentation unless compacted"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.search.expand_deepest_first"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Mark-compact algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.allocate.mark_reachable_then_free_unmarked"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Semi-space collector",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.allocate.copy_live_objects_to_a_fresh_space",
+   "name": "copy live objects to a fresh space",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "copy every reachable object from the current space into an empty one, leaving forwarding addresses so later references are updated, then discard the old space whole; a breadth-first copy needs only the destination space as its queue",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ALLOCATE",
+   "in_geometry": "GRAPH",
+   "out_geometry": "GRAPH",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "SCHEDULED",
+   "guarantee": "SOUND",
+   "strategy": "DIRECT",
+   "iteration": "FIFO",
+   "cost": "LINEAR",
+   "requires": [
+    "twice the memory"
+   ],
+   "fails_when": [
+    "half the address space idle"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cheney's algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.allocate.copy_live_objects_to_a_fresh_space"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Generational garbage collector",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.allocate.copy_live_objects_to_a_fresh_space"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Reference counting",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.allocate.free_when_reference_count_hits_zero",
+   "name": "free an object when its reference count reaches zero",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "keep a count of references on each object, adjust it on every pointer store, and free the object (decrementing its children) when the count reaches zero",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ALLOCATE",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "MONOTONE",
+   "strategy": "INCREMENTAL",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "a hook on every pointer write"
+   ],
+   "fails_when": [
+    "cycles are never freed",
+    "cost on every store"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Banker's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.verify.grant_only_if_a_safe_completion_order_exists",
+   "name": "grant a request only if some completion order remains safe",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "before granting a resource request, simulate granting it and check that the remaining processes can all finish in some order given their maximum claims; grant only if such an order exists",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "VERIFY",
+   "in_geometry": "MATRIX",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "CALLBACK",
+   "guarantee": "SOUND",
+   "strategy": "GREEDY",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "declared maximum claims per process"
+   ],
+   "fails_when": [
+    "conservative: refuses requests that would have been fine"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Adaptive replacement cache",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.remember.evict_by_balancing_recency_and_frequency_lists",
+   "name": "evict by balancing a recency list against a frequency list",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "keep two lists, one of items seen once recently and one of items seen more than once, plus ghost lists of what was recently evicted from each; a hit in a ghost list grows the corresponding list's target size, so the split between recency and frequency adapts to the workload",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REMEMBER",
+   "in_geometry": "STREAM",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "REACTIVE",
+   "guarantee": "NONE",
+   "strategy": "ADAPTIVE_SWITCH",
+   "iteration": "PRIORITY",
+   "cost": "CONSTANT",
+   "requires": [
+    "ghost metadata for evicted keys"
+   ],
+   "fails_when": [
+    "metadata overhead; patented history"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Clock with Adaptive Replacement (CAR)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.remember.evict_by_balancing_recency_and_frequency_lists"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Peterson's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.synchronize.flag_intent_then_yield_by_turn_variable",
+   "name": "flag intent, then yield by a shared turn variable",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "each of two processes sets a flag that it wants in and sets the turn to the other; it enters only when the other's flag is down or the turn is its own, so both cannot be inside and neither waits forever",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SYNCHRONIZE",
+   "in_geometry": "BOOLEAN",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "REACTIVE",
+   "guarantee": "SOUND",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "shared memory with ordered writes"
+   ],
+   "fails_when": [
+    "reordered memory breaks it; two processes only (the bakery form generalises with tickets)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Dekker's algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.synchronize.flag_intent_then_yield_by_turn_variable"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lamport's Bakery algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.synchronize.flag_intent_then_yield_by_turn_variable"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Earliest deadline first scheduling",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.schedule.run_the_task_with_the_nearest_deadline",
+   "name": "run the task with the nearest deadline",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "at every decision point run the ready task whose deadline is soonest, preempting a running task when a nearer deadline arrives",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SCHEDULE",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "OPTIMAL",
+   "strategy": "GREEDY",
+   "iteration": "PRIORITY",
+   "cost": "LOG",
+   "requires": [
+    "known deadlines",
+    "preemption"
+   ],
+   "fails_when": [
+    "overload degrades badly (domino misses)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Least slack time scheduling",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.schedule.run_the_task_with_the_nearest_deadline"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Rate-monotonic scheduling",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.schedule.run_the_task_with_the_nearest_deadline"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Shortest job next",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.schedule.run_the_shortest_remaining_work_first",
+   "name": "run the shortest remaining work first",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "choose the ready job with the least remaining service time, preempting when a shorter job arrives, which minimises mean waiting time",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SCHEDULE",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "OPTIMAL",
+   "strategy": "GREEDY",
+   "iteration": "PRIORITY",
+   "cost": "LOG",
+   "requires": [
+    "known or estimated service times"
+   ],
+   "fails_when": [
+    "long jobs starve"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Shortest remaining time",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.schedule.run_the_shortest_remaining_work_first"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Round-robin scheduling",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.schedule.rotate_fixed_quanta_over_ready_queue",
+   "name": "rotate fixed time quanta over the ready queue",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "give each ready task a fixed time slice in cyclic order, moving a task to the back of the queue when its slice ends",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SCHEDULE",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "SCHEDULED",
+   "guarantee": "DETERMINISTIC",
+   "strategy": "DIRECT",
+   "iteration": "FIFO",
+   "cost": "CONSTANT",
+   "requires": [
+    "a quantum (policy)"
+   ],
+   "fails_when": [
+    "quantum too small thrashes, too large approaches first-come"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Multi level feedback queue",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.schedule.demote_tasks_that_use_their_whole_quantum",
+   "name": "demote tasks that use their whole quantum",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "keep several ready queues of increasing quantum and decreasing priority; a task that uses its whole slice drops a level, one that blocks early stays or rises, so interactive tasks stay responsive without knowing service times",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SCHEDULE",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "NONE",
+   "strategy": "ADAPTIVE_SWITCH",
+   "iteration": "PRIORITY",
+   "cost": "CONSTANT",
+   "requires": [
+    "several queues and quanta (policy)"
+   ],
+   "fails_when": [
+    "gaming by yielding just before the slice ends; starvation without periodic boosts"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Fair-share scheduling",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.schedule.allocate_by_group_entitlement",
+   "name": "allocate processor time by group entitlement",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "assign each user or group an entitled share and schedule so that consumed time tracks the entitlements, penalising groups above their share",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SCHEDULE",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "SCHEDULED",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "iteration": "PRIORITY",
+   "cost": "LOG",
+   "requires": [
+    "entitlements (policy)"
+   ],
+   "fails_when": [
+    "accounting granularity"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "List scheduling",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.schedule.assign_next_ready_task_to_first_free_machine",
+   "name": "assign the next ready task to the first free machine",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "order tasks by a priority list and, whenever a machine is free, give it the highest-priority task whose predecessors are done",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SCHEDULE",
+   "in_geometry": "DAG",
+   "out_geometry": "MAP",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "GREEDY",
+   "iteration": "PRIORITY",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "a priority list (policy)"
+   ],
+   "fails_when": [
+    "within a factor of two of optimal, not optimal"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Elevator algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.schedule.serve_requests_in_sweep_direction",
+   "name": "serve requests in the current sweep direction",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "move the head in one direction serving every pending request on the way, reverse at the end (or at the last request), so seek distance is bounded and no request starves",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SCHEDULE",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "NONE",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LOG",
+   "requires": [
+    "a linear position axis"
+   ],
+   "fails_when": [
+    "middle positions get served twice as often as the ends"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Shortest seek first",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.schedule.serve_the_nearest_pending_request",
+   "name": "serve the nearest pending request",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "always serve the pending request closest to the current position",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SCHEDULE",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "iteration": "PRIORITY",
+   "cost": "LOG",
+   "requires": [
+    "a distance"
+   ],
+   "fails_when": [
+    "far requests starve"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.select.move_to_nearest_unvisited"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Karn's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.ignore_ambiguous_samples_and_back_off",
+   "name": "ignore ambiguous timing samples and back off the timer",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "do not update the round-trip estimate from acknowledgements of retransmitted messages (their timing is ambiguous), and double the timeout on each retransmission until a fresh unambiguous sample arrives",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "STREAM",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "NONE",
+   "strategy": "ADAPTIVE_SWITCH",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "a retransmission marker"
+   ],
+   "fails_when": [
+    "a sustained loss burst inflates the timer for a while"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Exponential backoff",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.bound.double_the_wait_after_each_collision",
+   "name": "double the random wait after each collision",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "after a failed attempt wait a random time drawn from a window that doubles with each consecutive failure (capped), so contending parties spread out without coordination",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "BOUND",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "a failure signal",
+    "a cap (policy)"
+   ],
+   "fails_when": [
+    "capture effect: a lucky party keeps winning"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Truncated binary exponential backoff",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.bound.double_the_wait_after_each_collision"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Nagle's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.bound.hold_small_sends_until_previous_is_acknowledged",
+   "name": "hold small sends until the previous one is acknowledged",
+   "lineage": [
+    "planning"
+   ],
+   "mechanism": "buffer small outgoing pieces while an earlier piece is unacknowledged and send them together, so many tiny messages become fewer larger ones",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "BOUND",
+   "in_geometry": "STREAM",
+   "out_geometry": "STREAM",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "REACTIVE",
+   "guarantee": "NONE",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "acknowledgements"
+   ],
+   "fails_when": [
+    "interacts badly with delayed acknowledgements (latency stalls)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Nested loop join",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.compare_every_pair_across_two_collections",
+   "name": "compare every pair across two collections",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "for each element of one collection scan the other and emit the pairs that satisfy the condition; reading one side in blocks reduces passes over the other",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "any join condition"
+   ],
+   "fails_when": [
+    "quadratic"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Block nested loop",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.compare_every_pair_across_two_collections"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hash join",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.bucket_one_side_then_probe_with_the_other",
+   "name": "bucket one side by key, then probe with the other",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "build a hash table on the join key from the smaller collection, then scan the larger one probing the table for matches",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "DISTRIBUTION",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "an equality join key",
+    "memory for the build side (or partitioning to disk)"
+   ],
+   "fails_when": [
+    "only equality conditions; skewed keys overflow buckets"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Sort-Merge Join",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.sort_both_sides_then_advance_the_smaller_key",
+   "name": "sort both sides, then advance whichever has the smaller key",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "sort both collections on the join key and walk them together, advancing the side with the smaller current key and emitting matches when keys are equal",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "a total order on the key"
+   ],
+   "fails_when": [
+    "sorting dominates unless inputs arrive sorted"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.order.merge_sorted_runs"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Algorithms for Recovery and Isolation Exploiting Semantics (ARIES)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.replay_log_forward_then_undo_uncommitted",
+   "name": "replay the log forward, then undo the uncommitted",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "after a crash, scan the write-ahead log forward re-applying every logged change (including changes of transactions that will be undone) to reach the exact pre-crash state, then scan backward undoing the changes of transactions that never committed, logging the undos so a second crash is safe",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "STREAM",
+   "out_geometry": "RECORD",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "SCHEDULED",
+   "guarantee": "SOUND",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a write-ahead log with sequence numbers",
+    "pages stamped with the last applied log number"
+   ],
+   "fails_when": [
+    "log must be forced before data; a log gap is unrecoverable"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+  }
+ }
+]

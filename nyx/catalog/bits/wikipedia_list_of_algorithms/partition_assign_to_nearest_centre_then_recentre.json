@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.assign_to_nearest_centre_then_recentre",
+  "name": "assign to the nearest centre, then move centres to their members' mean",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "pick initial centres, assign every point to its nearest centre, replace each centre by the mean of its assigned points, and repeat until assignments stop changing",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Linde–Buzo–Gray algorithm' in section Computational science / Statistics: a vector quantization algorithm to derive a good codebook",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PARTITION",
+  "in_geometry": "SET",
+  "out_geometry": "MAP",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "LOCAL_OPTIMUM",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "PARALLEL_ROUNDS",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a distance and a mean",
+    "the number of centres (policy)"
+  ],
+  "fails_when": [
+    "initialisation decides the local optimum; empty clusters"
+  ],
+  "instances": [
+    "Linde–Buzo–Gray algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

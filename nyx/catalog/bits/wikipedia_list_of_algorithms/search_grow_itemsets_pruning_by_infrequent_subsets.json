@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.grow_itemsets_pruning_by_infrequent_subsets",
+  "name": "grow itemsets, pruning any with an infrequent subset",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "count single items, keep the frequent ones, form candidate pairs only from frequent items, count them, and repeat one size larger each round, using the fact that a set cannot be frequent if any subset is not",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Apriori algorithm' in section Computer science / Machine learning and statistical classification: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Eclat algorithm': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'FP-growth algorithm': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "BRANCH_AND_BOUND",
+  "iteration": "FIFO",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a support threshold (policy)",
+    "transactions as sets"
+  ],
+  "fails_when": [
+    "many database passes; candidate explosion at low thresholds"
+  ],
+  "instances": [
+    "Apriori algorithm",
+    "Eclat algorithm",
+    "FP-growth algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

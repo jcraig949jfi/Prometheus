@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.replace_derivatives_by_difference_quotients_on_a_grid",
+  "name": "replace derivatives by difference quotients on a grid",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "lay a grid over the domain, replace each derivative in the equation by a difference of neighbouring grid values divided by the spacing, and solve the resulting algebraic system for the grid values",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Finite difference method' in section Computational mathematics / Numerical algorithms / Differential equation solving: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "MATRIX",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "a regular grid",
+    "boundary values"
+  ],
+  "fails_when": [
+    "irregular domains fit badly; error scales with spacing to a low power"
+  ],
+  "instances": [
+    "Finite difference method"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

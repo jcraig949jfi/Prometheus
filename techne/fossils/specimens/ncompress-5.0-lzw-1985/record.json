@@ -1,0 +1,119 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "ncompress-5.0-lzw-1985",
+  "canonical_name": "ncompress 5.0 -- the Unix compress(1) LZW lineage (Spencer Thomas et al., 1984-85)",
+  "aliases": [
+    "compress",
+    "ncompress",
+    "LZW"
+  ],
+  "lineage": "compress(1) (1984-85, Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost): adaptive LZW dictionary coding, the 4.3BSD/Unix standard before gzip; ncompress is the maintained continuation of the same code",
+  "domain": [
+    "compression",
+    "dictionary-coding",
+    "lzw"
+  ],
+  "era": "1984 (5.0 released 2021)",
+  "version": "git tag v5.0, github.com/vapier/ncompress",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/vapier/ncompress/archive/refs/tags/v5.0.tar.gz",
+        "filename": "ncompress-5.0.tar.gz",
+        "sha256": "96ec931d06ab827fccad377839bfb91955274568392ddecf809e443443aead46",
+        "bytes": 34185,
+        "extracted_to": "upstream/tree/ncompress-5.0"
+      }
+    ]
+  },
+  "source_type": "LATER_SAME_LINEAGE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/vapier/ncompress",
+    "tag": "v5.0",
+    "ancestry": "compress 4.x (1985) -> ncompress 4.2 (1992) -> 5.0"
+  },
+  "hashes": {
+    "tree_sha256": "5de18704eb9c8c16a0e8ca28ae333541504bc24968b1fda4a76226185c5948ff",
+    "n_files": 23,
+    "bytes": 130449,
+    "artifacts": [
+      {
+        "filename": "ncompress-5.0.tar.gz",
+        "sha256": "96ec931d06ab827fccad377839bfb91955274568392ddecf809e443443aead46",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\ncompress-5.0-lzw-1985",
+    "hash_list": "techne/fossils/specimens/ncompress-5.0-lzw-1985/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "public-domain / permissive per the source headers",
+    "status": "see LICENSE in tarball",
+    "evidence": "tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make",
+  "compiler_or_interpreter": "gcc 13 (WSL2)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./compress, ./compress -d (uncompress)"
+  ],
+  "example": {
+    "command": "./compress -c input > out.Z; ./compress -dc out.Z | cmp - input",
+    "input": "any file",
+    "output": "identical bytes after the round trip"
+  },
+  "environment": {
+    "runner": "wsl"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Welch, A Technique for High-Performance Data Compression, IEEE Computer 1984",
+    "compress.c header history"
+  ],
+  "human_capability_summary": {
+    "built_to": "shrink files losslessly with an adaptive dictionary that needs no side information",
+    "pressure": "1980s disk and modem bandwidth; the patent history of LZW is why gzip displaced it",
+    "success_means": "exact reconstruction after decompression, with a good compression ratio on text"
+  },
+  "known_human_problem_solved": "lossless adaptive dictionary compression",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/ncompress-5.0-lzw-1985/receipts/run-ncompress-5.0-lzw-1985-20260912T124716Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\ncompress-5.0-lzw-1985 ; tracked techne/fossils/specimens/ncompress-5.0-lzw-1985/",
+    "where_it_came_from": "{'repo': 'github.com/vapier/ncompress', 'tag': 'v5.0', 'ancestry': 'compress 4.x (1985) -> ncompress 4.2 (1992) -> 5.0'} ; LATER_SAME_LINEAGE_RELEASE ; public-domain / permissive per the source headers",
+    "how_to_run_it": "recipe.json (runner wsl); python -m techne.fossils.harvest run ncompress-5.0-lzw-1985",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/ncompress-5.0-lzw-1985/receipts/run-ncompress-5.0-lzw-1985-20260912T124716Z.json",
+    "what_humans_used_it_for": "shrink files losslessly with an adaptive dictionary that needs no side information"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "compression",
+    "dictionary-coding",
+    "lzw"
+  ],
+  "hardware_assumptions": ""
+}

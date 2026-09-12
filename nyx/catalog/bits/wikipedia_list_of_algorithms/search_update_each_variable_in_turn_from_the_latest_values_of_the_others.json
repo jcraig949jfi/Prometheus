@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.update_each_variable_in_turn_from_the_latest_values_of_the_others",
+  "name": "update each variable in turn from the latest values of the others",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "sweep through the equations; solve each for its own variable using the most recent values of all the others (including those updated earlier in the same sweep), and repeat sweeps until the changes are small",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gauss–Seidel method' in section Computational mathematics / Numerical algorithms / Linear algebra: solves systems of linear equations iteratively",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "TENSOR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "diagonal dominance or a similar condition for convergence"
+  ],
+  "fails_when": [
+    "diverges on many matrices; inherently sequential within a sweep"
+  ],
+  "instances": [
+    "Gauss–Seidel method"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.repair.reassign_conflicting_variable_to_least_conflict_value"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

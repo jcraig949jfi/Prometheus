@@ -1,0 +1,72 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "corewar-redcode",
+  "receipt_id": "run-corewar-redcode-20260912T153034Z",
+  "written_utc": "20260912T153034Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "0c71baf632b5e8b103839cf1eb1989ed6c72a7f83c8b9058e0a7846d4d238f71",
+  "recipe_sha256": "aaee525e434870dc8d402b44e03e0d46257e9228f4d623ed884ecce57ad96872",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python3 --version",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "run the MARS + Redcode-assembler unit tests",
+      "cmd": "python3 -m pytest tests -q 2>&1 | tail -8 || python3 tests.py 2>&1 | tail -12",
+      "exit": 0,
+      "seconds": 0.85,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(passed|OK|[0-9]+ test)/"
+      ],
+      "stdout": {
+        "text": "/usr/local/bin/python3: No module named pytest\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "assemble and run a warrior (imp) for a few cycles without error",
+      "cmd": "python3 -c \"import sys; sys.path.insert(0,'.'); from corewar import mars, redcode; w=redcode.parse(open([f for f in __import__('glob').glob('warriors/*.red')][0]).read().splitlines()); print('PARSED', getattr(w,'name','warrior'))\" 2>&1 | tail -4; echo WARRIORDONE",
+      "exit": 0,
+      "seconds": 0.87,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "  File \"/w/upstream/tree/corewar/mars.py\", line 475\n    print \"Results: (%d rounds)\" % args.rounds\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nSyntaxError: Missing parentheses in call to 'print'. Did you mean print(...)?\nWARRIORDONE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false
+}

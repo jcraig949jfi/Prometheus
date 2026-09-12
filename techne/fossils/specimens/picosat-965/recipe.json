@@ -1,0 +1,44 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/picosat-965",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "configure+make",
+      "cmd": "./configure.sh >/dev/null && make -s 2>&1 | tail -2; test -x ./picosat"
+    }
+  ],
+  "runs": [
+    {
+      "name": "satisfiable CNF (exit 10)",
+      "cmd": "./picosat $HARNESS/sat.cnf; exit $?",
+      "expect": {
+        "exit": 10,
+        "stdout_contains": [
+          "s SATISFIABLE"
+        ]
+      }
+    },
+    {
+      "name": "unsatisfiable CNF (exit 20)",
+      "cmd": "./picosat $HARNESS/unsat.cnf; exit $?",
+      "expect": {
+        "exit": 20,
+        "stdout_contains": [
+          "s UNSATISFIABLE"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "PicoSAT uses the same SAT-competition exit convention as MiniSat (10 SAT / 20 UNSAT); same two hand-checkable clauses, a DIFFERENT CDCL implementation."
+}

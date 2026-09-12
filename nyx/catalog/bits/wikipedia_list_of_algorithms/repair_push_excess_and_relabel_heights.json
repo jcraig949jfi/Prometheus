@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.push_excess_and_relabel_heights",
+  "name": "push excess and relabel heights",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "give each node a height and let nodes with excess flow push it downhill to neighbours with spare capacity; a node that cannot push raises its height; repeat until no node but the sink has excess",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Push–relabel algorithm' in section Combinatorial algorithms / Graph algorithms / Network theory: computes a maximum flow in a graph",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "GRAPH",
+  "out_geometry": "MAP",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "FIXPOINT_ITERATION",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "capacities",
+    "a node selection rule (highest label, FIFO: policy)"
+  ],
+  "fails_when": [
+    "excess may wander before draining; heuristics (gap, global relabel) matter in practice"
+  ],
+  "instances": [
+    "Push–relabel algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "PRIORITY",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

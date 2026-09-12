@@ -1,0 +1,109 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "xv6-riscv",
+  "canonical_name": "xv6-riscv -- MIT teaching operating system (RISC-V port)",
+  "aliases": [
+    "xv6",
+    "xv6-riscv"
+  ],
+  "lineage": "xv6 (2006-, MIT PDOS): a re-implementation of Sixth Edition Unix for teaching -- a real preemptive multiprocess kernel with a scheduler, virtual memory, a log-structured crash-safe filesystem, pipes and traps, small enough to read entirely",
+  "domain": [
+    "operating-systems",
+    "process-scheduling",
+    "virtual-memory",
+    "filesystem",
+    "journaling",
+    "kernel"
+  ],
+  "era": "2006 (riscv port 2019-)",
+  "version": "github.com/mit-pdos/xv6-riscv riscv branch as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/mit-pdos/xv6-riscv",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/mit-pdos/xv6-riscv"
+  },
+  "hashes": {
+    "tree_sha256": "45ba46ee61dbd6e2de6baa2193b29655e124814780f547a8d397201a8dc93298",
+    "n_files": 82,
+    "bytes": 298809,
+    "artifacts": [
+      {
+        "filename": "https://github.com/mit-pdos/xv6-riscv",
+        "sha256": null,
+        "commit": "9e3161a9abf5f51ea402562d1874caf6c4926597"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\xv6-riscv",
+    "hash_list": "techne/fossils/specimens/xv6-riscv/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE in repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "RISC-V assembly"
+  ],
+  "build_system": "make (needs a riscv64 gcc cross-toolchain and qemu-system-riscv64)",
+  "compiler_or_interpreter": "riscv64-linux-gnu-gcc + qemu (NOT built this pass)",
+  "dependencies": [
+    "gcc-riscv64",
+    "qemu-system-riscv64"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "make qemu (boots the kernel in qemu, drops to the xv6 shell)"
+  ],
+  "example": {
+    "command": "make qemu ; then 'ls', 'usertests'",
+    "input": "shell commands / the usertests program",
+    "output": "the shell session; usertests OK"
+  },
+  "environment": {
+    "runner": "none this pass -- SOURCE pinned; the riscv cross-toolchain + qemu world is a later emulated-run item (RUNNABLE_EMULATED candidate)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Cox, Kaashoek, Morris, xv6: a simple, Unix-like teaching operating system (the book)",
+    "pdos.csail.mit.edu/6.828"
+  ],
+  "human_capability_summary": {
+    "built_to": "be a complete, readable Unix-like kernel -- schedule processes across cores, give each an isolated virtual address space, and keep a crash-recoverable filesystem -- for students to modify",
+    "pressure": "concurrency (locks, sleep/wakeup), crash safety (the FS log), and isolation (page tables) all at once, in a few thousand readable lines",
+    "success_means": "boots, runs a shell and concurrent user programs, and its usertests pass including crash-recovery of the filesystem"
+  },
+  "known_human_problem_solved": "a working multiprocess operating system kernel",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\xv6-riscv ; tracked techne/fossils/specimens/xv6-riscv/",
+    "where_it_came_from": "{'repo': 'github.com/mit-pdos/xv6-riscv'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; MIT",
+    "how_to_run_it": "SOURCE/BLOCKED this pass; see record.environment",
+    "how_we_know_it_runs": "NOT_ATTEMPTED / NOT_ATTEMPTED ; receipt none (pinned+hashed)",
+    "what_humans_used_it_for": "be a complete, readable Unix-like kernel -- schedule processes across cores, give each an isolated virtual address space, and keep a crash-recoverable filesystem -- for students to modify"
+  },
+  "seat": "Techne"
+}

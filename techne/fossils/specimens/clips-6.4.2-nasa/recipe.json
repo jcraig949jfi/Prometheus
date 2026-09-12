@@ -1,0 +1,34 @@
+{
+  "runner": "wsl",
+  "workdir": "upstream/tree/clips_core_source_642/core",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | tail -3; test -x ./clips"
+    }
+  ],
+  "runs": [
+    {
+      "name": "two-rule forward chain",
+      "cmd": "./clips -f2 $HARNESS/smoke.clp",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RULE FIRED: flu-suspected",
+          "DIAGNOSIS flu-suspected"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_NATIVE",
+  "notes": "make writes .o files and the clips binary INSIDE upstream/tree/.../core (the Makefile has no out-of-tree mode); UPSTREAM_HASHES.txt was taken before the build, and `harvest verify` will therefore report the tree as changed after a build. That is the honest state: the archive clips_core_source_642.zip beside it is the immutable artefact."
+}

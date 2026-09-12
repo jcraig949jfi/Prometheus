@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.decompose_signal_into_basis_coefficients",
+  "name": "decompose a signal into coefficients over a fixed basis",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "express a block of samples as coefficients over a fixed orthogonal basis (cosines, wavelets) using a factorised fast algorithm, so energy concentrates in few coefficients that can be quantised coarsely",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fast Cosine Transform algorithms (FCT algorithms)' in section Information theory and signal processing / Coding theory / Lossy compression algorithms: computes Discrete Cosine Transform (DCT) efficiently",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Trigonometric interpolation': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a basis (policy)"
+  ],
+  "fails_when": [
+    "block boundaries produce artefacts"
+  ],
+  "instances": [
+    "Fast Cosine Transform algorithms (FCT algorithms)",
+    "Trigonometric interpolation"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

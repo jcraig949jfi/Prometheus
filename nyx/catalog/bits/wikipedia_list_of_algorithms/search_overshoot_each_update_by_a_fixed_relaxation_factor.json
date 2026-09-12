@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.overshoot_each_update_by_a_fixed_relaxation_factor",
+  "name": "overshoot each update by a fixed relaxation factor",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "wherever an iteration would move a variable to a new value, move it further along the same direction by a fixed factor greater than one (or less than one to damp); the right factor can cut the number of sweeps by an order of magnitude",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Successive over-relaxation (SOR)' in section Computational mathematics / Numerical algorithms / Linear algebra: method used to speed up convergence of the Gauss–Seidel method",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "TENSOR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a base fixed-point sweep",
+    "a relaxation factor (policy, between 0 and 2)"
+  ],
+  "fails_when": [
+    "a factor at or beyond 2 diverges; the best factor is problem-dependent"
+  ],
+  "instances": [
+    "Successive over-relaxation (SOR)"
+  ],
+  "related": [
+    {
+      "rel": "COMPOSES_WITH",
+      "id": "bit.search.update_each_variable_in_turn_from_the_latest_values_of_the_others"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

@@ -1,0 +1,42 @@
+{
+  "runner": "wsl",
+  "workdir": "upstream/tree/ncompress-5.0",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s compress 2>&1 | grep -i error; test -x ./compress"
+    }
+  ],
+  "runs": [
+    {
+      "name": "LZW round trip on compress.c",
+      "cmd": "mkdir -p $BODY/build && ./compress -c compress.c > $BODY/build/c.Z && ./compress -dc $BODY/build/c.Z | cmp - compress.c && echo ROUNDTRIP_OK $(stat -c %s compress.c) '->' $(stat -c %s $BODY/build/c.Z)",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "ROUNDTRIP_OK"
+        ]
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "a corrupted .Z is refused, not silently decoded",
+      "cmd": "cp $BODY/build/c.Z $BODY/build/bad.Z && printf '\\xff\\xff\\xff\\xff' | dd of=$BODY/build/bad.Z bs=1 seek=100 conv=notrunc 2>/dev/null && ./compress -dc $BODY/build/bad.Z > /dev/null 2>&1; test $? -ne 0 && echo CORRUPTION_DETECTED",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "CORRUPTION_DETECTED"
+        ]
+      }
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_NATIVE"
+}

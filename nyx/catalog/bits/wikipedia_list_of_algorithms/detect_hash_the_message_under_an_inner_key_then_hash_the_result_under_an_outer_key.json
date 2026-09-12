@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.detect.hash_the_message_under_an_inner_key_then_hash_the_result_under_an_outer_key",
+  "name": "hash the message under an inner key, then hash that result under an outer key",
+  "lineage": [
+    "network protocols",
+    "error-correcting systems"
+  ],
+  "mechanism": "XOR the key with one fixed pad and prepend it to the message, hash; XOR the key with a second pad, prepend it to that digest, hash again; the outer hash blocks anyone from extending the inner one, so a tag cannot be forged without the key even if the hash alone is extensible",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'HMAC' in section Computer science / Cryptography: keyed-hash message authentication",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "DETECT",
+  "in_geometry": "STRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "an underlying hash"
+  ],
+  "fails_when": [
+    "two hash passes over the key material; only as strong as the hash's compression"
+  ],
+  "instances": [
+    "HMAC"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

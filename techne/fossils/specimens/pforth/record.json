@@ -1,0 +1,115 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "pforth",
+  "canonical_name": "pForth -- a portable ANS Forth in C (Phil Burk)",
+  "aliases": [
+    "pforth"
+  ],
+  "lineage": "pForth (1994-, Phil Burk): a portable ANS Forth -- an inner interpreter over a threaded-code dictionary, a data and return stack machine, compiled from C; a concatenative stack-machine runtime",
+  "domain": [
+    "languages",
+    "interpreters",
+    "forth",
+    "stack-machine",
+    "bytecode",
+    "virtual-machine"
+  ],
+  "era": "1994-",
+  "version": "github.com/philburk/pforth master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/philburk/pforth",
+        "commit": "e5617638c3a397c644fe82c6301711867a0ca1bf",
+        "commit_resolved": "e5617638c3a397c644fe82c6301711867a0ca1bf",
+        "commit_date": "2026-07-28T13:36:47-07:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/philburk/pforth"
+  },
+  "hashes": {
+    "tree_sha256": "d376716f69fe50381a98d5880571f8eb34f9a4c1a6e2c3c277e7f6dd18dcc934",
+    "n_files": 163,
+    "bytes": 3582396,
+    "artifacts": [
+      {
+        "filename": "https://github.com/philburk/pforth",
+        "sha256": null,
+        "commit": "e5617638c3a397c644fe82c6301711867a0ca1bf"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\pforth",
+    "hash_list": "techne/fossils/specimens/pforth/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "0BSD / public-domain-like (pForth license)",
+    "status": "permissive",
+    "evidence": "LICENSE in repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "Forth"
+  ],
+  "build_system": "make (build/unix) or cmake",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "pforth (REPL); pforth -i (build the dictionary)"
+  ],
+  "example": {
+    "command": "echo ': sq dup * ; 7 sq . cr bye' | pforth",
+    "input": "Forth words on stdin",
+    "output": "49"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "github.com/philburk/pforth",
+    "ANS Forth standard"
+  ],
+  "human_capability_summary": {
+    "built_to": "run Forth -- a concatenative language where a program is a sequence of words operating on an explicit data stack, executed by a tiny threaded inner interpreter that a compiler can extend at runtime",
+    "pressure": "minimal footprint and self-hosting on bare or tiny machines; the language and its compiler are one small extensible dictionary",
+    "success_means": "Forth definitions compile and execute with correct stack effects; the interpreter is portable across machines"
+  },
+  "known_human_problem_solved": "a small, extensible, self-hosting stack-machine language",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/pforth/receipts/run-pforth-20260912T152709Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\pforth ; tracked techne/fossils/specimens/pforth/",
+    "where_it_came_from": "{'repo': 'github.com/philburk/pforth'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; 0BSD / public-domain-like (pForth license)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run pforth",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/pforth/receipts/run-pforth-20260912T152709Z.json",
+    "what_humans_used_it_for": "run Forth -- a concatenative language where a program is a sequence of words operating on an explicit data stack, executed by a tiny threaded inner interpreter that a compiler can extend at runtime"
+  },
+  "seat": "Techne"
+}

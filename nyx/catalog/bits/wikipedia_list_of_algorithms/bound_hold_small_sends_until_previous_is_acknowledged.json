@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.bound.hold_small_sends_until_previous_is_acknowledged",
+  "name": "hold small sends until the previous one is acknowledged",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "buffer small outgoing pieces while an earlier piece is unacknowledged and send them together, so many tiny messages become fewer larger ones",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Nagle's algorithm' in section Networking: improve the efficiency of TCP/IP networks by coalescing packets",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "BOUND",
+  "in_geometry": "STREAM",
+  "out_geometry": "STREAM",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "NONE",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "acknowledgements"
+  ],
+  "fails_when": [
+    "interacts badly with delayed acknowledgements (latency stalls)"
+  ],
+  "instances": [
+    "Nagle's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

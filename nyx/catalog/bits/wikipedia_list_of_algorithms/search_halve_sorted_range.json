@@ -1,0 +1,60 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.halve_sorted_range",
+  "name": "halve a sorted range",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "on a sorted sequence compare the target to the middle element and discard the half that cannot contain it, repeating until the range is empty or the element is found",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Binary search algorithm' in section Combinatorial algorithms / Sequence algorithms / Sequence search: locates an item in a sorted sequence",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Eytzinger binary search': cache friendly binary search algorithm",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fibonacci search technique': search a sorted sequence using a divide and conquer algorithm that narrows down possible locations with the aid of Fibon",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Uniform binary search': an optimization of the classic binary search algorithm",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LOG",
+  "requires": [
+    "a sorted sequence under a total order",
+    "random access"
+  ],
+  "fails_when": [
+    "unsorted input gives silent wrong answers",
+    "poor cache locality on large arrays (layout variants exist)"
+  ],
+  "instances": [
+    "Binary search algorithm",
+    "Eytzinger binary search",
+    "Fibonacci search technique",
+    "Uniform binary search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIVIDE_CONQUER",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "NONE"
+}

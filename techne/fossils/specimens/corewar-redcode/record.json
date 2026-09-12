@@ -1,0 +1,150 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "corewar-redcode",
+  "canonical_name": "Core War (Redcode / MARS) -- warring programs in a virtual machine",
+  "aliases": [
+    "corewar",
+    "Core War",
+    "Redcode",
+    "MARS"
+  ],
+  "lineage": "Core War (1984, A.K. Dewdney): two or more programs written in Redcode run in a shared circular memory on the Memory Array Redcode Simulator (MARS); they copy, bomb and evade each other until one survives -- a self-replication / competition substrate that predates and prefigures artificial life",
+  "domain": [
+    "artificial-life",
+    "virtual-machine",
+    "self-replication",
+    "competition",
+    "unconventional-computation",
+    "game"
+  ],
+  "era": "1984-",
+  "version": "github.com/rodrigosetti/corewar master as of 2026-09-12 (a Redcode MARS implementation; commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/rodrigosetti/corewar",
+        "commit": "a228123a1fb6a81f1a38b4988d5c245fe022fa53",
+        "commit_resolved": "a228123a1fb6a81f1a38b4988d5c245fe022fa53",
+        "commit_date": "2014-09-12T18:49:49-07:00"
+      }
+    ]
+  },
+  "source_type": "FAITHFUL_PORT",
+  "source_identity": {
+    "repo": "github.com/rodrigosetti/corewar",
+    "ancestry": "Dewdney's Core War / ICWS Redcode standard"
+  },
+  "hashes": {
+    "tree_sha256": "c1929dc0440cbac70a726aee6fd10811f9c80ebb7f347c1236f87e6b92d0a089",
+    "n_files": 50,
+    "bytes": 1196124,
+    "artifacts": [
+      {
+        "filename": "https://github.com/rodrigosetti/corewar",
+        "sha256": null,
+        "commit": "a228123a1fb6a81f1a38b4988d5c245fe022fa53"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\corewar-redcode",
+    "hash_list": "techne/fossils/specimens/corewar-redcode/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "see repo LICENSE",
+    "status": "read before redistribution",
+    "evidence": "repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "none (interpreted)",
+  "compiler_or_interpreter": "CPython (docker or native)",
+  "dependencies": [
+    "python3"
+  ],
+  "run_classification": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "the MARS simulator run on two Redcode warriors (e.g. Imp vs Dwarf)"
+  ],
+  "example": {
+    "command": "run the simulator with two shipped/standard warriors (Imp: a single self-copying instruction; Dwarf: a bomber)",
+    "input": "two Redcode programs",
+    "output": "the surviving warrior / tie after N cycles"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Dewdney, Core War, Scientific American 1984",
+    "ICWS Redcode standard"
+  ],
+  "human_capability_summary": {
+    "built_to": "run competing self-modifying programs in a shared virtual memory and see which survives -- a substrate where programs copy themselves, attack rivals' code, and defend, entirely inside a tiny instruction set",
+    "pressure": "a fixed shared memory and a single CPU shared round-robin; a warrior must replicate or damage others faster than it is damaged",
+    "success_means": "in its native domain, surviving longer than the opponent; as a fossil, a running self-replication/competition VM Nyx can perturb"
+  },
+  "known_human_problem_solved": "a virtual battleground for self-replicating, competing programs",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T152742Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T152925Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153034Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153241Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153357Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153435Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\corewar-redcode ; tracked techne/fossils/specimens/corewar-redcode/",
+    "where_it_came_from": "{'repo': 'github.com/rodrigosetti/corewar', 'ancestry': \"Dewdney's Core War / ICWS Redcode standard\"} ; FAITHFUL_PORT ; see repo LICENSE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run corewar-redcode",
+    "how_we_know_it_runs": "RUNNABLE_HISTORICAL_TOOLCHAIN / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153435Z.json",
+    "what_humans_used_it_for": "run competing self-modifying programs in a shared virtual memory and see which survives -- a substrate where programs copy themselves, attack rivals' code, and defend, entirely inside a tiny instruction set"
+  },
+  "seat": "Techne"
+}

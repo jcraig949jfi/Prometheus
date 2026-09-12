@@ -1,0 +1,169 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "minpack-netlib-1980",
+  "receipt_id": "run-minpack-netlib-1980-20260912T124612Z",
+  "written_utc": "20260912T124612Z",
+  "runner": "native",
+  "image": null,
+  "workdir": "build",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "bb2a1c77c73713408975f150c1f146fc388767165fe7ea6876d975df5d689de1",
+  "recipe_sha256": "222a9a904919e6531dd04a5de1ac1a25e5d5b8681c005ba1515d9f949d81061a",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 0,
+      "seconds": 0.22,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Fortran (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r4) 15.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "t15 nonlinear equations driver",
+      "cmd": "gfortran -std=legacy -O1 -x f77 -o t15.exe $BODY/upstream/ex/file15 $BODY/upstream/*.f",
+      "exit": 0,
+      "seconds": 1.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "t17 least squares driver",
+      "cmd": "gfortran -std=legacy -O1 -x f77 -o t17.exe $BODY/upstream/ex/file17 $BODY/upstream/*.f",
+      "exit": 0,
+      "seconds": 1.8,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "t20 chkder driver",
+      "cmd": "gfortran -std=legacy -O1 -x f77 -o t20.exe $BODY/upstream/ex/file20 $BODY/upstream/*.f",
+      "exit": 0,
+      "seconds": 1.76,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "hybrd/hybrj test set (file21)",
+      "cmd": "./t15.exe < $BODY/upstream/ex/file21",
+      "exit": 0,
+      "seconds": 0.24,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "head": "\n\n\n\n      PROBLEM    1      DIMENSION    2\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.4919350D+01\n\n      FINAL L2 NORM OF THE RESIDUALS    0.0000000D+00\n\n      NUMBER OF FUNCTION EVALUATIONS          22\n\n      EXIT PARAMETER                           1\n\n      FINAL APPROXIMATE SOLUTION\n\n       0.1000000D+01  0.1000000D+01\n\n\n\n\n      PROBLEM    1      DIMENSION    2\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.1340063D+04\n\n      FINAL L2 NORM OF THE RESIDUALS    0.0000000D+00\n\n      NUMBER OF FUNCTION EVALUATIONS           9\n\n      EXIT PARAMETER                           1\n\n      FINAL APPROXIMATE SOLUTION\n\n       0.1000000D+01  0.1000000D+01\n\n\n\n\n      PROBLEM    1      DIMENSION    2\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.1430001D+06\n\n      FINAL L2 NORM OF THE RESIDUALS    0.5373479D-12\n\n      NUMBER OF FUNCTION EVALUATIONS           9\n\n      EXIT PARAMETER                           1\n\n      FINAL APPROXIMATE SOLUTION\n\n       0.1000000D+01  0.1000000D+01\n\n\n\n\n      PROBLEM    2      DIMENSION    4\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.1466288D+02\n\n      FINAL L2 NORM OF THE RESIDUALS    0.1736920D-34\n\n      NUMBER OF FUNCTION EVALUATIONS         123\n\n      EXIT PARAMETER                           4\n\n      FINAL APPROXIMATE SOLUTION\n\n      -0.3964312D-18  0.3964312D-19  0.1671100D-17  0.1671100D-17\n\n\n\n\n      PROBLEM    2      DIMENSION    4\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.1270984D+04\n\n      FINAL L2 NORM OF THE RESIDUALS    0.1828554D-32\n\n      NUMBER OF FUNCTION EVALUATIONS         110\n\n      EXIT PARAMETER                           4\n\n      FINAL APPROXIMATE SOLUTION\n\n       0.1138905D-16 -0.1138905D-17  0.1511307D-16  0.1511307D-16\n\n\n\n\n      PROBLEM    2      DIMENSION    4\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.1268879D+06\n\n      FINAL L2 NORM OF THE RESIDUALS    0.2539466D-34\n\n      NUMBER OF FUNCTION EVALUATIONS         156\n\n      EXIT PARAMETER                           4\n\n      FINAL APPROXIMATE SOLUTION\n\n       0.2034050D-17 -0.20",
+        "tail": "   2     4    156     4   0.2539466D-34\n   3     2    181     1   0.1712494D-08\n   3     2     11     1   0.3744485D-07\n   4     4     94     1   0.4005067D-10\n   4     4    234     1   0.5154548D-09\n   4     4    514     1   0.2491133D-10\n   5     3     27     1   0.2753457D-12\n   5     3     31     1   0.4427907D-13\n   5     3     40     1   0.1610826D-12\n   6     6     96     1   0.3191646D-12\n   6     6    310     1   0.2336128D-10\n   6     9    167     1   0.1817744D-13\n   6     9    167     1   0.1138869D-11\n   7     5     17     1   0.3540292D-11\n   7     5    256     1   0.1902384D-09\n   7     5    522     1   0.2269130D-10\n   7     6     25     1   0.6841874D-09\n   7     6    172     1   0.2281996D-10\n   7     6    274     1   0.1260220D-10\n   7     7     20     1   0.2398700D-08\n   7     7    525     1   0.1624356D-09\n   7     7    657     4   0.2416003D+00\n   7     8    120     4   0.6440508D-01\n   7     9     41     1   0.1889808D-08\n   8    10     31     1   0.1312131D-13\n   8    10     31     1   0.1601186D-13\n   8    10     38     1   0.4213000D-14\n   8    30    113     1   0.2073414D-12\n   8    40    196     1   0.8885114D-13\n   9    10     16     1   0.2497793D-14\n   9    10     19     1   0.1725954D-12\n   9    10     52     1   0.4174414D-09\n  10     1      7     1   0.5551115D-16\n  10     1      9     1   0.5551115D-16\n  10     1     16     1   0.2775558D-16\n  10    10     16     1   0.5009132D-14\n  10    10     19     1   0.2188310D-12\n  10    10     39     1   0.3034804D-14\n  11    10    130     4   0.5296377D-02\n  11    10     84     1   0.5916171D-10\n  11    10     85     1   0.1814420D-08\n  12    10     31     1   0.5119467D-11\n  12    10     35     1   0.7399640D-10\n  12    10     66     1   0.0000000D+00\n  13    10     21     1   0.1493879D-07\n  13    10     59     1   0.5337442D-08\n  13    10     42     1   0.9878880D-10\n  14    10     30     1   0.2057898D-08\n  14    10     45     1   0.7953613D-08\n  14    10     58     1   0.4526424D-09\n",
+        "bytes": 25174,
+        "truncated": true
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "lmder/lmdif/lmstr test set (file22)",
+      "cmd": "./t17.exe < $BODY/upstream/ex/file22",
+      "exit": 0,
+      "seconds": 0.24,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "head": "\n\n\n\n      PROBLEM    1      DIMENSIONS    5   10\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.5000000D+01\n\n      FINAL L2 NORM OF THE RESIDUALS    0.2236068D+01\n\n      NUMBER OF FUNCTION EVALUATIONS           3\n\n      NUMBER OF JACOBIAN EVALUATIONS           2\n\n      EXIT PARAMETER                           3\n\n      FINAL APPROXIMATE SOLUTION\n\n      -0.1000000D+01 -0.1000000D+01 -0.1000000D+01 -0.1000000D+01 -0.1000000D+01\n\n\n\n\n      PROBLEM    1      DIMENSIONS    5   50\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.8062258D+01\n\n      FINAL L2 NORM OF THE RESIDUALS    0.6708204D+01\n\n      NUMBER OF FUNCTION EVALUATIONS           3\n\n      NUMBER OF JACOBIAN EVALUATIONS           2\n\n      EXIT PARAMETER                           3\n\n      FINAL APPROXIMATE SOLUTION\n\n      -0.1000000D+01 -0.1000000D+01 -0.1000000D+01 -0.1000000D+01 -0.1000000D+01\n\n\n\n\n      PROBLEM    2      DIMENSIONS    5   10\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.2915219D+03\n\n      FINAL L2 NORM OF THE RESIDUALS    0.1463850D+01\n\n      NUMBER OF FUNCTION EVALUATIONS           3\n\n      NUMBER OF JACOBIAN EVALUATIONS           2\n\n      EXIT PARAMETER                           1\n\n      FINAL APPROXIMATE SOLUTION\n\n      -0.1677968D+03 -0.8339841D+02  0.2211100D+03 -0.4119920D+02 -0.3275936D+02\n\n\n\n\n      PROBLEM    2      DIMENSIONS    5   50\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.3101600D+04\n\n      FINAL L2 NORM OF THE RESIDUALS    0.3482630D+01\n\n      NUMBER OF FUNCTION EVALUATIONS           3\n\n      NUMBER OF JACOBIAN EVALUATIONS           2\n\n      EXIT PARAMETER                           1\n\n      FINAL APPROXIMATE SOLUTION\n\n      -0.2030000D+02 -0.9650000D+01 -0.1652452D+03 -0.4325000D+01  0.1105331D+03\n\n\n\n\n      PROBLEM    3      DIMENSIONS    5   10\n\n\n      INITIAL L2 NORM OF THE RESIDUALS  0.1260397D+03\n\n      FINAL L2 NORM OF THE RESIDUALS    0.1909727D+01\n\n      NUMBER OF FUNCTION EVALUATIONS           3\n\n      NUMBER OF JACOBIAN EVALUATIONS           2\n\n      EXIT PARAMETER               ",
+        "tail": "    6    4    4    72    71     4   0.9103608D-39\n    6    4    4    68    67     4   0.2330524D-34\n    7    2    2    14     8     1   0.6998875D+01\n    7    2    2    19    12     1   0.6998875D+01\n    7    2    2    24    17     1   0.6998875D+01\n    8    3   15     6     5     1   0.9063596D-01\n    8    3   15    37    36     1   0.4174769D+01\n    8    3   15    14    13     1   0.4174769D+01\n    9    4   11    18    16     1   0.1753584D-01\n    9    4   11    78    70     1   0.3205219D-01\n    9    4   11   500   380     5   0.1753584D-01\n   10    3   16   126   116     3   0.9377945D+01\n   10    3   16   400   346     5   0.7945972D+03\n   11    6   31     8     7     1   0.4782959D-01\n   11    6   31    14    13     1   0.4782959D-01\n   11    6   31    15    14     1   0.4782959D-01\n   11    9   31     8     7     3   0.1183115D-02\n   11    9   31    19    15     1   0.1183115D-02\n   11    9   31    19    16     3   0.1183115D-02\n   11   12   31    10     9     3   0.2173104D-04\n   11   12   31    13    12     3   0.2173104D-04\n   11   12   31    34    28     2   0.2173104D-04\n   12    3   10     7     6     2   0.0000000D+00\n   13    2   10    21    12     1   0.1115178D+02\n   14    4   20   254   236     1   0.2929543D+03\n   14    4   20    53    42     1   0.2929543D+03\n   14    4   20   237   221     1   0.2929543D+03\n   15    1    8     1     1     4   0.1886238D+01\n   15    1    8    29    28     1   0.1884248D+01\n   15    1    8    47    46     1   0.1884248D+01\n   15    8    8    39    20     1   0.5930324D-01\n   15    9    9    12     9     2   0.1760084D-15\n   15   10   10    25    12     1   0.8064710D-01\n   16   10   10    14    12     2   0.8662586D-14\n   16   10   10    13     8     2   0.5000936D-14\n   16   10   10    22    20     2   0.5329071D-14\n   16   30   30    19    14     2   0.1482786D-12\n   16   40   40    19    14     2   0.2024535D-12\n   17    5   33    18    15     1   0.7392493D-02\n   18   11   65    16    12     1   0.2003440D+00\n",
+        "bytes": 26539,
+        "truncated": true
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "chkder test set (file23)",
+      "cmd": "./t20.exe < $BODY/upstream/ex/file23",
+      "exit": 0,
+      "seconds": 0.22,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "head": "\n\n\n      PROBLEM    1      WITH DIMENSION    2   IS  F\n\n\n      FIRST FUNCTION VECTOR   \n\n       0.2077000D+01 -0.2829290D+01\n\n\n      FUNCTION DIFFERENCE VECTOR\n\n      -0.1604855D-07  0.4763690D-06\n\n\n      ERROR VECTOR\n\n       0.3644165D-01  0.1000000D+01\n\n\n\n      PROBLEM    2      WITH DIMENSION    4   IS  F\n\n\n      FIRST FUNCTION VECTOR   \n\n      -0.8107000D+01 -0.1685995D+01  0.1874161D+01  0.1595216D+02\n\n\n      FUNCTION DIFFERENCE VECTOR\n\n       0.2138764D-06 -0.2512329D-07 -0.3578106D-07  0.4754114D-06\n\n\n      ERROR VECTOR\n\n       0.1000000D+01  0.1000000D+01  0.5678431D-01  0.1000000D+01\n\n\n\n      PROBLEM    3      WITH DIMENSION    2   IS  F\n\n\n      FIRST FUNCTION VECTOR   \n\n       0.1077710D+04  0.3001928D+00\n\n\n      FUNCTION DIFFERENCE VECTOR\n\n       0.3214806D-04 -0.7057517D-08\n\n\n      ERROR VECTOR\n\n       0.0000000D+00  0.0000000D+00\n\n\n\n      PROBLEM    4      WITH DIMENSION    4   IS  T\n\n\n      FIRST FUNCTION VECTOR   \n\n      -0.5412711D+04 -0.1964946D+04 -0.4871828D+04 -0.1776943D+04\n\n\n      FUNCTION DIFFERENCE VECTOR\n\n       0.2322079D-03  0.5335169D-04  0.2089914D-03  0.4808346D-04\n\n\n      ERROR VECTOR\n\n       0.9831358D+00  0.1000000D+01  0.9658717D+00  0.1000000D+01\n\n\n\n      PROBLEM    5      WITH DIMENSION    3   IS  F\n\n\n      FIRST FUNCTION VECTOR   \n\n      -0.5098770D+02 -0.1144166D+01  0.1230000D+00\n\n\n      FUNCTION DIFFERENCE VECTOR\n\n       0.1832842D-07 -0.1319622D-06  0.1832843D-08\n\n\n      ERROR VECTOR\n\n       0.1000000D+01  0.0000000D+00  0.1000000D+01\n\n\n\n      PROBLEM    6      WITH DIMENSION    9   IS  F\n\n\n      FIRST FUNCTION VECTOR   \n\n      -0.5793063D+01 -0.3339075D+02 -0.3468318D+02 -0.3636873D+02 -0.3794767D+02\n      -0.3943133D+02 -0.4083424D+02 -0.4217079D+02 -0.4345330D+02\n\n\n      FUNCTION DIFFERENCE VECTOR\n\n       0.4515008D-06  0.8252608D-06  0.1047076D-05  0.1220878D-05  0.1363613D-05\n       0.1485300D-05  0.1592015D-05  0.1687697D-05  0.1775024D-05\n\n\n      ERROR VECTOR\n\n       0.0000000D+00  0.4428514D-01  0.5843401D-01  0.69948",
+        "tail": "  FIRST FUNCTION VECTOR   \n\n      -0.3137258D+01  0.1997420D+00 -0.2260258D+01  0.1997420D+00 -0.2260258D+01\n       0.1997420D+00 -0.2260258D+01  0.1997420D+00 -0.2260258D+01 -0.2046258D+01\n\n\n      FUNCTION DIFFERENCE VECTOR\n\n       0.9923452D-07  0.3484660D-07  0.8616620D-07  0.3484660D-07  0.8616620D-07\n       0.3484660D-07  0.8616620D-07  0.3484660D-07  0.8616620D-07  0.6831461D-07\n\n\n      ERROR VECTOR\n\n       0.1000000D+01  0.8322885D+00  0.1000000D+01  0.8322885D+00  0.1000000D+01\n       0.8322885D+00  0.1000000D+01  0.8322885D+00  0.1000000D+01  0.9578317D+00\n\n\n\n      PROBLEM   14      WITH DIMENSION   10   IS  F\n\n\n      FIRST FUNCTION VECTOR   \n\n      -0.8219368D+01 -0.4402889D+01 -0.8249626D+01 -0.4433147D+01 -0.8279884D+01\n      -0.4463405D+01 -0.8172013D+01 -0.4463405D+01 -0.8172013D+01 -0.4325276D+01\n\n\n      FUNCTION DIFFERENCE VECTOR\n\n       0.3598776D-06  0.2186061D-06  0.3905817D-06  0.2493102D-06  0.4212857D-06\n       0.2800143D-06  0.4311393D-06  0.2800143D-06  0.4311393D-06  0.2591637D-06\n\n\n      ERROR VECTOR\n\n       0.0000000D+00  0.0000000D+00  0.0000000D+00  0.0000000D+00  0.0000000D+00\n       0.0000000D+00  0.0000000D+00  0.0000000D+00  0.0000000D+00  0.0000000D+00\n1SUMMARY OF  14 TESTS OF CHKDER\n\n NPROB   N    STATUS     ERRMIN         ERRMAX\n\n   1     2      F     0.3644165D-01  0.1000000D+01\n   2     4      F     0.5678431D-01  0.1000000D+01\n   3     2      F     0.0000000D+00  0.0000000D+00\n   4     4      T     0.9658717D+00  0.1000000D+01\n   5     3      F     0.0000000D+00  0.1000000D+01\n   6     9      F     0.0000000D+00  0.1062543D+00\n   7     7      F     0.0000000D+00  0.0000000D+00\n   8    10      T     0.1000000D+01  0.1000000D+01\n   9    10      F     0.1652737D-01  0.1620568D+00\n  10    10      F     0.0000000D+00  0.5761877D-01\n  11    10      F     0.0000000D+00  0.0000000D+00\n  12    10      F     0.2027908D-01  0.2027917D-01\n  13    10      T     0.8322885D+00  0.1000000D+01\n  14    10      F     0.0000000D+00  0.0000000D+00\n",
+        "bytes": 7812,
+        "truncated": true
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "the 1980 hybrd driver completes its 55-problem set; convergence shape reported",
+      "cmd": "./t15.exe < $BODY/upstream/ex/file21 | awk '/PROBLEM/{p=$2} /FINAL L2 NORM/{f=$7; gsub(\"D\",\"E\",f); f=f+0} /EXIT PARAMETER/{n++; info=$3; if (info>=1 && info<=3) c++; else if (info==4 && f<1e-8) floor++; else {other++; printf \"  problem %s info %s final %g\n\", p, info, f}} END{print \"problems\", n, \"converged\", c+0, \"floor_stall\", floor+0, \"other\", other+0}'",
+      "exit": 1,
+      "seconds": 0.22,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0",
+        "stdout lacks 'problems 55'"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "awk: cmd. line:1: /PROBLEM/{p=$2} /FINAL L2 NORM/{f=$7; gsub(\"D\",\"E\",f); f=f+0} /EXIT PARAMETER/{n++; info=$3; if (info>=1 && info<=3) c++; else if (info==4 && f<1e-8) floor++; else {other++; printf \"  problem %s info %s final %g\nawk: cmd. line:1:                                                                                                                                                                                      ^ unterminated string\n"
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "t15.exe",
+      "sha256": "0a5ed361f3a63b16527ff32128c1743bf4ff2feb02f974508641fe67599a00f7",
+      "bytes": 120413
+    },
+    {
+      "path": "t17.exe",
+      "sha256": "179d643a437def09bf2e2e5498278798cc293ad3c10f0e9f3b6c6b917d81f142",
+      "bytes": 127519
+    },
+    {
+      "path": "t20.exe",
+      "sha256": "66e618bee0af09c591ec65dc1864404c3aacbba1014f782c73828f374a7ea54e",
+      "bytes": 125543
+    }
+  ],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "UPSTREAM_TESTS_FAIL",
+  "ok": false
+}

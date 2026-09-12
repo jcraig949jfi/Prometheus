@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.sort_by_angle_then_pop_any_point_that_makes_a_non_left_turn",
+  "name": "sort by angle around a pivot, then pop any point that makes a non-left turn",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "sort the points by angle about the lowest point, walk them in that order pushing onto a stack, and whenever the top two stack points and the new point fail to turn left, pop the top; what remains on the stack is the hull in order",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Graham scan' in section Computational mathematics / Geometry: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "iteration": "LIFO",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "an orientation test",
+    "a sort"
+  ],
+  "fails_when": [
+    "collinear points need a tie rule"
+  ],
+  "instances": [
+    "Graham scan"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

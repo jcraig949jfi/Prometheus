@@ -1,0 +1,144 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "ff-planner-2.3",
+  "receipt_id": "run-ff-planner-2.3-20260912T143553Z",
+  "written_utc": "20260912T143553Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/FF-v2.3",
+  "harness_sha256": {
+    "gripper_domain.pddl": "f980ce40ac71a64e68199ee1c57fd94ef3ae9c459239fd70f484a6263673e47d",
+    "gripper_prob.pddl": "9d0dfa13e42d6b118ec34b9fba31fc132a9ba3bacca433db3bba230ef1834114"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "a771bb5de2d01b712da6b7497fde0f42c25fd2d949d34209698ef1be083c70e0",
+  "recipe_sha256": "06e8b69a9e6bb718158f4afa6b92372e6f10b4cebd6ddd8d7163d3fe0e26a4b1",
+  "patches": [],
+  "probe": [
+    {
+      "name": "toolchain",
+      "cmd": "gcc --version | head -1; bison --version | head -1; flex --version",
+      "exit": 0,
+      "seconds": 6.17,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\nbison (GNU Bison) 3.8.2\nflex 2.6.4\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make (CC=gcc -fcommon: the GCC-10+ -fno-common default breaks 2000-era tentative definitions; a COMPILER FLAG, not a source change)",
+      "cmd": "make clean >/dev/null 2>&1; make -s ADDONS=-fcommon 2>&1 | grep -viE 'warning|deprecat' | tail -3; test -x ./ff",
+      "exit": 0,
+      "seconds": 6.19,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "scan-ops_pddl.y:164:3: note: previous implicit declaration of \u00e2\u20ac\u02dcopserr\u00e2\u20ac\u2122 with type \u00e2\u20ac\u02dcvoid(int * (*)(), char *)\u00e2\u20ac\u2122\n  164 |   opserr( DOMDEF_EXPECTED, NULL );\n      |   ^~~~~~\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "plan the 2-ball gripper problem",
+      "cmd": "./ff -o $HARNESS/gripper_domain.pddl -f $HARNESS/gripper_prob.pddl 2>&1 | tail -30",
+      "exit": 0,
+      "seconds": 0.85,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": " ... done.\nff: parsing problem file\nproblem 'GRIPPER2' defined\n ... done.\n\n\n\nCueing down from goal distance:    5 into depth [1]\n                                   4            [1]\n                                   3            [1]\n                                   2            [1]\n                                   1            [1]\n                                   0            \n\nff: found legal plan as follows\n\nstep    0: PICK BALL1 ROOMA LEFT\n        1: PICK BALL2 ROOMA RIGHT\n        2: MOVE ROOMA ROOMB\n        3: DROP BALL1 ROOMB LEFT\n        4: DROP BALL2 ROOMB RIGHT\n     \n\ntime spent:    0.00 seconds instantiating 20 easy, 0 hard action templates\n               0.00 seconds reachability analysis, yielding 12 facts and 20 actions\n               0.00 seconds creating final representation with 12 relevant facts\n               0.00 seconds building connectivity graph\n               0.00 seconds searching, evaluating 8 states, to a max depth of 1\n               0.00 seconds total time\n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "ff",
+      "sha256": "8f05ed9d3d3ac96041189964aa4c4dd613a3b664f51eff233d0da26d91e6e017",
+      "bytes": 872048
+    },
+    {
+      "path": "inst_easy.o",
+      "sha256": "48a664f255c6c34a64d77720cefb5b64cc1c490abdd769103451f5c2973adb9b",
+      "bytes": 211896
+    },
+    {
+      "path": "inst_final.o",
+      "sha256": "3992191b0be0247b03f291ed5682bc3da052d98fea37decbe92f7920ae10d504",
+      "bytes": 126608
+    },
+    {
+      "path": "inst_hard.o",
+      "sha256": "9231b34b88e7f0865166b8718b127ea0f5173870295402519430135c41c3576f",
+      "bytes": 131440
+    },
+    {
+      "path": "inst_pre.o",
+      "sha256": "3c1de47a676a5332c4bd290e4ecfb929424cc1713d72edc83949674eca310f77",
+      "bytes": 270352
+    },
+    {
+      "path": "main.o",
+      "sha256": "fd5d3551ecd65872456d8c2c8c3acc255f6b303e5c15c0a1f30e5727061d28d2",
+      "bytes": 58616
+    },
+    {
+      "path": "memory.o",
+      "sha256": "9fc05872a30e2bdb008afe3397c9d3d4547d966bb1dc8bd43262a2176ea785c2",
+      "bytes": 89544
+    },
+    {
+      "path": "orderings.o",
+      "sha256": "ef306bd95199ae3f9bc11d3d09267184d2aaa9a975f23244060c5f8d632549d1",
+      "bytes": 28688
+    },
+    {
+      "path": "output.o",
+      "sha256": "36cb28f1df90adeefc05fe831eb833de84e722afdbb9681140029b31601530fa",
+      "bytes": 68488
+    },
+    {
+      "path": "parse.o",
+      "sha256": "949340040f2e23b6c9e52950128aad3bfcbe6322f7b8047a16e817bf57cc05ad",
+      "bytes": 108480
+    },
+    {
+      "path": "relax.o",
+      "sha256": "b93cf4fe5347d2291b2ae7f9393b54b269a21fe09569875b2e2540f2a5fb2dfb",
+      "bytes": 61816
+    },
+    {
+      "path": "scan-fct_pddl.tab.o",
+      "sha256": "e280db96449e8705154fee3e4a148ed753a0eb455c72e7b10822ff0e56ca5f53",
+      "bytes": 106424
+    },
+    {
+      "path": "scan-ops_pddl.tab.o",
+      "sha256": "ed79aa0c3fe57028e4278693e561e1703cbeff4173b718fc7f7b6954182fdae2",
+      "bytes": 123896
+    },
+    {
+      "path": "search.o",
+      "sha256": "e970f4c3e60038111712fd7240d3ca17753718bed7324f8843ac066a2e3bc8ba",
+      "bytes": 93840
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

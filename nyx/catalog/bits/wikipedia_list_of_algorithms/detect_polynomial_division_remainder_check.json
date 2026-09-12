@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.detect.polynomial_division_remainder_check",
+  "name": "polynomial division remainder as a check",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "treat the data as a polynomial over a two-element field, divide by a fixed generator polynomial, and append the remainder; the receiver divides again and a nonzero remainder reveals corruption, with burst errors shorter than the generator degree always caught",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cyclic redundancy check' in section Information theory and signal processing / Coding theory / Error detection and correction: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "DETECT",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a generator polynomial (policy; decides which bursts are caught)"
+  ],
+  "fails_when": [
+    "errors that are multiples of the generator pass"
+  ],
+  "instances": [
+    "Cyclic redundancy check"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

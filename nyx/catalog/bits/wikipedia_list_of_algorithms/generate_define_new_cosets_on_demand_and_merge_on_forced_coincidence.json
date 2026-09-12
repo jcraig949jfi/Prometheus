@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.define_new_cosets_on_demand_and_merge_on_forced_coincidence",
+  "name": "define new cosets on demand and merge them whenever a relation forces a coincidence",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+  ],
+  "mechanism": "keep a table of how each generator moves each known coset; whenever tracing a relation needs an undefined entry, define a new coset; whenever tracing shows two coset names must be equal, merge them (and everything that follows from the merge); stop when every relation closes on every coset",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Todd–Coxeter algorithm' in section Computational mathematics / Abstract algebra: Procedure for generating cosets.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "SET",
+  "out_geometry": "MAP",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "INCREMENTAL",
+  "iteration": "FIFO",
+  "cost": "UNKNOWN",
+  "requires": [
+    "a finite index (otherwise it never stops)"
+  ],
+  "fails_when": [
+    "no bound on the intermediate table size; infinite index never terminates"
+  ],
+  "instances": [
+    "Todd–Coxeter algorithm"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.remember.disjoint_set_union"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

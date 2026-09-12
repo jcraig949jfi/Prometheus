@@ -1,0 +1,86 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compare.alignment_by_dynamic_programming",
+  "name": "pairwise alignment by dynamic programming",
+  "lineage": [
+    "search",
+    "symbolic reasoning"
+  ],
+  "mechanism": "fill a table over prefix pairs of two sequences where each cell holds the best cost of aligning those prefixes from its three neighbours (match or substitute, insert, delete), then read the corner or trace back the path",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Levenshtein edit distance' in section Combinatorial algorithms / Sequence algorithms / Approximate sequence matching: computes a metric for the amount of difference between two sequences",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Damerau–Levenshtein distance': computes a distance measure between two strings, improves on Levenshtein distance",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Needleman–Wunsch algorithm': find global alignment between two sequences",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Smith–Waterman algorithm': find local sequence alignment",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hirschberg's algorithm': finds the least cost sequence alignment between two sequences, as measured by their Levenshtein distance",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Dynamic time warping': measure similarity between two sequences which may vary in time or speed",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Longest common subsequence problem': Find the longest subsequence common to all sequences in a set of sequences",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Shortest common supersequence problem': Find the shortest supersequence that contains two or more sequences as subsequences",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Longest common substring problem': find the longest string (or strings) that is a substring (or are substrings) of two or more strings",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPARE",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a cost for substitution, insertion, deletion (policy)",
+    "two sequences over a common alphabet"
+  ],
+  "fails_when": [
+    "quadratic space and time in sequence length",
+    "the cost table is a human prior; changing it changes every distance"
+  ],
+  "instances": [
+    "Levenshtein edit distance",
+    "Damerau–Levenshtein distance",
+    "Needleman–Wunsch algorithm",
+    "Smith–Waterman algorithm",
+    "Hirschberg's algorithm",
+    "Dynamic time warping",
+    "Longest common subsequence problem",
+    "Shortest common supersequence problem",
+    "Longest common substring problem"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DYNAMIC_PROGRAMMING",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

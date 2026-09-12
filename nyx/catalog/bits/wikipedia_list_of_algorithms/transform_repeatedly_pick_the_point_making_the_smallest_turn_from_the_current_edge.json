@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.repeatedly_pick_the_point_making_the_smallest_turn_from_the_current_edge",
+  "name": "repeatedly pick the point that makes the smallest turn from the current edge",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "start at an extreme point; among all remaining points choose the one such that every other point lies to one side of the line from the current point to it (the smallest angular turn), step to it, and repeat until the start is reached",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gift wrapping algorithm or Jarvis march' in section Computational mathematics / Geometry: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "GREEDY",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "an orientation test on three points"
+  ],
+  "fails_when": [
+    "cost is points times hull size; slow when most points are on the hull"
+  ],
+  "instances": [
+    "Gift wrapping algorithm or Jarvis march"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

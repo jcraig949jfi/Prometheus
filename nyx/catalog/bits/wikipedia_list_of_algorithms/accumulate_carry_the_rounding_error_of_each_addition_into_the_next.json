@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.accumulate.carry_the_rounding_error_of_each_addition_into_the_next",
+  "name": "carry the rounding error of each addition into the next",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "after adding a term to the running sum, recover what was lost to rounding by subtracting back, and add that lost piece to the next term before it is summed; the error no longer grows with the number of terms",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Kahan summation algorithm' in section Computational mathematics / Numerical algorithms / Elementary and special functions: a more accurate method of summing floating-point numbers",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ACCUMULATE",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "STREAMING",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "rounding that is deterministic and recoverable by subtraction"
+  ],
+  "fails_when": [
+    "compilers that reassociate the arithmetic remove the correction"
+  ],
+  "instances": [
+    "Kahan summation algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

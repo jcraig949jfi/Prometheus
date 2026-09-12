@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.bound.iterate_a_one_way_function_a_tunable_number_of_times_to_slow_each_guess",
+  "name": "iterate a one-way function a tunable number of times to slow each guess",
+  "lineage": [
+    "operating systems",
+    "network protocols"
+  ],
+  "mechanism": "derive the key by applying a keyed one-way function to the password and salt, then re-applying it to its own output for a chosen number of rounds (combining the round outputs); the legitimate user pays the cost once, an attacker pays it per guess, and the round count is raised as hardware gets faster",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'PBKDF2' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'bcrypt': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "BOUND",
+  "in_geometry": "STRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a salt per password",
+    "an iteration count (policy)"
+  ],
+  "fails_when": [
+    "parallel hardware makes pure time cost cheap; no memory cost"
+  ],
+  "instances": [
+    "PBKDF2",
+    "bcrypt"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "compress-4.2.4-lzw",
+  "canonical_name": "compress 4.2.4 -- the earlier Unix LZW compress (ncompress lineage)",
+  "aliases": [
+    "compress",
+    "ncompress-4.2.4"
+  ],
+  "lineage": "compress 4.x (1985-1992): the Unix LZW compressor as it stood before the long ncompress maintenance era; the EARLY version of the same lineage batch 01 preserved at ncompress 5.0",
+  "domain": [
+    "compression",
+    "lzw",
+    "dictionary-coding"
+  ],
+  "era": "1985-1992",
+  "version": "git tag v4.2.4.6, github.com/vapier/ncompress (the tagged historical 4.2.4 line)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/vapier/ncompress/archive/refs/tags/v4.2.4.6.tar.gz",
+        "filename": "ncompress-4.2.4.6.tar.gz"
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "repo": "github.com/vapier/ncompress",
+    "tag": "v4.2.4.6"
+  },
+  "hashes": {
+    "tree_sha256": "d729870244f7739a50fed2b8382a405ef37261fcb0f935bdd2a391e3e88f13a5",
+    "n_files": 24,
+    "bytes": 140098,
+    "artifacts": [
+      {
+        "filename": "ncompress-4.2.4.6.tar.gz",
+        "sha256": "112acfc76382e7b631d6cfc8e6ff9c8fd5b3677e5d49d3d9f1657bc15ad13d13",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\compress-4.2.4-lzw",
+    "hash_list": "techne/fossils/specimens/compress-4.2.4-lzw/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "public-domain / permissive (compress headers)",
+    "status": "see LICENSE",
+    "evidence": "tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./compress, ./compress -d"
+  ],
+  "example": {
+    "command": "make && ./compress -c compress.c | ./compress -dc | cmp - compress.c && echo ROUNDTRIP_OK",
+    "input": "any file",
+    "output": "identical after round trip"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Welch, A Technique for High-Performance Data Compression, 1984"
+  ],
+  "human_capability_summary": {
+    "built_to": "shrink files with adaptive LZW dictionary coding -- the same job as the 5.0 version, in the earlier code, before decades of portability maintenance",
+    "pressure": "1980s bandwidth and disk; the LZW patent that eventually pushed the world to gzip",
+    "success_means": "exact reconstruction; and, as a fossil PAIR with ncompress 5.0, a preserved 30-year span of the SAME lineage for later diff"
+  },
+  "known_human_problem_solved": "lossless LZW compression (early form)",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "historical_version_of",
+      "to": "ncompress-5.0-lzw-1985",
+      "note": "compress 4.2.4 (1992) is the earlier form; ncompress 5.0 (2021) is the later. Same LZW lineage, ~30 years apart -- the batch-03 one-specimen-many-versions pair. What changed mechanistically is Nyx's question."
+    }
+  ],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/compress-4.2.4-lzw/receipts/run-compress-4.2.4-lzw-20260912T152739Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\compress-4.2.4-lzw ; tracked techne/fossils/specimens/compress-4.2.4-lzw/",
+    "where_it_came_from": "{'repo': 'github.com/vapier/ncompress', 'tag': 'v4.2.4.6'} ; HISTORICAL_ARCHIVE_MIRROR ; public-domain / permissive (compress headers)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run compress-4.2.4-lzw",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/compress-4.2.4-lzw/receipts/run-compress-4.2.4-lzw-20260912T152739Z.json",
+    "what_humans_used_it_for": "shrink files with adaptive LZW dictionary coding -- the same job as the 5.0 version, in the earlier code, before decades of portability maintenance"
+  },
+  "seat": "Techne"
+}

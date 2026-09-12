@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.go_explore.representation_selection.cut1",
+  "specimen": "go_explore",
+  "name": "representation selection: search a family of observation-to-key functions for the one whose partition of a sample of recent observations has near-uniform occupancy at a target number of parts",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "Go-Explore robustified, Explore.try_split_frames + maybe_split_dynamic_state (the 'dynamic state representation' of the 2020 paper; paper not read, T2)",
+    "sources": [
+      {
+        "ref": "go-explore @702fb9c7a robustified/goexplore_py/goexplore.py 448-560 try_split_frames (proposal loop: geometric jumps in (shape, pix_val) around the best; score = norment(dist) / sqrt(|len(dist) - target|/target + 1) with target = len(frames) * cell_split_factor; keep the best); 561-660 maybe_split_dynamic_state (when due or the archive exceeds max_archive_size: adopt, then re-key every former grid through the admission rule)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "go-explore @702fb9c7a robustified/goexplore_py/goexplore.py 425-447 get_dynamic_repr (frame -> imdownscale(shape, pix) -> bytes; recursive split rules)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "utils.imdownscale -- NAMED, not read; signature (frame, target_shape, max_pix_val)",
+        "grade": "unknown"
+      },
+      {
+        "ref": "nyx/specimens/go_explore/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Go-Explore robustified variant at the pin; the 'downscaled representation' with dynamic recomputation. Whether the 2020 paper describes exactly this objective is T2 (not read).",
+    "mechanism": "Given a sample of recent observations and a parametrised family of key functions (here: downscale to shape s with pixel depth p, then bytes), propose parameters by geometric jumps around the current best, compute the occupancy distribution of the sample under each proposal, score it by the entropy of that distribution normalised by the uniform entropy of the same support, penalised by the distance of the support size from a target (target = sample size * split factor), keep the best over a fixed number of proposals; then re-key the whole archive under the winner.",
+    "input": "a sample of observations (RotatingSet of recent frames), a key-function family with a small parameter space, a target granularity (cell_split_factor), a proposal budget (split_iterations)",
+    "output": "the chosen parameters (shape, pix_val) and the resulting number of parts; side effect: the archive is rebuilt under the new key",
+    "state": "the recent-observation sample (a rotating set the exploration loop feeds); the former grids on disk (needed to re-key); the current split rules",
+    "assumptions": "that near-uniform occupancy at a chosen granularity is what makes a partition useful for exploration (the objective is a stated prior, not derived); that the family contains a good key (image downscaling is the only family shipped); that recent observations are representative of what the archive will hold",
+    "interface": "select(sample, family, target, budget) -> params; rekey(archive, params) -> archive. The family is a parameter; the shipped one is image-specific (2D arrays), the objective is not.",
+    "fitness_value": "unknown -- claimed: the archive stays at a workable size and the cells stay informative as exploration widens, without hand-tuned cell definitions (the domain-knowledge alternative c09 is the hand-tuned one). Not measured; NOT RUN -- no managed pin (Techne asked, #201).",
+    "failure_landscape": "(a) the objective rewards uniformity, not exploration value -- a partition that splits noise evenly scores well; (b) re-keying the whole archive is expensive (the code checkpoints before and after and warns when size forces it); (c) the family is image-only; (d) proposals are random jumps with a fixed budget -- a local search with no guarantee.",
+    "ablation": "unknown -- designed: fix the representation (dynamic_state off; the code has this switch) and compare archive size and max score over frames_compute; also replace the entropy score by 'closest to target count' alone. NOT RUN (no pin).",
+    "decomposability": "(1) the objective (normalised entropy vs target count), (2) the proposal search, (3) the re-keying. (1)+(2) are the organ; (3) is c05 scaffolding. The key family is a plug-in (POLICY/DATA).",
+    "composability": "Any archive keyed by a learned discretisation of observations; the objective needs only hashable keys and a sample.",
+    "human_prior": "That 'a good map of the world has cells of roughly equal visit frequency at a chosen count' -- an authorial objective, stated in code only; and that images downscale into meaningful places.",
+    "control": "Positive: on a sample drawn from k well-separated clusters with a family that can separate them, the search returns a partition with ~k parts of near-equal occupancy. Negative: on a constant sample every key collapses to one part and the score is 0. Cheat control: a family that maps every observation to a unique key scores near-uniform trivially -- the target-count penalty must refuse it (check the penalty fires when n approaches the sample size). None run.",
+    "cheat": "Maximising uniformity by making every observation its own cell; the penalty term is the guard, and a run must show it binding."
+  },
+  "alternative_cuts": [
+    "CUTS.md: c04 is the MAP-Elites descriptor organ with a learned descriptor -- a recurrence with a new parameter (a second Chopper may call it that)"
+  ],
+  "pressure_refs": []
+}

@@ -1,0 +1,32 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "configure+make vtest27",
+      "cmd": "( [ -x ./configure ] && ./configure >/dev/null 2>&1 || true ); make -s vtest27 ARCH_OPTION='-march=x86-64 -mmmx -msse -msse2' 2>&1 | grep -viE 'warning' | tail -4; ls vtest27 2>/dev/null; test -x ./vtest27"
+    }
+  ],
+  "runs": [
+    {
+      "name": "Viterbi decode a noisy K=7 convolutional code",
+      "cmd": "./vtest27 -e 3.0 -n 200 2>&1 | tail -8",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(BER|bit error|Es/No|decod|[0-9]e-[0-9])"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "COMPAT FLAG (recorded): libfec's configure emits -march=x86_64 (invalid; modern gcc wants x86-64), so the build is given ARCH_OPTION=-march=x86-64 -mmmx -msse -msse2 -- a build-flag fix, no source change. vtest27 encodes random frames with a rate-1/2 K=7 convolutional code, adds Gaussian noise at a given Eb/No, and Viterbi-decodes -- reporting the bit-error rate. It runs the trellis/ACS/traceback machinery on real noisy input."
+}

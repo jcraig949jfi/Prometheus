@@ -1,0 +1,118 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "bzip2-1.0.8",
+  "canonical_name": "bzip2 1.0.8 -- Burrows-Wheeler block-sorting compressor (Julian Seward)",
+  "aliases": [
+    "bzip2",
+    "libbz2"
+  ],
+  "lineage": "bzip2 (1996-, Julian Seward): the Burrows-Wheeler transform + move-to-front + Huffman pipeline -- a DIFFERENT compression paradigm from LZ, reordering the data so that context redundancy becomes local run redundancy",
+  "domain": [
+    "compression",
+    "burrows-wheeler-transform",
+    "move-to-front",
+    "huffman"
+  ],
+  "era": "1996 (1.0.8 rel. 2019)",
+  "version": "1.0.8 from sourceware.org (the maintainer's site)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+        "filename": "bzip2-1.0.8.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "site": "sourceware.org/pub/bzip2",
+    "release": "1.0.8"
+  },
+  "hashes": {
+    "tree_sha256": "70fe5728f37aa57560430df75cf8646bc87f0fd4f2a85b5b8d04f471fce955b4",
+    "n_files": 57,
+    "bytes": 3906421,
+    "artifacts": [
+      {
+        "filename": "bzip2-1.0.8.tar.gz",
+        "sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\bzip2-1.0.8",
+    "hash_list": "techne/fossils/specimens/bzip2-1.0.8/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "bzip2-1.0.6 (BSD-like)",
+    "status": "permissive",
+    "evidence": "LICENSE in tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "./bzip2 / ./bunzip2; make test"
+  ],
+  "example": {
+    "command": "make && make test (compresses and decompresses the shipped sample files)",
+    "input": "sample?.ref",
+    "output": "round-trip reproduces the references"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "sourceware.org/bzip2",
+    "Burrows & Wheeler, A Block-sorting Lossless Data Compression Algorithm, 1994"
+  ],
+  "human_capability_summary": {
+    "built_to": "compress losslessly by first BLOCK-SORTING the data (the Burrows-Wheeler transform) so repeated contexts cluster, then move-to-front and Huffman coding the transformed stream",
+    "pressure": "to beat DEFLATE's ratio on text; the BWT trades speed and memory for a better model of long-range redundancy",
+    "success_means": "exact round-trip at a higher ratio than gzip on text; the shipped self-test passes"
+  },
+  "known_human_problem_solved": "block-sorting (BWT) lossless compression",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/bzip2-1.0.8/receipts/run-bzip2-1.0.8-20260912T152735Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/bzip2-1.0.8/receipts/run-bzip2-1.0.8-20260912T152922Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\bzip2-1.0.8 ; tracked techne/fossils/specimens/bzip2-1.0.8/",
+    "where_it_came_from": "{'site': 'sourceware.org/pub/bzip2', 'release': '1.0.8'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; bzip2-1.0.6 (BSD-like)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run bzip2-1.0.8",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/bzip2-1.0.8/receipts/run-bzip2-1.0.8-20260912T152922Z.json",
+    "what_humans_used_it_for": "compress losslessly by first BLOCK-SORTING the data (the Burrows-Wheeler transform) so repeated contexts cluster, then move-to-front and Huffman coding the transformed stream"
+  },
+  "seat": "Techne"
+}

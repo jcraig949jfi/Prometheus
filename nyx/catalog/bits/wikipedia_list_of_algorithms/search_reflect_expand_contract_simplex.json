@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.reflect_expand_contract_simplex",
+  "name": "reflect, expand or contract a simplex of points",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "keep a set of one more point than the dimension, replace the worst by its reflection through the centroid of the others, expanding if that helped a lot and contracting toward the best if it did not, shrinking the whole set when nothing helps",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Nelder–Mead method (downhill simplex method)' in section Computational mathematics / Optimization algorithms: a nonlinear optimization algorithm",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SET",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "iteration": "SORTED_GLOBAL",
+  "cost": "LINEAR",
+  "requires": [
+    "only objective values (no gradient)"
+  ],
+  "fails_when": [
+    "can converge to a non-stationary point; degenerates in high dimension"
+  ],
+  "instances": [
+    "Nelder–Mead method (downhill simplex method)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

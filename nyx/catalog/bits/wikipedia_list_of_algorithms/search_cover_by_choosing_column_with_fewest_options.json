@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.cover_by_choosing_column_with_fewest_options",
+  "name": "exact cover by choosing the column with fewest options",
+  "lineage": [
+    "constraint solving",
+    "search"
+  ],
+  "mechanism": "to cover every column exactly once, pick the column with the fewest candidate rows, try each such row, remove the rows and columns it conflicts with, recurse, and undo the removals when returning",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Algorithm X' in section Computational mathematics / Optimization algorithms: a nondeterministic algorithm",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Dancing Links': an efficient implementation of Algorithm X",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "BACKTRACKING",
+  "iteration": "LIFO",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a 0/1 incidence matrix",
+    "constant-time removal and restoration (the doubly linked implementation)"
+  ],
+  "fails_when": [
+    "exponential; the fewest-options heuristic is what keeps it usable"
+  ],
+  "instances": [
+    "Algorithm X",
+    "Dancing Links"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

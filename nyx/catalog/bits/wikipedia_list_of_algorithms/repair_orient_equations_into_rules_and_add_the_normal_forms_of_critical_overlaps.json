@@ -1,0 +1,49 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.orient_equations_into_rules_and_add_the_normal_forms_of_critical_overlaps",
+  "name": "orient equations into rules and add the normal forms of critical overlaps as new rules",
+  "lineage": [
+    "theorem provers",
+    "symbolic reasoning"
+  ],
+  "mechanism": "turn each equation into a rewrite rule pointing downhill in a termination order; wherever two rules' left sides overlap, rewrite the overlap both ways to normal forms; if the results differ, orient that pair as a new rule; repeat until no overlap yields a new rule, when rewriting decides equality",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Knuth–Bendix completion algorithm' in section Computational mathematics / Computer algebra: for rewriting rule systems",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "WELL_FOUNDED",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "FIFO",
+  "cost": "UNKNOWN",
+  "requires": [
+    "a termination order that can orient every equation"
+  ],
+  "fails_when": [
+    "an unorientable equation halts the procedure; may run forever"
+  ],
+  "instances": [
+    "Knuth–Bendix completion algorithm"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.repair.add_the_reduced_combination_of_each_pair_until_every_pair_reduces_to_zero"
+    },
+    {
+      "rel": "COMPOSES_WITH",
+      "id": "bit.rewrite.rule_canonicalization"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

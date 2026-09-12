@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.iterate_pairwise_forces_to_equilibrium",
+  "name": "iterate pairwise forces to equilibrium",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "treat connected nodes as attracting and all nodes as repelling, move each node a small step along the net force, and repeat until movement is small",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Force-based algorithms (also known as force-directed algorithms or spring-based algorithms)' in section Combinatorial algorithms / Graph algorithms / Graph drawing: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "GRAPH",
+  "out_geometry": "MATRIX",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "LOCAL_OPTIMUM",
+  "strategy": "FIXPOINT_ITERATION",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a distance in the embedding space",
+    "force laws (policy)"
+  ],
+  "fails_when": [
+    "local minima; sensitive to initial positions",
+    "quadratic per iteration without approximation"
+  ],
+  "instances": [
+    "Force-based algorithms (also known as force-directed algorithms or spring-based algorithms)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "PARALLEL_ROUNDS",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

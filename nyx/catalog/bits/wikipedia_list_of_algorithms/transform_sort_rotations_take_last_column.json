@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.sort_rotations_take_last_column",
+  "name": "sort all rotations and take the last column",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "form every rotation of the input, sort them, and output the last character of each sorted rotation plus the index of the original; the output clusters equal characters that share a context and is exactly invertible",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Burrows–Wheeler transform' in section Information theory and signal processing / Coding theory / Lossless compression algorithms: preprocessing useful for improving lossless compression",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "STRING",
+  "out_geometry": "STRING",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SORTED_GLOBAL",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a sentinel or the original index"
+  ],
+  "fails_when": [
+    "by itself compresses nothing; it reorders for a later stage"
+  ],
+  "instances": [
+    "Burrows–Wheeler transform"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

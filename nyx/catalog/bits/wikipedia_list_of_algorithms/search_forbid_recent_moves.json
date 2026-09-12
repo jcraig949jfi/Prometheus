@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.forbid_recent_moves",
+  "name": "forbid recently made moves",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "move to the best neighbour even if worse, but keep a short list of recent moves or attributes that may not be reversed for a number of steps, so the search is pushed out of the basin it just left",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Tabu search' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "UNKNOWN",
+  "requires": [
+    "a neighbourhood",
+    "a tabu tenure (policy)"
+  ],
+  "fails_when": [
+    "tenure too short cycles, too long blocks the return to good regions"
+  ],
+  "instances": [
+    "Tabu search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

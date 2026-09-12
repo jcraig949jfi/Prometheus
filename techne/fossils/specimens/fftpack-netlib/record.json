@@ -1,0 +1,693 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "fftpack-netlib",
+  "canonical_name": "FFTPACK -- Paul Swarztrauber's Fortran FFT package (NCAR, 1985)",
+  "aliases": [
+    "fftpack"
+  ],
+  "lineage": "fftpack (netlib historical distribution): the authoritative Fortran source as served by netlib.org, the authors' own channel",
+  "domain": [
+    "scientific-computing",
+    "fft",
+    "signal-processing",
+    "numerical"
+  ],
+  "era": "1976-1985",
+  "version": "netlib.org/fftpack as served 2026-09-12 (per-file; no tarball endpoint)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cfftb.f",
+        "filename": "cfftb.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cfftb1.f",
+        "filename": "cfftb1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cfftf.f",
+        "filename": "cfftf.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cfftf1.f",
+        "filename": "cfftf1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cffti.f",
+        "filename": "cffti.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cffti1.f",
+        "filename": "cffti1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cosqb.f",
+        "filename": "cosqb.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cosqb1.f",
+        "filename": "cosqb1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cosqf.f",
+        "filename": "cosqf.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cosqf1.f",
+        "filename": "cosqf1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cosqi.f",
+        "filename": "cosqi.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/cost.f",
+        "filename": "cost.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/costi.f",
+        "filename": "costi.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/ezfft1.f",
+        "filename": "ezfft1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/ezfftb.f",
+        "filename": "ezfftb.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/ezfftf.f",
+        "filename": "ezfftf.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/ezffti.f",
+        "filename": "ezffti.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/passb.f",
+        "filename": "passb.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/passb2.f",
+        "filename": "passb2.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/passb3.f",
+        "filename": "passb3.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/passb4.f",
+        "filename": "passb4.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/passb5.f",
+        "filename": "passb5.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/passf.f",
+        "filename": "passf.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/passf2.f",
+        "filename": "passf2.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/passf3.f",
+        "filename": "passf3.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/passf4.f",
+        "filename": "passf4.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/passf5.f",
+        "filename": "passf5.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/radb2.f",
+        "filename": "radb2.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/radb3.f",
+        "filename": "radb3.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/radb4.f",
+        "filename": "radb4.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/radb5.f",
+        "filename": "radb5.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/radbg.f",
+        "filename": "radbg.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/radf2.f",
+        "filename": "radf2.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/radf3.f",
+        "filename": "radf3.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/radf4.f",
+        "filename": "radf4.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/radf5.f",
+        "filename": "radf5.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/radfg.f",
+        "filename": "radfg.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/rfftb.f",
+        "filename": "rfftb.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/rfftb1.f",
+        "filename": "rfftb1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/rfftf.f",
+        "filename": "rfftf.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/rfftf1.f",
+        "filename": "rfftf1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/rffti.f",
+        "filename": "rffti.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/rffti1.f",
+        "filename": "rffti1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/sinqb.f",
+        "filename": "sinqb.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/sinqf.f",
+        "filename": "sinqf.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/sinqi.f",
+        "filename": "sinqi.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/sint.f",
+        "filename": "sint.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/sint1.f",
+        "filename": "sint1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/sinti.f",
+        "filename": "sinti.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/test.f",
+        "filename": "test.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/doc",
+        "filename": "doc",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/changes",
+        "filename": "changes",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/fftpack/test.f",
+        "filename": "test.f",
+        "extract": false
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "netlib.org/fftpack"
+  },
+  "hashes": {
+    "tree_sha256": "e45ea77a24e418253549e373389e5116a8873cf2a15faf60ec505416c35b68d2",
+    "n_files": 52,
+    "bytes": 101593,
+    "artifacts": [
+      {
+        "filename": "cfftb.f",
+        "sha256": "65a5e14cfd22ff57472cbbf5c0c74c5d780573697ee47b1c3c635ba53a1fc2d2",
+        "commit": null
+      },
+      {
+        "filename": "cfftb1.f",
+        "sha256": "97c598fd66ce8d7434449644fb83641ad6ba423050465ec1520ba2910e7b5316",
+        "commit": null
+      },
+      {
+        "filename": "cfftf.f",
+        "sha256": "a00db04c4bc36991e2d6339fc27a6ad9890cf9ca25b1dde6e3feae0d98877c58",
+        "commit": null
+      },
+      {
+        "filename": "cfftf1.f",
+        "sha256": "9fe86ef56929d6df8d2418bcabe976fee2468d69f0c4dee1e293bd3ebdd21a4e",
+        "commit": null
+      },
+      {
+        "filename": "cffti.f",
+        "sha256": "ac963c6762860359197db96476b0ebfde36e3dac37452fcca82f8274e29da040",
+        "commit": null
+      },
+      {
+        "filename": "cffti1.f",
+        "sha256": "f9da6987e498ebb969add5916f18ab2388d4eec16594ce35d2b4b3a8bfa24836",
+        "commit": null
+      },
+      {
+        "filename": "cosqb.f",
+        "sha256": "0c9b44472456f041bd600612cdcb5437bb82d48a8da3fdd3b71aab324645edaa",
+        "commit": null
+      },
+      {
+        "filename": "cosqb1.f",
+        "sha256": "f510e693bc2f84adfe59a75648d24bd7f81726660e0fd11fbca7839820edc872",
+        "commit": null
+      },
+      {
+        "filename": "cosqf.f",
+        "sha256": "daa54e8b0fa69534caf8a9fa67208e25ec5fc5666fab76ff4774c0081888773c",
+        "commit": null
+      },
+      {
+        "filename": "cosqf1.f",
+        "sha256": "f605735685d4f57f45970569bce41c89b1ddc292251b284e11ba5c7f0ffce595",
+        "commit": null
+      },
+      {
+        "filename": "cosqi.f",
+        "sha256": "c6aa5d0b47fd36c55e0ea589b55c828254946cf76817cba52684f033bd04f6da",
+        "commit": null
+      },
+      {
+        "filename": "cost.f",
+        "sha256": "268c7abba03148c563b185e00f4378527ab3291c6da97c0c26bc6ecd31c49f7f",
+        "commit": null
+      },
+      {
+        "filename": "costi.f",
+        "sha256": "d97420be2c3bb5d6753c668f01fd77a277a89344bf6a77abff2c28113010dc70",
+        "commit": null
+      },
+      {
+        "filename": "ezfft1.f",
+        "sha256": "367b89ff1f5c1f39f4bbb4496752a5556e62e2cf80a9713e0d1f04bbda2aff28",
+        "commit": null
+      },
+      {
+        "filename": "ezfftb.f",
+        "sha256": "f1beff31495bb9c599a9563ac93cd7ef43b04dad43e566e0fa6e7eaa2999130f",
+        "commit": null
+      },
+      {
+        "filename": "ezfftf.f",
+        "sha256": "dc2651aac6e99c3e1dabc377f62c01dc594f6d7680b232fd4948a12347948995",
+        "commit": null
+      },
+      {
+        "filename": "ezffti.f",
+        "sha256": "448ad954aaf23a5ce2d510b99b00565ecfb2dfa9d8bb8ae4756c7790c06a6cdc",
+        "commit": null
+      },
+      {
+        "filename": "passb.f",
+        "sha256": "4414b5df289108a55abab88668876aecd24d362d378a532fc9832f0d4ea0890d",
+        "commit": null
+      },
+      {
+        "filename": "passb2.f",
+        "sha256": "87fc39b846af48733ed8976d3c0024c3e0622052e58e5a26ac5fe7a9c21be891",
+        "commit": null
+      },
+      {
+        "filename": "passb3.f",
+        "sha256": "061388a22248762a2310931ac7c7e8c32df06671f9baf2d88d780aeacd7394d6",
+        "commit": null
+      },
+      {
+        "filename": "passb4.f",
+        "sha256": "76b4c40351cbe966bb26c2e2e0b935de3a62b1b64f9b1ba93f7853c95da8ff6b",
+        "commit": null
+      },
+      {
+        "filename": "passb5.f",
+        "sha256": "dfffa7f71897890b676957b319ade671d43653da0cbfa00c0c9180bcad106b6c",
+        "commit": null
+      },
+      {
+        "filename": "passf.f",
+        "sha256": "24f269d82da64945f2f59360ade1f57149d5b87ea10183d27569828e738d0290",
+        "commit": null
+      },
+      {
+        "filename": "passf2.f",
+        "sha256": "5aa86afd0cdc7a1fa7aa8b5c93d410416ff6d7484d9d6e84f91b53b0b4a23cdf",
+        "commit": null
+      },
+      {
+        "filename": "passf3.f",
+        "sha256": "d6ac45a1445adf487beebf36ccb294dc41deded19c4890c2b8616ca49a269a7c",
+        "commit": null
+      },
+      {
+        "filename": "passf4.f",
+        "sha256": "521af6f4fc641e4cde243ca2042c4f4038d69fbaf13df89eb4a56e3068c92136",
+        "commit": null
+      },
+      {
+        "filename": "passf5.f",
+        "sha256": "6ccd9f2d093d52853ac2dca0d3d16307071ff573f398704d3cc0ac8f0a399eb0",
+        "commit": null
+      },
+      {
+        "filename": "radb2.f",
+        "sha256": "822bc72759aba26756aed9b86b1e9f8a41cfb512d8216465e829384f43c28e24",
+        "commit": null
+      },
+      {
+        "filename": "radb3.f",
+        "sha256": "72ec73d5d44074969bbf3b0abf4ba32e12dde187841bd800d9c43396155afeb7",
+        "commit": null
+      },
+      {
+        "filename": "radb4.f",
+        "sha256": "b9d56dd04e0c2e5299d1a2c90ebc9348fe495eee8c2a99f86a4aa2ab82cd1af8",
+        "commit": null
+      },
+      {
+        "filename": "radb5.f",
+        "sha256": "c03621801bc78543ff3acc6afa00387707f868217fdf72b6bb56ba6870e38d26",
+        "commit": null
+      },
+      {
+        "filename": "radbg.f",
+        "sha256": "1cb4097c35e38ec9596e62130426df1672ce4cbb20178afb6a80babb3672f5c7",
+        "commit": null
+      },
+      {
+        "filename": "radf2.f",
+        "sha256": "255e64faae574b6f28d3626ae0b5807a8ad32e322682f3232a5aea40f9117757",
+        "commit": null
+      },
+      {
+        "filename": "radf3.f",
+        "sha256": "f35230c41aa31daa478edd94a21a4031e1b28316d2160e57a94e0dd79f03aeb7",
+        "commit": null
+      },
+      {
+        "filename": "radf4.f",
+        "sha256": "544c3ee167be054f2b8a796a3e1a2ccc11bfb23228e1e8c112328ad493800dca",
+        "commit": null
+      },
+      {
+        "filename": "radf5.f",
+        "sha256": "129ee6a84064f90b753fb8683fd2d67536babbc37cce7939b9353d5fd1f23b75",
+        "commit": null
+      },
+      {
+        "filename": "radfg.f",
+        "sha256": "00ad0f5b258e95f8ecd76da67125ae4f9c754ffa715c622773d43221b39bb53f",
+        "commit": null
+      },
+      {
+        "filename": "rfftb.f",
+        "sha256": "e07d03281f34c03b4b5bb3d2566c8eec274a17f435d9639839e278974b1d7adc",
+        "commit": null
+      },
+      {
+        "filename": "rfftb1.f",
+        "sha256": "97c8fc338319cc302ad29781277bc825bc3c406c93c84b04bb56cda2e8fee94d",
+        "commit": null
+      },
+      {
+        "filename": "rfftf.f",
+        "sha256": "8eb9e0a52cc58180255dc1ff587294552f35fa245ed8f5f6593abb6c0d32a673",
+        "commit": null
+      },
+      {
+        "filename": "rfftf1.f",
+        "sha256": "7bc7150c4d68bc88a6721850fb4e3554aa28f9e924aa06cf94ce595793b98042",
+        "commit": null
+      },
+      {
+        "filename": "rffti.f",
+        "sha256": "a4e0e67e2e8c567cb7c140bcf59339034bd0bc8ec899d08f62fabae795f2acf6",
+        "commit": null
+      },
+      {
+        "filename": "rffti1.f",
+        "sha256": "7d2c2bdd072d2ecd8de36107fd4ad15ce38f6b432bbffea48f0a343a570f94c9",
+        "commit": null
+      },
+      {
+        "filename": "sinqb.f",
+        "sha256": "97c9a3ae0b0fafd3fdfff001ba304dcb980d76d9da9386fbdcfe2fc76cee5c78",
+        "commit": null
+      },
+      {
+        "filename": "sinqf.f",
+        "sha256": "a5ce3b009634baac864418f76a9700761f88a39b0d53c629e55121e13b81bdb9",
+        "commit": null
+      },
+      {
+        "filename": "sinqi.f",
+        "sha256": "7fb0c4873df4713d145f707813b65a84198b3538ee8241d33b751b2e28a94179",
+        "commit": null
+      },
+      {
+        "filename": "sint.f",
+        "sha256": "4a46f81d9d0166581291826d2539c10417bb8a53d80d5625a842535278726149",
+        "commit": null
+      },
+      {
+        "filename": "sint1.f",
+        "sha256": "45945dd92eaacc7d95823bf41ddacceeca3c5d642d55452e2404659c67a851e8",
+        "commit": null
+      },
+      {
+        "filename": "sinti.f",
+        "sha256": "55d09f93b8d88ea52b62f1a4bfefb786cf284a896eb4ff3a62d21fa5fc7a3812",
+        "commit": null
+      },
+      {
+        "filename": "test.f",
+        "sha256": "0e5f4065fc36fcdbf8bab9851b82be49ac5e81453135fbe32fc10acfecd92cea",
+        "commit": null
+      },
+      {
+        "filename": "doc",
+        "sha256": "50ba0b7a3ba675ffeace6381bdaa5921e43b066c8d79e1fa39ebc36a5e478f36",
+        "commit": null
+      },
+      {
+        "filename": "changes",
+        "sha256": "82b7799ce8da135664db20dbd0ab35010c160afd376729c83839fbd0713ae861",
+        "commit": null
+      },
+      {
+        "filename": "test.f",
+        "sha256": "0e5f4065fc36fcdbf8bab9851b82be49ac5e81453135fbe32fc10acfecd92cea",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\fftpack-netlib",
+    "hash_list": "techne/fossils/specimens/fftpack-netlib/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "public-domain (netlib)",
+    "status": "unrestricted",
+    "evidence": "netlib distribution"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Fortran 77"
+  ],
+  "build_system": "gfortran per-routine; test driver where present",
+  "compiler_or_interpreter": "gfortran (WinLibs 15.2, native)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "UPSTREAM_DRIVERS_RUN_NO_ORACLE",
+  "entry_points": [
+    "the package's driver / test program where one is shipped; else the named routines"
+  ],
+  "example": {
+    "command": "see recipe.json",
+    "input": "the shipped test.f driver or a Techne driver",
+    "output": "the routine's results"
+  },
+  "environment": {
+    "runner": "native"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "netlib.org/fftpack"
+  ],
+  "human_capability_summary": {
+    "built_to": "compute forward/inverse real and complex FFTs and related sine/cosine transforms in Fortran 77, mixed-radix",
+    "pressure": "the O(N^2) DFT cost, plus the many transform variants (real, complex, quarter-wave) each needing its own optimised radix passes",
+    "success_means": "transforms invert to the input within round-off; the classic NCAR reference results"
+  },
+  "known_human_problem_solved": "Paul Swarztrauber's Fortran FFT package (NCAR, 1985)",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/fftpack-netlib/receipts/run-fftpack-netlib-20260912T152132Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/fftpack-netlib/receipts/run-fftpack-netlib-20260912T152209Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/fftpack-netlib/receipts/run-fftpack-netlib-20260912T153925Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "UPSTREAM_DRIVERS_RUN_NO_ORACLE"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\fftpack-netlib ; tracked techne/fossils/specimens/fftpack-netlib/",
+    "where_it_came_from": "{'archive': 'netlib.org/fftpack'} ; HISTORICAL_ARCHIVE_MIRROR ; public-domain (netlib)",
+    "how_to_run_it": "recipe.json (runner native); python -m techne.fossils.harvest run fftpack-netlib",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / UPSTREAM_DRIVERS_RUN_NO_ORACLE ; receipt techne/fossils/specimens/fftpack-netlib/receipts/run-fftpack-netlib-20260912T153925Z.json",
+    "what_humans_used_it_for": "compute forward/inverse real and complex FFTs and related sine/cosine transforms in Fortran 77, mixed-radix"
+  },
+  "seat": "Techne"
+}

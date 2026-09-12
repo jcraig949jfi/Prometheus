@@ -1,0 +1,48 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.sample.uniform_permutation_by_swaps",
+  "name": "uniform permutation by swaps",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "walk the sequence from the end, swapping each position with a uniformly random position at or before it, so every permutation is equally likely in one pass",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fisher–Yates shuffle (also known as the Knuth shuffle)' in section Combinatorial algorithms / Sequence algorithms / Sequence permutations: randomly shuffle a finite set",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bogosort': the list is randomly shuffled until it happens to be sorted",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SAMPLE",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEAR",
+  "requires": [
+    "a uniform random integer source"
+  ],
+  "fails_when": [
+    "a biased or naive swap range makes some permutations more likely"
+  ],
+  "instances": [
+    "Fisher–Yates shuffle (also known as the Knuth shuffle)",
+    "Bogosort"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "RANDOMIZED",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

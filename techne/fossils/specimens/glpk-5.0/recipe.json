@@ -1,0 +1,45 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/glpk-5.0",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "configure",
+      "cmd": "./configure --disable-shared >/dev/null 2>&1; echo configured",
+      "timeout": 900
+    },
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | tail -2; test -x examples/glpsol || test -x src/glpsol || find . -name glpsol -type f",
+      "timeout": 1200
+    }
+  ],
+  "runs": [
+    {
+      "name": "solve a 2-var LP to its known optimum (10 at x=3,y=1)",
+      "cmd": "G=$(find $BODY/upstream/tree -name glpsol -type f | head -1); $G --math $HARNESS/lp.mod 2>&1 | tail -15",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "OBJECTIVE 12",
+          "x 4",
+          "y 0"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "deviations": [
+    "run 1 (receipt ...143613Z) expected OBJECTIVE 10 at (3,1); GLPK returned 12 at (4,0), which is the true optimum (vertex (4,0): 3*4+2*0=12 beats (3,1): 11). The expected value was my arithmetic error; the gate was corrected to the solver-verified and independently vertex-enumerated optimum. The receipt of the mismatch stays."
+  ],
+  "notes": "glpsol reads GNU MathProg; the LP has a vertex-enumerated optimum (12 at (4,0); run 1 asserted a wrong hand value of 10 at (3,1) and GLPK correctly returned 12 -- the solver caught my arithmetic, recorded as a deviation) so the check is correctness, not just exit 0. --disable-shared keeps the build self-contained."
+}

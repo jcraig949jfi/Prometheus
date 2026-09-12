@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.verify.compare_both_sides_applied_to_a_random_vector",
+  "name": "compare both sides applied to a random vector",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers",
+    "error-correcting systems"
+  ],
+  "mechanism": "to check a claimed product, draw a random vector, multiply the claimed result by it and multiply the two factors by it in sequence, and compare; a wrong claim survives with probability at most one half per trial, and the check costs only matrix-vector products",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Freivalds' algorithm' in section Computational mathematics / Numerical algorithms / Linear algebra: a randomized algorithm used to verify matrix multiplication",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "VERIFY",
+  "in_geometry": "MATRIX",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a source of random vectors"
+  ],
+  "fails_when": [
+    "one-sided: it never rejects a correct claim, but can accept a wrong one"
+  ],
+  "instances": [
+    "Freivalds' algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "bzip2-1.0.8",
+  "receipt_id": "run-bzip2-1.0.8-20260912T152922Z",
+  "written_utc": "20260912T152922Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/bzip2-1.0.8",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "70fe5728f37aa57560430df75cf8646bc87f0fd4f2a85b5b8d04f471fce955b4",
+  "recipe_sha256": "ff15ececaaca2a17f8f8cf4e09f057696063d0468a035b8b394a917f92abb3c2",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.69,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s bzip2 2>&1 | grep -viE 'warning' | tail -3; test -x ./bzip2",
+      "exit": 0,
+      "seconds": 0.68,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "BWT round trip on the shipped sample1.ref (cmp oracle)",
+      "cmd": "./bzip2 -1 -c sample1.ref > $BODY/s1.bz2 && ./bzip2 -d -c $BODY/s1.bz2 | cmp - sample1.ref && echo BZIP2_ROUNDTRIP_OK $(stat -c %s sample1.ref) '->' $(stat -c %s $BODY/s1.bz2)",
+      "exit": 0,
+      "seconds": 0.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "BZIP2_ROUNDTRIP_OK 98696 -> 32348\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "upstream make test (6 sample files)",
+      "cmd": "make test 2>&1 | tail -6; echo MAKETESTDONE",
+      "exit": 0,
+      "seconds": 0.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "It is available in Postscript form (manual.ps), PDF form (manual.pdf),\nand HTML form (manual.html).\n\nYou can also do \"bzip2 --help\" to see some helpful information. \n\"bzip2 -L\" displays the software license.\n\nMAKETESTDONE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true
+}

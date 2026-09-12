@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.size_reduce_and_swap_lattice_basis_vectors",
+  "name": "size-reduce and swap lattice basis vectors until nearly orthogonal",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "walk along a lattice basis, subtracting integer multiples of earlier vectors from each vector to keep its projections small, and swap two adjacent vectors whenever the later one is much shorter than the earlier in the orthogonalised sense, repeating until no swap applies",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lenstra–Lenstra–Lovász algorithm (also known as LLL algorithm)' in section Computational mathematics / Number theoretic algorithms: find a short, nearly orthogonal lattice basis in polynomial time",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "MATRIX",
+  "out_geometry": "MATRIX",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "exact or high-precision arithmetic",
+    "a swap threshold constant (policy)"
+  ],
+  "fails_when": [
+    "approximation factor exponential in dimension"
+  ],
+  "instances": [
+    "Lenstra–Lenstra–Lovász algorithm (also known as LLL algorithm)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

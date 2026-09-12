@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.square_and_multiply_by_the_binary_digits_of_the_exponent",
+  "name": "square, and multiply in by the binary digits of the exponent",
+  "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+  ],
+  "mechanism": "scan the exponent bit by bit; square the accumulator at every bit and multiply in the base only where the bit is set, so the number of multiplications is proportional to the bit length rather than the exponent",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Exponentiating by squaring' in section Computational mathematics / Numerical algorithms / Elementary and special functions: an algorithm used for the fast computation of large integer powers of a number",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "SWEEP",
+  "cost": "LOG",
+  "requires": [
+    "an associative operation"
+  ],
+  "fails_when": [
+    "not minimal in multiplications; leaks the exponent through timing if data-dependent"
+  ],
+  "instances": [
+    "Exponentiating by squaring"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

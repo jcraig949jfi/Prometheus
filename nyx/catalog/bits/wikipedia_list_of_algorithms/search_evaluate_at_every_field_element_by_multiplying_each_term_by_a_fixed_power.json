@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.evaluate_at_every_field_element_by_multiplying_each_term_by_a_fixed_power",
+  "name": "evaluate at every field element by multiplying each term by a fixed power",
+  "lineage": [
+    "error-correcting systems",
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+  ],
+  "mechanism": "to find where a polynomial vanishes over a finite field, keep one register per coefficient; moving from one element to the next multiplies each register by a fixed power of the generator, so every evaluation costs one multiply per term and a sum, and a zero sum marks a root",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Chien search' in section Computational mathematics / Abstract algebra: a recursive algorithm for determining roots of polynomials defined over a finite field",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a finite field with a known generator"
+  ],
+  "fails_when": [
+    "linear in the field size; useless over large fields"
+  ],
+  "instances": [
+    "Chien search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

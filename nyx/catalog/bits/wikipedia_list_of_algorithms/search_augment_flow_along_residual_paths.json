@@ -1,0 +1,54 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.augment_flow_along_residual_paths",
+  "name": "augment flow along residual paths",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "while a path from source to sink exists with spare capacity on every edge (counting reverse edges as undo capacity), push the bottleneck amount along it; the sum of pushes is a maximum flow",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Ford–Fulkerson algorithm' in section Combinatorial algorithms / Graph algorithms / Network theory: computes the maximum flow in a graph",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Edmonds–Karp algorithm': implementation of Ford–Fulkerson",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Dinic's algorithm': is a strongly polynomial algorithm for computing the maximum flow in a flow network.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "GRAPH",
+  "out_geometry": "MAP",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "INCREMENTAL",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "capacities",
+    "a rule for which path (shortest by edges gives the polynomial bound; level graphs with blocking flows give better)"
+  ],
+  "fails_when": [
+    "arbitrary path choice may not terminate on irrational capacities"
+  ],
+  "instances": [
+    "Ford–Fulkerson algorithm",
+    "Edmonds–Karp algorithm",
+    "Dinic's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "FIFO",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.accumulate_entropy_into_pools_and_reseed_a_cipher_counter_generator_when_a_pool_fills",
+  "name": "accumulate entropy into pools and reseed a cipher-counter generator when a pool fills",
+  "lineage": [
+    "operating systems",
+    "network protocols"
+  ],
+  "mechanism": "feed unpredictable events into hash-based pools; output comes from a block cipher encrypting a counter under the current key; when a pool has collected enough estimated entropy, hash it into a new key so an attacker who learned the old state is locked out again",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Yarrow algorithm' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "STREAM",
+  "out_geometry": "STREAM",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "REACTIVE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "ADAPTIVE_SWITCH",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "entropy estimates for the inputs (policy)",
+    "a block cipher and a hash"
+  ],
+  "fails_when": [
+    "entropy estimation is the weak point: an over-estimate reseeds too early with guessable material"
+  ],
+  "instances": [
+    "Yarrow algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

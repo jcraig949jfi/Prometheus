@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.remove_most_central_edge_repeatedly",
+  "name": "remove the most central edge repeatedly",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "compute for every edge how many shortest paths pass through it, remove the edge with the largest count, recompute, and repeat; the components that appear are the communities",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Girvan–Newman algorithm' in section Combinatorial algorithms / Graph algorithms / Network theory: detect communities in complex systems",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PARTITION",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "shortest-path counts (all pairs)"
+  ],
+  "fails_when": [
+    "cubic or worse per removal",
+    "no principled stopping point (modularity is a separate policy)"
+  ],
+  "instances": [
+    "Girvan–Newman algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "REMOVAL",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

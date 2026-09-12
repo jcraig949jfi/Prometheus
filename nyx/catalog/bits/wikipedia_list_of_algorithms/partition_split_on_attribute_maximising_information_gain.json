@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.split_on_attribute_maximising_information_gain",
+  "name": "split on the attribute that most reduces label entropy",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "at each node choose the attribute whose split most reduces the entropy of the labels, partition the examples by its values, and recurse until nodes are pure or no attributes remain",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'ID3 algorithm (Iterative Dichotomiser 3)' in section Computer science / Machine learning and statistical classification: use heuristic to generate small decision trees",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'C4.5 algorithm': an extension to ID3",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PARTITION",
+  "in_geometry": "SET",
+  "out_geometry": "TREE",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "iteration": "LIFO",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a purity measure (policy)"
+  ],
+  "fails_when": [
+    "greedy splits miss interactions; overfits without pruning"
+  ],
+  "instances": [
+    "ID3 algorithm (Iterative Dichotomiser 3)",
+    "C4.5 algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

@@ -1,0 +1,33 @@
+{
+  "runner": "native",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile EISPACK + a Techne driver on rs (symmetric eigenvalues)",
+      "cmd": "gfortran -std=legacy -w -O1 -o $BODY/eispack_test.exe $HARNESS/drv.f *.f 2>&1 | grep -i 'error:'; test -x $BODY/eispack_test.exe"
+    }
+  ],
+  "runs": [
+    {
+      "name": "eigenvalues of a matrix with known spectrum",
+      "cmd": "$BODY/eispack_test.exe 2>&1 | tail -10",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "EISPACK_OK"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_NATIVE",
+  "notes": "Techne driver calls rs (real symmetric eigensystem) on diag(2,3,4)+off-diagonal 1s whose eigenvalues are known; checks the computed eigenvalues match to 1e-8 -- an oracle for the eigensolver."
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.expand_frontier_level_by_level",
+  "name": "expand the frontier level by level",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "visit all nodes at distance one, then two, and so on, using a queue, so the first time a node is reached is by a fewest-edges path",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Breadth-first search' in section Combinatorial algorithms / Graph algorithms / Graph search: traverses a graph level by level",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lexicographic breadth-first search (also known as Lex-BFS)': a linear time algorithm for ordering the vertices of a graph",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "GRAPH",
+  "out_geometry": "MAP",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "INCREMENTAL",
+  "cost": "LINEAR",
+  "requires": [
+    "a queue",
+    "a visited set"
+  ],
+  "fails_when": [
+    "memory grows with the frontier width"
+  ],
+  "instances": [
+    "Breadth-first search",
+    "Lexicographic breadth-first search (also known as Lex-BFS)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "FIFO",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots",
+  "name": "join low-degree pieces with matching derivatives at the knots",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "use a separate low-degree polynomial on each interval between samples, and choose their coefficients so that values and the first few derivatives agree where pieces meet; smoothness comes from the joins, not from a high degree",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Spline interpolation' in section Computational mathematics / Numerical algorithms / Interpolation and extrapolation: Reduces error with Runge's phenomenon.",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cubic interpolation': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bicubic interpolation': a generalization of cubic interpolation to two dimensions",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Tricubic interpolation': a generalization of cubic interpolation to three dimensions",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "FUNCTION",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "ordered knots",
+    "end conditions (policy)"
+  ],
+  "fails_when": [
+    "overshoot near steep data; a change in one sample moves the whole curve (for natural splines)"
+  ],
+  "instances": [
+    "Spline interpolation",
+    "Cubic interpolation",
+    "Bicubic interpolation",
+    "Tricubic interpolation"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.predict.fit_the_unique_polynomial_through_all_the_points"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}
