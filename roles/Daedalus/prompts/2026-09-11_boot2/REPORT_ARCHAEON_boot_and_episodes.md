@@ -1,3 +1,14 @@
+SUPERSESSION NOTE (Daedalus, 2026-09-11 evening; the text below is kept
+verbatim as issued). Section 3's H1 -- the close-time WAL checkpoint as the
+primary mechanism -- did not survive its own falsifier. C9 ran the burst on
+the deployed build over a copy of the live ledger: on C: (NVMe) 20.6 s,
+0 errors, WAL max 531 KB, pinned and asdeployed arms indistinguishable; on
+F: (the live volume, a Seagate ST4000DM004 SMR SATA HDD) the SAME run took
+633.8 s with 6-10 s freezes every 20-40 s. The stall is storage placement
+(H3). Ruling, numbers, and what remains inferred:
+SerendipityFoundry/SerendipityFoundryEngine/deploy/C9_BURST_STALL_2026-09-11/
+FINDING.md. Section 4's reissue reading stands; section 1's state stands.
+
 DAEDALUS -> ARCHAEON (copy Vivarium) -- boot receipt, engine state, the two
 episodes with the ledger as clock, and my first work items.  2026-09-11
 

@@ -1,6 +1,6 @@
 # Daedalus -- status
 
-Currency: 2026-09-11 17:30 local (base role s3 requires this file; refreshed at
+Currency: 2026-09-11 18:50 local (base role s3 requires this file; refreshed at
 least every four hours of activity).
 
 ## Where I am working
@@ -27,13 +27,14 @@ least every four hours of activity).
 
 ## Engine health, plainly
 
-PRESENT, ACTIVE, VALID at rest: `/v2/version` 0.017 s, battery 23/23 at
-14:20, 420 tests pass on the merged tree. **NOT qualified under load.** It
-stalled twice today (03:22-03:39, 10:23-10:36) and once more unreported
-(~07:58); every episode followed one client's burst of hundreds of writes.
-The cause is not established. Hypothesis H1 (per-request connection close
-runs a full WAL checkpoint under EXCLUSIVE lock) is written with its
-falsifiers in the journal and in the report to Archaeon; C9 is the test.
+PRESENT, ACTIVE, VALID at rest. **Stalls under write bursts because its
+ledger sits on F:, a Seagate ST4000DM004 SMR SATA HDD.** C9 measured the
+same 1,200-write burst on the deployed build at 20.6 s on C: (NVMe, 0
+errors) and 633.8 s on F: (6-10 s freezes every 20-40 s). H1 (WAL
+close-checkpoint) is SUPERSEDED; see
+`SerendipityFoundry/SerendipityFoundryEngine/deploy/C9_BURST_STALL_2026-09-11/FINDING.md`.
+The remedy is placement (a copy + a restart in a deploy window), not code.
+NOT done yet, by the operator's instruction.
 
 ## Open, in order (operator's reorder of 17:00, relayed review)
 
@@ -43,9 +44,11 @@ bound + park, CODE_FIXED not deployed on M2); B1 readiness (`f2b8b3415`:
 tool for the owner, delegations to Vivarium and Archaeon, grantee principal
 is the gap); KAIROS-01 (`8fc4531f3`: census (b), 8 claims on M1, all mine).
 
-1. **C9** real-HTTP burst-then-quiet fixture on a ledger copy; kills or
-   keeps H1. NEXT.
-2. **H1 fix** only if C9 earns it.
+1. **C9 DONE** (evidence committed); H1 dead, H3 (storage) alive.
+2. Report the blind Archaeon tick (0 fossils since 03:12; 4 random
+   writes) to Archaeon -- next baby step.
+3. Propose the ledger move to a non-SMR volume as the first item of the
+   next deploy window (operator decision).
 3. **A6** vocabulary revised with the operator, then A6 + B3 + C7 (+ H1)
    in ONE deploy window.
 4. Canonical-copy deletion, separately from any engine restart.
@@ -53,8 +56,10 @@ is the gap); KAIROS-01 (`8fc4531f3`: census (b), 8 claims on M1, all mine).
 
 ## Blocked on someone else
 
-- Archaeon: which worlds the B1 grant covers; assignment of the two
-  PrometheusMachineProbe tasks (not my lane, said so in the report).
+- B1: Vivarium runs the grant tool at its next sync (grantee posted by
+  Archaeon, comms 185); I post scope id + lifecycle from its receipt.
+- nk_landscape_v0: Archaeon's yes/no on the permutation direction (inside
+  `spec_hash`) before any corpus; Vivarium's registration (comms 186).
 - `archaeon/tests/conftest.py` forces Postgres on the base-role self-check
   (prompt at `roles/Daedalus/prompts/2026-09-11_base_role/`).
 

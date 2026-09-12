@@ -1,0 +1,92 @@
+{
+ "arm": "asdeployed",
+ "burst": 600,
+ "copy_bytes": 286326784,
+ "copy_from": "F:/Prometheus-data/sfe/engine.db",
+ "engine": {
+  "api": "v2",
+  "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+  "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 8,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8"
+ },
+ "quiet_rows": 8,
+ "schema": "c9_burst_stall.v1",
+ "serial_rows": 12,
+ "slow_calls": [],
+ "summary": {
+  "burst/consumer": {
+   "errors": {},
+   "max_s": 0.115,
+   "n": 132,
+   "over_10s": 0,
+   "p50_s": 0.023,
+   "p95_s": 0.072
+  },
+  "burst/producer": {
+   "errors": {},
+   "max_s": 0.115,
+   "n": 1200,
+   "over_10s": 0,
+   "p50_s": 0.015,
+   "p95_s": 0.033
+  },
+  "burst/reader": {
+   "errors": {},
+   "max_s": 0.11,
+   "n": 76,
+   "over_10s": 0,
+   "p50_s": 0.018,
+   "p95_s": 0.032
+  },
+  "quiet/consumer": {
+   "errors": {},
+   "max_s": 0.09,
+   "n": 88,
+   "over_10s": 0,
+   "p50_s": 0.024,
+   "p95_s": 0.087
+  },
+  "quiet/reader": {
+   "errors": {},
+   "max_s": 0.044,
+   "n": 8,
+   "over_10s": 0,
+   "p50_s": 0.021,
+   "p95_s": 0.033
+  }
+ },
+ "t_burst_s": 20.6,
+ "t_total_s": 23.2,
+ "vacuum_into_s": 0.6,
+ "wal_bytes_at_end": 0,
+ "wal_max_bytes": 531512,
+ "wal_samples": 46,
+ "wal_trace": [
+  [
+   0.0,
+   0
+  ],
+  [
+   5.1,
+   0
+  ],
+  [
+   10.2,
+   0
+  ],
+  [
+   15.2,
+   0
+  ],
+  [
+   20.3,
+   0
+  ]
+ ]
+}
