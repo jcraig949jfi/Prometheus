@@ -38,6 +38,7 @@ NEAR = {  # partial credit between vocabulary values on the same axis
     ("verb", "COMPARE", "DETECT"): 0.25, ("verb", "COMPARE", "PREDICT"): 0.25,
     # strategy (v0.2): near values are ways of organising work that a naive observer would confuse
     ("strategy", "DIVIDE_CONQUER", "DYNAMIC_PROGRAMMING"): 0.5, ("strategy", "INCREMENTAL", "GREEDY"): 0.5,
+    ("strategy", "DIVIDE_CONQUER", "PARTITION_BY_VALUE"): 0.5,
     ("strategy", "INCREMENTAL", "STREAMING"): 0.5, ("strategy", "EXCHANGE", "FIXPOINT_ITERATION"): 0.5,
     ("strategy", "BACKTRACKING", "BRANCH_AND_BOUND"): 0.5, ("strategy", "DISTRIBUTION", "PRECOMPUTED_TABLE"): 0.25,
     ("strategy", "DIRECT", "PRECOMPUTED_TABLE"): 0.25, ("strategy", "RANDOMIZED", "DIRECT"): 0.25,
