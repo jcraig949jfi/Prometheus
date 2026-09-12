@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.adjust_weights_by_misclassified_example",
+  "name": "adjust weights toward each misclassified example",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "predict a class from the sign of a weighted sum; on each mistake move the weights toward the example (additively, or multiplicatively for the winnow variant), and stop when a pass makes no mistake",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Perceptron' in section Computer science / Machine learning and statistical classification: the simplest kind of feedforward neural network: a linear classifier.",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Winnow algorithm': related to the perceptron, but uses a multiplicative weight-update scheme",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "FUNCTION",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "TERMINATES",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "linearly separable data for termination"
+  ],
+  "fails_when": [
+    "never terminates on inseparable data"
+  ],
+  "instances": [
+    "Perceptron",
+    "Winnow algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

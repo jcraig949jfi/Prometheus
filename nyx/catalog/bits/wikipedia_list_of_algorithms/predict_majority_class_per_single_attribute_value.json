@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.majority_class_per_single_attribute_value",
+  "name": "predict the majority class for each value of one attribute",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "for each attribute, map each of its values to the most common class among training rows with that value; keep the attribute with the fewest errors and predict with that one table",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'One-attribute rule' in section Computer science / Machine learning and statistical classification: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Zero-attribute rule': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "RECORD",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "discrete attributes"
+  ],
+  "fails_when": [
+    "ignores every interaction; a baseline"
+  ],
+  "instances": [
+    "One-attribute rule",
+    "Zero-attribute rule"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

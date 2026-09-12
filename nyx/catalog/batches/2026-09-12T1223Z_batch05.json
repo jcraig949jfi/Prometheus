@@ -1,0 +1,770 @@
+[
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Association rule learning",
+  "decision": "NOT_A_BIT",
+  "reason": "a field, family or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Boosting (meta-algorithm)",
+  "decision": "NOT_A_BIT",
+  "reason": "a field, family or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Clustering",
+  "decision": "NOT_A_BIT",
+  "reason": "a field, family or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Computer Vision",
+  "decision": "NOT_A_BIT",
+  "reason": "a field, family or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Decision Trees",
+  "decision": "NOT_A_BIT",
+  "reason": "a field, family or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Neural Network",
+  "decision": "NOT_A_BIT",
+  "reason": "a field, family or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Reinforcement learning:",
+  "decision": "NOT_A_BIT",
+  "reason": "a field, family or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Supervised learning",
+  "decision": "NOT_A_BIT",
+  "reason": "a field, family or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "ALOPEX",
+  "decision": "DEFER",
+  "reason": "a named model or variant whose distinguishing mechanism is not characterised from the list line"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Almeida–Pineda recurrent backpropagation",
+  "decision": "DEFER",
+  "reason": "a named model or variant whose distinguishing mechanism is not characterised from the list line"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Pulse-coupled neural networks (PCNN)",
+  "decision": "DEFER",
+  "reason": "a named model or variant whose distinguishing mechanism is not characterised from the list line"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Grabcut based on Graph cuts",
+  "decision": "DEFER",
+  "reason": "a named model or variant whose distinguishing mechanism is not characterised from the list line"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Relevance-Vector Machine (RVM)",
+  "decision": "DEFER",
+  "reason": "a named model or variant whose distinguishing mechanism is not characterised from the list line"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Structured SVM",
+  "decision": "DEFER",
+  "reason": "a named model or variant whose distinguishing mechanism is not characterised from the list line"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "BrownBoost",
+  "decision": "DEFER",
+  "reason": "a named model or variant whose distinguishing mechanism is not characterised from the list line"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "LPBoost",
+  "decision": "DEFER",
+  "reason": "a named model or variant whose distinguishing mechanism is not characterised from the list line"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Apriori algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.grow_itemsets_pruning_by_infrequent_subsets",
+   "name": "grow itemsets, pruning any with an infrequent subset",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "count single items, keep the frequent ones, form candidate pairs only from frequent items, count them, and repeat one size larger each round, using the fact that a set cannot be frequent if any subset is not",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "BRANCH_AND_BOUND",
+   "iteration": "FIFO",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a support threshold (policy)",
+    "transactions as sets"
+   ],
+   "fails_when": [
+    "many database passes; candidate explosion at low thresholds"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Eclat algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.grow_itemsets_pruning_by_infrequent_subsets"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "FP-growth algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.grow_itemsets_pruning_by_infrequent_subsets"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "One-attribute rule",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.majority_class_per_single_attribute_value",
+   "name": "predict the majority class for each value of one attribute",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "for each attribute, map each of its values to the most common class among training rows with that value; keep the attribute with the fewest errors and predict with that one table",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "RECORD",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "discrete attributes"
+   ],
+   "fails_when": [
+    "ignores every interaction; a baseline"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Zero-attribute rule",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.majority_class_per_single_attribute_value"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "AdaBoost",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.reweight_misclassified_and_add_weak_learner",
+   "name": "reweight misclassified examples and add a weak learner",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "train a simple learner on weighted examples, increase the weights of the examples it got wrong and decrease the others, train the next learner on the reweighted set, and combine all learners by weighted vote according to their accuracy",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SET",
+   "out_geometry": "FUNCTION",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "GREEDY",
+   "iteration": "FIFO",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a weak learner better than chance",
+    "a round count (policy)"
+   ],
+   "fails_when": [
+    "label noise gets ever more weight"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "LogitBoost",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.reweight_misclassified_and_add_weak_learner"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bootstrap aggregating (bagging)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.average_models_trained_on_resamples",
+   "name": "average models trained on bootstrap resamples",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "draw many resamples of the training set with replacement, train one model on each, and combine their predictions by vote or average, reducing the variance of an unstable learner",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SET",
+   "out_geometry": "FUNCTION",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "PARALLEL_ROUNDS",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "an unstable base learner"
+   ],
+   "fails_when": [
+    "no gain on stable learners; correlated models"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Random forest",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.average_models_trained_on_resamples"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "ID3 algorithm (Iterative Dichotomiser 3)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.split_on_attribute_maximising_information_gain",
+   "name": "split on the attribute that most reduces label entropy",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "at each node choose the attribute whose split most reduces the entropy of the labels, partition the examples by its values, and recurse until nodes are pure or no attributes remain",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "SET",
+   "out_geometry": "TREE",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "GREEDY",
+   "iteration": "LIFO",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a purity measure (policy)"
+   ],
+   "fails_when": [
+    "greedy splits miss interactions; overfits without pruning"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "C4.5 algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.partition.split_on_attribute_maximising_information_gain"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "k-nearest neighbors (k-NN)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.vote_of_nearest_stored_examples",
+   "name": "vote of the nearest stored examples",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "store all training examples; to predict, find the k stored examples closest to the query under a distance and return their majority label or average value",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "RECORD",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "DIRECT",
+   "iteration": "PRIORITY",
+   "cost": "LINEAR",
+   "requires": [
+    "a distance",
+    "k (policy)"
+   ],
+   "fails_when": [
+    "distance meaningless in high dimension; cost per query linear without an index"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Linde–Buzo–Gray algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.assign_to_nearest_centre_then_recentre",
+   "name": "assign to the nearest centre, then move centres to their members' mean",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "pick initial centres, assign every point to its nearest centre, replace each centre by the mean of its assigned points, and repeat until assignments stop changing",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "SET",
+   "out_geometry": "MAP",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "LOCAL_OPTIMUM",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "PARALLEL_ROUNDS",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a distance and a mean",
+    "the number of centres (policy)"
+   ],
+   "fails_when": [
+    "initialisation decides the local optimum; empty clusters"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Locality-sensitive hashing (LSH)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.hash_so_near_points_collide",
+   "name": "hash so that near points collide with high probability",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "choose random hash functions under which two points collide with probability increasing in their similarity, bucket points by several such hashes, and answer a near-neighbour query by checking only the query's buckets",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "SIMILARITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "a similarity with a matching hash family (a human prior)"
+   ],
+   "fails_when": [
+    "false negatives; many tables for high recall"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Naive Bayes classifier",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.multiply_independent_likelihoods_with_prior",
+   "name": "multiply per-feature likelihoods with a class prior",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "estimate for each class the frequency of each feature value, and classify a new item to the class maximising the prior times the product of its features' likelihoods, as if features were independent given the class",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "RECORD",
+   "out_geometry": "DISTRIBUTION",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "counts per class and feature",
+    "smoothing for unseen values (policy)"
+   ],
+   "fails_when": [
+    "correlated features double-count"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Backpropagation",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.propagate_error_gradient_backward_through_layers",
+   "name": "propagate the error gradient backward through layers",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "compute the output error, then pass it backward layer by layer multiplying by each layer's local derivative to obtain the gradient of the error with respect to every weight in one backward sweep, and adjust the weights against it",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "FUNCTION",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "GLOBAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "LOCAL_OPTIMUM",
+   "strategy": "DYNAMIC_PROGRAMMING",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "differentiable layers",
+    "a step-size rule"
+   ],
+   "fails_when": [
+    "vanishing or exploding gradients through many layers"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.search.step_against_gradient"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Perceptron",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.adjust_weights_by_misclassified_example",
+   "name": "adjust weights toward each misclassified example",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "predict a class from the sign of a weighted sum; on each mistake move the weights toward the example (additively, or multiplicatively for the winnow variant), and stop when a pass makes no mistake",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "FUNCTION",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "TERMINATES",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "linearly separable data for termination"
+   ],
+   "fails_when": [
+    "never terminates on inseparable data"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Winnow algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.adjust_weights_by_misclassified_example"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hopfield net",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.remember.settle_to_stored_pattern_by_energy_descent",
+   "name": "settle to a stored pattern by energy descent",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "store patterns as symmetric connection weights, then from a corrupted input repeatedly update units toward the sign of their weighted input so an energy decreases until the state stops changing at a stored pattern",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REMEMBER",
+   "in_geometry": "BITSTRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "LOCAL_OPTIMUM",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "RANDOM",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "symmetric weights"
+   ],
+   "fails_when": [
+    "spurious attractors; capacity a small fraction of the unit count"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Radial basis function network",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.weighted_sum_of_distance_kernels_at_centres",
+   "name": "weighted sum of distance kernels centred on prototypes",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "place centres in the input space, compute for a query a kernel of its distance to each centre, and output a learned weighted sum of those kernel values",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "centres and kernel widths (policy or learned)"
+   ],
+   "fails_when": [
+    "curse of dimensionality in centre placement"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Self-organizing map",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.move_winner_and_neighbours_toward_input",
+   "name": "move the winning unit and its grid neighbours toward the input",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "arrange units on a low-dimensional grid; for each input find the unit whose weights are nearest, move it and its grid neighbours toward the input with strength decreasing in grid distance and over time, so grid position comes to reflect input similarity",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "MAP",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a grid topology",
+    "a neighbourhood radius schedule (policy)"
+   ],
+   "fails_when": [
+    "topological defects; schedule decides everything"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Q-learning",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.update_value_toward_reward_plus_discounted_best_next",
+   "name": "update a value toward reward plus discounted best next value",
+   "lineage": [
+    "reinforcement learning"
+   ],
+   "mechanism": "keep a table of values per state-action; after each step move the value of the taken pair a fraction toward the observed reward plus the discounted best value available at the next state (or the value of the next action actually taken, for the on-policy variant)",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "STREAM",
+   "out_geometry": "MAP",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "REACTIVE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "CONSTANT",
+   "requires": [
+    "a discount and a learning rate (policy)",
+    "enough visits to every pair"
+   ],
+   "fails_when": [
+    "tables do not scale; function approximation loses the guarantee"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "State–Action–Reward–State–Action (SARSA)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.update_value_toward_reward_plus_discounted_best_next"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Temporal difference learning",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.update_value_toward_reward_plus_discounted_best_next"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Support Vector Machine (SVM)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.separating_hyperplane_of_maximum_margin",
+   "name": "separating hyperplane of maximum margin",
+   "lineage": [
+    "optimization",
+    "memory and retrieval"
+   ],
+   "mechanism": "find the hyperplane that separates two classes with the largest distance to the nearest examples, by solving a quadratic program whose solution depends only on those nearest examples, optionally in a feature space reached through a kernel",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SET",
+   "out_geometry": "FUNCTION",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a kernel or feature map (policy)",
+    "a slack penalty (policy)"
+   ],
+   "fails_when": [
+    "quadratic in examples; kernel choice is the model"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+  }
+ }
+]
