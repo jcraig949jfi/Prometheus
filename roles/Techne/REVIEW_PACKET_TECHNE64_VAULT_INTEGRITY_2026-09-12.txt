@@ -152,7 +152,8 @@ From any worktree at or after 73bdf5864, on the host holding the bodies:
     python - <<X
     import json
     c = json.load(open('techne/fossils/VAULT_INTEGRITY_2026-09-12.json'))
-    print(c['differs'], sum(len(r['added']) for r in c['rows'] if not r['matches']))
+    bad = [r for r in c['rows'] if not r['matches']]
+    print(c['differs'], sum(len(r['added']) for r in bad))
     X
         expect: 23 1518
 
