@@ -82,6 +82,22 @@ _DECISION_MAP = {
 }
 
 
+def selection_labels(ranked, region_ctx):
+    """(source_reason, decision) from what CAUSED the selection.
+
+    Operator ruling 2026-09-12 (fossil metabolism S1, phase 2): a fired
+    detector that could not direct the draw does not make the row a
+    weak-signal row -- the experiment was drawn uniformly. Before this the
+    decision was WROTE_WEAK_SIGNAL whenever `ranked` was non-empty, which
+    labelled every row of 2026-09-12 as fossil-informed while the draw was
+    identical with and without the corpus (EVIDENCE_LINK_DRYRUN). The
+    fired signal stays in source_evidence.weak_signal and selection_basis
+    says weak_signal_recorded_only; only those describe what was seen."""
+    if region_ctx is not None:
+        return "weak_signal", WROTE_SIGNAL
+    return "exploration", WROTE_RANDOM
+
+
 def _mapped(d: str) -> str:
     return _DECISION_MAP.get(d, "REFUSED_RACE_LOST")
 
@@ -215,8 +231,13 @@ def tick(conn, config: Optional[cfg.ArchaeonConfig] = None, *,
                               {"attempts": 16})
             return out
 
-        source_reason = "weak_signal" if ranked else "exploration"
-        out["decision"] = WROTE_SIGNAL if ranked else WROTE_RANDOM
+        # PHASE 2 (operator 2026-09-12): the label describes what CAUSED the
+        # selection, never what the process could see. A uniform draw stays a
+        # uniform draw when fossils are visible; only a REGION-DIRECTED draw
+        # (parameters taken from the fired region) is a weak-signal write.
+        # Signals that fired but could not direct are still recorded in
+        # source_evidence.weak_signal / selection_basis, unchanged.
+        source_reason, out["decision"] = selection_labels(ranked, region_ctx)
         out["policy"] = drawn["policy"]
         out["spec_hash"] = drawn["spec_hash"]
 
