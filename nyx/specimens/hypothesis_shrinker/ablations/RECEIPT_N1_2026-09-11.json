@@ -1,0 +1,210 @@
+{
+  "date": "2026-09-11T23:00Z",
+  "hypothesis_version": "6.165.10",
+  "python": "F:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+  "shrinker_sha256": "f364cbff15bdd1e9afe68e97eb4a895db6f8166ad5fc83de8b4da8144e8d28e2",
+  "blocks": [
+    {
+      "name": "N-a_standalone_always_false_returns_initial",
+      "predicted": "Integer.shrink(1000, always False) == 1000; Collection likewise unchanged",
+      "observed": {
+        "integer": 1000,
+        "collection": [
+          5,
+          7,
+          9
+        ]
+      },
+      "error": null,
+      "predicate_calls": 28,
+      "seconds": 0.0
+    },
+    {
+      "name": "N-b_standalone_local_minimum_plant",
+      "predicted": "P3: predicate true only at n>=1000 or n==5; Integer stops at 1000 (5 unreachable by its moves)",
+      "observed": 1000,
+      "error": null,
+      "predicate_calls": 8,
+      "seconds": 0.0
+    },
+    {
+      "name": "N-b2_standalone_reachable_control",
+      "predicted": "same shape but a reachable target: true at n>=1000 or n==0 -> 0 (short_circuit tries 0 first)",
+      "observed": 0,
+      "error": null,
+      "predicate_calls": 1,
+      "seconds": 0.0
+    },
+    {
+      "name": "N-e_find_integer_nonmonotone",
+      "predicted": "returns 3 (local boundary), NOT 5+: the organ does not promise the global boundary",
+      "observed": 3,
+      "error": null,
+      "predicate_calls": 4,
+      "seconds": 0.0
+    },
+    {
+      "name": "P-a1_Integer_positive",
+      "predicted": "Integer.shrink(1000, n > 42) == 43 with O(log) predicate calls",
+      "observed": 43,
+      "error": null,
+      "predicate_calls": 14,
+      "seconds": 0.0
+    },
+    {
+      "name": "P-a2_Ordering_positive",
+      "predicted": "Ordering.shrink([3,1,2], always True) == (1,2,3)",
+      "observed": [
+        1,
+        2,
+        3
+      ],
+      "error": null,
+      "predicate_calls": 1,
+      "seconds": 0.0
+    },
+    {
+      "name": "P-a3_Collection_positive",
+      "predicted": "Collection.shrink((5,7,9,7,1), contains 7) == [7]",
+      "observed": [
+        7
+      ],
+      "error": null,
+      "predicate_calls": 11,
+      "seconds": 0.0
+    },
+    {
+      "name": "P-a4_find_integer_positive",
+      "predicted": "find_integer(k <= 37) == 37 in far fewer than 37 calls",
+      "observed": 37,
+      "error": null,
+      "predicate_calls": 12,
+      "seconds": 0.0
+    },
+    {
+      "name": "P-a5_Integer_cheat_control_order_strict",
+      "predicted": "every adopted value strictly smaller than the last (c01: adoption is a strict decrease under the order)",
+      "observed": {
+        "result": 43,
+        "accepted_sequence": [
+          488,
+          232,
+          104,
+          52,
+          50,
+          48,
+          46,
+          44,
+          43
+        ],
+        "strictly_decreasing": true
+      },
+      "error": null,
+      "predicate_calls": 14,
+      "seconds": 0.0
+    },
+    {
+      "name": "S-b_engine_shrink_on",
+      "predicted": "find(integers, x >= 1000) == 1000",
+      "observed": {
+        "first_satisfying_seen": 362881,
+        "returned": 1000
+      },
+      "error": null,
+      "predicate_calls": 0,
+      "seconds": 0.06
+    },
+    {
+      "name": "N-c_engine_null_config_shrink_off",
+      "predicted": "K6: with Phase.shrink EXCLUDED the returned example equals the FIRST satisfying example seen; if it is smaller, something reduced it outside the shrinker",
+      "observed": {
+        "first_satisfying_seen": 362881,
+        "returned": 362881
+      },
+      "error": null,
+      "predicate_calls": 0,
+      "seconds": 0.003
+    },
+    {
+      "name": "N-d_engine_nonmonotone_two_seeds",
+      "predicted": "find(integers(0,10**6), x % 7 == 3 and x > 100) for seeds 1 and 2: equal results (101 is the minimum; predicted reached by both)",
+      "observed": [
+        283,
+        325
+      ],
+      "error": null,
+      "predicate_calls": 0,
+      "seconds": 0.013
+    },
+    {
+      "name": "S-a_engine_derandomize_vs_seed",
+      "predicted": "derandomize=True gives the same final example as a seeded run (the shrunk result does not depend on the path)",
+      "observed": {
+        "derandomized": 1000,
+        "seeded": 1000
+      },
+      "error": null,
+      "predicate_calls": 0,
+      "seconds": 0.071
+    },
+    {
+      "name": "N-f_engine_local_minimum_plant",
+      "predicted": "P3 at engine level: find(integers, x >= 1000 or x == 5) -> does the full pass set reach 5? Standalone Integer could not; the engine has minimize_individual_choices + try_trivial_spans (index-0) -- prediction: reaches 5 only if a pass proposes it directly; expected 1000",
+      "observed": 1000,
+      "error": null,
+      "predicate_calls": 0,
+      "seconds": 0.035
+    },
+    {
+      "name": "N-g_engine_structural_nested_not",
+      "predicted": "pass_to_descendant positive: a recursive one_of strategy; predicate 'contains at least one Not' -- minimal is Not(leaf); prediction: reached",
+      "observed": [
+        "Not",
+        "x0"
+      ],
+      "error": null,
+      "predicate_calls": 0,
+      "seconds": 0.016
+    },
+    {
+      "name": "P-b_proteus_target7_with_pass_profile",
+      "predicted": "Techne saw size 9 vs ground truth 5 for target 7; prediction P6: the result is not minimal and the profile shows which passes fired (structural passes vs value passes)",
+      "observed": {
+        "found": {
+          "program": "(not (not (or (and x0 x1) (and x0 x2))))",
+          "size_key": [
+            9,
+            5,
+            "(not (not (or (and x0 x1) (and x0 x2))))"
+          ]
+        },
+        "ground_truth": {
+          "program": "(and (or x1 x2) x0)",
+          "size_key": [
+            5,
+            3,
+            "(and (or x1 x2) x0)"
+          ]
+        },
+        "pass_report_lines": [
+          "Shrinking made a total of 132 calls of which 5 shrank and 0 were misaligned. This deleted 5 choices out of 12.",
+          "* reorder_spans made 2 calls of which 2 shrank and 0 were misaligned, deleting 0 choices.",
+          "* minimize_individual_choices made 48 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.",
+          "* try_trivial_spans made 16 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.",
+          "* lower_integers_together made 15 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.",
+          "* redistribute_numeric_pairs made 14 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.",
+          "* node_program_X made 8 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.",
+          "* node_program_XX made 7 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.",
+          "* minimize_duplicated_choices made 5 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.",
+          "* node_program_XXX made 4 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.",
+          "* node_program_XXXX made 3 calls of which 0 shrank and 0 were misaligned, deleting 0 choices.",
+          "* node_program_XXXXX made 1 call of which 0 shrank and 0 were misaligned, deleting 0 choices."
+        ],
+        "log_bytes": 75756
+      },
+      "error": null,
+      "predicate_calls": 0,
+      "seconds": 1.363
+    }
+  ]
+}

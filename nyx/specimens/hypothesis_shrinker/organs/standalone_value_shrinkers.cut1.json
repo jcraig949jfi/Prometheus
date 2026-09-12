@@ -1,0 +1,59 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.hypothesis_shrinker.standalone_value_shrinkers.cut1",
+  "specimen": "hypothesis_shrinker",
+  "name": "standalone value shrinkers: given a plain value and a predicate, produce a smaller value satisfying it, by type-specific moves (integers: zero, one, bit masks, shifts, subtract multiples; sequences: sort regions; collections: all-zero, delete chunks from the back, reorder, shrink duplicates together, shrink each) under the greedy acceptance rule, with no engine",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "hypothesis shrinking/ package: common.Shrinker, Integer, Ordering, Collection (+ Float, Bytes, String not read)",
+    "sources": [
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinking/common.py (Shrinker: initial, predicate, full, seen set, consider, run/short_circuit/run_step, delegate/call_shrinker)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinking/integer.py (short_circuit: 0, 1, mask_high_bits, byte squeeze; run_step: shift_right, shrink_by_multiples 2 then 1)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinking/ordering.py (short_circuit: sorted; sort_regions; sort_regions_with_gaps)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinking/collection.py (all-zero; adaptive delete from the back; Ordering; duplicates together; each element)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinker.py 1695-1745 (minimize_nodes dispatches to Integer/Float/Bytes/String with try_shrinking_nodes as the predicate)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/hypothesis_shrinker/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Package boundary in the pinned bytes; INHERITED. The package imports find_integer and identity only -- no engine, no ConjectureData. Nyx expects this to be the first Chop Shop organ shown to behave OUTSIDE its ancestor (P4).",
+    "mechanism": "A base class holds the current value, the predicate and a seen-set, and implements consider() (c01's shape). Subclasses supply left_is_better (the order for this type) and moves: Integer tries 0 and 1, masks high bits, squeezes to a byte, shifts right, subtracts multiples of 2 then 1, each adaptively via find_integer; Ordering tries the fully sorted sequence, then sorts growing regions from each index, then regions around a fixed centre; Collection tries the min-size all-zero value, deletes chunks from the back adaptively, delegates to Ordering, shrinks duplicated elements together, then each element with an element shrinker. run() is one step, or to a fixpoint if full=True.",
+    "input": "a value (int / sequence / collection with an element shrinker), a predicate value -> bool, type-specific constraints (min_size, key, to_order/from_order)",
+    "output": "the smallest value found satisfying the predicate under this type's order",
+    "state": "current value, seen-set, change count; nothing outside the object",
+    "assumptions": "that the moves listed are the ones worth trying (the Integer docstring guarantees only 0, 1, initial-1, initial-2); that the predicate is cheap enough to call O(log) times per move family; that the type's left_is_better is what the caller wants",
+    "interface": "Cls.shrink(initial, predicate, **constraints) -> value; classes are composable via delegate/call_shrinker (Collection calls Ordering and an ElementShrinker)",
+    "fitness_value": "unknown -- claimed: each class reaches a local minimum of its move set in O(log) predicate calls per successful move family. Measurable standalone: P-a in ablations/ runs Integer, Ordering, Collection with counted predicate calls; not yet run at CUT-1.",
+    "failure_landscape": "(a) move-set minima: Integer cannot reach a value that needs a non-multiple, non-shift step from every intermediate (the specimen adds normalize_unicode_chars for exactly such a case in strings); (b) run() without full=True is one step only -- callers that want a fixpoint must say so, and the engine form does not pass full through (call_shrinker comment); (c) Collection.delete from the back only, so a minimal-front element run costs more; (d) duplicates are shrunk to the SAME value only.",
+    "ablation": "unknown -- designed and CHEAP: disable each move family in turn on a fixture and count predicate calls and the final value. P-a in ablations/ will run at least the baseline. Not run at CUT-1.",
+    "decomposability": "(1) the greedy base (c01 shape), (2) per-type move sets (Integer / Ordering / Collection / Float / Bytes / String), (3) the composition rules (Collection -> Ordering + element). Each move set is separately removable.",
+    "composability": "Any Prometheus minimiser over plain values; Proteus's H1 minimiser today reaches these only THROUGH the engine and the choice-sequence encoding; a direct call on a program tree with size_key as left_is_better would be a different composition (not proposed; noted).",
+    "human_prior": "Which moves are 'natural' for integers (bits, halves, small subtractions) and sequences (sorting) -- a programmer's model of simplicity, not a property of predicates.",
+    "control": "Positive: Integer.shrink(1000, lambda n: n > 42) == 43; Ordering.shrink([3,1,2], lambda s: True) == (1,2,3); Collection.shrink of a 10-list with predicate 'contains a 7' returns [7]. Negative: predicate always-false returns the initial unchanged. Cheat: a shrinker that returns the initial for every input passes the negative and fails the positive; both must run.",
+    "cheat": "Claiming minimality (the smallest satisfying value) rather than local minimality under the move set; Techne's receipt already separates SOUND from MINIMAL for this reason."
+  },
+  "alternative_cuts": [],
+  "pressure_refs": [
+    "pressure.hypothesis_shrinker.smallest_witness_not_first.cut1"
+  ]
+}

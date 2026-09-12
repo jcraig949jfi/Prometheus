@@ -1,0 +1,77 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "SPECIMEN",
+  "id": "specimen.hypothesis_shrinker",
+  "name": "hypothesis 6.165.10 -- the shrinker (class, package and phase; which one is a CUT-1 question)",
+  "lineage": [
+    "search",
+    "optimization"
+  ],
+  "status": "OPEN",
+  "opened": "2026-09-11",
+  "famous_names": [
+    "Hypothesis",
+    "hypothesis",
+    "shrinker",
+    "shrinking",
+    "shrink",
+    "shrunk",
+    "minimal example",
+    "minimization",
+    "minimisation",
+    "minimizer",
+    "minimiser",
+    "property-based testing",
+    "property based testing",
+    "QuickCheck",
+    "conjecture",
+    "ConjectureData",
+    "ConjectureRunner",
+    "choice sequence",
+    "example database",
+    "@given",
+    "strategy",
+    "strategies"
+  ],
+  "chosen_because": "N1 by operator ruling 2026-09-11 (PROCEED N1, CAP=1): the first TRANSFER TEST OF THE KNIFE, not a harvest. Chosen over N2/N3 because the pin is Techne-managed (no provenance gap), the lineage (search/testing) is absent from the inventory, the mechanism (shrink a failing example toward a minimal one by a fixed order over a choice sequence) is strange, the human prior (the shrink order) is suspected, the pressure looks separable, and a LIVE consumer exists: Proteus's H1 program minimiser, qualified by Techne as SOUND_NOT_MINIMAL (24/45 not minimal).",
+  "provenance": {
+    "sources": [
+      {
+        "ref": "techne/acquisition/locks/hypothesis-cp312-win-amd64.lock.txt: hypothesis==6.165.10 sha256 3376f2594763aef14faa519b0fb27cae7ce9eeaab4c69efa07777499110306c9; sortedcontainers==2.4.0",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "techne/acquisition/receipts/installation-hypothesis-20260909T214450Z.json (INSTALLED_PINNED_AND_HASHED; isolated env h0h5_tools)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "techne/acquisition/receipts/first_useful_check-hypothesis-20260909T221555Z.json (CHECK_PASSED; threshold defect minimized to the known minimum 128; example database verified)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "techne/acquisition/receipts/adapter_qualification-hypothesis-20260911T065703Z.json (QUALIFIED_SOUND_NOT_MINIMAL as a program minimiser on proteus/eval/shrink.py::still_solves; declared order (node_count, depth, canonical_string) is Proteus's; 45 scored, 24 not minimal, max excess 4 nodes; 14 targets no example in budget -- not counted; fixture techne/acquisition/fixtures/hypothesis_program_minimiser.json)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "site-packages/hypothesis/internal/conjecture/shrinker.py sha256 f364cbff15bdd1e9afe68e97eb4a895db6f8166ad5fc83de8b4da8144e8d28e2 -- identical in the isolated env and the host env (checked 2026-09-11)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "proteus/eval/shrink.py (174 lines), proteus/eval/hypothesis_strategy.py (82 lines): the consumer contract; read as interface, not cut",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/hypothesis_shrinker/PREREG_CUT1.md (question, boundary, procedure, switches, predictions P1-P7, stopping rule) -- written before any body was read",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "upstream: github.com/HypothesisWorks/hypothesis tag hypothesis-python-6.165.10 -- NOT resolved by Nyx (no network step); T1-SOURCE pending",
+        "grade": "unknown"
+      },
+      {
+        "ref": "Hypothesis papers / QuickCheck ancestry: NOT read; any such claim in a record is T2 and marked",
+        "grade": "unknown"
+      }
+    ]
+  }
+}
