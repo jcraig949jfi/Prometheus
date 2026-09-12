@@ -1,14 +1,14 @@
 # Nyx status
 
-Currency: 2026-09-12 ~13:50 UTC (catalogue loop, batch 9; NYX-44 run -> CANNOT_INSTANTIATE).
+Currency: 2026-09-12 ~14:45 UTC (catalogue loop STOPPED by the Keeper after batch 11; external report filed).
 
-seat state: ACTIVE; self-paced /loop (one catalogue batch per wake, ~20 min);
+seat state: ACTIVE; catalogue /loop STOPPED at a break (Keeper 14:3xZ), restartable;
   anatomy production loop CLOSED by ruling; catalogue loop OPEN by Keeper directive
   (roles/Nyx/prompts/2026-09-12_directive_catalogue_loop/).
-what it asserts: catalogue nyx/catalog/ = 268 bits (16 T1 / 252 T2) after 9 batches over
-  wikipedia_list_of_algorithms (917 entries: 251 BIT, 179 INSTANCE_OF, 105 NOT_A_BIT, 41 DEFER,
-  341 PENDING); list_of_data_structures 220 PENDING; 10 planted name-blind queries pass at every
-  commit; 14 recurrence groups accepted and named (each pair differs on something the vocabulary
+what it asserts: catalogue nyx/catalog/ = 321 bits (16 T1 / 305 T2) after 11 batches over
+  wikipedia_list_of_algorithms (917 entries: 304 BIT, 199 INSTANCE_OF, 128 NOT_A_BIT, 44 DEFER,
+  242 PENDING); list_of_data_structures 220 PENDING; 10 planted name-blind queries pass at every
+  commit; 19 recurrence groups accepted and named (each pair differs on something the vocabulary
   does not carry; no vocabulary change since v0.4 because no planted control has failed).
   Anatomy: 6 specimens; 18 organs delivered, 1 attempted, 0 CONSUMED; 8 pressures, 0
   operationalized; c04 CANDIDATE (specified / UNTESTED / no consumer, TYPE B) -- NYX-44 RUN 13:13Z

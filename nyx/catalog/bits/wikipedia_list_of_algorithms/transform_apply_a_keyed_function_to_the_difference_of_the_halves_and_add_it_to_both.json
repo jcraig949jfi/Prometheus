@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.apply_a_keyed_function_to_the_difference_of_the_halves_and_add_it_to_both",
+  "name": "apply a keyed function to the difference of the halves and add the result to both",
+  "lineage": [
+    "network protocols",
+    "error-correcting systems"
+  ],
+  "mechanism": "each round forms the difference of the two halves, passes it through a keyed function, and adds the same output to both halves (then swaps or reshuffles); the difference is unchanged by the addition, so the step is invertible for any round function, like the XOR-into-one-half design but touching both halves",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'IDEA' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DATA_INDEPENDENT",
+  "iteration": "SWEEP",
+  "cost": "CONSTANT",
+  "requires": [
+    "a keyed round function mixing several group operations"
+  ],
+  "fails_when": [
+    "weak-key classes when key words are zero"
+  ],
+  "instances": [
+    "IDEA"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.verify.sign_with_an_inverted_ephemeral_exponent_binding_hash_key_and_commitment",
+  "name": "sign with an inverted ephemeral exponent that binds the hash, the secret key and a commitment",
+  "lineage": [
+    "network protocols",
+    "error-correcting systems"
+  ],
+  "mechanism": "pick an ephemeral exponent, publish a commitment (the generator raised to it, reduced to a number); the signature's second part is the inverse of the ephemeral times (message hash plus secret key times commitment); the verifier recombines the public key, the commitment and the hash and checks that the commitment reappears; the deterministic variant derives the ephemeral from the hash and the secret so it can never repeat",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'ECDSA and Deterministic ECDSA' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'DSA, and its variants:': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "VERIFY",
+  "in_geometry": "STRING",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "RANDOMIZED",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a never-repeating ephemeral exponent",
+    "a hash of the message"
+  ],
+  "fails_when": [
+    "a repeated or biased ephemeral reveals the secret key"
+  ],
+  "instances": [
+    "ECDSA and Deterministic ECDSA",
+    "DSA, and its variants:"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.transform.square_and_multiply_by_the_binary_digits_of_the_exponent"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

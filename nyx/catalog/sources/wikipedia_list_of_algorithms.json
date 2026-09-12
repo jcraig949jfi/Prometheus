@@ -72,7 +72,9 @@
     "General combinatorial algorithms"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.generate.square_modulo_a_secret_composite_and_emit_a_low_bit_each_step",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Lagged Fibonacci generator",
@@ -7431,7 +7433,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "ElGamal",
@@ -7442,7 +7446,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.mask_the_message_with_a_fresh_shared_secret_from_an_ephemeral_exponent",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Elliptic curve cryptography",
@@ -7453,7 +7459,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a choice of group (data) under which the exponent-based mechanisms run; the mechanisms are catalogued under their generic forms",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "MAE1",
@@ -7464,7 +7472,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "DEFER",
+   "reason": "not identifiable from the bare name; needs a source read",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "NTRUEncrypt",
@@ -7475,7 +7485,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.mask_by_a_random_multiple_of_the_public_key_and_recover_by_a_secret_multiply_and_rounding",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "RSA",
@@ -7486,7 +7498,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.exponentiate_in_a_group_whose_order_only_the_key_holder_knows",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Digital signatures (asymmetric authentication):",
@@ -7497,7 +7511,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "DSA, and its variants:",
@@ -7508,7 +7524,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.verify.sign_with_an_inverted_ephemeral_exponent_binding_hash_key_and_commitment",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "ECDSA and Deterministic ECDSA",
@@ -7519,7 +7537,9 @@
     "Cryptography"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.verify.sign_with_an_inverted_ephemeral_exponent_binding_hash_key_and_commitment",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "EdDSA (Ed25519)",
@@ -7530,7 +7550,9 @@
     "Cryptography"
    ],
    "depth": 3,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.verify.sign_by_adding_the_hash_of_commitment_and_message_times_the_secret_to_the_nonce",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "RSA",
@@ -7541,7 +7563,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.exponentiate_in_a_group_whose_order_only_the_key_holder_knows",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Cryptographic hash functions (see also the section on message authentication codes):",
@@ -7552,7 +7576,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "BLAKE",
@@ -7563,7 +7589,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "MD5",
@@ -7574,7 +7602,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "RIPEMD-160",
@@ -7585,7 +7615,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "SHA-1",
@@ -7596,7 +7628,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "SHA-2 (SHA-224, SHA-256, SHA-384, SHA-512)",
@@ -7607,7 +7641,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "SHA-3 (SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE128, SHAKE256)",
@@ -7618,7 +7654,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.absorb_blocks_by_xor_into_a_wide_state_between_permutations_then_squeeze",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Tiger (TTH), usually used in Tiger tree hashes",
@@ -7629,7 +7667,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "WHIRLPOOL",
@@ -7640,7 +7680,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Cryptographically secure pseudo-random number generators",
@@ -7651,7 +7693,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Blum Blum Shub",
@@ -7673,7 +7717,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.schedule.use_pool_k_only_on_every_2_to_the_k_th_reseed",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Linear-feedback shift register (note",
@@ -7684,7 +7730,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.generate.shift_a_register_feeding_back_the_xor_of_tapped_bits",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Yarrow algorithm",
@@ -7695,7 +7743,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.generate.accumulate_entropy_into_pools_and_reseed_a_cipher_counter_generator_when_a_pool_fills",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Key exchange",
@@ -7706,7 +7756,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Diffie–Hellman key exchange",
@@ -7717,7 +7769,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.synchronize.each_party_raises_the_others_public_power_to_its_own_secret",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Elliptic-curve Diffie–Hellman (ECDH)",
@@ -7728,7 +7782,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.synchronize.each_party_raises_the_others_public_power_to_its_own_secret",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Key derivation functions, often used for password hashing and key stretching",
@@ -7739,7 +7795,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Argon2",
@@ -7750,7 +7808,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.bound.fill_a_large_memory_pseudorandomly_then_read_it_back_in_a_data_dependent_order",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "bcrypt",
@@ -7761,7 +7821,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.bound.iterate_a_one_way_function_a_tunable_number_of_times_to_slow_each_guess",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "PBKDF2",
@@ -7772,7 +7834,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.bound.iterate_a_one_way_function_a_tunable_number_of_times_to_slow_each_guess",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "scrypt",
@@ -7783,7 +7847,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.bound.fill_a_large_memory_pseudorandomly_then_read_it_back_in_a_data_dependent_order",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Message authentication codes (symmetric authentication algorithms, which take a key as a parameter):",
@@ -7794,7 +7860,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "HMAC",
@@ -7805,7 +7873,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.detect.hash_the_message_under_an_inner_key_then_hash_the_result_under_an_outer_key",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Poly1305",
@@ -7816,7 +7886,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.detect.evaluate_the_message_as_a_polynomial_at_a_secret_point_then_add_a_one_time_mask",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "SipHash",
@@ -7827,7 +7899,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.mix_a_word_state_by_repeated_add_rotate_xor_rounds_with_injected_key_words",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Secret sharing, secret splitting, key splitting, M of N algorithms",
@@ -7838,7 +7912,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Blakey's scheme",
@@ -7849,7 +7925,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.partition.hand_out_hyperplanes_that_meet_only_at_the_secret_point",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Shamir's secret sharing",
@@ -7860,7 +7938,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.partition.hide_the_secret_as_the_constant_term_of_a_random_polynomial_and_hand_out_evaluations",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Symmetric (secret key) encryption:",
@@ -7871,7 +7951,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Advanced Encryption Standard (AES), winner of NIST competition, also known as Rijndael",
@@ -7882,7 +7964,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.repeat_rounds_of_byte_substitution_positional_permutation_and_round_key_mixing",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Blowfish",
@@ -7893,7 +7977,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "ChaCha20 updated variant of Salsa20",
@@ -7904,7 +7990,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.mix_a_word_state_by_repeated_add_rotate_xor_rounds_with_injected_key_words",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Data Encryption Standard (DES), sometimes DE Algorithm, winner of NBS selection competition, replaced by AES for most pu",
@@ -7915,7 +8003,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "IDEA",
@@ -7926,7 +8016,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.apply_a_keyed_function_to_the_difference_of_the_halves_and_add_it_to_both",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "RC4 (cipher)",
@@ -7937,7 +8029,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.generate.walk_a_key_scrambled_permutation_swapping_two_entries_per_output_byte",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Salsa20",
@@ -7948,7 +8042,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.transform.mix_a_word_state_by_repeated_add_rotate_xor_rounds_with_injected_key_words",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Threefish",
@@ -7959,7 +8055,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.mix_a_word_state_by_repeated_add_rotate_xor_rounds_with_injected_key_words",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Tiny Encryption Algorithm (TEA)",
@@ -7970,7 +8068,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Twofish",
@@ -7981,7 +8081,9 @@
     "Cryptography"
    ],
    "depth": 2,
-   "classification": "PENDING"
+   "classification": "INSTANCE_OF",
+   "bit_id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Post-quantum cryptography",
@@ -7992,7 +8094,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "NOT_A_BIT",
+   "reason": "a header or category, not a mechanism",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Proof-of-work algorithms",
@@ -8003,7 +8107,9 @@
     "Cryptography"
    ],
    "depth": 1,
-   "classification": "PENDING"
+   "classification": "BIT",
+   "bit_id": "bit.search.vary_a_nonce_until_the_hash_falls_below_a_target",
+   "classified_at": "2026-09-12T14:39Z"
   },
   {
    "name": "Boolean minimization",

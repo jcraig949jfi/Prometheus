@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.schedule.use_pool_k_only_on_every_2_to_the_k_th_reseed",
+  "name": "use pool k only on every 2^k-th reseed",
+  "lineage": [
+    "operating systems",
+    "network protocols"
+  ],
+  "mechanism": "spread incoming events round-robin over many pools; at the n-th reseed include pool k only if 2^k divides n; the high pools therefore accumulate for very long stretches, so however slow the true entropy trickles in, some pool eventually gathers enough unseen material to recover -- with no entropy estimation at all",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fortuna, intended as an improvement on Yarrow algorithm' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SCHEDULE",
+  "in_geometry": "STREAM",
+  "out_geometry": "STREAM",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "SCHEDULED",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "DATA_INDEPENDENT",
+  "iteration": "PRIORITY",
+  "cost": "CONSTANT",
+  "requires": [
+    "a reseed counter",
+    "many pools"
+  ],
+  "fails_when": [
+    "recovery time is a multiple of the true entropy rate, not immediate"
+  ],
+  "instances": [
+    "Fortuna, intended as an improvement on Yarrow algorithm"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.generate.accumulate_entropy_into_pools_and_reseed_a_cipher_counter_generator_when_a_pool_fills"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

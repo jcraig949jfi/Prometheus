@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.walk_a_key_scrambled_permutation_swapping_two_entries_per_output_byte",
+  "name": "walk a key-scrambled permutation, swapping two entries per output byte",
+  "lineage": [
+    "network protocols",
+    "error-correcting systems"
+  ],
+  "mechanism": "initialise a permutation of all byte values and scramble it by swaps driven by the key; then, per output byte, advance one index, move a second index by the value found there, swap the two entries, and output the entry at the position given by their sum",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'RC4 (cipher)' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "STREAM",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "CONSTANT",
+  "requires": [
+    "a 256-entry state"
+  ],
+  "fails_when": [
+    "the first output bytes are biased; related-key weaknesses"
+  ],
+  "instances": [
+    "RC4 (cipher)"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.sample.uniform_permutation_by_swaps"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

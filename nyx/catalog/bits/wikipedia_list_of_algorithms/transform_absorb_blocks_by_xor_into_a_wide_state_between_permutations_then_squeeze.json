@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.absorb_blocks_by_xor_into_a_wide_state_between_permutations_then_squeeze",
+  "name": "absorb blocks by XOR into part of a wide state between permutations, then squeeze output from the same part",
+  "lineage": [
+    "network protocols",
+    "error-correcting systems"
+  ],
+  "mechanism": "keep a state much wider than the output; XOR each message block into the exposed part of the state and apply a fixed permutation to the whole; when the message is consumed, read the exposed part as output, permuting again for more; the hidden part of the state is never directly touched by input or read as output",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'SHA-3 (SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE128, SHAKE256)' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "STRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "strategy": "STREAMING",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a wide fixed permutation (data)",
+    "a rate/capacity split (policy)"
+  ],
+  "fails_when": [
+    "security is bounded by the hidden capacity, not the output length"
+  ],
+  "instances": [
+    "SHA-3 (SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE128, SHAKE256)"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}
