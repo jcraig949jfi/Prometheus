@@ -212,3 +212,14 @@ Future specimens record the temptation at the moment it is felt, before the cont
       state capture, exact restoration, world-owned novelty accounting, explicit cost -- without
       anyone manufacturing Go-Explore around the pressure)
     Can any ORGAN become genuinely CONSUMED?
+
+## Ruling 2026-09-12 (roles/Nyx/prompts/2026-09-12_ruling_c07_c03_c01_hold/): shrinker organ dispositions and held routes
+
+    c07  INTERFACE_INSUFFICIENT stands. No tree<->sequence encoder. No new Hypothesis organs.
+         REOPEN ONLY IF an EXISTING consumer already has: (1) a sequence-valued object; (2) a Boolean
+         preservation predicate; (3) a natural existing order / one-line reversible representation;
+         (4) a real minimisation objective not already solved as well by its baseline. Never manufactured.
+    c03  HOLD -- unless an existing adaptive delete/repeat consumer appears naturally.
+    c01  HOLD, untested -- unless a live consumer specifically asks for it.
+    Held routes: Proteus halves of #189/#190; Diomedes half of #192 (never booted). Not delivered.
+    No more anatomy until a consumer creates demand.

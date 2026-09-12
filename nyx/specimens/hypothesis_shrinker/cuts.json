@@ -60,7 +60,8 @@
       "organ_record": "order_gated_acceptance.cut2.json",
       "notes": {
         "CUT-2": "boundary drawn across two files; the standalone copy behaves as the record says"
-      }
+      },
+      "disposition_2026-09-12": "HOLD, untested: reopen only if a live consumer specifically asks for it."
     },
     {
       "id": "c02",
@@ -166,7 +167,8 @@
       "organ_record": "adaptive_step_search.cut2.json",
       "notes": {
         "CUT-2": "INHERITED and SUPPORTED: the programmer's def boundary is the mechanistic one"
-      }
+      },
+      "disposition_2026-09-12": "HOLD: no eligible site; reopen only if an existing adaptive delete/repeat consumer appears naturally."
     },
     {
       "id": "c04",
@@ -362,6 +364,11 @@
       "notes": {
         "CUT-2": "INHERITED and SUPPORTED: package boundary is the mechanistic one; P4 confirmed",
         "2026-09-12_bite_200": "c07 NOT repaired: no tree traversal, no tree<->sequence encoding, no wrapper, no descendant proposed (ruling; anti-reassembly)."
+      },
+      "disposition_2026-09-12": "INTERFACE_INSUFFICIENT (stands). No tree<->sequence encoder; no new Hypothesis organs.",
+      "reopen_condition": {
+        "ruling": "roles/Nyx/prompts/2026-09-12_ruling_c07_c03_c01_hold/",
+        "exact": "Reopen c07 only if an EXISTING Prometheus consumer is identified that already has: (1) a sequence-valued object, (2) a Boolean preservation predicate, (3) a natural existing order / one-line reversible representation, (4) a real minimisation objective not already solved as well by its baseline. Do not manufacture such a consumer to rescue the organ."
       }
     },
     {
@@ -1025,5 +1032,11 @@
     "satisfied": "2026-09-12T03:42Z",
     "ref": "comms 200 reopen_condition_B: no current consumer can test any delivered Nyx ORGAN today",
     "ruling": "roles/Nyx/prompts/2026-09-12_ruling_n3_open/"
-  }
+  },
+  "held_routes": {
+    "ruling": "roles/Nyx/prompts/2026-09-12_ruling_c07_c03_c01_hold/",
+    "Proteus halves of #189/#190": "HELD, not delivered (never booted)",
+    "Diomedes half of #192": "HELD, not delivered (never booted; parked)"
+  },
+  "no_more_anatomy": "ruling 2026-09-12: no more anatomy until a consumer creates demand"
 }
