@@ -71,3 +71,20 @@ def test_repo_id_is_the_root_commit_and_separates_same_named_repositories(tmp_pa
     subprocess.run(["git", "clone", "-q", str(a), str(clone)], check=True)
     assert W.receipt(clone)["repo_id"] == ra["repo_id"]
     assert W.receipt(clone)["repo_id"] != rb["repo_id"]
+
+
+def test_the_configured_sfe_ledger_exists_on_this_host():
+    """2026-09-11: the pinned tick worktree fell through to the in-repo
+    default ledger path, which does not exist in a linked worktree, and read
+    0 fossils for 51 ticks while reporting CONFORMANT. The eye must be
+    checked as a property: whatever path resolution lands on must be a file.
+    In a linked worktree with no ARCHAEON_SFE_DB and no config.local.json
+    sfe_db this test FAILS by design -- that is the deployment defect."""
+    import os
+    from pathlib import Path
+    from archaeon import fossils
+    path = Path(fossils._default_sfe_db())
+    configured = bool(os.environ.get("ARCHAEON_SFE_DB")) or (Path(fossils.__file__).resolve().parent / "config.local.json").exists()
+    assert path.exists(), (
+        "the resolved SFE ledger {} does not exist ({}); write archaeon/config.local.json with sfe_db = the engine's --db "
+        "(OPERATIONS.md, Start (deployed))".format(path, "configured" if configured else "no ARCHAEON_SFE_DB and no config.local.json: in-repo default in a linked worktree"))
