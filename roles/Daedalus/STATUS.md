@@ -1,6 +1,6 @@
 # Daedalus -- status
 
-Currency: 2026-09-12 12:35 local (base role s3 requires this file; refreshed at
+Currency: 2026-09-12 13:30 local (base role s3 requires this file; refreshed at
 least every four hours of activity).
 
 ## Where I am working
@@ -45,9 +45,10 @@ is the gap); KAIROS-01 (`8fc4531f3`: census (b), 8 claims on M1, all mine).
 1. Deploy candidate `8c53d04e6` (A6 + B3 + C7, hash 726275da) in one
    window ONCE Harmonia regenerates the contract (comms 215); otherwise
    both consumers' gates read state 3.
-2. B1: Vivarium's act at its next seat sync (grantee known; not issued
-   at 12:26).
-3. Archaeon re-points sfe_db to D: (216); F: copy is frozen.
+2. B1 ISSUED by Vivarium and verified (gnt_1ecdeae6; deploy/B1_2026-09-12).
+   Archaeon's parity + retirement of the raw-ledger read (F-25) is theirs.
+3. Ancestry: COMPLETE on the canary, no schema (deploy/fossil_ancestry.py).
+4. Archaeon re-points sfe_db to D: (216); F: copy is frozen.
 3. **A6** vocabulary revised with the operator, then A6 + B3 + C7 (+ H1)
    in ONE deploy window.
 4. Canonical-copy deletion, separately from any engine restart.
