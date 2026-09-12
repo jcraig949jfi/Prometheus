@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.move_toward_linearised_vertex",
+  "name": "move toward the vertex that minimises the linearisation",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "at the current feasible point minimise the linear approximation of the objective over the feasible set (a vertex), then move a fraction of the way toward that vertex, staying feasible without projection",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Frank-Wolfe algorithm' in section Computational mathematics / Optimization algorithms: an iterative first-order optimization algorithm for constrained convex optimization",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "LOCAL_OPTIMUM",
+  "strategy": "GREEDY",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a linear minimisation oracle over the feasible set"
+  ],
+  "fails_when": [
+    "slow zig-zag near the boundary"
+  ],
+  "instances": [
+    "Frank-Wolfe algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

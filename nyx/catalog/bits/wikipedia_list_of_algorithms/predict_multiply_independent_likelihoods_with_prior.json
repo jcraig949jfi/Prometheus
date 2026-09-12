@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.multiply_independent_likelihoods_with_prior",
+  "name": "multiply per-feature likelihoods with a class prior",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "estimate for each class the frequency of each feature value, and classify a new item to the class maximising the prior times the product of its features' likelihoods, as if features were independent given the class",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Naive Bayes classifier' in section Computer science / Machine learning and statistical classification: a family of probabilistic classifiers based on Bayes' theorem",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "RECORD",
+  "out_geometry": "DISTRIBUTION",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "counts per class and feature",
+    "smoothing for unseen values (policy)"
+  ],
+  "fails_when": [
+    "correlated features double-count"
+  ],
+  "instances": [
+    "Naive Bayes classifier"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

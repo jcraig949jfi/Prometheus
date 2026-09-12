@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.remember.settle_to_stored_pattern_by_energy_descent",
+  "name": "settle to a stored pattern by energy descent",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "store patterns as symmetric connection weights, then from a corrupted input repeatedly update units toward the sign of their weighted input so an energy decreases until the state stops changing at a stored pattern",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hopfield net' in section Computer science / Machine learning and statistical classification: a Recurrent neural network in which all connections are symmetric",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REMEMBER",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "LOCAL_OPTIMUM",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "RANDOM",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "symmetric weights"
+  ],
+  "fails_when": [
+    "spurious attractors; capacity a small fraction of the unit count"
+  ],
+  "instances": [
+    "Hopfield net"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

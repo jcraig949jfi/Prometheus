@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.sample.draw_in_proportion_to_score",
+  "name": "draw in proportion to score",
+  "lineage": [
+    "evolutionary computation",
+    "optimization"
+  ],
+  "mechanism": "choose members at random with probability proportional to their score, so better members are chosen more often but none is excluded",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fitness proportionate selection' in section Computational mathematics / Optimization algorithms: also known as roulette-wheel selection",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Stochastic universal sampling': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SAMPLE",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "LINEAR",
+  "requires": [
+    "non-negative scores"
+  ],
+  "fails_when": [
+    "a dominant member takes over; scale of scores changes pressure"
+  ],
+  "instances": [
+    "Fitness proportionate selection",
+    "Stochastic universal sampling"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

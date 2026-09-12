@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.evaluate_on_a_lattice",
+  "name": "evaluate on a lattice",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "evaluate the objective at every point of a fixed lattice over the parameter box and take the best",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Grid Search' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a bounded box and a resolution (policy)"
+  ],
+  "fails_when": [
+    "exponential in dimension"
+  ],
+  "instances": [
+    "Grid Search"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.search.enumerate_all_candidates"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

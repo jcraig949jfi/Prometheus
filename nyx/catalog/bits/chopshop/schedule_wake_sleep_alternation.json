@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.schedule.wake_sleep_alternation",
+  "name": "wake/sleep alternation",
+  "lineage": [
+    "program synthesis",
+    "self-modifying systems"
+  ],
+  "mechanism": "alternate a phase that solves tasks with the current library and model against a phase that refits the library and the model to the solutions found, so each phase's output is the other's input",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "nyx/specimens/dreamcoder/organs/wake_sleep_alternation.json",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "SCHEDULE",
+  "in_geometry": "RECORD",
+  "out_geometry": "RECORD",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "cost": "UNKNOWN",
+  "requires": [
+    "two phases whose outputs feed each other"
+  ],
+  "fails_when": [
+    "a phase that produces nothing starves the other"
+  ],
+  "instances": [
+    "DreamCoder"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/dreamcoder/organs/wake_sleep_alternation.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it",
+  "strategy": "FIXPOINT_ITERATION",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "FIFO"
+}

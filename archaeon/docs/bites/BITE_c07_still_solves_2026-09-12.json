@@ -1,0 +1,48 @@
+{
+ "schema": "archaeon.organ_bite.v0",
+ "at": "2026-09-12T04:0xZ (measured run ~03:5x UTC)",
+ "question": "Can Nyx ORGAN c07 leave Hypothesis and participate in real Prometheus machinery?",
+ "disposition": "INTERFACE_INSUFFICIENT",
+ "consumer": "Techne's minimiser harness (techne/acquisition/checks/hypothesis_program_minimiser.py, TECHNE-12), which scores a shrunk PROGRAM against Proteus's exact minimum; the predicate and order it uses are Proteus's (proteus/eval/shrink.py). Attempt performed by Archaeon as coordinator with Techne's and Proteus's code READ-ONLY; nothing in either lane modified.",
+ "exact_site": "still_solves(candidate, target) over program VALUES, target f=5 (truth table 00000101): the row in techne/acquisition/fixtures/hypothesis_program_minimiser.json where Hypothesis's engine-shrunk program is NOT minimal -- hypothesis '(not (not (and x0 x2)))' size 5 depth 4 vs ground truth '(and x0 x2)' size 3 depth 2 (excess_nodes 2).",
+ "exact_value": {
+  "repr": "('not', ('not', ('and', ('input', 0), ('input', 2))))",
+  "canonical": "(not (not (and x0 x2)))",
+  "canonical_matches_fixture": true,
+  "size_key": [5, 4, "(not (not (and x0 x2)))"],
+  "still_solves_before": true
+ },
+ "downstream_objective": "reach Proteus's declared minimum under size_key (Techne's harness scores exactly this; 24 of 45 scored targets are non-minimal in the fixture)",
+ "nyx_organ": {
+  "id": "c07 standalone_value_shrinkers (MECHANISM)",
+  "records": ["nyx/specimens/hypothesis_shrinker/organs/standalone_value_shrinkers.cut1.json", "nyx/specimens/hypothesis_shrinker/organs/standalone_value_shrinkers.cut2.json"],
+  "ancestry": "specimen nyx/specimens/hypothesis_shrinker (PROVENANCE.md): hypothesis==6.165.10, wheel sha256 3376f259...0306c9 (Techne lock), shrinker.py sha256 f364cbff...28e2, env h0h5_tools; delivered #191, routing repaired #197; Nyx's AMBIGUITY.md already noted 'running c07 directly on Proteus programs with size_key as left_is_better would be a different minimiser' and did not build it"
+ },
+ "interface_used": "from hypothesis.internal.conjecture.shrinking import Collection, Integer; Collection.shrink(initial, predicate, ElementShrinker=Integer, min_size=1) -- exactly the interface #197 supplied; no engine, no strategy, no ConjectureData",
+ "command_environment": {
+  "interpreter": "vault/techne_tools/envs/h0h5_tools/Scripts/python.exe (hypothesis 6.165.10 verified at run)",
+  "pythonpath": "the Archaeon worktree (proteus, techne importable)",
+  "call": "Collection.shrink(value, lambda seq: still_solves(tuple(seq), target_expr(5)), ElementShrinker=Integer, min_size=1)"
+ },
+ "observed_behavior": {
+  "predicate_calls": 1,
+  "first_candidate_offered": "(0,)",
+  "result": "TypeError: '<' not supported between instances of 'int' and 'str' at hypothesis/internal/conjecture/shrinking/collection.py:54 run_step -> consider([zero]*len(current)) (via common.py:90 shrink / :107 run)",
+  "explanation": "Collection treats the value as a FLAT sequence of int-orderable elements (to_order=identity, from_order(0)=0 as the 'smallest' element). The site's value is a nested tuple whose top-level elements are the operator string 'not' and a sub-tuple; the first shrink step offered [0] as a candidate program (still_solves refused it: not a program), then compared 0 < 'not' to decide whether the offer was 'better' and raised. Integer.shrink is not applicable: the site holds no integer with a Boolean property. No Prometheus code provides a reversible tree<->sequence encoding (proteus/eval/shrink.py::canonical is one-way; programs are drawn by st.recursive); building one would be a demonstration whose only purpose is to make c07 work, which the brief forbids."
+ },
+ "baseline_current_mechanism": {
+  "name": "proteus/eval/shrink.py::minimal_by_enumeration(target, 'still_solves', max_size=5)",
+  "result": "(and x0 x2), size_key [3, 2, '(and x0 x2)'] -- the exact minimum by exhaustive size-ordered enumeration; the consumer already reaches it, and the engine-shrunk program is 2 nodes above it"
+ },
+ "controls": {
+  "positive": "still_solves(value) is True before the bite and the fixture canonical string is reproduced byte-for-byte, so the value is the one the consumer holds",
+  "negative": "the organ imported, instantiated and ran one step in the pinned environment: this is not CANNOT_INSTANTIATE or HIDDEN_DEPENDENCY",
+  "cheat_not_run": "an ad-hoc flat encoding of the tree would have made c07 'work'; deliberately not built"
+ },
+ "cheapest_next_falsification": "Name an EXISTING sequence-valued Prometheus object with a Boolean property (e.g. Proteus's ordered assignments, a permutation of the 8 cases, under case coverage) and a one-line to_order/from_order. If none can be named in a day, INTERFACE_INSUFFICIENT stands and c07 is residue.",
+ "never_booted_routes": {
+  "Proteus": "NEVER BOOTED comms; roles/Proteus exists on main (base-role adoption 8fb6864cd, worktree proteus-base-role) with no STATUS.md and no sync receipt. No live consumer, no relay. The Proteus halves of #189/#190 are UNDELIVERABLE-HOLD; Vivarium takes its halves.",
+  "Diomedes": "NEVER BOOTED comms; PARKED by the operator 2026-09-02 (roles/Diomedes/STATUS.md): routable by ruling, no autonomous work. The Diomedes half of #192 is HELD; the Archaeon half is received."
+ },
+ "reopen_condition_B": "ON THE RECORD: of the six delivered SHRINKER organs, the only one a current consumer could attempt (c07, made runnable by #197) returns INTERFACE_INSUFFICIENT at the only two existing sites (Techne's harness, Proteus's shrink.py -- both hold tree values); c03 has no adaptive delete/repeat loop in Prometheus to name (Nyx's own reading); c01 vs the H3 admission rule was not attempted in this bite. No current consumer can test any delivered Nyx ORGAN today. This is evidence about the consumers, not a request for more anatomy."
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.collect_smooth_relations_then_combine_to_a_square",
+  "name": "collect smooth relations, then combine them into a square",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "find many numbers whose squares modulo the target factor completely over a small prime base, record each exponent vector modulo two, find a linear dependency among the vectors to multiply a subset into a perfect square on both sides, and take a greatest common divisor to split the target",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Dixon's algorithm' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Quadratic sieve': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'General number field sieve': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Special number field sieve': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "PRECOMPUTED_TABLE",
+  "iteration": "SWEEP",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a factor base (policy)",
+    "linear algebra over the two-element field"
+  ],
+  "fails_when": [
+    "relation collection dominates; sieving (quadratic sieve) and number fields (NFS) are the speedups"
+  ],
+  "instances": [
+    "Dixon's algorithm",
+    "Quadratic sieve",
+    "General number field sieve",
+    "Special number field sieve"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.coupled_value_moves",
+  "name": "coupled-value passes",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "when a value cannot be lowered alone because another depends on it, propose joint moves: the same new value for duplicates, a transfer between a near pair, the same decrement for two, a common offset for all recently changed",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "nyx/specimens/hypothesis_shrinker/organs/coupled_value_passes.cut1.json",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "SEARCH",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "CALLBACK",
+  "guarantee": "LOCAL_OPTIMUM",
+  "cost": "LINEAR",
+  "requires": [
+    "a locality window",
+    "greedy acceptance"
+  ],
+  "fails_when": [
+    "coupling farther than the window is invisible",
+    "only linear/sum couplings tried"
+  ],
+  "instances": [
+    "hypothesis Shrinker minimize_duplicated_choices, redistribute_numeric_pairs, lower_integers_together"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.order_gated_greedy_acceptance"
+    }
+  ],
+  "organ_record": "nyx/specimens/hypothesis_shrinker/organs/coupled_value_passes.cut1.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it",
+  "strategy": "GREEDY",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

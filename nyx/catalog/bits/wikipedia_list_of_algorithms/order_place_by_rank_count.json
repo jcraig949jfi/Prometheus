@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.place_by_rank_count",
+  "name": "place each element at its counted rank",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "for each element count how many are smaller to find its final position, write it there, and continue with the element displaced, so each element is written once",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cycle sort' in section Combinatorial algorithms / Sequence algorithms / Sequence sorting: in-place with theoretically optimal number of writes",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a total order"
+  ],
+  "fails_when": [
+    "quadratic comparisons; optimal only in writes"
+  ],
+  "instances": [
+    "Cycle sort"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIRECT",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

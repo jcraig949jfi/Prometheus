@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.climb_then_restart_from_random",
+  "name": "climb to a local optimum, then restart at random",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "repeatedly move to a better neighbour until none exists, record the result, restart from a random point, and keep the best over restarts",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Random-restart hill climbing' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "LOCAL_OPTIMUM",
+  "strategy": "GREEDY",
+  "iteration": "RANDOM",
+  "cost": "UNKNOWN",
+  "requires": [
+    "a neighbourhood"
+  ],
+  "fails_when": [
+    "restarts are independent; no memory across them"
+  ],
+  "instances": [
+    "Random-restart hill climbing"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

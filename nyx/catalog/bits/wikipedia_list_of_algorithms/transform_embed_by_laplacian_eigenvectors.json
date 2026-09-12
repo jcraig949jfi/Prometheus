@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.embed_by_laplacian_eigenvectors",
+  "name": "embed by Laplacian eigenvectors",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "form the graph's Laplacian matrix and place each vertex at the coordinates given by its entries in the eigenvectors of the smallest nonzero eigenvalues",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Spectral layout' in section Combinatorial algorithms / Graph algorithms / Graph drawing: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "GRAPH",
+  "out_geometry": "MATRIX",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "DIRECT",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "an eigensolver"
+  ],
+  "fails_when": [
+    "disconnected graphs need per-component handling",
+    "cubic eigensolve on dense graphs"
+  ],
+  "instances": [
+    "Spectral layout"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "NONE",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

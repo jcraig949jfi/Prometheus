@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.propagate_error_gradient_backward_through_layers",
+  "name": "propagate the error gradient backward through layers",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "compute the output error, then pass it backward layer by layer multiplying by each layer's local derivative to obtain the gradient of the error with respect to every weight in one backward sweep, and adjust the weights against it",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Backpropagation' in section Computer science / Machine learning and statistical classification: a supervised learning method which requires a teacher that knows, or can calculate, the desired output for any given input",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "FUNCTION",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "LOCAL_OPTIMUM",
+  "strategy": "DYNAMIC_PROGRAMMING",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "differentiable layers",
+    "a step-size rule"
+  ],
+  "fails_when": [
+    "vanishing or exploding gradients through many layers"
+  ],
+  "instances": [
+    "Backpropagation"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.step_against_gradient"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

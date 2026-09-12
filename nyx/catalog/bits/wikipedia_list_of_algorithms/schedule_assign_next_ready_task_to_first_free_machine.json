@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.schedule.assign_next_ready_task_to_first_free_machine",
+  "name": "assign the next ready task to the first free machine",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "order tasks by a priority list and, whenever a machine is free, give it the highest-priority task whose predecessors are done",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'List scheduling' in section Operating systems algorithms / Scheduling: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SCHEDULE",
+  "in_geometry": "DAG",
+  "out_geometry": "MAP",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a priority list (policy)"
+  ],
+  "fails_when": [
+    "within a factor of two of optimal, not optimal"
+  ],
+  "instances": [
+    "List scheduling"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

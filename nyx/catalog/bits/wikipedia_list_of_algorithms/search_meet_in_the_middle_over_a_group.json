@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.meet_in_the_middle_over_a_group",
+  "name": "meet in the middle over a group by a table of small steps",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "tabulate the first m powers of the generator, then step the target backward by multiples of m and look each value up in the table; a hit gives the exponent as a giant multiple plus a baby index, in about the square root of the group order steps",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Baby-step giant-step' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "PRECOMPUTED_TABLE",
+  "iteration": "SWEEP",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a group operation and inverse",
+    "memory for the table"
+  ],
+  "fails_when": [
+    "memory equal to the square root of the order"
+  ],
+  "instances": [
+    "Baby-step giant-step"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.search.meet_in_the_middle"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.evaluate_at_random_points",
+  "name": "evaluate at random points",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "draw points at random from the parameter space, evaluate each, and keep the best seen",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Random Search' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "LINEAR",
+  "requires": [
+    "a sampling distribution (policy)"
+  ],
+  "fails_when": [
+    "no use of structure; but it is the baseline every smarter method must beat"
+  ],
+  "instances": [
+    "Random Search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

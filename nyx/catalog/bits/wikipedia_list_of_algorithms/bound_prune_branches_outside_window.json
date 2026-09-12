@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.bound.prune_branches_outside_window",
+  "name": "prune branches outside the value window",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "while evaluating a two-player game tree with alternating maximiser and minimiser, carry the best values each side is already guaranteed and stop exploring any branch that cannot improve on them",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Alpha–beta pruning' in section Computational mathematics / Optimization algorithms: search to reduce number of nodes in minimax algorithm",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "BOUND",
+  "in_geometry": "TREE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "BRANCH_AND_BOUND",
+  "iteration": "LIFO",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a two-player zero-sum evaluation",
+    "move ordering (policy; decides the saving)"
+  ],
+  "fails_when": [
+    "poor move ordering gives no saving"
+  ],
+  "instances": [
+    "Alpha–beta pruning"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.bound.strategy_switch_on_depth",
+  "name": "strategy switch on depth exhaustion",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "run a fast strategy while tracking its recursion depth or effort, and when a budget derived from the input size is exceeded switch to a slower strategy with a guaranteed bound",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Introselect' in section Combinatorial algorithms / Sequence algorithms / Selection algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Introsort': begin with quicksort and switch to heapsort when the recursion depth exceeds a certain level",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "BOUND",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "FUNCTION",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "cost": "CONSTANT",
+  "requires": [
+    "two strategies for the same task",
+    "a depth or effort budget (policy)"
+  ],
+  "fails_when": [
+    "the budget constant is a human prior; too tight wastes the fast path, too loose gives the worst case"
+  ],
+  "instances": [
+    "Introselect",
+    "Introsort"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "ADAPTIVE_SWITCH",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "NONE"
+}

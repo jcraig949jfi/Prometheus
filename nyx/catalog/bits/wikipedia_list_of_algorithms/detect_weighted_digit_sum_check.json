@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.detect.weighted_digit_sum_check",
+  "name": "weighted digit sum check",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "weight the digits of an identifier by position (doubling alternate digits and folding the result), sum, and require the total to be a multiple of the base, so single-digit errors and most adjacent transpositions change the sum",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Luhn algorithm' in section Information theory and signal processing / Coding theory / Error detection and correction: a method of validating identification numbers",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Luhn mod N algorithm': extension of Luhn to non-numeric characters",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "DETECT",
+  "in_geometry": "STRING",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a weighting rule (policy)"
+  ],
+  "fails_when": [
+    "some transpositions (09 <-> 90) are invisible"
+  ],
+  "instances": [
+    "Luhn algorithm",
+    "Luhn mod N algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

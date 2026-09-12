@@ -1,0 +1,49 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.wildcard_match_by_backtracking",
+  "name": "wildcard match by backtracking",
+  "lineage": [
+    "search",
+    "symbolic reasoning"
+  ],
+  "mechanism": "match a pattern with single- and multi-character wildcards against a string by trying the shortest expansion of each multi-wildcard and backing up to try longer ones on failure",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Rich Salz' wildmat' in section Combinatorial algorithms / Sequence algorithms / Substrings: a widely used open-source recursive algorithm",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Krauss matching wildcards algorithm': an open-source non-recursive algorithm",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "STRING",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a wildcard grammar"
+  ],
+  "fails_when": [
+    "many multi-wildcards give exponential backtracking (the non-recursive variant bounds this)"
+  ],
+  "instances": [
+    "Rich Salz' wildmat",
+    "Krauss matching wildcards algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "BACKTRACKING",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "LIFO"
+}

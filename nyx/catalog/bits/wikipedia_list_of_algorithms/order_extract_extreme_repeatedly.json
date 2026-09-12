@@ -1,0 +1,55 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.extract_extreme_repeatedly",
+  "name": "repeatedly extract the extreme",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "repeatedly find the smallest remaining element and move it to the end of the output; a heap makes each extraction logarithmic",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Selection sort' in section Combinatorial algorithms / Sequence algorithms / Sequence sorting: pick the smallest of the remaining elements, add it to the end of the sorted list",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Heapsort': convert the list into a heap, keep removing the largest element from the heap and adding it to the end of the list",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Smoothsort': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a total order",
+    "optionally a priority structure"
+  ],
+  "fails_when": [
+    "quadratic without a priority structure",
+    "not stable"
+  ],
+  "instances": [
+    "Selection sort",
+    "Heapsort",
+    "Smoothsort"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "GREEDY",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "PRIORITY"
+}

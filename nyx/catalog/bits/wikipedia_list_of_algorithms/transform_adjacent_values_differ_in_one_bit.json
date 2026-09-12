@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.adjacent_values_differ_in_one_bit",
+  "name": "encode so adjacent values differ in one bit",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "map integers to binary words so that consecutive integers differ in exactly one bit (each word is the integer exclusive-or its right shift), so a transition between neighbours can never be misread as a far value",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gray code' in section Information theory and signal processing / Coding theory / Error detection and correction: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "binary representation"
+  ],
+  "fails_when": [
+    "arithmetic is awkward in the coded form"
+  ],
+  "instances": [
+    "Gray code"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

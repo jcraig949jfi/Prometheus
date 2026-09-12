@@ -1,0 +1,643 @@
+{
+  "specimen": "specimen.go_explore",
+  "cuts": [
+    "CUT-1"
+  ],
+  "candidates": [
+    {
+      "id": "c01",
+      "name": "archive admission: best-known entry per key, replace on higher score or equal-and-shorter",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: should_accept_cell + the write block in run_cycle + the recompute path",
+      "dispositions": {
+        "CUT-1": "RECURRENCE"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "same mechanism as MAP-Elites cell replacement by fitness in a behaviour-keyed archive; (score, -length) fitness and the restore payload are POLICY/DATA on it"
+      },
+      "tempted_organ_reading": true,
+      "recurrence_of": "organ.map_elites.cell_replacement (nyx/specimens/map_elites/organs/)",
+      "cross_lineage_recurrence": {
+        "of": "organ.map_elites.cell_replacement (lineage: quality diversity; nyx/specimens/map_elites/)",
+        "in": "go_explore c01 archive admission (lineage: reinforcement learning / search)",
+        "ruling": "roles/Nyx/prompts/2026-09-12_ruling_n3_accepted_n4_closed/",
+        "reading": "two independent cuts reached materially equivalent machinery; NOT a new organ, NOT validation of the existing organ, NOT proof of universality; both ancestries preserved"
+      }
+    },
+    {
+      "id": "c02",
+      "name": "selection weights over counters + positional bonuses, proportional sampling",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "class WeightedSelector",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "a weight table; count-based bonus is textbook; no behaviour beyond the table"
+      },
+      "tempted_organ_reading": true
+    },
+    {
+      "id": "c03",
+      "name": "deterministic reset: opaque restore token captured per step, stored with the elite, handed back before exploring",
+      "introduced_in": "CUT-1",
+      "origin": "DISCOVERED",
+      "source_boundary": "none: get_pos_info + run_cycle write + process_cell + ENV.get_restore/restore (emulator)",
+      "dispositions": {
+        "CUT-1": "COUPLED_CLUSTER"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "affordance (emulator clone/restore, OUT) + state assumption (exact resumption) + policy (carry the token; resume rather than replay); no mechanism in the IN files performs the reset; pressure P-A extracted",
+        "ruling_2026-09-12": "NOT presently supported as an ORGAN inside the boundary: environmental affordance + state assumption + policy; coupled cluster preserved; the pressure form (#202) may be tested downstream. TRANSFER FAILURE TYPE C (capability belongs to the environment)."
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c04",
+      "name": "representation selection (entropy-vs-target search over a key family, then re-key)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def try_split_frames (+ maybe_split_dynamic_state)",
+      "dispositions": {
+        "CUT-1": "ORGAN"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": [
+          "fitness_value",
+          "ablation"
+        ]
+      },
+      "record_bytes": {
+        "CUT-1": 5786
+      },
+      "independent_test": "specified",
+      "independent_test_ref": "organ record control field; NOT RUN (no managed pin; Techne #201)",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "representation_selection.cut1.json",
+      "notes": {
+        "CUT-1": "materially new vs inventory (declared descriptors there; learned here); image-only family shipped; NOT RUN",
+        "ruling_2026-09-12": "CANDIDATE ORGAN: specified / untested / no current consumer. Status may not be strengthened until executable contact. TRANSFER FAILURE TYPE B (no current consumer state). NYX-44 pre-authorized on a managed pin (#201); controls frozen in ablations/n3_c04_controls.py BEFORE any pin or result."
+      },
+      "tempted_organ_reading": true
+    },
+    {
+      "id": "c05",
+      "name": "archive rebuild under a new key",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "maybe_split_dynamic_state recompute block",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "a re-index through c01"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c06",
+      "name": "random explorer with geometric action repeat",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "class RepeatedRandomExplorer",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "sticky actions; textbook"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c07",
+      "name": "four visit counters with _diff merging",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "class Cell counters",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "bookkeeping for subprocess merge"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c08",
+      "name": "experience arrays for the demo generator",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "run_cycle experience_* + save_checkpoint",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "feeds the OUT phase"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c09",
+      "name": "domain-knowledge cell (discretised room/x/y/level/objects)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "Discretizer family + get_real_cell",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "the human prior about 'the same place'"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c10",
+      "name": "DONE cell at zero weight; ignore_death probe",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "run_cycle / process_cell",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "termination handling"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c11",
+      "name": "pools, pickling minimisation, FormerGrids on disk, checkpoints",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "LPool/SyncPool/FormerGrids/save_checkpoint",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "engineering"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c12",
+      "name": "fitness definition (score desc, trajectory_len asc) + prob_override",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def should_accept_cell",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "what 'better elite' means; rides on c01"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c13",
+      "name": "return-then-explore schedule (batch of starts; explore_steps; admit)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def run_cycle",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "the loop shape; a schedule"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c14",
+      "name": "restore token contents",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "env get_restore tuples",
+      "dispositions": {
+        "CUT-1": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": "unknown",
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "emulator state + wrapper bookkeeping; opaque to Go-Explore"
+      },
+      "tempted_organ_reading": false
+    }
+  ],
+  "deliveries": [
+    {
+      "seat": "Vivarium+Archaeon",
+      "msg": 202,
+      "posted": "2026-09-12T05:0xZ",
+      "cut": "CUT-1",
+      "first_substantive_return": null,
+      "state": "DELIVERED",
+      "content": "1 pressure (hostable UNKNOWN; owner candidate Archaeon; executor Vivarium); c04 marked NO CURRENT CONSUMER and NOT delivered"
+    }
+  ],
+  "cheat_controls": [
+    {
+      "candidate": "c04",
+      "fired": "not_run",
+      "ref": "organs/representation_selection.cut1.json control/cheat; blocked on a managed pin"
+    }
+  ],
+  "knife_application": {
+    "K1": {
+      "status": "FIRED",
+      "evidence": "sequential read, no def-grep; two boundaries drawn ACROSS defs (c01 united three sites; c03 united four including the env call sites) and both are the ones that decided the specimen's shape (a recurrence and a coupled cluster). Rate 12/14 inherited, reported not optimised"
+    },
+    "K2": {
+      "status": "FIRED",
+      "evidence": "the one organ record has 2 unknown-prefixed fields (fitness_value, ablation) because nothing was run"
+    },
+    "K3": {
+      "status": "DID_NOT_FIRE",
+      "evidence": "blocked on management: no managed pin (Techne asked #201, no answer in the pass); the specimen's own switch (dynamic_state on/off) is named in the ablation field and not run. Pre-declared in PREREG s2"
+    },
+    "K4": {
+      "status": "DID_NOT_FIRE",
+      "evidence": "same block; negative controls specified in the record, none run"
+    },
+    "K5": {
+      "status": "FIRED",
+      "evidence": "the foreign callee search located the reset capability OUTSIDE the boundary (ALE clone_state/restore_state via the env wrappers) and that decided c03's disposition (coupled cluster) and produced the pressure"
+    },
+    "K6": {
+      "status": "NOT_APPLICABLE",
+      "evidence": "no null/minimal mode used as a baseline"
+    },
+    "K7": {
+      "status": "FIRED",
+      "evidence": "one pressure written; a second candidate ('learn the map's granularity from experience', from c04) HELD as a note"
+    },
+    "K8": {
+      "status": "FIRED",
+      "evidence": "origins stamped in this generator at drawing"
+    },
+    "K9": {
+      "status": "FIRED",
+      "evidence": "the pressure carries substrate_required / substrate_owner (candidate Archaeon) / current_executor (Vivarium) / hostable_today UNKNOWN from the start; delivered to Vivarium + Archaeon in one message"
+    },
+    "K10": {
+      "status": "FIRED",
+      "evidence": "the cheat_control states its one-sided read-out"
+    }
+  },
+  "transfer_interface": {
+    "c04": {
+      "VALUE_GEOMETRY": "a SAMPLE of observations (here 2D uint8 frames) + a parametrised FAMILY of key functions observation -> hashable; output: parameters + a partition size",
+      "STATE_GEOMETRY": "a rotating sample of recent observations; the archive to be re-keyed (former grids on disk); the current key parameters",
+      "CONTROL_GEOMETRY": "the exploration loop decides WHEN (every recompute_dynamic_state_every frames or when the archive exceeds max_archive_size); the organ decides WHICH parameters",
+      "ORDER_METRIC": "a hashable key per observation (equality only); entropy over occupancy counts; |n - target| distance; no metric on observations themselves",
+      "REVERSIBILITY": "NO encoding/decoding boundary for the objective; the shipped family (downscale) is one-way and image-specific",
+      "FOREIGN_SEMANTICS": "that observations are images (the family's parameters are shape and pixel depth); that recent frames represent the archive; the target granularity constant",
+      "MINIMUM_CONSUMER_CONTRACT": "a consumer that (a) holds a sample of observations, (b) can supply a key-function family over them, (c) keys an archive by the result and is willing to re-key it",
+      "EXISTING_PROMETHEUS_MATCH": "NONE. Archaeon's H3 descriptors are declared, fixed-length, never learned (Vivarium #182); no site learns its own discretisation today",
+      "runnable_outside_ancestor": "SPECIFIED (pure Python over numpy arrays + Counter; needs imdownscale or any family) -- NOT RUN (no managed pin)",
+      "consumable_by_existing_site": "NO CURRENT CONSUMER"
+    },
+    "c01": {
+      "VALUE_GEOMETRY": "hashable key -> record{score, path length, payload}",
+      "STATE_GEOMETRY": "the archive (dict) and the counters",
+      "CONTROL_GEOMETRY": "called per step of every returned trajectory by the loop",
+      "ORDER_METRIC": "a total order on (score, -length); key equality",
+      "REVERSIBILITY": "none",
+      "FOREIGN_SEMANTICS": "that the payload (a restore token) is meaningful to whoever resumes",
+      "MINIMUM_CONSUMER_CONTRACT": "an archive keyed by a descriptor with a fitness order",
+      "EXISTING_PROMETHEUS_MATCH": "Archaeon h3_replay admission rule; MAP-Elites organ (inventory) -- hence RECURRENCE",
+      "runnable_outside_ancestor": "SPECIFIED (trivially)",
+      "consumable_by_existing_site": "YES in principle (H3 already has one) -- which is why it is a recurrence, not a delivery"
+    },
+    "c03": {
+      "VALUE_GEOMETRY": "an opaque token the WORLD produces and accepts back",
+      "STATE_GEOMETRY": "the world's full internal state at capture time",
+      "CONTROL_GEOMETRY": "the loop decides when to resume; the world performs it",
+      "ORDER_METRIC": "none",
+      "REVERSIBILITY": "the token IS a reversible encoding of the world state -- owned by the world",
+      "FOREIGN_SEMANTICS": "exact determinism; that a token captured under one wrapper configuration is valid later",
+      "MINIMUM_CONSUMER_CONTRACT": "a world exposing capture/resume",
+      "EXISTING_PROMETHEUS_MATCH": "NONE as a kind operation; H5 CA state is trivially resumable but no kind exposes 'resume from artifact'",
+      "runnable_outside_ancestor": "NONE (nothing to run; the capability is the world's)",
+      "consumable_by_existing_site": "NO CURRENT CONSUMER (converted to pressure P-A)"
+    }
+  },
+  "fishing_log": [],
+  "note": "empty at preregistration 2026-09-12 ~04:25Z; candidates stamped at drawing; transfer_interface rows (8 ruling fields + runnable_outside_ancestor + consumable_by_existing_site) per candidate ORGAN; executable attacks NOT RUN pending a Techne pin",
+  "pressures": {
+    "CUT-1": [
+      "resume_from_remembered_places.cut1.json"
+    ]
+  },
+  "deterministic_reset_disposition": "ENVIRONMENTAL AFFORDANCE (emulator save/restore, outside the boundary) + STATE ASSUMPTION (exact resumption) + POLICY (carry the token with the elite; resume rather than replay). Not a mechanism of the IN files. Preserved as COUPLED_CLUSTER c03; the world-side requirement is pressure P-A.",
+  "promotion_temptation": {
+    "count": 3,
+    "candidates": [
+      "c01 (admission rule -- refused: recurrence of MAP-Elites cell replacement)",
+      "c02 (selection weights -- refused: a table)",
+      "c04 (representation selection -- ADMITTED as ORGAN at CUT-1: learned key function is materially new vs declared descriptors)"
+    ]
+  },
+  "c07_pathology_check": {
+    "question": "does the c07 interface pathology (runnable outside the ancestor but not consumable at an existing site) recur?",
+    "c04": "CANNOT be answered as 'recurred' because nothing was run (runnable = SPECIFIED, not RUN); consumable = NO CURRENT CONSUMER -- a different failure class: not 'the site holds the wrong geometry' but 'no site holds this kind of state at all'",
+    "c03": "the coupled cluster's geometry is the WORLD's (a token the world produces and accepts); it cannot leave the ancestor by construction -- the pressure is the transferable form"
+  },
+  "transfer_failure_types_provisional": {
+    "note": "provisional empirical classes recorded per the ruling; NOT nyx.chop/0 ontology",
+    "A_interface_mismatch_at_existing_site": [
+      "hypothesis_shrinker c07 (#200): a candidate consumer exists; its value geometry (nested program trees) does not satisfy the organ's contract (flat orderable sequence)"
+    ],
+    "B_no_current_consumer_state": [
+      "go_explore c04: no existing site holds a sample of observations + a key-function family + an archive willing to be re-keyed"
+    ],
+    "C_capability_belongs_to_environment": [
+      "go_explore c03: the reset/resume capability is the emulator's; policy and a state assumption ride on it"
+    ]
+  },
+  "n4_gate": {
+    "status": "CLOSED (ruling roles/Nyx/prompts/2026-09-12_ruling_n3_accepted_n4_closed/)",
+    "reopen_any_of": [
+      "A NYX-44 produces executable evidence about c04",
+      "B #202 produces a substantive pressure return",
+      "C an existing ORGAN receives another substantive consumer attempt",
+      "D cross-lineage recurrence creates a concrete scientific reason to test another lineage",
+      "E the Keeper supplies a more informative experiment"
+    ]
+  },
+  "nyx44_controls_frozen": {
+    "file": "nyx/specimens/go_explore/ablations/n3_c04_controls.py",
+    "sha256": "398da889ebcfbd3fc1b10eaf3e6e5eccf01274992b8c60b5b772a68add25509a",
+    "frozen": "2026-09-12T04:40Z",
+    "rule": "not altered after a result except to repair a demonstrably malformed control, ledgered before rerun (ruling 2026-09-12)"
+  }
+}

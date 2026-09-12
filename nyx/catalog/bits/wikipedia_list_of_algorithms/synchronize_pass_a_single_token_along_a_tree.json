@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.synchronize.pass_a_single_token_along_a_tree",
+  "name": "pass a single token along a tree toward requesters",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "one token grants entry; each node knows only which neighbour is toward the token, forwards requests that way, and the token travels back along the request path, so messages are logarithmic and only one holder exists",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Raymond's Algorithm' in section Distributed systems algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SYNCHRONIZE",
+  "in_geometry": "TREE",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "SOUND",
+  "strategy": "DIRECT",
+  "iteration": "FIFO",
+  "cost": "LOG",
+  "requires": [
+    "a spanning tree",
+    "a single token"
+  ],
+  "fails_when": [
+    "token loss needs regeneration"
+  ],
+  "instances": [
+    "Raymond's Algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

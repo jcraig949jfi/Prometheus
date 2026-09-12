@@ -82,7 +82,13 @@ DISPOSITIONS = ("ORGAN", "PRESSURE", "DATA", "POLICY", "SCAFFOLDING", "COUPLED_C
                 "RECURRENCE", "RECURRENT_PRESSURE")
 # operator ruling 2026-09-12: the metabolic state of a delivery is one of these, never one bit.
 DELIVERY_STATES = ("DELIVERED", "ATTEMPTED", "REJECTED_BLOCKED", "OPERATIONALIZED", "CONSUMED",
-                   "CAUSED_DOWNSTREAM_EFFECT")
+                   "CAUSED_DOWNSTREAM_EFFECT",
+                   # operator ruling 2026-09-12 (N3 open), on Archaeon #200: a consumer imported,
+                   # instantiated and executed the organ and failed at the boundary between the organ's
+                   # value geometry and the site's. Not CONSUMED (consumed = the consumer used the output
+                   # in its own work), not REJECTED_BLOCKED (it ran). A delivery may carry
+                   # `state_history`: the ordered list of states it passed through.
+                   "INTERFACE_INSUFFICIENT")
 ORIGINS = ("INHERITED", "DISCOVERED", "PERTURBED")
 RELATIONS = ("NEW", "SURVIVED", "SPLIT", "MERGED", "DEMOTED", "PROMOTED", "KILLED")
 SUPPORT = ("UNTESTED", "SUPPORTED", "FALSIFIED")
@@ -138,6 +144,9 @@ def check(ledger: Dict[str, Any]) -> List[str]:
             out.append("delivery msg {}: state {} not in {}".format(d.get("msg"), st, DELIVERY_STATES))
         if st != "DELIVERED" and not str(d.get("state_ref", "")).strip():
             out.append("delivery msg {}: state {} without a state_ref (the return that established it)".format(d.get("msg"), st))
+        for h in d.get("state_history", []) or []:
+            if h not in DELIVERY_STATES:
+                out.append("delivery msg {}: state_history entry {} not in {}".format(d.get("msg"), h, DELIVERY_STATES))
     for k, v in (ledger.get("knife_application") or {}).items():
         if not isinstance(v, dict) or v.get("status") not in KNIFE_STATUS:
             out.append("knife_application[{}]: status must be one of {}".format(k, KNIFE_STATUS))

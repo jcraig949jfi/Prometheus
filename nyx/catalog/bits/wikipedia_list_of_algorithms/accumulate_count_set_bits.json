@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.accumulate.count_set_bits",
+  "name": "count the set bits of a word",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "count the one bits of a binary word, by table, by clearing the lowest set bit repeatedly, or by parallel bit-field additions",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hamming weight (population count)' in section Information theory and signal processing / Coding theory / Error detection and correction: find the number of 1 bits in a binary word",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ACCUMULATE",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "BIT_PARALLEL",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "a machine word"
+  ],
+  "fails_when": [
+    "none beyond word width"
+  ],
+  "instances": [
+    "Hamming weight (population count)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

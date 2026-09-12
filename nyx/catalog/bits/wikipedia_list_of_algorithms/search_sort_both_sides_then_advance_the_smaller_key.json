@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.sort_both_sides_then_advance_the_smaller_key",
+  "name": "sort both sides, then advance whichever has the smaller key",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "sort both collections on the join key and walk them together, advancing the side with the smaller current key and emitting matches when keys are equal",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Sort-Merge Join' in section Database algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a total order on the key"
+  ],
+  "fails_when": [
+    "sorting dominates unless inputs arrive sorted"
+  ],
+  "instances": [
+    "Sort-Merge Join"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.order.merge_sorted_runs"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

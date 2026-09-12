@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.synchronize.estimate_offset_by_round_trip_halving",
+  "name": "estimate clock offset as reference time plus half the round trip",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "ask a reference for its time, measure the round trip, and set the local clock to the reply plus half the round trip, assuming symmetric delays",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cristian's algorithm' in section Distributed systems algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SYNCHRONIZE",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "EXTERNAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "a reference clock",
+    "roughly symmetric delays"
+  ],
+  "fails_when": [
+    "asymmetric routes bias the offset by half the asymmetry"
+  ],
+  "instances": [
+    "Cristian's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

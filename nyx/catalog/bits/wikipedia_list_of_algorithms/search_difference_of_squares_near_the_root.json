@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.difference_of_squares_near_the_root",
+  "name": "search for a difference of squares near the square root",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "starting at the ceiling of the square root, test successive values a for whether a squared minus the target is a perfect square; when it is, the target factors as the product of the sum and difference",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fermat's factorization method' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "odd composite target"
+  ],
+  "fails_when": [
+    "slow unless the two factors are close"
+  ],
+  "instances": [
+    "Fermat's factorization method"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.synchronize.flag_intent_then_yield_by_turn_variable",
+  "name": "flag intent, then yield by a shared turn variable",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "each of two processes sets a flag that it wants in and sets the turn to the other; it enters only when the other's flag is down or the turn is its own, so both cannot be inside and neither waits forever",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Peterson's algorithm' in section Operating systems algorithms / Process synchronization: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Dekker's algorithm': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lamport's Bakery algorithm': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SYNCHRONIZE",
+  "in_geometry": "BOOLEAN",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "REACTIVE",
+  "guarantee": "SOUND",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "shared memory with ordered writes"
+  ],
+  "fails_when": [
+    "reordered memory breaks it; two processes only (the bakery form generalises with tickets)"
+  ],
+  "instances": [
+    "Peterson's algorithm",
+    "Dekker's algorithm",
+    "Lamport's Bakery algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

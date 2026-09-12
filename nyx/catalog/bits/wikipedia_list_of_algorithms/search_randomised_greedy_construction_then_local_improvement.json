@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.randomised_greedy_construction_then_local_improvement",
+  "name": "randomised greedy construction then local improvement",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "build a solution by repeatedly choosing at random among the few best-scoring next elements, then improve it by local moves, and repeat from scratch keeping the best",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Greedy randomized adaptive search procedure (GRASP)' in section Computational mathematics / Optimization algorithms: successive constructions of a greedy randomized solution and subsequent iterative improvements of it through a local search",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "RECORD",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "UNKNOWN",
+  "requires": [
+    "a greedy scoring of next elements",
+    "a local move set"
+  ],
+  "fails_when": [
+    "independent restarts learn nothing across rounds"
+  ],
+  "instances": [
+    "Greedy randomized adaptive search procedure (GRASP)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

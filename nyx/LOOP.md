@@ -19,7 +19,11 @@ Throughput observed is still 0 per hour, but the consumer exists.
     no CUT-3 -- no return, no patched-build ablation); deliveries #190 #191.
     N2 diomedes K0 census: DONE 2026-09-12 00:21Z as a NEGATIVE CHOP (ruling): 0 organs,
     0 pressures, boundary VALID, null SUPPORTED; one owner finding (#192).
-    In flight now: NOTHING. General loop CLOSED; N3 requires a ruling.
+    N3 Go-Explore: DONE 2026-09-12 05:0xZ at its evidence boundary (one cut; 1 organ NO CURRENT CONSUMER,
+    1 pressure delivered #202 hostable UNKNOWN, 1 recurrence of an inventory organ, 1 coupled cluster).
+    In flight now: NOTHING. RULING 2026-09-12 (roles/Nyx/prompts/2026-09-12_ruling_n3_accepted_n4_closed/): N3 ACCEPTED; N4 CLOSED;
+    production loop CLOSED. ATTACK EXISTING CLAIMS; DO NOT GROW THE WAREHOUSE. NYX-44 pre-authorized
+    on a managed pin (#201); controls FROZEN before any result (ablations/n3_c04_controls.py).
     RULING 2026-09-12 (metabolic gate holds): HOLD THE WAREHOUSE; ATTACK EXISTING
     CLAIMS (NYX-32/37/38 on existing specimens only, no new inventory); REPAIR
     ROUTING; WAIT FOR DIGESTION. Routing repaired #197 (Proteus and Diomedes have
@@ -100,9 +104,9 @@ consumer this week).
 
 ## ANTI-COLLECTION table (program level; refreshed at journal close)
 
-    organs delivered                 18  (MAP-Elites 3, DreamCoder 3, lean_simp 8, hypothesis_shrinker 6 at CUT-2 via #191)
+    organs delivered                 18  (unchanged: go_explore c04 marked NO CURRENT CONSUMER and NOT delivered)
     organs actually consumed          0
-    pressures delivered               7  (#190 to Vivarium+Proteus, owner named; +2 held: mutual_normalisation, encoding-decides-reachability)
+    pressures delivered               8  (#202 resume_from_remembered_places, hostable UNKNOWN, owner candidate named; +3 held)
     pressures operationalized         0  (6 returned: 1 world sketch blocked on semantics, 1 vacuous, 4 unhostable -- no rewriting substrate)
     cuts falsified                    2  (lean c23; shrinker c08); negative chops completed 1 (census: expected zero -> zero)
     cuts materially revised          17  (lean_simp 15 + 1 + orientation cheat read-out on #182; MAP-Elites/DreamCoder annotated, not recut)
@@ -155,10 +159,103 @@ Future specimens record the temptation at the moment it is felt, before the cont
     B  #191 is explicitly rejected because no current consumer can test any delivered organ
     C  evidence that the delivery/interface contract itself prevents consumption
     D  the Keeper issues a new scientific reason
-    Status 03:30Z: none met. Routing repair #197 asks Archaeon to put B on the record if it is true.
+    Status 03:30Z: none met. Routing repair #197 asked Archaeon to put B on the record.
+    04:00Z: B SATISFIED (#200: no current consumer can test any delivered Nyx ORGAN today). N3 OPENED by ruling
+    roles/Nyx/prompts/2026-09-12_ruling_n3_open/ with a new question: does Nyx extract organs whose INTERFACE
+    GEOMETRY is separable from the ancestor? Transfer-interface side ledger required before CUT-1.
 
 ## Class counted separately (ruling): useful outcomes with no ORGAN and no PRESSURE
 
     downstream failures made cheaper   3   (#44 preflight count; Techne target-7 located;
                                             Diomedes bootstrap zero-width, scope exactly n = 4 8 16 32
                                             observed, 5 17 24 100 fine -- not generalised)
+
+## Metabolic measurements kept SEPARATE (ruling 2026-09-12)
+
+    runnable outside the ancestor      3 organs (shrinker c01 c03 c07; RECEIPT_N1)
+    attempted by a downstream consumer 1 (c07, #200)
+    consumable by an existing site     0
+    CONSUMED (output used downstream)  0
+    first organ consumer return        #200, 2026-09-12 03:42Z, 4.6 h after #191
+    The c07 lesson as ruled: 'runnable outside the ancestor' != 'consumable by an existing downstream site'.
+    NOT learned: flat-sequence organs are bad; tree organs are better; seek Prometheus-shaped organs.
+
+## Recurrence of inventory organs (first instance 2026-09-12)
+
+    go_explore c01 archive admission -> RECURRENCE of organ.map_elites cell replacement (and of h3_replay's admission rule)
+    The Chop Shop did not manufacture apparent diversity here; the anti-collection law worked once.
+
+## Three transfer failures, recorded SEPARATELY (ruling 2026-09-12; provisional classes, not ontology)
+
+    TYPE A  interface mismatch at an existing site     c07 (#200): consumer exists; its value geometry does not fit the organ's contract
+    TYPE B  no current consumer state                  c04: no site holds the state/value/interface the organ needs
+    TYPE C  capability belongs to the environment      c03: reset/resume is the world's; policy + assumption ride on it
+    Not collapsed into one bit. nyx.chop/0 unchanged.
+
+## Standing diagnostic: CROSS-LINEAGE ORGAN RECURRENCE (ruling 2026-09-12)
+
+    2026-09-12  go_explore c01 (RL/search) -> organ.map_elites cell replacement by fitness in a behaviour-keyed archive (quality diversity)
+                Both ancestries preserved (nyx/specimens/map_elites/, nyx/specimens/go_explore/cuts.json c01).
+    Counts as: two independent cuts reaching materially equivalent machinery.
+    Does NOT count as: new organ / validation of the existing organ / proof of universality.
+
+## N4 gate (ruling 2026-09-12): CLOSED. Reconsider after ANY of
+    A  NYX-44 executable evidence about c04      B  #202 substantive pressure return
+    C  another substantive consumer attempt on an existing ORGAN
+    D  cross-lineage recurrence gives a concrete reason to test another lineage
+    E  the Keeper supplies a more informative experiment
+    Availability of another interesting tool is not sufficient.
+
+## The questions that now matter (ruling)
+    Can c04 survive executable attack?  (NYX-44; the unique-key-family cheat control especially)
+    Can #202 become an operational world pressure?  (decisive: does an EXISTING world supply opaque
+      state capture, exact restoration, world-owned novelty accounting, explicit cost -- without
+      anyone manufacturing Go-Explore around the pressure)
+    Can any ORGAN become genuinely CONSUMED?
+
+## Ruling 2026-09-12 (roles/Nyx/prompts/2026-09-12_ruling_c07_c03_c01_hold/): shrinker organ dispositions and held routes
+
+    c07  INTERFACE_INSUFFICIENT stands. No tree<->sequence encoder. No new Hypothesis organs.
+         REOPEN ONLY IF an EXISTING consumer already has: (1) a sequence-valued object; (2) a Boolean
+         preservation predicate; (3) a natural existing order / one-line reversible representation;
+         (4) a real minimisation objective not already solved as well by its baseline. Never manufactured.
+    c03  HOLD -- unless an existing adaptive delete/repeat consumer appears naturally.
+    c01  HOLD, untested -- unless a live consumer specifically asks for it.
+    Held routes: Proteus halves of #189/#190; Diomedes half of #192 (never booted). Not delivered.
+    No more anatomy until a consumer creates demand.
+
+## RE-PREMISE 2026-09-12 ~05:10Z -- Keeper directive (roles/Nyx/prompts/2026-09-12_directive_catalogue_loop/)
+
+The Keeper: "loop until the end of time building out this database, graph or tensor.
+Pull from existing databases, lists, wikis first then, chop chop chop. The smallest
+components computable. Human descriptions are OK but the Classification for
+searchability is the real gem ... Imagine a tool seeing a weird solution produced by
+an organism to survive. We want to match that against a similar set of known
+algorithmic bits."
+
+How this sits against the standing rulings, stated plainly:
+  - N4 gate condition E (the Keeper supplies a different experiment) is met by this
+    directive. The production loop reopens FOR THE CATALOGUE.
+  - The product changes: from ORGANs delivered to consumers (fitness = consumption)
+    to a CATALOGUE of algorithmic bits with behavioural classification (fitness =
+    a held-out description of a known mechanism retrieves it; a recurrence is
+    detected by classification, not by name). The anti-collection law is kept in
+    its adapted form: a bit that cannot be retrieved by a behavioural query is
+    inventory failure; the count of bits is not a score.
+  - Delivery of ORGANs to consumers stays ON DEMAND ONLY (ruling 04:50Z); the
+    catalogue does not deliver, it answers queries.
+  - Provenance grades travel: list/wiki-seeded bits are T2 (human description of a
+    known mechanism) until a chop or a run makes them T1; the grade is a field.
+  - Recurrence (N2/N3 rulings) becomes the catalogue's core operation: two bits with
+    the same behavioural signature are one bit with two ancestries.
+Layout: nyx/catalog/ (schema, search, seed, loop); records under nyx/catalog/bits/.
+
+## Catalogue loop state (refreshed at each checkpoint)
+
+    2026-09-12 ~05:45Z  bits 140 (T1 16 / T2 124); sources: wikipedia_list_of_algorithms 917
+    (601 pending), wikipedia_list_of_data_structures 220 (pending); vocabulary v0.4; planted
+    controls 10/10; residual recurrence pairs 6 (named in schema changelog / LOOP_LOG).
+    Fitness (adapted anti-collection law): every planted behavioural query retrieves its bit
+    without the name -- YES at this checkpoint. Bits with no behavioural query yet: most;
+    the planted set grows only from real query needs, not per bit.
+    checkpoint after batch 6: bits 190; pending in list_of_algorithms shrinking; loop self-paced (ScheduleWakeup), one batch per wake.

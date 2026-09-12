@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.keep_top_fraction",
+  "name": "keep the top fraction",
+  "lineage": [
+    "evolutionary computation",
+    "optimization"
+  ],
+  "mechanism": "rank all members by score and keep only the best fixed fraction as parents for the next round",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Truncation selection' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "strategy": "GREEDY",
+  "iteration": "SORTED_GLOBAL",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a fraction (policy)"
+  ],
+  "fails_when": [
+    "rapid diversity loss"
+  ],
+  "instances": [
+    "Truncation selection"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

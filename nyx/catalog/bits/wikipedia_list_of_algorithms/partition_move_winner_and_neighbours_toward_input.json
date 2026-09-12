@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.move_winner_and_neighbours_toward_input",
+  "name": "move the winning unit and its grid neighbours toward the input",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "arrange units on a low-dimensional grid; for each input find the unit whose weights are nearest, move it and its grid neighbours toward the input with strength decreasing in grid distance and over time, so grid position comes to reflect input similarity",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Self-organizing map' in section Computer science / Machine learning and statistical classification: an unsupervised network that produces a low-dimensional representation of the input space of the training samples",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PARTITION",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "MAP",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a grid topology",
+    "a neighbourhood radius schedule (policy)"
+  ],
+  "fails_when": [
+    "topological defects; schedule decides everything"
+  ],
+  "instances": [
+    "Self-organizing map"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

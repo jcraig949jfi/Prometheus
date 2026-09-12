@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.vector_of_per_process_counters",
+  "name": "a vector of per-process counters carried on every message",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "each process keeps a vector with one counter per process, increments its own entry per event, attaches the vector to messages, and on receipt takes the elementwise maximum; one event precedes another exactly when its vector is elementwise no greater and somewhere smaller",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Vector clocks' in section Distributed systems algorithms: generate a partial ordering of events in a distributed system and detect causality violations",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "STREAM",
+  "out_geometry": "SEQUENCE",
+  "order_req": "PARTIAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "a known process set"
+  ],
+  "fails_when": [
+    "vector size grows with the number of processes"
+  ],
+  "instances": [
+    "Vector clocks"
+  ],
+  "related": [
+    {
+      "rel": "GENERALIZES",
+      "id": "bit.order.timestamp_by_max_seen_plus_one"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

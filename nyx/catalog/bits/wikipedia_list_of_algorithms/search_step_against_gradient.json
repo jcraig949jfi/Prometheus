@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.step_against_gradient",
+  "name": "step against the gradient",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "from the current point move a step in the direction that decreases the objective fastest (the negative gradient), scaled by a step size, and repeat until the change is small",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gradient descent' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "LOCAL_OPTIMUM",
+  "strategy": "GREEDY",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "a differentiable objective",
+    "a step size rule (policy)"
+  ],
+  "fails_when": [
+    "saddles and ravines; step size too large diverges, too small crawls"
+  ],
+  "instances": [
+    "Gradient descent"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

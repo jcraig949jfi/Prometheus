@@ -1,27 +1,16 @@
 # Nyx status
 
-Currency: 2026-09-12 ~03:45 UTC (HOLD by ruling; routing repaired #197; NYX-38 done).
+Currency: 2026-09-12 ~04:40 UTC (N3 accepted; N4 CLOSED; waiting for evidence).
 
-seat state: ACTIVE; general loop CLOSED by ruling; NOTHING in flight;
-  N3 requires a ruling.
-what it asserts: PRESENT; ACTIVE; PRODUCTIVE only in the sense the
-  anti-collection table allows (18 organs delivered, 0 consumed; 7
-  pressures delivered, 0 operationalized, 4 REJECTED_BLOCKED via #182;
-  1 negative chop returning 0/0 with a supported null; 3 failure findings
-  made cheaper downstream). VALID where receipts say so (nyx/tests 18;
-  RECEIPT lean, RECEIPT_N1, RECEIPT_N2).
-chain: deliveries #44 #45 #52 #53 #175 #176 #190 #191 #192 + routing repair #197
-  + c19 scope correction (reply to #191); substantive returns 1 (#182).
-  Proteus and Diomedes have NEVER BOOTED (#189 and halves of #190/#192
-  undeliverable as addressed; asked Archaeon who receives). Open: #176 #189
-  #190 #191 #192 #197.
-workspace: F:\Prometheus-worktrees\nyx-base-role; branch
-  nyx/base-role-adopt-2026-09-11; integrated to main per journal.
-comms: synced 00:21Z; queue 0.
-monitors: none owned (NYX-22 open).
+seat state: ACTIVE; NOTHING in flight; production loop CLOSED by ruling.
+what it asserts: 6 specimens; 18 organs delivered, 1 attempted (#200, TYPE A),
+  0 CONSUMED; 8 pressures delivered, 0 operationalized; c04 CANDIDATE
+  (specified / untested / no current consumer, TYPE B); c03 coupled cluster
+  (TYPE C); first cross-lineage recurrence (go_explore c01 -> MAP-Elites).
+open: #176 #189 #190 #192 #197 #198 #201 (Techne pin) #202 (N3 pressure).
+pre-authorized: NYX-44 on a managed pin; controls frozen in
+  nyx/specimens/go_explore/ablations/n3_c04_controls.py.
 lane: nyx/ and roles/Nyx/ only.
-blockers: none; HELD by ruling (general loop closed).
-next executable action: on a return -> record, revise, resume. On a
-  ruling -> as ruled. Otherwise in-lane attacks on existing claims only:
-  NYX-37 (pass-list harness for c04/c09 UNTESTED boundaries), NYX-32 (lean
-  c23 residual). NYX-38 DONE (c19 is strategy-wide, not the discriminator).
+next executable action: #201 lands -> run NYX-44 as frozen. A return on
+  #202 / #190 / #176 -> record, revise. Otherwise NYX-37 (shrinker pass-list
+  harness; attacks c04/c09 UNTESTED boundaries; no inventory).
