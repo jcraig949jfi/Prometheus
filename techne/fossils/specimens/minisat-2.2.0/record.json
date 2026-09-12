@@ -114,11 +114,27 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\minisat-2.2.0 ; tracked record + hashes at techne/fossils/specimens/minisat-2.2.0/",
-    "where_it_came_from": "{'site': 'minisat.se', 'release': '2.2.0'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; MIT",
-    "how_to_run_it": "techne/fossils/specimens/minisat-2.2.0/recipe.json (runner docker) ; `python -m techne.fossils.harvest run minisat-2.2.0` reproduces the receipt",
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\minisat-2.2.0 ; tracked record+hashes at techne/fossils/specimens/minisat-2.2.0/",
+    "where_it_came_from": "{'site': 'minisat.se', 'release': '2.2.0'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; MIT",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run minisat-2.2.0",
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/minisat-2.2.0/receipts/run-minisat-2.2.0-20260912T125043Z.json",
     "what_humans_used_it_for": "decide propositional satisfiability of large CNF formulas and, when satisfiable, produce a model"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "sat",
+    "logic",
+    "search",
+    "constraint-solving"
+  ],
+  "hardware_assumptions": ""
 }

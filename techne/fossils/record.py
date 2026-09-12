@@ -15,8 +15,22 @@ from . import vault
 SCHEMA = "techne.fossil.record/1"
 
 RUN_CLASSES = ("RUNNABLE_NATIVE", "RUNNABLE_CONTAINER", "RUNNABLE_VM", "RUNNABLE_EMULATED",
+               "RUNNABLE_HISTORICAL_TOOLCHAIN",   # added by the 2026-09-12 global-archaeology charter
                "BUILDS_BUT_NOT_RUN", "SOURCE_ONLY", "BINARY_ONLY", "BLOCKED_DEPENDENCY",
                "BLOCKED_PLATFORM", "BROKEN_UPSTREAM", "LEGAL_RESTRICTION", "NOT_ATTEMPTED")
+
+#: Behavioral-observability dimensions (charter 2026-09-12), independent of run class. Each is
+#: yes/no/unknown; they are acquisition facts for Nyx, not a decomposition. INTERVENTION and
+#: PATCH_INTERVENTION say only whether behaviour CAN be varied, never which behaviour matters.
+OBSERVABILITY_DIMS = ("EXECUTABLE", "OBSERVABLE", "ORACLE_BACKED", "INTERVENTION_READY",
+                      "PATCH_INTERVENTION", "OPAQUE")
+
+#: Provenance relations for the lineage graph (charter 2026-09-12). NOT behavioral-equivalence
+#: claims -- that is a downstream question. Each edge: {relation, to (a fossil_id or an external
+#: name), note}.
+LINEAGE_RELATIONS = ("forked_from", "derived_from", "rewrote", "superseded", "inspired_by",
+                     "port_of", "reimplementation_of", "historical_version_of", "algorithm_from",
+                     "shares_ancestor_with")
 TEST_CLASSES = ("UPSTREAM_TESTS_PASS", "UPSTREAM_TESTS_FAIL", "UPSTREAM_TESTS_NOT_RUN",
                 "UPSTREAM_DRIVERS_RUN_NO_ORACLE",   # the shipped test programs ran to completion and produced their tables; no reference output exists in the vault to grade them
                 "TECHNE_SMOKE_HARNESS_PASS", "TECHNE_SMOKE_HARNESS_FAIL", "NO_TESTS", "NOT_ATTEMPTED")
@@ -47,6 +61,12 @@ def skeleton(specimen_id: str, **fields) -> dict:
         "upstream_docs": [],
         "human_capability_summary": {"built_to": "", "pressure": "", "success_means": ""},
         "known_human_problem_solved": "",
+        "hardware_assumptions": "",
+        # charter 2026-09-12: observability is a set of independent yes/no/unknown flags, and
+        # lineage is a list of provenance edges. Both default empty; the harvest fills them.
+        "observability": {d: "unknown" for d in OBSERVABILITY_DIMS},
+        "lineage_relations": [],
+        "acquisition_tags": [],
         "versions_preserved": [],
         "receipts": [],
         "nyx_handoff": {"here_is_the_machine": "", "where_it_came_from": "", "how_to_run_it": "",

@@ -1,0 +1,59 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "reed-solomon-rockliff-1991",
+  "receipt_id": "run-reed-solomon-rockliff-1991-20260912T143252Z",
+  "written_utc": "20260912T143252Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "5a38a755ff062098c8a9730f2a3bb3e3baa434fc874d2643bd8eea5851f54744",
+  "recipe_sha256": "89449b3a0eb76b1b8cc756613b25a1562b975c5fed8f94df5293e7631e8ffbd9",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 1,
+      "seconds": 0.77,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: cd: /w/upstream/tree: No such file or directory\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile (K&R)",
+      "cmd": "gcc -w -std=gnu89 -o $BODY/rs rs.c -lm 2>&1 | grep -i error; test -x $BODY/rs",
+      "exit": 1,
+      "seconds": 0.79,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: cd: /w/upstream/tree: No such file or directory\n"
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

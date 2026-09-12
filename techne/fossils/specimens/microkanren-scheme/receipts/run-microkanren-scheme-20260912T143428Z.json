@@ -1,0 +1,57 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "microkanren-scheme",
+  "receipt_id": "run-microkanren-scheme-20260912T143428Z",
+  "written_utc": "20260912T143428Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream",
+  "harness_sha256": {
+    "harness.scm": "7949bf31fd3bda0e89b48196a9cf8563a65cd954e6c963a24d62997bfe35bcb3"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "64938449ab18672f65a6f1d9bb10c4547d2a90b4f525ce99b21a6eaafc1627de",
+  "recipe_sha256": "8c46e75e6369a468a677138c7776e05bfd0b8d73ab1b1be193c8d9ab49d3af90",
+  "patches": [],
+  "probe": [
+    {
+      "name": "guile",
+      "cmd": "guile --version | head -1",
+      "exit": 0,
+      "seconds": 6.05,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "guile (GNU Guile) 3.0.8\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "unification + interleaving search on a tiny relation",
+      "cmd": "guile --no-auto-compile -l microKanren.scm -l $HARNESS/harness.scm -c '(exit 0)' 2>&1 | tail -6",
+      "exit": 0,
+      "seconds": 0.66,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "answers-for-q=5: 1\ndisj-answers: 2\nMICROKANREN_OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

@@ -127,11 +127,28 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022 ; tracked record + hashes at techne/fossils/specimens/go-explore-uber-2022/",
-    "where_it_came_from": "{'repo': 'github.com/uber-research/go-explore', 'commit': '702fb9c7a9aeecf2872d07ced236c730d5536a8f'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; Apache-2.0 (root LICENSE text is the Apache License 2.0 boilerplate; verify against the hash row before relying on it)",
-    "how_to_run_it": "techne/fossils/specimens/go-explore-uber-2022/recipe.json (runner native) ; `python -m techne.fossils.harvest run go-explore-uber-2022` reproduces the receipt",
-    "how_we_know_it_runs": "SOURCE_ONLY / NO_TESTS ; receipt techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T125406Z.json",
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022 ; tracked record+hashes at techne/fossils/specimens/go-explore-uber-2022/",
+    "where_it_came_from": "{'repo': 'github.com/uber-research/go-explore', 'commit': '702fb9c7a9aeecf2872d07ced236c730d5536a8f'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; Apache-2.0 (root LICENSE text is the Apache License 2.0 boilerplate; verify against the hash row before relying on it)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run go-explore-uber-2022",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T142512Z.json",
     "what_humans_used_it_for": "solve hard-exploration reinforcement-learning problems (Montezuma's Revenge, Pitfall) by keeping an archive of visited states ('cells'), deterministically returning to promising cells, exploring from them, and later robustifying the discovered trajectories into a policy"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "search",
+    "exploration",
+    "reinforcement-learning",
+    "quality-diversity",
+    "archive"
+  ],
+  "hardware_assumptions": ""
 }

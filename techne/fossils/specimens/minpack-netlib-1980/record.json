@@ -728,11 +728,27 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\minpack-netlib-1980 ; tracked record + hashes at techne/fossils/specimens/minpack-netlib-1980/",
-    "where_it_came_from": "{'archive': \"netlib.org/minpack (Argonne's distribution)\", 'files': 48} ; source_type HISTORICAL_ARCHIVE_MIRROR ; Minpack Copyright Notice (1999) University of Chicago -- BSD-like, see disclaimer",
-    "how_to_run_it": "techne/fossils/specimens/minpack-netlib-1980/recipe.json (runner native) ; `python -m techne.fossils.harvest run minpack-netlib-1980` reproduces the receipt",
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\minpack-netlib-1980 ; tracked record+hashes at techne/fossils/specimens/minpack-netlib-1980/",
+    "where_it_came_from": "{'archive': \"netlib.org/minpack (Argonne's distribution)\", 'files': 48} ; HISTORICAL_ARCHIVE_MIRROR ; Minpack Copyright Notice (1999) University of Chicago -- BSD-like, see disclaimer",
+    "how_to_run_it": "recipe.json (runner native); python -m techne.fossils.harvest run minpack-netlib-1980",
     "how_we_know_it_runs": "RUNNABLE_NATIVE / UPSTREAM_DRIVERS_RUN_NO_ORACLE ; receipt techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124631Z.json",
     "what_humans_used_it_for": "find x minimising sum of squares of m nonlinear functions, or solving n nonlinear equations, from a user function with or without an analytic Jacobian"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "nonlinear-least-squares",
+    "nonlinear-equations",
+    "optimization",
+    "scientific-computing"
+  ],
+  "hardware_assumptions": ""
 }

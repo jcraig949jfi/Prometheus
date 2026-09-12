@@ -101,11 +101,28 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\spin-6.5.2-holzmann ; tracked record + hashes at techne/fossils/specimens/spin-6.5.2-holzmann/",
-    "where_it_came_from": "{'repo': 'github.com/nimble-code/Spin', 'tag': 'version-6.5.2'} ; source_type ORIGINAL_AUTHORITATIVE_RELEASE ; BSD-3-Clause (Spin's LICENSE since 6.5)",
-    "how_to_run_it": "techne/fossils/specimens/spin-6.5.2-holzmann/recipe.json (runner docker) ; `python -m techne.fossils.harvest run spin-6.5.2-holzmann` reproduces the receipt",
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\spin-6.5.2-holzmann ; tracked record+hashes at techne/fossils/specimens/spin-6.5.2-holzmann/",
+    "where_it_came_from": "{'repo': 'github.com/nimble-code/Spin', 'tag': 'version-6.5.2'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; BSD-3-Clause (Spin's LICENSE since 6.5)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run spin-6.5.2-holzmann",
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/spin-6.5.2-holzmann/receipts/run-spin-6.5.2-holzmann-20260912T125057Z.json",
     "what_humans_used_it_for": "prove that a concurrent protocol or program model satisfies safety and liveness properties, or produce a concrete counterexample execution"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "model-checking",
+    "verification",
+    "concurrency",
+    "protocols",
+    "search"
+  ],
+  "hardware_assumptions": ""
 }

@@ -1,0 +1,128 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "kissfft-131.1.0",
+  "canonical_name": "KISS FFT 131.1.0 -- Mark Borgerding",
+  "aliases": [
+    "kissfft",
+    "kiss_fft"
+  ],
+  "lineage": "KISS FFT (2003-, Borgerding): a mixed-radix Cooley-Tukey FFT small enough to read in one sitting; the 'keep it simple' counterpoint to FFTW's code generation",
+  "domain": [
+    "scientific-computing",
+    "signal-processing",
+    "fft",
+    "numerical"
+  ],
+  "era": "2003 (131.1.0 rel. 2021)",
+  "version": "131.1.0 git tag, github.com/mborgerding/kissfft",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/mborgerding/kissfft/archive/refs/tags/131.1.0.tar.gz",
+        "filename": "kissfft-131.1.0.tar.gz",
+        "sha256": "76c1aac87ddb7258f34b08a13f0eebf9e53afa299857568346aa5c82bcafaf1a",
+        "bytes": 52383,
+        "extracted_to": "upstream/tree/kissfft-131.1.0"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/mborgerding/kissfft",
+    "tag": "131.1.0"
+  },
+  "hashes": {
+    "tree_sha256": "6c7e606fdfe451894b91e4f2f4d7e910aae6988ea1c1396a74a133b414214338",
+    "n_files": 47,
+    "bytes": 234462,
+    "artifacts": [
+      {
+        "filename": "kissfft-131.1.0.tar.gz",
+        "sha256": "76c1aac87ddb7258f34b08a13f0eebf9e53afa299857568346aa5c82bcafaf1a",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\kissfft-131.1.0",
+    "hash_list": "techne/fossils/specimens/kissfft-131.1.0/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "LICENSE in tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [
+    "libm"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "kiss_fft() / kiss_fftr() C API; test/ programs"
+  ],
+  "example": {
+    "command": "make testall (builds and runs the fwd/inverse round-trip tests)",
+    "input": "generated signals",
+    "output": "round-trip error below tolerance"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "github.com/mborgerding/kissfft README",
+    "Cooley & Tukey 1965"
+  ],
+  "human_capability_summary": {
+    "built_to": "compute the discrete Fourier transform (and inverse) for arbitrary sizes via mixed-radix Cooley-Tukey, in minimal readable C",
+    "pressure": "the O(N^2) cost of the naive DFT; the demand for a small dependency-free FFT where FFTW is overkill",
+    "success_means": "forward-then-inverse reconstructs the input within floating-point tolerance; agreement with a reference DFT"
+  },
+  "known_human_problem_solved": "the fast Fourier transform, minimally",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/kissfft-131.1.0/receipts/run-kissfft-131.1.0-20260912T143248Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body at F:\\Prometheus\\vault\\fossils\\kissfft-131.1.0 ; tracked record+hashes at techne/fossils/specimens/kissfft-131.1.0/",
+    "where_it_came_from": "{'repo': 'github.com/mborgerding/kissfft', 'tag': '131.1.0'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; BSD-3-Clause",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run kissfft-131.1.0",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/kissfft-131.1.0/receipts/run-kissfft-131.1.0-20260912T143248Z.json",
+    "what_humans_used_it_for": "compute the discrete Fourier transform (and inverse) for arbitrary sizes via mixed-radix Cooley-Tukey, in minimal readable C"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Cooley & Tukey 1965",
+      "note": "mixed-radix FFT"
+    }
+  ],
+  "acquisition_tags": [
+    "scientific-computing",
+    "signal-processing",
+    "fft",
+    "numerical"
+  ],
+  "hardware_assumptions": ""
+}
