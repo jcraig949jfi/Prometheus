@@ -3,51 +3,521 @@
   "cuts": [
     "CUT-1"
   ],
-  "candidates": [],
+  "candidates": [
+    {
+      "id": "c01",
+      "name": "exact tie-aware AUC",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def auc",
+      "dispositions": {
+        "CUT-1": "RECURRENCE"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C02-dup_textbook_recomputation",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C02-dup_textbook_recomputation",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "Mann-Whitney U over (score,label); recomputed by hand in C02-dup to 1e-4"
+      },
+      "tempted_organ_reading": false,
+      "recurrence_of": "textbook: Mann-Whitney AUC"
+    },
+    {
+      "id": "c02",
+      "name": "conditional headroom: per-state AUC of the marginal action-rate ranking vs a perfect ranker, averaged; headroom = oracle - ceiling",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def conditional_headroom",
+      "dispositions": {
+        "CUT-1": "RECURRENCE"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C02-pos / C02-neg / C02-ctx / C02-dup",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C02-pos / C02-neg / C02-ctx / C02-dup",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "TEMPTED (P3). Passes s2 (a)(b)(c): a real computation, statable without Diomedes, and it behaved on non-Diomedes inputs (planted parity structure -> headroom 0.5 qualifies; action-only labels -> 0.0; parity declared as context -> absorbed to 0.0). FAILS s4 (iii): the value equals a Mann-Whitney marginal-baseline AUC gap recomputed from textbook pieces (0.5 == 0.5). The construction is an evaluation STATISTIC composed of counting, a rank statistic and a mean; the only Diomedes-specific content is WHICH baseline is compared (a design choice = POLICY) and the 0.05 floor (POLICY). Refused as an organ; classified recurrence of a textbook construction. The doctrine it encodes (an eligibility count before a conditional-structure claim) is already the program's and Nyx's own (feedback: preregistered rules need an eligibility count)."
+      },
+      "tempted_organ_reading": true,
+      "recurrence_of": "textbook: baseline-vs-oracle AUC gap (marginal predictor ceiling)"
+    },
+    {
+      "id": "c03",
+      "name": "action-alphabet entropy H(a)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def _entropy_bits",
+      "dispositions": {
+        "CUT-1": "RECURRENCE"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "Shannon entropy over action frequencies; the original K0 line"
+      },
+      "tempted_organ_reading": false,
+      "recurrence_of": "textbook: Shannon entropy"
+    },
+    {
+      "id": "c04",
+      "name": "gate reachable (lo <= gate <= hi)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def gate_reachable",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C04",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C04",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "a range comparison encoding the doctrine gate-must-be-shown-reachable (cycle-004 residue; Nyx holds the same rule as feedback memory 08-23); historical residue, transferable as doctrine only"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c05",
+      "name": "gate exceeds error (|point-gate| >= 2 err)",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def gate_exceeds_error",
+      "dispositions": {
+        "CUT-1": "POLICY"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C05",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C05",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "a threshold comparison with a 2x constant encoding the doctrine gate-must-exceed-measurement-error (Nyx feedback memory 08-22); historical residue"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c06",
+      "name": "cluster bootstrap over an LCG",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def cluster_bootstrap + class _Lcg",
+      "dispositions": {
+        "CUT-1": "RECURRENCE"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C06 + C06-probe_lcg_power_of_two_degeneracy",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C06 + C06-probe_lcg_power_of_two_degeneracy",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "textbook cluster bootstrap; RUN on non-Diomedes inputs revealed a DEFECT: for cluster counts that are powers of two (4 8 16 32) every resample is a permutation of the clusters (the LCG low bits cycle through all residues under % n), half-width is exactly 0.0 and includes_zero is False regardless of data; 5 17 24 100 behave. The self-test demo uses 24 clusters and so never sees it. This is a failure-landscape row (F1), reported to the owner; it does not make the function an organ."
+      },
+      "tempted_organ_reading": false,
+      "recurrence_of": "textbook: cluster bootstrap"
+    },
+    {
+      "id": "c07",
+      "name": "identifiability ceiling sum_s P(s)/|A(s)|",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def identifiability_ceiling",
+      "dispositions": {
+        "CUT-1": "RECURRENCE"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "run",
+      "independent_test_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C07-dup / C07-neg",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "SUPPORTED",
+      "boundary_support_ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C07-dup / C07-neg",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "TEMPTED (P3). A clean formula with independent behaviour on non-Diomedes inputs (0.8 on a planted 40/60 split; 1.0 when all signatures distinct). Equals the Bayes-optimal accuracy with a uniform guess among causes sharing a signature, recomputed by hand (0.8 == 0.8). Refused as an organ under s4 (iii): a textbook quantity (Bayes error under signature ambiguity) with a good name."
+      },
+      "tempted_organ_reading": true,
+      "recurrence_of": "textbook: Bayes-optimal accuracy under signature ambiguity"
+    },
+    {
+      "id": "c08",
+      "name": "CAR record assembly with an enforced verdict enum",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def car + VERDICTS",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "schema and bookkeeping; the verdict RULE (entropy ~ 0 -> VACUOUS; qualifies -> ADEQUATE; else INADEQUATE) is POLICY over c02/c03 outputs; the _warning on empty decision_this_changes is a seat-governance rule"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c09",
+      "name": "planted positive/negative/cheat/vacuous controls",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def _planted_controls",
+      "dispositions": {
+        "CUT-1": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "fixtures encoding base-role rule 3 (an instrument must detect signal, not hallucinate it, and observe injected success) -- the same control discipline the Chop Shop itself uses; DATA plus doctrine, not mechanism"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c10",
+      "name": "differential self-test against committed constants",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "def _selftest",
+      "dispositions": {
+        "CUT-1": "SCAFFOLDING"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "bookkeeping; reads the sibling cycle005_operator_tables.json (dependency NAMED, not opened by Nyx) and asserts constants 0.0012 0.0011 0.3746 0.0265 from Diomedes cycles -- historical residue by definition"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c11",
+      "name": "HEADROOM_FLOOR = 0.05",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "module constant",
+      "dispositions": {
+        "CUT-1": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "a threshold value"
+      },
+      "tempted_organ_reading": false
+    },
+    {
+      "id": "c12",
+      "name": "the states schema {actions:[...], labels:[0/1]}",
+      "introduced_in": "CUT-1",
+      "origin": "INHERITED",
+      "source_boundary": "function signatures / docstrings",
+      "dispositions": {
+        "CUT-1": "DATA"
+      },
+      "lineage": [
+        {
+          "cut": "CUT-1",
+          "relation": "NEW",
+          "from": []
+        }
+      ],
+      "unknown_fields": {
+        "CUT-1": []
+      },
+      "record_bytes": {
+        "CUT-1": 0
+      },
+      "independent_test": "none",
+      "independent_test_ref": "none",
+      "ancestor_free_contract": true,
+      "consumer_returns": [],
+      "boundary_support": "UNTESTED",
+      "boundary_support_ref": "none",
+      "organ_record": "none",
+      "notes": {
+        "CUT-1": "the interface the statistic reads; an interface boundary, not a mechanism"
+      },
+      "tempted_organ_reading": false
+    }
+  ],
   "deliveries": [],
-  "cheat_controls": [],
+  "cheat_controls": [
+    {
+      "candidate": "c02",
+      "fired": true,
+      "ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C02-neg (action-only labels -> headroom 0.0: a module that found headroom here would hallucinate) and C02-ctx (declared context absorbs planted structure)"
+    },
+    {
+      "candidate": "c06",
+      "fired": true,
+      "ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C06-probe: the instrument reports zero uncertainty for power-of-two cluster counts -- a cheat path in the SPECIMEN (any gate passes check 3), caught by running it on inputs the self-test never uses"
+    },
+    {
+      "candidate": "c07",
+      "fired": true,
+      "ref": "nyx/specimens/diomedes_k0_census/ablations/RECEIPT_N2_2026-09-12.json C07-neg (all distinct -> 1.0) and C07-dup"
+    }
+  ],
   "knife_application": {
     "K1": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "DID_NOT_FIRE",
+      "evidence": "applied (sequential read, no def-grep); every candidate coincides with a def or constant -- 12/12 INHERITED; there was no cross-def mechanism to draw, and the rate is reported, not optimised (ruling)"
     },
     "K2": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "NOT_APPLICABLE",
+      "evidence": "no organ or pressure record was written, so no charter-IV field exists to prefix"
     },
     "K3": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "FIRED",
+      "evidence": "the self-test (the specimen's own switch) and independent-input runs were done BEFORE any disposition was final; the runs supplied the s4(ii) evidence for the two tempted candidates and exposed the c06 defect"
     },
     "K4": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "FIRED",
+      "evidence": "negatives run first on non-Diomedes inputs: C02-neg, C07-neg, and the bootstrap on power-of-two cluster counts -- the last revealed hidden behaviour (zero-width intervals) the read had not predicted"
     },
     "K5": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "DID_NOT_FIRE",
+      "evidence": "foreign dependencies named (sibling JSON; the independently written headroom census; aporia/lot/census.py) and not entered; none altered a disposition; boundary VALID (the file is not a thin wrapper)"
     },
     "K6": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "NOT_APPLICABLE",
+      "evidence": "the specimen has no null or minimal mode; the self-test is a switch, not a baseline"
     },
     "K7": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "NOT_APPLICABLE",
+      "evidence": "no pressure written (one tempted and refused: fishing log)"
     },
     "K8": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "FIRED",
+      "evidence": "origins and source boundaries stamped in this generator at drawing, before any run result was read into dispositions"
     },
     "K9": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "NOT_APPLICABLE",
+      "evidence": "no pressure"
     },
     "K10": {
-      "status": "APPLICABLE",
-      "evidence": ""
+      "status": "NOT_APPLICABLE",
+      "evidence": "no invariance control written"
     }
   },
-  "fishing_log": [],
-  "note": "empty at preregistration 2026-09-12; negative chop; candidates stamped at drawing"
+  "fishing_log": [
+    {
+      "impulse": "open aporia/lot/census.py (named in the docstring as what this is NOT)",
+      "opened": false,
+      "why_not": "outside the boundary; comparison would be reading adjacent machinery for an organ"
+    },
+    {
+      "impulse": "open roles/Diomedes/ROLE.md S4/S5 to see the doctrine this implements",
+      "opened": false,
+      "why_not": "the doctrine is named as ancestry; entering it would not change any disposition"
+    },
+    {
+      "impulse": "open cycle005_operator_tables.json and cycle005_q1_headroom_census.py (the self-test's dependencies)",
+      "opened": false,
+      "why_not": "the self-test ran as shipped (exit 0); the files are the specimen's evidence, not Nyx's"
+    },
+    {
+      "impulse": "unite c01+c02+c03 into one 'headroom census' mechanism to make an organ of the module as a whole",
+      "opened": false,
+      "why_not": "the union has the same input->output as c02 and the same duplicate-control verdict; a union that changes no behaviour is a name"
+    },
+    {
+      "impulse": "write a PRESSURE 'a world must show nonzero conditional headroom before a state-conditional capability can earn fitness'",
+      "opened": false,
+      "why_not": "that is a world-VALIDITY requirement (an eligibility count in preflight -- Vivarium already does this, #182) not an environmental condition under which a capability gains fitness; 'this code exists because X matters' is not a pressure (ruling)"
+    }
+  ],
+  "note": "empty at preregistration 2026-09-12; negative chop; candidates stamped at drawing",
+  "result": {
+    "organs": 0,
+    "pressures": 0,
+    "useful_cuts": 0,
+    "boundary": "VALID",
+    "tempted_and_refused": [
+      "c02",
+      "c07"
+    ],
+    "failure_findings_for_owner": [
+      "F1 LCG power-of-two bootstrap degeneracy"
+    ],
+    "null": "SUPPORTED"
+  }
 }
