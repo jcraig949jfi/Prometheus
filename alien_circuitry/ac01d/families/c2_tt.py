@@ -69,6 +69,8 @@ def run(tt_ranks=(4, 8, 16), tucker_k=(2,), epochs=12, per_set=300, max_obs=3_00
     for name, model in models:
         m, info = train(model, idx, y, idxv, yv, "mse", epochs, lr=1e-2 if "TT" in name else 5e-3, batch=4096)
         nbytes = serialized_bytes(m); rep = TorchRep(name, m, mean, F, nbytes); ev = ctx.evaluate(rep)
+        wdir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "results", "ac01d", "families", "weights"); os.makedirs(wdir, exist_ok=True)
+        torch.save({k: v.detach().cpu().half() for k, v in m.state_dict().items()}, os.path.join(wdir, f"{name}.pt")); ev["weights_file"] = f"weights/{name}.pt"
         ev["fit"] = {"params": sum(p.numel() for p in m.parameters()), **info, "bytes_lzma": nbytes, "observed_rows": int(len(S))}
         out["models"][name] = ev
         summary = {k: {kk: (round(vv.get("HC_D_transitions"), 3) if vv.get("HC_D_transitions") is not None else None, vv.get("mean_excess"), vv.get("failures"), vv.get("dominance")) for kk, vv in v.items() if kk in ("GBFS", "DFS")} for k, v in ev["sets"].items()}

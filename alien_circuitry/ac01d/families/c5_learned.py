@@ -99,6 +99,9 @@ def run(configs=(("small", 8, 128), ("medium", 16, 256)), epochs=12, per_set=300
         rm, rinfo = train(DigitNet(emb, hidden), idxR, yR, idxRv, yRv, "bce", epochs)
         nbytes = serialized_bytes(dm); nbytes_r = serialized_bytes(rm)
         rep = LearnedRep(f"C5-{name}", dm, rm, mean, F, nbytes)
+        wdir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "results", "ac01d", "families", "weights"); os.makedirs(wdir, exist_ok=True)
+        torch.save({k: v.detach().cpu().half() for k, v in dm.state_dict().items()}, os.path.join(wdir, f"C5-{name}-D.pt"))
+        torch.save({k: v.detach().cpu().half() for k, v in rm.state_dict().items()}, os.path.join(wdir, f"C5-{name}-R.pt"))
         ev = ctx.evaluate(rep); ev["fit"] = {"emb": emb, "hidden": hidden, "params": sum(p.numel() for p in dm.parameters()), "D_model": dinfo, "R_model": rinfo,
                                             "bytes_D_lzma": nbytes, "bytes_R_lzma": nbytes_r, "observed_D_rows": int(len(S)), "observed_R_rows": int(len(SR))}
         out["configs"][name] = ev
