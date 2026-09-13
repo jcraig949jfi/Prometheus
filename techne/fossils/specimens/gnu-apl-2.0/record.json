@@ -1,0 +1,139 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "gnu-apl-2.0",
+  "canonical_name": "GNU APL 2.0 -- a free interpreter for the array language APL (ISO 13751), by Juergen Sauermann",
+  "aliases": [
+    "GNU APL",
+    "apl"
+  ],
+  "lineage": "APL (Iverson, 1962; 'A Programming Language'): a notation that computes on whole arrays with a dense set of primitive functions and operators, no explicit loops -- the founding array-language culture (ancestor of J, K, kdb+, and of array thinking in NumPy). GNU APL (2013-) is a complete ISO-standard interpreter in C++. The vault's first array language; a genuinely different execution model (rank-polymorphic whole-array operations) from every other specimen.",
+  "domain": [
+    "language",
+    "array-language",
+    "APL",
+    "legacy-culture",
+    "interpreter"
+  ],
+  "era": "1962 (APL); 2013- (GNU APL); 2.0 = 2017",
+  "version": "GNU APL 2.0 (ftp.gnu.org/gnu/apl/apl-2.0.tar.gz)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://ftp.gnu.org/gnu/apl/apl-2.0.tar.gz",
+        "filename": "apl-2.0.tar.gz",
+        "sha256": "24bbb744fce47e62837234a053bdeecee51b9ea61c82c79f7cc191bc6a54c0a1",
+        "bytes": 5128916,
+        "extracted_to": "upstream/tree/apl-2.0"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "archive": "ftp.gnu.org/gnu/apl",
+    "file": "apl-2.0.tar.gz"
+  },
+  "hashes": {
+    "tree_sha256": "0c41fad109669c9c34381b83d3045e50d4920e74ed6786bd553f455d9562d7c8",
+    "n_files": 990,
+    "bytes": 21484058,
+    "artifacts": [
+      {
+        "filename": "apl-2.0.tar.gz",
+        "sha256": "24bbb744fce47e62837234a053bdeecee51b9ea61c82c79f7cc191bc6a54c0a1",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\gnu-apl-2.0",
+    "hash_list": "techne/fossils/specimens/gnu-apl-2.0/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-3.0-or-later",
+    "status": "copyleft",
+    "evidence": "COPYING"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C++"
+  ],
+  "build_system": "./configure && make",
+  "compiler_or_interpreter": "g++ 12 (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a C++ compiler; readline optional"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "src/apl --script (read APL from stdin); primitives + . / rho iota etc."
+  ],
+  "example": {
+    "command": "apl --silent --script < table.apl",
+    "input": "sum of 1..100 and a 5x5 outer-product multiplication table",
+    "output": "5050 and the table -- computed with no loops (the ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Iverson, A Programming Language, Wiley 1962",
+    "GNU APL info manual"
+  ],
+  "human_capability_summary": {
+    "built_to": "express computation as operations on whole arrays in a compact notation, without explicit iteration",
+    "pressure": "the human problem of concise mathematical/array notation; APL's terseness and non-ASCII glyphs are the cost",
+    "success_means": "an array expression yields the same result a looped program would, in one line"
+  },
+  "known_human_problem_solved": "array-oriented computation",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "notational density; whole-array thinking versus element-at-a-time",
+  "human_failure_condition": "rank/shape errors (LENGTH ERROR, RANK ERROR) when arrays do not conform",
+  "behavioral_entry_point": "reshape (rho) an array to a non-conforming shape and watch the error; vary the outer-product operator's function",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Iverson 1962 (APL)",
+      "note": "the founding array language; ancestor of J/K and of array programming generally"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase7",
+    "culture",
+    "array_language",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/gnu-apl-2.0/receipts/run-gnu-apl-2.0-20260913T063919Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/gnu-apl-2.0/receipts/run-gnu-apl-2.0-20260913T064433Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne"
+}

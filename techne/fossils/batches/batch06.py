@@ -397,6 +397,34 @@ spec("libdai-mooij",
                        {"relation": "shares_ancestor_with", "to": "ldpc-codes-neal-2001", "note": "BP as a decoder vs BP as a general inference engine"}])
 
 
+# ============================ PHASE 7: NEGLECTED COMPUTATIONAL CULTURES =======================
+spec("gnu-apl-2.0",
+    canonical_name="GNU APL 2.0 -- a free interpreter for the array language APL (ISO 13751), by Juergen Sauermann",
+    aliases=["GNU APL", "apl"],
+    lineage="APL (Iverson, 1962; 'A Programming Language'): a notation that computes on whole arrays with a dense set of primitive functions and operators, no explicit loops -- the founding array-language culture (ancestor of J, K, kdb+, and of array thinking in NumPy). GNU APL (2013-) is a complete ISO-standard interpreter in C++. The vault's first array language; a genuinely different execution model (rank-polymorphic whole-array operations) from every other specimen.",
+    domain=["language", "array-language", "APL", "legacy-culture", "interpreter"],
+    era="1962 (APL); 2013- (GNU APL); 2.0 = 2017",
+    version="GNU APL 2.0 (ftp.gnu.org/gnu/apl/apl-2.0.tar.gz)",
+    source_origin={"artifacts": [{"kind": "url", "url": "https://ftp.gnu.org/gnu/apl/apl-2.0.tar.gz", "filename": "apl-2.0.tar.gz"}]},
+    source_type="ORIGINAL_AUTHORITATIVE_RELEASE", source_identity={"archive": "ftp.gnu.org/gnu/apl", "file": "apl-2.0.tar.gz"},
+    license={"spdx": "GPL-3.0-or-later", "status": "copyleft", "evidence": "COPYING"},
+    language=["C++"], build_system="./configure && make", compiler_or_interpreter="g++ 12 (docker prometheus-fossil-c:bookworm)",
+    dependencies=["a C++ compiler; readline optional"],
+    entry_points=["src/apl --script (read APL from stdin); primitives + . / rho iota etc."],
+    example={"command": "apl --silent --script < table.apl", "input": "sum of 1..100 and a 5x5 outer-product multiplication table", "output": "5050 and the table -- computed with no loops (the ORACLE)"},
+    environment={"runner": "docker", "image": "prometheus-fossil-c:bookworm"},
+    upstream_docs=["Iverson, A Programming Language, Wiley 1962", "GNU APL info manual"],
+    human_capability_summary={"built_to": "express computation as operations on whole arrays in a compact notation, without explicit iteration",
+                              "pressure": "the human problem of concise mathematical/array notation; APL's terseness and non-ASCII glyphs are the cost",
+                              "success_means": "an array expression yields the same result a looped program would, in one line"},
+    known_human_problem_solved="array-oriented computation",
+    human_environmental_pressure="notational density; whole-array thinking versus element-at-a-time",
+    human_failure_condition="rank/shape errors (LENGTH ERROR, RANK ERROR) when arrays do not conform",
+    behavioral_entry_point="reshape (rho) an array to a non-conforming shape and watch the error; vary the outer-product operator's function",
+    acquisition_tags=["batch06", "phase7", "culture", "array_language", "outside_queue"],
+    lineage_relations=[{"relation": "algorithm_from", "to": "Iverson 1962 (APL)", "note": "the founding array language; ancestor of J/K and of array programming generally"}])
+
+
 def main():
     from .. import record as R
     for rec in S:

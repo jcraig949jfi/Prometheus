@@ -281,6 +281,18 @@ R["libdai-mooij"] = {
 H["libdai-mooij"] = {"bp_vs_exact.py": '"""Techne harness: compare libDAI\'s exact (junction tree) and loopy-BP variable marginals from\nexamples/example\'s output. The sprinkler network is LOOPY (Cloudy -> Sprinkler, Cloudy -> Rain,\nboth -> WetGrass), so BP is exact on the upstream variables and inexact on WetGrass: that is the\ndocumented behaviour of loopy BP, and the oracle checks exactly that shape."""\nimport re, sys\ntxt = open(sys.argv[1], encoding="utf-8", errors="replace").read()\n\n\ndef block(title):\n    i = txt.find(title)\n    if i < 0:\n        return None\n    lines = txt[i:].splitlines()[1:]\n    out = []\n    for l in lines:\n        if not l.strip().startswith("("):\n            break\n        nums = re.findall(r"\\(([0-9.eE+-]+), ([0-9.eE+-]+)\\)", l)\n        if nums:\n            out.append((float(nums[-1][0]), float(nums[-1][1])))\n    return out\n\n\nex = block("Exact variable marginals:")\nbp = block("Approximate (loopy belief propagation) variable marginals:")\nprint("exact:", ex)\nprint("bp:   ", bp)\nif not ex or not bp or len(ex) != len(bp):\n    print("RESULT FAIL (could not parse both blocks)"); sys.exit(1)\ndiffs = [max(abs(a - b) for a, b in zip(x, y)) for x, y in zip(ex, bp)]\nprint("per-variable max |bp - exact|:", ["%.4f" % d for d in diffs])\nupstream_exact = all(d < 1e-6 for d in diffs[:3])\nwetgrass_inexact = diffs[3] > 0.01\nprint("x0..x2 (Cloudy, Sprinkler, Rain) agree to 1e-6:", upstream_exact)\nprint("x3 (WetGrass, inside the loop) differs by %.4f: loopy BP is inexact here, as documented" % diffs[3])\nprint("RESULT", "OK" if (upstream_exact and wetgrass_inexact) else "FAIL")\n'}
 
 
+# ============================ PHASE 7: CULTURES ==============================================
+R["gnu-apl-2.0"] = {
+    "runner": "docker", "image": C, "workdir": "upstream/tree/apl-2.0",
+    "probe": [{"name": "g++", "cmd": "g++ --version | head -1"}],
+    "build": [{"name": "configure + make (readline optional; --without-... kept default)", "cmd": "./configure --quiet >/dev/null 2>&1 && make -s >/dev/null 2>&1; test -x src/apl && echo built", "timeout": 1800}],
+    "runs": [{"name": "whole-array APL: sum of 1..100 and a 5x5 outer-product multiplication table, no loops", "cmd": "src/apl --silent --script < $HARNESS/table.apl 2>&1 | grep -vE '^$' | tail -12", "expect": {"exit": 0, "stdout_contains": ["5050"], "stdout_regex": r"5\s+10\s+15\s+20\s+25"}, "timeout": 300}],
+    "tests": [], "test_kind": "TECHNE", "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+    "classification_if_ok": "RUNNABLE_CONTAINER",
+    "notes": "Oracle: +/iota 100 = 5050 and the 5x5 outer product o.x is the multiplication table (rows 5 10 15 20 25 ...), each computed as a whole-array expression with no explicit loop. The interpreter is the fossil; table.apl is Techne's stimulus."}
+H["gnu-apl-2.0"] = {"table.apl": "'sum 1..100:'\n+/⍳ 100\n'5x5 outer product:'\n(⍳ 5)∘.×⍳ 5\n"}
+
+
 
 def main():
     import shutil

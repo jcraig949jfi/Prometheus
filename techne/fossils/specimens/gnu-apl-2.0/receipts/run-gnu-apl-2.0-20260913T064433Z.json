@@ -1,0 +1,1077 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "gnu-apl-2.0",
+  "receipt_id": "run-gnu-apl-2.0-20260913T064433Z",
+  "written_utc": "20260913T064433Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/apl-2.0",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "table.apl": "979d58932c2d514e475aeff90bbbe72b9e1fdbc103a8ae705b79f2c5c151acdf"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "0c41fad109669c9c34381b83d3045e50d4920e74ed6786bd553f455d9562d7c8",
+  "recipe_sha256": "b2eec237110a88fefcbc17d703c3273faf906eb9bf400ed5657661ab0db0b829",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 6.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "configure + make (readline optional; --without-... kept default)",
+      "cmd": "./configure --quiet >/dev/null 2>&1 && make -s >/dev/null 2>&1; test -x src/apl && echo built",
+      "exit": 0,
+      "seconds": 281.34,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "whole-array APL: sum of 1..100 and a 5x5 outer-product multiplication table, no loops",
+      "cmd": "src/apl --silent --script < $HARNESS/table.apl 2>&1 | grep -vE '^$' | tail -12",
+      "exit": 0,
+      "seconds": 1.48,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "5050\n5x5 outer product:\n1  2  3  4  5\n2  4  6  8 10\n3  6  9 12 15\n4  8 12 16 20\n5 10 15 20 25\n      ^D or end-of-input detected (1). Use )OFF to leave APL!\n      ^D or end-of-input detected (2). Use )OFF to leave APL!\n      ^D or end-of-input detected (3). Use )OFF to leave APL!\n      ^D or end-of-input detected (4). Use )OFF to leave APL!\n      *** end of input\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": ".apl.history",
+      "sha256": "979d58932c2d514e475aeff90bbbe72b9e1fdbc103a8ae705b79f2c5c151acdf",
+      "bytes": 64
+    },
+    {
+      "path": "build/Makefile",
+      "sha256": "ad6af87b11c17e00e3c19928dc73fdee5ca835076c496924f4d2ba8d575328e9",
+      "bytes": 13813
+    },
+    {
+      "path": "config.h",
+      "sha256": "7219f13e75f360bdcf0a70d11143fdcc40b1ddba5e642a6cb055a061afaa665b",
+      "bytes": 19188
+    },
+    {
+      "path": "config.log",
+      "sha256": "7c2efee44370bf58fd992f062ed0d51aedde4182773ee05d426420a023ffa1ba",
+      "bytes": 166874
+    },
+    {
+      "path": "config.status",
+      "sha256": "ac0190a02df38b2a9707cf539f1e7d7e8ec0b16f4b3a3f7ea8b46e3d186572d4",
+      "bytes": 77509
+    },
+    {
+      "path": "debian/Makefile",
+      "sha256": "a9adc1dd57b9d824c7ad0198179c6d3f64783192592965de77688eac7d2ee9e2",
+      "bytes": 20240
+    },
+    {
+      "path": "debian/source/Makefile",
+      "sha256": "7276a5698e629663a4115f22c856b709d057fc0346af03bfc4f11a2af1d85f3a",
+      "bytes": 13787
+    },
+    {
+      "path": "doc/DALY/Makefile",
+      "sha256": "eb04b05705a9a305f276093033ea20048c1dcb2732c44baaa8b5fd1c445f4a45",
+      "bytes": 24082
+    },
+    {
+      "path": "doc/Makefile",
+      "sha256": "e21936a50653eb386e17ee33cd4c9a66673bbec28061faab9914f9e0124f04f3",
+      "bytes": 32061
+    },
+    {
+      "path": "erlang/.deps/liberlang_APL_nif_la-erlang_APL_nif.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "erlang/apl.erl",
+      "sha256": "6eeef56541e9d7bfa264173f1a738c6af6a89d18587188d9d2d3afb208645e96",
+      "bytes": 3730
+    },
+    {
+      "path": "erlang/Makefile",
+      "sha256": "803b888eed231ff1210c40300c8a7b15ace435eba8562723f8bda333fddd9759",
+      "bytes": 24575
+    },
+    {
+      "path": "gnu-apl.d/Makefile",
+      "sha256": "99746610ce8324c3c6e0250aa46b3e9102cbe42791726f566b68069384934d05",
+      "bytes": 16291
+    },
+    {
+      "path": "gnu-apl.d/preferences",
+      "sha256": "0a6805cb00e383228aa1b945e87107c7ada19d51f574c98f32056c5d83fbb039",
+      "bytes": 17660
+    },
+    {
+      "path": "HOWTOs/LApack-primer.pdf",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "HOWTOs/Makefile",
+      "sha256": "02cf8fdc64bfa3e9f2d334cf56c2692a13cc1d95fa94f1eac83ee60d9731b2c4",
+      "bytes": 18807
+    },
+    {
+      "path": "libtool",
+      "sha256": "fb68ec7cb108646eae7ea535e8e7a5dd8436da00b8e6d668c7dec973e616e167",
+      "bytes": 345312
+    },
+    {
+      "path": "Makefile",
+      "sha256": "23ef5ce07796149bd3bb0f758c216e9a734626f919d92bed50b094a0c65f3344",
+      "bytes": 39141
+    },
+    {
+      "path": "rpm/apl.spec",
+      "sha256": "16c17a747df569cc6c8bbec5acab3a871279d1b4e6b10d79f40f88186148d9de",
+      "bytes": 3776
+    },
+    {
+      "path": "rpm/Makefile",
+      "sha256": "9015b4d5d2c5cac0720738a3062b2bd212bb39a3585adef0a4ec39da61d35cb0",
+      "bytes": 14425
+    },
+    {
+      "path": "src/.deps/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/.deps/AP100-Backtrace.Po",
+      "sha256": "6f677412e584200e601685330e173d88951d8542638472aebd88dce2a3469228",
+      "bytes": 26202
+    },
+    {
+      "path": "src/.deps/AP100-Svar_DB.Po",
+      "sha256": "3f0a1c4c47d7b10c493cc327713765bb90bfbd858f2ec735cea9e4d312876615",
+      "bytes": 29714
+    },
+    {
+      "path": "src/.deps/AP100-Svar_record.Po",
+      "sha256": "da4e9c0f1cbbcaf02cf20f0587257177a05578f8142eedfeb55acc5ada08ac7e",
+      "bytes": 29912
+    },
+    {
+      "path": "src/.deps/AP210-Backtrace.Po",
+      "sha256": "c841b15db5fba335d5dde0f245829732084c52ed94a10571eb7f872a69426da1",
+      "bytes": 26202
+    },
+    {
+      "path": "src/.deps/AP210-Svar_DB.Po",
+      "sha256": "d279c31d3ef4b76a57f0a0439beadb53b605e6d6dcc6821c81fa715b5aea0150",
+      "bytes": 29714
+    },
+    {
+      "path": "src/.deps/AP210-Svar_record.Po",
+      "sha256": "7fee98e7dad9025e2d4da6577b1f7666d705307e73a1df5854b8b93ee2951769",
+      "bytes": 29912
+    },
+    {
+      "path": "src/.deps/apl-Archive.Po",
+      "sha256": "73c8e8f1a24eca7767056aa10893b722613608582b683076bd640845dbcc1bbf",
+      "bytes": 32897
+    },
+    {
+      "path": "src/.deps/apl-Assert.Po",
+      "sha256": "e9f9b06bd874634d8ec2cf137a0d221d132bab04335164387b268af37f86d350",
+      "bytes": 29015
+    },
+    {
+      "path": "src/.deps/apl-Avec.Po",
+      "sha256": "26aaa20458b6ff3f0759f3afb1a2b5cb215b1aa7adb6a9cf70ab27dc46437bc9",
+      "bytes": 27150
+    },
+    {
+      "path": "src/.deps/apl-Backtrace.Po",
+      "sha256": "520c1669aca53b23b71ba279ccae23ddf599e296b5c758d31a65a8f37d217d74",
+      "bytes": 26059
+    },
+    {
+      "path": "src/.deps/apl-Bif_F12_COMMA.Po",
+      "sha256": "86a6b9022cb0f964a73cbd0e53ed92bd2935fa67ba4a147afb2a10bdacafb8e8",
+      "bytes": 29016
+    },
+    {
+      "path": "src/.deps/apl-Bif_F12_DOMINO.Po",
+      "sha256": "d381fea31969c34b7ce56b17e2a8b2d4c948328873996c00d8dd37890dcbbe0c",
+      "bytes": 29000
+    },
+    {
+      "path": "src/.deps/apl-Bif_F12_FORMAT.Po",
+      "sha256": "3d4ca30ea08eb457d48518da0e6677f20e53d03a3212697b0808379054131451",
+      "bytes": 28832
+    },
+    {
+      "path": "src/.deps/apl-Bif_F12_INDEX_OF.Po",
+      "sha256": "b24335d85c65e95c42d74e9d757ae3910f110a8c916f3817a92513083a26ade6",
+      "bytes": 28840
+    },
+    {
+      "path": "src/.deps/apl-Bif_F12_INTERVAL_INDEX.Po",
+      "sha256": "0e89d0ca3fd8acbf26ac2ad316285a941c909cb1c2485324702f808a4acfc3bb",
+      "bytes": 28864
+    },
+    {
+      "path": "src/.deps/apl-Bif_F12_PARTITION_PICK.Po",
+      "sha256": "890ace5a608364a04530d35541fcc897eb18415f7fd3bba90f0d6845e5d20050",
+      "bytes": 28982
+    },
+    {
+      "path": "src/.deps/apl-Bif_F12_SORT.Po",
+      "sha256": "ca8e3d2e40023f1143ec8114f81911efa74575b849ae43d922e0a4594e1fd656",
+      "bytes": 29006
+    },
+    {
+      "path": "src/.deps/apl-Bif_F12_TAKE_DROP.Po",
+      "sha256": "2525976fe5e2ff60b3243c31d689e24071fffab36239070655a9b73756c0532a",
+      "bytes": 28934
+    },
+    {
+      "path": "src/.deps/apl-Bif_OPER1_COMMUTE.Po",
+      "sha256": "1457e4abf9bd06e8d52a0ca88572731c60fe7b573f641a9933c5b8b37e87bf52",
+      "bytes": 24758
+    },
+    {
+      "path": "src/.deps/apl-Bif_OPER1_EACH.Po",
+      "sha256": "86ffa62379d61d757fa212395045bc12fa235725fd5e05c2cc7aed2d2d5007ac",
+      "bytes": 29097
+    },
+    {
+      "path": "src/.deps/apl-Bif_OPER1_REDUCE.Po",
+      "sha256": "f2b870771f5eef3e62f9a6d7418b8664b0f5027cc6880dd6b41fed155fbcd50f",
+      "bytes": 29025
+    },
+    {
+      "path": "src/.deps/apl-Bif_OPER1_SCAN.Po",
+      "sha256": "0ab475044c622248c3188624487648a8ecd309983e1c518fcd41e4ffeefcd678",
+      "bytes": 29058
+    },
+    {
+      "path": "src/.deps/apl-Bif_OPER2_INNER.Po",
+      "sha256": "592057479f2ee1da3fe3a84e41a5807cd1b1f9c129e33c81cd502ac25e4fb2ae",
+      "bytes": 29158
+    },
+    {
+      "path": "src/.deps/apl-Bif_OPER2_OUTER.Po",
+      "sha256": "8d2c9d368c36edd1fa08741369f552335eea9d376a63db7b49a513074e3d6ec0",
+      "bytes": 29108
+    },
+    {
+      "path": "src/.deps/apl-Bif_OPER2_POWER.Po",
+      "sha256": "d0317b22d8cd782eb2cfd6738fe9c9f8b2c84ae26fcb6541cf90a4aa3869b0a7",
+      "bytes": 29021
+    },
+    {
+      "path": "src/.deps/apl-Bif_OPER2_RANK.Po",
+      "sha256": "f5ea74ed18eefdd54ae46d64ff2ba0cca9c614d49740e411c49bffb2d3da0cf1",
+      "bytes": 29060
+    },
+    {
+      "path": "src/.deps/apl-CDR.Po",
+      "sha256": "c04c6a39e725bba6a30543b1fbef08b034b9908368000bbc703848a297a71f52",
+      "bytes": 28820
+    },
+    {
+      "path": "src/.deps/apl-Cell.Po",
+      "sha256": "bbd6253d5e5665f817a953517b95cf5ccf0b047566baba9e8a9d9f5970137f05",
+      "bytes": 28794
+    },
+    {
+      "path": "src/.deps/apl-CharCell.Po",
+      "sha256": "ae7a1ea323bef37f2d1fe46bdf7443feaf45e937cd6361b7c99edb6bf861728e",
+      "bytes": 28783
+    },
+    {
+      "path": "src/.deps/apl-Cmd_IN.Po",
+      "sha256": "b10f6d970a5e524b1f1e7f9ed0154a5db9be2999d99a4caac9efd20e7611082b",
+      "bytes": 28859
+    },
+    {
+      "path": "src/.deps/apl-Cmd_KEYB.Po",
+      "sha256": "1be72963b3602ca3ba4b4f17170c21127d463185b65a48f84fe0f01e575d726c",
+      "bytes": 28780
+    },
+    {
+      "path": "src/.deps/apl-Cmd_LIB.Po",
+      "sha256": "f382a248eb146dbfa9e5d0867eac5b58e37e52513149f7af95827a27103248b5",
+      "bytes": 26109
+    },
+    {
+      "path": "src/.deps/apl-Command.Po",
+      "sha256": "e96889a1a31e04e0c36df85f1e39a78bcf0e6abe12e24a5796093862e8d228e4",
+      "bytes": 32832
+    },
+    {
+      "path": "src/.deps/apl-Common.Po",
+      "sha256": "410f73d49cddc94f7b802bfb11aca8fe375edc5c8b7e9418790265bff8c9c0d8",
+      "bytes": 32545
+    },
+    {
+      "path": "src/.deps/apl-ComplexCell.Po",
+      "sha256": "b951d5ada2c506d4c6d8353e16a16649cc607c15ce21793794e63ce7c232867b",
+      "bytes": 29028
+    },
+    {
+      "path": "src/.deps/apl-DerivedFunction.Po",
+      "sha256": "97c431f5de44eddd49ecc5ca36140112b2f988ae5190314d3186a382f8112488",
+      "bytes": 28979
+    },
+    {
+      "path": "src/.deps/apl-DiffOut.Po",
+      "sha256": "817f3ada2a87e6ab4b1b564657b498d4ea8c991fc4bcf98c4ae53fe9dfbc397d",
+      "bytes": 23880
+    },
+    {
+      "path": "src/.deps/apl-Doxy.Po",
+      "sha256": "e497460acbb5d9859302ffae8e72ea1fc13309118b6c45a6c30af63737705e03",
+      "bytes": 30794
+    },
+    {
+      "path": "src/.deps/apl-DynamicObject.Po",
+      "sha256": "7dc37ac89c20737d02aaeefda92bc1b16919fb5d49381dfa920340c38699be27",
+      "bytes": 24440
+    },
+    {
+      "path": "src/.deps/apl-Error.Po",
+      "sha256": "d20b0830ad8757c1701d669364b433ce9e52adddd4082faa3f3c8e2b6e7f6698",
+      "bytes": 29068
+    },
+    {
+      "path": "src/.deps/apl-Executable.Po",
+      "sha256": "6ced85710fcefff4846cc48e435762e83975b21fbdf63e142abbe7ba8bb6a6f4",
+      "bytes": 29081
+    },
+    {
+      "path": "src/.deps/apl-FloatCell.Po",
+      "sha256": "fd284b892ebd85e7b6a1127d2dc9aa308c4a070b8ee29418e2d6e9733c9ae754",
+      "bytes": 28810
+    },
+    {
+      "path": "src/.deps/apl-Function.Po",
+      "sha256": "13e10eaa189224a35877a36fce9e8f7663e329912e9100ee42ded041b2b87027",
+      "bytes": 27322
+    },
+    {
+      "path": "src/.deps/apl-Id.Po",
+      "sha256": "b0a5133182218b55d89cff29f224379276753a386d00ffb0284b9d136bbb082c",
+      "bytes": 29804
+    },
+    {
+      "path": "src/.deps/apl-IndexExpr.Po",
+      "sha256": "e1aeb7b8851412d1363cea3b16559a2bbdda6d6ce090e9c189ced681b63a0122",
+      "bytes": 28812
+    },
+    {
+      "path": "src/.deps/apl-IndexIterator.Po",
+      "sha256": "1dcd4a6754b6222a405c23d4b22767589c09824bc5023257773b9cc0396198bf",
+      "bytes": 24478
+    },
+    {
+      "path": "src/.deps/apl-InputFile.Po",
+      "sha256": "822a26280dc1f03e5aa0f13ae8667bcf066dd2db11b55251b4d65f43031a9f4b",
+      "bytes": 25711
+    },
+    {
+      "path": "src/.deps/apl-IntCell.Po",
+      "sha256": "635e79a934040eaa75f421b0241859752f309da1550e386fc3e77cc13ea78265",
+      "bytes": 28781
+    },
+    {
+      "path": "src/.deps/apl-IO_Files.Po",
+      "sha256": "d017e66af8e22c2e0c055fa85a7e0413e2d6eef2a862020684db1a89aa5c994c",
+      "bytes": 29070
+    },
+    {
+      "path": "src/.deps/apl-LApack.Po",
+      "sha256": "64b5bc0e2f2306a5a0e3ec172bcf08b4e663b03e9fa282bb26a782965189553a",
+      "bytes": 28862
+    },
+    {
+      "path": "src/.deps/apl-LibPaths.Po",
+      "sha256": "0fff70ff46af3bef48a171ae15bc1bbe63fb825e4c9558065ad952d01e1df3c3",
+      "bytes": 28795
+    },
+    {
+      "path": "src/.deps/apl-LineInput.Po",
+      "sha256": "7b44eae701374cb118d854e4903a303e7d3d2844df811c913b8b8519d50d9804",
+      "bytes": 30125
+    },
+    {
+      "path": "src/.deps/apl-Logging.Po",
+      "sha256": "29f49c0636de08d54e80970d302418fe7c948c1189fe1b973dc488d4394bd66b",
+      "bytes": 23129
+    },
+    {
+      "path": "src/.deps/apl-LvalCell.Po",
+      "sha256": "253391edb7d8c3f0a30c98ced4a49b3b9ec3297cb4297308ee54a1abf5261adc",
+      "bytes": 24436
+    },
+    {
+      "path": "src/.deps/apl-Macro.Po",
+      "sha256": "cd079f9938812cbfce8fdb53a7776a418f24faf16ed8e2eea075a022c7d9c3b1",
+      "bytes": 24787
+    },
+    {
+      "path": "src/.deps/apl-main.Po",
+      "sha256": "9b6fae98f7ba631e5ea80429e5d81351e036e4697c76b863c983c713d7d15794",
+      "bytes": 34500
+    },
+    {
+      "path": "src/.deps/apl-Malloc_hooks.Po",
+      "sha256": "a3afc6d27661b1b34d5dcd898947de77a14f04101b4562846ea366bd8d799de6",
+      "bytes": 91
+    },
+    {
+      "path": "src/.deps/apl-Missing_Libraries.Po",
+      "sha256": "84c9766426d72005ae26959bef037b4b25467ec58c558556bafce58d01d8c332",
+      "bytes": 24440
+    },
+    {
+      "path": "src/.deps/apl-Nabla.Po",
+      "sha256": "cad74def7b212055a95e29ecca2bf00d4c6145e1eb9fbb6a0a5c9d5601d8e350",
+      "bytes": 30201
+    },
+    {
+      "path": "src/.deps/apl-NamedObject.Po",
+      "sha256": "2196944cb859173dcb189a2e9b75078431df7db9b40b4302add82b1ab1f32261",
+      "bytes": 28786
+    },
+    {
+      "path": "src/.deps/apl-NativeFunction.Po",
+      "sha256": "47f3b671689ebd18f1befb2b8edb7fca7bace146018c5952098e7a7c969c47f5",
+      "bytes": 29132
+    },
+    {
+      "path": "src/.deps/apl-NumericCell.Po",
+      "sha256": "b5d285798072224c68e1b13900875f43cd2dc48c21004e6d6f78ed1e3f7a63da",
+      "bytes": 28973
+    },
+    {
+      "path": "src/.deps/apl-Output.Po",
+      "sha256": "21e1cfd1214f14b8e651197b1d9a73dc6395e959bc26997f243c23bbf446cdf2",
+      "bytes": 26105
+    },
+    {
+      "path": "src/.deps/apl-Parallel.Po",
+      "sha256": "9a286d00c28786d40c2a97f13b478febda19a9243ec3c1fd75050e9756a0b6be",
+      "bytes": 27348
+    },
+    {
+      "path": "src/.deps/apl-Parser.Po",
+      "sha256": "c8876c18a3efee9a991cdc6b6055256431f021e5b85e69c33e1640decbd98575",
+      "bytes": 28985
+    },
+    {
+      "path": "src/.deps/apl-Performance.Po",
+      "sha256": "9db4046ef2f92da65ba45a1e21141239001f56c5c583057817ea2c40cc0e0026",
+      "bytes": 23744
+    },
+    {
+      "path": "src/.deps/apl-Plot_ascii.Po",
+      "sha256": "33359fdc090014040e2d8fa8a675ae749f15b13055b15f4b568b5c964328045d",
+      "bytes": 29139
+    },
+    {
+      "path": "src/.deps/apl-Plot_data.Po",
+      "sha256": "cc7654fb87a282468bb605afe1471d8e45e3c6a2386126f3a79a82ec06bb803a",
+      "bytes": 23166
+    },
+    {
+      "path": "src/.deps/apl-Plot_gtk.Po",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/apl-Plot_line_properties.Po",
+      "sha256": "d4361ce3a93d1ce55072db28b3e88ff43b4aa0f823cba185f34cd264bd01b7de",
+      "bytes": 29100
+    },
+    {
+      "path": "src/.deps/apl-Plot_window_properties.Po",
+      "sha256": "30761d0fe8818be38b67a1f78477b9d748569b62ede48d9c895c2bb962f95539",
+      "bytes": 29520
+    },
+    {
+      "path": "src/.deps/apl-Plot_xcb.Po",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/apl-PointerCell.Po",
+      "sha256": "a2e2ea9a7a73fbdbc53fcb561568231a133a45378eed18f6e1a251ed42f12115",
+      "bytes": 28789
+    },
+    {
+      "path": "src/.deps/apl-Polynomial.Po",
+      "sha256": "c9f077f33612ba6ff62b5ed29df1a40e1c65e36ff4bdad5952bbabdef620b619",
+      "bytes": 24562
+    },
+    {
+      "path": "src/.deps/apl-Prefix.Po",
+      "sha256": "7bc121777e7b06ad7567449606abbc4447adf7d2810c2831712c4b899edf7faf",
+      "bytes": 29183
+    },
+    {
+      "path": "src/.deps/apl-PrimitiveFunction.Po",
+      "sha256": "53c0c026fec681255380d90b3516ba03a8c8a229300e98c3d030dbd2cf8920f4",
+      "bytes": 29404
+    },
+    {
+      "path": "src/.deps/apl-PrintBuffer.Po",
+      "sha256": "f0a1aae96aafae6204327820dff246d6df2c947e569410c43216bbca39a5499e",
+      "bytes": 28789
+    },
+    {
+      "path": "src/.deps/apl-ProcessorID.Po",
+      "sha256": "0e547dc9bd3723a170b1d66e33398251213e2392fdca49e0dfb483e20fab234a",
+      "bytes": 27258
+    },
+    {
+      "path": "src/.deps/apl-PythonPipe.Po",
+      "sha256": "53a241466bf54c62694a228f09866bdffcb714df1d70b85f9f35fca43389e7e0",
+      "bytes": 26007
+    },
+    {
+      "path": "src/.deps/apl-QR_factorization_GSL.Po",
+      "sha256": "c7c3437495c1d5c7b9662d1d8203af074f526c980cda65194189ad28ff4dd753",
+      "bytes": 28804
+    },
+    {
+      "path": "src/.deps/apl-Quad_CC.Po",
+      "sha256": "7716743e80b7a2761f5fee78cd162c155f843b79c710ff44ef134d06c0fb7329",
+      "bytes": 24669
+    },
+    {
+      "path": "src/.deps/apl-Quad_CR.Po",
+      "sha256": "dc51a146d0f078ce0a0bf5657befa07de69ab439a4967074d5d835b98686fc35",
+      "bytes": 29105
+    },
+    {
+      "path": "src/.deps/apl-Quad_DLX.Po",
+      "sha256": "f325079d5f71fbc6cb545a83579d516f4958b5fcf4ef768a188fa6919e9f6529",
+      "bytes": 28780
+    },
+    {
+      "path": "src/.deps/apl-Quad_FFT.Po",
+      "sha256": "788179f8b7af25251d39c062ec2a828d0d50ea05540523899eac2e81c47b62b1",
+      "bytes": 29019
+    },
+    {
+      "path": "src/.deps/apl-Quad_FIO.Po",
+      "sha256": "1b42f51574cd7c20b153c934e3c78d995aea3f42c0c28afaab0c1b432f51307a",
+      "bytes": 34752
+    },
+    {
+      "path": "src/.deps/apl-Quad_FX.Po",
+      "sha256": "469cf473322784a83f654e15600b5fe919f54e53094795ba624a0ff2ceb041ee",
+      "bytes": 29252
+    },
+    {
+      "path": "src/.deps/apl-Quad_GTK.Po",
+      "sha256": "1867ba973c66e27496771b0e5eee193aaa3b14d1fd1ee259459deb381391e9cd",
+      "bytes": 30468
+    },
+    {
+      "path": "src/.deps/apl-Quad_JSON.Po",
+      "sha256": "026bed6e7646193ff53c4962439188b182a2ecfff86bc4f55da7481cee916caf",
+      "bytes": 30968
+    },
+    {
+      "path": "src/.deps/apl-Quad_MAP.Po",
+      "sha256": "c002ad24bff2783197f6cc58e8f8ded76c4bba8ee7500338c77a8fb5d0ceaa7e",
+      "bytes": 28808
+    },
+    {
+      "path": "src/.deps/apl-Quad_MX.Po",
+      "sha256": "b34266fd90df6db7087b0a54de8ba0bc19c4c0a1a7abad6b33431ed2e15793cf",
+      "bytes": 28778
+    },
+    {
+      "path": "src/.deps/apl-Quad_PLOT.Po",
+      "sha256": "45c9a3b9c1cab1f5afd683f40d6d2ec7beccb84bdcbf4229ae6f012b76aaaa2e",
+      "bytes": 29597
+    },
+    {
+      "path": "src/.deps/apl-Quad_PNG.Po",
+      "sha256": "b4911d88b4f72763dab0a48161c19ed52f18e123d6f8f26d5d8fc123fdf658e0",
+      "bytes": 24816
+    },
+    {
+      "path": "src/.deps/apl-Quad_RE.Po",
+      "sha256": "4cc0abd808c896ae6d8b7ada72b78e410eb84bd25ef034e44c425bc1a946fa4b",
+      "bytes": 28778
+    },
+    {
+      "path": "src/.deps/apl-Quad_RL.Po",
+      "sha256": "98c5fe51e2c3b37dfe0fdcf14b30461a8c82ef60b3b7c11d5923358f8341181a",
+      "bytes": 24849
+    },
+    {
+      "path": "src/.deps/apl-Quad_RVAL.Po",
+      "sha256": "e5599901cc29b94b66ef80f802a9597a8a8778c49cc513a79e14f558bb840dd6",
+      "bytes": 24671
+    },
+    {
+      "path": "src/.deps/apl-Quad_SQL.Po",
+      "sha256": "d9687099e10941a884ee086b54cd0ef1bcc6d14dd2a12070fce1286a7525fdff",
+      "bytes": 29345
+    },
+    {
+      "path": "src/.deps/apl-Quad_SVx.Po",
+      "sha256": "6f7eb47bfdbe5b03cced87440a3232187527e0ca3873b01ce166440b1f13df3f",
+      "bytes": 31957
+    },
+    {
+      "path": "src/.deps/apl-Quad_TF.Po",
+      "sha256": "cb326f9d2ce8e1707dc9d06f6ee17470eb513a0cf422d2e096c7adaa95e1b97f",
+      "bytes": 28931
+    },
+    {
+      "path": "src/.deps/apl-Quad_WA.Po",
+      "sha256": "956d1aba30b92505cbd48ddda6883677d84ee250dc944a3270e67f28cf197d49",
+      "bytes": 25229
+    },
+    {
+      "path": "src/.deps/apl-Quad_XML.Po",
+      "sha256": "e672ec2f441bef5361a49d82a3f2d44b2274075d6d66b0ce9068c4d4bea3afa4",
+      "bytes": 30964
+    },
+    {
+      "path": "src/.deps/apl-QuadFunction.Po",
+      "sha256": "f0d722114607386336198936e37736d0b85ed6f7e79271362b5f0d4b4e646766",
+      "bytes": 30881
+    },
+    {
+      "path": "src/.deps/apl-RealCell.Po",
+      "sha256": "7a6018134485d9a315aa01f1919ad9fd3a2167218c113c98aae72af2a6214489",
+      "bytes": 28783
+    },
+    {
+      "path": "src/.deps/apl-Regexp.Po",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/apl-sbrk.Po",
+      "sha256": "12df3fb7b60c91bfad6f0b441ba7f82637d017c883c0d320865c876296245ebd",
+      "bytes": 1593
+    },
+    {
+      "path": "src/.deps/apl-ScalarFunction.Po",
+      "sha256": "e08f23ad7e5d8514303837d6b1441c8ca3c502b14f1c26898d7e742b6a588050",
+      "bytes": 28895
+    },
+    {
+      "path": "src/.deps/apl-Security.Po",
+      "sha256": "3b5e6aa6d0e9d5cffcda4537660359c3ca24a397eed53e4f0b754c4f3006cb15",
+      "bytes": 28805
+    },
+    {
+      "path": "src/.deps/apl-Shape.Po",
+      "sha256": "ec33bf19dbc2f4e13f93b5a50da731734a05717063c066d9bf77cd25c2c5a150",
+      "bytes": 24397
+    },
+    {
+      "path": "src/.deps/apl-StateIndicator.Po",
+      "sha256": "551c8e6f146354826e9337e01c98e27d5fbd8c1eb35fd00010374d24e530bab3",
+      "bytes": 29142
+    },
+    {
+      "path": "src/.deps/apl-static_Objects.Po",
+      "sha256": "62721c222de19142c32bb011c82cf43714ce628c4402a3d2905ca959c322fbf8",
+      "bytes": 29146
+    },
+    {
+      "path": "src/.deps/apl-Svar_DB.Po",
+      "sha256": "4b8e46114b5e398d5a4fa1d503fccb492fd5ce7a1cb5c3ed847773c92950200c",
+      "bytes": 29466
+    },
+    {
+      "path": "src/.deps/apl-Svar_record.Po",
+      "sha256": "0eca5e7345a777e654e260d1fe4af36652031fdaab308fa847fd4bc928a01d9a",
+      "bytes": 29748
+    },
+    {
+      "path": "src/.deps/apl-Symbol.Po",
+      "sha256": "632b00bb1502cdb61d5d80eacd1685aa4e705bd6413223321ffe21fb454bafcf",
+      "bytes": 30978
+    },
+    {
+      "path": "src/.deps/apl-SymbolTable.Po",
+      "sha256": "cb7e94b8548fcdaae42b1418bab932339326673da4fe7acfa7feac0899b14364",
+      "bytes": 29196
+    },
+    {
+      "path": "src/.deps/apl-SystemVariable.Po",
+      "sha256": "651dd3c0a45cfd4a701930d3fc505551543cf9af0eba2ae112dcb8182a759cf5",
+      "bytes": 30433
+    },
+    {
+      "path": "src/.deps/apl-TabExpansion.Po",
+      "sha256": "25d2d0a5d9ce9b48488a4b2825739f8648338e94f0e9a3169c1348b7fdea255d",
+      "bytes": 28862
+    },
+    {
+      "path": "src/.deps/apl-Thread_context.Po",
+      "sha256": "5d7d965bc5ce79c4769aa060eefd855c70e480e06e7573fdbd7c9132661bcff1",
+      "bytes": 27360
+    },
+    {
+      "path": "src/.deps/apl-Token.Po",
+      "sha256": "4fe7bceac1e3ce2f55d08a0f8f32e2e7f3ae0290a9dc2eb3779c4c7d243ede53",
+      "bytes": 28801
+    },
+    {
+      "path": "src/.deps/apl-Token_string.Po",
+      "sha256": "4f6986b08ce512b6a9af1aba3c985f2095e59ea24856c62810d2dda8ff330706",
+      "bytes": 24469
+    },
+    {
+      "path": "src/.deps/apl-Tokenizer.Po",
+      "sha256": "caac7f76101fbe7d610b27ea7bc63bf9c29c29b66f0ccaec6a181becaf58563c",
+      "bytes": 29510
+    },
+    {
+      "path": "src/.deps/apl-UCS_string.Po",
+      "sha256": "63bb74c3fbb87e5e1e1422a7d7247b65b783f12eff1794225cf503009aae96d0",
+      "bytes": 24615
+    },
+    {
+      "path": "src/.deps/apl-UCS_string_vector.Po",
+      "sha256": "aae6cce7fb8cbb41b21a32439ee734a63aee646a316730aa3b589c2d1babca78",
+      "bytes": 28798
+    },
+    {
+      "path": "src/.deps/apl-UserFunction.Po",
+      "sha256": "06560d5f24f95736c16c7035983126ff720f95f27dd7defcc93ee925b2bb9bfd",
+      "bytes": 31766
+    },
+    {
+      "path": "src/.deps/apl-UserFunction_header.Po",
+      "sha256": "c8d4d9cb36e2142d21dc7445319b7981b00f521d237c84b7c58eb949b87dc218",
+      "bytes": 31728
+    },
+    {
+      "path": "src/.deps/apl-UserPreferences.Po",
+      "sha256": "7bde953ca5827aeae91ee1fe984c52010b3863b109680092b9ccc0407cc8556d",
+      "bytes": 30079
+    },
+    {
+      "path": "src/.deps/apl-UTF8_string.Po",
+      "sha256": "798353762c2b97a7cc4eba63b1460f813a29b6e403d90918e52669393014196d",
+      "bytes": 28789
+    },
+    {
+      "path": "src/.deps/apl-Value.Po",
+      "sha256": "c4083b6a48f44ae20e984b93e6900073ed0705f3b556f1e2d205ee5d51767a6c",
+      "bytes": 29347
+    },
+    {
+      "path": "src/.deps/apl-ValueHistory.Po",
+      "sha256": "05503ab95641d3615dc67c94907d1da12eb818d612e4b45c99ef93f2521cba75",
+      "bytes": 24480
+    },
+    {
+      "path": "src/.deps/apl-Workspace.Po",
+      "sha256": "bee382759304396dc8429de3d1212e0c52d7b23ffa3dcf89c326fe0fd2206ab7",
+      "bytes": 31171
+    },
+    {
+      "path": "src/.deps/APserver-Svar_record.Po",
+      "sha256": "498f6dcf49b16012781cd0acedcd3d7c1d7561eef508f94ef11beef0916a178f",
+      "bytes": 29915
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Archive.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Assert.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Avec.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Backtrace.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_F12_COMMA.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_F12_DOMINO.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_F12_FORMAT.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_F12_INDEX_OF.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_F12_INTERVAL_INDEX.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_F12_PARTITION_PICK.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_F12_SORT.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_F12_TAKE_DROP.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_OPER1_COMMUTE.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_OPER1_EACH.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_OPER1_REDUCE.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_OPER1_SCAN.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_OPER2_INNER.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_OPER2_OUTER.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_OPER2_POWER.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Bif_OPER2_RANK.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-CDR.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Cell.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-CharCell.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Cmd_IN.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Cmd_KEYB.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Cmd_LIB.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Command.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Common.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-ComplexCell.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-DerivedFunction.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-DiffOut.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Doxy.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-DynamicObject.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Error.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Executable.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-FloatCell.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Function.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Id.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-IndexExpr.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-IndexIterator.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-InputFile.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-IntCell.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-IO_Files.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-LApack.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-LibPaths.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-LineInput.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Logging.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-LvalCell.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Macro.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    },
+    {
+      "path": "src/.deps/lib_gnu_apl_la-Malloc_hooks.Plo",
+      "sha256": "ddb1c8705176da86c285112f625f6a732bf7353b0a17835e8bcbc27c0e4243d9",
+      "bytes": 8
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "0c41fad109669c9c34381b83d3045e50d4920e74ed6786bd553f455d9562d7c8",
+  "body_preserved": true
+}
