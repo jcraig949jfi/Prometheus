@@ -1,0 +1,419 @@
+{
+ "schema": "techne.fossil.preservation_queue/1",
+ "written_utc": "2026-09-13T21:18:35Z",
+ "question": "CAN THIS EXACT BODY BE RECONSTRUCTED WITHOUT TRUSTING MOVING HEAD?",
+ "n_network_dependent": 18,
+ "reconstructible_without_moving_head": 0,
+ "rule": {
+  "risk": "+3 unpinned pip, +2 floating numerical dep, +1 apt index, +1 pip pinned by version but not hash",
+  "value": "+2 oracle-backed, +2 evidence-backed disposition, +1 intervention-ready, +1 estimation/control/inference",
+  "priority": "risk + value; ties broken by risk then id"
+ },
+ "note": "For these fossils the BODY is pinned and verifies; the WORLD is not. That is the same failure class P5 demonstrated, not a bookkeeping nicety. This is a dig-order, not a judgement of the software.",
+ "rows": [
+  {
+   "specimen_id": "python-sgp4-2.23",
+   "risk": 6,
+   "value": 3,
+   "priority": 9,
+   "pip": true,
+   "version_pinned": false,
+   "apt": true,
+   "floating_numerical": [
+    "numpy"
+   ],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)",
+    "floating NUMERICAL dependency (numpy): P5 showed a moving world can change an answer silently",
+    "apt-get install from a moving distro index"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)"
+   ]
+  },
+  {
+   "specimen_id": "emcee-3.1.6",
+   "risk": 5,
+   "value": 4,
+   "priority": 9,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [
+    "numpy"
+   ],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)",
+    "floating NUMERICAL dependency (numpy): P5 showed a moving world can change an answer silently"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)",
+    "in a behaviourally-exercised area (estimation/control/inference)"
+   ]
+  },
+  {
+   "specimen_id": "filterpy-labbe",
+   "risk": 5,
+   "value": 4,
+   "priority": 9,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [
+    "numpy",
+    "scipy"
+   ],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)",
+    "floating NUMERICAL dependency (numpy,scipy): P5 showed a moving world can change an answer silently"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)",
+    "in a behaviourally-exercised area (estimation/control/inference)"
+   ]
+  },
+  {
+   "specimen_id": "pid-autotune-hirschmann",
+   "risk": 5,
+   "value": 4,
+   "priority": 9,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [
+    "matplotlib"
+   ],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)",
+    "floating NUMERICAL dependency (matplotlib): P5 showed a moving world can change an answer silently"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)",
+    "in a behaviourally-exercised area (estimation/control/inference)"
+   ]
+  },
+  {
+   "specimen_id": "python-control",
+   "risk": 5,
+   "value": 4,
+   "priority": 9,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [
+    "matplotlib",
+    "numpy",
+    "scipy"
+   ],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)",
+    "floating NUMERICAL dependency (matplotlib,numpy,scipy): P5 showed a moving world can change an answer silently"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)",
+    "in a behaviourally-exercised area (estimation/control/inference)"
+   ]
+  },
+  {
+   "specimen_id": "hopfield-takyamamoto",
+   "risk": 5,
+   "value": 3,
+   "priority": 8,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [
+    "matplotlib",
+    "numpy"
+   ],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)",
+    "floating NUMERICAL dependency (matplotlib,numpy): P5 showed a moving world can change an answer silently"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)"
+   ]
+  },
+  {
+   "specimen_id": "minisom",
+   "risk": 5,
+   "value": 3,
+   "priority": 8,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [
+    "numpy"
+   ],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)",
+    "floating NUMERICAL dependency (numpy): P5 showed a moving world can change an answer silently"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)"
+   ]
+  },
+  {
+   "specimen_id": "pyportfolioopt-1.5.5",
+   "risk": 5,
+   "value": 3,
+   "priority": 8,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [
+    "pandas"
+   ],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)",
+    "floating NUMERICAL dependency (pandas): P5 showed a moving world can change an answer silently"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)"
+   ]
+  },
+  {
+   "specimen_id": "do-mpc",
+   "risk": 5,
+   "value": 2,
+   "priority": 7,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "scipy"
+   ],
+   "oracle_backed": "no",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)",
+    "floating NUMERICAL dependency (matplotlib,numpy,pandas,scipy): P5 showed a moving world can change an answer silently"
+   ],
+   "why_value": [
+    "intervention-ready (downstream perturbation target)",
+    "in a behaviourally-exercised area (estimation/control/inference)"
+   ]
+  },
+  {
+   "specimen_id": "redlock-py-redis-2014",
+   "risk": 4,
+   "value": 3,
+   "priority": 7,
+   "pip": true,
+   "version_pinned": false,
+   "apt": true,
+   "floating_numerical": [],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)",
+    "apt-get install from a moving distro index"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)"
+   ]
+  },
+  {
+   "specimen_id": "padasip-1.2.2",
+   "risk": 3,
+   "value": 4,
+   "priority": 7,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)",
+    "in a behaviourally-exercised area (estimation/control/inference)"
+   ]
+  },
+  {
+   "specimen_id": "particles-chopin-0.4",
+   "risk": 3,
+   "value": 4,
+   "priority": 7,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)",
+    "in a behaviourally-exercised area (estimation/control/inference)"
+   ]
+  },
+  {
+   "specimen_id": "backoff-2.2.1",
+   "risk": 3,
+   "value": 3,
+   "priority": 6,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)"
+   ]
+  },
+  {
+   "specimen_id": "py-vollib-lets-be-rational",
+   "risk": 3,
+   "value": 3,
+   "priority": 6,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)"
+   ]
+  },
+  {
+   "specimen_id": "pybreaker-1.2.0",
+   "risk": 3,
+   "value": 3,
+   "priority": 6,
+   "pip": true,
+   "version_pinned": false,
+   "apt": false,
+   "floating_numerical": [],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "pip install with NO version pin (PyPI is a moving target)"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)"
+   ]
+  },
+  {
+   "specimen_id": "compact-4.2bsd-1983",
+   "risk": 1,
+   "value": 5,
+   "priority": 6,
+   "pip": false,
+   "version_pinned": false,
+   "apt": true,
+   "floating_numerical": [],
+   "oracle_backed": "yes",
+   "disposition": "SUPERSEDED",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "apt-get install from a moving distro index"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "carries an evidence-backed historical disposition (SUPERSEDED)",
+    "intervention-ready (downstream perturbation target)"
+   ]
+  },
+  {
+   "specimen_id": "libdai-mooij",
+   "risk": 1,
+   "value": 4,
+   "priority": 5,
+   "pip": false,
+   "version_pinned": false,
+   "apt": true,
+   "floating_numerical": [],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "apt-get install from a moving distro index"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)",
+    "in a behaviourally-exercised area (estimation/control/inference)"
+   ]
+  },
+  {
+   "specimen_id": "valgrind-helgrind-fixtures-3.19",
+   "risk": 1,
+   "value": 3,
+   "priority": 4,
+   "pip": false,
+   "version_pinned": false,
+   "apt": true,
+   "floating_numerical": [],
+   "oracle_backed": "yes",
+   "disposition": "UNKNOWN",
+   "reconstructible_without_moving_head": false,
+   "why_risk": [
+    "apt-get install from a moving distro index"
+   ],
+   "why_value": [
+    "oracle-backed: its evidence DEPENDS on the run reproducing",
+    "intervention-ready (downstream perturbation target)"
+   ]
+  }
+ ]
+}
