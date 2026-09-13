@@ -1,13 +1,15 @@
 """S7 verdict under the frozen rule (S7_PREREG_2026-09-13.json), from the result files only.
 Run from the repository root: python archaeon/docs/h0h5/S7_VERDICT_2026-09-13.py"""
 import json
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).parent
-E8 = json.loads((HERE / "S7_RESULTS_ELIGIBLE_L8_2026-09-13.json").read_text(encoding="utf-8"))
-E9 = json.loads((HERE / "S7_RESULTS_ELIGIBLE_L9_2026-09-13.json").read_text(encoding="utf-8"))
-U = json.loads((HERE / "S7_RESULTS_UNIVERSE_2026-09-13.json").read_text(encoding="utf-8"))
-L10 = json.loads((HERE / "S7_RESULTS_L10_2026-09-13.json").read_text(encoding="utf-8")) if (HERE / "S7_RESULTS_L10_2026-09-13.json").exists() else None
+TAG = ("_" + sys.argv[sys.argv.index("--tag") + 1]) if "--tag" in sys.argv else ""          # ARCH-46A: same rule, tagged rows
+E8 = json.loads((HERE / f"S7_RESULTS_ELIGIBLE_L8{TAG}_2026-09-13.json").read_text(encoding="utf-8"))
+E9 = json.loads((HERE / f"S7_RESULTS_ELIGIBLE_L9{TAG}_2026-09-13.json").read_text(encoding="utf-8"))
+U = json.loads((HERE / f"S7_RESULTS_UNIVERSE{TAG}_2026-09-13.json").read_text(encoding="utf-8"))
+L10 = json.loads((HERE / f"S7_RESULTS_L10{TAG}_2026-09-13.json").read_text(encoding="utf-8")) if (HERE / f"S7_RESULTS_L10{TAG}_2026-09-13.json").exists() else None
 
 failures = []
 for name, r in (("L8", E8), ("L9", E9), ("universe", U)) + ((("L10", L10),) if L10 else ()):
@@ -33,6 +35,6 @@ elif not (checks["improvement_L9"]["ok"] and checks["work"]["ok"] and (checks["L
     verdict = "SAFE_BUT_NOT_WORTH_IT"
 else:
     verdict = "LICENSED_ENDGAME_REPAIR"
-out = {"schema": "archaeon.fossil_metabolism_s7.verdict.v0", "preregistration": "S7_PREREG_2026-09-13.json", "candidate_version": E8["candidate_version"], "instrument_failures": failures, "checks": checks, "verdict": verdict}
-(HERE / "S7_VERDICT_2026-09-13.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
+out = {"schema": "archaeon.fossil_metabolism_s7.verdict.v0", "preregistration": ("ARCH46A_PREREG_2026-09-13.json (bars identical to S7_PREREG)" if TAG else "S7_PREREG_2026-09-13.json"), "candidate_version": E8["candidate_version"], "instrument_failures": failures, "checks": checks, "verdict": verdict}
+(HERE / f"S7_VERDICT{TAG}_2026-09-13.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
 print(json.dumps(out, indent=1))

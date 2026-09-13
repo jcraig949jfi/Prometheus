@@ -20,6 +20,8 @@ from archaeon.producer import acquisition as AQ, fossil_inference as FI, s4_prod
 HERE = Path(__file__).parent
 PRE = json.loads((HERE / "S7_PREREG_2026-09-13.json").read_text(encoding="utf-8"))
 B = 10
+# ARCH-46A: identical trial, exact v2w; results are written under a tag so S7's rows are never overwritten
+TAG = ("_" + sys.argv[sys.argv.index("--tag") + 1]) if "--tag" in sys.argv else ""
 
 
 def _json(o):
@@ -88,7 +90,7 @@ def eligible(L):
             print("eligible L", L, i + 1, "/", len(states), "t=%ds" % (time.time() - t0), flush=True)
     res = {"schema": "archaeon.fossil_metabolism_s7.eligible.v0", "L": L, "candidate_version": G7.CANDIDATE_VERSION, "identity_audit": audit, "rows": out, "elapsed_s": time.time() - t0}
     res["summary"] = summarise_eligible(out)
-    (HERE / f"S7_RESULTS_ELIGIBLE_L{L}_2026-09-13.json").write_text(json.dumps(res, indent=1, default=_json), encoding="utf-8")
+    (HERE / f"S7_RESULTS_ELIGIBLE_L{L}{TAG}_2026-09-13.json").write_text(json.dumps(res, indent=1, default=_json), encoding="utf-8")
     print(json.dumps({"identity_audit": {k: (v if k != "violations" else len(v)) for k, v in audit.items()}, "summary": res["summary"]}, indent=1, default=_json))
 
 
@@ -141,7 +143,7 @@ def universe():
             "C_median_units": float(np.median([x["arms"]["GATED_V2W"]["median_units"] for x in out])), "G_median_units": float(np.median([x["arms"]["G"]["median_units"] for x in out])), "C_max_units": max(x["arms"]["GATED_V2W"]["max_units"] for x in out),
             "total_incremental_units": sum(x["arms"]["GATED_V2W"]["total_units"] - x["arms"]["G"]["total_units"] for x in out)}
     res = {"schema": "archaeon.fossil_metabolism_s7.universe.v0", "candidate_version": G7.CANDIDATE_VERSION, "identity_audit": audit, "rows": out, "summary": summ, "elapsed_s": time.time() - t0}
-    (HERE / "S7_RESULTS_UNIVERSE_2026-09-13.json").write_text(json.dumps(res, indent=1, default=_json), encoding="utf-8")
+    (HERE / f"S7_RESULTS_UNIVERSE{TAG}_2026-09-13.json").write_text(json.dumps(res, indent=1, default=_json), encoding="utf-8")
     print(json.dumps({"identity_audit": {k: (v if k != "violations" else len(v)) for k, v in audit.items()}, "summary": summ}, indent=1, default=_json))
 
 
@@ -188,7 +190,7 @@ def l10():
             "fired_fraction": sum(x["arms"]["GATED_V2W"]["fired"] for x in out) / sum(x["arms"]["GATED_V2W"]["decisions"] for x in out), "C_median_units": float(np.median([x["arms"]["GATED_V2W"]["median_units"] for x in out])), "G_median_units": float(np.median([x["arms"]["G"]["median_units"] for x in out])),
             "C_max_units": max(x["arms"]["GATED_V2W"]["max_units"] for x in out), "oracle_ledger": vars(oracle.ledger)}
     res = {"schema": "archaeon.fossil_metabolism_s7.l10.v0", "candidate_version": G7.CANDIDATE_VERSION, "identity_audit": audit, "rows": out, "summary": summ, "elapsed_s": time.time() - t0}
-    (HERE / "S7_RESULTS_L10_2026-09-13.json").write_text(json.dumps(res, indent=1, default=_json), encoding="utf-8")
+    (HERE / f"S7_RESULTS_L10{TAG}_2026-09-13.json").write_text(json.dumps(res, indent=1, default=_json), encoding="utf-8")
     print(json.dumps({"identity_audit": {k: (v if k != "violations" else len(v)) for k, v in audit.items()}, "summary": summ}, indent=1, default=_json))
 
 

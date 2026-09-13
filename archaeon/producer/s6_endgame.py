@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import hashlib
 import math
+from fractions import Fraction
 import random
 import time
 from dataclasses import dataclass
@@ -115,12 +116,18 @@ def lb2_num(L: int, S: np.ndarray, q_int: int, cache: Dict[bytes, float]) -> flo
     return tot
 
 
-def v2w_num(L: int, S: np.ndarray, q_int: int, cache: Dict[bytes, int]) -> float:
+def v2w_num(L: int, S: np.ndarray, q_int: int, cache: Dict[bytes, int]) -> Fraction:
     """Cell-weighted next-step collision: sum_e (n_e/N) * min_q' sum n'^2 over the cell, singletons contributing 0.
     (Found by accident in the first characterization pass through a cache collision between v2 and lb2 -- recorded as
     its own statistic because it was the one actually measured there; it weights each cell's best next-step ER by
-    the probability of landing in it and gives a resolved cell nothing.)"""
-    D = O5._dist_matrix(L); row = D[q_int, S]; tot = 0.0; N = len(S)
+    the probability of landing in it and gives a resolved cell nothing.)
+
+    ARCH-46A (2026-09-13): EXACT. Every term is an integer (n_e times an integer minimum) over the common denominator
+    N, so the value is the rational Fraction(sum_e n_e * min_q' sum n'^2, N). S7 computed it in binary floating point
+    and a 2e-15 rounding difference split a mathematically exact five-way tie against G's tie rule
+    (evs:914ee3e416304d0d). Equal partitions now compare equal and fall through to G's lexicographic rule; unequal
+    values keep their order (a Fraction orders exactly as the real number it denotes)."""
+    D = O5._dist_matrix(L); row = D[q_int, S]; num = 0; N = len(S)
     for e in np.unique(row):
         cell = S[row == e]; n = len(cell)
         if n == 1:
@@ -130,8 +137,8 @@ def v2w_num(L: int, S: np.ndarray, q_int: int, cache: Dict[bytes, int]) -> float
             M = D[:, cell]; counts = np.stack([(M == d).sum(1) for d in range(L + 1)], axis=1)
             _charge(1 << L, "v2_cell_probes")
             v = int((counts.astype(np.int64) ** 2).sum(1).min()); cache[k] = v
-        tot += (n / N) * v
-    return tot
+        num += n * v
+    return Fraction(num, N)
 
 
 def statistic(name: str, L: int, S: np.ndarray, q_int: int, cells: Sequence[int], caches: Dict[str, Dict]) -> object:
