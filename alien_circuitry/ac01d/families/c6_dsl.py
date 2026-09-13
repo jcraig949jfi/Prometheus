@@ -55,6 +55,17 @@ def crossover(rng, a, b):
     a = list(a); i = rng.randrange(1, len(a)); a[i] = crossover(rng, a[i], b); return tuple(a)
 
 
+def size(node):
+    return 1 if isinstance(node, str) else 1 + sum(size(n) for n in node[1:])
+
+
+MAX_NODES = 40
+
+
+def bounded(rng, child, fallback):
+    return child if size(child) <= MAX_NODES else fallback
+
+
 def to_str(node):
     return node if isinstance(node, str) else "(" + " ".join([node[0]] + [to_str(n) for n in node[1:]]) + ")"
 
@@ -87,7 +98,7 @@ def ridge(Phi, y, lam=1.0):
     A = Phi.T @ Phi + lam * np.eye(Phi.shape[1]); return np.linalg.solve(A, Phi.T @ y)
 
 
-def run(pop=120, generations=30, n_trees=24, fit_rows=150_000, per_set=300, wall_limit_s=1500, seed=0):
+def run(pop=120, generations=30, n_trees=24, fit_rows=120_000, per_set=300, wall_limit_s=1500, seed=0):
     t0 = time.perf_counter(); ctx = Context(per_set=per_set); U, M = ctx.U, ctx.M; D = U["D"]; F = U["F"]; tg = np.array(U["targets"])
     sr, trole, pr, live = M["state_role"], M["target_role"], M["pair_role"], M["live"]; rng = random.Random(seed); nrng = np.random.default_rng(seed)
     fit = live & (sr == 0)[:, None] & (trole == 0)[None, :] & (pr == 0); S, J = np.nonzero(fit); sel = nrng.choice(len(S), fit_rows, replace=False); S, J = S[sel], J[sel]
@@ -116,7 +127,7 @@ def run(pop=120, generations=30, n_trees=24, fit_rows=150_000, per_set=300, wall
             while len(children) < pop - len(elite):
                 a, b = rng.choice(elite), rng.choice(elite)
                 child = crossover(rng, a, b) if rng.random() < 0.6 else mutate(rng, a)
-                children.append(child)
+                children.append(bounded(rng, child, rand_tree(rng, 3)))  # bloat control: reject oversize offspring
             population = elite + children; scores = [fitness(t) for t in population]
         best = population[int(np.argmax(scores))]; trees.append(best)
         Phi_cur = np.stack([evaluate(t, X) for t in trees] + [np.ones(len(y), dtype=np.float32)], axis=1); w = ridge(Phi_cur, y)
