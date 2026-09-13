@@ -1,0 +1,38 @@
+{
+ "schema": "archaeon.fossil_metabolism_s7.verdict.v0",
+ "preregistration": "ARCH46A_PREREG_2026-09-13.json (bars identical to S7_PREREG)",
+ "candidate_version": "6680e382d679d169",
+ "instrument_failures": [],
+ "checks": {
+  "outside_gate_identity": true,
+  "canaries_all_pass": true,
+  "inside_gate_exact_nonregression": true,
+  "inside": {
+   "L8_worsened": 0,
+   "L9_worsened": 0,
+   "worsened_ids": []
+  },
+  "full_universe_ok": true,
+  "universe_worsened_any": 0,
+  "universe_worst": 0.0,
+  "L10_ok": true,
+  "improvement_L9": {
+   "recovery": 0.6874281370266545,
+   "aggregate_reduction": 0.040682832049016265,
+   "ok": true
+  },
+  "improvement_L8_reported": {
+   "recovery": 0.4048741439117673,
+   "aggregate_reduction": 0.021045345507191338
+  },
+  "work": {
+   "L8_median": 1937.0,
+   "L9_median": 3477.0,
+   "L8_ratio": 3.8261728395061727,
+   "L9_ratio": 8.32814371257485,
+   "max": 18743,
+   "ok": true
+  }
+ },
+ "verdict": "LICENSED_ENDGAME_REPAIR"
+}
