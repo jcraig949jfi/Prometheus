@@ -1,0 +1,43 @@
+L10 1 / 110 L10_shell_m1 N 10 {'G': 3.4, 'GATED_V2W': 3.4} V* 3.4000000000000004 t=11s
+L10 11 / 110 L10_prod2_a2_b8_uA2_uB1 N 8 {'G': 3.0, 'GATED_V2W': 3.0} V* 3.0 t=150s
+L10 21 / 110 L10_prod2_a3_b7_uA2_uB0 N 3 {'G': 1.667, 'GATED_V2W': 1.667} V* 1.6666666666666665 t=635s
+L10 31 / 110 L10_prod2_a4_b6_uA0_uB3 N 20 {'G': 3.1, 'GATED_V2W': 3.1} V* 3.0999999999999996 t=1133s
+L10 41 / 110 L10_prod2_a4_b6_uA3_uB1 N 24 {'G': 3.25, 'GATED_V2W': 3.25} V* 3.125 t=2349s
+L10 51 / 110 L10_prod2_a5_b5_uA0_uB3 N 10 {'G': 2.6, 'GATED_V2W': 2.6} V* 2.5999999999999996 t=2758s
+L10 61 / 110 L10_prod2_a5_b5_uA5_uB1 N 5 {'G': 2.4, 'GATED_V2W': 2.4} V* 2.4 t=2761s
+L10 71 / 110 L10_prod2_a6_b4_uA1_uB4 N 6 {'G': 2.667, 'GATED_V2W': 2.667} V* 2.6666666666666665 t=3629s
+L10 81 / 110 L10_prod2_a6_b4_uA5_uB4 N 6 {'G': 2.667, 'GATED_V2W': 2.667} V* 2.6666666666666665 t=4679s
+L10 91 / 110 L10_prod2_a7_b3_uA2_uB0 N 21 {'G': 3.524, 'GATED_V2W': 3.333} V* 3.2857142857142856 t=5225s
+L10 101 / 110 L10_prod2_a8_b2_uA1_uB0 N 8 {'G': 3.0, 'GATED_V2W': 3.0} V* 3.0 t=5884s
+L10 110 / 110 L10_prod2_a9_b1_uA8_uB1 N 9 {'G': 3.222, 'GATED_V2W': 3.222} V* 3.222222222222222 t=6010s
+{
+ "identity_audit": {
+  "decisions": 871,
+  "inside": 176,
+  "outside": 695,
+  "violations": 0
+ },
+ "summary": {
+  "worlds": 110,
+  "worsened_any": 0,
+  "worsened_ge_2pct": 0,
+  "worst_regression_rel": 0.0,
+  "improved_any": 17,
+  "aggregate_cost_rel_to_G": -0.013845350052246604,
+  "probes_saved_census": 53.0,
+  "L10_ok": true,
+  "oracle_available_worlds": 110,
+  "gap_worlds": 36,
+  "recovery_where_available": 0.6824712643678158,
+  "fired_fraction": 0.37695364238410595,
+  "C_median_units": 630.0,
+  "G_median_units": 321.0,
+  "C_max_units": 51421,
+  "oracle_ledger": {
+   "fresh_units": 94697780,
+   "memo_hits": 176997940,
+   "calls": 110,
+   "seconds": 6004.211949599878
+  }
+ }
+}
