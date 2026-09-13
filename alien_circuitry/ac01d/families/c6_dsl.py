@@ -38,7 +38,7 @@ def evaluate(node, X):
 
 
 def rand_tree(rng, depth):
-    if depth == 0 or rng.random() < 0.25: return rng.choice(TERMS)
+    if depth <= 0 or rng.random() < 0.25: return rng.choice(TERMS)
     r = rng.random()
     if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
     if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
