@@ -8,7 +8,7 @@ Charter:         roles/Techne/prompts/2026-09-12_batch06/OPERATOR_CHARTER.md
                  sha256 f5260cceb80e5d0342d68c2bd726a4841b66e65e4c75468e
 Artifacts:       techne/fossils/VAULT_INTEGRITY_2026-09-13_close.json
                  techne/fossils/CATALOG.json  (105 fossils, catalog improved)
-                 techne/fossils/pressure/{SAT,COMPRESSION}_PRESSURE_2026-09-13.json
+techne/fossils/pressure/{SAT,COMPRESSION}_PRESSURE_2026-09-13.json
                  techne/fossils/mirror/TECHNE65_Z_INDEPENDENCE_2026-09-13.md
                  roles/Nyx/INBOX_TECHNE_FOSSIL_BATCH06_2026-09-13.md
                  roles/Techne/journal/2026-09-13.md
@@ -61,7 +61,8 @@ opening (batch 06)                 90     90       0        0
 closing (batch 06)                105    105       0        0   (95 runnable)
 
 Old fossils made more useful (the second number)
-  libfec-karn        BLOCKED_PLATFORM -> RUNNABLE (SSE2 Viterbi; BER 180/409600 @3dB)
+  libfec-karn        BLOCKED_PLATFORM -> RUNNABLE (SSE2 Viterbi; BER 180/409600
+  @3dB)
   compact-4.2bsd     -m32 apt hack -> native i386 world
   4.3BSD kernel      SOURCE_ONLY -> boots on emulated VAX (RUNNABLE_EMULATED)
   particles          + a PMMH run (particle MCMC)
@@ -94,7 +95,8 @@ Instrument   test_fossils.py + test_fossil_isolation.py = 331 passed (incl. the
              MIRROR_DIFFERS, source untouched; truncate -> DIFFERS; remove ->
              MISSING). Every batch-06 receipt records BODY PRESERVED.
 Failure fossils preserved failing, not repaired: the Go deadlocks, the helgrind
-             races/lock-order, the glibc starvation, the 4.2BSD collapse lineage.
+             races/lock-order, the glibc starvation, the 4.2BSD collapse
+             lineage.
 Not-a-failure control: MainGoroutineID panics (a crash, not a deadlock).
 
 --------------------------------------------------------------------------------
@@ -121,7 +123,8 @@ Not-a-failure control: MainGoroutineID panics (a crash, not a deadlock).
 6. REPRODUCTION
 --------------------------------------------------------------------------------
     python -m techne.fossils.harvest verify --all          expect 105/105
-    python -m techne.fossils.harvest run libfec-karn        BER lines, BODY PRESERVED
+    python -m techne.fossils.harvest run libfec-karn        BER lines, BODY
+    PRESERVED
     python -m techne.fossils.harvest run bsd-4.3-distribution-tape-1986
         expect "4.3 BSD UNIX #1", "Root filesystem extracted", BODY PRESERVED
     python -m techne.fossils.harvest run glibc-rwlock-writer-starvation-2.36
@@ -132,14 +135,17 @@ Not-a-failure control: MainGoroutineID panics (a crash, not a deadlock).
 7. VERDICT
 --------------------------------------------------------------------------------
 BODIES STILL THE BODIES (open + close) ......... YES (90/90, 105/105)
-OLD FOSSILS UNLOCKED ........................... 4 (libfec, compact, 4.3 kernel, PMMH)
+OLD FOSSILS UNLOCKED ........................... 4 (libfec, compact, 4.3 kernel,
+PMMH)
 NEW EXECUTING CONCURRENCY FAILURES ............. 3
 DISTRIBUTED SURVIVAL, DISTINCT ASSUMPTIONS ..... 4
 SAT / COMPRESSION PRESSURE SPREAD RECORDED ..... YES
-OFF-HOST REDUNDANCY ACHIEVED ................... NO (Z: not independent; STOPPED)
+OFF-HOST REDUNDANCY ACHIEVED ................... NO (Z: not independent;
+STOPPED)
 CHARTER PHASES 6/9/10/11 ....................... PARTIAL / NOT DONE (reported)
 STOP RECOMMENDED? .............................. NO; next is TECHNE-69b (the TCP
-                                                 experiment) and the four thin phases
+                                                 experiment) and the four thin
+                                                 phases
 Reviewer's bottom line: batch 06 chose to UNLOCK and to add failure/survival
 machinery and pressure over breadth, and left phases 6/9/10/11 openly
 unfinished -- is that the right allocation, or should the next batch close
