@@ -1,0 +1,110 @@
+{
+ "schema": "techne.fossil.sat_pressure/1",
+ "written_utc": "2026-09-13T06:33:38Z",
+ "workload": "techne/fossils/pressure/workload_sat (gen_sat_workload.py, deterministic)",
+ "note": "raw behaviour of preserved SAT solvers over one shared workload; NOT a ranking. minisat-2.2.0 exposes conflicts/decisions, picosat-965 decisions/propagations; walksat (stochastic) cannot prove UNSAT and is recorded separately when run.",
+ "solvers": [
+  "picosat-965",
+  "minisat-2.2.0"
+ ],
+ "rows": [
+  {
+   "solver": "picosat-965",
+   "instance": "php_5_4.cnf",
+   "result": "UNSATISFIABLE",
+   "decisions": 39,
+   "propagations": 469
+  },
+  {
+   "solver": "picosat-965",
+   "instance": "php_7_6.cnf",
+   "result": "UNSATISFIABLE",
+   "decisions": 947,
+   "propagations": 13203
+  },
+  {
+   "solver": "picosat-965",
+   "instance": "rand_3sat_100_r38.cnf",
+   "result": "SATISFIABLE",
+   "decisions": 88,
+   "propagations": 1371
+  },
+  {
+   "solver": "picosat-965",
+   "instance": "rand_3sat_100_r426.cnf",
+   "result": "UNSATISFIABLE",
+   "decisions": 522,
+   "propagations": 14514
+  },
+  {
+   "solver": "picosat-965",
+   "instance": "rand_3sat_150_r426.cnf",
+   "result": "UNSATISFIABLE",
+   "decisions": 2519,
+   "propagations": 87562
+  },
+  {
+   "solver": "picosat-965",
+   "instance": "sat_easy.cnf",
+   "result": "SATISFIABLE",
+   "decisions": 40,
+   "propagations": 40
+  },
+  {
+   "solver": "picosat-965",
+   "instance": "unsat_easy.cnf",
+   "result": "UNSATISFIABLE",
+   "decisions": 0,
+   "propagations": 0
+  },
+  {
+   "solver": "minisat-2.2.0",
+   "instance": "php_5_4.cnf",
+   "result": "UNSATISFIABLE",
+   "conflicts": 31,
+   "decisions": 35
+  },
+  {
+   "solver": "minisat-2.2.0",
+   "instance": "php_7_6.cnf",
+   "result": "UNSATISFIABLE",
+   "conflicts": 1898,
+   "decisions": 2357
+  },
+  {
+   "solver": "minisat-2.2.0",
+   "instance": "rand_3sat_100_r38.cnf",
+   "result": "SATISFIABLE",
+   "conflicts": 23,
+   "decisions": 48
+  },
+  {
+   "solver": "minisat-2.2.0",
+   "instance": "rand_3sat_100_r426.cnf",
+   "result": "UNSATISFIABLE",
+   "conflicts": 389,
+   "decisions": 467
+  },
+  {
+   "solver": "minisat-2.2.0",
+   "instance": "rand_3sat_150_r426.cnf",
+   "result": "UNSATISFIABLE",
+   "conflicts": 3863,
+   "decisions": 4682
+  },
+  {
+   "solver": "minisat-2.2.0",
+   "instance": "sat_easy.cnf",
+   "result": "SATISFIABLE",
+   "conflicts": 0,
+   "decisions": 20
+  },
+  {
+   "solver": "minisat-2.2.0",
+   "instance": "unsat_easy.cnf",
+   "result": "UNSATISFIABLE",
+   "conflicts": 0,
+   "decisions": 0
+  }
+ ]
+}
