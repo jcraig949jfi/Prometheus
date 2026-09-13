@@ -56,3 +56,15 @@ decision, not Techne's to make unilaterally, and large bodies must NOT go into g
 the guarantee is "reconstructible from the recorded origin + verifiable by hash", which is
 strong for still-live origins and weak for the day an origin vanishes. That day is the reason
 this file names the gap rather than hiding it.
+
+## Off-host mirror: mechanism ready, destination not (2026-09-13, TECHNE-65)
+`harvest mirror --dest D` + `harvest mirror-verify --dest D` copy verified bodies by tree hash and
+re-check them (destructive-negative control passes: a one-byte edit of a mirrored file -> MIRROR_DIFFERS,
+source untouched). A same-volume destination is refused. The operator ruled Z: the first mirror, but on
+2026-09-13 the Z: share (\SPECTREX5\prometheus_share) was NOT independently reachable from SKULLPORT
+(stale mapping; UNC unresolved; a same-volume F:\SPECTREX5 look-alike), so the real mirror was STOPPED and
+reported (techne/fossils/mirror/TECHNE65_Z_INDEPENDENCE_2026-09-13.md). THE VAULT STILL HAS ONE HOST as its
+preservation dependency (105 bodies). When a reachable off-host destination is named, run mirror then
+mirror-verify and set techne/config.local.json "fossil_mirror" so the catalog's mirror_available turns to
+"mirrored".
+
