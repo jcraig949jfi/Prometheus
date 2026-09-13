@@ -263,7 +263,8 @@ def main():
             old = record.load(rec["specimen_id"])
             for k in ("run_classification", "test_classification", "receipts", "hashes", "acquisition_date", "environment"):
                 if old.get(k):
-                    rec[k] = old[k] if k != "environment" else {**rec["environment"], **old["environment"]}
+                    rec[k] = old[k]
+            record.merge_artifact_pins(rec, old)   # batch 10 P1: never lose an established pin if k != "environment" else {**rec["environment"], **old["environment"]}
         except FileNotFoundError:
             pass
         probs = record.validate(rec)

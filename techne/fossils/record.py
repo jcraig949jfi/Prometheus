@@ -60,6 +60,67 @@ REQUIRED = ["specimen_id", "canonical_name", "aliases", "lineage", "domain", "er
             "human_capability_summary"]
 
 
+
+# ---------------------------------------------------------------- pin evidence (batch 10 P1)
+# PREREG: techne/fossils/PREREG_PIN_EVIDENCE_2026-09-13.md
+# source_origin.artifacts[] is the REQUEST; hashes.artifacts[] is the RECEIPT written by acquire().
+# A pin is ESTABLISHED when either side carries a FIXED identifier -- a sha256, or a 40-hex commit.
+# "HEAD" is not fixed. Once established, a pin must never be lost or downgraded to a moving
+# reference: the batch scripts used to rebuild source_origin from a literal and destroy it.
+
+def _artifact_key(a: dict):
+    return (a.get("kind"), a.get("url") if a.get("kind") == "git" else a.get("filename"))
+
+
+def established_pin(art: dict, hashes_artifacts=None) -> str:
+    """The fixed identifier for this artifact, or "" if none is established."""
+    if not art:
+        return ""
+    hashes_artifacts = hashes_artifacts or []
+    key = art.get("url") if art.get("kind") == "git" else art.get("filename")
+    h = {}
+    for x in hashes_artifacts:
+        if str(x.get("filename") or "") == str(key or ""):
+            h = x
+            break
+    if art.get("kind") == "git":
+        for c in (art.get("commit_resolved"), art.get("commit"), h.get("commit")):
+            c = str(c or "")
+            if len(c) == 40 and all(ch in "0123456789abcdef" for ch in c.lower()):
+                return c
+        return ""
+    for sh in (art.get("sha256"), h.get("sha256")):
+        if sh:
+            return str(sh)
+    return ""
+
+
+def merge_artifact_pins(new_rec: dict, old_rec: dict) -> int:
+    """Carry established pins from old_rec onto new_rec's artifacts. Adding or removing artifacts
+    stays legal; LOSING an established pin does not. Returns how many pins were restored."""
+    if not old_rec:
+        return 0
+    old_arts = (old_rec.get("source_origin") or {}).get("artifacts") or []
+    old_hashes = (old_rec.get("hashes") or {}).get("artifacts") or []
+    idx = {_artifact_key(a): a for a in old_arts}
+    restored = 0
+    for a in (new_rec.get("source_origin") or {}).get("artifacts") or []:
+        if established_pin(a):           # this record already carries its own fixed pin
+            continue
+        o = idx.get(_artifact_key(a))
+        pin = established_pin(o, old_hashes) if o else established_pin(a, old_hashes)
+        if not pin:
+            continue
+        if a.get("kind") == "git":
+            a["commit"] = pin
+            a["commit_resolved"] = pin
+            if o and o.get("commit_date") and not a.get("commit_date"):
+                a["commit_date"] = o["commit_date"]
+        else:
+            a["sha256"] = pin
+        restored += 1
+    return restored
+
 def skeleton(specimen_id: str, **fields) -> dict:
     rec = {
         "schema": SCHEMA,

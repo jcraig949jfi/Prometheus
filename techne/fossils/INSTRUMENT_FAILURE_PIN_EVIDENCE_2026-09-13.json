@@ -1,0 +1,37 @@
+{
+ "schema": "techne.fossil.instrument_failure/1",
+ "written_utc": "2026-09-13T15:10:00Z",
+ "instrument": "techne/fossils/harvest.py preservation_of() -- pin evidence",
+ "prereg": "techne/fossils/PREREG_PIN_EVIDENCE_2026-09-13.md",
+ "summary": "The first preservation census read pin evidence from the REQUEST (source_origin.artifacts) instead of the RECEIPT (hashes.artifacts) and reported 59 fossils with unpinned artifacts when the true count was 18. This record preserves the erroneous result rather than deleting it.",
+ "failure": {
+  "when": "batch 09, 2026-09-13, first run of preservation_census over n=109",
+  "mechanism": "acquire() writes the resolved pin to both source_origin and hashes.artifacts. Every batch script's main() then rebuilds the record from a literal skeleton, carrying forward only run_classification/test_classification/receipts/hashes/acquisition_date/observability/nyx_handoff. source_origin is NOT carried forward, so re-running a batch script overwrites it and destroys the request-side pin. The census then read the destroyed half.",
+  "erroneous_result": {
+   "n": 109,
+   "by_status": {"SELF_CONTAINED": 44, "KNOWN_INCOMPLETE": 2, "UNPINNED_EXTERNAL_DEPENDENCY": 63},
+   "fossils_reported_with_unpinned_artifacts": 59
+  },
+  "corrected_result_same_bodies": {
+   "n": 109,
+   "by_status": {"SELF_CONTAINED": 89, "KNOWN_INCOMPLETE": 2, "UNPINNED_EXTERNAL_DEPENDENCY": 18},
+   "fossils_reported_with_unpinned_artifacts": 18
+  },
+  "how_caught": "The 59 figure was implausible against the knowledge that acquire() records sha256 for every url artifact, so the two fields were compared directly on three specimens (bdwgc-8.2.6, avida, buddy-bdd). All three carried the pin in hashes.artifacts and lacked it in source_origin.",
+  "what_it_would_have_cost": "Reporting 54% of the vault as unpinned would have mis-ranked the entire preservation-debt queue and hidden the 2 genuinely incomplete bodies among 59 false positives."
+ },
+ "repair_batch_10": {
+  "reader": "unchanged -- batch 09 already corrected it to consult the receipt first",
+  "writer": "record.merge_artifact_pins() added; all 9 batch main() blocks now call it, so rebuilding a record can no longer destroy an established pin",
+  "backfill": {"pins_restored": 260, "git_commits_restored": 21, "url_sha256_restored": 239,
+               "unpinned_in_request_before": 260, "unpinned_in_request_after": 0,
+               "not_recoverable": 0},
+  "controls": "techne/tests/test_pin_evidence.py -- C1 reproduces the 59-error with the legacy request-only predicate and shows the authoritative reader disagreeing; C2 prevents C1 passing for a reader that always says pinned; C3 reproduces the writer defect and shows the fix repairing it; C4 asserts no record in the vault asks a re-acquisition to trust a moving HEAD. Falsifiability verified by disabling the fix and observing C3 fail."
+ },
+ "preregistered_predictions": {
+  "P-A": {"claim": "lost pins 21 git / 239 url -> 0 / 0", "outcome": "CONFIRMED (260 restored, 0 remaining)"},
+  "P-B": {"claim": "the preservation census counts DO NOT MOVE (97/2/18/0 at n=117)", "outcome": "CONFIRMED -- identical after the change, because the reader already consulted the receipt. The defect was never about the census counts; it was about whether this exact body can be reconstructed without trusting a moving HEAD."},
+  "P-C": {"claim": "re-running a batch script is idempotent with respect to pins", "outcome": "CONFIRMED by test_c4b over a 20-specimen sample"}
+ },
+ "lesson": "A census that reads the wrong field is not a census of the vault, it is a census of the field. The number was wrong by 3.3x while every underlying body was unchanged -- the bodies were never the thing that moved."
+}
