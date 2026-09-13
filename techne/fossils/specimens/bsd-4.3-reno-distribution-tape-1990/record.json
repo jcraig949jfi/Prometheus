@@ -23,41 +23,31 @@
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/FORMAT",
         "filename": "FORMAT",
-        "extract": false,
-        "sha256": "fa1d15aae6491669b48a7d9c08e730c36076959056ffad70daccc4469da5d081",
-        "bytes": 84
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/stand.gz",
         "filename": "stand.gz",
-        "extract": false,
-        "sha256": "e49ead51a57868ae022511333824d0fcea28c0aea9aac76ae0f3e45d216613a9",
-        "bytes": 62534
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/miniroot.gz",
         "filename": "miniroot.gz",
-        "extract": false,
-        "sha256": "1014a234a5ffd4074157eab1e72786df3c1c71ef6e707f04db898d0f6b0a4ffc",
-        "bytes": 813246
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/rootdump.gz",
         "filename": "rootdump.gz",
-        "extract": false,
-        "sha256": "39c3ccc33d75b957bac4ab08f1f50e0cb7f0a072b2689dfbb3b4f52c2721ea6e",
-        "bytes": 1279783
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/usr.tar.gz",
         "filename": "usr.tar.gz",
-        "extract": false,
-        "sha256": "9be3cde8317b1d2a1106207d7a0fd2587ea2ae1f814fdd0a9bedbcd7d212b678",
-        "bytes": 15247645
+        "extract": false
       }
     ]
   },
@@ -118,8 +108,8 @@
     "an RP06 disk image",
     "expect (console automation)"
   ],
-  "run_classification": "NOT_ATTEMPTED",
-  "test_classification": "NOT_ATTEMPTED",
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
   "entry_points": [
     "SIMH: boot ts0 -> standalone boot -> copy miniroot -> boot -> newfs / restore -> boot hp(0,0)vmunix"
   ],
@@ -149,12 +139,12 @@
   "human_failure_condition": "multiple losses in one window still collapse the window (NewReno/SACK pressure)",
   "behavioral_entry_point": "the same controlled pressure as the 4.3 tape, so the two kernels' netstat -s counters can be set side by side (interpretation is Nyx's)",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
     "INTERVENTION_READY": "unknown",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -174,11 +164,11 @@
   "versions_preserved": [],
   "receipts": [],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\bsd-4.3-reno-distribution-tape-1990 ; tracked techne/fossils/specimens/bsd-4.3-reno-distribution-tape-1990",
+    "where_it_came_from": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/FORMAT ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "PRESERVED + hashed; not individually booted this pass -- TECHNE-69b.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 44e6e0bf76122e15 pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "install 4.3BSD-Reno on a VAX from one tape"
   },
   "seat": "Techne"
 }

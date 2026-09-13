@@ -92,12 +92,12 @@
   "human_failure_condition": "rank/shape errors (LENGTH ERROR, RANK ERROR) when arrays do not conform",
   "behavioral_entry_point": "reshape (rho) an array to a non-conforming shape and watch the error; vary the outer-product operator's function",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -129,11 +129,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\gnu-apl-2.0 ; tracked techne/fossils/specimens/gnu-apl-2.0",
+    "where_it_came_from": "https://ftp.gnu.org/gnu/apl/apl-2.0.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run gnu-apl-2.0",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/gnu-apl-2.0/receipts/run-gnu-apl-2.0-20260913T064433Z.json",
+    "what_humans_used_it_for": "express computation as operations on whole arrays in a compact notation, without explicit iteration"
   },
   "seat": "Techne"
 }

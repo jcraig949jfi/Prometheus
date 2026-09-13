@@ -20,9 +20,7 @@
       {
         "kind": "git",
         "url": "https://github.com/dbtsai/libDAI",
-        "commit": "6df66a8ce7eb6f669bae933ab6ec35bbba56182f",
-        "commit_resolved": "6df66a8ce7eb6f669bae933ab6ec35bbba56182f",
-        "commit_date": "2012-05-16T15:50:19+02:00"
+        "commit": "HEAD"
       }
     ]
   },
@@ -91,12 +89,12 @@
   "human_failure_condition": "loopy BP oscillates or converges to wrong marginals",
   "behavioral_entry_point": "run BP on a loopy .fg (tests/ ships several) with different damping/update schedules and record convergence",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -138,11 +136,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\libdai-mooij ; tracked techne/fossils/specimens/libdai-mooij",
+    "where_it_came_from": "https://github.com/dbtsai/libDAI ; HISTORICAL_ARCHIVE_MIRROR @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run libdai-mooij",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/libdai-mooij/receipts/run-libdai-mooij-20260913T060747Z.json",
+    "what_humans_used_it_for": "compute marginals and MAP states on graphical models by passing messages along factor-graph edges, exactly on trees and approximately on loopy graphs"
   },
   "seat": "Techne"
 }

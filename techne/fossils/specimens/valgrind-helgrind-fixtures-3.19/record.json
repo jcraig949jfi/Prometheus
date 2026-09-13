@@ -24,10 +24,7 @@
       {
         "kind": "url",
         "url": "https://sourceware.org/pub/valgrind/valgrind-3.19.0.tar.bz2",
-        "filename": "valgrind-3.19.0.tar.bz2",
-        "sha256": "dd5e34486f1a483ff7be7300cc16b4d6b24690987877c3278d797534d6738f02",
-        "bytes": 16403296,
-        "extracted_to": "upstream/tree/valgrind-3.19.0"
+        "filename": "valgrind-3.19.0.tar.bz2"
       }
     ]
   },
@@ -97,12 +94,12 @@
   "human_failure_condition": "silent corruption (race) or an eventual deadlock (lock order) in production, not in test",
   "behavioral_entry_point": "run a fixture natively (usually 'works') and under helgrind (the error is reported): the same binary, two observers",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -129,11 +126,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\valgrind-helgrind-fixtures-3.19 ; tracked techne/fossils/specimens/valgrind-helgrind-fixtures-3.19",
+    "where_it_came_from": "https://sourceware.org/pub/valgrind/valgrind-3.19.0.tar.bz2 ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run valgrind-helgrind-fixtures-3.19",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/valgrind-helgrind-fixtures-3.19/receipts/run-valgrind-helgrind-fixtures-3.19-20260913T054408Z.json",
+    "what_humans_used_it_for": "make each class of thread error reproducible so the detector's report for it never regresses"
   },
   "seat": "Techne"
 }

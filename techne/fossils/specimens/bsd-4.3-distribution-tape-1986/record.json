@@ -108,8 +108,8 @@
     "an RP06 disk image",
     "expect (console automation)"
   ],
-  "run_classification": "NOT_ATTEMPTED",
-  "test_classification": "NOT_ATTEMPTED",
+  "run_classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
   "entry_points": [
     "SIMH: boot ts0 -> : ts(0,1)copy -> : hp(0,1)vmunix -> newfs / restore -> boot hp(0,0)vmunix"
   ],
@@ -139,12 +139,12 @@
   "human_failure_condition": "congestion collapse (historical); install failure (tape/disk)",
   "behavioral_entry_point": "netstat -s before/after a loopback transfer; a second emulated VAX over a lossy Ethernet relay is the boundary (see record notes)",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -167,13 +167,20 @@
     "known_bad_lineage"
   ],
   "versions_preserved": [],
-  "receipts": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/bsd-4.3-distribution-tape-1986/receipts/run-bsd-4.3-distribution-tape-1986-20260913T065059Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_EMULATED",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\bsd-4.3-distribution-tape-1986 ; tracked techne/fossils/specimens/bsd-4.3-distribution-tape-1986",
+    "where_it_came_from": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/FORMAT ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run bsd-4.3-distribution-tape-1986",
+    "how_we_know_it_runs": "RUNNABLE_EMULATED / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/bsd-4.3-distribution-tape-1986/receipts/run-bsd-4.3-distribution-tape-1986-20260913T065059Z.json",
+    "what_humans_used_it_for": "install a complete 4.3BSD system on a VAX from one tape"
   },
   "seat": "Techne"
 }

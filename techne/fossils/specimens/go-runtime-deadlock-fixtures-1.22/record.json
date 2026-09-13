@@ -23,25 +23,19 @@
         "kind": "url",
         "url": "https://raw.githubusercontent.com/golang/go/go1.22.0/src/runtime/testdata/testprog/deadlock.go",
         "filename": "deadlock.go",
-        "extract": false,
-        "sha256": "a10812d1f0bc5c8cfdff6402637da84961e10ad2a88f21727e614e3397bca7c3",
-        "bytes": 6658
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://raw.githubusercontent.com/golang/go/go1.22.0/src/runtime/testdata/testprog/main.go",
         "filename": "main.go",
-        "extract": false,
-        "sha256": "6fd26614bafc3969b083d3f87d2692c663db14daa9e11264cf2471a14ae079c0",
-        "bytes": 651
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://raw.githubusercontent.com/golang/go/go1.22.0/src/runtime/crash_test.go",
         "filename": "crash_test.go",
-        "extract": false,
-        "sha256": "95fbe4971cafbc454f141ac1086e01e8c6a75f1e3521ab862674afddfcea835e",
-        "bytes": 23673
+        "extract": false
       }
     ]
   },
@@ -120,12 +114,12 @@
   "human_failure_condition": "a hung program that never terminates and never explains why",
   "behavioral_entry_point": "run each named case; compare the goroutine dump; edit nothing (the fixtures are the fossil)",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -169,11 +163,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\go-runtime-deadlock-fixtures-1.22 ; tracked techne/fossils/specimens/go-runtime-deadlock-fixtures-1.22",
+    "where_it_came_from": "https://raw.githubusercontent.com/golang/go/go1.22.0/src/runtime/testdata/testprog/deadlock.go ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run go-runtime-deadlock-fixtures-1.22",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/go-runtime-deadlock-fixtures-1.22/receipts/run-go-runtime-deadlock-fixtures-1.22-20260913T054356Z.json",
+    "what_humans_used_it_for": "keep the runtime's deadlock detector honest: each program must still be recognised as a deadlock on every release"
   },
   "seat": "Techne"
 }

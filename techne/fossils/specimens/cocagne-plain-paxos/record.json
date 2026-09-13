@@ -90,12 +90,12 @@
   "human_failure_condition": "duelling proposers never decide (liveness), or -- if the quorum rule is broken -- two values decided (safety)",
   "behavioral_entry_point": "the tests' contention cases; drop acceptor replies and watch proposal numbers climb",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -133,11 +133,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\cocagne-plain-paxos ; tracked techne/fossils/specimens/cocagne-plain-paxos",
+    "where_it_came_from": "https://github.com/cocagne/paxos ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run cocagne-plain-paxos",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/cocagne-plain-paxos/receipts/run-cocagne-plain-paxos-20260913T055447Z.json",
+    "what_humans_used_it_for": "let a majority of unreliable nodes agree on one value despite crashes and message loss, and keep agreeing when a leader dies"
   },
   "seat": "Techne"
 }

@@ -23,41 +23,31 @@
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/FORMAT",
         "filename": "FORMAT",
-        "extract": false,
-        "sha256": "a104de0480e2367e3b3936cdf6ed2d6fd800c7cc3f414b57ad10f3dd6a40de09",
-        "bytes": 336
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/stand.gz",
         "filename": "stand.gz",
-        "extract": false,
-        "sha256": "2a48b4de94fb63e1fbb57969cd804261bfa384482c5b65f5b592f63e8f1a66ab",
-        "bytes": 21867
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/miniroot.gz",
         "filename": "miniroot.gz",
-        "extract": false,
-        "sha256": "e0bd20d769220f744636519ecfe3b2cdda245e13b591af5b5f1363b88f6c6a67",
-        "bytes": 734768
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/rootdump.gz",
         "filename": "rootdump.gz",
-        "extract": false,
-        "sha256": "0bcb40c2b864f43dce1faeba9f3dcf6059c98055b394c2cfcd1221ab36a5015e",
-        "bytes": 1383511
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/usr.tar.gz",
         "filename": "usr.tar.gz",
-        "extract": false,
-        "sha256": "73124e1583d5c75b6a7a5540ba7523c6923afa870d0671e5e142e3a0d686e401",
-        "bytes": 6966724
+        "extract": false
       }
     ]
   },
@@ -118,8 +108,8 @@
     "an RP06 disk image",
     "expect (console automation)"
   ],
-  "run_classification": "NOT_ATTEMPTED",
-  "test_classification": "NOT_ATTEMPTED",
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
   "entry_points": [
     "SIMH: boot ts0 -> standalone boot -> copy miniroot to hp(0,1) -> boot hp(0,1)vmunix -> newfs/restore root -> boot hp(0,0)vmunix"
   ],
@@ -149,12 +139,12 @@
   "human_failure_condition": "a bad tape or disk geometry stops the install; historically, its TCP collapsed under congestion",
   "behavioral_entry_point": "boot the installed disk under SIMH; netstat -s on the guest before/after a loopback transfer",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
     "INTERVENTION_READY": "unknown",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -173,11 +163,11 @@
   "versions_preserved": [],
   "receipts": [],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\bsd-4.2-distribution-tape-1983 ; tracked techne/fossils/specimens/bsd-4.2-distribution-tape-1983",
+    "where_it_came_from": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/FORMAT ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "PRESERVED + hashed; the boot procedure is identical to the 4.3 tape (proven) but this tape was not individually booted this pass -- TECHNE-69b.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 9dfc093874cc79e1 pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "install a complete 4.2BSD system on a VAX from one magnetic tape"
   },
   "seat": "Techne"
 }

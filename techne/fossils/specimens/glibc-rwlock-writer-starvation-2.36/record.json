@@ -24,25 +24,19 @@
         "kind": "url",
         "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=nptl/pthread_rwlock_common.c;hb=glibc-2.36",
         "filename": "pthread_rwlock_common.c",
-        "extract": false,
-        "sha256": "7ae9727e8e66785d23ccaabb43fb860830ecde992df2d96ba7a3d5ebf55555b6",
-        "bytes": 44450
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=nptl/pthread_rwlock_wrlock.c;hb=glibc-2.36",
         "filename": "pthread_rwlock_wrlock.c",
-        "extract": false,
-        "sha256": "f7701020e3784df59afafae21d21d49781e247c30a5dcea512e623c81742343e",
-        "bytes": 1656
+        "extract": false
       },
       {
         "kind": "url",
         "url": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=nptl/pthread_rwlock_rdlock.c;hb=glibc-2.36",
         "filename": "pthread_rwlock_rdlock.c",
-        "extract": false,
-        "sha256": "a0914192854192c68e32848b8b3e9e3baca4d5ce3a04e140e2ff91941491bf1a",
-        "bytes": 1655
+        "extract": false
       }
     ]
   },
@@ -122,12 +116,12 @@
   "human_failure_condition": "writer starvation: updates never land while readers keep arriving",
   "behavioral_entry_point": "vary reader count and hold time; switch the kind attribute; measure writer acquisitions",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -153,11 +147,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\glibc-rwlock-writer-starvation-2.36 ; tracked techne/fossils/specimens/glibc-rwlock-writer-starvation-2.36",
+    "where_it_came_from": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=nptl/pthread_rwlock_common.c;hb=glibc-2.36 ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run glibc-rwlock-writer-starvation-2.36",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/glibc-rwlock-writer-starvation-2.36/receipts/run-glibc-rwlock-writer-starvation-2.36-20260913T054149Z.json",
+    "what_humans_used_it_for": "let many readers share a structure while excluding writers, with a policy choice the standard leaves to the implementation"
   },
   "seat": "Techne"
 }

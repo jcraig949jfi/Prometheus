@@ -22,9 +22,7 @@
       {
         "kind": "git",
         "url": "https://github.com/LiaoSteve/Adaptive-control---Indirect-Self-Tuning-Regulator",
-        "commit": "de92c5c69832ab30a162af4bc2df7059d49c77cc",
-        "commit_resolved": "de92c5c69832ab30a162af4bc2df7059d49c77cc",
-        "commit_date": "2020-01-01T10:43:26+08:00"
+        "commit": "HEAD"
       }
     ]
   },
@@ -92,12 +90,12 @@
   "human_failure_condition": "estimator divergence or controller bursting when excitation vanishes (the known STR hazard)",
   "behavioral_entry_point": "the forgetting factor lambda (0.8 in the script) and the initial covariance p: the adaptation speed knob",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -140,11 +138,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\indirect-self-tuning-regulator-liaosteve ; tracked techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve",
+    "where_it_came_from": "https://github.com/LiaoSteve/Adaptive-control---Indirect-Self-Tuning-Regulator ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run indirect-self-tuning-regulator-liaosteve",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve/receipts/run-indirect-self-tuning-regulator-liaosteve-20260913T055943Z.json",
+    "what_humans_used_it_for": "control a plant whose parameters are unknown by identifying them online and redesigning the controller at every step"
   },
   "seat": "Techne"
 }

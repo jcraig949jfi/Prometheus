@@ -90,12 +90,12 @@
   "human_failure_condition": "hours of computation lost at a crash; or a restart that silently diverges",
   "behavioral_entry_point": "checkpoint at count N, kill, restart: the first printed count after restart is the observation",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [],
   "acquisition_tags": [
@@ -120,11 +120,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\dmtcp-3.1.2 ; tracked techne/fossils/specimens/dmtcp-3.1.2",
+    "where_it_came_from": "https://github.com/dmtcp/dmtcp/archive/refs/tags/v3.1.2.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run dmtcp-3.1.2",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/dmtcp-3.1.2/receipts/run-dmtcp-3.1.2-20260913T055210Z.json",
+    "what_humans_used_it_for": "let a long computation survive the death of its process or node by saving and restoring its entire state, without changing the program"
   },
   "seat": "Techne"
 }

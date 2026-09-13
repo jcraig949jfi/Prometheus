@@ -21,9 +21,7 @@
       {
         "kind": "git",
         "url": "https://github.com/xkhainguyen/L1AC-Basics",
-        "commit": "3799a07d9320d6f9ec7bbcab784d10289ecb8719",
-        "commit_resolved": "3799a07d9320d6f9ec7bbcab784d10289ecb8719",
-        "commit_date": "2022-06-08T21:08:19+07:00"
+        "commit": "HEAD"
       }
     ]
   },
@@ -90,12 +88,12 @@
   "human_failure_condition": "loss of robustness under fast adaptation (the MRAC failure L1 was designed against; Rohrs 1985)",
   "behavioral_entry_point": "the adaptation gain Gamma and the filter bandwidth in the script",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -133,11 +131,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\l1-adaptive-control-basics-xkhainguyen ; tracked techne/fossils/specimens/l1-adaptive-control-basics-xkhainguyen",
+    "where_it_came_from": "https://github.com/xkhainguyen/L1AC-Basics ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run l1-adaptive-control-basics-xkhainguyen",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/l1-adaptive-control-basics-xkhainguyen/receipts/run-l1-adaptive-control-basics-xkhainguyen-20260913T055946Z.json",
+    "what_humans_used_it_for": "adapt fast to an unknown plant without the high-gain fragility of classical MRAC, by filtering the adaptive control signal"
   },
   "seat": "Techne"
 }

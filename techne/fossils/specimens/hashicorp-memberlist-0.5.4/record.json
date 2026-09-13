@@ -89,12 +89,12 @@
   "human_failure_condition": "a partition splits membership; a live node is wrongly declared dead and evicted",
   "behavioral_entry_point": "the tests' unreachable peers and timeouts; shrink ProbeTimeout / SuspicionMult and watch false positives",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -131,11 +131,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\hashicorp-memberlist-0.5.4 ; tracked techne/fossils/specimens/hashicorp-memberlist-0.5.4",
+    "where_it_came_from": "https://github.com/hashicorp/memberlist/archive/refs/tags/v0.5.4.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run hashicorp-memberlist-0.5.4",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/hashicorp-memberlist-0.5.4/receipts/run-hashicorp-memberlist-0.5.4-20260913T055310Z.json",
+    "what_humans_used_it_for": "let every node in a cluster learn who is alive and who has died, without a coordinator, tolerating message loss and slow nodes"
   },
   "seat": "Techne"
 }

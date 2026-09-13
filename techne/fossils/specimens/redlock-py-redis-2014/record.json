@@ -93,12 +93,12 @@
   "human_failure_condition": "two holders at once after a pause or clock jump (Kleppmann's scenario); or permanent blocking without a lease",
   "behavioral_entry_point": "shorten the TTL below the holder's work time and observe the second client acquire while the first still believes it holds the lock",
   "observability": {
-    "EXECUTABLE": "unknown",
-    "OBSERVABLE": "unknown",
-    "ORACLE_BACKED": "unknown",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
-    "OPAQUE": "unknown"
+    "OPAQUE": "no"
   },
   "lineage_relations": [
     {
@@ -125,11 +125,11 @@
     }
   ],
   "nyx_handoff": {
-    "here_is_the_machine": "",
-    "where_it_came_from": "",
-    "how_to_run_it": "",
-    "how_we_know_it_runs": "",
-    "what_humans_used_it_for": ""
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\redlock-py-redis-2014 ; tracked techne/fossils/specimens/redlock-py-redis-2014",
+    "where_it_came_from": "https://github.com/SPSCommerce/redlock-py ; FAITHFUL_PORT @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run redlock-py-redis-2014",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/redlock-py-redis-2014/receipts/run-redlock-py-redis-2014-20260913T054942Z.json",
+    "what_humans_used_it_for": "grant one client at a time exclusive access to a resource across machines, with a lease so a crashed holder cannot block forever"
   },
   "seat": "Techne"
 }
