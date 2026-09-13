@@ -1,0 +1,132 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "go-runtime-deadlock-fixtures-1.22",
+  "receipt_id": "run-go-runtime-deadlock-fixtures-1.22-20260913T054240Z",
+  "written_utc": "20260913T054240Z",
+  "runner": "docker",
+  "image": "golang:1.22-bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "b1863899268afcaba2a8a3c7b84610d4919cda6fd0fed66f4b6116d4a8aa5b93",
+  "recipe_sha256": "42bdde5cd37d5167c68865c57c25f026c1c3a6639433750704e03799a579e959",
+  "patches": [],
+  "probe": [
+    {
+      "name": "go",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go version",
+      "exit": 0,
+      "seconds": 0.92,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "go version go1.22.12 linux/amd64\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "stage the two testprog files as a module-less main package (crash_test.go is the expectation file, not built)",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; mkdir -p $BODY/build/prog && cp deadlock.go main.go $BODY/build/prog/ && cd $BODY/build/prog && go mod init testprog >/dev/null 2>&1; go vet . 2>&1 | tail -2; go build -o $BODY/build/testprog . && echo built",
+      "exit": 0,
+      "seconds": 3.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "./deadlock.go:46:2: unreachable code\n./deadlock.go:51:2: unreachable code\nbuilt\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "SimpleDeadlock: main blocks on a channel nobody sends to",
+      "cmd": "cd $BODY/build && ./testprog SimpleDeadlock 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine 1 [select (no cases)]:\nmain.SimpleDeadlock()\n\t/w/build/prog/deadlock.go:45 +0xf\nmain.main()\nexit=2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "LockedDeadlock: the deadlock with the main goroutine locked to its thread",
+      "cmd": "cd $BODY/build && ./testprog LockedDeadlock 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine 1 [select (no cases), locked to thread]:\nmain.LockedDeadlock()\n\t/w/build/prog/deadlock.go:56 +0x14\nmain.main()\nexit=2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "LockedDeadlock2: two goroutines, one locked, both waiting",
+      "cmd": "cd $BODY/build && ./testprog LockedDeadlock2 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+      "exit": 0,
+      "seconds": 0.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine 1 [select (no cases)]:\nmain.LockedDeadlock2()\n\t/w/build/prog/deadlock.go:65 +0x2a\nmain.main()\nexit=2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "GoexitDeadlock: main calls Goexit while others block",
+      "cmd": "cd $BODY/build && ./testprog GoexitDeadlock 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+      "exit": 0,
+      "seconds": 0.78,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "fatal error: no goroutines (main called runtime.Goexit) - deadlock!\nexit=2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "control: a fixture that is NOT a deadlock (GoexitExit) exits 3 with no diagnosis",
+      "cmd": "cd $BODY/build && ./testprog GoexitExit 2>&1 | head -3; echo exit=${PIPESTATUS[0]}",
+      "exit": 0,
+      "seconds": 0.77,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'exit=3'"
+      ],
+      "stdout": {
+        "text": "t1\nt2\nt3\nexit=2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false,
+  "tree_sha256_after": "b1863899268afcaba2a8a3c7b84610d4919cda6fd0fed66f4b6116d4a8aa5b93",
+  "body_preserved": true
+}

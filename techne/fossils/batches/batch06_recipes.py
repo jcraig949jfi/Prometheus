@@ -1,0 +1,130 @@
+"""Batch 06 recipes + harnesses (2026-09-13). python -m techne.fossils.batches.batch06_recipes
+
+Every recipe executes in the disposable work/ copy. Deviations in each recipe's notes.
+"""
+from __future__ import annotations
+
+import json
+from .. import vault
+
+C = "prometheus-fossil-c:bookworm"
+SIMH = "prometheus-fossil-simh:bookworm"
+GO = "golang:1.22-bookworm"
+R = {}
+H = {}
+
+# ============================ PHASE 1 / TECHNE-69: 4.3BSD on the emulated VAX-11/780 ==========
+R["bsd-4.3-distribution-tape-1986"] = {
+    "runner": "docker", "image": SIMH, "workdir": "build",
+    "probe": [{"name": "simh", "cmd": "cat /usr/local/share/simh-commit.txt; expect -v; printf 'show version\\nexit\\n' > /tmp/v.ini; vax780 /tmp/v.ini 2>&1 | head -2"}],
+    "build": [{"name": "assemble the .tap from the tape files (stand 512-byte records; miniroot, rootdump, usr.tar 10240) and gunzip the miniroot as a raw disk",
+               "cmd": "python3 $HARNESS/simh_mktape.py 43bsd.tap $BODY/upstream/stand.gz:512 $BODY/upstream/miniroot.gz:10240 $BODY/upstream/rootdump.gz:10240 $BODY/upstream/usr.tar.gz:10240 && gunzip -c $BODY/upstream/miniroot.gz > miniroot.raw && sha256sum miniroot.raw 43bsd.tap | cut -c1-80", "timeout": 600},
+              {"name": "STAGE 1: console-load boot42, boot the miniroot from rq0, restore the root dump onto rq1 with the release's own xtr", "cmd": "expect $HARNESS/bsd43_install_stage1.exp miniroot.raw rq.dsk 43bsd.tap $HARNESS/boot42 > stage1.log 2>&1; grep -a STAGE1 stage1.log; grep -a -c 'Root filesystem extracted' stage1.log", "timeout": 3600},
+              {"name": "STAGE 2: boot the restored root, newfs + extract /usr from tape file 4, fstab, home slice", "cmd": "expect $HARNESS/bsd43_install_stage2.exp rq.dsk 43bsd.tap $HARNESS/boot42 > stage2.log 2>&1; grep -a STAGE2 stage2.log", "timeout": 5400}],
+    "runs": [{"name": "STAGE 3: multi-user boot; netstat -s before and after a loopback rsh transfer of /vmunix (the fossil's TCP moving bytes through itself)",
+              "cmd": "expect $HARNESS/bsd43_tcp_experiment.exp rq.dsk $HARNESS/boot42 > stage3.log 2>&1; grep -a -E 'EXP:|4.3 BSD UNIX' stage3.log | head -12; grep -a -A3 'tcp:' stage3.log | head -40",
+              "expect": {"exit": 0, "stdout_contains": ["4.3 BSD UNIX #1", "EXP: root shell", "tcp:"]}, "timeout": 3600}],
+    "tests": [], "test_kind": "TECHNE", "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+    "classification_if_ok": "RUNNABLE_EMULATED",
+    "notes": "Follows the documented SIMH procedure (gunkies.org, Neozeed): the 780 has no tape boot ROM, so the 4.2BSD console `boot` (boot42, a 6600-byte companion, sha256 a7bacc51...) is loaded at 0 with R10=9 (uda), R11=0 and started at 2; the miniroot is attached as a raw RA81 and boots directly. Nothing in the distribution is modified. Loss/delay injection is NOT available on one guest: the loopback transfer is the 'normal transfer' pressure only; two guests over a lossy Ethernet relay is the recorded boundary (TECHNE-69b). The full install is ~45 min of emulated VAX time per run."}
+
+# ============================ PHASE 2: REAL CONCURRENT FAILURE ================================
+R["go-runtime-deadlock-fixtures-1.22"] = {
+    "runner": "docker", "image": GO, "workdir": "upstream",
+    "probe": [{"name": "go", "cmd": "export PATH=$PATH:/usr/local/go/bin; go version"}],
+    "build": [{"name": "stage the two testprog files as a module-less main package (crash_test.go is the expectation file, not built)",
+               "cmd": "export PATH=$PATH:/usr/local/go/bin; mkdir -p $BODY/build/prog && cp deadlock.go main.go $BODY/build/prog/ && cd $BODY/build/prog && go mod init testprog >/dev/null 2>&1; go vet . 2>&1 | tail -2; go build -o $BODY/build/testprog . && echo built", "timeout": 600}],
+    "runs": [{"name": "SimpleDeadlock: main blocks on a channel nobody sends to", "cmd": "cd $BODY/build && ./testprog SimpleDeadlock 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+              "expect": {"stdout_contains": ["all goroutines are asleep - deadlock!", "exit=2"]}, "timeout": 120},
+             {"name": "LockedDeadlock: the deadlock with the main goroutine locked to its thread", "cmd": "cd $BODY/build && ./testprog LockedDeadlock 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+              "expect": {"stdout_contains": ["all goroutines are asleep - deadlock!", "exit=2"]}, "timeout": 120},
+             {"name": "LockedDeadlock2: two goroutines, one locked, both waiting", "cmd": "cd $BODY/build && ./testprog LockedDeadlock2 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+              "expect": {"stdout_contains": ["all goroutines are asleep - deadlock!", "exit=2"]}, "timeout": 120},
+             {"name": "GoexitDeadlock: main calls Goexit while others block", "cmd": "cd $BODY/build && ./testprog GoexitDeadlock 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+              "expect": {"stdout_contains": ["no goroutines (main called runtime.Goexit) - deadlock!", "exit=2"]}, "timeout": 120},
+             {"name": "GoexitExit: main's Goexit after its helpers finish -- crash_test.go expects the Goexit deadlock diagnosis here too", "cmd": "cd $BODY/build && ./testprog GoexitExit 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+              "expect": {"stdout_contains": ["no goroutines (main called runtime.Goexit) - deadlock!", "exit=2"]}, "timeout": 120},
+             {"name": "control: a fixture that is NOT a deadlock (MainGoroutineID panics on purpose): a crash with no deadlock diagnosis", "cmd": "cd $BODY/build && ./testprog MainGoroutineID 2>&1 | head -3; echo exit=${PIPESTATUS[0]}",
+              "expect": {"stdout_contains": ["panic: test", "goroutine 1 [running]"], "stdout_not_contains": ["deadlock"]}, "timeout": 120}],
+    "tests": [], "test_kind": "UPSTREAM", "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+    "classification_if_ok": "RUNNABLE_CONTAINER",
+    "notes": "Oracle: crash_test.go's expected strings for each case ('all goroutines are asleep - deadlock!' exit 2; GoexitDeadlock's 'no goroutines (main called runtime.Goexit) - deadlock!'; GoexitExit also ends in the Goexit diagnosis -- my first 'control' expectation of exit 3 was wrong and is replaced by MainGoroutineID, which panics: a crash that is not a deadlock). The fixtures run unmodified; only main.go's other registered cases (in files not fetched) are absent, so the package holds these two files. Concurrent machinery executes: real goroutines block on real channels and the runtime's checkdead fires."}
+
+R["valgrind-helgrind-fixtures-3.19"] = {
+    "runner": "docker", "image": C, "workdir": "upstream/tree/valgrind-3.19.0/helgrind/tests",
+    "probe": [{"name": "valgrind (installed for the run; Debian's 3.19.0 matches the fixture version)", "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --version"}],
+    "build": [{"name": "compile five fixtures with pthreads, unmodified", "cmd": "for t in tc01_simple_race tc05_simple_race tc09_bad_unlock tc13_laog1 tc19_shadowmem; do gcc -O0 -g -pthread -w -o $BODY/build/$t $t.c || echo FAIL $t; done; ls $BODY/build | tr '\\n' ' '"}],
+    "runs": [{"name": "RACE: tc01_simple_race natively (completes, error invisible) then under helgrind (Possible data race reported at the planted line)",
+              "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; $BODY/build/tc01_simple_race; echo native_exit=$?; valgrind --tool=helgrind -q $BODY/build/tc01_simple_race 2>&1 | grep -E 'Possible data race|tc01_simple_race.c:|by thread|ERROR SUMMARY' | head -8; grep -c 'Possible data race' tc01_simple_race.stderr.exp",
+              "expect": {"exit": 0, "stdout_contains": ["Possible data race", "native_exit=0"]}, "timeout": 600},
+             {"name": "LOCK ORDER (deadlock precursor): tc13_laog1 -- two threads take two locks in opposite orders; helgrind's lock-order graph reports the inversion",
+              "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --tool=helgrind -q $BODY/build/tc13_laog1 2>&1 | grep -E 'lock order|violated|acquired|ERROR SUMMARY' | head -8; grep -c 'lock order' tc13_laog1.stderr.exp",
+              "expect": {"exit": 0, "stdout_regex": r"(?i)lock order"}, "timeout": 600},
+             {"name": "BAD UNLOCK: tc09_bad_unlock -- unlocking a mutex the thread does not hold / an unlocked mutex", "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --tool=helgrind -q $BODY/build/tc09_bad_unlock 2>&1 | grep -E 'unlock|not locked|ERROR SUMMARY' | head -6",
+              "expect": {"exit": 0, "stdout_regex": r"(?i)unlock"}, "timeout": 600},
+             {"name": "RACE (second fixture): tc05_simple_race", "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --tool=helgrind -q $BODY/build/tc05_simple_race 2>&1 | grep -E 'Possible data race|ERROR SUMMARY' | head -4",
+              "expect": {"exit": 0, "stdout_contains": ["Possible data race"]}, "timeout": 600}],
+    "tests": [], "test_kind": "UPSTREAM", "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+    "classification_if_ok": "RUNNABLE_CONTAINER",
+    "notes": "Oracle: each fixture's shipped .stderr.exp names the error class helgrind must report; the receipt records helgrind's actual report (addresses differ, classes must match). valgrind is apt-installed in the run container (recorded); the fixtures are the fossil, the detector is the instrument. The native run of tc01 shows the failure mode's signature: exit 0, nothing visible."}
+
+R["glibc-rwlock-writer-starvation-2.36"] = {
+    "runner": "docker", "image": C, "workdir": "upstream",
+    "probe": [{"name": "glibc", "cmd": "ldd --version | head -1; gcc --version | head -1; nproc"}],
+    "build": [{"name": "compile Techne's harness against the system glibc 2.36 (the preserved source is the same version, to read)", "cmd": "gcc -O2 -pthread -o $BODY/build/starve $HARNESS/starve.c && echo built; grep -c 'PREFER_READER' pthread_rwlock_common.c"}],
+    "runs": [{"name": "STARVATION: default kind PREFER_READER_NP, 8 readers re-acquiring for 3 s, 1 writer", "cmd": "$BODY/build/starve reader 3 8", "expect": {"exit": 0, "stdout_regex": r"kind=PREFER_READER .*writer_acquisitions=\d+"}, "timeout": 120},
+             {"name": "the opt-in kind PREFER_WRITER_NONRECURSIVE_NP under the same pressure", "cmd": "$BODY/build/starve writer 3 8", "expect": {"exit": 0, "stdout_regex": r"kind=PREFER_WRITER_NONRECURSIVE .*writer_acquisitions=\d+"}, "timeout": 120},
+             {"name": "both kinds side by side (the pressure response, not a verdict)", "cmd": "$BODY/build/starve reader 3 8 | tail -1; $BODY/build/starve writer 3 8 | tail -1", "expect": {"exit": 0}, "timeout": 120}],
+    "tests": [{"name": "oracle: under reader preference the writer acquires FEWER times than under writer preference (the documented direction)", "cmd": "a=$($BODY/build/starve reader 3 8 | grep -o 'writer_acquisitions=[0-9]*' | cut -d= -f2); b=$($BODY/build/starve writer 3 8 | grep -o 'writer_acquisitions=[0-9]*' | cut -d= -f2); echo reader_pref=$a writer_pref=$b; test $a -lt $b", "expect": {"exit": 0}, "timeout": 120}],
+    "test_kind": "TECHNE", "classification_if_ok": "RUNNABLE_CONTAINER",
+    "notes": "The documented pathology, measured: with the default kind, readers that never let the lock go idle keep the writer out (acquisitions/s near zero); with PREFER_WRITER_NONRECURSIVE the writer gets in. Techne records the two counts; whether a given count is 'starvation' is the reader's call. The rwlock itself is glibc's, unmodified; the harness only holds and releases it."}
+H["glibc-rwlock-writer-starvation-2.36"] = {"starve.c": r'''/* Techne harness: writer progress under continuous reader pressure, for a chosen rwlock kind.
+   usage: starve reader|writer <seconds> <n_readers> */
+#define _GNU_SOURCE
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <unistd.h>
+static pthread_rwlock_t lk; static volatile int stop = 0; static volatile long reads = 0, writes = 0;
+static double now(void){ struct timespec t; clock_gettime(CLOCK_MONOTONIC,&t); return t.tv_sec + t.tv_nsec*1e-9; }
+static void *reader(void *a){ while(!stop){ pthread_rwlock_rdlock(&lk); for (volatile int i=0;i<2000;i++); __sync_fetch_and_add(&reads,1); pthread_rwlock_unlock(&lk);} return 0; }
+static void *writer(void *a){ while(!stop){ pthread_rwlock_wrlock(&lk); __sync_fetch_and_add(&writes,1); pthread_rwlock_unlock(&lk); for (volatile int i=0;i<200;i++);} return 0; }
+int main(int argc, char **argv){
+    if (argc < 4) return 2;
+    int secs = atoi(argv[2]), nr = atoi(argv[3]);
+    pthread_rwlockattr_t at; pthread_rwlockattr_init(&at);
+    int kind = strcmp(argv[1],"writer")==0 ? PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP : PTHREAD_RWLOCK_PREFER_READER_NP;
+    pthread_rwlockattr_setkind_np(&at, kind); pthread_rwlock_init(&lk, &at);
+    pthread_t r[64], w; for (int i=0;i<nr;i++) pthread_create(&r[i],0,reader,0);
+    usleep(20000); pthread_create(&w,0,writer,0);
+    double t0=now(); sleep(secs); stop=1; for (int i=0;i<nr;i++) pthread_join(r[i],0); pthread_join(w,0);
+    double dt=now()-t0;
+    printf("kind=%s readers=%d seconds=%.1f reader_acquisitions=%ld writer_acquisitions=%ld writer_per_second=%.1f\n",
+        kind==PTHREAD_RWLOCK_PREFER_READER_NP ? "PREFER_READER" : "PREFER_WRITER_NONRECURSIVE", nr, dt, reads, writes, writes/dt);
+    return 0;
+}
+'''}
+
+
+def main():
+    import shutil
+    env = vault.REPO / "techne" / "fossils" / "environment"
+    # the SIMH world's console scripts travel with the tape specimen as its harness
+    H.setdefault("bsd-4.3-distribution-tape-1986", {})
+    for f in ("simh_mktape.py", "bsd43_install_stage1.exp", "bsd43_install_stage2.exp", "bsd43_tcp_experiment.exp", "boot42.uue"):
+        H["bsd-4.3-distribution-tape-1986"][f] = (env / f).read_text(encoding="utf-8")
+    for sid, recipe in R.items():
+        d = vault.specimen_dir(sid); d.mkdir(parents=True, exist_ok=True)
+        (d / "recipe.json").write_text(json.dumps(recipe, indent=2) + "\n", encoding="utf-8", newline="\n")
+        for name, text in H.get(sid, {}).items():
+            (d / "harness" / name).parent.mkdir(parents=True, exist_ok=True)
+            (d / "harness" / name).write_text(text, encoding="utf-8", newline="\n")
+        if sid == "bsd-4.3-distribution-tape-1986":
+            shutil.copyfile(env / "boot42", d / "harness" / "boot42")   # the 6600-byte console boot, binary
+        print("wrote", sid, "+harness" if sid in H or sid.startswith("bsd-4.3") else "")
+
+
+if __name__ == "__main__":
+    main()

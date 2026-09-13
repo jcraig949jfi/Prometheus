@@ -1,0 +1,63 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "go-runtime-deadlock-fixtures-1.22",
+  "receipt_id": "run-go-runtime-deadlock-fixtures-1.22-20260913T054130Z",
+  "written_utc": "20260913T054130Z",
+  "runner": "docker",
+  "image": "golang:1.22-bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "b1863899268afcaba2a8a3c7b84610d4919cda6fd0fed66f4b6116d4a8aa5b93",
+  "recipe_sha256": "48df5260d658fb2ef958a9bbd0e6ae49192c41c8809e05907596ed396ba54bdf",
+  "patches": [],
+  "probe": [
+    {
+      "name": "go",
+      "cmd": "go version",
+      "exit": 127,
+      "seconds": 18.31,
+      "ok": false,
+      "why_not": [
+        "exit 127 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "Unable to find image 'golang:1.22-bookworm' locally\n1.22-bookworm: Pulling from library/golang\n35af2a7690f2: Pulling fs layer\na492eee5e559: Pulling fs layer\n32b550be6cb6: Pulling fs layer\n1451027d3c0e: Pulling fs layer\n4f4fb700ef54: Pulling fs layer\n3b7f19923e15: Pulling fs layer\nafa154b433c7: Pulling fs layer\n1451027d3c0e: Download complete\n4f4fb700ef54: Download complete\ncc4952016b2b: Download complete\na6f5ee3ce429: Download complete\n32b550be6cb6: Download complete\n35af2a7690f2: Download complete\n3b7f19923e15: Download complete\na492eee5e559: Download complete\nafa154b433c7: Download complete\na492eee5e559: Pull complete\n32b550be6cb6: Pull complete\n35af2a7690f2: Pull complete\n3b7f19923e15: Pull complete\n1451027d3c0e: Pull complete\n4f4fb700ef54: Pull complete\nafa154b433c7: Pull complete\nDigest: sha256:3d699e4d15d0f8f13c9195c0632a16702b8cbdece2955af1c23b37ae5d55a253\nStatus: Downloaded newer image for golang:1.22-bookworm\nbash: line 1: go: command not found\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "stage the two testprog files as a module-less main package (crash_test.go is the expectation file, not built)",
+      "cmd": "mkdir -p $BODY/build/prog && cp deadlock.go main.go $BODY/build/prog/ && cd $BODY/build/prog && go mod init testprog >/dev/null 2>&1; go vet . 2>&1 | tail -2; go build -o $BODY/build/testprog . && echo built",
+      "exit": 127,
+      "seconds": 0.83,
+      "ok": false,
+      "why_not": [
+        "exit 127 != expected 0"
+      ],
+      "stdout": {
+        "text": "bash: line 1: go: command not found\n"
+      },
+      "stderr": {
+        "text": "bash: line 1: go: command not found\n"
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false,
+  "tree_sha256_after": "b1863899268afcaba2a8a3c7b84610d4919cda6fd0fed66f4b6116d4a8aa5b93",
+  "body_preserved": true
+}

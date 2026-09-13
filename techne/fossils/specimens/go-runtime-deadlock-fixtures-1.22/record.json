@@ -1,0 +1,179 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "go-runtime-deadlock-fixtures-1.22",
+  "canonical_name": "Go runtime deadlock regression fixtures (src/runtime/testdata/testprog/deadlock.go, go1.22.0): SimpleDeadlock, LockedDeadlock, LockedDeadlock2, GoexitDeadlock, InitDeadlock",
+  "aliases": [
+    "testprog deadlock.go",
+    "all goroutines are asleep"
+  ],
+  "lineage": "The Go runtime's own regression programs for its deadlock detector (checkdead(): 'fatal error: all goroutines are asleep - deadlock!'), kept since Go 1.x and run by runtime/crash_test.go on every release. Each program is a REAL concurrent deadlock -- goroutines blocked on channels/mutexes with no runnable goroutine left -- preserved as the runtime team wrote it; the runtime is the detector, not the fix. The failing programs are not repaired.",
+  "domain": [
+    "concurrency",
+    "deadlock",
+    "failure",
+    "regression-fixture",
+    "runtime",
+    "go"
+  ],
+  "era": "2014- (fixtures; Go 1.22.0 = Feb 2024)",
+  "version": "golang/go tag go1.22.0, files src/runtime/testdata/testprog/{deadlock.go,main.go}",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/golang/go/go1.22.0/src/runtime/testdata/testprog/deadlock.go",
+        "filename": "deadlock.go",
+        "extract": false,
+        "sha256": "a10812d1f0bc5c8cfdff6402637da84961e10ad2a88f21727e614e3397bca7c3",
+        "bytes": 6658
+      },
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/golang/go/go1.22.0/src/runtime/testdata/testprog/main.go",
+        "filename": "main.go",
+        "extract": false,
+        "sha256": "6fd26614bafc3969b083d3f87d2692c663db14daa9e11264cf2471a14ae079c0",
+        "bytes": 651
+      },
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/golang/go/go1.22.0/src/runtime/crash_test.go",
+        "filename": "crash_test.go",
+        "extract": false,
+        "sha256": "95fbe4971cafbc454f141ac1086e01e8c6a75f1e3521ab862674afddfcea835e",
+        "bytes": 23673
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/golang/go",
+    "tag": "go1.22.0",
+    "path": "src/runtime/testdata/testprog"
+  },
+  "hashes": {
+    "tree_sha256": "b1863899268afcaba2a8a3c7b84610d4919cda6fd0fed66f4b6116d4a8aa5b93",
+    "n_files": 3,
+    "bytes": 30982,
+    "artifacts": [
+      {
+        "filename": "deadlock.go",
+        "sha256": "a10812d1f0bc5c8cfdff6402637da84961e10ad2a88f21727e614e3397bca7c3",
+        "commit": null
+      },
+      {
+        "filename": "main.go",
+        "sha256": "6fd26614bafc3969b083d3f87d2692c663db14daa9e11264cf2471a14ae079c0",
+        "commit": null
+      },
+      {
+        "filename": "crash_test.go",
+        "sha256": "95fbe4971cafbc454f141ac1086e01e8c6a75f1e3521ab862674afddfcea835e",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\go-runtime-deadlock-fixtures-1.22",
+    "hash_list": "techne/fossils/specimens/go-runtime-deadlock-fixtures-1.22/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "Go LICENSE"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "Go"
+  ],
+  "build_system": "go run (module-less package main)",
+  "compiler_or_interpreter": "go 1.22 (docker golang:1.22-bookworm)",
+  "dependencies": [
+    "a Go toolchain"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "go run . SimpleDeadlock | LockedDeadlock | LockedDeadlock2 | GoexitDeadlock ; crash_test.go names the expected output per case"
+  ],
+  "example": {
+    "command": "go run . SimpleDeadlock",
+    "input": "the named fixture",
+    "output": "fatal error: all goroutines are asleep - deadlock! + goroutine dump (exit 2); crash_test.go's expectation is the ORACLE"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "golang:1.22-bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "src/runtime/crash_test.go (TestSimpleDeadlock etc.)",
+    "Go runtime proc.go checkdead()"
+  ],
+  "human_capability_summary": {
+    "built_to": "keep the runtime's deadlock detector honest: each program must still be recognised as a deadlock on every release",
+    "pressure": "concurrent programs that block forever; a runtime that must tell 'everyone is waiting' from 'someone is still working'",
+    "success_means": "the runtime aborts with the deadlock diagnosis instead of hanging silently"
+  },
+  "known_human_problem_solved": "detection of whole-program deadlock in a concurrent runtime",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "many actors blocking on each other; no external observer",
+  "human_failure_condition": "a hung program that never terminates and never explains why",
+  "behavioral_entry_point": "run each named case; compare the goroutine dump; edit nothing (the fixtures are the fossil)",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "spin-pathfinder-priority-inversion-1997",
+      "note": "a deadlock found by execution + runtime detector vs one found by model checking"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase2",
+    "deadlock",
+    "executes_concurrency",
+    "regression_fixture"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/go-runtime-deadlock-fixtures-1.22/receipts/run-go-runtime-deadlock-fixtures-1.22-20260913T054130Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/go-runtime-deadlock-fixtures-1.22/receipts/run-go-runtime-deadlock-fixtures-1.22-20260913T054240Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/go-runtime-deadlock-fixtures-1.22/receipts/run-go-runtime-deadlock-fixtures-1.22-20260913T054319Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/go-runtime-deadlock-fixtures-1.22/receipts/run-go-runtime-deadlock-fixtures-1.22-20260913T054356Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne"
+}
