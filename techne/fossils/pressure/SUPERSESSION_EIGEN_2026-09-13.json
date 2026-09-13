@@ -1,0 +1,202 @@
+{
+ "schema": "techne.fossil.supersession_eigen/1",
+ "written_utc": "2026-09-13T22:29:15Z",
+ "prereg": "this module, committed before it was run",
+ "pair": [
+  "eispack-netlib-1976",
+  "lapack-reference"
+ ],
+ "preregistered_sizes": [
+  32,
+  64,
+  128,
+  256
+ ],
+ "coordinate": "D1 data-miss rate = (D1mr+D1mw)/(Dr+Dw), measured by cachegrind",
+ "why_not_the_LU_coordinate": "EISPACK's tred2/tql2 make NO BLAS calls at all, so the LINPACK/LAPACK Level-3-fraction coordinate has an undefined denominator on this arm. Recorded, not silently dropped.",
+ "confound": "valgrind is installed from the network into the MEASUREMENT container; that world floats. Both fossil bodies are untouched and compiled with identical flags.",
+ "arms": [
+  {
+   "arm": "eispack",
+   "n": 32,
+   "ierr": 0,
+   "w1": 0.0090561548538317,
+   "wn": 3.9909438451462,
+   "I_refs": 569108,
+   "D_refs": 192945,
+   "D1_misses": 6231,
+   "LLd_misses": 5291,
+   "expected_w1": 0.009056154853830822,
+   "expected_wn": 3.990943845146169,
+   "oracle_ok": true,
+   "D1_miss_rate": 0.03229417709710021,
+   "LL_miss_rate": 0.02742232242348856
+  },
+  {
+   "arm": "lapack",
+   "n": 32,
+   "ierr": 0,
+   "w1": 0.0090561548538304,
+   "wn": 3.9909438451462,
+   "I_refs": 398322,
+   "D_refs": 131243,
+   "D1_misses": 4593,
+   "LLd_misses": 5357,
+   "expected_w1": 0.009056154853830822,
+   "expected_wn": 3.990943845146169,
+   "oracle_ok": true,
+   "D1_miss_rate": 0.03499615217573509,
+   "LL_miss_rate": 0.04081741502403938
+  },
+  {
+   "arm": "eispack",
+   "n": 64,
+   "ierr": 0,
+   "w1": 0.0023355463353475,
+   "wn": 3.9976644536647,
+   "I_refs": 1860417,
+   "D_refs": 621665,
+   "D1_misses": 19687,
+   "LLd_misses": 5710,
+   "expected_w1": 0.0023355463353467165,
+   "expected_wn": 3.997664453664653,
+   "oracle_ok": true,
+   "D1_miss_rate": 0.031668181416035966,
+   "LL_miss_rate": 0.009185011219869222
+  },
+  {
+   "arm": "lapack",
+   "n": 64,
+   "ierr": 0,
+   "w1": 0.0023355463353475,
+   "wn": 3.9976644536647,
+   "I_refs": 2002471,
+   "D_refs": 707828,
+   "D1_misses": 21793,
+   "LLd_misses": 6105,
+   "expected_w1": 0.0023355463353467165,
+   "expected_wn": 3.997664453664653,
+   "oracle_ok": true,
+   "D1_miss_rate": 0.03078855315133055,
+   "LL_miss_rate": 0.008624976689252191
+  },
+  {
+   "arm": "eispack",
+   "n": 128,
+   "ierr": 0,
+   "w1": 0.00059306030971964,
+   "wn": 3.9994069396903,
+   "I_refs": 10114310,
+   "D_refs": 3525990,
+   "D1_misses": 114194,
+   "LLd_misses": 7310,
+   "expected_w1": 0.0005930603097212828,
+   "expected_wn": 3.999406939690279,
+   "oracle_ok": true,
+   "D1_miss_rate": 0.032386365247774385,
+   "LL_miss_rate": 0.0020731766113914105
+  },
+  {
+   "arm": "lapack",
+   "n": 128,
+   "ierr": 0,
+   "w1": 0.00059306030972111,
+   "wn": 3.9994069396903,
+   "I_refs": 9892912,
+   "D_refs": 3639994,
+   "D1_misses": 125625,
+   "LLd_misses": 7910,
+   "expected_w1": 0.0005930603097212828,
+   "expected_wn": 3.999406939690279,
+   "oracle_ok": true,
+   "D1_miss_rate": 0.03451241952596625,
+   "LL_miss_rate": 0.0021730805050777556
+  },
+  {
+   "arm": "eispack",
+   "n": 256,
+   "ierr": 0,
+   "w1": 0.00014942666053486,
+   "wn": 3.9998505733395,
+   "I_refs": 68271057,
+   "D_refs": 24787683,
+   "D1_misses": 806402,
+   "LLd_misses": 13328,
+   "expected_w1": 0.0001494266605348571,
+   "expected_wn": 3.999850573339465,
+   "oracle_ok": true,
+   "D1_miss_rate": 0.032532366982424295,
+   "LL_miss_rate": 0.0005376863985230084
+  },
+  {
+   "arm": "lapack",
+   "n": 256,
+   "ierr": 0,
+   "w1": 0.00014942666053441,
+   "wn": 3.9998505733395,
+   "I_refs": 53511795,
+   "D_refs": 20281070,
+   "D1_misses": 804937,
+   "LLd_misses": 14599,
+   "expected_w1": 0.0001494266605348571,
+   "expected_wn": 3.999850573339465,
+   "oracle_ok": true,
+   "D1_miss_rate": 0.0396890795209523,
+   "LL_miss_rate": 0.0007198338154742329
+  }
+ ],
+ "preregistered_predictions": {
+  "E-1": {
+   "claim": "both arms match the closed-form spectrum at every n (validity gate)",
+   "outcome": "CONFIRMED",
+   "observed": "oracle_ok True for all 8 arm-size runs"
+  },
+  "E-2": {
+   "claim": "LAPACK's D1 data-miss RATE is lower than EISPACK's at the largest n",
+   "outcome": "FALSIFIED",
+   "observed": "at n=256 LAPACK 0.039689 vs EISPACK 0.032532 -- LAPACK is HIGHER"
+  },
+  "E-3": {
+   "claim": "the gap widens in LAPACK's favour as n grows",
+   "outcome": "FALSIFIED",
+   "observed": "rate gap (lap - eis) by n: n=32 +0.002702, n=64 -0.000880, n=128 +0.002126, n=256 +0.007157"
+  },
+  "E-4": {
+   "claim": "EISPACK issues zero Level-3 BLAS calls, making the LU coordinate inapplicable",
+   "outcome": "CONFIRMED",
+   "observed": "tred2/tql2 contain no BLAS call sites at all; the Level-3-fraction denominator would be zero, not small"
+  }
+ },
+ "result": "NULL -- the documented supersession pressure is NOT reproduced for the eigen pair at these sizes",
+ "headline": {
+  "d1_miss_rate": {
+   "eispack": {
+    "32": 0.032294,
+    "64": 0.031668,
+    "128": 0.032386,
+    "256": 0.032532
+   },
+   "lapack": {
+    "32": 0.034996,
+    "64": 0.030789,
+    "128": 0.034512,
+    "256": 0.039689
+   }
+  },
+  "absolute_d1_misses_at_max_n": {
+   "eispack": 806402,
+   "lapack": 804937
+  },
+  "total_data_refs_at_max_n": {
+   "eispack": 24787683,
+   "lapack": 20281070
+  },
+  "reading": "At n=256 LAPACK issues 18% FEWER total data references (20281070 vs 24787683) yet MISSES more often per reference (0.0397 vs 0.0325), leaving absolute D1 misses essentially tied (804937 vs 806402). On this task, at these sizes, with reference BLAS, the cache advantage the LAPACK Users' Guide documents does not appear. Techne records the measurement; it does not explain it.",
+  "bounds_on_this_null": [
+   "n <= 256 is small; blocked algorithms are documented to pay off at larger n. The sizes were fixed in the preregistration for cachegrind cost and were NOT enlarged after seeing this result.",
+   "reference (unoptimised) BLAS on both arms; a tuned BLAS would change the picture and is absent here.",
+   "dsyev('N') computes eigenvalues only, so the blocked reduction may be exercised less than a full eigenvector solve would exercise it.",
+   "this is a null for THIS pair on THIS task, not a refutation of the historical record."
+  ]
+ }
+}
