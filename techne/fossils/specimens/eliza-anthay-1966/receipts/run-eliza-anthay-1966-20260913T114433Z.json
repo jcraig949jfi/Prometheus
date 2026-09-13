@@ -1,0 +1,108 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "eliza-anthay-1966",
+  "receipt_id": "run-eliza-anthay-1966-20260913T114433Z",
+  "written_utc": "20260913T114433Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "5859cac5b558e3f786be2adb2917cf208863dc2cd97165e02f5af1de10dd0f03",
+  "recipe_sha256": "79792f4acbadcf13d4792335a7148758c32ae6332ffce5e5fefc39f88b03a934",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 1.5,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "single-file g++ -std=c++20 (eliza.cpp embeds the 1966 DOCTOR script + tests)",
+      "cmd": "g++ -std=c++20 -O2 -o eliza src/eliza.cpp 2>&1 | head -5; test -x ./eliza && echo built",
+      "exit": 0,
+      "seconds": 9.02,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "reproduce the opening of Weizenbaum's 1966 CACM conversation, incl. pronoun reflection (my->YOUR, me->YOU)",
+      "cmd": "printf 'Men are all alike.\\nThey are always bugging us about something or other.\\nWell, my boyfriend made me come here.\\n' | ./eliza --nobanner 2>&1",
+      "exit": 0,
+      "seconds": 0.76,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "HOW DO YOU DO. PLEASE TELL ME YOUR PROBLEM\n\nIN WHAT WAY\n\nCAN YOU THINK OF A SPECIFIC EXAMPLE\n\nYOUR BOYFRIEND MADE YOU COME HERE\n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "the embedded self-tests reproduce the documented 1966/1965 conversations at startup (report the 'test failed' count -- expect 0 -- and that the greeting is reached)",
+      "cmd": "printf '' | ./eliza 2>&1 > /tmp/o; echo \"test_failed_lines=$(grep -ci 'test failed' /tmp/o)\"; echo \"greeting=$(grep -c 'PLEASE TELL ME YOUR PROBLEM' /tmp/o)\"",
+      "exit": 0,
+      "seconds": 0.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "test_failed_lines=0\ngreeting=1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "a turn whose words hit no DOCTOR keyword falls through to a scripted deflection (the failure mode)",
+      "cmd": "printf 'xyzzy plugh frobnitz\\n' | ./eliza --nobanner 2>&1 | tail -2",
+      "exit": 0,
+      "seconds": 0.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "I AM NOT SURE I UNDERSTAND YOU FULLY\n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "eliza",
+      "sha256": "3eb4623a8f7a5cc3091edd39dee4c12760739f1c8bc767ca3094b84ead033436",
+      "bytes": 565120
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "5859cac5b558e3f786be2adb2917cf208863dc2cd97165e02f5af1de10dd0f03",
+  "body_preserved": true
+}

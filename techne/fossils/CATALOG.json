@@ -1,11 +1,11 @@
 {
  "schema": "techne.fossil.catalog/1",
- "written_utc": "2026-09-13T11:29:41Z",
+ "written_utc": "2026-09-13T11:50:31Z",
  "records_root": "F:/Prometheus-worktrees/techne-pass-0912/techne/fossils/specimens",
  "vault_root_on_this_host": "F:\\Prometheus\\vault\\fossils",
- "fossils": 108,
- "runnable": 98,
- "bodies_present_on_this_host": 108,
+ "fossils": 109,
+ "runnable": 99,
+ "bodies_present_on_this_host": 109,
  "fields": [
   "fossil_id",
   "canonical_name",
@@ -1538,6 +1538,71 @@
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\eispack-netlib",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
+   "fossil_id": "eliza-anthay-1966",
+   "canonical_name": "ELIZA (1966) -- Weizenbaum's script-driven conversational program (DOCTOR script), Anthony Hay's faithful C++ reconstruction",
+   "lineage": "ELIZA (Joseph Weizenbaum, MIT, 1966, CACM 9(1)): the first widely known natural-language conversation program. Not learning, not parsing -- a SCRIPT of decomposition/reassembly rules matched against keywords with a ranked agenda and memory. The DOCTOR script imitates a Rogerian therapist. A distinct execution model absent from the vault: keyword-triggered pattern transformation over text, no model of meaning. This body is Anthony Hay's C++ reconstruction built from the 1966 CACM paper and the recovered original script, reproducing the paper's canonical conversation exactly.",
+   "ancestry": [
+    {
+     "relation": "algorithm_from",
+     "to": "Weizenbaum 1966 (keyword decomposition/reassembly)",
+     "note": "first conversational-AI fossil; a pre-1970 program recovered via a faithful reconstruction, not the original MAD-SLIP binary (which runs only under CTSS emulation)"
+    },
+    {
+     "relation": "shares_ancestor_with",
+     "to": "gnu-apl-2.0",
+     "note": "both are interpreters of a small formal notation, but ELIZA transforms text by rules and APL evaluates array expressions -- Techne records the shared machinery domain, not equivalence"
+    }
+   ],
+   "human_purpose": "hold a text conversation by transforming the user's own words back at them via scripted keyword rules -- to study man-machine communication and, unintentionally, how readily people attribute understanding",
+   "human_environmental_pressure": "producing believable dialogue with pure surface pattern transformation, no semantics",
+   "version": "github.com/anthay/ELIZA master as of 2026-09-13 (commit in hashes)",
+   "era": "1966 (Weizenbaum ELIZA); this reconstruction 2021-",
+   "language": [
+    "C++"
+   ],
+   "domain": [
+    "conversational-ai",
+    "natural-language",
+    "pattern-matching",
+    "symbolic",
+    "early-ai",
+    "human-computer-interaction"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "yes",
+   "intervention_ready": "yes",
+   "known_historical_disposition": [],
+   "source_type": "FAITHFUL_PORT",
+   "license_spdx": "Unlicense-or-similar",
+   "acquisition_tags": [
+    "batch08",
+    "edge",
+    "historical_world",
+    "pre_1970_program",
+    "computational_culture",
+    "early_ai",
+    "outside_queue"
+   ],
+   "tree_sha256": "5859cac5b558e3f786be2adb2917cf208863dc2cd97165e02f5af1de10dd0f03",
+   "record_path": "techne/fossils/specimens/eliza-anthay-1966/record.json",
+   "recipe_path": "techne/fossils/specimens/eliza-anthay-1966/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/eliza-anthay-1966/receipts/run-eliza-anthay-1966-20260913T114433Z.json"
+   ],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\eliza-anthay-1966",
    "mirror_available": "no_mirror_configured"
   },
   {

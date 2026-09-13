@@ -1,9 +1,9 @@
 {
  "schema": "techne.fossil.coverage/1",
- "written_utc": "2026-09-13T11:29:43Z",
- "total_specimens": 108,
- "runnable": 98,
- "oracle_backed": 78,
+ "written_utc": "2026-09-13T11:50:33Z",
+ "total_specimens": 109,
+ "runnable": 99,
+ "oracle_backed": 79,
  "with_failed_or_superseded_disposition": 15,
  "sparsity_rule": "per domain: +1 for each of {<=2 specimens, <=1 decade, <=1 language, 0 runnable, 0 failed/superseded}; higher = thinner. Mechanical, not a judgement of value.",
  "views": {
@@ -184,6 +184,14 @@
     "era_diversity": 2,
     "language_diversity": 1
    },
+   "symbolic": {
+    "specimens": 4,
+    "runnable": 4,
+    "oracle_backed": 4,
+    "failed_or_superseded": 0,
+    "era_diversity": 3,
+    "language_diversity": 3
+   },
    "virtual-machine": {
     "specimens": 4,
     "runnable": 4,
@@ -288,14 +296,6 @@
     "era_diversity": 2,
     "language_diversity": 1
    },
-   "symbolic": {
-    "specimens": 3,
-    "runnable": 3,
-    "oracle_backed": 3,
-    "failed_or_superseded": 0,
-    "era_diversity": 3,
-    "language_diversity": 3
-   },
    "robustness": {
     "specimens": 3,
     "runnable": 3,
@@ -319,6 +319,14 @@
     "failed_or_superseded": 0,
     "era_diversity": 3,
     "language_diversity": 4
+   },
+   "pattern-matching": {
+    "specimens": 3,
+    "runnable": 3,
+    "oracle_backed": 2,
+    "failed_or_superseded": 0,
+    "era_diversity": 3,
+    "language_diversity": 3
    },
    "superseded-design": {
     "specimens": 3,
@@ -544,14 +552,6 @@
     "era_diversity": 2,
     "language_diversity": 2
    },
-   "pattern-matching": {
-    "specimens": 2,
-    "runnable": 2,
-    "oracle_backed": 1,
-    "failed_or_superseded": 0,
-    "era_diversity": 2,
-    "language_diversity": 2
-   },
    "consensus": {
     "specimens": 2,
     "runnable": 2,
@@ -607,6 +607,14 @@
     "failed_or_superseded": 0,
     "era_diversity": 1,
     "language_diversity": 1
+   },
+   "natural-language": {
+    "specimens": 2,
+    "runnable": 2,
+    "oracle_backed": 2,
+    "failed_or_superseded": 0,
+    "era_diversity": 2,
+    "language_diversity": 2
    },
    "Monte-Carlo": {
     "specimens": 2,
@@ -1097,6 +1105,30 @@
     "language_diversity": 1
    },
    "eigensolvers": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 0,
+    "era_diversity": 1,
+    "language_diversity": 1
+   },
+   "conversational-ai": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 0,
+    "era_diversity": 1,
+    "language_diversity": 1
+   },
+   "early-ai": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 0,
+    "era_diversity": 1,
+    "language_diversity": 1
+   },
+   "human-computer-interaction": {
     "specimens": 1,
     "runnable": 1,
     "oracle_backed": 1,
@@ -2392,14 +2424,6 @@
     "era_diversity": 1,
     "language_diversity": 1
    },
-   "natural-language": {
-    "specimens": 1,
-    "runnable": 1,
-    "oracle_backed": 1,
-    "failed_or_superseded": 0,
-    "era_diversity": 1,
-    "language_diversity": 1
-   },
    "morphology": {
     "specimens": 1,
     "runnable": 1,
@@ -2523,9 +2547,9 @@
     "language_diversity": 4
    },
    "1960s": {
-    "specimens": 6,
-    "runnable": 6,
-    "oracle_backed": 6,
+    "specimens": 7,
+    "runnable": 7,
+    "oracle_backed": 7,
     "failed_or_superseded": 0,
     "era_diversity": 1,
     "language_diversity": 2
@@ -2557,9 +2581,9 @@
     "language_diversity": 16
    },
    "C++": {
-    "specimens": 17,
-    "runnable": 15,
-    "oracle_backed": 14,
+    "specimens": 18,
+    "runnable": 16,
+    "oracle_backed": 15,
     "failed_or_superseded": 2,
     "era_diversity": 5,
     "language_diversity": 4
@@ -2783,9 +2807,9 @@
   },
   "execution_model": {
    "container": {
-    "specimens": 75,
-    "runnable": 75,
-    "oracle_backed": 65,
+    "specimens": 76,
+    "runnable": 76,
+    "oracle_backed": 66,
     "failed_or_superseded": 8,
     "era_diversity": 7,
     "language_diversity": 23
@@ -2833,9 +2857,9 @@
   },
   "runnability": {
    "RUNNABLE_CONTAINER": {
-    "specimens": 75,
-    "runnable": 75,
-    "oracle_backed": 65,
+    "specimens": 76,
+    "runnable": 76,
+    "oracle_backed": 66,
     "failed_or_superseded": 8,
     "era_diversity": 7,
     "language_diversity": 23
@@ -2883,9 +2907,9 @@
   },
   "disposition": {
    "(none recorded)": {
-    "specimens": 93,
-    "runnable": 87,
-    "oracle_backed": 67,
+    "specimens": 94,
+    "runnable": 88,
+    "oracle_backed": 68,
     "failed_or_superseded": 0,
     "era_diversity": 8,
     "language_diversity": 27
@@ -2989,17 +3013,17 @@
     "language_diversity": 14
    },
    "shares_ancestor_with": {
-    "specimens": 38,
-    "runnable": 34,
-    "oracle_backed": 30,
+    "specimens": 39,
+    "runnable": 35,
+    "oracle_backed": 31,
     "failed_or_superseded": 9,
     "era_diversity": 7,
     "language_diversity": 18
    },
    "algorithm_from": {
-    "specimens": 31,
-    "runnable": 30,
-    "oracle_backed": 27,
+    "specimens": 32,
+    "runnable": 31,
+    "oracle_backed": 28,
     "failed_or_superseded": 3,
     "era_diversity": 7,
     "language_diversity": 13
