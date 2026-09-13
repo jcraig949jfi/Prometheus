@@ -1,0 +1,87 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "eispack-netlib-1976",
+  "receipt_id": "run-eispack-netlib-1976-20260913T144851Z",
+  "written_utc": "20260913T144851Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "driver.f": "4b788d2ab9a19c0b8b3ab3baa1052b3ea7ffa1e3c240ea636ae0dd174d17181d"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "c635228297e5f865dc71ca98755319c32ada205bdf8831a8673333f020c29d81",
+  "recipe_sha256": "5eaed8f1662ecef2528c134b40469cbb522f080e76d12aa55a3c722bd93a6ff7",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 0,
+      "seconds": 6.39,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Fortran (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "gfortran -std=legacy: rs + tred2 + tql2 + harness driver",
+      "cmd": "cp $HARNESS/driver.f . && gfortran -std=legacy -w -O2 -o eig driver.f rs.f tred2.f tql2.f tred1.f tqlrat.f pythag.f epslon.f tql1.f 2>&1 | grep -iE 'error|undefined' | head -8; test -x ./eig && echo BUILT",
+      "exit": 0,
+      "seconds": 1.21,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "BUILT\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "all eigenvalues/vectors of the 3x3 tridiagonal [2,-1;-1,2,-1;-1,2] (exact spectrum 2-sqrt2, 2, 2+sqrt2)",
+      "cmd": "./eig 2>&1 | head -12",
+      "exit": 0,
+      "seconds": 0.7,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": " ierr =    0\n eigenvalues:     0.585786    2.000000    3.414214\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "driver.f",
+      "sha256": "4b788d2ab9a19c0b8b3ab3baa1052b3ea7ffa1e3c240ea636ae0dd174d17181d",
+      "bytes": 506
+    },
+    {
+      "path": "eig",
+      "sha256": "108d06e1a8251cc6a081e15e3e76cb88be61267ce722932e270e0e91e9dfe4b5",
+      "bytes": 25296
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "c635228297e5f865dc71ca98755319c32ada205bdf8831a8673333f020c29d81",
+  "body_preserved": true
+}

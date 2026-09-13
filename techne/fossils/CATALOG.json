@@ -1,11 +1,11 @@
 {
  "schema": "techne.fossil.catalog/1",
- "written_utc": "2026-09-13T11:50:31Z",
+ "written_utc": "2026-09-13T14:50:25Z",
  "records_root": "F:/Prometheus-worktrees/techne-pass-0912/techne/fossils/specimens",
  "vault_root_on_this_host": "F:\\Prometheus\\vault\\fossils",
- "fossils": 109,
- "runnable": 99,
- "bodies_present_on_this_host": 109,
+ "fossils": 117,
+ "runnable": 105,
+ "bodies_present_on_this_host": 117,
  "fields": [
   "fossil_id",
   "canonical_name",
@@ -59,6 +59,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [],
@@ -95,8 +98,8 @@
     "genetic-programming",
     "unconventional-computation"
    ],
-   "run_status": "NOT_ATTEMPTED",
-   "test_status": "NOT_ATTEMPTED",
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
    "observability": {
     "EXECUTABLE": "no",
     "OBSERVABLE": "unknown",
@@ -108,13 +111,18 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-3.0 / Apache-2.0 (mixed; see COPYING)",
    "acquisition_tags": [],
-   "tree_sha256": "3be38122caaae61b73f75e3cd4f216bcf24ec7d95736e6485f61c8dfddb2719c",
+   "tree_sha256": "0a18674a17e76f6111a1eedac9efb3ed18c84b4e23f12477d65e835170425e0d",
    "record_path": "techne/fossils/specimens/avida/record.json",
-   "recipe_path": null,
-   "receipts": [],
+   "recipe_path": "techne/fossils/specimens/avida/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/avida/receipts/run-avida-20260913T141120Z.json"
+   ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\avida",
    "mirror_available": "no_mirror_configured"
@@ -156,6 +164,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -212,6 +223,9 @@
    "oracle_backed": "no",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "NOASSERTION",
    "acquisition_tags": [
@@ -265,6 +279,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT-style (Boehm GC license)",
    "acquisition_tags": [],
@@ -321,6 +338,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "Apache-2.0",
    "acquisition_tags": [
@@ -382,6 +402,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
    "acquisition_tags": [
@@ -446,6 +469,9 @@
    "known_historical_disposition": [
     "known_bad_lineage"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
    "acquisition_tags": [
@@ -508,6 +534,9 @@
    "known_historical_disposition": [
     "successor"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
    "acquisition_tags": [
@@ -572,6 +601,9 @@
     "known_bad",
     "failed_branch"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
    "acquisition_tags": [
@@ -635,6 +667,9 @@
    "known_historical_disposition": [
     "successor"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
    "acquisition_tags": [
@@ -697,6 +732,9 @@
    "known_historical_disposition": [
     "historical_redesign"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
    "acquisition_tags": [
@@ -746,6 +784,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "0BSD",
    "acquisition_tags": [],
@@ -792,6 +833,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "custom permissive (BuDDy terms)",
    "acquisition_tags": [],
@@ -837,6 +881,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "bzip2-1.0.6 (BSD-like)",
    "acquisition_tags": [],
@@ -882,6 +929,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "custom permissive (Hansen: 'may be used, modified, redistributed' with notice)",
    "acquisition_tags": [
@@ -940,6 +990,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -991,6 +1044,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "public-domain (CLIPS is released into the public domain; see the release notes)",
    "acquisition_tags": [
@@ -1041,6 +1097,9 @@
    "oracle_backed": "no",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "CC-BY-4.0",
    "acquisition_tags": [
@@ -1099,6 +1158,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -1165,6 +1227,9 @@
     "failed_branch",
     "loser"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
    "acquisition_tags": [
@@ -1228,6 +1293,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "public-domain / permissive (compress headers)",
    "acquisition_tags": [],
@@ -1279,6 +1347,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-2-Clause",
    "acquisition_tags": [
@@ -1331,6 +1402,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "FAITHFUL_PORT",
    "license_spdx": "see repo LICENSE",
    "acquisition_tags": [],
@@ -1348,6 +1422,87 @@
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\corewar-redcode",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
+   "fossil_id": "des-reference",
+   "canonical_name": "DES -- the Data Encryption Standard, withdrawn after its key length became breakable",
+   "lineage": "DES (IBM/NSA, adopted as FIPS 46 in 1977) was THE block cipher of the era: 64-bit blocks, a 56-bit key, 16 Feistel rounds. Its structure was never broken in practice; its KEY LENGTH was. The EFF built Deep Crack in 1998 and exhausted the keyspace in days, and NIST ran a public competition whose winner, Rijndael, became AES. Preserved as archival/defensive reference material only -- the fossil is the cipher, not an attack.",
+   "ancestry": [
+    {
+     "relation": "superseded",
+     "to": "tiny-aes-c",
+     "note": "AES (Rijndael) replaced DES by NIST competition"
+    }
+   ],
+   "human_purpose": "provide a single standard, hardware-friendly block cipher for unclassified US government data",
+   "human_environmental_pressure": "an adversary with growing compute; a key length fixed in 1977 against hardware that kept getting cheaper",
+   "version": "a reference DES implementation (see source_identity)",
+   "era": "1977 (FIPS 46); broken in practice 1998; withdrawn 2005",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "cryptography",
+    "block-cipher",
+    "feistel-network",
+    "security",
+    "loser"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "yes",
+   "intervention_ready": "yes",
+   "known_historical_disposition": [
+    "loser",
+    "superseded_design"
+   ],
+   "historical_disposition": {
+    "state": "OBSOLETED_BY_ENVIRONMENT",
+    "failure_reasons": [
+     "security_weakness"
+    ],
+    "superseded_by": "tiny-aes-c",
+    "rival_of": "tiny-aes-c",
+    "evidence": [
+     {
+      "kind": "standards_history",
+      "ref": "NIST FIPS 46-3 withdrawal (2005); FIPS 197 (AES, 2001)",
+      "says": "NIST withdrew the DES standard and replaced it with AES, selected through a public competition."
+     },
+     {
+      "kind": "retrospective",
+      "ref": "Electronic Frontier Foundation, Cracking DES (O'Reilly, 1998)",
+      "says": "EFF's purpose-built Deep Crack machine recovered DES keys by exhaustive search in days, demonstrating the 56-bit key was too short."
+     }
+    ]
+   },
+   "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+   "license_spdx": "NOASSERTION",
+   "acquisition_tags": [
+    "batch09",
+    "loser",
+    "superseded_design",
+    "security",
+    "archival_only",
+    "pair_cipher"
+   ],
+   "tree_sha256": "ca9cb18afc5605e28a56bce37d8340453bacb792f35321f4d139c4d9cee85d7c",
+   "record_path": "techne/fossils/specimens/des-reference/record.json",
+   "recipe_path": "techne/fossils/specimens/des-reference/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/des-reference/receipts/run-des-reference-20260913T144336Z.json"
+   ],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\des-reference",
    "mirror_available": "no_mirror_configured"
   },
   {
@@ -1381,6 +1536,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "CC0-1.0 / public-domain (Lea released it to the public domain)",
    "acquisition_tags": [],
@@ -1428,6 +1586,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "LGPL-3.0-or-later",
    "acquisition_tags": [
@@ -1479,6 +1640,9 @@
    "oracle_backed": "no",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "LGPL-3.0",
    "acquisition_tags": [],
@@ -1524,6 +1688,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "public-domain (netlib)",
    "acquisition_tags": [],
@@ -1538,6 +1705,97 @@
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\eispack-netlib",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
+   "fossil_id": "eispack-netlib-1976",
+   "canonical_name": "EISPACK (1976) -- the Fortran eigenvalue package, superseded by LAPACK",
+   "lineage": "EISPACK (Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler; 1974-1976) was the standard eigenproblem library, itself a Fortran translation of the ALGOL procedures in Wilkinson & Reinsch's Handbook for Automatic Computation. Superseded by LAPACK for the same documented reason as LINPACK: Level-1 BLAS structure performs poorly on memory-hierarchy machines. Its ALGOL ancestry makes it a second, older lineage layer.",
+   "ancestry": [
+    {
+     "relation": "port_of",
+     "to": "Wilkinson & Reinsch ALGOL procedures (1971)",
+     "note": "Fortran translation of the Handbook"
+    },
+    {
+     "relation": "superseded",
+     "to": "lapack-reference",
+     "note": ""
+    }
+   ],
+   "human_purpose": "compute eigenvalues and eigenvectors of real and complex matrices reliably, as portable Fortran translations of the certified ALGOL procedures",
+   "human_environmental_pressure": "numerical delicacy of iterative eigen-solvers; heterogeneous floating point",
+   "version": "netlib eispack routines as served 2026-09-13",
+   "era": "1974-1976 (EISPACK); ALGOL originals 1971; superseded from 1992",
+   "language": [
+    "Fortran 77"
+   ],
+   "domain": [
+    "numerical-linear-algebra",
+    "eigenproblem",
+    "scientific-computing",
+    "loser"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "yes",
+   "intervention_ready": "yes",
+   "known_historical_disposition": [
+    "loser",
+    "superseded_design",
+    "predecessor"
+   ],
+   "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "poor_scaling",
+     "superior_rival"
+    ],
+    "superseded_by": "lapack-reference",
+    "rival_of": "lapack-reference",
+    "evidence": [
+     {
+      "kind": "successor_documentation",
+      "ref": "LAPACK Users' Guide (SIAM)",
+      "says": "LAPACK was designed to supersede LINPACK and EISPACK, providing the same functionality with better performance on modern machines."
+     },
+     {
+      "kind": "original_paper",
+      "ref": "Wilkinson & Reinsch, Handbook for Automatic Computation Vol II (1971); EISPACK Guide (1976)",
+      "says": "EISPACK routines are Fortran translations of the Handbook's ALGOL eigenvalue procedures."
+     }
+    ]
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "NOASSERTION",
+   "acquisition_tags": [
+    "batch09",
+    "loser",
+    "superseded_design",
+    "predecessor",
+    "numerical",
+    "pair_linear_algebra"
+   ],
+   "tree_sha256": "c635228297e5f865dc71ca98755319c32ada205bdf8831a8673333f020c29d81",
+   "record_path": "techne/fossils/specimens/eispack-netlib-1976/record.json",
+   "recipe_path": "techne/fossils/specimens/eispack-netlib-1976/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144332Z.json",
+    "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144422Z.json",
+    "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144537Z.json",
+    "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144819Z.json",
+    "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144851Z.json"
+   ],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\eispack-netlib-1976",
    "mirror_available": "no_mirror_configured"
   },
   {
@@ -1584,6 +1842,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "FAITHFUL_PORT",
    "license_spdx": "Unlicense-or-similar",
    "acquisition_tags": [
@@ -1643,6 +1904,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -1706,6 +1970,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-2.0-or-later",
    "acquisition_tags": [
@@ -1765,6 +2032,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [
@@ -1819,6 +2089,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "LATER_SAME_LINEAGE_RELEASE",
    "license_spdx": "custom BSD-like (Berkeley Espresso terms)",
    "acquisition_tags": [],
@@ -1867,6 +2140,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [],
@@ -1925,6 +2201,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-2.0-or-later (FF's COPYRIGHT)",
    "acquisition_tags": [
@@ -1977,6 +2256,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "public-domain (netlib)",
    "acquisition_tags": [],
@@ -2025,6 +2307,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [],
@@ -2072,6 +2357,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "Zlib",
    "acquisition_tags": [],
@@ -2126,6 +2414,9 @@
    "known_historical_disposition": [
     "documented_pathology"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "LGPL-2.1-or-later",
    "acquisition_tags": [
@@ -2178,6 +2469,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-3.0-or-later",
    "acquisition_tags": [
@@ -2237,6 +2531,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-3.0-or-later",
    "acquisition_tags": [
@@ -2304,6 +2601,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "LGPL-3.0-or-later / GPL-2.0-or-later",
    "acquisition_tags": [],
@@ -2350,6 +2650,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "Apache-2.0 (root LICENSE text is the Apache License 2.0 boilerplate; verify against the hash row before relying on it)",
    "acquisition_tags": [
@@ -2411,6 +2714,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [
@@ -2465,6 +2771,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "unstated (academic distribution; README)",
    "acquisition_tags": [
@@ -2529,6 +2838,9 @@
    "known_historical_disposition": [
     "historical_redesign"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-2.0",
    "acquisition_tags": [
@@ -2590,6 +2902,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MPL-2.0",
    "acquisition_tags": [
@@ -2643,6 +2958,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "see repo LICENSE",
    "acquisition_tags": [],
@@ -2702,6 +3020,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -2760,6 +3081,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [
@@ -2816,6 +3140,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -2835,6 +3162,75 @@
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\l1-adaptive-control-basics-xkhainguyen",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
+   "fossil_id": "lapack-reference",
+   "canonical_name": "LAPACK (reference) -- the blocked successor that superseded LINPACK and EISPACK",
+   "lineage": "LAPACK (Anderson et al., 1992-) rewrote the LINPACK/EISPACK functionality around BLOCKED algorithms expressed in Level-3 BLAS (matrix-matrix), so that data loaded into cache is reused O(block) times. It is the WINNER of this pair: same mathematics, different memory-access structure. Kept here as the rival, so the loser can be compared on a shared problem without Techne deciding why it won.",
+   "ancestry": [
+    {
+     "relation": "rewrote",
+     "to": "linpack-netlib-1979",
+     "note": "same functionality, blocked for cache"
+    },
+    {
+     "relation": "rewrote",
+     "to": "eispack-netlib-1976",
+     "note": "same functionality, blocked for cache"
+    }
+   ],
+   "human_purpose": "provide LINPACK/EISPACK functionality at high performance on machines with memory hierarchies, by blocking the algorithms onto Level-3 BLAS",
+   "human_environmental_pressure": "memory hierarchy: data movement costs more than arithmetic",
+   "version": "github.com/Reference-LAPACK/lapack as of 2026-09-13 (commit in hashes)",
+   "era": "1992- (LAPACK); this checkout modern",
+   "language": [
+    "Fortran 90",
+    "C"
+   ],
+   "domain": [
+    "numerical-linear-algebra",
+    "scientific-computing",
+    "dense-linear-algebra",
+    "successor"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "no",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [
+    "successor"
+   ],
+   "historical_disposition": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "linpack-netlib-1979",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [
+    "batch09",
+    "successor",
+    "winner_of_pair",
+    "numerical",
+    "pair_linear_algebra"
+   ],
+   "tree_sha256": "d6f94c154171da32f48c9bb28466a9945544d2fb958d3fb23e3f813f84b6330e",
+   "record_path": "techne/fossils/specimens/lapack-reference/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\lapack-reference",
    "mirror_available": "no_mirror_configured"
   },
   {
@@ -2868,6 +3264,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "custom permissive (Neal: free for any purpose with notice; see index.html/COPYRIGHT)",
    "acquisition_tags": [
@@ -2930,6 +3329,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [
@@ -2998,6 +3400,9 @@
    "known_historical_disposition": [
     "successor"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [
@@ -3061,6 +3466,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-2-Clause",
    "acquisition_tags": [
@@ -3114,6 +3522,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "LGPL-2.1-or-later",
    "acquisition_tags": [],
@@ -3127,6 +3538,94 @@
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\libfec-karn",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
+   "fossil_id": "linpack-netlib-1979",
+   "canonical_name": "LINPACK (1979) -- the Fortran dense linear algebra library, superseded by LAPACK",
+   "lineage": "LINPACK (Dongarra, Bunch, Moler, Stewart, 1979) organised dense linear algebra around COLUMN operations expressed in Level-1 BLAS (vector-vector: daxpy, dscal, ddot, idamax). It defined the field and gave the world the LINPACK benchmark still used for the TOP500. It was superseded by LAPACK, which solves the SAME problems restructured around blocked Level-3 BLAS. The loser and the winner compute the same LU factorisation; only the memory-access structure differs.",
+   "ancestry": [
+    {
+     "relation": "superseded",
+     "to": "lapack-reference",
+     "note": "same problems, restructured for memory hierarchy; the human record states the reason"
+    },
+    {
+     "relation": "shares_ancestor_with",
+     "to": "fftpack-netlib",
+     "note": "both netlib Fortran numerical libraries of the same era"
+    }
+   ],
+   "human_purpose": "solve dense linear systems and least-squares problems portably and reliably in Fortran, on the vector machines of the late 1970s",
+   "human_environmental_pressure": "expensive arithmetic on vector hardware; portability across wildly different machines",
+   "version": "netlib linpack routines + the linpackd benchmark, as served by netlib 2026-09-13",
+   "era": "1979 (LINPACK); superseded from 1992 (LAPACK)",
+   "language": [
+    "Fortran 77"
+   ],
+   "domain": [
+    "numerical-linear-algebra",
+    "scientific-computing",
+    "dense-linear-algebra",
+    "benchmark",
+    "loser"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "yes",
+   "intervention_ready": "yes",
+   "known_historical_disposition": [
+    "loser",
+    "superseded_design",
+    "predecessor"
+   ],
+   "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "poor_scaling",
+     "superior_rival"
+    ],
+    "superseded_by": "lapack-reference",
+    "rival_of": "lapack-reference",
+    "evidence": [
+     {
+      "kind": "successor_documentation",
+      "ref": "LAPACK Users' Guide (SIAM), 'LAPACK supersedes LINPACK and EISPACK'",
+      "says": "LAPACK was written to supersede LINPACK and EISPACK, providing the same functionality with better performance."
+     },
+     {
+      "kind": "successor_documentation",
+      "ref": "LAPACK Users' Guide, design rationale / netlib LAPACK FAQ",
+      "says": "LINPACK and EISPACK are based on vector (Level-1 BLAS) operations whose memory-reference pattern performs poorly on machines with cache and multi-level memory hierarchies; LAPACK restructures the algorithms to use blocked Level-3 BLAS so that data is reused in cache."
+     }
+    ]
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "NOASSERTION",
+   "acquisition_tags": [
+    "batch09",
+    "loser",
+    "superseded_design",
+    "predecessor",
+    "numerical",
+    "pair_linear_algebra"
+   ],
+   "tree_sha256": "cfe571decfc7752f2ad51137dac1b26f5b931d0d47cab70110f89cb4194a4fdf",
+   "record_path": "techne/fossils/specimens/linpack-netlib-1979/record.json",
+   "recipe_path": "techne/fossils/specimens/linpack-netlib-1979/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/linpack-netlib-1979/receipts/run-linpack-netlib-1979-20260913T144321Z.json"
+   ],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\linpack-netlib-1979",
    "mirror_available": "no_mirror_configured"
   },
   {
@@ -3159,6 +3658,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "public-domain (netlib LINPACK; no licence text in file)",
    "acquisition_tags": [
@@ -3220,6 +3722,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-2.0",
    "acquisition_tags": [],
@@ -3269,6 +3774,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "OLDAP-2.8",
    "acquisition_tags": [
@@ -3319,10 +3827,13 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "MIT",
    "acquisition_tags": [],
-   "tree_sha256": "6b9266080ddb9edd0c18061143ab3b8cbc8bd481a45390fcf5adb082bf3209b8",
+   "tree_sha256": "57d253398e4498a746f52b6a88a4894cb1edce6e63979b0a678db98211f100b9",
    "record_path": "techne/fossils/specimens/lru-cache-goldsborough/record.json",
    "recipe_path": "techne/fossils/specimens/lru-cache-goldsborough/recipe.json",
    "receipts": [
@@ -3332,6 +3843,90 @@
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\lru-cache-goldsborough",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
+   "fossil_id": "md5-rfc1321",
+   "canonical_name": "MD5 (RFC 1321 reference implementation) -- a hash function whose collision resistance was broken",
+   "lineage": "MD5 (Rivest, 1992, RFC 1321) was the default cryptographic hash for a decade: 128-bit digest, Merkle-Damgard over a 512-bit block compression function. Wang et al. published practical collisions in 2004-2005, and RFC 6151 records that MD5 is no longer acceptable where collision resistance is required. The fossil is the RFC's own reference C code -- the standard and its implementation in one artifact.",
+   "ancestry": [
+    {
+     "relation": "superseded",
+     "to": "the SHA-2 family",
+     "note": "deployment moved to SHA-256 after the collision results"
+    }
+   ],
+   "human_purpose": "produce a short fixed-length fingerprint of a message that is infeasible to forge or collide",
+   "human_environmental_pressure": "an adversary free to choose both messages (collision), with growing compute and improving differential cryptanalysis",
+   "version": "RFC 1321 text including the reference implementation (appendix)",
+   "era": "1992 (RFC 1321); collisions demonstrated 2004-2005; deprecated by RFC 6151 (2011)",
+   "language": [
+    "C",
+    "RFC text"
+   ],
+   "domain": [
+    "cryptography",
+    "hash-function",
+    "merkle-damgard",
+    "security",
+    "loser"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "yes",
+   "intervention_ready": "yes",
+   "known_historical_disposition": [
+    "loser"
+   ],
+   "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "security_weakness",
+     "incorrect_assumptions"
+    ],
+    "superseded_by": "SHA-2 family",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "standards_history",
+      "ref": "RFC 6151 (2011), Updated Security Considerations for MD5 and HMAC-MD5",
+      "says": "MD5 is no longer acceptable where collision resistance is required, and new protocol designs should not use it."
+     },
+     {
+      "kind": "original_paper",
+      "ref": "Wang & Yu, How to Break MD5 and Other Hash Functions, EUROCRYPT 2005",
+      "says": "Practical collisions for MD5 can be constructed, breaking its collision resistance."
+     }
+    ]
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "NOASSERTION",
+   "acquisition_tags": [
+    "batch09",
+    "loser",
+    "security",
+    "archival_only",
+    "standard_and_impl"
+   ],
+   "tree_sha256": "2a63ad17b696314834ac04c79153ef9cd7c93ba4c0a62d32d43ee5e136d184ae",
+   "record_path": "techne/fossils/specimens/md5-rfc1321/record.json",
+   "recipe_path": "techne/fossils/specimens/md5-rfc1321/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144334Z.json",
+    "techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144429Z.json",
+    "techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144545Z.json",
+    "techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144827Z.json"
+   ],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\md5-rfc1321",
    "mirror_available": "no_mirror_configured"
   },
   {
@@ -3377,6 +3972,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -3442,6 +4040,9 @@
    "known_historical_disposition": [
     "predecessor"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -3491,6 +4092,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -3546,6 +4150,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "MIT",
    "acquisition_tags": [],
@@ -3591,6 +4198,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "Minpack Copyright Notice (1999) University of Chicago -- BSD-like, see disclaimer",
    "acquisition_tags": [
@@ -3642,6 +4252,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "LATER_SAME_LINEAGE_RELEASE",
    "license_spdx": "public-domain / permissive per the source headers",
    "acquisition_tags": [
@@ -3709,6 +4322,9 @@
    "known_historical_disposition": [
     "pathology"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "Public-Domain",
    "acquisition_tags": [
@@ -3726,6 +4342,86 @@
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\odepack-netlib",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
+   "fossil_id": "openssl-1.0.1f-heartbleed",
+   "canonical_name": "OpenSSL 1.0.1f -- the last release carrying Heartbleed (CVE-2014-0160)",
+   "lineage": "OpenSSL's TLS heartbeat extension (RFC 6520) accepted a caller-supplied payload LENGTH and copied that many bytes back without checking it against the record actually received. 1.0.1 through 1.0.1f carry the defect; 1.0.1g fixes it with a bounds check. Preserved as the BEFORE-FAILURE body of a documented failure whose replacement is one released version away. Archival only: this fossil exists so the defect can be read in its original world, and the vault carries no exploit for it.",
+   "ancestry": [
+    {
+     "relation": "historical_version_of",
+     "to": "OpenSSL 1.0.1g (the fix)",
+     "note": "before-failure body; the replacement is one release later"
+    }
+   ],
+   "human_purpose": "keep a TLS session alive and discover path MTU without renegotiating, per RFC 6520",
+   "human_environmental_pressure": "untrusted input crossing a trust boundary into a memory-unsafe language",
+   "version": "OpenSSL 1.0.1f source tarball (openssl.org archive)",
+   "era": "2012-2014 (1.0.1 line); disclosed 2014-04-07; fixed in 1.0.1g",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "cryptography",
+    "tls",
+    "security",
+    "memory-safety",
+    "loser"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "no",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [
+    "loser",
+    "documented_pathology"
+   ],
+   "historical_disposition": {
+    "state": "FAILED",
+    "failure_reasons": [
+     "security_weakness",
+     "brittleness"
+    ],
+    "superseded_by": "OpenSSL 1.0.1g",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "release_notes",
+      "ref": "OpenSSL Security Advisory, 07 April 2014 (CVE-2014-0160)",
+      "says": "A missing bounds check in the TLS heartbeat extension allows disclosure of up to 64kB of process memory; affected versions are 1.0.1 through 1.0.1f, fixed in 1.0.1g."
+     },
+     {
+      "kind": "standards_history",
+      "ref": "RFC 6520, TLS Heartbeat Extension",
+      "says": "The heartbeat response must echo the payload of the request; the length handling is where the implementation failed."
+     }
+    ]
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "OpenSSL",
+   "acquisition_tags": [
+    "batch09",
+    "loser",
+    "security",
+    "archival_only",
+    "before_failure",
+    "documented_pathology"
+   ],
+   "tree_sha256": "70f4afd6ad289df3408e7a3b4901bd9f1d1e4e402eaf2c6f475aafa03ade6d2b",
+   "record_path": "techne/fossils/specimens/openssl-1.0.1f-heartbleed/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\openssl-1.0.1f-heartbleed",
    "mirror_available": "no_mirror_configured"
   },
   {
@@ -3771,6 +4467,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -3833,6 +4532,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -3891,6 +4593,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-2.0-or-later",
    "acquisition_tags": [
@@ -3961,6 +4666,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -4022,6 +4730,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "0BSD / public-domain-like (pForth license)",
    "acquisition_tags": [],
@@ -4068,6 +4779,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "ISC",
    "acquisition_tags": [],
@@ -4120,6 +4834,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -4184,6 +4901,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -4246,6 +4966,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -4304,6 +5027,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [
@@ -4364,6 +5090,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -4415,6 +5144,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [],
@@ -4469,6 +5201,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -4521,6 +5256,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "public-domain (netlib)",
    "acquisition_tags": [],
@@ -4577,6 +5315,9 @@
    "oracle_backed": "no",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -4637,6 +5378,9 @@
    "known_historical_disposition": [
     "contested_design"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "FAITHFUL_PORT",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -4694,6 +5438,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "public (Rockliff: 'This program may be freely modified and/or given to whoever wants it')",
    "acquisition_tags": [
@@ -4745,6 +5492,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "MIT",
    "acquisition_tags": [],
@@ -4799,6 +5549,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "UPL-1.0 (Universal Permissive License)",
    "acquisition_tags": [
@@ -4815,6 +5568,84 @@
    "receipts": [],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\souffle-2.4.1",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
+   "fossil_id": "spdylay",
+   "canonical_name": "SPDY (spdylay) -- the experimental protocol that became HTTP/2 and was then retired",
+   "lineage": "SPDY (Google, 2009) attacked HTTP/1.1 head-of-line blocking with multiplexed streams, header compression and prioritisation over one TLS connection. It worked, and the IETF took it as the BASIS for HTTP/2 (RFC 7540). Its authors then deprecated it: SPDY is a loser of an unusual kind -- defeated by its own successor, having won the argument. spdylay is Tatsuhiro Tsujikawa's C implementation (the ancestor of nghttp2).",
+   "ancestry": [
+    {
+     "relation": "superseded",
+     "to": "HTTP/2 (RFC 7540)",
+     "note": "SPDY was the basis of the standard that replaced it"
+    }
+   ],
+   "human_purpose": "remove HTTP/1.1's head-of-line blocking by multiplexing many requests over one connection with compressed headers",
+   "human_environmental_pressure": "latency and connection limits; TCP head-of-line blocking under loss",
+   "version": "github.com/tatsuhiro-t/spdylay as of 2026-09-13 (commit in hashes)",
+   "era": "2009-2015 (SPDY); HTTP/2 published 2015; SPDY removed from Chrome 2016",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "networks",
+    "protocol",
+    "http",
+    "multiplexing",
+    "loser"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "no",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [
+    "loser",
+    "superseded_design"
+   ],
+   "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "superior_rival"
+    ],
+    "superseded_by": "HTTP/2 (RFC 7540) / nghttp2",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "standards_history",
+      "ref": "RFC 7540 (HTTP/2), May 2015",
+      "says": "HTTP/2 was developed from SPDY as its starting point and supersedes it as the standardised protocol."
+     },
+     {
+      "kind": "release_notes",
+      "ref": "Chromium blog, 'Hello HTTP/2, Goodbye SPDY' (Feb 2015)",
+      "says": "Google announced it would remove SPDY support from Chrome in favour of HTTP/2."
+     }
+    ]
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch09",
+    "loser",
+    "superseded_design",
+    "networks",
+    "protocol"
+   ],
+   "tree_sha256": "29f832fd903ac6bcb4c1cf5eef7fa7d0d4b050f908250b5465db6f6788c57a75",
+   "record_path": "techne/fossils/specimens/spdylay/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\spdylay",
    "mirror_available": "no_mirror_configured"
   },
   {
@@ -4850,6 +5681,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause (Spin's LICENSE since 6.5)",
    "acquisition_tags": [
@@ -4916,6 +5750,9 @@
    "known_historical_disposition": [
     "pathology"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [
@@ -4968,6 +5805,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "public-domain (blessing)",
    "acquisition_tags": [
@@ -5026,6 +5866,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -5080,6 +5923,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-2-Clause (core; some components differ)",
    "acquisition_tags": [
@@ -5096,6 +5942,72 @@
    "receipts": [],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\swipl-9.2.9",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
+   "fossil_id": "tiny-aes-c",
+   "canonical_name": "AES (tiny-AES-c) -- the Rijndael successor that replaced DES",
+   "lineage": "Rijndael (Daemen & Rijmen) won the NIST AES competition and became FIPS 197 in 2001, replacing DES. Not a Feistel network but a substitution-permutation network over GF(2^8), with 128/192/256-bit keys. Kept as the WINNER of the cipher pair so the loser can be compared on shared test vectors.",
+   "ancestry": [
+    {
+     "relation": "superseded",
+     "to": "des-reference",
+     "note": "AES replaced DES as the US standard"
+    }
+   ],
+   "human_purpose": "replace DES with a cipher whose key length and structure resist foreseeable attack, efficient in both hardware and software",
+   "human_environmental_pressure": "adversarial cryptanalysis; an open selection process",
+   "version": "github.com/kokke/tiny-AES-c as of 2026-09-13 (commit in hashes)",
+   "era": "1998 (Rijndael); FIPS 197 in 2001",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "cryptography",
+    "block-cipher",
+    "substitution-permutation-network",
+    "security",
+    "successor"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "yes",
+   "intervention_ready": "yes",
+   "known_historical_disposition": [
+    "successor"
+   ],
+   "historical_disposition": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "des-reference",
+    "evidence": []
+   },
+   "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+   "license_spdx": "Unlicense",
+   "acquisition_tags": [
+    "batch09",
+    "successor",
+    "winner_of_pair",
+    "security",
+    "pair_cipher"
+   ],
+   "tree_sha256": "ceac46bb10ea8f2bbab812bc39f49a65effb6fc3f0714a225015eeeeb32e05d0",
+   "record_path": "techne/fossils/specimens/tiny-aes-c/record.json",
+   "recipe_path": "techne/fossils/specimens/tiny-aes-c/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/tiny-aes-c/receipts/run-tiny-aes-c-20260913T144339Z.json"
+   ],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\tiny-aes-c",
    "mirror_available": "no_mirror_configured"
   },
   {
@@ -5130,6 +6042,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "LGPL-2.1-or-later",
    "acquisition_tags": [],
@@ -5192,6 +6107,9 @@
    "oracle_backed": "no",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -5256,6 +6174,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [
@@ -5320,6 +6241,9 @@
    "known_historical_disposition": [
     "superseded_design"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-2.0",
    "acquisition_tags": [
@@ -5371,6 +6295,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "custom (author permits use for learning; see the source header)",
    "acquisition_tags": [
@@ -5435,6 +6362,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "NOASSERTION",
    "acquisition_tags": [
@@ -5499,6 +6429,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-2.0",
    "acquisition_tags": [
@@ -5557,6 +6490,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [
@@ -5612,6 +6548,9 @@
    "oracle_backed": "unknown",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "see repo (OpenCores)",
    "acquisition_tags": [],
@@ -5659,6 +6598,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "see repo (OpenCores; often LGPL/BSD)",
    "acquisition_tags": [],
@@ -5706,6 +6648,9 @@
    "oracle_backed": "no",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "see repo (OpenCores)",
    "acquisition_tags": [],
@@ -5752,6 +6697,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
    "license_spdx": "see repo LICENSE.md",
    "acquisition_tags": [],
@@ -5807,6 +6755,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "custom academic (Kautz/Selman; see the source header)",
    "acquisition_tags": [
@@ -5857,6 +6808,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "LATER_SAME_LINEAGE_RELEASE",
    "license_spdx": "Public-Domain",
    "acquisition_tags": [
@@ -5919,6 +6873,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "yes",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [],
@@ -5968,6 +6925,9 @@
    "oracle_backed": "no",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [],
@@ -6025,6 +6985,9 @@
     "failed_branch",
     "loser"
    ],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "NOASSERTION",
    "acquisition_tags": [
@@ -6078,6 +7041,9 @@
    "oracle_backed": "yes",
    "intervention_ready": "unknown",
    "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN"
+   },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "Zlib",
    "acquisition_tags": [],

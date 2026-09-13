@@ -1,0 +1,1089 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "avida",
+  "receipt_id": "run-avida-20260913T141120Z",
+  "written_utc": "20260913T141120Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "0a18674a17e76f6111a1eedac9efb3ed18c84b4e23f12477d65e835170425e0d",
+  "recipe_sha256": "045664c87e68b1126531f72a5e0a7b66b6b05b133dd64be159f54af2f2111f44",
+  "patches": [],
+  "probe": [
+    {
+      "name": "toolchain present without apt",
+      "cmd": "cmake --version | head -1; g++ --version | head -1",
+      "exit": 0,
+      "seconds": 6.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "cmake version 3.25.1\ng++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "pinned submodule is IN the body (the P1 repair)",
+      "cmd": "echo apto=$(find libs/apto -type f | wc -l) backward_cpp=$(find libs/backward-cpp -type f | wc -l); test $(find libs/apto -type f | wc -l) -gt 50",
+      "exit": 0,
+      "seconds": 0.84,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "apto=165 backward_cpp=25\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "cmake + make avida (offline; apto from the preserved body)",
+      "cmd": "export AVIDA_DISABLE_BACKTRACE=1; mkdir -p cbuild && cd cbuild && cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=Release .. >/tmp/cmake.log 2>&1 && make -j4 avida >/tmp/make.log 2>&1; test -x ./bin/avida && echo BUILT || { tail -20 /tmp/make.log; false; }",
+      "exit": 0,
+      "seconds": 139.48,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "BUILT\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "evolve a population from the hand-written ancestor for 300 updates (self-replication + descent)",
+      "cmd": "W=$(pwd); cp -r avida-core/support/config /tmp/run && cd /tmp/run && sed -i 's/^u 100000 Exit/u 300 Exit/' events.cfg && $W/cbuild/bin/avida -c avida.cfg > /tmp/run.log 2>&1; L=$(grep '^UD:' /tmp/run.log | tail -1); echo \"FINAL $L\"; O=$(echo \"$L\" | sed 's/.*Orgs: *//;s/ *$//'); G=$(echo \"$L\" | sed 's/.*Gen: *//;s/ .*//'); B=$(grep -v '^#' data/count.dat | tail -1 | awk '{print $4}'); echo \"ORGS=$O GEN=$G BIRTHS=$B\"; awk -v o=\"$O\" -v g=\"$G\" -v b=\"$B\" 'BEGIN{print (o>100 && g>5 && b>100) ? \"SELF_REPLICATING_POPULATION=yes\" : \"SELF_REPLICATING_POPULATION=no\"}'",
+      "exit": 0,
+      "seconds": 1.45,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "FINAL UD: 300     Gen: 23.04808   Fit: 0.2442704  Orgs: 1144    \nORGS=1144 GEN=23.04808 BIRTHS=868\nSELF_REPLICATING_POPULATION=yes\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "cbuild/avida-core/cmake_install.cmake",
+      "sha256": "9992879dd82d453128744aa1d8b4f7436ca6f53dae1e5fb66024a2738ef1f718",
+      "bytes": 2840
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/build.make",
+      "sha256": "d03881411aa3dce0af2823b3f4b5b44b2f21c582ca7769b5b39a1e6e82cae9bc",
+      "bytes": 252926
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/cmake_clean.cmake",
+      "sha256": "492027637a14f8917197fd1287d9a437872d58debc676c129821a3b134e8a8cd",
+      "bytes": 15591
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/cmake_clean_target.cmake",
+      "sha256": "e4799f88cb0fcf153480e2df7dcbaffede187372d0e9bc74b299baa7b8be6800",
+      "bytes": 49
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/compiler_depend.make",
+      "sha256": "f8b1959b6471394efae74561b00b9acd0d344e94b122830ade5a501f4aeb1961",
+      "bytes": 113
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/compiler_depend.ts",
+      "sha256": "68ce83a6d62e694ad131c8cf5e5fa6cbd76e0069a5b0eeac05cc7c52f703824f",
+      "bytes": 117
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/depend.make",
+      "sha256": "8de7bbea0b1398741f3b6904c9fbb2a3c5fb0a79abb35bc878c10a53b541f2e6",
+      "bytes": 94
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/DependInfo.cmake",
+      "sha256": "f1105fce450f12bcab17f4259cded5ec8fe872103ee9fa42d63b84c3124c709a",
+      "bytes": 26263
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/flags.make",
+      "sha256": "58daca56facd3afd4cd8aab4ce030cd19fd2b097e300bc1d238c8fa06ae50845",
+      "bytes": 805
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/link.txt",
+      "sha256": "2efe8df1b08ac860b0952030785a1c57af0a5989dcfb6d9cafbb71fda4f335c5",
+      "bytes": 7389
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/progress.make",
+      "sha256": "97d4cbb0e8a58ceb298468314cd3153e0779877ac006ab6b448d293ce5ef448d",
+      "bytes": 2713
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/cActionLibrary.cc.o",
+      "sha256": "56523d29c6bf3221c201f02216a6e46f5477dd5a9e80f721be4e10cbc0e7c13c",
+      "bytes": 25488
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/cActionLibrary.cc.o.d",
+      "sha256": "16e41c2d684b8186925098101e1f2f24334fa35bc4885f85e55b09b46c345a13",
+      "bytes": 13820
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/DriverActions.cc.o",
+      "sha256": "5e91285cfb564da7b312c99b6e13189095b9022221f063d16884c4cd8933ccf0",
+      "bytes": 127120
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/DriverActions.cc.o.d",
+      "sha256": "907d49f4170dca226c37ac237b01b3ae27dbb03709baed411fb318d5dac0d6bc",
+      "bytes": 18733
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/EnvironmentActions.cc.o",
+      "sha256": "8a0958cee313a497a0458e3ddacfdeff45f99353af7e5fc2f45f6583a4153dc5",
+      "bytes": 496008
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/EnvironmentActions.cc.o.d",
+      "sha256": "17b5950d4e12d12bbb81ce6922ef3732f2f0013d8d54b8535e05d9e9ae145862",
+      "bytes": 19548
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/LandscapeActions.cc.o",
+      "sha256": "3425eda5d720b1649d6db9b2debb87fb9175a453e8b2f8d8f637065b422b14c5",
+      "bytes": 231840
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/LandscapeActions.cc.o.d",
+      "sha256": "b9e68b232712cef4fd9962b4c55d9f8bb3835d7a917f9dd17af99dee13d3d08e",
+      "bytes": 21336
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/PopulationActions.cc.o",
+      "sha256": "74c57e401e8a0f7bcd7a2a8a605c16a82929385a455297d20cbfb4eba5a0acd8",
+      "bytes": 1141968
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/PopulationActions.cc.o.d",
+      "sha256": "84e10e1db699e798add4373e6d6ed703d641d6c99077b8537a12e459ce1c6283",
+      "bytes": 21099
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/PrintActions.cc.o",
+      "sha256": "ffbc10cdcf74701c731c710f5fcfa17fdf3bc92772c5e5f7b799b574a2ba763f",
+      "bytes": 2278088
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/PrintActions.cc.o.d",
+      "sha256": "363a0828651547419e29b4a828d49dd3f7d943f26dab45dceda32417a0e0c899",
+      "bytes": 22107
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/SaveLoadActions.cc.o",
+      "sha256": "4972123770b16d01a93f7674f8ada572e283f05b412b97ebac659320ba2bc039",
+      "bytes": 221464
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/actions/SaveLoadActions.cc.o.d",
+      "sha256": "cf49df3358cc756c32b054e53b887a2d1be657090b25e071668672cbbe0d3b3e",
+      "bytes": 19783
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyze.cc.o",
+      "sha256": "5b1f74577e1f882eac2fbe5065677afaabf4d248f373589d47c6186ad2026c89",
+      "bytes": 1347928
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyze.cc.o.d",
+      "sha256": "95c7a55fcbb7c3870231266bc86f9b4468cd27dd0abaad5fe32fe568a249b455",
+      "bytes": 24136
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyzeGenotype.cc.o",
+      "sha256": "3067a438bd4b57c46d7cde9d610a71e1b9135c132f028a2254be6938d3796f44",
+      "bytes": 498512
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyzeGenotype.cc.o.d",
+      "sha256": "73d5a99d13a68646e226270a04267dcd533ddd507cccf8e02a7ef23c1714eb55",
+      "bytes": 20077
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyzeJobQueue.cc.o",
+      "sha256": "ab6bb3009c3007cbcb71b1a6dbfb95ef031f6872fcd3e6891159b2c4c75d9fef",
+      "bytes": 11920
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyzeJobQueue.cc.o.d",
+      "sha256": "4eb5b5352e804232b6f0aca46289919b20a22e24688f272b4a210f2a9006a46a",
+      "bytes": 14474
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyzeJobWorker.cc.o",
+      "sha256": "1ff220df91fa15d6ea57a6b83bda2df9a507db1389857f0f18db2857364abd22",
+      "bytes": 8080
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyzeJobWorker.cc.o.d",
+      "sha256": "8414055fc933d50b9385bebb61398044f971c581e5cee61009eed41ded2bfb3f",
+      "bytes": 14200
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyzeTreeStats_CumulativeStemminess.cc.o",
+      "sha256": "9c647d778a967ae8fe2f4f7d39f9773fd927a4647728df7ead3c2ab2807ec7f9",
+      "bytes": 43384
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyzeTreeStats_CumulativeStemminess.cc.o.d",
+      "sha256": "a33cec9342becced66ba4d31477e2bdcde808233d8cb747aebae22b66c069a06",
+      "bytes": 19321
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyzeTreeStats_Gamma.cc.o",
+      "sha256": "06eadc5d07f604e21077b979b1fcf3be37202e10236a7c89cea9b0102eaa4bf0",
+      "bytes": 62000
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cAnalyzeTreeStats_Gamma.cc.o.d",
+      "sha256": "4d83e2f7b79cf9fb930866e2dc7f32bb4900294021b8c2f88f70c32aa79d5aab",
+      "bytes": 19666
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cGenotypeBatch.cc.o",
+      "sha256": "b6fe482be2c15b21819e97d052a08ff7e779451cad91c09095e48ad686338068",
+      "bytes": 54584
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cGenotypeBatch.cc.o.d",
+      "sha256": "bb75a8ab624f8529c2fc183eceaf178cf99c1e29924fd068e4e16cf6c6ac73bc",
+      "bytes": 19246
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cGenotypeData.cc.o",
+      "sha256": "497bcdf5e22c88fb60227d60ee0ff3006c9b204fc6932558eeb588a3d4133190",
+      "bytes": 1400
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cGenotypeData.cc.o.d",
+      "sha256": "0f449a12e3a21f75c404f8a444838381516291df7fc56375e62fb3946e2befaa",
+      "bytes": 227
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cModularityAnalysis.cc.o",
+      "sha256": "eec33f0a9ae71b927b112812e8de6df8e03bfe41bd1e1f8d1bc42a93a98f20fc",
+      "bytes": 181032
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cModularityAnalysis.cc.o.d",
+      "sha256": "fde9ca42dfc66badc533e8b2a19e366d6d2ea3c94c74591ea8f149865fd42d91",
+      "bytes": 19800
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cMutationalNeighborhood.cc.o",
+      "sha256": "0da5330bfbe1a936458e6b6d0613cf5b97d13c88a901f5f6a63de8c3e5d65664",
+      "bytes": 163936
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/analyze/cMutationalNeighborhood.cc.o.d",
+      "sha256": "94b32ad98e09251a77905a74600a8ee65fe6526822ac213e285e2d5f9e4c7ad9",
+      "bytes": 19595
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/Avida.cc.o",
+      "sha256": "ea71643d5406728fab7f4484fdfbd1cfa691defda36b2169a1456862106b22be",
+      "bytes": 3576
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/Avida.cc.o.d",
+      "sha256": "251a517e43f7d3c3c25230a97cb1a0a7897f070c4c46649705266b088f09f705",
+      "bytes": 21276
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/GeneticRepresentation.cc.o",
+      "sha256": "293137c051136c41cdc0922db47ec7ca8ed0aca439af72f27add2b430be33ccf",
+      "bytes": 15360
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/GeneticRepresentation.cc.o.d",
+      "sha256": "cfb16e10efc4ec6500c901c5dfc2b0cf6a0965cfa83cd2108f3628e12e636ede",
+      "bytes": 11978
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/Genome.cc.o",
+      "sha256": "83560322054205ada3f106cf778dcb6bc8b78083863df47d625c5e79c4bf3465",
+      "bytes": 76952
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/Genome.cc.o.d",
+      "sha256": "ca72935da2664ee6b1828e8b8366e8834502ef2b3946599175989686dee3c1df",
+      "bytes": 16051
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/GlobalObject.cc.o",
+      "sha256": "b5c51b568597e47af6afb80bb17633f769c1c9e4173427c62b73a9de67eda490",
+      "bytes": 4632
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/GlobalObject.cc.o.d",
+      "sha256": "09ba25aa78f4fe649433f696f0e5302b8c98efa5a0670c9a6eeb747204f41953",
+      "bytes": 3996
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/InstructionSequence.cc.o",
+      "sha256": "79d15e865f6edfd914cf72d9424af533dd4c6e15072d1b89b1874d79ac34a4b9",
+      "bytes": 68392
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/InstructionSequence.cc.o.d",
+      "sha256": "ee57f6e6f6593a84b0a0906344161179cb4492cfe94af957c3fd4595aa1d7c18",
+      "bytes": 12110
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/Properties.cc.o",
+      "sha256": "40d5f210c8041c669d5d86e82a53f392ff0b1c23c0b068872eb94844c5d3bfc0",
+      "bytes": 81928
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/Properties.cc.o.d",
+      "sha256": "84fccddca2adb40f7653f85dea7a7472d14da9fe07b9f9cc6b55cd315ec419ed",
+      "bytes": 11945
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/Types.cc.o",
+      "sha256": "d4d41b95d52287a2206624dc90d354599eccc9572072b7a5c78b345804cd6dc9",
+      "bytes": 872
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/Types.cc.o.d",
+      "sha256": "5d1ae7d45ecd7f1a55eb41822aade9129d93f8db6086a1eb46210fb53633d919",
+      "bytes": 11865
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/Version.cc.o",
+      "sha256": "e241767e0c3390e26c80d5e105cc582b49b4ead4eede8e87fcc4edd6e63fd459",
+      "bytes": 21848
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/Version.cc.o.d",
+      "sha256": "2d44fea41ba0c124adaadda65b1a331e0d42916b9bbad23850eb214fa52dc345",
+      "bytes": 8983
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/World.cc.o",
+      "sha256": "d384d71584a78e5900dd48e8253d3df20021ff3a08eeab3d7c4b9fa84183eb35",
+      "bytes": 36344
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/core/World.cc.o.d",
+      "sha256": "3d1bcfce479908c0307a84756b89b481e9552cbad80bcd187fbfb7b62325089a",
+      "bytes": 11997
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cCodeLabel.cc.o",
+      "sha256": "593f5b9be6295e3ebe986c612274d1b467be5fcc71f944a0d5e6baf51d4c1f0a",
+      "bytes": 14448
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cCodeLabel.cc.o.d",
+      "sha256": "4a845d37ed0067efe350b0e594469cd120fa31c47616c22c5bb991077fdb3a7d",
+      "bytes": 14123
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cCPUMemory.cc.o",
+      "sha256": "57ebba5ea1a7b0b9dc57942212ac6c7c95e1052b540d7e9ed88081af0839d266",
+      "bytes": 16040
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cCPUMemory.cc.o.d",
+      "sha256": "c6eaade79c5f471f51e4537548da343e42801f5a7f62ba83c8684c14e24e416b",
+      "bytes": 12088
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cCPUStack.cc.o",
+      "sha256": "0a376e73963cd694b2d64484db85056be7d64711cb796f49b233afb8debea01b",
+      "bytes": 10496
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cCPUStack.cc.o.d",
+      "sha256": "d86fcadae248c14a36101ece9cf326a524424da19d875f8f8981372b3c7a39a4",
+      "bytes": 13098
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cCPUTestInfo.cc.o",
+      "sha256": "464de6f5661e68ebc948c86e2b7ac14390713188d3234993c1be6b0b0e6b76cb",
+      "bytes": 8208
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cCPUTestInfo.cc.o.d",
+      "sha256": "5b57d70c4bcdac0a7dac27ab3a5bc3647a393421f3bc52bf2c99443cf1d01deb",
+      "bytes": 16879
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareBase.cc.o",
+      "sha256": "676f34d5e3f1083d669332a9617ffdd274a59a0f67444d6b04a4a9d48625292f",
+      "bytes": 109176
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareBase.cc.o.d",
+      "sha256": "5802f0e98c2774c99447720b14afc0d87b695a5f4e19cab78085bcef5fef99a1",
+      "bytes": 20111
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareBCR.cc.o",
+      "sha256": "bf6b928641be56b8f13c1106d482505016cf99ff3d1dbf07676d87d332bbb7c8",
+      "bytes": 380136
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareBCR.cc.o.d",
+      "sha256": "e81450b7200c3fa761fa51ab21eb0e29076fcde35e0c5fd1a90334a6ce615013",
+      "bytes": 20731
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareCPU.cc.o",
+      "sha256": "cd1f2b5ea306129916c0ce1ae8082e99ec8ec53e47a17e9674e80365b47424c8",
+      "bytes": 865784
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareCPU.cc.o.d",
+      "sha256": "333f51dd2377137e42fcd1b312e208ea41c7a2229fb195e2123db5262a4cee34",
+      "bytes": 21152
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareExperimental.cc.o",
+      "sha256": "5327a67b0c6a29a1f90728c11f4af30e83f0bb9aa2e9bc974f3566a607053d94",
+      "bytes": 573776
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareExperimental.cc.o.d",
+      "sha256": "881fb67de405f8235d328de89ce28c4a59515200420b60acacd7d5d005f578d7",
+      "bytes": 20848
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareGP8.cc.o",
+      "sha256": "cccd4803fceff40a55cbcd09b241d1b28fc05bab9de9e3590d039f3eabd236ad",
+      "bytes": 310632
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareGP8.cc.o.d",
+      "sha256": "32b3265b59db77855c3200239015384da5ad31ce9c5cceed26e81d74eb264d47",
+      "bytes": 20731
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareManager.cc.o",
+      "sha256": "65d76800b82ae18c9b97a3f64f177aae011e65ec45c65a06915bac2d48fc3646",
+      "bytes": 130888
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareManager.cc.o.d",
+      "sha256": "7a259131d9a035f7f0d9ee6d532c7bf1ed5aefad3a1352097e0b53b399483f0a",
+      "bytes": 20686
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareStatusPrinter.cc.o",
+      "sha256": "6665edf712d7e4b25b8295181feb6dd5bea8f22cfbff5042de446d4d432835e5",
+      "bytes": 14296
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareStatusPrinter.cc.o.d",
+      "sha256": "2f4c9c2e118226878f79dc9dcec0fd54d5e62cb706e068b8a831ed45827ab92f",
+      "bytes": 17225
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareTransSMT.cc.o",
+      "sha256": "a97bc891f0022b55cfe5d27e02c3446744d53fb4c15370025f3f9d4dde537258",
+      "bytes": 205016
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHardwareTransSMT.cc.o.d",
+      "sha256": "ce6f702cb99a824ae9628c5b4e3054841aedb0df2e6a98951d393c0c9e3fa05a",
+      "bytes": 19828
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHeadCPU.cc.o",
+      "sha256": "5f50d5cae469b5075553958f32931bd35663537045d7c1169e79c62fe998735a",
+      "bytes": 2200
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cHeadCPU.cc.o.d",
+      "sha256": "5c70d341465bbf1eda6862f43c6ef368a43066d484fce92652145c42a40cfd77",
+      "bytes": 15013
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cInstSet.cc.o",
+      "sha256": "9aa2028b7cfc0a229131b7753eadcddc9c2f42651a5b42a61eb94f20529b3076",
+      "bytes": 63688
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cInstSet.cc.o.d",
+      "sha256": "d73625edcd9b1ca26923ea8b48b5f948dbc1dd42846ce9fba2fb82a65cf80e82",
+      "bytes": 15035
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cTestCPU.cc.o",
+      "sha256": "ec36e5f22a162c5aa2bd18a545a5b28e859e8e239673cd4bc9ed6b13c3d15cfc",
+      "bytes": 36024
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cTestCPU.cc.o.d",
+      "sha256": "0de64dfdab942ee7903ce99d7bbfad9ea0fb0bacc2a2403ebcf177e2e1cd78b2",
+      "bytes": 19728
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cTestCPUInterface.cc.o",
+      "sha256": "1a134ce8f29162ec11e447ae9c4a9dcb3b42ac14de3f261b8e09fa9d85681975",
+      "bytes": 68664
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/cpu/cTestCPUInterface.cc.o.d",
+      "sha256": "bde96a2685cb3cecc7d985a097cb3a9aa449eca6b7baaac322cf1a787d5ca55f",
+      "bytes": 17114
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/data/Manager.cc.o",
+      "sha256": "28c8cfea017b0d6e84ca21e42a887d515398bd3047bdc2da307e824de0f3b1a7",
+      "bytes": 256704
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/data/Manager.cc.o.d",
+      "sha256": "1ce8b347fa8f9f22c58ac2ee4599eef23e28b9097ee92feb40441070db28086a",
+      "bytes": 12336
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/data/Package.cc.o",
+      "sha256": "4363f869791e6c456fb5ebe1ea65997d72ef8b7c1c8b90a01b6f3585c6cce990",
+      "bytes": 30776
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/data/Package.cc.o.d",
+      "sha256": "fdd1b2f0ff7ba9eb8aecb6758a7dad818887051db7721fdd23b35bc096b5a321",
+      "bytes": 12001
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/data/Provider.cc.o",
+      "sha256": "19043f43f7d63dceff9ff04406c36b67a5c18bff1607c06dec65314b497b7d5e",
+      "bytes": 18168
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/data/Provider.cc.o.d",
+      "sha256": "9dda1e573fbe0f62bc0cc1c3213298d43b8fb848d48c60273b3b513e8786e982",
+      "bytes": 12135
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/data/Recorder.cc.o",
+      "sha256": "0bc66cdd249311cb7a12baad25ccc8d211e6d1ba2d10bb12840c75956905f4ef",
+      "bytes": 1496
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/data/Recorder.cc.o.d",
+      "sha256": "76a70f82f448bef7ff4df356161c56b3b90166ec48a000807ce10bce17d9b243",
+      "bytes": 12004
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/data/TimeSeriesRecorder.cc.o",
+      "sha256": "00c5df6bc191717286f7eddd889dd9b066df35c6f130ca6077d5c71ea98908a5",
+      "bytes": 187400
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/data/TimeSeriesRecorder.cc.o.d",
+      "sha256": "3245470e0d29f8eb9606208822ff208da573abd77f7e666eeb872ac7ee76a82a",
+      "bytes": 12169
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/environment/Manager.cc.o",
+      "sha256": "aecc3df03fe9cad7583a5e6d2cee6053940cd0e1e01d18e83dc535dd890f804a",
+      "bytes": 100640
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/environment/Manager.cc.o.d",
+      "sha256": "81c9cb58192737304af76943242dc81a017c17ce5a67e778ef46293792e9dfea",
+      "bytes": 12465
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cAvidaConfig.cc.o",
+      "sha256": "64f0319ad86065d86d7dab6fdade4a83d6834fe11f53cdfd15a6107d728b29f7",
+      "bytes": 158344
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cAvidaConfig.cc.o.d",
+      "sha256": "b61a1618d06b5ae9eabc80b46ade5d71c313ebd22069c7c8957c54d410b116cd",
+      "bytes": 14720
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthChamber.cc.o",
+      "sha256": "a98ac63243f0f8ba663ee3c465ae22d1b20933324ff7f30f829ed150871dc122",
+      "bytes": 63672
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthChamber.cc.o.d",
+      "sha256": "baac2ad50d68c9bb27bfddfd3d9c287548da799689088da45f99639264266045",
+      "bytes": 18094
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthDemeHandler.cc.o",
+      "sha256": "fa483e020441f238bd1bf7d7766c29c413d7b2cb375b549a2c7e63768b4b437d",
+      "bytes": 9432
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthDemeHandler.cc.o.d",
+      "sha256": "0bd1cc2fc7714061343772a1a757603168064bc4e0ee73745e86fb3b0d74b6bb",
+      "bytes": 16947
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthEntry.cc.o",
+      "sha256": "50463b1c48fcff1adf9cf4e6ee88110b957aff047bb53f6005a350b4b1b7ba02",
+      "bytes": 20184
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthEntry.cc.o.d",
+      "sha256": "20f2018ca0883afed066922ae3e61b88924d09acee37c9da65be1e1075ef3d99",
+      "bytes": 16406
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthGenomeSizeHandler.cc.o",
+      "sha256": "d02372e4857e7a5690cad6669db7c5a6cf8515451a2d59e80d4c16182bd3bc08",
+      "bytes": 9280
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthGenomeSizeHandler.cc.o.d",
+      "sha256": "39bb11114ac5be410596bf3d8fe907f7840cd0e6dddd55180cea7cc48fae143c",
+      "bytes": 14579
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthGlobalHandler.cc.o",
+      "sha256": "2270f7c133a3fc85c9a3c66bf49d1ddba468ca8a401f5b71e8b39e3753d85e9b",
+      "bytes": 5176
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthGlobalHandler.cc.o.d",
+      "sha256": "08ef63cb400a299cfb7e9f3b2541c8ba8bc3778601576c7fc447bc61fdc5a6dd",
+      "bytes": 14488
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthGridLocalHandler.cc.o",
+      "sha256": "a15d3c5f84fc8648da2997b5e45bfe9fddbad196ec565caeb62f4eadae309af6",
+      "bytes": 10824
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthGridLocalHandler.cc.o.d",
+      "sha256": "d8f29357354147054daa257ab66612eb461b6599d3371f93864bf8e85b89354b",
+      "bytes": 18494
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthMateSelectHandler.cc.o",
+      "sha256": "b9979e6c5e980e53e0465adbb4aa7b5b10c65cbfef6548c1337b763296f0e653",
+      "bytes": 8672
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthMateSelectHandler.cc.o.d",
+      "sha256": "8761914bc94a0c90cbf966a519f6b64252d8c93d1a9dc700eef3ac689cd6df41",
+      "bytes": 16626
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthMatingTypeGlobalHandler.cc.o",
+      "sha256": "5fdb7d0108ebeea298b30e4565a6e16c01a4a47b0850681301bd3fb1a8e40382",
+      "bytes": 29976
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthMatingTypeGlobalHandler.cc.o.d",
+      "sha256": "47d7cebb84756620ea426c39b3014ef1ce44bf34c4b8bb93be446f48b16e5836",
+      "bytes": 18269
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthNeighborhoodHandler.cc.o",
+      "sha256": "67cc6628320116261d50d1af85f49a4b99b8ffa53bbd77d3508bc01db4ba1290",
+      "bytes": 9920
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthNeighborhoodHandler.cc.o.d",
+      "sha256": "bb8710e4b247145e47fd3eb48c1124b87dff07d1380ae2ed1b78418c39484eb8",
+      "bytes": 18444
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthSelectionHandler.cc.o",
+      "sha256": "52e0d3708ff8f606bab0f1e81cf69112e332ef9c04796d89b9c21804ac0bf5d7",
+      "bytes": 3288
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cBirthSelectionHandler.cc.o.d",
+      "sha256": "b48282b5bba3dc736b628317825c6713ce190b5ea076b8b92b935b6148998715",
+      "bytes": 245
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cContextPhenotype.cc.o",
+      "sha256": "aa17e8a25e70ac04c1e28a0c018d7e5978dde3bdbde17305f4a6b51270a1a7b5",
+      "bytes": 2816
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cContextPhenotype.cc.o.d",
+      "sha256": "5843cbc62dd454f91441648e6507190d639d87d96e83dd162fdf3a917ea129b3",
+      "bytes": 13802
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cDeme.cc.o",
+      "sha256": "e4c0a4b00f41489fd4ecbc1a910e7e4f31d505b9c00677c0ca33e389c78903a6",
+      "bytes": 222680
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cDeme.cc.o.d",
+      "sha256": "7d3da8b71ad341fafb4ae50e3f6ad806aa8b28cbb6e88013292bc01f130f1c70",
+      "bytes": 19374
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cDemeCellEvent.cc.o",
+      "sha256": "2f351a2b70b1cf6dfb9a138d224baddbe14170fa272d519afedd707dfb1f3314",
+      "bytes": 10248
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cDemeCellEvent.cc.o.d",
+      "sha256": "4f202e9954af5dba02d6382288105cec0cc5b1e7ad5de68e95365155b53116ad",
+      "bytes": 17958
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cDemeNetwork.cc.o",
+      "sha256": "1c05c621cb3516f58549f80246f68d37115063b3d0b9038c895205c265c40866",
+      "bytes": 6024
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cDemeNetwork.cc.o.d",
+      "sha256": "d2d31bdb13364d2654165614bc60b7b9fa49b988bb429a724f98ff13e640a8f0",
+      "bytes": 18165
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cEnvironment.cc.o",
+      "sha256": "032d6174ade3336f832de5b5b19bab8b1fefb99420825f33324c19bbffbe74f8",
+      "bytes": 200224
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cEnvironment.cc.o.d",
+      "sha256": "84a32fcd86df14c99e2d80dab969bef3c13d9bc798062d8a450539e5f4f54402",
+      "bytes": 20102
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cEventList.cc.o",
+      "sha256": "383a591f8e563e86cecdafeef74d08b3e12e4ba99344196835b2e7676ad1f538",
+      "bytes": 64792
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cEventList.cc.o.d",
+      "sha256": "827d6a211fca06342af3a050a58e57819b3423a823a2216c761b55c1f7e0f8d0",
+      "bytes": 18044
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cGenomeUtil.cc.o",
+      "sha256": "0c982ff06222edcebac4a04f685f44817a18bc1d21001d3d407e6826a5048af4",
+      "bytes": 31768
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cGenomeUtil.cc.o.d",
+      "sha256": "22cffd5d73ece72b452336f8aaf37dc9c6badac8dad4931b660f43d1b2da1513",
+      "bytes": 14870
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cGradientCount.cc.o",
+      "sha256": "dbdf2e67f4b291958cb6cf7d29d9ce177e34bc9c2390d898160b0c69ddac4fea",
+      "bytes": 63696
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cGradientCount.cc.o.d",
+      "sha256": "cfe39f8f8b5133b2556a1f1b49d10b2b942d7c87bf169d1a16660cba757eca50",
+      "bytes": 18411
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cLandscape.cc.o",
+      "sha256": "507c5f9d5c5f8a39e1aaa68fd68fed1ba236348e7614c8feff3539d93bf6f91b",
+      "bytes": 197504
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cLandscape.cc.o.d",
+      "sha256": "5dc828972b74266aae938ec645014647afc41824536bee974c600b16dc540770",
+      "bytes": 18961
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cMigrationMatrix.cc.o",
+      "sha256": "8faa382bbab2b9c54198e2aa22d158ad5ede44ea98f4693f1db8a61afd89cd1b",
+      "bytes": 37848
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cMigrationMatrix.cc.o.d",
+      "sha256": "ad64dfbf9f7b2912f48d1dae597c8d6ecb6b31ce8509442e21406f5a543e5264",
+      "bytes": 13906
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cMutationRates.cc.o",
+      "sha256": "252ee1e3bc8c89664b204d53558c04437dd24351956403d16a80ab15bbbd300c",
+      "bytes": 3080
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cMutationRates.cc.o.d",
+      "sha256": "553e1e87bdb5ed55b369f9d36e567d5cafeed1b6848c251ee3d6bcae8ea1b8a8",
+      "bytes": 14047
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cOrganism.cc.o",
+      "sha256": "3cdb9b8e38e3a078d1c42da2dbbd3eec10fc4aaa1bb012c99c32715e463546b7",
+      "bytes": 255792
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cOrganism.cc.o.d",
+      "sha256": "fd40d39792efc8c996e4aa5606411b5cec17ae967002a1f9654e295765055d74",
+      "bytes": 20229
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cOrgMessage.cc.o",
+      "sha256": "63db5189cc5398f045d201bf2802e649deb8283fcefcc750c2cdb9cf0e85b0aa",
+      "bytes": 3064
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cOrgMessage.cc.o.d",
+      "sha256": "dfe7b626631cf51aed4bde790e8fa4162fcbea81aa0e099ca6a8f21a730f5ac6",
+      "bytes": 16352
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cOrgSensor.cc.o",
+      "sha256": "f4ecc8f9ee7b1bf1aa692a9cbe03b063731f58c8417f9b50d504df9f5e122fa7",
+      "bytes": 56184
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cOrgSensor.cc.o.d",
+      "sha256": "5d97561e86d3c87ca25db838417f78cc45e2bcb3145d9040752f59f46b4f035d",
+      "bytes": 18187
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cParasite.cc.o",
+      "sha256": "bb152f5b74165c7370b070cd701adf72a59e64c918f31693cbd786790b225ca8",
+      "bytes": 37584
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cParasite.cc.o.d",
+      "sha256": "9f721d12500f66fb198447c49e4ba22b6deecbc876a959894bdef3d1a465a9a8",
+      "bytes": 16475
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPhenotype.cc.o",
+      "sha256": "f3fc2fdce9c634e8e77bea06a05687e4829117e05107b9d606b1733061798ca4",
+      "bytes": 163160
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPhenotype.cc.o.d",
+      "sha256": "4401cb537b5a109a93afe960c93db21e4ab3f326c90d530391937227c7a0ddab",
+      "bytes": 18535
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPhenPlastGenotype.cc.o",
+      "sha256": "037c8673c2909ab6ccb60e8bdf98a11a23590c42ced10ecd30e4db34f7fcee56",
+      "bytes": 34296
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPhenPlastGenotype.cc.o.d",
+      "sha256": "09b23708a8197a5866cdbc2242e443b1961ceb081e0da7a534afa21fe16d1672",
+      "bytes": 18968
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPhenPlastUtil.cc.o",
+      "sha256": "2b2bb16b7135d1a052971b6cd8e01f03037d8916b716ea08f526e9a04bb8b0f3",
+      "bytes": 35216
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPhenPlastUtil.cc.o.d",
+      "sha256": "bea0f2ba42b7ad2516a5fcb16c2060ce01d49d77121422521c75fe5602cd94ea",
+      "bytes": 18938
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPlasticPhenotype.cc.o",
+      "sha256": "0122233f70f6f5ded92618a133289b804ed228b16c999574eb179e6b6c1df3ee",
+      "bytes": 9112
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPlasticPhenotype.cc.o.d",
+      "sha256": "53110a44e61454c0f64c0f5f4bc8aa009adbab830c9a6bbe92c14e7a3c068de5",
+      "bytes": 16958
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPopulation.cc.o",
+      "sha256": "e7f289e08edba9a1355121231a780d7768e9a0881c0b83221940c5b78dbcc81f",
+      "bytes": 1044280
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPopulation.cc.o.d",
+      "sha256": "3e17c2f0fc94a6e11402fc31dfeeba9bb73b0a5a77da2dc710683934f6b0167b",
+      "bytes": 22425
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPopulationCell.cc.o",
+      "sha256": "190dbda7413e205ef22143d805afb0036b61daed48ec06e8ca9431d04c7c19a3",
+      "bytes": 84480
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPopulationCell.cc.o.d",
+      "sha256": "8d59e9eb5eca56b35d8a71670d9bc2bdd83fcc1f89319d50f6129c441ef2cb25",
+      "bytes": 18832
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPopulationInterface.cc.o",
+      "sha256": "3a8e5eec2ab85c20039265255b95710a833d655d65654289f1ec216b316723f4",
+      "bytes": 172232
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cPopulationInterface.cc.o.d",
+      "sha256": "66eec2134c45f756a28e83591721390c1e6969029b7e67c6f85d7643c7fa3f99",
+      "bytes": 19659
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cReaction.cc.o",
+      "sha256": "d5513c537a77aaff4909838fe628abac5f06d01b2e63d8601e6ff7ab97b68788",
+      "bytes": 14840
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cReaction.cc.o.d",
+      "sha256": "889eb86bf3e9980e514797e06bdb98ce962437a250c095b8ba7f61aeef4982ce",
+      "bytes": 14346
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cReactionLib.cc.o",
+      "sha256": "fa2257a981cd7e95fb421713851bd180831070ff3d7f4abe8ceb7db33deb233f",
+      "bytes": 4776
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cReactionLib.cc.o.d",
+      "sha256": "e7735738f5f25c6e7f6f96b56fc9c8601882458d2bdef3c0b5b491d6de8d3de6",
+      "bytes": 13533
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cReactionResult.cc.o",
+      "sha256": "92d688c45607dedf55abccd0e8e5f967d26b31d741f15adb48a85335b526115b",
+      "bytes": 37336
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cReactionResult.cc.o.d",
+      "sha256": "1bb84d949b7dcbba1b6289767d7179d5123a8099b8273556016a71784188aa14",
+      "bytes": 13059
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cResource.cc.o",
+      "sha256": "4011816dafbf5ee28e1a0b099592d506ae665c8d9bc882e9e8141a85342c6631",
+      "bytes": 6864
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cResource.cc.o.d",
+      "sha256": "a3de3245cede2e01596e44ad27f2d5dd060ea559c81c7481298d2783f280e485",
+      "bytes": 13096
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cResourceCount.cc.o",
+      "sha256": "22c6bdb20723a93f093b5acdc3965122687ede5c2142a62e13c75ad24cb7caf4",
+      "bytes": 81368
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cResourceCount.cc.o.d",
+      "sha256": "888c6e03d8ebcc7dc29d78c05c154129d77898a88b10fadbf6eb966b0b9f8b57",
+      "bytes": 17736
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cResourceHistory.cc.o",
+      "sha256": "c66763f816cb580453c277322fa7d82f4b707fcd492c1b3eb0e0065b9bf99338",
+      "bytes": 32256
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cResourceHistory.cc.o.d",
+      "sha256": "608b354289700864002d8d9518b714efb8feca9488c6dd9c49be68876dfcbb92",
+      "bytes": 14379
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cResourceLib.cc.o",
+      "sha256": "01e5191bef3727a621fb347f48400c3cd592bb474142564b76330da20d0c1f6b",
+      "bytes": 10784
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cResourceLib.cc.o.d",
+      "sha256": "d829f66d533bf3ff67c5768a3b2bc51361f0876cd5e1dd4e1978f98e66c32ccd",
+      "bytes": 13543
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cSpatialCountElem.cc.o",
+      "sha256": "68b7e62c28ce46dc25941a154cf98ded8ffce2413ee89bf06566ce7433be715f",
+      "bytes": 5064
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cSpatialCountElem.cc.o.d",
+      "sha256": "5020f66885c49dae0c87781386d62f293b3ec898e78907a8b1c702c505d25478",
+      "bytes": 11952
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cSpatialResCount.cc.o",
+      "sha256": "a93f0a0b529c0972c7d79648afb70f312231bf61dc23b1a511da49068a5d64cc",
+      "bytes": 47424
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cSpatialResCount.cc.o.d",
+      "sha256": "8eb5e3f59856560e8c3d28f32f686434446da2d4329bf24373a9915f4c504591",
+      "bytes": 13727
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cStats.cc.o",
+      "sha256": "2dcd09c4eb8ead6afd8cf29b6d28c75fef8b37801dfb26cab1e303cdf260c3eb",
+      "bytes": 973296
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cStats.cc.o.d",
+      "sha256": "3b66f0774fb6bd7a78635517fb2ca023d2e0e284787fcdd908b9093a3ad28d81",
+      "bytes": 20722
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cTaskLib.cc.o",
+      "sha256": "37dab1e21cf112edf34b1710b576b230a9079e4224742f275212e58393500018",
+      "bytes": 393592
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cTaskLib.cc.o.d",
+      "sha256": "2db23762238376822dca504789bdea74ee777debe9144143e3ed3c8ccb8e2dc5",
+      "bytes": 19782
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cWorld.cc.o",
+      "sha256": "2bc43b609bcf2935ddfd1625b8fdb3b1fd1644524702cf78acb34071a5c6cd57",
+      "bytes": 1857368
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/main/cWorld.cc.o.d",
+      "sha256": "d7df874ffe1e34b5fc174e85a8f51cf19bb49ebf75d693f69c82d57a47b723d3",
+      "bytes": 21489
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/output/File.cc.o",
+      "sha256": "d58dd65d3b9b150d99d89165e4bea583d25201330f04eed556a0c6bf770645ad",
+      "bytes": 41392
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/output/File.cc.o.d",
+      "sha256": "3f858c72dafc182ec345e415cfb22ffb3f5c07fefe49bcee1a0e1d050a17d493",
+      "bytes": 13959
+    },
+    {
+      "path": "cbuild/avida-core/CMakeFiles/avida-core.dir/source/output/Manager.cc.o",
+      "sha256": "22b8e0ee166488d6835ef2570c822cc9c464a8d8fd11046ac4e1f1ebc9a63b37",
+      "bytes": 61472
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "0a18674a17e76f6111a1eedac9efb3ed18c84b4e23f12477d65e835170425e0d",
+  "body_preserved": true
+}

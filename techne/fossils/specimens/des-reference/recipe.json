@@ -1,0 +1,37 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "gcc -O3 des.c run_des.c",
+      "cmd": "gcc -O2 -o run_des des.c run_des.c 2>&1 | grep -i 'error' | head -3; test -x ./run_des && echo BUILT",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "generate a key, encrypt a known plaintext, decrypt it back (16-round Feistel round trip)",
+      "cmd": "printf 'The quick brown fox jumps over the lazy dog. 1234567890' > /tmp/pt.txt; ./run_des -g /tmp/k.key >/dev/null 2>&1; ./run_des -e /tmp/k.key /tmp/pt.txt /tmp/ct.bin >/dev/null 2>&1; ./run_des -d /tmp/k.key /tmp/ct.bin /tmp/rt.txt >/dev/null 2>&1; echo -n 'roundtrip_identical='; cmp -s /tmp/pt.txt /tmp/rt.txt && echo yes || echo no; echo -n 'ciphertext_differs='; cmp -s /tmp/pt.txt /tmp/ct.bin && echo no || echo yes; echo -n 'key_bytes='; wc -c < /tmp/k.key",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "roundtrip_identical=yes",
+          "ciphertext_differs=yes"
+        ]
+      },
+      "timeout": 300
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: a full 16-round Feistel round trip -- the decryption must reproduce the plaintext byte-for-byte while the ciphertext differs from it. This implementation is file-oriented with PKCS5 padding and does NOT expose a raw single-block interface, so a FIPS known-answer vector is not run here; that limitation is recorded rather than papered over. The historical failure of DES was never its round function: it was the 56-bit key, which no round trip can reveal."
+}

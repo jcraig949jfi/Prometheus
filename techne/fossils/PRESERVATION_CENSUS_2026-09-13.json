@@ -1,10 +1,10 @@
 {
  "schema": "techne.fossil.preservation_census/1",
- "written_utc": "2026-09-13T14:03:48Z",
- "n": 109,
+ "written_utc": "2026-09-13T14:50:28Z",
+ "n": 117,
  "by_status": {
-  "SELF_CONTAINED": 89,
-  "KNOWN_INCOMPLETE": 2,
+  "SELF_CONTAINED": 97,
+  "FULLY_PINNED_EXTERNALS": 2,
   "UNPINNED_EXTERNAL_DEPENDENCY": 18
  },
  "network_dependent": 18,
@@ -22,15 +22,11 @@
   },
   {
    "specimen_id": "avida",
-   "status": "KNOWN_INCOMPLETE",
-   "body_status": "KNOWN_INCOMPLETE",
+   "status": "FULLY_PINNED_EXTERNALS",
+   "body_status": "FULLY_PINNED_EXTERNALS",
    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
    "submodules": 3,
-   "submodules_missing": [
-    "documentation",
-    "libs/apto",
-    "libs/backward-cpp"
-   ],
+   "submodules_missing": [],
    "unpinned_artifacts": [],
    "network_fetch_in_recipe": []
   },
@@ -259,6 +255,16 @@
    "network_fetch_in_recipe": []
   },
   {
+   "specimen_id": "des-reference",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
    "specimen_id": "dlmalloc",
    "status": "SELF_CONTAINED",
    "body_status": "SELF_CONTAINED",
@@ -292,6 +298,16 @@
   },
   {
    "specimen_id": "eispack-netlib",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "eispack-netlib-1976",
    "status": "SELF_CONTAINED",
    "body_status": "SELF_CONTAINED",
    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
@@ -537,6 +553,16 @@
    "network_fetch_in_recipe": []
   },
   {
+   "specimen_id": "lapack-reference",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
    "specimen_id": "ldpc-codes-neal-2001",
    "status": "SELF_CONTAINED",
    "body_status": "SELF_CONTAINED",
@@ -589,6 +615,16 @@
    "network_fetch_in_recipe": []
   },
   {
+   "specimen_id": "linpack-netlib-1979",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
    "specimen_id": "linpackd-netlib-1979",
    "status": "SELF_CONTAINED",
    "body_status": "SELF_CONTAINED",
@@ -620,13 +656,21 @@
   },
   {
    "specimen_id": "lru-cache-goldsborough",
-   "status": "KNOWN_INCOMPLETE",
-   "body_status": "KNOWN_INCOMPLETE",
+   "status": "FULLY_PINNED_EXTERNALS",
+   "body_status": "FULLY_PINNED_EXTERNALS",
    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
    "submodules": 1,
-   "submodules_missing": [
-    "tests/googletest"
-   ],
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "md5-rfc1321",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
    "unpinned_artifacts": [],
    "network_fetch_in_recipe": []
   },
@@ -694,6 +738,16 @@
   },
   {
    "specimen_id": "odepack-netlib",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "openssl-1.0.1f-heartbleed",
    "status": "SELF_CONTAINED",
    "body_status": "SELF_CONTAINED",
    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
@@ -913,6 +967,16 @@
    "network_fetch_in_recipe": []
   },
   {
+   "specimen_id": "spdylay",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
    "specimen_id": "spin-6.5.2-holzmann",
    "status": "SELF_CONTAINED",
    "body_status": "SELF_CONTAINED",
@@ -954,6 +1018,16 @@
   },
   {
    "specimen_id": "swipl-9.2.9",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "tiny-aes-c",
    "status": "SELF_CONTAINED",
    "body_status": "SELF_CONTAINED",
    "recipe_status": "NO_NETWORK_FETCH_DETECTED",

@@ -1,0 +1,289 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "eispack-netlib-1976",
+  "canonical_name": "EISPACK (1976) -- the Fortran eigenvalue package, superseded by LAPACK",
+  "aliases": [
+    "EISPACK",
+    "rs",
+    "tred2",
+    "tql2"
+  ],
+  "lineage": "EISPACK (Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler; 1974-1976) was the standard eigenproblem library, itself a Fortran translation of the ALGOL procedures in Wilkinson & Reinsch's Handbook for Automatic Computation. Superseded by LAPACK for the same documented reason as LINPACK: Level-1 BLAS structure performs poorly on memory-hierarchy machines. Its ALGOL ancestry makes it a second, older lineage layer.",
+  "domain": [
+    "numerical-linear-algebra",
+    "eigenproblem",
+    "scientific-computing",
+    "loser"
+  ],
+  "era": "1974-1976 (EISPACK); ALGOL originals 1971; superseded from 1992",
+  "version": "netlib eispack routines as served 2026-09-13",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/eispack/rs.f",
+        "filename": "rs.f",
+        "extract": false,
+        "sha256": "398791f5cf5b1a17e8d94a6acd040a10833c6178c5fa977d69824640ee7ff05e",
+        "bytes": 1957
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/eispack/tred2.f",
+        "filename": "tred2.f",
+        "extract": false,
+        "sha256": "38ffc6404e9e2f612e6b3ec11f3325a62acbec6705d59f89df45be15e400788c",
+        "bytes": 4123
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/eispack/tql2.f",
+        "filename": "tql2.f",
+        "extract": false,
+        "sha256": "b2fdcd25e88e9c5aa58a9fc6521c57514c67a084d00d9add7b97a02a892aed9c",
+        "bytes": 4952
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/eispack/tred1.f",
+        "filename": "tred1.f",
+        "extract": false,
+        "sha256": "ad3896adf002bcb62fefb58a5dc7bb934918fe0d8f1e6e67764df0ffb34aff79",
+        "bytes": 3691
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/eispack/tqlrat.f",
+        "filename": "tqlrat.f",
+        "extract": false,
+        "sha256": "c80ae07ed3ad940785da74c59a4cc2d77126e5fb405ab216a4ffe679d8b3df85",
+        "bytes": 4417
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/eispack/pythag.f",
+        "filename": "pythag.f",
+        "extract": false,
+        "sha256": "4e331058d98cb8040063538a351f29eba404d86bffdfde6c4ef149b6c3295e50",
+        "bytes": 503
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/eispack/epslon.f",
+        "filename": "epslon.f",
+        "extract": false,
+        "sha256": "17b97b35661080c922504fb3472a729a6a81ad66844641e95cf5bc5178a83894",
+        "bytes": 1334
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/eispack/tql1.f",
+        "filename": "tql1.f",
+        "extract": false,
+        "sha256": "39b91aced74d9e3f853e25d8536c49c723f2751faa7d1d3946779514d08dee7d",
+        "bytes": 3829
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "archive": "netlib.org/eispack"
+  },
+  "hashes": {
+    "tree_sha256": "c635228297e5f865dc71ca98755319c32ada205bdf8831a8673333f020c29d81",
+    "n_files": 8,
+    "bytes": 24806,
+    "artifacts": [
+      {
+        "filename": "rs.f",
+        "sha256": "398791f5cf5b1a17e8d94a6acd040a10833c6178c5fa977d69824640ee7ff05e",
+        "commit": null
+      },
+      {
+        "filename": "tred2.f",
+        "sha256": "38ffc6404e9e2f612e6b3ec11f3325a62acbec6705d59f89df45be15e400788c",
+        "commit": null
+      },
+      {
+        "filename": "tql2.f",
+        "sha256": "b2fdcd25e88e9c5aa58a9fc6521c57514c67a084d00d9add7b97a02a892aed9c",
+        "commit": null
+      },
+      {
+        "filename": "tred1.f",
+        "sha256": "ad3896adf002bcb62fefb58a5dc7bb934918fe0d8f1e6e67764df0ffb34aff79",
+        "commit": null
+      },
+      {
+        "filename": "tqlrat.f",
+        "sha256": "c80ae07ed3ad940785da74c59a4cc2d77126e5fb405ab216a4ffe679d8b3df85",
+        "commit": null
+      },
+      {
+        "filename": "pythag.f",
+        "sha256": "4e331058d98cb8040063538a351f29eba404d86bffdfde6c4ef149b6c3295e50",
+        "commit": null
+      },
+      {
+        "filename": "epslon.f",
+        "sha256": "17b97b35661080c922504fb3472a729a6a81ad66844641e95cf5bc5178a83894",
+        "commit": null
+      },
+      {
+        "filename": "tql1.f",
+        "sha256": "39b91aced74d9e3f853e25d8536c49c723f2751faa7d1d3946779514d08dee7d",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\eispack-netlib-1976",
+    "hash_list": "techne/fossils/specimens/eispack-netlib-1976/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "NOASSERTION",
+    "status": "public-domain-style (netlib)",
+    "evidence": "netlib distribution terms"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "Fortran 77"
+  ],
+  "build_system": "gfortran -std=legacy",
+  "compiler_or_interpreter": "gfortran (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a Fortran compiler"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "rs -- all eigenvalues/eigenvectors of a real symmetric matrix (via tred2 + tql2)"
+  ],
+  "example": {
+    "command": "gfortran -std=legacy rs.f tred2.f tql2.f driver.f && ./a.out",
+    "input": "a small real symmetric matrix with known spectrum",
+    "output": "its eigenvalues, checkable against the known values (the ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Smith et al., Matrix Eigensystem Routines -- EISPACK Guide, Springer 1976",
+    "Wilkinson & Reinsch, Handbook for Automatic Computation Vol II, 1971 (the ALGOL originals)",
+    "Anderson et al., LAPACK Users' Guide (supersession)"
+  ],
+  "human_capability_summary": {
+    "built_to": "compute eigenvalues and eigenvectors of real and complex matrices reliably, as portable Fortran translations of the certified ALGOL procedures",
+    "pressure": "eigenproblems are iterative and numerically delicate; the algorithms had to be stable across very different floating-point hardware",
+    "success_means": "eigenvalues accurate to working precision with orthogonal eigenvectors"
+  },
+  "known_human_problem_solved": "the symmetric and unsymmetric eigenproblem in portable Fortran",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "numerical delicacy of iterative eigen-solvers; heterogeneous floating point",
+  "human_failure_condition": "same as LINPACK's: vector-oriented inner loops become memory-bound on cache machines",
+  "behavioral_entry_point": "feed matrices with clustered or degenerate eigenvalues and watch convergence; compare rs against LAPACK dsyev on the same matrix",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "port_of",
+      "to": "Wilkinson & Reinsch ALGOL procedures (1971)",
+      "note": "Fortran translation of the Handbook"
+    },
+    {
+      "relation": "superseded",
+      "to": "lapack-reference",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch09",
+    "loser",
+    "superseded_design",
+    "predecessor",
+    "numerical",
+    "pair_linear_algebra"
+  ],
+  "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+      "poor_scaling",
+      "superior_rival"
+    ],
+    "superseded_by": "lapack-reference",
+    "rival_of": "lapack-reference",
+    "evidence": [
+      {
+        "kind": "successor_documentation",
+        "ref": "LAPACK Users' Guide (SIAM)",
+        "says": "LAPACK was designed to supersede LINPACK and EISPACK, providing the same functionality with better performance on modern machines."
+      },
+      {
+        "kind": "original_paper",
+        "ref": "Wilkinson & Reinsch, Handbook for Automatic Computation Vol II (1971); EISPACK Guide (1976)",
+        "says": "EISPACK routines are Fortran translations of the Handbook's ALGOL eigenvalue procedures."
+      }
+    ]
+  },
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144332Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144422Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144537Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144819Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144851Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\eispack-netlib-1976 ; tracked techne/fossils/specimens/eispack-netlib-1976",
+    "where_it_came_from": "https://www.netlib.org/eispack/rs.f ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run eispack-netlib-1976",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144851Z.json",
+    "what_humans_used_it_for": "compute eigenvalues and eigenvectors of real and complex matrices reliably, as portable Fortran translations of the certified ALGOL procedures"
+  },
+  "seat": "Techne",
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-13T14:48:51Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

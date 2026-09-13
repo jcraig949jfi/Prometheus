@@ -1,0 +1,142 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "spdylay",
+  "canonical_name": "SPDY (spdylay) -- the experimental protocol that became HTTP/2 and was then retired",
+  "aliases": [
+    "SPDY",
+    "spdylay"
+  ],
+  "lineage": "SPDY (Google, 2009) attacked HTTP/1.1 head-of-line blocking with multiplexed streams, header compression and prioritisation over one TLS connection. It worked, and the IETF took it as the BASIS for HTTP/2 (RFC 7540). Its authors then deprecated it: SPDY is a loser of an unusual kind -- defeated by its own successor, having won the argument. spdylay is Tatsuhiro Tsujikawa's C implementation (the ancestor of nghttp2).",
+  "domain": [
+    "networks",
+    "protocol",
+    "http",
+    "multiplexing",
+    "loser"
+  ],
+  "era": "2009-2015 (SPDY); HTTP/2 published 2015; SPDY removed from Chrome 2016",
+  "version": "github.com/tatsuhiro-t/spdylay as of 2026-09-13 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/tatsuhiro-t/spdylay",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/tatsuhiro-t/spdylay"
+  },
+  "hashes": {
+    "tree_sha256": "29f832fd903ac6bcb4c1cf5eef7fa7d0d4b050f908250b5465db6f6788c57a75",
+    "n_files": 209,
+    "bytes": 2103581,
+    "artifacts": [
+      {
+        "filename": "https://github.com/tatsuhiro-t/spdylay",
+        "sha256": null,
+        "commit": "ce6426b046722c06b0a004a82513f4f076719651"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\spdylay",
+    "hash_list": "techne/fossils/specimens/spdylay/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE in the tree"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C"
+  ],
+  "build_system": "autotools (autoreconf + configure + make)",
+  "compiler_or_interpreter": "gcc (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a C compiler; zlib for header compression; autotools"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "libspdylay -- frame a SPDY session; the tree ships unit tests for framing/compression"
+  ],
+  "example": {
+    "command": "build and run the shipped tests",
+    "input": "SPDY frames",
+    "output": "round-tripped frames; the tests are the ORACLE"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "RFC 7540, Hypertext Transfer Protocol Version 2 (HTTP/2)",
+    "Chromium blog, Hello HTTP/2, Goodbye SPDY (2015)"
+  ],
+  "human_capability_summary": {
+    "built_to": "remove HTTP/1.1's head-of-line blocking by multiplexing many requests over one connection with compressed headers",
+    "pressure": "pages needing dozens of round-trips over high-latency links; browsers opening many TCP connections to work around it",
+    "success_means": "fewer connections and lower page load time at the same bandwidth"
+  },
+  "known_human_problem_solved": "HTTP latency over high-latency links",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "latency and connection limits; TCP head-of-line blocking under loss",
+  "human_failure_condition": "retired by its own authors once its ideas were standardised as HTTP/2; deployments moved off it",
+  "behavioral_entry_point": "frame the same request set under SPDY and HTTP/2 header compression and compare bytes on the wire",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded",
+      "to": "HTTP/2 (RFC 7540)",
+      "note": "SPDY was the basis of the standard that replaced it"
+    }
+  ],
+  "acquisition_tags": [
+    "batch09",
+    "loser",
+    "superseded_design",
+    "networks",
+    "protocol"
+  ],
+  "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+      "superior_rival"
+    ],
+    "superseded_by": "HTTP/2 (RFC 7540) / nghttp2",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "standards_history",
+        "ref": "RFC 7540 (HTTP/2), May 2015",
+        "says": "HTTP/2 was developed from SPDY as its starting point and supersedes it as the standardised protocol."
+      },
+      {
+        "kind": "release_notes",
+        "ref": "Chromium blog, 'Hello HTTP/2, Goodbye SPDY' (Feb 2015)",
+        "says": "Google announced it would remove SPDY support from Chrome in favour of HTTP/2."
+      }
+    ]
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\spdylay ; tracked techne/fossils/specimens/spdylay",
+    "where_it_came_from": "https://github.com/tatsuhiro-t/spdylay ; ORIGINAL_AUTHORITATIVE_RELEASE @ HEAD",
+    "how_to_run_it": "SOURCE_ONLY this round: autotools build not attempted in this pass. Preserved + hashed so the SPDY framing/header-compression machinery can be read in its own world.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 29f832fd903ac6bc pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "remove HTTP/1.1's head-of-line blocking by multiplexing many requests over one connection with compressed headers"
+  },
+  "seat": "Techne"
+}

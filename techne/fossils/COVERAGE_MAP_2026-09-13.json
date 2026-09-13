@@ -1,10 +1,10 @@
 {
  "schema": "techne.fossil.coverage/1",
- "written_utc": "2026-09-13T11:50:33Z",
- "total_specimens": 109,
- "runnable": 99,
- "oracle_backed": 79,
- "with_failed_or_superseded_disposition": 15,
+ "written_utc": "2026-09-13T14:50:26Z",
+ "total_specimens": 117,
+ "runnable": 105,
+ "oracle_backed": 84,
+ "with_failed_or_superseded_disposition": 23,
  "sparsity_rule": "per domain: +1 for each of {<=2 specimens, <=1 decade, <=1 language, 0 runnable, 0 failed/superseded}; higher = thinner. Mechanical, not a judgement of value.",
  "views": {
   "domain": {
@@ -24,6 +24,14 @@
     "era_diversity": 5,
     "language_diversity": 4
    },
+   "scientific-computing": {
+    "specimens": 10,
+    "runnable": 9,
+    "oracle_backed": 8,
+    "failed_or_superseded": 3,
+    "era_diversity": 4,
+    "language_diversity": 4
+   },
    "estimation": {
     "specimens": 9,
     "runnable": 9,
@@ -32,12 +40,28 @@
     "era_diversity": 3,
     "language_diversity": 3
    },
+   "networks": {
+    "specimens": 8,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 6,
+    "era_diversity": 3,
+    "language_diversity": 2
+   },
    "failure": {
     "specimens": 8,
     "runnable": 5,
     "oracle_backed": 5,
     "failed_or_superseded": 6,
     "era_diversity": 4,
+    "language_diversity": 4
+   },
+   "loser": {
+    "specimens": 8,
+    "runnable": 6,
+    "oracle_backed": 6,
+    "failed_or_superseded": 8,
+    "era_diversity": 5,
     "language_diversity": 4
    },
    "hardware": {
@@ -48,14 +72,6 @@
     "era_diversity": 3,
     "language_diversity": 2
    },
-   "networks": {
-    "specimens": 7,
-    "runnable": 1,
-    "oracle_backed": 1,
-    "failed_or_superseded": 5,
-    "era_diversity": 2,
-    "language_diversity": 2
-   },
    "concurrency": {
     "specimens": 7,
     "runnable": 7,
@@ -63,14 +79,6 @@
     "failed_or_superseded": 3,
     "era_diversity": 4,
     "language_diversity": 4
-   },
-   "scientific-computing": {
-    "specimens": 7,
-    "runnable": 7,
-    "oracle_backed": 6,
-    "failed_or_superseded": 0,
-    "era_diversity": 3,
-    "language_diversity": 3
    },
    "languages": {
     "specimens": 7,
@@ -144,6 +152,14 @@
     "era_diversity": 3,
     "language_diversity": 4
    },
+   "numerical-linear-algebra": {
+    "specimens": 5,
+    "runnable": 4,
+    "oracle_backed": 4,
+    "failed_or_superseded": 3,
+    "era_diversity": 2,
+    "language_diversity": 3
+   },
    "numerical": {
     "specimens": 5,
     "runnable": 5,
@@ -199,6 +215,22 @@
     "failed_or_superseded": 0,
     "era_diversity": 3,
     "language_diversity": 4
+   },
+   "cryptography": {
+    "specimens": 4,
+    "runnable": 3,
+    "oracle_backed": 3,
+    "failed_or_superseded": 4,
+    "era_diversity": 3,
+    "language_diversity": 2
+   },
+   "security": {
+    "specimens": 4,
+    "runnable": 3,
+    "oracle_backed": 3,
+    "failed_or_superseded": 4,
+    "era_diversity": 3,
+    "language_diversity": 2
    },
    "lisp": {
     "specimens": 4,
@@ -442,7 +474,7 @@
    },
    "artificial-life": {
     "specimens": 2,
-    "runnable": 1,
+    "runnable": 2,
     "oracle_backed": 1,
     "failed_or_superseded": 0,
     "era_diversity": 2,
@@ -450,7 +482,7 @@
    },
    "self-replication": {
     "specimens": 2,
-    "runnable": 1,
+    "runnable": 2,
     "oracle_backed": 1,
     "failed_or_superseded": 0,
     "era_diversity": 2,
@@ -458,7 +490,7 @@
    },
    "unconventional-computation": {
     "specimens": 2,
-    "runnable": 1,
+    "runnable": 2,
     "oracle_backed": 1,
     "failed_or_superseded": 0,
     "era_diversity": 2,
@@ -576,20 +608,20 @@
     "era_diversity": 2,
     "language_diversity": 3
    },
-   "loser": {
-    "specimens": 2,
-    "runnable": 2,
-    "oracle_backed": 2,
-    "failed_or_superseded": 2,
-    "era_diversity": 2,
-    "language_diversity": 2
-   },
    "lzw": {
     "specimens": 2,
     "runnable": 2,
     "oracle_backed": 1,
     "failed_or_superseded": 0,
     "era_diversity": 1,
+    "language_diversity": 1
+   },
+   "block-cipher": {
+    "specimens": 2,
+    "runnable": 2,
+    "oracle_backed": 2,
+    "failed_or_superseded": 2,
+    "era_diversity": 2,
     "language_diversity": 1
    },
    "data-structures": {
@@ -599,14 +631,6 @@
     "failed_or_superseded": 0,
     "era_diversity": 2,
     "language_diversity": 2
-   },
-   "numerical-linear-algebra": {
-    "specimens": 2,
-    "runnable": 2,
-    "oracle_backed": 2,
-    "failed_or_superseded": 0,
-    "era_diversity": 1,
-    "language_diversity": 1
    },
    "natural-language": {
     "specimens": 2,
@@ -728,6 +752,22 @@
     "era_diversity": 2,
     "language_diversity": 2
    },
+   "dense-linear-algebra": {
+    "specimens": 2,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 2,
+    "era_diversity": 2,
+    "language_diversity": 3
+   },
+   "successor": {
+    "specimens": 2,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 2,
+    "era_diversity": 1,
+    "language_diversity": 2
+   },
    "coding-theory": {
     "specimens": 2,
     "runnable": 2,
@@ -767,6 +807,14 @@
     "failed_or_superseded": 0,
     "era_diversity": 2,
     "language_diversity": 2
+   },
+   "benchmark": {
+    "specimens": 2,
+    "runnable": 2,
+    "oracle_backed": 2,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 1
    },
    "SAT": {
     "specimens": 2,
@@ -834,7 +882,7 @@
    },
    "digital-evolution": {
     "specimens": 1,
-    "runnable": 0,
+    "runnable": 1,
     "oracle_backed": 0,
     "failed_or_superseded": 0,
     "era_diversity": 1,
@@ -842,7 +890,7 @@
    },
    "genetic-programming": {
     "specimens": 1,
-    "runnable": 0,
+    "runnable": 1,
     "oracle_backed": 0,
     "failed_or_superseded": 0,
     "era_diversity": 1,
@@ -1072,6 +1120,14 @@
     "era_diversity": 1,
     "language_diversity": 1
    },
+   "feistel-network": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 1
+   },
    "checkpoint-restart": {
     "specimens": 1,
     "runnable": 1,
@@ -1109,6 +1165,14 @@
     "runnable": 1,
     "oracle_backed": 1,
     "failed_or_superseded": 0,
+    "era_diversity": 1,
+    "language_diversity": 1
+   },
+   "eigenproblem": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 1,
     "era_diversity": 1,
     "language_diversity": 1
    },
@@ -1640,14 +1704,6 @@
     "era_diversity": 1,
     "language_diversity": 1
    },
-   "benchmark": {
-    "specimens": 1,
-    "runnable": 1,
-    "oracle_backed": 1,
-    "failed_or_superseded": 0,
-    "era_diversity": 1,
-    "language_diversity": 1
-   },
    "memory-mapped": {
     "specimens": 1,
     "runnable": 1,
@@ -1679,6 +1735,22 @@
     "failed_or_superseded": 0,
     "era_diversity": 1,
     "language_diversity": 1
+   },
+   "hash-function": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 2
+   },
+   "merkle-damgard": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 2
    },
    "relational-programming": {
     "specimens": 1,
@@ -1764,6 +1836,22 @@
     "specimens": 1,
     "runnable": 1,
     "oracle_backed": 1,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 1
+   },
+   "tls": {
+    "specimens": 1,
+    "runnable": 0,
+    "oracle_backed": 0,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 1
+   },
+   "memory-safety": {
+    "specimens": 1,
+    "runnable": 0,
+    "oracle_backed": 0,
     "failed_or_superseded": 1,
     "era_diversity": 1,
     "language_diversity": 1
@@ -2120,6 +2208,30 @@
     "era_diversity": 1,
     "language_diversity": 2
    },
+   "protocol": {
+    "specimens": 1,
+    "runnable": 0,
+    "oracle_backed": 0,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 1
+   },
+   "http": {
+    "specimens": 1,
+    "runnable": 0,
+    "oracle_backed": 0,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 1
+   },
+   "multiplexing": {
+    "specimens": 1,
+    "runnable": 0,
+    "oracle_backed": 0,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 1
+   },
    "verification": {
     "specimens": 1,
     "runnable": 1,
@@ -2215,6 +2327,14 @@
     "failed_or_superseded": 0,
     "era_diversity": 1,
     "language_diversity": 2
+   },
+   "substitution-permutation-network": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 1
    },
    "compilers": {
     "specimens": 1,
@@ -2506,6 +2626,14 @@
    }
   },
   "decade": {
+   "2010s": {
+    "specimens": 26,
+    "runnable": 24,
+    "oracle_backed": 19,
+    "failed_or_superseded": 4,
+    "era_diversity": 1,
+    "language_diversity": 10
+   },
    "1980s": {
     "specimens": 26,
     "runnable": 21,
@@ -2514,37 +2642,29 @@
     "era_diversity": 1,
     "language_diversity": 10
    },
-   "2010s": {
-    "specimens": 25,
-    "runnable": 24,
-    "oracle_backed": 19,
-    "failed_or_superseded": 3,
+   "1990s": {
+    "specimens": 21,
+    "runnable": 18,
+    "oracle_backed": 12,
+    "failed_or_superseded": 7,
     "era_diversity": 1,
-    "language_diversity": 10
+    "language_diversity": 12
    },
    "2000s": {
-    "specimens": 20,
+    "specimens": 21,
     "runnable": 19,
     "oracle_backed": 17,
-    "failed_or_superseded": 3,
+    "failed_or_superseded": 4,
     "era_diversity": 1,
     "language_diversity": 8
    },
-   "1990s": {
-    "specimens": 18,
-    "runnable": 15,
-    "oracle_backed": 10,
-    "failed_or_superseded": 4,
-    "era_diversity": 1,
-    "language_diversity": 10
-   },
    "1970s": {
-    "specimens": 7,
-    "runnable": 7,
-    "oracle_backed": 5,
-    "failed_or_superseded": 0,
+    "specimens": 10,
+    "runnable": 10,
+    "oracle_backed": 8,
+    "failed_or_superseded": 3,
     "era_diversity": 1,
-    "language_diversity": 4
+    "language_diversity": 5
    },
    "1960s": {
     "specimens": 7,
@@ -2573,16 +2693,16 @@
   },
   "language": {
    "C": {
-    "specimens": 57,
-    "runnable": 49,
-    "oracle_backed": 37,
-    "failed_or_superseded": 11,
-    "era_diversity": 6,
-    "language_diversity": 16
+    "specimens": 63,
+    "runnable": 52,
+    "oracle_backed": 40,
+    "failed_or_superseded": 17,
+    "era_diversity": 7,
+    "language_diversity": 18
    },
    "C++": {
     "specimens": 18,
-    "runnable": 16,
+    "runnable": 17,
     "oracle_backed": 15,
     "failed_or_superseded": 2,
     "era_diversity": 5,
@@ -2596,19 +2716,19 @@
     "era_diversity": 4,
     "language_diversity": 4
    },
+   "Fortran 77": {
+    "specimens": 8,
+    "runnable": 8,
+    "oracle_backed": 7,
+    "failed_or_superseded": 3,
+    "era_diversity": 2,
+    "language_diversity": 1
+   },
    "Verilog": {
     "specimens": 6,
     "runnable": 6,
     "oracle_backed": 3,
     "failed_or_superseded": 0,
-    "era_diversity": 2,
-    "language_diversity": 1
-   },
-   "Fortran 77": {
-    "specimens": 6,
-    "runnable": 6,
-    "oracle_backed": 5,
-    "failed_or_superseded": 1,
     "era_diversity": 2,
     "language_diversity": 1
    },
@@ -2724,6 +2844,22 @@
     "era_diversity": 1,
     "language_diversity": 2
    },
+   "Fortran 90": {
+    "specimens": 1,
+    "runnable": 0,
+    "oracle_backed": 0,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 2
+   },
+   "RFC text": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 2
+   },
    "Common Lisp": {
     "specimens": 1,
     "runnable": 1,
@@ -2807,12 +2943,12 @@
   },
   "execution_model": {
    "container": {
-    "specimens": 76,
-    "runnable": 76,
-    "oracle_backed": 66,
-    "failed_or_superseded": 8,
+    "specimens": 82,
+    "runnable": 82,
+    "oracle_backed": 71,
+    "failed_or_superseded": 13,
     "era_diversity": 7,
-    "language_diversity": 23
+    "language_diversity": 25
    },
    "native": {
     "specimens": 14,
@@ -2823,12 +2959,12 @@
     "language_diversity": 4
    },
    "source-only (not executed)": {
-    "specimens": 8,
+    "specimens": 11,
     "runnable": 0,
     "oracle_backed": 0,
-    "failed_or_superseded": 4,
-    "era_diversity": 3,
-    "language_diversity": 5
+    "failed_or_superseded": 7,
+    "era_diversity": 4,
+    "language_diversity": 6
    },
    "emulated (HDL/VM)": {
     "specimens": 7,
@@ -2838,14 +2974,6 @@
     "era_diversity": 3,
     "language_diversity": 3
    },
-   "other/NOT_ATTEMPTED": {
-    "specimens": 2,
-    "runnable": 0,
-    "oracle_backed": 0,
-    "failed_or_superseded": 0,
-    "era_diversity": 2,
-    "language_diversity": 3
-   },
    "historical-toolchain": {
     "specimens": 2,
     "runnable": 2,
@@ -2853,16 +2981,24 @@
     "failed_or_superseded": 1,
     "era_diversity": 2,
     "language_diversity": 2
+   },
+   "other/NOT_ATTEMPTED": {
+    "specimens": 1,
+    "runnable": 0,
+    "oracle_backed": 0,
+    "failed_or_superseded": 0,
+    "era_diversity": 1,
+    "language_diversity": 2
    }
   },
   "runnability": {
    "RUNNABLE_CONTAINER": {
-    "specimens": 76,
-    "runnable": 76,
-    "oracle_backed": 66,
-    "failed_or_superseded": 8,
+    "specimens": 82,
+    "runnable": 82,
+    "oracle_backed": 71,
+    "failed_or_superseded": 13,
     "era_diversity": 7,
-    "language_diversity": 23
+    "language_diversity": 25
    },
    "RUNNABLE_NATIVE": {
     "specimens": 14,
@@ -2873,12 +3009,12 @@
     "language_diversity": 4
    },
    "SOURCE_ONLY": {
-    "specimens": 8,
+    "specimens": 11,
     "runnable": 0,
     "oracle_backed": 0,
-    "failed_or_superseded": 4,
-    "era_diversity": 3,
-    "language_diversity": 5
+    "failed_or_superseded": 7,
+    "era_diversity": 4,
+    "language_diversity": 6
    },
    "RUNNABLE_EMULATED": {
     "specimens": 7,
@@ -2888,14 +3024,6 @@
     "era_diversity": 3,
     "language_diversity": 3
    },
-   "NOT_ATTEMPTED": {
-    "specimens": 2,
-    "runnable": 0,
-    "oracle_backed": 0,
-    "failed_or_superseded": 0,
-    "era_diversity": 2,
-    "language_diversity": 3
-   },
    "RUNNABLE_HISTORICAL_TOOLCHAIN": {
     "specimens": 2,
     "runnable": 2,
@@ -2903,90 +3031,100 @@
     "failed_or_superseded": 1,
     "era_diversity": 2,
     "language_diversity": 2
+   },
+   "NOT_ATTEMPTED": {
+    "specimens": 1,
+    "runnable": 0,
+    "oracle_backed": 0,
+    "failed_or_superseded": 0,
+    "era_diversity": 1,
+    "language_diversity": 2
    }
   },
   "disposition": {
    "(none recorded)": {
     "specimens": 94,
-    "runnable": 88,
+    "runnable": 89,
     "oracle_backed": 68,
     "failed_or_superseded": 0,
     "era_diversity": 8,
     "language_diversity": 27
    },
-   "successor": {
-    "specimens": 3,
-    "runnable": 1,
-    "oracle_backed": 1,
-    "failed_or_superseded": 3,
-    "era_diversity": 2,
-    "language_diversity": 2
+   "UNKNOWN": {
+    "specimens": 15,
+    "runnable": 11,
+    "oracle_backed": 11,
+    "failed_or_superseded": 15,
+    "era_diversity": 4,
+    "language_diversity": 7
    },
-   "failed_branch": {
-    "specimens": 3,
-    "runnable": 2,
-    "oracle_backed": 2,
-    "failed_or_superseded": 3,
-    "era_diversity": 2,
-    "language_diversity": 2
-   },
-   "historical_redesign": {
-    "specimens": 2,
-    "runnable": 1,
-    "oracle_backed": 1,
-    "failed_or_superseded": 2,
-    "era_diversity": 2,
-    "language_diversity": 1
-   },
-   "loser": {
-    "specimens": 2,
-    "runnable": 2,
-    "oracle_backed": 2,
-    "failed_or_superseded": 2,
-    "era_diversity": 2,
-    "language_diversity": 2
-   },
-   "pathology": {
-    "specimens": 2,
-    "runnable": 2,
-    "oracle_backed": 2,
-    "failed_or_superseded": 2,
-    "era_diversity": 2,
+   "SUPERSEDED": {
+    "specimens": 4,
+    "runnable": 3,
+    "oracle_backed": 3,
+    "failed_or_superseded": 4,
+    "era_diversity": 3,
     "language_diversity": 3
    },
-   "known_bad_lineage": {
+   "ACTIVE": {
+    "specimens": 2,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 2,
+    "era_diversity": 1,
+    "language_diversity": 2
+   },
+   "OBSOLETED_BY_ENVIRONMENT": {
     "specimens": 1,
     "runnable": 1,
     "oracle_backed": 1,
     "failed_or_superseded": 1,
     "era_diversity": 1,
-    "language_diversity": 2
+    "language_diversity": 1
    },
-   "known_bad": {
+   "FAILED": {
     "specimens": 1,
     "runnable": 0,
     "oracle_backed": 0,
     "failed_or_superseded": 1,
     "era_diversity": 1,
     "language_diversity": 1
+   }
+  },
+  "failure_reason": {
+   "(none recorded)": {
+    "specimens": 111,
+    "runnable": 101,
+    "oracle_backed": 80,
+    "failed_or_superseded": 17,
+    "era_diversity": 8,
+    "language_diversity": 30
    },
-   "documented_pathology": {
-    "specimens": 1,
-    "runnable": 1,
-    "oracle_backed": 1,
-    "failed_or_superseded": 1,
+   "security_weakness": {
+    "specimens": 3,
+    "runnable": 2,
+    "oracle_backed": 2,
+    "failed_or_superseded": 3,
+    "era_diversity": 3,
+    "language_diversity": 2
+   },
+   "superior_rival": {
+    "specimens": 3,
+    "runnable": 2,
+    "oracle_backed": 2,
+    "failed_or_superseded": 3,
+    "era_diversity": 2,
+    "language_diversity": 2
+   },
+   "poor_scaling": {
+    "specimens": 2,
+    "runnable": 2,
+    "oracle_backed": 2,
+    "failed_or_superseded": 2,
     "era_diversity": 1,
     "language_diversity": 1
    },
-   "predecessor": {
-    "specimens": 1,
-    "runnable": 1,
-    "oracle_backed": 1,
-    "failed_or_superseded": 1,
-    "era_diversity": 1,
-    "language_diversity": 1
-   },
-   "contested_design": {
+   "incorrect_assumptions": {
     "specimens": 1,
     "runnable": 1,
     "oracle_backed": 1,
@@ -2994,10 +3132,10 @@
     "era_diversity": 1,
     "language_diversity": 2
    },
-   "superseded_design": {
+   "brittleness": {
     "specimens": 1,
-    "runnable": 1,
-    "oracle_backed": 1,
+    "runnable": 0,
+    "oracle_backed": 0,
     "failed_or_superseded": 1,
     "era_diversity": 1,
     "language_diversity": 1
@@ -3006,17 +3144,17 @@
   "ancestry_relation": {
    "(none)": {
     "specimens": 48,
-    "runnable": 45,
+    "runnable": 46,
     "oracle_backed": 31,
     "failed_or_superseded": 0,
     "era_diversity": 8,
     "language_diversity": 14
    },
    "shares_ancestor_with": {
-    "specimens": 39,
-    "runnable": 35,
-    "oracle_backed": 31,
-    "failed_or_superseded": 9,
+    "specimens": 40,
+    "runnable": 36,
+    "oracle_backed": 32,
+    "failed_or_superseded": 10,
     "era_diversity": 7,
     "language_diversity": 18
    },
@@ -3029,12 +3167,12 @@
     "language_diversity": 13
    },
    "superseded": {
-    "specimens": 11,
-    "runnable": 7,
-    "oracle_backed": 7,
-    "failed_or_superseded": 9,
-    "era_diversity": 4,
-    "language_diversity": 4
+    "specimens": 17,
+    "runnable": 12,
+    "oracle_backed": 12,
+    "failed_or_superseded": 15,
+    "era_diversity": 5,
+    "language_diversity": 5
    },
    "derived_from": {
     "specimens": 7,
@@ -3045,12 +3183,28 @@
     "language_diversity": 5
    },
    "historical_version_of": {
-    "specimens": 6,
+    "specimens": 7,
     "runnable": 4,
     "oracle_backed": 4,
-    "failed_or_superseded": 5,
-    "era_diversity": 3,
+    "failed_or_superseded": 6,
+    "era_diversity": 4,
     "language_diversity": 3
+   },
+   "rewrote": {
+    "specimens": 2,
+    "runnable": 0,
+    "oracle_backed": 0,
+    "failed_or_superseded": 2,
+    "era_diversity": 1,
+    "language_diversity": 2
+   },
+   "port_of": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 1
    },
    "reimplementation_of": {
     "specimens": 1,
@@ -3063,26 +3217,6 @@
   }
  },
  "sparsest_domains": [
-  {
-   "domain": "digital-evolution",
-   "sparsity": 5,
-   "specimens": 1,
-   "runnable": 0,
-   "oracle_backed": 0,
-   "failed_or_superseded": 0,
-   "era_diversity": 1,
-   "language_diversity": 1
-  },
-  {
-   "domain": "genetic-programming",
-   "sparsity": 5,
-   "specimens": 1,
-   "runnable": 0,
-   "oracle_backed": 0,
-   "failed_or_superseded": 0,
-   "era_diversity": 1,
-   "language_diversity": 1
-  },
   {
    "domain": "pid",
    "sparsity": 4,
@@ -3099,6 +3233,26 @@
    "specimens": 1,
    "runnable": 1,
    "oracle_backed": 1,
+   "failed_or_superseded": 0,
+   "era_diversity": 1,
+   "language_diversity": 1
+  },
+  {
+   "domain": "digital-evolution",
+   "sparsity": 4,
+   "specimens": 1,
+   "runnable": 1,
+   "oracle_backed": 0,
+   "failed_or_superseded": 0,
+   "era_diversity": 1,
+   "language_diversity": 1
+  },
+  {
+   "domain": "genetic-programming",
+   "sparsity": 4,
+   "specimens": 1,
+   "runnable": 1,
+   "oracle_backed": 0,
    "failed_or_superseded": 0,
    "era_diversity": 1,
    "language_diversity": 1

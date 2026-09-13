@@ -1,0 +1,91 @@
+{
+ "schema": "techne.fossil.environment_assumption/1",
+ "written_utc": "2026-09-13T14:49:50Z",
+ "fossil_driven": "md5-rfc1321",
+ "assumption": "RFC 1321 global.h: typedef unsigned long int UINT4 -- i.e. `unsigned long` is 32 bits",
+ "method": "extract the SAME appendix sources from the RFC text in two container worlds, compile with the same flags, run the RFC's own -x test suite, and compare against the digests printed in RFC 1321 section A.5.",
+ "identical_source_in_both_worlds": true,
+ "rfc_expected": {
+  "": "d41d8cd98f00b204e9800998ecf8427e",
+  "a": "0cc175b9c0f1b6a831c399e269772661",
+  "abc": "900150983cd24fb0d6963f7d28e17f72",
+  "message digest": "f96b697d7cb7938d525a2f31aaf161d0"
+ },
+ "rows": [
+  {
+   "image": "prometheus-fossil-i386:bookworm",
+   "sizeof_unsigned_long": 4,
+   "source_sha256": "73a9773fdf8e63c77c1309f7b7876aca54addee612224acd775683db64f390c0",
+   "digests": {
+    "": "d41d8cd98f00b204e9800998ecf8427e",
+    "a": "0cc175b9c0f1b6a831c399e269772661",
+    "abc": "900150983cd24fb0d6963f7d28e17f72",
+    "message digest": "f96b697d7cb7938d525a2f31aaf161d0",
+    "abcdefghijklmnopqrstuvwxyz": "c3fcd3d76192e4007dfb496cca67e13b",
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789": "d174ab98d277d9f5a5611c2c9f419d9f",
+    "12345678901234567890123456789012345678901234567890123456789012345678901234567890": "57edf4a22be3c955ac49da2e2107b67a"
+   },
+   "checked": {
+    "": {
+     "observed": "d41d8cd98f00b204e9800998ecf8427e",
+     "rfc_says": "d41d8cd98f00b204e9800998ecf8427e",
+     "matches": true
+    },
+    "a": {
+     "observed": "0cc175b9c0f1b6a831c399e269772661",
+     "rfc_says": "0cc175b9c0f1b6a831c399e269772661",
+     "matches": true
+    },
+    "abc": {
+     "observed": "900150983cd24fb0d6963f7d28e17f72",
+     "rfc_says": "900150983cd24fb0d6963f7d28e17f72",
+     "matches": true
+    },
+    "message digest": {
+     "observed": "f96b697d7cb7938d525a2f31aaf161d0",
+     "rfc_says": "f96b697d7cb7938d525a2f31aaf161d0",
+     "matches": true
+    }
+   },
+   "all_match_rfc": true
+  },
+  {
+   "image": "prometheus-fossil-c:bookworm",
+   "sizeof_unsigned_long": 8,
+   "source_sha256": "73a9773fdf8e63c77c1309f7b7876aca54addee612224acd775683db64f390c0",
+   "digests": {
+    "": "e4c23762ed2823a27e62a64b95c024e7",
+    "a": "793a9bc07e209b286fa416d6ee29a85d",
+    "abc": "7999dc75e8da648c6727e137c5b77803",
+    "message digest": "840793371ec58a6cc84896a5153095de",
+    "abcdefghijklmnopqrstuvwxyz": "98ef94f1f01ac7b91918c6747fdebd96",
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789": "dabcd637cde443764c4f8aa099cf23be",
+    "12345678901234567890123456789012345678901234567890123456789012345678901234567890": "e29c01a1e2a663c26b4a68bf7ec42df7"
+   },
+   "checked": {
+    "": {
+     "observed": "e4c23762ed2823a27e62a64b95c024e7",
+     "rfc_says": "d41d8cd98f00b204e9800998ecf8427e",
+     "matches": false
+    },
+    "a": {
+     "observed": "793a9bc07e209b286fa416d6ee29a85d",
+     "rfc_says": "0cc175b9c0f1b6a831c399e269772661",
+     "matches": false
+    },
+    "abc": {
+     "observed": "7999dc75e8da648c6727e137c5b77803",
+     "rfc_says": "900150983cd24fb0d6963f7d28e17f72",
+     "matches": false
+    },
+    "message digest": {
+     "observed": "840793371ec58a6cc84896a5153095de",
+     "rfc_says": "f96b697d7cb7938d525a2f31aaf161d0",
+     "matches": false
+    }
+   },
+   "all_match_rfc": false
+  }
+ ],
+ "note": "The artifact is not patched. Where sizeof(unsigned long)==4 the 1992 code reproduces its own published digests; where it is 8 the same bytes compile and run without error and produce WRONG digests. A silent failure caused by the environment moving, not by the code changing. Techne records it; what it means is not Techne's question."
+}

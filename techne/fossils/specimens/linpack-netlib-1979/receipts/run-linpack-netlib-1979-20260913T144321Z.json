@@ -1,0 +1,94 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "linpack-netlib-1979",
+  "receipt_id": "run-linpack-netlib-1979-20260913T144321Z",
+  "written_utc": "20260913T144321Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "cfe571decfc7752f2ad51137dac1b26f5b931d0d47cab70110f89cb4194a4fdf",
+  "recipe_sha256": "ecb670ee40167d892b0eb2430c2f5156d897a9f372c9bed7563043efaf0caa31",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 0,
+      "seconds": 7.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Fortran (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "gfortran -std=legacy (the 1979 Fortran compiles unchanged)",
+      "cmd": "gfortran -std=legacy -w -O2 -o linpackd linpackd.f 2>&1 | grep -i 'error' | head -3; test -x ./linpackd && echo BUILT",
+      "exit": 0,
+      "seconds": 1.09,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "BUILT\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "the LINPACK 100x100 benchmark: solve a system whose exact solution is all ones, report residual + MFLOPS",
+      "cmd": "./linpackd < /dev/null 2>&1 | grep -A2 -E 'norm. resid|dgefa' | head -12",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "     norm. resid      resid           machep         x(1)          x(n)\n  1.25501937E+00  1.39332990E-14  2.22044605E-16  1.00000000E+00  1.00000000E+00\n\n--\n      dgefa      dgesl      total     mflops       unit      ratio       b(1)\n times for array with leading dimension of 201\n  9.100E-05  4.000E-06  9.500E-05  7.228E+03  2.767E-04  1.696E-03 -9.159E-15\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "the rate the benchmark reports (the quantity LAPACK was built to improve)",
+      "cmd": "./linpackd < /dev/null 2>&1 | grep -E 'mflops|times for|^ *[0-9]+\\.' | head -8; true",
+      "exit": 0,
+      "seconds": 0.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "  1.25501937E+00  1.39332990E-14  2.22044605E-16  1.00000000E+00  1.00000000E+00\n      dgefa      dgesl      total     mflops       unit      ratio       b(1)\n times for array with leading dimension of 201\n  8.600E-05  4.000E-06  9.000E-05  7.630E+03  2.621E-04  1.607E-03 -9.159E-15\n  8.400E-05  3.000E-06  8.700E-05  7.893E+03  2.534E-04  1.554E-03  1.000E+00\n  8.400E-05  4.000E-06  8.800E-05  7.803E+03  2.563E-04  1.571E-03  1.000E+00\n  8.430E-05  3.100E-06  8.740E-05  7.857E+03  2.546E-04  1.561E-03  5.298E+02\n times for array with leading dimension of 200\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "linpackd",
+      "sha256": "0ff549b3b64cf42820d930512be30ec9e30704a1e216496409398a1626c15d4b",
+      "bytes": 25272
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "cfe571decfc7752f2ad51137dac1b26f5b931d0d47cab70110f89cb4194a4fdf",
+  "body_preserved": true
+}

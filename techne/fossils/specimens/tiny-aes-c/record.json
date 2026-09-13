@@ -1,0 +1,138 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "tiny-aes-c",
+  "canonical_name": "AES (tiny-AES-c) -- the Rijndael successor that replaced DES",
+  "aliases": [
+    "AES",
+    "Rijndael",
+    "tiny-AES"
+  ],
+  "lineage": "Rijndael (Daemen & Rijmen) won the NIST AES competition and became FIPS 197 in 2001, replacing DES. Not a Feistel network but a substitution-permutation network over GF(2^8), with 128/192/256-bit keys. Kept as the WINNER of the cipher pair so the loser can be compared on shared test vectors.",
+  "domain": [
+    "cryptography",
+    "block-cipher",
+    "substitution-permutation-network",
+    "security",
+    "successor"
+  ],
+  "era": "1998 (Rijndael); FIPS 197 in 2001",
+  "version": "github.com/kokke/tiny-AES-c as of 2026-09-13 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/kokke/tiny-AES-c",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/kokke/tiny-AES-c",
+    "specifies": "FIPS 197 AES"
+  },
+  "hashes": {
+    "tree_sha256": "ceac46bb10ea8f2bbab812bc39f49a65effb6fc3f0714a225015eeeeb32e05d0",
+    "n_files": 16,
+    "bytes": 49430,
+    "artifacts": [
+      {
+        "filename": "https://github.com/kokke/tiny-AES-c",
+        "sha256": null,
+        "commit": "23856752fbd139da0b8ca6e471a13d5bcc99a08d"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\tiny-aes-c",
+    "hash_list": "techne/fossils/specimens/tiny-aes-c/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Unlicense",
+    "status": "public-domain",
+    "evidence": "unlicense.txt in the tree"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C"
+  ],
+  "build_system": "make / cc",
+  "compiler_or_interpreter": "gcc (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a C compiler"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "AES-128/192/256 ECB/CBC/CTR encrypt and decrypt; the repo ships FIPS-197 self-tests"
+  ],
+  "example": {
+    "command": "make test",
+    "input": "the FIPS-197 / NIST known-answer vectors",
+    "output": "the published ciphertexts (the ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "FIPS PUB 197 (AES)",
+    "Daemen & Rijmen, The Design of Rijndael"
+  ],
+  "human_capability_summary": {
+    "built_to": "replace DES with a cipher whose key length and structure resist foreseeable attack, efficient in both hardware and software",
+    "pressure": "the same adversary that killed DES, plus a public competition demanding analysable security margins",
+    "success_means": "matching the FIPS-197 vectors with no practical attack better than brute force on a 128-bit key"
+  },
+  "known_human_problem_solved": "standardised symmetric encryption after DES",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "adversarial cryptanalysis; an open selection process",
+  "human_failure_condition": "implementation-level leakage (timing/cache side channels) rather than a break of the cipher",
+  "behavioral_entry_point": "run the FIPS vectors; compare structure against DES on the same plaintext/key sizes",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded",
+      "to": "des-reference",
+      "note": "AES replaced DES as the US standard"
+    }
+  ],
+  "acquisition_tags": [
+    "batch09",
+    "successor",
+    "winner_of_pair",
+    "security",
+    "pair_cipher"
+  ],
+  "historical_disposition": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "des-reference",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/tiny-aes-c/receipts/run-tiny-aes-c-20260913T144339Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\tiny-aes-c ; tracked techne/fossils/specimens/tiny-aes-c",
+    "where_it_came_from": "https://github.com/kokke/tiny-AES-c ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run tiny-aes-c",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/tiny-aes-c/receipts/run-tiny-aes-c-20260913T144339Z.json",
+    "what_humans_used_it_for": "replace DES with a cipher whose key length and structure resist foreseeable attack, efficient in both hardware and software"
+  },
+  "seat": "Techne"
+}

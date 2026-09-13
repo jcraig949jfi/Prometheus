@@ -27,6 +27,15 @@ def _decade(era: str) -> str:
     return m.group(1)[:3] + "0s" if m else "unknown"
 
 
+def _disposed(r) -> bool:
+    """A fossil counts as carrying a failed/superseded disposition when either the explicit P7
+    state says so, or the older acquisition tags do. Mechanical; no inference from age."""
+    st = (r.get("historical_disposition") or {}).get("state", "UNKNOWN")
+    if st not in ("ACTIVE", "UNKNOWN", None, ""):
+        return True
+    return bool(r.get("known_historical_disposition"))
+
+
 def build() -> dict:
     rows = catalog.enumerate_fossils()
     n = len(rows)
@@ -41,7 +50,7 @@ def build() -> dict:
                 c["specimens"] += 1
                 c["runnable"] += runnable(r)
                 c["oracle_backed"] += (r.get("oracle_backed") == "yes")
-                c["failed_or_superseded"] += bool(r.get("known_historical_disposition"))
+                c["failed_or_superseded"] += _disposed(r)
                 c["eras"].add(_decade(r.get("era", "")))
                 for l in (r.get("language") or []):
                     c["languages"].add(l.split(" (")[0].strip())
@@ -58,7 +67,10 @@ def build() -> dict:
         "language": tally(lambda r: [l.split(" (")[0].strip() for l in (r.get("language") or ["(none)"])]),
         "execution_model": tally(lambda r: [((r_env := None) or _exec_model(r))]),
         "runnability": tally(lambda r: [r.get("run_status") or "(none)"]),
-        "disposition": tally(lambda r: (r.get("known_historical_disposition") or ["(none recorded)"])),
+        "disposition": tally(lambda r: ([ (r.get("historical_disposition") or {}).get("state") ]
+                                        if _disposed(r) else ["(none recorded)"])),
+        "failure_reason": tally(lambda r: ((r.get("historical_disposition") or {}).get("failure_reasons")
+                                           or ["(none recorded)"])),
         "ancestry_relation": tally(lambda r: [e.get("relation", "?") for e in (r.get("ancestry") or [])] or ["(none)"]),
     }
 
@@ -75,7 +87,7 @@ def build() -> dict:
     return {"schema": "techne.fossil.coverage/1", "written_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "total_specimens": n, "runnable": sum(1 for r in rows if runnable(r)),
             "oracle_backed": sum(1 for r in rows if r.get("oracle_backed") == "yes"),
-            "with_failed_or_superseded_disposition": sum(1 for r in rows if r.get("known_historical_disposition")),
+            "with_failed_or_superseded_disposition": sum(1 for r in rows if _disposed(r)),
             "sparsity_rule": "per domain: +1 for each of {<=2 specimens, <=1 decade, <=1 language, 0 runnable, 0 failed/superseded}; higher = thinner. Mechanical, not a judgement of value.",
             "views": views, "sparsest_domains": sparse[:20],
             "note": "coverage of the source corpus only; NOT behavioral organs, equivalence, or a taxonomy of cognition (those are Nyx's). A fossil is counted in every cell it belongs to."}

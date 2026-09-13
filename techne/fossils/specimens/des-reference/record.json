@@ -1,0 +1,153 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "des-reference",
+  "canonical_name": "DES -- the Data Encryption Standard, withdrawn after its key length became breakable",
+  "aliases": [
+    "DES",
+    "FIPS 46",
+    "Data Encryption Standard"
+  ],
+  "lineage": "DES (IBM/NSA, adopted as FIPS 46 in 1977) was THE block cipher of the era: 64-bit blocks, a 56-bit key, 16 Feistel rounds. Its structure was never broken in practice; its KEY LENGTH was. The EFF built Deep Crack in 1998 and exhausted the keyspace in days, and NIST ran a public competition whose winner, Rijndael, became AES. Preserved as archival/defensive reference material only -- the fossil is the cipher, not an attack.",
+  "domain": [
+    "cryptography",
+    "block-cipher",
+    "feistel-network",
+    "security",
+    "loser"
+  ],
+  "era": "1977 (FIPS 46); broken in practice 1998; withdrawn 2005",
+  "version": "a reference DES implementation (see source_identity)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/tarequeh/DES",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/tarequeh/DES",
+    "specifies": "FIPS 46 DES (tables and rounds as published in the standard)"
+  },
+  "hashes": {
+    "tree_sha256": "ca9cb18afc5605e28a56bce37d8340453bacb792f35321f4d139c4d9cee85d7c",
+    "n_files": 6,
+    "bytes": 20865,
+    "artifacts": [
+      {
+        "filename": "https://github.com/tarequeh/DES",
+        "sha256": null,
+        "commit": "6ad9df7a543481f9e419df90e4b69cd4cbbe8322"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\des-reference",
+    "hash_list": "techne/fossils/specimens/des-reference/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "NOASSERTION",
+    "status": "see repo",
+    "evidence": "repository terms"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C"
+  ],
+  "build_system": "cc",
+  "compiler_or_interpreter": "gcc (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a C compiler"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "DES encrypt/decrypt of a 64-bit block under a 56-bit key"
+  ],
+  "example": {
+    "command": "encrypt a known plaintext under a known key",
+    "input": "a FIPS/standard known-answer test vector",
+    "output": "the published ciphertext for that vector (the ORACLE: a known-answer test)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "FIPS PUB 46-3, Data Encryption Standard (withdrawn 2005)",
+    "Electronic Frontier Foundation, Cracking DES, O'Reilly 1998",
+    "FIPS PUB 197, Advanced Encryption Standard (2001)"
+  ],
+  "human_capability_summary": {
+    "built_to": "provide a single standard, hardware-friendly block cipher for unclassified US government data",
+    "pressure": "a cipher cheap enough for 1970s hardware yet strong enough to resist analysis, standardised so that different systems could interoperate",
+    "success_means": "ciphertext that only the key holder can invert, and identical output across every conforming implementation"
+  },
+  "known_human_problem_solved": "standardised symmetric encryption",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "an adversary with growing compute; a key length fixed in 1977 against hardware that kept getting cheaper",
+  "human_failure_condition": "the 56-bit keyspace became exhaustively searchable -- EFF's Deep Crack recovered keys in days in 1998, and the standard was withdrawn",
+  "behavioral_entry_point": "run the known-answer vectors; vary rounds to watch avalanche; the failure is economic (keyspace size), not structural",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded",
+      "to": "tiny-aes-c",
+      "note": "AES (Rijndael) replaced DES by NIST competition"
+    }
+  ],
+  "acquisition_tags": [
+    "batch09",
+    "loser",
+    "superseded_design",
+    "security",
+    "archival_only",
+    "pair_cipher"
+  ],
+  "historical_disposition": {
+    "state": "OBSOLETED_BY_ENVIRONMENT",
+    "failure_reasons": [
+      "security_weakness"
+    ],
+    "superseded_by": "tiny-aes-c",
+    "rival_of": "tiny-aes-c",
+    "evidence": [
+      {
+        "kind": "standards_history",
+        "ref": "NIST FIPS 46-3 withdrawal (2005); FIPS 197 (AES, 2001)",
+        "says": "NIST withdrew the DES standard and replaced it with AES, selected through a public competition."
+      },
+      {
+        "kind": "retrospective",
+        "ref": "Electronic Frontier Foundation, Cracking DES (O'Reilly, 1998)",
+        "says": "EFF's purpose-built Deep Crack machine recovered DES keys by exhaustive search in days, demonstrating the 56-bit key was too short."
+      }
+    ]
+  },
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/des-reference/receipts/run-des-reference-20260913T144336Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\des-reference ; tracked techne/fossils/specimens/des-reference",
+    "where_it_came_from": "https://github.com/tarequeh/DES ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run des-reference",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/des-reference/receipts/run-des-reference-20260913T144336Z.json",
+    "what_humans_used_it_for": "provide a single standard, hardware-friendly block cipher for unclassified US government data"
+  },
+  "seat": "Techne"
+}

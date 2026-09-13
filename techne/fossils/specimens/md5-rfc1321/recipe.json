@@ -1,0 +1,49 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-i386:bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "extract the appendix sources from the RFC text, then compile with -DMD=5",
+      "cmd": "sed -n '/^A\\.1 global\\.h/,/^A\\.2 md5\\.h/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > global.h; sed -n '/^A\\.2 md5\\.h/,/^A\\.3 md5c\\.c/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > md5.h; sed -n '/^A\\.3 md5c\\.c/,/^A\\.4 mddriver\\.c/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > md5c.c; sed -n '/^A\\.4 mddriver\\.c/,/^A\\.5 Test suite/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > mddriver.c; wc -l global.h md5.h md5c.c mddriver.c; gcc -w -DMD=5 -o mddriver md5c.c mddriver.c 2>&1 | head -5; test -x ./mddriver && echo BUILT",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "the environment assumption the 1992 code depends on: UINT4 is `unsigned long`",
+      "cmd": "printf 'int main(){return sizeof(unsigned long);}' > /tmp/z.c; gcc -o /tmp/z /tmp/z.c; /tmp/z; echo \"sizeof_unsigned_long=$?\"",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "sizeof_unsigned_long=4"
+        ]
+      },
+      "timeout": 120
+    },
+    {
+      "name": "run the RFC's own MD5 test suite (-x) and compare with the digests printed in the RFC",
+      "cmd": "./mddriver -x 2>&1 | head -12",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "d41d8cd98f00b204e9800998ecf8427e",
+          "0cc175b9c0f1b6a831c399e269772661",
+          "900150983cd24fb0d6963f7d28e17f72"
+        ]
+      },
+      "timeout": 300
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "ENVIRONMENT: run in the vault's 32-bit userland, which is the code's ORIGINAL world, not a modernisation. RFC 1321's global.h declares `typedef unsigned long int UINT4`, true on the 32-bit machines of 1992 and FALSE on today's LP64 targets. Built with the modern 64-bit toolchain this same body compiles cleanly, runs, and prints CONFIRMED-WRONG digests (MD5(\"\") came out e4c23762ed2823a27e62a64b95c024e7 instead of d41d8cd98f00b204e9800998ecf8427e) -- a silent numerical failure caused by the environment moving, recorded in ENVIRONMENT_ASSUMPTION_2026-09-13.json. Oracle: RFC 1321 section A.5 prints the digests its own reference code must produce -- MD5(\"\")=d41d8cd9..., MD5(\"a\")=0cc175b9..., MD5(\"abc\")=90015098... The standard, the implementation and the test suite are one artifact; the build extracts the appendix out of the RFC text. NOTE the fossil's point: every one of these vectors still PASSES. What broke in 2004 was collision resistance, which no self-test in the document can detect."
+}

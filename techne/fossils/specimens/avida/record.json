@@ -77,8 +77,8 @@
     "cmake",
     "a C++ toolchain"
   ],
-  "run_classification": "NOT_ATTEMPTED",
-  "test_classification": "NOT_ATTEMPTED",
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
   "entry_points": [
     "avida (runs a population from a config + ancestor genome)"
   ],
@@ -114,7 +114,14 @@
   "lineage_relations": [],
   "acquisition_tags": [],
   "versions_preserved": [],
-  "receipts": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/avida/receipts/run-avida-20260913T141120Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
   "nyx_handoff": {
     "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\avida ; tracked techne/fossils/specimens/avida/",
     "where_it_came_from": "{'repo': 'github.com/devosoft/avida'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; GPL-3.0 / Apache-2.0 (mixed; see COPYING)",
