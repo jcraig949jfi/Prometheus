@@ -242,5 +242,32 @@
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T211434Z.json",
     "what_humans_used_it_for": "shrink files on 1980 disks with one pass and no side table, by adapting the Huffman tree as symbols arrive"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+      "superior_rival"
+    ],
+    "superseded_by": "compress (LZW), later gzip-1.2.4-1993",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "original_paper",
+        "ref": "Welch, A Technique for High-Performance Data Compression, IEEE Computer 1984",
+        "says": "LZW is presented as a fast, high-ratio compression technique; compress implemented it and became the standard Unix compressor, displacing the adaptive-Huffman compact."
+      },
+      {
+        "kind": "project_documentation",
+        "ref": "4.xBSD distribution contents (compact in ucb/, later absent)",
+        "says": "compact shipped in 4.xBSD and did not survive into later standard Unix toolsets."
+      }
+    ],
+    "audit_note": "Beaten on both speed and ratio; the rival that beat it was itself later displaced by gzip under patent pressure, which is a separate disposition.",
+    "legacy_tags": [
+      "failed_branch",
+      "loser"
+    ],
+    "audit_verdict": "CONFIRMED",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

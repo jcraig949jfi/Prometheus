@@ -1,6 +1,6 @@
 {
  "schema": "techne.fossil.coverage/1",
- "written_utc": "2026-09-13T14:50:26Z",
+ "written_utc": "2026-09-13T21:06:43Z",
  "total_specimens": 117,
  "runnable": 105,
  "oracle_backed": 84,
@@ -3050,29 +3050,37 @@
     "era_diversity": 8,
     "language_diversity": 27
    },
-   "UNKNOWN": {
-    "specimens": 15,
-    "runnable": 11,
-    "oracle_backed": 11,
-    "failed_or_superseded": 15,
-    "era_diversity": 4,
-    "language_diversity": 7
-   },
    "SUPERSEDED": {
-    "specimens": 4,
-    "runnable": 3,
-    "oracle_backed": 3,
-    "failed_or_superseded": 4,
+    "specimens": 10,
+    "runnable": 6,
+    "oracle_backed": 6,
+    "failed_or_superseded": 10,
+    "era_diversity": 4,
+    "language_diversity": 5
+   },
+   "ACTIVE": {
+    "specimens": 6,
+    "runnable": 5,
+    "oracle_backed": 5,
+    "failed_or_superseded": 6,
     "era_diversity": 3,
     "language_diversity": 3
    },
-   "ACTIVE": {
-    "specimens": 2,
+   "FAILED": {
+    "specimens": 3,
     "runnable": 1,
     "oracle_backed": 1,
-    "failed_or_superseded": 2,
-    "era_diversity": 1,
+    "failed_or_superseded": 3,
+    "era_diversity": 3,
     "language_diversity": 2
+   },
+   "UNKNOWN": {
+    "specimens": 2,
+    "runnable": 2,
+    "oracle_backed": 2,
+    "failed_or_superseded": 2,
+    "era_diversity": 2,
+    "language_diversity": 3
    },
    "OBSOLETED_BY_ENVIRONMENT": {
     "specimens": 1,
@@ -3082,10 +3090,10 @@
     "era_diversity": 1,
     "language_diversity": 1
    },
-   "FAILED": {
+   "LOSING_RIVAL": {
     "specimens": 1,
-    "runnable": 0,
-    "oracle_backed": 0,
+    "runnable": 1,
+    "oracle_backed": 1,
     "failed_or_superseded": 1,
     "era_diversity": 1,
     "language_diversity": 1
@@ -3093,12 +3101,28 @@
   },
   "failure_reason": {
    "(none recorded)": {
-    "specimens": 111,
-    "runnable": 101,
-    "oracle_backed": 80,
-    "failed_or_superseded": 17,
+    "specimens": 104,
+    "runnable": 97,
+    "oracle_backed": 76,
+    "failed_or_superseded": 10,
     "era_diversity": 8,
-    "language_diversity": 30
+    "language_diversity": 29
+   },
+   "superior_rival": {
+    "specimens": 6,
+    "runnable": 4,
+    "oracle_backed": 4,
+    "failed_or_superseded": 6,
+    "era_diversity": 3,
+    "language_diversity": 3
+   },
+   "incorrect_assumptions": {
+    "specimens": 4,
+    "runnable": 2,
+    "oracle_backed": 2,
+    "failed_or_superseded": 4,
+    "era_diversity": 2,
+    "language_diversity": 3
    },
    "security_weakness": {
     "specimens": 3,
@@ -3106,14 +3130,6 @@
     "oracle_backed": 2,
     "failed_or_superseded": 3,
     "era_diversity": 3,
-    "language_diversity": 2
-   },
-   "superior_rival": {
-    "specimens": 3,
-    "runnable": 2,
-    "oracle_backed": 2,
-    "failed_or_superseded": 3,
-    "era_diversity": 2,
     "language_diversity": 2
    },
    "poor_scaling": {
@@ -3124,13 +3140,13 @@
     "era_diversity": 1,
     "language_diversity": 1
    },
-   "incorrect_assumptions": {
+   "performance_collapse": {
     "specimens": 1,
-    "runnable": 1,
-    "oracle_backed": 1,
+    "runnable": 0,
+    "oracle_backed": 0,
     "failed_or_superseded": 1,
     "era_diversity": 1,
-    "language_diversity": 2
+    "language_diversity": 1
    },
    "brittleness": {
     "specimens": 1,
@@ -3139,6 +3155,14 @@
     "failed_or_superseded": 1,
     "era_diversity": 1,
     "language_diversity": 1
+   },
+   "concurrency_failure": {
+    "specimens": 1,
+    "runnable": 1,
+    "oracle_backed": 1,
+    "failed_or_superseded": 1,
+    "era_diversity": 1,
+    "language_diversity": 2
    }
   },
   "ancestry_relation": {

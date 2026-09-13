@@ -271,5 +271,31 @@
     "how_we_know_it_runs": "not executed; body tree_sha256 0489c44ba9804179 pinned in UPSTREAM_HASHES.txt",
     "what_humans_used_it_for": "recover from a single lost segment without draining the pipe: retransmit on duplicate ACKs and keep sending at half rate"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+      "incorrect_assumptions"
+    ],
+    "superseded_by": "NewReno (RFC 3782) / SACK (RFC 2018)",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "original_paper",
+        "ref": "Fall & Floyd, Simulation-based Comparisons of Tahoe, Reno and SACK TCP, CCR 1996",
+        "says": "Reno performs poorly when multiple segments are lost from one window."
+      },
+      {
+        "kind": "standards_history",
+        "ref": "RFC 2018 (TCP Selective Acknowledgment) and RFC 3782 (NewReno)",
+        "says": "Both were standardised specifically to address Reno's behaviour under multiple losses."
+      }
+    ],
+    "audit_note": "Tagged 'successor' because it succeeded Tahoe -- but being a successor is not a disposition, and Reno was in turn superseded.",
+    "legacy_tags": [
+      "successor"
+    ],
+    "audit_verdict": "RECLASSIFIED",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

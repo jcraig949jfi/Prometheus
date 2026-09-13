@@ -1,0 +1,183 @@
+{
+ "schema": "techne.fossil.disposition_audit/1",
+ "written_utc": "2026-09-13T21:06:40Z",
+ "applied": true,
+ "legacy_claims_entered": 15,
+ "by_verdict": {
+  "CONFIRMED": 5,
+  "RECLASSIFIED": 4,
+  "NOT_A_LOSER": 4,
+  "UNKNOWN": 2
+ },
+ "rule": "A non-ACTIVE state requires at least one citation (record.validate enforces it). A tag that merely names a relationship (successor, predecessor, redesign) is not a disposition. A documented failure MODE of current software is not a disposition.",
+ "rows": [
+  {
+   "specimen_id": "bsd-4.3-distribution-tape-1986",
+   "legacy_tags": [
+    "known_bad_lineage"
+   ],
+   "verdict": "CONFIRMED",
+   "state_before": "UNKNOWN",
+   "state_after": "SUPERSEDED",
+   "n_evidence": 2,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "bsd-4.3-reno-distribution-tape-1990",
+   "legacy_tags": [
+    "successor"
+   ],
+   "verdict": "RECLASSIFIED",
+   "state_before": "UNKNOWN",
+   "state_after": "SUPERSEDED",
+   "n_evidence": 1,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "bsd-tcp-4.2-1983",
+   "legacy_tags": [
+    "known_bad",
+    "failed_branch"
+   ],
+   "verdict": "CONFIRMED",
+   "state_before": "UNKNOWN",
+   "state_after": "FAILED",
+   "n_evidence": 1,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "bsd-tcp-4.3-reno-1990",
+   "legacy_tags": [
+    "successor"
+   ],
+   "verdict": "RECLASSIFIED",
+   "state_before": "UNKNOWN",
+   "state_after": "SUPERSEDED",
+   "n_evidence": 2,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "bsd-tcp-4.3-tahoe-1988",
+   "legacy_tags": [
+    "historical_redesign"
+   ],
+   "verdict": "RECLASSIFIED",
+   "state_before": "UNKNOWN",
+   "state_after": "SUPERSEDED",
+   "n_evidence": 1,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "compact-4.2bsd-1983",
+   "legacy_tags": [
+    "failed_branch",
+    "loser"
+   ],
+   "verdict": "CONFIRMED",
+   "state_before": "UNKNOWN",
+   "state_after": "SUPERSEDED",
+   "n_evidence": 2,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "glibc-rwlock-writer-starvation-2.36",
+   "legacy_tags": [
+    "documented_pathology"
+   ],
+   "verdict": "NOT_A_LOSER",
+   "state_before": "UNKNOWN",
+   "state_after": "ACTIVE",
+   "n_evidence": 1,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "gzip-1.2.4-1993",
+   "legacy_tags": [
+    "historical_redesign"
+   ],
+   "verdict": "NOT_A_LOSER",
+   "state_before": "UNKNOWN",
+   "state_after": "ACTIVE",
+   "n_evidence": 1,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "libcorrect-quiet",
+   "legacy_tags": [
+    "successor"
+   ],
+   "verdict": "NOT_A_LOSER",
+   "state_before": "UNKNOWN",
+   "state_after": "ACTIVE",
+   "n_evidence": 0,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "minisat-1.14-2006",
+   "legacy_tags": [
+    "predecessor"
+   ],
+   "verdict": "CONFIRMED",
+   "state_before": "UNKNOWN",
+   "state_after": "SUPERSEDED",
+   "n_evidence": 2,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "odepack-netlib",
+   "legacy_tags": [
+    "pathology"
+   ],
+   "verdict": "NOT_A_LOSER",
+   "state_before": "UNKNOWN",
+   "state_after": "ACTIVE",
+   "n_evidence": 0,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "redlock-py-redis-2014",
+   "legacy_tags": [
+    "contested_design"
+   ],
+   "verdict": "UNKNOWN",
+   "state_before": "UNKNOWN",
+   "state_after": "UNKNOWN",
+   "n_evidence": 2,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "spin-pathfinder-priority-inversion-1997",
+   "legacy_tags": [
+    "pathology"
+   ],
+   "verdict": "RECLASSIFIED",
+   "state_before": "UNKNOWN",
+   "state_after": "FAILED",
+   "n_evidence": 1,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "tinystm-marlier",
+   "legacy_tags": [
+    "superseded_design"
+   ],
+   "verdict": "UNKNOWN",
+   "state_before": "UNKNOWN",
+   "state_after": "UNKNOWN",
+   "n_evidence": 1,
+   "validate_problems": []
+  },
+  {
+   "specimen_id": "zchaff-2007",
+   "legacy_tags": [
+    "failed_branch",
+    "loser"
+   ],
+   "verdict": "CONFIRMED",
+   "state_before": "UNKNOWN",
+   "state_after": "LOSING_RIVAL",
+   "n_evidence": 3,
+   "validate_problems": []
+  }
+ ]
+}

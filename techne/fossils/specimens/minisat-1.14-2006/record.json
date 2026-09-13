@@ -128,5 +128,29 @@
     "how_we_know_it_runs": "RUNNABLE_HISTORICAL_TOOLCHAIN / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/minisat-1.14-2006/receipts/run-minisat-1.14-2006-20260912T211731Z.json",
     "what_humans_used_it_for": "be the smallest complete CDCL solver competitive with the large ones, so others could extend it"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [],
+    "superseded_by": "minisat-2.2.0",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "original_paper",
+        "ref": "Een & Sorensson, An Extensible SAT-solver, SAT 2003",
+        "says": "Describes the MiniSat core that 1.14 represents."
+      },
+      {
+        "kind": "release_notes",
+        "ref": "MiniSat 2.0/2.2 release history",
+        "says": "The 2.x line rewrote the solver (SimpSolver, new restart and clause-reduction policies) and replaced the 1.x line."
+      }
+    ],
+    "audit_note": "Superseded by its OWN successor version, not out-competed by a rival. No failure reason applies; recording one would overstate the evidence.",
+    "legacy_tags": [
+      "predecessor"
+    ],
+    "audit_verdict": "CONFIRMED",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

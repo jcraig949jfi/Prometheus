@@ -162,5 +162,18 @@
     "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/odepack-netlib/receipts/run-odepack-netlib-20260912T210100Z.json",
     "what_humans_used_it_for": "integrate ODE systems with automatic step and order selection, including stiff systems whose fast modes would otherwise force absurdly small steps"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [],
+    "audit_note": "The 'pathology' is stiffness -- a property of the PROBLEM that makes a non-stiff method exhaust its step budget. That is mathematics behaving correctly, not software that failed. ODEPACK remains in use (scipy's LSODA wraps it). LEAVES the loser count.",
+    "legacy_tags": [
+      "pathology"
+    ],
+    "audit_verdict": "NOT_A_LOSER",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

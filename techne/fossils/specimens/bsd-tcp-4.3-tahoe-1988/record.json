@@ -271,5 +271,26 @@
     "how_we_know_it_runs": "not executed; body tree_sha256 fd02c4ae618544b8 pinned in UPSTREAM_HASHES.txt",
     "what_humans_used_it_for": "make every sender probe for its share of a shared link and back off multiplicatively when loss signals congestion"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+      "superior_rival"
+    ],
+    "superseded_by": "bsd-tcp-4.3-reno-1990",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "original_paper",
+        "ref": "Fall & Floyd, Simulation-based Comparisons of Tahoe, Reno and SACK TCP, CCR 1996",
+        "says": "Compares the variants directly; Tahoe collapses its window to one segment on loss, which Reno's fast recovery avoids."
+      }
+    ],
+    "audit_note": "The tag said 'redesign', which is not a disposition. The redesign WAS the fix for 4.2 -- and was itself then superseded by Reno.",
+    "legacy_tags": [
+      "historical_redesign"
+    ],
+    "audit_verdict": "RECLASSIFIED",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

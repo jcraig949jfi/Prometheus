@@ -136,5 +136,26 @@
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/spin-pathfinder-priority-inversion-1997/receipts/run-spin-pathfinder-priority-inversion-1997-20260912T211155Z.json",
     "what_humans_used_it_for": "share a resource between tasks of different priority on a real-time scheduler without the high-priority task being blocked indefinitely"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "FAILED",
+    "failure_reasons": [
+      "concurrency_failure"
+    ],
+    "superseded_by": "the same system with priority inheritance enabled",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "retrospective",
+        "ref": "Glenn E. Reeves (JPL), What Really Happened on Mars Rover Pathfinder, 1997",
+        "says": "Repeated spacecraft resets were caused by priority inversion: a low-priority task held a mutex needed by a high-priority task while a medium-priority task ran; the fix was to enable priority inheritance on that mutex."
+      }
+    ],
+    "audit_note": "The FAILED subject is the deployed configuration the model encodes, not the SPIN model itself. This is a real failure that happened on another planet and was diagnosed and patched in flight.",
+    "legacy_tags": [
+      "pathology"
+    ],
+    "audit_verdict": "RECLASSIFIED",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

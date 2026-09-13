@@ -133,5 +133,24 @@
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260912T210109Z.json",
     "what_humans_used_it_for": "compress files better than compress without infringing the LZW patent, and interoperate forever via a fixed format"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "standards_history",
+        "ref": "RFC 1951 (DEFLATE)",
+        "says": "gzip's DEFLATE was standardised and remains in ubiquitous use."
+      }
+    ],
+    "audit_note": "gzip is the WINNER of the compression displacement, not a loser. The patent pressure that drove the redesign is a disposition of compress/LZW, not of gzip. LEAVES the loser count.",
+    "legacy_tags": [
+      "historical_redesign"
+    ],
+    "audit_verdict": "NOT_A_LOSER",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

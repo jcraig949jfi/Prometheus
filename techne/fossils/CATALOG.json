@@ -1,6 +1,6 @@
 {
  "schema": "techne.fossil.catalog/1",
- "written_utc": "2026-09-13T14:50:25Z",
+ "written_utc": "2026-09-13T21:06:41Z",
  "records_root": "F:/Prometheus-worktrees/techne-pass-0912/techne/fossils/specimens",
  "vault_root_on_this_host": "F:\\Prometheus\\vault\\fossils",
  "fossils": 117,
@@ -470,7 +470,30 @@
     "known_bad_lineage"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "incorrect_assumptions"
+    ],
+    "superseded_by": "bsd-4.3-reno-distribution-tape-1990",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Jacobson & Karels, Congestion Avoidance and Control, SIGCOMM 1988",
+      "says": "The congestion-control algorithms absent from 4.3BSD were added in 4.3BSD-Tahoe, making the plain 4.3BSD TCP the pre-fix design."
+     },
+     {
+      "kind": "standards_history",
+      "ref": "4.3BSD -> 4.3BSD-Tahoe -> 4.3BSD-Reno -> 4.4BSD release lineage",
+      "says": "Each BSD release supersedes the previous distribution."
+     }
+    ],
+    "audit_note": "Superseded as a DISTRIBUTION; its TCP is the before-point of the congestion lineage.",
+    "legacy_tags": [
+     "known_bad_lineage"
+    ],
+    "audit_verdict": "CONFIRMED",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
@@ -535,7 +558,23 @@
     "successor"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "SUPERSEDED",
+    "failure_reasons": [],
+    "superseded_by": "4.4BSD",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "standards_history",
+      "ref": "4.3BSD-Reno -> 4.4BSD / 4.4BSD-Lite release lineage",
+      "says": "4.4BSD superseded 4.3BSD-Reno as the Berkeley distribution."
+     }
+    ],
+    "audit_note": "Tagged 'successor'; as a DISTRIBUTION it was itself superseded.",
+    "legacy_tags": [
+     "successor"
+    ],
+    "audit_verdict": "RECLASSIFIED",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
@@ -602,7 +641,27 @@
     "failed_branch"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "FAILED",
+    "failure_reasons": [
+     "incorrect_assumptions",
+     "performance_collapse"
+    ],
+    "superseded_by": "bsd-tcp-4.3-tahoe-1988",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Jacobson & Karels, Congestion Avoidance and Control, SIGCOMM 1988",
+      "says": "In October 1986 the LBL-to-Berkeley path collapsed from 32 kbit/s to 40 bit/s; the paper attributes this to TCP lacking congestion control and introduces slow start and congestion avoidance as the fix."
+     }
+    ],
+    "audit_note": "This design failed in production on the real Internet, not merely in comparison.",
+    "legacy_tags": [
+     "known_bad",
+     "failed_branch"
+    ],
+    "audit_verdict": "CONFIRMED",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
@@ -668,7 +727,30 @@
     "successor"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "incorrect_assumptions"
+    ],
+    "superseded_by": "NewReno (RFC 3782) / SACK (RFC 2018)",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Fall & Floyd, Simulation-based Comparisons of Tahoe, Reno and SACK TCP, CCR 1996",
+      "says": "Reno performs poorly when multiple segments are lost from one window."
+     },
+     {
+      "kind": "standards_history",
+      "ref": "RFC 2018 (TCP Selective Acknowledgment) and RFC 3782 (NewReno)",
+      "says": "Both were standardised specifically to address Reno's behaviour under multiple losses."
+     }
+    ],
+    "audit_note": "Tagged 'successor' because it succeeded Tahoe -- but being a successor is not a disposition, and Reno was in turn superseded.",
+    "legacy_tags": [
+     "successor"
+    ],
+    "audit_verdict": "RECLASSIFIED",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
@@ -733,7 +815,25 @@
     "historical_redesign"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "superior_rival"
+    ],
+    "superseded_by": "bsd-tcp-4.3-reno-1990",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Fall & Floyd, Simulation-based Comparisons of Tahoe, Reno and SACK TCP, CCR 1996",
+      "says": "Compares the variants directly; Tahoe collapses its window to one segment on loss, which Reno's fast recovery avoids."
+     }
+    ],
+    "audit_note": "The tag said 'redesign', which is not a disposition. The redesign WAS the fix for 4.2 -- and was itself then superseded by Reno.",
+    "legacy_tags": [
+     "historical_redesign"
+    ],
+    "audit_verdict": "RECLASSIFIED",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
@@ -1228,7 +1328,31 @@
     "loser"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "superior_rival"
+    ],
+    "superseded_by": "compress (LZW), later gzip-1.2.4-1993",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Welch, A Technique for High-Performance Data Compression, IEEE Computer 1984",
+      "says": "LZW is presented as a fast, high-ratio compression technique; compress implemented it and became the standard Unix compressor, displacing the adaptive-Huffman compact."
+     },
+     {
+      "kind": "project_documentation",
+      "ref": "4.xBSD distribution contents (compact in ucb/, later absent)",
+      "says": "compact shipped in 4.xBSD and did not survive into later standard Unix toolsets."
+     }
+    ],
+    "audit_note": "Beaten on both speed and ratio; the rival that beat it was itself later displaced by gzip under patent pressure, which is a separate disposition.",
+    "legacy_tags": [
+     "failed_branch",
+     "loser"
+    ],
+    "audit_verdict": "CONFIRMED",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "BSD-4-Clause",
@@ -2415,7 +2539,23 @@
     "documented_pathology"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "project_documentation",
+      "ref": "pthread_rwlockattr_setkind_np(3)",
+      "says": "PTHREAD_RWLOCK_PREFER_READER_NP 'may result in writer starvation'. This documents a BEHAVIOUR of a currently shipped design, not its defeat."
+     }
+    ],
+    "audit_note": "glibc still ships this. A documented failure MODE is not a historical disposition. The starvation is already captured behaviourally in the fossil's receipt (1 writer acquisition vs 4,950,536). LEAVES the loser count.",
+    "legacy_tags": [
+     "documented_pathology"
+    ],
+    "audit_verdict": "NOT_A_LOSER",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "LGPL-2.1-or-later",
@@ -2839,7 +2979,23 @@
     "historical_redesign"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "standards_history",
+      "ref": "RFC 1951 (DEFLATE)",
+      "says": "gzip's DEFLATE was standardised and remains in ubiquitous use."
+     }
+    ],
+    "audit_note": "gzip is the WINNER of the compression displacement, not a loser. The patent pressure that drove the redesign is a disposition of compress/LZW, not of gzip. LEAVES the loser count.",
+    "legacy_tags": [
+     "historical_redesign"
+    ],
+    "audit_verdict": "NOT_A_LOSER",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-2.0",
@@ -3401,7 +3557,17 @@
     "successor"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "libfec-karn",
+    "evidence": [],
+    "audit_note": "Tagged 'successor' -- a relationship, not a disposition. Current software. LEAVES the loser count.",
+    "legacy_tags": [
+     "successor"
+    ],
+    "audit_verdict": "NOT_A_LOSER",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
@@ -4041,7 +4207,28 @@
     "predecessor"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "SUPERSEDED",
+    "failure_reasons": [],
+    "superseded_by": "minisat-2.2.0",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Een & Sorensson, An Extensible SAT-solver, SAT 2003",
+      "says": "Describes the MiniSat core that 1.14 represents."
+     },
+     {
+      "kind": "release_notes",
+      "ref": "MiniSat 2.0/2.2 release history",
+      "says": "The 2.x line rewrote the solver (SimpSolver, new restart and clause-reduction policies) and replaced the 1.x line."
+     }
+    ],
+    "audit_note": "Superseded by its OWN successor version, not out-competed by a rival. No failure reason applies; recording one would overstate the evidence.",
+    "legacy_tags": [
+     "predecessor"
+    ],
+    "audit_verdict": "CONFIRMED",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
@@ -4323,7 +4510,17 @@
     "pathology"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [],
+    "audit_note": "The 'pathology' is stiffness -- a property of the PROBLEM that makes a non-stiff method exhaust its step budget. That is mathematics behaving correctly, not software that failed. ODEPACK remains in use (scipy's LSODA wraps it). LEAVES the loser count.",
+    "legacy_tags": [
+     "pathology"
+    ],
+    "audit_verdict": "NOT_A_LOSER",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
    "license_spdx": "Public-Domain",
@@ -5379,7 +5576,28 @@
     "contested_design"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "archived_technical_discussion",
+      "ref": "Kleppmann, How to do distributed locking (2016)",
+      "says": "Argues Redlock is unsafe for correctness-critical locking because it depends on bounded clock drift and pause times."
+     },
+     {
+      "kind": "archived_technical_discussion",
+      "ref": "antirez, Is Redlock safe? (2016 response)",
+      "says": "Disputes that analysis and defends the algorithm's assumptions."
+     }
+    ],
+    "audit_note": "Genuinely CONTESTED and never settled by the historical record. Both citations are kept; neither establishes a disposition. Declaring a winner here would be my judgement, not evidence.",
+    "legacy_tags": [
+     "contested_design"
+    ],
+    "audit_verdict": "UNKNOWN",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "FAITHFUL_PORT",
    "license_spdx": "MIT",
@@ -5751,7 +5969,25 @@
     "pathology"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "FAILED",
+    "failure_reasons": [
+     "concurrency_failure"
+    ],
+    "superseded_by": "the same system with priority inheritance enabled",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "retrospective",
+      "ref": "Glenn E. Reeves (JPL), What Really Happened on Mars Rover Pathfinder, 1997",
+      "says": "Repeated spacecraft resets were caused by priority inversion: a low-priority task held a mutex needed by a high-priority task while a medium-priority task ran; the fix was to enable priority inheritance on that mutex."
+     }
+    ],
+    "audit_note": "The FAILED subject is the deployed configuration the model encodes, not the SPIN model itself. This is a real failure that happened on another planet and was diagnosed and patched in flight.",
+    "legacy_tags": [
+     "pathology"
+    ],
+    "audit_verdict": "RECLASSIFIED",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
@@ -6004,7 +6240,8 @@
    "record_path": "techne/fossils/specimens/tiny-aes-c/record.json",
    "recipe_path": "techne/fossils/specimens/tiny-aes-c/recipe.json",
    "receipts": [
-    "techne/fossils/specimens/tiny-aes-c/receipts/run-tiny-aes-c-20260913T144339Z.json"
+    "techne/fossils/specimens/tiny-aes-c/receipts/run-tiny-aes-c-20260913T144339Z.json",
+    "techne/fossils/specimens/tiny-aes-c/receipts/run-tiny-aes-c-20260913T210142Z.json"
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\tiny-aes-c",
@@ -6242,7 +6479,23 @@
     "superseded_design"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "retrospective",
+      "ref": "Cascaval et al., Software Transactional Memory: Why Is It Only a Research Toy?, CACM 2008",
+      "says": "Documents large STM runtime overheads and argues the approach had not become practical. This supports a documented CRITIQUE; it does not establish that TinySTM was superseded."
+     }
+    ],
+    "audit_note": "The tag claimed supersession. I cannot cite a source establishing that STM lost to a named rival, so the claim is DEMOTED rather than migrated. The critique is preserved as evidence of the argument, not of an outcome.",
+    "legacy_tags": [
+     "superseded_design"
+    ],
+    "audit_verdict": "UNKNOWN",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-2.0",
@@ -6986,7 +7239,36 @@
     "loser"
    ],
    "historical_disposition": {
-    "state": "UNKNOWN"
+    "state": "LOSING_RIVAL",
+    "failure_reasons": [
+     "superior_rival"
+    ],
+    "superseded_by": "minisat-2.2.0",
+    "rival_of": "minisat-2.2.0",
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Moskewicz, Madigan, Zhao, Zhang, Malik, Chaff: Engineering an Efficient SAT Solver, DAC 2001",
+      "says": "Chaff introduced VSIDS and two-literal watching, the techniques later CDCL solvers adopted."
+     },
+     {
+      "kind": "original_paper",
+      "ref": "Een & Sorensson, An Extensible SAT-solver, SAT 2003",
+      "says": "MiniSat reimplements the same CDCL techniques in a far smaller core, and became the solver subsequent work built on."
+     },
+     {
+      "kind": "benchmark_history",
+      "ref": "SAT Competition results (zChaff 2002; MiniSat placements from 2005)",
+      "says": "zChaff won the 2002 competition; MiniSat and its descendants displaced it in later years."
+     }
+    ],
+    "audit_note": "Historically pivotal AND displaced -- the ideas won while the implementation lost.",
+    "legacy_tags": [
+     "failed_branch",
+     "loser"
+    ],
+    "audit_verdict": "CONFIRMED",
+    "audited_utc": "2026-09-13T21:06:40Z"
    },
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "NOASSERTION",

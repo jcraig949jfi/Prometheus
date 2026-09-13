@@ -272,5 +272,28 @@
     "how_we_know_it_runs": "not executed; body tree_sha256 24b875969234412b pinned in UPSTREAM_HASHES.txt",
     "what_humans_used_it_for": "deliver a reliable byte stream over an unreliable internet using windows and retransmission timers"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "FAILED",
+    "failure_reasons": [
+      "incorrect_assumptions",
+      "performance_collapse"
+    ],
+    "superseded_by": "bsd-tcp-4.3-tahoe-1988",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "original_paper",
+        "ref": "Jacobson & Karels, Congestion Avoidance and Control, SIGCOMM 1988",
+        "says": "In October 1986 the LBL-to-Berkeley path collapsed from 32 kbit/s to 40 bit/s; the paper attributes this to TCP lacking congestion control and introduces slow start and congestion avoidance as the fix."
+      }
+    ],
+    "audit_note": "This design failed in production on the real Internet, not merely in comparison.",
+    "legacy_tags": [
+      "known_bad",
+      "failed_branch"
+    ],
+    "audit_verdict": "CONFIRMED",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }
