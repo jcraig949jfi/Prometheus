@@ -46,116 +46,18 @@ import time
 
 from . import record, vault
 
+# archive kinds restore() can re-extract a dirtied file from (module-level: the batch-10
+# de-duplication briefly deleted this along with the stale acquire() it happened to sit after,
+# which test_fossil_isolation caught immediately).
+ARCHIVE_SUFFIXES = (".tar.gz", ".tgz", ".tar.bz2", ".tar.xz", ".tar", ".zip")
+
 MAX_CAPTURE = 4000
 
 
 # --------------------------------------------------------------------------- runners
-def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | None, timeout: int) -> dict:
-    """Run `cmd` in <body>/<rel>. $HARNESS is the body's harness/ copy (Techne's smoke inputs),
-    $BODY the body root, whatever the runner; the command text in the receipt is what ran."""
-    t0 = time.time()
-    if runner == "wsl":
-        b = vault.to_wsl(body)
-        pre = "export BODY=%s HARNESS=%s; cd %s && " % (shlex.quote(b), shlex.quote(b + "/harness"), shlex.quote(b + "/" + rel))
-        full = ["wsl.exe", "-e", "bash", "-lc", pre + cmd]
-    elif runner == "docker":
-        pre = "export BODY=/w HARNESS=/w/harness; cd %s && " % shlex.quote("/w/" + rel)
-        full = ["wsl.exe", "-e", "bash", "-lc",
-                "docker run --rm -v %s:/w -w /w %s bash -lc %s" % (
-                    shlex.quote(vault.to_wsl(body)), shlex.quote(image or "prometheus-fossil-c:bookworm"), shlex.quote(pre + cmd))]
-    elif runner == "native":
-        b = str(body).replace("\\", "/")
-        pre = "export BODY=%s HARNESS=%s; cd %s && " % (shlex.quote(b), shlex.quote(b + "/harness"), shlex.quote(b + "/" + rel))
-        full = ["bash", "-lc", pre + cmd]
-    else:
-        raise ValueError("unknown runner " + runner)
-    try:
-        p = subprocess.run(full, capture_output=True, text=True, timeout=timeout, errors="replace")
-        rc, out, err = p.returncode, p.stdout or "", p.stderr or ""
-    except subprocess.TimeoutExpired as e:
-        so = e.stdout.decode("utf-8", "replace") if isinstance(e.stdout, bytes) else (e.stdout or "")
-        rc, out, err = -1, so, "TIMEOUT after %ss" % timeout
-    return {"cmd": cmd, "runner": runner, "exit": rc, "seconds": round(time.time() - t0, 2),
-            "stdout": out, "stderr": err}
-
-
-def _clip(s: str) -> dict:
-    if len(s) <= MAX_CAPTURE:
-        return {"text": s}
-    return {"head": s[:MAX_CAPTURE // 2], "tail": s[-MAX_CAPTURE // 2:], "bytes": len(s), "truncated": True}
-
-
-def _expect_ok(res: dict, expect: dict | None) -> tuple[bool, list[str]]:
-    expect = expect or {"exit": 0}
-    why = []
-    if "exit" in expect and res["exit"] != expect["exit"]:
-        why.append("exit %s != expected %s" % (res["exit"], expect["exit"]))
-    for s in expect.get("stdout_contains", []):
-        if s not in res["stdout"]:
-            why.append("stdout lacks %r" % s)
-    for s in expect.get("stderr_contains", []):
-        if s not in res["stderr"]:
-            why.append("stderr lacks %r" % s)
-    if expect.get("stdout_regex") and not re.search(expect["stdout_regex"], res["stdout"], re.S):
-        why.append("stdout does not match /%s/" % expect["stdout_regex"])
-    if expect.get("stdout_not_contains"):
-        for s in expect["stdout_not_contains"]:
-            if s in res["stdout"]:
-                why.append("stdout unexpectedly contains %r" % s)
-    return (not why), why
 
 
 # --------------------------------------------------------------------------- acquire
-def acquire(specimen_id: str) -> dict:
-    rec = record.load(specimen_id)
-    origin = rec["source_origin"]
-    body = vault.body_dir(specimen_id)
-    up = body / "upstream"
-    up.mkdir(parents=True, exist_ok=True)
-    out = {"specimen_id": specimen_id, "fetched": [], "body": str(body)}
-    for art in origin.get("artifacts", []):
-        kind = art["kind"]
-        if kind == "url":
-            dest = up / art["filename"]
-            if dest.exists() and art.get("sha256") and vault.sha256_file(dest) == art["sha256"]:
-                f = {"url": art["url"], "path": str(dest), "sha256": art["sha256"], "cached": True}
-            else:
-                f = vault.fetch_url(art["url"], dest)
-                if art.get("sha256") and f["sha256"] != art["sha256"]:
-                    raise RuntimeError("sha256 mismatch for %s: got %s expected %s" % (art["url"], f["sha256"], art["sha256"]))
-            art["sha256"] = f["sha256"]
-            art["bytes"] = dest.stat().st_size
-            if art.get("extract", True) and dest.name.lower().endswith((".gz", ".tgz", ".zip", ".bz2", ".xz", ".tar")):
-                root = vault.extract(dest, up / "tree")
-                art["extracted_to"] = str(root.relative_to(body)).replace("\\", "/")
-            out["fetched"].append(f)
-        elif kind == "git":
-            dest = up / "tree"
-            g = vault.git_pin(art["url"], art["commit"], dest)
-            art.update({"commit_resolved": g["commit"], "commit_date": g["commit_date"]})
-            if art["commit"] == "HEAD":
-                art["commit"] = g["commit"]          # the pin is exact from now on
-            out["fetched"].append(g)
-        else:
-            raise ValueError("unknown artifact kind " + kind)
-    # hash EVERYTHING under upstream/: the immutable archive(s) as fetched plus the extracted
-    # tree plus any loose files, so one tree hash covers the whole body
-    rows = vault.hash_tree(up)
-    vault.write_hashes(specimen_id, rows)
-    rec["hashes"] = {"tree_sha256": vault.tree_hash_of(rows), "n_files": len(rows),
-                     "bytes": sum(r[2] for r in rows),
-                     "artifacts": [{"filename": a.get("filename") or a.get("url"), "sha256": a.get("sha256"),
-                                    "commit": a.get("commit_resolved")} for a in origin.get("artifacts", [])],
-                     "body_location": str(body), "hash_list": "techne/fossils/specimens/%s/UPSTREAM_HASHES.txt" % specimen_id}
-    rec["acquisition_date"] = time.strftime("%Y-%m-%d", time.gmtime())
-    record.save(rec)
-    out["tree_sha256"] = rec["hashes"]["tree_sha256"]
-    out["n_files"] = len(rows)
-    print(json.dumps({k: v for k, v in out.items() if k != "fetched"}, indent=1))
-    return out
-
-
-ARCHIVE_SUFFIXES = (".tar.gz", ".tgz", ".tar.bz2", ".tar.xz", ".tar", ".zip")
 
 
 def _want_rows(specimen_id: str) -> dict:
@@ -440,15 +342,6 @@ def acquire(specimen_id: str) -> dict:
     out["n_files"] = len(rows)
     print(json.dumps({k: v for k, v in out.items() if k != "fetched"}, indent=1))
     return out
-
-
-def verify(specimen_id: str) -> bool:
-    body = vault.body_dir(specimen_id)
-    rows = vault.hash_tree(body / "upstream")
-    want = record.load(specimen_id)["hashes"].get("tree_sha256")
-    got = vault.tree_hash_of(rows)
-    print(specimen_id, "tree", got, "matches" if got == want else "DIFFERS FROM RECORD %s" % want)
-    return got == want
 
 
 # --------------------------------------------------------------------------- mirror
