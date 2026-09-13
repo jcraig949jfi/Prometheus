@@ -23,31 +23,36 @@
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/FORMAT",
         "filename": "FORMAT",
-        "extract": false
+        "extract": false,
+        "sha256": "57aaa553ceccd59a4145a7c8696e614f21696404214d3ee7199e9c87fdccf624"
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/stand.gz",
         "filename": "stand.gz",
-        "extract": false
+        "extract": false,
+        "sha256": "8f5f38d1c141f598bf4fca16277960f463486f5d678e883a7de97af11ab148a2"
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/miniroot.gz",
         "filename": "miniroot.gz",
-        "extract": false
+        "extract": false,
+        "sha256": "9f3c27b7ea99cec22b22a9eb8e25f85287087d031681476158e98b6ffffdebb5"
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/rootdump.gz",
         "filename": "rootdump.gz",
-        "extract": false
+        "extract": false,
+        "sha256": "46d1ab1c41c330be47b04812f779c7e535b3e0d4d251b03670455660b212b125"
       },
       {
         "kind": "url",
         "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/usr.tar.gz",
         "filename": "usr.tar.gz",
-        "extract": false
+        "extract": false,
+        "sha256": "8565ff6f85ade24a1b63fdc5f7f5befe49b70bf4d44281cbfb015742ba379cc4"
       }
     ]
   },
@@ -182,5 +187,31 @@
     "how_we_know_it_runs": "RUNNABLE_EMULATED / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/bsd-4.3-distribution-tape-1986/receipts/run-bsd-4.3-distribution-tape-1986-20260913T065059Z.json",
     "what_humans_used_it_for": "install a complete 4.3BSD system on a VAX from one tape"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+      "incorrect_assumptions"
+    ],
+    "superseded_by": "bsd-4.3-reno-distribution-tape-1990",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "original_paper",
+        "ref": "Jacobson & Karels, Congestion Avoidance and Control, SIGCOMM 1988",
+        "says": "The congestion-control algorithms absent from 4.3BSD were added in 4.3BSD-Tahoe, making the plain 4.3BSD TCP the pre-fix design."
+      },
+      {
+        "kind": "standards_history",
+        "ref": "4.3BSD -> 4.3BSD-Tahoe -> 4.3BSD-Reno -> 4.4BSD release lineage",
+        "says": "Each BSD release supersedes the previous distribution."
+      }
+    ],
+    "audit_note": "Superseded as a DISTRIBUTION; its TCP is the before-point of the congestion lineage.",
+    "legacy_tags": [
+      "known_bad_lineage"
+    ],
+    "audit_verdict": "CONFIRMED",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

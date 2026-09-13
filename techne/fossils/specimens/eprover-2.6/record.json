@@ -1,0 +1,138 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "eprover-2.6",
+  "canonical_name": "E 2.6 -- a superposition-based theorem prover for first-order logic with equality (Stephan Schulz)",
+  "aliases": [
+    "E prover",
+    "eprover"
+  ],
+  "lineage": "Automated theorem proving by SATURATION: the resolution lineage (Robinson 1965) as refined into superposition/paramodulation with term orderings and a given-clause loop -- Otter (McCune 1988) -> E (Schulz 1998-) and Vampire, the engines that win CASC. Distinct execution model from every solver in the vault: it searches a space of DERIVED CLAUSES for the empty clause, proving a conjecture by refuting its negation. First theorem-proving fossil.",
+  "domain": [
+    "theorem-proving",
+    "automated-reasoning",
+    "first-order-logic",
+    "saturation",
+    "search",
+    "symbolic"
+  ],
+  "era": "1965 (resolution); 1998- (E); 2.6 = 2022",
+  "version": "github.com/eprover/eprover master as of 2026-09-13 (commit in hashes; 3.x line)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/eprover/eprover",
+        "commit": "3b7afc70fe77d3118bb95144c4735ca45f5f31cf",
+        "commit_resolved": "3b7afc70fe77d3118bb95144c4735ca45f5f31cf",
+        "commit_date": "2026-09-02T22:08:04+02:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/eprover/eprover (Schulz)"
+  },
+  "hashes": {
+    "tree_sha256": "fe9c8d0b1272629df58a27611190c4d4869b708c98f3539ffe12ef2a3eb42e2e",
+    "n_files": 1472,
+    "bytes": 11586638,
+    "artifacts": [
+      {
+        "filename": "https://github.com/eprover/eprover",
+        "sha256": null,
+        "commit": "3b7afc70fe77d3118bb95144c4735ca45f5f31cf"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\eprover-2.6",
+    "hash_list": "techne/fossils/specimens/eprover-2.6/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-2.0-or-later",
+    "status": "copyleft",
+    "evidence": "COPYING in the tree"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C"
+  ],
+  "build_system": "./configure && make",
+  "compiler_or_interpreter": "E built from source (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a C compiler; the tree bundles its build"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "eprover --auto --tptp3-format problem.p ; 'Proof found!' / 'No proof found!'"
+  ],
+  "example": {
+    "command": "eprover --auto --tptp3-format group.p",
+    "input": "a group-theory conjecture in TPTP (a group where x*x=e for all x is abelian)",
+    "output": "'# Proof found!' + SZS status Theorem (the ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Schulz, E - A Brainiac Theorem Prover, AI Communications 2002",
+    "Robinson, A Machine-Oriented Logic Based on the Resolution Principle, JACM 1965"
+  ],
+  "human_capability_summary": {
+    "built_to": "decide whether a first-order conjecture follows from axioms, by systematically deriving consequences until it finds a contradiction with the negated goal",
+    "pressure": "the search space of derivable clauses is unbounded; term orderings, literal selection and the given-clause loop keep it tractable on real problems",
+    "success_means": "a conjecture that is a theorem is proved (empty clause derived); a checkable proof object is emitted"
+  },
+  "known_human_problem_solved": "automated first-order theorem proving",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "unbounded search; combinatorial explosion of derived clauses",
+  "human_failure_condition": "the prover runs forever or exhausts memory on a true theorem it cannot order well (incompleteness of the strategy, not of the calculus)",
+  "behavioral_entry_point": "give it a harder algebra problem (e.g. a ring identity) and watch generated/processed clause counts and time; vary --auto vs a fixed strategy",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Robinson 1965 (resolution); Bachmair-Ganzinger (superposition)",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "cocagne-plain-paxos",
+      "note": "both search, but for a proof vs for agreement -- different problems (Techne records the domain, not equivalence)"
+    }
+  ],
+  "acquisition_tags": [
+    "batch07",
+    "new_domain",
+    "theorem_proving",
+    "search",
+    "symbolic",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/eprover-2.6/receipts/run-eprover-2.6-20260913T110350Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\eprover-2.6 ; tracked techne/fossils/specimens/eprover-2.6",
+    "where_it_came_from": "https://github.com/eprover/eprover ; ORIGINAL_AUTHORITATIVE_RELEASE @ 3b7afc70fe77d3118bb95144c4735ca45f5f31cf",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run eprover-2.6",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/eprover-2.6/receipts/run-eprover-2.6-20260913T110350Z.json",
+    "what_humans_used_it_for": "decide whether a first-order conjecture follows from axioms, by systematically deriving consequences until it finds a contradiction with the negated goal"
+  },
+  "seat": "Techne"
+}

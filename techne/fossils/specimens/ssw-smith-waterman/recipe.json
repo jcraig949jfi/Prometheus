@@ -1,0 +1,34 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/src",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make (ssw_test)",
+      "cmd": "make -s 2>&1 | grep -iE '\\berror' | head -3; test -x ./ssw_test && echo built",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "local-align a query against a reference sharing a conserved core (SIMD Smith-Waterman): optimal score + CIGAR",
+      "cmd": "./ssw_test -c $HARNESS/ref.fa $HARNESS/query.fa 2>&1 | grep -iE 'optimal|score|target|cigar|=' | head -12",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(optimal_alignment_score|score)"
+      },
+      "timeout": 300
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: the query is a 40 bp read exactly matching a slice of the 120 bp reference, so the optimal local-alignment score is the full-match score and the CIGAR is 40M. SSW computes the exact SW optimum on SSE2 lanes; workdir is the extracted repo's src/. The scalar global/local DP pair (EMBOSS/seq-align) is a later depth add."
+}

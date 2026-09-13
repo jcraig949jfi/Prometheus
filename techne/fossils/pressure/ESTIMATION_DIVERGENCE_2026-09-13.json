@@ -1,0 +1,49 @@
+{
+ "schema": "techne.fossil.estimation_divergence/1",
+ "written_utc": "2026-09-13T11:10:50Z",
+ "fossil_driven": "filterpy-labbe",
+ "method": "a constant-velocity KalmanFilter is run against a target that steps into an acceleration at k=40 (model mismatch), under four process-noise scales Q; record final Kalman gain, the filter's reported position sigma vs its actual error after the manoeuvre, and the overconfidence ratio (actual RMSE / reported sigma).",
+ "note": "raw divergence behaviour of a preserved Kalman filter; NOT a tuning ranking. The failed branch is the overconfident/'smug' filter: with Q too small the gain collapses, the filter ignores measurements, and its reported confidence detaches from its true error. A matched Q is the tracking control.",
+ "rows": [
+  {
+   "Q_scale": 1e-06,
+   "final_gain": 0.035859494789448734,
+   "reported_sigma_final": 0.37873206777060076,
+   "actual_abs_error_final": 299.4058531430379,
+   "actual_rmse_after_manoeuvre": 212.045393840225,
+   "reported_sigma_after_manoeuvre": 0.403650002753068,
+   "overconfidence_ratio_error_over_reported": 525.3199365638139,
+   "diverged": true
+  },
+  {
+   "Q_scale": 0.0001,
+   "final_gain": 0.09516357859756953,
+   "reported_sigma_final": 0.6169718910860349,
+   "actual_abs_error_final": 58.67324592916134,
+   "actual_rmse_after_manoeuvre": 58.57884019664053,
+   "reported_sigma_after_manoeuvre": 0.6170558132694258,
+   "overconfidence_ratio_error_over_reported": 94.93280662289649,
+   "diverged": true
+  },
+  {
+   "Q_scale": 0.01,
+   "final_gain": 0.27110638343527543,
+   "reported_sigma_final": 1.0413575436616866,
+   "actual_abs_error_final": 5.048177118411559,
+   "actual_rmse_after_manoeuvre": 5.291895624327837,
+   "reported_sigma_after_manoeuvre": 1.041357543662046,
+   "overconfidence_ratio_error_over_reported": 5.081727843175089,
+   "diverged": true
+  },
+  {
+   "Q_scale": 1.0,
+   "final_gain": 0.6320850016101965,
+   "reported_sigma_final": 1.590075471932319,
+   "actual_abs_error_final": 0.42465384640354387,
+   "actual_rmse_after_manoeuvre": 1.3276077618195947,
+   "reported_sigma_after_manoeuvre": 1.590075471932319,
+   "overconfidence_ratio_error_over_reported": 0.8349338036176587,
+   "diverged": false
+  }
+ ]
+}

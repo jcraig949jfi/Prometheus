@@ -1,0 +1,5 @@
+print("factor 2^67-1: ", factor(2^67-1))
+print("prime(1000) = ", prime(1000))
+E = ellinit([0,0,1,-1,0]); print("ellap(11): ", ellap(E, 11))
+print("class number disc -23: ", qfbclassno(-23))
+print("isprime(2^61-1): ", isprime(2^61-1))

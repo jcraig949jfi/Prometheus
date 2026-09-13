@@ -1,0 +1,104 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "md5-rfc1321",
+  "receipt_id": "run-md5-rfc1321-20260913T144545Z",
+  "written_utc": "20260913T144545Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "2a63ad17b696314834ac04c79153ef9cd7c93ba4c0a62d32d43ee5e136d184ae",
+  "recipe_sha256": "91b7287c969a1c3b103c0b4a24360730bb7a2604f87aa0388befc8d28180e43b",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "extract the appendix sources from the RFC text, then compile with -DMD=5",
+      "cmd": "sed -n '/^A\\.1 global\\.h/,/^A\\.2 md5\\.h/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > global.h; sed -n '/^A\\.2 md5\\.h/,/^A\\.3 md5c\\.c/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > md5.h; sed -n '/^A\\.3 md5c\\.c/,/^A\\.4 mddriver\\.c/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > md5c.c; sed -n '/^A\\.4 mddriver\\.c/,/^A\\.5 Test suite/p' rfc1321.txt | sed '1d;$d' | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' | awk '{ if ($0 ~ /^[[:space:]]*$/ && cont) next; print; cont = ($0 ~ /\\\\[[:space:]]*$/) }' > mddriver.c; wc -l global.h md5.h md5c.c mddriver.c; gcc -w -DMD=5 -o mddriver md5c.c mddriver.c 2>&1 | head -5; test -x ./mddriver && echo BUILT",
+      "exit": 0,
+      "seconds": 1.04,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "   38 global.h\n   44 md5.h\n  371 md5c.c\n  259 mddriver.c\n  712 total\nBUILT\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "run the RFC's own MD5 test suite (-x) and compare with the digests printed in the RFC",
+      "cmd": "./mddriver -x 2>&1 | head -12",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'd41d8cd98f00b204e9800998ecf8427e'",
+        "stdout lacks '0cc175b9c0f1b6a831c399e269772661'",
+        "stdout lacks '900150983cd24fb0d6963f7d28e17f72'"
+      ],
+      "stdout": {
+        "text": "MD5 test suite:\nMD5 (\"\") = e4c23762ed2823a27e62a64b95c024e7\nMD5 (\"a\") = 793a9bc07e209b286fa416d6ee29a85d\nMD5 (\"abc\") = 7999dc75e8da648c6727e137c5b77803\nMD5 (\"message digest\") = 840793371ec58a6cc84896a5153095de\nMD5 (\"abcdefghijklmnopqrstuvwxyz\") = 98ef94f1f01ac7b91918c6747fdebd96\nMD5 (\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\") = dabcd637cde443764c4f8aa099cf23be\nMD5 (\"12345678901234567890123456789012345678901234567890123456789012345678901234567890\") = e29c01a1e2a663c26b4a68bf7ec42df7\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "global.h",
+      "sha256": "bd656e1a38c45f3ffb7e93551bb85e0b3f0d6f0986903069d0cce66c7b82889b",
+      "bytes": 789
+    },
+    {
+      "path": "md5.h",
+      "sha256": "3f21c223677100d01a6c2749c02e385f6a662c23e9cb2918eba373af2cea5a11",
+      "bytes": 1358
+    },
+    {
+      "path": "md5c.c",
+      "sha256": "55f5d01dd3a106776a030990ad3e0e24ecce2e65fdcc4e89f5dc39aea976e950",
+      "bytes": 10461
+    },
+    {
+      "path": "mddriver",
+      "sha256": "10218827a30bdedd040b036d2be94492669dcc067e070df4850897d6628b097d",
+      "bytes": 25240
+    },
+    {
+      "path": "mddriver.c",
+      "sha256": "0fcd85bec65f29eaa10fe913999826193ae19d6ee751228ca9026840baa5a21e",
+      "bytes": 4888
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "2a63ad17b696314834ac04c79153ef9cd7c93ba4c0a62d32d43ee5e136d184ae",
+  "body_preserved": true
+}

@@ -1,0 +1,173 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "md5-rfc1321",
+  "canonical_name": "MD5 (RFC 1321 reference implementation) -- a hash function whose collision resistance was broken",
+  "aliases": [
+    "MD5",
+    "RFC 1321"
+  ],
+  "lineage": "MD5 (Rivest, 1992, RFC 1321) was the default cryptographic hash for a decade: 128-bit digest, Merkle-Damgard over a 512-bit block compression function. Wang et al. published practical collisions in 2004-2005, and RFC 6151 records that MD5 is no longer acceptable where collision resistance is required. The fossil is the RFC's own reference C code -- the standard and its implementation in one artifact.",
+  "domain": [
+    "cryptography",
+    "hash-function",
+    "merkle-damgard",
+    "security",
+    "loser"
+  ],
+  "era": "1992 (RFC 1321); collisions demonstrated 2004-2005; deprecated by RFC 6151 (2011)",
+  "version": "RFC 1321 text including the reference implementation (appendix)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.ietf.org/rfc/rfc1321.txt",
+        "filename": "rfc1321.txt",
+        "extract": false,
+        "sha256": "284a79d148400d9cd2a423211d1103b5cef0fb9256a4cbe6d7ebe5197c3149dd"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "archive": "ietf.org/rfc/rfc1321.txt",
+    "note": "the RFC carries the reference implementation in its appendix"
+  },
+  "hashes": {
+    "tree_sha256": "2a63ad17b696314834ac04c79153ef9cd7c93ba4c0a62d32d43ee5e136d184ae",
+    "n_files": 1,
+    "bytes": 35222,
+    "artifacts": [
+      {
+        "filename": "rfc1321.txt",
+        "sha256": "284a79d148400d9cd2a423211d1103b5cef0fb9256a4cbe6d7ebe5197c3149dd",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\md5-rfc1321",
+    "hash_list": "techne/fossils/specimens/md5-rfc1321/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "NOASSERTION",
+    "status": "RSA Data Security reference-implementation licence in the RFC",
+    "evidence": "RFC 1321 appendix header"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C",
+    "RFC text"
+  ],
+  "build_system": "cc (extract the appendix sources)",
+  "compiler_or_interpreter": "gcc (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a C compiler"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "MD5 of a byte string; the RFC ships its own test suite of known digests"
+  ],
+  "example": {
+    "command": "compile the appendix reference code and run its test driver",
+    "input": "the RFC 1321 test suite strings (\"\", \"a\", \"abc\", ...)",
+    "output": "the digests printed IN the RFC (the ORACLE: the standard grades itself)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "RFC 1321, The MD5 Message-Digest Algorithm",
+    "RFC 6151, Updated Security Considerations for MD5 and HMAC-MD5",
+    "Wang & Yu, How to Break MD5 and Other Hash Functions, EUROCRYPT 2005"
+  ],
+  "human_capability_summary": {
+    "built_to": "produce a short fixed-length fingerprint of a message that is infeasible to forge or collide",
+    "pressure": "fingerprints had to be cheap enough to hash whole files while resisting an adversary searching for two messages with one digest",
+    "success_means": "matching the RFC's published digests, and no feasible way to find two messages sharing one"
+  },
+  "known_human_problem_solved": "message fingerprinting / integrity checking",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "an adversary free to choose both messages (collision), with growing compute and improving differential cryptanalysis",
+  "human_failure_condition": "collision resistance fell -- Wang et al. produced colliding pairs; MD5 is now unsuitable for signatures or certificates while remaining a correct checksum",
+  "behavioral_entry_point": "run the RFC's own test vectors; the failure is not visible in them at all, which is itself the point -- a broken hash still passes its published tests",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded",
+      "to": "the SHA-2 family",
+      "note": "deployment moved to SHA-256 after the collision results"
+    }
+  ],
+  "acquisition_tags": [
+    "batch09",
+    "loser",
+    "security",
+    "archival_only",
+    "standard_and_impl"
+  ],
+  "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+      "security_weakness",
+      "incorrect_assumptions"
+    ],
+    "superseded_by": "SHA-2 family",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "standards_history",
+        "ref": "RFC 6151 (2011), Updated Security Considerations for MD5 and HMAC-MD5",
+        "says": "MD5 is no longer acceptable where collision resistance is required, and new protocol designs should not use it."
+      },
+      {
+        "kind": "original_paper",
+        "ref": "Wang & Yu, How to Break MD5 and Other Hash Functions, EUROCRYPT 2005",
+        "says": "Practical collisions for MD5 can be constructed, breaking its collision resistance."
+      }
+    ]
+  },
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144334Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144429Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144545Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144827Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\md5-rfc1321 ; tracked techne/fossils/specimens/md5-rfc1321",
+    "where_it_came_from": "https://www.ietf.org/rfc/rfc1321.txt ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run md5-rfc1321",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144827Z.json",
+    "what_humans_used_it_for": "produce a short fixed-length fingerprint of a message that is infeasible to forge or collide"
+  },
+  "seat": "Techne"
+}

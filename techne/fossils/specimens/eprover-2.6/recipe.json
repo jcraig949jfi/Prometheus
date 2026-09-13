@@ -1,0 +1,51 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "./configure && make (builds PROVER/eprover)",
+      "cmd": "./configure >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; B=$(find . -name eprover -type f -perm -u+x | head -1); echo BIN=$B; test -n \"$B\"",
+      "timeout": 1800
+    }
+  ],
+  "runs": [
+    {
+      "name": "prove a group-theory theorem (GRP: shipped TPTP, Unsatisfiable = theorem)",
+      "cmd": "B=$(find . -name eprover -type f -perm -u+x | head -1); $B --auto --tptp3-format EXAMPLE_PROBLEMS/TPTP/GRP237-1.p 2>&1 | grep -E 'SZS status|Proof found|processed clauses|generated clauses' | head -6",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "SZS status (Unsatisfiable|Theorem|ContradictoryAxioms)"
+      },
+      "timeout": 300
+    },
+    {
+      "name": "prove a Boolean-algebra lemma (BOO006-1, Unsatisfiable)",
+      "cmd": "B=$(find . -name eprover -type f -perm -u+x | head -1); $B --auto --tptp3-format EXAMPLE_PROBLEMS/TPTP/BOO006-1.p 2>&1 | grep -E 'SZS status|Proof found' | head -3",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "SZS status (Unsatisfiable|Theorem)"
+      },
+      "timeout": 300
+    },
+    {
+      "name": "the search cost (generated vs processed clauses) -- the saturation working",
+      "cmd": "B=$(find . -name eprover -type f -perm -u+x | head -1); $B --auto -s EXAMPLE_PROBLEMS/TPTP/GRP237-1.p 2>&1 | grep -iE 'clauses|generated|processed' | head -6; true",
+      "expect": {
+        "exit": 0
+      },
+      "timeout": 300
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: the shipped TPTP problems carry '% Status : Unsatisfiable' -- a refutation exists, i.e. the conjecture is a theorem; E must report SZS status Unsatisfiable/Theorem. The problems are E's own EXAMPLE_PROBLEMS/TPTP. Saturation is visible in the generated/processed clause counts."
+}

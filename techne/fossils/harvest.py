@@ -46,116 +46,18 @@ import time
 
 from . import record, vault
 
+# archive kinds restore() can re-extract a dirtied file from (module-level: the batch-10
+# de-duplication briefly deleted this along with the stale acquire() it happened to sit after,
+# which test_fossil_isolation caught immediately).
+ARCHIVE_SUFFIXES = (".tar.gz", ".tgz", ".tar.bz2", ".tar.xz", ".tar", ".zip")
+
 MAX_CAPTURE = 4000
 
 
 # --------------------------------------------------------------------------- runners
-def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | None, timeout: int) -> dict:
-    """Run `cmd` in <body>/<rel>. $HARNESS is the body's harness/ copy (Techne's smoke inputs),
-    $BODY the body root, whatever the runner; the command text in the receipt is what ran."""
-    t0 = time.time()
-    if runner == "wsl":
-        b = vault.to_wsl(body)
-        pre = "export BODY=%s HARNESS=%s; cd %s && " % (shlex.quote(b), shlex.quote(b + "/harness"), shlex.quote(b + "/" + rel))
-        full = ["wsl.exe", "-e", "bash", "-lc", pre + cmd]
-    elif runner == "docker":
-        pre = "export BODY=/w HARNESS=/w/harness; cd %s && " % shlex.quote("/w/" + rel)
-        full = ["wsl.exe", "-e", "bash", "-lc",
-                "docker run --rm -v %s:/w -w /w %s bash -lc %s" % (
-                    shlex.quote(vault.to_wsl(body)), shlex.quote(image or "prometheus-fossil-c:bookworm"), shlex.quote(pre + cmd))]
-    elif runner == "native":
-        b = str(body).replace("\\", "/")
-        pre = "export BODY=%s HARNESS=%s; cd %s && " % (shlex.quote(b), shlex.quote(b + "/harness"), shlex.quote(b + "/" + rel))
-        full = ["bash", "-lc", pre + cmd]
-    else:
-        raise ValueError("unknown runner " + runner)
-    try:
-        p = subprocess.run(full, capture_output=True, text=True, timeout=timeout, errors="replace")
-        rc, out, err = p.returncode, p.stdout or "", p.stderr or ""
-    except subprocess.TimeoutExpired as e:
-        so = e.stdout.decode("utf-8", "replace") if isinstance(e.stdout, bytes) else (e.stdout or "")
-        rc, out, err = -1, so, "TIMEOUT after %ss" % timeout
-    return {"cmd": cmd, "runner": runner, "exit": rc, "seconds": round(time.time() - t0, 2),
-            "stdout": out, "stderr": err}
-
-
-def _clip(s: str) -> dict:
-    if len(s) <= MAX_CAPTURE:
-        return {"text": s}
-    return {"head": s[:MAX_CAPTURE // 2], "tail": s[-MAX_CAPTURE // 2:], "bytes": len(s), "truncated": True}
-
-
-def _expect_ok(res: dict, expect: dict | None) -> tuple[bool, list[str]]:
-    expect = expect or {"exit": 0}
-    why = []
-    if "exit" in expect and res["exit"] != expect["exit"]:
-        why.append("exit %s != expected %s" % (res["exit"], expect["exit"]))
-    for s in expect.get("stdout_contains", []):
-        if s not in res["stdout"]:
-            why.append("stdout lacks %r" % s)
-    for s in expect.get("stderr_contains", []):
-        if s not in res["stderr"]:
-            why.append("stderr lacks %r" % s)
-    if expect.get("stdout_regex") and not re.search(expect["stdout_regex"], res["stdout"], re.S):
-        why.append("stdout does not match /%s/" % expect["stdout_regex"])
-    if expect.get("stdout_not_contains"):
-        for s in expect["stdout_not_contains"]:
-            if s in res["stdout"]:
-                why.append("stdout unexpectedly contains %r" % s)
-    return (not why), why
 
 
 # --------------------------------------------------------------------------- acquire
-def acquire(specimen_id: str) -> dict:
-    rec = record.load(specimen_id)
-    origin = rec["source_origin"]
-    body = vault.body_dir(specimen_id)
-    up = body / "upstream"
-    up.mkdir(parents=True, exist_ok=True)
-    out = {"specimen_id": specimen_id, "fetched": [], "body": str(body)}
-    for art in origin.get("artifacts", []):
-        kind = art["kind"]
-        if kind == "url":
-            dest = up / art["filename"]
-            if dest.exists() and art.get("sha256") and vault.sha256_file(dest) == art["sha256"]:
-                f = {"url": art["url"], "path": str(dest), "sha256": art["sha256"], "cached": True}
-            else:
-                f = vault.fetch_url(art["url"], dest)
-                if art.get("sha256") and f["sha256"] != art["sha256"]:
-                    raise RuntimeError("sha256 mismatch for %s: got %s expected %s" % (art["url"], f["sha256"], art["sha256"]))
-            art["sha256"] = f["sha256"]
-            art["bytes"] = dest.stat().st_size
-            if art.get("extract", True) and dest.name.lower().endswith((".gz", ".tgz", ".zip", ".bz2", ".xz", ".tar")):
-                root = vault.extract(dest, up / "tree")
-                art["extracted_to"] = str(root.relative_to(body)).replace("\\", "/")
-            out["fetched"].append(f)
-        elif kind == "git":
-            dest = up / "tree"
-            g = vault.git_pin(art["url"], art["commit"], dest)
-            art.update({"commit_resolved": g["commit"], "commit_date": g["commit_date"]})
-            if art["commit"] == "HEAD":
-                art["commit"] = g["commit"]          # the pin is exact from now on
-            out["fetched"].append(g)
-        else:
-            raise ValueError("unknown artifact kind " + kind)
-    # hash EVERYTHING under upstream/: the immutable archive(s) as fetched plus the extracted
-    # tree plus any loose files, so one tree hash covers the whole body
-    rows = vault.hash_tree(up)
-    vault.write_hashes(specimen_id, rows)
-    rec["hashes"] = {"tree_sha256": vault.tree_hash_of(rows), "n_files": len(rows),
-                     "bytes": sum(r[2] for r in rows),
-                     "artifacts": [{"filename": a.get("filename") or a.get("url"), "sha256": a.get("sha256"),
-                                    "commit": a.get("commit_resolved")} for a in origin.get("artifacts", [])],
-                     "body_location": str(body), "hash_list": "techne/fossils/specimens/%s/UPSTREAM_HASHES.txt" % specimen_id}
-    rec["acquisition_date"] = time.strftime("%Y-%m-%d", time.gmtime())
-    record.save(rec)
-    out["tree_sha256"] = rec["hashes"]["tree_sha256"]
-    out["n_files"] = len(rows)
-    print(json.dumps({k: v for k, v in out.items() if k != "fetched"}, indent=1))
-    return out
-
-
-ARCHIVE_SUFFIXES = (".tar.gz", ".tgz", ".tar.bz2", ".tar.xz", ".tar", ".zip")
 
 
 def _want_rows(specimen_id: str) -> dict:
@@ -410,10 +312,16 @@ def acquire(specimen_id: str) -> dict:
             out["fetched"].append(f)
         elif kind == "git":
             dest = up / "tree"
-            g = vault.git_pin(art["url"], art["commit"], dest)
+            # Submodules are fetched only when the record DECLARES them ("submodules": "required"),
+            # and then only at the commits the superproject pins -- never implicitly, never at HEAD.
+            want_subs = str(art.get("submodules", "")).lower() in ("required", "true", "yes", "1")
+            g = vault.git_pin(art["url"], art["commit"], dest, init_submodules=want_subs)
             art.update({"commit_resolved": g["commit"], "commit_date": g["commit_date"]})
             if art["commit"] == "HEAD":
                 art["commit"] = g["commit"]          # the pin is exact from now on
+            if g.get("submodules") is not None:
+                art["submodules_pinned"] = [{"path": x["path"], "url": x["url"],
+                                             "commit": x["pinned_commit"]} for x in g["submodules"]]
             out["fetched"].append(g)
         else:
             raise ValueError("unknown artifact kind " + kind)
@@ -427,20 +335,13 @@ def acquire(specimen_id: str) -> dict:
                                     "commit": a.get("commit_resolved")} for a in origin.get("artifacts", [])],
                      "body_location": str(body), "hash_list": "techne/fossils/specimens/%s/UPSTREAM_HASHES.txt" % specimen_id}
     rec["acquisition_date"] = time.strftime("%Y-%m-%d", time.gmtime())
+    rec["preservation"] = preservation_of(specimen_id, rec)
+    out["preservation"] = rec["preservation"]["status"]
     record.save(rec)
     out["tree_sha256"] = rec["hashes"]["tree_sha256"]
     out["n_files"] = len(rows)
     print(json.dumps({k: v for k, v in out.items() if k != "fetched"}, indent=1))
     return out
-
-
-def verify(specimen_id: str) -> bool:
-    body = vault.body_dir(specimen_id)
-    rows = vault.hash_tree(body / "upstream")
-    want = record.load(specimen_id)["hashes"].get("tree_sha256")
-    got = vault.tree_hash_of(rows)
-    print(specimen_id, "tree", got, "matches" if got == want else "DIFFERS FROM RECORD %s" % want)
-    return got == want
 
 
 # --------------------------------------------------------------------------- mirror
@@ -564,10 +465,18 @@ def mirror_verify(dest: str, specimen_ids=None) -> dict:
 
 
 # --------------------------------------------------------------------------- run
-def run(specimen_id: str, timeout: int = 1800) -> dict:
+def run(specimen_id: str, timeout: int = 1800, image=None, persist=None) -> dict:
+    """image= runs the SAME preserved body and the SAME recipe in a DIFFERENT world (batch 10 P5:
+    "test them using preserved bodies and explicit world changes"). A world-override never
+    persists by default, so probing a fossil in a foreign world cannot overwrite its real
+    classification or append a misleading receipt."""
+    if persist is None:
+        persist = image is None
     rec = record.load(specimen_id)
     sd = vault.specimen_dir(specimen_id)
     recipe = json.loads((sd / "recipe.json").read_text(encoding="utf-8"))
+    if image:
+        recipe["image"] = image
     body = vault.body_dir(specimen_id)
     rel = recipe.get("workdir", "upstream/tree")
     runner = recipe["runner"]
@@ -643,6 +552,12 @@ def run(specimen_id: str, timeout: int = 1800) -> dict:
     after_rows = vault.hash_tree(body / "upstream")
     receipt["tree_sha256_after"] = vault.tree_hash_of(after_rows)
     receipt["body_preserved"] = receipt["tree_sha256_after"] == receipt["tree_sha256_before"]
+    if not persist:
+        receipt["persisted"] = False
+        receipt["world_override_image"] = recipe.get("image")
+        print("WORLD-PROBE", specimen_id, "image=%s" % recipe.get("image"),
+              receipt["classification"], "ok=%s" % receipt["ok"], "(not persisted)")
+        return receipt
     rp = sd / "receipts" / (receipt["receipt_id"] + ".json")
     rp.parent.mkdir(parents=True, exist_ok=True)
     rp.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8", newline="\n")
@@ -718,21 +633,149 @@ def summary() -> dict:
     return out
 
 
+# --------------------------------------------------------------- preservation completeness
+# Charter 2026-09-13 (batch 09, P1/P8): a matching top-level tree hash does NOT mean the body is
+# complete. avida hashed fine while libs/apto (required to build) was an empty directory. These
+# functions classify what a body actually contains and FAIL when a declared external is missing.
+
+_NETWORK_PAT = re.compile(
+    r"(apt-get\s+(?:-\S+\s+)*install|apt-get\s+update|pip3?\s+install|npm\s+install|"
+    r"go\s+get|cargo\s+(?:fetch|install)|gem\s+install|wget\s|curl\s|git\s+clone|conda\s+install)")
+
+PRESERVATION_STATES = ("SELF_CONTAINED", "FULLY_PINNED_EXTERNALS", "UNPINNED_EXTERNAL_DEPENDENCY",
+                       "KNOWN_INCOMPLETE", "UNKNOWN")
+_RANK = {s: i for i, s in enumerate(PRESERVATION_STATES)}
+
+
+def _recipe_network_deps(specimen_id):
+    """Distinct network-fetch invocations appearing in the recipe (build/run time)."""
+    rp = vault.specimen_dir(specimen_id) / "recipe.json"
+    if not rp.exists():
+        return []
+    txt = rp.read_text(encoding="utf-8", errors="ignore")
+    return sorted({m.group(1).strip() for m in _NETWORK_PAT.finditer(txt)})
+
+
+def preservation_of(specimen_id, rec=None):
+    """Classify how complete this body actually is. The body axis and the recipe axis are kept
+    separate; `status` is the worse of the two, so nothing reads as preserved on a tree hash alone."""
+    rec = rec or record.load(specimen_id)
+    up = vault.body_dir(specimen_id) / "upstream"
+    tree = up / "tree"
+    arts = list(rec.get("source_origin", {}).get("artifacts", []))
+    subs = vault.submodules_of(tree) if tree.exists() else []
+    has_gitmodules = (tree / ".gitmodules").exists()
+    missing = [x["path"] for x in subs if not x["present"]]
+    drifted = [x["path"] for x in subs
+               if x["present"] and x["pinned_commit"] and x["checked_out_commit"]
+               and not x["checked_out_commit"].startswith(x["pinned_commit"][:12])]
+    # The authoritative acquisition pin lives in hashes.artifacts (acquire() writes it there);
+    # source_origin.artifacts is re-written by the batch scripts and loses sha256/commit_resolved,
+    # so it must NOT be read as evidence of missing pinning.
+    hart = {}
+    for h in (rec.get("hashes", {}) or {}).get("artifacts", []) or []:
+        hart[str(h.get("filename") or "")] = h
+    unpinned = []
+    for a in arts:
+        if a.get("kind") == "url":
+            h = hart.get(str(a.get("filename") or "")) or {}
+            if not (a.get("sha256") or h.get("sha256")):
+                unpinned.append("url:" + str(a.get("url", ""))[:70])
+        if a.get("kind") == "git":
+            h = hart.get(str(a.get("url") or "")) or {}
+            if not (a.get("commit_resolved") or h.get("commit") or
+                    (a.get("commit") and a.get("commit") != "HEAD")):
+                unpinned.append("git:" + str(a.get("url", ""))[:70])
+    lfs = False
+    ga = tree / ".gitattributes"
+    if ga.exists():
+        lfs = "filter=lfs" in ga.read_text(encoding="utf-8", errors="ignore")
+
+    if missing or drifted:
+        body = "KNOWN_INCOMPLETE"
+    elif has_gitmodules and not subs:
+        body = "UNKNOWN"
+    elif unpinned:
+        body = "UNPINNED_EXTERNAL_DEPENDENCY"
+    elif subs or lfs:
+        body = "FULLY_PINNED_EXTERNALS"
+    else:
+        body = "SELF_CONTAINED"
+
+    net = _recipe_network_deps(specimen_id)
+    recipe = "NETWORK_DEPENDENT" if net else "NO_NETWORK_FETCH_DETECTED"
+    status = body
+    if net and _RANK[body] < _RANK["UNPINNED_EXTERNAL_DEPENDENCY"]:
+        status = "UNPINNED_EXTERNAL_DEPENDENCY"
+    return {"status": status, "body_status": body, "recipe_status": recipe,
+            "submodules": subs, "submodules_missing": missing, "submodules_drifted": drifted,
+            "unpinned_artifacts": unpinned, "git_lfs": lfs, "network_fetch_in_recipe": net,
+            "checked_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "note": "status is the worse of body_status and the recipe axis; a matching tree hash "
+                    "alone never implies completeness."}
+
+
+def preservation_check(specimen_id):
+    """INVARIANT. Returns (ok, problems). Fails when a submodule the superproject pins is absent
+    from the body or checked out at a different commit -- the avida defect, and the negative
+    control for this instrument."""
+    p = preservation_of(specimen_id)
+    problems = []
+    for path in p["submodules_missing"]:
+        problems.append("required submodule MISSING from body: %s" % path)
+    for path in p["submodules_drifted"]:
+        problems.append("submodule NOT at the pinned commit: %s" % path)
+    if p["body_status"] == "UNKNOWN":
+        problems.append(".gitmodules present but submodules could not be enumerated (no .git)")
+    return (not problems), problems
+
+
+def preservation_census(out=None):
+    specimens = vault.specimen_dir("_").parent
+    rows = []
+    for sid in sorted(x.name for x in specimens.iterdir() if x.is_dir() and (x / "record.json").exists()):
+        try:
+            p = preservation_of(sid)
+        except Exception as e:
+            rows.append({"specimen_id": sid, "status": "UNKNOWN", "error": str(e)[:120]})
+            continue
+        rows.append({"specimen_id": sid, "status": p["status"], "body_status": p["body_status"],
+                     "recipe_status": p["recipe_status"], "submodules": len(p["submodules"]),
+                     "submodules_missing": p["submodules_missing"],
+                     "unpinned_artifacts": p["unpinned_artifacts"],
+                     "network_fetch_in_recipe": p["network_fetch_in_recipe"]})
+    tally = {}
+    for r in rows:
+        tally[r["status"]] = tally.get(r["status"], 0) + 1
+    doc = {"schema": "techne.fossil.preservation_census/1",
+           "written_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+           "n": len(rows), "by_status": tally,
+           "network_dependent": sum(1 for r in rows if r.get("recipe_status") == "NETWORK_DEPENDENT"),
+           "rule": "body_status from submodules/lfs/artifact pinning; recipe_status from network "
+                   "fetches in recipe.json; status = worse of the two. Mechanical, no judgement.",
+           "rows": rows}
+    if out:
+        pathlib.Path(out).write_text(json.dumps(doc, indent=1) + "\n", encoding="utf-8", newline="\n")
+        print("preservation census", out, len(rows), "fossils", tally)
+    return doc
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     a = sub.add_parser("acquire"); a.add_argument("specimen_id")
-    r = sub.add_parser("run"); r.add_argument("specimen_id"); r.add_argument("--timeout", type=int, default=1800)
+    r = sub.add_parser("run"); r.add_argument("specimen_id"); r.add_argument("--timeout", type=int, default=1800); r.add_argument("--image", help="run the same preserved body in a different world; never persists")
     v = sub.add_parser("verify"); v.add_argument("specimen_id", nargs="?"); v.add_argument("--all", action="store_true"); v.add_argument("--out")
     rs = sub.add_parser("restore"); rs.add_argument("specimen_id")
     mi = sub.add_parser("mirror"); mi.add_argument("--dest", required=True); mi.add_argument("--specimen", action="append"); mi.add_argument("--dry-run", action="store_true"); mi.add_argument("--allow-same-volume", action="store_true", help="disposable controls only")
     mv = sub.add_parser("mirror-verify"); mv.add_argument("--dest", required=True); mv.add_argument("--specimen", action="append")
     sub.add_parser("status"); sub.add_parser("summary")
+    pr = sub.add_parser("preservation"); pr.add_argument("specimen_id", nargs="?"); pr.add_argument("--all", action="store_true"); pr.add_argument("--out")
     args = ap.parse_args(argv)
     if args.cmd == "acquire":
         acquire(args.specimen_id)
     elif args.cmd == "run":
-        rc = run(args.specimen_id, args.timeout)
+        rc = run(args.specimen_id, args.timeout, image=getattr(args, "image", None))
         return 0 if rc["ok"] else 1
     elif args.cmd == "verify":
         if args.all or not args.specimen_id:
@@ -748,6 +791,14 @@ def main(argv=None) -> int:
         r = mirror(args.dest, args.specimen, args.dry_run, args.allow_same_volume)
         bad = [x for x in r["rows"] if x["status"] in ("REFUSED_SOURCE_DRIFTED", "COPY_DIFFERS_LEFT_AS_PARTIAL", "ALREADY_PRESENT_DIFFERS")]
         return 1 if bad else 0
+    elif args.cmd == "preservation":
+        if args.all or not args.specimen_id:
+            preservation_census(args.out)
+        else:
+            ok, probs = preservation_check(args.specimen_id)
+            print(json.dumps(preservation_of(args.specimen_id), indent=1))
+            print("PRESERVATION", args.specimen_id, "OK" if ok else "FAIL", *probs)
+            return 0 if ok else 1
     elif args.cmd == "status":
         status()
     elif args.cmd == "summary":

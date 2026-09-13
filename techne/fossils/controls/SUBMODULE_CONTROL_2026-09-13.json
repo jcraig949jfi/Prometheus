@@ -1,0 +1,48 @@
+{
+ "schema": "techne.fossil.submodule_control/1",
+ "specimen_id": "lru-cache-goldsborough",
+ "submodule": "tests/googletest",
+ "pinned_commit": "a2b8a8e07628e5fd60644b6dd99c1b5e7d7f1f47",
+ "tree_sha256_before": "57d253398e4498a746f52b6a88a4894cb1edce6e63979b0a678db98211f100b9",
+ "tree_sha256_after": "57d253398e4498a746f52b6a88a4894cb1edce6e63979b0a678db98211f100b9",
+ "restored_exactly": true,
+ "negative_b_run": true,
+ "steps": [
+  {
+   "step": "POSITIVE acquired body",
+   "expected_ok": true,
+   "observed_ok": true,
+   "problems": []
+  },
+  {
+   "step": "NEGATIVE A submodule emptied",
+   "expected_ok": false,
+   "observed_ok": false,
+   "problems": [
+    "required submodule MISSING from body: tests/googletest"
+   ]
+  },
+  {
+   "step": "RESTORE after A",
+   "expected_ok": true,
+   "observed_ok": true,
+   "problems": []
+  },
+  {
+   "step": "NEGATIVE B submodule off pin",
+   "expected_ok": false,
+   "observed_ok": false,
+   "problems": [
+    "submodule NOT at the pinned commit: tests/googletest"
+   ]
+  },
+  {
+   "step": "RESTORE after B",
+   "expected_ok": true,
+   "observed_ok": true,
+   "problems": []
+  }
+ ],
+ "control_passed": true,
+ "note": "the check must FAIL on omission and on pin drift, and the body must come back byte-identical; content mutation is verify's job, not this check's."
+}

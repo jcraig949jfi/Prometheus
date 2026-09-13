@@ -403,6 +403,7 @@ def main():
             for k in ("run_classification", "test_classification", "receipts", "hashes", "acquisition_date"):
                 if old.get(k):
                     rec[k] = old[k]
+            R.merge_artifact_pins(rec, old)   # batch 10 P1: never lose an established pin
         except FileNotFoundError:
             pass
         probs = R.validate(rec)

@@ -1,0 +1,147 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "openssl-1.0.1f-heartbleed",
+  "canonical_name": "OpenSSL 1.0.1f -- the last release carrying Heartbleed (CVE-2014-0160)",
+  "aliases": [
+    "Heartbleed",
+    "CVE-2014-0160",
+    "openssl-1.0.1f"
+  ],
+  "lineage": "OpenSSL's TLS heartbeat extension (RFC 6520) accepted a caller-supplied payload LENGTH and copied that many bytes back without checking it against the record actually received. 1.0.1 through 1.0.1f carry the defect; 1.0.1g fixes it with a bounds check. Preserved as the BEFORE-FAILURE body of a documented failure whose replacement is one released version away. Archival only: this fossil exists so the defect can be read in its original world, and the vault carries no exploit for it.",
+  "domain": [
+    "cryptography",
+    "tls",
+    "security",
+    "memory-safety",
+    "loser"
+  ],
+  "era": "2012-2014 (1.0.1 line); disclosed 2014-04-07; fixed in 1.0.1g",
+  "version": "OpenSSL 1.0.1f source tarball (openssl.org archive)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.openssl.org/source/old/1.0.1/openssl-1.0.1f.tar.gz",
+        "filename": "openssl-1.0.1f.tar.gz",
+        "sha256": "6cc2a80b17d64de6b7bac985745fdaba971d54ffd7d38d3556f998d7c0c9cb5a"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "archive": "openssl.org/source/old/1.0.1",
+    "file": "openssl-1.0.1f.tar.gz"
+  },
+  "hashes": {
+    "tree_sha256": "70f4afd6ad289df3408e7a3b4901bd9f1d1e4e402eaf2c6f475aafa03ade6d2b",
+    "n_files": 2254,
+    "bytes": 25268911,
+    "artifacts": [
+      {
+        "filename": "openssl-1.0.1f.tar.gz",
+        "sha256": "6cc2a80b17d64de6b7bac985745fdaba971d54ffd7d38d3556f998d7c0c9cb5a",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\openssl-1.0.1f-heartbleed",
+    "hash_list": "techne/fossils/specimens/openssl-1.0.1f-heartbleed/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "OpenSSL",
+    "status": "OpenSSL/SSLeay dual licence",
+    "evidence": "LICENSE in the tree"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C"
+  ],
+  "build_system": "./config && make (not built here)",
+  "compiler_or_interpreter": "not executed in the vault (archival)",
+  "dependencies": [
+    "a C compiler"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "ssl/d1_both.c and ssl/t1_lib.c -- the heartbeat request/response path carrying the unchecked length"
+  ],
+  "example": {
+    "command": "read ssl/d1_both.c dtls1_process_heartbeat / tls1_process_heartbeat",
+    "input": "the preserved source",
+    "output": "the missing bounds check, in its original context"
+  },
+  "environment": {
+    "runner": "none (archival source)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "CVE-2014-0160",
+    "OpenSSL Security Advisory 07 Apr 2014",
+    "RFC 6520 (TLS Heartbeat Extension)"
+  ],
+  "human_capability_summary": {
+    "built_to": "keep a TLS session alive and discover path MTU without renegotiating, per RFC 6520",
+    "pressure": "long-lived TLS sessions over NAT/firewall timeouts needed a cheap liveness probe",
+    "success_means": "a heartbeat reply echoing the peer's payload"
+  },
+  "known_human_problem_solved": "TLS session liveness (heartbeat)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "untrusted input crossing a trust boundary into a memory-unsafe language",
+  "human_failure_condition": "the responder trusted an attacker-supplied length field and echoed adjacent process memory -- disclosed as Heartbleed, fixed by bounds-checking in 1.0.1g",
+  "behavioral_entry_point": "diff 1.0.1f against 1.0.1g in ssl/d1_both.c: the failure and its repair are a few lines apart",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "historical_version_of",
+      "to": "OpenSSL 1.0.1g (the fix)",
+      "note": "before-failure body; the replacement is one release later"
+    }
+  ],
+  "acquisition_tags": [
+    "batch09",
+    "loser",
+    "security",
+    "archival_only",
+    "before_failure",
+    "documented_pathology"
+  ],
+  "historical_disposition": {
+    "state": "FAILED",
+    "failure_reasons": [
+      "security_weakness",
+      "brittleness"
+    ],
+    "superseded_by": "OpenSSL 1.0.1g",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "release_notes",
+        "ref": "OpenSSL Security Advisory, 07 April 2014 (CVE-2014-0160)",
+        "says": "A missing bounds check in the TLS heartbeat extension allows disclosure of up to 64kB of process memory; affected versions are 1.0.1 through 1.0.1f, fixed in 1.0.1g."
+      },
+      {
+        "kind": "standards_history",
+        "ref": "RFC 6520, TLS Heartbeat Extension",
+        "says": "The heartbeat response must echo the payload of the request; the length handling is where the implementation failed."
+      }
+    ]
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\openssl-1.0.1f-heartbleed ; tracked techne/fossils/specimens/openssl-1.0.1f-heartbleed",
+    "where_it_came_from": "https://www.openssl.org/source/old/1.0.1/openssl-1.0.1f.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "SOURCE_ONLY BY INTENT: this body is preserved so a documented failure can be read in its original context (ssl/d1_both.c). It is deliberately never built or executed in the vault, and the vault carries no exploit for it. Archival/defensive only.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 70f4afd6ad289df3 pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "keep a TLS session alive and discover path MTU without renegotiating, per RFC 6520"
+  },
+  "seat": "Techne"
+}

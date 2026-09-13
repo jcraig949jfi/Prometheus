@@ -1,0 +1,42 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "gfortran -std=legacy (the 1979 Fortran compiles unchanged)",
+      "cmd": "gfortran -std=legacy -w -O2 -o linpackd linpackd.f 2>&1 | grep -i 'error' | head -3; test -x ./linpackd && echo BUILT",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "the LINPACK 100x100 benchmark: solve a system whose exact solution is all ones, report residual + MFLOPS",
+      "cmd": "./linpackd < /dev/null 2>&1 | grep -A2 -E 'norm. resid|dgefa' | head -12",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "1\\.00000000E\\+00\\s+1\\.00000000E\\+00"
+      },
+      "timeout": 600
+    },
+    {
+      "name": "the rate the benchmark reports (the quantity LAPACK was built to improve)",
+      "cmd": "./linpackd < /dev/null 2>&1 | grep -E 'mflops|times for|^ *[0-9]+\\.' | head -8; true",
+      "expect": {
+        "exit": 0
+      },
+      "timeout": 600
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: the benchmark constructs a system whose exact solution is the all-ones vector and prints x(1) and x(n); both must come back 1.00000000E+00, with a residual at machine epsilon (observed 1.39e-14, machep 2.22e-16). That is LINPACK grading itself. The MFLOPS figure is recorded, not compared -- the LINPACK/LAPACK rate comparison is a separate dataset, and Techne does not rank them here."
+}

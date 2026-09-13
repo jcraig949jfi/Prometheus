@@ -22,7 +22,8 @@
       {
         "kind": "url",
         "url": "https://www.princeton.edu/~chaff/zchaff/zchaff.64bit.2007.3.12.zip",
-        "filename": "zchaff.64bit.2007.3.12.zip"
+        "filename": "zchaff.64bit.2007.3.12.zip",
+        "sha256": "9b88d8f366d0dc6b3cacd9d497e755d06af069ff27411870cc8b40fe0f11911f"
       }
     ]
   },
@@ -145,5 +146,37 @@
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/zchaff-2007/receipts/run-zchaff-2007-20260912T210513Z.json",
     "what_humans_used_it_for": "decide propositional satisfiability on industrial instances (verification, EDA) by conflict-driven learning with cheap propagation and a decaying activity heuristic"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "LOSING_RIVAL",
+    "failure_reasons": [
+      "superior_rival"
+    ],
+    "superseded_by": "minisat-2.2.0",
+    "rival_of": "minisat-2.2.0",
+    "evidence": [
+      {
+        "kind": "original_paper",
+        "ref": "Moskewicz, Madigan, Zhao, Zhang, Malik, Chaff: Engineering an Efficient SAT Solver, DAC 2001",
+        "says": "Chaff introduced VSIDS and two-literal watching, the techniques later CDCL solvers adopted."
+      },
+      {
+        "kind": "original_paper",
+        "ref": "Een & Sorensson, An Extensible SAT-solver, SAT 2003",
+        "says": "MiniSat reimplements the same CDCL techniques in a far smaller core, and became the solver subsequent work built on."
+      },
+      {
+        "kind": "benchmark_history",
+        "ref": "SAT Competition results (zChaff 2002; MiniSat placements from 2005)",
+        "says": "zChaff won the 2002 competition; MiniSat and its descendants displaced it in later years."
+      }
+    ],
+    "audit_note": "Historically pivotal AND displaced -- the ideas won while the implementation lost.",
+    "legacy_tags": [
+      "failed_branch",
+      "loser"
+    ],
+    "audit_verdict": "CONFIRMED",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

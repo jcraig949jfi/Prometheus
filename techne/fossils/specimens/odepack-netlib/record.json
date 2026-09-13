@@ -23,19 +23,22 @@
         "kind": "url",
         "url": "https://www.netlib.org/odepack/opkdmain.f",
         "filename": "opkdmain.f",
-        "extract": false
+        "extract": false,
+        "sha256": "da31255ff43e3a13c2c0ccaed51c3cd260b8ac9d9082f34b8587c9007d9a2376"
       },
       {
         "kind": "url",
         "url": "https://www.netlib.org/odepack/opkda1.f",
         "filename": "opkda1.f",
-        "extract": false
+        "extract": false,
+        "sha256": "861c7bc2c74172b9e26127fd1100e5900e87f47f876d97cdef1b87e580510e6b"
       },
       {
         "kind": "url",
         "url": "https://www.netlib.org/odepack/opkda2.f",
         "filename": "opkda2.f",
-        "extract": false
+        "extract": false,
+        "sha256": "2dd229cb112b463d6c3151a259aae28bf480c75eda6861507ab678ea0d204046"
       }
     ]
   },
@@ -159,5 +162,18 @@
     "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/odepack-netlib/receipts/run-odepack-netlib-20260912T210100Z.json",
     "what_humans_used_it_for": "integrate ODE systems with automatic step and order selection, including stiff systems whose fast modes would otherwise force absurdly small steps"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [],
+    "audit_note": "The 'pathology' is stiffness -- a property of the PROBLEM that makes a non-stiff method exhaust its step budget. That is mathematics behaving correctly, not software that failed. ODEPACK remains in use (scipy's LSODA wraps it). LEAVES the loser count.",
+    "legacy_tags": [
+      "pathology"
+    ],
+    "audit_verdict": "NOT_A_LOSER",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

@@ -1,0 +1,148 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "pari-gp-2.17",
+  "canonical_name": "PARI/GP 2.17.4 -- a computer algebra system specialised for number theory (Henri Cohen et al., Bordeaux)",
+  "aliases": [
+    "PARI",
+    "gp",
+    "pari-gp"
+  ],
+  "lineage": "PARI/GP (1985-): a CAS built for fast number theory -- arbitrary-precision integers/reals, factoring, elliptic curves, number fields, modular forms, L-functions -- with its own stack-based interpreter (gp). A distinct symbolic/exact execution model (a computation stack, exact arithmetic, mathematical objects as first-class values) absent from the vault. First computer-algebra fossil.",
+  "domain": [
+    "symbolic",
+    "computer-algebra",
+    "number-theory",
+    "exact-arithmetic",
+    "scientific-computing"
+  ],
+  "era": "1985- (PARI); 2.15 = 2022",
+  "version": "PARI/GP 2.17.4 (pari.math.u-bordeaux.fr source)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-2.17.4.tar.gz",
+        "filename": "pari-2.17.4.tar.gz",
+        "sha256": "02651d99c391007d384b3fadbc20abc6916b77036f9e496c99e9ce8688ca4b53",
+        "bytes": 5333669,
+        "extracted_to": "upstream/tree/pari-2.17.4"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "archive": "pari.math.u-bordeaux.fr/pub/pari/unix",
+    "file": "pari-2.17.4.tar.gz"
+  },
+  "hashes": {
+    "tree_sha256": "992f33881d7ba8e6e14336ec63f159c542d6f6e69ceb54c32040e590ff137dc0",
+    "n_files": 2327,
+    "bytes": 23443377,
+    "artifacts": [
+      {
+        "filename": "pari-2.17.4.tar.gz",
+        "sha256": "02651d99c391007d384b3fadbc20abc6916b77036f9e496c99e9ce8688ca4b53",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\pari-gp-2.17",
+    "hash_list": "techne/fossils/specimens/pari-gp-2.17/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-2.0-or-later",
+    "status": "copyleft",
+    "evidence": "COPYING in the tree"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C",
+    "GP (the PARI scripting language)"
+  ],
+  "build_system": "./Configure && make gp",
+  "compiler_or_interpreter": "gp 2.17 built from source (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a C compiler; readline/gmp optional (bundled fallback)"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "gp -q < script.gp ; factor(), ellinit()+ellap(), qfbclassno(), nextprime()"
+  ],
+  "example": {
+    "command": "gp -q < nt.gp",
+    "input": "factor a Mersenne number, count points on an elliptic curve mod p, a class number",
+    "output": "the exact factorisation 2^67-1 = 193707721 * 761838257287, etc. (the ORACLE: known number-theoretic values)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Cohen, A Course in Computational Algebraic Number Theory, Springer 1993",
+    "PARI/GP user's manual"
+  ],
+  "human_capability_summary": {
+    "built_to": "compute exact number-theoretic quantities fast -- factorisations, curve orders, class numbers, L-values -- on a purpose-built stack machine",
+    "pressure": "exact arithmetic on huge integers; algorithms whose cost is number-theoretic (factoring is hard); a finite computation stack",
+    "success_means": "the exact mathematical value is returned; known values (LMFDB, tables) match"
+  },
+  "known_human_problem_solved": "computational number theory",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "exact arithmetic at scale; the hardness of factoring/discrete log; bounded stack memory",
+  "human_failure_condition": "stack overflow on a too-large object, or an intractable factorisation that never returns",
+  "behavioral_entry_point": "factor progressively larger semiprimes and watch the time climb; grow a computation past the default parisize stack",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "reed-solomon-rockliff-1991",
+      "note": "finite-field / GF arithmetic underlies both (Techne records the shared machinery domain, not equivalence)"
+    }
+  ],
+  "acquisition_tags": [
+    "batch07",
+    "new_domain",
+    "symbolic",
+    "computer_algebra",
+    "number_theory",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/pari-gp-2.17/receipts/run-pari-gp-2.17-20260913T105954Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/pari-gp-2.17/receipts/run-pari-gp-2.17-20260913T111949Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/pari-gp-2.17/receipts/run-pari-gp-2.17-20260913T112538Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\pari-gp-2.17 ; tracked techne/fossils/specimens/pari-gp-2.17",
+    "where_it_came_from": "https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-2.17.4.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run pari-gp-2.17",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/pari-gp-2.17/receipts/run-pari-gp-2.17-20260913T112538Z.json",
+    "what_humans_used_it_for": "compute exact number-theoretic quantities fast -- factorisations, curve orders, class numbers, L-values -- on a purpose-built stack machine"
+  },
+  "seat": "Techne"
+}

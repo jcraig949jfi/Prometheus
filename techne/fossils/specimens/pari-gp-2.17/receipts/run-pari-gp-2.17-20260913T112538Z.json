@@ -1,0 +1,962 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "pari-gp-2.17",
+  "receipt_id": "run-pari-gp-2.17-20260913T112538Z",
+  "written_utc": "20260913T112538Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/pari-2.17.4",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "nt.gp": "8e1d708eb56f03956a31e3854cc7fbfce3677224bd89298886c31810295ed81f"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "992f33881d7ba8e6e14336ec63f159c542d6f6e69ceb54c32040e590ff137dc0",
+  "recipe_sha256": "5812d2210ca15ecb587743c0ad8b6d1f8562508da98dba1cd6b49ef49473ac3f",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 7.76,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "./Configure && make gp (readline/gmp optional)",
+      "cmd": "./Configure >/dev/null 2>&1 && make -s gp 2>&1 | grep -iE '\\berror' | head -3; B=$(find . -name gp-dyn -type f -perm -u+x | head -1); echo BIN=$B; test -n \"$B\"",
+      "exit": 0,
+      "seconds": 195.96,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "BIN=./Olinux-x86_64/gp-dyn\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "number theory: factor a Mersenne number, an elliptic-curve point count, a class number, the 1000th prime -- exact, against known values",
+      "cmd": "B=$(find . -name gp-dyn -type f -perm -u+x | head -1); LD_LIBRARY_PATH=$(dirname $B) $B -q < $HARNESS/nt.gp 2>&1 | tail -8",
+      "exit": 0,
+      "seconds": 1.0,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "factor 2^67-1: [193707721, 1; 761838257287, 1]\nprime(1000) = 7919\nellap(11): -5\nclass number disc -23: 3\nisprime(2^61-1): 1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "doc/gphelp",
+      "sha256": "bd8b6d73589de03c77b2343ae1d756ed73dd0d7bf40efa4624eb8c9f6c400984",
+      "bytes": 37417
+    },
+    {
+      "path": "doc/Makefile",
+      "sha256": "eceb6a86b7b3d21f2d3e072c2f6b06d1f718ee40b072ff5fe592a92c590b85c6",
+      "bytes": 4707
+    },
+    {
+      "path": "doc/paricfg.tex",
+      "sha256": "c6f8737c3ff76d05f4ff15a1f98914251e3cfffef1b1b07767d0cc20ae8c867e",
+      "bytes": 212
+    },
+    {
+      "path": "Makefile",
+      "sha256": "fccf7808b80cf6335339cf08057637b71d6277ca280b77570574279391440081",
+      "bytes": 11476
+    },
+    {
+      "path": "misc/tex2mail",
+      "sha256": "5214937624eac246fcaa89d6587c646a3cbb4351427eb67db50f7396b066e479",
+      "bytes": 73121
+    },
+    {
+      "path": "Olinux-x86_64/.headers",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "Olinux-x86_64/algebras.o",
+      "sha256": "3100a27f9955bc39e73db62c629ce6033260971b51e84ca5efdcd4724e300739",
+      "bytes": 319784
+    },
+    {
+      "path": "Olinux-x86_64/alglin1.o",
+      "sha256": "9e7bd48b4e5b30cd8c9f46e7bf041c94923cdbf49a357527ee43521f667770ab",
+      "bytes": 275104
+    },
+    {
+      "path": "Olinux-x86_64/alglin2.o",
+      "sha256": "f9b030c96d5707ad08e98f02296a39c414a17328e3f235d86ac0391cc4badb28",
+      "bytes": 166264
+    },
+    {
+      "path": "Olinux-x86_64/alglin3.o",
+      "sha256": "c8b602b381e4dd5db46c2a40b8ea4608f2c2793410d371ebd29d30f71ca17fff",
+      "bytes": 60160
+    },
+    {
+      "path": "Olinux-x86_64/anal.o",
+      "sha256": "d06958d46f3cb7ed552bbed452875d041a04e2971e8a60f9dc62ae62f7464bcd",
+      "bytes": 48128
+    },
+    {
+      "path": "Olinux-x86_64/aprcl.o",
+      "sha256": "2fbca53629916d8919e5eb2cb31fffceb9299d30d5a2056390372a67e4a2564c",
+      "bytes": 72680
+    },
+    {
+      "path": "Olinux-x86_64/arith1.o",
+      "sha256": "f71c024cd99219c043a6ed89d4d0dd0cb80d79350ed087906d021593799ab30b",
+      "bytes": 211768
+    },
+    {
+      "path": "Olinux-x86_64/arith2.o",
+      "sha256": "32a99ef5458e972a7d8fe795daedf87ea67427a5fce934a235ff7ac5341849c7",
+      "bytes": 63184
+    },
+    {
+      "path": "Olinux-x86_64/base1.o",
+      "sha256": "3e3ab5610f3f9b1bba93b9fbfb8409e497d261e74a8d2fba7c23405a2f2abfc6",
+      "bytes": 178184
+    },
+    {
+      "path": "Olinux-x86_64/base2.o",
+      "sha256": "1fc2cad67a97f54105d8b0365703a179b4ae87e0b72b3314d99522d433437462",
+      "bytes": 221752
+    },
+    {
+      "path": "Olinux-x86_64/base3.o",
+      "sha256": "889a67a3886204fea1c24c54fb173a3795a2974515e3fc00a459122e9259a458",
+      "bytes": 215224
+    },
+    {
+      "path": "Olinux-x86_64/base4.o",
+      "sha256": "0099b8b68ffcea87c55a1ae778580dcbd5f6d77343073bc8b2948b46ad5f37d9",
+      "bytes": 174040
+    },
+    {
+      "path": "Olinux-x86_64/base5.o",
+      "sha256": "adfd681f56f3c79801241558854b2d7b42180edf861f62360d22885d0d959bdb",
+      "bytes": 157328
+    },
+    {
+      "path": "Olinux-x86_64/bb_group.o",
+      "sha256": "49d48ba2f48d91a9006c493de5494bcdd489324036580149eb9699a0e6bbaa85",
+      "bytes": 79784
+    },
+    {
+      "path": "Olinux-x86_64/bb_hnf.o",
+      "sha256": "5e48cba51a593dd83d7b9745fc6da1b1019d7bf936d88cce47a8b01fd7ac5241",
+      "bytes": 94744
+    },
+    {
+      "path": "Olinux-x86_64/bern.o",
+      "sha256": "d2a5c1a9fcb8773d9470889f61aee0b3584aeb46dd46617c35d85ec7e1e73c23",
+      "bytes": 60944
+    },
+    {
+      "path": "Olinux-x86_64/bibli1.o",
+      "sha256": "ddc7dce38ffd30f56d8e5b75cac72a6867a14c7a44026eeffda89e5f505574f1",
+      "bytes": 151368
+    },
+    {
+      "path": "Olinux-x86_64/bibli2.o",
+      "sha256": "583b5fb612fe56bb598dd7ef6304a8078903e8c4d1ae1387cd80e976d64530e8",
+      "bytes": 172056
+    },
+    {
+      "path": "Olinux-x86_64/bit.o",
+      "sha256": "4108b3dae75bb221271d460496359ee9ed1c03780c2233225eaf14ccb6b97ac9",
+      "bytes": 31816
+    },
+    {
+      "path": "Olinux-x86_64/bnflog.o",
+      "sha256": "55eb9315b7b8147ee5ba37099a0590948b5e201208b48dbb1b3de978c2f64f49",
+      "bytes": 30208
+    },
+    {
+      "path": "Olinux-x86_64/bnfunits.o",
+      "sha256": "67c5adedabdeba546b2e34d5ab689fa4f217eb5aeae574d4ad65d0968dc27d45",
+      "bytes": 39792
+    },
+    {
+      "path": "Olinux-x86_64/buch1.o",
+      "sha256": "fac9013d260c23845fdccd6c5deb7ee5274f2fec92f10e94c56a62116fa9edff",
+      "bytes": 125456
+    },
+    {
+      "path": "Olinux-x86_64/buch2.o",
+      "sha256": "19a52f2d96297cdd638ee476f3ce47b11b706a6b9f20843cc44aae3c01b8a0ce",
+      "bytes": 219608
+    },
+    {
+      "path": "Olinux-x86_64/buch3.o",
+      "sha256": "345064777a268a73b5a3615236dfc2a72d8076dd7d2e7467a7e5b3150e6543f1",
+      "bytes": 185864
+    },
+    {
+      "path": "Olinux-x86_64/buch4.o",
+      "sha256": "996aa41724682e735b5280aff84344e13e3ee08422a400e97061f617dbe17a2d",
+      "bytes": 19152
+    },
+    {
+      "path": "Olinux-x86_64/char.o",
+      "sha256": "2c2ce13d251ad8bcc632178730284da820cc76a2c7b79d9ece756663fffe6662",
+      "bytes": 113120
+    },
+    {
+      "path": "Olinux-x86_64/compile.o",
+      "sha256": "4b6d3bbbbfca0eef18b5940de81908f128e419af2a924cadb358a1bb21aaf504",
+      "bytes": 104096
+    },
+    {
+      "path": "Olinux-x86_64/concat.o",
+      "sha256": "cdd008c00735fca3bdf06d002cf7c971a2d72e82fc165d2663853a7cc35590ef",
+      "bytes": 35872
+    },
+    {
+      "path": "Olinux-x86_64/config.log",
+      "sha256": "5967858108033ca6996842341bd3de08ab5e8b347d54da49ee7049fd3b6ad94c",
+      "bytes": 3723
+    },
+    {
+      "path": "Olinux-x86_64/crvwtors.o",
+      "sha256": "7667042c518705a7c7943ac6643ea3bb46355fa6db95b0168f1cc57b3b89f854",
+      "bytes": 143368
+    },
+    {
+      "path": "Olinux-x86_64/default.o",
+      "sha256": "a9d4958c24b53b98122286549a33b79511c769fb494c6f4a00dd5acaa7e1e159",
+      "bytes": 53640
+    },
+    {
+      "path": "Olinux-x86_64/digits.o",
+      "sha256": "67357edff48affdddc492531ef637c711fb52f28d2c8f397ccbe3f47757149f2",
+      "bytes": 45272
+    },
+    {
+      "path": "Olinux-x86_64/dirichlet.o",
+      "sha256": "72f78fd2f580b5fda1a544ffa301a837c869986d4dee2694774e9f8356216d9d",
+      "bytes": 64328
+    },
+    {
+      "path": "Olinux-x86_64/ecpp.o",
+      "sha256": "d603ad5574a503b1bf51d1feabbc533bed8bc2aa361347bc2ad2a4432111bf4a",
+      "bytes": 93400
+    },
+    {
+      "path": "Olinux-x86_64/ellanal.o",
+      "sha256": "a1919868ed335b839e9070b06413fa1575d655296064b2329e7c04b65850f3bb",
+      "bytes": 114216
+    },
+    {
+      "path": "Olinux-x86_64/elldata.o",
+      "sha256": "c7b21d8c91c3f16ae6c1ad4649fb5ae812c37601f3480529730661d2722b3506",
+      "bytes": 22088
+    },
+    {
+      "path": "Olinux-x86_64/ellfromeqn.o",
+      "sha256": "994a7414e552fbd6fefdd05e3483301fa400ee89e45a98001e1783f739da28d6",
+      "bytes": 28656
+    },
+    {
+      "path": "Olinux-x86_64/elliptic.o",
+      "sha256": "978d8a5947b8a49af8bf51be62f813ad64b972c7f8bd6c787a9bc4c14c2fc1f2",
+      "bytes": 420392
+    },
+    {
+      "path": "Olinux-x86_64/ellisog.o",
+      "sha256": "8ccdfa166b1d02e6affc5ce7f2db9c86f5e2bd2d67c94b6d20956987b4e76ae1",
+      "bytes": 135008
+    },
+    {
+      "path": "Olinux-x86_64/ellpadic.o",
+      "sha256": "02466728cf8c46712782cd077d44681df2d65eb2d2611a7b3b62bd4935999426",
+      "bytes": 92976
+    },
+    {
+      "path": "Olinux-x86_64/ellpadiclambdamu.o",
+      "sha256": "527771094c0c2b7bac31f62fd365d69042574d5c2ae69fd4f29353e0488fdafd",
+      "bytes": 13944
+    },
+    {
+      "path": "Olinux-x86_64/ellrank.o",
+      "sha256": "0ccc83d343f02d722c466d070a52bb7619b345c064b84e58943776e22991bc57",
+      "bytes": 146648
+    },
+    {
+      "path": "Olinux-x86_64/ellsea.o",
+      "sha256": "65d9816040802362d13eb869234a0344bb4d8346a60cfe4debd4d7381a1052dc",
+      "bytes": 146608
+    },
+    {
+      "path": "Olinux-x86_64/elltors.o",
+      "sha256": "31503aaf7ad0eedd640a21871aa6ea086026e8f016964df057f60af8705843f7",
+      "bytes": 47432
+    },
+    {
+      "path": "Olinux-x86_64/emacs.o",
+      "sha256": "019c2273fd3f9b89ad30eb10a0091c509118bfe87cd41cd021cfd7483f69ecda",
+      "bytes": 1352
+    },
+    {
+      "path": "Olinux-x86_64/es.o",
+      "sha256": "6f763786cc5c39c7264eafa4a27345e377b969b412773490c7a99fd2c367f252",
+      "bytes": 222064
+    },
+    {
+      "path": "Olinux-x86_64/eval.o",
+      "sha256": "72266530717adeb085d7e4cad1ea9b4d8ecb6215da4129c2d69140b9dc488c5c",
+      "bytes": 183264
+    },
+    {
+      "path": "Olinux-x86_64/F2v.o",
+      "sha256": "70b6654380f5a1ff56e32d27f0cc2bcf40dc7d1c0453d7faa584214a2a4e56ee",
+      "bytes": 102952
+    },
+    {
+      "path": "Olinux-x86_64/F2x.o",
+      "sha256": "361c1195b88160c0da6954f3a1e6798841d533d826a56843390048a361480a41",
+      "bytes": 180824
+    },
+    {
+      "path": "Olinux-x86_64/F2xqE.o",
+      "sha256": "ead3a23ba8f03597b097a02e1521f5a805d16d574b5ce9adb5a36664a2945ffe",
+      "bytes": 103584
+    },
+    {
+      "path": "Olinux-x86_64/F3v.o",
+      "sha256": "a2a5b8522e5709b22496ecc572188b8589ff189c5863e9bda7f0d2b5d60f330c",
+      "bytes": 29976
+    },
+    {
+      "path": "Olinux-x86_64/factcyclo.o",
+      "sha256": "62d776696edf0eedd4894fef009653f546519807c47f138518cbda435638d37e",
+      "bytes": 125528
+    },
+    {
+      "path": "Olinux-x86_64/FF.o",
+      "sha256": "8949e654bcc4115f17f4dd06607e98d31ceaf987952f4d5f5db4049c881bb483",
+      "bytes": 155608
+    },
+    {
+      "path": "Olinux-x86_64/Fle.o",
+      "sha256": "db1402241446d62dc141207103bd4c7a176269cfd0699d42d228a8e3261cd601",
+      "bytes": 60808
+    },
+    {
+      "path": "Olinux-x86_64/Flv.o",
+      "sha256": "7ccfd81ec5fddf4f6f92536b3b918d3fd5419d4fc5cf75532bada7602300801f",
+      "bytes": 135344
+    },
+    {
+      "path": "Olinux-x86_64/Flx.o",
+      "sha256": "1e16e1ae7812475a7758175cc98885f8a60a02bb3fcd2269bced1865a1eeb865",
+      "bytes": 259704
+    },
+    {
+      "path": "Olinux-x86_64/Flxq_log.o",
+      "sha256": "0985af729c42b54f913c2d83f6f7a86dac3522e61c65b8522c5da647cc5040e2",
+      "bytes": 84568
+    },
+    {
+      "path": "Olinux-x86_64/FlxqE.o",
+      "sha256": "0b94df8d43c127251f2ad72636d4485b536a07f357efc829ca4d53bf732871cc",
+      "bytes": 129584
+    },
+    {
+      "path": "Olinux-x86_64/FlxX.o",
+      "sha256": "8214b425d4e599965b8886832abf2b41d922b6c8b42fe51d464e0fb358f575f1",
+      "bytes": 157488
+    },
+    {
+      "path": "Olinux-x86_64/forperm.o",
+      "sha256": "1da4be02106200f2d3d5b83b8f09fc032281fc16f13c0f74293503665329548b",
+      "bytes": 4968
+    },
+    {
+      "path": "Olinux-x86_64/forprime.o",
+      "sha256": "6fa5637852ffa33777d27f3a184d456a4f45828ed18be8c9c0660b2a875c30a7",
+      "bytes": 28824
+    },
+    {
+      "path": "Olinux-x86_64/forsubset.o",
+      "sha256": "48aff9f390a5e67dba22bfc322d5ff2c7bbdead3359eb45f9454c8a857445b4b",
+      "bytes": 4776
+    },
+    {
+      "path": "Olinux-x86_64/FpE.o",
+      "sha256": "12300af5adae9d73859412e332ac56c087fba405b5619f31475c011c4ed511f5",
+      "bytes": 146816
+    },
+    {
+      "path": "Olinux-x86_64/FpV.o",
+      "sha256": "d147762225c739f618360d12b82f77872bdbfd4db70f5e02727338f1b22bdcf4",
+      "bytes": 136808
+    },
+    {
+      "path": "Olinux-x86_64/FpX.o",
+      "sha256": "12566ce4a9d6c78f441fd3b5a3f500ec8d1df55449104b325defa1033e0b308d",
+      "bytes": 184648
+    },
+    {
+      "path": "Olinux-x86_64/FpX_factor.o",
+      "sha256": "886c850fd67c796d18862a90b04b816feb9721ef8a3a6cea374e56604aa62b4c",
+      "bytes": 144776
+    },
+    {
+      "path": "Olinux-x86_64/FpXQX_factor.o",
+      "sha256": "b6651eb02d8be51ff7aa7de8efe36c4d7ad078e416f0f9fb6b7571bd2919a3b1",
+      "bytes": 207240
+    },
+    {
+      "path": "Olinux-x86_64/FpXX.o",
+      "sha256": "9632305ba4215e5022ff9479848a6ff338efc3dc1163762ec5e89111734407d9",
+      "bytes": 151464
+    },
+    {
+      "path": "Olinux-x86_64/galconj.o",
+      "sha256": "56b477f76aa6002bdd82e17dad389d2f50060e60be6db078aee1905ee548ae5a",
+      "bytes": 213800
+    },
+    {
+      "path": "Olinux-x86_64/galois.o",
+      "sha256": "95421563205a49aa7714cb73b701327b7f12b8cef289b43149e01edd487e7c88",
+      "bytes": 119896
+    },
+    {
+      "path": "Olinux-x86_64/galpol.o",
+      "sha256": "ba1deb237b7a84d23b216f17adb225af869da99894d1eb004c4bf89dc8a9d82b",
+      "bytes": 11072
+    },
+    {
+      "path": "Olinux-x86_64/gen1.o",
+      "sha256": "2c6f25bac7249a8e9bc513d3a94b60570ae37d4613af50a984b8a8629e4e567a",
+      "bytes": 199624
+    },
+    {
+      "path": "Olinux-x86_64/gen2.o",
+      "sha256": "ec835e442ea86c15866db71bf5aeb405dd3f86d8e548083697964b9ea10e293e",
+      "bytes": 160584
+    },
+    {
+      "path": "Olinux-x86_64/gen3.o",
+      "sha256": "55e1de93ac115a533ccf1e7bfeeae84b4a948e22c6b53f14d98a43b8478051aa",
+      "bytes": 265808
+    },
+    {
+      "path": "Olinux-x86_64/genus2red.o",
+      "sha256": "1a11d1c4e546330cdaab22a771890db15bdb094de65fc1ae5bac9c9debc017c1",
+      "bytes": 133216
+    },
+    {
+      "path": "Olinux-x86_64/gp-dyn",
+      "sha256": "9060359a4bea3f959d969ac0519483ad9c828d6c9ba5ea3f9e7ab7f9e1389812",
+      "bytes": 134040
+    },
+    {
+      "path": "Olinux-x86_64/gp.o",
+      "sha256": "264745eb1a3e9993ad8ab26d9e26b7971eb7d86b9742def4f5baf500ae0907e6",
+      "bytes": 30768
+    },
+    {
+      "path": "Olinux-x86_64/gp_rl.o",
+      "sha256": "6386e8b44ebbb1e536bc3ffbbfd51bd7ca9faab4641c53beb822635eb2e1dc12",
+      "bytes": 16528
+    },
+    {
+      "path": "Olinux-x86_64/gplib.o",
+      "sha256": "1439fb04f42dcfa9c63631fd6142973055c5495599031f2b16d8a422d93eb1c4",
+      "bytes": 79248
+    },
+    {
+      "path": "Olinux-x86_64/grossenchar.o",
+      "sha256": "b2e192fb83fbc8c705b247d65dce79c1b417ab9b560d0208e0f012632cd5f976",
+      "bytes": 157976
+    },
+    {
+      "path": "Olinux-x86_64/groupid.o",
+      "sha256": "2699f524492ba03e3dca1a6e818fcb7a4b6308d0d9218f554a96102a571250f9",
+      "bytes": 21808
+    },
+    {
+      "path": "Olinux-x86_64/hash.o",
+      "sha256": "a6487da4f9863b57d87f8b692c4393af3ba9c88dd4a996c7e8ad6fbb18f424be",
+      "bytes": 13992
+    },
+    {
+      "path": "Olinux-x86_64/hgm.o",
+      "sha256": "9e3437f0611fb43643a47d71d84833511430f44f06bfd6d7210a7cc372e90779",
+      "bytes": 169776
+    },
+    {
+      "path": "Olinux-x86_64/hnf_snf.o",
+      "sha256": "2dc4469d40ee59e1eb54bf41303e757f4e8b5bff846a028ac849be8cf726991d",
+      "bytes": 192720
+    },
+    {
+      "path": "Olinux-x86_64/hyperell.o",
+      "sha256": "be012e600bb38cba24a7392fa426ad9d7ca6c20fe54d9b7db698469b6a330e71",
+      "bytes": 133520
+    },
+    {
+      "path": "Olinux-x86_64/hypergeom.o",
+      "sha256": "4ef34ba1d7433c1c7b5ff24503d552de10946a4e33cc14b4b85826906ce7a630",
+      "bytes": 110296
+    },
+    {
+      "path": "Olinux-x86_64/ifactor1.o",
+      "sha256": "9f1ee1f7f579e9996f99a76337066f4c8488af72db74096269c2cf92d1b40273",
+      "bytes": 151472
+    },
+    {
+      "path": "Olinux-x86_64/init.o",
+      "sha256": "6268357d493acc30db143e343cc8e40ef8d1f60578c6e7fa4111696274f8e848",
+      "bytes": 636560
+    },
+    {
+      "path": "Olinux-x86_64/intnum.o",
+      "sha256": "af66a0e06c1de3b8db93d615e21005470a068eab9b0d697fdfbd4fc89f7327ed",
+      "bytes": 184712
+    },
+    {
+      "path": "Olinux-x86_64/ispower.o",
+      "sha256": "939dc2cca7069ddad03d5073fa95a288e050c461710690914411a921ffea6cbe",
+      "bytes": 63600
+    },
+    {
+      "path": "Olinux-x86_64/krasner.o",
+      "sha256": "17944f617ec2002c89a8fe214368ebb8c8c10e05b0a6cea7c111ae44b36364ae",
+      "bytes": 44600
+    },
+    {
+      "path": "Olinux-x86_64/kummer.o",
+      "sha256": "cdb96a78dcd6e9a27b4ebf4e9463f9c1633c0501c17da85cb544b6fa2e6a7a40",
+      "bytes": 104736
+    },
+    {
+      "path": "Olinux-x86_64/lambert.o",
+      "sha256": "b53d81fdaef463adfecde218783d382c07a0628ede4874f00a8fa281ffa74d24",
+      "bytes": 54912
+    },
+    {
+      "path": "Olinux-x86_64/lerch.o",
+      "sha256": "241a7f6c8a062fc5469f35c3805ad96ebf56192f8e8f033b422f3b1a23546f96",
+      "bytes": 79472
+    },
+    {
+      "path": "Olinux-x86_64/lfun.o",
+      "sha256": "bd1786059eb0f14d79b9e76ed8fb7fd78d2150b6356c3869caae020f48e871c4",
+      "bytes": 172080
+    },
+    {
+      "path": "Olinux-x86_64/lfunlarge.o",
+      "sha256": "0482de730bd81b9e5d4e513aba51332ecb2bbc73f074ca2c4716e4f2e2fded7e",
+      "bytes": 80512
+    },
+    {
+      "path": "Olinux-x86_64/lfunquad.o",
+      "sha256": "4f674361c396b921ea40badf4a91c6fe7ae3ee5fa4ae222a39f03be821d5017c",
+      "bytes": 51664
+    },
+    {
+      "path": "Olinux-x86_64/lfunutils.o",
+      "sha256": "c1aa6e92f3f4d15be86135db12236b0a241a964ff2242d123daa1222e44f3c39",
+      "bytes": 191880
+    },
+    {
+      "path": "Olinux-x86_64/libpari-gmp.so.2.17.4",
+      "sha256": "81d4903d375bf044c83f4adb8e052d98a7213bbbcbe0b054d7c7dad28c2b9074",
+      "bytes": 13012368
+    },
+    {
+      "path": "Olinux-x86_64/lll.o",
+      "sha256": "379969418254b6daed312b8b4b57aaafa55fe36d75dccef9cee6dfa958353206",
+      "bytes": 154984
+    },
+    {
+      "path": "Olinux-x86_64/Makefile",
+      "sha256": "7d9ea5de2ac6de301c4632f8c9d9b20dce11ef81f736276889523bf4b284a358",
+      "bytes": 60928
+    },
+    {
+      "path": "Olinux-x86_64/Makefile.examples",
+      "sha256": "5265ac0c829ce7845a9ecc6d0684cbeaa2922472b668e7714a242a2f55eb440b",
+      "bytes": 1412
+    },
+    {
+      "path": "Olinux-x86_64/map.o",
+      "sha256": "bba3ca8c0ee67ffebef00016d35979dc56130b54fe154c130d26775e4b44f4cb",
+      "bytes": 24648
+    },
+    {
+      "path": "Olinux-x86_64/matperm.o",
+      "sha256": "6a53715e8626c3242067bd78c6381e29819d331bbf837aa61e851204261c8dce",
+      "bytes": 14392
+    },
+    {
+      "path": "Olinux-x86_64/mellininv.o",
+      "sha256": "85beb1c2b2bb1e09623ffc88e76d8ab034b6be659c19134bdacbfba30391b5cf",
+      "bytes": 77256
+    },
+    {
+      "path": "Olinux-x86_64/members.o",
+      "sha256": "87f24688980332fd13c638a0144afaa27d642141d3eadc405a6fee543ce638f7",
+      "bytes": 28528
+    },
+    {
+      "path": "Olinux-x86_64/mftrace.o",
+      "sha256": "efea44d6bab507bb701832227a2c970710c9ed9e2b2be1562b6c2d81e61ee7b7",
+      "bytes": 731480
+    },
+    {
+      "path": "Olinux-x86_64/modsym.o",
+      "sha256": "ef43ed5a8b8317edd87ed5ed03b7c111faf4d08e2f8233b7d8dc09e9fa0ce453",
+      "bytes": 264256
+    },
+    {
+      "path": "Olinux-x86_64/mpinl.h",
+      "sha256": "f5a843b9a2ce855b4177bf3102ded0dbc9cbbb756f10871ab00a2675cabfa079",
+      "bytes": 73382
+    },
+    {
+      "path": "Olinux-x86_64/mpinl.o",
+      "sha256": "34654cc748654baf20b879da587699b2e0213a2445ea525cc30fb49455f6b453",
+      "bytes": 62776
+    },
+    {
+      "path": "Olinux-x86_64/mpker.c",
+      "sha256": "15ee0a57d6ed2302bb19878d62c4080d8ce07a04616f38cf8b8ffd075b6c1397",
+      "bytes": 139037
+    },
+    {
+      "path": "Olinux-x86_64/mpker.o",
+      "sha256": "de0d988231f2b43479e7d87e860395f027ff93f52dd18173ca0b00c9151c38c7",
+      "bytes": 279288
+    },
+    {
+      "path": "Olinux-x86_64/mpqs.o",
+      "sha256": "d112d9b64ebe988f723ed3216f7fb742418ec98c5c2d8b2d87dcc1ecc682babc",
+      "bytes": 67888
+    },
+    {
+      "path": "Olinux-x86_64/msfarey.o",
+      "sha256": "1a7774decfd1ef1b7e7dcb799a697a5fdba7a1479f6c4bbea499d3038cc1f0c0",
+      "bytes": 33984
+    },
+    {
+      "path": "Olinux-x86_64/mt.o",
+      "sha256": "257f5c77362c98f374595999c8addd28c141c20c7731a7c31e49fa7429d96475",
+      "bytes": 4344
+    },
+    {
+      "path": "Olinux-x86_64/nffactor.o",
+      "sha256": "3baa4d31f47e3af0e343c869708f429500a50c0958e4bdc7fac2a74fb4096b95",
+      "bytes": 156528
+    },
+    {
+      "path": "Olinux-x86_64/nflist.o",
+      "sha256": "b40003aa0820be173de7a46a919f5d6143fd616d39f7a0c61fa7f327bbe0b04b",
+      "bytes": 382928
+    },
+    {
+      "path": "Olinux-x86_64/nflistQT.o",
+      "sha256": "3f1bb4d10ba7bc8b6e438da2225805879992b9c416f671e8eb58b8979fad9239",
+      "bytes": 34240
+    },
+    {
+      "path": "Olinux-x86_64/pari.cfg",
+      "sha256": "50e572f1c398e47f7bc7149e436f090cf913fd0800bf63561b228fe0ee886c65",
+      "bytes": 12333
+    },
+    {
+      "path": "Olinux-x86_64/paricfg.h",
+      "sha256": "4257a4e5ffa06a7fc021f012753a9f08ec0156a29bdf7b26d01b5dd23bb16633",
+      "bytes": 1322
+    },
+    {
+      "path": "Olinux-x86_64/paricfg.o",
+      "sha256": "d938c330d6ef078035852f4614b053bf90a4b2e3297cbe487a86c5d1d4a86488",
+      "bytes": 1992
+    },
+    {
+      "path": "Olinux-x86_64/pariinl.o",
+      "sha256": "d945076c13d695170c8cee9259fb39f47d9a545daa9b443c7600c62765cd25a8",
+      "bytes": 141232
+    },
+    {
+      "path": "Olinux-x86_64/parilvl0.h",
+      "sha256": "6f58414934b7814d98bb5595f75d2bef87848b403589eabca9a5fc4ebb9021af",
+      "bytes": 25505
+    },
+    {
+      "path": "Olinux-x86_64/parilvl1.h",
+      "sha256": "da536141723ba76333404330c84cd3dd706976a026ea2cbe82087c9b00d079ba",
+      "bytes": 47877
+    },
+    {
+      "path": "Olinux-x86_64/parimt.h",
+      "sha256": "4c0e8639f616e056e63c4e8989f9e2eb2d7ca946402b769581364670e874c1b6",
+      "bytes": 709
+    },
+    {
+      "path": "Olinux-x86_64/parse.o",
+      "sha256": "991784b98112755c883bdd9fec01de66b91d4cfd25161ea8ca913f903cbe3572",
+      "bytes": 33816
+    },
+    {
+      "path": "Olinux-x86_64/part.o",
+      "sha256": "01231b6f4268f51bba2d78b1c87f2f04fde9adf7eaa4bfe0f5e224d6fa71ac81",
+      "bytes": 29200
+    },
+    {
+      "path": "Olinux-x86_64/pclgp.o",
+      "sha256": "f463a1f79fd2f153b8c3df82074ad584803ce4b3840ca657b26c0418a50a0967",
+      "bytes": 220656
+    },
+    {
+      "path": "Olinux-x86_64/perm.o",
+      "sha256": "76aa3d1ab4ed6d62c7478fb89cea1d51401806aac4754442c27adf1a114c3d25",
+      "bytes": 135568
+    },
+    {
+      "path": "Olinux-x86_64/plotport.o",
+      "sha256": "a4ef40db9e085ca8b522e6334b8cb068aa7f10b086113bff1d608caea5b32ec4",
+      "bytes": 206816
+    },
+    {
+      "path": "Olinux-x86_64/plotsvg.o",
+      "sha256": "dd2829603657a23c1ffebf3e91efb07fd4914fcb808c2b049c5b59464b881869",
+      "bytes": 2320
+    },
+    {
+      "path": "Olinux-x86_64/plottty.o",
+      "sha256": "4abc041541b791a20ee02de9fc428945140ef95a91ad651952906a3f194c0ee1",
+      "bytes": 36760
+    },
+    {
+      "path": "Olinux-x86_64/polarit1.o",
+      "sha256": "ed63fd8c645ae673a005561877eb364a2792cff5a3efc35e526f00e46319599a",
+      "bytes": 43568
+    },
+    {
+      "path": "Olinux-x86_64/polarit2.o",
+      "sha256": "3d78a5d6089f7822dd36f2501b0e3fb6cf6e56ad89981fc96a4112af9c19ebb5",
+      "bytes": 236528
+    },
+    {
+      "path": "Olinux-x86_64/polarit3.o",
+      "sha256": "7cefe1aa0b364d2563607e244c4c6e166fb7d4040276893db63103a1a1dd2d12",
+      "bytes": 208984
+    },
+    {
+      "path": "Olinux-x86_64/polclass.o",
+      "sha256": "af50a493f117f723cb7bcad9a6d06c18f5c4f6d8c66d07e4e5b2c2ade5120e33",
+      "bytes": 114896
+    },
+    {
+      "path": "Olinux-x86_64/polmodular.o",
+      "sha256": "b79f53d7d552c01a328653aa288d1dd2ca65f280399de48cff3a7fa3c56b2037",
+      "bytes": 173384
+    },
+    {
+      "path": "Olinux-x86_64/prime.o",
+      "sha256": "d1990f77e294e2718acd39cf5b515961d8acea7899f2607a7d5e1782aaa9f5b0",
+      "bytes": 88600
+    },
+    {
+      "path": "Olinux-x86_64/Qfb.o",
+      "sha256": "f92b41b4364b1dfe8aa239a41f01137c8b4d0b4ce5666cec8ae4e7c165c58031",
+      "bytes": 148368
+    },
+    {
+      "path": "Olinux-x86_64/qfisom.o",
+      "sha256": "67bc5604c3f1854881d2fcdae9986e8c9dabec0da9d2bbfcb072bd161b1bec23",
+      "bytes": 109280
+    },
+    {
+      "path": "Olinux-x86_64/qfsolve.o",
+      "sha256": "9bc57bf409c38b3fb3d3c2f27b4d08349970e84b6e219f32c566108a983c5bfb",
+      "bytes": 105336
+    },
+    {
+      "path": "Olinux-x86_64/quad.o",
+      "sha256": "813d6db55b72eb68a4702a0a1e9428f184e8c14f261aa1bd878ca411fb27f71c",
+      "bytes": 89112
+    },
+    {
+      "path": "Olinux-x86_64/QX_factor.o",
+      "sha256": "29ac1cb4c52c9c7d1bad72fe19076f7599f55f5155ee35a5d51593aa70e2eeb8",
+      "bytes": 116472
+    },
+    {
+      "path": "Olinux-x86_64/ramanujantau.o",
+      "sha256": "bb797cd5f51327567df278be3c8b61e0321f9d52044dc3b726c76827ff132c43",
+      "bytes": 14840
+    },
+    {
+      "path": "Olinux-x86_64/random.o",
+      "sha256": "41c42301fe5d7fdf55884edbe2d1090f74b801a40459e8664ce75661f8b278ee",
+      "bytes": 14144
+    },
+    {
+      "path": "Olinux-x86_64/ratpoints.o",
+      "sha256": "940fee96f2a38ca63c9a07317b2d7fb8cfd56f3b63e52704dd16e38288e4f478",
+      "bytes": 80144
+    },
+    {
+      "path": "Olinux-x86_64/readline.o",
+      "sha256": "6adad4f73e9e6af80d3222630586ac2d96b355805ff0624424602cac12b3c423",
+      "bytes": 12960
+    },
+    {
+      "path": "Olinux-x86_64/RgV.o",
+      "sha256": "732a6531c1f9785ebe9beaa8a347394fcc036e0a6dfa0622e052df602946f2b6",
+      "bytes": 70392
+    },
+    {
+      "path": "Olinux-x86_64/RgX.o",
+      "sha256": "710102aeb043186532eeef76d3c2f73c695e685b23e23058753a07ce82c9f1b9",
+      "bytes": 176304
+    },
+    {
+      "path": "Olinux-x86_64/rootpol.o",
+      "sha256": "fb12a807810bafc63f38c999074abde0166ce0a54ae5bb646502518f86115647",
+      "bytes": 188536
+    },
+    {
+      "path": "Olinux-x86_64/Ser.o",
+      "sha256": "88ced857e7998e300a525999c576a5d6381b8019b610c6e8a3a2b0e98dbf80b1",
+      "bytes": 22520
+    },
+    {
+      "path": "Olinux-x86_64/single.o",
+      "sha256": "9928f4a790685fa7c9cdeb742d1bf66ce9e1a7a8bce659e4f9a19e3e353a3ff3",
+      "bytes": 3648
+    },
+    {
+      "path": "Olinux-x86_64/stark.o",
+      "sha256": "cb47ff461ca339d4ac9184e81667356be9f748afa03b7323100188033bfdc230",
+      "bytes": 175744
+    },
+    {
+      "path": "Olinux-x86_64/str.o",
+      "sha256": "eb901e39428c8560bbc31d203075d89597785dd9ab55f593602019caffb9ecd0",
+      "bytes": 14576
+    },
+    {
+      "path": "Olinux-x86_64/subcyclo.o",
+      "sha256": "68a6d7cf59f7cf5a4f0a85dcbdef2c7edbe7d4912e7ec65d5b2a29a35a31910c",
+      "bytes": 91048
+    },
+    {
+      "path": "Olinux-x86_64/subfield.o",
+      "sha256": "929da85fef2a42c163ae5410dc817e7d3ce092fdb260ecc52d2022a87ceb1d59",
+      "bytes": 115112
+    },
+    {
+      "path": "Olinux-x86_64/subgroup.o",
+      "sha256": "8a2e1e4ab1d821de92eb9eaedb264bcc9ab73a3ccff42cbf17d583ea343dcf3d",
+      "bytes": 45672
+    },
+    {
+      "path": "Olinux-x86_64/sumiter.o",
+      "sha256": "a47e880c9aeef464e5a253caec74c0cebf332b1c2dead921487c867645e2eb6d",
+      "bytes": 160664
+    },
+    {
+      "path": "Olinux-x86_64/texmacs.o",
+      "sha256": "4120e89b7d14dc0028852d37286e642ae95f776bc7822528dfef188d21eb9ce8",
+      "bytes": 13320
+    },
+    {
+      "path": "Olinux-x86_64/thue.o",
+      "sha256": "3bea6134d69455a04a7669c6c2c455efc7f61ea9838e53775490488d3a2b935b",
+      "bytes": 122216
+    },
+    {
+      "path": "Olinux-x86_64/trans1.o",
+      "sha256": "81b22b0d0c2c04a8c88c8354531f095e709988c7afa092c96ac51739b70eecb3",
+      "bytes": 236904
+    },
+    {
+      "path": "Olinux-x86_64/trans2.o",
+      "sha256": "a79fb6c3938875e3512a5c507cdd98d87687831844efcf1f79a9fa4795e760e0",
+      "bytes": 155984
+    },
+    {
+      "path": "Olinux-x86_64/trans3.o",
+      "sha256": "86e5db46563500a94e81ebefba8b3e44652a33e054074c06ea99f4112812ae3b",
+      "bytes": 214000
+    },
+    {
+      "path": "Olinux-x86_64/volcano.o",
+      "sha256": "3ae83358d8e50f75a4c9d04c02972c5ff7bb7e7ca750f60e4c0a604fa30a37ed",
+      "bytes": 26512
+    },
+    {
+      "path": "Olinux-x86_64/whatnow.o",
+      "sha256": "c6d4e6071307e763bf3f40502da3f7241aadd7244fe21368411bc654ca9e5ed2",
+      "bytes": 75952
+    },
+    {
+      "path": "Olinux-x86_64/zetamult.o",
+      "sha256": "091d892ac3fa84cae966a8d7173a8650cf6831b5a7931db5d8c4df4f364632f3",
+      "bytes": 92952
+    },
+    {
+      "path": "Olinux-x86_64/ZG.o",
+      "sha256": "491f1cabd42f149d314a8974b6936efe53a77aea5d5722a6349e4391883baad1",
+      "bytes": 13736
+    },
+    {
+      "path": "Olinux-x86_64/Zp.o",
+      "sha256": "42641105322aac0052876d2726797fb5bc8281b10a734e33e5beda830c73b431",
+      "bytes": 117040
+    },
+    {
+      "path": "Olinux-x86_64/ZV.o",
+      "sha256": "713329aecdc1099b133bdfaa3ea3e7eff13468010dbaa1fd61652e08e56f45c9",
+      "bytes": 129392
+    },
+    {
+      "path": "Olinux-x86_64/ZX.o",
+      "sha256": "ac213a7f111ca4b43a9258acef00320c66123e189c41b14a9748e9798a355948",
+      "bytes": 95016
+    },
+    {
+      "path": "src/desc/pari.desc",
+      "sha256": "a4a7eaf683d118f3bf7d792a730b564a44f226f9592d041e35b5445312865354",
+      "bytes": 1766037
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "992f33881d7ba8e6e14336ec63f159c542d6f6e69ceb54c32040e590ff137dc0",
+  "body_preserved": true
+}

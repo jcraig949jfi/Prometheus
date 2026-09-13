@@ -1,0 +1,69 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "eispack-netlib-1976",
+  "receipt_id": "run-eispack-netlib-1976-20260913T144537Z",
+  "written_utc": "20260913T144537Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "driver.f": "4b788d2ab9a19c0b8b3ab3baa1052b3ea7ffa1e3c240ea636ae0dd174d17181d"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "a58ae4ce6822fe7c43e80a2bef73f92459409347b5ab655d46804fa273b55411",
+  "recipe_sha256": "672bdf77536bb0daea644ce0d7eb2dd58b91763b75e99146be6a59ae04ece36e",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 0,
+      "seconds": 6.46,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Fortran (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "gfortran -std=legacy: rs + tred2 + tql2 + harness driver",
+      "cmd": "cp $HARNESS/driver.f . && gfortran -std=legacy -w -O2 -o eig driver.f rs.f tred2.f tql2.f tred1.f tqlrat.f 2>&1 | grep -i 'error' | head -5; test -x ./eig && echo BUILT",
+      "exit": 1,
+      "seconds": 1.19,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "collect2: error: ld returned 1 exit status\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [
+    {
+      "path": "driver.f",
+      "sha256": "4b788d2ab9a19c0b8b3ab3baa1052b3ea7ffa1e3c240ea636ae0dd174d17181d",
+      "bytes": 506
+    }
+  ],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "a58ae4ce6822fe7c43e80a2bef73f92459409347b5ab655d46804fa273b55411",
+  "body_preserved": true
+}

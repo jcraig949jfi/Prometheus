@@ -1,0 +1,44 @@
+"""Batch 08 recipes + harnesses (2026-09-13). python -m techne.fossils.batches.batch08_recipes
+Each runs in the disposable work/ copy; deviations in each recipe's notes."""
+from __future__ import annotations
+
+import json
+from .. import vault
+
+LANG = "prometheus-fossil-lang:bookworm"
+R = {}
+H = {}
+
+# ---- ELIZA 1966 (Anthony Hay's faithful reconstruction) --------------------------------------
+R["eliza-anthay-1966"] = {
+    "runner": "docker", "image": LANG, "workdir": "upstream/tree",
+    "probe": [{"name": "g++", "cmd": "g++ --version | head -1"}],
+    "build": [{"name": "single-file g++ -std=c++20 (eliza.cpp embeds the 1966 DOCTOR script + tests)",
+               "cmd": "g++ -std=c++20 -O2 -o eliza src/eliza.cpp 2>&1 | head -5; test -x ./eliza && echo built", "timeout": 600}],
+    "runs": [
+        {"name": "reproduce the opening of Weizenbaum's 1966 CACM conversation, incl. pronoun reflection (my->YOUR, me->YOU)",
+         "cmd": "printf 'Men are all alike.\\nThey are always bugging us about something or other.\\nWell, my boyfriend made me come here.\\n' | ./eliza --nobanner 2>&1",
+         "expect": {"exit": 0, "stdout_contains": ["IN WHAT WAY", "CAN YOU THINK OF A SPECIFIC EXAMPLE", "YOUR BOYFRIEND MADE YOU COME HERE"]}, "timeout": 120},
+        {"name": "the embedded self-tests reproduce the documented 1966/1965 conversations at startup (report the 'test failed' count -- expect 0 -- and that the greeting is reached)",
+         "cmd": "printf '' | ./eliza 2>&1 > /tmp/o; echo \"test_failed_lines=$(grep -ci 'test failed' /tmp/o)\"; echo \"greeting=$(grep -c 'PLEASE TELL ME YOUR PROBLEM' /tmp/o)\"",
+         "expect": {"exit": 0, "stdout_contains": ["test_failed_lines=0", "greeting=1"]}, "timeout": 120},
+        {"name": "a turn whose words hit no DOCTOR keyword falls through to a scripted deflection (the failure mode)",
+         "cmd": "printf 'xyzzy plugh frobnitz\\n' | ./eliza --nobanner 2>&1 | tail -2",
+         "expect": {"exit": 0}, "timeout": 120}],
+    "tests": [], "test_kind": "TECHNE", "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+    "classification_if_ok": "RUNNABLE_CONTAINER",
+    "notes": "Oracle: the exact dialogue printed in Weizenbaum's 1966 CACM paper -- 'Men are all alike.'->'IN WHAT WAY', then 'CAN YOU THINK OF A SPECIFIC EXAMPLE', then the pronoun-reflected 'YOUR BOYFRIEND MADE YOU COME HERE'. The program is configured with Weizenbaum's 1966 DOCTOR script by default and runs its embedded conversation self-tests (RUN_TESTS at startup) with zero failures. Single-file C++20 build; body is a faithful reconstruction (source_type FAITHFUL_PORT), not the original MAD-SLIP binary."}
+
+
+def main():
+    for sid, recipe in R.items():
+        d = vault.specimen_dir(sid); d.mkdir(parents=True, exist_ok=True)
+        (d / "recipe.json").write_text(json.dumps(recipe, indent=2) + "\n", encoding="utf-8", newline="\n")
+        for name, text in H.get(sid, {}).items():
+            (d / "harness").mkdir(exist_ok=True)
+            (d / "harness" / name).write_text(text, encoding="utf-8", newline="\n")
+        print("wrote", sid, "+harness" if sid in H else "")
+
+
+if __name__ == "__main__":
+    main()

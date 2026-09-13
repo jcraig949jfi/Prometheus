@@ -1,0 +1,232 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "linpack-netlib-1979",
+  "canonical_name": "LINPACK (1979) -- the Fortran dense linear algebra library, superseded by LAPACK",
+  "aliases": [
+    "LINPACK",
+    "dgefa",
+    "linpack benchmark"
+  ],
+  "lineage": "LINPACK (Dongarra, Bunch, Moler, Stewart, 1979) organised dense linear algebra around COLUMN operations expressed in Level-1 BLAS (vector-vector: daxpy, dscal, ddot, idamax). It defined the field and gave the world the LINPACK benchmark still used for the TOP500. It was superseded by LAPACK, which solves the SAME problems restructured around blocked Level-3 BLAS. The loser and the winner compute the same LU factorisation; only the memory-access structure differs.",
+  "domain": [
+    "numerical-linear-algebra",
+    "scientific-computing",
+    "dense-linear-algebra",
+    "benchmark",
+    "loser"
+  ],
+  "era": "1979 (LINPACK); superseded from 1992 (LAPACK)",
+  "version": "netlib linpack routines + the linpackd benchmark, as served by netlib 2026-09-13",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/benchmark/linpackd",
+        "filename": "linpackd.f",
+        "extract": false,
+        "sha256": "4bb5e28a4d060ba832a3cb55903c5287c966b6ccd51bf987d4d8fdb5d070a2a5"
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/linpack/dgefa.f",
+        "filename": "dgefa.f",
+        "extract": false,
+        "sha256": "764bd0a87dba77464eeac5c232a264b9de0aee192c8db152799b939579d95317"
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/linpack/dgesl.f",
+        "filename": "dgesl.f",
+        "extract": false,
+        "sha256": "2ef2289c6cb929825fff0fc9a9fd57c556c3cde97b21351cfdff140be645fbda"
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/blas/daxpy.f",
+        "filename": "daxpy.f",
+        "extract": false,
+        "sha256": "1e29c2ea939058958773c23a1c8e034d47621c316806d4b8bb052b5a0b69069a"
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/blas/dscal.f",
+        "filename": "dscal.f",
+        "extract": false,
+        "sha256": "3983f576bcd20eec2a70c07b3411a5d91afafae012c23768b8edd77be10ea67a"
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/blas/ddot.f",
+        "filename": "ddot.f",
+        "extract": false,
+        "sha256": "92f3260e061ae7e5ecc59bdb16ca3eaea29e777c8c7d2635530cde561d4daeb1"
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/blas/idamax.f",
+        "filename": "idamax.f",
+        "extract": false,
+        "sha256": "533abe15ac6ee2b463b241dc55b03b81324bd112844d1cf3d852840aa7d72c4c"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "archive": "netlib.org/linpack, netlib.org/blas, netlib.org/benchmark"
+  },
+  "hashes": {
+    "tree_sha256": "cfe571decfc7752f2ad51137dac1b26f5b931d0d47cab70110f89cb4194a4fdf",
+    "n_files": 7,
+    "bytes": 41443,
+    "artifacts": [
+      {
+        "filename": "linpackd.f",
+        "sha256": "4bb5e28a4d060ba832a3cb55903c5287c966b6ccd51bf987d4d8fdb5d070a2a5",
+        "commit": null
+      },
+      {
+        "filename": "dgefa.f",
+        "sha256": "764bd0a87dba77464eeac5c232a264b9de0aee192c8db152799b939579d95317",
+        "commit": null
+      },
+      {
+        "filename": "dgesl.f",
+        "sha256": "2ef2289c6cb929825fff0fc9a9fd57c556c3cde97b21351cfdff140be645fbda",
+        "commit": null
+      },
+      {
+        "filename": "daxpy.f",
+        "sha256": "1e29c2ea939058958773c23a1c8e034d47621c316806d4b8bb052b5a0b69069a",
+        "commit": null
+      },
+      {
+        "filename": "dscal.f",
+        "sha256": "3983f576bcd20eec2a70c07b3411a5d91afafae012c23768b8edd77be10ea67a",
+        "commit": null
+      },
+      {
+        "filename": "ddot.f",
+        "sha256": "92f3260e061ae7e5ecc59bdb16ca3eaea29e777c8c7d2635530cde561d4daeb1",
+        "commit": null
+      },
+      {
+        "filename": "idamax.f",
+        "sha256": "533abe15ac6ee2b463b241dc55b03b81324bd112844d1cf3d852840aa7d72c4c",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\linpack-netlib-1979",
+    "hash_list": "techne/fossils/specimens/linpack-netlib-1979/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "NOASSERTION",
+    "status": "public-domain-style (netlib)",
+    "evidence": "netlib distribution terms; LINPACK routines are freely redistributable"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "Fortran 77"
+  ],
+  "build_system": "gfortran -std=legacy",
+  "compiler_or_interpreter": "gfortran (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a Fortran compiler"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "linpackd -- the 100x100 LU benchmark, reports MFLOPS and a residual check",
+    "dgefa/dgesl -- LU factorise and solve, Level-1 BLAS inner loops"
+  ],
+  "example": {
+    "command": "gfortran -std=legacy -O2 -o linpackd linpackd.f && ./linpackd",
+    "input": "the benchmark's own generated 100x100 system",
+    "output": "MFLOPS plus a residual/norm check the benchmark grades itself against (the ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Dongarra, Bunch, Moler, Stewart, LINPACK Users' Guide, SIAM 1979",
+    "Anderson et al., LAPACK Users' Guide, SIAM (3rd ed. 1999) -- supersession + the reason"
+  ],
+  "human_capability_summary": {
+    "built_to": "solve dense linear systems and least-squares problems portably and reliably in Fortran, on the vector machines of the late 1970s",
+    "pressure": "limited memory and the arithmetic cost of O(n^3) factorisation on machines whose fast path was long vector operations",
+    "success_means": "an accurate factorisation and solution, with a small residual, at the machine's peak vector rate"
+  },
+  "known_human_problem_solved": "dense linear systems (LU, QR, SVD) in portable Fortran",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "expensive arithmetic on vector hardware; portability across wildly different machines",
+  "human_failure_condition": "on cache-based machines the Level-1 BLAS inner loops move O(n^3) words through memory and the factorisation becomes MEMORY-bound, running far below peak",
+  "behavioral_entry_point": "factor matrices of growing n with LINPACK dgefa and LAPACK dgetrf in the same process and compare time/MFLOPS as n crosses cache sizes",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded",
+      "to": "lapack-reference",
+      "note": "same problems, restructured for memory hierarchy; the human record states the reason"
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "fftpack-netlib",
+      "note": "both netlib Fortran numerical libraries of the same era"
+    }
+  ],
+  "acquisition_tags": [
+    "batch09",
+    "loser",
+    "superseded_design",
+    "predecessor",
+    "numerical",
+    "pair_linear_algebra"
+  ],
+  "historical_disposition": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+      "poor_scaling",
+      "superior_rival"
+    ],
+    "superseded_by": "lapack-reference",
+    "rival_of": "lapack-reference",
+    "evidence": [
+      {
+        "kind": "successor_documentation",
+        "ref": "LAPACK Users' Guide (SIAM), 'LAPACK supersedes LINPACK and EISPACK'",
+        "says": "LAPACK was written to supersede LINPACK and EISPACK, providing the same functionality with better performance."
+      },
+      {
+        "kind": "successor_documentation",
+        "ref": "LAPACK Users' Guide, design rationale / netlib LAPACK FAQ",
+        "says": "LINPACK and EISPACK are based on vector (Level-1 BLAS) operations whose memory-reference pattern performs poorly on machines with cache and multi-level memory hierarchies; LAPACK restructures the algorithms to use blocked Level-3 BLAS so that data is reused in cache."
+      }
+    ]
+  },
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/linpack-netlib-1979/receipts/run-linpack-netlib-1979-20260913T144321Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\linpack-netlib-1979 ; tracked techne/fossils/specimens/linpack-netlib-1979",
+    "where_it_came_from": "https://www.netlib.org/benchmark/linpackd ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run linpack-netlib-1979",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/linpack-netlib-1979/receipts/run-linpack-netlib-1979-20260913T144321Z.json",
+    "what_humans_used_it_for": "solve dense linear systems and least-squares problems portably and reliably in Fortran, on the vector machines of the late 1970s"
+  },
+  "seat": "Techne"
+}

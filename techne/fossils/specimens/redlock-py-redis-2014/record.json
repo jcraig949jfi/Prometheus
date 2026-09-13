@@ -22,7 +22,8 @@
       {
         "kind": "git",
         "url": "https://github.com/SPSCommerce/redlock-py",
-        "commit": "HEAD"
+        "commit": "42ef491061c3790307d39356b307c4318032c439",
+        "commit_resolved": "42ef491061c3790307d39356b307c4318032c439"
       }
     ]
   },
@@ -131,5 +132,29 @@
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/redlock-py-redis-2014/receipts/run-redlock-py-redis-2014-20260913T054942Z.json",
     "what_humans_used_it_for": "grant one client at a time exclusive access to a resource across machines, with a lease so a crashed holder cannot block forever"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "archived_technical_discussion",
+        "ref": "Kleppmann, How to do distributed locking (2016)",
+        "says": "Argues Redlock is unsafe for correctness-critical locking because it depends on bounded clock drift and pause times."
+      },
+      {
+        "kind": "archived_technical_discussion",
+        "ref": "antirez, Is Redlock safe? (2016 response)",
+        "says": "Disputes that analysis and defends the algorithm's assumptions."
+      }
+    ],
+    "audit_note": "Genuinely CONTESTED and never settled by the historical record. Both citations are kept; neither establishes a disposition. Declaring a winner here would be my judgement, not evidence.",
+    "legacy_tags": [
+      "contested_design"
+    ],
+    "audit_verdict": "UNKNOWN",
+    "audited_utc": "2026-09-13T21:06:40Z"
+  }
 }

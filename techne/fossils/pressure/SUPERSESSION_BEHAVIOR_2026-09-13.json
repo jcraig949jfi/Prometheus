@@ -1,0 +1,363 @@
+{
+ "schema": "techne.fossil.supersession_behavior/1",
+ "written_utc": "2026-09-13T21:18:37Z",
+ "prereg": "techne/fossils/PREREG_SUPERSESSION_BEHAVIOR_2026-09-13.md",
+ "pair": [
+  "linpack-netlib-1979",
+  "lapack-reference"
+ ],
+ "preregistered_sizes": [
+  64,
+  128,
+  256,
+  512,
+  1024
+ ],
+ "coordinate": "LEVEL3_FRACTION = element-references issued through Level-3 BLAS / total element-references",
+ "method": "both fossils compiled exactly as preserved; BLAS calls counted with ld --wrap, which redirects undefined references to a counting shim at LINK time. No preserved body edited.",
+ "secondary_confounded": "SECONDS is cpu_time and is CONFOUNDED (one host, unoptimised reference BLAS, shim overhead penalises the arm making more calls). It carries no claim.",
+ "arms": [
+  {
+   "arm": "linpack",
+   "n": 64,
+   "routines": {
+    "daxpy": {
+     "level": 1,
+     "calls": 2143,
+     "element_refs": 89376.0
+    },
+    "dscal": {
+     "level": 1,
+     "calls": 63,
+     "element_refs": 2016.0
+    },
+    "idamax": {
+     "level": 1,
+     "calls": 63,
+     "element_refs": 2079.0
+    }
+   },
+   "info": 0,
+   "max_err": 1.55431e-15,
+   "seconds": 0.0,
+   "total_element_refs": 93471.0,
+   "level3_element_refs": 0,
+   "LEVEL3_FRACTION": 0.0
+  },
+  {
+   "arm": "lapack",
+   "n": 64,
+   "routines": {
+    "dscal": {
+     "level": 1,
+     "calls": 63,
+     "element_refs": 2016.0
+    },
+    "idamax": {
+     "level": 1,
+     "calls": 63,
+     "element_refs": 2079.0
+    },
+    "dgemm": {
+     "level": 3,
+     "calls": 63,
+     "element_refs": 14304.0
+    },
+    "dtrsm": {
+     "level": 3,
+     "calls": 65,
+     "element_refs": 7248.0
+    }
+   },
+   "info": 0,
+   "max_err": 1.55431e-15,
+   "seconds": 0.0001,
+   "total_element_refs": 25647.0,
+   "level3_element_refs": 21552.0,
+   "LEVEL3_FRACTION": 0.840332202596795
+  },
+  {
+   "arm": "linpack",
+   "n": 128,
+   "routines": {
+    "daxpy": {
+     "level": 1,
+     "calls": 8383,
+     "element_refs": 707136.0
+    },
+    "dscal": {
+     "level": 1,
+     "calls": 127,
+     "element_refs": 8128.0
+    },
+    "idamax": {
+     "level": 1,
+     "calls": 127,
+     "element_refs": 8255.0
+    }
+   },
+   "info": 0,
+   "max_err": 4.66294e-15,
+   "seconds": 0.0002,
+   "total_element_refs": 723519.0,
+   "level3_element_refs": 0,
+   "LEVEL3_FRACTION": 0.0
+  },
+  {
+   "arm": "lapack",
+   "n": 128,
+   "routines": {
+    "dscal": {
+     "level": 1,
+     "calls": 127,
+     "element_refs": 8128.0
+    },
+    "idamax": {
+     "level": 1,
+     "calls": 127,
+     "element_refs": 8255.0
+    },
+    "dgemm": {
+     "level": 3,
+     "calls": 127,
+     "element_refs": 65472.0
+    },
+    "dtrsm": {
+     "level": 3,
+     "calls": 129,
+     "element_refs": 28832.0
+    }
+   },
+   "info": 0,
+   "max_err": 4.66294e-15,
+   "seconds": 0.0002,
+   "total_element_refs": 110687.0,
+   "level3_element_refs": 94304.0,
+   "LEVEL3_FRACTION": 0.8519880383423528
+  },
+  {
+   "arm": "linpack",
+   "n": 256,
+   "routines": {
+    "daxpy": {
+     "level": 1,
+     "calls": 33151,
+     "element_refs": 5624960.0
+    },
+    "dscal": {
+     "level": 1,
+     "calls": 255,
+     "element_refs": 32640.0
+    },
+    "idamax": {
+     "level": 1,
+     "calls": 255,
+     "element_refs": 32895.0
+    }
+   },
+   "info": 0,
+   "max_err": 3.9968e-15,
+   "seconds": 0.001,
+   "total_element_refs": 5690495.0,
+   "level3_element_refs": 0,
+   "LEVEL3_FRACTION": 0.0
+  },
+  {
+   "arm": "lapack",
+   "n": 256,
+   "routines": {
+    "dscal": {
+     "level": 1,
+     "calls": 255,
+     "element_refs": 32640.0
+    },
+    "idamax": {
+     "level": 1,
+     "calls": 255,
+     "element_refs": 32895.0
+    },
+    "dgemm": {
+     "level": 3,
+     "calls": 255,
+     "element_refs": 311168.0
+    },
+    "dtrsm": {
+     "level": 3,
+     "calls": 257,
+     "element_refs": 108864.0
+    }
+   },
+   "info": 0,
+   "max_err": 3.9968e-15,
+   "seconds": 0.0017,
+   "total_element_refs": 485567.0,
+   "level3_element_refs": 420032.0,
+   "LEVEL3_FRACTION": 0.8650340735676024
+  },
+  {
+   "arm": "linpack",
+   "n": 512,
+   "routines": {
+    "daxpy": {
+     "level": 1,
+     "calls": 131839,
+     "element_refs": 44869888.0
+    },
+    "dscal": {
+     "level": 1,
+     "calls": 511,
+     "element_refs": 130816.0
+    },
+    "idamax": {
+     "level": 1,
+     "calls": 511,
+     "element_refs": 131327.0
+    }
+   },
+   "info": 0,
+   "max_err": 5.77316e-15,
+   "seconds": 0.012,
+   "total_element_refs": 45132031.0,
+   "level3_element_refs": 0,
+   "LEVEL3_FRACTION": 0.0
+  },
+  {
+   "arm": "lapack",
+   "n": 512,
+   "routines": {
+    "dscal": {
+     "level": 1,
+     "calls": 511,
+     "element_refs": 130816.0
+    },
+    "idamax": {
+     "level": 1,
+     "calls": 511,
+     "element_refs": 131327.0
+    },
+    "dgemm": {
+     "level": 3,
+     "calls": 511,
+     "element_refs": 1605376.0
+    },
+    "dtrsm": {
+     "level": 3,
+     "calls": 513,
+     "element_refs": 416384.0
+    }
+   },
+   "info": 0,
+   "max_err": 5.77316e-15,
+   "seconds": 0.0179,
+   "total_element_refs": 2283903.0,
+   "level3_element_refs": 2021760.0,
+   "LEVEL3_FRACTION": 0.885221482698696
+  },
+  {
+   "arm": "linpack",
+   "n": 1024,
+   "routines": {
+    "daxpy": {
+     "level": 1,
+     "calls": 525823,
+     "element_refs": 358437376.0
+    },
+    "dscal": {
+     "level": 1,
+     "calls": 1023,
+     "element_refs": 523776.0
+    },
+    "idamax": {
+     "level": 1,
+     "calls": 1023,
+     "element_refs": 524799.0
+    }
+   },
+   "info": 0,
+   "max_err": 1.02141e-14,
+   "seconds": 0.0808,
+   "total_element_refs": 359485951.0,
+   "level3_element_refs": 0,
+   "LEVEL3_FRACTION": 0.0
+  },
+  {
+   "arm": "lapack",
+   "n": 1024,
+   "routines": {
+    "dscal": {
+     "level": 1,
+     "calls": 1023,
+     "element_refs": 523776.0
+    },
+    "idamax": {
+     "level": 1,
+     "calls": 1023,
+     "element_refs": 524799.0
+    },
+    "dgemm": {
+     "level": 3,
+     "calls": 1023,
+     "element_refs": 9240064.0
+    },
+    "dtrsm": {
+     "level": 3,
+     "calls": 1025,
+     "element_refs": 1621248.0
+    }
+   },
+   "info": 0,
+   "max_err": 1.02141e-14,
+   "seconds": 0.1397,
+   "total_element_refs": 11909887.0,
+   "level3_element_refs": 10861312.0,
+   "LEVEL3_FRACTION": 0.9119576029562665
+  }
+ ],
+ "preregistered_predictions": {
+  "P-1": {
+   "claim": "LINPACK dgefa issues ZERO Level-3 calls; LEVEL3_FRACTION = 0 at every n",
+   "outcome": "CONFIRMED",
+   "observed": "0.0000 at n=64,128,256,512,1024; routines used are only daxpy/dscal/idamax"
+  },
+  "P-2": {
+   "claim": "LAPACK dgetrf's LEVEL3_FRACTION increases monotonically with n",
+   "outcome": "CONFIRMED",
+   "observed": [
+    0.8403,
+    0.852,
+    0.865,
+    0.8852,
+    0.912
+   ]
+  },
+  "P-3": {
+   "claim": "at n=64 the two may be indistinguishable because dgetrf falls back to unblocked dgetf2 at or below the block size; a null at n=64 is EXPECTED",
+   "outcome": "FALSIFIED",
+   "observed": "LAPACK's LEVEL3_FRACTION is already 0.8403 at n=64",
+   "why_i_was_wrong": "I assumed reference LAPACK's dgetrf switches to the unblocked dgetf2 at n <= nb. Modern reference LAPACK uses a RECURSIVE panel factorisation (dgetrf2), which issues dgemm/dtrsm on the sub-blocks even when n equals the nominal block size. The organisational difference therefore appears at every size tested, not only above the block size."
+  },
+  "P-4": {
+   "claim": "both arms agree with the all-ones oracle, so the comparison is valid",
+   "outcome": "CONFIRMED",
+   "observed": {
+    "max_err_worst": 1.02141e-14,
+    "note": "both recover the exact solution to ~1e-14; the two arms compute the SAME mathematics"
+   }
+  }
+ },
+ "headline": {
+  "coordinate": "LEVEL3_FRACTION",
+  "linpack": 0.0,
+  "lapack_range": [
+   0.8403,
+   0.912
+  ],
+  "total_element_refs_at_n_1024": {
+   "linpack": 359485951.0,
+   "lapack": 11909887.0,
+   "ratio": 30.2
+  },
+  "reading": "Same problem, same answer to 1e-14, and LINPACK issues ~30x more matrix element-references to get there at n=1024. The documented supersession pressure -- data reuse, not mathematics -- is reproduced as a machine-independent number. Techne records it; it does not rank the fossils.",
+  "caveat": "element-references are those IMPLIED BY THE BLAS ARGUMENTS (operands touched per call), the preregistered proxy for data movement. It is not a hardware cache-miss measurement."
+ }
+}

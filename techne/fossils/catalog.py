@@ -66,6 +66,7 @@ def enumerate_fossils(check_bodies: bool = True) -> list[dict]:
             "oracle_backed": obs.get("ORACLE_BACKED", "unknown"),
             "intervention_ready": obs.get("INTERVENTION_READY", "unknown"),
             "known_historical_disposition": disp,
+            "historical_disposition": r.get("historical_disposition") or {"state": "UNKNOWN"},
             "source_type": r.get("source_type", ""),
             "license_spdx": (r.get("license") or {}).get("spdx", ""),
             "acquisition_tags": tags,

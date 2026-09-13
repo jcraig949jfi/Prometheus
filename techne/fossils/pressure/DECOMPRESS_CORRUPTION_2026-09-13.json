@@ -1,0 +1,133 @@
+{
+ "schema": "techne.fossil.decompress_corruption/1",
+ "written_utc": "2026-09-13T11:06:29Z",
+ "method": "compress ~155 KB of text, then flip one byte (XOR 0xFF) at 10/50/90% or truncate to 50%, and decompress; record exit code, bytes produced, whether output == original, stderr head. Workload/corruption via coreutils (no python in the C image).",
+ "note": "raw decompressor failure behaviour; NOT a recovery ranking. A clean case must reproduce the original; corrupted cases show each codec's error/partial/silent-wrong/crash response.",
+ "codecs": [
+  "gzip-1.2.4",
+  "bzip2-1.0.8",
+  "ncompress-5.0"
+ ],
+ "rows": [
+  {
+   "codec": "gzip-1.2.4",
+   "case": "clean",
+   "exit_code": 0,
+   "bytes_out": 148893,
+   "output_equals_original": true,
+   "stderr_head": ""
+  },
+  {
+   "codec": "gzip-1.2.4",
+   "case": "flip@10%",
+   "exit_code": 1,
+   "bytes_out": 148816,
+   "output_equals_original": false,
+   "stderr_head": "gzip: stdin: invalid compressed data--crc error"
+  },
+  {
+   "codec": "gzip-1.2.4",
+   "case": "flip@50%",
+   "exit_code": 1,
+   "bytes_out": 148888,
+   "output_equals_original": false,
+   "stderr_head": "gzip: stdin: invalid compressed data--crc error"
+  },
+  {
+   "codec": "gzip-1.2.4",
+   "case": "flip@90%",
+   "exit_code": 1,
+   "bytes_out": 149182,
+   "output_equals_original": false,
+   "stderr_head": "gzip: stdin: invalid compressed data--crc error"
+  },
+  {
+   "codec": "gzip-1.2.4",
+   "case": "truncate@50%",
+   "exit_code": 1,
+   "bytes_out": 65536,
+   "output_equals_original": false,
+   "stderr_head": "gzip: stdin: unexpected end of file"
+  },
+  {
+   "codec": "bzip2-1.0.8",
+   "case": "clean",
+   "exit_code": 0,
+   "bytes_out": 148893,
+   "output_equals_original": true,
+   "stderr_head": ""
+  },
+  {
+   "codec": "bzip2-1.0.8",
+   "case": "flip@10%",
+   "exit_code": 2,
+   "bytes_out": 145000,
+   "output_equals_original": false,
+   "stderr_head": "bzip2: Data integrity error when decompressing.  Input file = (stdin), output file = (stdout)  It is possible that the"
+  },
+  {
+   "codec": "bzip2-1.0.8",
+   "case": "flip@50%",
+   "exit_code": 2,
+   "bytes_out": 145000,
+   "output_equals_original": false,
+   "stderr_head": "bzip2: Data integrity error when decompressing.  Input file = (stdin), output file = (stdout)  It is possible that the"
+  },
+  {
+   "codec": "bzip2-1.0.8",
+   "case": "flip@90%",
+   "exit_code": 2,
+   "bytes_out": 205000,
+   "output_equals_original": false,
+   "stderr_head": "bzip2: Data integrity error when decompressing.  Input file = (stdin), output file = (stdout)  It is possible that the"
+  },
+  {
+   "codec": "bzip2-1.0.8",
+   "case": "truncate@50%",
+   "exit_code": 2,
+   "bytes_out": 0,
+   "output_equals_original": false,
+   "stderr_head": "bzip2: Compressed file ends unexpectedly;  perhaps it is corrupted?  *Possible* reason follows. bzip2: Inappropriate io"
+  },
+  {
+   "codec": "ncompress-5.0",
+   "case": "clean",
+   "exit_code": 0,
+   "bytes_out": 148893,
+   "output_equals_original": true,
+   "stderr_head": ""
+  },
+  {
+   "codec": "ncompress-5.0",
+   "case": "flip@10%",
+   "exit_code": 0,
+   "bytes_out": 148347,
+   "output_equals_original": false,
+   "stderr_head": ""
+  },
+  {
+   "codec": "ncompress-5.0",
+   "case": "flip@50%",
+   "exit_code": 0,
+   "bytes_out": 146794,
+   "output_equals_original": false,
+   "stderr_head": ""
+  },
+  {
+   "codec": "ncompress-5.0",
+   "case": "flip@90%",
+   "exit_code": 0,
+   "bytes_out": 148932,
+   "output_equals_original": false,
+   "stderr_head": ""
+  },
+  {
+   "codec": "ncompress-5.0",
+   "case": "truncate@50%",
+   "exit_code": 0,
+   "bytes_out": 63407,
+   "output_equals_original": false,
+   "stderr_head": ""
+  }
+ ]
+}
