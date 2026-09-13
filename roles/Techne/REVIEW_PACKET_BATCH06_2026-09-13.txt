@@ -1,0 +1,149 @@
+================================================================================
+REVIEW PACKET
+FOSSIL VAULT BATCH 06: UNLOCK, FAILURE MACHINERY, PRESSURE, CULTURES
+================================================================================
+Prepared:        2026-09-13   frozen (rows committed; main fast-forwarded)
+Seat/Instance:   Techne  m1-8c399e8f   worktree techne-pass-0912
+Charter:         roles/Techne/prompts/2026-09-12_batch06/OPERATOR_CHARTER.md
+                 sha256 f5260cceb80e5d0342d68c2bd726a4841b66e65e4c75468e
+Artifacts:       techne/fossils/VAULT_INTEGRITY_2026-09-13_close.json
+                 techne/fossils/CATALOG.json  (105 fossils, catalog improved)
+                 techne/fossils/pressure/{SAT,COMPRESSION}_PRESSURE_2026-09-13.json
+                 techne/fossils/mirror/TECHNE65_Z_INDEPENDENCE_2026-09-13.md
+                 roles/Nyx/INBOX_TECHNE_FOSSIL_BATCH06_2026-09-13.md
+                 roles/Techne/journal/2026-09-13.md
+Headline:        Vault 90 -> 105 (0 drift). 4 old fossils UNLOCKED (libfec,
+                 compact, the 4.3BSD kernel boots, particles+PMMH); 15 new
+                 specimens across concurrent failure / distributed survival /
+                 adaptive control / inference / an array-language culture; SAT
+                 and compression PRESSURE datasets; the off-host mirror
+                 mechanism built but STOPPED (Z: not independently reachable).
+
+--------------------------------------------------------------------------------
+1. CLAIMS UNDER REVIEW
+--------------------------------------------------------------------------------
+P1  The i386 world unlocks libfec-karn (was BLOCKED_PLATFORM): its own
+    configure builds the MMX/SSE2 Viterbi and it decodes noisy codewords.
+P2  The SIMH world runs the fossil 4.3BSD kernel: it boots on an emulated
+    VAX-11/780 and restores its root filesystem. The multi-user install and
+    the TCP experiment are the honest boundary (not reached in-budget).
+P3  Three preserved concurrency failures EXECUTE and are detected: a Go
+    scheduler deadlock, helgrind race / lock-order inversion, glibc rwlock
+    writer starvation. Falsifier: any that does not reproduce its failure.
+P4  Four distributed-survival mechanisms run under four different assumptions
+    (crash-only, async gossip, lease, quorum), none a Raft clone.
+P5  Two SAT solvers and four codecs run over shared multi-regime workloads;
+    the recorded behaviour spreads. No ranking is asserted.
+P6  The off-host mirror is verifiable (a corrupted mirror file fails
+    mirror-verify) but NOT populated: Z: is not independent storage today.
+
+--------------------------------------------------------------------------------
+2. METHOD
+--------------------------------------------------------------------------------
+Preserved worlds built this batch (docker, pinned):
+  prometheus-fossil-simh   open-simh vax780 from source a1f57fa37 (Debian's
+                           3.8.1 cannot boot the 780 from tape)
+  prometheus-fossil-i386   a genuine i386 Debian userland (ILP32 + x86 asm)
+  prometheus-fossil-octave GNU Octave 7.3 for the MATLAB-dialect controllers
+Each specimen: record (batch06.py) -> acquire (fetch/pin/hash) -> recipe +
+harness (batch06_recipes.py) -> run in the disposable work/ copy -> receipt.
+Pressure: gen_sat_workload.py + run_pressure.py drive the preserved solvers/
+codecs over shared inputs and record raw behaviour (no interpretation).
+Mirror: harvest mirror / mirror-verify, with a same-volume guard and a
+destructive-negative control on a disposable test mirror.
+
+--------------------------------------------------------------------------------
+3. PRIMARY RESULTS
+--------------------------------------------------------------------------------
+Census                      specimens  match  differ  missing
+------------------------    ---------  -----  ------  -------
+opening (batch 06)                 90     90       0        0
+closing (batch 06)                105    105       0        0   (95 runnable)
+
+Old fossils made more useful (the second number)
+  libfec-karn        BLOCKED_PLATFORM -> RUNNABLE (SSE2 Viterbi; BER 180/409600 @3dB)
+  compact-4.2bsd     -m32 apt hack -> native i386 world
+  4.3BSD kernel      SOURCE_ONLY -> boots on emulated VAX (RUNNABLE_EMULATED)
+  particles          + a PMMH run (particle MCMC)
+  SAT / compression  put under multiple pressure regimes (below)
+
+New specimens (15): 3 BSD tapes; go-deadlock, helgrind, glibc-rwlock;
+  dmtcp, memberlist, redlock, paxos; pid-autotune, STR, L1; libdai; gnu-apl.
+
+Behaviour worth checking
+  go deadlock: "all goroutines are asleep - deadlock!" exit 2 (x5 cases)
+  helgrind tc01: "Possible data race ... tc01_simple_race.c:28 vs child_fn:14"
+  helgrind tc13: "Thread #1: lock order ... violated"
+  glibc rwlock: writer acquisitions 1 (reader-pref) vs 4,950,536 (writer-pref)
+  dmtcp: killed at count 8, restarted at 7
+  redlock: TTL 300ms + 1000ms work -> two holders (Kleppmann 2016)
+  paxos: 214 tests OK (python 2.7 world)
+  autotune: Ziegler-Nichols Kd 169 (40 l) vs 69 (10 l)
+  STR: estimate within 0.033 by sample 20; drifts to 0.0997 (wind-up), kept
+  L1: estimates the d=100 pulse at 98.02
+  libdai: BP = exact on Cloudy/Sprinkler/Rain, 0.5985 vs 0.6471 on WetGrass
+  apl: +/iota 100 = 5050; 5x5 outer-product table, no loops
+  SAT: picosat 0..2519 decisions, minisat 0..3863 conflicts; both agree
+  compression: LZW expands random to 1.27x; bzip2 best on text; all round-trip
+
+--------------------------------------------------------------------------------
+4. CONTROLS
+--------------------------------------------------------------------------------
+Instrument   test_fossils.py + test_fossil_isolation.py = 331 passed (incl. the
+             mirror destructive-negative control: corrupt one mirrored file ->
+             MIRROR_DIFFERS, source untouched; truncate -> DIFFERS; remove ->
+             MISSING). Every batch-06 receipt records BODY PRESERVED.
+Failure fossils preserved failing, not repaired: the Go deadlocks, the helgrind
+             races/lock-order, the glibc starvation, the 4.2BSD collapse lineage.
+Not-a-failure control: MainGoroutineID panics (a crash, not a deadlock).
+
+--------------------------------------------------------------------------------
+5. LIMITATIONS
+--------------------------------------------------------------------------------
+- TCP: only the 4.3 kernel was booted; the multi-user install (/usr from
+  emulated tape) exceeds ~1 h and was cut; the netstat-under-loss experiment
+  across 4.2/Tahoe/Reno -- the highest-value depth dataset -- is NOT done
+  (TECHNE-69b needs a prebuilt disk or a faster host). 4.2 and Reno tapes were
+  not individually booted.
+- Charter phases under-delivered: scientific extremes (6): 0 new (still only
+  erfa + sgp4, both astro). Cultures (7): APL only. Dedicated bad-designs (9):
+  none new beyond redlock + the batch-05 losers. Small-strange (11): none.
+  Binary-only (10): NOT attempted. All named with candidates in HARVEST_QUEUE.
+- Mirror: mechanism verified, but no body is off-host; Z: unreachable, one host
+  remains the preservation dependency (105 bodies).
+- Many recipes install from the network at run time (apt/pip/modules); the
+  pinned Owl Lisp / boot42 / tarballs are the reproducible exceptions.
+- Five oracles were mis-specified on first write and corrected in the open;
+  the corrections and the retained "drift"/"inexactness" data are in the notes.
+- All measurement and oracles are Techne's own; no second seat has verified.
+
+--------------------------------------------------------------------------------
+6. REPRODUCTION
+--------------------------------------------------------------------------------
+    python -m techne.fossils.harvest verify --all          expect 105/105
+    python -m techne.fossils.harvest run libfec-karn        BER lines, BODY PRESERVED
+    python -m techne.fossils.harvest run bsd-4.3-distribution-tape-1986
+        expect "4.3 BSD UNIX #1", "Root filesystem extracted", BODY PRESERVED
+    python -m techne.fossils.harvest run glibc-rwlock-writer-starvation-2.36
+    python techne/fossils/pressure/run_pressure.py sat      SAT_PRESSURE_*.json
+    python -m pytest techne/tests/test_fossil_isolation.py -q
+
+--------------------------------------------------------------------------------
+7. VERDICT
+--------------------------------------------------------------------------------
+BODIES STILL THE BODIES (open + close) ......... YES (90/90, 105/105)
+OLD FOSSILS UNLOCKED ........................... 4 (libfec, compact, 4.3 kernel, PMMH)
+NEW EXECUTING CONCURRENCY FAILURES ............. 3
+DISTRIBUTED SURVIVAL, DISTINCT ASSUMPTIONS ..... 4
+SAT / COMPRESSION PRESSURE SPREAD RECORDED ..... YES
+OFF-HOST REDUNDANCY ACHIEVED ................... NO (Z: not independent; STOPPED)
+CHARTER PHASES 6/9/10/11 ....................... PARTIAL / NOT DONE (reported)
+STOP RECOMMENDED? .............................. NO; next is TECHNE-69b (the TCP
+                                                 experiment) and the four thin phases
+Reviewer's bottom line: batch 06 chose to UNLOCK and to add failure/survival
+machinery and pressure over breadth, and left phases 6/9/10/11 openly
+unfinished -- is that the right allocation, or should the next batch close
+those phases before pushing 69b (the emulated-VAX TCP experiment)?
+================================================================================
+END OF PACKET
+================================================================================
