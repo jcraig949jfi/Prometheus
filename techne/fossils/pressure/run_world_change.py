@@ -21,7 +21,15 @@ from .. import harvest, record
 
 HERE = pathlib.Path(__file__).resolve().parent
 DATE = "2026-09-13"
-OTHER_WORLD = "prometheus-fossil-i386:bookworm"
+WORLD_32 = "prometheus-fossil-i386:bookworm"
+WORLD_64 = "prometheus-fossil-c:bookworm"
+
+
+def other_world(native_image):
+    """The other world must actually DIFFER from the native one. md5-rfc1321 is native to the
+    32-bit image, so probing it 'in i386' compared a world against itself and the positive
+    control silently passed as AGREES -- which is how this bug was caught."""
+    return WORLD_64 if (native_image or "").startswith("prometheus-fossil-i386") else WORLD_32
 
 # md5-rfc1321 is the POSITIVE CONTROL: it is already known to diverge, so if the method reports
 # AGREES for it, the method is broken and no other row can be trusted.
@@ -43,21 +51,24 @@ def _probe(sid, image):
         return {"classification": "PROBE_ERROR", "ok": False, "builds": False, "error": str(e)[:200]}
 
 
-def main():
+def main(argv=None):
+    import sys
+    sel = (argv if argv is not None else sys.argv[1:]) or CANDIDATES
     rows = []
-    for sid in CANDIDATES:
+    for sid in sel:
         rec = record.load(sid)
         native_image = json.loads((harvest.vault.specimen_dir(sid) / "recipe.json")
                                   .read_text(encoding="utf-8")).get("image")
         native = _probe(sid, native_image)
-        other = _probe(sid, OTHER_WORLD)
+        ow = other_world(native_image)
+        other = _probe(sid, ow)
         if not other["builds"]:
             verdict = "INCONCLUSIVE_BUILD"
         elif native["ok"] == other["ok"]:
             verdict = "AGREES"
         else:
             verdict = "DIVERGES"
-        rows.append({"specimen_id": sid, "native_image": native_image, "other_image": OTHER_WORLD,
+        rows.append({"specimen_id": sid, "native_image": native_image, "other_image": ow,
                      "native": native, "other": other, "verdict": verdict,
                      "recorded_classification": rec.get("run_classification")})
         print("%-34s native_ok=%-5s other_ok=%-5s builds_other=%-5s %s" % (
@@ -68,10 +79,10 @@ def main():
     doc = {"schema": "techne.fossil.world_change/1",
            "written_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
            "census": "techne/fossils/ENV_ASSUMPTION_CENSUS_2026-09-13.json",
-           "other_world": OTHER_WORLD,
+           "other_world_rule": "the world that differs from the fossil's native image (64-bit <-> 32-bit)",
            "positive_control": "md5-rfc1321 must report DIVERGES; if it does not, the method is broken",
            "positive_control_held": control_ok,
-           "tested": CANDIDATES, "not_tested_this_round": NOT_TESTED,
+           "tested": sel, "full_candidate_set": CANDIDATES, "not_tested_this_round": NOT_TESTED,
            "natural_specimens_found": [r["specimen_id"] for r in rows
                                        if r["verdict"] == "DIVERGES" and r["specimen_id"] != "md5-rfc1321"],
            "note": "A world probe never persists; recorded classifications are untouched. "
