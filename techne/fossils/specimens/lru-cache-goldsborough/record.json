@@ -22,7 +22,15 @@
         "url": "https://github.com/goldsborough/lru-cache",
         "commit": "13f30ad33a227a3e9682578c450777380ecddfcf",
         "commit_resolved": "13f30ad33a227a3e9682578c450777380ecddfcf",
-        "commit_date": "2017-03-30T10:11:40+01:00"
+        "commit_date": "2017-03-30T10:11:40+01:00",
+        "submodules": "required",
+        "submodules_pinned": [
+          {
+            "path": "tests/googletest",
+            "url": "https://github.com/google/googletest",
+            "commit": "a2b8a8e07628e5fd60644b6dd99c1b5e7d7f1f47"
+          }
+        ]
       }
     ]
   },
@@ -31,9 +39,9 @@
     "repo": "github.com/goldsborough/lru-cache"
   },
   "hashes": {
-    "tree_sha256": "6b9266080ddb9edd0c18061143ab3b8cbc8bd481a45390fcf5adb082bf3209b8",
-    "n_files": 52,
-    "bytes": 383563,
+    "tree_sha256": "57d253398e4498a746f52b6a88a4894cb1edce6e63979b0a678db98211f100b9",
+    "n_files": 376,
+    "bytes": 6148059,
     "artifacts": [
       {
         "filename": "https://github.com/goldsborough/lru-cache",
@@ -49,7 +57,7 @@
     "status": "permissive",
     "evidence": "LICENSE"
   },
-  "acquisition_date": "2026-09-12",
+  "acquisition_date": "2026-09-13",
   "language": [
     "C++"
   ],
@@ -123,5 +131,27 @@
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/lru-cache-goldsborough/receipts/run-lru-cache-goldsborough-20260912T162752Z.json",
     "what_humans_used_it_for": "keep the most useful bounded subset of data in fast memory by evicting the least-recently-used entry when capacity is exceeded"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "preservation": {
+    "status": "FULLY_PINNED_EXTERNALS",
+    "body_status": "FULLY_PINNED_EXTERNALS",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [
+      {
+        "path": "tests/googletest",
+        "url": "https://github.com/google/googletest",
+        "pinned_commit": "a2b8a8e07628e5fd60644b6dd99c1b5e7d7f1f47",
+        "present": true,
+        "checked_out_commit": "a2b8a8e07628e5fd60644b6dd99c1b5e7d7f1f47",
+        "n_files": 324
+      }
+    ],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-13T14:04:22Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
 }

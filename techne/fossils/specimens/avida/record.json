@@ -20,7 +20,27 @@
       {
         "kind": "git",
         "url": "https://github.com/devosoft/avida",
-        "commit": "HEAD"
+        "commit": "47f13dadb547fcf10f620ace60247f38b30b8b16",
+        "commit_resolved": "47f13dadb547fcf10f620ace60247f38b30b8b16",
+        "submodules": "required",
+        "commit_date": "2025-01-27T12:53:22-05:00",
+        "submodules_pinned": [
+          {
+            "path": "documentation",
+            "url": "https://github.com/devosoft/avida.wiki.git",
+            "commit": "550bd084a53d5f6b6bd3e80cd3310d5e75c924ee"
+          },
+          {
+            "path": "libs/apto",
+            "url": "https://github.com/dmbryson/apto.git",
+            "commit": "02e18980071d237f1ea4641f3f35cae469e2ed38"
+          },
+          {
+            "path": "libs/backward-cpp",
+            "url": "https://github.com/bombela/backward-cpp.git",
+            "commit": "dc8b8c76822dcbc8918f032171050ad90e11eb7f"
+          }
+        ]
       }
     ]
   },
@@ -29,9 +49,9 @@
     "repo": "github.com/devosoft/avida"
   },
   "hashes": {
-    "tree_sha256": "3be38122caaae61b73f75e3cd4f216bcf24ec7d95736e6485f61c8dfddb2719c",
-    "n_files": 2551,
-    "bytes": 140117477,
+    "tree_sha256": "0a18674a17e76f6111a1eedac9efb3ed18c84b4e23f12477d65e835170425e0d",
+    "n_files": 2868,
+    "bytes": 144442411,
     "artifacts": [
       {
         "filename": "https://github.com/devosoft/avida",
@@ -47,7 +67,7 @@
     "status": "see COPYING",
     "evidence": "repo"
   },
-  "acquisition_date": "2026-09-12",
+  "acquisition_date": "2026-09-13",
   "language": [
     "C++"
   ],
@@ -102,5 +122,43 @@
     "how_we_know_it_runs": "NOT_ATTEMPTED / NOT_ATTEMPTED ; receipt none (pinned+hashed)",
     "what_humans_used_it_for": "let self-replicating programs (digital organisms) mutate and compete for CPU cycles and memory, rewarding those that evolve to compute logic functions -- an instrumented Petri dish for open-ended evolution"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "preservation": {
+    "status": "FULLY_PINNED_EXTERNALS",
+    "body_status": "FULLY_PINNED_EXTERNALS",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [
+      {
+        "path": "documentation",
+        "url": "https://github.com/devosoft/avida.wiki.git",
+        "pinned_commit": "550bd084a53d5f6b6bd3e80cd3310d5e75c924ee",
+        "present": true,
+        "checked_out_commit": "550bd084a53d5f6b6bd3e80cd3310d5e75c924ee",
+        "n_files": 129
+      },
+      {
+        "path": "libs/apto",
+        "url": "https://github.com/dmbryson/apto.git",
+        "pinned_commit": "02e18980071d237f1ea4641f3f35cae469e2ed38",
+        "present": true,
+        "checked_out_commit": "02e18980071d237f1ea4641f3f35cae469e2ed38",
+        "n_files": 164
+      },
+      {
+        "path": "libs/backward-cpp",
+        "url": "https://github.com/bombela/backward-cpp.git",
+        "pinned_commit": "dc8b8c76822dcbc8918f032171050ad90e11eb7f",
+        "present": true,
+        "checked_out_commit": "dc8b8c76822dcbc8918f032171050ad90e11eb7f",
+        "n_files": 24
+      }
+    ],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-13T14:04:17Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
 }
