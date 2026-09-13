@@ -1,6 +1,6 @@
 {
   "runner": "docker",
-  "image": "prometheus-fossil-c:bookworm",
+  "image": "prometheus-fossil-i386:bookworm",
   "workdir": "upstream",
   "probe": [
     {
@@ -10,9 +10,8 @@
   ],
   "build": [
     {
-      "name": "ONE container: apt gcc-multilib + libc6-dev-i386 (the 1983 code assumes ILP32: undeclared char *malloc() is implicit int and truncates pointers on x86-64 -> segfault observed), then compile as 32-bit STATIC K&R (-m32 -static -std=gnu89 -fcommon -w; static so the binary runs in the next container without lib32; -Dvax selects the little-endian byte order the source keys on the VAX/PDP-11 symbols; no source change). compact(1) exits 1 after a successful run (1983 convention), so the round trip is judged by cmp, not by its exit status",
-      "timeout": 900,
-      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y gcc-multilib libc6-dev-i386 >/dev/null 2>&1; gcc -m32 -static -Dvax -std=gnu89 -fcommon -w -o $BODY/build/compact compact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; gcc -m32 -static -Dvax -std=gnu89 -fcommon -w -o $BODY/build/uncompact uncompact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; test -x $BODY/build/compact && test -x $BODY/build/uncompact && echo built"
+      "name": "compile the 1983 K&R sources natively 32-bit (i386 world: ILP32 as the code assumes; -Dvax selects the little-endian byte order the source keys on the vax/pdp11 symbols; -std=gnu89 -fcommon -w; no source change)",
+      "cmd": "gcc -Dvax -std=gnu89 -fcommon -w -o $BODY/build/compact compact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; gcc -Dvax -std=gnu89 -fcommon -w -o $BODY/build/uncompact uncompact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; test -x $BODY/build/compact && test -x $BODY/build/uncompact && echo built"
     }
   ],
   "runs": [
@@ -31,5 +30,5 @@
   "test_kind": "TECHNE",
   "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
   "classification_if_ok": "RUNNABLE_CONTAINER",
-  "notes": "The loser runs -- as a 32-bit program. Unmodified on x86-64 it segfaults (K&R implicit-int malloc truncates pointers); -m32 restores the ILP32 world it was written for. The i386 toolchain is the same accommodation libfec-karn needs. Ratio printed beside the byte count for the lineage comparison."
+  "notes": "The loser runs -- in the i386 world (batch 06), which replaces batch 05's per-run apt-get gcc-multilib + -m32 -static accommodation. Unmodified on x86-64 it segfaults (K&R implicit-int malloc truncates pointers). compact(1) exits 1 after a successful run (1983 convention), so the round trip is judged by cmp. Ratio printed beside the byte count for the lineage comparison."
 }

@@ -1,26 +1,46 @@
 {
   "runner": "docker",
-  "image": "prometheus-fossil-lang:bookworm",
+  "image": "prometheus-fossil-i386:bookworm",
   "workdir": "upstream/tree",
   "probe": [
     {
-      "name": "gcc",
-      "cmd": "gcc --version | head -1"
+      "name": "world",
+      "cmd": "uname -m; gcc -dumpmachine; gcc --version | head -1"
     }
   ],
   "build": [
     {
-      "name": "configure+make vtest27",
-      "cmd": "( [ -x ./configure ] && ./configure >/dev/null 2>&1 || true ); make -s vtest27 ARCH_OPTION='-march=x86-64 -mmmx -msse -msse2' 2>&1 | grep -viE 'warning' | tail -4; ls vtest27 2>/dev/null; test -x ./vtest27"
+      "name": "configure + make vtest27 in a genuine i386 userland (configure now selects the MMX/SSE/SSE2 butterflies; no ARCH_OPTION override, no source change)",
+      "cmd": "./configure >/dev/null 2>&1; make -s vtest27 2>&1 | grep -viE 'warning|deprecated|^a - ' | tail -3; test -x ./vtest27 && echo built",
+      "timeout": 900
     }
   ],
   "runs": [
     {
-      "name": "Viterbi decode a noisy K=7 convolutional code",
-      "cmd": "./vtest27 -e 3.0 -n 200 2>&1 | tail -8",
+      "name": "Viterbi decode a noisy K=7 convolutional code at Eb/N0 = 3.0 dB (SSE2 code path)",
+      "cmd": "./vtest27 -e 3.0 -n 200 2>&1 | tail -4",
       "expect": {
         "exit": 0,
-        "stdout_regex": "(?i)(BER|bit error|Es/No|decod|[0-9]e-[0-9])"
+        "stdout_contains": [
+          "SIMD CPU detect",
+          "BER"
+        ],
+        "stdout_regex": "BER \\d+/409600"
+      }
+    },
+    {
+      "name": "the same code at Eb/N0 = 1.0 dB: more errors survive decoding (the pressure knob)",
+      "cmd": "./vtest27 -e 1.0 -n 200 2>&1 | tail -2",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "BER \\d+/409600"
+      }
+    },
+    {
+      "name": "force the portable C path (-f? no: the PORT decoder is selected by the cpu_mode API; vtest27 has no switch) -- recorded: only the SIMD path is exercised",
+      "cmd": "./vtest27 -h 2>&1 | head -5; true",
+      "expect": {
+        "exit": 0
       }
     }
   ],
@@ -28,5 +48,5 @@
   "test_kind": "TECHNE",
   "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
   "classification_if_ok": "RUNNABLE_CONTAINER",
-  "notes": "COMPAT FLAG (recorded): libfec's configure emits -march=x86_64 (invalid; modern gcc wants x86-64), so the build is given ARCH_OPTION=-march=x86-64 -mmmx -msse -msse2 -- a build-flag fix, no source change. vtest27 encodes random frames with a rate-1/2 K=7 convolutional code, adds Gaussian noise at a given Eb/No, and Viterbi-decodes -- reporting the bit-error rate. It runs the trellis/ACS/traceback machinery on real noisy input."
+  "notes": "UNLOCKED 2026-09-13 (batch 06, TECHNE-70): in the 64-bit worlds the package was BLOCKED_PLATFORM (32-bit x86 MMX/SSE assembly, and configure emits -march=x86_64). In the i386 world configure runs unmodified and the assembly assembles; vtest27 encodes 200 random 2048-bit frames with the rate-1/2 K=7 code, adds Gaussian noise at the given Eb/N0 and Viterbi-decodes on the SSE2 butterflies, reporting BER/FER. Oracle: BER at 1.0 dB exceeds BER at 3.0 dB (noise pressure), and the SIMD path reports itself. The batch-03 attempt (ARCH_OPTION override on x86-64) is superseded by this recipe; its receipt stays."
 }

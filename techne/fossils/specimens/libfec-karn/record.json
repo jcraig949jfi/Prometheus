@@ -57,8 +57,8 @@
   "build_system": "./configure && make",
   "compiler_or_interpreter": "gcc 12 (docker bookworm-lang)",
   "dependencies": [],
-  "run_classification": "BLOCKED_PLATFORM",
-  "test_classification": "UPSTREAM_TESTS_NOT_RUN",
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
   "entry_points": [
     "the shipped vtest / vtest27 (Viterbi self-test); rstest (Reed-Solomon)"
   ],
@@ -107,6 +107,12 @@
       "receipt": "techne/fossils/specimens/libfec-karn/receipts/run-libfec-karn-20260912T153815Z.json",
       "ok": false,
       "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/libfec-karn/receipts/run-libfec-karn-20260913T052515Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
       "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
     }
   ],
