@@ -25,7 +25,7 @@ def digit_index(F, states, targets):
 class CPRep:
     def __init__(self, name, factors, mean, F, nbytes):
         self.name = name; self.A = factors; self.mean = mean; self.F = F; self.serialized_bytes = nbytes
-        self.eligible_sets = ["HELD_PAIRS", "HELD_STATES", "HELD_TARGETS", "HELD_BOTH"]; self.reach_score = None
+        self.eligible_sets = ["VAL", "HELD_PAIRS", "HELD_STATES", "HELD_TARGETS", "HELD_BOTH"]; self.reach_score = None
 
     def predict_D(self, states, targets):
         idx = digit_index(self.F, np.asarray(states), np.asarray(targets))
@@ -84,11 +84,18 @@ def run(ranks=(4, 16, 32), per_set=300):
     t0 = time.perf_counter(); ctx = Context(per_set=per_set); out = {"family": "C2 CP over digit modes (masked ALS)", "ranks": {}}
     for r in ranks:
         rep, info = fit_cp(ctx, r); ev = ctx.evaluate(rep); ev["fit"] = info; out["ranks"][str(r)] = ev
+        wdir = os.path.join(HERE, "results", "ac01d", "families", "weights"); os.makedirs(wdir, exist_ok=True)
+        np.savez(os.path.join(wdir, f"C2-CP-r{r}.npz"), *[a.astype(np.float16) for a in rep.A], mean=np.array(rep.mean)); ev["weights_file"] = f"weights/C2-CP-r{r}.npz"
         summary = {k: {kk: (round(vv.get("HC_D_transitions"), 3) if vv.get("HC_D_transitions") is not None else None, vv.get("mean_excess"), vv.get("failures"), vv.get("dominance")) for kk, vv in v.items() if kk in ("GBFS", "DFS")} for k, v in ev["sets"].items()}
         print(json.dumps({"rank": r, "CR": round(ev["CR"], 1), "val_rmse": round(info["val_rmse"], 3), "std_D": round(info["std_D_fit"], 3), "sets": summary,
                           "distance": {k: (round(v["distance"]["R2"], 3), round(v["distance"]["exact"], 3), round(v["distance"]["within_1"], 3)) for k, v in ev["sets"].items() if "distance" in v}}), flush=True)
         write_result(out, "C2_cp")
-    out["seconds"] = round(time.perf_counter() - t0, 1); print(write_result(out, "C2_cp")); return out
+    # selection rules, both stated: (a) VAL RMSE (the early-stopping criterion), (b) VAL navigation HC_D (KA+GBFS, transitions)
+    by_rmse = min(out["ranks"], key=lambda k: out["ranks"][k]["fit"]["val_rmse"])
+    by_nav = max(out["ranks"], key=lambda k: out["ranks"][k]["sets"]["VAL"]["GBFS"].get("HC_D_transitions", -9))
+    out["selection"] = {"by_VAL_rmse": by_rmse, "by_VAL_navigation_HC_D": by_nav,
+                        "VAL_navigation_HC_D": {k: v["sets"]["VAL"]["GBFS"].get("HC_D_transitions") for k, v in out["ranks"].items()}}
+    out["seconds"] = round(time.perf_counter() - t0, 1); print(json.dumps(out["selection"])); print(write_result(out, "C2_cp")); return out
 
 
 if __name__ == "__main__":

@@ -96,7 +96,8 @@ def make_policies(U, M, obs, predict, ball):
 
 def sample_eval_problems(U, M, per_set, seed, min_d=5):
     D = U["D"]; live = M["live"]; sr, trole, pr = M["state_role"], M["target_role"], M["pair_role"]
-    sets = {"HELD_PAIRS": live & (sr == 0)[:, None] & (trole == 0)[None, :] & (pr == 1),
+    sets = {"VAL": live & (sr == 1)[:, None] & (trole == 0)[None, :],
+            "HELD_PAIRS": live & (sr == 0)[:, None] & (trole == 0)[None, :] & (pr == 1),
             "HELD_STATES": live & (sr == 2)[:, None] & (trole == 0)[None, :],
             "HELD_TARGETS": live & (sr == 0)[:, None] & (trole == 1)[None, :],
             "HELD_BOTH": live & (sr == 2)[:, None] & (trole == 1)[None, :]}

@@ -106,7 +106,8 @@ class Context:
                 res_set[kind] = entry
             # distance channel on up to 300k rows of the set
             live = self.M["live"]; sr, trole, pr = self.M["state_role"], self.M["target_role"], self.M["pair_role"]
-            masks = {"HELD_PAIRS": live & (sr == 0)[:, None] & (trole == 0)[None, :] & (pr == 1), "HELD_STATES": live & (sr == 2)[:, None] & (trole == 0)[None, :],
+            masks = {"VAL": live & (sr == 1)[:, None] & (trole == 0)[None, :],
+                     "HELD_PAIRS": live & (sr == 0)[:, None] & (trole == 0)[None, :] & (pr == 1), "HELD_STATES": live & (sr == 2)[:, None] & (trole == 0)[None, :],
                      "HELD_TARGETS": live & (sr == 0)[:, None] & (trole == 1)[None, :], "HELD_BOTH": live & (sr == 2)[:, None] & (trole == 1)[None, :]}
             Sx, Jx = np.nonzero(masks[set_name]); rng = np.random.default_rng(1)
             if len(Sx) > 300000: sel = rng.choice(len(Sx), 300000, replace=False); Sx, Jx = Sx[sel], Jx[sel]
