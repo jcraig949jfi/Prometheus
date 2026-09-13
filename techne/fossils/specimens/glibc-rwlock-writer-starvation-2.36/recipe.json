@@ -1,0 +1,58 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "glibc",
+      "cmd": "ldd --version | head -1; gcc --version | head -1; nproc"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile Techne's harness against the system glibc 2.36 (the preserved source is the same version, to read)",
+      "cmd": "gcc -O2 -pthread -o $BODY/build/starve $HARNESS/starve.c && echo built; grep -c 'PREFER_READER' pthread_rwlock_common.c"
+    }
+  ],
+  "runs": [
+    {
+      "name": "STARVATION: default kind PREFER_READER_NP, 8 readers re-acquiring for 3 s, 1 writer",
+      "cmd": "$BODY/build/starve reader 3 8",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "kind=PREFER_READER .*writer_acquisitions=\\d+"
+      },
+      "timeout": 120
+    },
+    {
+      "name": "the opt-in kind PREFER_WRITER_NONRECURSIVE_NP under the same pressure",
+      "cmd": "$BODY/build/starve writer 3 8",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "kind=PREFER_WRITER_NONRECURSIVE .*writer_acquisitions=\\d+"
+      },
+      "timeout": 120
+    },
+    {
+      "name": "both kinds side by side (the pressure response, not a verdict)",
+      "cmd": "$BODY/build/starve reader 3 8 | tail -1; $BODY/build/starve writer 3 8 | tail -1",
+      "expect": {
+        "exit": 0
+      },
+      "timeout": 120
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: under reader preference the writer acquires FEWER times than under writer preference (the documented direction)",
+      "cmd": "a=$($BODY/build/starve reader 3 8 | grep -o 'writer_acquisitions=[0-9]*' | cut -d= -f2); b=$($BODY/build/starve writer 3 8 | grep -o 'writer_acquisitions=[0-9]*' | cut -d= -f2); echo reader_pref=$a writer_pref=$b; test $a -lt $b",
+      "expect": {
+        "exit": 0
+      },
+      "timeout": 120
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "The documented pathology, measured: with the default kind, readers that never let the lock go idle keep the writer out (acquisitions/s near zero); with PREFER_WRITER_NONRECURSIVE the writer gets in. Techne records the two counts; whether a given count is 'starvation' is the reader's call. The rwlock itself is glibc's, unmodified; the harness only holds and releases it."
+}

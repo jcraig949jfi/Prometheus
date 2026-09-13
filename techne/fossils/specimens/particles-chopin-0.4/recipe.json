@@ -26,6 +26,18 @@
         ]
       },
       "timeout": 2400
+    },
+    {
+      "name": "particle MCMC (PMMH, Andrieu-Doucet-Holenstein 2010) over the stochastic-volatility model's parameters -- batch 06 phase 5, an old fossil made more useful",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/pmmh.py",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESULT RUN"
+        ],
+        "stdout_regex": "acceptance ~ 0[.][0-9]+"
+      },
+      "timeout": 2400
     }
   ],
   "tests": [],

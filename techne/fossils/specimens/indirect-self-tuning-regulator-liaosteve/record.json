@@ -1,0 +1,148 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "indirect-self-tuning-regulator-liaosteve",
+  "canonical_name": "Indirect self-tuning regulator (Astrom & Wittenmark, Adaptive Control ch. 3): RLS with forgetting factor estimates the plant online, pole-placement (R,S,T) recomputed every step -- a MATLAB implementation, run under Octave",
+  "aliases": [
+    "indirect STR",
+    "self-tuning regulator",
+    "RLS + pole placement"
+  ],
+  "lineage": "The self-tuning regulator (Astrom & Wittenmark 1973; textbook Adaptive Control 1989/1995, Example 3.5-style: model-following with zero cancellation): a recursive-least-squares estimator with forgetting tracks the plant's a1,a2,b0,b1; the controller polynomials R,S,T are re-derived from the estimates each sample so the closed loop follows the reference model Am/Bm. This is a student's faithful implementation of the textbook algorithm (MATLAB, 2020) with the true plant's parameters drawn as reference lines -- the ORACLE the estimates converge to (a1=-1.6065, a2=0.6065, b0=0.1065, b1=0.0902).",
+  "domain": [
+    "control",
+    "adaptive",
+    "self-tuning-regulator",
+    "recursive-least-squares",
+    "pole-placement"
+  ],
+  "era": "1973 (algorithm); 2020 (code)",
+  "version": "github.com/LiaoSteve/Adaptive-control---Indirect-Self-Tuning-Regulator master (commit in hashes): main_code.m, rls_forgetting.m",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/LiaoSteve/Adaptive-control---Indirect-Self-Tuning-Regulator",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/LiaoSteve/Adaptive-control---Indirect-Self-Tuning-Regulator",
+    "textbook": "Astrom & Wittenmark, Adaptive Control, 2nd ed., ch. 3"
+  },
+  "hashes": {
+    "tree_sha256": "feea2a02de061ec6b9c5356ee5fa9c627eb3de2f62dd2ca2b85e752d6e592c57",
+    "n_files": 5,
+    "bytes": 295626,
+    "artifacts": [
+      {
+        "filename": "https://github.com/LiaoSteve/Adaptive-control---Indirect-Self-Tuning-Regulator",
+        "sha256": null,
+        "commit": "de92c5c69832ab30a162af4bc2df7059d49c77cc"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\indirect-self-tuning-regulator-liaosteve",
+    "hash_list": "techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "MATLAB"
+  ],
+  "build_system": "none (interpreted)",
+  "compiler_or_interpreter": "GNU Octave 7.3 (docker prometheus-fossil-octave:bookworm); plot calls shadowed by harness no-ops",
+  "dependencies": [
+    "Octave; no toolboxes"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "main_code.m (the loop: RLS update -> R,S,T -> control law -> plant step); rls_forgetting.m"
+  ],
+  "example": {
+    "command": "octave --no-gui -p $HARNESS main_code.m; then print theta(:,end)",
+    "input": "square-wave reference uc, unknown plant simulated inside the script",
+    "output": "theta converging to the true plant (the dashed reference lines in the script); u and y traces"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-octave:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Astrom & Wittenmark, On self-tuning regulators, Automatica 1973",
+    "Astrom & Wittenmark, Adaptive Control, Addison-Wesley 1995, ch. 3"
+  ],
+  "human_capability_summary": {
+    "built_to": "control a plant whose parameters are unknown by identifying them online and redesigning the controller at every step",
+    "pressure": "unknown/drifting plant, the need for the closed loop to match a specified reference model",
+    "success_means": "the estimated parameters converge to the plant's and the output follows the reference model"
+  },
+  "known_human_problem_solved": "adaptive pole-placement control of an unknown plant",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "parameter uncertainty; excitation must be rich enough for identification",
+  "human_failure_condition": "estimator divergence or controller bursting when excitation vanishes (the known STR hazard)",
+  "behavioral_entry_point": "the forgetting factor lambda (0.8 in the script) and the initial covariance p: the adaptation speed knob",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Astrom & Wittenmark 1973",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "padasip-1.2.2",
+      "note": "RLS identification is the estimator inside this controller"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase4",
+    "adaptive",
+    "self_tuning_regulator",
+    "octave"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve/receipts/run-indirect-self-tuning-regulator-liaosteve-20260913T055635Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve/receipts/run-indirect-self-tuning-regulator-liaosteve-20260913T055756Z.json",
+      "ok": false,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve/receipts/run-indirect-self-tuning-regulator-liaosteve-20260913T055943Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\indirect-self-tuning-regulator-liaosteve ; tracked techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve",
+    "where_it_came_from": "https://github.com/LiaoSteve/Adaptive-control---Indirect-Self-Tuning-Regulator ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run indirect-self-tuning-regulator-liaosteve",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve/receipts/run-indirect-self-tuning-regulator-liaosteve-20260913T055943Z.json",
+    "what_humans_used_it_for": "control a plant whose parameters are unknown by identifying them online and redesigning the controller at every step"
+  },
+  "seat": "Techne"
+}

@@ -42,28 +42,67 @@ def enumerate_fossils(check_bodies: bool = True) -> list[dict]:
             except ValueError:
                 return str(p).replace("\\", "/")
         hs = r.get("human_capability_summary") or {}
+        obs = r.get("observability") or {}
+        tags = r.get("acquisition_tags", [])
+        # known historical disposition: the human record's verdict, drawn only from explicit tags
+        disp = [t for t in tags if t in ("loser", "known_bad", "known_bad_lineage", "failed_branch",
+                                         "superseded_design", "contested_design", "historical_redesign",
+                                         "successor", "predecessor", "pathology", "documented_pathology")]
+        mirror = _mirror_status(tree_sha256=(r.get("hashes") or {}).get("tree_sha256", ""))
         rows.append({
             "fossil_id": sid,
             "canonical_name": r.get("canonical_name", ""),
             "lineage": r.get("lineage", ""),
+            "ancestry": r.get("lineage_relations", []),
             "human_purpose": hs.get("built_to") or r.get("known_human_problem_solved", ""),
+            "human_environmental_pressure": r.get("human_environmental_pressure", "") or hs.get("pressure", ""),
             "version": r.get("version", ""),
             "era": r.get("era", ""),
             "language": r.get("language", []),
             "domain": r.get("domain", []),
             "run_status": r.get("run_classification", ""),
             "test_status": r.get("test_classification", ""),
+            "observability": obs,
+            "oracle_backed": obs.get("ORACLE_BACKED", "unknown"),
+            "intervention_ready": obs.get("INTERVENTION_READY", "unknown"),
+            "known_historical_disposition": disp,
             "source_type": r.get("source_type", ""),
             "license_spdx": (r.get("license") or {}).get("spdx", ""),
-            "acquisition_tags": r.get("acquisition_tags", []),
+            "acquisition_tags": tags,
             "tree_sha256": (r.get("hashes") or {}).get("tree_sha256", ""),
             "record_path": rel(rec_path),
             "recipe_path": rel(sd / "recipe.json") if (sd / "recipe.json").exists() else None,
             "receipts": [x.get("receipt") for x in r.get("receipts", [])],
             "body_present_on_this_host": (body / "upstream").exists() if check_bodies else None,
             "body_path": str(body),
+            "mirror_available": mirror,
         })
     return rows
+
+
+_MIRROR_INDEX = {"loaded": False, "specimens": {}}
+
+
+def _mirror_status(tree_sha256=""):
+    """Whether an off-host mirror holds this body, read from the mirror's MIRROR_INDEX.json if a
+    mirror destination is configured (techne/config.local.json 'fossil_mirror'). Absent config or
+    index -> 'no_mirror_configured'. Records availability without needing the body."""
+    if not _MIRROR_INDEX["loaded"]:
+        _MIRROR_INDEX["loaded"] = True
+        cfg = vault.REPO / "techne" / "config.local.json"
+        try:
+            dest = json.loads(cfg.read_text(encoding="utf-8")).get("fossil_mirror")
+            if dest:
+                idx = pathlib.Path(dest) / "MIRROR_INDEX.json"
+                if idx.exists():
+                    _MIRROR_INDEX["specimens"] = json.loads(idx.read_text(encoding="utf-8")).get("specimens", {})
+                    _MIRROR_INDEX["configured"] = True
+        except (OSError, ValueError):
+            pass
+    if not _MIRROR_INDEX.get("configured"):
+        return "no_mirror_configured"
+    hits = [sid for sid, v in _MIRROR_INDEX["specimens"].items() if v.get("tree_sha256") == tree_sha256]
+    return "mirrored" if hits else "not_mirrored"
 
 
 def catalog(check_bodies: bool = True) -> dict:

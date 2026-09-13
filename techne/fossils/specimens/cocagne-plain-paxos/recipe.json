@@ -1,0 +1,37 @@
+{
+  "runner": "docker",
+  "image": "python:2.7-slim",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "python 2.7 (the preserved py2 world the code was written for)",
+      "cmd": "python --version 2>&1"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "the shipped tests: essential (prepare/promise/accept/learn, quorum), functional, practical (heartbeat leadership), durable",
+      "cmd": "python -m unittest discover -s test -p 'test_*.py' 2>&1 | tail -6",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "Ran \\d+ tests"
+      },
+      "timeout": 600
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: the essential + functional suites pass ",
+      "cmd": "python -m unittest discover -s test -p 'test_essential.py' 2>&1 | tail -3; python -m unittest discover -s test -p 'test_functional.py' 2>&1 | tail -3; python -m unittest discover -s test -p 'test_practical.py' 2>&1 | tail -3",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "Ran \\d+ tests[^O]*OK[\\s\\S]*Ran \\d+ tests[^O]*OK"
+      },
+      "timeout": 600
+    }
+  ],
+  "test_kind": "UPSTREAM",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "The tests are message-passing simulations of Proposer/Acceptor/Learner exchanges including contention; they assert Paxos's safety and the leader-heartbeat behaviour of the practical layer. Written in the Python 2 era: under python 3.11 the suites fail on str/bytes (48 + 29 errors, first attempt, recorded); run in the preserved python:2.7-slim world they are the code's own contract."
+}

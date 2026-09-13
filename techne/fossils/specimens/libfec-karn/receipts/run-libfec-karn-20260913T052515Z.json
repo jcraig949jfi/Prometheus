@@ -1,0 +1,428 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "libfec-karn",
+  "receipt_id": "run-libfec-karn-20260913T052515Z",
+  "written_utc": "20260913T052515Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-i386:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "e140027b76e27d81b19322968c6d54cfaf0c768d1d4c14807cb742cce737770f",
+  "recipe_sha256": "eeb0cb8ce3818fa58f35960c6f7dc8872f9c101ba5a872c830567147560398a7",
+  "patches": [],
+  "probe": [
+    {
+      "name": "world",
+      "cmd": "uname -m; gcc -dumpmachine; gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "x86_64\ni686-linux-gnu\ngcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "configure + make vtest27 in a genuine i386 userland (configure now selects the MMX/SSE/SSE2 butterflies; no ARCH_OPTION override, no source change)",
+      "cmd": "./configure >/dev/null 2>&1; make -s vtest27 2>&1 | grep -viE 'warning|deprecated|^a - ' | tail -3; test -x ./vtest27 && echo built",
+      "exit": 0,
+      "seconds": 4.04,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "ar: creating libfec.a\nbuilt\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "Viterbi decode a noisy K=7 convolutional code at Eb/N0 = 3.0 dB (SSE2 code path)",
+      "cmd": "./vtest27 -e 3.0 -n 200 2>&1 | tail -4",
+      "exit": 0,
+      "seconds": 0.95,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "SIMD CPU detect: x86 Streaming SIMD Extensions 2 (SSE2)\nnframes = 200 framesize = 2048 ebn0 = 3.00 dB gain = 32\nBER 180/409600 (0.000439) FER 32/201 (0.159)\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "the same code at Eb/N0 = 1.0 dB: more errors survive decoding (the pressure knob)",
+      "cmd": "./vtest27 -e 1.0 -n 200 2>&1 | tail -2",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "nframes = 200 framesize = 2048 ebn0 = 1.00 dB gain = 32\nBER 17163/409600 (0.0419) FER 200/201 (0.995)\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "force the portable C path (-f? no: the PORT decoder is selected by the cpu_mode API; vtest27 has no switch) -- recorded: only the SIMD path is exercised",
+      "cmd": "./vtest27 -h 2>&1 | head -5; true",
+      "exit": 0,
+      "seconds": 0.95,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "./vtest27: invalid option -- 'h'\nSIMD CPU detect: x86 Streaming SIMD Extensions 2 (SSE2)\nStarting time trials\nExecution time for 10000 2048-bit frames: 0.00 sec\ndecoder speed: 1.70667e+12 bits/s\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "ccsds_tab.c",
+      "sha256": "198b24e3f63f501ee7c44f4bcfb37bad2e87a2d1dcbeaa787ede1fcb462f741d",
+      "bytes": 2556
+    },
+    {
+      "path": "ccsds_tab.o",
+      "sha256": "0f74d65a1a1ed2b7943475ec1fb0ae309a9996b261d61be96d30387d460d7177",
+      "bytes": 2380
+    },
+    {
+      "path": "ccsds_tal.c",
+      "sha256": "f106955d472cd0c6cc427a3937ae1434d08cd041c2d238913c80c4361a4fc8d4",
+      "bytes": 2655
+    },
+    {
+      "path": "ccsds_tal.o",
+      "sha256": "bb45703b0d1e7759c6f184591590327cf9f13431f523528d7aa138fbe1b57b23",
+      "bytes": 2204
+    },
+    {
+      "path": "cpu_features.o",
+      "sha256": "490f02bf1e87d395ec03c5de47485ab567181ffea1dd9b180cf3fba19a447022",
+      "bytes": 440
+    },
+    {
+      "path": "cpu_mode_x86.o",
+      "sha256": "9ed44f5156d8d98d45a8137078454fe6dc73edaaf96aef5b8aa2d5f76fbf0b94",
+      "bytes": 5872
+    },
+    {
+      "path": "decode_rs_8.o",
+      "sha256": "587d39f97e2d171ba81b89579ca90d0bdfe3595bb3afd87b70ef70d2b1c76e2c",
+      "bytes": 12792
+    },
+    {
+      "path": "decode_rs_ccsds.o",
+      "sha256": "e0be0e184758699f3bcdcd7406f3510a5767b30e32dac07c6881def85200526f",
+      "bytes": 3656
+    },
+    {
+      "path": "decode_rs_char.o",
+      "sha256": "648ab34e1374db5bfd7245740e0f99baf405aacaa00ab73f15fa125a18348202",
+      "bytes": 16284
+    },
+    {
+      "path": "decode_rs_int.o",
+      "sha256": "7cc9b420828ac79c5d0ec6fabc9cbc2d010d94b89b2cec239f8840fb80cff1e0",
+      "bytes": 16044
+    },
+    {
+      "path": "dotprod.o",
+      "sha256": "4846c03595560f2a0f722a768cd7602df9e569805a1229d32adbafb0762bb6ee",
+      "bytes": 4776
+    },
+    {
+      "path": "dotprod_mmx.o",
+      "sha256": "029e80852bbdebb4e0f738c3d57e77d6245f61f61f8a4a31dd02b0052070c4f8",
+      "bytes": 4992
+    },
+    {
+      "path": "dotprod_mmx_assist.o",
+      "sha256": "a2f33eadc3ea867fcdb1cbf8d3499332a92bb42f59f4c123f7f1f6bca07cde18",
+      "bytes": 576
+    },
+    {
+      "path": "dotprod_port.o",
+      "sha256": "67f5bd64a08b88f664c87ed6e24fe7845561b2af97073d17fda2f3d84f429090",
+      "bytes": 4820
+    },
+    {
+      "path": "dotprod_sse2.o",
+      "sha256": "d0882bb7be9ed2826e2bff14cc1746b0c4aec7f367267bcd49fa037c334288b4",
+      "bytes": 5576
+    },
+    {
+      "path": "dotprod_sse2_assist.o",
+      "sha256": "3b6a037310f146ef440dcbd920326682e48cef5c8ad6a18cff95b92c7146aa10",
+      "bytes": 608
+    },
+    {
+      "path": "encode_rs_8.o",
+      "sha256": "a8a265b2a5f1c6203e5f1a05034a3f6be52c0a6f120a8b3fe1bd46210bf90d00",
+      "bytes": 6032
+    },
+    {
+      "path": "encode_rs_ccsds.o",
+      "sha256": "96cf87e89254eb05e101cd8ba7932a4569653413f442bc0d9983e4d0c1668316",
+      "bytes": 3508
+    },
+    {
+      "path": "encode_rs_char.o",
+      "sha256": "ab84352821fc6bfe178ee3bbb98c78b592e37afd303af321c32af0345e02ea95",
+      "bytes": 5088
+    },
+    {
+      "path": "encode_rs_int.o",
+      "sha256": "e9edd3b0685e4884dcbe277dea9efcde640ec5ad77cb319754b9afa09706fc75",
+      "bytes": 5184
+    },
+    {
+      "path": "fec.o",
+      "sha256": "a292e37a3126e75645f35b01d33002ac1353f81a913fa811f7e7ba632b8d6406",
+      "bytes": 4244
+    },
+    {
+      "path": "gen_ccsds",
+      "sha256": "737f1d31abc9d6883843e057d6cab1cad20cd480684ad403f6b37fe81e9282a4",
+      "bytes": 21256
+    },
+    {
+      "path": "gen_ccsds.o",
+      "sha256": "dc579240b72fb4299583b48f5f76374560f5746e84ddb50ad6f80fd77335da89",
+      "bytes": 6132
+    },
+    {
+      "path": "gen_ccsds_tal",
+      "sha256": "6a5ed30e75b4e9929cee7bfe0c1b4b7b9f18345febbc959026d523c31e67a839",
+      "bytes": 17344
+    },
+    {
+      "path": "init_rs_char.o",
+      "sha256": "be4cf509155d32423c1e3445a75373f69acbb2d545569cb19f5adeae9a9cacc8",
+      "bytes": 7548
+    },
+    {
+      "path": "init_rs_int.o",
+      "sha256": "f73caf254507c558f1a6db0299c846fcf779ae1154c93bdb86b9a5b02e0305c3",
+      "bytes": 7376
+    },
+    {
+      "path": "libfec.a",
+      "sha256": "7078bf646d0b5fb32bff18244ae415ab797814e4546ea351b94bc1ba77d7c67f",
+      "bytes": 377346
+    },
+    {
+      "path": "mmxbfly27.o",
+      "sha256": "ca1dab244a54b5822dc089073347e9aae38480ef17882fc640bad89d86b9d528",
+      "bytes": 1512
+    },
+    {
+      "path": "mmxbfly29.o",
+      "sha256": "0c2717aa827145c54de269ce461d1e41ac9c5c5bd364d6a3d612be9e25842fa2",
+      "bytes": 3760
+    },
+    {
+      "path": "peakval.o",
+      "sha256": "ee6747ac0c7bad1129719cd3e4dc00f204af02f5d4fa9509dbf07993d2f7d7fb",
+      "bytes": 3596
+    },
+    {
+      "path": "peakval_mmx.o",
+      "sha256": "b3e586d2229db00f7d9e446462d3f7d6b85ff586be7bfb7982ce7805b69b028e",
+      "bytes": 3784
+    },
+    {
+      "path": "peakval_mmx_assist.o",
+      "sha256": "ace09dae95fc4e253070c0475ca8cdea9f9ffb12e1bee418140c5dbfecf2aec4",
+      "bytes": 568
+    },
+    {
+      "path": "peakval_port.o",
+      "sha256": "e3552641c83ac91a279c6ecada543785f0b6f37bf872f2b700ec16439b47c4f9",
+      "bytes": 2708
+    },
+    {
+      "path": "peakval_sse.o",
+      "sha256": "e6f613cac41d5bbf5aaf64498e90e6b42537a649cf7e0f919ff9dbd7d42b72ac",
+      "bytes": 3784
+    },
+    {
+      "path": "peakval_sse2.o",
+      "sha256": "e7945454fba265db1da22856efc78185cd6c5d840f2cbcf65b216abc69aa9408",
+      "bytes": 3752
+    },
+    {
+      "path": "peakval_sse2_assist.o",
+      "sha256": "e78ac13cffb1c3ca7b0e7dd81db3bb3479600176bf18e1723b37b32441da0191",
+      "bytes": 544
+    },
+    {
+      "path": "peakval_sse_assist.o",
+      "sha256": "b474e17387c86c53a3a73c02fa3e8f392254f741a52cc6687cabc62dc8ea0d38",
+      "bytes": 520
+    },
+    {
+      "path": "sim.o",
+      "sha256": "50e0f6c6d3a9b13952ca9b6345f8731aeb078c5c6c747d12d74e3913ad3a350a",
+      "bytes": 5088
+    },
+    {
+      "path": "sse2bfly27.o",
+      "sha256": "d373e65dff6e06fda919c846acdce5abe7780432cda08b90263bcbdcd03676f3",
+      "bytes": 1296
+    },
+    {
+      "path": "sse2bfly29.o",
+      "sha256": "f3277fab66509fa9ff72f67abbdd2107f1c4aaa6034bdba537db7af8cba68a46",
+      "bytes": 2616
+    },
+    {
+      "path": "ssebfly27.o",
+      "sha256": "330b679d51933806a9f102f4e6031b9a835471b0f3dfe226f350b64f5260d4ac",
+      "bytes": 1524
+    },
+    {
+      "path": "ssebfly29.o",
+      "sha256": "68bb99af4b45b6d83abcee77cc40421bf61dd960b9e4046d756e803b7d5c6fd0",
+      "bytes": 3684
+    },
+    {
+      "path": "sumsq.o",
+      "sha256": "d57b45bc0ab115f2ca13cbb1f5ae5cd1a369852141f373ba4edb408968b17236",
+      "bytes": 3312
+    },
+    {
+      "path": "sumsq_mmx.o",
+      "sha256": "c28fd0d2c677dc747829404605380364e9845c598b8b9d73b6207ba14a095df3",
+      "bytes": 3404
+    },
+    {
+      "path": "sumsq_mmx_assist.o",
+      "sha256": "f2897c3f5ab8e37d5b267b60ef13ada6064298fa04599121516fb34649e84eba",
+      "bytes": 616
+    },
+    {
+      "path": "sumsq_port.o",
+      "sha256": "f0c8ea6215388d560e75997af6ab38a5e2ea6280d803ee36187a412b0acd1929",
+      "bytes": 2472
+    },
+    {
+      "path": "sumsq_sse2.o",
+      "sha256": "cbc674b61cd67ce0b1ab29e29b9955928e347ff5cd90919cf6b23216aa405c23",
+      "bytes": 3416
+    },
+    {
+      "path": "sumsq_sse2_assist.o",
+      "sha256": "9c11f3429c7fd3fad74fae021ae4a777aa7ac57e14217450cb22a1e6bea79803",
+      "bytes": 640
+    },
+    {
+      "path": "viterbi27.o",
+      "sha256": "e07ab7e76e8d988e44e49ee085b26963bb3ba1e2eeb7bdbb4cbb0465eaf6de7e",
+      "bytes": 7700
+    },
+    {
+      "path": "viterbi27_mmx.o",
+      "sha256": "ec1c3e947a4080e8b519fd850a6f78340772821141768fc9d4c46b66278f4412",
+      "bytes": 8624
+    },
+    {
+      "path": "viterbi27_port.o",
+      "sha256": "94b9e20f3ecf859299a40f9f5442d8b257b48a46144ebe967bceeb271ea8607b",
+      "bytes": 43764
+    },
+    {
+      "path": "viterbi27_sse.o",
+      "sha256": "05b3c36005e6c9971cd5631238290d3aff8ae89c63d9e3a1346a93c07a1d3c21",
+      "bytes": 7576
+    },
+    {
+      "path": "viterbi27_sse2.o",
+      "sha256": "497c86b838eb00c2c0220441909dbc71b8ceb1023d5620e741e341e594f76f03",
+      "bytes": 8296
+    },
+    {
+      "path": "viterbi29.o",
+      "sha256": "52d6c6167b08eed14c24c5c0ab2dd8f0fa2f708733bcb20d0c93509f87d417bd",
+      "bytes": 7700
+    },
+    {
+      "path": "viterbi29_mmx.o",
+      "sha256": "8fa20e3515e1fe09394a796555bc340937ef68fbfac6e5705f6fd0a33094290d",
+      "bytes": 7952
+    },
+    {
+      "path": "viterbi29_port.o",
+      "sha256": "e59d49f2b8caee1816f1b305595ff1b0fc6cf8233eddacb6b1f6d729a45245ed",
+      "bytes": 9872
+    },
+    {
+      "path": "viterbi29_sse.o",
+      "sha256": "bab78407bc8fe86a486b3cea1942b7c8446bb1611ab9ec537e0fedeeb18ee023",
+      "bytes": 7528
+    },
+    {
+      "path": "viterbi29_sse2.o",
+      "sha256": "7ba432258708f7785c8c1b8495b10ab3096e7d6a3493835789038774c07a2bf5",
+      "bytes": 8112
+    },
+    {
+      "path": "viterbi615.o",
+      "sha256": "9d1865b1c9dc5ee7f9995a2d4d51c6be558a8413c5d73016e45bc49266d0c202",
+      "bytes": 7756
+    },
+    {
+      "path": "viterbi615_mmx.o",
+      "sha256": "0b54e9d717c8873dcb1955964707756b5485add84eedb6d84414e908f291f2c3",
+      "bytes": 19528
+    },
+    {
+      "path": "viterbi615_port.o",
+      "sha256": "e52d02cc561e68b68bf2671f7cfc229d145e407fe7fc5ba5fd65a368812dd9a2",
+      "bytes": 11100
+    },
+    {
+      "path": "viterbi615_sse.o",
+      "sha256": "1a261cc899cf42f5512a4463dfc8813cde2870a8c3d3768e261ef9f8793914ce",
+      "bytes": 20800
+    },
+    {
+      "path": "viterbi615_sse2.o",
+      "sha256": "f4a63d88be1a38e550f34f0bc3271772c59be78c1bc18532a8042172cbf68450",
+      "bytes": 20180
+    },
+    {
+      "path": "vtest27",
+      "sha256": "069e38d94c17b3d94f53f9866c5090e2e1149eeeaf56e9d2bf00d2ec7209506c",
+      "bytes": 84280
+    },
+    {
+      "path": "vtest27.o",
+      "sha256": "6b6b9cbaeea446ca7fcb571e3a46aa5a38d8475d51a15aa65621f9b943e2bde1",
+      "bytes": 13412
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "e140027b76e27d81b19322968c6d54cfaf0c768d1d4c14807cb742cce737770f",
+  "body_preserved": true
+}

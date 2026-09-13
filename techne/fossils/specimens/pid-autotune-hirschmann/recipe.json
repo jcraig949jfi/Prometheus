@@ -1,0 +1,54 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "relay autotune on kettle A (40 l, 6 kW): limit cycle -> Ku, Pu -> gains per rule",
+      "cmd": "pip install -q matplotlib >/dev/null 2>&1; python $HARNESS/two_plants.py A 2>&1 | head -60",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "succeeded",
+          "rule: ziegler-nichols"
+        ]
+      },
+      "timeout": 900
+    },
+    {
+      "name": "the SAME tuner on kettle B (10 l, 2 kW): a different plant yields different gains (changing plant -> adaptation -> altered parameters)",
+      "cmd": "pip install -q matplotlib >/dev/null 2>&1; python $HARNESS/two_plants.py B 2>&1 | head -60",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "succeeded",
+          "rule: ziegler-nichols"
+        ]
+      },
+      "timeout": 900
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: the Ziegler-Nichols gains differ between the two plants -- Kd (which carries the measured ultimate period) by more than 20%; Kp is printed too",
+      "cmd": "pip install -q matplotlib >/dev/null 2>&1; python $HARNESS/two_plants.py compare 2>&1 | tail -3",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESULT OK"
+        ]
+      },
+      "timeout": 1800
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "sim.py's autotune mode is driven with two kettle parameterisations; the tuner (autotune.py, unmodified) finds each plant's limit cycle and prints the gains. The oracle is that the tuned gains differ across plants (Kd, which carries the measured ultimate period, by >20%): adaptation to the plant, not a fixed gain. Observed 2026-09-13: Kp 6.18 vs 5.81 (6%), Ki 0.019 vs 0.041, Kd 153 vs 63 -- the first oracle asked Kp alone to move by 10% and it did not; Kd/Ki carry the plant's time constant. Simulation runs at the script's own sample time (minutes of simulated time, seconds of wall time)."
+}

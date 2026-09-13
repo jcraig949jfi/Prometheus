@@ -181,13 +181,13 @@ def test_catalog_enumerates_records_without_bodies(specimen, tmp_path, monkeypat
 def test_mirror_copies_by_tree_hash_and_verifies(specimen, tmp_path, monkeypatch):
     monkeypatch.setattr(vault, "REPO", tmp_path / "repo"); (tmp_path / "repo").mkdir()
     dest = tmp_path / "offhost"
-    rep = harvest.mirror(str(dest), dry_run=True)
+    rep = harvest.mirror(str(dest), dry_run=True, allow_same_volume=True)
     assert rep["rows"][0]["status"] == "WOULD_COPY" and not dest.exists()
-    rep = harvest.mirror(str(dest))
+    rep = harvest.mirror(str(dest), allow_same_volume=True)
     row = rep["rows"][0]
     assert row["status"] == "COPIED_VERIFIED" and row["destination_tree_sha256"] == row["source_tree_sha256"]
     assert (dest / row["source_tree_sha256"] / "upstream" / "tree" / "hello.txt").read_bytes() == HELLO
-    rep2 = harvest.mirror(str(dest))
+    rep2 = harvest.mirror(str(dest), allow_same_volume=True)
     assert rep2["rows"][0]["status"] == "ALREADY_PRESENT_VERIFIED"
     receipts = list((tmp_path / "repo" / "techne" / "fossils" / "mirror").glob("mirror-*.json"))
     assert len(receipts) == 3, "one receipt per invocation, dry run included"
@@ -196,8 +196,31 @@ def test_mirror_copies_by_tree_hash_and_verifies(specimen, tmp_path, monkeypatch
 def test_mirror_refuses_a_drifted_source_and_a_destination_inside_the_repo(specimen, tmp_path, monkeypatch):
     monkeypatch.setattr(vault, "REPO", tmp_path / "repo"); (tmp_path / "repo").mkdir()
     with pytest.raises(ValueError):
-        harvest.mirror(str(tmp_path / "repo" / "vault"))
+        harvest.mirror(str(tmp_path / "repo" / "vault"), allow_same_volume=True)
+    with pytest.raises(ValueError):          # same volume as the vault is not redundancy
+        harvest.mirror(str(tmp_path / "offhost"))
     (vault.body_dir(specimen) / "upstream" / "tree" / "junk.o").write_bytes(b"x")
-    rep = harvest.mirror(str(tmp_path / "offhost"))
+    rep = harvest.mirror(str(tmp_path / "offhost"), allow_same_volume=True)
     assert rep["rows"][0]["status"] == "REFUSED_SOURCE_DRIFTED"
     assert not (tmp_path / "offhost").exists() or not any((tmp_path / "offhost").iterdir())
+
+
+def test_mirror_verify_destructive_negative_control(specimen, tmp_path, monkeypatch):
+    """TECHNE-65 control: corrupt ONE mirrored file -> mirror-verify MUST fail; the source is untouched."""
+    monkeypatch.setattr(vault, "REPO", tmp_path / "repo"); (tmp_path / "repo").mkdir()
+    dest = tmp_path / "offhost"
+    rep = harvest.mirror(str(dest), allow_same_volume=True)
+    h = rep["rows"][0]["source_tree_sha256"]
+    assert (dest / "MIRROR_INDEX.json").exists(), "specimen -> tree-hash mapping travels with the mirror"
+    assert json.loads((dest / "MIRROR_INDEX.json").read_text(encoding="utf-8"))["specimens"][specimen]["tree_sha256"] == h
+    ok = harvest.mirror_verify(str(dest))
+    assert ok["rows"][0]["status"] == "MIRROR_VERIFIED" and ok["rows"][0]["index_agrees"] is True
+    victim = dest / h / "upstream" / "tree" / "hello.txt"
+    victim.write_bytes(b"hello from 1987\n"[:-2] + b"X\n")           # one byte changed, same length
+    bad = harvest.mirror_verify(str(dest))
+    assert bad["rows"][0]["status"] == "MIRROR_DIFFERS"
+    assert harvest.verify(specimen) is True, "the source body was never touched"
+    victim.unlink()
+    assert harvest.mirror_verify(str(dest))["rows"][0]["status"] == "MIRROR_DIFFERS"
+    shutil.rmtree(dest / h)
+    assert harvest.mirror_verify(str(dest))["rows"][0]["status"] == "MIRROR_MISSING"

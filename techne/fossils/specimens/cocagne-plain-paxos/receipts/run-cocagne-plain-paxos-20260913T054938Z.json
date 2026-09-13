@@ -1,0 +1,122 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "cocagne-plain-paxos",
+  "receipt_id": "run-cocagne-plain-paxos-20260913T054938Z",
+  "written_utc": "20260913T054938Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "4d9b7e3da558423a5befb690dc8dec13a695d922f17efd8414067e3a1f6a3905",
+  "recipe_sha256": "1efe82a4b682460c6cbd68eb4f4eae70a30e22e702763e8e8aff32f726f7ff64",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "the shipped tests: essential (prepare/promise/accept/learn, quorum), functional, practical (heartbeat leadership), durable",
+      "cmd": "python -m unittest discover -s test -p 'test_essential.py' -p 'test_functional.py' 2>&1 | tail -4; python -m unittest test.test_essential test.test_functional test.test_practical test.test_durable 2>&1 | tail -6",
+      "exit": 0,
+      "seconds": 1.38,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "----------------------------------------------------------------------\nRan 64 tests in 0.115s\n\nFAILED (errors=48)\nTypeError: can only concatenate str (not \"bytes\") to str\n\n----------------------------------------------------------------------\nRan 37 tests in 0.048s\n\nFAILED (errors=29)\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: the essential + functional suites pass (the practical/durable suites may need Python-2-era paths; their result is recorded, not required)",
+      "cmd": "python -m unittest test.test_essential test.test_functional 2>&1 | tail -3",
+      "exit": 0,
+      "seconds": 1.06,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'OK'"
+      ],
+      "stdout": {
+        "text": "Ran 23 tests in 0.031s\n\nFAILED (errors=18)\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "paxos/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "161043da65ee719e9ef6dc42db60f9490a1aba063f004e5982348b68d1e3ed4b",
+      "bytes": 143
+    },
+    {
+      "path": "paxos/__pycache__/durable.cpython-311.pyc",
+      "sha256": "8722dd642bc05f300966dd72f2f43c6026054880186d6e235859c2502bb91ef7",
+      "bytes": 10584
+    },
+    {
+      "path": "paxos/__pycache__/essential.cpython-311.pyc",
+      "sha256": "0c9556f91ebdbbcd2c1133f99ac8256815629c09d05264dd9d36928c26f63c52",
+      "bytes": 7366
+    },
+    {
+      "path": "paxos/__pycache__/functional.cpython-311.pyc",
+      "sha256": "67505c2147ad72c48419a714d151f0657ee860b45419482c186f0cec635cb00f",
+      "bytes": 10657
+    },
+    {
+      "path": "paxos/__pycache__/practical.cpython-311.pyc",
+      "sha256": "e5df56e70097086acc1aa87f663902c10ca35dbd3079a20a79173fcc8138a730",
+      "bytes": 16064
+    },
+    {
+      "path": "test/__pycache__/test_durable.cpython-311.pyc",
+      "sha256": "f71340b0da127c194e6d4dcb119a6664d44a9e5024da3a61116b4795af74ab49",
+      "bytes": 14179
+    },
+    {
+      "path": "test/__pycache__/test_essential.cpython-311.pyc",
+      "sha256": "650f97583f2f3c0f7b3feae8443b2a6e6002d124efe12918381743feda1cabf0",
+      "bytes": 28246
+    },
+    {
+      "path": "test/__pycache__/test_functional.cpython-311.pyc",
+      "sha256": "c0b5391ea4a44e31c85c7ec9f0e454d8d83f24240a0e1b6c36060b76d53dacb4",
+      "bytes": 18239
+    },
+    {
+      "path": "test/__pycache__/test_practical.cpython-311.pyc",
+      "sha256": "6f348924a0f38bd58480fe7e15c3fe28689c17b5511eefaa2ee8c38d71dd580f",
+      "bytes": 33409
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_FAIL",
+  "ok": false,
+  "tree_sha256_after": "4d9b7e3da558423a5befb690dc8dec13a695d922f17efd8414067e3a1f6a3905",
+  "body_preserved": true
+}

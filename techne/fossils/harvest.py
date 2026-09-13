@@ -6,6 +6,7 @@
     python -m techne.fossils.harvest verify --all [--out F]       every body; the census as JSON rows
     python -m techne.fossils.harvest restore <specimen_id>        put a drifted body back to its pin (rows in a receipt)
     python -m techne.fossils.harvest mirror --dest D [--dry-run]  copy verified bodies to D/<tree_sha256>/ (TECHNE-65: D is the operator's call)
+    python -m techne.fossils.harvest mirror-verify --dest D      re-hash every mirrored body against the records (a corrupted mirror file MUST fail this)
     python -m techne.fossils.harvest status                       one line per specimen
     python -m techne.fossils.harvest summary                      the directive's success measures, computed
 
@@ -443,7 +444,7 @@ def verify(specimen_id: str) -> bool:
 
 
 # --------------------------------------------------------------------------- mirror
-def mirror(dest: str, specimen_ids=None, dry_run: bool = False) -> dict:
+def mirror(dest: str, specimen_ids=None, dry_run: bool = False, allow_same_volume: bool = False) -> dict:
     """Copy preserved bodies to an off-host store keyed by their immutable tree hash.
 
     TECHNE-65: the DESTINATION is the operator's decision; this function only makes the copy
@@ -461,9 +462,20 @@ def mirror(dest: str, specimen_ids=None, dry_run: bool = False) -> dict:
     except ValueError as e:
         if "inside the repository" in str(e):
             raise
+    # A mirror on the same volume as the vault is not redundancy (operator, TECHNE-65 ruling): the
+    # destination must be a different storage device. On Windows the drive letter of the resolved
+    # path is the cheap test; a UNC path has no drive letter and passes. Tests pass
+    # allow_same_volume=True for their disposable controls and say so in the receipt.
+    src_anchor = pathlib.Path(vault.vault_root()).resolve().anchor.upper()
+    dst_anchor = d.anchor.upper()
+    same_volume = bool(dst_anchor) and not dst_anchor.startswith("\\\\") and dst_anchor == src_anchor
+    if same_volume and not allow_same_volume:
+        raise ValueError("mirror destination %s is on the same volume as the vault (%s): not redundancy; "
+                         "pass allow_same_volume only for a disposable control" % (d, vault.vault_root()))
     ids = specimen_ids or sorted(p.parent.name for p in vault.SPECIMENS.glob("*/record.json"))
     rep = {"schema": "techne.fossil.mirror_receipt/1", "receipt_id": "mirror-%s" % ts, "written_utc": ts,
-           "destination": str(d), "dry_run": dry_run, "rows": []}
+           "destination": str(d), "dry_run": dry_run, "same_volume_as_vault": same_volume,
+           "allow_same_volume": allow_same_volume, "rows": []}
     for sid in ids:
         body = vault.body_dir(sid) / "upstream"
         row = {"specimen_id": sid, "source": str(body)}
@@ -496,6 +508,16 @@ def mirror(dest: str, specimen_ids=None, dry_run: bool = False) -> dict:
             row["status"] = "COPY_DIFFERS_LEFT_AS_PARTIAL"
         rep["rows"].append(row)
     rep["summary"] = {k: sum(1 for r in rep["rows"] if r["status"] == k) for k in sorted({r["status"] for r in rep["rows"]})}
+    if not dry_run and d.exists():
+        # the specimen -> tree-hash mapping lives beside the bodies so the mirror is self-describing
+        idx_path = d / "MIRROR_INDEX.json"
+        idx = json.loads(idx_path.read_text(encoding="utf-8")) if idx_path.exists() else {"schema": "techne.fossil.mirror_index/1", "specimens": {}}
+        for r in rep["rows"]:
+            if r["status"] in ("COPIED_VERIFIED", "ALREADY_PRESENT_VERIFIED"):
+                idx["specimens"][r["specimen_id"]] = {"tree_sha256": r["source_tree_sha256"], "bytes": r.get("bytes"), "mirrored_utc": ts}
+        idx["updated_utc"] = ts
+        idx_path.write_text(json.dumps(idx, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+        rep["index"] = str(idx_path)
     out = vault.REPO / "techne" / "fossils" / "mirror" / (rep["receipt_id"] + (".dryrun" if dry_run else "") + ".json")
     out.parent.mkdir(parents=True, exist_ok=True)
     k = 1
@@ -504,6 +526,40 @@ def mirror(dest: str, specimen_ids=None, dry_run: bool = False) -> dict:
         out = out.with_name("%s-%d%s.json" % (rep["receipt_id"], k, ".dryrun" if dry_run else ""))
     out.write_text(json.dumps(rep, indent=1) + "\n", encoding="utf-8", newline="\n")
     print("mirror ->", d, rep["summary"], "receipt", out)
+    return rep
+
+
+def mirror_verify(dest: str, specimen_ids=None) -> dict:
+    """Re-hash every mirrored body at <dest>/<tree_sha256>/upstream and compare with BOTH the
+    directory name and the specimen's record. A corrupted, truncated or missing file in the
+    mirror shows up as MIRROR_DIFFERS; a body the record expects that the mirror lacks shows up
+    as MIRROR_MISSING. Writes a tracked receipt. Never touches the source bodies."""
+    ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    d = pathlib.Path(dest).resolve()
+    ids = specimen_ids or sorted(p.parent.name for p in vault.SPECIMENS.glob("*/record.json"))
+    idx_path = d / "MIRROR_INDEX.json"
+    idx = json.loads(idx_path.read_text(encoding="utf-8"))["specimens"] if idx_path.exists() else {}
+    rep = {"schema": "techne.fossil.mirror_verify_receipt/1", "receipt_id": "mirror-verify-%s" % ts, "written_utc": ts,
+           "destination": str(d), "index_present": idx_path.exists(), "rows": []}
+    for sid in ids:
+        want = record.load(sid)["hashes"].get("tree_sha256")
+        row = {"specimen_id": sid, "recorded_tree_sha256": want}
+        target = d / (want or "-") / "upstream"
+        if not want or not target.exists():
+            row["status"] = "MIRROR_MISSING"; rep["rows"].append(row); continue
+        got = vault.tree_hash_of(vault.hash_tree(target))
+        row["mirror_tree_sha256"] = got
+        row["index_agrees"] = (idx.get(sid, {}).get("tree_sha256") == want) if idx else None
+        row["status"] = "MIRROR_VERIFIED" if got == want else "MIRROR_DIFFERS"
+        rep["rows"].append(row)
+    rep["summary"] = {k: sum(1 for r in rep["rows"] if r["status"] == k) for k in sorted({r["status"] for r in rep["rows"]})}
+    out = vault.REPO / "techne" / "fossils" / "mirror" / (rep["receipt_id"] + ".json")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    k = 1
+    while out.exists():
+        k += 1; out = out.with_name("%s-%d.json" % (rep["receipt_id"], k))
+    out.write_text(json.dumps(rep, indent=1) + "\n", encoding="utf-8", newline="\n")
+    print("mirror-verify", d, rep["summary"], "receipt", out)
     return rep
 
 
@@ -669,7 +725,8 @@ def main(argv=None) -> int:
     r = sub.add_parser("run"); r.add_argument("specimen_id"); r.add_argument("--timeout", type=int, default=1800)
     v = sub.add_parser("verify"); v.add_argument("specimen_id", nargs="?"); v.add_argument("--all", action="store_true"); v.add_argument("--out")
     rs = sub.add_parser("restore"); rs.add_argument("specimen_id")
-    mi = sub.add_parser("mirror"); mi.add_argument("--dest", required=True); mi.add_argument("--specimen", action="append"); mi.add_argument("--dry-run", action="store_true")
+    mi = sub.add_parser("mirror"); mi.add_argument("--dest", required=True); mi.add_argument("--specimen", action="append"); mi.add_argument("--dry-run", action="store_true"); mi.add_argument("--allow-same-volume", action="store_true", help="disposable controls only")
+    mv = sub.add_parser("mirror-verify"); mv.add_argument("--dest", required=True); mv.add_argument("--specimen", action="append")
     sub.add_parser("status"); sub.add_parser("summary")
     args = ap.parse_args(argv)
     if args.cmd == "acquire":
@@ -684,8 +741,11 @@ def main(argv=None) -> int:
         return 0 if verify(args.specimen_id) else 1
     elif args.cmd == "restore":
         return 0 if restore(args.specimen_id)["verified"] else 1
+    elif args.cmd == "mirror-verify":
+        r = mirror_verify(args.dest, args.specimen)
+        return 0 if all(x["status"] == "MIRROR_VERIFIED" for x in r["rows"]) else 1
     elif args.cmd == "mirror":
-        r = mirror(args.dest, args.specimen, args.dry_run)
+        r = mirror(args.dest, args.specimen, args.dry_run, args.allow_same_volume)
         bad = [x for x in r["rows"] if x["status"] in ("REFUSED_SOURCE_DRIFTED", "COPY_DIFFERS_LEFT_AS_PARTIAL", "ALREADY_PRESENT_DIFFERS")]
         return 1 if bad else 0
     elif args.cmd == "status":

@@ -1,0 +1,77 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "hashicorp-memberlist-0.5.4",
+  "receipt_id": "run-hashicorp-memberlist-0.5.4-20260913T055000Z",
+  "written_utc": "20260913T055000Z",
+  "runner": "docker",
+  "image": "golang:1.22-bookworm",
+  "workdir": "upstream/tree/memberlist-0.5.4",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "8295c85b810a8f15ebf9729c85b19d4b7ad02b91de6c731cdca5284c78e3d4a6",
+  "recipe_sha256": "a589e8c66006ffd2316b045851f8dd0ed1da760a60425cff3bdcf6de38347b9c",
+  "patches": [],
+  "probe": [
+    {
+      "name": "go",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go version",
+      "exit": 0,
+      "seconds": 0.75,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "go version go1.22.12 linux/amd64\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "go build (modules from go.sum, fetched at run time -- recorded)",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go build ./... 2>&1 | tail -3; echo built",
+      "exit": 0,
+      "seconds": 0.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "go: go.mod requires go >= 1.24.0 (running go 1.22.12; GOTOOLCHAIN=local)\nbuilt\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "SWIM probing and suspicion: the package's own tests for probe, indirect ping, suspect -> dead, gossip (loopback, unreachable peers)",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go test -count=1 -run 'TestMemberList_ProbeNode|TestMemberList_Probe$|TestMemberList_SuspectNode|TestMemberList_SuspectNode_NoNode|TestMemberList_DeadNode|TestMemberList_Gossip|TestMemberlist_Join|TestMemberlist_Leave' -v . 2>&1 | grep -E '^(=== RUN|--- (PASS|FAIL)|PASS|FAIL|ok)' | head -40",
+      "exit": 0,
+      "seconds": 0.71,
+      "ok": false,
+      "why_not": [
+        "stdout lacks '--- PASS: TestMemberList_SuspectNode'",
+        "stdout lacks '--- PASS: TestMemberList_DeadNode'"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false,
+  "tree_sha256_after": "8295c85b810a8f15ebf9729c85b19d4b7ad02b91de6c731cdca5284c78e3d4a6",
+  "body_preserved": true
+}

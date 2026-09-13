@@ -1,0 +1,135 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "redlock-py-redis-2014",
+  "canonical_name": "Redlock (antirez, 2014) as redlock-py, with Debian's redis-server as the lock store -- a lease-based distributed mutex, and the design Kleppmann's 2016 analysis argued is unsafe for correctness-critical use",
+  "aliases": [
+    "Redlock",
+    "redlock-py",
+    "distributed lock"
+  ],
+  "lineage": "A LEASE-based distributed mutex: acquire a key with a TTL on a majority of N independent Redis instances within a validity window; release by a check-and-delete script. Proposed by Antirez (redis.io/topics/distlock, 2014); criticised by Martin Kleppmann ('How to do distributed locking', 2016) for depending on bounded clock drift and process pauses, with Antirez's reply ('Is Redlock safe?'). Preserved as a runnable lease mechanism AND as a documented contested design (Phase 9: incorrect timing assumption).",
+  "domain": [
+    "distributed-systems",
+    "distributed-mutex",
+    "lease",
+    "timeout-based",
+    "contested-design"
+  ],
+  "era": "2014-",
+  "version": "github.com/SPSCommerce/redlock-py master as of 2026-09-13 (commit in hashes); redis-server 7.0 (Debian bookworm) at run time",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/SPSCommerce/redlock-py",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "FAITHFUL_PORT",
+  "source_identity": {
+    "repo": "github.com/SPSCommerce/redlock-py",
+    "algorithm": "redis.io/docs/manual/patterns/distributed-locks"
+  },
+  "hashes": {
+    "tree_sha256": "09488f1ae9cf4bf50049c8646cdac9ccf055482964352b554688304de8f48dc8",
+    "n_files": 9,
+    "bytes": 15610,
+    "artifacts": [
+      {
+        "filename": "https://github.com/SPSCommerce/redlock-py",
+        "sha256": null,
+        "commit": "42ef491061c3790307d39356b307c4318032c439"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\redlock-py-redis-2014",
+    "hash_list": "techne/fossils/specimens/redlock-py-redis-2014/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "Python",
+    "Lua (release script)"
+  ],
+  "build_system": "pip install . + apt redis-server",
+  "compiler_or_interpreter": "python 3.11 + redis 7 (docker python:3.11-slim with apt redis-server)",
+  "dependencies": [
+    "redis-py",
+    "one or more redis-server instances"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "Redlock([{host,port}...]).lock(resource, ttl_ms) -> Lock(validity, resource, key) | False; unlock(lock)"
+  ],
+  "example": {
+    "command": "three redis instances on loopback; two clients contend for one resource",
+    "input": "contending acquirers, a TTL",
+    "output": "exactly one holder at a time; the second acquires only after release or TTL expiry (the ORACLE); the lease's validity window printed"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Sanfilippo, Distributed locks with Redis (Redlock), redis.io 2014",
+    "Kleppmann, How to do distributed locking, 2016-02-08",
+    "Sanfilippo, Is Redlock safe?, 2016-02-09"
+  ],
+  "human_capability_summary": {
+    "built_to": "grant one client at a time exclusive access to a resource across machines, with a lease so a crashed holder cannot block forever",
+    "pressure": "crashes of holders, network delay, clock drift, process pauses (GC) -- the last two are exactly the contested assumptions",
+    "success_means": "mutual exclusion while the lease is valid; liveness after a holder dies"
+  },
+  "known_human_problem_solved": "distributed mutual exclusion with liveness",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "partial failure, unbounded delay, unsynchronised clocks",
+  "human_failure_condition": "two holders at once after a pause or clock jump (Kleppmann's scenario); or permanent blocking without a lease",
+  "behavioral_entry_point": "shorten the TTL below the holder's work time and observe the second client acquire while the first still believes it holds the lock",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "willemt-raft",
+      "note": "lease-based exclusion vs consensus-based"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase3",
+    "phase9",
+    "lease",
+    "distributed_mutex",
+    "contested_design"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/redlock-py-redis-2014/receipts/run-redlock-py-redis-2014-20260913T054942Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\redlock-py-redis-2014 ; tracked techne/fossils/specimens/redlock-py-redis-2014",
+    "where_it_came_from": "https://github.com/SPSCommerce/redlock-py ; FAITHFUL_PORT @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run redlock-py-redis-2014",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/redlock-py-redis-2014/receipts/run-redlock-py-redis-2014-20260913T054942Z.json",
+    "what_humans_used_it_for": "grant one client at a time exclusive access to a resource across machines, with a lease so a crashed holder cannot block forever"
+  },
+  "seat": "Techne"
+}

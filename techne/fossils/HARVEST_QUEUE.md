@@ -156,3 +156,38 @@ C-Prolog (no provenance), Tierra (no source located).
   A preserved 32-bit toolchain image and a SIMH world are now two concrete infrastructure rows.
 - Observed instrument flake: one cJSON ASan run spun 665 s before being killed; two identical runs
   took <1 s. Not diagnosed (ASan under WSL2 docker suspected). Per-command timeouts now 120/300 s.
+
+## Batch 06 done (2026-09-13): 15 new + old fossils unlocked; vault 90 -> 105 -- UNLOCK, FAILURE, PRESSURE, CULTURES
+Opened `verify --all` 90/90; closed 105/105 (no drift). Charter roles/Techne/prompts/2026-09-12_batch06/.
+UNLOCKED (old fossils made runnable): libfec-karn (BLOCKED_PLATFORM -> RUNNABLE in the new i386 world,
+SSE2 Viterbi, BER 180/409600 at 3 dB); compact-4.2bsd (i386 world, no per-run apt); do-mpc
+(SOURCE_ONLY -> RUNNABLE, batch 05); particles (PMMH added); 4.3BSD kernel BOOTS on open-simh vax780
+(TCP fossils' host, stage 1; multi-user install is the boundary, TECHNE-69b).
+NEW WORLDS: prometheus-fossil-simh (open-simh vax780 @ a1f57fa37), prometheus-fossil-i386,
+prometheus-fossil-octave, prometheus-fossil-legacy(+Bas 2.5 from batch05).
+NEW SPECIMENS: bsd-4.2/4.3/reno distribution tapes | go-runtime-deadlock, valgrind-helgrind,
+glibc-rwlock-writer-starvation (real concurrent failures) | dmtcp, hashicorp-memberlist(SWIM),
+redlock(lease, contested), cocagne-plain-paxos (distributed survival, 4 assumptions) | pid-autotune,
+STR, L1 (adaptive control) | libdai (belief propagation) | gnu-apl (array-language culture).
+PRESSURE: techne/fossils/pressure/ -- SAT (7 regimes x picosat+minisat, decisions 0..2519/conflicts
+0..3863) and COMPRESSION (gzip/zlib/bzip2/ncompress x text/random/repeat/zeros; LZW expands random
+to 1.27x). MIRROR: mechanism + verify + destructive control built; Z: not independently reachable,
+real mirror STOPPED (techne/fossils/mirror/TECHNE65_Z_INDEPENDENCE_2026-09-13.md).
+
+## Remaining holes after batch 06 (honest; do not hide)
+- NEAR-EMPTY: scientific extremes still only astrometry (erfa) + orbital (sgp4) -- accelerator/beam,
+  fusion/plasma, interferometry, numerical relativity, precision timing, detector reconstruction all
+  absent (phase 6 under-delivered: 0 new this batch; candidates: chrony/ntp clock discipline, ERFA is
+  the only precision one). BINARY-ONLY lawful recovery STILL not attempted (phase 10 not reached).
+- CULTURES: APL landed; Smalltalk (not in bookworm; GNU Smalltalk source build heavy), Erlang (actor
+  model, erlang:25 image ready), Icon (goal-directed, apt icont), gforth, SWI-Prolog, SNOBOL(source)
+  all still absent -- phase 7 partial (1 of 3).
+- BAD DESIGNS (phase 9): redlock (contested) landed; the batch-05 losers (zchaff, compact, tinystm)
+  and bsd-4.2 (congestion collapse) carry documented dispositions, but no NEW dedicated bad-design
+  trio this batch -- 3 dedicated ones still owed.
+- SMALL STRANGE (phase 11): not done this batch (0 of 5-10).
+- TCP series: 4.3 boots; 4.2 and Reno not individually booted; the controlled loss/delay TCP
+  experiment across 4.2/Tahoe/Reno (the highest-value depth dataset) needs a prebuilt multi-user
+  disk or a faster host -- TECHNE-69b, the single biggest open depth item.
+- FAILURE PATHOLOGIES now have runnable executing examples (Go, helgrind, glibc); deadlock via model
+  (spin) + execution (Go/helgrind lock-order) both present.

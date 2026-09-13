@@ -1,0 +1,186 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "bsd-4.3-distribution-tape-1986",
+  "canonical_name": "4.3BSD distribution tape (June 1986): stand, miniroot, root dump, usr.tar -- the last pre-slow-start BSD TCP, bootable",
+  "aliases": [
+    "4.3BSD tape",
+    "4.3 BSD VAX"
+  ],
+  "lineage": "Plain 4.3BSD (1986) predates Jacobson's slow start / congestion avoidance (which arrived in 4.3BSD-Tahoe, 1988): its TCP is the 4.2 design with two years of fixes -- a BEFORE point for the congestion lineage that, unlike the Tahoe tape (usr.tar cut short in the archive), is COMPLETE and installable. The classic SIMH-installable BSD.",
+  "domain": [
+    "operating-system",
+    "networks",
+    "TCP",
+    "historical-toolchain",
+    "distribution-tape",
+    "vax"
+  ],
+  "era": "1986",
+  "version": "4.3BSD (Jun 1986); TUHS Archive/Distributions/UCB/4BSD/4.3BSD (stand, miniroot, rootdump, usr.tar; FORMAT)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/FORMAT",
+        "filename": "FORMAT",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/stand.gz",
+        "filename": "stand.gz",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/miniroot.gz",
+        "filename": "miniroot.gz",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/rootdump.gz",
+        "filename": "rootdump.gz",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/usr.tar.gz",
+        "filename": "usr.tar.gz",
+        "extract": false
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD",
+    "tape_files": "1 stand, 2 miniroot, 3 rootdump, 4 usr.tar"
+  },
+  "hashes": {
+    "tree_sha256": "0b4517d6e80cb0bad20540f778f29bb3d07b7a988310093d1beca2f5f9dea7de",
+    "n_files": 5,
+    "bytes": 12015122,
+    "artifacts": [
+      {
+        "filename": "FORMAT",
+        "sha256": "57aaa553ceccd59a4145a7c8696e614f21696404214d3ee7199e9c87fdccf624",
+        "commit": null
+      },
+      {
+        "filename": "stand.gz",
+        "sha256": "8f5f38d1c141f598bf4fca16277960f463486f5d678e883a7de97af11ab148a2",
+        "commit": null
+      },
+      {
+        "filename": "miniroot.gz",
+        "sha256": "9f3c27b7ea99cec22b22a9eb8e25f85287087d031681476158e98b6ffffdebb5",
+        "commit": null
+      },
+      {
+        "filename": "rootdump.gz",
+        "sha256": "46d1ab1c41c330be47b04812f779c7e535b3e0d4d251b03670455660b212b125",
+        "commit": null
+      },
+      {
+        "filename": "usr.tar.gz",
+        "sha256": "8565ff6f85ade24a1b63fdc5f7f5befe49b70bf4d44281cbfb015742ba379cc4",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\bsd-4.3-distribution-tape-1986",
+    "hash_list": "techne/fossils/specimens/bsd-4.3-distribution-tape-1986/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-4-Clause",
+    "status": "permissive (original BSD licence; Caldera 2002 grant covers 32V-derived code); AT&T-derived portions were released by Caldera/SCO 2002",
+    "evidence": "TUHS archive terms; Caldera licence 2002"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C (4BSD kernel and userland)",
+    "VAX assembler"
+  ],
+  "build_system": "none: a distribution TAPE (stand / miniroot / rootdump / usr.tar as tape files)",
+  "compiler_or_interpreter": "a VAX-11/780 -- emulated by SIMH vax780 (docker world prometheus-fossil-simh)",
+  "dependencies": [
+    "SIMH vax780 (Debian simh 3.8.1)",
+    "a .tap image built from the tape files (Techne mktape, record sizes per FORMAT/notes)",
+    "an RP06 disk image",
+    "expect (console automation)"
+  ],
+  "run_classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "SIMH: boot ts0 -> : ts(0,1)copy -> : hp(0,1)vmunix -> newfs / restore -> boot hp(0,0)vmunix"
+  ],
+  "example": {
+    "command": "python -m techne.fossils.harvest run bsd-4.3-distribution-tape-1986",
+    "input": "the four tape files assembled into a .tap image",
+    "output": "a booted 4.3BSD on an emulated VAX-11/780; netstat -s TCP counters around a loopback transfer"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-simh:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Installing and Operating 4.3BSD on the VAX (Karels, Leffler, McKusick, Joy; 1986)",
+    "Jacobson, Congestion Avoidance and Control, 1988 (what this release lacks)"
+  ],
+  "human_capability_summary": {
+    "built_to": "install a complete 4.3BSD system on a VAX from one tape",
+    "pressure": "the 1986 congestion collapse happened on THIS release's TCP",
+    "success_means": "boots multi-user; TCP answers; netstat -s shows the retransmission counters"
+  },
+  "known_human_problem_solved": "distribution and installation of 4.3BSD",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "the Internet of 1986: shared scarce links, loss as the only signal, no congestion window yet",
+  "human_failure_condition": "congestion collapse (historical); install failure (tape/disk)",
+  "behavioral_entry_point": "netstat -s before/after a loopback transfer; a second emulated VAX over a lossy Ethernet relay is the boundary (see record notes)",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "historical_version_of",
+      "to": "bsd-tcp-4.2-1983",
+      "note": "4.3's TCP = 4.2's design + fixes, still no congestion window"
+    },
+    {
+      "relation": "superseded",
+      "to": "bsd-tcp-4.3-tahoe-1988",
+      "note": "Tahoe added slow start / congestion avoidance"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase1",
+    "unlock",
+    "depth:tcp",
+    "historical_world",
+    "known_bad_lineage"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/bsd-4.3-distribution-tape-1986/receipts/run-bsd-4.3-distribution-tape-1986-20260913T065059Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_EMULATED",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\bsd-4.3-distribution-tape-1986 ; tracked techne/fossils/specimens/bsd-4.3-distribution-tape-1986",
+    "where_it_came_from": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD/FORMAT ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run bsd-4.3-distribution-tape-1986",
+    "how_we_know_it_runs": "RUNNABLE_EMULATED / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/bsd-4.3-distribution-tape-1986/receipts/run-bsd-4.3-distribution-tape-1986-20260913T065059Z.json",
+    "what_humans_used_it_for": "install a complete 4.3BSD system on a VAX from one tape"
+  },
+  "seat": "Techne"
+}

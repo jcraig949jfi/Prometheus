@@ -1,0 +1,173 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "bsd-4.2-distribution-tape-1983",
+  "canonical_name": "4.2BSD distribution tape (August 1983): stand, miniroot, root dump, usr.tar -- the bootable system whose TCP is bsd-tcp-4.2-1983",
+  "aliases": [
+    "4.2BSD tape",
+    "4.2 BSD VAX"
+  ],
+  "lineage": "The 4.2BSD release as shipped to VAX sites: the standalone boot programs, the miniroot filesystem, a dump of the root filesystem (with /vmunix) and the /usr tree. Preserved so that the kernel in bsd-tcp-4.2-1983 can be BOOTED under an emulated VAX-11/780 rather than only read. Transcribed from the physical 9-track tape into the TUHS archive.",
+  "domain": [
+    "operating-system",
+    "networks",
+    "TCP",
+    "historical-toolchain",
+    "distribution-tape",
+    "vax"
+  ],
+  "era": "1983",
+  "version": "4.2BSD (Aug 1983); TUHS Archive/Distributions/UCB/4BSD/4.2BSD (stand, miniroot, rootdump, usr.tar; FORMAT)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/FORMAT",
+        "filename": "FORMAT",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/stand.gz",
+        "filename": "stand.gz",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/miniroot.gz",
+        "filename": "miniroot.gz",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/rootdump.gz",
+        "filename": "rootdump.gz",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/usr.tar.gz",
+        "filename": "usr.tar.gz",
+        "extract": false
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD",
+    "tape_files": "1 stand (199x512), 2 miniroot (205x10240), 3 rootdump (383x10240), 5 usr.tar (2148x10240)"
+  },
+  "hashes": {
+    "tree_sha256": "9dfc093874cc79e14e195292412746248cf079bc4133eb7d06739035aa7718cf",
+    "n_files": 5,
+    "bytes": 9107206,
+    "artifacts": [
+      {
+        "filename": "FORMAT",
+        "sha256": "a104de0480e2367e3b3936cdf6ed2d6fd800c7cc3f414b57ad10f3dd6a40de09",
+        "commit": null
+      },
+      {
+        "filename": "stand.gz",
+        "sha256": "2a48b4de94fb63e1fbb57969cd804261bfa384482c5b65f5b592f63e8f1a66ab",
+        "commit": null
+      },
+      {
+        "filename": "miniroot.gz",
+        "sha256": "e0bd20d769220f744636519ecfe3b2cdda245e13b591af5b5f1363b88f6c6a67",
+        "commit": null
+      },
+      {
+        "filename": "rootdump.gz",
+        "sha256": "0bcb40c2b864f43dce1faeba9f3dcf6059c98055b394c2cfcd1221ab36a5015e",
+        "commit": null
+      },
+      {
+        "filename": "usr.tar.gz",
+        "sha256": "73124e1583d5c75b6a7a5540ba7523c6923afa870d0671e5e142e3a0d686e401",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\bsd-4.2-distribution-tape-1983",
+    "hash_list": "techne/fossils/specimens/bsd-4.2-distribution-tape-1983/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-4-Clause",
+    "status": "permissive (original BSD licence; Caldera 2002 grant covers 32V-derived code); AT&T-derived portions were released by Caldera/SCO 2002",
+    "evidence": "TUHS archive terms; Caldera licence 2002"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C (4BSD kernel and userland)",
+    "VAX assembler"
+  ],
+  "build_system": "none: a distribution TAPE (stand / miniroot / rootdump / usr.tar as tape files)",
+  "compiler_or_interpreter": "a VAX-11/780 -- emulated by SIMH vax780 (docker world prometheus-fossil-simh)",
+  "dependencies": [
+    "SIMH vax780 (Debian simh 3.8.1)",
+    "a .tap image built from the tape files (Techne mktape, record sizes per FORMAT/notes)",
+    "an RP06 disk image",
+    "expect (console automation)"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "SIMH: boot ts0 -> standalone boot -> copy miniroot to hp(0,1) -> boot hp(0,1)vmunix -> newfs/restore root -> boot hp(0,0)vmunix"
+  ],
+  "example": {
+    "command": "python -m techne.fossils.harvest run bsd-4.2-distribution-tape-1983",
+    "input": "the four tape files assembled into a .tap image",
+    "output": "a booted 4.2BSD kernel on an emulated VAX-11/780 (stage of the install reached is the receipt)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-simh:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Installing and Operating 4.2BSD on the VAX (Leffler, Joy, Fabry; 1983)",
+    "TUHS FORMAT file"
+  ],
+  "human_capability_summary": {
+    "built_to": "install a complete 4.2BSD system on a VAX from one magnetic tape",
+    "pressure": "1983 hardware: a 9-track drive, an RP06 disk, a console; and the Internet that this release's TCP was about to collapse",
+    "success_means": "the kernel boots multi-user from disk and its TCP answers on lo0"
+  },
+  "known_human_problem_solved": "distribution and installation of a research operating system",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "1983 media and hardware; the network stack shipped here had no congestion control",
+  "human_failure_condition": "a bad tape or disk geometry stops the install; historically, its TCP collapsed under congestion",
+  "behavioral_entry_point": "boot the installed disk under SIMH; netstat -s on the guest before/after a loopback transfer",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "bsd-tcp-4.2-1983",
+      "note": "this tape CONTAINS the kernel whose netinet/tcp_* files are preserved as that specimen"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase1",
+    "unlock",
+    "depth:tcp",
+    "historical_world"
+  ],
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\bsd-4.2-distribution-tape-1983 ; tracked techne/fossils/specimens/bsd-4.2-distribution-tape-1983",
+    "where_it_came_from": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.2BSD/FORMAT ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "PRESERVED + hashed; the boot procedure is identical to the 4.3 tape (proven) but this tape was not individually booted this pass -- TECHNE-69b.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 9dfc093874cc79e1 pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "install a complete 4.2BSD system on a VAX from one magnetic tape"
+  },
+  "seat": "Techne"
+}

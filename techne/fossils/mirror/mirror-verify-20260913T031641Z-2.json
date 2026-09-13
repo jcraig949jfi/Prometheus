@@ -1,0 +1,34 @@
+{
+ "schema": "techne.fossil.mirror_verify_receipt/1",
+ "receipt_id": "mirror-verify-20260913T031641Z",
+ "written_utc": "20260913T031641Z",
+ "destination": "C:\\Users\\jcrai\\AppData\\Local\\Temp\\claude\\f--Prometheus\\8c399e8f-59fa-4499-b812-80acab789124\\scratchpad\\fossil_mirror_control_1789269401",
+ "index_present": true,
+ "rows": [
+  {
+   "specimen_id": "tscp-1.81-kerrigan-1997",
+   "recorded_tree_sha256": "3f85294cf11763e5e0a43e9c4c38b4e2db151142bce1295f931d744ba7010ec4",
+   "mirror_tree_sha256": "3f85294cf11763e5e0a43e9c4c38b4e2db151142bce1295f931d744ba7010ec4",
+   "index_agrees": true,
+   "status": "MIRROR_VERIFIED"
+  },
+  {
+   "specimen_id": "backoff-2.2.1",
+   "recorded_tree_sha256": "488002d80d9becf538ba6106282356e95020c502d22cec663b3d6830ed77b5cb",
+   "mirror_tree_sha256": "488002d80d9becf538ba6106282356e95020c502d22cec663b3d6830ed77b5cb",
+   "index_agrees": true,
+   "status": "MIRROR_VERIFIED"
+  },
+  {
+   "specimen_id": "compact-4.2bsd-1983",
+   "recorded_tree_sha256": "6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d",
+   "mirror_tree_sha256": "f2e1aab195cac1dbd07a8776f82c87ffbf815ab308c077dc2f265bac61c29feb",
+   "index_agrees": true,
+   "status": "MIRROR_DIFFERS"
+  }
+ ],
+ "summary": {
+  "MIRROR_DIFFERS": 1,
+  "MIRROR_VERIFIED": 2
+ }
+}

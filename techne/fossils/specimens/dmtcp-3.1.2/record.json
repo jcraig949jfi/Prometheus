@@ -1,0 +1,130 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "dmtcp-3.1.2",
+  "canonical_name": "DMTCP 3.1.2 -- Distributed MultiThreaded CheckPointing: transparent user-space checkpoint/restart of unmodified Linux processes (Cooperman, Ansel, Arya et al.)",
+  "aliases": [
+    "dmtcp",
+    "dmtcp_launch",
+    "dmtcp_restart"
+  ],
+  "lineage": "Checkpoint/restart as a SURVIVAL mechanism: a coordinator signals every process in a computation; each writes its full memory image and reopens its files/sockets on restart, with no kernel module and no source change (the successor of BLCR-style and Condor-style checkpointing; used on HPC clusters). Crash-only assumption: the process may die at any instant after a checkpoint and continue from it.",
+  "domain": [
+    "distributed-systems",
+    "checkpoint-restart",
+    "fault-tolerance",
+    "recovery",
+    "hpc"
+  ],
+  "era": "2007-",
+  "version": "v3.1.2 (2024)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/dmtcp/dmtcp/archive/refs/tags/v3.1.2.tar.gz",
+        "filename": "dmtcp-3.1.2.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/dmtcp/dmtcp",
+    "tag": "v3.1.2"
+  },
+  "hashes": {
+    "tree_sha256": "a5f1b540d86bd4d10478a3670317df05713ce75d312919e5607c514f39c3ac01",
+    "n_files": 506,
+    "bytes": 5646412,
+    "artifacts": [
+      {
+        "filename": "dmtcp-3.1.2.tar.gz",
+        "sha256": "560691a4a3efa2b583af2976145fc356b2a24d78c2476c338bc85a0e1f457aee",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\dmtcp-3.1.2",
+    "hash_list": "techne/fossils/specimens/dmtcp-3.1.2/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "LGPL-3.0-or-later",
+    "status": "copyleft (library)",
+    "evidence": "COPYING"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C++",
+    "C"
+  ],
+  "build_system": "./configure && make",
+  "compiler_or_interpreter": "g++ 12 (docker bookworm)",
+  "dependencies": [
+    "a C++ compiler; LD_PRELOAD-able target"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "dmtcp_coordinator; dmtcp_launch <prog>; dmtcp_command -c (checkpoint) -q (quit); dmtcp_restart ckpt_*.dmtcp"
+  ],
+  "example": {
+    "command": "dmtcp_launch ./counter & ...; dmtcp_command -c; kill the process; dmtcp_restart ckpt_counter_*.dmtcp",
+    "input": "a counting program",
+    "output": "the count resumes from the checkpointed value, not from zero (the ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Ansel, Arya, Cooperman, DMTCP: Transparent Checkpointing for Cluster Computations and the Desktop, IPDPS 2009"
+  ],
+  "human_capability_summary": {
+    "built_to": "let a long computation survive the death of its process or node by saving and restoring its entire state, without changing the program",
+    "pressure": "node failure, preemption, job time limits on shared clusters",
+    "success_means": "the restarted process continues exactly where the checkpoint left it"
+  },
+  "known_human_problem_solved": "fault tolerance for long-running computations",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "partial failure, time-limited resources",
+  "human_failure_condition": "hours of computation lost at a crash; or a restart that silently diverges",
+  "behavioral_entry_point": "checkpoint at count N, kill, restart: the first printed count after restart is the observation",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "batch06",
+    "phase3",
+    "checkpoint_restart",
+    "crash_only"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/dmtcp-3.1.2/receipts/run-dmtcp-3.1.2-20260913T055002Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/dmtcp-3.1.2/receipts/run-dmtcp-3.1.2-20260913T055210Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\dmtcp-3.1.2 ; tracked techne/fossils/specimens/dmtcp-3.1.2",
+    "where_it_came_from": "https://github.com/dmtcp/dmtcp/archive/refs/tags/v3.1.2.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run dmtcp-3.1.2",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/dmtcp-3.1.2/receipts/run-dmtcp-3.1.2-20260913T055210Z.json",
+    "what_humans_used_it_for": "let a long computation survive the death of its process or node by saving and restoring its entire state, without changing the program"
+  },
+  "seat": "Techne"
+}

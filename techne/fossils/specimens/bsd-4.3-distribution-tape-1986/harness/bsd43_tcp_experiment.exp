@@ -1,0 +1,65 @@
+#!/usr/bin/expect -f
+# Batch 06 / TECHNE-69, 4.3BSD stage 3: boot the installed disk multi-user, log in as root, read
+# the TCP statistics, move a file over the loopback with the release's own rsh/rshd, read the
+# statistics again. Techne records; it does not interpret.
+# usage: bsd43_tcp_experiment.exp <disk> <boot42>
+set timeout 120
+lassign $argv dsk boot42
+log_user 1
+# SIMH is configured from a generated .ini whose last line is `run 2`, so expect only ever
+# talks to the guest console (interactive sim> handshakes raced with the libedit prompt).
+set ini [open "simh_run.ini" w]
+puts $ini "set cpu 8M"
+puts $ini "set rq0 ra81"
+puts $ini "attach -q rq0 $dsk"
+puts $ini "set rq1 dis"
+puts $ini "set rq2 dis"
+puts $ini "set rq3 dis"
+puts $ini "set rp dis"
+puts $ini "set lpt dis"
+puts $ini "set rl dis"
+puts $ini "set tq dis"
+puts $ini "set tu dis"
+puts $ini "set ts dis"
+puts $ini "set tti 7b"
+puts $ini "set tto 7b"
+puts $ini "load -o $boot42 0"
+puts $ini "d r10 9"
+puts $ini "d r11 0"
+puts $ini "run 2"
+close $ini
+spawn vax780 simh_run.ini
+expect { -re "Boot\[\r\n\]+: " { send "ra(0,0)vmunix\r" } timeout { puts "\nEXP: no Boot prompt"; exit 2 } }
+set timeout 900
+expect {
+    -re "login: $" { puts "\nEXP: multi-user login prompt" }
+    -re "# $" { puts "\nEXP: dropped to single user (fsck or rc problem)"; send "cat /etc/rc.local | head -5\r"; expect "# $"; exit 4 }
+    timeout { puts "\nEXP: no login prompt"; exit 3 }
+}
+send "root\r"
+expect { -re "(Password:|# $)" { if {[string match *Password* $expect_out(0,string)]} { send "\r"; expect -re "# $" } } }
+puts "\nEXP: root shell"
+proc sh {cmd {t 300}} {
+    global timeout
+    set timeout $t
+    send "$cmd\r"
+    expect { -re "# $" {} timeout { puts "\nEXP: timeout on: $cmd" } }
+}
+sh "hostname"
+sh "cat /etc/hosts"
+sh "ifconfig lo0"
+sh "netstat -in"
+puts "\nEXP: ===== netstat -s BEFORE ====="
+sh "netstat -s"
+sh "echo localhost root > /.rhosts; echo 127.0.0.1 localhost >> /etc/hosts; ls -l /vmunix"
+puts "\nEXP: ===== loopback transfer: rsh localhost cat /vmunix | wc -c ====="
+sh "rsh localhost -n cat /vmunix | wc -c" 900
+sh "rsh localhost -n cat /vmunix /vmunix /vmunix | wc -c" 900
+puts "\nEXP: ===== netstat -s AFTER ====="
+sh "netstat -s"
+sh "netstat -an"
+sh "sync"
+send "\005"
+expect "sim>" { send "exit\r" }
+expect eof
+puts "\nEXP: done"

@@ -1,0 +1,1095 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "dmtcp-3.1.2",
+  "receipt_id": "run-dmtcp-3.1.2-20260913T055002Z",
+  "written_utc": "20260913T055002Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/dmtcp-3.1.2",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "ckpt_restart.sh": "b2ffb9c537309393228f39d90d35a7a9781adb583eca1f7544d60ed0a11ed421",
+    "counter.c": "c6bba2b46c65ae45fe851951a7ea525a881380d0f3014f68c6802f27aa1d2142"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "a5f1b540d86bd4d10478a3670317df05713ce75d312919e5607c514f39c3ac01",
+  "recipe_sha256": "2da11cb9152fb2a9f43631de36680bd9d03a687de840ff796e81015dc97d293a",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1; uname -r",
+      "exit": 0,
+      "seconds": 0.7,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n6.6.87.2-microsoft-standard-WSL2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "configure + make (the coordinator, launcher, restarter and the preload library)",
+      "cmd": "./configure -q >/dev/null 2>&1 && make -s -j4 2>&1 | grep -iE '\\berror' | head -3; test -x bin/dmtcp_launch && test -x bin/dmtcp_restart && echo built",
+      "exit": 0,
+      "seconds": 38.97,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "compile the counting target",
+      "cmd": "gcc -O0 -o $BODY/build/counter $HARNESS/counter.c && echo built",
+      "exit": 0,
+      "seconds": 0.84,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "checkpoint at ~count 5, kill the process, restart from the image: the count continues, not restarts (one container, one command)",
+      "cmd": "bash $HARNESS/ckpt_restart.sh $BODY/upstream/tree/dmtcp-3.1.2/bin $BODY/build 2>&1 | tail -15",
+      "exit": 0,
+      "seconds": 15.32,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'RESTART OK'",
+        "stdout does not match /first count after restart = \\d+/"
+      ],
+      "stdout": {
+        "text": "/w/harness/ckpt_restart.sh: line 14:    15 Killed                  dmtcp_launch -p 7779 ./counter > counter.out 2>&1\nlast count before kill = 8\nckpt_counter_3dd10a958e1b66dc-40000-35c601b6d83.dmtcp\nfirst count after restart = none\nrestart output head:\nWARNING:  Running dmtcp_restart as root can be dangerous.\n  An unknown checkpoint image or bugs in DMTCP may lead to unforeseen\n  consequences.  Continuing as root ....\n\u001b[0m\u001b[0;31m[2026-09-13T05:50:55.453, 35, 35, Error] at dmtcprestartinternal.cpp:859 in DmtcpRestart; REASON='JASSERT(false) failed\nRESTART FAILED\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "bin/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "bin/dmtcp_command",
+      "sha256": "e1f503c2bbc29b66f24fee960c31bb8da69bbcc56906b2fd8776acc3b9ab5afc",
+      "bytes": 4150160
+    },
+    {
+      "path": "bin/dmtcp_coordinator",
+      "sha256": "a7586eb3f6a4d1ba2b90cbf73120445e168e1a63410a7ececb304dad9d6cca89",
+      "bytes": 4175088
+    },
+    {
+      "path": "bin/dmtcp_get_libc_offset",
+      "sha256": "a73a2a66cb87f9fad2a32820131621a59a0c84116c65e09068dd6ad9c048bdf6",
+      "bytes": 21656
+    },
+    {
+      "path": "bin/dmtcp_launch",
+      "sha256": "5dc21b633be32b8e4d2bca26f3d4a886d3eb1eb75acb809e0a8ffe3d4290b3e9",
+      "bytes": 4264304
+    },
+    {
+      "path": "bin/dmtcp_nocheckpoint",
+      "sha256": "4520de8c7f581a2c1ebaef638bf0d73c8ead45e8f2f1cdec48c567024dc425e0",
+      "bytes": 20784
+    },
+    {
+      "path": "bin/dmtcp_restart",
+      "sha256": "3ba4fa0c19984917159927f347d5474bb06cc908a45930484d3296457c503c44",
+      "bytes": 4858528
+    },
+    {
+      "path": "bin/dmtcp_ssh",
+      "sha256": "4d574fe11c8f8c0d7f8a6ba966b4d2623f24a3b30a841e633973c027232dc15d",
+      "bytes": 98032
+    },
+    {
+      "path": "bin/dmtcp_sshd",
+      "sha256": "fbe55d97db61e6c4c274d8d7df5160568ef2f78b635c07c3aa858935c98bf24e",
+      "bytes": 133008
+    },
+    {
+      "path": "bin/mtcp_restart",
+      "sha256": "6d9fd1cd8ae2f06ad1e9da17c9236ce2480ff14c86e42daf571c6cdbe719100e",
+      "bytes": 96952
+    },
+    {
+      "path": "config.log",
+      "sha256": "d066820b9b191214ce161587d31b709e82e962ca5c1d068a726d700b1ca32374",
+      "bytes": 40018
+    },
+    {
+      "path": "config.status",
+      "sha256": "0e20d7472a1d419c3eab7f4b6c6c29372ae4a0167983e85c324a15cafc5f7666",
+      "bytes": 36953
+    },
+    {
+      "path": "contrib/ckptfile/Makefile",
+      "sha256": "d6e9264728346f36f451f1e81315b3d98297509cb540a96457be847f50c2e94b",
+      "bytes": 3232
+    },
+    {
+      "path": "contrib/Makefile",
+      "sha256": "65d0d842305bc4f309431764bda89c15043ff667329cdb76c14a8ff7d8aa7a44",
+      "bytes": 1764
+    },
+    {
+      "path": "include/config.h",
+      "sha256": "ddd0a8685883aa1b1481502ac419dd51051f3622e68c2b0c73966d7e665edb7e",
+      "bytes": 4460
+    },
+    {
+      "path": "include/dmtcp/version.h",
+      "sha256": "74543ead0aec2e8eb76ffd3e22e135b9d851e952b7d55e41094b9f9b5ec137c8",
+      "bytes": 1188
+    },
+    {
+      "path": "include/stamp-h1",
+      "sha256": "c92cf4b676b946e8ebaa0b9068f628921ced6273f30313bb3816d37860bbaa55",
+      "bytes": 31
+    },
+    {
+      "path": "jalib/.deps/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "jalib/.deps/jalib.Po",
+      "sha256": "52ed9fea6ba5b87c65975285b84ef4fab89cbc095c5dd3ba6bb6745c8063b9b7",
+      "bytes": 23919
+    },
+    {
+      "path": "jalib/.deps/jalloc.Po",
+      "sha256": "045e854a7a397940994cf1d1531a4efedce6332d264e7b5cfae07f8f60417946",
+      "bytes": 27093
+    },
+    {
+      "path": "jalib/.deps/jassert.Po",
+      "sha256": "3ae6cd120eeb7689b23c9a9eba6604067ef112ec9516a6f8f4e23f8215f86dc9",
+      "bytes": 25518
+    },
+    {
+      "path": "jalib/.deps/jbuffer.Po",
+      "sha256": "0064ae5219df07d8d950bcbc008fd622be4e15dc62d2122a4ac3d76a695151f7",
+      "bytes": 19793
+    },
+    {
+      "path": "jalib/.deps/jfilesystem.Po",
+      "sha256": "6182d78e9c9cce7e4f715307538cd51362ee94e9222c909f0fe417626e756c92",
+      "bytes": 24863
+    },
+    {
+      "path": "jalib/.deps/jserialize.Po",
+      "sha256": "0fa74560336e7b9845fecac48f4515ae1bab6031324746b1af5e5a06b3162bc4",
+      "bytes": 22743
+    },
+    {
+      "path": "jalib/.deps/jsocket.Po",
+      "sha256": "89bb30f8d6b25c600df2ff3e6d177ce3e24372d15cd2925c01ef01f70dc4d036",
+      "bytes": 24036
+    },
+    {
+      "path": "jalib/.deps/jtimer.Po",
+      "sha256": "f39062b0ab7589af09947faccac6ffd0cf17c4307283513d923fb6cb429096ad",
+      "bytes": 21664
+    },
+    {
+      "path": "jalib/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "jalib/jalib.o",
+      "sha256": "c6f71e3c842a64a045cfbb38bf2a78797dd0c4350e2418f25c8692a738789eae",
+      "bytes": 125952
+    },
+    {
+      "path": "jalib/jalloc.o",
+      "sha256": "5af0f7e0cc972cee633bdcc31f4c21793a4375ad1f1fcb5ee5562134ca4e8edb",
+      "bytes": 146584
+    },
+    {
+      "path": "jalib/jassert.o",
+      "sha256": "0c706730763f736959622703e105c2a083553ec54f438435fa736736fcb399a8",
+      "bytes": 755704
+    },
+    {
+      "path": "jalib/jbuffer.o",
+      "sha256": "d68e2420e8719c93f60fffd4410c4ab7530ffa7a523477485f7f37739467c287",
+      "bytes": 127296
+    },
+    {
+      "path": "jalib/jfilesystem.o",
+      "sha256": "36e13bb21224947662db37ba400d98e21803e50e7aabcd9f36368b8e620f6419",
+      "bytes": 949800
+    },
+    {
+      "path": "jalib/jserialize.o",
+      "sha256": "89cd7e66707b9195278add3eb967d5c18394b2e5b3c2911a7274cefdb99909da",
+      "bytes": 287184
+    },
+    {
+      "path": "jalib/jsocket.o",
+      "sha256": "f39e11a906b1724fcb1d5dbe461a0aab27d974c42cb7662764ce6cb767e9393d",
+      "bytes": 637976
+    },
+    {
+      "path": "jalib/jtimer.o",
+      "sha256": "8250e768f497384bb5d311039f6e59768f9e270d7b773785a9a4711101d425e1",
+      "bytes": 512856
+    },
+    {
+      "path": "lib/dmtcp/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "lib/dmtcp/libdmtcp.so",
+      "sha256": "0e5f8736d77fbea29fd1cb516d5e1ee557c0e0f3a4723d90f5129a04dc470bc1",
+      "bytes": 6720448
+    },
+    {
+      "path": "lib/dmtcp/libdmtcp_alloc.so",
+      "sha256": "3623e8a4a79bca703bd1cd0f0aec10de45a11cf88bbdff273d09ab7e914944d8",
+      "bytes": 24000
+    },
+    {
+      "path": "lib/dmtcp/libdmtcp_dl.so",
+      "sha256": "a4d12947dd970d4c4eeede15767b3a1fdf76f0fb5c2f0417d996055b87e46ab3",
+      "bytes": 234464
+    },
+    {
+      "path": "lib/dmtcp/libdmtcp_ipc.so",
+      "sha256": "42f9c62a5b3e3b220b7e9d2934370d09edaafae98e6734561fa7c3236085d87c",
+      "bytes": 6456768
+    },
+    {
+      "path": "lib/dmtcp/libdmtcp_modify-env.so",
+      "sha256": "6d090068444a8fe2c871270ed7ef63acb42c66fa02ab5e0fe0e73e8d54bb56f2",
+      "bytes": 130296
+    },
+    {
+      "path": "lib/dmtcp/libdmtcp_pathvirt.so",
+      "sha256": "bc8f170832fe223fb0c189ab6f02511552290f32bba495817cc0fa6bfb82e89b",
+      "bytes": 260232
+    },
+    {
+      "path": "lib/dmtcp/libdmtcp_pid.so",
+      "sha256": "3c73233637d9ba7b55cd96a5a6c7e57046c9afd94f9f96b90e6637498ef38079",
+      "bytes": 1139656
+    },
+    {
+      "path": "lib/dmtcp/libdmtcp_svipc.so",
+      "sha256": "4894378ae4a7dfd5e795ff90fa565d0b8b964e1423e56e50700f495b307ad565",
+      "bytes": 1337792
+    },
+    {
+      "path": "lib/dmtcp/libdmtcp_timer.so",
+      "sha256": "5d360db6faf0a201ac0d43cbd15d4481fbd5da7a4e99e6c48d61e9280e2c4561",
+      "bytes": 1057176
+    },
+    {
+      "path": "lib/dmtcp/libdmtcp_unique-ckpt.so",
+      "sha256": "24c50231729ee4c4d1af8ace4a55df696c297f51f027303fddb0c4beb26d36c1",
+      "bytes": 240104
+    },
+    {
+      "path": "Makefile",
+      "sha256": "b388240e27e693a6ea2a72be08b324fe2f71ef6cdae8a167b7cfeb347ee91b87",
+      "bytes": 13677
+    },
+    {
+      "path": "plugin/Makefile",
+      "sha256": "0fb905eb8eb91577a4c5b5e43fe477312ebe5963c09ed753268a64e12ba62cd5",
+      "bytes": 33062
+    },
+    {
+      "path": "plugin/modify-env/.deps/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "plugin/modify-env/.deps/modify-env.Po",
+      "sha256": "0ddd640a0dff703eb9426a809dfbe59c9de9f4c540e9b77eca90d8b60b36f932",
+      "bytes": 11699
+    },
+    {
+      "path": "plugin/modify-env/.deps/warning.Po",
+      "sha256": "4ffa8be01269d337278ca509a9b830982cb7acde40e58e9b5d3ec4ef1b06e5cd",
+      "bytes": 19811
+    },
+    {
+      "path": "plugin/modify-env/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "plugin/modify-env/modify-env.o",
+      "sha256": "b22849106851625db71560b938a46e0e5aac217b326c59fe16ed81040c825667",
+      "bytes": 27808
+    },
+    {
+      "path": "plugin/modify-env/warning.o",
+      "sha256": "c49756feaba92844567794111cd1ec065e51faaae49a65409a3bd83a1a3a4a28",
+      "bytes": 185512
+    },
+    {
+      "path": "plugin/pathvirt/.deps/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "plugin/pathvirt/.deps/pathvirt.Po",
+      "sha256": "77c619a50442653ad43b2b58972be78c44a23161449f55213f501d415c43d5f9",
+      "bytes": 25192
+    },
+    {
+      "path": "plugin/pathvirt/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "plugin/pathvirt/pathvirt.o",
+      "sha256": "830969abb081a2dbac57908c7dc17523d903a8ac1108c16bccf45cf537493749",
+      "bytes": 517936
+    },
+    {
+      "path": "plugin/unique-ckpt/.deps/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "plugin/unique-ckpt/.deps/unique-ckpt.Po",
+      "sha256": "8cc5ce9702f623394a11ab842b2d6340e3671a5de3759fbe67e593056641fc66",
+      "bytes": 24159
+    },
+    {
+      "path": "plugin/unique-ckpt/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "plugin/unique-ckpt/unique-ckpt.o",
+      "sha256": "ab8eca88fe66d64df017dc0d3d602e49b7429ae2685447e4c12d67fba7f765e5",
+      "bytes": 425240
+    },
+    {
+      "path": "src/.deps/alarm.Po",
+      "sha256": "b4cdc94391fb4da692960960c80849f17d183e3feb6bc1cf41c2302fb1be9e4e",
+      "bytes": 22308
+    },
+    {
+      "path": "src/.deps/ckptserializer.Po",
+      "sha256": "3e250f1f0b1b0035b077c0b16d001e33769e7ee6832eef6eda85c0da25fc545e",
+      "bytes": 30881
+    },
+    {
+      "path": "src/.deps/coordinatorapi.Po",
+      "sha256": "d80b87266cbf156c1b424fe6fe29f5ea9ad592ab507ebd539d78e9877da92048",
+      "bytes": 31656
+    },
+    {
+      "path": "src/.deps/dlwrappers.Po",
+      "sha256": "e36831f65db2de6fd5c0626d9d13828f02a04d64ded78bcacf59f7926e22a3db",
+      "bytes": 22274
+    },
+    {
+      "path": "src/.deps/dmtcp_command.Po",
+      "sha256": "1456c3b11bbe6d39dc0a7efedb8fc5a514160335fc00804d8840c95ad182d5eb",
+      "bytes": 30636
+    },
+    {
+      "path": "src/.deps/dmtcp_coordinator.Po",
+      "sha256": "d9d0c524eab4960559e36d5a37e1c42771098c009e3f7bc0f72f4ac58d6eeffc",
+      "bytes": 32771
+    },
+    {
+      "path": "src/.deps/dmtcp_dlsym.Po",
+      "sha256": "a31cc347d08b478ec7fc938739c70b60130dc33e2ed9fa5403ed4d6387226a5b",
+      "bytes": 22323
+    },
+    {
+      "path": "src/.deps/dmtcp_dlsym_wrappers.Po",
+      "sha256": "e9d827c6bfbbd1ed8b29bf5dd01a05168265efb73f13ec5c8533c528e037d950",
+      "bytes": 22488
+    },
+    {
+      "path": "src/.deps/dmtcp_get_libc_offset.Po",
+      "sha256": "5838e8c851d0a14ebb4df10ab3b41ab4f35469e5a49aefe8a4f60bd26cea06da",
+      "bytes": 6791
+    },
+    {
+      "path": "src/.deps/dmtcp_launch.Po",
+      "sha256": "6968a5db30f58ae4fd6da3680ca97a8a91b8ed214a709141636bba2e176eba0c",
+      "bytes": 30825
+    },
+    {
+      "path": "src/.deps/dmtcp_nocheckpoint.Po",
+      "sha256": "97c5500707af8cc00b8a6b6f8473a82050365d6908e12dc0c6c7660228f88f52",
+      "bytes": 6902
+    },
+    {
+      "path": "src/.deps/dmtcp_restart.Po",
+      "sha256": "307851d06917ad7e1493ad5c5cdfcc11fbcb5c1799e2d14bd3d26897a3b15831",
+      "bytes": 22594
+    },
+    {
+      "path": "src/.deps/dmtcpmessagetypes.Po",
+      "sha256": "88ce178f3e22d9b6fd33739861d24ea252089ece5fb2532290d3494fb63e62c9",
+      "bytes": 22727
+    },
+    {
+      "path": "src/.deps/dmtcpnohijackstubs.Po",
+      "sha256": "5f972b84bfb044835f1034b09642cfbc4a85a26ef86e9c71b7b3ebaf9b60b792",
+      "bytes": 22405
+    },
+    {
+      "path": "src/.deps/dmtcpplugin.Po",
+      "sha256": "3a447124c684ca842c45fa4252f1db9ddaeb93826a22869ac5e9091fbe9414cf",
+      "bytes": 30811
+    },
+    {
+      "path": "src/.deps/dmtcprestartinternal.Po",
+      "sha256": "6b68615d94ea42da1df93a4e2330614f1e617f5f70a72636faf293b3d2aa62d9",
+      "bytes": 31514
+    },
+    {
+      "path": "src/.deps/dmtcpworker.Po",
+      "sha256": "ef48083bf0c8ba6429934279359dee4ef21004a8851e7a11d261cede6e51f2e9",
+      "bytes": 31850
+    },
+    {
+      "path": "src/.deps/execwrappers.Po",
+      "sha256": "1188ef82948da0e91e31f7e6177cf8f9a987e2128eabf80b4c83f5db902a9615",
+      "bytes": 31674
+    },
+    {
+      "path": "src/.deps/glibcsystem.Po",
+      "sha256": "59ed6e43e5273fbafed42404bd92103612bd46a2a50a41ada871781d2d7288d9",
+      "bytes": 7416
+    },
+    {
+      "path": "src/.deps/jalibinterface.Po",
+      "sha256": "7b856a19a9e6824d64759d862c07c1a393bf4c3e8298cfb9468737b35ab50024",
+      "bytes": 29723
+    },
+    {
+      "path": "src/.deps/kvdb.Po",
+      "sha256": "921400a7a39a4019a79aa69d8836effa434e1dea77e3e44e656f00d70ba8434d",
+      "bytes": 31217
+    },
+    {
+      "path": "src/.deps/lookup_service.Po",
+      "sha256": "98d5f2be5a5c8b36252b92d3882f7b729b4021ff20b3060e23215c718ef8d5e6",
+      "bytes": 23934
+    },
+    {
+      "path": "src/.deps/miscwrappers.Po",
+      "sha256": "a838c9091460f364dd89ae6de06c129cb21371ed32f2b3d88fe03b22342954dc",
+      "bytes": 31142
+    },
+    {
+      "path": "src/.deps/mutex.Po",
+      "sha256": "1fe8d8eadf7c0fb84edf009e8ee7af80102201d5cc2c8d9c883b8c6501cb1ec1",
+      "bytes": 29896
+    },
+    {
+      "path": "src/.deps/nosyscallsreal.Po",
+      "sha256": "9a44fd81702434c4f099b1224d5e45eb1ff5e35e4f76e2cb0e0db38a2733edf1",
+      "bytes": 19756
+    },
+    {
+      "path": "src/.deps/plugininfo.Po",
+      "sha256": "9383edfa35e9e47571becb7f362670c472e00a42e935391aec0e2e8892850735",
+      "bytes": 22779
+    },
+    {
+      "path": "src/.deps/pluginmanager.Po",
+      "sha256": "cee235742843153f41dfbafe30fc0e9e17acd9517cbf960d2c378da404239233",
+      "bytes": 30908
+    },
+    {
+      "path": "src/.deps/popen.Po",
+      "sha256": "29c6efc30d9cf3af06576c2e4d87b7bc5697e44c564f71645c70aca73616de9e",
+      "bytes": 29491
+    },
+    {
+      "path": "src/.deps/posix_spawn.Po",
+      "sha256": "bbeb409ab3b951266d0193216234790061c12dbaf58bbb8ff79753fb62991d95",
+      "bytes": 29405
+    },
+    {
+      "path": "src/.deps/processinfo.Po",
+      "sha256": "824b52ca79b2386ef62b92a7c7f3c3ee130cab78b8e88d7ffdd9249d5ace84c3",
+      "bytes": 31490
+    },
+    {
+      "path": "src/.deps/procselfmaps.Po",
+      "sha256": "28dc19d147c085bebfab6fbef263df033a128aba1193a3b39ff4b3f79976fc3e",
+      "bytes": 29814
+    },
+    {
+      "path": "src/.deps/restartscript.Po",
+      "sha256": "ae25c54fb2921b8b87d923add3051118b33b93aaf78583a88d842414eed3aef5",
+      "bytes": 25645
+    },
+    {
+      "path": "src/.deps/rlimitfloatenv.Po",
+      "sha256": "32d0439c7f9afac0d232bbf2169db33a755dfc0ede437fd21ae62f04cc88d35c",
+      "bytes": 23940
+    },
+    {
+      "path": "src/.deps/rwlock.Po",
+      "sha256": "166790b005f51055219af2cc16da01f10e4cedfa5d6418c854abd359ec385cab",
+      "bytes": 30689
+    },
+    {
+      "path": "src/.deps/shareddata.Po",
+      "sha256": "f1980b69b22a1eb8ef0ab71ce999efec7e0df12ed10ec5a630d43eac4c37b603",
+      "bytes": 31234
+    },
+    {
+      "path": "src/.deps/siginfo.Po",
+      "sha256": "57c331459ba6b941c564f1c0e68fbc1f725d107b0598073d9b253784c7d0102e",
+      "bytes": 30146
+    },
+    {
+      "path": "src/.deps/signalwrappers.Po",
+      "sha256": "3a2b25fe10a672c7c3715463eda482b9ef91662f5437aeb31e874020d3c45f2e",
+      "bytes": 29428
+    },
+    {
+      "path": "src/.deps/syscallsreal.Po",
+      "sha256": "794d416212fdb1e16336f204e2292592b8834f16f5a5a25eacfae5d2f0ddd0ec",
+      "bytes": 18057
+    },
+    {
+      "path": "src/.deps/syslogwrappers.Po",
+      "sha256": "18d4f493c0b70f4080ff7af9b64d7907cb668b42c4f88c5c307e56e5e3218d5a",
+      "bytes": 29599
+    },
+    {
+      "path": "src/.deps/terminal.Po",
+      "sha256": "3d5550f0720e6d35d77e85c82fed73016273547517abc9f3433871edd5257c19",
+      "bytes": 26865
+    },
+    {
+      "path": "src/.deps/threadlist.Po",
+      "sha256": "9eea362615850a7c3598e33ccd0089cd9ae9ddd1aaddf0259c793f564d019305",
+      "bytes": 31738
+    },
+    {
+      "path": "src/.deps/threadsync.Po",
+      "sha256": "e59e5f8c729e8ca13291048dd4722dbb4b0db898e2f6b2fe6dd291dcef8d1b42",
+      "bytes": 30088
+    },
+    {
+      "path": "src/.deps/threadwrappers.Po",
+      "sha256": "bd703827a71f8db07793d436c17a71aad2a9cc1e824c00adb26d45891110775e",
+      "bytes": 30877
+    },
+    {
+      "path": "src/.deps/tls.Po",
+      "sha256": "c5b018ead1f816ab45f27091da499688bb7a189e2a94a8c36892ff2f62f3fb68",
+      "bytes": 30431
+    },
+    {
+      "path": "src/.deps/tokenize.Po",
+      "sha256": "e6276ac3cd97838eb3c20214951d004c207518a91e83bfa1be604a79ed7b0c0f",
+      "bytes": 19655
+    },
+    {
+      "path": "src/.deps/trampolines.Po",
+      "sha256": "e978f6bb91aa0b1d92b7d0809bdf935050b29a39bef9a08291ce5745411b06d5",
+      "bytes": 29984
+    },
+    {
+      "path": "src/.deps/uniquepid.Po",
+      "sha256": "9cb6b546f28b9804daabe31a4fdc3429d2cf32a917248d0737f49d3790022d36",
+      "bytes": 30355
+    },
+    {
+      "path": "src/.deps/util_exec.Po",
+      "sha256": "31953f8173c46f92092e624c6caaf592aa280f548215040db2b5574891f3cb1a",
+      "bytes": 30620
+    },
+    {
+      "path": "src/.deps/util_init.Po",
+      "sha256": "752fdca1227b73574b3b65e2dc5aaabba88dd67d3479817dcb6021291e402113",
+      "bytes": 31710
+    },
+    {
+      "path": "src/.deps/util_misc.Po",
+      "sha256": "3eb32f263bfc0a8bf1c72d221b2b23bd9e32f6e2c925da7be41744d0317f6020",
+      "bytes": 30485
+    },
+    {
+      "path": "src/.deps/workerstate.Po",
+      "sha256": "eba72f234dfa3a04a072ffab0873927dbf0cc12ad983e2186c91bbc497053356",
+      "bytes": 19770
+    },
+    {
+      "path": "src/.deps/wrapperlock.Po",
+      "sha256": "c3d552e06645d9894553c46736585f40ff76166e162426d2b2f96080f981650a",
+      "bytes": 7695
+    },
+    {
+      "path": "src/.deps/wrappers.Po",
+      "sha256": "14e9d0428bba85c61094766e643a784ab76e90bb689bc2b5cab201cb0ac4dff2",
+      "bytes": 31635
+    },
+    {
+      "path": "src/.deps/writeckpt.Po",
+      "sha256": "db9477d80271319092b7b063a7a3a93a104841be0c13f024b5843143c851562b",
+      "bytes": 28101
+    },
+    {
+      "path": "src/alarm.o",
+      "sha256": "e23c0745716d92c82955b40253febe7061ed619c0dfed913f55f6230f68f0c42",
+      "bytes": 89032
+    },
+    {
+      "path": "src/ckptserializer.o",
+      "sha256": "9223251f5f8964e858f493b6cdd67fa29f0fbecdf80f95df1e3745c819795b57",
+      "bytes": 503640
+    },
+    {
+      "path": "src/coordinatorapi.o",
+      "sha256": "126bb0d2b6ca6004286564a13dde36d99b5877db75454096e497ef860ccd1992",
+      "bytes": 944152
+    },
+    {
+      "path": "src/dlwrappers.o",
+      "sha256": "986c356dec2563880e05c1f7b8dee3252223b2a4c22c6b83db12e18742cd8947",
+      "bytes": 90248
+    },
+    {
+      "path": "src/dmtcp_command.o",
+      "sha256": "39421bb01f1bcd1b80d1affc5bb28d531cc801d4da6e776967b1fdb1e8f41615",
+      "bytes": 208664
+    },
+    {
+      "path": "src/dmtcp_coordinator.o",
+      "sha256": "b949c9f9a00cd490372672a75080132064093c752f6f005b9f815308899714fb",
+      "bytes": 2966368
+    },
+    {
+      "path": "src/dmtcp_dlsym.o",
+      "sha256": "1f3f988568bea4e3e3e46e7efe608a8e04605d176b48f1bb9af78fafee1e7267",
+      "bytes": 146112
+    },
+    {
+      "path": "src/dmtcp_dlsym_wrappers.o",
+      "sha256": "299c6cf5ae32f942160e7e2bdc38bc45489d443254908c481dd28f76554ee61b",
+      "bytes": 41704
+    },
+    {
+      "path": "src/dmtcp_get_libc_offset.o",
+      "sha256": "206fbd685c4621770d5dae31e9e961a22cb2fc1a23e5a9ec7e0c161092b6a619",
+      "bytes": 14360
+    },
+    {
+      "path": "src/dmtcp_launch.o",
+      "sha256": "5cb845ed6838e73cd82673f7b82b17f0fe66d09a21d5325fb2de22907dd07dec",
+      "bytes": 498104
+    },
+    {
+      "path": "src/dmtcp_nocheckpoint.o",
+      "sha256": "ca28adaba3fa4c9c692f06d1fc9db3a25ce92fa4c990f01f1b62d8c8015c346b",
+      "bytes": 10936
+    },
+    {
+      "path": "src/dmtcp_restart.o",
+      "sha256": "260cdade3cde83adb967efefd1c867b38f6bbb092104b45e6845e2801e297c83",
+      "bytes": 174216
+    },
+    {
+      "path": "src/dmtcpmessagetypes.o",
+      "sha256": "2edcdc8f1cbbb7caa34dd44ad4dc70f5deb2ac321d885c474d2c940f668ded41",
+      "bytes": 171368
+    },
+    {
+      "path": "src/dmtcpnohijackstubs.o",
+      "sha256": "205b4eb9ad275ba810f837837546a304a58187c38f25ce578edd5fc3a5f303e3",
+      "bytes": 154968
+    },
+    {
+      "path": "src/dmtcpplugin.o",
+      "sha256": "dfa516dafecf2f0d0e332f1a98f9938d8b421856b36d05a291c49bfb18d5d17f",
+      "bytes": 387944
+    },
+    {
+      "path": "src/dmtcprestartinternal.o",
+      "sha256": "354a7838090f6e245f3465310ea9a74b482dda33a51f7881ffa08a457879f3f5",
+      "bytes": 1900144
+    },
+    {
+      "path": "src/dmtcpworker.o",
+      "sha256": "aa2e14887c69d172cff0651304ce81ffe60b086eb1b7208f0b6e7e6e3089df0a",
+      "bytes": 809872
+    },
+    {
+      "path": "src/execwrappers.o",
+      "sha256": "4b79b11993a95917409880441b3d38e1cd8c7eed1ed01e2eaedd8eaea4ba2a43",
+      "bytes": 1086880
+    },
+    {
+      "path": "src/glibcsystem.o",
+      "sha256": "96034baec4edef8d7877b31d79e67044e68c080782adbd2ee13b737507c4bfa5",
+      "bytes": 12576
+    },
+    {
+      "path": "src/jalibinterface.o",
+      "sha256": "6626f726c1e85a1a8d57c5451686e4292c9f9724e20792e140e4a8e47b8676a6",
+      "bytes": 111120
+    },
+    {
+      "path": "src/kvdb.o",
+      "sha256": "15c4aaef3ab0920921396692cea93ab15d64b8921e8f8e04fdc08028d9371f62",
+      "bytes": 445960
+    },
+    {
+      "path": "src/libdmtcpinternal.a",
+      "sha256": "70722eddc5d3c720e83f273e0f6333d87927f4e8a70d3f23cc0598b754436eb8",
+      "bytes": 7418260
+    },
+    {
+      "path": "src/libdmtcprestart.a",
+      "sha256": "ed40adcb10d3e74cfa124346a701b3760583cca159ed4d507f8d6f44e94b52e0",
+      "bytes": 13092242
+    },
+    {
+      "path": "src/libjalib.a",
+      "sha256": "64b94cdb372712d8ca4a5dc266c19b460210a84e09dd5f57e09da62e1cf06a20",
+      "bytes": 3561032
+    },
+    {
+      "path": "src/libnohijack.a",
+      "sha256": "513b1e9a6c9aaf0e81904f4bc3565cf1501823863996dcc3b5dede87ee8b0b2a",
+      "bytes": 206838
+    },
+    {
+      "path": "src/libsyscallsreal.a",
+      "sha256": "ac9ae9591b817a7d45b83aec66213143b6490f23bb114765450032f74c56ba04",
+      "bytes": 306620
+    },
+    {
+      "path": "src/lookup_service.o",
+      "sha256": "e31c758ce8e3363bfac59acc99ba9a20264c7e084f330181a9ea70eec75b039a",
+      "bytes": 1435040
+    },
+    {
+      "path": "src/Makefile",
+      "sha256": "7421bf02134dee15e2bbfce9f872249fb1ba850a5909cfaf683b715a0216cbf0",
+      "bytes": 56265
+    },
+    {
+      "path": "src/miscwrappers.o",
+      "sha256": "fd7fe2bfd286859c4b4c2dfee366a66b0fffcb8cdc218a22026499ef10e28a30",
+      "bytes": 143968
+    },
+    {
+      "path": "src/mtcp/libmtcprestart.a",
+      "sha256": "5ed9d65b3e196b7e9adedd149035c66bd6d5c28cbbdd85618075136f7e95962b",
+      "bytes": 172918
+    },
+    {
+      "path": "src/mtcp/main.o",
+      "sha256": "34d3500c9579910b6cad3d1ae93daa9f179f0f9a8cff33a49b6e1ebda2798a25",
+      "bytes": 10856
+    },
+    {
+      "path": "src/mtcp/Makefile",
+      "sha256": "e1c8b3f399ffd39e09b9dad5688a11eb0c2520f3a08e292ff3b9137965430de1",
+      "bytes": 5071
+    },
+    {
+      "path": "src/mtcp/mtcp_check_vdso.o",
+      "sha256": "bb08372d7189d3c386a571f6bb0fee30cdde4a26acc6989282bfe3abbb7a5f3f",
+      "bytes": 30136
+    },
+    {
+      "path": "src/mtcp/mtcp_restart.o",
+      "sha256": "5728817801c46c78a5186176d2109fa58838ca17bdc9b76fe8e0924f60e73056",
+      "bytes": 76336
+    },
+    {
+      "path": "src/mtcp/mtcp_util.o",
+      "sha256": "cf0dca08b770c3810bc9f37402df2f51d486bfae4a9a6338a91903057a19dd26",
+      "bytes": 51984
+    },
+    {
+      "path": "src/mtcp/stdlibfnc.o",
+      "sha256": "442bec672869d53d330a486591da376437c9802daf9d77a5e35d161ed996b650",
+      "bytes": 12984
+    },
+    {
+      "path": "src/mutex.o",
+      "sha256": "55da40179aeba195137642a2818b6c1b93cc3d03b811685d47dd1fbe8e4cabad",
+      "bytes": 128504
+    },
+    {
+      "path": "src/nosyscallsreal.o",
+      "sha256": "667d1206527011aa1f4ac7639048b658aa054b9bf31fad740c7067545202f59a",
+      "bytes": 50176
+    },
+    {
+      "path": "src/plugin/alloc/.deps/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/plugin/alloc/.deps/mallocwrappers.Po",
+      "sha256": "200a65b19cc3d333b0ffc6579ab123be14a3e6569dcd6c3801bea264c0caee78",
+      "bytes": 9867
+    },
+    {
+      "path": "src/plugin/alloc/.deps/mmapwrappers.Po",
+      "sha256": "8f15365b662e5ce24036b6029fabb707fe023c6548eafd8452a8add9720a2d4f",
+      "bytes": 8482
+    },
+    {
+      "path": "src/plugin/alloc/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/plugin/alloc/mallocwrappers.o",
+      "sha256": "bbc65b4042a3d2cbd0154290742c6359d250c725e945e0e392dadeebd366ffa0",
+      "bytes": 18856
+    },
+    {
+      "path": "src/plugin/alloc/mmapwrappers.o",
+      "sha256": "24168ce84f9f2cb09892a7b9d4ae6ff58105b747c6b313d222e8d03a01b0980f",
+      "bytes": 3096
+    },
+    {
+      "path": "src/plugin/dl/.deps/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/plugin/dl/.deps/dlwrappers.Po",
+      "sha256": "cbfd38625872797697b3497216df34f2231987db712e63626317ac4213644deb",
+      "bytes": 23765
+    },
+    {
+      "path": "src/plugin/dl/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/plugin/dl/dlwrappers.o",
+      "sha256": "b28da086095c661f0dc05daf9b7935923916f4a5fb1de4d20ea4ddc73a00059d",
+      "bytes": 431104
+    },
+    {
+      "path": "src/plugin/ipc/.deps/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/plugin/ipc/.deps/i-connection.Po",
+      "sha256": "a89f6015b87fdd9d9dd2331510c15151d0bdecb90d2e49826d509bec5e6227f1",
+      "bytes": 27323
+    },
+    {
+      "path": "src/plugin/ipc/.deps/i-connectionidentifier.Po",
+      "sha256": "6389ed333c09d96636a55607b7fe27d9d077e78e0e4c71d3ea1688a2159e36cc",
+      "bytes": 25617
+    },
+    {
+      "path": "src/plugin/ipc/.deps/i-connectionlist.Po",
+      "sha256": "d0c1eb0d2a99991e9cb4e81594761082fd5822ef99989c133d17927df532867a",
+      "bytes": 28395
+    },
+    {
+      "path": "src/plugin/ipc/.deps/i-ipc.Po",
+      "sha256": "9d329033fcfd2c12e889d60194cb885a45fedbb35fe0cfd5af4483121a0017ea",
+      "bytes": 28333
+    },
+    {
+      "path": "src/plugin/ipc/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/plugin/ipc/event/.deps/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/plugin/ipc/event/.deps/i-eventconnection.Po",
+      "sha256": "3aaf9acacee3400ba8c502bd5bc45460382f8ee9540709c924a462e6d6edeea8",
+      "bytes": 30883
+    },
+    {
+      "path": "src/plugin/ipc/event/.deps/i-eventconnlist.Po",
+      "sha256": "0f15dcdccfe2d81be0f267aca819dae05b86b132fb8d1696e929f3e7df0c7a98",
+      "bytes": 28020
+    },
+    {
+      "path": "src/plugin/ipc/event/.deps/i-eventwrappers.Po",
+      "sha256": "d8a5ff7747e69fe30c0c8d7adf2c9f557f16730dd18864f5bb65f3133986dd54",
+      "bytes": 27835
+    },
+    {
+      "path": "src/plugin/ipc/event/.deps/i-util_descriptor.Po",
+      "sha256": "a064c96d2843ab16a8c5017fd9b437c576826d7ce8c9a6e4cedd5e114be97d7d",
+      "bytes": 23144
+    },
+    {
+      "path": "src/plugin/ipc/event/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/plugin/ipc/event/i-eventconnection.o",
+      "sha256": "2958d86eb0de8fc7f1dfe1e3c96e903d89b39efaf2cb65478518f345982f86d7",
+      "bytes": 845776
+    },
+    {
+      "path": "src/plugin/ipc/event/i-eventconnlist.o",
+      "sha256": "5ae9d499de872ed436d896744cb211bfd3d1e2f83522cb979f31a7eafe10800f",
+      "bytes": 464304
+    },
+    {
+      "path": "src/plugin/ipc/event/i-eventwrappers.o",
+      "sha256": "693172be1323c1070e3c9cdffb4b4a441a4eff88803008aeef2e7b4bfd178d1b",
+      "bytes": 276704
+    },
+    {
+      "path": "src/plugin/ipc/event/i-util_descriptor.o",
+      "sha256": "5bc20d0e3f88b844b2547b6fb23c7fda63070345cc8c220299f2f489c4e17385",
+      "bytes": 121776
+    },
+    {
+      "path": "src/plugin/ipc/file/.deps/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/plugin/ipc/file/.deps/i-fileconnection.Po",
+      "sha256": "6052face1311652f87474a7b0c9d37733d39956eba27ac7640baf0e191565747",
+      "bytes": 30498
+    },
+    {
+      "path": "src/plugin/ipc/file/.deps/i-fileconnlist.Po",
+      "sha256": "3da91a3d067270f85d0168175c4adc1512c98aa4aa783b95763c18e69d0e3b5b",
+      "bytes": 29547
+    },
+    {
+      "path": "src/plugin/ipc/file/.deps/i-filewrappers.Po",
+      "sha256": "4db46861c6335d27d4922da8d5d6e4581992dfd442ce954cb19f236dac8c2cd8",
+      "bytes": 30195
+    },
+    {
+      "path": "src/plugin/ipc/file/.deps/i-openwrappers.Po",
+      "sha256": "ad5d15b1334463576a265fa189312ca65131ac67b7c048c1db8f6207980dbf95",
+      "bytes": 111
+    },
+    {
+      "path": "src/plugin/ipc/file/.deps/i-posixipcwrappers.Po",
+      "sha256": "260e76017d5849d607b0158c2b88c6d456efadd2cf26b8c3e5a5e756e18296ad",
+      "bytes": 27814
+    },
+    {
+      "path": "src/plugin/ipc/file/.deps/i-ptyconnection.Po",
+      "sha256": "d73a41e8c8783dc90381d8c49c15afde197d8e4449c706dc8d5e0f34a0f5f4cf",
+      "bytes": 29965
+    },
+    {
+      "path": "src/plugin/ipc/file/.deps/i-ptyconnlist.Po",
+      "sha256": "92a8a4c61546c0179a4a7909e05006764f4680e8e9d96e44633d0f22b52d1d34",
+      "bytes": 28730
+    },
+    {
+      "path": "src/plugin/ipc/file/.deps/i-ptywrappers.Po",
+      "sha256": "d0e1461970a120bd220aeb716f2f0ac0abbc78ecf68740ed131ab765a29c1b2b",
+      "bytes": 109
+    },
+    {
+      "path": "src/plugin/ipc/file/.dirstamp",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "src/plugin/ipc/file/i-fileconnection.o",
+      "sha256": "47df71c4c70807c3428aafdea8305646f00f1a8a4cba89905995973c36355071",
+      "bytes": 2132896
+    },
+    {
+      "path": "src/plugin/ipc/file/i-fileconnlist.o",
+      "sha256": "d4ab98610d3b129d3e70844e9092cc00ffc15bf91985b953b0cdccddc147dd4b",
+      "bytes": 1465192
+    },
+    {
+      "path": "src/plugin/ipc/file/i-filewrappers.o",
+      "sha256": "435f1fb94727351fa3f376b9cea9a81232585813bcb8a6e2910060a52f2f3e24",
+      "bytes": 31216
+    },
+    {
+      "path": "src/plugin/ipc/file/i-openwrappers.o",
+      "sha256": "7c43467acbeb056646008a37e8b0a57faa9887dc80181472204a7f3bf35625bd",
+      "bytes": 1216
+    },
+    {
+      "path": "src/plugin/ipc/file/i-posixipcwrappers.o",
+      "sha256": "6acbcc4d29ab703aeca060ba19ee970166ee51e33707827a4c9c395795189034",
+      "bytes": 283480
+    },
+    {
+      "path": "src/plugin/ipc/file/i-ptyconnection.o",
+      "sha256": "afdeb5f8a68f99eaa81d3a90c3731bbc7e7a46ac6c3828fa174d75e109ac2fef",
+      "bytes": 752472
+    },
+    {
+      "path": "src/plugin/ipc/file/i-ptyconnlist.o",
+      "sha256": "27952fccabe4846509514db65c72428153ba8a29452a4fe5fd021b9ca1c6d2ef",
+      "bytes": 601520
+    },
+    {
+      "path": "src/plugin/ipc/file/i-ptywrappers.o",
+      "sha256": "f2cf547d2946dc9a587f325c94a8ed8150338a6de8d148099ad1fd70d52e55bb",
+      "bytes": 1216
+    },
+    {
+      "path": "src/plugin/ipc/i-connection.o",
+      "sha256": "bd0b4f6429e19081365e0a3532120ca4dfe95c1370903187ed36175eeba704a1",
+      "bytes": 503712
+    },
+    {
+      "path": "src/plugin/ipc/i-connectionidentifier.o",
+      "sha256": "11b3b12b14ce0c82dbd46b39b0c72f22789712835d22abcfed4a67de4a6509d4",
+      "bytes": 429032
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "a5f1b540d86bd4d10478a3670317df05713ce75d312919e5607c514f39c3ac01",
+  "body_preserved": true
+}

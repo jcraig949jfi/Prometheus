@@ -1,0 +1,141 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "hashicorp-memberlist-0.5.4",
+  "canonical_name": "hashicorp/memberlist 0.5.4 -- SWIM-style gossip membership and failure detection (the machinery under Consul, Nomad, Serf)",
+  "aliases": [
+    "memberlist",
+    "SWIM"
+  ],
+  "lineage": "Das, Gupta, Motivala's SWIM (2002): scalable weakly-consistent membership by randomized probing (ping, ping-req through k peers, suspect, dead) with gossip dissemination -- the asynchronous, timeout-based failure detector that Serf (2013), Consul and Nomad run on. Lifeguard extensions (2018). Distinct assumptions from Raft: no leader, no log, eventual membership agreement, suspicion timeouts instead of quorum.",
+  "domain": [
+    "distributed-systems",
+    "failure-detector",
+    "gossip",
+    "membership",
+    "heartbeat-timeout"
+  ],
+  "era": "2002 (SWIM); 2013- (memberlist)",
+  "version": "v0.5.4 (2024)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/hashicorp/memberlist/archive/refs/tags/v0.5.4.tar.gz",
+        "filename": "memberlist-0.5.4.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/hashicorp/memberlist",
+    "tag": "v0.5.4"
+  },
+  "hashes": {
+    "tree_sha256": "8295c85b810a8f15ebf9729c85b19d4b7ad02b91de6c731cdca5284c78e3d4a6",
+    "n_files": 57,
+    "bytes": 553356,
+    "artifacts": [
+      {
+        "filename": "memberlist-0.5.4.tar.gz",
+        "sha256": "002d8bce3d66ec2035954905b0f197683c76eb1839bfbd47d0d0106d9a6ce2f5",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\hashicorp-memberlist-0.5.4",
+    "hash_list": "techne/fossils/specimens/hashicorp-memberlist-0.5.4/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MPL-2.0",
+    "status": "weak copyleft",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "Go"
+  ],
+  "build_system": "go test",
+  "compiler_or_interpreter": "go 1.22 (docker golang:1.22-bookworm; modules fetched at run time, recorded)",
+  "dependencies": [
+    "Go modules (go.sum pinned in the tree)"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "memberlist.Create(config); Join; the probe loop (state.go: probeNode, suspect, dead); go test -run 'TestMemberlist_(Probe|Suspect|Gossip)'"
+  ],
+  "example": {
+    "command": "go test -run 'TestMemberlist_ProbeNode|TestMemberlist_SuspectNode|TestMemberlist_Gossip' -v",
+    "input": "in-process members over loopback with deliberately unreachable peers",
+    "output": "the suspect -> dead transitions the tests assert (the ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "golang:1.22-bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Das, Gupta, Motivala, SWIM: Scalable Weakly-consistent Infection-style Process Group Membership Protocol, DSN 2002",
+    "Dadgar, Phanishayee, Lifeguard: Local Health Awareness for More Accurate Failure Detection, 2018"
+  ],
+  "human_capability_summary": {
+    "built_to": "let every node in a cluster learn who is alive and who has died, without a coordinator, tolerating message loss and slow nodes",
+    "pressure": "asynchronous network: lost probes, slow peers, partitions; false positives cost as much as misses",
+    "success_means": "a dead node is declared dead within the suspicion timeout; a slow-but-alive node is refuted via indirect probes"
+  },
+  "known_human_problem_solved": "scalable failure detection and membership",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "message loss, asynchrony, scale",
+  "human_failure_condition": "a partition splits membership; a live node is wrongly declared dead and evicted",
+  "behavioral_entry_point": "the tests' unreachable peers and timeouts; shrink ProbeTimeout / SuspicionMult and watch false positives",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Das, Gupta, Motivala 2002 (SWIM)",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "willemt-raft",
+      "note": "two answers to 'who is alive': gossip suspicion vs leader heartbeats"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase3",
+    "failure_detector",
+    "asynchronous",
+    "timeout_based"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/hashicorp-memberlist-0.5.4/receipts/run-hashicorp-memberlist-0.5.4-20260913T055000Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/hashicorp-memberlist-0.5.4/receipts/run-hashicorp-memberlist-0.5.4-20260913T055310Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\hashicorp-memberlist-0.5.4 ; tracked techne/fossils/specimens/hashicorp-memberlist-0.5.4",
+    "where_it_came_from": "https://github.com/hashicorp/memberlist/archive/refs/tags/v0.5.4.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run hashicorp-memberlist-0.5.4",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/hashicorp-memberlist-0.5.4/receipts/run-hashicorp-memberlist-0.5.4-20260913T055310Z.json",
+    "what_humans_used_it_for": "let every node in a cluster learn who is alive and who has died, without a coordinator, tolerating message loss and slow nodes"
+  },
+  "seat": "Techne"
+}

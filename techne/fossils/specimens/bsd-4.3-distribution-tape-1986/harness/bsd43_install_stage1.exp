@@ -1,0 +1,64 @@
+#!/usr/bin/expect -f
+# Batch 06 / TECHNE-69, 4.3BSD stage 1: boot the miniroot (attached as a raw RA81 disk on rq0),
+# restore the root dump from tape onto rq1 with the release's own `xtr` script.
+# usage: bsd43_install_stage1.exp <miniroot-raw> <target-disk> <tap> <boot42>
+# Follows the procedure documented at gunkies.org/wiki/Installing_4.3_BSD_on_SIMH (Neozeed).
+set timeout 120
+lassign $argv miniroot dsk tap boot42
+log_user 1
+# SIMH is configured from a generated .ini whose last line is `run 2`, so expect only ever
+# talks to the guest console (interactive sim> handshakes raced with the libedit prompt).
+set ini [open "simh_run.ini" w]
+puts $ini "set cpu 8M"
+puts $ini "set rq0 ra81"
+puts $ini "attach -q rq0 $miniroot"
+puts $ini "set rq1 ra81"
+puts $ini "attach -q rq1 $dsk"
+puts $ini "set rq2 dis"
+puts $ini "set rq3 dis"
+puts $ini "set rp dis"
+puts $ini "set lpt dis"
+puts $ini "set rl dis"
+puts $ini "set tq dis"
+puts $ini "set tu dis"
+puts $ini "attach -q ts0 $tap"
+puts $ini "set tti 7b"
+puts $ini "set tto 7b"
+puts $ini "load -o $boot42 0"
+puts $ini "d r10 9"
+puts $ini "d r11 0"
+puts $ini "run 2"
+close $ini
+spawn vax780 simh_run.ini
+expect {
+    -re "Boot\[\r\n\]+: " { send "ra(0,0)vmunix\r" }
+    timeout { puts "\nSTAGE1: no Boot prompt"; exit 2 }
+}
+expect {
+    -re "4.3 BSD UNIX #\[0-9\]+: .*\r\n" { puts "\nSTAGE1: kernel banner seen" }
+    timeout { puts "\nSTAGE1: kernel did not announce itself"; exit 3 }
+}
+set timeout 300
+expect {
+    -re "# $" { puts "\nSTAGE1: miniroot single-user shell" }
+    timeout { puts "\nSTAGE1: no miniroot shell"; exit 4 }
+}
+send "cd /dev\r"; expect "# "
+send "./MAKEDEV ra1\r"; expect "# "
+send "cd /\r"; expect "# "
+set timeout 2400
+send "disk=ra1 type=ra81 tape=ts xtr\r"
+expect {
+    "Root filesystem extracted" { puts "\nSTAGE1: root filesystem extracted" }
+    -re "(?i)error|cannot|not found.*xtr" { puts "\nSTAGE1: xtr reported a problem (continuing to read)"; exp_continue }
+    timeout { puts "\nSTAGE1: xtr did not finish"; exit 5 }
+}
+expect "# "
+set timeout 120
+send "sync\r"; expect "# "
+send "sync\r"; expect "# "
+send "sync\r"; expect "# "
+send "\005"
+expect "sim>" { send "exit\r" }
+expect eof
+puts "\nSTAGE1: done"

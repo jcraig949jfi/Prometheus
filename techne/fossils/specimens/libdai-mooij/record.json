@@ -1,0 +1,146 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "libdai-mooij",
+  "canonical_name": "libDAI (0.3 line, 2012 mirror) -- a C++ library of approximate inference on factor graphs: (loopy) belief propagation, junction tree, mean field, TreeEP, Gibbs, and more (Joris Mooij)",
+  "aliases": [
+    "libDAI"
+  ],
+  "lineage": "Pearl's belief propagation (1982/1988) and its loopy generalisation, exact junction-tree inference, and a dozen approximate methods, in one reference library (JMLR MLOSS 2010) with the standard examples (sprinkler network) and unit tests. The canonical open BELIEF-PROPAGATION implementation; the vault's ldpc-codes does BP only for decoding.",
+  "domain": [
+    "inference",
+    "belief-propagation",
+    "factor-graphs",
+    "graphical-models",
+    "approximate-inference"
+  ],
+  "era": "2006-2015 (0.3.2 = 2015)",
+  "version": "github.com/dbtsai/libDAI master (a 2012 mirror of the libdai.org 0.3 line; exact version from ChangeLog in the tree; commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/dbtsai/libDAI",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "original": "libdai.org (Joris Mooij), 0.3 line",
+    "mirror": "github.com/dbtsai/libDAI"
+  },
+  "hashes": {
+    "tree_sha256": "fd4b4581b1f3a3ed9ee757fc0e18e03c1a6280b0d51af2971335c249a40e1b96",
+    "n_files": 176,
+    "bytes": 1728515,
+    "artifacts": [
+      {
+        "filename": "https://github.com/dbtsai/libDAI",
+        "sha256": null,
+        "commit": "6df66a8ce7eb6f669bae933ab6ec35bbba56182f"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\libdai-mooij",
+    "hash_list": "techne/fossils/specimens/libdai-mooij/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-2-Clause",
+    "status": "permissive (relicensed from GPL at 0.3)",
+    "evidence": "COPYING / README"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C++"
+  ],
+  "build_system": "make (Makefile.LINUX -> Makefile.conf; boost, gmp)",
+  "compiler_or_interpreter": "g++ 12 (docker bookworm) with libboost-dev, libgmp-dev, libgmpxx (apt at run time, recorded)",
+  "dependencies": [
+    "boost (program_options, test)",
+    "gmp/gmpxx"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "examples/example_sprinkler.cpp (exact + BP marginals on the sprinkler network); tests/testdai; examples/example.cpp with a .fg factor graph"
+  ],
+  "example": {
+    "command": "make examples; ./examples/example_sprinkler",
+    "input": "the sprinkler Bayesian network",
+    "output": "P(Sprinkler|WetGrass) etc. by exact inference and by BP -- BP equals exact on this tree (the ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Mooij, libDAI: A Free and Open Source C++ Library for Discrete Approximate Inference in Graphical Models, JMLR 11, 2010",
+    "Pearl, Probabilistic Reasoning in Intelligent Systems, 1988"
+  ],
+  "human_capability_summary": {
+    "built_to": "compute marginals and MAP states on graphical models by passing messages along factor-graph edges, exactly on trees and approximately on loopy graphs",
+    "pressure": "exact inference is exponential on loopy graphs; loopy BP may not converge",
+    "success_means": "on a tree, BP marginals equal the exact ones; on loopy graphs, convergence and accuracy are reported"
+  },
+  "known_human_problem_solved": "probabilistic inference on graphical models",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "combinatorial state spaces, loops",
+  "human_failure_condition": "loopy BP oscillates or converges to wrong marginals",
+  "behavioral_entry_point": "run BP on a loopy .fg (tests/ ships several) with different damping/update schedules and record convergence",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Pearl 1982/1988",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "ldpc-codes-neal-2001",
+      "note": "BP as a decoder vs BP as a general inference engine"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase5",
+    "belief_propagation",
+    "inference"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/libdai-mooij/receipts/run-libdai-mooij-20260913T060317Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/libdai-mooij/receipts/run-libdai-mooij-20260913T060503Z.json",
+      "ok": false,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/libdai-mooij/receipts/run-libdai-mooij-20260913T060747Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\libdai-mooij ; tracked techne/fossils/specimens/libdai-mooij",
+    "where_it_came_from": "https://github.com/dbtsai/libDAI ; HISTORICAL_ARCHIVE_MIRROR @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run libdai-mooij",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/libdai-mooij/receipts/run-libdai-mooij-20260913T060747Z.json",
+    "what_humans_used_it_for": "compute marginals and MAP states on graphical models by passing messages along factor-graph edges, exactly on trees and approximately on loopy graphs"
+  },
+  "seat": "Techne"
+}

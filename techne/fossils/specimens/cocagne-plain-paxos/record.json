@@ -1,0 +1,143 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "cocagne-plain-paxos",
+  "canonical_name": "Plain Paxos (Tom Cocagne) -- the essential Paxos roles (Proposer, Acceptor, Learner) and a practical variant with heartbeats and leadership, in Python, with its unit tests",
+  "aliases": [
+    "plain paxos",
+    "essential paxos",
+    "cocagne/paxos"
+  ],
+  "lineage": "Lamport's Paxos (1989/1998) -- quorum-based, asynchronous, single-decree consensus -- written as small readable classes (essential.py) plus a 'practical' layer (heartbeat-driven leader acquisition, message retransmission, durable state) and a 'functional' variant, each with tests. NOT Raft: no log, no explicit leader term, safety from quorum intersection alone. Widely read as the reference Python Paxos (the Java twin lives in src/).",
+  "domain": [
+    "distributed-systems",
+    "consensus",
+    "quorum",
+    "leader-election",
+    "heartbeat-timeout"
+  ],
+  "era": "1989 (algorithm); 2012- (this code)",
+  "version": "github.com/cocagne/paxos master as of 2026-09-13 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/cocagne/paxos",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/cocagne/paxos"
+  },
+  "hashes": {
+    "tree_sha256": "4d9b7e3da558423a5befb690dc8dec13a695d922f17efd8414067e3a1f6a3905",
+    "n_files": 38,
+    "bytes": 128148,
+    "artifacts": [
+      {
+        "filename": "https://github.com/cocagne/paxos",
+        "sha256": null,
+        "commit": "3bceac02f6693a2c6ea1bfc3a5e70c4ae45fccb3"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\cocagne-plain-paxos",
+    "hash_list": "techne/fossils/specimens/cocagne-plain-paxos/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "Python",
+    "Java"
+  ],
+  "build_system": "none (python -m unittest discover test)",
+  "compiler_or_interpreter": "python 3.11 (docker python:3.11-slim); tests written for Python 2/3",
+  "dependencies": [
+    "none"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "paxos/essential.py (Proposer/Acceptor/Learner), paxos/practical.py (Node, heartbeat leader), paxos/functional.py; test/test_essential.py etc."
+  ],
+  "example": {
+    "command": "python -m unittest discover -s test -p 'test_*.py' -v",
+    "input": "the shipped message-passing tests (prepare/promise/accept/accepted, contention, leader loss)",
+    "output": "the assertions (the ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Lamport, Paxos Made Simple, 2001",
+    "README.md (in the tree)"
+  ],
+  "human_capability_summary": {
+    "built_to": "let a majority of unreliable nodes agree on one value despite crashes and message loss, and keep agreeing when a leader dies",
+    "pressure": "asynchrony, crash failures, duelling proposers (livelock is Paxos's known liveness hazard, which the practical layer's leader heartbeats exist to suppress)",
+    "success_means": "no two learners learn different values; a value is learned once a quorum is available"
+  },
+  "known_human_problem_solved": "fault-tolerant consensus",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "partial failure, message loss, competing proposers",
+  "human_failure_condition": "duelling proposers never decide (liveness), or -- if the quorum rule is broken -- two values decided (safety)",
+  "behavioral_entry_point": "the tests' contention cases; drop acceptor replies and watch proposal numbers climb",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "willemt-raft",
+      "note": "Raft (2014) is a redesign of Paxos for understandability; this is the ancestor family"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase3",
+    "consensus",
+    "quorum_based",
+    "leader_election"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/cocagne-plain-paxos/receipts/run-cocagne-plain-paxos-20260913T054938Z.json",
+      "ok": false,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/cocagne-plain-paxos/receipts/run-cocagne-plain-paxos-20260913T055207Z.json",
+      "ok": false,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/cocagne-plain-paxos/receipts/run-cocagne-plain-paxos-20260913T055447Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\cocagne-plain-paxos ; tracked techne/fossils/specimens/cocagne-plain-paxos",
+    "where_it_came_from": "https://github.com/cocagne/paxos ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run cocagne-plain-paxos",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/cocagne-plain-paxos/receipts/run-cocagne-plain-paxos-20260913T055447Z.json",
+    "what_humans_used_it_for": "let a majority of unreliable nodes agree on one value despite crashes and message loss, and keep agreeing when a leader dies"
+  },
+  "seat": "Techne"
+}

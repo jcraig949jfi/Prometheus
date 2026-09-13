@@ -1,0 +1,136 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "valgrind-helgrind-fixtures-3.19",
+  "canonical_name": "Valgrind 3.19.0 helgrind regression fixtures: tc01_simple_race, tc05_simple_race, tc09_bad_unlock, tc13_laog1 (lock-order inversion), tc19_shadowmem -- real pthread programs with their expected detector output",
+  "aliases": [
+    "helgrind tests",
+    "tc01_simple_race.c",
+    "tc13_laog1.c"
+  ],
+  "lineage": "Valgrind's thread-error detector Helgrind (Nethercote/Seward, 2007-) ships regression programs that each commit a specific concurrency error -- unsynchronised access (a RACE), unlocking a lock the thread does not hold, acquiring locks in inconsistent order (the classic DEADLOCK precursor, reported via the lock-order acquisition graph) -- together with the .stderr.exp files the detector must reproduce. Preserved as the failing programs plus the expected traces; run under the detector.",
+  "domain": [
+    "concurrency",
+    "race",
+    "deadlock",
+    "lock-order",
+    "failure",
+    "regression-fixture",
+    "pthreads"
+  ],
+  "era": "2007- (fixtures; 3.19.0 = 2022)",
+  "version": "valgrind-3.19.0.tar.bz2 (sourceware), helgrind/tests/",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://sourceware.org/pub/valgrind/valgrind-3.19.0.tar.bz2",
+        "filename": "valgrind-3.19.0.tar.bz2"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "archive": "sourceware.org/pub/valgrind",
+    "file": "valgrind-3.19.0.tar.bz2",
+    "path": "helgrind/tests"
+  },
+  "hashes": {
+    "tree_sha256": "7b0af7d84bd262752ab521f125dfc6f3310488b08e69c8eda0f1c3cfb2b95c4d",
+    "n_files": 6517,
+    "bytes": 170025767,
+    "artifacts": [
+      {
+        "filename": "valgrind-3.19.0.tar.bz2",
+        "sha256": "dd5e34486f1a483ff7be7300cc16b4d6b24690987877c3278d797534d6738f02",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\valgrind-helgrind-fixtures-3.19",
+    "hash_list": "techne/fossils/specimens/valgrind-helgrind-fixtures-3.19/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-2.0",
+    "status": "copyleft",
+    "evidence": "COPYING"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C (pthreads)"
+  ],
+  "build_system": "gcc -pthread per fixture; run under the distribution's valgrind --tool=helgrind",
+  "compiler_or_interpreter": "gcc 12 + valgrind 3.19 (Debian bookworm, apt)",
+  "dependencies": [
+    "valgrind (the detector; Debian's 3.19.0-1 matches the fixture version)",
+    "pthreads"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "helgrind/tests/tc01_simple_race.c (race), tc05_simple_race.c, tc09_bad_unlock.c, tc13_laog1.c (lock order), tc19_shadowmem.c; *.stderr.exp"
+  ],
+  "example": {
+    "command": "gcc -pthread tc13_laog1.c && valgrind --tool=helgrind ./a.out",
+    "input": "the fixture",
+    "output": "Helgrind's report ('Thread #N: lock order ... violated' / 'Possible data race'); compared with the shipped .stderr.exp (the ORACLE, modulo addresses)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Valgrind manual, Helgrind chapter",
+    "helgrind/tests/*.stderr.exp"
+  ],
+  "human_capability_summary": {
+    "built_to": "make each class of thread error reproducible so the detector's report for it never regresses",
+    "pressure": "races and lock-order bugs are timing-dependent and invisible in normal runs; a detector must find them from one execution",
+    "success_means": "helgrind reports the planted error in the planted place, matching the expected trace"
+  },
+  "known_human_problem_solved": "detection of data races and lock-order deadlocks in pthread programs",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "nondeterministic scheduling, shared memory without discipline",
+  "human_failure_condition": "silent corruption (race) or an eventual deadlock (lock order) in production, not in test",
+  "behavioral_entry_point": "run a fixture natively (usually 'works') and under helgrind (the error is reported): the same binary, two observers",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "go-runtime-deadlock-fixtures-1.22",
+      "note": "two runtimes' regression corpora for concurrency failure"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase2",
+    "race",
+    "deadlock",
+    "executes_concurrency",
+    "regression_fixture"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/valgrind-helgrind-fixtures-3.19/receipts/run-valgrind-helgrind-fixtures-3.19-20260913T054408Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\valgrind-helgrind-fixtures-3.19 ; tracked techne/fossils/specimens/valgrind-helgrind-fixtures-3.19",
+    "where_it_came_from": "https://sourceware.org/pub/valgrind/valgrind-3.19.0.tar.bz2 ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run valgrind-helgrind-fixtures-3.19",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/valgrind-helgrind-fixtures-3.19/receipts/run-valgrind-helgrind-fixtures-3.19-20260913T054408Z.json",
+    "what_humans_used_it_for": "make each class of thread error reproducible so the detector's report for it never regresses"
+  },
+  "seat": "Techne"
+}
