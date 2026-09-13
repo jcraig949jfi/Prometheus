@@ -98,7 +98,7 @@ def ridge(Phi, y, lam=1.0):
     A = Phi.T @ Phi + lam * np.eye(Phi.shape[1]); return np.linalg.solve(A, Phi.T @ y)
 
 
-def run(pop=120, generations=30, n_trees=24, fit_rows=120_000, per_set=300, wall_limit_s=1500, seed=0):
+def run(pop=120, generations=30, n_trees=24, fit_rows=100_000, per_set=300, wall_limit_s=1500, seed=0):
     t0 = time.perf_counter(); ctx = Context(per_set=per_set); U, M = ctx.U, ctx.M; D = U["D"]; F = U["F"]; tg = np.array(U["targets"])
     sr, trole, pr, live = M["state_role"], M["target_role"], M["pair_role"], M["live"]; rng = random.Random(seed); nrng = np.random.default_rng(seed)
     fit = live & (sr == 0)[:, None] & (trole == 0)[None, :] & (pr == 0); S, J = np.nonzero(fit); sel = nrng.choice(len(S), fit_rows, replace=False); S, J = S[sel], J[sel]
@@ -107,12 +107,17 @@ def run(pop=120, generations=30, n_trees=24, fit_rows=120_000, per_set=300, wall
     X = terminals(F, S, tg[J]); Xv = terminals(F, Sv, tg[Jv])
     # evolve single trees by correlation with the residual of a growing ridge ensemble (forward stagewise GP)
     trees, hist = [], []
+    ckpt = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "results", "ac01d", "families", "C6_checkpoint.pkl")
+    if os.path.exists(ckpt):  # resume after a host memory kill: identical seed stream is NOT restored, so the run is a continuation
+        import pickle
+        with open(ckpt, "rb") as f: trees, hist = pickle.load(f)
+        print(json.dumps({"resumed_from_checkpoint": len(trees)}), flush=True)
     def ensemble_pred(ts, Xd):
         if not ts: return np.zeros(len(next(iter(Xd.values()))), dtype=np.float32), None
         Phi = np.stack([evaluate(t, Xd) for t in ts] + [np.ones(len(next(iter(Xd.values()))), dtype=np.float32)], axis=1)
         return Phi, None
     w = None
-    for stage in range(n_trees):
+    for stage in range(len(trees), n_trees):
         if time.perf_counter() - t0 > wall_limit_s: break
         Phi_cur = np.stack([evaluate(t, X) for t in trees] + [np.ones(len(y), dtype=np.float32)], axis=1)
         w = ridge(Phi_cur, y); resid = y - Phi_cur @ w
@@ -135,6 +140,8 @@ def run(pop=120, generations=30, n_trees=24, fit_rows=120_000, per_set=300, wall
         rmse_fit = float(np.sqrt(((Phi_cur @ w - y) ** 2).mean())); rmse_val = float(np.sqrt(((Phi_v @ w - yv) ** 2).mean()))
         hist.append({"stage": stage, "tree": to_str(best), "rmse_fit": rmse_fit, "rmse_val": rmse_val, "t": round(time.perf_counter() - t0)})
         print(json.dumps(hist[-1]), flush=True)
+        import pickle
+        with open(ckpt, "wb") as f: pickle.dump((trees, hist), f)
     # select the ensemble size by VAL
     best_k = min(range(1, len(trees) + 1), key=lambda k: hist[k - 1]["rmse_val"]); trees = trees[:best_k]
     Phi_cur = np.stack([evaluate(t, X) for t in trees] + [np.ones(len(y), dtype=np.float32)], axis=1); w = ridge(Phi_cur, y)
