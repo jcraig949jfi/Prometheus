@@ -35,7 +35,7 @@ class CPRep:
         return G.sum(axis=1) + self.mean
 
 
-def fit_cp(ctx: Context, rank: int, sweeps: int = 25, lam: float = 1e-2, seed: int = 0, max_obs: int = 1_500_000):
+def fit_cp(ctx: Context, rank: int, sweeps: int = 25, lam: float = 1e-4, seed: int = 0, max_obs: int = 1_500_000):
     U, M = ctx.U, ctx.M; D = U["D"]; F = U["F"]; tg = np.array(U["targets"])
     sr, trole, pr, live = M["state_role"], M["target_role"], M["pair_role"], M["live"]
     fit = live & (sr == 0)[:, None] & (trole == 0)[None, :] & (pr == 0)
@@ -50,7 +50,10 @@ def fit_cp(ctx: Context, rank: int, sweeps: int = 25, lam: float = 1e-2, seed: i
     if len(Sv) > 200000: sel = rng.choice(len(Sv), 200000, replace=False); Sv, Jv = Sv[sel], Jv[sel]
     idxv = digit_index(F, Sv, tg[Jv]).astype(np.int16); yv = D[Sv, Jv].astype(np.float32) - mean
     sizes = [7] * 7 + [2] * 7
-    A = [rng.standard_normal((sz, rank)).astype(np.float32) * 0.3 for sz in sizes]
+    # 14-mode products vanish for small factors (0.3**13 ~ 1e-7), which lets the ridge term dominate and collapses the
+    # model to the mean (observed in the first run: R^2 = 0 at every rank).  Initialise near 1 so products are O(1).
+    A = [(1.0 + 0.2 * rng.standard_normal((sz, rank))).astype(np.float32) for sz in sizes]
+    A[0] *= 0.1  # scale lives in one mode
     def predict(idx_):
         G = np.ones((len(idx_), rank), dtype=np.float32)
         for m in range(14): G *= A[m][idx_[:, m]]

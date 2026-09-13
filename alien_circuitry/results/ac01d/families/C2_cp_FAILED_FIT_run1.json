@@ -1,0 +1,852 @@
+{
+ "family": "C2 CP over digit modes (masked ALS)",
+ "ranks": {
+  "4": {
+   "name": "C2-CP-r4",
+   "serialized_bytes": 268,
+   "CR": 3957.820895522388,
+   "sets": {
+    "HELD_PAIRS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 641.36,
+      "mean_states": 285.4,
+      "mean_excess": 7.51,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -10.870272041953458,
+      "HC_D_transitions_CI95": [
+       -11.872264738578032,
+       -9.939465340129123
+      ],
+      "HC_D_states": -9.976569949598147,
+      "HC_D_states_CI95": [
+       -10.941106948237568,
+       -9.129965419155244
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 116.07333333333334,
+      "mean_states": 51.78,
+      "mean_excess": 33.596666666666664,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.5401507702392658,
+      "HC_D_transitions_CI95": [
+       -0.6223082600824525,
+       -0.46842893847268596
+      ],
+      "HC_D_states": -0.4293692957362758,
+      "HC_D_states_CI95": [
+       -0.5102623246717869,
+       -0.3624749260204371
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -5.325255779897731e-06,
+      "exact": 0.12955666666666665,
+      "within_1": 0.3797333333333333,
+      "MAE": 2.3291302559153237,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 37.75666666666667,
+      "KA-DFS_transitions": 88.60666666666667,
+      "KA-DFS_excess": 23.47,
+      "KA-GBFS_transitions": 126.28333333333333,
+      "KA-GBFS_excess": 3.3833333333333333
+     }
+    },
+    "HELD_STATES": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 647.3366666666667,
+      "mean_states": 288.45666666666665,
+      "mean_excess": 6.76,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -10.958611220086308,
+      "HC_D_transitions_CI95": [
+       -11.953571676856035,
+       -9.997073796350683
+      ],
+      "HC_D_states": -10.022856370029753,
+      "HC_D_states_CI95": [
+       -10.931602218458796,
+       -9.108286870253963
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 115.21666666666667,
+      "mean_states": 51.75666666666667,
+      "mean_excess": 33.54,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.5207924676343665,
+      "HC_D_transitions_CI95": [
+       -0.6050310194643101,
+       -0.44599238859259377
+      ],
+      "HC_D_states": -0.4191236137408709,
+      "HC_D_states_CI95": [
+       -0.49900923639691747,
+       -0.34979925764409536
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -1.682425916360586e-06,
+      "exact": 0.13061,
+      "within_1": 0.38076666666666664,
+      "MAE": 2.3302152831268312,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 37.68666666666667,
+      "KA-DFS_transitions": 88.66666666666667,
+      "KA-DFS_excess": 23.483333333333334,
+      "KA-GBFS_transitions": 119.63333333333334,
+      "KA-GBFS_excess": 2.8566666666666665
+     }
+    },
+    "HELD_TARGETS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 640.4966666666667,
+      "mean_states": 285.51,
+      "mean_excess": 7.276666666666666,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -10.931182370018474,
+      "HC_D_transitions_CI95": [
+       -11.874551382770104,
+       -10.011279660861764
+      ],
+      "HC_D_states": -10.13890808569454,
+      "HC_D_states_CI95": [
+       -11.044628949272699,
+       -9.2705131780179
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 117.44333333333333,
+      "mean_states": 52.49333333333333,
+      "mean_excess": 34.156666666666666,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.577790973871734,
+      "HC_D_transitions_CI95": [
+       -0.6603219981147044,
+       -0.4999322210939426
+      ],
+      "HC_D_states": -0.47684865238424323,
+      "HC_D_states_CI95": [
+       -0.5588972399934675,
+       -0.40268894137127864
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -0.0042607266154310874,
+      "exact": 0.12861333333333333,
+      "within_1": 0.37937,
+      "MAE": 2.33892839776357,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 37.733333333333334,
+      "KA-DFS_transitions": 88.25333333333333,
+      "KA-DFS_excess": 23.0,
+      "KA-GBFS_transitions": 124.20666666666666,
+      "KA-GBFS_excess": 3.15
+     }
+    },
+    "HELD_BOTH": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 661.0533333333333,
+      "mean_states": 294.07666666666665,
+      "mean_excess": 7.57,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -11.560309451732257,
+      "HC_D_transitions_CI95": [
+       -12.662799481426836,
+       -10.555734966501271
+      ],
+      "HC_D_states": -10.597319184585311,
+      "HC_D_states_CI95": [
+       -11.629924658619453,
+       -9.63870112422122
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 113.32333333333334,
+      "mean_states": 50.89333333333333,
+      "mean_excess": 32.26,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.5062226707029935,
+      "HC_D_transitions_CI95": [
+       -0.5896048680555974,
+       -0.4308274593952827
+      ],
+      "HC_D_states": -0.41091873778274235,
+      "HC_D_states_CI95": [
+       -0.4908777359295053,
+       -0.3369681216527159
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -0.0048364252264978536,
+      "exact": 0.12993666666666667,
+      "within_1": 0.3816333333333333,
+      "MAE": 2.3329533495076498,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 38.69,
+      "KA-DFS_transitions": 88.24,
+      "KA-DFS_excess": 22.746666666666666,
+      "KA-GBFS_transitions": 123.48333333333333,
+      "KA-GBFS_excess": 3.0766666666666667
+     }
+    }
+   },
+   "landmarks": {
+    "1.5": "eligible",
+    "2.0": "eligible",
+    "4.0": "eligible",
+    "8.0": "eligible"
+   },
+   "seconds": 14.1,
+   "fit": {
+    "rank": 4,
+    "observed": 1500000,
+    "best_sweep": 0,
+    "val_rmse": 2.8836684226989746,
+    "history": [
+     [
+      0,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      1,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      2,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      3,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      4,
+      2.881324052810669,
+      2.8836684226989746
+     ]
+    ],
+    "bytes_lzma": 268,
+    "CR": 3957.820895522388,
+    "std_D_fit": 2.881324052810669
+   }
+  },
+  "16": {
+   "name": "C2-CP-r16",
+   "serialized_bytes": 752,
+   "CR": 1410.5,
+   "sets": {
+    "HELD_PAIRS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 641.36,
+      "mean_states": 285.4,
+      "mean_excess": 7.51,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -10.870272041953458,
+      "HC_D_transitions_CI95": [
+       -11.872264738578032,
+       -9.939465340129123
+      ],
+      "HC_D_states": -9.976569949598147,
+      "HC_D_states_CI95": [
+       -10.941106948237568,
+       -9.129965419155244
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 116.07333333333334,
+      "mean_states": 51.78,
+      "mean_excess": 33.596666666666664,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.5401507702392658,
+      "HC_D_transitions_CI95": [
+       -0.6223082600824525,
+       -0.46842893847268596
+      ],
+      "HC_D_states": -0.4293692957362758,
+      "HC_D_states_CI95": [
+       -0.5102623246717869,
+       -0.3624749260204371
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -5.325255779897731e-06,
+      "exact": 0.12955666666666665,
+      "within_1": 0.3797333333333333,
+      "MAE": 2.3291302559153237,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 37.75666666666667,
+      "KA-DFS_transitions": 88.60666666666667,
+      "KA-DFS_excess": 23.47,
+      "KA-GBFS_transitions": 126.28333333333333,
+      "KA-GBFS_excess": 3.3833333333333333
+     }
+    },
+    "HELD_STATES": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 647.3366666666667,
+      "mean_states": 288.45666666666665,
+      "mean_excess": 6.76,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -10.958611220086308,
+      "HC_D_transitions_CI95": [
+       -11.953571676856035,
+       -9.997073796350683
+      ],
+      "HC_D_states": -10.022856370029753,
+      "HC_D_states_CI95": [
+       -10.931602218458796,
+       -9.108286870253963
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 115.21666666666667,
+      "mean_states": 51.75666666666667,
+      "mean_excess": 33.54,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.5207924676343665,
+      "HC_D_transitions_CI95": [
+       -0.6050310194643101,
+       -0.44599238859259377
+      ],
+      "HC_D_states": -0.4191236137408709,
+      "HC_D_states_CI95": [
+       -0.49900923639691747,
+       -0.34979925764409536
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -1.682425916360586e-06,
+      "exact": 0.13061,
+      "within_1": 0.38076666666666664,
+      "MAE": 2.3302152831268312,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 37.68666666666667,
+      "KA-DFS_transitions": 88.66666666666667,
+      "KA-DFS_excess": 23.483333333333334,
+      "KA-GBFS_transitions": 119.63333333333334,
+      "KA-GBFS_excess": 2.8566666666666665
+     }
+    },
+    "HELD_TARGETS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 640.4966666666667,
+      "mean_states": 285.51,
+      "mean_excess": 7.276666666666666,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -10.931182370018474,
+      "HC_D_transitions_CI95": [
+       -11.874551382770104,
+       -10.011279660861764
+      ],
+      "HC_D_states": -10.13890808569454,
+      "HC_D_states_CI95": [
+       -11.044628949272699,
+       -9.2705131780179
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 117.44333333333333,
+      "mean_states": 52.49333333333333,
+      "mean_excess": 34.156666666666666,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.577790973871734,
+      "HC_D_transitions_CI95": [
+       -0.6603219981147044,
+       -0.4999322210939426
+      ],
+      "HC_D_states": -0.47684865238424323,
+      "HC_D_states_CI95": [
+       -0.5588972399934675,
+       -0.40268894137127864
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -0.0042607266154310874,
+      "exact": 0.12861333333333333,
+      "within_1": 0.37937,
+      "MAE": 2.33892839776357,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 37.733333333333334,
+      "KA-DFS_transitions": 88.25333333333333,
+      "KA-DFS_excess": 23.0,
+      "KA-GBFS_transitions": 124.20666666666666,
+      "KA-GBFS_excess": 3.15
+     }
+    },
+    "HELD_BOTH": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 661.0533333333333,
+      "mean_states": 294.07666666666665,
+      "mean_excess": 7.57,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -11.560309451732257,
+      "HC_D_transitions_CI95": [
+       -12.662799481426836,
+       -10.555734966501271
+      ],
+      "HC_D_states": -10.597319184585311,
+      "HC_D_states_CI95": [
+       -11.629924658619453,
+       -9.63870112422122
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 113.32333333333334,
+      "mean_states": 50.89333333333333,
+      "mean_excess": 32.26,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.5062226707029935,
+      "HC_D_transitions_CI95": [
+       -0.5896048680555974,
+       -0.4308274593952827
+      ],
+      "HC_D_states": -0.41091873778274235,
+      "HC_D_states_CI95": [
+       -0.4908777359295053,
+       -0.3369681216527159
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -0.0048364252264978536,
+      "exact": 0.12993666666666667,
+      "within_1": 0.3816333333333333,
+      "MAE": 2.3329533495076498,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 38.69,
+      "KA-DFS_transitions": 88.24,
+      "KA-DFS_excess": 22.746666666666666,
+      "KA-GBFS_transitions": 123.48333333333333,
+      "KA-GBFS_excess": 3.0766666666666667
+     }
+    }
+   },
+   "landmarks": {
+    "1.5": "eligible",
+    "2.0": "eligible",
+    "4.0": "eligible",
+    "8.0": "eligible"
+   },
+   "seconds": 12.6,
+   "fit": {
+    "rank": 16,
+    "observed": 1500000,
+    "best_sweep": 0,
+    "val_rmse": 2.8836684226989746,
+    "history": [
+     [
+      0,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      1,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      2,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      3,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      4,
+      2.881324052810669,
+      2.8836684226989746
+     ]
+    ],
+    "bytes_lzma": 752,
+    "CR": 1410.5,
+    "std_D_fit": 2.881324052810669
+   }
+  },
+  "32": {
+   "name": "C2-CP-r32",
+   "serialized_bytes": 1292,
+   "CR": 820.9721362229102,
+   "sets": {
+    "HELD_PAIRS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 641.36,
+      "mean_states": 285.4,
+      "mean_excess": 7.51,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -10.870272041953458,
+      "HC_D_transitions_CI95": [
+       -11.872264738578032,
+       -9.939465340129123
+      ],
+      "HC_D_states": -9.976569949598147,
+      "HC_D_states_CI95": [
+       -10.941106948237568,
+       -9.129965419155244
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 116.07333333333334,
+      "mean_states": 51.78,
+      "mean_excess": 33.596666666666664,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.5401507702392658,
+      "HC_D_transitions_CI95": [
+       -0.6223082600824525,
+       -0.46842893847268596
+      ],
+      "HC_D_states": -0.4293692957362758,
+      "HC_D_states_CI95": [
+       -0.5102623246717869,
+       -0.3624749260204371
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -5.325255779897731e-06,
+      "exact": 0.12955666666666665,
+      "within_1": 0.3797333333333333,
+      "MAE": 2.3291302559153237,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 37.75666666666667,
+      "KA-DFS_transitions": 88.60666666666667,
+      "KA-DFS_excess": 23.47,
+      "KA-GBFS_transitions": 126.28333333333333,
+      "KA-GBFS_excess": 3.3833333333333333
+     }
+    },
+    "HELD_STATES": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 647.3366666666667,
+      "mean_states": 288.45666666666665,
+      "mean_excess": 6.76,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -10.958611220086308,
+      "HC_D_transitions_CI95": [
+       -11.953571676856035,
+       -9.997073796350683
+      ],
+      "HC_D_states": -10.022856370029753,
+      "HC_D_states_CI95": [
+       -10.931602218458796,
+       -9.108286870253963
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 115.21666666666667,
+      "mean_states": 51.75666666666667,
+      "mean_excess": 33.54,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.5207924676343665,
+      "HC_D_transitions_CI95": [
+       -0.6050310194643101,
+       -0.44599238859259377
+      ],
+      "HC_D_states": -0.4191236137408709,
+      "HC_D_states_CI95": [
+       -0.49900923639691747,
+       -0.34979925764409536
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -1.682425916360586e-06,
+      "exact": 0.13061,
+      "within_1": 0.38076666666666664,
+      "MAE": 2.3302152831268312,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 37.68666666666667,
+      "KA-DFS_transitions": 88.66666666666667,
+      "KA-DFS_excess": 23.483333333333334,
+      "KA-GBFS_transitions": 119.63333333333334,
+      "KA-GBFS_excess": 2.8566666666666665
+     }
+    },
+    "HELD_TARGETS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 640.4966666666667,
+      "mean_states": 285.51,
+      "mean_excess": 7.276666666666666,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -10.931182370018474,
+      "HC_D_transitions_CI95": [
+       -11.874551382770104,
+       -10.011279660861764
+      ],
+      "HC_D_states": -10.13890808569454,
+      "HC_D_states_CI95": [
+       -11.044628949272699,
+       -9.2705131780179
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 117.44333333333333,
+      "mean_states": 52.49333333333333,
+      "mean_excess": 34.156666666666666,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.577790973871734,
+      "HC_D_transitions_CI95": [
+       -0.6603219981147044,
+       -0.4999322210939426
+      ],
+      "HC_D_states": -0.47684865238424323,
+      "HC_D_states_CI95": [
+       -0.5588972399934675,
+       -0.40268894137127864
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -0.0042607266154310874,
+      "exact": 0.12861333333333333,
+      "within_1": 0.37937,
+      "MAE": 2.33892839776357,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 37.733333333333334,
+      "KA-DFS_transitions": 88.25333333333333,
+      "KA-DFS_excess": 23.0,
+      "KA-GBFS_transitions": 124.20666666666666,
+      "KA-GBFS_excess": 3.15
+     }
+    },
+    "HELD_BOTH": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 661.0533333333333,
+      "mean_states": 294.07666666666665,
+      "mean_excess": 7.57,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -11.560309451732257,
+      "HC_D_transitions_CI95": [
+       -12.662799481426836,
+       -10.555734966501271
+      ],
+      "HC_D_states": -10.597319184585311,
+      "HC_D_states_CI95": [
+       -11.629924658619453,
+       -9.63870112422122
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 113.32333333333334,
+      "mean_states": 50.89333333333333,
+      "mean_excess": 32.26,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.5062226707029935,
+      "HC_D_transitions_CI95": [
+       -0.5896048680555974,
+       -0.4308274593952827
+      ],
+      "HC_D_states": -0.41091873778274235,
+      "HC_D_states_CI95": [
+       -0.4908777359295053,
+       -0.3369681216527159
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": -0.0048364252264978536,
+      "exact": 0.12993666666666667,
+      "within_1": 0.3816333333333333,
+      "MAE": 2.3329533495076498,
+      "spearman": NaN
+     },
+     "references": {
+      "oracle_transitions": 38.69,
+      "KA-DFS_transitions": 88.24,
+      "KA-DFS_excess": 22.746666666666666,
+      "KA-GBFS_transitions": 123.48333333333333,
+      "KA-GBFS_excess": 3.0766666666666667
+     }
+    }
+   },
+   "landmarks": {
+    "1.5": "eligible",
+    "2.0": "eligible",
+    "4.0": "eligible",
+    "8.0": "eligible"
+   },
+   "seconds": 13.1,
+   "fit": {
+    "rank": 32,
+    "observed": 1500000,
+    "best_sweep": 0,
+    "val_rmse": 2.8836684226989746,
+    "history": [
+     [
+      0,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      1,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      2,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      3,
+      2.881324052810669,
+      2.8836684226989746
+     ],
+     [
+      4,
+      2.881324052810669,
+      2.8836684226989746
+     ]
+    ],
+    "bytes_lzma": 1292,
+    "CR": 820.9721362229102,
+    "std_D_fit": 2.881324052810669
+   }
+  }
+ },
+ "seconds": 177.8
+}
