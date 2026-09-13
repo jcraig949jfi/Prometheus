@@ -26,6 +26,13 @@ B = 10; R_MAX_N = 12
 BARS = PRE["bars_frozen"]
 
 
+def _json(o):
+    if isinstance(o, (np.bool_,)): return bool(o)
+    if isinstance(o, np.integer): return int(o)
+    if isinstance(o, np.floating): return float(o)
+    return str(o)
+
+
 def score(x, t):
     return sum(a == b for a, b in zip(x, t)) / len(t)
 
@@ -81,8 +88,8 @@ def eligible_run(L):
     res = {"schema": "archaeon.fossil_metabolism_s6.eligible.v0", "L": L, "preregistration": "S6_PREREG_2026-09-13.json", "versions": {"s4": P.PRODUCER_VERSION, "s5": O5.PRODUCER_VERSION, "s6": S6.PRODUCER_VERSION},
            "oracle_ledger": vars(oracle.ledger), "elapsed_s": time.time() - t0, "rows": out}
     res["summary"] = summarise(out, arms)
-    (HERE / f"S6_RESULTS_ELIGIBLE_L{L}_2026-09-13.json").write_text(json.dumps(res, indent=1), encoding="utf-8")
-    print(json.dumps(res["summary"], indent=1))
+    (HERE / f"S6_RESULTS_ELIGIBLE_L{L}_2026-09-13.json").write_text(json.dumps(res, indent=1, default=_json), encoding="utf-8")
+    print(json.dumps(res["summary"], indent=1, default=_json))
 
 
 def summarise(rows, arms):
@@ -128,8 +135,8 @@ def universe_run():
                    "aggregate_cost_rel_to_G": (sum(x["arms"][a]["cost"] * x["N"] for x in out) - totG) / totG, "regression_universe_ok": (sum(1 for v in rel if v >= 0.02) == 0 and sum(x["arms"][a]["cost"] * x["N"] for x in out) <= totG + 1e-9),
                    "worlds_below_S5_Vstar": sum(1 for x in out if x["arms"][a]["cost"] < x["V_star_from_S5"] - 1e-9)}
     res = {"schema": "archaeon.fossil_metabolism_s6.universe.v0", "rows": out, "summary": summ, "elapsed_s": time.time() - t0}
-    (HERE / "S6_RESULTS_UNIVERSE_2026-09-13.json").write_text(json.dumps(res, indent=1), encoding="utf-8")
-    print(json.dumps(summ, indent=1))
+    (HERE / "S6_RESULTS_UNIVERSE_2026-09-13.json").write_text(json.dumps(res, indent=1, default=_json), encoding="utf-8")
+    print(json.dumps(summ, indent=1, default=_json))
 
 
 if __name__ == "__main__":

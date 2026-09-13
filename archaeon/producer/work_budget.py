@@ -40,9 +40,13 @@ class WorkBudget:
     counters: Dict[str, int] = field(default_factory=dict)
     started: float = 0.0
     _token: object = None
+    parent: Optional["WorkBudget"] = None
 
     def __enter__(self):
-        self.started = time.perf_counter(); self._token = _ACTIVE.set(self); return self
+        # S6: budgets NEST. A producer's own budget bounds its search; an enclosing ledger (an evaluator
+        # measuring that producer) still sees every unit, so accounted work can never read zero because
+        # the producer opened its own budget (the S5/S6 accounting gap).
+        self.parent = _ACTIVE.get(); self.started = time.perf_counter(); self._token = _ACTIVE.set(self); return self
 
     def __exit__(self, *exc):
         _ACTIVE.reset(self._token); return False
@@ -53,6 +57,8 @@ class WorkBudget:
                 "wall_ceiling_seconds": self.max_seconds}
 
     def charge(self, n: int, phase: str) -> None:
+        if self.parent is not None:
+            self.parent.charge(n, phase)
         self.units += n
         self.counters[phase] = self.counters.get(phase, 0) + n
         if self.units > self.max_units:
