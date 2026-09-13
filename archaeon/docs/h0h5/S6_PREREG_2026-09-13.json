@@ -1,0 +1,101 @@
+{
+ "schema": "archaeon.fossil_metabolism_s6.prereg.v0",
+ "status": "PREREGISTERED_BEFORE_ANY_CANDIDATE_RUN",
+ "operator_order": {
+  "file": "roles/Archaeon/prompts/2026-09-12_seasons/S6_ORDER.md",
+  "sha256": "41bd12f0fb70a199912c5cae89a347abf3597fc89d3d1d3d9f7ce67d751bc515"
+ },
+ "s5_preserved": "S5's two INSTRUMENT_FAILURE verdicts stand as ruled (run 1: census-index seeding, a real instrument defect; run 2: the universal clause 'blind U never beats G at the bar in any state'). Nothing in S5 is rewritten; its rows are inputs here.",
+ "instrument_repair": {
+  "blind_control": "the blind arm is the EXACT uniform-random policy value R(s) (archaeon.producer.s6_endgame.random_policy_value: a DP averaging over every probe in {0,1}^L at every step, evidence ignored), not one seeded draw. It is DESCRIPTIVE. A fixed blind probe sequence tying or beating G in one tiny state is not evidence of instrument failure: a uniformly drawn probe lands in the optimal class with positive probability (in the N 6 witness the optimal class is 1/3 of the alphabet), so a per-state 'never' clause has a nonzero chance rate by construction; the S5 run-2 clause had no tolerance and no eligibility count and was malformed for that reason.",
+  "what_is_impossible_and_therefore_a_failure": "an arm's exact census cost below V*(s) - 1e-9 at any state (V* is a minimum over all policies); the sealed oracle exhausting its budget or returning SCOPE_EXCEEDED; a candidate decision that changes under a permutation of the census or of the fossil order (tests); a mismatch between the census size and the block solver's feasible count.",
+  "sanity_reported_not_ruled": "R(s) >= V*(s) always (identity); G <= R(s) on aggregate over eligible states is reported; if G > R on aggregate that is a finding about the endgame, recorded, not a failure."
+ },
+ "eligible_endgame": {
+  "rule": "decision states (evidence sets reached by G in S5 run 2, depth <= 6, distinct by canonical fossil set) with 5 <= N <= 18 feasible targets",
+  "justification_from_s5_artifacts_only": "S6_MYOPIA_BY_N_FROM_S5_2026-09-13.json (G's exact decision-state myopia by N, both L, 11,285 decisions): N 2-3: 0/3265; N 4: 4/992 (0.4 %); N 5-11: 140/245, 492/882, 42/245, 152/304, 36/450, 180/360, 44/44; N 12: 0/432; N 14-15: 42/112, 405/480; N 16: 0/224; N 18: 36/342 (10.5 %); N 20-40: 0/1908. The largest N with any observed myopia is 18; nothing above it in 1908 decisions. N <= 16 was the order's default; the evidence gives a principled reason to include 18 (real residue, still tiny) and to stop at the first N above which no myopia was observed.",
+  "N_le_4": "EXCLUDED from the primary comparison as near-vacuous (0/3265 at N 2-3; 4/992 at N 4, all pool-restriction cases: at N 4 the ER order and the cost order over partition shapes coincide, {1,1,1,1} < {1,1,2} < {2,2} < {1,3}). Audited in the full-universe regression check.",
+  "N_gt_18": "EXCLUDED from the primary comparison (0/1908 myopic decisions); audited in the full-universe regression check.",
+  "counts": {
+   "L8": "258 eligible states (development)",
+   "L9": "eligible states counted only after the freeze (S6_ENDGAME_UNIVERSE_L9: 5..8: 124, 9..16: 78, >16: 40 incl. 18) -- held-out at the S6 level, see generalization"
+  }
+ },
+ "characterization_frozen": {
+  "file": "S6_CHARACTERIZATION_L8_2026-09-13.json (L 8 development set, exact, every probe in {0,1}^8, sealed oracle Q*)",
+  "findings": "258 eligible states, 111 with G->O regret (mean 0.101 probes, 4.4 % of cost). Exact ER ties inside G's pool carry 45.7 % of total regret (21/111 states fully); a 5 % / 10 % / 20 % relative ER window carries 49 / 63 / 84 %; the best pool member 96 %; outside the pool 4 %. The oracle-preferred probe has ER strictly above the global minimum in 88/258 states (mean +4.2 %): the loss is a strict preference of the count objective as often as a tie. Most common pattern: G {2,2,2} (ER 2.0) vs oracle {3,2,1} (ER 2.33) at N 6 -- cost is counted in PROBES: a cell that one probe can shatter costs exactly 1 whatever its size; ER counts targets.",
+  "statistic_anatomy": "tie-break accuracy inside exact tie classes (240 classes): G lex 219, neg_max_cell/shape 221, entropy 229, singleton_mass/n_cells 232, LB2 232, v2 (unweighted next-step count) 234, v2w (cell-weighted next-step count) 239. Counterexamples against sufficiency at ER-min (same ER-min, same statistic, different Q*): entropy 16 states, singleton/n_cells 24, max_cell/shape 16, v2 8, LB2 8, v2w 0. Insufficiency groups over all probes: entropy 127, singleton 143, n_cells 173, max_cell 135, shape 127, v2 62, v2w 16, LB2 12. No single cheap statistic is sufficient; two two-level statistics (v2w in count units, LB2 in probe units) come close from different directions; the residue lies in near-ties as much as in exact ties.",
+  "LB2": "two-level probe-unit lower bound: LB2(q) = sum_e (n_e/N) lb(cell_e), lb = 0 for a singleton, else 1 + min_q' (mass of cells of size >= 2 after q'). Derived from the anatomy (cost is counted in probes; a shatterable cell costs exactly one more), not fitted. On the minimal witness (N 6, evs:1c02f77cec2e4734) LB2 and Q* agree exactly on all three shapes: {2,2,2} 1.0/2.0, {3,2,1} shatterable 0.833/1.833, {3,2,1} non-shatterable 1.167/2.167 -- ER cannot separate the last two at all.",
+  "correction_recorded": "the first characterization pass shared one cache between v2 and LB2, so the quantity it labelled 'LB2' (239/240, 0 counterexamples) was in fact the cell-weighted next-step count v2w. Found by the unit test on the minimal witness; caches separated; both statistics kept and named; numbers above are from the corrected pass (S6_CHARACTERIZATION_L8_2026-09-13.json).",
+  "v2w": "cell-weighted next-step count: sum_e (n_e/N) min_q' sum n'^2 over the cell, singletons 0. Count units with the landing probability; the statistic the first pass actually measured."
+ },
+ "repair_ladder_frozen": {
+  "form": "G unchanged in pool, objective and seed; inside the admissible window (pool members with ER numerator <= (1 + w) x the pool minimum) the member maximising ONE statistic is chosen, ties by G's lexicographic rule; outside the window nothing changes; a window of one member leaves G's choice untouched (inactive by construction).",
+  "rungs": {
+   "A_entropy_0": "exact ties re-ranked by entropy (the S5 witness statistic; a rung to falsify, not an assumption)",
+   "A_lb2_0": "exact ties re-ranked by LB2 (probe units)",
+   "A_v2w_0": "exact ties re-ranked by v2w (count units)",
+   "B_v2w_10": "10 % window re-ranked by v2w",
+   "B_v2w_20": "20 % window re-ranked by v2w",
+   "B_lb2_20": "20 % window re-ranked by LB2"
+  },
+  "windows_derivation": "10 % and 20 % are the two windows at which the L 8 characterization's recoverable regret crosses 0.6 and 0.8; 2 % recovers nothing beyond exact ties (integer numerators); no other coefficient exists. Six rungs, two controls; nothing added after L 8 results.",
+  "positive_controls_not_candidates": {
+   "CTRL_0": "exact ties re-ranked by the sealed oracle's Q*",
+   "CTRL_20": "20 % window re-ranked by Q*; bounds what any refinement confined to the window can achieve"
+  },
+  "primary_rung_selection": "the rung with the highest aggregate recovery on the L 8 development set among rungs satisfying the regression bounds there (if none satisfies them, the highest recovery); written to S6_PRIMARY_RUNG_2026-09-13.json and committed BEFORE any L 9 computation",
+  "no_coefficients": "no weighted objective; no tuned thresholds; the only parameters are the two windows above, fixed here"
+ },
+ "measurement": {
+  "unit": "eligible evidence state s, census over every feasible target t in T(s) (uniform prior); every arm run from s to identification, budget 10 probes (censored at 11)",
+  "arms": [
+   "G",
+   "A_entropy_0",
+   "A_lb2_0",
+   "A_v2w_0",
+   "B_v2w_10",
+   "B_v2w_20",
+   "B_lb2_20",
+   "CTRL_0",
+   "CTRL_20",
+   "O (sealed oracle value V*, exact; the DP policy)",
+   "R (exact blind policy value, states with N <= 12 only, descriptive)"
+  ],
+  "seeds": "seed_inputs = (lane 's6', L, eligible-state id, arm 'G', step): every candidate uses G's seed suffix so the pool is identical to G's; no target, no census index",
+  "primary_measure": "recovery(C) = sum over GAP states of (cost_G - cost_C) / sum over GAP states of (cost_G - V*), where a gap state has cost_G - V* > 1e-9; states without gap are reported separately (count, and any change of cost there counts as regression)",
+  "also_reported": [
+   "fraction of eligible states with gap",
+   "fraction of gap states improved / worsened / unchanged",
+   "median per-state recovery over gap states",
+   "aggregate probe reduction vs G over ALL eligible states",
+   "residual distance to O: sum(cost_C - V*)/sum(cost_G - V*)",
+   "worst regression: max over eligible states of (cost_C - cost_G)/cost_G",
+   "work per decision (median units) for G and each rung; oracle ledger (fresh units, memo hits, seconds) separately",
+   "full-universe audit on the 233 S5 root worlds (both L): cost_G vs cost_C per world under the S6 seed, V* from the S5 run-2 rows"
+  ]
+ },
+ "bars_frozen": {
+  "recovery_meaningful": 0.33,
+  "control_strong": 0.66,
+  "gap_present": "at least 20 % of eligible states have a gap AND the aggregate gap sum(cost_G - V*) is >= 1 % of sum(cost_G)",
+  "regression_eligible": "fraction of eligible states worsened (cost_C > cost_G + 1e-9) <= 5 % AND worst relative regression <= 5 %",
+  "regression_universe": "no root world worsened by >= 2 % relative AND aggregate cost_C <= aggregate cost_G over the 233 worlds",
+  "work": "median candidate work per decision <= 25,000 units (probe_scored + statistic + lb2_cell_probe / v2_cell_probes + inference nodes); reported beside G's median and the oracle's fresh units per state. At L 8-9 the oracle is itself cheap, so this bar is about the cost STRUCTURE (admissible x cells x alphabet, linear) not a claim of asymptotic superiority; both numbers are reported"
+ },
+ "verdict_rule_frozen": {
+  "evaluated_on": "the L 9 eligible states (confirmation) for the primary rung; L 8 reported as development; full-universe audit on both L",
+  "INSTRUMENT_FAILURE": "any arm's census cost < V* - 1e-9 at any state; oracle BUDGET_EXHAUSTED/SCOPE_EXCEEDED; adversarial permutation test fails; census/solver mismatch",
+  "NO_OBJECTIVE_RESIDUE": "gap_present is false on L 9 eligible states",
+  "CHEAP_ENDGAME_REPAIR": "primary rung recovery >= 0.33 on L 9 AND regression_eligible on L 9 AND regression_universe AND work bar",
+  "CHEAP_REPAIR_WITH_REGRESSION": "primary rung recovery >= 0.33 on L 9 but regression_eligible or regression_universe fails",
+  "DEEP_SEARCH_REQUIRED": "every rung < 0.33 on L 9 AND CTRL_20 >= 0.66 on L 9 (the information is inside the window but not in the tested cheap statistics)",
+  "RESIDUE_NOT_COMPRESSIBLE": "every rung < 0.33 on L 9 AND CTRL_20 < 0.66 (the residue is not reachable by re-ranking G's admissible set)",
+  "precedence": "INSTRUMENT_FAILURE, then NO_OBJECTIVE_RESIDUE, then CHEAP_ENDGAME_REPAIR / CHEAP_REPAIR_WITH_REGRESSION, then DEEP_SEARCH_REQUIRED / RESIDUE_NOT_COMPRESSIBLE; a rung failing the work bar alone with recovery >= 0.33 and no regression is reported as CHEAP_ENDGAME_REPAIR with the work bar flagged (the bar is structural, see above)"
+ },
+ "generalization": "L 8 is the development set (characterization, window derivation, primary-rung selection). L 9 eligible states were built from S5 rows but no S6 quantity is computed on them before the primary rung is committed. Honest limit: L 9 was exposed in S5 at the aggregate producer level (O vs G, kappa audit); it was never exposed to any partition statistic, window or refinement. It is the strongest confirmation the artifacts permit, not a virgin set.",
+ "leakage": "candidates take (fossils, seed_inputs, statistic name, window); the control takes the oracle explicitly; tests: signatures, oracle strings absent from candidate provenance, census/fossil-order permutation invariance (archaeon/tests/test_s6_endgame.py)",
+ "stopping_rule": "every eligible state once, every target once; no reruns; no rung added or removed after L 8 results; no bar changed after any result",
+ "production": "NO PRODUCTION by default; a CHEAP_ENDGAME_REPAIR verdict earns a separate production case, not a switch",
+ "runner": "archaeon/docs/h0h5/S6_RUNNER_2026-09-13.py --L 8 (dev) | --L 9 (confirm) | --universe"
+}

@@ -7,3 +7,4 @@ sha256 over the file bytes as committed (utf-8, LF newlines).
 - S3_ORDER.md  sha256:d48ca198a463d2164cd62fb9a837de07227899833952a50c9b039331862503b9  chars:10855
 - S4_ORDER.md  sha256:be824d37a2596be9d604d0803eb850f191430dd60b9ed911db52e6ea4f66bca8  chars:12555
 - S5_ORDER.md  sha256:5c6c427972a307cffc1006cc6229094d3bed52d06ee8279c29a33629cb2ee14a  chars:7849
+- S6_ORDER.md  sha256:41bd12f0fb70a199912c5cae89a347abf3597fc89d3d1d3d9f7ce67d751bc515  chars:12206  (filed at issuance 2026-09-13)
