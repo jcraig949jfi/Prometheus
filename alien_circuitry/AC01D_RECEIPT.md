@@ -120,7 +120,12 @@ Findings, mapped to the ruled hypotheses:
   (R head) is damaged more by source digits 1 and 3 (PR-AUC 0.66-0.68) than by target digits (0.74+). The
   computation is distributed: there is no small subspace controlling either D or reachability, and every position
   matters roughly equally, which is what a permutation-sensitive but position-symmetric geometry predicts.
-- Symmetry (ruled section 10): the model is NOT invariant under simultaneous value relabelling. Under the 20
+- Symmetry (ruled section 10) -- CORRECTED 2026-09-13 in AC-01D-v2: the exact metric symmetry of the left action is DOMAIN
+  relabelling (f, t) -> (f o sigma, t o sigma) for all sigma in S_7 (verified: 0 violations on 176,540 tests); NO non-trivial
+  VALUE relabelling preserves the metric (the generator set has trivial conjugation stabiliser, computed exhaustively). The
+  v1 test below used value relabellings fixing {0,1} setwise, which are NOT symmetries; its finding is withdrawn. See
+  `results/ac01d/v2/canonical_symmetry.json`. Original v1 text follows for the record:
+- (v1, withdrawn) Symmetry: the model is NOT invariant under simultaneous value relabelling. Under the 20
   relabellings that fix {0,1} setwise (which preserve the generator set and therefore the true metric exactly),
   predictions change by 2.05 on average, 5.19 at the 95th percentile, and 82% of rows move by more than 0.5. The
   model learned the geometry in the fixed digit convention it was trained in, not the intrinsic semigroup
