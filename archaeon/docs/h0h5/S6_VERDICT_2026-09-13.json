@@ -1,0 +1,34 @@
+{
+ "schema": "archaeon.fossil_metabolism_s6.verdict.v0",
+ "preregistration": "S6_PREREG_2026-09-13.json",
+ "primary_rung": "A_v2w_0",
+ "instrument_failures": [],
+ "checks": {
+  "gap_present_L9": true,
+  "primary_recovery_L9": 0.699579512519599,
+  "recovery_ok": true,
+  "regression_eligible_L9_ok": true,
+  "worsened_fraction_L9": 0.0,
+  "worst_regression_L9": 0.0,
+  "regression_universe_ok": false,
+  "universe_worsened_ge_2pct": 7,
+  "universe_worst": 0.053763440860215006,
+  "universe_aggregate_rel": -0.017446393762183234,
+  "work_ok": true,
+  "primary_median_units_L9": 3648.75,
+  "G_median_units_L9": 417.5,
+  "CTRL_20_recovery_L9": 0.8649451228203545,
+  "all_rungs_recovery_L9": {
+   "A_entropy_0": 0.6128997006699293,
+   "A_lb2_0": 0.6921318952819879,
+   "A_v2w_0": 0.699579512519599,
+   "B_v2w_10": 0.7237254715636434,
+   "B_v2w_20": 0.7237254715636434,
+   "B_lb2_20": 0.8620468475317149,
+   "CTRL_0": 0.6968356535373214,
+   "CTRL_20": 0.8649451228203545
+  }
+ },
+ "verdict": "CHEAP_REPAIR_WITH_REGRESSION",
+ "note": "computed only from S6_RESULTS_ELIGIBLE_L9, S6_RESULTS_ELIGIBLE_L8 (failure scan) and S6_RESULTS_UNIVERSE under the frozen precedence"
+}
