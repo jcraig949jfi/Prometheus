@@ -169,15 +169,21 @@ def extract(archive: pathlib.Path, into: pathlib.Path) -> pathlib.Path:
     return kids[0] if len(kids) == 1 and kids[0].is_dir() else into
 
 
-def git_pin(url: str, commit: str, dest: pathlib.Path, timeout: int = 900) -> dict:
-    """Clone and check out EXACTLY `commit`; refuse to proceed if HEAD disagrees."""
+def git_pin(url: str, commit: str, dest: pathlib.Path, timeout: int = 900,
+            init_submodules: bool = False) -> dict:
+    """Clone and check out EXACTLY `commit`; refuse to proceed if HEAD disagrees.
+
+    When init_submodules, also fetch the submodules AT THE COMMITS THE SUPERPROJECT PINS
+    (git submodule update --init --recursive uses the recorded gitlink SHAs, never HEAD) so
+    the body is preservation-complete. The avida failure came from fetching a submodule at
+    HEAD instead; this is the fix. Submodule metadata (path/url/pinned commit) is returned."""
     dest.parent.mkdir(parents=True, exist_ok=True)
+    GITENV = ["-c", "core.autocrlf=false", "-c", "core.eol=lf"]
     if not (dest / ".git").exists():
         # Force LF and no autocrlf so the working tree is BYTE-EXACT upstream, not Windows-
         # converted -- otherwise text files get CRLF on a Windows checkout and (a) the tree hash
         # would not match a Linux re-fetch and (b) shell scripts like tinycc's configure break.
-        subprocess.run(["git", "-c", "core.autocrlf=false", "-c", "core.eol=lf",
-                        "clone", "--quiet", url, str(dest)], check=True, timeout=timeout)
+        subprocess.run(["git", *GITENV, "clone", "--quiet", url, str(dest)], check=True, timeout=timeout)
     if commit == "HEAD":
         # "whatever the default branch is right now" -- resolved ONCE here and written back to
         # the record as commit_resolved, so the pin becomes exact from this moment on.
@@ -189,5 +195,55 @@ def git_pin(url: str, commit: str, dest: pathlib.Path, timeout: int = 900) -> di
     if not head.startswith(commit):
         raise RuntimeError("HEAD %s != requested %s" % (head, commit))
     date = subprocess.run(["git", "-C", str(dest), "show", "-s", "--format=%cI", "HEAD"], capture_output=True, text=True).stdout.strip()
-    return {"url": url, "commit": head, "commit_date": date, "path": str(dest),
-            "fetched_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+    out = {"url": url, "commit": head, "commit_date": date, "path": str(dest),
+           "fetched_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+    if (dest / ".gitmodules").exists():
+        if init_submodules:
+            # update --init --recursive checks out the PINNED gitlink commits (not HEAD).
+            subprocess.run(["git", "-C", str(dest), *GITENV, "submodule", "update", "--init",
+                            "--recursive"], check=True, timeout=timeout)
+        out["submodules"] = submodules_of(dest)
+        out["submodules_fetched"] = bool(init_submodules)
+    return out
+
+
+def submodules_of(tree_dir: pathlib.Path) -> list:
+    """Read-only census of a checked-out git tree's submodules (needs the tree's .git).
+    Returns [{path, url, pinned_commit, present, checked_out_commit, n_files}]. present means
+    the submodule working tree is populated (a real file besides its own .git)."""
+    tree_dir = pathlib.Path(tree_dir)
+    if not (tree_dir / ".gitmodules").exists() or not (tree_dir / ".git").exists():
+        return []
+    cfg = subprocess.run(["git", "-C", str(tree_dir), "config", "-f", ".gitmodules",
+                          "--get-regexp", r"submodule\..*\.(path|url)"], capture_output=True, text=True).stdout
+    paths, urls = {}, {}
+    for line in cfg.splitlines():
+        try:
+            key, val = line.split(None, 1)
+        except ValueError:
+            continue
+        name = key[len("submodule."):].rsplit(".", 1)[0]
+        if key.endswith(".path"):
+            paths[name] = val.strip()
+        elif key.endswith(".url"):
+            urls[name] = val.strip()
+    ls = subprocess.run(["git", "-C", str(tree_dir), "ls-tree", "-r", "HEAD"], capture_output=True, text=True).stdout
+    pinned = {}
+    for line in ls.splitlines():
+        # <mode> <type> <sha>\t<path>   -- mode 160000 marks a gitlink (submodule)
+        meta, _, path = line.partition("\t")
+        parts = meta.split()
+        if len(parts) >= 3 and parts[0] == "160000":
+            pinned[path] = parts[2]
+    subs = []
+    for name in sorted(set(paths) | set(urls)):
+        rel = paths.get(name, name)
+        sub_dir = tree_dir / rel
+        present = sub_dir.exists() and any(p.name != ".git" for p in sub_dir.iterdir()) if sub_dir.exists() else False
+        co = ""
+        if present and (sub_dir / ".git").exists():
+            co = subprocess.run(["git", "-C", str(sub_dir), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+        n_files = sum(1 for p in sub_dir.rglob("*") if p.is_file() and ".git" not in p.relative_to(sub_dir).parts) if present else 0
+        subs.append({"path": rel, "url": urls.get(name, ""), "pinned_commit": pinned.get(rel, ""),
+                     "present": bool(present), "checked_out_commit": co, "n_files": n_files})
+    return subs
