@@ -73,8 +73,8 @@ def test_M_is_tractable_at_small_L_and_declares_intractability():
     rnd = random.Random(2); L = 8; t = "".join(rnd.choice("01") for _ in range(L)); fs = _fossils(t, ["".join(rnd.choice("01") for _ in range(L))])
     m = P.produce_M(fs, {"lane": "s4", "world": 0, "step": 1})
     assert m.producer_id == "M" and m.objective_value is not None and m.compute_seconds < 60 and not m.extra.get("intractable")
-    m2 = P.produce_M(fs, {"lane": "s4", "world": 0, "step": 1}, time_bound_s=0.0)
-    assert m2.extra.get("intractable") is True and len(m2.probe) == L
+    m2 = P.produce_M(fs, {"lane": "s4", "world": 0, "step": 1}, max_units=20)      # S5: the deterministic work budget replaces the wall-clock fallback
+    assert m2.extra.get("outcome") == "BUDGET_EXHAUSTED" and m2.probe is None
 
 
 def test_external_channel_slot_is_recorded_not_built():

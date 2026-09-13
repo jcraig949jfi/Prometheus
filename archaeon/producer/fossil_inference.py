@@ -55,6 +55,8 @@ from dataclasses import dataclass, field
 from math import comb
 from typing import Dict, List, Optional, Sequence, Tuple
 
+from .work_budget import charge as _charge
+
 
 class Contradiction(ValueError):
     """The fossils admit no target (a tampered or misattributed score)."""
@@ -155,6 +157,7 @@ def infer(fossils: Sequence[Fossil]) -> Inference:
     for k in range(K - 1, -1, -1):
         suffix[k] = suffix[k + 1] + sizes[k]
     def dfs(k: int, partial: List[int], u: List[int], w: int):
+        _charge(1, "infer_dfs_node")
         if k == K:
             if all(partial[i] == ms[i] for i in range(N)):
                 sols.append(tuple(u)); weights.append(w)
