@@ -11,19 +11,19 @@
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 82.97333333333333,
-      "mean_states": 34.3,
-      "mean_excess": 5.45,
+      "mean_transitions": 79.43333333333334,
+      "mean_states": 32.82333333333333,
+      "mean_excess": 5.006666666666667,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.1107833497214028,
+      "HC_D_transitions": 0.09121813031161474,
       "HC_D_transitions_CI95": [
-       0.033133668269103723,
-       0.18402133415091168
+       -0.0024168634095946993,
+       0.1681083330205179
       ],
-      "HC_D_states": 0.2849747990736957,
+      "HC_D_states": 0.2720436449424949,
       "HC_D_states_CI95": [
-       0.2166994778854601,
-       0.3441252570938064
+       0.1908781571723394,
+       0.33661384053487653
       ],
       "band": "no useful compression",
       "dominance": "DOMINATES KA-DFS"
@@ -31,19 +31,19 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 88.00333333333333,
-      "mean_states": 37.24,
-      "mean_excess": 20.09,
+      "mean_transitions": 80.99666666666667,
+      "mean_states": 34.163333333333334,
+      "mean_excess": 17.523333333333333,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.011864962307440163,
+      "HC_D_transitions": 0.05800283286118979,
       "HC_D_transitions_CI95": [
-       -0.08719057944980488,
-       0.09610400426512601
+       -0.044293786436239144,
+       0.1470206687013766
       ],
-      "HC_D_states": 0.16482768015256777,
+      "HC_D_states": 0.2127690946623415,
       "HC_D_states_CI95": [
-       0.07870321691692328,
-       0.24117167590942898
+       0.12574439204826895,
+       0.2875510792025917
       ],
       "band": "no useful compression",
       "dominance": "COST ONLY"
@@ -51,37 +51,37 @@
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.43278835946673044,
-      "exact": 0.18072,
-      "within_1": 0.5180433333333333,
-      "MAE": 1.7153385376008352,
-      "spearman": 0.6567092850256901
+      "R2": 0.4327748552382439,
+      "exact": 0.18005333333333334,
+      "within_1": 0.5187866666666666,
+      "MAE": 1.7134736297957103,
+      "spearman": 0.6569589243787537
      },
      "references": {
-      "oracle_transitions": 37.75666666666667,
-      "KA-DFS_transitions": 88.60666666666667,
-      "KA-DFS_excess": 23.47,
-      "KA-GBFS_transitions": 126.28333333333333,
-      "KA-GBFS_excess": 3.3833333333333333
+      "oracle_transitions": 36.66,
+      "KA-DFS_transitions": 83.72666666666667,
+      "KA-DFS_excess": 21.65,
+      "KA-GBFS_transitions": 117.35333333333334,
+      "KA-GBFS_excess": 3.0366666666666666
      }
     },
     "HELD_STATES": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 83.40333333333334,
-      "mean_states": 34.38666666666666,
-      "mean_excess": 5.8933333333333335,
+      "mean_transitions": 78.33333333333333,
+      "mean_states": 32.403333333333336,
+      "mean_excess": 4.966666666666667,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.1032431018700144,
+      "HC_D_transitions": 0.18216568905292296,
       "HC_D_transitions_CI95": [
-       0.02103710456285553,
-       0.1710247046847013
+       0.10670367916119772,
+       0.257070802659842
       ],
-      "HC_D_states": 0.2856370029753854,
+      "HC_D_states": 0.34767074343823,
       "HC_D_states_CI95": [
-       0.21618400787965622,
-       0.34134968356746137
+       0.2849808782896837,
+       0.410075883755639
       ],
       "band": "no useful compression",
       "dominance": "DOMINATES KA-DFS"
@@ -89,115 +89,115 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 89.56333333333333,
-      "mean_states": 37.8,
-      "mean_excess": 20.69333333333333,
+      "mean_transitions": 82.31333333333333,
+      "mean_states": 34.8,
+      "mean_excess": 17.96,
       "traps_taken": 0.0,
-      "HC_D_transitions": -0.017588596835360182,
+      "HC_D_transitions": 0.10347327489619718,
       "HC_D_transitions_CI95": [
-       -0.12055585811967276,
-       0.07325446072483903
+       0.017092002283876195,
+       0.18720253461439298
       ],
-      "HC_D_states": 0.14714633486610762,
+      "HC_D_states": 0.24886629105400582,
       "HC_D_states_CI95": [
-       0.05691400172006084,
-       0.22685764390523608
+       0.16958339773774816,
+       0.32330036177164867
       ],
       "band": "no useful compression",
-      "dominance": "PATH ONLY"
+      "dominance": "DOMINATES KA-DFS"
      },
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.43172060132857903,
-      "exact": 0.18106,
-      "within_1": 0.51739,
-      "MAE": 1.718957785727183,
-      "spearman": 0.6560451944613341
+      "R2": 0.43136096274180014,
+      "exact": 0.18152666666666667,
+      "within_1": 0.5182833333333333,
+      "MAE": 1.7171333493423462,
+      "spearman": 0.6560728540182722
      },
      "references": {
-      "oracle_transitions": 37.68666666666667,
-      "KA-DFS_transitions": 88.66666666666667,
-      "KA-DFS_excess": 23.483333333333334,
-      "KA-GBFS_transitions": 119.63333333333334,
-      "KA-GBFS_excess": 2.8566666666666665
+      "oracle_transitions": 36.97,
+      "KA-DFS_transitions": 87.54666666666667,
+      "KA-DFS_excess": 23.14666666666667,
+      "KA-GBFS_transitions": 121.99333333333334,
+      "KA-GBFS_excess": 3.27
      }
     },
     "HELD_TARGETS": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 88.23,
-      "mean_states": 36.526666666666664,
-      "mean_excess": 6.1433333333333335,
+      "mean_transitions": 92.53333333333333,
+      "mean_states": 38.2,
+      "mean_excess": 6.483333333333333,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.00046186328846664626,
+      "HC_D_transitions": -0.04181363432309371,
       "HC_D_transitions_CI95": [
-       -0.10443109364396543,
-       0.08652507758387427
+       -0.14923084882657506,
+       0.06162153619760917
       ],
-      "HC_D_states": 0.18521078092605392,
+      "HC_D_states": 0.15181915462814344,
       "HC_D_states_CI95": [
-       0.0923566284567775,
-       0.261924782931361
+       0.060068215292615426,
+       0.2401021103853178
       ],
       "band": "no useful compression",
-      "dominance": "DOMINATES KA-DFS"
+      "dominance": "PATH ONLY"
      },
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 95.65,
-      "mean_states": 40.42,
-      "mean_excess": 23.216666666666665,
+      "mean_transitions": 97.54666666666667,
+      "mean_states": 41.126666666666665,
+      "mean_excess": 23.72,
       "traps_taken": 0.0,
-      "HC_D_transitions": -0.14641066244391654,
+      "HC_D_transitions": -0.13826717116654907,
       "HC_D_transitions_CI95": [
-       -0.2715055874507638,
-       -0.03834687018323369
+       -0.2552901456470445,
+       -0.030014016521975186
       ],
-      "HC_D_states": 0.023773324118866568,
+      "HC_D_states": 0.03437667201712147,
       "HC_D_states_CI95": [
-       -0.08740069143271462,
-       0.11876468595482133
+       -0.0644312996024699,
+       0.1281878047179439
       ],
       "band": "no useful compression",
-      "dominance": "NONE"
+      "dominance": "PATH ONLY"
      },
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.37190732887015765,
-      "exact": 0.17304,
-      "within_1": 0.4923,
-      "MAE": 1.8073020191574096,
-      "spearman": 0.6081610338548428
+      "R2": 0.3713456900608839,
+      "exact": 0.1742,
+      "within_1": 0.49867333333333336,
+      "MAE": 1.7993263735040028,
+      "spearman": 0.6079666337814666
      },
      "references": {
-      "oracle_transitions": 37.733333333333334,
-      "KA-DFS_transitions": 88.25333333333333,
-      "KA-DFS_excess": 23.0,
-      "KA-GBFS_transitions": 124.20666666666666,
-      "KA-GBFS_excess": 3.15
+      "oracle_transitions": 38.38333333333333,
+      "KA-DFS_transitions": 90.36,
+      "KA-DFS_excess": 23.78,
+      "KA-GBFS_transitions": 125.95333333333333,
+      "KA-GBFS_excess": 3.513333333333333
      }
     },
     "HELD_BOTH": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 97.11666666666666,
-      "mean_states": 40.163333333333334,
-      "mean_excess": 6.23,
+      "mean_transitions": 88.66333333333333,
+      "mean_states": 36.70666666666666,
+      "mean_excess": 5.413333333333333,
       "traps_taken": 0.0,
-      "HC_D_transitions": -0.17914564413050793,
+      "HC_D_transitions": -0.0017717698011681104,
       "HC_D_transitions_CI95": [
-       -0.3263640906247991,
-       -0.05036711717008927
+       -0.11747155461091548,
+       0.09493358620857664
       ],
-      "HC_D_states": 0.03853672158614907,
+      "HC_D_states": 0.18787629994526545,
       "HC_D_states_CI95": [
-       -0.09036836985069614,
-       0.15367425831625878
+       0.09019590264934914,
+       0.2708302646592662
       ],
       "band": "no useful compression",
       "dominance": "PATH ONLY"
@@ -205,19 +205,19 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 94.49,
-      "mean_states": 39.93,
-      "mean_excess": 22.373333333333335,
+      "mean_transitions": 94.91333333333333,
+      "mean_states": 40.263333333333335,
+      "mean_excess": 22.95,
       "traps_taken": 0.0,
-      "HC_D_transitions": -0.12613521695257313,
+      "HC_D_transitions": -0.12481133932672739,
       "HC_D_transitions_CI95": [
-       -0.231687703407068,
-       -0.030806523147606617
+       -0.24104546276341682,
+       -0.018255091239791438
       ],
-      "HC_D_states": 0.048310527785534796,
+      "HC_D_states": 0.041871921182266014,
       "HC_D_states_CI95": [
-       -0.047968695325116405,
-       0.13467619307967907
+       -0.06360181664495623,
+       0.13633801054828049
       ],
       "band": "no useful compression",
       "dominance": "PATH ONLY"
@@ -225,18 +225,18 @@
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.3748018409988785,
-      "exact": 0.17437333333333332,
-      "within_1": 0.4932066666666667,
-      "MAE": 1.7992217984771728,
-      "spearman": 0.6110324195612109
+      "R2": 0.37544560968926677,
+      "exact": 0.17595333333333332,
+      "within_1": 0.5005766666666667,
+      "MAE": 1.789292744070689,
+      "spearman": 0.6113542229972535
      },
      "references": {
-      "oracle_transitions": 38.69,
-      "KA-DFS_transitions": 88.24,
-      "KA-DFS_excess": 22.746666666666666,
-      "KA-GBFS_transitions": 123.48333333333333,
-      "KA-GBFS_excess": 3.0766666666666667
+      "oracle_transitions": 37.776666666666664,
+      "KA-DFS_transitions": 88.57333333333334,
+      "KA-DFS_excess": 23.233333333333334,
+      "KA-GBFS_transitions": 122.23333333333333,
+      "KA-GBFS_excess": 3.1333333333333333
      }
     }
    },
@@ -246,55 +246,60 @@
     "4.0": "eligible",
     "8.0": "eligible"
    },
-   "seconds": 64.7,
+   "seconds": 104.9,
+   "weights_file": "weights/C2-TT-r4.pt",
    "fit": {
     "params": 900,
-    "best_epoch": 7,
-    "best_val": 2.170567512512207,
+    "best_epoch": 8,
+    "best_val": 2.1711440086364746,
     "history": [
      [
       0,
-      2.8810229301452637
+      2.8809120655059814
      ],
      [
       1,
-      2.8809823989868164
+      2.1832432746887207
      ],
      [
       2,
-      2.191765308380127
+      2.1730616092681885
      ],
      [
       3,
-      2.180927038192749
+      2.1720690727233887
      ],
      [
       4,
-      2.1826939582824707
+      2.174481153488159
      ],
      [
       5,
-      2.1709938049316406
+      2.171377658843994
      ],
      [
       6,
-      2.1723177433013916
+      2.1725289821624756
      ],
      [
       7,
-      2.170567512512207
+      2.172063112258911
      ],
      [
       8,
-      2.1707491874694824
+      2.1711440086364746
      ],
      [
       9,
-      2.1721136569976807
+      2.1729605197906494
      ],
      [
       10,
-      2.1715826988220215
+      2.171752691268921
+     ],
+     [
+      11,
+      2.1733510494232178
      ]
     ],
     "bytes_lzma": 2828,
@@ -310,19 +315,19 @@
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 66.34666666666666,
-      "mean_states": 31.05666666666667,
-      "mean_excess": 4.0,
+      "mean_transitions": 64.89,
+      "mean_states": 30.97,
+      "mean_excess": 4.4,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.4377581120943953,
+      "HC_D_transitions": 0.4002124645892351,
       "HC_D_transitions_CI95": [
-       0.38036593530841917,
-       0.4914665896807489
+       0.3274786519997915,
+       0.46316463288413684
       ],
-      "HC_D_states": 0.4175180493120828,
+      "HC_D_states": 0.35402536125036865,
       "HC_D_states_CI95": [
-       0.3518428502822179,
-       0.4779824358246421
+       0.2682749555786303,
+       0.42940184097223083
       ],
       "band": "meaningful structural compression",
       "dominance": "DOMINATES KA-DFS"
@@ -330,57 +335,57 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 69.58333333333333,
-      "mean_states": 33.82333333333333,
-      "mean_excess": 15.703333333333333,
+      "mean_transitions": 64.79666666666667,
+      "mean_states": 30.736666666666668,
+      "mean_excess": 13.576666666666666,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.3741068502130449,
+      "HC_D_transitions": 0.40219546742209633,
       "HC_D_transitions_CI95": [
-       0.3196277036189961,
-       0.43133211450243353
+       0.3362337781189264,
+       0.46478327096908423
       ],
-      "HC_D_states": 0.3044544340008173,
+      "HC_D_states": 0.3643468003538779,
       "HC_D_states_CI95": [
-       0.23462930200032922,
-       0.3703927625401324
+       0.28565560938040446,
+       0.43896941197860995
       ],
-      "band": "weak but real structure",
+      "band": "meaningful structural compression",
       "dominance": "DOMINATES KA-DFS"
      },
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.6204289750605304,
-      "exact": 0.23457333333333333,
-      "within_1": 0.61524,
-      "MAE": 1.3969998138491313,
-      "spearman": 0.7769382727236678
+      "R2": 0.6196727706135232,
+      "exact": 0.23237,
+      "within_1": 0.61519,
+      "MAE": 1.398935958000819,
+      "spearman": 0.7758843612398714
      },
      "references": {
-      "oracle_transitions": 37.75666666666667,
-      "KA-DFS_transitions": 88.60666666666667,
-      "KA-DFS_excess": 23.47,
-      "KA-GBFS_transitions": 126.28333333333333,
-      "KA-GBFS_excess": 3.3833333333333333
+      "oracle_transitions": 36.66,
+      "KA-DFS_transitions": 83.72666666666667,
+      "KA-DFS_excess": 21.65,
+      "KA-GBFS_transitions": 117.35333333333334,
+      "KA-GBFS_excess": 3.0366666666666666
      }
     },
     "HELD_STATES": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 64.59,
-      "mean_states": 30.016666666666666,
-      "mean_excess": 3.8266666666666667,
+      "mean_transitions": 64.18,
+      "mean_states": 30.096666666666668,
+      "mean_excess": 4.246666666666667,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.4722767098208448,
+      "HC_D_transitions": 0.4620048770842945,
       "HC_D_transitions_CI95": [
-       0.41612163248966294,
-       0.5213167359411034
+       0.3978497170754397,
+       0.525763760031953
       ],
-      "HC_D_states": 0.4629429266973222,
+      "HC_D_states": 0.4427648756355641,
       "HC_D_states_CI95": [
-       0.4008414464495118,
-       0.5172424644650884
+       0.3726043076805628,
+       0.5139330057606454
       ],
       "band": "meaningful structural compression",
       "dominance": "DOMINATES KA-DFS"
@@ -388,57 +393,57 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 68.33333333333333,
-      "mean_states": 32.49,
-      "mean_excess": 14.61,
+      "mean_transitions": 63.843333333333334,
+      "mean_states": 30.116666666666667,
+      "mean_excess": 12.756666666666666,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.3988492219170917,
+      "HC_D_transitions": 0.4686614380808014,
       "HC_D_transitions_CI95": [
-       0.33691741226678396,
-       0.4552059628307694
+       0.40982521221105267,
+       0.5197700369782717
       ],
-      "HC_D_states": 0.362591290235326,
+      "HC_D_states": 0.44194036003847736,
       "HC_D_states_CI95": [
-       0.2963762320690314,
-       0.4277547742037201
+       0.3758484298755424,
+       0.5019669727392758
       ],
-      "band": "weak but real structure",
+      "band": "meaningful structural compression",
       "dominance": "DOMINATES KA-DFS"
      },
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.6216291249142188,
-      "exact": 0.2333,
-      "within_1": 0.61454,
-      "MAE": 1.397896141058604,
-      "spearman": 0.7772576766396954
+      "R2": 0.6193083428973011,
+      "exact": 0.23265,
+      "within_1": 0.61436,
+      "MAE": 1.4021114891846975,
+      "spearman": 0.7752540744524152
      },
      "references": {
-      "oracle_transitions": 37.68666666666667,
-      "KA-DFS_transitions": 88.66666666666667,
-      "KA-DFS_excess": 23.483333333333334,
-      "KA-GBFS_transitions": 119.63333333333334,
-      "KA-GBFS_excess": 2.8566666666666665
+      "oracle_transitions": 36.97,
+      "KA-DFS_transitions": 87.54666666666667,
+      "KA-DFS_excess": 23.14666666666667,
+      "KA-GBFS_transitions": 121.99333333333334,
+      "KA-GBFS_excess": 3.27
      }
     },
     "HELD_TARGETS": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 72.67666666666666,
-      "mean_states": 33.76,
-      "mean_excess": 5.363333333333333,
+      "mean_transitions": 76.18333333333334,
+      "mean_states": 36.49,
+      "mean_excess": 6.07,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.30832673528635524,
+      "HC_D_transitions": 0.27275059321490414,
       "HC_D_transitions_CI95": [
-       0.24498266801442464,
-       0.36527712812883045
+       0.2063996399388699,
+       0.3370062991989156
       ],
-      "HC_D_states": 0.29993089149965446,
+      "HC_D_states": 0.22043873729266983,
       "HC_D_states_CI95": [
-       0.23051571728073195,
-       0.3617869325422865
+       0.14672805296558916,
+       0.29208329050494664
       ],
       "band": "weak but real structure",
       "dominance": "DOMINATES KA-DFS"
@@ -446,57 +451,57 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 77.99333333333334,
-      "mean_states": 37.39,
-      "mean_excess": 19.016666666666666,
+      "mean_transitions": 73.44666666666667,
+      "mean_states": 35.236666666666665,
+      "mean_excess": 17.69,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.20308788598574823,
+      "HC_D_transitions": 0.32540242416468923,
       "HC_D_transitions_CI95": [
-       0.12599668384654678,
-       0.27320087580787306
+       0.26307433169327077,
+       0.38719801640501966
       ],
-      "HC_D_states": 0.14941257774706285,
+      "HC_D_states": 0.27073301230604596,
       "HC_D_states_CI95": [
-       0.0712083557969451,
-       0.22664269282610464
+       0.20139853978264705,
+       0.339648609526577
       ],
       "band": "weak but real structure",
-      "dominance": "COST ONLY"
+      "dominance": "DOMINATES KA-DFS"
      },
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.441112331691185,
-      "exact": 0.18875666666666666,
-      "within_1": 0.5277566666666667,
-      "MAE": 1.6989031279563904,
-      "spearman": 0.6605743585816889
+      "R2": 0.4376339685738353,
+      "exact": 0.18625,
+      "within_1": 0.52358,
+      "MAE": 1.703552948029836,
+      "spearman": 0.6841104257145717
      },
      "references": {
-      "oracle_transitions": 37.733333333333334,
-      "KA-DFS_transitions": 88.25333333333333,
-      "KA-DFS_excess": 23.0,
-      "KA-GBFS_transitions": 124.20666666666666,
-      "KA-GBFS_excess": 3.15
+      "oracle_transitions": 38.38333333333333,
+      "KA-DFS_transitions": 90.36,
+      "KA-DFS_excess": 23.78,
+      "KA-GBFS_transitions": 125.95333333333333,
+      "KA-GBFS_excess": 3.513333333333333
      }
     },
     "HELD_BOTH": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 72.25666666666666,
-      "mean_states": 33.236666666666665,
-      "mean_excess": 5.196666666666666,
+      "mean_transitions": 73.41333333333333,
+      "mean_states": 35.123333333333335,
+      "mean_excess": 5.556666666666667,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.3225697948200471,
+      "HC_D_transitions": 0.2984447798411969,
       "HC_D_transitions_CI95": [
-       0.26094371984389536,
-       0.38214244707275746
+       0.2308160748183173,
+       0.3603746110231835
       ],
-      "HC_D_states": 0.3286791399050545,
+      "HC_D_states": 0.25287356321839083,
       "HC_D_states_CI95": [
-       0.26538245977084096,
-       0.38888931241514246
+       0.17530318468977527,
+       0.3236564930836849
       ],
       "band": "weak but real structure",
       "dominance": "DOMINATES KA-DFS"
@@ -504,19 +509,19 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 76.53,
-      "mean_states": 36.45,
-      "mean_excess": 17.666666666666668,
+      "mean_transitions": 69.52333333333333,
+      "mean_states": 33.53333333333333,
+      "mean_excess": 16.13,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.2363269424823411,
+      "HC_D_transitions": 0.37502460791390513,
       "HC_D_transitions_CI95": [
-       0.1638363451229299,
-       0.31038322658991974
+       0.3134142132412253,
+       0.42737992311172684
       ],
-      "HC_D_states": 0.19407986595922921,
+      "HC_D_states": 0.3181444991789819,
       "HC_D_states_CI95": [
-       0.1163761554059001,
-       0.27205634109161264
+       0.25016684676638684,
+       0.37943954343670444
       ],
       "band": "weak but real structure",
       "dominance": "DOMINATES KA-DFS"
@@ -524,18 +529,18 @@
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.44353407740392614,
-      "exact": 0.18926333333333334,
-      "within_1": 0.5302,
-      "MAE": 1.691443895931244,
-      "spearman": 0.6632363312606911
+      "R2": 0.4415310040689403,
+      "exact": 0.18737666666666666,
+      "within_1": 0.5264666666666666,
+      "MAE": 1.6942048724492391,
+      "spearman": 0.6868602498537042
      },
      "references": {
-      "oracle_transitions": 38.69,
-      "KA-DFS_transitions": 88.24,
-      "KA-DFS_excess": 22.746666666666666,
-      "KA-GBFS_transitions": 123.48333333333333,
-      "KA-GBFS_excess": 3.0766666666666667
+      "oracle_transitions": 37.776666666666664,
+      "KA-DFS_transitions": 88.57333333333334,
+      "KA-DFS_excess": 23.233333333333334,
+      "KA-GBFS_transitions": 122.23333333333333,
+      "KA-GBFS_excess": 3.1333333333333333
      }
     }
    },
@@ -545,51 +550,36 @@
     "4.0": "eligible",
     "8.0": "eligible"
    },
-   "seconds": 42.2,
+   "seconds": 62.5,
+   "weights_file": "weights/C2-TT-r8.pt",
    "fit": {
     "params": 3528,
-    "best_epoch": 6,
-    "best_val": 1.7689378261566162,
+    "best_epoch": 2,
+    "best_val": 1.773227334022522,
     "history": [
      [
       0,
-      2.2302379608154297
+      1.928074598312378
      ],
      [
       1,
-      1.7892944812774658
+      1.7904338836669922
      ],
      [
       2,
-      1.7765369415283203
+      1.773227334022522
      ],
      [
       3,
-      1.7799468040466309
+      1.7779711484909058
      ],
      [
       4,
-      1.775995135307312
+      1.7746708393096924
      ],
      [
       5,
-      1.7751291990280151
-     ],
-     [
-      6,
-      1.7689378261566162
-     ],
-     [
-      7,
-      1.7715355157852173
-     ],
-     [
-      8,
-      1.7699742317199707
-     ],
-     [
-      9,
-      1.7737942934036255
+      1.7743743658065796
      ]
     ],
     "bytes_lzma": 7544,
@@ -598,26 +588,26 @@
   },
   "C2-TT-r16": {
    "name": "C2-TT-r16",
-   "serialized_bytes": 26324,
-   "CR": 40.293876310591095,
+   "serialized_bytes": 26344,
+   "CR": 40.26328575766778,
    "sets": {
     "HELD_PAIRS": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 61.87,
-      "mean_states": 29.366666666666667,
-      "mean_excess": 3.2133333333333334,
+      "mean_transitions": 64.55666666666667,
+      "mean_states": 31.596666666666668,
+      "mean_excess": 2.8,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.5257948213700426,
+      "HC_D_transitions": 0.4072946175637394,
       "HC_D_transitions_CI95": [
-       0.4722172241171371,
-       0.5776863053247039
+       0.3504500391206368,
+       0.45934568613042986
       ],
-      "HC_D_states": 0.4865822095082414,
+      "HC_D_states": 0.32630492480094364,
       "HC_D_states_CI95": [
-       0.4242478277084284,
-       0.5467912129406278
+       0.25521202219887945,
+       0.3900160318911834
       ],
       "band": "meaningful structural compression",
       "dominance": "DOMINATES KA-DFS"
@@ -625,57 +615,57 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 65.73333333333333,
-      "mean_states": 32.36666666666667,
-      "mean_excess": 15.126666666666667,
+      "mean_transitions": 65.77666666666667,
+      "mean_states": 32.96333333333333,
+      "mean_excess": 15.923333333333334,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.44981973123566044,
+      "HC_D_transitions": 0.38137393767705385,
       "HC_D_transitions_CI95": [
-       0.3871148018914165,
-       0.5078531491477446
+       0.3109546584254352,
+       0.4378437676803162
       ],
-      "HC_D_states": 0.36398310856831495,
+      "HC_D_states": 0.2658507814803893,
       "HC_D_states_CI95": [
-       0.2893637281485365,
-       0.4335286843537736
+       0.18476626824280523,
+       0.33161237865131094
       ],
-      "band": "meaningful structural compression",
+      "band": "weak but real structure",
       "dominance": "DOMINATES KA-DFS"
      },
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.7679830342906228,
-      "exact": 0.30767666666666665,
-      "within_1": 0.74264,
-      "MAE": 1.0752107109991709,
-      "spearman": 0.8713281591195582
+      "R2": 0.7753624528600616,
+      "exact": 0.31526666666666664,
+      "within_1": 0.7501733333333334,
+      "MAE": 1.055308933690389,
+      "spearman": 0.876192536660334
      },
      "references": {
-      "oracle_transitions": 37.75666666666667,
-      "KA-DFS_transitions": 88.60666666666667,
-      "KA-DFS_excess": 23.47,
-      "KA-GBFS_transitions": 126.28333333333333,
-      "KA-GBFS_excess": 3.3833333333333333
+      "oracle_transitions": 36.66,
+      "KA-DFS_transitions": 83.72666666666667,
+      "KA-DFS_excess": 21.65,
+      "KA-GBFS_transitions": 117.35333333333334,
+      "KA-GBFS_excess": 3.0366666666666666
      }
     },
     "HELD_STATES": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 61.07666666666667,
-      "mean_states": 29.023333333333333,
-      "mean_excess": 3.486666666666667,
+      "mean_transitions": 64.94,
+      "mean_states": 32.04333333333334,
+      "mean_excess": 3.013333333333333,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.5411926245586505,
+      "HC_D_transitions": 0.44697818493376396,
       "HC_D_transitions_CI95": [
-       0.49335167078691117,
-       0.5825345441660233
+       0.39478556466898457,
+       0.4938654538195201
       ],
-      "HC_D_states": 0.5032458750338111,
+      "HC_D_states": 0.36251202418579087,
       "HC_D_states_CI95": [
-       0.44331933146034813,
-       0.5544459464791731
+       0.29782189519657076,
+       0.42126147462165203
       ],
       "band": "meaningful structural compression",
       "dominance": "DOMINATES KA-DFS"
@@ -683,154 +673,154 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 64.42333333333333,
-      "mean_states": 31.59,
-      "mean_excess": 14.49,
+      "mean_transitions": 70.5,
+      "mean_states": 35.49,
+      "mean_excess": 18.066666666666666,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.47554596573819796,
+      "HC_D_transitions": 0.3370460686746194,
       "HC_D_transitions_CI95": [
-       0.4200734287081923,
-       0.5268320607416167
+       0.27472472840195533,
+       0.39570145076770197
       ],
-      "HC_D_states": 0.3991073843657019,
+      "HC_D_states": 0.2204205029545142,
       "HC_D_states_CI95": [
-       0.3313236730917089,
-       0.4591031339652948
+       0.14267804561623926,
+       0.2907909638566955
       ],
-      "band": "meaningful structural compression",
+      "band": "weak but real structure",
       "dominance": "DOMINATES KA-DFS"
      },
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.7694114558808025,
-      "exact": 0.30726333333333333,
-      "within_1": 0.7425133333333334,
-      "MAE": 1.0744540274302166,
-      "spearman": 0.8722108002121562
+      "R2": 0.7768600691204459,
+      "exact": 0.31499333333333335,
+      "within_1": 0.74986,
+      "MAE": 1.0545361153793336,
+      "spearman": 0.8768149379309151
      },
      "references": {
-      "oracle_transitions": 37.68666666666667,
-      "KA-DFS_transitions": 88.66666666666667,
-      "KA-DFS_excess": 23.483333333333334,
-      "KA-GBFS_transitions": 119.63333333333334,
-      "KA-GBFS_excess": 2.8566666666666665
+      "oracle_transitions": 36.97,
+      "KA-DFS_transitions": 87.54666666666667,
+      "KA-DFS_excess": 23.14666666666667,
+      "KA-GBFS_transitions": 121.99333333333334,
+      "KA-GBFS_excess": 3.27
      }
     },
     "HELD_TARGETS": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 70.22,
-      "mean_states": 31.84,
-      "mean_excess": 5.346666666666667,
+      "mean_transitions": 66.62666666666667,
+      "mean_states": 28.976666666666667,
+      "mean_excess": 5.77,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.35695434151491157,
+      "HC_D_transitions": 0.45661514782274093,
       "HC_D_transitions_CI95": [
-       0.27224447075501956,
-       0.4315200215559238
+       0.3963221483654192,
+       0.5100096709230267
       ],
-      "HC_D_states": 0.3795438838977194,
+      "HC_D_states": 0.5219368646334939,
       "HC_D_states_CI95": [
-       0.2982886509296968,
-       0.45347367894224677
+       0.4680173605393762,
+       0.5682939614201845
       ],
-      "band": "weak but real structure",
+      "band": "meaningful structural compression",
       "dominance": "DOMINATES KA-DFS"
      },
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 72.93,
-      "mean_states": 33.723333333333336,
-      "mean_excess": 16.423333333333332,
+      "mean_transitions": 68.39,
+      "mean_states": 30.733333333333334,
+      "mean_excess": 13.26,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.3033122195830035,
+      "HC_D_transitions": 0.4226896684409671,
       "HC_D_transitions_CI95": [
-       0.20959973326106326,
-       0.38407763611414686
+       0.35549876413199116,
+       0.4884821773100592
       ],
-      "HC_D_states": 0.3014512785072564,
+      "HC_D_states": 0.4514446227929374,
       "HC_D_states_CI95": [
-       0.20116954294907666,
-       0.3879210342196371
+       0.37967624163372643,
+       0.5192308994852343
       ],
-      "band": "weak but real structure",
+      "band": "meaningful structural compression",
       "dominance": "DOMINATES KA-DFS"
      },
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.4716588604500106,
-      "exact": 0.19923,
-      "within_1": 0.54857,
-      "MAE": 1.635482174421946,
-      "spearman": 0.6778985937369816
+      "R2": 0.4939124952478119,
+      "exact": 0.19639,
+      "within_1": 0.5433933333333333,
+      "MAE": 1.6201154315948487,
+      "spearman": 0.6923684455921358
      },
      "references": {
-      "oracle_transitions": 37.733333333333334,
-      "KA-DFS_transitions": 88.25333333333333,
-      "KA-DFS_excess": 23.0,
-      "KA-GBFS_transitions": 124.20666666666666,
-      "KA-GBFS_excess": 3.15
+      "oracle_transitions": 38.38333333333333,
+      "KA-DFS_transitions": 90.36,
+      "KA-DFS_excess": 23.78,
+      "KA-GBFS_transitions": 125.95333333333333,
+      "KA-GBFS_excess": 3.513333333333333
      }
     },
     "HELD_BOTH": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 69.00666666666666,
-      "mean_states": 30.95,
-      "mean_excess": 5.55,
+      "mean_transitions": 66.67666666666666,
+      "mean_states": 29.14666666666667,
+      "mean_excess": 5.71,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.3881601076353851,
+      "HC_D_transitions": 0.4310650305138133,
       "HC_D_transitions_CI95": [
-       0.3097044892298226,
-       0.46164537567051933
+       0.37015835470445757,
+       0.490705737108219
       ],
-      "HC_D_states": 0.4244624406590338,
+      "HC_D_states": 0.4982211275314724,
       "HC_D_states_CI95": [
-       0.3497515316589334,
-       0.49384327227249153
+       0.44281413531043573,
+       0.5530673451498442
       ],
-      "band": "weak but real structure",
+      "band": "meaningful structural compression",
       "dominance": "DOMINATES KA-DFS"
      },
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 73.31333333333333,
-      "mean_states": 33.75333333333333,
-      "mean_excess": 15.96,
+      "mean_transitions": 67.25333333333333,
+      "mean_states": 30.473333333333333,
+      "mean_excess": 13.203333333333333,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.3012445341405987,
+      "HC_D_transitions": 0.4197125795655883,
       "HC_D_transitions_CI95": [
-       0.18365642862355153,
-       0.402736896995839
+       0.35388081611050415,
+       0.4806802338937496
       ],
-      "HC_D_states": 0.3070371404635577,
+      "HC_D_states": 0.44376026272577995,
       "HC_D_states_CI95": [
-       0.17905600123116558,
-       0.4146249561789855
+       0.3717098402655699,
+       0.5078145382335814
       ],
-      "band": "weak but real structure",
+      "band": "meaningful structural compression",
       "dominance": "DOMINATES KA-DFS"
      },
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.4713990576070394,
-      "exact": 0.20083666666666666,
-      "within_1": 0.5505566666666667,
-      "MAE": 1.6317842404651641,
-      "spearman": 0.6773340909452906
+      "R2": 0.4971958445725527,
+      "exact": 0.19932,
+      "within_1": 0.5477633333333334,
+      "MAE": 1.6096203893184662,
+      "spearman": 0.6951457081849831
      },
      "references": {
-      "oracle_transitions": 38.69,
-      "KA-DFS_transitions": 88.24,
-      "KA-DFS_excess": 22.746666666666666,
-      "KA-GBFS_transitions": 123.48333333333333,
-      "KA-GBFS_excess": 3.0766666666666667
+      "oracle_transitions": 37.776666666666664,
+      "KA-DFS_transitions": 88.57333333333334,
+      "KA-DFS_excess": 23.233333333333334,
+      "KA-GBFS_transitions": 122.23333333333333,
+      "KA-GBFS_excess": 3.1333333333333333
      }
     }
    },
@@ -840,87 +830,88 @@
     "4.0": "eligible",
     "8.0": "eligible"
    },
-   "seconds": 38.9,
+   "seconds": 47.3,
+   "weights_file": "weights/C2-TT-r16.pt",
    "fit": {
     "params": 13968,
     "best_epoch": 11,
-    "best_val": 1.3863537311553955,
+    "best_val": 1.364866852760315,
     "history": [
      [
       0,
-      1.6691302061080933
+      1.665687918663025
      ],
      [
       1,
-      1.549296498298645
+      1.5342717170715332
      ],
      [
       2,
-      1.4986447095870972
+      1.4986882209777832
      ],
      [
       3,
-      1.474673867225647
+      1.4457820653915405
      ],
      [
       4,
-      1.4438625574111938
+      1.4108189344406128
      ],
      [
       5,
-      1.4371986389160156
+      1.3871203660964966
      ],
      [
       6,
-      1.4272396564483643
+      1.3733885288238525
      ],
      [
       7,
-      1.405224323272705
+      1.3662583827972412
      ],
      [
       8,
-      1.393843412399292
+      1.3655990362167358
      ],
      [
       9,
-      1.39529287815094
+      1.3684940338134766
      ],
      [
       10,
-      1.3900712728500366
+      1.3688398599624634
      ],
      [
       11,
-      1.3863537311553955
+      1.364866852760315
      ]
     ],
-    "bytes_lzma": 26324,
+    "bytes_lzma": 26344,
     "observed_rows": 3000000
    }
   },
   "C2-Tucker-k2": {
    "name": "C2-Tucker-k2",
-   "serialized_bytes": 30996,
-   "CR": 34.220415537488705,
+   "serialized_bytes": 30960,
+   "CR": 34.260206718346254,
    "sets": {
     "HELD_PAIRS": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 92.39333333333333,
-      "mean_states": 40.626666666666665,
-      "mean_excess": 4.42,
+      "mean_transitions": 90.87333333333333,
+      "mean_states": 39.93333333333333,
+      "mean_excess": 4.136666666666667,
       "traps_taken": 0.0,
-      "HC_D_transitions": -0.07446738774172412,
+      "HC_D_transitions": -0.1518413597733712,
       "HC_D_transitions_CI95": [
-       -0.17454008892333828,
-       0.022454930589064042
+       -0.2554351638548634,
+       -0.046086649195457435
       ],
-      "HC_D_states": 0.02642691731371749,
+      "HC_D_states": -0.04246534945443825,
       "HC_D_states_CI95": [
-       -0.07386086778375997,
-       0.12455406430339523
+       -0.14311643975366362,
+       0.06043779119484333
       ],
       "band": "no useful compression",
       "dominance": "PATH ONLY"
@@ -928,135 +919,19 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 76.39666666666666,
-      "mean_states": 33.20333333333333,
-      "mean_excess": 15.986666666666666,
+      "mean_transitions": 77.43333333333334,
+      "mean_states": 33.78666666666667,
+      "mean_excess": 16.976666666666667,
       "traps_taken": 0.0,
-      "HC_D_transitions": 0.240117994100295,
+      "HC_D_transitions": 0.1337110481586402,
       "HC_D_transitions_CI95": [
-       0.16355101744037903,
-       0.31415620653874227
+       0.0235818560266363,
+       0.21904527294234127
       ],
-      "HC_D_states": 0.32979158152840216,
+      "HC_D_states": 0.22943084635800648,
       "HC_D_states_CI95": [
-       0.2533366246723673,
-       0.400170897969408
-      ],
-      "band": "weak but real structure",
-      "dominance": "DOMINATES KA-DFS"
-     },
-     "distance": {
-      "rows": 300000,
-      "coverage": 1.0,
-      "R2": 0.5808041976969528,
-      "exact": 0.21757333333333334,
-      "within_1": 0.5925933333333333,
-      "MAE": 1.4599126959546407,
-      "spearman": 0.7703739035719196
-     },
-     "references": {
-      "oracle_transitions": 37.75666666666667,
-      "KA-DFS_transitions": 88.60666666666667,
-      "KA-DFS_excess": 23.47,
-      "KA-GBFS_transitions": 126.28333333333333,
-      "KA-GBFS_excess": 3.3833333333333333
-     }
-    },
-    "HELD_STATES": {
-     "GBFS": {
-      "solve_rate": 1.0,
-      "failures": 0,
-      "mean_transitions": 92.64,
-      "mean_states": 40.70666666666666,
-      "mean_excess": 4.383333333333334,
-      "traps_taken": 0.0,
-      "HC_D_transitions": -0.07793906106970061,
-      "HC_D_transitions_CI95": [
-       -0.1972464245627097,
-       0.0354369035011218
-      ],
-      "HC_D_states": 0.029212875304300834,
-      "HC_D_states_CI95": [
-       -0.08640489868265575,
-       0.14013849630306707
-      ],
-      "band": "no useful compression",
-      "dominance": "PATH ONLY"
-     },
-     "DFS": {
-      "solve_rate": 1.0,
-      "failures": 0,
-      "mean_transitions": 78.42666666666666,
-      "mean_states": 34.38,
-      "mean_excess": 17.203333333333333,
-      "traps_taken": 0.0,
-      "HC_D_transitions": 0.2008630835621813,
-      "HC_D_transitions_CI95": [
-       0.112413891059002,
-       0.2816103013331085
-      ],
-      "HC_D_states": 0.28590749256153636,
-      "HC_D_states_CI95": [
-       0.19315418027931786,
-       0.3669125037098381
-      ],
-      "band": "weak but real structure",
-      "dominance": "DOMINATES KA-DFS"
-     },
-     "distance": {
-      "rows": 300000,
-      "coverage": 1.0,
-      "R2": 0.5808759939472671,
-      "exact": 0.21440333333333333,
-      "within_1": 0.5914666666666667,
-      "MAE": 1.4646167783737183,
-      "spearman": 0.7700306290921917
-     },
-     "references": {
-      "oracle_transitions": 37.68666666666667,
-      "KA-DFS_transitions": 88.66666666666667,
-      "KA-DFS_excess": 23.483333333333334,
-      "KA-GBFS_transitions": 119.63333333333334,
-      "KA-GBFS_excess": 2.8566666666666665
-     }
-    },
-    "HELD_TARGETS": {
-     "GBFS": {
-      "solve_rate": 1.0,
-      "failures": 0,
-      "mean_transitions": 101.47666666666667,
-      "mean_states": 46.00666666666667,
-      "mean_excess": 5.673333333333333,
-      "traps_taken": 0.0,
-      "HC_D_transitions": -0.2617445236210081,
-      "HC_D_transitions_CI95": [
-       -0.39962790359937095,
-       -0.12846031022387736
-      ],
-      "HC_D_states": -0.20787836903939194,
-      "HC_D_states_CI95": [
-       -0.3492603240535122,
-       -0.07036271957066907
-      ],
-      "band": "no useful compression",
-      "dominance": "PATH ONLY"
-     },
-     "DFS": {
-      "solve_rate": 1.0,
-      "failures": 0,
-      "mean_transitions": 84.37666666666667,
-      "mean_states": 38.04,
-      "mean_excess": 20.633333333333333,
-      "traps_taken": 0.0,
-      "HC_D_transitions": 0.07673528635523885,
-      "HC_D_transitions_CI95": [
-       -0.040708108947804564,
-       0.17825256773767864
-      ],
-      "HC_D_states": 0.12246026261230136,
-      "HC_D_states_CI95": [
-       0.003181009264813318,
-       0.228943865096593
+       0.12201963294921038,
+       0.31581429667389455
       ],
       "band": "no useful compression",
       "dominance": "COST ONLY"
@@ -1064,37 +939,37 @@
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.3004212220747713,
-      "exact": 0.16866,
-      "within_1": 0.47763666666666665,
-      "MAE": 1.9032495148690542,
-      "spearman": 0.5476981282051471
+      "R2": 0.5808958222073592,
+      "exact": 0.21753333333333333,
+      "within_1": 0.59276,
+      "MAE": 1.4597909465758006,
+      "spearman": 0.7703259241172911
      },
      "references": {
-      "oracle_transitions": 37.733333333333334,
-      "KA-DFS_transitions": 88.25333333333333,
-      "KA-DFS_excess": 23.0,
-      "KA-GBFS_transitions": 124.20666666666666,
-      "KA-GBFS_excess": 3.15
+      "oracle_transitions": 36.66,
+      "KA-DFS_transitions": 83.72666666666667,
+      "KA-DFS_excess": 21.65,
+      "KA-GBFS_transitions": 117.35333333333334,
+      "KA-GBFS_excess": 3.0366666666666666
      }
     },
-    "HELD_BOTH": {
+    "HELD_STATES": {
      "GBFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 106.32,
-      "mean_states": 47.81333333333333,
-      "mean_excess": 5.66,
+      "mean_transitions": 91.93333333333334,
+      "mean_states": 40.62,
+      "mean_excess": 4.676666666666667,
       "traps_taken": 0.0,
-      "HC_D_transitions": -0.36488395560040354,
+      "HC_D_transitions": -0.08673301258815003,
       "HC_D_transitions_CI95": [
-       -0.5017368952374325,
-       -0.23067709349878227
+       -0.18822699320879002,
+       0.021964095935932782
       ],
-      "HC_D_states": -0.28190449595085165,
+      "HC_D_states": 0.008932252301772747,
       "HC_D_states_CI95": [
-       -0.4199257806157512,
-       -0.14718386957460586
+       -0.08778542800394412,
+       0.11195957577184736
       ],
       "band": "no useful compression",
       "dominance": "PATH ONLY"
@@ -1102,19 +977,77 @@
      "DFS": {
       "solve_rate": 1.0,
       "failures": 0,
-      "mean_transitions": 94.93666666666667,
-      "mean_states": 43.0,
-      "mean_excess": 25.206666666666667,
+      "mean_transitions": 78.01333333333334,
+      "mean_states": 34.22,
+      "mean_excess": 17.23,
       "traps_taken": 0.0,
-      "HC_D_transitions": -0.13514968045745035,
+      "HC_D_transitions": 0.1884927173268306,
       "HC_D_transitions_CI95": [
-       -0.25811119479957895,
-       -0.019090477658032606
+       0.0974006669339434,
+       0.27640192672006225
       ],
-      "HC_D_states": -0.08028483663781061,
+      "HC_D_states": 0.27277724336952036,
       "HC_D_states_CI95": [
-       -0.20748583902488843,
-       0.03704060633848178
+       0.1834231260553557,
+       0.35562443909233976
+      ],
+      "band": "no useful compression",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.5809821611860259,
+      "exact": 0.21454333333333334,
+      "within_1": 0.5913133333333334,
+      "MAE": 1.464510726219813,
+      "spearman": 0.7699709837455648
+     },
+     "references": {
+      "oracle_transitions": 36.97,
+      "KA-DFS_transitions": 87.54666666666667,
+      "KA-DFS_excess": 23.14666666666667,
+      "KA-GBFS_transitions": 121.99333333333334,
+      "KA-GBFS_excess": 3.27
+     }
+    },
+    "HELD_TARGETS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 132.51666666666668,
+      "mean_states": 59.63,
+      "mean_excess": 5.933333333333334,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.8110690694542424,
+      "HC_D_transitions_CI95": [
+       -1.0559260738041176,
+       -0.5921628487018116
+      ],
+      "HC_D_states": -0.7081326912787587,
+      "HC_D_states_CI95": [
+       -0.9520427456881415,
+       -0.48837664931095215
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 94.54333333333334,
+      "mean_states": 42.28333333333333,
+      "mean_excess": 24.683333333333334,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.08048483293785669,
+      "HC_D_transitions_CI95": [
+       -0.1810311652962898,
+       0.025787409294576385
+      ],
+      "HC_D_states": -0.012038523274478408,
+      "HC_D_states_CI95": [
+       -0.11364327791700594,
+       0.09140758619321465
       ],
       "band": "no useful compression",
       "dominance": "NONE"
@@ -1122,18 +1055,76 @@
      "distance": {
       "rows": 300000,
       "coverage": 1.0,
-      "R2": 0.2989383210694688,
-      "exact": 0.16751333333333332,
-      "within_1": 0.4791,
-      "MAE": 1.900773024597168,
-      "spearman": 0.5461172315236799
+      "R2": 0.2603209234932531,
+      "exact": 0.16807666666666668,
+      "within_1": 0.4777,
+      "MAE": 1.9375486373170216,
+      "spearman": 0.5132292434563458
      },
      "references": {
-      "oracle_transitions": 38.69,
-      "KA-DFS_transitions": 88.24,
-      "KA-DFS_excess": 22.746666666666666,
-      "KA-GBFS_transitions": 123.48333333333333,
-      "KA-GBFS_excess": 3.0766666666666667
+      "oracle_transitions": 38.38333333333333,
+      "KA-DFS_transitions": 90.36,
+      "KA-DFS_excess": 23.78,
+      "KA-GBFS_transitions": 125.95333333333333,
+      "KA-GBFS_excess": 3.513333333333333
+     }
+    },
+    "HELD_BOTH": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 117.59,
+      "mean_states": 52.85,
+      "mean_excess": 5.83,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -0.5712317081173306,
+      "HC_D_transitions_CI95": [
+       -0.8062496870995174,
+       -0.3799317971334786
+      ],
+      "HC_D_states": -0.47482211275314734,
+      "HC_D_states_CI95": [
+       -0.7092725281769137,
+       -0.2853030588167171
+      ],
+      "band": "no useful compression",
+      "dominance": "PATH ONLY"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 87.36666666666666,
+      "mean_states": 39.21,
+      "mean_excess": 21.886666666666667,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.02375483955640134,
+      "HC_D_transitions_CI95": [
+       -0.080990980046344,
+       0.11541312304685247
+      ],
+      "HC_D_states": 0.08511220580186096,
+      "HC_D_states_CI95": [
+       -0.019805414744356452,
+       0.17635357679608435
+      ],
+      "band": "no useful compression",
+      "dominance": "COST ONLY"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.2590596754471537,
+      "exact": 0.16986333333333334,
+      "within_1": 0.47980333333333336,
+      "MAE": 1.9328547299098968,
+      "spearman": 0.511631612086865
+     },
+     "references": {
+      "oracle_transitions": 37.776666666666664,
+      "KA-DFS_transitions": 88.57333333333334,
+      "KA-DFS_excess": 23.233333333333334,
+      "KA-GBFS_transitions": 122.23333333333333,
+      "KA-GBFS_excess": 3.1333333333333333
      }
     }
    },
@@ -1143,65 +1134,66 @@
     "4.0": "eligible",
     "8.0": "eligible"
    },
-   "seconds": 95.3,
+   "seconds": 141.3,
+   "weights_file": "weights/C2-Tucker-k2.pt",
    "fit": {
     "params": 16510,
     "best_epoch": 9,
-    "best_val": 1.861401081085205,
+    "best_val": 1.8612816333770752,
     "history": [
      [
       0,
-      1.870327353477478
+      1.8726588487625122
      ],
      [
       1,
-      1.8645427227020264
+      1.864809274673462
      ],
      [
       2,
-      1.864219307899475
+      1.8641281127929688
      ],
      [
       3,
-      1.8628493547439575
+      1.8625410795211792
      ],
      [
       4,
-      1.8622034788131714
+      1.8618848323822021
      ],
      [
       5,
-      1.8641738891601562
+      1.863656997680664
      ],
      [
       6,
-      1.8616756200790405
+      1.861289381980896
      ],
      [
       7,
-      1.8640130758285522
+      1.8639806509017944
      ],
      [
       8,
-      1.8624482154846191
+      1.8623883724212646
      ],
      [
       9,
-      1.861401081085205
+      1.8612816333770752
      ],
      [
       10,
-      1.8622584342956543
+      1.8621505498886108
      ],
      [
       11,
-      1.8620363473892212
+      1.8617568016052246
      ]
     ],
-    "bytes_lzma": 30996,
+    "bytes_lzma": 30960,
     "observed_rows": 3000000
    }
   }
  },
- "seconds": 567.8
+ "seconds": 697.9
 }
