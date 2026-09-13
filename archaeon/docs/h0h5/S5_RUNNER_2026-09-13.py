@@ -20,7 +20,8 @@ sys.path.insert(0, str(ROOT))
 from archaeon.producer import acquisition as AQ, fossil_inference as FI, s4_producers as P, s5_producers as O5, s5_coordinates as C5  # noqa: E402
 
 HERE = Path(__file__).parent
-PRE = json.loads((HERE / "S5_PREREG_2026-09-13.json").read_text(encoding="utf-8"))
+PREREG_NAME = sys.argv[sys.argv.index("--prereg") + 1] if "--prereg" in sys.argv else "S5_PREREG_2026-09-13.json"
+PRE = json.loads((HERE / PREREG_NAME).read_text(encoding="utf-8"))
 LENGTHS = PRE["worlds"]["L"]; NMAX = {int(k): v for k, v in PRE["worlds"]["max_feasible_targets"].items()}; NMIN = PRE["worlds"]["min_feasible_targets"]
 B = PRE["budget"]["probes_per_arm"]; NAUC_B = PRE["secondary_metrics"]["nAUC_first_probes"]
 ARMS = PRE["arms"]["order"]; BAR = PRE["verdict_rule"]["separation_bar_relative"]
@@ -134,7 +135,10 @@ def run_arm(arm, world, t, decision_rows):
         st = AQ.feasible(E)
         if st.feasible_targets == 1:
             break
-        si = {"lane": "s5", "L": L, "world": world["state_id"], "target_index": int(world["targets"].index(t)), "arm": arm, "step": step}
+        # amendment v1: one deterministic policy per arm per state -- no target_index in the seed (run 1 INSTRUMENT_FAILURE cause)
+        si = {"lane": "s5", "L": L, "world": world["state_id"], "arm": arm, "step": step}
+        if PRE["schema"].endswith(".v0"):
+            si["target_index"] = int(world["targets"].index(t))
         p, route = propose(arm, E, L, si, decision_rows)
         secs += p.compute_seconds; units += int((p.ancestry or {}).get("work_units") or 0)
         if p.probe is None:
@@ -150,7 +154,7 @@ def run_arm(arm, world, t, decision_rows):
         redundant = any(p.probe == f.bits for f in E) or v.er_numerator == before * before
         if arm in PRE["decision_state_audit"]["arms"] and step <= PRE["decision_state_audit"]["max_depth"]:
             vstar, Q, S, D = exact_state(E); c = coordinates_at(E, p.probe); qg = Q(p.probe)
-            decision_rows.append(dict(c, L=L, state_id=world["state_id"], target_index=si["target_index"], arm=arm, step=step, probe=p.probe, snapshot=p.evidence_snapshot_id,
+            decision_rows.append(dict(c, L=L, state_id=world["state_id"], target_index=int(world["targets"].index(t)), arm=arm, step=step, probe=p.probe, snapshot=p.evidence_snapshot_id,
                                       V_star=vstar, Q_choice=qg, delta=qg - vstar, myopic_exact=bool(qg - vstar > 1e-9)))
         E.append(FI.Fossil(p.probe, s)); st2 = AQ.feasible(E)
         traj.append({"step": step, "probe": p.probe, "score": s, "log2_before": math.log2(before), "log2_after": math.log2(st2.feasible_targets), "gain_bits": math.log2(before) - math.log2(st2.feasible_targets),
@@ -252,7 +256,7 @@ def evaluate(worlds, decision_rows):
             verdict = "PLURALITY_SUPPORTED"
         else:
             verdict = "DIFFERENCE_WITHOUT_ROUTABILITY"
-    return {"schema": "archaeon.fossil_metabolism_s5.results.v0", "preregistration": "S5_PREREG_2026-09-13.json", "producer_versions": {"s4": P.PRODUCER_VERSION, "s5": O5.PRODUCER_VERSION}, "quick": QUICK,
+    return {"schema": "archaeon.fossil_metabolism_s5.results.v0", "preregistration": PREREG_NAME, "producer_versions": {"s4": P.PRODUCER_VERSION, "s5": O5.PRODUCER_VERSION}, "quick": QUICK,
             "world_level": wl, "decision_state_audit": audit, "instrument_failures": fail, "verdict": verdict}
 
 
