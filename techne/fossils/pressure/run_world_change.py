@@ -10,6 +10,7 @@ harvest.run(image=...) never persists, so a foreign-world probe cannot overwrite
 
 Outcomes are kept distinct, because they mean different things:
   AGREES              same oracle verdict in both worlds -> correctness does not depend on this axis
+  INCONCLUSIVE_NATIVE_FAILS  the fossil fails in its OWN world, so nothing can be concluded
   DIVERGES            passes in one world, fails its oracle in the other -> NATURAL SPECIMEN
   INCONCLUSIVE_BUILD  did not build in the other world -> says nothing about correctness
 
@@ -64,6 +65,10 @@ def main(argv=None):
         other = _probe(sid, ow)
         if not other["builds"]:
             verdict = "INCONCLUSIVE_BUILD"
+        elif not native["ok"]:
+            # It fails in its OWN world, so this run cannot speak to world-dependence at all.
+            # Without this, two failures for unrelated (e.g. host) reasons read as "AGREES".
+            verdict = "INCONCLUSIVE_NATIVE_FAILS"
         elif native["ok"] == other["ok"]:
             verdict = "AGREES"
         else:
@@ -75,7 +80,9 @@ def main(argv=None):
             sid, native["ok"], other["ok"], other["builds"], verdict))
 
     control = next((r for r in rows if r["specimen_id"] == "md5-rfc1321"), None)
-    control_ok = bool(control and control["verdict"] == "DIVERGES")
+    # Distinguish "the control ran and failed" from "the control was not in this selection".
+    # Reporting a missing control as False would look like a broken method.
+    control_ok = "NOT_RUN" if control is None else bool(control["verdict"] == "DIVERGES")
     doc = {"schema": "techne.fossil.world_change/1",
            "written_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
            "census": "techne/fossils/ENV_ASSUMPTION_CENSUS_2026-09-13.json",
@@ -83,6 +90,7 @@ def main(argv=None):
            "positive_control": "md5-rfc1321 must report DIVERGES; if it does not, the method is broken",
            "positive_control_held": control_ok,
            "tested": sel, "full_candidate_set": CANDIDATES, "not_tested_this_round": NOT_TESTED,
+           "rows_trustworthy": control_ok is True,
            "natural_specimens_found": [r["specimen_id"] for r in rows
                                        if r["verdict"] == "DIVERGES" and r["specimen_id"] != "md5-rfc1321"],
            "note": "A world probe never persists; recorded classifications are untouched. "

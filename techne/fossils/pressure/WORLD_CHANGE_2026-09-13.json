@@ -1,13 +1,13 @@
 {
  "schema": "techne.fossil.world_change/1",
- "written_utc": "2026-09-13T21:23:54Z",
+ "written_utc": "2026-09-13T22:17:44Z",
  "census": "techne/fossils/ENV_ASSUMPTION_CENSUS_2026-09-13.json",
  "other_world_rule": "the world that differs from the fossil's native image (64-bit <-> 32-bit)",
  "positive_control": "md5-rfc1321 must report DIVERGES; if it does not, the method is broken",
  "positive_control_held": true,
  "tested": [
   "md5-rfc1321",
-  "tinycc"
+  "cjson-1.7.18"
  ],
  "full_candidate_set": [
   "md5-rfc1321",
@@ -27,9 +27,8 @@
   "openssl-1.0.1f-heartbleed (SOURCE_ONLY)",
   "xv6-riscv (NOT_ATTEMPTED)"
  ],
- "natural_specimens_found": [
-  "tinycc"
- ],
+ "rows_trustworthy": true,
+ "natural_specimens_found": [],
  "note": "A world probe never persists; recorded classifications are untouched. INCONCLUSIVE_BUILD is not evidence of environment-dependent correctness.",
  "rows": [
   {
@@ -58,19 +57,23 @@
     ]
    },
    "verdict": "DIVERGES",
-   "recorded_classification": "RUNNABLE_CONTAINER",
-   "mechanism_established": true,
-   "mechanism": "RFC 1321 global.h: typedef unsigned long int UINT4 -- identified, single line."
+   "recorded_classification": "RUNNABLE_CONTAINER"
   },
   {
-   "specimen_id": "tinycc",
+   "specimen_id": "cjson-1.7.18",
    "native_image": "prometheus-fossil-c:bookworm",
    "other_image": "prometheus-fossil-i386:bookworm",
    "native": {
-    "classification": "RUNNABLE_CONTAINER",
-    "ok": true,
+    "classification": "BUILDS_BUT_NOT_RUN",
+    "ok": false,
     "builds": true,
-    "failed_runs": []
+    "failed_runs": [
+     [
+      "exit -1 != expected 0",
+      "stdout lacks 'crashed=0'",
+      "stdout does not match /rejected=[1-9]/"
+     ]
+    ]
    },
    "other": {
     "classification": "BUILDS_BUT_NOT_RUN",
@@ -78,33 +81,18 @@
     "builds": true,
     "failed_runs": [
      [
-      "stdout lacks 'exit=45'"
+      "exit 127 != expected 0",
+      "stdout lacks 'parsed=1'",
+      "stdout lacks 'crashed=0'"
+     ],
+     [
+      "stdout lacks 'crashed=0'",
+      "stdout does not match /rejected=[1-9]/"
      ]
     ]
    },
-   "verdict": "DIVERGES",
-   "recorded_classification": "RUNNABLE_CONTAINER",
-   "mechanism_established": false,
-   "caveat": "tinycc DIVERGES under a valid control: it builds in both worlds, passes its oracle at 64-bit and fails it at 32-bit. But the MECHANISM is NOT established. tinycc is a C compiler, so running it in a 32-bit userland changes its code-generation target, not merely its own integer widths. This is a real measured environment dependence; it is NOT demonstrated to be the same single-line width assumption that breaks md5-rfc1321, where the responsible line is identified. Calling them the same defect class would be an inference, not a measurement."
+   "verdict": "INCONCLUSIVE_NATIVE_FAILS",
+   "recorded_classification": "RUNNABLE_CONTAINER"
   }
- ],
- "coverage": {
-  "planned_candidates": [
-   "md5-rfc1321",
-   "cjson-1.7.18",
-   "femtolisp",
-   "espresso-logic",
-   "zchaff-2007",
-   "tinycc"
-  ],
-  "actually_tested": [
-   "md5-rfc1321",
-   "tinycc"
-  ],
-  "not_tested_reason": "The full 6-candidate run was KILLED by host memory pressure mid-way. Rather than report the earlier run (whose positive control had FAILED, because it compared md5's native 32-bit world against itself), this minimal re-run covers the control plus the single candidate that run had flagged. cjson-1.7.18, femtolisp, espresso-logic and zchaff-2007 remain UNTESTED, along with the heavier set already named."
- },
- "natural_specimens_found_with_mechanism_established": [],
- "natural_specimens_found_mechanism_unknown": [
-  "tinycc"
  ]
 }
