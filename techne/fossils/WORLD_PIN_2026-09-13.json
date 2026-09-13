@@ -1,0 +1,115 @@
+{
+ "schema": "techne.fossil.world_pin/1",
+ "written_utc": "2026-09-13T21:52:24Z",
+ "note": "ORIGINAL_WORLD_RECOVERED is unreachable for every fossil in the vault: none records the versions its evidence ran under.",
+ "rows": [
+  {
+   "specimen_id": "emcee-3.1.6",
+   "status": "CAPTURED",
+   "image": "python:3.11-slim",
+   "direct_specs": [
+    "numpy"
+   ],
+   "n_pinned": 2,
+   "classification": "COMPATIBLE_RECONSTRUCTION",
+   "closure_sample": [
+    "numpy==2.4.6",
+    "packaging==26.3"
+   ],
+   "pip_commands_pinned": 2,
+   "constraints_file": "F:\\Prometheus-worktrees\\techne-pass-0912\\techne\\fossils\\specimens\\emcee-3.1.6\\harness\\world_constraints.txt",
+   "oracle_rechecked_in_pinned_world": true,
+   "oracle_result": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ok=True; BODY PRESERVED"
+  },
+  {
+   "specimen_id": "filterpy-labbe",
+   "status": "CAPTURED",
+   "image": "python:3.11-slim",
+   "direct_specs": [
+    "numpy",
+    "scipy"
+   ],
+   "n_pinned": 3,
+   "classification": "COMPATIBLE_RECONSTRUCTION",
+   "closure_sample": [
+    "numpy==2.4.6",
+    "packaging==26.3",
+    "scipy==1.17.1"
+   ],
+   "pip_commands_pinned": 1,
+   "constraints_file": "F:\\Prometheus-worktrees\\techne-pass-0912\\techne\\fossils\\specimens\\filterpy-labbe\\harness\\world_constraints.txt",
+   "oracle_rechecked_in_pinned_world": true,
+   "oracle_result": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ok=True; BODY PRESERVED"
+  },
+  {
+   "specimen_id": "pid-autotune-hirschmann",
+   "status": "CAPTURED",
+   "image": "python:3.11-slim",
+   "direct_specs": [
+    "matplotlib"
+   ],
+   "n_pinned": 11,
+   "classification": "COMPATIBLE_RECONSTRUCTION",
+   "closure_sample": [
+    "contourpy==1.3.3",
+    "cycler==0.12.1",
+    "fonttools==4.65.0",
+    "kiwisolver==1.5.1",
+    "matplotlib==3.11.2",
+    "numpy==2.4.6"
+   ],
+   "pip_commands_pinned": 2,
+   "constraints_file": "F:\\Prometheus-worktrees\\techne-pass-0912\\techne\\fossils\\specimens\\pid-autotune-hirschmann\\harness\\world_constraints.txt",
+   "oracle_rechecked_in_pinned_world": true,
+   "oracle_result": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ok=True; BODY PRESERVED"
+  },
+  {
+   "specimen_id": "python-control",
+   "status": "CAPTURED",
+   "image": "python:3.11-slim",
+   "direct_specs": [
+    "matplotlib",
+    "numpy",
+    "scipy"
+   ],
+   "n_pinned": 12,
+   "classification": "COMPATIBLE_RECONSTRUCTION",
+   "closure_sample": [
+    "contourpy==1.3.3",
+    "cycler==0.12.1",
+    "fonttools==4.65.0",
+    "kiwisolver==1.5.1",
+    "matplotlib==3.11.2",
+    "numpy==2.4.6"
+   ],
+   "pip_commands_pinned": 1,
+   "constraints_file": "F:\\Prometheus-worktrees\\techne-pass-0912\\techne\\fossils\\specimens\\python-control\\harness\\world_constraints.txt",
+   "oracle_rechecked_in_pinned_world": true,
+   "oracle_result": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ok=True; BODY PRESERVED"
+  },
+  {
+   "specimen_id": "python-sgp4-2.23",
+   "status": "CAPTURED",
+   "image": "python:3.11-slim",
+   "direct_specs": [
+    "numpy"
+   ],
+   "n_pinned": 2,
+   "classification": "COMPATIBLE_RECONSTRUCTION",
+   "closure_sample": [
+    "numpy==2.4.6",
+    "packaging==26.3"
+   ],
+   "pip_commands_pinned": 2,
+   "constraints_file": "F:\\Prometheus-worktrees\\techne-pass-0912\\techne\\fossils\\specimens\\python-sgp4-2.23\\harness\\world_constraints.txt",
+   "oracle_rechecked_in_pinned_world": true,
+   "oracle_result": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ok=True; BODY PRESERVED"
+  }
+ ],
+ "summary": {
+  "attempted": 5,
+  "COMPATIBLE_RECONSTRUCTION": 5,
+  "ORIGINAL_WORLD_RECOVERED": 0,
+  "why_zero_original": "No fossil in the vault records the versions its evidence ran under. Picking modern versions and calling them historical is what the charter forbids."
+ }
+}

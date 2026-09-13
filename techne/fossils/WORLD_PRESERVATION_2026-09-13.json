@@ -1,6 +1,6 @@
 {
  "schema": "techne.fossil.world_preservation/1",
- "written_utc": "2026-09-13T21:47:00Z",
+ "written_utc": "2026-09-13T21:56:34Z",
  "lattice": {
   "-1": "N_A",
   "0": "UNKNOWN",
@@ -18,14 +18,16 @@
   },
   "BUILD_WORLD_PRESERVATION": {
    "PINNED": 67,
-   "FLOATING": 17,
+   "FLOATING": 15,
    "N_A": 13,
-   "UNKNOWN": 20
+   "UNKNOWN": 20,
+   "NAMED": 2
   },
   "RUN_WORLD_PRESERVATION": {
    "PINNED": 75,
-   "FLOATING": 22,
-   "UNKNOWN": 20
+   "FLOATING": 17,
+   "UNKNOWN": 20,
+   "NAMED": 5
   }
  },
  "world_reproducible_count": 74,
@@ -108,12 +110,12 @@
     "BUILD_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "why": "build fetches from the network with no recorded closure"
     },
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -648,7 +650,7 @@
     "BUILD_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "why": "build fetches from the network with no recorded closure"
     },
     "RUN_WORLD_PRESERVATION": {
      "level": 3,
@@ -858,12 +860,12 @@
     "BUILD_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "why": "build fetches from the network with no recorded closure"
     },
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -976,21 +978,21 @@
      "why": "every artifact names an exact sha256/commit"
     },
     "BUILD_WORLD_PRESERVATION": {
-     "level": 1,
-     "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "level": 2,
+     "state": "NAMED",
+     "why": "build fetches under a recorded closure of 2 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
     },
     "RUN_WORLD_PRESERVATION": {
-     "level": 1,
-     "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "level": 2,
+     "state": "NAMED",
+     "why": "runs fetches under a recorded closure of 2 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
     }
    },
-   "min_level": 1,
+   "min_level": 2,
    "world_reproducible": false,
    "world_image": "python:3.11-slim",
    "world_is_single_host": false,
-   "overall": "FLOATING"
+   "overall": "NAMED"
   },
   {
    "specimen_id": "eprover-2.6",
@@ -1191,16 +1193,16 @@
      "why": "this fossil has no build steps; there is no build world to pin"
     },
     "RUN_WORLD_PRESERVATION": {
-     "level": 1,
-     "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "level": 2,
+     "state": "NAMED",
+     "why": "runs fetches under a recorded closure of 3 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
     }
    },
-   "min_level": 1,
+   "min_level": 2,
    "world_reproducible": false,
    "world_image": "python:3.11-slim",
    "world_is_single_host": false,
-   "overall": "FLOATING"
+   "overall": "NAMED"
   },
   {
    "specimen_id": "genann",
@@ -1523,7 +1525,7 @@
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -1758,12 +1760,12 @@
     "BUILD_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "why": "build fetches from the network with no recorded closure"
     },
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -2093,7 +2095,7 @@
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -2238,12 +2240,12 @@
     "BUILD_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "why": "build fetches from the network with no recorded closure"
     },
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -2328,12 +2330,12 @@
     "BUILD_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "why": "build fetches from the network with no recorded closure"
     },
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -2451,16 +2453,16 @@
      "why": "this fossil has no build steps; there is no build world to pin"
     },
     "RUN_WORLD_PRESERVATION": {
-     "level": 1,
-     "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "level": 2,
+     "state": "NAMED",
+     "why": "runs fetches under a recorded closure of 11 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
     }
    },
-   "min_level": 1,
+   "min_level": 2,
    "world_reproducible": false,
    "world_image": "python:3.11-slim",
    "world_is_single_host": false,
-   "overall": "FLOATING"
+   "overall": "NAMED"
   },
   {
    "specimen_id": "py-vollib-lets-be-rational",
@@ -2478,12 +2480,12 @@
     "BUILD_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "why": "build fetches from the network with no recorded closure"
     },
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -2508,12 +2510,12 @@
     "BUILD_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "why": "build fetches from the network with no recorded closure"
     },
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -2538,12 +2540,12 @@
     "BUILD_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "why": "build fetches from the network with no recorded closure"
     },
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -2571,16 +2573,16 @@
      "why": "this fossil has no build steps; there is no build world to pin"
     },
     "RUN_WORLD_PRESERVATION": {
-     "level": 1,
-     "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "level": 2,
+     "state": "NAMED",
+     "why": "runs fetches under a recorded closure of 12 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
     }
    },
-   "min_level": 1,
+   "min_level": 2,
    "world_reproducible": false,
    "world_image": "python:3.11-slim",
    "world_is_single_host": false,
-   "overall": "FLOATING"
+   "overall": "NAMED"
   },
   {
    "specimen_id": "python-sgp4-2.23",
@@ -2596,21 +2598,21 @@
      "why": "every artifact names an exact sha256/commit"
     },
     "BUILD_WORLD_PRESERVATION": {
-     "level": 1,
-     "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "level": 2,
+     "state": "NAMED",
+     "why": "build fetches under a recorded closure of 2 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
     },
     "RUN_WORLD_PRESERVATION": {
-     "level": 1,
-     "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "level": 2,
+     "state": "NAMED",
+     "why": "runs fetches under a recorded closure of 2 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
     }
    },
-   "min_level": 1,
+   "min_level": 2,
    "world_reproducible": false,
    "world_image": "python:3.11-slim",
    "world_is_single_host": false,
-   "overall": "FLOATING"
+   "overall": "NAMED"
   },
   {
    "specimen_id": "quadpack-netlib",
@@ -2688,12 +2690,12 @@
     "BUILD_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "build fetches from the network; composition is not fixed by any image"
+     "why": "build fetches from the network with no recorded closure"
     },
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,
@@ -3203,7 +3205,7 @@
     "RUN_WORLD_PRESERVATION": {
      "level": 1,
      "state": "FLOATING",
-     "why": "runs fetches from the network; composition is not fixed by any image"
+     "why": "runs fetches from the network with no recorded closure"
     }
    },
    "min_level": 1,

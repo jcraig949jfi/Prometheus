@@ -112,7 +112,14 @@ def _world_level(recipe, phase, images):
             return 0, "no recipe at all: nothing can be established about the %s world" % phase
         return -1, "this fossil has no %s steps; there is no %s world to pin" % (phase, phase)
     if _FETCH.search(_phase_text(recipe, phase)):
-        return 1, "%s fetches from the network; composition is not fixed by any image" % phase
+        # A fetch under a RECORDED FULL CLOSURE is materially different from an unconstrained one:
+        # the composition is fixed by name+version, but obtaining it still depends on an external
+        # service staying up. That is NAMED, not PINNED, and certainly not FLOATING.
+        wc = recipe.get("world_closure") or {}
+        if wc.get("constraints"):
+            return 2, ("%s fetches under a recorded closure of %s pinned versions (%s); composition "
+                       "is fixed, availability is not" % (phase, wc.get("n_pinned"), wc["constraints"]))
+        return 1, "%s fetches from the network with no recorded closure" % phase
     if runner == "native":
         return 1, "native runner: the host toolchain is the world and is not recorded"
     img = recipe.get("image")
