@@ -71,3 +71,22 @@ def test_M_has_no_wall_clock_fallback_any_more():
     rnd = random.Random(4); L = 8; t = "".join(rnd.choice("01") for _ in range(L)); fs = _fossils(t, ["".join(rnd.choice("01") for _ in range(L))])
     ok = P.produce_M(fs, {"lane": "t", "world": 0, "step": 1})
     assert ok.probe is not None and ok.objective_value is not None and "intractable" not in ok.extra
+
+
+def test_nested_budgets_propagate_every_unit_to_the_enclosing_ledger():
+    """S6 accounting repair: an evaluator's ledger around a producer that opens its own budget sees the same units."""
+    with WB.WorkBudget(10 ** 9) as outer:
+        with WB.WorkBudget(10 ** 9) as inner:
+            WB.charge(7, "a"); WB.charge(5, "b")
+        WB.charge(1, "c")
+    assert inner.units == 12 and outer.units == 13 and outer.counters == {"a": 7, "b": 5, "c": 1}
+    # the inner bound still interrupts, and the outer ledger keeps what was charged before the interruption
+    with WB.WorkBudget(10 ** 9) as outer:
+        with pytest.raises(WB.BudgetExhausted):
+            with WB.WorkBudget(3):
+                WB.charge(2, "x"); WB.charge(2, "x")
+    assert outer.units == 4
+    rnd = random.Random(5); L = 10; t = "".join(rnd.choice("01") for _ in range(L)); fs = _fossils(t, ["".join(rnd.choice("01") for _ in range(L))])
+    with WB.WorkBudget(10 ** 9) as ledger:
+        p = P.produce_G(fs, {"lane": "t", "world": 0, "step": 1})
+    assert p.probe is not None and ledger.units > 0 and ledger.counters["probe_scored"] == p.ancestry["pool_size"]

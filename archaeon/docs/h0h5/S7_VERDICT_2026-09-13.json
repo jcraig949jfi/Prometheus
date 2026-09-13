@@ -1,0 +1,40 @@
+{
+ "schema": "archaeon.fossil_metabolism_s7.verdict.v0",
+ "preregistration": "S7_PREREG_2026-09-13.json",
+ "candidate_version": "39093752300ebb85",
+ "instrument_failures": [],
+ "checks": {
+  "outside_gate_identity": true,
+  "canaries_all_pass": true,
+  "inside_gate_exact_nonregression": false,
+  "inside": {
+   "L8_worsened": 1,
+   "L9_worsened": 0,
+   "worsened_ids": [
+    "evs:914ee3e416304d0d"
+   ]
+  },
+  "full_universe_ok": true,
+  "universe_worsened_any": 1,
+  "universe_worst": 0.00813008130081298,
+  "L10_ok": true,
+  "improvement_L9": {
+   "recovery": 0.6995795125195989,
+   "aggregate_reduction": 0.0414019652088579,
+   "ok": true
+  },
+  "improvement_L8_reported": {
+   "recovery": 0.4048741439117673,
+   "aggregate_reduction": 0.02090664595420012
+  },
+  "work": {
+   "L8_median": 1934.25,
+   "L9_median": 3535.0,
+   "L8_ratio": 3.8207407407407405,
+   "L9_ratio": 8.467065868263473,
+   "max": 18743,
+   "ok": true
+  }
+ },
+ "verdict": "GATE_FAILS_TO_ISOLATE"
+}
