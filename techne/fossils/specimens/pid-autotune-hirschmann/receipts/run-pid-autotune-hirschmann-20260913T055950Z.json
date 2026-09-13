@@ -1,0 +1,114 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "pid-autotune-hirschmann",
+  "receipt_id": "run-pid-autotune-hirschmann-20260913T055950Z",
+  "written_utc": "20260913T055950Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "two_plants.py": "cdb27ffdb1a552ee7cf6641cc9fa2c53aef67e01b02c9065caf5539b46eec0af"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "97240e632836e228545c562797b636cf1092a86e2a325996234aeaf60a02f21d",
+  "recipe_sha256": "e0184e2aec6ffadbb92fee268f1bcef21a6f422e0d76d9323c0195fce7b28c48",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.8,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "relay autotune on kettle A (40 l, 6 kW): limit cycle -> Ku, Pu -> gains per rule",
+      "cmd": "pip install -q matplotlib >/dev/null 2>&1; python $HARNESS/two_plants.py A 2>&1 | tail -12",
+      "exit": 0,
+      "seconds": 8.81,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'state:   succeeded'",
+        "stdout lacks 'rule: ziegler-nichols'"
+      ],
+      "stdout": {
+        "text": "\nrule: no-overshoot\nKp: 2.102356512391806\nKi: 0.019243537870863216\nKd: 153.12163265253653\n\nrule: brewing\nKp: 84.09426049567224\nKi: 0.11546122722517928\nKd: 967.0839957002308\n\n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "the SAME tuner on kettle B (10 l, 2 kW): a different plant yields different gains (changing plant -> adaptation -> altered parameters)",
+      "cmd": "pip install -q matplotlib >/dev/null 2>&1; python $HARNESS/two_plants.py B 2>&1 | tail -12",
+      "exit": 0,
+      "seconds": 8.1,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'state:   succeeded'",
+        "stdout lacks 'rule: ziegler-nichols'"
+      ],
+      "stdout": {
+        "text": "\nrule: no-overshoot\nKp: 1.9737781481844394\nKi: 0.04133566802480501\nKd: 62.83193771720465\n\nrule: brewing\nKp: 78.95112592737757\nKi: 0.2480140081488301\nKd: 396.8332908455031\n\n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: the Ziegler-Nichols Kp differs between the two plants by more than 10%",
+      "cmd": "pip install -q matplotlib >/dev/null 2>&1; python $HARNESS/two_plants.py compare 2>&1 | tail -3",
+      "exit": 0,
+      "seconds": 8.83,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'RESULT OK'"
+      ],
+      "stdout": {
+        "text": "Kp(ziegler-nichols) kettle A = 6.1834015070347235 ; kettle B = 5.805229847601292\nRESULT FAIL\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "__pycache__/autotune.cpython-311.pyc",
+      "sha256": "0bb3f110d533a8764241137f3b850321f0d3f4faea8dc5a74c907ccdbb0b3d8e",
+      "bytes": 11000
+    },
+    {
+      "path": "__pycache__/kettle.cpython-311.pyc",
+      "sha256": "b0035c90b868fe4fd1d1f2d15e86cda8abb58d9baa9bb5a8fc0f04ee2e999986",
+      "bytes": 3197
+    },
+    {
+      "path": "__pycache__/pid.cpython-311.pyc",
+      "sha256": "9377c222d17c3a60414984750067ff983452a90fbbb0ec5facfb723c3e2280d9",
+      "bytes": 4134
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_FAIL",
+  "ok": false,
+  "tree_sha256_after": "97240e632836e228545c562797b636cf1092a86e2a325996234aeaf60a02f21d",
+  "body_preserved": true
+}

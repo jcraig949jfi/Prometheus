@@ -1,0 +1,143 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "l1-adaptive-control-basics-xkhainguyen",
+  "canonical_name": "L1 adaptive control basic simulation (Hovakimyan & Cao's L1 architecture on a first-order plant with unknown parameters), MATLAB, run under Octave",
+  "aliases": [
+    "L1AC",
+    "L1 adaptive control"
+  ],
+  "lineage": "L1 adaptive control (Cao & Hovakimyan, 2006-; book 2010): a state predictor, a fast projection-based adaptation law, and a low-pass filter on the control channel that decouples adaptation rate from robustness -- the adaptive architecture flown on NASA's AirSTAR and in quadrotor augmentation. This is a minimal simulation of the architecture (MATLAB, 2022) whose author later published L1 augmentation for geometric quadrotor control.",
+  "domain": [
+    "control",
+    "adaptive",
+    "L1",
+    "state-predictor",
+    "robustness"
+  ],
+  "era": "2006 (architecture); 2022 (code)",
+  "version": "github.com/xkhainguyen/L1AC-Basics main (commit in hashes): MainL1_ODE1_v1.m, MainL1_ODE1_v2.m",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/xkhainguyen/L1AC-Basics",
+        "commit": "3799a07d9320d6f9ec7bbcab784d10289ecb8719",
+        "commit_resolved": "3799a07d9320d6f9ec7bbcab784d10289ecb8719",
+        "commit_date": "2022-06-08T21:08:19+07:00"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/xkhainguyen/L1AC-Basics",
+    "theory": "Hovakimyan & Cao, L1 Adaptive Control Theory, SIAM 2010"
+  },
+  "hashes": {
+    "tree_sha256": "3029795a9e754436d70be8321e4481e8166ebe03b82fade737f9261fbb3c01c0",
+    "n_files": 4,
+    "bytes": 7584,
+    "artifacts": [
+      {
+        "filename": "https://github.com/xkhainguyen/L1AC-Basics",
+        "sha256": null,
+        "commit": "3799a07d9320d6f9ec7bbcab784d10289ecb8719"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\l1-adaptive-control-basics-xkhainguyen",
+    "hash_list": "techne/fossils/specimens/l1-adaptive-control-basics-xkhainguyen/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "MATLAB"
+  ],
+  "build_system": "none (interpreted)",
+  "compiler_or_interpreter": "GNU Octave 7.3 (docker prometheus-fossil-octave:bookworm); plot calls shadowed",
+  "dependencies": [
+    "Octave"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "MainL1_ODE1_v1.m (predictor + adaptation + filter loop)"
+  ],
+  "example": {
+    "command": "octave --no-gui -p $HARNESS MainL1_ODE1_v1.m; print the final tracking error and adapted parameter",
+    "input": "unknown plant parameter, reference signal",
+    "output": "the adapted estimate and the tracking error trace"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-octave:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Hovakimyan & Cao, L1 Adaptive Control Theory: Guaranteed Robustness with Fast Adaptation, SIAM 2010"
+  ],
+  "human_capability_summary": {
+    "built_to": "adapt fast to an unknown plant without the high-gain fragility of classical MRAC, by filtering the adaptive control signal",
+    "pressure": "unknown/time-varying plant with robustness requirements (flight control)",
+    "success_means": "the plant tracks the reference; the adaptive estimate moves; the filtered control stays smooth"
+  },
+  "known_human_problem_solved": "fast, robust adaptive control",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "parametric uncertainty under a hard robustness margin",
+  "human_failure_condition": "loss of robustness under fast adaptation (the MRAC failure L1 was designed against; Rohrs 1985)",
+  "behavioral_entry_point": "the adaptation gain Gamma and the filter bandwidth in the script",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Cao & Hovakimyan 2006",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase4",
+    "adaptive",
+    "L1",
+    "octave"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/l1-adaptive-control-basics-xkhainguyen/receipts/run-l1-adaptive-control-basics-xkhainguyen-20260913T055638Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/l1-adaptive-control-basics-xkhainguyen/receipts/run-l1-adaptive-control-basics-xkhainguyen-20260913T055759Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/l1-adaptive-control-basics-xkhainguyen/receipts/run-l1-adaptive-control-basics-xkhainguyen-20260913T055946Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne"
+}

@@ -1,0 +1,330 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "libdai-mooij",
+  "receipt_id": "run-libdai-mooij-20260913T060747Z",
+  "written_utc": "20260913T060747Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "bp_vs_exact.py": "e78f2efe5abd1267ec8f44091d379fc04d7a47ba4173c08afabbafd10f89fa49"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "fd4b4581b1f3a3ed9ee757fc0e18e03c1a6280b0d51af2971335c249a40e1b96",
+  "recipe_sha256": "3c242ffa7a8024c742b8f0b54d82e89fcc020cce4abc8a016b8744a2f83f9e16",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "apt boost + gmp, then make the library and examples (Makefile.LINUX; no source change)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y libboost-dev libboost-program-options-dev libboost-test-dev libgmp-dev >/dev/null 2>&1; cp Makefile.LINUX Makefile.conf; make -s -j4 lib examples 2>&1 | grep -iE '\\berror' | head -5; ls examples/example_sprinkler examples/example 2>&1; test -x examples/example_sprinkler && echo built",
+      "exit": 0,
+      "seconds": 59.22,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "examples/example\nexamples/example_sprinkler\nbuilt\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "the same apt + make in the run container is repeated per command (one container per command)",
+      "cmd": "echo noted",
+      "exit": 0,
+      "seconds": 0.8,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "noted\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "sprinkler network: build it, write sprinkler.fg, exact marginals (junction tree)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y libboost-dev libboost-program-options-dev libboost-test-dev libgmp-dev >/dev/null 2>&1; cp Makefile.LINUX Makefile.conf; make -s -j4 lib examples >/dev/null 2>&1; ./examples/example_sprinkler 2>&1 | tail -8",
+      "exit": 0,
+      "seconds": 7.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Sprinkler network written to sprinkler.fg\n4 variables\n4 factors\nP(W=1) = 0.6471\nP(S=1 | W=1) = 0.429764\nP(R=1 | W=1) = 0.707928\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "BELIEF PROPAGATION on the same factor graph beside the exact answer (examples/example: JTree exact, then loopy BP, then MF/TreeEP/Gibbs)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y libboost-dev libboost-program-options-dev libboost-test-dev libgmp-dev >/dev/null 2>&1; cp Makefile.LINUX Makefile.conf; make -s -j4 lib examples >/dev/null 2>&1; ./examples/example_sprinkler >/dev/null 2>&1; ./examples/example sprinkler.fg 2>&1 | grep -iE 'exact|belief propagation|BP|marginal|\\(' | head -40",
+      "exit": 0,
+      "seconds": 7.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Builtin inference algorithms: {BP, CBP, DECMAP, EXACT, FBP, GIBBS, HAK, JTREE, LC, MF, MR, TREEEP, TRWBP}\nStarting BP[tol=1e-09,maxiter=10000,maxtime=inf,verbose=1,logdomain=0,updates=SEQRND,damping=0,inference=SUMPROD]...converged in 2 passes (2.31266e-05 seconds).\nStarting BP[tol=1e-09,maxiter=10000,maxtime=inf,verbose=1,logdomain=0,updates=SEQRND,damping=0.1,inference=MAXPROD]...converged in 15 passes (6.48499e-05 seconds).\nStarting DECMAP[verbose=1,reinit=1,ianame=BP,iaopts=[damping=0.1,inference=MAXPROD,logdomain=0,maxiter=1000,tol=1e-9,updates=SEQRND,verbose=1]]...Starting BP[tol=1e-09,maxiter=1000,maxtime=inf,verbose=1,logdomain=0,updates=SEQRND,damping=0.1,inference=MAXPROD]...converged in 13 passes (4.79221e-05 seconds).\nStarting BP[tol=1e-09,maxiter=1000,maxtime=inf,verbose=1,logdomain=0,updates=SEQRND,damping=0.1,inference=MAXPROD]...converged in 11 passes (4.1008e-05 seconds).\nStarting BP[tol=1e-09,maxiter=1000,maxtime=inf,verbose=1,logdomain=0,updates=SEQRND,damping=0.1,inference=MAXPROD]...converged in 11 passes (4.1008e-05 seconds).\nStarting BP[tol=1e-09,maxiter=1000,maxtime=inf,verbose=1,logdomain=0,updates=SEQRND,damping=0.1,inference=MAXPROD]...converged in 2 passes (2.09808e-05 seconds).\nExact variable marginals:\n({x0}, (0.5, 0.5))\n({x1}, (0.7, 0.3))\n({x2}, (0.5, 0.5))\n({x3}, (0.3529, 0.6471))\nApproximate (loopy belief propagation) variable marginals:\n({x0}, (0.5, 0.5))\n({x1}, (0.7, 0.3))\n({x2}, (0.5, 0.5))\n({x3}, (0.4015, 0.5985))\nExact factor marginals:\n({x0}, (0.5, 0.5))\n({x0, x2}, (0.4, 0.1, 0.1, 0.4))\n({x0, x1}, (0.25, 0.45, 0.25, 0.05))\n({x1, x2, x3}, (0.29, 0.021, 0.041, 0.0009, 0, 0.189, 0.369, 0.0891))\nApproximate (loopy belief propagation) factor marginals:\n({x0}, (0.5, 0.5))\n({x0, x2}, (0.4, 0.1, 0.1, 0.4))\n({x0, x1}, (0.25, 0.45, 0.25, 0.05))\n({x1, x2, x3}, (0.35, 0.015, 0.035, 0.0015, 0, 0.135, 0.315, 0.1485))\nExact log partition sum: 2.22045e-16\nApproximate (loopy belief propagation) log partition sum: 0\nExact MAP variable marginals:\n({x0}, (0.381679, 0.618321))\n({x1}, (0.642857, 0.357143))\n({x2}, (0.381679, 0.618321))\n({x3}, (0.381679, 0.618321))\nApproximate (max-product) MAP variable marginals:\n({x0}, (0.404412, 0.595588))\n({x1}, (0.595588, 0.404412))\n({x2}, (0.404412, 0.595588))\n({x3}, (0.404412, 0.595588))\nExact MAP factor marginals:\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: the sprinkler network is LOOPY (Cloudy -> Sprinkler and Rain -> WetGrass), so loopy BP must agree with the exact marginals on Cloudy/Sprinkler/Rain (1e-6) and DIFFER on WetGrass -- the documented inexactness of loopy BP, measured",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y libboost-dev libboost-program-options-dev libboost-test-dev libgmp-dev python3 >/dev/null 2>&1; cp Makefile.LINUX Makefile.conf; make -s -j4 lib examples >/dev/null 2>&1; ./examples/example_sprinkler >/dev/null 2>&1; ./examples/example sprinkler.fg > $BODY/build/example.out 2>&1; python3 $HARNESS/bp_vs_exact.py $BODY/build/example.out",
+      "exit": 0,
+      "seconds": 10.28,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "exact: [(0.5, 0.5), (0.7, 0.3), (0.5, 0.5), (0.3529, 0.6471)]\nbp:    [(0.5, 0.5), (0.7, 0.3), (0.5, 0.5), (0.4015, 0.5985)]\nper-variable max |bp - exact|: ['0.0000', '0.0000', '0.0000', '0.0486']\nx0..x2 (Cloudy, Sprinkler, Rain) agree to 1e-6: True\nx3 (WetGrass, inside the loop) differs by 0.0486: loopy BP is inexact here, as documented\nRESULT OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "alldai.o",
+      "sha256": "7389594927549266fd8ba0f96135fdefc55d8b9c8057f90643930d69bc3a83c8",
+      "bytes": 4988504
+    },
+    {
+      "path": "bbp.o",
+      "sha256": "230464939c98b45e85284b6a958754fcb24bc4df20e20585b0f9f689278a0bce",
+      "bytes": 5491088
+    },
+    {
+      "path": "bipgraph.o",
+      "sha256": "5060a148fca6cedb28b558b82a31bdb31fa5a3dce5ff2b9327683c363d67153f",
+      "bytes": 1422624
+    },
+    {
+      "path": "bp.o",
+      "sha256": "2adf23e0f0e24b8c516fd3f5e19d4999c678ccc1799466f617d10490289c1258",
+      "bytes": 5127984
+    },
+    {
+      "path": "bp_dual.o",
+      "sha256": "bfdb24b812c7c8a408281fe161c3ff49dd19557b86410c7613149f3576375f06",
+      "bytes": 2390680
+    },
+    {
+      "path": "cbp.o",
+      "sha256": "9cb47f02765a2ef8e1bad0705fed6b5bcf9701d9a0d8eed188755e2640be90a6",
+      "bytes": 6379896
+    },
+    {
+      "path": "clustergraph.o",
+      "sha256": "0d34bbe12dc3a1b6ac6a381ebf3c5d1ccc7dc83984024d512856df09fd3b5ea9",
+      "bytes": 1397176
+    },
+    {
+      "path": "dag.o",
+      "sha256": "4257c7b74cb4d62f2326376fd3be4d51e850fe6e4ad438d1ca6f48d6fa03bdc3",
+      "bytes": 1326648
+    },
+    {
+      "path": "daialg.o",
+      "sha256": "dd8f7aa470fca57a3ac7c4a1868b91479d9b8c1602a1f09f55d67bd9bd9813ab",
+      "bytes": 2800312
+    },
+    {
+      "path": "decmap.o",
+      "sha256": "a7f8b88866e9bb7618c26a45af361b3434c30e9c56b8e047468aafbf12fada33",
+      "bytes": 4091952
+    },
+    {
+      "path": "emalg.o",
+      "sha256": "01571c4bb5dd227dfe995b152f47e9b2dbe65721e7019551bf28b511e3042165",
+      "bytes": 3967736
+    },
+    {
+      "path": "evidence.o",
+      "sha256": "dc9ae05b9f441df8e707e2e72560146b4e10e969b6baabfeac7f4d2ccbf3777f",
+      "bytes": 1491040
+    },
+    {
+      "path": "exactinf.o",
+      "sha256": "91e4841c4ada8c3e3a2c9b52f1dcb941836254045f330df86fa8d9178add3737",
+      "bytes": 3662880
+    },
+    {
+      "path": "examples/example",
+      "sha256": "a5008cb0b783c4263f4aa43441c0f0c1ccadce44f9f3307580044c44ac7f6d09",
+      "bytes": 38483032
+    },
+    {
+      "path": "examples/example_bipgraph",
+      "sha256": "fb204de1228ac44b1b450220e852c6cae350e7058ea66dc271179bc68d06d4ab",
+      "bytes": 965336
+    },
+    {
+      "path": "examples/example_permute",
+      "sha256": "27cbd93d68762783127d7a5e3bdd3124a5feea1254e6edbc49d8ccf817db3c72",
+      "bytes": 735680
+    },
+    {
+      "path": "examples/example_sprinkler",
+      "sha256": "e87c5342faca65a529e30f6656f14cd532156114bd40113a28d96cba1f287c92",
+      "bytes": 4473344
+    },
+    {
+      "path": "examples/example_sprinkler_em",
+      "sha256": "01b8a7a8ffbb641e1ba92ae08431f7bafe15f8614a22e77485d735aaa63db90c",
+      "bytes": 39786960
+    },
+    {
+      "path": "examples/example_sprinkler_gibbs",
+      "sha256": "199de3afe1de0fbb7a6712206c5691ae14e12cbd8119077d1f25f8e254ddd267",
+      "bytes": 6036496
+    },
+    {
+      "path": "examples/example_varset",
+      "sha256": "9abcc91d504cc347bddc0fff3ec00fa37fbbc5d34da829952ed5d6b44f9c2cc3",
+      "bytes": 774432
+    },
+    {
+      "path": "exceptions.o",
+      "sha256": "ea328a650e7a57cd7fcb51ad0689600c40f56c9c64b9c3093061e1b36d026187",
+      "bytes": 126552
+    },
+    {
+      "path": "factor.o",
+      "sha256": "7311f2a20eb7d363eafd5df41bb8e013b5278424d8e36c1bb0a74acfe99c04e6",
+      "bytes": 972400
+    },
+    {
+      "path": "factorgraph.o",
+      "sha256": "bf06d7e8e6a514e809a88e1e263982650385e5f6ee45d7c4f6979979e5b41701",
+      "bytes": 4489728
+    },
+    {
+      "path": "fbp.o",
+      "sha256": "32086c973eb4339c7bc5f37fda84a73ffe79f4308cfa5f4c5ed4ed9e37df928b",
+      "bytes": 3197904
+    },
+    {
+      "path": "gibbs.o",
+      "sha256": "8c81fb79daa55fc5ea0a606d016f6fcc746a26f33ca78b38abfbd5d8b03a3fde",
+      "bytes": 3842136
+    },
+    {
+      "path": "graph.o",
+      "sha256": "7f763e3c07b8817739835edb7c859f25f8fdb232f70b7095ccdbee015a5114e8",
+      "bytes": 1256272
+    },
+    {
+      "path": "hak.o",
+      "sha256": "1f22d4586fa7d5d02e15a58cbd6c1d85e58dcc2836042116e1a3cf3b9ed586bd",
+      "bytes": 6023048
+    },
+    {
+      "path": "io.o",
+      "sha256": "00fed8c896a9d148a51fed5bb7dc0b2c9d00c7f3554a3fff1e56beb75875b498",
+      "bytes": 2358072
+    },
+    {
+      "path": "jtree.o",
+      "sha256": "71601bfda8ae00bd71b37d7119ac1199c773303936004647f9a000fa5d442c6d",
+      "bytes": 8610392
+    },
+    {
+      "path": "lc.o",
+      "sha256": "e22fbb96d1e25f3cf791d2dc3d3b6ab320e31f2e7f9c8f8e9e1e887bf9ddec7a",
+      "bytes": 5392784
+    },
+    {
+      "path": "lib/libdai.a",
+      "sha256": "a9d76c2086f644869d4ddd9f38ee44449716e77c3253953edd22c78e24b986af",
+      "bytes": 109443558
+    },
+    {
+      "path": "Makefile.conf",
+      "sha256": "2c2ed9990e96dc3495e130573820d16b61e768a554585b94edaecf8c41709be4",
+      "bytes": 2257
+    },
+    {
+      "path": "mf.o",
+      "sha256": "508c1353e3017a390d44a5431e9c2db853a7e3b020a52581ddabca0b506e6a7d",
+      "bytes": 3913960
+    },
+    {
+      "path": "mr.o",
+      "sha256": "7bdaa73b91990ae1532d4135d3b6ff50f250096f36ef351a402a2e8cdd273547",
+      "bytes": 5514032
+    },
+    {
+      "path": "properties.o",
+      "sha256": "6f41f8a2cfed411062a0653210676bac171c0ddfc88a9ceebd17c366051b0ffd",
+      "bytes": 1043832
+    },
+    {
+      "path": "regiongraph.o",
+      "sha256": "f830535298ee22ff3e1ab52785088425d2c0a7cf4089fb73bb6990d0fa50e8d4",
+      "bytes": 3178272
+    },
+    {
+      "path": "sprinkler.fg",
+      "sha256": "5c44e6b9166eb78cfb36c62999189c53c3344e18d785aa966e12a7ab72fe5d0c",
+      "bytes": 436
+    },
+    {
+      "path": "treeep.o",
+      "sha256": "c54345946dfe936d47d8fd7f250bb5efd39341905189ea62aefac2f2231a4a11",
+      "bytes": 7485280
+    },
+    {
+      "path": "trwbp.o",
+      "sha256": "e3ae999b1ed2bb74ea704010d3bf285855bfd454f6aac3dd676d617b01615c08",
+      "bytes": 5445824
+    },
+    {
+      "path": "util.o",
+      "sha256": "075e65903d4de98080cad0802f894c4e426acf40214ae8935679dbbc12431d3a",
+      "bytes": 428824
+    },
+    {
+      "path": "varset.o",
+      "sha256": "12d1e49de259fb80541c7cf72f69ca1873ec83ae8fc7f1799671a3b638d734bf",
+      "bytes": 636456
+    },
+    {
+      "path": "weightedgraph.o",
+      "sha256": "d990fa247b01c6d17335faab9fdf666f7efa636ed78503bec5641a433e603ae7",
+      "bytes": 752024
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "fd4b4581b1f3a3ed9ee757fc0e18e03c1a6280b0d51af2971335c249a40e1b96",
+  "body_preserved": true
+}

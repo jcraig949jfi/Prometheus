@@ -1,0 +1,114 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "pid-autotune-hirschmann",
+  "receipt_id": "run-pid-autotune-hirschmann-20260913T055641Z",
+  "written_utc": "20260913T055641Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "two_plants.py": "1a35305b4aeed8a6da50dfe512182784faebbc3608fc078575cda54b0d009e57"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "97240e632836e228545c562797b636cf1092a86e2a325996234aeaf60a02f21d",
+  "recipe_sha256": "e47442f78324322f26cf91c189aac21556bb0b805bd275fbcc32dd3ef03d0630",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.69,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "relay autotune on kettle A (40 l, 6 kW): limit cycle -> Ku, Pu -> gains per rule",
+      "cmd": "python $HARNESS/two_plants.py A 2>&1 | tail -12",
+      "exit": 0,
+      "seconds": 0.87,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'state:   succeeded'",
+        "stdout lacks 'rule: ziegler-nichols'"
+      ],
+      "stdout": {
+        "text": "Traceback (most recent call last):\n  File \"/w/upstream/tree/sim.py\", line 11, in <module>\n    import matplotlib.pyplot as plt\nModuleNotFoundError: No module named 'matplotlib'\n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "the SAME tuner on kettle B (10 l, 2 kW): a different plant yields different gains (changing plant -> adaptation -> altered parameters)",
+      "cmd": "python $HARNESS/two_plants.py B 2>&1 | tail -12",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'state:   succeeded'",
+        "stdout lacks 'rule: ziegler-nichols'"
+      ],
+      "stdout": {
+        "text": "Traceback (most recent call last):\n  File \"/w/upstream/tree/sim.py\", line 11, in <module>\n    import matplotlib.pyplot as plt\nModuleNotFoundError: No module named 'matplotlib'\n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: the Ziegler-Nichols Kp differs between the two plants by more than 10%",
+      "cmd": "python $HARNESS/two_plants.py compare 2>&1 | tail -3",
+      "exit": 0,
+      "seconds": 0.88,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'RESULT OK'"
+      ],
+      "stdout": {
+        "text": "Kp(ziegler-nichols) kettle A = None ; kettle B = None\nRESULT FAIL\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "__pycache__/autotune.cpython-311.pyc",
+      "sha256": "0bb3f110d533a8764241137f3b850321f0d3f4faea8dc5a74c907ccdbb0b3d8e",
+      "bytes": 11000
+    },
+    {
+      "path": "__pycache__/kettle.cpython-311.pyc",
+      "sha256": "b0035c90b868fe4fd1d1f2d15e86cda8abb58d9baa9bb5a8fc0f04ee2e999986",
+      "bytes": 3197
+    },
+    {
+      "path": "__pycache__/pid.cpython-311.pyc",
+      "sha256": "9377c222d17c3a60414984750067ff983452a90fbbb0ec5facfb723c3e2280d9",
+      "bytes": 4134
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_FAIL",
+  "ok": false,
+  "tree_sha256_after": "97240e632836e228545c562797b636cf1092a86e2a325996234aeaf60a02f21d",
+  "body_preserved": true
+}

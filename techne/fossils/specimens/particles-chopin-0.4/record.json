@@ -110,13 +110,21 @@
       "relation": "shares_ancestor_with",
       "to": "filterpy-labbe",
       "note": "Bayesian filtering: Kalman (linear) vs particle (nonlinear)"
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "libdai-mooij",
+      "note": "particle MCMC (PMMH) and belief propagation: two inference lineages; PMMH added to this specimen in batch 06 phase 5"
     }
   ],
   "acquisition_tags": [
     "batch05",
     "priorityC",
     "estimation",
-    "queue_named_family"
+    "queue_named_family",
+    "batch06",
+    "phase5",
+    "old_fossil_made_more_useful"
   ],
   "versions_preserved": [],
   "receipts": [
@@ -128,6 +136,36 @@
     },
     {
       "receipt": "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260912T215641Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260913T060959Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260913T061140Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260913T061327Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260913T061510Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260913T061708Z.json",
       "ok": true,
       "classification": "RUNNABLE_CONTAINER",
       "test_classification": "TECHNE_SMOKE_HARNESS_PASS"

@@ -1,0 +1,168 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "pid-autotune-hirschmann",
+  "canonical_name": "pid-autotune (Hirschmann) -- Astrom-Hagglund relay-feedback autotuner with Ziegler-Nichols / Tyreus-Luyben / Pessen rules, on a simulated brewing kettle",
+  "aliases": [
+    "pid-autotune",
+    "relay autotuner",
+    "PIDAutotune"
+  ],
+  "lineage": "Astrom & Hagglund's relay auto-tuning (Automatica 1984): put the loop under a relay, measure the induced limit cycle's amplitude and period (ultimate gain and period), then compute PID gains by a tuning rule -- the mechanism inside industrial PID controllers' 'autotune' buttons. This implementation (2016-) drives a first-order thermal kettle model (volume, heater power, ambient loss) and prints the gains each rule yields; used by home-brewing controllers (CraftBeerPi lineage).",
+  "domain": [
+    "control",
+    "adaptive",
+    "self-tuning",
+    "relay-feedback",
+    "PID",
+    "small-mechanism"
+  ],
+  "era": "1984 (method); 2016- (code)",
+  "version": "github.com/hirschmann/pid-autotune master as of 2026-09-13 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/hirschmann/pid-autotune",
+        "commit": "60505e964f194355a84ff4e7359ec1a8528b0d02",
+        "commit_resolved": "60505e964f194355a84ff4e7359ec1a8528b0d02",
+        "commit_date": "2017-07-14T22:40:49+02:00"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/hirschmann/pid-autotune"
+  },
+  "hashes": {
+    "tree_sha256": "97240e632836e228545c562797b636cf1092a86e2a325996234aeaf60a02f21d",
+    "n_files": 9,
+    "bytes": 123118,
+    "artifacts": [
+      {
+        "filename": "https://github.com/hirschmann/pid-autotune",
+        "sha256": null,
+        "commit": "60505e964f194355a84ff4e7359ec1a8528b0d02"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\pid-autotune-hirschmann",
+    "hash_list": "techne/fossils/specimens/pid-autotune-hirschmann/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE.md"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "Python"
+  ],
+  "build_system": "none",
+  "compiler_or_interpreter": "python 3.11 (docker python:3.11-slim; matplotlib only if plotting)",
+  "dependencies": [
+    "none for the autotune path (matplotlib for --plot only)"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "autotune.py PIDAutotune(setpoint, out_step, sampletime, lookback, ...).run(input); get_pid_parameters(rule); sim.py autotune <args>"
+  ],
+  "example": {
+    "command": "python sim.py autotune --volume 40 ... ; python sim.py autotune --volume 10 ...",
+    "input": "two different kettles (plants)",
+    "output": "different Kp/Ki/Kd per rule for each plant: the CHANGING PLANT -> ADAPTATION -> ALTERED PARAMETERS chain"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Astrom & Hagglund, Automatic tuning of simple regulators with specifications on phase and amplitude margins, Automatica 20(5), 1984",
+    "README.md (in the tree)"
+  ],
+  "human_capability_summary": {
+    "built_to": "let a controller find its own gains from the plant it is attached to, by provoking a controlled oscillation and measuring it",
+    "pressure": "unknown plant dynamics (kettle size, heater power), a user who cannot hand-tune",
+    "success_means": "the measured limit cycle yields gains that regulate the plant; a different plant yields different gains"
+  },
+  "known_human_problem_solved": "PID controller auto-tuning",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "unknown/varying plant, noisy temperature sensor, slow thermal dynamics",
+  "human_failure_condition": "no limit cycle detected (tuning fails) or gains that oscillate the real plant",
+  "behavioral_entry_point": "change --volume / --heater-power / --ambient-temp and compare the tuned gains and the limit-cycle period",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Astrom & Hagglund 1984",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "arduino-pid",
+      "note": "the PID this tunes; the vault's fixed-gain PID beside a gain-finding mechanism"
+    }
+  ],
+  "acquisition_tags": [
+    "batch06",
+    "phase4",
+    "adaptive",
+    "self_tuning",
+    "small_mechanism"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T055641Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T055801Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T055950Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T060041Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T060157Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T060238Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne"
+}
