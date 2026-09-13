@@ -10,10 +10,10 @@ direct registry write.
 
 ## Status counts
 
-- candidate: 7
+- candidate: 6
 - killed-in-AC01, candidate-elsewhere: 1
 - parked: 1
-- specimen: 1
+- specimen: 2
 
 ## Index
 
@@ -22,7 +22,7 @@ ID       Name                                        Status
 NUR-001  QUOTIENT_CANONICALIZE                      specimen
 NUR-002  COMPILE_REPEATED_TRAJECTORY                candidate
 NUR-003  SAME_SCORE_DISJOINT_FAILURES_PROBE         killed-in-AC01, candidate-elsewhere
-NUR-004  QUOTIENT_BY_PAIR_BEFORE_FITTING            candidate
+NUR-004  QUOTIENT_BY_PAIR_BEFORE_FITTING            specimen
 NUR-005  MINIMUM_SUFFICIENT_INSTRUMENT              candidate
 NUR-006  FACTOR_FIRST_REPRESENTATION_INVERSION      candidate
 NUR-007  OBSTRUCTION_FIRST_KILL_BASIS               parked
@@ -70,7 +70,7 @@ Origin: {"experiment": "AC-01D-v2", "receipt": "alien_circuitry/AC01D_V2_RECEIPT
 
 **expected cost.** T_7 evidence complete (minutes to reproduce); cousin tests costed in their own entries
 
-**promotion condition.** independent rediscovery or measured search reduction in >= 2 ecologies with different failure geometry; and at least one ecology where the quotient is NOT the whole answer (so the organism composes rather than replaces)
+**promotion condition.** was: >= 2 ecologies -> MET on count. Held at SPECIMEN pending (a) a composition test with an orthogonal mechanism and (b) an account of WHY tensor-QD was inert (move-set bottleneck) that predicts inertness in advance rather than after
 
 **kill condition.** in every non-T_7 ecology tried the quotient is either trivial (no collapse) or inert (collapse without search reduction, as in tensor-QD); or a consumer that would use the canonical representative cannot be named
 
@@ -79,6 +79,14 @@ Origin: {"experiment": "AC-01D-v2", "receipt": "alien_circuitry/AC01D_V2_RECEIPT
 **descendant if negative.** retained as a T_7 specimen with the tensor-QD inert case beside it: 'exactness of a quotient does not imply consequential reduction' becomes the recorded lesson
 
 **orthogonality.** What it transforms that current organisms do not: state multiplicity under a verified symmetry. What it does NOT transform: the move set (tensor-QD), the function's internal complexity (T_7 non-additivity), or wall-clock.
+
+**new evidence.** CRUCIBLE-C (2026-09-13) is a SECOND POSITIVE ECOLOGY: quotienting Diomedes counterexample-hunt states by invariant pair reduces exact cost-to-first-break 2.69 -> 2.22 (HC 0.28) beyond a random-class permutation null and a matched-N control, with the class observable at decision time. Tally: T_7 (exact combinatorial, HC 0.998) POSITIVE; Diomedes (noisy statistical, HC 0.28) POSITIVE; tensor-QD (gauge quotient) INERT.
+
+**verdict.** recurrence evidence strengthened: two positive ecologies with different failure geometry (exact vs statistical), one inert. NOT promoted to primitive-candidate: the ruling requires evidence, not doctrine, and the inert case stands.
+
+**supersedes.** NUR-001 @ 86a429e
+
+**recorded.** 2026-09-13 after CRUCIBLE-C; appended, prior rows retained
 
 Provenance: {"observed_by": "AC-01 seat, 2026-09-12/13", "operator_rulings": "AC-01D-v2 ruling 'orbit/collapse coordinate test'", "evidence_levels": "all numbers OBSERVED in committed JSON; the mechanism statement is INFERRED from one ecology plus one independent inert recurrence; generality is UNTESTED"}
 
@@ -171,7 +179,7 @@ Provenance: {"evidence_levels": "CP-vs-C6 OBSERVED this task; other instances OB
 
 ## NUR-004 QUOTIENT_BY_PAIR_BEFORE_FITTING
 
-Status: candidate
+Status: specimen
 
 Origin: {"experiment": "Diomedes cycles 001-005", "artifacts": ["roles/Diomedes/CYCLE_001_RESULT_h1_counterfactual_hunt.md", "roles/Diomedes/CYCLE_003_RESULT_split_discriminator.md", "roles/Diomedes/CYCLE_004_RESULT_relation_type_confound.md", "roles/Diomedes/CYCLE_005_ARMA_RESULT.md"]}
 
@@ -190,6 +198,7 @@ Origin: {"experiment": "Diomedes cycles 001-005", "artifacts": ["roles/Diomedes/
 
 **failure geometry.**
 - OBSERVED (CYCLE_005): b2 commutation is 97% determined by which operators (marginal 0.789 -> conditional 0.974), disposition PARK 'underpowered by landscape' -- a quotient can be exact and leave no headroom
+- OBSERVED (CRUCIBLE-C): the pooled logistic is WORSE than the one-feature break-rate baseline (2.69 vs 2.55) -- pooling over sign-disagreeing classes does active harm, not merely no good; the canonical model only recovers 28% of the pooled-to-oracle gap, so most of the gap is not pooling
 
 **relation to existing.**
 - NUR-001 (same organism, different substrate)
@@ -201,15 +210,23 @@ Origin: {"experiment": "Diomedes cycles 001-005", "artifacts": ["roles/Diomedes/
 
 **expected cost.** minutes to an hour on existing rows
 
-**promotion condition.** class-canonical model beats pooled by more than the permutation-null width AND the class is decision-time-observable
+**promotion condition.** was: gain > null with decision-time classes -> MET. Next: does the pair-quotient reduce search in a THIRD ecology with a different failure geometry, or compose with a move-set mechanism (NUR-002)?
 
 **kill condition.** gain is post-hoc only, or inside the null
 
-**descendant if positive.** second-ecology evidence for NUR-001 in a statistical rather than combinatorial world
+**descendant if positive.** CRUCIBLE-A is satisfied by this result (second ecology for NUR-001, statistical rather than combinatorial); no further Diomedes work; the pair x relation secondary is a candidate for a separately preregistered class, not for post-hoc promotion
 
 **descendant if negative.** the Diomedes ceiling is genuine; record that pooling was not the cause
 
 **orthogonality.** tests whether the quotient organism transfers from exact combinatorial search to noisy statistical fitting
+
+**new evidence.** CRUCIBLE-C 2026-09-13 (OBSERVED, prereg d3b9533, results/ac01d/nursery/crucible_c_result.json): on the frozen Diomedes h1 population (digest 1b4abb1a reproduced), 22 qualifying invariant pairs, ~15,100 held states per seed, 5 seeds: cost-to-first-break pooled 2.69 -> per-pair canonical 2.22 (oracle 1.00, random 3.16, break-rate-only 2.55); reduction 0.47 (per-seed 0.34-0.62, SE ~0.04) above every one of 200 random-class permutations on every seed (null p95 <= 0.22, p = 0.005 each); matched-N pooled 2.76 (worse than pooled: sample size exonerated); HC 0.28 (0.22-0.34). VERDICT C-PASS. Class key (inv_a, inv_b) is an attribute of the state before any label: decision-time observable by construction. SECONDARY (not in verdict): pair x relation classes reach 1.75.
+
+**verdict.** C-PASS: the pooled ceiling on these rows is partly a pooling artefact; quotienting by pair changes the consequential selection (which candidate to test next) beyond the random-class null and beyond sample size.
+
+**supersedes.** NUR-004 @ 86a429e
+
+**recorded.** 2026-09-13 after CRUCIBLE-C; appended, prior rows retained
 
 Provenance: {"evidence_levels": "all numbers OBSERVED in Diomedes results; mechanism HYPOTHESIZED; UNTESTED"}
 

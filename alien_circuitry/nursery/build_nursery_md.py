@@ -23,9 +23,12 @@ def load():
             for tok in str(r["status"]).replace(",", " ").replace("-in-AC01", "").replace("-elsewhere", "").split():
                 if tok not in STATUS_VOCAB: raise SystemExit(f"line {i} ({r['id']}): status token {tok!r} not in {sorted(STATUS_VOCAB)}")
             rows.append(r)
-    ids = [r["id"] for r in rows]
-    if len(ids) != len(set(ids)): raise SystemExit("duplicate ids")
-    return rows
+    # append-only ledger: a later row with the same id supersedes the earlier one (must carry "supersedes"); the reader shows the latest
+    latest = {}
+    for r in rows:
+        if r["id"] in latest and "supersedes" not in r: raise SystemExit(f"duplicate id {r['id']} without 'supersedes'")
+        latest[r["id"]] = r
+    return list(latest.values())
 
 
 def render(rows):
@@ -50,6 +53,8 @@ def render(rows):
             out += [f"**{k.replace('_', ' ')}.**"] + [f"- {x}" for x in r[k]] + [""]
         for k in ("cheapest_kill_experiment", "oracle_verifier", "expected_cost", "promotion_condition", "kill_condition", "descendant_if_positive", "descendant_if_negative", "orthogonality"):
             out += [f"**{k.replace('_', ' ')}.** {r[k]}", ""]
+        for k in ("new_evidence", "verdict", "supersedes", "recorded"):
+            if k in r: out += [f"**{k.replace('_', ' ')}.** {r[k]}", ""]
         out += ["Provenance: " + json.dumps(r["provenance"], ensure_ascii=False), ""]
     return "\n".join(out)
 
