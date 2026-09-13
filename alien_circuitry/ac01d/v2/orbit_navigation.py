@@ -40,11 +40,16 @@ def run(per_set=300):
     t0 = time.perf_counter(); ctx = Context(per_set=per_set); U, M = ctx.U, ctx.M; D = U["D"]; F = U["F"]; tg = np.array(U["targets"])
     sr, trole, pr, live = M["state_role"], M["target_role"], M["pair_role"], M["live"]
     out = {"family": "AC-01D-v2 orbit table (canonical joint arrangement -> D)", "models": {}}
-    fit = live & (sr == 0)[:, None] & (trole == 0)[None, :] & (pr == 0); S, J = np.nonzero(fit)
+    # BUG FIX (run 1): the table must cover every reachable pair the searcher can query, including rank-2 successors (the last step
+    # before a target), which lie outside the rank>=3 corpus used for problem STARTS.  Fit rows = reachable pairs of any rank whose
+    # state is a train state and target a train target, pair role fit (for rank>=3) -- rank-2 pairs carry no pair-role mask and are
+    # included for train states x train targets.
+    reach = U["D"] >= 0
+    fit = reach & (sr == 0)[:, None] & (trole == 0)[None, :] & ((pr == 0) | ~M["corpus"][:, None]); S, J = np.nonzero(fit)
     u, m, fb, gm, nb, nonint = build_table(F, tg, D, S, J)
     rep = OrbitTableRep("ORBIT-TABLE-fit", u, m, fb, gm, F, nb); ev = ctx.evaluate(rep); ev["fit"] = {"orbits_seen_in_FIT": int(len(u)), "fit_rows": int(len(S)), "cells_with_non_integer_mean": nonint}
     out["models"]["fit_only"] = ev
-    Sa, Ja = np.nonzero(live); u2, m2, fb2, gm2, nb2, nonint2 = build_table(F, tg, D, Sa, Ja)
+    Sa, Ja = np.nonzero(reach); u2, m2, fb2, gm2, nb2, nonint2 = build_table(F, tg, D, Sa, Ja)
     rep2 = OrbitTableRep("ORBIT-TABLE-exact-all-pairs", u2, m2, fb2, gm2, F, nb2); ev2 = ctx.evaluate(rep2); ev2["fit"] = {"orbits": int(len(u2)), "rows": int(len(Sa)), "cells_with_non_integer_mean": nonint2, "note": "upper reference; built from all reachable pairs incl. held sets"}
     out["models"]["exact_all_pairs"] = ev2
     out["seconds"] = round(time.perf_counter() - t0, 1)
