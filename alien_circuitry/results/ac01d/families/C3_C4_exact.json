@@ -1,0 +1,78 @@
+{
+ "family": "C3/C4 exact quotient and consequence signature",
+ "eligible_sets": [
+  "FIT compression",
+  "HELD_PAIRS by row sharing"
+ ],
+ "train_states": 492648,
+ "train_targets": 50,
+ "denominator_lzma": 1060696,
+ "C3_fit_rows": {
+  "classes": 492648,
+  "states": 492648,
+  "mean_class_size": 1.0,
+  "class_size_quartiles": [
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "bytes_table_lzma": 5627244,
+  "bytes_index_lzma": 1252080,
+  "bytes_total": 6879324,
+  "CR_vs_denominator": 0.15418607991134012,
+  "sha256_classes": "3370608b01b6112f84b2ef408388061ed6708105941643b33ba681a6ecbc91e7"
+ },
+ "C3_full_exact_table": {
+  "classes": 793989,
+  "states": 820890,
+  "mean_class_size": 1.0338808220265017,
+  "class_size_quartiles": [
+   1,
+   1,
+   1,
+   1,
+   4
+  ],
+  "bytes_table_lzma": 3340384,
+  "bytes_index_lzma": 1226144,
+  "bytes_total": 4566528,
+  "CR_vs_denominator": 0.23227625014015024,
+  "sha256_classes": "bd1277335990aed12b9db84e831cdfaa8da5baf3218276bbde02a9e4f0a995df"
+ },
+ "C4_fit_signatures": {
+  "classes": 492648,
+  "states": 492648,
+  "mean_class_size": 1.0,
+  "class_size_quartiles": [
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "bytes_table_lzma": 14396756,
+  "bytes_index_lzma": 1252080,
+  "bytes_total": 15648836,
+  "CR_vs_denominator": 0.06778114359432229,
+  "sha256_classes": "5b2b95dce32c270fa479da97df6174fec5ef1a63e6346b65c844c9feefcabd72"
+ },
+ "HELD_PAIRS_row_sharing": {
+  "scored": 200000,
+  "coverage": 0.0,
+  "exact_given_covered": 0.0,
+  "within1_given_covered": 0.0,
+  "exact_overall": 0.0
+ },
+ "post_hoc": {
+  "C3_vs_kernel_NMI": 0.6476461717229608,
+  "C3_vs_countvector_NMI": 0.6944248352548361,
+  "C4_vs_kernel_NMI": 0.6476461717229608,
+  "C3full_vs_kernel_NMI": 0.6325185786789311,
+  "kernel_classes_in_train": 813,
+  "C3_classes_per_kernel_class_mean": 605.9630996309963
+ },
+ "interpretation_rules": "exact families are scored as table compression (CR at lookup accuracy on FIT) and HELD_PAIRS row sharing; not eligible for cross-target verdicts",
+ "seconds": 174.8
+}
