@@ -135,8 +135,7 @@ for N in __SIZES__; do
   for ARM in eis lap; do
     echo "=== ARM $ARM N=$N"
     valgrind --tool=cachegrind --cache-sim=yes --cachegrind-out-file=/tmp/cg.out ./$ARM $N 2>/tmp/cg.err
-    grep -E '^(D refs|D1  misses|LLd misses)' /tmp/cg.err | sed 's/^==[0-9]*== //'
-    grep -E '^(D refs|D1  misses|LLd misses)' /tmp/cg.err >/dev/null || sed -n 's/^==[0-9]*== //p' /tmp/cg.err | grep -E 'refs|misses'
+    sed -n 's/^==[0-9]*== //p' /tmp/cg.err | grep -E 'refs:|misses:'
   done
 done
 '''
@@ -157,7 +156,7 @@ def parse(out):
         if t.startswith("=== ARM "):
             p = t.split()
             cur = {"arm": {"eis": "eispack", "lap": "lapack"}[p[2]], "n": int(p[3].split("=")[1]),
-                   "ierr": None, "w1": None, "wn": None, "D_refs": 0, "D1_misses": 0, "LLd_misses": 0}
+                   "ierr": None, "w1": None, "wn": None, "I_refs": 0, "D_refs": 0, "D1_misses": 0, "LLd_misses": 0}
             arms.append(cur)
         elif cur is None:
             continue
@@ -167,12 +166,24 @@ def parse(out):
             cur["w1"] = float(t.split()[1])
         elif t.startswith("WN "):
             cur["wn"] = float(t.split()[1])
-        elif t.startswith("D refs:"):
-            cur["D_refs"] = _num(t.split(":", 1)[1].split("(")[0])
-        elif t.startswith("D1  misses:"):
-            cur["D1_misses"] = _num(t.split(":", 1)[1].split("(")[0])
-        elif t.startswith("LLd misses:"):
-            cur["LLd_misses"] = _num(t.split(":", 1)[1].split("(")[0])
+        else:
+            # cachegrind pads its labels ("D   refs:", "D1  misses:"), so match on a regex rather
+            # than a literal prefix. The first pass missed the DENOMINATOR for exactly this reason
+            # and produced an undefined rate while the misses parsed fine.
+            m = re.match(r"^(I\s+refs|D\s+refs|D1\s+misses|LLd\s+misses|LL\s+misses):\s*(.+)$", t)
+            if m:
+                key = re.sub(r"\s+", "_", m.group(1))
+                val = _num(m.group(2).split("(")[0])
+                {"I_refs": "I_refs", "D_refs": "D_refs", "D1_misses": "D1_misses",
+                 "LLd_misses": "LLd_misses", "LL_misses": "LLd_misses"}.get(key)
+                if key == "I_refs":
+                    cur["I_refs"] = val
+                elif key == "D_refs":
+                    cur["D_refs"] = val
+                elif key == "D1_misses":
+                    cur["D1_misses"] = val
+                elif key in ("LLd_misses", "LL_misses"):
+                    cur["LLd_misses"] = val
     import math
     for a in arms:
         n = a["n"]
