@@ -108,6 +108,105 @@ int main(int argc, char **argv){
 '''}
 
 
+# ============================ PHASE 3: DISTRIBUTED SURVIVAL ====================================
+R["dmtcp-3.1.2"] = {
+    "runner": "docker", "image": C, "workdir": "upstream/tree/dmtcp-3.1.2",
+    "probe": [{"name": "g++", "cmd": "g++ --version | head -1; uname -r"}],
+    "build": [{"name": "configure + make (the coordinator, launcher, restarter and the preload library)", "cmd": "./configure -q >/dev/null 2>&1 && make -s -j4 2>&1 | grep -iE '\\berror' | head -3; test -x bin/dmtcp_launch && test -x bin/dmtcp_restart && echo built", "timeout": 1800},
+              {"name": "compile the counting target", "cmd": "gcc -O0 -o $BODY/build/counter $HARNESS/counter.c && echo built"}],
+    "runs": [{"name": "checkpoint at ~count 5, kill the process, restart from the image: the count continues, not restarts (one container, one command)",
+              "cmd": "mkdir -p /tmp/dm && cp $BODY/build/counter /tmp/dm/ && bash $HARNESS/ckpt_restart.sh $BODY/upstream/tree/dmtcp-3.1.2/bin /tmp/dm 2>&1 | tail -15; cp /tmp/dm/*.out $BODY/build/ 2>/dev/null; ls /tmp/dm | head -5",
+              "expect": {"exit": 0, "stdout_contains": ["RESTART OK"], "stdout_regex": r"first count after restart = \d+"}, "timeout": 600}],
+    "tests": [], "test_kind": "TECHNE", "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+    "classification_if_ok": "RUNNABLE_CONTAINER",
+    "notes": "Oracle: the first value printed by the restarted process is >= the last value printed before the kill and > 0 (it did not begin again at 1). Runs inside one docker container with default capabilities; DMTCP is LD_PRELOAD + signals (no ptrace, no kernel module). The checkpoint image and the target live in a container-local directory: on the Windows-mounted work/ the image is owned by uid 1000 while the process is root and dmtcp_restart refuses it ('Process uid doesn't match uid of checkpoint image') -- the first attempt, recorded."}
+H["dmtcp-3.1.2"] = {"counter.c": r"""#include <stdio.h>
+#include <unistd.h>
+int main(void){ for (int i = 1; ; i++) { printf("count %d\n", i); fflush(stdout); sleep(1); } }
+""", "ckpt_restart.sh": r"""#!/bin/bash
+# Techne harness: DMTCP checkpoint -> kill -> restart. args: <dmtcp bin dir> <build dir>
+set -u
+BIN=$1; B=$2; cd $B; rm -f ckpt_*.dmtcp dmtcp_restart_script* counter.out restart.out
+export PATH=$BIN:$PATH
+dmtcp_coordinator --daemon --exit-on-last -p 7779 -q >/dev/null 2>&1 || true
+sleep 1
+dmtcp_launch -p 7779 ./counter > counter.out 2>&1 &
+LP=$!
+sleep 5.5
+dmtcp_command -p 7779 -c >/dev/null 2>&1 || dmtcp_command -p 7779 --checkpoint
+sleep 2
+LAST=$(grep -o '[0-9]*' counter.out | tail -1)
+kill -9 $LP 2>/dev/null; sleep 1; pkill -9 -f '^./counter' 2>/dev/null; pkill -9 counter 2>/dev/null
+echo "last count before kill = $LAST"
+ls ckpt_counter_*.dmtcp | head -1 || { echo "NO CHECKPOINT IMAGE"; exit 1; }
+dmtcp_coordinator --daemon --exit-on-last -p 7780 -q >/dev/null 2>&1 || true
+sleep 1
+dmtcp_restart -p 7780 ckpt_counter_*.dmtcp > restart.out 2>&1 &
+RP=$!
+sleep 4
+kill -9 $RP 2>/dev/null; pkill -9 -f dmtcp_restart 2>/dev/null; pkill -9 counter 2>/dev/null
+FIRST=$(grep -o 'count [0-9]*' restart.out | head -1 | grep -o '[0-9]*')
+echo "first count after restart = ${FIRST:-none}"
+echo "restart output head:"; head -4 restart.out
+if [ -n "${FIRST:-}" ] && [ "$FIRST" -ge 4 ]; then echo "RESTART OK (continued from the checkpoint, not from 1)"; else echo "RESTART FAILED"; exit 1; fi
+"""}
+
+R["hashicorp-memberlist-0.5.4"] = {
+    "runner": "docker", "image": "golang:1.24-bookworm", "workdir": "upstream/tree/memberlist-0.5.4",
+    "probe": [{"name": "go", "cmd": "export PATH=$PATH:/usr/local/go/bin; go version"}],
+    "build": [{"name": "go build (modules from go.sum, fetched at run time -- recorded)", "cmd": "export PATH=$PATH:/usr/local/go/bin; go build ./... 2>&1 | tail -3; echo built", "timeout": 900}],
+    "runs": [{"name": "SWIM probing and suspicion: the package's own tests for probe, indirect ping, suspect -> dead, gossip (loopback, unreachable peers)",
+              "cmd": "export PATH=$PATH:/usr/local/go/bin; go test -count=1 -run 'TestMemberList_Probe$|TestMemberList_ProbeNode_Suspect$|TestMemberList_ProbeNode_Suspect_Dogpile|TestMemberList_ProbeNode_Awareness_Degraded|TestMemberList_SuspectNode|TestMemberList_DeadNode|TestMemberList_Gossip|TestMemberlist_Join$|TestMemberlist_Leave$' -v . 2>&1 | grep -E '^(=== RUN|--- (PASS|FAIL)|PASS|FAIL|ok)' | head -40",
+              "expect": {"exit": 0, "stdout_contains": ["--- PASS: TestMemberList_ProbeNode_Suspect", "--- PASS: TestMemberList_DeadNode"], "stdout_not_contains": ["--- FAIL"]}, "timeout": 900}],
+    "tests": [], "test_kind": "UPSTREAM", "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+    "classification_if_ok": "RUNNABLE_CONTAINER",
+    "notes": "The upstream tests construct members in-process on loopback with unreachable addresses and assert the suspect/dead transitions and gossip; that is the oracle. Test names are those of v0.5.4 (state_test.go, memberlist_test.go). go.mod requires go >= 1.24, so the run world is golang:1.24-bookworm (first attempt with 1.22 refused to build; recorded)."}
+
+R["redlock-py-redis-2014"] = {
+    "runner": "docker", "image": "python:3.11-slim", "workdir": "upstream/tree",
+    "probe": [{"name": "python", "cmd": "python --version"}],
+    "build": [{"name": "apt redis-server + pip install . (same container as the run; recorded)", "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y redis-server >/dev/null 2>&1; redis-server --version | head -1; pip install -q . 2>&1 | tail -1; echo built", "timeout": 900}],
+    "runs": [{"name": "three redis instances; two clients contend; TTL shorter than the holder's work -> the lease expires under the first holder (Kleppmann's scenario, observed)",
+              "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y redis-server >/dev/null 2>&1; pip install -q . >/dev/null 2>&1; python $HARNESS/lease.py 2>&1 | tail -20",
+              "expect": {"exit": 0, "stdout_contains": ["mutual exclusion while valid: OK", "lease expired under a live holder"], "stdout_regex": r"validity_ms=\d+"}, "timeout": 600}],
+    "tests": [], "test_kind": "TECHNE", "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+    "classification_if_ok": "RUNNABLE_CONTAINER",
+    "notes": "Oracle A (the mechanism): with TTL 2000 ms, client B cannot acquire while A holds a valid lease, and acquires after A releases. Oracle B (the documented weakness): with TTL 300 ms and A 'working' for 1000 ms, B acquires while A still believes it holds the lock -- two holders. Both recorded as behaviour; the 2014/2016 debate is cited in the record, not adjudicated."}
+H["redlock-py-redis-2014"] = {"lease.py": r"""import subprocess, time, sys
+from redlock import Redlock
+ports = [7401, 7402, 7403]
+procs = [subprocess.Popen(["redis-server", "--port", str(p), "--save", "", "--appendonly", "no", "--loglevel", "warning"]) for p in ports]
+time.sleep(1.5)
+servers = [{"host": "127.0.0.1", "port": p, "db": 0} for p in ports]
+A = Redlock(servers); B = Redlock(servers)
+# A: the mechanism
+la = A.lock("resource", 2000); print("A acquired:", bool(la), "validity_ms=%d" % (la.validity if la else 0))
+lb = B.lock("resource", 2000); print("B while A valid:", bool(lb))
+ok1 = bool(la) and not lb
+A.unlock(la); lb = B.lock("resource", 2000); print("B after A released:", bool(lb)); ok1 = ok1 and bool(lb); B.unlock(lb)
+print("mutual exclusion while valid:", "OK" if ok1 else "FAILED")
+# B: the weakness -- a lease shorter than the holder's work
+la = A.lock("resource", 300); print("A acquired short lease:", bool(la), "validity_ms=%d" % (la.validity if la else 0))
+time.sleep(1.0)   # A 'works' (or is paused) longer than its lease
+lb = B.lock("resource", 300); print("B acquires while A still thinks it holds:", bool(lb))
+print("lease expired under a live holder" if (la and lb) else "no expiry observed")
+for p in procs: p.kill()
+sys.exit(0 if ok1 else 1)
+"""}
+
+R["cocagne-plain-paxos"] = {
+    "runner": "docker", "image": "python:2.7-slim", "workdir": "upstream/tree",
+    "probe": [{"name": "python 2.7 (the preserved py2 world the code was written for)", "cmd": "python --version 2>&1"}],
+    "build": [],
+    "runs": [{"name": "the shipped tests: essential (prepare/promise/accept/learn, quorum), functional, practical (heartbeat leadership), durable",
+              "cmd": "python -m unittest discover -s test -p 'test_*.py' 2>&1 | tail -6",
+              "expect": {"exit": 0, "stdout_regex": r"Ran \d+ tests"}, "timeout": 600}],
+    "tests": [{"name": "oracle: the essential + functional suites pass ",
+               "cmd": "python -m unittest discover -s test -p 'test_essential.py' 2>&1 | tail -3; python -m unittest discover -s test -p 'test_functional.py' 2>&1 | tail -3; python -m unittest discover -s test -p 'test_practical.py' 2>&1 | tail -3", "expect": {"exit": 0, "stdout_regex": r"Ran \d+ tests[^O]*OK[\s\S]*Ran \d+ tests[^O]*OK"}, "timeout": 600}],
+    "test_kind": "UPSTREAM", "classification_if_ok": "RUNNABLE_CONTAINER",
+    "notes": "The tests are message-passing simulations of Proposer/Acceptor/Learner exchanges including contention; they assert Paxos's safety and the leader-heartbeat behaviour of the practical layer. Written in the Python 2 era: under python 3.11 the suites fail on str/bytes (48 + 29 errors, first attempt, recorded); run in the preserved python:2.7-slim world they are the code's own contract."}
+
+
 def main():
     import shutil
     env = vault.REPO / "techne" / "fossils" / "environment"

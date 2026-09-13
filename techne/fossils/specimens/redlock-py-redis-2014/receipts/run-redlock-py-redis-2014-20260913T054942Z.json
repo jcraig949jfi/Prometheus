@@ -1,0 +1,117 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "redlock-py-redis-2014",
+  "receipt_id": "run-redlock-py-redis-2014-20260913T054942Z",
+  "written_utc": "20260913T054942Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "lease.py": "e35fa9bd720a9d9cc686c5aa170a0cd99693bc40d0f0358e8692d2c759c1c370"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "09488f1ae9cf4bf50049c8646cdac9ccf055482964352b554688304de8f48dc8",
+  "recipe_sha256": "ea722ff72ab45ec8e135f9fc28af586c130f7694ffa620f27bf6296353ee1ce2",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "apt redis-server + pip install . (same container as the run; recorded)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y redis-server >/dev/null 2>&1; redis-server --version | head -1; pip install -q . 2>&1 | tail -1; echo built",
+      "exit": 0,
+      "seconds": 6.59,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Redis server v=8.0.2 sha=00000000:0 malloc=jemalloc-5.3.0 bits=64 build=b52b02bf0759f5b4\n[notice] To update, run: pip install --upgrade pip\nbuilt\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "three redis instances; two clients contend; TTL shorter than the holder's work -> the lease expires under the first holder (Kleppmann's scenario, observed)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y redis-server >/dev/null 2>&1; pip install -q . >/dev/null 2>&1; python $HARNESS/lease.py 2>&1 | tail -20",
+      "exit": 0,
+      "seconds": 9.91,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "164:C 13 Sep 2026 05:49:56.511 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.\n163:C 13 Sep 2026 05:49:56.511 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.\n165:C 13 Sep 2026 05:49:56.511 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.\nA acquired: True validity_ms=1973\nB while A valid: False\nB after A released: True\nmutual exclusion while valid: OK\nA acquired short lease: True validity_ms=295\nB acquires while A still thinks it holds: True\nlease expired under a live holder\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "build/lib/redlock/__init__.py",
+      "sha256": "e14450479d582d9ac5883079f54ea8e39d9ed404ac0ff2eccabfd0d6f92c1562",
+      "bytes": 4331
+    },
+    {
+      "path": "build/lib/redlock/cli.py",
+      "sha256": "105fa5e610364738eeeb5e767de04843f3fd3e64f73edd8d07235953e3a50c63",
+      "bytes": 3221
+    },
+    {
+      "path": "redlock_py.egg-info/dependency_links.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    {
+      "path": "redlock_py.egg-info/entry_points.txt",
+      "sha256": "d22801c8486f6ae6ae177f0a2c2922dbc5b8bc24dc11531bf9c60843668caf53",
+      "bytes": 45
+    },
+    {
+      "path": "redlock_py.egg-info/PKG-INFO",
+      "sha256": "a8b12f70b67705005d04a4636e1759ed0c708427a381187d82d2a91706cb3c7b",
+      "bytes": 3220
+    },
+    {
+      "path": "redlock_py.egg-info/requires.txt",
+      "sha256": "38c01e7ecce575ee99a0eb65337e405b3a5122bc2d72a00c1c69518adfb0dbee",
+      "bytes": 6
+    },
+    {
+      "path": "redlock_py.egg-info/SOURCES.txt",
+      "sha256": "3c8acf6c3a934ee302b3026fa165a74ae08ff07e594a306bf62896f57d8d2236",
+      "bytes": 315
+    },
+    {
+      "path": "redlock_py.egg-info/top_level.txt",
+      "sha256": "4cc27249eaf5692a158d850ea893bbbcd44f3733832f37a633e9f5beeeadbeff",
+      "bytes": 8
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "09488f1ae9cf4bf50049c8646cdac9ccf055482964352b554688304de8f48dc8",
+  "body_preserved": true
+}

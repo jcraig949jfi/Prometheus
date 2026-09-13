@@ -1,0 +1,74 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "hashicorp-memberlist-0.5.4",
+  "receipt_id": "run-hashicorp-memberlist-0.5.4-20260913T055310Z",
+  "written_utc": "20260913T055310Z",
+  "runner": "docker",
+  "image": "golang:1.24-bookworm",
+  "workdir": "upstream/tree/memberlist-0.5.4",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "8295c85b810a8f15ebf9729c85b19d4b7ad02b91de6c731cdca5284c78e3d4a6",
+  "recipe_sha256": "89cd6d37dafe987c97f351d79b7a6fa44198b50be75522c3594d0fd2b5667fea",
+  "patches": [],
+  "probe": [
+    {
+      "name": "go",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go version",
+      "exit": 0,
+      "seconds": 18.18,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "go version go1.24.13 linux/amd64\n"
+      },
+      "stderr": {
+        "text": "Unable to find image 'golang:1.24-bookworm' locally\n1.24-bookworm: Pulling from library/golang\n4f4fb700ef54: Pulling fs layer\nbbceb0035429: Pulling fs layer\nf7bdfd728ac2: Pulling fs layer\nee9e6246b78f: Pulling fs layer\n89edcaae7ec4: Pulling fs layer\n6bc9f599b3ef: Pulling fs layer\nd1ae0a59862a: Pulling fs layer\n4f4fb700ef54: Already exists\n4f4fb700ef54: Pull complete\n70665be368f4: Download complete\n55dcc25fab54: Download complete\nee9e6246b78f: Download complete\nbbceb0035429: Download complete\n89edcaae7ec4: Download complete\nf7bdfd728ac2: Download complete\n6bc9f599b3ef: Download complete\nd1ae0a59862a: Download complete\n6bc9f599b3ef: Pull complete\n89edcaae7ec4: Pull complete\nbbceb0035429: Pull complete\nd1ae0a59862a: Pull complete\nee9e6246b78f: Pull complete\nf7bdfd728ac2: Pull complete\nDigest: sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac\nStatus: Downloaded newer image for golang:1.24-bookworm\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "go build (modules from go.sum, fetched at run time -- recorded)",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go build ./... 2>&1 | tail -3; echo built",
+      "exit": 0,
+      "seconds": 8.74,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "go: downloading golang.org/x/sys v0.38.0\ngo: downloading github.com/hashicorp/go-immutable-radix v1.0.0\ngo: downloading github.com/hashicorp/golang-lru v0.5.0\nbuilt\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "SWIM probing and suspicion: the package's own tests for probe, indirect ping, suspect -> dead, gossip (loopback, unreachable peers)",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go test -count=1 -run 'TestMemberList_Probe$|TestMemberList_ProbeNode_Suspect$|TestMemberList_ProbeNode_Suspect_Dogpile|TestMemberList_ProbeNode_Awareness_Degraded|TestMemberList_SuspectNode|TestMemberList_DeadNode|TestMemberList_Gossip|TestMemberlist_Join$|TestMemberlist_Leave$' -v . 2>&1 | grep -E '^(=== RUN|--- (PASS|FAIL)|PASS|FAIL|ok)' | head -40",
+      "exit": 0,
+      "seconds": 17.76,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "=== RUN   TestMemberlist_Join\n--- PASS: TestMemberlist_Join (0.05s)\n=== RUN   TestMemberlist_Leave\n--- PASS: TestMemberlist_Leave (0.05s)\n=== RUN   TestMemberList_Probe\n--- PASS: TestMemberList_Probe (0.03s)\n=== RUN   TestMemberList_ProbeNode_Suspect\n--- PASS: TestMemberList_ProbeNode_Suspect (0.08s)\n=== RUN   TestMemberList_ProbeNode_Suspect_Dogpile\n=== RUN   TestMemberList_ProbeNode_Suspect_Dogpile/n=2,_k=3_(max_timeout_disabled)\n=== RUN   TestMemberList_ProbeNode_Suspect_Dogpile/n=3,_k=3\n=== RUN   TestMemberList_ProbeNode_Suspect_Dogpile/n=4,_k=3\n=== RUN   TestMemberList_ProbeNode_Suspect_Dogpile/n=5,_k=3_(max_timeout_starts_to_take_effect)\n=== RUN   TestMemberList_ProbeNode_Suspect_Dogpile/n=6,_k=3\n=== RUN   TestMemberList_ProbeNode_Suspect_Dogpile/n=6,_k=3_(confirmations_start_to_lower_timeout)\n=== RUN   TestMemberList_ProbeNode_Suspect_Dogpile/n=6,_k=3#01\n=== RUN   TestMemberList_ProbeNode_Suspect_Dogpile/n=6,_k=3_(timeout_driven_to_nominal_value)\n=== RUN   TestMemberList_ProbeNode_Suspect_Dogpile/n=6,_k=3#02\n--- PASS: TestMemberList_ProbeNode_Suspect_Dogpile (7.63s)\n=== RUN   TestMemberList_ProbeNode_Awareness_Degraded\n--- PASS: TestMemberList_ProbeNode_Awareness_Degraded (0.45s)\n=== RUN   TestMemberList_SuspectNode_NoNode\n--- PASS: TestMemberList_SuspectNode_NoNode (0.00s)\n=== RUN   TestMemberList_SuspectNode\n--- PASS: TestMemberList_SuspectNode (0.03s)\n=== RUN   TestMemberList_SuspectNode_DoubleSuspect\n--- PASS: TestMemberList_SuspectNode_DoubleSuspect (0.01s)\n=== RUN   TestMemberList_SuspectNode_OldSuspect\n--- PASS: TestMemberList_SuspectNode_OldSuspect (0.02s)\n=== RUN   TestMemberList_SuspectNode_Refute\n--- PASS: TestMemberList_SuspectNode_Refute (0.02s)\n=== RUN   TestMemberList_DeadNode_NoNode\n--- PASS: TestMemberList_DeadNode_NoNode (0.02s)\n=== RUN   TestMemberList_DeadNodeLeft\n--- PASS: TestMemberList_DeadNodeLeft (0.02s)\n=== RUN   TestMemberList_DeadNode\n--- PASS: TestMemberList_DeadNode (0.02s)\n=== RUN   TestMemberList_DeadNode_Double\n--- PASS: TestMemberList_DeadNode_Double (0.02s)\n=== RUN   TestMemberList_DeadNode_OldDead\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true,
+  "tree_sha256_after": "8295c85b810a8f15ebf9729c85b19d4b7ad02b91de6c731cdca5284c78e3d4a6",
+  "body_preserved": true
+}

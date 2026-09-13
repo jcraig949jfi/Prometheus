@@ -1,0 +1,130 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "cocagne-plain-paxos",
+  "receipt_id": "run-cocagne-plain-paxos-20260913T055447Z",
+  "written_utc": "20260913T055447Z",
+  "runner": "docker",
+  "image": "python:2.7-slim",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "4d9b7e3da558423a5befb690dc8dec13a695d922f17efd8414067e3a1f6a3905",
+  "recipe_sha256": "60e2d6321cde4fd85779eefc50d8bfd56f8cfb489da123ee98af8ab7cf06276f",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python 2.7 (the preserved py2 world the code was written for)",
+      "cmd": "python --version 2>&1",
+      "exit": 0,
+      "seconds": 0.78,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 2.7.18\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "the shipped tests: essential (prepare/promise/accept/learn, quorum), functional, practical (heartbeat leadership), durable",
+      "cmd": "python -m unittest discover -s test -p 'test_*.py' 2>&1 | tail -6",
+      "exit": 0,
+      "seconds": 1.77,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "......................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 214 tests in 0.011s\n\nOK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: the essential + functional suites pass ",
+      "cmd": "python -m unittest discover -s test -p 'test_essential.py' 2>&1 | tail -3; python -m unittest discover -s test -p 'test_functional.py' 2>&1 | tail -3; python -m unittest discover -s test -p 'test_practical.py' 2>&1 | tail -3",
+      "exit": 0,
+      "seconds": 1.01,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Ran 22 tests in 0.001s\n\nOK\nRan 64 tests in 0.003s\n\nOK\nRan 54 tests in 0.002s\n\nOK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "paxos/__init__.pyc",
+      "sha256": "8daa7ee3ab18ee9df1c3fc220f758df6873fc7d350d0b001df0a4dfce5453f9e",
+      "bytes": 104
+    },
+    {
+      "path": "paxos/durable.pyc",
+      "sha256": "787b8108c357cb404bc9b7865038d4a426a0db9f9eda2131f37e8965ba3ee5ec",
+      "bytes": 7065
+    },
+    {
+      "path": "paxos/essential.pyc",
+      "sha256": "d37a0b5fa903dc1320201cdc90695b51eb387a609fc8cfdc43ff2b23e1e607fc",
+      "bytes": 5475
+    },
+    {
+      "path": "paxos/external.pyc",
+      "sha256": "dc74e712f179c629800581b2434e32ba49804de9290db8fe4e138be7317c562f",
+      "bytes": 3822
+    },
+    {
+      "path": "paxos/functional.pyc",
+      "sha256": "82598442c1c9ab70544889df950240306db23a0cd9a230ebb15bf838b1040ab8",
+      "bytes": 7375
+    },
+    {
+      "path": "paxos/practical.pyc",
+      "sha256": "23856e01df210ffcecf8fb2525c6746a63a312292235cafcfe4e8b194d2413ed",
+      "bytes": 12222
+    },
+    {
+      "path": "test/test_durable.pyc",
+      "sha256": "33fa94c57c5279acfbb1c8e42cf7dbc10933358119b948e0a9a4ef2602bb884a",
+      "bytes": 7877
+    },
+    {
+      "path": "test/test_essential.pyc",
+      "sha256": "ed565091a891a146467ae1b639143a0d00164ce50d8c494b3d41077966ba37d1",
+      "bytes": 15892
+    },
+    {
+      "path": "test/test_external.pyc",
+      "sha256": "55559772dd5d7ace89349bd5d2abc6cc66318d945fd1469215d8c46756f74414",
+      "bytes": 7383
+    },
+    {
+      "path": "test/test_functional.pyc",
+      "sha256": "936c3c89fda4d660d6a0f82975319ea4da9690f15b1bbebf961231ad86ce960e",
+      "bytes": 10430
+    },
+    {
+      "path": "test/test_practical.pyc",
+      "sha256": "d084ba580e678912953005853076609eec216028e78f376d0e157438fe7616ad",
+      "bytes": 17717
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true,
+  "tree_sha256_after": "4d9b7e3da558423a5befb690dc8dec13a695d922f17efd8414067e3a1f6a3905",
+  "body_preserved": true
+}

@@ -1,0 +1,41 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/dmtcp-3.1.2",
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1; uname -r"
+    }
+  ],
+  "build": [
+    {
+      "name": "configure + make (the coordinator, launcher, restarter and the preload library)",
+      "cmd": "./configure -q >/dev/null 2>&1 && make -s -j4 2>&1 | grep -iE '\\berror' | head -3; test -x bin/dmtcp_launch && test -x bin/dmtcp_restart && echo built",
+      "timeout": 1800
+    },
+    {
+      "name": "compile the counting target",
+      "cmd": "gcc -O0 -o $BODY/build/counter $HARNESS/counter.c && echo built"
+    }
+  ],
+  "runs": [
+    {
+      "name": "checkpoint at ~count 5, kill the process, restart from the image: the count continues, not restarts (one container, one command)",
+      "cmd": "mkdir -p /tmp/dm && cp $BODY/build/counter /tmp/dm/ && bash $HARNESS/ckpt_restart.sh $BODY/upstream/tree/dmtcp-3.1.2/bin /tmp/dm 2>&1 | tail -15; cp /tmp/dm/*.out $BODY/build/ 2>/dev/null; ls /tmp/dm | head -5",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESTART OK"
+        ],
+        "stdout_regex": "first count after restart = \\d+"
+      },
+      "timeout": 600
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: the first value printed by the restarted process is >= the last value printed before the kill and > 0 (it did not begin again at 1). Runs inside one docker container with default capabilities; DMTCP is LD_PRELOAD + signals (no ptrace, no kernel module). The checkpoint image and the target live in a container-local directory: on the Windows-mounted work/ the image is owned by uid 1000 while the process is root and dmtcp_restart refuses it ('Process uid doesn't match uid of checkpoint image') -- the first attempt, recorded."
+}
