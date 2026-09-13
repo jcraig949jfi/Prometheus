@@ -465,10 +465,18 @@ def mirror_verify(dest: str, specimen_ids=None) -> dict:
 
 
 # --------------------------------------------------------------------------- run
-def run(specimen_id: str, timeout: int = 1800) -> dict:
+def run(specimen_id: str, timeout: int = 1800, image=None, persist=None) -> dict:
+    """image= runs the SAME preserved body and the SAME recipe in a DIFFERENT world (batch 10 P5:
+    "test them using preserved bodies and explicit world changes"). A world-override never
+    persists by default, so probing a fossil in a foreign world cannot overwrite its real
+    classification or append a misleading receipt."""
+    if persist is None:
+        persist = image is None
     rec = record.load(specimen_id)
     sd = vault.specimen_dir(specimen_id)
     recipe = json.loads((sd / "recipe.json").read_text(encoding="utf-8"))
+    if image:
+        recipe["image"] = image
     body = vault.body_dir(specimen_id)
     rel = recipe.get("workdir", "upstream/tree")
     runner = recipe["runner"]
@@ -544,6 +552,12 @@ def run(specimen_id: str, timeout: int = 1800) -> dict:
     after_rows = vault.hash_tree(body / "upstream")
     receipt["tree_sha256_after"] = vault.tree_hash_of(after_rows)
     receipt["body_preserved"] = receipt["tree_sha256_after"] == receipt["tree_sha256_before"]
+    if not persist:
+        receipt["persisted"] = False
+        receipt["world_override_image"] = recipe.get("image")
+        print("WORLD-PROBE", specimen_id, "image=%s" % recipe.get("image"),
+              receipt["classification"], "ok=%s" % receipt["ok"], "(not persisted)")
+        return receipt
     rp = sd / "receipts" / (receipt["receipt_id"] + ".json")
     rp.parent.mkdir(parents=True, exist_ok=True)
     rp.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8", newline="\n")
@@ -750,7 +764,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     a = sub.add_parser("acquire"); a.add_argument("specimen_id")
-    r = sub.add_parser("run"); r.add_argument("specimen_id"); r.add_argument("--timeout", type=int, default=1800)
+    r = sub.add_parser("run"); r.add_argument("specimen_id"); r.add_argument("--timeout", type=int, default=1800); r.add_argument("--image", help="run the same preserved body in a different world; never persists")
     v = sub.add_parser("verify"); v.add_argument("specimen_id", nargs="?"); v.add_argument("--all", action="store_true"); v.add_argument("--out")
     rs = sub.add_parser("restore"); rs.add_argument("specimen_id")
     mi = sub.add_parser("mirror"); mi.add_argument("--dest", required=True); mi.add_argument("--specimen", action="append"); mi.add_argument("--dry-run", action="store_true"); mi.add_argument("--allow-same-volume", action="store_true", help="disposable controls only")
@@ -761,7 +775,7 @@ def main(argv=None) -> int:
     if args.cmd == "acquire":
         acquire(args.specimen_id)
     elif args.cmd == "run":
-        rc = run(args.specimen_id, args.timeout)
+        rc = run(args.specimen_id, args.timeout, image=getattr(args, "image", None))
         return 0 if rc["ok"] else 1
     elif args.cmd == "verify":
         if args.all or not args.specimen_id:
