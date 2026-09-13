@@ -54,7 +54,11 @@ def build():
     order = sorted(range(len(tw)), key=lambda j: _bucket(f"AC01|target|{tw[j]}"))
     target_role = np.zeros(len(tw), dtype=np.int8); target_role[order[:HELD_TARGETS]] = 1  # 1 = held-out target
     sidx = np.arange(NS, dtype=np.int64)
-    pair_role = ((splitmix(sidx[:, None] * np.uint64(64) + np.arange(len(tw))[None, :].astype(np.uint64)) % np.uint64(100)) >= np.uint64(80)).astype(np.int8)  # 1 = held pair
+    pair_role = np.zeros((NS, len(tw)), dtype=np.int8)  # 1 = held pair; computed in row chunks to bound peak memory (values identical)
+    tj_u = np.arange(len(tw))[None, :].astype(np.uint64)
+    for a in range(0, NS, 65536):
+        b = min(NS, a + 65536)
+        pair_role[a:b] = ((splitmix(sidx[a:b, None].astype(np.uint64) * np.uint64(64) + tj_u) % np.uint64(100)) >= np.uint64(80)).astype(np.int8)
     reach = D >= 0
     live = reach & corpus[:, None]
     # kernel audit array and reachability label check
