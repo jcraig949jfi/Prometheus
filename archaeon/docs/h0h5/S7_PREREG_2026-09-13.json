@@ -1,0 +1,53 @@
+{
+ "schema": "archaeon.fossil_metabolism_s7.prereg.v0",
+ "status": "PREREGISTERED_BEFORE_THE_COMPARATIVE_TRIAL",
+ "operator_order": {"file": "roles/Archaeon/prompts/2026-09-12_seasons/S7_ORDER.md", "sha256": "e4bbb346acb518c76d284113f8b2ed18d3d7ac954187031c41e73b569afd379b"},
+ "s6_preserved": "S6's frozen verdict CHEAP_REPAIR_WITH_REGRESSION (ab2d40cef, S6_VERDICT_2026-09-13.json) stands and is not reinterpreted; S7 tests the composition S6 did not preregister.",
+ "question": "Does the preregistered observable gate 5 <= N <= 18 turn the frozen S6 exact-tie v2w refinement into a production-safe improvement over incumbent G? A licensing trial, not a search.",
+ "candidate": {
+  "name": "GATED_V2W",
+  "definition": "if 5 <= N(s) <= 18: S6 A_v2w_0(s) = archaeon.producer.s6_endgame.produce_refined(fossils, seed_inputs, 'v2w', 0.0); else: archaeon.producer.s4_producers.produce_G(fossils, seed_inputs). N(s) = FI.infer(fossils).feasible_targets (exact block solver).",
+  "implementation": "archaeon/producer/s7_gated.py (a composition; no algorithm rewritten)",
+  "candidate_version": "39093752300ebb85 = sha256 over s7_gated.py + s6_endgame.py + s4_producers.py (s6 PRODUCER_VERSION 2ad1653acef49b73, s4 7a1c9062b4823ecd)",
+  "frozen": "gate bounds 5 and 18, statistic v2w, window 0.0; no coefficients, no other coordinate, no exceptions",
+  "gate_overhead": "one exact inference per decision, charged under its own nested budget and reported as extra['gate']['gate_units']"
+ },
+ "identity_proof": "archaeon/tests/test_s7_gated.py: on 800 real decision states (S6 universes L 8 + L 9) the candidate's proposal equals G's exactly (probe, tie class, objective value, pool size) whenever N < 5 or N > 18, and equals produce_refined('v2w', 0.0) exactly whenever 5 <= N <= 18; the seven S6 canary roots (N 30) yield G's proposal and the suppressed S6 refinement is shown to differ at those roots; fossil-order permutations never change the decision; signatures carry no target / index / oracle. The runner repeats the identity check at EVERY audited decision of the trial (see instrument_invariants).",
+ "seeds": "eligible and universe runs: the S6 seed inputs VERBATIM (lane 's6', L, state id, arm 'G', step) so every pool is identical to S6's and G's census costs replicate S6 exactly; the candidate differs from S6 A_v2w_0 only by the gate. L 10 confirmation: lane 's7'. No target, no census index (S5 lesson; permutation tests).",
+ "universes": {
+  "eligible_inside_gate": "the S6 eligible endgame states: L 8 258 and L 9 210 decision states with 5 <= N <= 18 (S6_ENDGAME_UNIVERSE_L{8,9}), complete census over every feasible target, budget 10 probes; V* reused from S6_RESULTS_ELIGIBLE_L{8,9} (provenance recorded, not recomputed)",
+  "full_universe": "the 233 S5 root worlds (both L), complete census; V* from the S5 run-2 rows (O's exact census cost), as in S6",
+  "canaries": "the seven S6 N 30 roots (S7_CANARIES_FROM_S6_2026-09-13.json), part of the full universe, reported by name",
+  "additional_confirmation_L10": "the same state family at L 10 (shells and two-block products, 3 <= N <= 24, deduplicated: 110 root worlds, 1252 targets; enumerated in S5 as a count only, never run with any producer or statistic). Complete census, arms G and GATED_V2W. A sealed oracle with a 50 M-unit budget per world supplies V* where it completes; where it does not, recovery is UNAVAILABLE for that world (not an instrument failure: the oracle is not required for the safety comparison, which is G vs candidate). No tuning surface: nothing in the candidate can change."
+ },
+ "arms": ["G (S4, unchanged)", "GATED_V2W", "A_v2w_0 reference costs taken from the S6 result files (not rerun) for the eligible and universe sets"],
+ "instrument_invariants_fail_closed": [
+  "at every audited decision with N outside the gate the candidate's proposal must equal G's proposal computed independently with the same seed (probe, tie class, objective value) -- any divergence is INSTRUMENT_FAILURE",
+  "at every audited decision inside the gate the candidate's proposal must equal produce_refined('v2w', 0.0) computed independently",
+  "no arm's census cost below V* - 1e-9 where V* is available",
+  "census size equals the block solver's feasible count at every state",
+  "fossil-order permutation test and signature audit pass (tests)",
+  "the gate is a function of N only (code: gate() calls FI.infer and reads feasible_targets; nothing else)"
+ ],
+ "bars_frozen": {
+  "outside_gate_identity": "100 % of audited outside-gate decisions identical to G (an instrument invariant, not a statistic)",
+  "canaries": "each of the seven: root decision identical to G AND census cost <= G's census cost (exact, deterministic policies, complete census)",
+  "inside_gate_regression": "EXACT NON-REGRESSION: no eligible state (L 8 union L 9) with cost_C > cost_G + 1e-9. Chosen as the strongest bound: complete census, deterministic policies, no sampling noise; S6 A_v2w_0 showed 1 worsened L 8 state (3.2 %) and 0 at L 9 -- the trial is allowed to fail on that one state if the gate does not remove it",
+  "full_universe": "the S6 universe bar unchanged: no root world worsened >= 2 % relative AND aggregate census cost <= G's; additionally reported: exact count of worlds worsened by any amount",
+  "L10_confirmation": "the same universe bar on the 110 L 10 worlds (no world worsened >= 2 % AND aggregate <= G); improvement reported",
+  "improvement": "recovery of the G->O gap over L 9 eligible gap states >= 0.33 (the S6 meaningful bar) AND aggregate probe reduction over all L 9 eligible states >= 1 %; L 8 reported",
+  "work": "median candidate work per decision <= 25,000 units (S6 bar) AND median ratio to G <= 10 (derived from S6 A_v2w_0: ratios 4.1 at L 8 and 8.7 at L 9, with headroom; the gate lowers the invocation fraction so the ratio is expected to fall) AND maximum per decision <= 100,000 units; reported: invocation fraction, total incremental units over the census, incremental units per probe saved",
+  "worth_it": "one probe saved = one fewer SFE experiment execution; one work unit = one probe scored / DFS node / cell-probe evaluation (microseconds). The production bar for 'worth it' is therefore the improvement bar plus the work bars above; there is no exchange rate to tune"
+ },
+ "verdict_rule_frozen": {
+  "INSTRUMENT_FAILURE": "any instrument invariant fails",
+  "GATE_FAILS_TO_ISOLATE": "any canary fails its bar, OR inside_gate_regression fails (any eligible state worsened), OR full_universe fails",
+  "SAFE_BUT_NOT_WORTH_IT": "isolation bars pass but improvement fails, or any work bar fails, or L10_confirmation fails",
+  "LICENSED_ENDGAME_REPAIR": "all bars pass",
+  "precedence": "in the order listed; nothing softer is added after execution"
+ },
+ "production": "allowed only on LICENSED_ENDGAME_REPAIR and only for the mechanism tested: G outside the gate, the frozen exact-tie v2w refinement inside it, with a countable firing flag (extra['gate']['active']). Integration is a separate, minimal commit after the verdict; the live tick's producer path is currently G-equivalent for bitstring landscapes and the integration point is archaeon/producer/tick.py's proposal step -- if governance requires a promotion step, it is obeyed.",
+ "not_in_scope": "LB2, near-tie windows, entropy, W, M, kappa_H, any change to 5/18/v2w; near-tie observations are recorded for ARCH-46, not acted on",
+ "stopping_rule": "every state and target once; no reruns; no bar changed after any result",
+ "runner": "archaeon/docs/h0h5/S7_RUNNER_2026-09-13.py --eligible 8|9 | --universe | --L10"
+}
