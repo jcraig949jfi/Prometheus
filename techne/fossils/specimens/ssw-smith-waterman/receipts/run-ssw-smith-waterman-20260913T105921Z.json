@@ -1,0 +1,66 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "ssw-smith-waterman",
+  "receipt_id": "run-ssw-smith-waterman-20260913T105921Z",
+  "written_utc": "20260913T105921Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/Complete-Striped-Smith-Waterman-Library-master/src",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "query.fa": "a63dc1c1cf8de4cc31266cb755a4bf239e592ed1a56f1e4ac8ae2175af8ebaa2",
+    "ref.fa": "0808a64874c339d88ff16aefaf31ad7daf39c69ed2d7db9cf0c4fca58d121691"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "3d5056fdb387b085dce770a5e7b708c0401368793d2187dc74f3a2889830f5fb",
+  "recipe_sha256": "94a4e901fc5f0bc106d0e4200e8a8a4c6afa83d1c6303e8cf93a2f1776823d48",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 1,
+      "seconds": 7.88,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: cd: /w/upstream/tree/Complete-Striped-Smith-Waterman-Library-master/src: No such file or directory\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make (ssw_test)",
+      "cmd": "make -s 2>&1 | grep -iE '\\berror' | head -3; test -x ./ssw_test && echo built",
+      "exit": 1,
+      "seconds": 0.83,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: cd: /w/upstream/tree/Complete-Striped-Smith-Waterman-Library-master/src: No such file or directory\n"
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "3d5056fdb387b085dce770a5e7b708c0401368793d2187dc74f3a2889830f5fb",
+  "body_preserved": true
+}

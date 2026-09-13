@@ -1,0 +1,1103 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "eprover-2.6",
+  "receipt_id": "run-eprover-2.6-20260913T110350Z",
+  "written_utc": "20260913T110350Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "fe9c8d0b1272629df58a27611190c4d4869b708c98f3539ffe12ef2a3eb42e2e",
+  "recipe_sha256": "79503a784e231ee3a050d2e930d522c95b0ae3855eb476530e50851a9056b259",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.94,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "./configure && make (builds PROVER/eprover)",
+      "cmd": "./configure >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; B=$(find . -name eprover -type f -perm -u+x | head -1); echo BIN=$B; test -n \"$B\"",
+      "exit": 0,
+      "seconds": 180.15,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "BIN=./PROVER/eprover\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "prove a group-theory theorem (GRP: shipped TPTP, Unsatisfiable = theorem)",
+      "cmd": "B=$(find . -name eprover -type f -perm -u+x | head -1); $B --auto --tptp3-format EXAMPLE_PROBLEMS/TPTP/GRP237-1.p 2>&1 | grep -E 'SZS status|Proof found|processed clauses|generated clauses' | head -6",
+      "exit": 0,
+      "seconds": 1.21,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "% Proof found!\n% SZS status Unsatisfiable\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "prove a Boolean-algebra lemma (BOO006-1, Unsatisfiable)",
+      "cmd": "B=$(find . -name eprover -type f -perm -u+x | head -1); $B --auto --tptp3-format EXAMPLE_PROBLEMS/TPTP/BOO006-1.p 2>&1 | grep -E 'SZS status|Proof found' | head -3",
+      "exit": 0,
+      "seconds": 0.99,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "% Proof found!\n% SZS status Unsatisfiable\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "the search cost (generated vs processed clauses) -- the saturation working",
+      "cmd": "B=$(find . -name eprover -type f -perm -u+x | head -1); $B --auto -s EXAMPLE_PROBLEMS/TPTP/GRP237-1.p 2>&1 | grep -iE 'clauses|generated|processed' | head -6; true",
+      "exit": 0,
+      "seconds": 1.29,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "BASICS/BASICS.a",
+      "sha256": "c1755dfb79a5fbc91447d365f9075191bb7a3a0dd126e97b845d11b86fb31033",
+      "bytes": 1032442
+    },
+    {
+      "path": "BASICS/clb_ddarrays.o",
+      "sha256": "fbe12ec963d012fbab58101736aa9ef791e38f9898b7ac071ad25f50db47aa4c",
+      "bytes": 36392
+    },
+    {
+      "path": "BASICS/clb_dstacks.o",
+      "sha256": "2b4b9a20996f6e0a804a796542fe31f0d4db4cfff5328fb0c0679e639131ebf7",
+      "bytes": 20392
+    },
+    {
+      "path": "BASICS/clb_dstrings.o",
+      "sha256": "7d4010d98c584576110e852ce6b326a226eaf9806560b8daffe3b872fb01ce66",
+      "bytes": 38152
+    },
+    {
+      "path": "BASICS/clb_error.o",
+      "sha256": "9a35d120fbbe1c2f62015096f0ab7238f6fa42e7c3a5cd31ad447073171eaa9b",
+      "bytes": 25784
+    },
+    {
+      "path": "BASICS/clb_fixdarrays.o",
+      "sha256": "de8a478c33f882c437ce8e183a6df84f0a1c7b6e59a19519b946a65cbba390db",
+      "bytes": 24840
+    },
+    {
+      "path": "BASICS/clb_floattrees.o",
+      "sha256": "451d64ea6709f6ef0bcd218d19115bb927a288045b6ac37d9d7d6e9bf94de078",
+      "bytes": 38736
+    },
+    {
+      "path": "BASICS/clb_intmap.o",
+      "sha256": "b91b8ca18c35354a09101c48177973c302e2cf98067e9c196e69d1e7c643373f",
+      "bytes": 80960
+    },
+    {
+      "path": "BASICS/clb_memory.o",
+      "sha256": "eabcb3cd599028896ff9d02c130e4d87f2466d6bd85e5f55c1e13b5d1ce07515",
+      "bytes": 31304
+    },
+    {
+      "path": "BASICS/clb_min_heap.o",
+      "sha256": "3d34de268014c50a0fd8d7d5a06be4107cf30de4216e600713518ad1ce7b1f6d",
+      "bytes": 42912
+    },
+    {
+      "path": "BASICS/clb_numtrees.o",
+      "sha256": "d62c755cc91eea4e156f695c50ad27b1e5201022b51241874b4b303aa046bec4",
+      "bytes": 77536
+    },
+    {
+      "path": "BASICS/clb_numxtrees.o",
+      "sha256": "67f7bd8cea9ef331215e5a9e50d0cdb154e4f59471d7bcd140efcae693eb4fd9",
+      "bytes": 43480
+    },
+    {
+      "path": "BASICS/clb_objmaps.o",
+      "sha256": "3538a42eae08af1ff9a70a724b22686e9023a9705d39c7389d1c133280af2a70",
+      "bytes": 46968
+    },
+    {
+      "path": "BASICS/clb_objtrees.o",
+      "sha256": "a91515a8977152f2808cd1c6f15de013a9d22dbd45f11cc80ab5aea9b4fb43d0",
+      "bytes": 54128
+    },
+    {
+      "path": "BASICS/clb_os_wrapper.o",
+      "sha256": "3d06edf1fb7a3c8ce064fe096b5fcce297519e4c153f4a4afaf38afcb4afd561",
+      "bytes": 40696
+    },
+    {
+      "path": "BASICS/clb_partial_orderings.o",
+      "sha256": "6f53f7b679073b000e7a026aefc85196f9e80be81240d68d144253df087a7a02",
+      "bytes": 3512
+    },
+    {
+      "path": "BASICS/clb_pdarrays.o",
+      "sha256": "d07eda01c520bcf3ee38be2d078446563b6527a5f1267f5775e0bafe985a2fd0",
+      "bytes": 44440
+    },
+    {
+      "path": "BASICS/clb_pdrangearrays.o",
+      "sha256": "97cfb2698dfab79ea332aecdee1b6040211c1f12d988a17f85703175757ff8f7",
+      "bytes": 38352
+    },
+    {
+      "path": "BASICS/clb_permastrings.o",
+      "sha256": "07bd99b150c0df26caf31189cf80280d2696278c42e322eeea2a5356516100eb",
+      "bytes": 13216
+    },
+    {
+      "path": "BASICS/clb_plist.o",
+      "sha256": "23536ff8f7a0d19ea0b1fc3bbe498ef65d60844bf056edd49e7c89bc9451f928",
+      "bytes": 23784
+    },
+    {
+      "path": "BASICS/clb_plocalstacks.o",
+      "sha256": "899fdc5c36fab0fac32b72bffd801f8153aa45a70780ca43d5fd56e2bab908c4",
+      "bytes": 10160
+    },
+    {
+      "path": "BASICS/clb_pqueue.o",
+      "sha256": "68204313ab77fb154412ee54ce39eac3e8a73adafe938d58bb2f8db5f802b25a",
+      "bytes": 11800
+    },
+    {
+      "path": "BASICS/clb_pstacks.o",
+      "sha256": "2827ac4625c78f4ca209a494ad7c0534ee2105ef65825eda5cfb28cea2cf3915",
+      "bytes": 29360
+    },
+    {
+      "path": "BASICS/clb_ptrees.o",
+      "sha256": "7969dd650bed62b2de97fee0904066e5e511396ca90fc519d1a37683a9de03ba",
+      "bytes": 131864
+    },
+    {
+      "path": "BASICS/clb_quadtrees.o",
+      "sha256": "2c7d975dabc721af79c49c962183775ea7a6300fe338fa93e2e2e346f4af37b9",
+      "bytes": 53152
+    },
+    {
+      "path": "BASICS/clb_regmem.o",
+      "sha256": "fbeaae7b994ca66e9e62a63d8548c722c74986ade833813440600540e05fb555",
+      "bytes": 11504
+    },
+    {
+      "path": "BASICS/clb_simple_stuff.o",
+      "sha256": "cce3ea0c9c4d26979df4386404322f03a83e54a7e00f2788a176734f63d7a7f9",
+      "bytes": 13824
+    },
+    {
+      "path": "BASICS/clb_stringtrees.o",
+      "sha256": "51ef3997c54dfb3c4a1e7eaf1b6ff8b918e39950b479dd08f9296078465a6b69",
+      "bytes": 28088
+    },
+    {
+      "path": "BASICS/clb_sysdate.o",
+      "sha256": "a96f9c951a8f3f8c462a22a9f94ef190bd9b66bd1d5d47eb40f87cf57c687d4c",
+      "bytes": 6624
+    },
+    {
+      "path": "BASICS/clb_verbose.o",
+      "sha256": "1a1c0c4b31f15b33858508c13520d5c72d1f88a7fdd2468474a2d369e895fb84",
+      "bytes": 2928
+    },
+    {
+      "path": "BASICS/Makefile.dependencies",
+      "sha256": "74cab34f3850ef673581a36b036efb150d1e3815863c9f9cfaf46b55da258bf3",
+      "bytes": 203606
+    },
+    {
+      "path": "CLAUSES/ccl_axiomsorter.o",
+      "sha256": "5440637ad665fe631e8a561b53b6de85150d7eecd7a1410fdd0112c1be311029",
+      "bytes": 45048
+    },
+    {
+      "path": "CLAUSES/ccl_bce.o",
+      "sha256": "ff436193e387c3ac334f6d54bd14551b1b1af1cf679af1e56c664d53b73bef89",
+      "bytes": 132992
+    },
+    {
+      "path": "CLAUSES/ccl_clausecpos.o",
+      "sha256": "dcd0872d981e69e478d7f24e53441bf2e4c9cb35937f7e550298ea1d62eab7ab",
+      "bytes": 63408
+    },
+    {
+      "path": "CLAUSES/ccl_clausefunc.o",
+      "sha256": "2a9d315fd030525b4d9c15fe3afedec1b6451419ac3a154b9be3b079266c0fa3",
+      "bytes": 138976
+    },
+    {
+      "path": "CLAUSES/ccl_clauseinfo.o",
+      "sha256": "a7b80af9471b33a316bc0dac92e421aea5cbc829e8da6d2138e182406c2f2a5c",
+      "bytes": 18648
+    },
+    {
+      "path": "CLAUSES/ccl_clausepos.o",
+      "sha256": "2a72df4c9ba98a7debf0b6960acd520add68d82cb0988ae1b489e1d266854045",
+      "bytes": 44688
+    },
+    {
+      "path": "CLAUSES/ccl_clausepos_tree.o",
+      "sha256": "641d4d7566bca7fdfb551f8d5a701249546cf25dbc730c0e982e91c656e5fd3e",
+      "bytes": 46024
+    },
+    {
+      "path": "CLAUSES/ccl_clauses.o",
+      "sha256": "752b2f962795bfc0b278204924ca521fb461c96bed9c74a7c3589eb3fbc05e8b",
+      "bytes": 209032
+    },
+    {
+      "path": "CLAUSES/ccl_clausesets.o",
+      "sha256": "b65735d799e3238dedbeae71af8ec6c549835cbb1012e801bde4ad63da44c0cd",
+      "bytes": 249392
+    },
+    {
+      "path": "CLAUSES/ccl_condensation.o",
+      "sha256": "737f18a2c367ff07f3d653199ebb24e378f79deae3c244e8e8256869258592c7",
+      "bytes": 51392
+    },
+    {
+      "path": "CLAUSES/ccl_context_sr.o",
+      "sha256": "704cc6180cf03a621ff7bbac71b433cfee7c2dbe087b0f2a5274b4859b642355",
+      "bytes": 46312
+    },
+    {
+      "path": "CLAUSES/ccl_def_handling.o",
+      "sha256": "9ca190c3ba57a1e6eaf57710f3f634c88b8ac1e3ba0791e7f32d7863bba084b4",
+      "bytes": 66592
+    },
+    {
+      "path": "CLAUSES/ccl_derivation.o",
+      "sha256": "e482258a308652fb5c0e6f84fd97accdcf5e16ef8572b27dd5dc9ea275b9bd60",
+      "bytes": 314024
+    },
+    {
+      "path": "CLAUSES/ccl_diseq_decomp.o",
+      "sha256": "cbda111197e59f437b845d865ef6154b43606931940cd99a88c1cabd986a508f",
+      "bytes": 29312
+    },
+    {
+      "path": "CLAUSES/ccl_eqn.o",
+      "sha256": "3a01b46149b429e3dbd7affcdeeea25d11d61f34bc1573c85d98053a81e0e643",
+      "bytes": 305896
+    },
+    {
+      "path": "CLAUSES/ccl_eqnlist.o",
+      "sha256": "2f8bbf50c50fbf4de1995075eef5041749c00b502bdf425a522975adad596fc4",
+      "bytes": 135472
+    },
+    {
+      "path": "CLAUSES/ccl_eqnresolution.o",
+      "sha256": "0ed92010f9c6c55a87f035c883dbf1847c471f7e5ba8039d30f3f4bed721ed70",
+      "bytes": 48504
+    },
+    {
+      "path": "CLAUSES/ccl_ext_index.o",
+      "sha256": "12261741b359cc071c817ae2b3934ed14cda205cbe2cdde18d903a2df5c73597",
+      "bytes": 92952
+    },
+    {
+      "path": "CLAUSES/ccl_f_generality.o",
+      "sha256": "e2dd5728c5119fcf8d823df1fa7f4316b8f4406eea061da2229508e8f89db743",
+      "bytes": 98792
+    },
+    {
+      "path": "CLAUSES/ccl_factor.o",
+      "sha256": "65d2761fc5a3f39823d4183dcb990e336d3361e4ba8002aefe60b32e7d8c05c1",
+      "bytes": 73664
+    },
+    {
+      "path": "CLAUSES/ccl_fcvindexing.o",
+      "sha256": "efeed0539da33323c819f170cb4be7b035e5bb1af43b9549fc10ca6201b5da40",
+      "bytes": 94632
+    },
+    {
+      "path": "CLAUSES/ccl_findex.o",
+      "sha256": "a83d6bce25c7de24c960b759f4b2bc977c44e0f57b9762d939803ec61ad7d3ae",
+      "bytes": 75856
+    },
+    {
+      "path": "CLAUSES/ccl_formula_wrapper.o",
+      "sha256": "84d336892ea1d59eb8df3f80781dfbae4c48dc3c66495cd189296d9ac6fd1f00",
+      "bytes": 107216
+    },
+    {
+      "path": "CLAUSES/ccl_formulafunc.o",
+      "sha256": "99a7e111ac25ab59f7cd2e649ae759b8455c96fb67645e43f1600ee51f246000",
+      "bytes": 374080
+    },
+    {
+      "path": "CLAUSES/ccl_formulasets.o",
+      "sha256": "57dcb1914ee6755b582e4cc7e316eca1106692837cd20a1fd040e5a0dfe266b4",
+      "bytes": 74912
+    },
+    {
+      "path": "CLAUSES/ccl_freqvectors.o",
+      "sha256": "5cf53c444a0807ad99a63374d0072fbbdf41af86e705836e2fb0f6ceffa6fba3",
+      "bytes": 115048
+    },
+    {
+      "path": "CLAUSES/ccl_g_lithash.o",
+      "sha256": "b34b62ca572535d05b06dbfa2ed38255bf1f1a037fd2828811c6a199d2dc6e28",
+      "bytes": 65208
+    },
+    {
+      "path": "CLAUSES/ccl_garbage_coll.o",
+      "sha256": "41708914a465703dec5011f7ae725213e39198bfe907d6b4b1d6a07f482ffe8e",
+      "bytes": 36528
+    },
+    {
+      "path": "CLAUSES/ccl_gd_transformation.o",
+      "sha256": "bf5f6d16f01a2e6962044b4aaee1bfdb755f28125da365ba78c2bf0a0ba2f968",
+      "bytes": 71856
+    },
+    {
+      "path": "CLAUSES/ccl_global_indices.o",
+      "sha256": "e58ff7662449534057331093f920391ac514c63a899a3b72f5e2a4a512a111ec",
+      "bytes": 41960
+    },
+    {
+      "path": "CLAUSES/ccl_groundconstr.o",
+      "sha256": "4fb83c1e82e53dcdecfc2c4910fb3d9aaab5dc2624881911db4ec44db11eb238",
+      "bytes": 76856
+    },
+    {
+      "path": "CLAUSES/ccl_grounding.o",
+      "sha256": "39a9cbd54275ac7c5fc7292c5d9e480043f6bf919aa0478688920b2b6263e102",
+      "bytes": 136816
+    },
+    {
+      "path": "CLAUSES/ccl_inferencedoc.o",
+      "sha256": "e3a57c5296cd012b2a22d2439be1eca5b11a68320934b47d4f84498bf21aa2ea",
+      "bytes": 188960
+    },
+    {
+      "path": "CLAUSES/ccl_neweval.o",
+      "sha256": "0a46422ee1ae3bdeedfa6b68497ac3623f0536515047b65c8c36e87975a5a878",
+      "bytes": 57248
+    },
+    {
+      "path": "CLAUSES/ccl_overlap_index.o",
+      "sha256": "199438dd73d19870a865cce01116fb5bdde8ebba2ec177cb8118bad4bca12993",
+      "bytes": 158400
+    },
+    {
+      "path": "CLAUSES/ccl_paramod.o",
+      "sha256": "702c63cfc70702606f2ec1749e209d7dd83d3841aab70cc4d812f85fdc48190c",
+      "bytes": 168136
+    },
+    {
+      "path": "CLAUSES/ccl_pdtrees.o",
+      "sha256": "d37249124b62735e98787260454e3402f3e600eef6973e43ea15d250ec4aaf4b",
+      "bytes": 311384
+    },
+    {
+      "path": "CLAUSES/ccl_pred_elim.o",
+      "sha256": "c9c2195ea20fa477dfc92e3a005b0aa943dd490d92d96c0e28d15ae54d0c2571",
+      "bytes": 293808
+    },
+    {
+      "path": "CLAUSES/ccl_proofstate.o",
+      "sha256": "a41320e4df198ded93c2e45ce918e1f2326858a6f135f720a62b3e8a1fc3efe4",
+      "bytes": 119648
+    },
+    {
+      "path": "CLAUSES/ccl_propclauses.o",
+      "sha256": "e38a2a03224e0c02aac2e873d6423333047ef77b24ba038df821cf02e1652da5",
+      "bytes": 52536
+    },
+    {
+      "path": "CLAUSES/ccl_relevance.o",
+      "sha256": "8d0f35c3fd03c738fd1e6789ee26491712683cb1f0ba2b4a1dc872d0e92aa38c",
+      "bytes": 84968
+    },
+    {
+      "path": "CLAUSES/ccl_rewrite.o",
+      "sha256": "f2a641bc97d4c746d6abfe24147d368e54550d0e33e2d463fbe55db24c9314f9",
+      "bytes": 187720
+    },
+    {
+      "path": "CLAUSES/ccl_satinterface.o",
+      "sha256": "c2d7ab4aba20862d79be8374e7d10bb23c23def9d9dcbabcb22c2c6063ae73eb",
+      "bytes": 163016
+    },
+    {
+      "path": "CLAUSES/ccl_sine.o",
+      "sha256": "0f68d3e0f8ad1412c3fda3affbaf133b73d96e19025be966157c0fac1aa1e872",
+      "bytes": 164288
+    },
+    {
+      "path": "CLAUSES/ccl_splitting.o",
+      "sha256": "9e50781991b898ced3f70cdbdcbe5cf4b40b518efc206d476bf7791921263984",
+      "bytes": 119712
+    },
+    {
+      "path": "CLAUSES/ccl_subsumption.o",
+      "sha256": "86ae77ab6b10978bc3709065eb2795da5a872ce7e4e40852cc32976dc09643cb",
+      "bytes": 186032
+    },
+    {
+      "path": "CLAUSES/ccl_subterm_index.o",
+      "sha256": "f5eab0327cb2b0f0e4b95631fb78e0cb785d525e1acd636e67772b9494347b14",
+      "bytes": 63392
+    },
+    {
+      "path": "CLAUSES/ccl_subterm_tree.o",
+      "sha256": "b6c62dc20b57cfb80dbb8d2b736bcd6a6982732e996a9e6daedb18fed99ca638",
+      "bytes": 75624
+    },
+    {
+      "path": "CLAUSES/ccl_tautologies.o",
+      "sha256": "7ef04925891409f521cafb1d72545beeeed8f27366bdda49015b546d2bf75323",
+      "bytes": 51984
+    },
+    {
+      "path": "CLAUSES/ccl_tcnf.o",
+      "sha256": "ab7b13a7b47eaf8d6e77fbe0a8fddd950383179f47ccc42cdaf4f77908966495",
+      "bytes": 252648
+    },
+    {
+      "path": "CLAUSES/ccl_tformulae.o",
+      "sha256": "5022aa0533237144e1428e559b297562c2f73543947b3a1ce76d7ddd35c4f09f",
+      "bytes": 342376
+    },
+    {
+      "path": "CLAUSES/ccl_unfold_defs.o",
+      "sha256": "b40e3c34d677aad653f40c5dab3892285c32d84c215a3cff4055d14b90c9fab6",
+      "bytes": 88456
+    },
+    {
+      "path": "CLAUSES/ccl_unit_simplify.o",
+      "sha256": "dee3984bdaa2b27643b93c17e55f8af3ca122ee3a72e923275ce628063f07734",
+      "bytes": 75504
+    },
+    {
+      "path": "CLAUSES/CLAUSES.a",
+      "sha256": "e3ecdf9ffba066e1c4db2b4c0af036fae64cba36678bef2d4a45b2e2e6d869d5",
+      "bytes": 6717006
+    },
+    {
+      "path": "CLAUSES/Makefile.dependencies",
+      "sha256": "4f1c46faca01afc208c83357ddf10eb7bbf2a55adf8f304c3849bbee9648d56a",
+      "bytes": 475935
+    },
+    {
+      "path": "CONTRIB/Makefile.dependencies",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "CONTRIB/picosat-965/app.o",
+      "sha256": "16bca3434685bfaf810f3815fb1a96d4d958639af5f94d6159c27713a8b0475c",
+      "bytes": 38736
+    },
+    {
+      "path": "CONTRIB/picosat-965/config.h",
+      "sha256": "2bca525aff045a634e5035e836445a3a5029c46780d89207be899d9a5a9a96d2",
+      "bytes": 144
+    },
+    {
+      "path": "CONTRIB/picosat-965/libpicosat.a",
+      "sha256": "c595d91ed5ce33445a0e521740ce09b926ac1064c80aa023c66e6c5c5b74f48b",
+      "bytes": 113268
+    },
+    {
+      "path": "CONTRIB/picosat-965/main.o",
+      "sha256": "9b0a8569e1b3fcab70c359460af6280b22866222a4b1e9547c30376501f64fbb",
+      "bytes": 1288
+    },
+    {
+      "path": "CONTRIB/picosat-965/makefile",
+      "sha256": "7ddd1e71521343bd54344abe212ac4719702dc9a6d672505470522fb3a3c7d21",
+      "bytes": 1405
+    },
+    {
+      "path": "CONTRIB/picosat-965/picogcnf",
+      "sha256": "6205fc15aa5c5cf517ef6c89e3f19ee3da74e2d0ce348beadbcf6d31f939ba7e",
+      "bytes": 104264
+    },
+    {
+      "path": "CONTRIB/picosat-965/picogcnf.o",
+      "sha256": "21465043124e5875f81dfcd924e9966a827e97c6b5aa5494c6eff8b041cbecca",
+      "bytes": 8696
+    },
+    {
+      "path": "CONTRIB/picosat-965/picomcs",
+      "sha256": "9ac3f2b0983e0c19ba128974c8186da3cf3cd668165a218344676b6554dadbf5",
+      "bytes": 105048
+    },
+    {
+      "path": "CONTRIB/picosat-965/picomcs.o",
+      "sha256": "5295350ba888155d224f6b52b975b436bfe4ea8fe3f72680079537db524e067b",
+      "bytes": 15552
+    },
+    {
+      "path": "CONTRIB/picosat-965/picomus",
+      "sha256": "dd25123bb1d5543f6ba86986e07f5258f7e0b9f3de472582367af3f2b15f0416",
+      "bytes": 113232
+    },
+    {
+      "path": "CONTRIB/picosat-965/picomus.o",
+      "sha256": "2fd1b16cb776ba747ab89bd9db7cbb750864b7b319fdb592aee50f2273750915",
+      "bytes": 21336
+    },
+    {
+      "path": "CONTRIB/picosat-965/picosat",
+      "sha256": "3b9c3c2fa26202e090a89e1a2a20d5266c39f6f3a058d0c1316eb0d7d48bf8c5",
+      "bytes": 117936
+    },
+    {
+      "path": "CONTRIB/picosat-965/picosat.o",
+      "sha256": "8f34c8e001542911ab99ebeab1eb95de17094f3e8e3cef1df8fc3a0811282c4e",
+      "bytes": 109656
+    },
+    {
+      "path": "CONTRIB/picosat-965/version.o",
+      "sha256": "c3faf8bfd27bf8fb1e25feac14c7770509ca0cf1cf63969ec63cbcda628123b9",
+      "bytes": 1608
+    },
+    {
+      "path": "CONTROL/cco_batch_spec.o",
+      "sha256": "60c1d5b191f8e799cf60f8767cae898936cb3a608dec53fc8b2a5c10ded341b6",
+      "bytes": 156296
+    },
+    {
+      "path": "CONTROL/cco_clausesplitting.o",
+      "sha256": "d832cd5b452205a179f84c35b7da1b7ea9e35a80b8a734a013adb37cdebf425e",
+      "bytes": 28912
+    },
+    {
+      "path": "CONTROL/cco_diseq_decomp.o",
+      "sha256": "4ffa86842c5464e86da2e2567419aa6fc11c5d872339138a736e3efdde7cb175",
+      "bytes": 30256
+    },
+    {
+      "path": "CONTROL/cco_einteractive_mode.o",
+      "sha256": "7facebcf0665c8dd682af318596b28c07ebe6c4f8ed9a5987ac827da30fcd46e",
+      "bytes": 164056
+    },
+    {
+      "path": "CONTROL/cco_eqnresolving.o",
+      "sha256": "22168da75b466a500a624613c9094077fbbce46edaf481f87b6106431a97eab2",
+      "bytes": 61432
+    },
+    {
+      "path": "CONTROL/cco_eserver.o",
+      "sha256": "b59093cc48b3250e7d8c22ef21a455c99549c0d20159bafbc7a6aac42dceb287",
+      "bytes": 20280
+    },
+    {
+      "path": "CONTROL/cco_esession.o",
+      "sha256": "347e8d060bb88053f9283702af8b262db7d366041319e9f77e45bfade448d43d",
+      "bytes": 20032
+    },
+    {
+      "path": "CONTROL/cco_factoring.o",
+      "sha256": "e4a5e9f2d56589e4abaa6f801eae1ac8b25c51e7ba6b929dfb5da754452fa388",
+      "bytes": 74536
+    },
+    {
+      "path": "CONTROL/cco_forward_contraction.o",
+      "sha256": "8aa4953807759e3e380c198d16837a010c8342e309a457e22abae60d88b83bcb",
+      "bytes": 102776
+    },
+    {
+      "path": "CONTROL/cco_gproc_ctrl.o",
+      "sha256": "7178abc34ad46c02826ea2b7522281c1f81a6331f6d75744f718a969e63aff80",
+      "bytes": 49640
+    },
+    {
+      "path": "CONTROL/cco_ho_inferences.o",
+      "sha256": "bc942fdebea79302af6c22123a7173c739f40d810ed66a35b57e6e7d90bbf756",
+      "bytes": 517024
+    },
+    {
+      "path": "CONTROL/cco_interpreted.o",
+      "sha256": "4882124957175e98d42a6c0075dcfd103d053c8a03e443e3ae3bb91d7547c71e",
+      "bytes": 47416
+    },
+    {
+      "path": "CONTROL/cco_paramodulation.o",
+      "sha256": "be3d33303280e4dfcabfec920e59d5362ece938e8fd13a502a7186d7b6f95214",
+      "bytes": 157096
+    },
+    {
+      "path": "CONTROL/cco_preprocessing.o",
+      "sha256": "c4db931a86e4243c04340d32956986e730535621a91f673261d14986a24c3129",
+      "bytes": 54520
+    },
+    {
+      "path": "CONTROL/cco_proc_ctrl.o",
+      "sha256": "1401ac6cf483351b03af662db6de33218dd18603ff16d8a278257e88c1849665",
+      "bytes": 49536
+    },
+    {
+      "path": "CONTROL/cco_proofproc.o",
+      "sha256": "748ebf4632f811d1db54c8a5b79c7316390046f65ed84aaaa57862913db3a30f",
+      "bytes": 175256
+    },
+    {
+      "path": "CONTROL/cco_scheduling.o",
+      "sha256": "b303280e717d02c88155c541736ec291f4ea2f9421f3bc7a7967073389438f23",
+      "bytes": 69080
+    },
+    {
+      "path": "CONTROL/cco_simplification.o",
+      "sha256": "1432752775ee03630140ed02868e50743b5ed1a44e2748832c53f19a4f216398",
+      "bytes": 62352
+    },
+    {
+      "path": "CONTROL/cco_sine.o",
+      "sha256": "2358e76a433d33b2d85950e5e419c0f135f275e4608b13c2be9234e4b14c6e5a",
+      "bytes": 96616
+    },
+    {
+      "path": "CONTROL/CONTROL.a",
+      "sha256": "cd00b865a6452a5d07fdf93ebce29a7c747df5ec6a4feb3e0a791012f58df9ff",
+      "bytes": 1942964
+    },
+    {
+      "path": "CONTROL/Makefile.dependencies",
+      "sha256": "eaf175c5022c0d40171a57d802b14272cf4c092c3d38869079d238c3c8cc8a56",
+      "bytes": 193358
+    },
+    {
+      "path": "EXTERNAL/cex_csscpa.o",
+      "sha256": "1f18df347a12373392b3c8d17ac91771b98bbbabf6bddb5c57fa6e11a14767fc",
+      "bytes": 73776
+    },
+    {
+      "path": "EXTERNAL/CSSCPA_filter",
+      "sha256": "bc2a17624afbe0475664d6f3b6e7c009c4efd271c6cf7ae345892599a0c286d0",
+      "bytes": 3383464
+    },
+    {
+      "path": "EXTERNAL/CSSCPA_filter.o",
+      "sha256": "c3289e7f6abb662a38170f93da615b87fb9179048fff74c5b6cb16e42f50f291",
+      "bytes": 53848
+    },
+    {
+      "path": "EXTERNAL/Makefile.dependencies",
+      "sha256": "a15ed55a90b9f46b2f851d401824b688943aeed234db0c6147f60528869d021b",
+      "bytes": 18114
+    },
+    {
+      "path": "HEURISTICS/che_axfilter.o",
+      "sha256": "59d1530f47d5e16e704ac01f75f76a540e39163809022086b8cfd819ec648ca1",
+      "bytes": 69336
+    },
+    {
+      "path": "HEURISTICS/che_axiomscan.o",
+      "sha256": "398570cd44ff19458c929a1ec15cf156138814d70a35985d91fe78aca15e8c31",
+      "bytes": 44480
+    },
+    {
+      "path": "HEURISTICS/che_clausefeatures.o",
+      "sha256": "c7ce08fc6eae03e67af4d76470316504b97ab566f9bd4ce8b972e8de6e563b7b",
+      "bytes": 68232
+    },
+    {
+      "path": "HEURISTICS/che_clausesetfeatures.o",
+      "sha256": "156d32a82fa06a2ad2e65d4a5300d044556b878f7e67c1d2fc9fa773ef93188d",
+      "bytes": 166384
+    },
+    {
+      "path": "HEURISTICS/che_clauseweight.o",
+      "sha256": "0709329ef68dd516244ef8ab5acc8835c060defc952bace59db995ed9e91f474",
+      "bytes": 88096
+    },
+    {
+      "path": "HEURISTICS/che_dagweight.o",
+      "sha256": "6e79858685b2d997e13848969cb562e677a080dc775b8b00ef0ccaaa38c61de3",
+      "bytes": 96112
+    },
+    {
+      "path": "HEURISTICS/che_diversityweight.o",
+      "sha256": "02e3f2641edb2edcf9ae88e4aa0f13234304c6fd88a1330ee3fe1f1f4240add5",
+      "bytes": 63152
+    },
+    {
+      "path": "HEURISTICS/che_fcode_featurearrays.o",
+      "sha256": "bb2ac1144472f6b3a78341af06fa3473f4e4c72c4a36dfe2acf8469be9284c62",
+      "bytes": 53840
+    },
+    {
+      "path": "HEURISTICS/che_fifo.o",
+      "sha256": "fb0f16f95eb463b3da95140b4b75d58f34bae228aa863f7a8611d601f09160ae",
+      "bytes": 47400
+    },
+    {
+      "path": "HEURISTICS/che_funweights.o",
+      "sha256": "a5233241786fed88caaa76f8e2610247bb15ca09ecab5641d52a3c47337d3c1f",
+      "bytes": 184280
+    },
+    {
+      "path": "HEURISTICS/che_gdweight.o",
+      "sha256": "cee1d39029ce86239cea9df74380cdbf4c1fb69fa1df476e8cea8eb68f099816",
+      "bytes": 86224
+    },
+    {
+      "path": "HEURISTICS/che_hcb.o",
+      "sha256": "06d02d16d603d129a2da6eb85ebada138eb04a1ef971cfab23af7399437fdba5",
+      "bytes": 232944
+    },
+    {
+      "path": "HEURISTICS/che_hcbadmin.o",
+      "sha256": "f9c959bc79653f9e88ffd99842a35c1dbfbb8576c8c552b64d1dedda29503488",
+      "bytes": 76448
+    },
+    {
+      "path": "HEURISTICS/che_heuristics.o",
+      "sha256": "9320919ee04ccb986afb54a62e35263a268b623d5f265129094fb072a5f0d463",
+      "bytes": 66552
+    },
+    {
+      "path": "HEURISTICS/che_learning.o",
+      "sha256": "ff27971c99f8b38e4a58d9100c228ca6c3329ef7bd72468f1c48c7e97ee6496f",
+      "bytes": 104288
+    },
+    {
+      "path": "HEURISTICS/che_levweight.o",
+      "sha256": "7ac85864dd83502887df740f96cf48b3854cbf866027758aa501843ed0619d9d",
+      "bytes": 112448
+    },
+    {
+      "path": "HEURISTICS/che_lifo.o",
+      "sha256": "945492d7e59f6e806ddc7a6e60a6eda6196cd2fa8129f75e36ecc80106279ccc",
+      "bytes": 47400
+    },
+    {
+      "path": "HEURISTICS/che_litselection.o",
+      "sha256": "19098027f2c40b2f1e12640b3eaea82a7c00e377e846bdc94cf13c03dd6bb4df",
+      "bytes": 988176
+    },
+    {
+      "path": "HEURISTICS/che_new_autoschedule.o",
+      "sha256": "638472ce289bfeefec42e4a896070fb33d433a9585df937b70787511ebcb521a",
+      "bytes": 2609152
+    },
+    {
+      "path": "HEURISTICS/che_orientweight.o",
+      "sha256": "8d2c127710b23c9cd66757ddeffb3d4cb3479898ba23e1594a7ff62d89cc3651",
+      "bytes": 63888
+    },
+    {
+      "path": "HEURISTICS/che_prefixweight.o",
+      "sha256": "3d420cdc12a98b221ce9b1109a89f9d28d64e0fa6ccd386abe223b966bbe391e",
+      "bytes": 83088
+    },
+    {
+      "path": "HEURISTICS/che_prio_funs.o",
+      "sha256": "5f9fbab9865b5f13be090b3bea2ca372320b8f1b959f901c59a21a997128e185",
+      "bytes": 88304
+    },
+    {
+      "path": "HEURISTICS/che_proofcontrol.o",
+      "sha256": "dc2ac9c724155ae9bd88b6670cefc61ebbf6ccc8a32df5062176bf04af9943e0",
+      "bytes": 67888
+    },
+    {
+      "path": "HEURISTICS/che_random.o",
+      "sha256": "d60d69c9cead032ca6d7369831c419ff82137b766ff11c5c9bb86fe2e50b2343",
+      "bytes": 53728
+    },
+    {
+      "path": "HEURISTICS/che_rawspecfeatures.o",
+      "sha256": "af06f7c64fb605304c89ed7e4dbb1820ebde48c8fe0c2e4b54a295b91f6e3ba4",
+      "bytes": 54920
+    },
+    {
+      "path": "HEURISTICS/che_refinedweight.o",
+      "sha256": "51892e62a4863a03546d2b6fe7016201f04e86093fd169b6d4d976865a5bffa1",
+      "bytes": 56216
+    },
+    {
+      "path": "HEURISTICS/che_simweight.o",
+      "sha256": "ef7469a1f8746770cd6e00aaf859407e85498cbdd8e20da2b21c36aec331cd8b",
+      "bytes": 67344
+    },
+    {
+      "path": "HEURISTICS/che_specsigfeatures.o",
+      "sha256": "1d3072ba8107d198f48c5c3a27bc6ff1c0ad8b87b9585c59a2dba6828cf2ed9e",
+      "bytes": 62232
+    },
+    {
+      "path": "HEURISTICS/che_strucweight.o",
+      "sha256": "919c73a7df0304251bc34661ecf9541b008786b3ce7dd711391758b55bd3a71d",
+      "bytes": 99560
+    },
+    {
+      "path": "HEURISTICS/che_termweight.o",
+      "sha256": "8c36615a0191b8a5de0f7dc5ac0cb9537e971985419d70d4484bbe5f7cd11624",
+      "bytes": 92976
+    },
+    {
+      "path": "HEURISTICS/che_termweights.o",
+      "sha256": "130bbaf91abab299aceed6f1c14530b7a60572e2d3fe71f0003833d0c42fc18b",
+      "bytes": 109200
+    },
+    {
+      "path": "HEURISTICS/che_tfidfweight.o",
+      "sha256": "a862b7181720fdf302ec59a6bb106e14d078f06de20c03bdf9bbd1e83510420a",
+      "bytes": 79344
+    },
+    {
+      "path": "HEURISTICS/che_to_autoselect.o",
+      "sha256": "da25a2a746c32fd8ec916baf562359164bf3ea811ed07aff2faf069f306b35cf",
+      "bytes": 107936
+    },
+    {
+      "path": "HEURISTICS/che_to_params.o",
+      "sha256": "10d56d85657e03671bc701dbe28a60852bf841e267064cbab473592d6cf32ec3",
+      "bytes": 48720
+    },
+    {
+      "path": "HEURISTICS/che_to_precgen.o",
+      "sha256": "dbeb31743f08c66d9a84149fe23fd3f1cea88ad749569107b0e01250dcddd0ca",
+      "bytes": 64096
+    },
+    {
+      "path": "HEURISTICS/che_to_weightgen.o",
+      "sha256": "d2f44eb850c05db3114ad91dbf516576b823ba30480d4d1552c74ba5336d7dea",
+      "bytes": 104568
+    },
+    {
+      "path": "HEURISTICS/che_treeweight.o",
+      "sha256": "9ccd6a4debe304495113e029ace775911787b9b0f76734ca8618730e873a0d3b",
+      "bytes": 127424
+    },
+    {
+      "path": "HEURISTICS/che_varweights.o",
+      "sha256": "afad2591837c434b41cd30194880a0eaa5ec02d30fcbea054d987be0a5624651",
+      "bytes": 146168
+    },
+    {
+      "path": "HEURISTICS/che_wfcb.o",
+      "sha256": "c8c1493133e248077102d0f36b5cb60c3e758aef53838a46b58f88cf7692e5a3",
+      "bytes": 34416
+    },
+    {
+      "path": "HEURISTICS/che_wfcbadmin.o",
+      "sha256": "e78c8ffd3d9888eb9c57b51e9a2ee58fe1e510e92da84248822fbcf7546930b3",
+      "bytes": 90312
+    },
+    {
+      "path": "HEURISTICS/HEURISTICS.a",
+      "sha256": "41b16f1793e2ba1487f2dc88ab104711da1fcc2564970a966e6e69bdf02373e8",
+      "bytes": 6977046
+    },
+    {
+      "path": "HEURISTICS/Makefile.dependencies",
+      "sha256": "bfae015f9b277351f2fadd5b25dc4f6afe2dafeb177c80b0a616700b7da4a92c",
+      "bytes": 398567
+    },
+    {
+      "path": "INOUT/cio_basicparser.o",
+      "sha256": "d5a42d5d70aadfe9e12f9164564270ddbe56fb089dbd04ecc301f0b8ce1e1da0",
+      "bytes": 52160
+    },
+    {
+      "path": "INOUT/cio_commandline.o",
+      "sha256": "02473dd958823a9cecdb77663a4048e0823b4a43d51e47fddbe717e8ab138eba",
+      "bytes": 51040
+    },
+    {
+      "path": "INOUT/cio_fileops.o",
+      "sha256": "3df92b3cc6c7edae73026be45d0eca3f32ef114ae72521ff2c1f000391c30e26",
+      "bytes": 37576
+    },
+    {
+      "path": "INOUT/cio_filevars.o",
+      "sha256": "78d273d6f62e718c941a9fb27e567e532ae0a28d090c6fa5c123dd1502c67944",
+      "bytes": 37472
+    },
+    {
+      "path": "INOUT/cio_initio.o",
+      "sha256": "05876895c6825280704e5b5d3a3e7f8db165976fb6f1ac29caf823cbad39fe75",
+      "bytes": 10544
+    },
+    {
+      "path": "INOUT/cio_multiplexer.o",
+      "sha256": "384398d35e3ac524c71b585bb88a52ad2f004f8eb144b3da27e81a7a187d67b8",
+      "bytes": 34208
+    },
+    {
+      "path": "INOUT/cio_network.o",
+      "sha256": "da44e9932193a272d57c37940298719f72577abe2d1ffc9c184679a33c3473be",
+      "bytes": 44864
+    },
+    {
+      "path": "INOUT/cio_output.o",
+      "sha256": "ea15036059ad4ccef3b2ca8ebe076f1d395916c58e2d81064c42255d29e12de9",
+      "bytes": 17832
+    },
+    {
+      "path": "INOUT/cio_scanner.o",
+      "sha256": "d715b0b1454b652f339db0c1bf0fa1330f88fea06768f9b72abb0d61b329507d",
+      "bytes": 132040
+    },
+    {
+      "path": "INOUT/cio_signals.o",
+      "sha256": "d4e864e7df76e6b45d5de3c3a56a62f0aeedc2f2a549e5a55387429d790b1565",
+      "bytes": 18744
+    },
+    {
+      "path": "INOUT/cio_simplestuff.o",
+      "sha256": "4f8273a27fa34203a613085fb9fef0da55fa138699b57d1ee024c269020e1afd",
+      "bytes": 9648
+    },
+    {
+      "path": "INOUT/cio_streams.o",
+      "sha256": "22768b152a5633d60c432c78cec3357b0dbfb9d0e8b7a848bab4c693d80c632e",
+      "bytes": 25056
+    },
+    {
+      "path": "INOUT/cio_tempfile.o",
+      "sha256": "e5613d99bd824b21ad5e22c1a0f37cef2a4afd89ffff079ce1fc72ccd6c3e758",
+      "bytes": 19848
+    },
+    {
+      "path": "INOUT/INOUT.a",
+      "sha256": "796a89eba2dab7177f63f00108bcf82aaaa4c8f6a883b4f6c9fc53edea59ee30",
+      "bytes": 494358
+    },
+    {
+      "path": "INOUT/Makefile.dependencies",
+      "sha256": "2be283115f36203f3df45822bfae70be4a2ca515bde2dc13cb48acdce7903faf",
+      "bytes": 93855
+    },
+    {
+      "path": "LEARN/cle_annotations.o",
+      "sha256": "f58186b3ff666ea08c96e77bc6708baa85c91eaaedc32cfa12e26c87448209f8",
+      "bytes": 46616
+    },
+    {
+      "path": "LEARN/cle_annoterms.o",
+      "sha256": "c3370f10f8ba801aaf294929eb288e8f264ceedf1b2533725f269b357ceae684",
+      "bytes": 126272
+    },
+    {
+      "path": "LEARN/cle_classification.o",
+      "sha256": "29ae644d490d0fdb2395ab78f8f668ef0ab49e96238a4568ca12a60788d5fb92",
+      "bytes": 38560
+    },
+    {
+      "path": "LEARN/cle_clauseenc.o",
+      "sha256": "4e9656e88a5baff2cb0a2aa41042f27d149c54c13d861d8a5e5f04b7034513ec",
+      "bytes": 70632
+    },
+    {
+      "path": "LEARN/cle_examplerep.o",
+      "sha256": "70b49d8833ecf934c06182b30c789e6cbfa578dece59c545df62125fbba9ca4a",
+      "bytes": 57304
+    },
+    {
+      "path": "LEARN/cle_flatannoterms.o",
+      "sha256": "c762b10d1d9f91b1fdda53445efe3085a3f2c4731eb902a5c44223822bbcadcf",
+      "bytes": 75064
+    },
+    {
+      "path": "LEARN/cle_indexfunctions.o",
+      "sha256": "d1ecfd835b4b55a2a15241574d88ab9e8fcd3c600fdc95f3a70c590ba2bb68a6",
+      "bytes": 80960
+    },
+    {
+      "path": "LEARN/cle_kbdesc.o",
+      "sha256": "ced04217daba184a02d1fb4ee4ad8979f9ccd571271a48e610bbf4de4acc5e51",
+      "bytes": 22048
+    },
+    {
+      "path": "LEARN/cle_kbinsert.o",
+      "sha256": "90ac0253fc7105278b8652a5de46d3260ed5d24afd5023c6f9ca8b0a2eb42bd2",
+      "bytes": 57456
+    },
+    {
+      "path": "LEARN/cle_numfeatures.o",
+      "sha256": "59d07929b6301bfae46f1dfffc270a35d744acd892837eada6794e442a45900b",
+      "bytes": 98504
+    },
+    {
+      "path": "LEARN/cle_patterns.o",
+      "sha256": "936075c34a13231b57cbede39ea8f687063a1f99660e1729675b6e864a7deba9",
+      "bytes": 226328
+    },
+    {
+      "path": "LEARN/cle_termtops.o",
+      "sha256": "1cf91faeb48a03d09ee8909f0b5a99417447696d40174851cc6d4a0ca97e8b91",
+      "bytes": 98376
+    },
+    {
+      "path": "LEARN/cle_tsm.o",
+      "sha256": "d62820a291e6b9d0e42935cee5b75e272d6faac24234716ea99347b1eb5d5a29",
+      "bytes": 185152
+    },
+    {
+      "path": "LEARN/cle_tsmio.o",
+      "sha256": "bf2e4c254e4708811dcbfbb812f7c40f3027e9d8cbe6ec409d3fcdb52bf5a4a9",
+      "bytes": 88704
+    },
+    {
+      "path": "LEARN/LEARN.a",
+      "sha256": "88cde95227534bc013dc06cebaafda414c181095fb11ff6a7ff7ac7e47782d8a",
+      "bytes": 1275920
+    },
+    {
+      "path": "LEARN/Makefile.dependencies",
+      "sha256": "e26a19dbef4139755b4b7629c5ba014d87095a66e4e063e16440e58f8c727bba",
+      "bytes": 121739
+    },
+    {
+      "path": "Makefile.vars",
+      "sha256": "b7072efe80ec40ae2128240f1f3a6def9dc2eafc52f82f740c83227451acca59",
+      "bytes": 5765
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "fe9c8d0b1272629df58a27611190c4d4869b708c98f3539ffe12ef2a3eb42e2e",
+  "body_preserved": true
+}

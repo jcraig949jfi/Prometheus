@@ -1,0 +1,38 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/pari-2.17.4",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "./Configure && make gp (readline/gmp optional)",
+      "cmd": "./Configure >/dev/null 2>&1 && make -s gp 2>&1 | grep -iE '\\berror' | head -3; B=$(find . -name gp-dyn -type f -perm -u+x | head -1); echo BIN=$B; test -n \"$B\"",
+      "timeout": 1800
+    }
+  ],
+  "runs": [
+    {
+      "name": "number theory: factor a Mersenne number, an elliptic-curve point count, a class number, the 1000th prime -- exact, against known values",
+      "cmd": "B=$(find . -name gp-dyn -type f -perm -u+x | head -1); LD_LIBRARY_PATH=$(dirname $B) $B -q < $HARNESS/nt.gp 2>&1 | tail -8",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "193707721",
+          "761838257287",
+          "prime(1000) = 7919"
+        ]
+      },
+      "timeout": 300
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: known number-theoretic values -- 2^67-1 = 193707721 * 761838257287 (Cole 1903); prime(1000) = 7919; ellap of a named curve; a class number. Exact arithmetic on the PARI stack; gp built from source (readline/gmp optional, bundled fallback)."
+}

@@ -1,0 +1,138 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "ssw-smith-waterman",
+  "canonical_name": "SSW -- a SIMD (SSE2) striped Smith-Waterman implementation in C (Zhao, Lee, Bustamante 2013)",
+  "aliases": [
+    "SSW",
+    "striped Smith-Waterman",
+    "ssw_test"
+  ],
+  "lineage": "The Smith-Waterman 1981 recurrence re-expressed for vector hardware: Farrar's striped SIMD layout (2007) as the SSW library (2013), tens of times faster than the scalar DP by computing the score matrix in SSE2 lanes. The architecture-and-era DEPTH partner of EMBOSS's `water`: same algorithm, 32 years and one hardware model apart.",
+  "domain": [
+    "bioinformatics",
+    "sequence-alignment",
+    "SIMD",
+    "biological-computation"
+  ],
+  "era": "1981 (SW); 2007 (Farrar striped); SSW 2013",
+  "version": "github.com/mengyao/Complete-Striped-Smith-Waterman-Library master as of 2026-09-13 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library",
+        "commit": "a66636b79ef36ac178122437053be0d8ef345271",
+        "commit_resolved": "a66636b79ef36ac178122437053be0d8ef345271",
+        "commit_date": "2026-01-14T21:53:27-05:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/mengyao/Complete-Striped-Smith-Waterman-Library"
+  },
+  "hashes": {
+    "tree_sha256": "3d5056fdb387b085dce770a5e7b708c0401368793d2187dc74f3a2889830f5fb",
+    "n_files": 42,
+    "bytes": 28863971,
+    "artifacts": [
+      {
+        "filename": "https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library",
+        "sha256": null,
+        "commit": "a66636b79ef36ac178122437053be0d8ef345271"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\ssw-smith-waterman",
+    "hash_list": "techne/fossils/specimens/ssw-smith-waterman/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "README/LICENSE"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C",
+    "C++"
+  ],
+  "build_system": "make (src/)",
+  "compiler_or_interpreter": "gcc 12 (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a C compiler with SSE2 (x86-64)"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "src/ssw_test -- align reads against a reference FASTA; the aligned score + CIGAR"
+  ],
+  "example": {
+    "command": "make; ./src/ssw_test ref.fa query.fa",
+    "input": "the same conserved-core pair used for EMBOSS water",
+    "output": "the optimal local-alignment score + CIGAR -- the same optimum EMBOSS water reports (the ORACLE: agreement with the 1981 scalar DP)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Zhao, Lee, Bustamante et al., SSW Library: An SIMD Smith-Waterman C/C++ Library, PLoS ONE 2013",
+    "Farrar, Striped Smith-Waterman speeds database searches, Bioinformatics 2007"
+  ],
+  "human_capability_summary": {
+    "built_to": "compute the exact Smith-Waterman local-alignment score on vector hardware, an order of magnitude faster than the scalar recurrence",
+    "pressure": "aligning millions of short reads to a genome; the O(mn) DP is too slow scalar; SIMD lanes and striping recover the throughput",
+    "success_means": "the SIMD score equals the exact SW optimum, computed far faster"
+  },
+  "known_human_problem_solved": "fast optimal local alignment at read-mapping scale",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "throughput: millions of alignments; the quadratic scalar cost",
+  "human_failure_condition": "a saturating 8/16-bit score overflow silently returning a wrong optimum (the known SIMD hazard the library guards with an overflow-and-recompute path)",
+  "behavioral_entry_point": "align a pair with a very high score to probe the 8-bit->16-bit fallback; compare the score with EMBOSS water on the same pair",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Smith-Waterman 1981; Farrar 2007 (striped SIMD)",
+      "note": "first bioinformatics fossil; the global/local DP pair (EMBOSS needle/water or seq-align) is a later add -- its build needs submodules/heavy autotools, deferred honestly"
+    }
+  ],
+  "acquisition_tags": [
+    "batch07",
+    "new_domain",
+    "bioinformatics",
+    "SIMD",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/ssw-smith-waterman/receipts/run-ssw-smith-waterman-20260913T105921Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/ssw-smith-waterman/receipts/run-ssw-smith-waterman-20260913T105940Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\ssw-smith-waterman ; tracked techne/fossils/specimens/ssw-smith-waterman",
+    "where_it_came_from": "https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library ; ORIGINAL_AUTHORITATIVE_RELEASE @ a66636b79ef36ac178122437053be0d8ef345271",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run ssw-smith-waterman",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/ssw-smith-waterman/receipts/run-ssw-smith-waterman-20260913T105940Z.json",
+    "what_humans_used_it_for": "compute the exact Smith-Waterman local-alignment score on vector hardware, an order of magnitude faster than the scalar recurrence"
+  },
+  "seat": "Techne"
+}
