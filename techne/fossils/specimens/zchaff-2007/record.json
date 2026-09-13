@@ -1,0 +1,149 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "zchaff-2007",
+  "canonical_name": "zChaff (Princeton, 2001-2007) -- the Chaff CDCL SAT solver: VSIDS and two-watched-literals, the RIVAL MiniSat displaced",
+  "aliases": [
+    "zChaff",
+    "Chaff",
+    "zchaff.64bit.2007.3.12"
+  ],
+  "lineage": "SAT lineage, the LOSING COMPETITOR: Chaff (Moskewicz, Madigan, Zhao, Zhang, Malik, DAC 2001) introduced the VSIDS decision heuristic and two-literal watching that every later CDCL solver uses; zChaff won SAT 2002. MiniSat (Een & Sorensson 2003) reimplemented the same ideas in a fraction of the code with better restarts/learnt-clause management and took the field; zChaff's last release is 2007.3.12 and it has not been developed since. Preserved from Princeton's page.",
+  "domain": [
+    "SAT",
+    "search",
+    "CDCL",
+    "loser",
+    "superseded-design"
+  ],
+  "era": "2001-2007",
+  "version": "zchaff.64bit.2007.3.12 (Princeton distribution)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.princeton.edu/~chaff/zchaff/zchaff.64bit.2007.3.12.zip",
+        "filename": "zchaff.64bit.2007.3.12.zip"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "publisher": "Princeton University, Sharad Malik's group",
+    "url": "princeton.edu/~chaff"
+  },
+  "hashes": {
+    "tree_sha256": "3e95242e880b29d8ab9201f6a74451710f5d9819a5bb44e7c1f2be5911e06cdf",
+    "n_files": 20,
+    "bytes": 275403,
+    "artifacts": [
+      {
+        "filename": "zchaff.64bit.2007.3.12.zip",
+        "sha256": "9b88d8f366d0dc6b3cacd9d497e755d06af069ff27411870cc8b40fe0f11911f",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\zchaff-2007",
+    "hash_list": "techne/fossils/specimens/zchaff-2007/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "NOASSERTION",
+    "status": "Princeton's zChaff licence: free for non-commercial research use (see the LICENSE/README in the zip); recorded, not asserted",
+    "evidence": "the distribution's licence text"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C++ (2001-era)"
+  ],
+  "build_system": "make",
+  "compiler_or_interpreter": "g++ 12 (docker bookworm) or gcc:4.9 if modern C++ rejects it (recorded)",
+  "dependencies": [
+    "libc++"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "zchaff <cnf> [timeout]; zverify_df (proof checker); SAT_C.h library API"
+  ],
+  "example": {
+    "command": "make; ./zchaff $HARNESS/sat.cnf; ./zchaff $HARNESS/unsat.cnf",
+    "input": "the same small SAT/UNSAT CNFs the vault used for picosat and minisat",
+    "output": "RESULT: SAT / UNSAT (ORACLE: agreement with minisat-2.2.0 and picosat-965 on the same files)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Moskewicz, Madigan, Zhao, Zhang, Malik, Chaff: Engineering an Efficient SAT Solver, DAC 2001",
+    "Zhang & Malik, The Quest for Efficient Boolean Satisfiability Solvers, CAV 2002"
+  ],
+  "human_capability_summary": {
+    "built_to": "decide propositional satisfiability on industrial instances (verification, EDA) by conflict-driven learning with cheap propagation and a decaying activity heuristic",
+    "pressure": "instance sizes from hardware verification; the SAT competitions; then a smaller, faster rival",
+    "success_means": "correct SAT/UNSAT with a checkable proof; the human record: MiniSat's design beat it on speed and simplicity"
+  },
+  "known_human_problem_solved": "industrial SAT solving (2001-2005)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "combinatorial explosion, competition (SAT races), code complexity",
+  "human_failure_condition": "a wrong UNSAT (hence zverify_df); or being out-competed",
+  "behavioral_entry_point": "run zchaff, minisat-2.2.0 and picosat-965 on one harder CNF and record decisions/conflicts/time -- the lineage's selection pressure made measurable",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded",
+      "to": "minisat-2.2.0",
+      "note": "MiniSat (2003) reimplemented Chaff's ideas and displaced it"
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "picosat-965",
+      "note": "CDCL family"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "depth:sat",
+    "failed_branch",
+    "loser",
+    "rival",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/zchaff-2007/receipts/run-zchaff-2007-20260912T210114Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/zchaff-2007/receipts/run-zchaff-2007-20260912T210251Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/zchaff-2007/receipts/run-zchaff-2007-20260912T210513Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\zchaff-2007 ; tracked techne/fossils/specimens/zchaff-2007",
+    "where_it_came_from": "https://www.princeton.edu/~chaff/zchaff/zchaff.64bit.2007.3.12.zip ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run zchaff-2007",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/zchaff-2007/receipts/run-zchaff-2007-20260912T210513Z.json",
+    "what_humans_used_it_for": "decide propositional satisfiability on industrial instances (verification, EDA) by conflict-driven learning with cheap propagation and a decaying activity heuristic"
+  },
+  "seat": "Techne"
+}

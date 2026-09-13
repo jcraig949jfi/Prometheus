@@ -1,0 +1,147 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "tinyekf-levy",
+  "canonical_name": "TinyEKF -- a header-only Extended Kalman Filter in C for microcontrollers and PCs (Simon D. Levy)",
+  "aliases": [
+    "TinyEKF"
+  ],
+  "lineage": "The Extended Kalman Filter (Schmidt/Smith, NASA Apollo era, 1960s) reduced to a few hundred lines with static allocation for Arduino/Teensy-class hardware; shipped with a GPS position/velocity example whose data and reference implementation come from Rachel Blakeley's 'Extended Kalman Filter for GPS' (MATLAB). SMALL MECHANISM: predict, then update with a linearised measurement model.",
+  "domain": [
+    "estimation",
+    "hidden-state",
+    "Kalman",
+    "embedded",
+    "small-mechanism",
+    "navigation"
+  ],
+  "era": "2015-",
+  "version": "github.com/simondlevy/TinyEKF master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/simondlevy/TinyEKF",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/simondlevy/TinyEKF"
+  },
+  "hashes": {
+    "tree_sha256": "1591ee24d60213fd596524e0cfc32ccf549e535e2d4f899872833adce3aa67f4",
+    "n_files": 26,
+    "bytes": 977517,
+    "artifacts": [
+      {
+        "filename": "https://github.com/simondlevy/TinyEKF",
+        "sha256": null,
+        "commit": "ba0d2a90e22f2f4e4120a91cb05ca2ca6a8e8da3"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\tinyekf-levy",
+    "hash_list": "techne/fossils/specimens/tinyekf-levy/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE.md"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "C++"
+  ],
+  "build_system": "make (examples)",
+  "compiler_or_interpreter": "gcc/g++ 12 (docker bookworm)",
+  "dependencies": [
+    "none beyond libc/libm"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "src/tinyekf.h: ekf_initialize / ekf_predict / ekf_update; the GPS example"
+  ],
+  "example": {
+    "command": "build and run the shipped GPS example on its gps.csv",
+    "input": "pseudorange observations from 4 satellites",
+    "output": "the receiver position/clock trajectory; compared against the example's reference output"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "README.md (in the tree)",
+    "Blakeley, Extended Kalman Filter for GPS (the example's source)"
+  ],
+  "human_capability_summary": {
+    "built_to": "estimate a hidden state (position, clock bias) from nonlinear noisy measurements on a machine with kilobytes of RAM",
+    "pressure": "hidden state, measurement noise, nonlinearity (ranges), tiny memory and CPU budgets",
+    "success_means": "the estimate converges to the true trajectory and the covariance shrinks; no dynamic allocation"
+  },
+  "known_human_problem_solved": "embedded nonlinear state estimation",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "noisy observation, hidden state, bounded memory",
+  "human_failure_condition": "filter divergence: linearisation error or a bad noise model drives the covariance to inconsistency and the estimate away",
+  "behavioral_entry_point": "scale the measurement-noise matrix R or corrupt a satellite's range and watch the estimate/covariance respond",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Kalman 1960; EKF (Schmidt, 1960s Apollo navigation)",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "simple-kalman-denyssene",
+      "note": "scalar KF vs multivariate EKF"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityC",
+    "small_mechanism",
+    "estimation",
+    "queue_named_family"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/tinyekf-levy/receipts/run-tinyekf-levy-20260912T210119Z.json",
+      "ok": false,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/tinyekf-levy/receipts/run-tinyekf-levy-20260912T210255Z.json",
+      "ok": false,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/tinyekf-levy/receipts/run-tinyekf-levy-20260912T210525Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\tinyekf-levy ; tracked techne/fossils/specimens/tinyekf-levy",
+    "where_it_came_from": "https://github.com/simondlevy/TinyEKF ; ORIGINAL_AUTHORITATIVE_RELEASE @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run tinyekf-levy",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/tinyekf-levy/receipts/run-tinyekf-levy-20260912T210525Z.json",
+    "what_humans_used_it_for": "estimate a hidden state (position, clock bias) from nonlinear noisy measurements on a machine with kilobytes of RAM"
+  },
+  "seat": "Techne"
+}

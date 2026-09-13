@@ -1,0 +1,136 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "gzip-1.2.4-1993",
+  "canonical_name": "gzip 1.2.4 (1993) -- GNU zip: DEFLATE (LZ77 + Huffman), the redesign forced by the LZW patent",
+  "aliases": [
+    "gzip",
+    "GNU zip",
+    "DEFLATE"
+  ],
+  "lineage": "Compression lineage, the HISTORICAL REDESIGN under legal pressure: Unisys's enforcement of the LZW patent (1993-94) made compress unshippable for GNU; Jean-loup Gailly's gzip (1992-93) used Ziv-Lempel 1977 plus Huffman -- DEFLATE, later RFC 1951 and zlib's core -- and replaced compress across Unix. 1.2.4 (Aug 1993) is the version that stayed frozen for a decade. Beside the vault's zlib-1.3.1 (the library form, 2024) and compress/ncompress, this closes the compress -> gzip -> zlib series.",
+  "domain": [
+    "compression",
+    "LZ77",
+    "Huffman",
+    "historical-redesign",
+    "legal-pressure"
+  ],
+  "era": "1993",
+  "version": "gzip-1.2.4 (18 Aug 1993), ftp.gnu.org/gnu/gzip",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://ftp.gnu.org/gnu/gzip/gzip-1.2.4.tar.gz",
+        "filename": "gzip-1.2.4.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "archive": "ftp.gnu.org/gnu/gzip",
+    "file": "gzip-1.2.4.tar.gz"
+  },
+  "hashes": {
+    "tree_sha256": "d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719",
+    "n_files": 90,
+    "bytes": 942686,
+    "artifacts": [
+      {
+        "filename": "gzip-1.2.4.tar.gz",
+        "sha256": "1ca41818a23c9c59ef1d5e1d00c0d5eaa2285d931c0fb059637d7c0cc02ad967",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\gzip-1.2.4-1993",
+    "hash_list": "techne/fossils/specimens/gzip-1.2.4-1993/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-2.0",
+    "status": "copyleft",
+    "evidence": "COPYING"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C (1993, pre-ANSI-tolerant)"
+  ],
+  "build_system": "./configure && make (1993 autoconf)",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm); modern-compiler accommodations recorded",
+  "dependencies": [
+    "libc"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "gzip / gunzip / zcat; deflate.c (LZ77 hashing), trees.c (Huffman), inflate.c"
+  ],
+  "example": {
+    "command": "./configure && make; ./gzip -c sample > s.gz; ./gzip -dc s.gz | cmp - sample",
+    "input": "a text file",
+    "output": "round trip exact; ratio versus compact and compress on the same input"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Deutsch, DEFLATE Compressed Data Format Specification, RFC 1951 (1996)",
+    "Ziv & Lempel, A Universal Algorithm for Sequential Data Compression, IEEE IT 1977",
+    "gzip NEWS/README 1993 (the patent motivation)"
+  ],
+  "human_capability_summary": {
+    "built_to": "compress files better than compress without infringing the LZW patent, and interoperate forever via a fixed format",
+    "pressure": "the Unisys LZW patent (legal), disk/bandwidth scarcity, portability across 1993 Unixes and DOS",
+    "success_means": "exact round trip, better ratio than compress, patent-free"
+  },
+  "known_human_problem_solved": "patent-free lossless compression",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "legal pressure (patent), storage scarcity, portability",
+  "human_failure_condition": "a format change would orphan every archive; a patent claim would stop distribution",
+  "behavioral_entry_point": "vary -1..-9 (the lazy-match effort knob in deflate.c) and record ratio/time; compare with compact and ncompress on one corpus",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded",
+      "to": "ncompress-5.0-lzw-1985",
+      "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress)"
+    },
+    {
+      "relation": "historical_version_of",
+      "to": "zlib-1.3.1",
+      "note": "same author (Gailly) and algorithm; the library form"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "depth:compression",
+    "historical_redesign",
+    "legal_pressure"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260912T210109Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\gzip-1.2.4-1993 ; tracked techne/fossils/specimens/gzip-1.2.4-1993",
+    "where_it_came_from": "https://ftp.gnu.org/gnu/gzip/gzip-1.2.4.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run gzip-1.2.4-1993",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260912T210109Z.json",
+    "what_humans_used_it_for": "compress files better than compress without infringing the LZW patent, and interoperate forever via a fixed format"
+  },
+  "seat": "Techne"
+}

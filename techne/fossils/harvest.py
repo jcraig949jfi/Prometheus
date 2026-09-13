@@ -5,6 +5,7 @@
     python -m techne.fossils.harvest verify <specimen_id>         re-hash the body against UPSTREAM_HASHES.txt
     python -m techne.fossils.harvest verify --all [--out F]       every body; the census as JSON rows
     python -m techne.fossils.harvest restore <specimen_id>        put a drifted body back to its pin (rows in a receipt)
+    python -m techne.fossils.harvest mirror --dest D [--dry-run]  copy verified bodies to D/<tree_sha256>/ (TECHNE-65: D is the operator's call)
     python -m techne.fossils.harvest status                       one line per specimen
     python -m techne.fossils.harvest summary                      the directive's success measures, computed
 
@@ -30,6 +31,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import pathlib
 import platform
 import re
@@ -226,10 +228,23 @@ def _rm_readonly(func, path, _exc):
 
 
 def _rmtree(p: pathlib.Path):
-    if sys.version_info >= (3, 12):
-        shutil.rmtree(p, onexc=_rm_readonly)
-    else:
-        shutil.rmtree(p, onerror=_rm_readonly)
+    """Destroy a directory tree that Linux builds may have filled with names Windows cannot address
+    by ordinary path (a trailing dot: the Ada sorter's "WORK."). First the extended-length prefix,
+    then, if residue remains, `wsl rm -rf` on the same directory (the runners that created the
+    names can delete them). Never returns with the directory still present."""
+    p = pathlib.Path(p)
+    target = ("\\\\?\\" + str(p.resolve())) if os.name == "nt" else str(p)
+    try:
+        if sys.version_info >= (3, 12):
+            shutil.rmtree(target, onexc=_rm_readonly)
+        else:
+            shutil.rmtree(target, onerror=_rm_readonly)
+    except OSError:
+        pass
+    if p.exists() and os.name == "nt" and shutil.which("wsl.exe"):
+        subprocess.run(["wsl.exe", "-e", "rm", "-rf", vault.to_wsl(p)], timeout=600)
+    if p.exists():
+        raise OSError("could not remove %s (residue: %s)" % (p, [x.name for x in p.rglob("*")][:5]))
 
 
 def _prune_empty_dirs(root: pathlib.Path):
@@ -427,6 +442,71 @@ def verify(specimen_id: str) -> bool:
     return got == want
 
 
+# --------------------------------------------------------------------------- mirror
+def mirror(dest: str, specimen_ids=None, dry_run: bool = False) -> dict:
+    """Copy preserved bodies to an off-host store keyed by their immutable tree hash.
+
+    TECHNE-65: the DESTINATION is the operator's decision; this function only makes the copy
+    executable once it is named. For each specimen whose body is present and VERIFIED against
+    its record, upstream/ is copied to <dest>/<tree_sha256>/upstream/ (content-addressed: the
+    same body from any host lands in the same place; a drifted body is refused, never mirrored),
+    the copy is re-hashed, and a receipt row carries source hash, destination hash, bytes and
+    the verdict. The receipt is tracked under techne/fossils/mirror/; the bodies never enter git,
+    and a destination inside the repository is refused."""
+    ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    d = pathlib.Path(dest).resolve()
+    try:
+        d.relative_to(vault.REPO.resolve())
+        raise ValueError("mirror destination %s is inside the repository; bodies never enter git" % d)
+    except ValueError as e:
+        if "inside the repository" in str(e):
+            raise
+    ids = specimen_ids or sorted(p.parent.name for p in vault.SPECIMENS.glob("*/record.json"))
+    rep = {"schema": "techne.fossil.mirror_receipt/1", "receipt_id": "mirror-%s" % ts, "written_utc": ts,
+           "destination": str(d), "dry_run": dry_run, "rows": []}
+    for sid in ids:
+        body = vault.body_dir(sid) / "upstream"
+        row = {"specimen_id": sid, "source": str(body)}
+        if not body.exists():
+            row["status"] = "BODY_MISSING_ON_THIS_HOST"; rep["rows"].append(row); continue
+        dr = drift(sid)
+        row["source_tree_sha256"] = dr["tree_sha256_now"]
+        if not dr["matches"]:
+            row["status"] = "REFUSED_SOURCE_DRIFTED"; rep["rows"].append(row); continue
+        target = d / dr["tree_sha256_now"] / "upstream"
+        row["destination"] = str(target)
+        row["bytes"] = sum(n for _, _, n in vault.hash_tree(body))
+        if dry_run:
+            row["status"] = "WOULD_COPY" if not target.exists() else "ALREADY_PRESENT"; rep["rows"].append(row); continue
+        if target.exists():
+            got = vault.tree_hash_of(vault.hash_tree(target))
+            row["destination_tree_sha256"] = got
+            row["status"] = "ALREADY_PRESENT_VERIFIED" if got == dr["tree_sha256_now"] else "ALREADY_PRESENT_DIFFERS"
+            rep["rows"].append(row); continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        tmp = target.with_name("upstream.partial")
+        if tmp.exists():
+            _rmtree(tmp)
+        shutil.copytree(body, tmp, symlinks=True)
+        got = vault.tree_hash_of(vault.hash_tree(tmp))
+        row["destination_tree_sha256"] = got
+        if got == dr["tree_sha256_now"]:
+            tmp.rename(target); row["status"] = "COPIED_VERIFIED"
+        else:
+            row["status"] = "COPY_DIFFERS_LEFT_AS_PARTIAL"
+        rep["rows"].append(row)
+    rep["summary"] = {k: sum(1 for r in rep["rows"] if r["status"] == k) for k in sorted({r["status"] for r in rep["rows"]})}
+    out = vault.REPO / "techne" / "fossils" / "mirror" / (rep["receipt_id"] + (".dryrun" if dry_run else "") + ".json")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    k = 1
+    while out.exists():                       # two invocations inside one second never share a receipt
+        k += 1
+        out = out.with_name("%s-%d%s.json" % (rep["receipt_id"], k, ".dryrun" if dry_run else ""))
+    out.write_text(json.dumps(rep, indent=1) + "\n", encoding="utf-8", newline="\n")
+    print("mirror ->", d, rep["summary"], "receipt", out)
+    return rep
+
+
 # --------------------------------------------------------------------------- run
 def run(specimen_id: str, timeout: int = 1800) -> dict:
     rec = record.load(specimen_id)
@@ -453,7 +533,7 @@ def run(specimen_id: str, timeout: int = 1800) -> dict:
                "written_utc": ts, "runner": runner, "image": image, "workdir": rel,
                "isolation": "in_place" if in_place else "disposable_copy",
                "exec_root": str(exec_body.relative_to(body)).replace("\\", "/") if exec_body != body else ".",
-               "harness_sha256": {p.name: vault.sha256_file(p) for p in sorted((sd / "harness").glob("*")) if p.is_file()} if (sd / "harness").exists() else {},
+               "harness_sha256": {str(p.relative_to(sd / "harness")).replace("\\", "/"): vault.sha256_file(p) for p in sorted((sd / "harness").rglob("*")) if p.is_file()} if (sd / "harness").exists() else {},
                "host": {"platform": platform.platform(), "python": sys.version.split()[0]},
                "tree_sha256_before": rec["hashes"].get("tree_sha256"),
                "recipe_sha256": vault.sha256_file(sd / "recipe.json"),
@@ -589,6 +669,7 @@ def main(argv=None) -> int:
     r = sub.add_parser("run"); r.add_argument("specimen_id"); r.add_argument("--timeout", type=int, default=1800)
     v = sub.add_parser("verify"); v.add_argument("specimen_id", nargs="?"); v.add_argument("--all", action="store_true"); v.add_argument("--out")
     rs = sub.add_parser("restore"); rs.add_argument("specimen_id")
+    mi = sub.add_parser("mirror"); mi.add_argument("--dest", required=True); mi.add_argument("--specimen", action="append"); mi.add_argument("--dry-run", action="store_true")
     sub.add_parser("status"); sub.add_parser("summary")
     args = ap.parse_args(argv)
     if args.cmd == "acquire":
@@ -603,6 +684,10 @@ def main(argv=None) -> int:
         return 0 if verify(args.specimen_id) else 1
     elif args.cmd == "restore":
         return 0 if restore(args.specimen_id)["verified"] else 1
+    elif args.cmd == "mirror":
+        r = mirror(args.dest, args.specimen, args.dry_run)
+        bad = [x for x in r["rows"] if x["status"] in ("REFUSED_SOURCE_DRIFTED", "COPY_DIFFERS_LEFT_AS_PARTIAL", "ALREADY_PRESENT_DIFFERS")]
+        return 1 if bad else 0
     elif args.cmd == "status":
         status()
     elif args.cmd == "summary":

@@ -1,0 +1,153 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "whitakers-words-ada",
+  "canonical_name": "Whitaker's Words -- a Latin morphological analyser and dictionary in Ada (Col. William Whitaker, 1993-2006; maintained by Martin Keegan)",
+  "aliases": [
+    "WORDS",
+    "whitakers-words"
+  ],
+  "lineage": "A large REAL Ada program (tens of thousands of lines) from the language's first generation: parses Latin word forms into stem + inflection against a 39,000-entry dictionary, handling enclitics, tackons, prefixes/suffixes and syncope; runs on DOS/Windows/Unix for three decades. Public domain by its author. The Ada culture's strong typing and packages are visible throughout.",
+  "domain": [
+    "natural-language",
+    "morphology",
+    "dictionary",
+    "legacy-culture",
+    "ada"
+  ],
+  "era": "1993-2006 (Whitaker); repository 2013-",
+  "version": "github.com/mk270/whitakers-words master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/mk270/whitakers-words",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "LATER_SAME_LINEAGE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/mk270/whitakers-words",
+    "original_author": "William Whitaker"
+  },
+  "hashes": {
+    "tree_sha256": "f660d9efaa19c586b012f015c14cce67d53bd58ddf6516b29187d2d2004a1eda",
+    "n_files": 166,
+    "bytes": 9060994,
+    "artifacts": [
+      {
+        "filename": "https://github.com/mk270/whitakers-words",
+        "sha256": null,
+        "commit": "1f2f0fb0867a896d7b9284a03d615ed635d6f992"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\whitakers-words-ada",
+    "hash_list": "techne/fossils/specimens/whitakers-words-ada/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Public-Domain",
+    "status": "public domain (author's statement); see LICENSE in the tree",
+    "evidence": "LICENSE / README"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Ada"
+  ],
+  "build_system": "make (gprbuild)",
+  "compiler_or_interpreter": "GNAT 12 + gprbuild (docker prometheus-fossil-legacy:bookworm)",
+  "dependencies": [
+    "GNAT",
+    "gprbuild"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "bin/words <latin word> ; the dictionary build (makedict/makestem/makeinfl) produces DICTFILE.GEN etc."
+  ],
+  "example": {
+    "command": "make; echo amo | bin/words",
+    "input": "a Latin form",
+    "output": "its parse: amo, amare, amavi, amatus V (1st) ... 'love'"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-legacy:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Whitaker, WORDS documentation (doc/ in the tree)"
+  ],
+  "human_capability_summary": {
+    "built_to": "explain any Latin word form by finding which stem plus which inflection could produce it, against a real dictionary",
+    "pressure": "morphological ambiguity, a large dictionary, DOS-era memory limits the design still shows",
+    "success_means": "known forms parse to the right lemma and inflection; unknown forms are reported as such"
+  },
+  "known_human_problem_solved": "Latin morphological analysis",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "ambiguity, dictionary scale, limited memory (1990s PCs)",
+  "human_failure_condition": "a form is parsed to a wrong lemma or missed",
+  "behavioral_entry_point": "feed rare, syncopated or enclitic forms (amavisse, amaveruntque) and inspect the analysis trace",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "batch05",
+    "priorityG",
+    "legacy_culture:ada",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T214433Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T224433Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T224633Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T224807Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T231344Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T233941Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\whitakers-words-ada ; tracked techne/fossils/specimens/whitakers-words-ada",
+    "where_it_came_from": "https://github.com/mk270/whitakers-words ; LATER_SAME_LINEAGE_RELEASE @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run whitakers-words-ada",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T233941Z.json",
+    "what_humans_used_it_for": "explain any Latin word form by finding which stem plus which inflection could produce it, against a real dictionary"
+  },
+  "seat": "Techne"
+}

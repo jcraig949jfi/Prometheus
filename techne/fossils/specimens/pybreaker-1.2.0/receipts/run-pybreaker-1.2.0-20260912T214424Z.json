@@ -1,0 +1,76 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "pybreaker-1.2.0",
+  "receipt_id": "run-pybreaker-1.2.0-20260912T214424Z",
+  "written_utc": "20260912T214424Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/pybreaker-1.2.0",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "breaker_trace.py": "83f7219408a86f171b6e6e4e9e1cfbddb5fa24c215dc8c6ec87851c87ac281fb"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "c76f5023265bc8f7e5818353e8858aa020563eb686c95ecf5a520772e12101f5",
+  "recipe_sha256": "5fbd1ddace9658ef6e7b4d96c66d6b7633588a648888e993807ce758115566e9",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 6.34,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 2.99,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "breaker_trace (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/breaker_trace.py",
+      "exit": 0,
+      "seconds": 3.7,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "call 0 -> RuntimeError state closed\ncall 1 -> RuntimeError state closed\nstate closed->open\ncall 2 -> CircuitBreakerError state open\nfast-fail while open: CircuitBreakerError (dependency NOT called)\nstate open->half-open\nstate half-open->closed\nprobe after reset_timeout: ok\nfinal closed\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "c76f5023265bc8f7e5818353e8858aa020563eb686c95ecf5a520772e12101f5",
+  "body_preserved": true
+}

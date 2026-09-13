@@ -1,0 +1,32 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile biriscv_npc with Techne's testbench (bimodal BHT + BTB)",
+      "cmd": "iverilog -g2012 -I src/core -o $BODY/build/sim $HARNESS/tb_npc.v src/core/biriscv_npc.v 2>&1 | grep -v warning | head -5; test -f $BODY/build/sim && echo built"
+    }
+  ],
+  "runs": [
+    {
+      "name": "a loop branch taken 7x then not-taken, 40 iterations: mispredictions early vs late",
+      "cmd": "vvp -n $BODY/build/sim | tail -12",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "late_mispredicts=\\d+[\\s\\S]*RESULT\\s+OK"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_EMULATED",
+  "notes": "Oracle: after warm-up the predictor's misprediction count per 10 iterations falls below the untrained count (the BTB learns the target, the BHT the direction). The testbench drives only the npc module; no core is simulated."
+}

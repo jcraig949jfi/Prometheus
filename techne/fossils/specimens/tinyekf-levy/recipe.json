@@ -1,0 +1,41 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/examples/GPS",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make the GPS example (header-only EKF)",
+      "cmd": "make -s gps 2>&1 | grep -iE '\\berror' | head -3; test -x ./gps && echo built"
+    }
+  ],
+  "runs": [
+    {
+      "name": "run the EKF over the shipped pseudorange data (stdout = raw ECEF position per epoch; ekf.csv is mean-subtracted)",
+      "cmd": "./gps > $BODY/build/gps.out; tail -3 $BODY/build/gps.out",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "Wrote file"
+        ]
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "plausibility oracle: the estimated receiver position lies at Earth's surface radius (6.35e6..6.40e6 m) and moves less than 100 m over the last 10 epochs",
+      "cmd": "awk 'NF==3 && $1+0==$1 {r=sqrt($1*$1+$2*$2+$3*$3); n++; R[n]=r} END{d=R[n]-R[n-10]; if(d<0)d=-d; printf(\"epochs=%d final_r=%.1f m drift_last10=%.2f m\\n\", n, R[n], d); exit (n==25 && R[n]>6.35e6 && R[n]<6.40e6 && d<100)?0:1}' $BODY/build/gps.out",
+      "expect": {
+        "exit": 0
+      }
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "stdout carries the raw filtered ECEF positions; ekf.csv is mean-subtracted (first attempt read the csv and saw a 3 m radius -- corrected). Oracle is plausibility (receiver on the geoid, estimate settled), not a reference trajectory -- the upstream example ships none."
+}

@@ -1,0 +1,263 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "bsd-tcp-4.2-1983",
+  "canonical_name": "4.2BSD TCP (1983) -- the pre-congestion-control TCP that collapsed the Internet in 1986",
+  "aliases": [
+    "4.2BSD netinet/tcp",
+    "TCP before slow start"
+  ],
+  "lineage": "TCP congestion-control lineage, the KNOWN-BAD ancestor: 4.2BSD's TCP (Bill Joy, Sam Leffler) had retransmission timers and windows but NO congestion window, NO slow start and a crude RTT estimate. In October 1986 the LBL-to-Berkeley path fell from 32 kbit/s to 40 bit/s -- congestion collapse -- which is the pressure that produced 4.3BSD-Tahoe's algorithms (Jacobson 1988). Preserved from the unix-history-repo (Spinellis) at tag BSD-4_2.",
+  "domain": [
+    "networks",
+    "congestion-control",
+    "retransmission",
+    "contention",
+    "failure"
+  ],
+  "era": "1983",
+  "version": "4.2BSD (released Aug 1983), sys/netinet/tcp_*.{c,h}; unix-history-repo tag BSD-4_2",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_debug.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_debug.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_debug.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_debug.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_fsm.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_fsm.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_input.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_input.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_output.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_output.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_seq.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_seq.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_subr.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_subr.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_timer.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_timer.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_timer.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_timer.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_usrreq.c",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_usrreq.c"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcp_var.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp_var.h"
+      },
+      {
+        "kind": "url",
+        "extract": false,
+        "filename": "tcpip.h",
+        "url": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcpip.h"
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "repo": "dspinellis/unix-history-repo",
+    "tag": "BSD-4_2",
+    "path": "usr/src/sys/netinet/tcp_*"
+  },
+  "hashes": {
+    "tree_sha256": "24b875969234412bc1f278b4617e072beb82324375188afa37eb28b06d372c68",
+    "n_files": 13,
+    "bytes": 64912,
+    "artifacts": [
+      {
+        "filename": "tcp.h",
+        "sha256": "ff10da006092a90bea69daa4c96edfbc16b573706f5475385e29d42c252a2ce4",
+        "commit": null
+      },
+      {
+        "filename": "tcp_debug.c",
+        "sha256": "2ec6f063eae65d6f342c72ba9a0961c48333d3e476f8553d6ae4e43d9ec498ce",
+        "commit": null
+      },
+      {
+        "filename": "tcp_debug.h",
+        "sha256": "5a9499413434d67d94d6b04c7282296700bca5a5f7f169436615d4eef22f721d",
+        "commit": null
+      },
+      {
+        "filename": "tcp_fsm.h",
+        "sha256": "efe5b9ea06737ca8b28173536d993325f490b79d683abe4a3e371659aff789b2",
+        "commit": null
+      },
+      {
+        "filename": "tcp_input.c",
+        "sha256": "d672450882397f0b50cbc92721ae21bb2c9739a52461797103406732a731dd5d",
+        "commit": null
+      },
+      {
+        "filename": "tcp_output.c",
+        "sha256": "453c07bd52b4e9eadde6ef9591a0ee426a244eb309a9e11cc9682aa601a451f6",
+        "commit": null
+      },
+      {
+        "filename": "tcp_seq.h",
+        "sha256": "52f5f701af4603319a45d7c7323276322f20fbdb0161bb118b9e0a47744a43e3",
+        "commit": null
+      },
+      {
+        "filename": "tcp_subr.c",
+        "sha256": "70675e040c1cf2367314dbfebeeaf84ca38bf3b485d9ea6272dcfc44edf99d10",
+        "commit": null
+      },
+      {
+        "filename": "tcp_timer.c",
+        "sha256": "5ed145ba220e78166db3c948f846819501462026aef3e3996ca8b4c63302430d",
+        "commit": null
+      },
+      {
+        "filename": "tcp_timer.h",
+        "sha256": "30f8f46763663c2836d72e4843db6ea37ead08869a40b219ec22ded16ab5b871",
+        "commit": null
+      },
+      {
+        "filename": "tcp_usrreq.c",
+        "sha256": "78db4496833de0437d47874061fc206a2674ff7ee3fd0b64743c53dc2530317a",
+        "commit": null
+      },
+      {
+        "filename": "tcp_var.h",
+        "sha256": "32c639206051f1f63204c3d8c16f41575232b839049705cfe61a502f0f77f7eb",
+        "commit": null
+      },
+      {
+        "filename": "tcpip.h",
+        "sha256": "a81c7f47173c95b42fdcbfa92ccb528f123284b42fdb66f848db0b6159ec0c9a",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.2-1983",
+    "hash_list": "techne/fossils/specimens/bsd-tcp-4.2-1983/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-4-Clause",
+    "status": "permissive (original BSD licence, advertising clause)",
+    "evidence": "file headers; Regents of the University of California"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C (BSD kernel)"
+  ],
+  "build_system": "none standalone (kernel netinet)",
+  "compiler_or_interpreter": "4.xBSD kernel build (NOT built standalone; SOURCE_ONLY)",
+  "dependencies": [
+    "the BSD kernel: mbufs, socket layer, IP"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "tcp_input() in tcp_input.c; tcp_output() in tcp_output.c; tcp_timers() in tcp_timer.c"
+  ],
+  "example": {
+    "command": "",
+    "input": "",
+    "output": ""
+  },
+  "environment": {
+    "runner": "none",
+    "note": "kernel code; preserved and hashed, not executed"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Jacobson, Congestion Avoidance and Control, SIGCOMM 1988 (documents the collapse and the fix)",
+    "Nagle, Congestion Control in IP/TCP Internetworks, RFC 896 (1984)"
+  ],
+  "human_capability_summary": {
+    "built_to": "deliver a reliable byte stream over an unreliable internet using windows and retransmission timers",
+    "pressure": "packet loss and delay from shared links; but the design did not yet read loss as a congestion signal",
+    "success_means": "data arrives in order; when the network is congested this version keeps retransmitting into it -- the human record marks that as its failure"
+  },
+  "known_human_problem_solved": "reliable transport (without congestion control)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "bandwidth scarcity on shared links, packet loss, queueing delay",
+  "human_failure_condition": "congestion collapse: throughput falls by three orders of magnitude while every host keeps retransmitting",
+  "behavioral_entry_point": "read tcp_output.c/tcp_timer.c: no cwnd, no ssthresh; compare with the same files at BSD-4_3_Tahoe",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "superseded",
+      "to": "bsd-tcp-4.3-tahoe-1988",
+      "note": "the redesign forced by the 1986 collapse"
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "linux-tcp-congestion",
+      "note": "the same lineage four decades later (CUBIC, BBR)"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityB",
+    "known_bad",
+    "failed_branch",
+    "depth:tcp",
+    "queue_named_family"
+  ],
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.2-1983 ; tracked techne/fossils/specimens/bsd-tcp-4.2-1983",
+    "where_it_came_from": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/sys/netinet/tcp.h ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "SOURCE_ONLY: 4.2BSD kernel netinet/tcp_* -- links against the 1983 BSD kernel; preserved + tree-hashed for the congestion-collapse lineage; no in-vault runner (a 4.2BSD VM under SIMH is the way to run it, queued).",
+    "how_we_know_it_runs": "not executed; body tree_sha256 24b875969234412b pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "deliver a reliable byte stream over an unreliable internet using windows and retransmission timers"
+  },
+  "seat": "Techne"
+}

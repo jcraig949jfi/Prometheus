@@ -1,0 +1,110 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "corewar-redcode",
+  "receipt_id": "run-corewar-redcode-20260912T202752Z",
+  "written_utc": "20260912T202752Z",
+  "runner": "docker",
+  "image": "python:2.7-slim",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "c1929dc0440cbac70a726aee6fd10811f9c80ebb7f347c1236f87e6b92d0a089",
+  "recipe_sha256": "a67b22a5622f3d7dd9267e89ad55ea234d60d438a3b8a97dd8461b24d46d20ad",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version 2>&1",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 2.7.18\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "run the MARS + Redcode-assembler unit tests",
+      "cmd": "python tests.py 2>&1 | tail -15",
+      "exit": 0,
+      "seconds": 1.92,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.862s\n\nOK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "assemble and run a warrior (imp) for a few cycles without error",
+      "cmd": "python -c \"import sys; sys.path.insert(0,'.'); from corewar import mars, redcode; w=redcode.parse(open([f for f in __import__('glob').glob('warriors/*.red')][0]).read().splitlines()); print('PARSED', getattr(w,'name','warrior'))\" 2>&1 | tail -4; echo WARRIORDONE",
+      "exit": 0,
+      "seconds": 0.94,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "('PARSED', 'Dwarf Avan\\xe7ado')\nWARRIORDONE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "corewar/__init__.pyc",
+      "sha256": "327087e0c12fb71ac16b0d93091beddcad6a1f5ab9373cd27d80b012585d4928",
+      "bytes": 123
+    },
+    {
+      "path": "corewar/core.pyc",
+      "sha256": "4f195124c1b5ce6f17e6d3f66ce5bb96f986e3675897cd09b82ee22f2df3e81a",
+      "bytes": 3527
+    },
+    {
+      "path": "corewar/mars.pyc",
+      "sha256": "2eb384de9c39e2ea471d3ebde5b129ad57ba393babb7b32c8d04e9d5a67052f5",
+      "bytes": 13570
+    },
+    {
+      "path": "corewar/redcode.pyc",
+      "sha256": "4f72942fd2937bb70baa70cfea37b2aebb96ff762c2f4e55fc3fcff3d1f9015b",
+      "bytes": 11405
+    },
+    {
+      "path": "tests/__init__.pyc",
+      "sha256": "a0099b2a292ea480d9b75a9490c6f4bba3a1c24f028c4a3daa429f6351b1b350",
+      "bytes": 121
+    },
+    {
+      "path": "tests/mars_test.pyc",
+      "sha256": "8287a62d16ca604890703aed4f812c668ada834320187e4b57cfc621c03dcaf8",
+      "bytes": 4138
+    },
+    {
+      "path": "tests/redcode_test.pyc",
+      "sha256": "353af62584278c444d60129355eceeac4d81f0edd2fb1708adbc754d53cae2ef",
+      "bytes": 1524
+    }
+  ],
+  "classification": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true,
+  "tree_sha256_after": "c1929dc0440cbac70a726aee6fd10811f9c80ebb7f347c1236f87e6b92d0a089",
+  "body_preserved": true
+}

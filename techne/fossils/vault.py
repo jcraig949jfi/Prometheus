@@ -100,8 +100,16 @@ def hash_tree(root: pathlib.Path, skip_dirs=(".git",)) -> list[tuple[str, str, i
     hashes to its working tree, which is what anyone re-fetching will compare."""
     rows = []
     for p in sorted(root.rglob("*")):
-        if p.is_file() and not any(part in skip_dirs for part in p.relative_to(root).parts):
+        if any(part in skip_dirs for part in p.relative_to(root).parts):
+            continue
+        try:
+            # a dangling or Linux-only symlink (autotools' build-aux/compile -> /usr/share/...) cannot
+            # be stat'ed from Windows (WinError 1920); symlinks are not file content and are skipped
+            if p.is_symlink() or not p.is_file():
+                continue
             rows.append((str(p.relative_to(root)).replace("\\", "/"), sha256_file(p), p.stat().st_size))
+        except OSError:
+            continue
     return rows
 
 

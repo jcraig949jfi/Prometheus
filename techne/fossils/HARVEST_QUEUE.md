@@ -111,3 +111,48 @@ pair: filterpy (noise generator <-> state estimator). Pressure series: linux-tcp
   The census BEFORE the fix found 23 of 57 bodies dirtied by in-place builds; all 23 restored
   (techne/fossils/VAULT_INTEGRITY_2026-09-12{,_after_restore}.json). Run `verify --all` at the
   start of every batch; a body that differs is repaired before anything new is acquired.
+
+## Batch 05 done (2026-09-12): 33 specimens (30 runnable, 3 SOURCE_ONLY) + do-mpc made runnable; vault now 90
+Opened with `verify --all` = 57/57, second-source checks on the two restored tarball bodies (MATCH),
+10 real recipes re-run under isolation (all preserved). Charter roles/Techne/prompts/2026-09-12_batch05/.
+contention/recovery: lmdb, leveldb, concurrencykit (+backoff), pybreaker, backoff | pathologies: bsd-tcp
+4.2 (known-bad, SRC) -> 4.3-tahoe (redesign, SRC) -> 4.3-reno (successor, SRC), odepack Adams-on-stiff,
+spin pathfinder priority inversion (real 1997 failure), cobol S0C7 | estimation: particles (PF), emcee
+(MCMC), tinyekf (EKF), umdhmm (Baum-Welch) | adaptive/MPC: padasip, do-mpc RUNNABLE | concurrency:
+tinystm (STM, superseded design), ck | adversarial pairs: radamsa<->cjson, libcorrect (noise<->decoder)
+| legacy cultures: paip-lisp (CL), whitakers-words (Ada), basic-computer-games (BASIC under Bas 2.5 +
+bwBASIC), cobol-programming-course (COBOL) -- new world prometheus-fossil-legacy | hardware:
+forencich arbiter (RR vs priority), biriscv branch predictor (bimodal vs gshare) | scientific: erfa,
+python-sgp4 | finance: py_vollib, pyportfolioopt | depth: compact (Huffman LOSER, -m32 -Dvax), gzip 1.2.4
+(patent redesign), zchaff (SAT LOSER), minisat 1.14 (predecessor).
+Discovery outside this queue: 16 of 33 (48%; first written as 25/76% and corrected -- the queue had named the mechanism family for 17 of them). Failed acquisitions: NIST COBOL-85 suite (origin gone),
+C-Prolog (no provenance), Tierra (no source located).
+
+## Thin axes AFTER batch 05 (target these next; do not hide)
+- CONTENTION/RETRY still has NO runnable Ethernet/CSMA backoff, no distributed mutex/lease, no failure
+  detector (phi-accrual), no leader election other than raft, no checkpoint/restart. Needed: a
+  simulator that actually contends (ns-3 CSMA is heavy; a Contiki CSMA MAC in Cooja; a Chandra-Toueg
+  or phi-accrual implementation with provenance).
+- FAILURE PATHOLOGIES: still no RUNNABLE race/deadlock from a real historical codebase (pathfinder is a
+  model; the S0C7 is silently computed by GnuCOBOL). Need: a real before/after regression fixture
+  (a CVE pair, a kernel lockdep selftest run in a VM), a retry storm, a livelock.
+- TCP series is SOURCE_ONLY: a 4.2BSD / 4.3BSD-Tahoe VM under SIMH (VAX 11/780) would make the
+  collapse and the fix RUNNABLE -- a whole preserved world, the biggest single depth win available.
+- ADAPTIVE CONTROL: still no genuinely adaptive CONTROLLER (MRAC / self-tuning regulator) with pinned
+  provenance; padasip is an adaptive identifier. Astrom & Wittenmark-lineage code, or an autopilot's
+  adaptive loop, is the target.
+- BELIEF PROPAGATION as its own specimen (libDAI is heavy; ldpc-codes already does BP decoding).
+- HARDWARE: cache controller, NoC router, sorting network, CORDIC, clock-domain-crossing failure still
+  absent; hardware remains arbiter/FIFO/UART/branch-predictor/CPU.
+- LEGACY CULTURES: APL, Smalltalk (not packaged in bookworm), Forth beyond pforth, older FORTRAN
+  applications (not libraries), Prolog predecessors (C-Prolog needs a provenanced source).
+- SCIENTIFIC EXTREMES: accelerator/beam optics, fusion/plasma, interferometry, numerical relativity
+  all still absent; only astrometry and orbital mechanics are held.
+- FINANCE: order-book / execution simulation, risk, fraud detection absent.
+- BINARY-ONLY lawful recovery: STILL not exercised (open since batch 03; no worthy specimen appeared).
+- Versions: minisat 1.14 -> 2.2.0 and compact -> compress -> gzip now form series; extend to
+  gzip 1.2.4 -> 1.13, zlib 1.0 -> 1.3.1, leveldb -> rocksdb, tinystm -> a TSX-era design.
+- i386 / VAX worlds: compact needed -m32 -Dvax; libfec needs i386 asm; the BSD TCP needs a VAX.
+  A preserved 32-bit toolchain image and a SIMH world are now two concrete infrastructure rows.
+- Observed instrument flake: one cJSON ASan run spun 665 s before being killed; two identical runs
+  took <1 s. Not diagnosed (ASan under WSL2 docker suspected). Per-command timeouts now 120/300 s.

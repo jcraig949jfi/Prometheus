@@ -1,0 +1,78 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "py-vollib-lets-be-rational",
+  "receipt_id": "run-py-vollib-lets-be-rational-20260912T214612Z",
+  "written_utc": "20260912T214612Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "roundtrip.py": "fe6d4721499f970f78cc38e7fca63a00b8ba58c5f50575f34f56ab02d4eebfa4"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "b0220057275c417bd1ac94a20829fe481c80bfb9beedb5cd50ef21810de2bb9e",
+  "recipe_sha256": "6f267d22112eda57fff879af7573a3c82c88e7d3ff8def0d0d82c56475a88e4e",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.91,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q py_lets_be_rational . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 15.93,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "roundtrip (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q py_lets_be_rational . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/roundtrip.py",
+      "exit": 0,
+      "seconds": 16.39,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'RESULT OK'"
+      ],
+      "stdout": {
+        "text": "grid points inverted: 256  worst |sigma_iv - sigma| = 6.000e-01\nRESULT FAIL\n"
+      },
+      "stderr": {
+        "text": "/w/harness/roundtrip.py:2: DeprecationWarning: py_vollib is deprecated and will be removed in a future release; please import from vollib instead.\n  from py_vollib.black_scholes import black_scholes as bs\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "b0220057275c417bd1ac94a20829fe481c80bfb9beedb5cd50ef21810de2bb9e",
+  "body_preserved": true
+}

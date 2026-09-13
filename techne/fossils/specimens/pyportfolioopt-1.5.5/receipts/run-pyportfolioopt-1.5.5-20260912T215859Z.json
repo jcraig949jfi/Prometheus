@@ -1,0 +1,76 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "pyportfolioopt-1.5.5",
+  "receipt_id": "run-pyportfolioopt-1.5.5-20260912T215859Z",
+  "written_utc": "20260912T215859Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/pyportfolioopt-1.5.5",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "minvol.py": "7281b7bba03f76ad73eb313aa9e9ac37c330e5cb2aa81c04b7f001dcb4c78d52"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "cca30e0a1098599fff465b3e1095135aebf17b69541a9d2237ef52013c23a726",
+  "recipe_sha256": "debdf80c50d8003c81cf369d708d0ac8f62d8252bd5ff118f04927a1b3e7b076",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 1.16,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q pandas . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 18.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "minvol (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q pandas . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/minvol.py",
+      "exit": 0,
+      "seconds": 19.35,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "data: SYNTHETIC seeded factor market (sdist has no tests/resources)\nassets=20 sum(w)=1.000000 min(w)=0.000000 nonzero=15\nannual variance: min-vol=0.001350 equal-weight=0.004527\nRESULT OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "cca30e0a1098599fff465b3e1095135aebf17b69541a9d2237ef52013c23a726",
+  "body_preserved": true
+}

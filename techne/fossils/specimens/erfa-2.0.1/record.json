@@ -1,0 +1,150 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "erfa-2.0.1",
+  "canonical_name": "ERFA 2.0.1 -- Essential Routines for Fundamental Astronomy (the liberally-licensed derivative of IAU SOFA)",
+  "aliases": [
+    "erfa",
+    "liberfa",
+    "SOFA"
+  ],
+  "lineage": "The IAU Standards Of Fundamental Astronomy library (Wallace et al., 2000-): precession-nutation (IAU 2006/2000A), Earth rotation, time scales (TAI/TT/UT1/TDB), star-independent astrometry, ephemerides -- relicensed as ERFA (2013) so astropy could ship it. Precision-heavy by construction: the test program t_erfa_c checks every routine against reference values to ~1e-12.",
+  "domain": [
+    "astronomy",
+    "astrometry",
+    "precision",
+    "time-scales",
+    "reference-frames",
+    "scientific-extreme"
+  ],
+  "era": "2000- (SOFA); 2013- (ERFA)",
+  "version": "v2.0.1 (2024), from the GitHub release tarball (autotools-generated)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/liberfa/erfa/releases/download/v2.0.1/erfa-2.0.1.tar.xz",
+        "filename": "erfa-2.0.1.tar.xz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/liberfa/erfa",
+    "tag": "v2.0.1"
+  },
+  "hashes": {
+    "tree_sha256": "18f011416105d6315dd709d19a22e46265109fc93bedcdfe7756280c2b8334e7",
+    "n_files": 270,
+    "bytes": 2496973,
+    "artifacts": [
+      {
+        "filename": "erfa-2.0.1.tar.xz",
+        "sha256": "45111f0addf6ef69345aaf093bd054705b41ac2db7541dd3f0e105362c8e20e4",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\erfa-2.0.1",
+    "hash_list": "techne/fossils/specimens/erfa-2.0.1/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive (SOFA-derived, relicensed with IAU permission)",
+    "evidence": "LICENSE.rst"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "autotools (./configure && make && make check)",
+  "compiler_or_interpreter": "gcc 12 (docker prometheus-fossil-lang:bookworm)",
+  "dependencies": [
+    "libm"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "eraPnm06a, eraApci13 (astrometry), eraDtf2d/eraTaitt (time scales), eraEpv00 (Earth ephemeris); src/t_erfa_c.c (the validation program)"
+  ],
+  "example": {
+    "command": "./configure && make && make check",
+    "input": "the reference values compiled into t_erfa_c",
+    "output": "'t_erfa_c validation successful' -- every routine within its tolerance (ORACLE-backed)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "IAU SOFA Board, SOFA Astrometry Tools / Time Scale and Calendar Tools",
+    "Wallace & Capitaine, Precession-nutation procedures consistent with IAU 2006 resolutions, A&A 2006"
+  ],
+  "human_capability_summary": {
+    "built_to": "transform positions and times between celestial reference frames to microarcsecond and nanosecond consistency",
+    "pressure": "telescope pointing and ephemeris demands where 1e-9 relative error is visible; standards that change (IAU 2000/2006) and must remain reproducible",
+    "success_means": "every routine reproduces the IAU reference values to its stated tolerance"
+  },
+  "known_human_problem_solved": "fundamental astronomy computations to standards precision",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "extreme precision requirements, evolving standards, long time baselines",
+  "human_failure_condition": "a nutation or time-scale term off by 1e-9 misplaces a star by milliarcseconds in a survey catalogue",
+  "behavioral_entry_point": "perturb a constant in a copy of one routine and re-run make check: the validation names the routine that drifted",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "derived_from",
+      "to": "IAU SOFA (Wallace et al.)",
+      "note": "relicensed derivative"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityI",
+    "precision",
+    "scientific_extreme",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T211736Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T211855Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T212324Z.json",
+      "ok": false,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T212500Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\erfa-2.0.1 ; tracked techne/fossils/specimens/erfa-2.0.1",
+    "where_it_came_from": "https://github.com/liberfa/erfa/releases/download/v2.0.1/erfa-2.0.1.tar.xz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run erfa-2.0.1",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T212500Z.json",
+    "what_humans_used_it_for": "transform positions and times between celestial reference frames to microarcsecond and nanosecond consistency"
+  },
+  "seat": "Techne"
+}

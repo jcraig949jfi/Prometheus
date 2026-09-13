@@ -1,0 +1,35 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile arbiter + priority_encoder with Techne's testbench (two instances: round-robin and fixed-priority)",
+      "cmd": "iverilog -g2012 -o $BODY/build/sim $HARNESS/tb_arbiter.v arbiter.v priority_encoder.v 2>&1 | head -5; test -f $BODY/build/sim && echo built"
+    }
+  ],
+  "runs": [
+    {
+      "name": "16 cycles of all-four-requesting: grant trace and per-port counts",
+      "cmd": "vvp -n $BODY/build/sim | tail -24",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RR grants per port: 4 4 4 4"
+        ],
+        "stdout_regex": "RESULT\\s+OK"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_EMULATED",
+  "notes": "Oracle: with four persistent requesters, round-robin (ARB_BLOCK=0) grants each port exactly 4 of 16 cycles; fixed priority grants the same port every cycle (starvation of the others, shown)."
+}

@@ -1,0 +1,142 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "radamsa-0.6",
+  "canonical_name": "Radamsa 0.6 -- a general-purpose mutational fuzzer (Aki Helin, OUSPG), written in Owl Lisp",
+  "aliases": [
+    "radamsa"
+  ],
+  "lineage": "Black-box mutation fuzzing (Miller 1990 'fuzz'; Helin's Radamsa 2010-): take valid samples, apply a menu of structural mutations (byte flips, repeats, list/tree edits, number nudges) and emit adversarial inputs. Written in Owl Lisp (Helin's own purely functional Scheme dialect) and compiled to C -- a legacy-culture artifact as well as a pressure generator. PAIR: radamsa (pressure) <-> cJSON (the parser under attack).",
+  "domain": [
+    "adversarial",
+    "fuzzing",
+    "robustness",
+    "input-generation",
+    "lisp"
+  ],
+  "era": "2010-",
+  "version": "v0.6 (2018)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://gitlab.com/akihe/radamsa/-/archive/v0.6/radamsa-v0.6.tar.gz",
+        "filename": "radamsa-v0.6.tar.gz"
+      },
+      {
+        "kind": "url",
+        "url": "https://gitlab.com/owl-lisp/owl/uploads/0d0730b500976348d1e66b4a1756cdc3/ol-0.1.19.c.gz",
+        "filename": "ol-0.1.19.c.gz",
+        "extract": false
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "gitlab.com/akihe/radamsa",
+    "tag": "v0.6"
+  },
+  "hashes": {
+    "tree_sha256": "d324e3686c126799cfe20a9fb29bdcc7ce806d7268700d7b8c4b9e61122c77fc",
+    "n_files": 56,
+    "bytes": 563803,
+    "artifacts": [
+      {
+        "filename": "radamsa-v0.6.tar.gz",
+        "sha256": "a68f11da7a559fceb695a7af7035384ecd2982d666c7c95ce74c849405450b5e",
+        "commit": null
+      },
+      {
+        "filename": "ol-0.1.19.c.gz",
+        "sha256": "86917b9145cf3745ee8294c81fb822d17106698aa1d021916dfb2e0b8cfbb54d",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\radamsa-0.6",
+    "hash_list": "techne/fossils/specimens/radamsa-0.6/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENCE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Owl Lisp (Scheme dialect)",
+    "C (generated)"
+  ],
+  "build_system": "make (fetches the Owl Lisp compiler ol at build time; recorded)",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm); ol (Owl Lisp) to regenerate radamsa.c",
+  "dependencies": [
+    "Owl Lisp compiler ol 0.1.19 (companion artifact ol-0.1.19.c.gz, pinned; the Makefile would otherwise wget it)",
+    "a C compiler"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "bin/radamsa -n N -s SEED sample.json"
+  ],
+  "example": {
+    "command": "make; ./bin/radamsa -n 200 -s 1 $HARNESS/seed.json > cases",
+    "input": "a valid JSON seed",
+    "output": "200 mutated inputs (deterministic under -s)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Helin, Radamsa README (in the tree)",
+    "Miller, Fredriksen, So, An Empirical Study of the Reliability of UNIX Utilities, CACM 1990"
+  ],
+  "human_capability_summary": {
+    "built_to": "manufacture inputs that are almost valid, in volume, to find where a parser breaks",
+    "pressure": "the parser's assumptions; the human need to find crashes before attackers do",
+    "success_means": "the emitted cases are diverse, reproducible under a seed, and reach deep parser states"
+  },
+  "known_human_problem_solved": "robustness testing by mutation",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "adversarial input, the asymmetry between one parser and unbounded malformed input",
+  "human_failure_condition": "mutations too shallow (all rejected at the first byte) or non-reproducible",
+  "behavioral_entry_point": "change the seed and mutation menu (-m); pipe the cases into cjson-1.7.18's parser under ASan",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Miller et al. 1990 (fuzz)",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityF",
+    "adversarial_pair:pressure",
+    "legacy_culture:lisp",
+    "queue_named_family"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/radamsa-0.6/receipts/run-radamsa-0.6-20260912T211504Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\radamsa-0.6 ; tracked techne/fossils/specimens/radamsa-0.6",
+    "where_it_came_from": "https://gitlab.com/akihe/radamsa/-/archive/v0.6/radamsa-v0.6.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run radamsa-0.6",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/radamsa-0.6/receipts/run-radamsa-0.6-20260912T211504Z.json",
+    "what_humans_used_it_for": "manufacture inputs that are almost valid, in volume, to find where a parser breaks"
+  },
+  "seat": "Techne"
+}

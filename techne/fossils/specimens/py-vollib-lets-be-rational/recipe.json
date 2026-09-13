@@ -1,0 +1,36 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q py_lets_be_rational . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "timeout": 900
+    }
+  ],
+  "runs": [
+    {
+      "name": "roundtrip (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q py_lets_be_rational . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/roundtrip.py",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESULT OK"
+        ]
+      },
+      "timeout": 1800
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: price -> implied vol -> price round trip over a grid including deep OTM strikes closes to 1e-10 in sigma. py_lets_be_rational (Jaeckel's algorithm) is installed from PyPI at run time (recorded)."
+}

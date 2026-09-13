@@ -1,0 +1,80 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "basic-computer-games-1978",
+  "receipt_id": "run-basic-computer-games-1978-20260912T213705Z",
+  "written_utc": "20260912T213705Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-legacy:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "hamurabi_policy.txt": "dbc55137d9f6da966e822e40e3a2bad4ff9e724580f05bcbdcede05ede587475",
+    "startrek_moves.txt": "120a9e97475ec03e4b98d37232a962d0e61df76ddecb58ca8b5bb9b4bf88363a"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "3ada27a07e30b17b0e767d0d4ec1d7f5de9f8b2e67794b0fe9e9793b46239c75",
+  "recipe_sha256": "cdd8b1411de677f011f0642c9036b8d099823162919ed852b7e7d3eebd3c2a46",
+  "patches": [],
+  "probe": [
+    {
+      "name": "bwbasic",
+      "cmd": "bwbasic --version 2>&1 | head -1",
+      "exit": 0,
+      "seconds": 1.1,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\nBywater BASIC Interpreter/Shell, version 2.20 patch level 2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "HAMURABI: ten years of a fixed rationing policy, scripted",
+      "cmd": "bwbasic hammurabi.bas < $HARNESS/hamurabi_policy.txt 2>&1 | tr -d '\\r' | grep -v '^$' | tail -25",
+      "exit": 0,
+      "seconds": 1.0,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(HAMURABI|STARV|ACRES|BUSHELS)/"
+      ],
+      "stdout": {
+        "text": "bwBASIC: \nERROR: Line number 0 not found\nbwBASIC: \nERROR: Line number 0 not found\nbwBASIC: \nERROR: Line number 2000 not found\nbwBASIC: \nERROR: Line number 200 not found\nbwBASIC: \nERROR: Line number 0 not found\nbwBASIC: \nERROR: Line number 0 not found\nbwBASIC: \nERROR: Line number 2000 not found\nbwBASIC: \nERROR: Line number 200 not found\nbwBASIC: \nERROR: Line number 0 not found\nbwBASIC: \nERROR: Line number 0 not found\nbwBASIC: \nERROR: Line number 2000 not found\nbwBASIC: \nERROR: Line number 200 not found\nbwBASIC: \n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "SUPER STAR TREK: start a game and issue a short-range scan then quit (dialect check)",
+      "cmd": "bwbasic superstartrek.bas < $HARNESS/startrek_moves.txt 2>&1 | tr -d '\\r' | grep -v '^$' | tail -25",
+      "exit": 0,
+      "seconds": 1.03,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(ENTERPRISE|KLINGON|STARDATE|COMMAND)/"
+      ],
+      "stdout": {
+        "text": "sh: 1: PRINT: not found\nsh: 1: PRINT: not found\nsh: 1: PRINT: not found\nsh: 1: PRINT:PRINT:PRINT:PRINT:PRINT: not found\nsh: 1: REM: not found\nsh: 1: N: not found\nsh: 1: XXX: not found\nBywater BASIC Interpreter/Shell, version 2.20 patch level 2\nCopyright (c) 1993, Ted A. Campbell\nCopyright (c) 1995-1997, Jon B. Volkoff\n \nERROR in line 270: Incomplete string constant\nbwBASIC: bwBASIC: \nERROR: Line number 2 not found\nbwBASIC: \nERROR: Line number 2 not found\nbwBASIC: \nERROR: Line number 6 not found\nbwBASIC: \nERROR: Line number 3 not found\nbwBASIC: \nERROR: Line number 1 not found\nbwBASIC: \nERROR: Line number 3 not found\nbwBASIC: bwBASIC: \n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "3ada27a07e30b17b0e767d0d4ec1d7f5de9f8b2e67794b0fe9e9793b46239c75",
+  "body_preserved": true
+}

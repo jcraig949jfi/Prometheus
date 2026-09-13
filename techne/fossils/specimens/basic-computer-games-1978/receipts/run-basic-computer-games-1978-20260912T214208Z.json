@@ -1,0 +1,92 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "basic-computer-games-1978",
+  "receipt_id": "run-basic-computer-games-1978-20260912T214208Z",
+  "written_utc": "20260912T214208Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-legacy:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "hamurabi_policy.txt": "df978f7d649f4f6dd11e7c34d02b693823b1b687613b1808d4d7dffc0206e32e",
+    "startrek_moves.txt": "6a4858f4116215b3dcb4ba7c9916354a6d805ba54f6e00f895f7cbc112c68b4a"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "3ada27a07e30b17b0e767d0d4ec1d7f5de9f8b2e67794b0fe9e9793b46239c75",
+  "recipe_sha256": "45684614815822b41d9a451245f43a782a5b6d201f9a6b6310f4283ea4f34c75",
+  "patches": [],
+  "probe": [
+    {
+      "name": "bas (Haardt 2.5) and bwbasic",
+      "cmd": "which bas; bwbasic --version 2>&1 | head -1",
+      "exit": 0,
+      "seconds": 7.93,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "/usr/bin/bas\n\nBywater BASIC Interpreter/Shell, version 2.20 patch level 2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "HAMURABI under Bas 2.5: a scripted starvation policy (feed 500 of the 2000 bushels 100 people need) -> the program's own impeachment end state",
+      "cmd": "bas hammurabi.bas < $HARNESS/hamurabi_policy.txt 2>&1 | tr -d '\\r' | grep -v '^\\s*$' | tail -22",
+      "exit": 0,
+      "seconds": 0.84,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "                               HAMURABI\n              CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY\nTRY YOUR HAND AT GOVERNING ANCIENT SUMERIA\nFOR A TEN-YEAR TERM OF OFFICE.\nHAMURABI:  I BEG TO REPORT TO YOU,\nIN YEAR 1 , 0 PEOPLE STARVED, 5 CAME TO THE CITY,\nPOPULATION IS NOW 100 \nTHE CITY NOW OWNS  1000 ACRES.\nYOU HARVESTED 3 BUSHELS PER ACRE.\nTHE RATS ATE 200 BUSHELS.\nYOU NOW HAVE  2800 BUSHELS IN STORE.\nLAND IS TRADING AT 25 BUSHELS PER ACRE.\nHOW MANY ACRES DO YOU WISH TO BUY? HOW MANY ACRES DO YOU WISH TO SELL? \nHOW MANY BUSHELS DO YOU WISH TO FEED YOUR PEOPLE? \nHOW MANY ACRES DO YOU WISH TO PLANT WITH SEED? \nYOU STARVED 75 PEOPLE IN ONE YEAR!!!\nDUE TO THIS EXTREME MISMANAGEMENT YOU HAVE NOT ONLY\nBEEN IMPEACHED AND THROWN OUT OF OFFICE BUT YOU HAVE\nALSO BEEN DECLARED NATIONAL FINK!!!!\n\u0007\u0007\u0007\u0007\u0007\u0007\u0007\u0007\u0007\u0007SO LONG FOR NOW.\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "HAMURABI under bwBASIC 2.20: the same program, a later interpreter -- runs, but passes PRINT:PRINT lines to the shell and mis-evaluates line 990 (dialect gap recorded)",
+      "cmd": "bwbasic hammurabi.bas < $HARNESS/hamurabi_policy.txt 2>&1 | tr -d '\\r' | grep -v '^\\s*$' | grep -v 'Line number' | tail -8",
+      "exit": 0,
+      "seconds": 0.87,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(HAMURABI|FINK|IMPEACHED)/"
+      ],
+      "stdout": {
+        "text": "bwBASIC: \nbwBASIC: \nbwBASIC: \nbwBASIC: \nbwBASIC: \nbwBASIC: \nbwBASIC: \nbwBASIC: \n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "SUPER STAR TREK under Bas 2.5: DIALECT REFUSAL at line 4060 (the 1978 listing's crunched keyword 'TOQ1+1'); recorded, not patched",
+      "cmd": "bas superstartrek.bas < $HARNESS/startrek_moves.txt 2>&1 | tr -d '\\r' | grep -v '^\\s*$' | tail -4",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Error: Missing `to' in line 4060 at:\n4060 for I=Q1-1 TOQ1+1 : N(1)=-1 : N(2)=-2 : N(3)=-3 : for J=Q2-1 TOQ2+1\n                ^\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "3ada27a07e30b17b0e767d0d4ec1d7f5de9f8b2e67794b0fe9e9793b46239c75",
+  "body_preserved": true
+}

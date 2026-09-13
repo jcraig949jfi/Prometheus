@@ -1,0 +1,157 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "verilog-arbiter-forencich",
+  "canonical_name": "Parametrizable priority / round-robin arbiter with priority encoder (Verilog, Alex Forencich, verilog-axi)",
+  "aliases": [
+    "arbiter.v",
+    "priority_encoder.v"
+  ],
+  "lineage": "The two-module arbiter used across Forencich's open FPGA IP (AXI, Ethernet, PCIe): a priority encoder plus an arbiter that can be fixed-priority or round-robin, with block-on-acknowledge or block-on-grant policies -- a SMALL DECISION MECHANISM (who gets the bus this cycle) with exposed state (mask, grant, grant_encoded). Rival to the freecores rr-arbiter already in the vault.",
+  "domain": [
+    "hardware",
+    "arbitration",
+    "contention",
+    "small-mechanism",
+    "verilog"
+  ],
+  "era": "2014-",
+  "version": "alexforencich/verilog-axi master rtl/arbiter.v + rtl/priority_encoder.v as fetched 2026-09-12",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/alexforencich/verilog-axi/master/rtl/arbiter.v",
+        "filename": "arbiter.v",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/alexforencich/verilog-axi/master/rtl/priority_encoder.v",
+        "filename": "priority_encoder.v",
+        "extract": false
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/alexforencich/verilog-axi",
+    "files": [
+      "rtl/arbiter.v",
+      "rtl/priority_encoder.v"
+    ]
+  },
+  "hashes": {
+    "tree_sha256": "d4a077c09b5d6bfa8705d70a5d10e329725b33e849b67a5ce5d31652399a54ad",
+    "n_files": 2,
+    "bytes": 8280,
+    "artifacts": [
+      {
+        "filename": "arbiter.v",
+        "sha256": "a001507c82843e36e133dea75491fc044f56660fac0aff0127cf3afec7f927e0",
+        "commit": null
+      },
+      {
+        "filename": "priority_encoder.v",
+        "sha256": "df28220d95b47df349a72803a9751aad331eb8e1435416e8686d00572a974dd5",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\verilog-arbiter-forencich",
+    "hash_list": "techne/fossils/specimens/verilog-arbiter-forencich/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "file headers"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Verilog"
+  ],
+  "build_system": "iverilog",
+  "compiler_or_interpreter": "Icarus Verilog 11 (docker prometheus-fossil-hw:bookworm)",
+  "dependencies": [
+    "iverilog"
+  ],
+  "run_classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "module arbiter #(PORTS, ARB_TYPE_ROUND_ROBIN, ARB_BLOCK, ARB_BLOCK_ACK, ARB_LSB_HIGH_PRIORITY) (request, acknowledge, grant, grant_valid, grant_encoded)"
+  ],
+  "example": {
+    "command": "iverilog -o sim $HARNESS/tb_arbiter.v arbiter.v priority_encoder.v && vvp sim",
+    "input": "all four requesters asserting continuously; then a single requester",
+    "output": "the grant trace per cycle: round-robin rotates 0,1,2,3,...; fixed priority repeats the highest; fairness counts"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-hw:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "verilog-axi README (github.com/alexforencich/verilog-axi)"
+  ],
+  "human_capability_summary": {
+    "built_to": "decide each cycle which of several requesters owns a shared resource, either by fixed priority or in rotation",
+    "pressure": "simultaneous requests for one bus; the fairness/latency trade-off between priority and rotation",
+    "success_means": "exactly one grant per cycle when any request is present; round-robin serves every persistent requester within PORTS cycles"
+  },
+  "known_human_problem_solved": "bus arbitration",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "resource contention, fairness versus priority",
+  "human_failure_condition": "starvation of a low-priority requester (fixed mode) or two simultaneous grants",
+  "behavioral_entry_point": "flip ARB_TYPE_ROUND_ROBIN and ARB_BLOCK parameters in the testbench and compare grant traces under the same request pattern",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "verilog-rr-arbiter",
+      "note": "two arbiter designs for the same decision"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityH",
+    "hardware",
+    "small_mechanism",
+    "contention",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/verilog-arbiter-forencich/receipts/run-verilog-arbiter-forencich-20260912T211739Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/verilog-arbiter-forencich/receipts/run-verilog-arbiter-forencich-20260912T211903Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/verilog-arbiter-forencich/receipts/run-verilog-arbiter-forencich-20260912T212120Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_EMULATED",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\verilog-arbiter-forencich ; tracked techne/fossils/specimens/verilog-arbiter-forencich",
+    "where_it_came_from": "https://raw.githubusercontent.com/alexforencich/verilog-axi/master/rtl/arbiter.v ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run verilog-arbiter-forencich",
+    "how_we_know_it_runs": "RUNNABLE_EMULATED / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/verilog-arbiter-forencich/receipts/run-verilog-arbiter-forencich-20260912T212120Z.json",
+    "what_humans_used_it_for": "decide each cycle which of several requesters owns a shared resource, either by fixed priority or in rotation"
+  },
+  "seat": "Techne"
+}

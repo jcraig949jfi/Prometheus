@@ -1,0 +1,163 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "odepack-netlib",
+  "canonical_name": "ODEPACK -- LSODE and family, Hindmarsh (LLNL, 1983-2001)",
+  "aliases": [
+    "LSODE",
+    "odepack",
+    "DLSODE"
+  ],
+  "lineage": "Netlib Fortran ODE solvers descended from GEAR (1974): variable-step variable-order Adams (non-stiff) and BDF (stiff) methods with error control, a corrector iteration and a Jacobian strategy chosen by the method flag MF. Sibling of QUADPACK/EISPACK in the vault; ancestor of scipy.integrate.odeint (which wraps LSODA).",
+  "domain": [
+    "numerical",
+    "ODE",
+    "stiffness",
+    "adaptive-step-control",
+    "failure"
+  ],
+  "era": "1983-2001",
+  "version": "netlib odepack (double precision: opkdmain.f, opkda1.f, opkda2.f), as fetched 2026-09-12",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/odepack/opkdmain.f",
+        "filename": "opkdmain.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/odepack/opkda1.f",
+        "filename": "opkda1.f",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/odepack/opkda2.f",
+        "filename": "opkda2.f",
+        "extract": false
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "netlib.org/odepack"
+  },
+  "hashes": {
+    "tree_sha256": "a241fb44842769e5e21f24ab7b2d0731cf197f10959c1b910e0738df4b2008fc",
+    "n_files": 3,
+    "bytes": 1236638,
+    "artifacts": [
+      {
+        "filename": "opkdmain.f",
+        "sha256": "da31255ff43e3a13c2c0ccaed51c3cd260b8ac9d9082f34b8587c9007d9a2376",
+        "commit": null
+      },
+      {
+        "filename": "opkda1.f",
+        "sha256": "861c7bc2c74172b9e26127fd1100e5900e87f47f876d97cdef1b87e580510e6b",
+        "commit": null
+      },
+      {
+        "filename": "opkda2.f",
+        "sha256": "2dd229cb112b463d6c3151a259aae28bf480c75eda6861507ab678ea0d204046",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\odepack-netlib",
+    "hash_list": "techne/fossils/specimens/odepack-netlib/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Public-Domain",
+    "status": "public domain (US government work, LLNL); see opkdmain.f header",
+    "evidence": "opkdmain.f header"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Fortran 77"
+  ],
+  "build_system": "gfortran (three files + a driver)",
+  "compiler_or_interpreter": "gfortran 12 (docker bookworm)",
+  "dependencies": [
+    "none (opkda2.f bundles the LINPACK/BLAS routines it needs)"
+  ],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "DLSODE(F, NEQ, Y, T, TOUT, ITOL, RTOL, ATOL, ITASK, ISTATE, IOPT, RWORK, LRW, IWORK, LIW, JAC, MF)"
+  ],
+  "example": {
+    "command": "gfortran harness/robertson.f opkd*.f; ./a.out 10; ./a.out 21",
+    "input": "the Robertson stiff chemical kinetics problem",
+    "output": "MF=21 (BDF) integrates to t=4e10 in a few hundred steps; MF=10 (Adams, non-stiff) fails: ISTATE=-1 (too many steps) -- the PATHOLOGY, method vs problem"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Hindmarsh, ODEPACK, A Systematized Collection of ODE Solvers, 1983",
+    "Radhakrishnan & Hindmarsh, Description and Use of LSODE, LLNL UCRL-ID-113855, 1993"
+  ],
+  "human_capability_summary": {
+    "built_to": "integrate ODE systems with automatic step and order selection, including stiff systems whose fast modes would otherwise force absurdly small steps",
+    "pressure": "stiffness: time scales separated by 10^10 in Robertson's problem; error tolerances; work limits",
+    "success_means": "the requested tolerance is met in a bounded number of steps; a method mismatched to the problem is reported, not silently wrong"
+  },
+  "known_human_problem_solved": "stiff and non-stiff initial value problems",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "stiffness (widely separated time scales), accuracy tolerance, step budget",
+  "human_failure_condition": "the non-stiff method's stability region forces steps ~1/|lambda|: the integrator exhausts its step budget (ISTATE=-1) or diverges",
+  "behavioral_entry_point": "switch MF between 10 (Adams) and 21 (BDF + user Jacobian) on the same problem and tolerance; vary MXSTEP",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "derived_from",
+      "to": "GEAR (Hindmarsh 1974)",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "quadpack-netlib",
+      "note": "netlib numerical lineage"
+    },
+    {
+      "relation": "superseded",
+      "to": "scipy.integrate.odeint / LSODA",
+      "note": "LSODA (in this same package) auto-switches; wrapped by SciPy"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityB",
+    "pathology",
+    "depth:numerical",
+    "legacy_fortran"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/odepack-netlib/receipts/run-odepack-netlib-20260912T210100Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\odepack-netlib ; tracked techne/fossils/specimens/odepack-netlib",
+    "where_it_came_from": "https://www.netlib.org/odepack/opkdmain.f ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run odepack-netlib",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/odepack-netlib/receipts/run-odepack-netlib-20260912T210100Z.json",
+    "what_humans_used_it_for": "integrate ODE systems with automatic step and order selection, including stiff systems whose fast modes would otherwise force absurdly small steps"
+  },
+  "seat": "Techne"
+}

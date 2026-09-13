@@ -1,0 +1,139 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "cjson-1.7.18",
+  "canonical_name": "cJSON 1.7.18 -- an ultralightweight JSON parser in ANSI C (Dave Gamble et al.)",
+  "aliases": [
+    "cJSON"
+  ],
+  "lineage": "Single-file recursive-descent JSON parser (2009-) used in embedded and IoT code; the defensive half of the fuzzing PAIR with radamsa-0.6: fed mutated inputs under AddressSanitizer, it must reject or parse, never crash. cJSON's own history includes CVEs found by exactly this pressure (e.g. CVE-2019-11834), which is why the pair is instructive.",
+  "domain": [
+    "parsing",
+    "robustness",
+    "adversarial",
+    "embedded",
+    "C"
+  ],
+  "era": "2009-",
+  "version": "v1.7.18 (2024)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/DaveGamble/cJSON/archive/refs/tags/v1.7.18.tar.gz",
+        "filename": "cJSON-1.7.18.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/DaveGamble/cJSON",
+    "tag": "v1.7.18"
+  },
+  "hashes": {
+    "tree_sha256": "04d713005ebce02fb84b14a70240fdb46171128c372baaf39f349031bc3c1ffe",
+    "n_files": 217,
+    "bytes": 1621489,
+    "artifacts": [
+      {
+        "filename": "cJSON-1.7.18.tar.gz",
+        "sha256": "3aa806844a03442c00769b83e99970be70fbef03735ff898f4811dd03b9f5ee5",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\cjson-1.7.18",
+    "hash_list": "techne/fossils/specimens/cjson-1.7.18/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "gcc cJSON.c + harness (or cmake)",
+  "compiler_or_interpreter": "gcc 12 with -fsanitize=address (docker bookworm)",
+  "dependencies": [
+    "libc; libasan for the adversarial run"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "cJSON_Parse(const char*) -> cJSON* or NULL; cJSON_Print; fuzzing/ (the project's own libFuzzer harness)"
+  ],
+  "example": {
+    "command": "gcc -fsanitize=address cJSON.c $HARNESS/parse_all.c; ./a.out cases",
+    "input": "the radamsa-mutated cases",
+    "output": "counts: parsed / rejected / CRASHED (ASan) -- the last must be 0"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "README.md, fuzzing/README.md (in the tree)"
+  ],
+  "human_capability_summary": {
+    "built_to": "turn untrusted text into a tree or refuse it, on small machines",
+    "pressure": "malformed, truncated, deeply nested and hostile input; tiny memory budgets",
+    "success_means": "every input either parses to a well-formed tree or returns NULL; no memory error"
+  },
+  "known_human_problem_solved": "safe parsing of untrusted JSON",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "adversarial input, bounded memory",
+  "human_failure_condition": "a crafted input reads or writes out of bounds (the CVE history)",
+  "behavioral_entry_point": "increase radamsa's case count or nesting depth (CJSON_NESTING_LIMIT); watch rejected vs parsed vs crashed",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "radamsa-0.6",
+      "note": "PAIR: pressure generator <-> defended parser (humans regarded fuzzing as the corrective for parser bugs)"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityF",
+    "adversarial_pair:response",
+    "queue_named_family"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/cjson-1.7.18/receipts/run-cjson-1.7.18-20260912T211207Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/cjson-1.7.18/receipts/run-cjson-1.7.18-20260912T212626Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/cjson-1.7.18/receipts/run-cjson-1.7.18-20260912T214353Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\cjson-1.7.18 ; tracked techne/fossils/specimens/cjson-1.7.18",
+    "where_it_came_from": "https://github.com/DaveGamble/cJSON/archive/refs/tags/v1.7.18.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run cjson-1.7.18",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/cjson-1.7.18/receipts/run-cjson-1.7.18-20260912T214353Z.json",
+    "what_humans_used_it_for": "turn untrusted text into a tree or refuse it, on small machines"
+  },
+  "seat": "Techne"
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "paip-lisp-norvig-1991",
+  "receipt_id": "run-paip-lisp-norvig-1991-20260912T213658Z",
+  "written_utc": "20260912T213658Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "run_gps.lisp": "19382bc05912bfeb7138833096e54423fcd39a0ec2506ef32c069683c14de8e1",
+    "run_patmatch.lisp": "c5b42f9aa824515824602e9253acc395309a5e309a5215638b348c4ec428c2ee"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "9ec5c1c33390c7524a51f8ffe1f1092cc6ac3d618089d896bafb867895688998",
+  "recipe_sha256": "efbd3a2bc0dabd4a28476b900550456f89449d1a24ac26685b551750e6eb292e",
+  "patches": [],
+  "probe": [
+    {
+      "name": "sbcl",
+      "cmd": "sbcl --version",
+      "exit": 0,
+      "seconds": 1.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "SBCL 2.2.9.debian\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "GPS (means-ends analysis) solves the book's 'drive son to school' problem",
+      "cmd": "sbcl --script $HARNESS/run_gps.lisp 2>&1 | tail -15",
+      "exit": 0,
+      "seconds": 1.26,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\nPLAN: ((START) (EXECUTING LOOK-UP-NUMBER) (EXECUTING TELEPHONE-SHOP)\n       (EXECUTING TELL-SHOP-PROBLEM) (EXECUTING GIVE-SHOP-MONEY)\n       (EXECUTING SHOP-INSTALLS-BATTERY) (EXECUTING DRIVE-SON-TO-SCHOOL))\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "pattern matcher + unifier (the substrate of ELIZA and the Prolog interpreter)",
+      "cmd": "sbcl --script $HARNESS/run_patmatch.lisp 2>&1 | tail -8",
+      "exit": 0,
+      "seconds": 1.17,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\nPATMATCH: ((?X . VACATION))\nPATMATCH-SEGMENT: ((?X A VACATION) (?P MR HULOT AND I))\nUNIFY: ((?Y . 1) (?X . 2))\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "9ec5c1c33390c7524a51f8ffe1f1092cc6ac3d618089d896bafb867895688998",
+  "body_preserved": true
+}

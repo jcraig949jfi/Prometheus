@@ -1,0 +1,3242 @@
+{
+ "schema": "techne.fossil.catalog/1",
+ "written_utc": "2026-09-13T00:06:25Z",
+ "records_root": "F:/Prometheus-worktrees/techne-pass-0912/techne/fossils/specimens",
+ "vault_root_on_this_host": "F:\\Prometheus\\vault\\fossils",
+ "fossils": 90,
+ "runnable": 81,
+ "bodies_present_on_this_host": 0,
+ "fields": [
+  "fossil_id",
+  "canonical_name",
+  "lineage",
+  "human_purpose",
+  "version",
+  "era",
+  "language",
+  "domain",
+  "run_status",
+  "test_status",
+  "source_type",
+  "license_spdx",
+  "acquisition_tags",
+  "tree_sha256",
+  "record_path",
+  "recipe_path",
+  "receipts",
+  "body_present_on_this_host",
+  "body_path"
+ ],
+ "rows": [
+  {
+   "fossil_id": "arduino-pid",
+   "canonical_name": "Arduino PID Library -- Brett Beauregard",
+   "lineage": "Beauregard PID (2011-): a widely-copied, carefully-engineered PID controller -- proportional/integral/derivative feedback with anti-windup, derivative-on-measurement, and bumpless mode switching; the reference small feedback controller of the maker world",
+   "human_purpose": "drive a measured process variable to a setpoint by feeding back the error through proportional, integral and derivative terms, robustly, on a tiny microcontroller",
+   "version": "github.com/br3ttb/Arduino-PID-Library master as of 2026-09-12 (commit in hashes)",
+   "era": "2011-",
+   "language": [
+    "C++"
+   ],
+   "domain": [
+    "control",
+    "feedback-control",
+    "pid",
+    "regulation"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [],
+   "tree_sha256": "f4b65bd9cdf08236942485491bb73de0c5e3e4d16a357450e4f21bc0932c902b",
+   "record_path": "techne/fossils/specimens/arduino-pid/record.json",
+   "recipe_path": "techne/fossils/specimens/arduino-pid/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163238Z.json",
+    "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163459Z.json",
+    "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163640Z.json",
+    "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163837Z.json",
+    "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163917Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\arduino-pid"
+  },
+  {
+   "fossil_id": "avida",
+   "canonical_name": "Avida -- a digital-evolution research platform (Devosoft / Ofria lab)",
+   "lineage": "Avida (1993-, Adami/Ofria/Brown, later Devosoft): a platform of self-replicating computer programs (digital organisms) that mutate, compete for CPU time, and evolve to perform logic tasks for rewards; the workhorse of experimental digital evolution",
+   "human_purpose": "let self-replicating programs (digital organisms) mutate and compete for CPU cycles and memory, rewarding those that evolve to compute logic functions -- an instrumented Petri dish for open-ended evolution",
+   "version": "github.com/devosoft/avida master as of 2026-09-12 (commit in hashes)",
+   "era": "1993-",
+   "language": [
+    "C++"
+   ],
+   "domain": [
+    "artificial-life",
+    "digital-evolution",
+    "self-replication",
+    "genetic-programming",
+    "unconventional-computation"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "GPL-3.0 / Apache-2.0 (mixed; see COPYING)",
+   "acquisition_tags": [],
+   "tree_sha256": "3be38122caaae61b73f75e3cd4f216bcf24ec7d95736e6485f61c8dfddb2719c",
+   "record_path": "techne/fossils/specimens/avida/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\avida"
+  },
+  {
+   "fossil_id": "backoff-2.2.1",
+   "canonical_name": "backoff 2.2.1 -- exponential backoff with jitter as Python decorators (litl)",
+   "lineage": "The retry rule of Ethernet (binary exponential backoff, 1973-76) and of TCP RTO, packaged for application code; jitter follows the 'full jitter' analysis (Brooker, AWS Architecture Blog 2015). A small mechanism: wait = min(cap, base * 2^n) * random.",
+   "human_purpose": "spread retries out in time, and de-synchronise many retriers so they do not collide again",
+   "version": "v2.2.1 (2022)",
+   "era": "2014-",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "retry",
+    "backoff",
+    "contention",
+    "small-mechanism"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityA",
+    "small_mechanism"
+   ],
+   "tree_sha256": "488002d80d9becf538ba6106282356e95020c502d22cec663b3d6830ed77b5cb",
+   "record_path": "techne/fossils/specimens/backoff-2.2.1/record.json",
+   "recipe_path": "techne/fossils/specimens/backoff-2.2.1/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/backoff-2.2.1/receipts/run-backoff-2.2.1-20260912T214437Z.json",
+    "techne/fossils/specimens/backoff-2.2.1/receipts/run-backoff-2.2.1-20260912T215611Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\backoff-2.2.1"
+  },
+  {
+   "fossil_id": "basic-computer-games-1978",
+   "canonical_name": "BASIC Computer Games (David Ahl, 1978): HAMURABI and SUPER STAR TREK -- original BASIC listings run under Bywater BASIC",
+   "lineage": "The hobbyist BASIC culture of the 1970s: HAMURABI (a resource-rationing simulation under scarcity and random plague/rat pressure, from DEC's 1968 'King'/'Sumer' via Ahl) and SUPER STAR TREK (Mayfield 1971; Leedom/Ahl 1974-78), the most-copied game program of its era. Preserved as the original line-numbered BASIC (from the coding-horror/basic-computer-games transcription of Ahl's book) and executed by Bywater BASIC 2.20, itself a 1990s interpreter of the classic dialect.",
+   "human_purpose": "let a player govern a city for ten years by rationing grain between food, seed and land purchases under random harvests, rats and plague (HAMURABI); command a starship against Klingons with finite energy and torpedoes (STAR TREK)",
+   "version": "coding-horror/basic-computer-games main: 43_Hammurabi/hammurabi.bas, 84_Super_Star_Trek/superstartrek.bas (as fetched 2026-09-12)",
+   "era": "1971-1978 (programs); 1993 (bwBASIC)",
+   "language": [
+    "BASIC (Microsoft/Altair dialect, 1978)"
+   ],
+   "domain": [
+    "games",
+    "simulation",
+    "resource-rationing",
+    "legacy-culture",
+    "basic"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "NOASSERTION",
+   "acquisition_tags": [
+    "batch05",
+    "priorityG",
+    "legacy_culture:basic",
+    "scarcity",
+    "outside_queue"
+   ],
+   "tree_sha256": "3ada27a07e30b17b0e767d0d4ec1d7f5de9f8b2e67794b0fe9e9793b46239c75",
+   "record_path": "techne/fossils/specimens/basic-computer-games-1978/record.json",
+   "recipe_path": "techne/fossils/specimens/basic-computer-games-1978/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T213705Z.json",
+    "techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T214208Z.json",
+    "techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T214242Z.json",
+    "techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T214327Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\basic-computer-games-1978"
+  },
+  {
+   "fossil_id": "bdwgc-8.2.6",
+   "canonical_name": "Boehm-Demers-Weiser conservative garbage collector 8.2.6",
+   "lineage": "BDWGC (1988-, Hans Boehm, Alan Demers, Mark Weiser): a conservative mark-sweep (optionally generational, incremental, parallel) garbage collector usable as a drop-in malloc replacement for C/C++; the GC behind many language runtimes",
+   "human_purpose": "reclaim unreachable heap memory automatically in a language (C/C++) that gives the collector no cooperation -- scanning the stack and heap conservatively for anything that looks like a pointer",
+   "version": "git tag v8.2.6, github.com/ivmai/bdwgc",
+   "era": "1988 (8.2.6 rel. 2024)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "operating-systems",
+    "garbage-collection",
+    "memory-management",
+    "mark-sweep"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT-style (Boehm GC license)",
+   "acquisition_tags": [],
+   "tree_sha256": "581c541df2d1bab80e8a0de5f1619b0d28fc9b0e752dfc4fa6f0b99fcb1f7b4f",
+   "record_path": "techne/fossils/specimens/bdwgc-8.2.6/record.json",
+   "recipe_path": "techne/fossils/specimens/bdwgc-8.2.6/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/bdwgc-8.2.6/receipts/run-bdwgc-8.2.6-20260912T153532Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\bdwgc-8.2.6"
+  },
+  {
+   "fossil_id": "biriscv-branch-predictor",
+   "canonical_name": "biRISC-V next-PC / branch prediction unit (biriscv_npc.v: BTB, bimodal or gshare, RAS; Ultra-Embedded)",
+   "lineage": "Dynamic branch prediction (Smith 1981 bimodal; McFarling 1993 gshare; Yeh & Patt two-level) as one Verilog module inside a small dual-issue RISC-V core: a branch target buffer, a bimodal/gshare pattern table, a return-address stack. The DECISION machinery is small and its state (counters, history) is exposed; the vault's picorv32 has no predictor at all -- this is the contrasting design point.",
+   "human_purpose": "guess the next instruction address before the branch resolves, so the pipeline never waits",
+   "version": "github.com/ultraembedded/biriscv master as of 2026-09-12 (commit in hashes); file src/core/biriscv_npc.v",
+   "era": "2019-",
+   "language": [
+    "Verilog"
+   ],
+   "domain": [
+    "hardware",
+    "branch-prediction",
+    "speculation",
+    "hidden-state",
+    "verilog"
+   ],
+   "run_status": "RUNNABLE_EMULATED",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "batch05",
+    "priorityH",
+    "hardware",
+    "hidden_state",
+    "queue_named_family"
+   ],
+   "tree_sha256": "7ba854a7912cd236c743bd857c47695486a65aa07dcb97480881c41aa85f0e8b",
+   "record_path": "techne/fossils/specimens/biriscv-branch-predictor/record.json",
+   "recipe_path": "techne/fossils/specimens/biriscv-branch-predictor/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/biriscv-branch-predictor/receipts/run-biriscv-branch-predictor-20260912T211742Z.json",
+    "techne/fossils/specimens/biriscv-branch-predictor/receipts/run-biriscv-branch-predictor-20260912T211906Z.json",
+    "techne/fossils/specimens/biriscv-branch-predictor/receipts/run-biriscv-branch-predictor-20260912T212123Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\biriscv-branch-predictor"
+  },
+  {
+   "fossil_id": "bsd-tcp-4.2-1983",
+   "canonical_name": "4.2BSD TCP (1983) -- the pre-congestion-control TCP that collapsed the Internet in 1986",
+   "lineage": "TCP congestion-control lineage, the KNOWN-BAD ancestor: 4.2BSD's TCP (Bill Joy, Sam Leffler) had retransmission timers and windows but NO congestion window, NO slow start and a crude RTT estimate. In October 1986 the LBL-to-Berkeley path fell from 32 kbit/s to 40 bit/s -- congestion collapse -- which is the pressure that produced 4.3BSD-Tahoe's algorithms (Jacobson 1988). Preserved from the unix-history-repo (Spinellis) at tag BSD-4_2.",
+   "human_purpose": "deliver a reliable byte stream over an unreliable internet using windows and retransmission timers",
+   "version": "4.2BSD (released Aug 1983), sys/netinet/tcp_*.{c,h}; unix-history-repo tag BSD-4_2",
+   "era": "1983",
+   "language": [
+    "C (BSD kernel)"
+   ],
+   "domain": [
+    "networks",
+    "congestion-control",
+    "retransmission",
+    "contention",
+    "failure"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "BSD-4-Clause",
+   "acquisition_tags": [
+    "batch05",
+    "priorityB",
+    "known_bad",
+    "failed_branch",
+    "depth:tcp",
+    "queue_named_family"
+   ],
+   "tree_sha256": "24b875969234412bc1f278b4617e072beb82324375188afa37eb28b06d372c68",
+   "record_path": "techne/fossils/specimens/bsd-tcp-4.2-1983/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.2-1983"
+  },
+  {
+   "fossil_id": "bsd-tcp-4.3-reno-1990",
+   "canonical_name": "4.3BSD-Reno TCP (1990) -- fast retransmit and fast recovery",
+   "lineage": "TCP congestion-control lineage, the SUCCESSOR: Reno keeps Tahoe's slow start/avoidance and adds fast retransmit on three duplicate ACKs and fast recovery (halve cwnd instead of collapsing to one segment). 'Reno' is the name later analyses (Fall & Floyd 1996) attach to this behaviour; NewReno, SACK, CUBIC descend from it. Preserved from unix-history-repo tag BSD-4_3_Reno.",
+   "human_purpose": "recover from a single lost segment without draining the pipe: retransmit on duplicate ACKs and keep sending at half rate",
+   "version": "4.3BSD-Reno (June 1990), sys/netinet/tcp_*.{c,h}; unix-history-repo tag BSD-4_3_Reno",
+   "era": "1990",
+   "language": [
+    "C (BSD kernel)"
+   ],
+   "domain": [
+    "networks",
+    "congestion-control",
+    "retransmission",
+    "contention",
+    "failure"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "BSD-4-Clause",
+   "acquisition_tags": [
+    "batch05",
+    "priorityB",
+    "successor",
+    "depth:tcp",
+    "queue_named_family"
+   ],
+   "tree_sha256": "0489c44ba9804179ca45d17805a3d710738bf91794b0dd3bf958a25b29b0912a",
+   "record_path": "techne/fossils/specimens/bsd-tcp-4.3-reno-1990/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.3-reno-1990"
+  },
+  {
+   "fossil_id": "bsd-tcp-4.3-tahoe-1988",
+   "canonical_name": "4.3BSD-Tahoe TCP (1988) -- slow start, congestion avoidance, Karn's algorithm, RTT variance (Jacobson/Karels)",
+   "lineage": "TCP congestion-control lineage, the HISTORICAL REDESIGN: Van Jacobson and Mike Karels added a congestion window (snd_cwnd), slow start, congestion avoidance (additive increase / multiplicative decrease), Karn's retransmission-timer rule and the mean+variance RTT estimator to 4.3BSD-Tahoe in response to the 1986 collapse. Preserved from unix-history-repo tag BSD-4_3_Tahoe.",
+   "human_purpose": "make every sender probe for its share of a shared link and back off multiplicatively when loss signals congestion",
+   "version": "4.3BSD-Tahoe (June 1988), sys/netinet/tcp_*.{c,h}; unix-history-repo tag BSD-4_3_Tahoe",
+   "era": "1988",
+   "language": [
+    "C (BSD kernel)"
+   ],
+   "domain": [
+    "networks",
+    "congestion-control",
+    "retransmission",
+    "contention",
+    "failure"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "BSD-4-Clause",
+   "acquisition_tags": [
+    "batch05",
+    "priorityB",
+    "historical_redesign",
+    "depth:tcp",
+    "queue_named_family"
+   ],
+   "tree_sha256": "fd02c4ae618544b857d1dc8a12bac1409b8af4f8618d6a439807bbed38d52ffe",
+   "record_path": "techne/fossils/specimens/bsd-tcp-4.3-tahoe-1988/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.3-tahoe-1988"
+  },
+  {
+   "fossil_id": "buddy-alloc-spaskalev",
+   "canonical_name": "buddy_alloc -- a header-only buddy memory allocator (Stanislav Paskalev)",
+   "lineage": "Buddy allocation (Knowlton 1965, Knuth): split memory into power-of-two blocks, merge free 'buddies' on release; the allocator behind many kernels' page allocators, trading internal fragmentation for O(log n) alloc/free and fast coalescing",
+   "human_purpose": "allocate and free memory from a FIXED arena in power-of-two blocks, merging freed buddies so large blocks become available again -- fast coalescing under a hard capacity bound",
+   "version": "github.com/spaskalev/buddy_alloc master as of 2026-09-12 (commit in hashes)",
+   "era": "1965 (this impl modern)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "memory-allocation",
+    "operating-systems",
+    "buddy-system",
+    "resource-management",
+    "scarcity"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+   "license_spdx": "0BSD",
+   "acquisition_tags": [],
+   "tree_sha256": "38db38112475eef217db6cbec5cdfa1214805241ad6b8fd243e3c92e0dbbbe21",
+   "record_path": "techne/fossils/specimens/buddy-alloc-spaskalev/record.json",
+   "recipe_path": "techne/fossils/specimens/buddy-alloc-spaskalev/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/buddy-alloc-spaskalev/receipts/run-buddy-alloc-spaskalev-20260912T162521Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\buddy-alloc-spaskalev"
+  },
+  {
+   "fossil_id": "buddy-bdd",
+   "canonical_name": "BuDDy -- a Binary Decision Diagram package (Jorn Lind-Nielsen)",
+   "lineage": "BuDDy (1996-, Lind-Nielsen, DTU): a reduced ordered Binary Decision Diagram library -- canonical DAG representation of Boolean functions with a unique-table + computed-cache, ITE, and dynamic variable reordering; the representation behind model checkers",
+   "human_purpose": "represent and manipulate Boolean functions as reduced ordered BDDs -- a canonical form where equivalence is pointer identity and operations are memoised graph algorithms -- so huge functions become tractable",
+   "version": "sourceforge buddy latest as of 2026-09-12 (release in hashes)",
+   "era": "1996-",
+   "language": [
+    "C",
+    "C++"
+   ],
+   "domain": [
+    "representation-transformation",
+    "binary-decision-diagram",
+    "boolean-function",
+    "canonicalization",
+    "symbolic"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "custom permissive (BuDDy terms)",
+   "acquisition_tags": [],
+   "tree_sha256": "8090220207a7cae1411b7459f4c03507c4a809adabc4d7c32d38ac83470e597e",
+   "record_path": "techne/fossils/specimens/buddy-bdd/record.json",
+   "recipe_path": "techne/fossils/specimens/buddy-bdd/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/buddy-bdd/receipts/run-buddy-bdd-20260912T153515Z.json",
+    "techne/fossils/specimens/buddy-bdd/receipts/run-buddy-bdd-20260912T153805Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\buddy-bdd"
+  },
+  {
+   "fossil_id": "bzip2-1.0.8",
+   "canonical_name": "bzip2 1.0.8 -- Burrows-Wheeler block-sorting compressor (Julian Seward)",
+   "lineage": "bzip2 (1996-, Julian Seward): the Burrows-Wheeler transform + move-to-front + Huffman pipeline -- a DIFFERENT compression paradigm from LZ, reordering the data so that context redundancy becomes local run redundancy",
+   "human_purpose": "compress losslessly by first BLOCK-SORTING the data (the Burrows-Wheeler transform) so repeated contexts cluster, then move-to-front and Huffman coding the transformed stream",
+   "version": "1.0.8 from sourceware.org (the maintainer's site)",
+   "era": "1996 (1.0.8 rel. 2019)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "compression",
+    "burrows-wheeler-transform",
+    "move-to-front",
+    "huffman"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "bzip2-1.0.6 (BSD-like)",
+   "acquisition_tags": [],
+   "tree_sha256": "70fe5728f37aa57560430df75cf8646bc87f0fd4f2a85b5b8d04f471fce955b4",
+   "record_path": "techne/fossils/specimens/bzip2-1.0.8/record.json",
+   "recipe_path": "techne/fossils/specimens/bzip2-1.0.8/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/bzip2-1.0.8/receipts/run-bzip2-1.0.8-20260912T152735Z.json",
+    "techne/fossils/specimens/bzip2-1.0.8/receipts/run-bzip2-1.0.8-20260912T152922Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\bzip2-1.0.8"
+  },
+  {
+   "fossil_id": "c-cmaes-hansen",
+   "canonical_name": "c-cmaes -- Nikolaus Hansen's C reference implementation of CMA-ES",
+   "lineage": "CMA-ES (1996-, Hansen & Ostermeier): evolution strategy with covariance matrix adaptation and cumulative step-size adaptation; this is the author's own ANSI C code (cmaes.c), the ancestor of every pycma-style port",
+   "human_purpose": "minimise a black-box, possibly noisy and ill-conditioned objective in continuous space without derivatives",
+   "version": "github.com/CMA-ES/c-cmaes default branch as of 2026-09-12 (commit in hashes)",
+   "era": "1996 (C code 2003-2014)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "optimization",
+    "evolutionary-computation",
+    "black-box-optimization",
+    "stochastic-search"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "custom permissive (Hansen: 'may be used, modified, redistributed' with notice)",
+   "acquisition_tags": [
+    "optimization",
+    "evolutionary-computation",
+    "black-box-optimization",
+    "stochastic-search"
+   ],
+   "tree_sha256": "742bea2d0389ebc0e94809dedb98db597d9eb7bc465a7af0efdb0bc3c417ffe4",
+   "record_path": "techne/fossils/specimens/c-cmaes-hansen/record.json",
+   "recipe_path": "techne/fossils/specimens/c-cmaes-hansen/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/c-cmaes-hansen/receipts/run-c-cmaes-hansen-20260912T125114Z.json",
+    "techne/fossils/specimens/c-cmaes-hansen/receipts/run-c-cmaes-hansen-20260912T125307Z.json",
+    "techne/fossils/specimens/c-cmaes-hansen/receipts/run-c-cmaes-hansen-20260912T125333Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\c-cmaes-hansen"
+  },
+  {
+   "fossil_id": "cjson-1.7.18",
+   "canonical_name": "cJSON 1.7.18 -- an ultralightweight JSON parser in ANSI C (Dave Gamble et al.)",
+   "lineage": "Single-file recursive-descent JSON parser (2009-) used in embedded and IoT code; the defensive half of the fuzzing PAIR with radamsa-0.6: fed mutated inputs under AddressSanitizer, it must reject or parse, never crash. cJSON's own history includes CVEs found by exactly this pressure (e.g. CVE-2019-11834), which is why the pair is instructive.",
+   "human_purpose": "turn untrusted text into a tree or refuse it, on small machines",
+   "version": "v1.7.18 (2024)",
+   "era": "2009-",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "parsing",
+    "robustness",
+    "adversarial",
+    "embedded",
+    "C"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityF",
+    "adversarial_pair:response",
+    "queue_named_family"
+   ],
+   "tree_sha256": "04d713005ebce02fb84b14a70240fdb46171128c372baaf39f349031bc3c1ffe",
+   "record_path": "techne/fossils/specimens/cjson-1.7.18/record.json",
+   "recipe_path": "techne/fossils/specimens/cjson-1.7.18/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/cjson-1.7.18/receipts/run-cjson-1.7.18-20260912T211207Z.json",
+    "techne/fossils/specimens/cjson-1.7.18/receipts/run-cjson-1.7.18-20260912T212626Z.json",
+    "techne/fossils/specimens/cjson-1.7.18/receipts/run-cjson-1.7.18-20260912T214353Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\cjson-1.7.18"
+  },
+  {
+   "fossil_id": "clips-6.4.2-nasa",
+   "canonical_name": "CLIPS 6.4.2 (C Language Integrated Production System), NASA Johnson lineage",
+   "lineage": "CLIPS (1985, NASA JSC, Gary Riley): forward-chaining production-rule system with a Rete pattern matcher, later with COOL objects; the public-domain expert-system shell",
+   "human_purpose": "let domain experts encode knowledge as if-then rules over facts and have the machine chain them forward to conclusions, without writing procedural code",
+   "version": "6.4.2 core source (sourceforge clipsrules, clips_core_source_642.zip)",
+   "era": "1985 (this release 2024)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "expert-systems",
+    "production-rules",
+    "symbolic-ai",
+    "pattern-matching"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "public-domain (CLIPS is released into the public domain; see the release notes)",
+   "acquisition_tags": [
+    "expert-systems",
+    "production-rules",
+    "symbolic-ai",
+    "pattern-matching"
+   ],
+   "tree_sha256": "deedb3f3d49a0f766aec231f5d6cb11e8c866cd711e37645bdc69dbbadf75cf7",
+   "record_path": "techne/fossils/specimens/clips-6.4.2-nasa/record.json",
+   "recipe_path": "techne/fossils/specimens/clips-6.4.2-nasa/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/clips-6.4.2-nasa/receipts/run-clips-6.4.2-nasa-20260912T124643Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\clips-6.4.2-nasa"
+  },
+  {
+   "fossil_id": "cobol-programming-course-omp",
+   "canonical_name": "COBOL Programming Course (Open Mainframe Project / IBM, 2020-): CBL0001..CBL0014, PAYROL00 -- real mainframe COBOL with EBCDIC packed-decimal data, run under GnuCOBOL 3",
+   "lineage": "The business-computing culture as it still runs: fixed-format COBOL (IDENTIFICATION/ENVIRONMENT/DATA/PROCEDURE divisions, PICTURE clauses, COMP-3 packed decimal, FD/SELECT/ASSIGN to JCL DDNAMEs), reading a 170-byte fixed-record EBCDIC account file and writing a formatted report. Written for z/OS; here compiled by GnuCOBOL 3.1.2 with DDNAME-to-file mapping through the environment. Chosen after the NIST COBOL-85 validation suite (newcob.val) proved UNAVAILABLE at its origin (see the batch report: ORIGIN_UNAVAILABLE).",
+   "human_purpose": "process fixed-format business records -- accounts, balances, limits, payroll -- in batch and print formatted reports, exactly as mainframe shops have since the 1960s",
+   "version": "github.com/openmainframeproject/cobol-programming-course master as of 2026-09-12 (commit in hashes); Course #2 Labs/cbl + Labs/data",
+   "era": "1959- (COBOL); 2020- (course)",
+   "language": [
+    "COBOL (IBM Enterprise COBOL dialect, fixed format)"
+   ],
+   "domain": [
+    "cobol",
+    "business-computing",
+    "batch-processing",
+    "legacy-culture",
+    "record-io"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "CC-BY-4.0",
+   "acquisition_tags": [
+    "batch05",
+    "priorityG",
+    "legacy_culture:cobol",
+    "outside_queue"
+   ],
+   "tree_sha256": "0a6956ecb5b2776117d325c6e64ed657fb38ca8fd29e2991ce27396f21c6eb40",
+   "record_path": "techne/fossils/specimens/cobol-programming-course-omp/record.json",
+   "recipe_path": "techne/fossils/specimens/cobol-programming-course-omp/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/cobol-programming-course-omp/receipts/run-cobol-programming-course-omp-20260912T213713Z.json",
+    "techne/fossils/specimens/cobol-programming-course-omp/receipts/run-cobol-programming-course-omp-20260912T214221Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\cobol-programming-course-omp"
+  },
+  {
+   "fossil_id": "compact-4.2bsd-1983",
+   "canonical_name": "compact / uncompact (4.2BSD, 1983) -- adaptive Huffman file compression, the LOSER superseded by compress",
+   "lineage": "Compression lineage, the SUPERSEDED DESIGN: compact (Colin McMaster, 1980; shipped in 4.xBSD ucb/) used Gallager's adaptive Huffman coding -- one-pass, no table transmitted, but slow and ~38% savings. compress (Thomas et al. 1984, LZW) beat it decisively on speed and ratio, then LZW's Unisys patent pressure produced gzip/DEFLATE (1992-93). Preserved from the unix-history-repo at tag BSD-4_2 (ucb/compact: compact.c, uncompact.c, tree.c, compact.h, Makefile, ccat.sh).",
+   "human_purpose": "shrink files on 1980 disks with one pass and no side table, by adapting the Huffman tree as symbols arrive",
+   "version": "4.2BSD usr/src/ucb/compact (unix-history-repo tag BSD-4_2)",
+   "era": "1980-1983",
+   "language": [
+    "C (pre-ANSI, K&R)"
+   ],
+   "domain": [
+    "compression",
+    "entropy-coding",
+    "superseded-design",
+    "loser"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "BSD-4-Clause",
+   "acquisition_tags": [
+    "batch05",
+    "depth:compression",
+    "failed_branch",
+    "loser",
+    "outside_queue"
+   ],
+   "tree_sha256": "6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d",
+   "record_path": "techne/fossils/specimens/compact-4.2bsd-1983/record.json",
+   "recipe_path": "techne/fossils/specimens/compact-4.2bsd-1983/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T210106Z.json",
+    "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T210240Z.json",
+    "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T210457Z.json",
+    "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T210705Z.json",
+    "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T210757Z.json",
+    "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T211011Z.json",
+    "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T211247Z.json",
+    "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T211434Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\compact-4.2bsd-1983"
+  },
+  {
+   "fossil_id": "compress-4.2.4-lzw",
+   "canonical_name": "compress 4.2.4 -- the earlier Unix LZW compress (ncompress lineage)",
+   "lineage": "compress 4.x (1985-1992): the Unix LZW compressor as it stood before the long ncompress maintenance era; the EARLY version of the same lineage batch 01 preserved at ncompress 5.0",
+   "human_purpose": "shrink files with adaptive LZW dictionary coding -- the same job as the 5.0 version, in the earlier code, before decades of portability maintenance",
+   "version": "git tag v4.2.4.6, github.com/vapier/ncompress (the tagged historical 4.2.4 line)",
+   "era": "1985-1992",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "compression",
+    "lzw",
+    "dictionary-coding"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "public-domain / permissive (compress headers)",
+   "acquisition_tags": [],
+   "tree_sha256": "d729870244f7739a50fed2b8382a405ef37261fcb0f935bdd2a391e3e88f13a5",
+   "record_path": "techne/fossils/specimens/compress-4.2.4-lzw/record.json",
+   "recipe_path": "techne/fossils/specimens/compress-4.2.4-lzw/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/compress-4.2.4-lzw/receipts/run-compress-4.2.4-lzw-20260912T152739Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\compress-4.2.4-lzw"
+  },
+  {
+   "fossil_id": "concurrencykit-0.7.2",
+   "canonical_name": "Concurrency Kit 0.7.2 -- lock-free data structures, spinlocks with backoff, hazard pointers (Samy Al Bahra)",
+   "lineage": "A C library of the classic concurrent-memory-model machinery: ck_spinlock (ticket, MCS, CLH, anderson, hclh; with ck_backoff exponential backoff), ck_ring/ck_fifo/ck_stack lock-free structures, ck_hp hazard pointers and ck_epoch safe memory reclamation (2011-). Reference rivals: liblfds, Boost.Lockfree.",
+   "human_purpose": "let many threads share structures without a global lock, and make contending threads back off instead of hammering a cache line",
+   "version": "0.7.2 (2024)",
+   "era": "2011-",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "concurrency",
+    "lock-free",
+    "backoff",
+    "contention",
+    "memory-reclamation"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-2-Clause",
+   "acquisition_tags": [
+    "batch05",
+    "priorityA",
+    "priorityE",
+    "backoff",
+    "outside_queue"
+   ],
+   "tree_sha256": "594921ff1c45e0f8e122f1c0e0fc0b7a963f70f59c9524b491842e1db027de52",
+   "record_path": "techne/fossils/specimens/concurrencykit-0.7.2/record.json",
+   "recipe_path": "techne/fossils/specimens/concurrencykit-0.7.2/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/concurrencykit-0.7.2/receipts/run-concurrencykit-0.7.2-20260912T211117Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\concurrencykit-0.7.2"
+  },
+  {
+   "fossil_id": "corewar-redcode",
+   "canonical_name": "Core War (Redcode / MARS) -- warring programs in a virtual machine",
+   "lineage": "Core War (1984, A.K. Dewdney): two or more programs written in Redcode run in a shared circular memory on the Memory Array Redcode Simulator (MARS); they copy, bomb and evade each other until one survives -- a self-replication / competition substrate that predates and prefigures artificial life",
+   "human_purpose": "run competing self-modifying programs in a shared virtual memory and see which survives -- a substrate where programs copy themselves, attack rivals' code, and defend, entirely inside a tiny instruction set",
+   "version": "github.com/rodrigosetti/corewar master as of 2026-09-12 (a Redcode MARS implementation; commit in hashes)",
+   "era": "1984-",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "artificial-life",
+    "virtual-machine",
+    "self-replication",
+    "competition",
+    "unconventional-computation",
+    "game"
+   ],
+   "run_status": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "FAITHFUL_PORT",
+   "license_spdx": "see repo LICENSE",
+   "acquisition_tags": [],
+   "tree_sha256": "c1929dc0440cbac70a726aee6fd10811f9c80ebb7f347c1236f87e6b92d0a089",
+   "record_path": "techne/fossils/specimens/corewar-redcode/record.json",
+   "recipe_path": "techne/fossils/specimens/corewar-redcode/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T152742Z.json",
+    "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T152925Z.json",
+    "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153034Z.json",
+    "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153241Z.json",
+    "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153357Z.json",
+    "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153435Z.json",
+    "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T202752Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\corewar-redcode"
+  },
+  {
+   "fossil_id": "dlmalloc",
+   "canonical_name": "dlmalloc -- Doug Lea's memory allocator",
+   "lineage": "dlmalloc (1987-, Doug Lea): the boundary-tag, binned free-list general-purpose allocator behind glibc's ptmalloc and countless embedded mallocs; a whole lineage of heap management in one file",
+   "human_purpose": "hand out and reclaim variable-size blocks of memory from a heap, fast, with low fragmentation, using boundary tags and size-binned free lists",
+   "version": "gee.cs.oswego.edu/pub/misc/malloc.c as served 2026-09-12 (the file carries its own version string)",
+   "era": "1987-",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "operating-systems",
+    "memory-allocation",
+    "data-structures",
+    "resource-management"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "CC0-1.0 / public-domain (Lea released it to the public domain)",
+   "acquisition_tags": [],
+   "tree_sha256": "957081e882ffec000899ea57dbb7f7cada0c5457aa959497d18bfc819b344c4d",
+   "record_path": "techne/fossils/specimens/dlmalloc/record.json",
+   "recipe_path": "techne/fossils/specimens/dlmalloc/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/dlmalloc/receipts/run-dlmalloc-20260912T152655Z.json",
+    "techne/fossils/specimens/dlmalloc/receipts/run-dlmalloc-20260912T152908Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\dlmalloc"
+  },
+  {
+   "fossil_id": "do-mpc",
+   "canonical_name": "do-mpc -- Model Predictive Control toolbox (TU Dortmund)",
+   "lineage": "do-mpc (2016-, Fiedler/Lucia et al.): nonlinear and robust Model Predictive Control -- at each step solve a finite-horizon optimal-control problem over a model, apply the first input, re-solve (receding horizon); built on CasADi/IPOPT",
+   "human_purpose": "control a constrained dynamical system by repeatedly solving, at each step, a finite-horizon optimisation over a model of the plant and applying only the first move -- anticipating the future and respecting constraints",
+   "version": "github.com/do-mpc/do-mpc master as of 2026-09-12 (commit in hashes)",
+   "era": "2016-",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "control",
+    "model-predictive-control",
+    "optimization",
+    "receding-horizon",
+    "feedback-control"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "LGPL-3.0",
+   "acquisition_tags": [],
+   "tree_sha256": "df82e517cdf342d17261d5adea8272c7e5cc27f4fdad4194906ed8bff71804b6",
+   "record_path": "techne/fossils/specimens/do-mpc/record.json",
+   "recipe_path": "techne/fossils/specimens/do-mpc/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/do-mpc/receipts/run-do-mpc-20260912T220202Z.json",
+    "techne/fossils/specimens/do-mpc/receipts/run-do-mpc-20260912T220324Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\do-mpc"
+  },
+  {
+   "fossil_id": "eispack-netlib",
+   "canonical_name": "EISPACK -- matrix eigensystem routines (Argonne, 1976)",
+   "lineage": "eispack (netlib historical distribution): the authoritative Fortran source as served by netlib.org, the authors' own channel",
+   "human_purpose": "compute eigenvalues and eigenvectors of real/complex, symmetric/general matrices (the QR, QZ, tridiagonalisation and inverse-iteration lineage), from the Wilkinson-Reinsch Algol procedures",
+   "version": "netlib.org/eispack as served 2026-09-12 (per-file; no tarball endpoint)",
+   "era": "1976-1985",
+   "language": [
+    "Fortran 77"
+   ],
+   "domain": [
+    "numerical-linear-algebra",
+    "eigensolvers",
+    "scientific-computing",
+    "numerical"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "public-domain (netlib)",
+   "acquisition_tags": [],
+   "tree_sha256": "b42d2185d65bbe0d7975a95246a29ff38b56ce48fb24e0fe568dc923e5e9f7f0",
+   "record_path": "techne/fossils/specimens/eispack-netlib/record.json",
+   "recipe_path": "techne/fossils/specimens/eispack-netlib/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/eispack-netlib/receipts/run-eispack-netlib-20260912T152133Z.json",
+    "techne/fossils/specimens/eispack-netlib/receipts/run-eispack-netlib-20260912T152217Z.json",
+    "techne/fossils/specimens/eispack-netlib/receipts/run-eispack-netlib-20260912T152429Z.json",
+    "techne/fossils/specimens/eispack-netlib/receipts/run-eispack-netlib-20260912T152558Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\eispack-netlib"
+  },
+  {
+   "fossil_id": "emcee-3.1.6",
+   "canonical_name": "emcee 3.1.6 -- the MCMC Hammer: affine-invariant ensemble sampler (Foreman-Mackey, Hogg, Lang, Goodman)",
+   "lineage": "Markov chain Monte Carlo (Metropolis et al. 1953; Hastings 1970) via Goodman & Weare's affine-invariant ensemble 'stretch move' (2010), implemented for astronomy (2012) and used in thousands of papers. A compact, inspectable sampler: walkers, proposals, acceptance fractions, autocorrelation time.",
+   "human_purpose": "draw samples from a posterior known only up to a constant, using an ensemble of walkers that adapts to the posterior's scale and orientation",
+   "version": "v3.1.6 (2024)",
+   "era": "2012-",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "estimation",
+    "MCMC",
+    "Bayesian-inference",
+    "Monte-Carlo",
+    "astronomy"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityC",
+    "estimation",
+    "queue_named_family"
+   ],
+   "tree_sha256": "76553717948133319415caed8d583fac4b4d41d56515f1761b67d59a618eeb7f",
+   "record_path": "techne/fossils/specimens/emcee-3.1.6/record.json",
+   "recipe_path": "techne/fossils/specimens/emcee-3.1.6/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260912T214502Z.json",
+    "techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260912T215619Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\emcee-3.1.6"
+  },
+  {
+   "fossil_id": "erfa-2.0.1",
+   "canonical_name": "ERFA 2.0.1 -- Essential Routines for Fundamental Astronomy (the liberally-licensed derivative of IAU SOFA)",
+   "lineage": "The IAU Standards Of Fundamental Astronomy library (Wallace et al., 2000-): precession-nutation (IAU 2006/2000A), Earth rotation, time scales (TAI/TT/UT1/TDB), star-independent astrometry, ephemerides -- relicensed as ERFA (2013) so astropy could ship it. Precision-heavy by construction: the test program t_erfa_c checks every routine against reference values to ~1e-12.",
+   "human_purpose": "transform positions and times between celestial reference frames to microarcsecond and nanosecond consistency",
+   "version": "v2.0.1 (2024), from the GitHub release tarball (autotools-generated)",
+   "era": "2000- (SOFA); 2013- (ERFA)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "astronomy",
+    "astrometry",
+    "precision",
+    "time-scales",
+    "reference-frames",
+    "scientific-extreme"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [
+    "batch05",
+    "priorityI",
+    "precision",
+    "scientific_extreme",
+    "outside_queue"
+   ],
+   "tree_sha256": "18f011416105d6315dd709d19a22e46265109fc93bedcdfe7756280c2b8334e7",
+   "record_path": "techne/fossils/specimens/erfa-2.0.1/record.json",
+   "recipe_path": "techne/fossils/specimens/erfa-2.0.1/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T211736Z.json",
+    "techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T211855Z.json",
+    "techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T212324Z.json",
+    "techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T212500Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\erfa-2.0.1"
+  },
+  {
+   "fossil_id": "espresso-logic",
+   "canonical_name": "Espresso -- two-level Boolean logic minimizer (UC Berkeley)",
+   "lineage": "Espresso (1980s, Brayton/Hachtel/McMullen/Sangiovanni-Vincentelli, UC Berkeley): heuristic two-level logic minimisation (EXPAND / REDUCE / IRREDUNDANT over cube covers); the tool that defined PLA minimisation and seeded logic synthesis",
+   "human_purpose": "minimise a two-level Boolean function (a truth table / PLA) to the fewest product terms, so the circuit that implements it is smaller and faster",
+   "version": "github.com/classabbyamp/espresso-logic master as of 2026-09-12 (a build-fixed mirror of the Berkeley source)",
+   "era": "1980s (this a maintained rebuild)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "hardware",
+    "logic-minimization",
+    "boolean-network",
+    "combinational-logic",
+    "optimization"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "LATER_SAME_LINEAGE_RELEASE",
+   "license_spdx": "custom BSD-like (Berkeley Espresso terms)",
+   "acquisition_tags": [],
+   "tree_sha256": "aa352802ae1a0b732878fb8e1b5d7511736f77360c7e55fe95ac132582a40a20",
+   "record_path": "techne/fossils/specimens/espresso-logic/record.json",
+   "recipe_path": "techne/fossils/specimens/espresso-logic/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/espresso-logic/receipts/run-espresso-logic-20260912T152704Z.json",
+    "techne/fossils/specimens/espresso-logic/receipts/run-espresso-logic-20260912T152917Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\espresso-logic"
+  },
+  {
+   "fossil_id": "femtolisp",
+   "canonical_name": "femtolisp -- a small, fast Scheme-ish Lisp (Jeff Bezanson)",
+   "lineage": "femtolisp (2008-, Jeff Bezanson): a compact Lisp with a bytecode compiler, mark-and-sweep GC, tail calls and a numeric tower; the language that bootstraps parts of Julia's front end",
+   "human_purpose": "evaluate a Lisp by compiling s-expressions to a compact bytecode and running them on a stack VM with garbage collection -- small and fast enough to embed and to bootstrap a larger language",
+   "version": "github.com/JeffBezanson/femtolisp master as of 2026-09-12 (commit in hashes)",
+   "era": "2008-",
+   "language": [
+    "C",
+    "Lisp"
+   ],
+   "domain": [
+    "languages",
+    "interpreters",
+    "lisp",
+    "bytecode",
+    "garbage-collection",
+    "virtual-machine"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [],
+   "tree_sha256": "2ce026b954ff3d073425706072e15e103038f30c475a57e15bd64a7009d6f788",
+   "record_path": "techne/fossils/specimens/femtolisp/record.json",
+   "recipe_path": "techne/fossils/specimens/femtolisp/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/femtolisp/receipts/run-femtolisp-20260912T152717Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\femtolisp"
+  },
+  {
+   "fossil_id": "ff-planner-2.3",
+   "canonical_name": "FF (Fast-Forward) planner v2.3 -- Joerg Hoffmann",
+   "lineage": "FF (2000, Hoffmann & Nebel): forward heuristic-search STRIPS/ADL planner -- the relaxed-plan (ignore-delete-lists) heuristic guiding enforced hill-climbing, then best-first; won AIPS-2000 and reset classical planning after Graphplan",
+   "human_purpose": "find a plan from initial state to goal in STRIPS/ADL by heuristic forward search, using the relaxed (delete-free) plan length as the guiding heuristic",
+   "version": "FF-v2.3 from the author's Saarland page",
+   "era": "2000 (v2.3)",
+   "language": [
+    "C",
+    "flex",
+    "bison"
+   ],
+   "domain": [
+    "planning",
+    "search",
+    "heuristic-search",
+    "strips",
+    "symbolic-ai"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "GPL-2.0-or-later (FF's COPYRIGHT)",
+   "acquisition_tags": [
+    "planning",
+    "search",
+    "heuristic-search",
+    "strips",
+    "symbolic-ai"
+   ],
+   "tree_sha256": "a771bb5de2d01b712da6b7497fde0f42c25fd2d949d34209698ef1be083c70e0",
+   "record_path": "techne/fossils/specimens/ff-planner-2.3/record.json",
+   "recipe_path": "techne/fossils/specimens/ff-planner-2.3/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/ff-planner-2.3/receipts/run-ff-planner-2.3-20260912T143441Z.json",
+    "techne/fossils/specimens/ff-planner-2.3/receipts/run-ff-planner-2.3-20260912T143519Z.json",
+    "techne/fossils/specimens/ff-planner-2.3/receipts/run-ff-planner-2.3-20260912T143553Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\ff-planner-2.3"
+  },
+  {
+   "fossil_id": "fftpack-netlib",
+   "canonical_name": "FFTPACK -- Paul Swarztrauber's Fortran FFT package (NCAR, 1985)",
+   "lineage": "fftpack (netlib historical distribution): the authoritative Fortran source as served by netlib.org, the authors' own channel",
+   "human_purpose": "compute forward/inverse real and complex FFTs and related sine/cosine transforms in Fortran 77, mixed-radix",
+   "version": "netlib.org/fftpack as served 2026-09-12 (per-file; no tarball endpoint)",
+   "era": "1976-1985",
+   "language": [
+    "Fortran 77"
+   ],
+   "domain": [
+    "scientific-computing",
+    "fft",
+    "signal-processing",
+    "numerical"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "UPSTREAM_DRIVERS_RUN_NO_ORACLE",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "public-domain (netlib)",
+   "acquisition_tags": [],
+   "tree_sha256": "e45ea77a24e418253549e373389e5116a8873cf2a15faf60ec505416c35b68d2",
+   "record_path": "techne/fossils/specimens/fftpack-netlib/record.json",
+   "recipe_path": "techne/fossils/specimens/fftpack-netlib/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/fftpack-netlib/receipts/run-fftpack-netlib-20260912T152132Z.json",
+    "techne/fossils/specimens/fftpack-netlib/receipts/run-fftpack-netlib-20260912T152209Z.json",
+    "techne/fossils/specimens/fftpack-netlib/receipts/run-fftpack-netlib-20260912T153925Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\fftpack-netlib"
+  },
+  {
+   "fossil_id": "filterpy-labbe",
+   "canonical_name": "FilterPy -- Bayesian filtering library (Roger Labbe)",
+   "lineage": "FilterPy (2014-, Labbe): reference implementations of the Kalman family (KF/EKF/UKF), particle filters, and other Bayesian filters, written for clarity alongside the book 'Kalman and Bayesian Filters in Python'; carries example systems (a noisy nonlinear plant) AND the estimators that recover their hidden state",
+   "human_purpose": "estimate the hidden state of a dynamical system from noisy measurements across the whole Bayesian-filter family -- linear (KF), nonlinear (EKF/UKF), and non-Gaussian (particle filter)",
+   "version": "github.com/rlabbe/filterpy master as of 2026-09-12 (commit in hashes)",
+   "era": "2014-",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "estimation",
+    "particle-filter",
+    "kalman-filter",
+    "unscented-kalman",
+    "bayesian-inference",
+    "state-estimation"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [],
+   "tree_sha256": "c7592f02163aef1d42504b50a30e88f0d1346f47660cd5739be87ee5d53f832d",
+   "record_path": "techne/fossils/specimens/filterpy-labbe/record.json",
+   "recipe_path": "techne/fossils/specimens/filterpy-labbe/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260912T164217Z.json",
+    "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260912T164310Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\filterpy-labbe"
+  },
+  {
+   "fossil_id": "genann",
+   "canonical_name": "genann -- a minimal feedforward neural network in C (Lewis Van Winkle)",
+   "lineage": "The perceptron/MLP lineage (Rosenblatt 1958 -> Rumelhart backprop 1986): genann is a tiny ANSI C multilayer perceptron trained by backpropagation -- the connectionist update rule and forward pass in a few hundred readable lines",
+   "human_purpose": "learn a nonlinear input-output mapping from examples by adjusting connection weights via gradient descent (backpropagation) through a layered network",
+   "version": "github.com/codeplea/genann master as of 2026-09-12 (commit in hashes)",
+   "era": "1958/1986 lineage; this impl 2015",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "connectionist",
+    "neural-network",
+    "perceptron",
+    "backpropagation",
+    "adaptation",
+    "learning"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+   "license_spdx": "Zlib",
+   "acquisition_tags": [],
+   "tree_sha256": "e35c6295244d4553a6043efd57f4ec261c9d86cb29398da01543d0730b25577f",
+   "record_path": "techne/fossils/specimens/genann/record.json",
+   "recipe_path": "techne/fossils/specimens/genann/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/genann/receipts/run-genann-20260912T162533Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\genann"
+  },
+  {
+   "fossil_id": "glpk-5.0",
+   "canonical_name": "GLPK 5.0 (GNU Linear Programming Kit) -- Andrew Makhorin",
+   "lineage": "GLPK (2000-, Makhorin): revised primal/dual SIMPLEX and a primal-dual INTERIOR-POINT method for LP, plus branch-and-cut MIP and the GNU MathProg modelling language; a complete free LP/MIP solver ecosystem",
+   "human_purpose": "solve linear programs (simplex or interior-point) and mixed-integer programs (branch-and-cut) to proven optimality, from a modelling-language description",
+   "version": "5.0 from ftp.gnu.org",
+   "era": "2000 (5.0 rel. 2020)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "optimization",
+    "linear-programming",
+    "integer-programming",
+    "simplex",
+    "interior-point",
+    "branch-and-bound"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "GPL-3.0-or-later",
+   "acquisition_tags": [
+    "optimization",
+    "linear-programming",
+    "integer-programming",
+    "simplex",
+    "interior-point",
+    "branch-and-bound"
+   ],
+   "tree_sha256": "c0b0bdcab06c9d5c21cbde9e4d07275fd2b382206cca70afd0bf6fa8c85820d2",
+   "record_path": "techne/fossils/specimens/glpk-5.0/record.json",
+   "recipe_path": "techne/fossils/specimens/glpk-5.0/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/glpk-5.0/receipts/run-glpk-5.0-20260912T143613Z.json",
+    "techne/fossils/specimens/glpk-5.0/receipts/run-glpk-5.0-20260912T143908Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\glpk-5.0"
+  },
+  {
+   "fossil_id": "gnu-prolog-1.5.0",
+   "canonical_name": "GNU Prolog 1.5.0 -- Daniel Diaz (WAM-compiling Prolog)",
+   "lineage": "GNU Prolog (1996-, Diaz): an ISO Prolog that COMPILES to a WAM (Warren Abstract Machine) and thence to native code, with a finite-domain constraint solver; a WAM lineage distinct from SWI's VM interpreter",
+   "human_purpose": "run Prolog by COMPILING clauses to Warren Abstract Machine instructions and then to native code -- unification, backtracking and SLD resolution as compiled machine operations rather than interpreted",
+   "version": "1.5.0 from gprolog.org (the author's site)",
+   "era": "1996 (1.5.0 rel. 2020)",
+   "language": [
+    "C",
+    "Prolog",
+    "WAM assembly"
+   ],
+   "domain": [
+    "languages",
+    "logic-programming",
+    "prolog",
+    "wam",
+    "unification",
+    "resolution",
+    "constraint-solving"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "LGPL-3.0-or-later / GPL-2.0-or-later",
+   "acquisition_tags": [],
+   "tree_sha256": "4fcc7ba2899110e8d4d1e8cf1ddee872b43283b53cf324d3d07549f2fdb72033",
+   "record_path": "techne/fossils/specimens/gnu-prolog-1.5.0/record.json",
+   "recipe_path": "techne/fossils/specimens/gnu-prolog-1.5.0/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/gnu-prolog-1.5.0/receipts/run-gnu-prolog-1.5.0-20260912T153603Z.json",
+    "techne/fossils/specimens/gnu-prolog-1.5.0/receipts/run-gnu-prolog-1.5.0-20260912T202812Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\gnu-prolog-1.5.0"
+  },
+  {
+   "fossil_id": "go-explore-uber-2022",
+   "canonical_name": "Go-Explore (Uber AI Labs reference implementation)",
+   "lineage": "Go-Explore (Ecoffet, Huizinga, Lehman, Stanley, Clune 2019/2021): archive-based exploration -- remember cells, return to them, explore from them, then robustify",
+   "human_purpose": "solve hard-exploration reinforcement-learning problems (Montezuma's Revenge, Pitfall) by keeping an archive of visited states ('cells'), deterministically returning to promising cells, exploring from them, and later robustifying the discovered trajectories into a policy",
+   "version": "git 702fb9c7a9aeecf2872d07ced236c730d5536a8f (2022-01-10, 'clarify readme'; default-branch HEAD on 2026-09-12)",
+   "era": "2019-2022",
+   "language": [
+    "Python 3"
+   ],
+   "domain": [
+    "search",
+    "exploration",
+    "reinforcement-learning",
+    "quality-diversity",
+    "archive"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0 (root LICENSE text is the Apache License 2.0 boilerplate; verify against the hash row before relying on it)",
+   "acquisition_tags": [
+    "search",
+    "exploration",
+    "reinforcement-learning",
+    "quality-diversity",
+    "archive"
+   ],
+   "tree_sha256": "67bfdebe5f01b0bf3b3df32e6b72e98476fbcc578f55b90b9c999ece28fba6c0",
+   "record_path": "techne/fossils/specimens/go-explore-uber-2022/record.json",
+   "recipe_path": "techne/fossils/specimens/go-explore-uber-2022/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T123537Z.json",
+    "techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T125345Z.json",
+    "techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T125406Z.json",
+    "techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T142512Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022"
+  },
+  {
+   "fossil_id": "graphplan-blum-furst-1995",
+   "canonical_name": "Graphplan -- Avrim Blum and Merrick Furst (CMU), C implementation",
+   "lineage": "Graphplan (1995, CMU): STRIPS planning by building a layered planning graph with mutual-exclusion relations and extracting a plan by backward search; the redesign that made classical planning fast",
+   "human_purpose": "find a parallel plan (sequence of action sets) from an initial state to a goal in STRIPS domains",
+   "version": "CMU AFS distribution as served 2026-09-12 (Source.tar.gz + domain files)",
+   "era": "1995",
+   "language": [
+    "C",
+    "lex/yacc (generated lex.yy.c, y.tab.c shipped)"
+   ],
+   "domain": [
+    "planning",
+    "search",
+    "symbolic-ai",
+    "strips"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "unstated (academic distribution; README)",
+   "acquisition_tags": [
+    "planning",
+    "search",
+    "symbolic-ai",
+    "strips"
+   ],
+   "tree_sha256": "b0abf2bffcad7f5f05713bd91698153593b94b27bce9948f88e3ae41cb47aab2",
+   "record_path": "techne/fossils/specimens/graphplan-blum-furst-1995/record.json",
+   "recipe_path": "techne/fossils/specimens/graphplan-blum-furst-1995/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/graphplan-blum-furst-1995/receipts/run-graphplan-blum-furst-1995-20260912T125108Z.json",
+    "techne/fossils/specimens/graphplan-blum-furst-1995/receipts/run-graphplan-blum-furst-1995-20260912T125257Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\graphplan-blum-furst-1995"
+  },
+  {
+   "fossil_id": "gzip-1.2.4-1993",
+   "canonical_name": "gzip 1.2.4 (1993) -- GNU zip: DEFLATE (LZ77 + Huffman), the redesign forced by the LZW patent",
+   "lineage": "Compression lineage, the HISTORICAL REDESIGN under legal pressure: Unisys's enforcement of the LZW patent (1993-94) made compress unshippable for GNU; Jean-loup Gailly's gzip (1992-93) used Ziv-Lempel 1977 plus Huffman -- DEFLATE, later RFC 1951 and zlib's core -- and replaced compress across Unix. 1.2.4 (Aug 1993) is the version that stayed frozen for a decade. Beside the vault's zlib-1.3.1 (the library form, 2024) and compress/ncompress, this closes the compress -> gzip -> zlib series.",
+   "human_purpose": "compress files better than compress without infringing the LZW patent, and interoperate forever via a fixed format",
+   "version": "gzip-1.2.4 (18 Aug 1993), ftp.gnu.org/gnu/gzip",
+   "era": "1993",
+   "language": [
+    "C (1993, pre-ANSI-tolerant)"
+   ],
+   "domain": [
+    "compression",
+    "LZ77",
+    "Huffman",
+    "historical-redesign",
+    "legal-pressure"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "GPL-2.0",
+   "acquisition_tags": [
+    "batch05",
+    "depth:compression",
+    "historical_redesign",
+    "legal_pressure"
+   ],
+   "tree_sha256": "d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719",
+   "record_path": "techne/fossils/specimens/gzip-1.2.4-1993/record.json",
+   "recipe_path": "techne/fossils/specimens/gzip-1.2.4-1993/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260912T210109Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\gzip-1.2.4-1993"
+  },
+  {
+   "fossil_id": "hopfield-takyamamoto",
+   "canonical_name": "Hopfield Network (Python reference, Takuya Yamamoto)",
+   "lineage": "The Hopfield network (Hopfield 1982): a recurrent associative memory where patterns are stored as attractors of an energy function; presented a corrupted pattern, the dynamics descend the energy landscape and recall the nearest stored memory",
+   "human_purpose": "store patterns as stable attractors and RECALL the nearest stored pattern from a noisy or partial cue by iterating recurrent dynamics that minimise an energy function",
+   "version": "github.com/takyamamoto/Hopfield-Network master as of 2026-09-12 (commit in hashes)",
+   "era": "1982 lineage; this impl modern",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "connectionist",
+    "hopfield-network",
+    "associative-memory",
+    "attractor-dynamics",
+    "recurrent",
+    "recovery"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+   "license_spdx": "see repo LICENSE",
+   "acquisition_tags": [],
+   "tree_sha256": "52d091ff7e6e6f5d96b7edd674bf6900a5c027323d1fe194e48f7373df11abc2",
+   "record_path": "techne/fossils/specimens/hopfield-takyamamoto/record.json",
+   "recipe_path": "techne/fossils/specimens/hopfield-takyamamoto/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/hopfield-takyamamoto/receipts/run-hopfield-takyamamoto-20260912T163932Z.json",
+    "techne/fossils/specimens/hopfield-takyamamoto/receipts/run-hopfield-takyamamoto-20260912T164033Z.json",
+    "techne/fossils/specimens/hopfield-takyamamoto/receipts/run-hopfield-takyamamoto-20260912T164159Z.json",
+    "techne/fossils/specimens/hopfield-takyamamoto/receipts/run-hopfield-takyamamoto-20260912T202800Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\hopfield-takyamamoto"
+  },
+  {
+   "fossil_id": "kissfft-131.1.0",
+   "canonical_name": "KISS FFT 131.1.0 -- Mark Borgerding",
+   "lineage": "KISS FFT (2003-, Borgerding): a mixed-radix Cooley-Tukey FFT small enough to read in one sitting; the 'keep it simple' counterpoint to FFTW's code generation",
+   "human_purpose": "compute the discrete Fourier transform (and inverse) for arbitrary sizes via mixed-radix Cooley-Tukey, in minimal readable C",
+   "version": "131.1.0 git tag, github.com/mborgerding/kissfft",
+   "era": "2003 (131.1.0 rel. 2021)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "scientific-computing",
+    "signal-processing",
+    "fft",
+    "numerical"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [
+    "scientific-computing",
+    "signal-processing",
+    "fft",
+    "numerical"
+   ],
+   "tree_sha256": "6c7e606fdfe451894b91e4f2f4d7e910aae6988ea1c1396a74a133b414214338",
+   "record_path": "techne/fossils/specimens/kissfft-131.1.0/record.json",
+   "recipe_path": "techne/fossils/specimens/kissfft-131.1.0/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/kissfft-131.1.0/receipts/run-kissfft-131.1.0-20260912T143248Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\kissfft-131.1.0"
+  },
+  {
+   "fossil_id": "ldpc-codes-neal-2001",
+   "canonical_name": "LDPC-codes -- Radford M. Neal's software for low density parity check codes",
+   "lineage": "Neal LDPC software (2001-2012, U Toronto): construction of sparse parity-check matrices, encoding via dense/mixed/sparse methods, channel simulation, and belief-propagation (sum-product) decoding; a reference implementation for Gallager/MacKay-Neal codes",
+   "human_purpose": "correct transmission errors with sparse-graph codes decoded by iterative probabilistic message passing",
+   "version": "github.com/radfordneal/LDPC-codes default branch as of 2026-09-12 (recorded commit in hashes)",
+   "era": "2001 (last revision 2012)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "error-correcting-codes",
+    "coding-theory",
+    "belief-propagation",
+    "inference"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "custom permissive (Neal: free for any purpose with notice; see index.html/COPYRIGHT)",
+   "acquisition_tags": [
+    "error-correcting-codes",
+    "coding-theory",
+    "belief-propagation",
+    "inference"
+   ],
+   "tree_sha256": "132aa1f564f37d4bfa10c1e1293b8f5b9f3f3551245545a089e645913dc2b168",
+   "record_path": "techne/fossils/specimens/ldpc-codes-neal-2001/record.json",
+   "recipe_path": "techne/fossils/specimens/ldpc-codes-neal-2001/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/ldpc-codes-neal-2001/receipts/run-ldpc-codes-neal-2001-20260912T125109Z.json",
+    "techne/fossils/specimens/ldpc-codes-neal-2001/receipts/run-ldpc-codes-neal-2001-20260912T125302Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\ldpc-codes-neal-2001"
+  },
+  {
+   "fossil_id": "leveldb-1.23",
+   "canonical_name": "LevelDB 1.23 -- log-structured merge key-value store (Jeff Dean, Sanjay Ghemawat; Google)",
+   "lineage": "LSM-tree storage (O'Neil et al. 1996) as Google built it for Chrome/IndexedDB in 2011: a write-ahead log, an in-memory memtable, sorted on-disk tables, and background compaction; RECOVERY replays the log. Ancestor of RocksDB (Facebook fork, 2012).",
+   "human_purpose": "absorb writes fast by appending to a log and merging later, and recover the unflushed tail of the log after a crash",
+   "version": "1.23 (2021)",
+   "era": "2011-",
+   "language": [
+    "C++"
+   ],
+   "domain": [
+    "database",
+    "recovery",
+    "write-ahead-log",
+    "compaction",
+    "contention"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [
+    "batch05",
+    "priorityA",
+    "recovery",
+    "outside_queue"
+   ],
+   "tree_sha256": "9f24633cc601cdeb2bc7ee6edf135b093c305da050cd88f47681a7871debc983",
+   "record_path": "techne/fossils/specimens/leveldb-1.23/record.json",
+   "recipe_path": "techne/fossils/specimens/leveldb-1.23/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/leveldb-1.23/receipts/run-leveldb-1.23-20260912T211026Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\leveldb-1.23"
+  },
+  {
+   "fossil_id": "libcorrect-quiet",
+   "canonical_name": "libcorrect -- convolutional (Viterbi) and Reed-Solomon forward error correction in C (Brian Armstrong, Quiet Modem Project)",
+   "lineage": "A portable SUCCESSOR/RIVAL to Phil Karn's libfec (in the vault as libfec-karn, BLOCKED by its 32-bit x86 assembly): the same two code families -- convolutional codes decoded by Viterbi, and Reed-Solomon over GF(2^8) -- reimplemented in plain C with SSE optional, plus a libfec-compatible shim. Its tests are the ADVERSARIAL PAIR: a noise/erasure injector corrupts codewords, the decoders must recover them. Deepens the ECC lineage: Rockliff RS (1991) -> Karn libfec (1990s-2000s) -> libcorrect (2016-).",
+   "human_purpose": "carry data across a channel that flips or erases symbols, and recover the message exactly",
+   "version": "github.com/quiet/libcorrect master as of 2026-09-12 (commit in hashes)",
+   "era": "2016-",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "error-correction",
+    "coding",
+    "adversarial",
+    "noise",
+    "communications"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [
+    "batch05",
+    "priorityF",
+    "adversarial_pair",
+    "depth:ecc",
+    "successor",
+    "outside_queue"
+   ],
+   "tree_sha256": "ddaf51af3e29f03b9c818f1d519d698125c96e6c96a580af8f7d8bde75ac5e3d",
+   "record_path": "techne/fossils/specimens/libcorrect-quiet/record.json",
+   "recipe_path": "techne/fossils/specimens/libcorrect-quiet/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/libcorrect-quiet/receipts/run-libcorrect-quiet-20260912T211141Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\libcorrect-quiet"
+  },
+  {
+   "fossil_id": "libfec-karn",
+   "canonical_name": "libfec -- Phil Karn's forward-error-correction library (Viterbi + Reed-Solomon)",
+   "lineage": "libfec (1995-, Phil Karn KA9Q): optimised VITERBI decoders for convolutional codes (the trellis / add-compare-select / traceback machinery) plus Reed-Solomon; the amateur-radio and deep-space FEC reference",
+   "human_purpose": "recover the most-likely transmitted bit sequence from a noisy convolutionally-coded signal by the Viterbi algorithm (dynamic programming over a trellis of hidden encoder states), and to correct Reed-Solomon block errors",
+   "version": "github.com/ka9q/libfec master as of 2026-09-12 (commit in hashes)",
+   "era": "1995-",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "error-correcting-codes",
+    "viterbi",
+    "convolutional-codes",
+    "estimation",
+    "signal-processing",
+    "state-estimation"
+   ],
+   "run_status": "BLOCKED_PLATFORM",
+   "test_status": "UPSTREAM_TESTS_NOT_RUN",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "LGPL-2.1-or-later",
+   "acquisition_tags": [],
+   "tree_sha256": "e140027b76e27d81b19322968c6d54cfaf0c768d1d4c14807cb742cce737770f",
+   "record_path": "techne/fossils/specimens/libfec-karn/record.json",
+   "recipe_path": "techne/fossils/specimens/libfec-karn/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/libfec-karn/receipts/run-libfec-karn-20260912T153530Z.json",
+    "techne/fossils/specimens/libfec-karn/receipts/run-libfec-karn-20260912T153815Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\libfec-karn"
+  },
+  {
+   "fossil_id": "linpackd-netlib-1979",
+   "canonical_name": "LINPACK benchmark, double precision (linpackd) -- Dongarra, Bunch, Moler, Stewart",
+   "lineage": "LINPACK (1979, Argonne / U New Mexico / Sandia / Michigan): LU factorisation with partial pivoting (DGEFA/DGESL) over the BLAS-1 kernels (DAXPY, DDOT, DSCAL, IDAMAX); the benchmark that defined machine performance for two decades",
+   "human_purpose": "solve dense systems of linear equations Ax=b reliably on the machines of the late 1970s, and (as the benchmark) measure how fast a machine does it",
+   "version": "netlib.org/benchmark/linpackd as served 2026-09-12 (file carries its own 'linpack benchmark' revision comments)",
+   "era": "1979",
+   "language": [
+    "Fortran 77"
+   ],
+   "domain": [
+    "numerical-linear-algebra",
+    "benchmark",
+    "scientific-computing"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "public-domain (netlib LINPACK; no licence text in file)",
+   "acquisition_tags": [
+    "numerical-linear-algebra",
+    "benchmark",
+    "scientific-computing"
+   ],
+   "tree_sha256": "568392d920a61e0ef0b715d670f9e78bfcaad1ed1228f71c1731454af25b27c7",
+   "record_path": "techne/fossils/specimens/linpackd-netlib-1979/record.json",
+   "recipe_path": "techne/fossils/specimens/linpackd-netlib-1979/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/linpackd-netlib-1979/receipts/run-linpackd-netlib-1979-20260912T124501Z.json",
+    "techne/fossils/specimens/linpackd-netlib-1979/receipts/run-linpackd-netlib-1979-20260912T202724Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\linpackd-netlib-1979"
+  },
+  {
+   "fossil_id": "linux-tcp-congestion",
+   "canonical_name": "Linux TCP congestion control -- CUBIC and BBR (the congestion-avoidance lineage under pressure)",
+   "lineage": "TCP congestion control (1988-, Van Jacobson onward): Tahoe -> Reno -> NewReno -> CUBIC (2008, loss-based, the Linux default) -> BBR (2016, Google, model-based rate/RTT). Each redesign was forced by a changed network: higher bandwidth-delay products, then bufferbloat. Preserved here as the actual Linux kernel modules tcp_cubic.c and tcp_bbr.c.",
+   "human_purpose": "regulate a TCP sender's transmission rate so it uses available bandwidth without collapsing the shared network -- inferring congestion from loss (CUBIC) or from a bandwidth/RTT model (BBR)",
+   "version": "linux v6.6 net/ipv4/tcp_cubic.c + tcp_bbr.c (pinned tag)",
+   "era": "1988- (cubic 2008, bbr 2016)",
+   "language": [
+    "C (Linux kernel)"
+   ],
+   "domain": [
+    "networks",
+    "congestion-control",
+    "feedback-control",
+    "adaptation",
+    "contention"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "GPL-2.0",
+   "acquisition_tags": [],
+   "tree_sha256": "9a8f38abdfec736771b1a9d41ac5cf049231927506b7be3d39efa895a7566e6f",
+   "record_path": "techne/fossils/specimens/linux-tcp-congestion/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\linux-tcp-congestion"
+  },
+  {
+   "fossil_id": "lmdb-0.9.31",
+   "canonical_name": "LMDB 0.9.31 -- Lightning Memory-Mapped Database (Howard Chu, Symas / OpenLDAP)",
+   "lineage": "B+tree key-value store with single-writer/multi-reader MVCC and copy-on-write pages: crash consistency WITHOUT a write-ahead log (two meta pages, the last committed root wins). Descends from OpenLDAP's back-mdb work (2011); rival to Berkeley DB and to log-structured stores such as LevelDB.",
+   "human_purpose": "give readers a consistent snapshot while one writer commits, and survive a crash at any instant without replaying a log",
+   "version": "LMDB_0.9.31 (2023)",
+   "era": "2011-",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "database",
+    "recovery",
+    "contention",
+    "memory-mapped",
+    "MVCC"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "OLDAP-2.8",
+   "acquisition_tags": [
+    "batch05",
+    "priorityA",
+    "recovery",
+    "outside_queue"
+   ],
+   "tree_sha256": "c4a064d6d711367624fa19b7b57c333c0e6da891ef8da31f6b24dc012c296fe0",
+   "record_path": "techne/fossils/specimens/lmdb-0.9.31/record.json",
+   "recipe_path": "techne/fossils/specimens/lmdb-0.9.31/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/lmdb-0.9.31/receipts/run-lmdb-0.9.31-20260912T210038Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\lmdb-0.9.31"
+  },
+  {
+   "fossil_id": "lru-cache-goldsborough",
+   "canonical_name": "lru-cache -- a C++ LRU cache (Peter Goldsborough)",
+   "lineage": "LRU (least-recently-used) eviction: when a bounded cache is full, discard the entry unused for longest; a hash-map + intrusive list, the standard caching mechanism across CPUs, OSes and databases",
+   "human_purpose": "keep the most useful bounded subset of data in fast memory by evicting the least-recently-used entry when capacity is exceeded",
+   "version": "github.com/goldsborough/lru-cache master as of 2026-09-12 (commit in hashes)",
+   "era": "LRU 1960s-; this impl modern",
+   "language": [
+    "C++"
+   ],
+   "domain": [
+    "memory-management",
+    "cache",
+    "replacement-policy",
+    "data-structures",
+    "scarcity"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+   "license_spdx": "MIT",
+   "acquisition_tags": [],
+   "tree_sha256": "6b9266080ddb9edd0c18061143ab3b8cbc8bd481a45390fcf5adb082bf3209b8",
+   "record_path": "techne/fossils/specimens/lru-cache-goldsborough/record.json",
+   "recipe_path": "techne/fossils/specimens/lru-cache-goldsborough/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/lru-cache-goldsborough/receipts/run-lru-cache-goldsborough-20260912T162524Z.json",
+    "techne/fossils/specimens/lru-cache-goldsborough/receipts/run-lru-cache-goldsborough-20260912T162711Z.json",
+    "techne/fossils/specimens/lru-cache-goldsborough/receipts/run-lru-cache-goldsborough-20260912T162752Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\lru-cache-goldsborough"
+  },
+  {
+   "fossil_id": "microkanren-scheme",
+   "canonical_name": "microKanren -- Hemann and Friedman (relational/logic programming kernel)",
+   "lineage": "microKanren (2013, Hemann & Friedman): a ~40-line relational programming kernel -- unification, fresh logic variables, interleaving (complete) search via streams; the minimal core underneath miniKanren and, by descent, a functional cousin of Prolog's resolution",
+   "human_purpose": "run relations (not functions) -- pose a goal with logic variables and get the complete stream of variable bindings that make it hold, by unification and interleaving search",
+   "version": "jasonhemann/microKanren microKanren.scm as served 2026-09-12",
+   "era": "2013",
+   "language": [
+    "Scheme"
+   ],
+   "domain": [
+    "logic-programming",
+    "relational-programming",
+    "unification",
+    "search",
+    "languages"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "logic-programming",
+    "relational-programming",
+    "unification",
+    "search",
+    "languages"
+   ],
+   "tree_sha256": "64938449ab18672f65a6f1d9bb10c4547d2a90b4f525ce99b21a6eaafc1627de",
+   "record_path": "techne/fossils/specimens/microkanren-scheme/record.json",
+   "recipe_path": "techne/fossils/specimens/microkanren-scheme/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/microkanren-scheme/receipts/run-microkanren-scheme-20260912T143253Z.json",
+    "techne/fossils/specimens/microkanren-scheme/receipts/run-microkanren-scheme-20260912T143351Z.json",
+    "techne/fossils/specimens/microkanren-scheme/receipts/run-microkanren-scheme-20260912T143428Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\microkanren-scheme"
+  },
+  {
+   "fossil_id": "minisat-1.14-2006",
+   "canonical_name": "MiniSat 1.14 (2006) -- the small CDCL solver in its pre-2.0 form (Een & Sorensson)",
+   "lineage": "SAT lineage, the PREDECESSOR of the vault's minisat-2.2.0: 1.14 is the version described in 'An Extensible SAT-solver' (SAT 2003) as it stood in 2006 -- ~600 lines of core, before 2.0's rewrite (SimpSolver, new restart/reduce policies). Beside zchaff-2007 (the rival it displaced) and 2.2.0 (its successor) the vault holds the transition.",
+   "human_purpose": "be the smallest complete CDCL solver competitive with the large ones, so others could extend it",
+   "version": "MiniSat_v1.14.2006-Aug-29.src.zip (minisat.se/downloads)",
+   "era": "2003-2006",
+   "language": [
+    "C++ (2006)"
+   ],
+   "domain": [
+    "SAT",
+    "search",
+    "CDCL",
+    "predecessor"
+   ],
+   "run_status": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "depth:sat",
+    "predecessor",
+    "historical_version"
+   ],
+   "tree_sha256": "e98aa45b9bfa07254073a643dd74e657bde052a6846da76f02849501e2400bcf",
+   "record_path": "techne/fossils/specimens/minisat-1.14-2006/record.json",
+   "recipe_path": "techne/fossils/specimens/minisat-1.14-2006/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/minisat-1.14-2006/receipts/run-minisat-1.14-2006-20260912T211731Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\minisat-1.14-2006"
+  },
+  {
+   "fossil_id": "minisat-2.2.0",
+   "canonical_name": "MiniSat 2.2.0 -- Een and Sorensson",
+   "lineage": "MiniSat (2003-2010, Chalmers; Niklas Een, Niklas Sorensson): minimal CDCL SAT solver with two-watched literals, VSIDS, conflict-clause learning and restarts; the reference from which most modern SAT solvers descend",
+   "human_purpose": "decide propositional satisfiability of large CNF formulas and, when satisfiable, produce a model",
+   "version": "2.2.0 tarball from minisat.se (the authors' site)",
+   "era": "2003 (2.2.0 released 2010)",
+   "language": [
+    "C++"
+   ],
+   "domain": [
+    "sat",
+    "logic",
+    "search",
+    "constraint-solving"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "sat",
+    "logic",
+    "search",
+    "constraint-solving"
+   ],
+   "tree_sha256": "0a7fe1e69d3f84d222785eabf7e5cb0161463cc9b122b57008b5b9bf3f6adaa5",
+   "record_path": "techne/fossils/specimens/minisat-2.2.0/record.json",
+   "recipe_path": "techne/fossils/specimens/minisat-2.2.0/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/minisat-2.2.0/receipts/run-minisat-2.2.0-20260912T124713Z.json",
+    "techne/fossils/specimens/minisat-2.2.0/receipts/run-minisat-2.2.0-20260912T124933Z.json",
+    "techne/fossils/specimens/minisat-2.2.0/receipts/run-minisat-2.2.0-20260912T125022Z.json",
+    "techne/fossils/specimens/minisat-2.2.0/receipts/run-minisat-2.2.0-20260912T125043Z.json",
+    "techne/fossils/specimens/minisat-2.2.0/receipts/run-minisat-2.2.0-20260912T202747Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\minisat-2.2.0"
+  },
+  {
+   "fossil_id": "minisom",
+   "canonical_name": "MiniSom -- a minimal Self-Organizing Map in Python (Giuseppe Vettigli)",
+   "lineage": "The Self-Organizing Map (Kohonen 1982): an unsupervised connectionist network whose neurons arrange on a grid and adapt so that nearby neurons respond to similar inputs -- competitive learning that forms a topology-preserving map of the data",
+   "human_purpose": "learn, without labels, a low-dimensional (grid) representation of high-dimensional data where neighbouring grid cells respond to similar inputs -- competitive, neighbourhood-cooperative weight adaptation",
+   "version": "github.com/JustGlowing/minisom master as of 2026-09-12 (commit in hashes)",
+   "era": "1982 lineage; this impl 2015",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "connectionist",
+    "self-organizing-map",
+    "unsupervised-learning",
+    "competitive-learning",
+    "adaptation",
+    "clustering"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+   "license_spdx": "MIT",
+   "acquisition_tags": [],
+   "tree_sha256": "6a09c9f371ea8e0c7b68dcdf04fa3398f7e4bdc1356f8fe0d3c5170d82ed24df",
+   "record_path": "techne/fossils/specimens/minisom/record.json",
+   "recipe_path": "techne/fossils/specimens/minisom/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/minisom/receipts/run-minisom-20260912T163938Z.json",
+    "techne/fossils/specimens/minisom/receipts/run-minisom-20260912T164039Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\minisom"
+  },
+  {
+   "fossil_id": "minpack-netlib-1980",
+   "canonical_name": "MINPACK-1 (double precision) -- More, Garbow, Hillstrom, Argonne",
+   "lineage": "MINPACK (1980, Argonne National Laboratory): Levenberg-Marquardt least squares (LMDER/LMDIF/LMSTR) and Powell hybrid dogleg for nonlinear equations (HYBRD/HYBRJ), with CHKDER Jacobian checking; ancestor of scipy.optimize.leastsq/fsolve",
+   "human_purpose": "find x minimising sum of squares of m nonlinear functions, or solving n nonlinear equations, from a user function with or without an analytic Jacobian",
+   "version": "netlib.org/minpack as served 2026-09-12 (25 routine files + 23 ex/ test files)",
+   "era": "1980",
+   "language": [
+    "Fortran 77"
+   ],
+   "domain": [
+    "nonlinear-least-squares",
+    "nonlinear-equations",
+    "optimization",
+    "scientific-computing"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "UPSTREAM_DRIVERS_RUN_NO_ORACLE",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "Minpack Copyright Notice (1999) University of Chicago -- BSD-like, see disclaimer",
+   "acquisition_tags": [
+    "nonlinear-least-squares",
+    "nonlinear-equations",
+    "optimization",
+    "scientific-computing"
+   ],
+   "tree_sha256": "bb2a1c77c73713408975f150c1f146fc388767165fe7ea6876d975df5d689de1",
+   "record_path": "techne/fossils/specimens/minpack-netlib-1980/record.json",
+   "recipe_path": "techne/fossils/specimens/minpack-netlib-1980/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124502Z.json",
+    "techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124530Z.json",
+    "techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124612Z.json",
+    "techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124631Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\minpack-netlib-1980"
+  },
+  {
+   "fossil_id": "ncompress-5.0-lzw-1985",
+   "canonical_name": "ncompress 5.0 -- the Unix compress(1) LZW lineage (Spencer Thomas et al., 1984-85)",
+   "lineage": "compress(1) (1984-85, Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost): adaptive LZW dictionary coding, the 4.3BSD/Unix standard before gzip; ncompress is the maintained continuation of the same code",
+   "human_purpose": "shrink files losslessly with an adaptive dictionary that needs no side information",
+   "version": "git tag v5.0, github.com/vapier/ncompress",
+   "era": "1984 (5.0 released 2021)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "compression",
+    "dictionary-coding",
+    "lzw"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "LATER_SAME_LINEAGE_RELEASE",
+   "license_spdx": "public-domain / permissive per the source headers",
+   "acquisition_tags": [
+    "compression",
+    "dictionary-coding",
+    "lzw"
+   ],
+   "tree_sha256": "5de18704eb9c8c16a0e8ca28ae333541504bc24968b1fda4a76226185c5948ff",
+   "record_path": "techne/fossils/specimens/ncompress-5.0-lzw-1985/record.json",
+   "recipe_path": "techne/fossils/specimens/ncompress-5.0-lzw-1985/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/ncompress-5.0-lzw-1985/receipts/run-ncompress-5.0-lzw-1985-20260912T124716Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\ncompress-5.0-lzw-1985"
+  },
+  {
+   "fossil_id": "odepack-netlib",
+   "canonical_name": "ODEPACK -- LSODE and family, Hindmarsh (LLNL, 1983-2001)",
+   "lineage": "Netlib Fortran ODE solvers descended from GEAR (1974): variable-step variable-order Adams (non-stiff) and BDF (stiff) methods with error control, a corrector iteration and a Jacobian strategy chosen by the method flag MF. Sibling of QUADPACK/EISPACK in the vault; ancestor of scipy.integrate.odeint (which wraps LSODA).",
+   "human_purpose": "integrate ODE systems with automatic step and order selection, including stiff systems whose fast modes would otherwise force absurdly small steps",
+   "version": "netlib odepack (double precision: opkdmain.f, opkda1.f, opkda2.f), as fetched 2026-09-12",
+   "era": "1983-2001",
+   "language": [
+    "Fortran 77"
+   ],
+   "domain": [
+    "numerical",
+    "ODE",
+    "stiffness",
+    "adaptive-step-control",
+    "failure"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "Public-Domain",
+   "acquisition_tags": [
+    "batch05",
+    "priorityB",
+    "pathology",
+    "depth:numerical",
+    "legacy_fortran"
+   ],
+   "tree_sha256": "a241fb44842769e5e21f24ab7b2d0731cf197f10959c1b910e0738df4b2008fc",
+   "record_path": "techne/fossils/specimens/odepack-netlib/record.json",
+   "recipe_path": "techne/fossils/specimens/odepack-netlib/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/odepack-netlib/receipts/run-odepack-netlib-20260912T210100Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\odepack-netlib"
+  },
+  {
+   "fossil_id": "padasip-1.2.2",
+   "canonical_name": "padasip 1.2.2 -- adaptive filters (LMS, NLMS, RLS, AP, GNGD) and adaptive system identification in Python (Matous Cejnek)",
+   "lineage": "Widrow & Hoff's LMS (1960; the ADALINE rule) and its descendants -- normalised LMS, recursive least squares, affine projection -- as a small library for adaptive filtering, prediction and system identification. Genuinely ADAPTIVE: weights change online in response to error. Recorded honestly as an adaptive FILTER/identifier, not a closed-loop controller (the charter's 'genuinely adaptive controller' with pinned provenance was not found this batch; see the report).",
+   "human_purpose": "fit a model to a system whose parameters are unknown or drifting, one sample at a time, from the error alone",
+   "version": "v1.2.2 (2021)",
+   "era": "2016-",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "adaptation",
+    "estimation",
+    "signal-processing",
+    "online-learning",
+    "system-identification"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityD",
+    "adaptive",
+    "connectionist_lineage"
+   ],
+   "tree_sha256": "843358e3a62ec8653536c70a7643f346053c661288287c1a303596792c371ab8",
+   "record_path": "techne/fossils/specimens/padasip-1.2.2/record.json",
+   "recipe_path": "techne/fossils/specimens/padasip-1.2.2/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/padasip-1.2.2/receipts/run-padasip-1.2.2-20260912T214445Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\padasip-1.2.2"
+  },
+  {
+   "fossil_id": "paip-lisp-norvig-1991",
+   "canonical_name": "Paradigms of Artificial Intelligence Programming -- Norvig's Common Lisp programs (GPS, ELIZA, pattern matcher, unifier, Prolog-in-Lisp, 1991)",
+   "lineage": "The canonical Common Lisp exposition of classical AI machinery: Newell & Simon's General Problem Solver (means-ends analysis), Weizenbaum's ELIZA (pattern-directed rewriting), STUDENT, a unifier and a Prolog interpreter/compiler, search tools, Othello. Real problem-solving programs from the symbolic-AI culture, kept runnable by Norvig's repository under SBCL.",
+   "human_purpose": "solve problems by reducing goal/state differences with operators (GPS), converse by pattern rewriting (ELIZA), and answer queries by unification and backtracking (Prolog)",
+   "version": "github.com/norvig/paip-lisp main as of 2026-09-12 (commit in hashes)",
+   "era": "1991 (book); repository 2018-",
+   "language": [
+    "Common Lisp"
+   ],
+   "domain": [
+    "symbolic-AI",
+    "search",
+    "pattern-matching",
+    "unification",
+    "lisp",
+    "legacy-culture"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityG",
+    "legacy_culture:lisp",
+    "depth:lisp",
+    "outside_queue"
+   ],
+   "tree_sha256": "9ec5c1c33390c7524a51f8ffe1f1092cc6ac3d618089d896bafb867895688998",
+   "record_path": "techne/fossils/specimens/paip-lisp-norvig-1991/record.json",
+   "recipe_path": "techne/fossils/specimens/paip-lisp-norvig-1991/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/paip-lisp-norvig-1991/receipts/run-paip-lisp-norvig-1991-20260912T213658Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\paip-lisp-norvig-1991"
+  },
+  {
+   "fossil_id": "particles-chopin-0.4",
+   "canonical_name": "particles 0.4 -- sequential Monte Carlo / particle filtering in Python (Nicolas Chopin)",
+   "lineage": "Particle filtering (Gordon, Salmond, Smith 1993 bootstrap filter; Doucet et al.) as the companion code to Chopin & Papaspiliopoulos, An Introduction to Sequential Monte Carlo (2020): state-space models, resampling schemes (multinomial, residual, stratified, systematic), SMC samplers, particle MCMC.",
+   "human_purpose": "track a hidden state through nonlinear, non-Gaussian dynamics by propagating and reweighting a cloud of hypotheses",
+   "version": "v0.4 (2024)",
+   "era": "2018-",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "estimation",
+    "hidden-state",
+    "Monte-Carlo",
+    "filtering",
+    "resampling"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityC",
+    "estimation",
+    "queue_named_family"
+   ],
+   "tree_sha256": "e27cbce29e5f876c07ff42487879d9ee04db7b1b2d59fad93336834c9a15be6c",
+   "record_path": "techne/fossils/specimens/particles-chopin-0.4/record.json",
+   "recipe_path": "techne/fossils/specimens/particles-chopin-0.4/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260912T214514Z.json",
+    "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260912T215641Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\particles-chopin-0.4"
+  },
+  {
+   "fossil_id": "pforth",
+   "canonical_name": "pForth -- a portable ANS Forth in C (Phil Burk)",
+   "lineage": "pForth (1994-, Phil Burk): a portable ANS Forth -- an inner interpreter over a threaded-code dictionary, a data and return stack machine, compiled from C; a concatenative stack-machine runtime",
+   "human_purpose": "run Forth -- a concatenative language where a program is a sequence of words operating on an explicit data stack, executed by a tiny threaded inner interpreter that a compiler can extend at runtime",
+   "version": "github.com/philburk/pforth master as of 2026-09-12 (commit in hashes)",
+   "era": "1994-",
+   "language": [
+    "C",
+    "Forth"
+   ],
+   "domain": [
+    "languages",
+    "interpreters",
+    "forth",
+    "stack-machine",
+    "bytecode",
+    "virtual-machine"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "0BSD / public-domain-like (pForth license)",
+   "acquisition_tags": [],
+   "tree_sha256": "d376716f69fe50381a98d5880571f8eb34f9a4c1a6e2c3c277e7f6dd18dcc934",
+   "record_path": "techne/fossils/specimens/pforth/record.json",
+   "recipe_path": "techne/fossils/specimens/pforth/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/pforth/receipts/run-pforth-20260912T152709Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\pforth"
+  },
+  {
+   "fossil_id": "picorv32",
+   "canonical_name": "PicoRV32 -- a size-optimised RISC-V CPU core in Verilog (Clifford Wolf / YosysHQ)",
+   "lineage": "PicoRV32 (2015-, Clifford Wolf): a small RV32I[MC] processor as synthesisable Verilog with a self-checking testbench; the reference small core of the open RISC-V / Yosys ecosystem",
+   "human_purpose": "execute the RISC-V RV32I instruction set as a small synthesisable processor -- fetch, decode, a state-machine control path, register file, and an ALU -- for FPGAs and teaching",
+   "version": "github.com/YosysHQ/picorv32 main branch as of 2026-09-12 (commit in hashes)",
+   "era": "2015-",
+   "language": [
+    "Verilog"
+   ],
+   "domain": [
+    "hardware",
+    "cpu",
+    "verilog",
+    "sequential-logic",
+    "finite-state-machine",
+    "processor"
+   ],
+   "run_status": "RUNNABLE_EMULATED",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "ISC",
+   "acquisition_tags": [],
+   "tree_sha256": "647455da29695832218941a94052b274f9ce2cf7b1b57d59eddfdfb5d661d653",
+   "record_path": "techne/fossils/specimens/picorv32/record.json",
+   "recipe_path": "techne/fossils/specimens/picorv32/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/picorv32/receipts/run-picorv32-20260912T153506Z.json",
+    "techne/fossils/specimens/picorv32/receipts/run-picorv32-20260912T153756Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\picorv32"
+  },
+  {
+   "fossil_id": "picosat-965",
+   "canonical_name": "PicoSAT 965 -- Armin Biere",
+   "lineage": "PicoSAT (2007-, JKU Linz, Armin Biere): compact CDCL SAT solver with aggressive clause learning, phase saving and a trace/proof mode; a distinct CDCL lineage from MiniSat and the ancestor of PrecoSAT/Lingeling",
+   "human_purpose": "decide propositional satisfiability and emit a model or an UNSAT proof trace, in a small self-contained solver",
+   "version": "965 from fmv.jku.at (the author's site)",
+   "era": "2007 (965 rel. 2014)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "sat",
+    "logic",
+    "search",
+    "constraint-solving",
+    "proof-trace"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "sat",
+    "logic",
+    "search",
+    "constraint-solving",
+    "proof-trace"
+   ],
+   "tree_sha256": "e68ea1cb95417c291146d86d447b20a8a3b271c3b89b13e1648f38a4ff58cd94",
+   "record_path": "techne/fossils/specimens/picosat-965/record.json",
+   "recipe_path": "techne/fossils/specimens/picosat-965/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/picosat-965/receipts/run-picosat-965-20260912T143236Z.json",
+    "techne/fossils/specimens/picosat-965/receipts/run-picosat-965-20260912T175221Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\picosat-965"
+  },
+  {
+   "fossil_id": "py-vollib-lets-be-rational",
+   "canonical_name": "py_vollib + py_lets_be_rational -- Black-Scholes(-Merton) pricing and Jaeckel's 'Let's Be Rational' implied volatility (vollib)",
+   "lineage": "Option pricing (Black & Scholes 1973; Merton 1973) and the inverse problem -- implied volatility -- solved to machine precision in two iterations by Peter Jaeckel's 'Let's Be Rational' (2013/2015), a precision-engineering algorithm (rational approximations per branch, careful handling of extreme moneyness). vollib wraps Jaeckel's reference C++ as Python (py_lets_be_rational is the translation).",
+   "human_purpose": "price European options and, more demandingly, recover the volatility a market price implies, to full double precision, in constant time",
+   "version": "github.com/vollib/py_vollib master as of 2026-09-12 (commit in hashes); py_lets_be_rational from PyPI at run time (recorded)",
+   "era": "1973 (model); 2015 (algorithm); 2017- (package)",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "finance",
+    "option-pricing",
+    "root-finding",
+    "precision",
+    "volatility"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityJ",
+    "finance",
+    "precision",
+    "outside_queue"
+   ],
+   "tree_sha256": "b0220057275c417bd1ac94a20829fe481c80bfb9beedb5cd50ef21810de2bb9e",
+   "record_path": "techne/fossils/specimens/py-vollib-lets-be-rational/record.json",
+   "recipe_path": "techne/fossils/specimens/py-vollib-lets-be-rational/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/py-vollib-lets-be-rational/receipts/run-py-vollib-lets-be-rational-20260912T214612Z.json",
+    "techne/fossils/specimens/py-vollib-lets-be-rational/receipts/run-py-vollib-lets-be-rational-20260912T215734Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\py-vollib-lets-be-rational"
+  },
+  {
+   "fossil_id": "pybreaker-1.2.0",
+   "canonical_name": "pybreaker 1.2.0 -- the Circuit Breaker pattern in Python (Daniel Fernandes Martins)",
+   "lineage": "Nygard's Circuit Breaker (Release It!, 2007): a failure counter trips an OPEN state that fails fast for a reset timeout, then HALF-OPEN probes the dependency. pybreaker (2010-) is a compact, widely-copied Python implementation; the Java relative is Netflix Hystrix (2012, retired 2018).",
+   "human_purpose": "stop a caller from pounding a failing dependency, and let it recover by probing instead of flooding",
+   "version": "1.2.0 (2024)",
+   "era": "2010-",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "retry",
+    "recovery",
+    "fault-tolerance",
+    "state-machine",
+    "distributed-systems"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [
+    "batch05",
+    "priorityA",
+    "small_mechanism",
+    "queue_named_family"
+   ],
+   "tree_sha256": "c76f5023265bc8f7e5818353e8858aa020563eb686c95ecf5a520772e12101f5",
+   "record_path": "techne/fossils/specimens/pybreaker-1.2.0/record.json",
+   "recipe_path": "techne/fossils/specimens/pybreaker-1.2.0/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/pybreaker-1.2.0/receipts/run-pybreaker-1.2.0-20260912T214424Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\pybreaker-1.2.0"
+  },
+  {
+   "fossil_id": "pyportfolioopt-1.5.5",
+   "canonical_name": "PyPortfolioOpt 1.5.5 -- Markowitz mean-variance and related portfolio optimisation (Robert Martin)",
+   "lineage": "Modern portfolio theory (Markowitz 1952) as a convex program: efficient frontier, maximum Sharpe, minimum volatility, plus shrinkage covariance (Ledoit-Wolf), Black-Litterman views and hierarchical risk parity (Lopez de Prado 2016) -- a compact library over cvxpy with a bundled price dataset.",
+   "human_purpose": "choose asset weights that minimise variance for a target return (or maximise Sharpe) given estimated means and covariances",
+   "version": "v1.5.5 (2023)",
+   "era": "1952 (theory); 2018- (package)",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "finance",
+    "portfolio-optimization",
+    "convex-optimization",
+    "risk"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityJ",
+    "finance",
+    "outside_queue"
+   ],
+   "tree_sha256": "cca30e0a1098599fff465b3e1095135aebf17b69541a9d2237ef52013c23a726",
+   "record_path": "techne/fossils/specimens/pyportfolioopt-1.5.5/record.json",
+   "recipe_path": "techne/fossils/specimens/pyportfolioopt-1.5.5/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/pyportfolioopt-1.5.5/receipts/run-pyportfolioopt-1.5.5-20260912T214745Z.json",
+    "techne/fossils/specimens/pyportfolioopt-1.5.5/receipts/run-pyportfolioopt-1.5.5-20260912T215859Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\pyportfolioopt-1.5.5"
+  },
+  {
+   "fossil_id": "python-control",
+   "canonical_name": "python-control -- the Python Control Systems Library",
+   "lineage": "python-control (2010-, Murray et al., Caltech): LTI systems, state-space and transfer functions, LQR/LQE optimal control, pole placement, frequency response; the open reference implementing the classical/modern control toolbox in Python",
+   "human_purpose": "design and simulate controllers for linear dynamical systems -- compute an optimal state-feedback gain (LQR) that trades control effort against state error, and simulate the resulting closed loop",
+   "version": "github.com/python-control/python-control main as of 2026-09-12 (commit in hashes)",
+   "era": "2010-",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "control",
+    "optimal-control",
+    "state-feedback",
+    "lqr",
+    "feedback-control"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [],
+   "tree_sha256": "63a1737525ab96f4f176896cd3ae3a1115aa92d6c75de1db62cfb3fdd725a723",
+   "record_path": "techne/fossils/specimens/python-control/record.json",
+   "recipe_path": "techne/fossils/specimens/python-control/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164222Z.json",
+    "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164322Z.json",
+    "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164354Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\python-control"
+  },
+  {
+   "fossil_id": "python-sgp4-2.23",
+   "canonical_name": "python-sgp4 2.23 -- Vallado's SGP4/SDP4 satellite propagator (C++ core + Python), with the official test vectors (Brandon Rhodes)",
+   "lineage": "Simplified General Perturbations model 4 (Hoots & Roehrich, Spacetrack Report #3, 1980) as revised by Vallado, Crawford, Hujsak & Kelso (AIAA 2006-6753) -- the propagator behind every Two-Line Element set. Orbital mechanics under Earth oblateness, drag and lunar-solar resonance; the package embeds Vallado's C++ and ships tcppver.out, the reference trajectories every implementation must reproduce.",
+   "human_purpose": "predict where a satellite will be from a compact element set, fast enough for thousands of objects, accurately enough to point an antenna",
+   "version": "v2.23 (2024)",
+   "era": "1980 (model); 2006 (revision); 2012- (package)",
+   "language": [
+    "Python",
+    "C++"
+   ],
+   "domain": [
+    "orbital-mechanics",
+    "astrodynamics",
+    "precision",
+    "propagation",
+    "scientific-extreme"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityI",
+    "precision",
+    "scientific_extreme",
+    "outside_queue"
+   ],
+   "tree_sha256": "f75b0c555b5bee6976b6eecfb06c8a5f661e1a35c11f28ba8afbaa25de1d89bf",
+   "record_path": "techne/fossils/specimens/python-sgp4-2.23/record.json",
+   "recipe_path": "techne/fossils/specimens/python-sgp4-2.23/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260912T214648Z.json",
+    "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260912T215810Z.json",
+    "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260912T220043Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\python-sgp4-2.23"
+  },
+  {
+   "fossil_id": "quadpack-netlib",
+   "canonical_name": "QUADPACK -- Piessens/de Doncker adaptive quadrature (1983)",
+   "lineage": "quadpack (netlib historical distribution): the authoritative Fortran source as served by netlib.org, the authors' own channel",
+   "human_purpose": "numerically integrate a function of one variable, ADAPTING the subdivision to the estimated error (Gauss-Kronrod rules + epsilon extrapolation), including singular and infinite ranges",
+   "version": "netlib.org/quadpack as served 2026-09-12 (per-file; no tarball endpoint)",
+   "era": "1976-1985",
+   "language": [
+    "Fortran 77"
+   ],
+   "domain": [
+    "scientific-computing",
+    "numerical-integration",
+    "adaptive",
+    "numerical"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "public-domain (netlib)",
+   "acquisition_tags": [],
+   "tree_sha256": "36fcd9b89b93a2c342cca1cd2e6b1d5e645164eaa47b898e2bd84217e6aaec7e",
+   "record_path": "techne/fossils/specimens/quadpack-netlib/record.json",
+   "recipe_path": "techne/fossils/specimens/quadpack-netlib/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152132Z.json",
+    "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152213Z.json",
+    "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152424Z.json",
+    "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152540Z.json",
+    "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152641Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\quadpack-netlib"
+  },
+  {
+   "fossil_id": "radamsa-0.6",
+   "canonical_name": "Radamsa 0.6 -- a general-purpose mutational fuzzer (Aki Helin, OUSPG), written in Owl Lisp",
+   "lineage": "Black-box mutation fuzzing (Miller 1990 'fuzz'; Helin's Radamsa 2010-): take valid samples, apply a menu of structural mutations (byte flips, repeats, list/tree edits, number nudges) and emit adversarial inputs. Written in Owl Lisp (Helin's own purely functional Scheme dialect) and compiled to C -- a legacy-culture artifact as well as a pressure generator. PAIR: radamsa (pressure) <-> cJSON (the parser under attack).",
+   "human_purpose": "manufacture inputs that are almost valid, in volume, to find where a parser breaks",
+   "version": "v0.6 (2018)",
+   "era": "2010-",
+   "language": [
+    "Owl Lisp (Scheme dialect)",
+    "C (generated)"
+   ],
+   "domain": [
+    "adversarial",
+    "fuzzing",
+    "robustness",
+    "input-generation",
+    "lisp"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityF",
+    "adversarial_pair:pressure",
+    "legacy_culture:lisp",
+    "queue_named_family"
+   ],
+   "tree_sha256": "d324e3686c126799cfe20a9fb29bdcc7ce806d7268700d7b8c4b9e61122c77fc",
+   "record_path": "techne/fossils/specimens/radamsa-0.6/record.json",
+   "recipe_path": "techne/fossils/specimens/radamsa-0.6/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/radamsa-0.6/receipts/run-radamsa-0.6-20260912T211504Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\radamsa-0.6"
+  },
+  {
+   "fossil_id": "reed-solomon-rockliff-1991",
+   "canonical_name": "Reed-Solomon encoder/decoder -- Simon Rockliff (1989/1991)",
+   "lineage": "Rockliff RS (1989-1991, University of Adelaide): a textbook Reed-Solomon coder over GF(2^m) -- generate the field, build the generator polynomial, systematic encode, and Berlekamp-Massey + Forney erasure/error decode; the widely-copied reference on eccpage.com",
+   "human_purpose": "encode data with Reed-Solomon redundancy and recover it after a bounded number of symbol errors and erasures, over a Galois field",
+   "version": "eccpage.com/rs.c as served 2026-09-12 (single file, self-dated 26 June 1991)",
+   "era": "1989-1991",
+   "language": [
+    "C (K&R)"
+   ],
+   "domain": [
+    "error-correcting-codes",
+    "coding-theory",
+    "galois-field",
+    "algebraic-codes"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "public (Rockliff: 'This program may be freely modified and/or given to whoever wants it')",
+   "acquisition_tags": [
+    "error-correcting-codes",
+    "coding-theory",
+    "galois-field",
+    "algebraic-codes"
+   ],
+   "tree_sha256": "5a38a755ff062098c8a9730f2a3bb3e3baa434fc874d2643bd8eea5851f54744",
+   "record_path": "techne/fossils/specimens/reed-solomon-rockliff-1991/record.json",
+   "recipe_path": "techne/fossils/specimens/reed-solomon-rockliff-1991/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/reed-solomon-rockliff-1991/receipts/run-reed-solomon-rockliff-1991-20260912T143252Z.json",
+    "techne/fossils/specimens/reed-solomon-rockliff-1991/receipts/run-reed-solomon-rockliff-1991-20260912T143343Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\reed-solomon-rockliff-1991"
+  },
+  {
+   "fossil_id": "simple-kalman-denyssene",
+   "canonical_name": "SimpleKalmanFilter -- a compact scalar Kalman filter (Denys Sene)",
+   "lineage": "Kalman filter (1960, Rudolf Kalman): recursive least-squares estimation of hidden state from noisy measurements via predict/update; this is a minimal scalar C++ reference for embedded sensor smoothing",
+   "human_purpose": "recover a hidden true value from a stream of noisy measurements by recursively combining a prediction with each new observation, weighted by their uncertainties",
+   "version": "github.com/denyssene/SimpleKalmanFilter master as of 2026-09-12 (commit in hashes)",
+   "era": "1960 (this impl modern)",
+   "language": [
+    "C++"
+   ],
+   "domain": [
+    "estimation",
+    "kalman-filter",
+    "state-estimation",
+    "sensor-fusion",
+    "signal-reconstruction"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+   "license_spdx": "MIT",
+   "acquisition_tags": [],
+   "tree_sha256": "91e2463153d7bb5b132c18077bb4ee9c5b4207a43bb3a60245958ac071f083d6",
+   "record_path": "techne/fossils/specimens/simple-kalman-denyssene/record.json",
+   "recipe_path": "techne/fossils/specimens/simple-kalman-denyssene/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/simple-kalman-denyssene/receipts/run-simple-kalman-denyssene-20260912T162526Z.json",
+    "techne/fossils/specimens/simple-kalman-denyssene/receipts/run-simple-kalman-denyssene-20260912T162714Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\simple-kalman-denyssene"
+  },
+  {
+   "fossil_id": "souffle-2.4.1",
+   "canonical_name": "Souffle 2.4.1 -- a Datalog engine that compiles to C++",
+   "lineage": "Souffle (2016-, Oracle Labs / Sydney): a high-performance Datalog -- bottom-up semi-naive evaluation with a specialised data-structure back end, compiled to parallel C++; the modern engine behind large-scale static program analyses",
+   "human_purpose": "evaluate Datalog -- compute the least fixpoint of a set of recursive Horn rules over relations -- fast enough for whole-program static analysis of millions of tuples",
+   "version": "git tag 2.4.1, github.com/souffle-lang/souffle",
+   "era": "2016 (2.4.1 rel. 2023)",
+   "language": [
+    "C++",
+    "yacc/flex"
+   ],
+   "domain": [
+    "databases",
+    "datalog",
+    "logic",
+    "deductive-database",
+    "static-analysis",
+    "fixpoint"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "UPSTREAM_TESTS_NOT_RUN",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "UPL-1.0 (Universal Permissive License)",
+   "acquisition_tags": [
+    "databases",
+    "datalog",
+    "logic",
+    "deductive-database",
+    "static-analysis",
+    "fixpoint"
+   ],
+   "tree_sha256": "ac7b049d77c3f41025a6b66cec4450002e7dc6e8f6c877c61460b04913960c99",
+   "record_path": "techne/fossils/specimens/souffle-2.4.1/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\souffle-2.4.1"
+  },
+  {
+   "fossil_id": "spin-6.5.2-holzmann",
+   "canonical_name": "SPIN 6.5.2 model checker -- Gerard Holzmann",
+   "lineage": "SPIN (1989-, Bell Labs / JPL, Gerard Holzmann): explicit-state model checker for Promela; on-the-fly LTL verification via nested depth-first search, partial-order reduction, bitstate hashing",
+   "human_purpose": "prove that a concurrent protocol or program model satisfies safety and liveness properties, or produce a concrete counterexample execution",
+   "version": "git tag version-6.5.2, github.com/nimble-code/Spin (the author's repository)",
+   "era": "1989 (6.5.2 released 2020)",
+   "language": [
+    "C",
+    "yacc"
+   ],
+   "domain": [
+    "model-checking",
+    "verification",
+    "concurrency",
+    "protocols",
+    "search"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause (Spin's LICENSE since 6.5)",
+   "acquisition_tags": [
+    "model-checking",
+    "verification",
+    "concurrency",
+    "protocols",
+    "search"
+   ],
+   "tree_sha256": "30afd80d875d786f950a59d0ccbac8b19eebc1e2c5c4138f678fc3139cd15de5",
+   "record_path": "techne/fossils/specimens/spin-6.5.2-holzmann/record.json",
+   "recipe_path": "techne/fossils/specimens/spin-6.5.2-holzmann/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/spin-6.5.2-holzmann/receipts/run-spin-6.5.2-holzmann-20260912T125057Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\spin-6.5.2-holzmann"
+  },
+  {
+   "fossil_id": "spin-pathfinder-priority-inversion-1997",
+   "canonical_name": "Mars Pathfinder priority inversion (1997) as Holzmann's Promela model, checked with SPIN 6.5.2",
+   "lineage": "A REAL historical failure: the Mars Pathfinder lander (1997) suffered repeated system resets because a low-priority meteorological task held a mutex needed by the high-priority bus-management task while a medium-priority task starved it -- classic priority inversion under VxWorks, fixed by enabling priority inheritance. Holzmann's Promela model (Examples/pathfinder.pml in the SPIN distribution) reproduces the invalid end state (deadlock) and the fix. The failing model is preserved AS FAILING; SPIN is the instrument.",
+   "human_purpose": "share a resource between tasks of different priority on a real-time scheduler without the high-priority task being blocked indefinitely",
+   "version": "Spin version-6.5.2 tarball, Examples/pathfinder.pml (same artifact as spin-6.5.2-holzmann)",
+   "era": "1997 (event); model in SPIN distributions since the 2000s",
+   "language": [
+    "Promela",
+    "C (SPIN)"
+   ],
+   "domain": [
+    "concurrency",
+    "scheduling",
+    "priority-inversion",
+    "deadlock",
+    "failure",
+    "model-checking"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [
+    "batch05",
+    "priorityB",
+    "pathology",
+    "real_historical_failure",
+    "queue_named_family"
+   ],
+   "tree_sha256": "30afd80d875d786f950a59d0ccbac8b19eebc1e2c5c4138f678fc3139cd15de5",
+   "record_path": "techne/fossils/specimens/spin-pathfinder-priority-inversion-1997/record.json",
+   "recipe_path": "techne/fossils/specimens/spin-pathfinder-priority-inversion-1997/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/spin-pathfinder-priority-inversion-1997/receipts/run-spin-pathfinder-priority-inversion-1997-20260912T211155Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\spin-pathfinder-priority-inversion-1997"
+  },
+  {
+   "fossil_id": "sqlite-3.49.1-amalgamation",
+   "canonical_name": "SQLite 3.49.1 amalgamation -- D. Richard Hipp",
+   "lineage": "SQLite (2000-, Hipp): embedded transactional SQL database in one C file -- bytecode VM (VDBE), B-tree pager with rollback/WAL journaling, cost-based query planner, full ACID in-process",
+   "human_purpose": "give any program a full relational database with transactions in a single file, no server, no configuration",
+   "version": "3.49.1 amalgamation (sqlite.org/2025/sqlite-amalgamation-3490100.zip)",
+   "era": "2000 (3.49.1 released 2025)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "databases",
+    "query-planning",
+    "b-tree",
+    "transactions",
+    "storage-engine",
+    "virtual-machine"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "public-domain (blessing)",
+   "acquisition_tags": [
+    "databases",
+    "query-planning",
+    "b-tree",
+    "transactions",
+    "storage-engine",
+    "virtual-machine"
+   ],
+   "tree_sha256": "5028c95217712699af046f2ea520fc4173bf17191a0c45789191bcd69656a0eb",
+   "record_path": "techne/fossils/specimens/sqlite-3.49.1-amalgamation/record.json",
+   "recipe_path": "techne/fossils/specimens/sqlite-3.49.1-amalgamation/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/sqlite-3.49.1-amalgamation/receipts/run-sqlite-3.49.1-amalgamation-20260912T124717Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\sqlite-3.49.1-amalgamation"
+  },
+  {
+   "fossil_id": "swipl-9.2.9",
+   "canonical_name": "SWI-Prolog 9.2.9 -- Jan Wielemaker",
+   "lineage": "SWI-Prolog (1987-, Wielemaker): a full ISO Prolog with a WAM-style virtual machine, garbage collection, constraint (CLP) libraries, tabling and modules; the most widely used free Prolog and a living WAM lineage (Warren 1983)",
+   "human_purpose": "execute logic programs -- resolution (SLD) over Horn clauses with unification and backtracking -- as a practical, full-featured programming system",
+   "version": "git tag V9.2.9, github.com/SWI-Prolog/swipl-devel",
+   "era": "1987 (9.2.9 rel. 2024)",
+   "language": [
+    "C",
+    "Prolog"
+   ],
+   "domain": [
+    "logic-programming",
+    "prolog",
+    "wam",
+    "unification",
+    "resolution",
+    "languages"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "UPSTREAM_TESTS_NOT_RUN",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-2-Clause (core; some components differ)",
+   "acquisition_tags": [
+    "logic-programming",
+    "prolog",
+    "wam",
+    "unification",
+    "resolution",
+    "languages"
+   ],
+   "tree_sha256": "f025c50c8cb2bb360223ed5a80052a38cf2a1f4ee980efd2fb98a93e0ac6d78b",
+   "record_path": "techne/fossils/specimens/swipl-9.2.9/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\swipl-9.2.9"
+  },
+  {
+   "fossil_id": "tinycc",
+   "canonical_name": "TinyCC (tcc) -- Fabrice Bellard's small C compiler",
+   "lineage": "TinyCC (2001-, Bellard): a tiny, fast C99 compiler with its own back end (parse -> in-memory code generation -> ELF/executable) that can compile-and-run C in one step; a whole compiler pipeline small enough to read",
+   "human_purpose": "compile C to machine code very fast, in one small program that parses, type-checks, allocates registers and emits an executable (or runs it directly in memory)",
+   "version": "repo.or.cz/tinycc.git mob branch as of 2026-09-12 (commit in hashes)",
+   "era": "2001-",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "compilers",
+    "code-generation",
+    "parsing",
+    "languages",
+    "representation-transformation"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "LGPL-2.1-or-later",
+   "acquisition_tags": [],
+   "tree_sha256": "926f8626193eebf953c48cb590cb5d1b0bb51cbe7cd653df1557f16efb5a460c",
+   "record_path": "techne/fossils/specimens/tinycc/record.json",
+   "recipe_path": "techne/fossils/specimens/tinycc/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T152725Z.json",
+    "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T152920Z.json",
+    "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T153025Z.json",
+    "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T153231Z.json",
+    "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T153347Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\tinycc"
+  },
+  {
+   "fossil_id": "tinyekf-levy",
+   "canonical_name": "TinyEKF -- a header-only Extended Kalman Filter in C for microcontrollers and PCs (Simon D. Levy)",
+   "lineage": "The Extended Kalman Filter (Schmidt/Smith, NASA Apollo era, 1960s) reduced to a few hundred lines with static allocation for Arduino/Teensy-class hardware; shipped with a GPS position/velocity example whose data and reference implementation come from Rachel Blakeley's 'Extended Kalman Filter for GPS' (MATLAB). SMALL MECHANISM: predict, then update with a linearised measurement model.",
+   "human_purpose": "estimate a hidden state (position, clock bias) from nonlinear noisy measurements on a machine with kilobytes of RAM",
+   "version": "github.com/simondlevy/TinyEKF master as of 2026-09-12 (commit in hashes)",
+   "era": "2015-",
+   "language": [
+    "C",
+    "C++"
+   ],
+   "domain": [
+    "estimation",
+    "hidden-state",
+    "Kalman",
+    "embedded",
+    "small-mechanism",
+    "navigation"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityC",
+    "small_mechanism",
+    "estimation",
+    "queue_named_family"
+   ],
+   "tree_sha256": "1591ee24d60213fd596524e0cfc32ccf549e535e2d4f899872833adce3aa67f4",
+   "record_path": "techne/fossils/specimens/tinyekf-levy/record.json",
+   "recipe_path": "techne/fossils/specimens/tinyekf-levy/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/tinyekf-levy/receipts/run-tinyekf-levy-20260912T210119Z.json",
+    "techne/fossils/specimens/tinyekf-levy/receipts/run-tinyekf-levy-20260912T210255Z.json",
+    "techne/fossils/specimens/tinyekf-levy/receipts/run-tinyekf-levy-20260912T210525Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\tinyekf-levy"
+  },
+  {
+   "fossil_id": "tinyscheme-1.42",
+   "canonical_name": "TinyScheme 1.42 -- Dimitrios Souflis et al.",
+   "lineage": "TinyScheme (2000-, from Atsushi Moriwaki's MiniScheme 1989): a small R5RS-ish Scheme interpreter in one C file -- s-expression reader, eval/apply on a dispatch loop, mark-and-sweep GC, call/cc, tail calls",
+   "human_purpose": "embed a complete, tiny Scheme in a C program as a scripting/extension language",
+   "version": "tinyscheme-1.42.tar.gz (sourceforge)",
+   "era": "1989/2000 (1.42 released 2021)",
+   "language": [
+    "C",
+    "Scheme"
+   ],
+   "domain": [
+    "languages",
+    "interpreters",
+    "lisp",
+    "garbage-collection"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [
+    "languages",
+    "interpreters",
+    "lisp",
+    "garbage-collection"
+   ],
+   "tree_sha256": "134ca51590fd79bbcc7549318aa450540f39980f5b7bb22af4cff199f69921ce",
+   "record_path": "techne/fossils/specimens/tinyscheme-1.42/record.json",
+   "recipe_path": "techne/fossils/specimens/tinyscheme-1.42/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/tinyscheme-1.42/receipts/run-tinyscheme-1.42-20260912T124715Z.json",
+    "techne/fossils/specimens/tinyscheme-1.42/receipts/run-tinyscheme-1.42-20260912T202727Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\tinyscheme-1.42"
+  },
+  {
+   "fossil_id": "tinystm-marlier",
+   "canonical_name": "TinySTM -- a lightweight word-based software transactional memory (Felber, Fetzer, Riegel, Marlier; 2007-)",
+   "lineage": "Software transactional memory (Shavit & Touitou 1995) as the research lineage that competed with lock-based concurrency in the multicore decade: TinySTM (2007, Univ. Neuchatel / TU Dresden) uses time-based validation (Riegel), encounter- or commit-time locking, and ships micro-benchmarks (bank, intset) that count aborts/commits. The human record: STM lost the mainstream to fine-grained locks and lock-free structures, survived in Haskell/Clojure and Intel TSX -- a partly SUPERSEDED design, preserved.",
+   "human_purpose": "let threads compose memory operations into atomic transactions that abort and retry on conflict instead of holding locks",
+   "version": "github.com/patrickmarlier/tinystm master as of 2026-09-12 (commit in hashes; 1.0.5 lineage)",
+   "era": "2007-",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "concurrency",
+    "transactional-memory",
+    "contention",
+    "abort-retry",
+    "superseded-design"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "GPL-2.0",
+   "acquisition_tags": [
+    "batch05",
+    "priorityE",
+    "concurrency",
+    "superseded_design",
+    "outside_queue"
+   ],
+   "tree_sha256": "9fd0d198dbefbcdb02daff6b26a88bc3417cd009f8e80dcfa84275bad04f4f8a",
+   "record_path": "techne/fossils/specimens/tinystm-marlier/record.json",
+   "recipe_path": "techne/fossils/specimens/tinystm-marlier/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/tinystm-marlier/receipts/run-tinystm-marlier-20260912T211133Z.json",
+    "techne/fossils/specimens/tinystm-marlier/receipts/run-tinystm-marlier-20260912T211303Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\tinystm-marlier"
+  },
+  {
+   "fossil_id": "tscp-1.81-kerrigan-1997",
+   "canonical_name": "TSCP 1.81 -- Tom Kerrigan's Simple Chess Program",
+   "lineage": "TSCP (1997-, Tom Kerrigan): the didactic chess engine -- 0x88-free mailbox board, alpha-beta with iterative deepening, quiescence, killer moves, history heuristic, simple evaluation",
+   "human_purpose": "play legal, reasonable chess with the smallest readable code, so people could learn how chess programs search",
+   "version": "tscp181.zip from tckerrigan.com (the author's site)",
+   "era": "1997 (1.81 released 2001)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "games",
+    "chess",
+    "alpha-beta-search",
+    "game-tree-search"
+   ],
+   "run_status": "RUNNABLE_NATIVE",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "custom (author permits use for learning; see the source header)",
+   "acquisition_tags": [
+    "games",
+    "chess",
+    "alpha-beta-search",
+    "game-tree-search"
+   ],
+   "tree_sha256": "3f85294cf11763e5e0a43e9c4c38b4e2db151142bce1295f931d744ba7010ec4",
+   "record_path": "techne/fossils/specimens/tscp-1.81-kerrigan-1997/record.json",
+   "recipe_path": "techne/fossils/specimens/tscp-1.81-kerrigan-1997/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/tscp-1.81-kerrigan-1997/receipts/run-tscp-1.81-kerrigan-1997-20260912T124714Z.json",
+    "techne/fossils/specimens/tscp-1.81-kerrigan-1997/receipts/run-tscp-1.81-kerrigan-1997-20260912T124927Z.json",
+    "techne/fossils/specimens/tscp-1.81-kerrigan-1997/receipts/run-tscp-1.81-kerrigan-1997-20260912T125013Z.json",
+    "techne/fossils/specimens/tscp-1.81-kerrigan-1997/receipts/run-tscp-1.81-kerrigan-1997-20260912T175210Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\tscp-1.81-kerrigan-1997"
+  },
+  {
+   "fossil_id": "umdhmm-kanungo-1.02",
+   "canonical_name": "UMDHMM 1.02 -- Hidden Markov Model toolkit in C: forward, backward, Viterbi and Baum-Welch (Tapas Kanungo, 1998)",
+   "lineage": "Rabiner's 1989 tutorial algorithms implemented directly in C at the University of Maryland (1998): esthmm TRAINS an HMM from an observation sequence by Baum-Welch (EM), testfor/testvit evaluate and decode, genseq samples. The classic compact reference many later toolkits cite; complements the vault's decode-only viterbi-hmm-xukmin. Preserved from a GitHub mirror of Kanungo's original distribution (the author's page is gone) -- HISTORICAL_ARCHIVE_MIRROR.",
+   "human_purpose": "learn the transition and emission probabilities of a hidden process from its outputs alone, then decode the hidden states",
+   "version": "UMDHMM 1.02 (VERSION file); mirror github.com/palanceli/UMDHMM master (commit in hashes)",
+   "era": "1998",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "estimation",
+    "hidden-state",
+    "HMM",
+    "EM",
+    "learning"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "NOASSERTION",
+   "acquisition_tags": [
+    "batch05",
+    "priorityC",
+    "estimation",
+    "learning",
+    "legacy_c",
+    "queue_named_family"
+   ],
+   "tree_sha256": "56f67cde1a1e01748d49a39265d574ea7adb7eadb5963c35f53f32d2ef8d1753",
+   "record_path": "techne/fossils/specimens/umdhmm-kanungo-1.02/record.json",
+   "recipe_path": "techne/fossils/specimens/umdhmm-kanungo-1.02/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/umdhmm-kanungo-1.02/receipts/run-umdhmm-kanungo-1.02-20260912T210116Z.json",
+    "techne/fossils/specimens/umdhmm-kanungo-1.02/receipts/run-umdhmm-kanungo-1.02-20260912T210253Z.json",
+    "techne/fossils/specimens/umdhmm-kanungo-1.02/receipts/run-umdhmm-kanungo-1.02-20260912T210520Z.json",
+    "techne/fossils/specimens/umdhmm-kanungo-1.02/receipts/run-umdhmm-kanungo-1.02-20260912T210719Z.json",
+    "techne/fossils/specimens/umdhmm-kanungo-1.02/receipts/run-umdhmm-kanungo-1.02-20260912T210812Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\umdhmm-kanungo-1.02"
+  },
+  {
+   "fossil_id": "verilog-arbiter-forencich",
+   "canonical_name": "Parametrizable priority / round-robin arbiter with priority encoder (Verilog, Alex Forencich, verilog-axi)",
+   "lineage": "The two-module arbiter used across Forencich's open FPGA IP (AXI, Ethernet, PCIe): a priority encoder plus an arbiter that can be fixed-priority or round-robin, with block-on-acknowledge or block-on-grant policies -- a SMALL DECISION MECHANISM (who gets the bus this cycle) with exposed state (mask, grant, grant_encoded). Rival to the freecores rr-arbiter already in the vault.",
+   "human_purpose": "decide each cycle which of several requesters owns a shared resource, either by fixed priority or in rotation",
+   "version": "alexforencich/verilog-axi master rtl/arbiter.v + rtl/priority_encoder.v as fetched 2026-09-12",
+   "era": "2014-",
+   "language": [
+    "Verilog"
+   ],
+   "domain": [
+    "hardware",
+    "arbitration",
+    "contention",
+    "small-mechanism",
+    "verilog"
+   ],
+   "run_status": "RUNNABLE_EMULATED",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "batch05",
+    "priorityH",
+    "hardware",
+    "small_mechanism",
+    "contention",
+    "outside_queue"
+   ],
+   "tree_sha256": "d4a077c09b5d6bfa8705d70a5d10e329725b33e849b67a5ce5d31652399a54ad",
+   "record_path": "techne/fossils/specimens/verilog-arbiter-forencich/record.json",
+   "recipe_path": "techne/fossils/specimens/verilog-arbiter-forencich/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/verilog-arbiter-forencich/receipts/run-verilog-arbiter-forencich-20260912T211739Z.json",
+    "techne/fossils/specimens/verilog-arbiter-forencich/receipts/run-verilog-arbiter-forencich-20260912T211903Z.json",
+    "techne/fossils/specimens/verilog-arbiter-forencich/receipts/run-verilog-arbiter-forencich-20260912T212120Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\verilog-arbiter-forencich"
+  },
+  {
+   "fossil_id": "verilog-generic-fifo",
+   "canonical_name": "Generic synchronous/async FIFO (Verilog, freecores)",
+   "lineage": "A FIFO with full/empty flags and (in the async case) gray-coded pointers is the standard backpressure/flow-control element between two clock or rate domains -- it holds state and asserts 'full' to stall a fast producer",
+   "human_purpose": "buffer data between a producer and consumer running at different rates, asserting 'full' to stall the producer and 'empty' to stall the consumer -- flow control in hardware",
+   "version": "github.com/freecores/generic_fifos master as of 2026-09-12 (commit in hashes)",
+   "era": "classic (this Verilog impl)",
+   "language": [
+    "Verilog"
+   ],
+   "domain": [
+    "hardware",
+    "fifo",
+    "backpressure",
+    "flow-control",
+    "sequential-logic",
+    "verilog"
+   ],
+   "run_status": "RUNNABLE_EMULATED",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "see repo (OpenCores)",
+   "acquisition_tags": [],
+   "tree_sha256": "71549df2068e4712d08e36abdace415f88bad4cafed1651f5ba217e69dc284a4",
+   "record_path": "techne/fossils/specimens/verilog-generic-fifo/record.json",
+   "recipe_path": "techne/fossils/specimens/verilog-generic-fifo/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/verilog-generic-fifo/receipts/run-verilog-generic-fifo-20260912T162146Z.json",
+    "techne/fossils/specimens/verilog-generic-fifo/receipts/run-verilog-generic-fifo-20260912T162254Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\verilog-generic-fifo"
+  },
+  {
+   "fossil_id": "verilog-rr-arbiter",
+   "canonical_name": "Round-robin arbiter (Verilog, freecores)",
+   "lineage": "Round-robin arbitration: when several requesters compete for one shared resource, grant fairly in rotation so none starves; the arbiter is a small finite-state DECISION machine at the heart of buses, NoCs and schedulers",
+   "human_purpose": "decide, each clock, which of several simultaneous requesters gets a shared resource, rotating priority so every requester is served and none is starved",
+   "version": "github.com/freecores/round_robin_arbiter master as of 2026-09-12 (commit in hashes)",
+   "era": "classic (this Verilog impl)",
+   "language": [
+    "Verilog"
+   ],
+   "domain": [
+    "hardware",
+    "arbiter",
+    "contention",
+    "finite-state-machine",
+    "fairness",
+    "verilog"
+   ],
+   "run_status": "RUNNABLE_EMULATED",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "see repo (OpenCores; often LGPL/BSD)",
+   "acquisition_tags": [],
+   "tree_sha256": "b87f9278bbf6a9630ee8e487f67fe6ab7f45b2239610491b2c3a45fc434058e8",
+   "record_path": "techne/fossils/specimens/verilog-rr-arbiter/record.json",
+   "recipe_path": "techne/fossils/specimens/verilog-rr-arbiter/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/verilog-rr-arbiter/receipts/run-verilog-rr-arbiter-20260912T162136Z.json",
+    "techne/fossils/specimens/verilog-rr-arbiter/receipts/run-verilog-rr-arbiter-20260912T202757Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\verilog-rr-arbiter"
+  },
+  {
+   "fossil_id": "verilog-uart2bus",
+   "canonical_name": "UART-to-bus protocol controller (Verilog, freecores)",
+   "lineage": "A UART receiver/transmitter with a bus-interface FSM: it synchronises to an asynchronous serial line (start-bit detection, mid-bit sampling, framing), a protocol state machine coping with timing and framing errors -- classic sequential control under timing pressure",
+   "human_purpose": "receive asynchronous serial data with no shared clock -- detect the start bit, sample each bit at mid-period, check framing -- and turn decoded bytes into bus read/write commands",
+   "version": "github.com/freecores/uart2bus master as of 2026-09-12 (commit in hashes)",
+   "era": "classic (this Verilog impl)",
+   "language": [
+    "Verilog"
+   ],
+   "domain": [
+    "hardware",
+    "protocol-controller",
+    "finite-state-machine",
+    "serial",
+    "synchronization",
+    "verilog"
+   ],
+   "run_status": "RUNNABLE_EMULATED",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "see repo (OpenCores)",
+   "acquisition_tags": [],
+   "tree_sha256": "3b41bf158603334d2b93d267637134759522d8c508cef6f700452585dc34da7a",
+   "record_path": "techne/fossils/specimens/verilog-uart2bus/record.json",
+   "recipe_path": "techne/fossils/specimens/verilog-uart2bus/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/verilog-uart2bus/receipts/run-verilog-uart2bus-20260912T162148Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\verilog-uart2bus"
+  },
+  {
+   "fossil_id": "viterbi-hmm-xukmin",
+   "canonical_name": "Viterbi / HMM decoder (compact C++ reference, Min Xu)",
+   "lineage": "The Viterbi algorithm (1967) over a Hidden Markov Model (Rabiner 1989): find the most-likely hidden state path for an observation sequence by dynamic programming over the trellis; this is a small, tested C++ reference of the HMM + Viterbi decode",
+   "human_purpose": "recover the most-likely sequence of hidden states that produced an observed sequence, by dynamic programming over the HMM trellis (predict-then-max at each step)",
+   "version": "github.com/xukmin/viterbi master as of 2026-09-12 (commit in hashes)",
+   "era": "1967/1989 lineage; this impl modern",
+   "language": [
+    "C++"
+   ],
+   "domain": [
+    "estimation",
+    "hidden-markov-model",
+    "viterbi",
+    "dynamic-programming",
+    "sequence-modelling",
+    "hidden-state"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+   "license_spdx": "see repo LICENSE.md",
+   "acquisition_tags": [],
+   "tree_sha256": "090ce20d7d7c9b28970092ebdac2c6ec16b3f86113bdaecbfa67299a113d5433",
+   "record_path": "techne/fossils/specimens/viterbi-hmm-xukmin/record.json",
+   "recipe_path": "techne/fossils/specimens/viterbi-hmm-xukmin/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/viterbi-hmm-xukmin/receipts/run-viterbi-hmm-xukmin-20260912T162528Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\viterbi-hmm-xukmin"
+  },
+  {
+   "fossil_id": "walksat-v56",
+   "canonical_name": "WalkSAT -- Kautz and Selman (stochastic local search for SAT)",
+   "lineage": "GSAT (1992) -> WalkSAT (1994, Selman, Kautz, Cohen): STOCHASTIC LOCAL SEARCH for SAT -- flip the variable that minimises broken clauses, with a random-walk escape; an incomplete solver that finds models fast but never proves UNSAT. The opposite paradigm to CDCL (MiniSat/PicoSAT).",
+   "human_purpose": "find a satisfying assignment for a hard SAT instance quickly by hill-climbing on the count of unsatisfied clauses with random restarts and walks",
+   "version": "Kautz's Walksat repository default branch as of 2026-09-12 (commit in hashes)",
+   "era": "1994 (this repo the maintained C source)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "sat",
+    "stochastic-local-search",
+    "search",
+    "optimization"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "custom academic (Kautz/Selman; see the source header)",
+   "acquisition_tags": [
+    "sat",
+    "stochastic-local-search",
+    "search",
+    "optimization"
+   ],
+   "tree_sha256": "b65452d65d50b26e27f8185d7a0d430eca3c9dc6c34bd8df2ead372f8aba7bd2",
+   "record_path": "techne/fossils/specimens/walksat-v56/record.json",
+   "recipe_path": "techne/fossils/specimens/walksat-v56/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/walksat-v56/receipts/run-walksat-v56-20260912T143448Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\walksat-v56"
+  },
+  {
+   "fossil_id": "whitakers-words-ada",
+   "canonical_name": "Whitaker's Words -- a Latin morphological analyser and dictionary in Ada (Col. William Whitaker, 1993-2006; maintained by Martin Keegan)",
+   "lineage": "A large REAL Ada program (tens of thousands of lines) from the language's first generation: parses Latin word forms into stem + inflection against a 39,000-entry dictionary, handling enclitics, tackons, prefixes/suffixes and syncope; runs on DOS/Windows/Unix for three decades. Public domain by its author. The Ada culture's strong typing and packages are visible throughout.",
+   "human_purpose": "explain any Latin word form by finding which stem plus which inflection could produce it, against a real dictionary",
+   "version": "github.com/mk270/whitakers-words master as of 2026-09-12 (commit in hashes)",
+   "era": "1993-2006 (Whitaker); repository 2013-",
+   "language": [
+    "Ada"
+   ],
+   "domain": [
+    "natural-language",
+    "morphology",
+    "dictionary",
+    "legacy-culture",
+    "ada"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "LATER_SAME_LINEAGE_RELEASE",
+   "license_spdx": "Public-Domain",
+   "acquisition_tags": [
+    "batch05",
+    "priorityG",
+    "legacy_culture:ada",
+    "outside_queue"
+   ],
+   "tree_sha256": "f660d9efaa19c586b012f015c14cce67d53bd58ddf6516b29187d2d2004a1eda",
+   "record_path": "techne/fossils/specimens/whitakers-words-ada/record.json",
+   "recipe_path": "techne/fossils/specimens/whitakers-words-ada/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T214433Z.json",
+    "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T224433Z.json",
+    "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T224633Z.json",
+    "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T224807Z.json",
+    "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T231344Z.json",
+    "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T233941Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\whitakers-words-ada"
+  },
+  {
+   "fossil_id": "willemt-raft",
+   "canonical_name": "willemt/raft -- a C implementation of the Raft consensus algorithm",
+   "lineage": "Raft (2014, Ongaro & Ousterhout): understandable distributed consensus -- leader election, log replication, and safety across crashing/partitioning nodes; willemt/raft is a widely-used embeddable C library of the core state machine",
+   "human_purpose": "keep a replicated log consistent across a cluster of machines that crash, restart, and get partitioned -- by electing a leader and replicating entries only when a majority acknowledges",
+   "version": "github.com/willemt/raft master as of 2026-09-12 (commit in hashes)",
+   "era": "2014-",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "distributed-systems",
+    "consensus",
+    "leader-election",
+    "replication",
+    "recovery",
+    "fault-tolerance"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [],
+   "tree_sha256": "4a8b3aca72e1b778176c868e69979071ab0eb33984b00dbbb4b12322616b7603",
+   "record_path": "techne/fossils/specimens/willemt-raft/record.json",
+   "recipe_path": "techne/fossils/specimens/willemt-raft/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163240Z.json",
+    "techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163503Z.json",
+    "techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163644Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\willemt-raft"
+  },
+  {
+   "fossil_id": "xv6-riscv",
+   "canonical_name": "xv6-riscv -- MIT teaching operating system (RISC-V port)",
+   "lineage": "xv6 (2006-, MIT PDOS): a re-implementation of Sixth Edition Unix for teaching -- a real preemptive multiprocess kernel with a scheduler, virtual memory, a log-structured crash-safe filesystem, pipes and traps, small enough to read entirely",
+   "human_purpose": "be a complete, readable Unix-like kernel -- schedule processes across cores, give each an isolated virtual address space, and keep a crash-recoverable filesystem -- for students to modify",
+   "version": "github.com/mit-pdos/xv6-riscv riscv branch as of 2026-09-12 (commit in hashes)",
+   "era": "2006 (riscv port 2019-)",
+   "language": [
+    "C",
+    "RISC-V assembly"
+   ],
+   "domain": [
+    "operating-systems",
+    "process-scheduling",
+    "virtual-memory",
+    "filesystem",
+    "journaling",
+    "kernel"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [],
+   "tree_sha256": "45ba46ee61dbd6e2de6baa2193b29655e124814780f547a8d397201a8dc93298",
+   "record_path": "techne/fossils/specimens/xv6-riscv/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\xv6-riscv"
+  },
+  {
+   "fossil_id": "zchaff-2007",
+   "canonical_name": "zChaff (Princeton, 2001-2007) -- the Chaff CDCL SAT solver: VSIDS and two-watched-literals, the RIVAL MiniSat displaced",
+   "lineage": "SAT lineage, the LOSING COMPETITOR: Chaff (Moskewicz, Madigan, Zhao, Zhang, Malik, DAC 2001) introduced the VSIDS decision heuristic and two-literal watching that every later CDCL solver uses; zChaff won SAT 2002. MiniSat (Een & Sorensson 2003) reimplemented the same ideas in a fraction of the code with better restarts/learnt-clause management and took the field; zChaff's last release is 2007.3.12 and it has not been developed since. Preserved from Princeton's page.",
+   "human_purpose": "decide propositional satisfiability on industrial instances (verification, EDA) by conflict-driven learning with cheap propagation and a decaying activity heuristic",
+   "version": "zchaff.64bit.2007.3.12 (Princeton distribution)",
+   "era": "2001-2007",
+   "language": [
+    "C++ (2001-era)"
+   ],
+   "domain": [
+    "SAT",
+    "search",
+    "CDCL",
+    "loser",
+    "superseded-design"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "NOASSERTION",
+   "acquisition_tags": [
+    "batch05",
+    "depth:sat",
+    "failed_branch",
+    "loser",
+    "rival",
+    "outside_queue"
+   ],
+   "tree_sha256": "3e95242e880b29d8ab9201f6a74451710f5d9819a5bb44e7c1f2be5911e06cdf",
+   "record_path": "techne/fossils/specimens/zchaff-2007/record.json",
+   "recipe_path": "techne/fossils/specimens/zchaff-2007/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/zchaff-2007/receipts/run-zchaff-2007-20260912T210114Z.json",
+    "techne/fossils/specimens/zchaff-2007/receipts/run-zchaff-2007-20260912T210251Z.json",
+    "techne/fossils/specimens/zchaff-2007/receipts/run-zchaff-2007-20260912T210513Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\zchaff-2007"
+  },
+  {
+   "fossil_id": "zlib-1.3.1",
+   "canonical_name": "zlib 1.3.1 -- the DEFLATE reference (Gailly & Adler)",
+   "lineage": "zlib (1995-, Jean-loup Gailly & Mark Adler): the reference DEFLATE -- LZ77 sliding-window matching + Huffman coding of literals/lengths/distances; the compression behind gzip, PNG, zip and HTTP",
+   "human_purpose": "compress and decompress a byte stream losslessly by finding repeated substrings within a 32KB window (LZ77) and entropy-coding the result (Huffman)",
+   "version": "git tag v1.3.1, github.com/madler/zlib",
+   "era": "1995 (1.3.1 rel. 2024)",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "compression",
+    "lz77",
+    "huffman",
+    "dictionary-coding"
+   ],
+   "run_status": "RUNNABLE_CONTAINER",
+   "test_status": "UPSTREAM_TESTS_PASS",
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Zlib",
+   "acquisition_tags": [],
+   "tree_sha256": "de66ed57b3a84acfb93b8c2e73f365df280754b56118c4f1dc7499cce68fc327",
+   "record_path": "techne/fossils/specimens/zlib-1.3.1/record.json",
+   "recipe_path": "techne/fossils/specimens/zlib-1.3.1/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/zlib-1.3.1/receipts/run-zlib-1.3.1-20260912T152727Z.json",
+    "techne/fossils/specimens/zlib-1.3.1/receipts/run-zlib-1.3.1-20260912T202736Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\zlib-1.3.1"
+  }
+ ]
+}

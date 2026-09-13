@@ -1,0 +1,133 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "backoff-2.2.1",
+  "canonical_name": "backoff 2.2.1 -- exponential backoff with jitter as Python decorators (litl)",
+  "aliases": [
+    "backoff",
+    "expo backoff"
+  ],
+  "lineage": "The retry rule of Ethernet (binary exponential backoff, 1973-76) and of TCP RTO, packaged for application code; jitter follows the 'full jitter' analysis (Brooker, AWS Architecture Blog 2015). A small mechanism: wait = min(cap, base * 2^n) * random.",
+  "domain": [
+    "retry",
+    "backoff",
+    "contention",
+    "small-mechanism"
+  ],
+  "era": "2014-",
+  "version": "v2.2.1 (2022)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/litl/backoff/archive/refs/tags/v2.2.1.tar.gz",
+        "filename": "backoff-2.2.1.tar.gz"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/litl/backoff",
+    "tag": "v2.2.1"
+  },
+  "hashes": {
+    "tree_sha256": "488002d80d9becf538ba6106282356e95020c502d22cec663b3d6830ed77b5cb",
+    "n_files": 29,
+    "bytes": 126703,
+    "artifacts": [
+      {
+        "filename": "backoff-2.2.1.tar.gz",
+        "sha256": "7b92e74aac38ec49e97ac899c96c882496c7b09cf4235e8da205e62b2c6c001d",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\backoff-2.2.1",
+    "hash_list": "techne/fossils/specimens/backoff-2.2.1/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "none (pure python)",
+  "compiler_or_interpreter": "python 3.11 (docker python:3.11-slim)",
+  "dependencies": [
+    "none"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "backoff.expo(), backoff.full_jitter(), backoff.on_exception(wait_gen, exception, max_tries)"
+  ],
+  "example": {
+    "command": "python harness: generate the wait sequence of expo with and without full_jitter",
+    "input": "base, factor, max_value",
+    "output": "the wait schedule and its spread"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Brooker, Exponential Backoff And Jitter, AWS Architecture Blog, 2015",
+    "Metcalfe & Boggs, Ethernet, CACM 1976 (binary exponential backoff)"
+  ],
+  "human_capability_summary": {
+    "built_to": "spread retries out in time, and de-synchronise many retriers so they do not collide again",
+    "pressure": "a shared resource that fails under simultaneous demand; retries that re-collide if scheduled identically",
+    "success_means": "the retrying population thins out geometrically and desynchronises; the resource recovers"
+  },
+  "known_human_problem_solved": "collision/overload avoidance among retrying clients",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "contention on a shared resource, transient failure",
+  "human_failure_condition": "synchronised retry storm: every client retries at the same instant and the resource never recovers",
+  "behavioral_entry_point": "compare the wait schedules of expo vs full_jitter over many clients: identical versus spread",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Ethernet BEB (Metcalfe & Boggs 1976); Brooker 2015 jitter",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityA",
+    "small_mechanism"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/backoff-2.2.1/receipts/run-backoff-2.2.1-20260912T214437Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/backoff-2.2.1/receipts/run-backoff-2.2.1-20260912T215611Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\backoff-2.2.1 ; tracked techne/fossils/specimens/backoff-2.2.1",
+    "where_it_came_from": "https://github.com/litl/backoff/archive/refs/tags/v2.2.1.tar.gz ; ORIGINAL_AUTHORITATIVE_RELEASE",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run backoff-2.2.1",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/backoff-2.2.1/receipts/run-backoff-2.2.1-20260912T215611Z.json",
+    "what_humans_used_it_for": "spread retries out in time, and de-synchronise many retriers so they do not collide again"
+  },
+  "seat": "Techne"
+}

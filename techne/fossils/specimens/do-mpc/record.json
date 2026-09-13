@@ -61,8 +61,8 @@
     "numpy",
     "an NLP solver (IPOPT)"
   ],
-  "run_classification": "SOURCE_ONLY",
-  "test_classification": "NO_TESTS",
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
   "entry_points": [
     "do_mpc.controller.MPC over a do_mpc.model; the receding-horizon loop"
   ],
@@ -91,22 +91,35 @@
   "human_failure_condition": "the horizon optimisation is infeasible or too slow -> the controller stalls or violates a constraint (a physical limit is breached)",
   "behavioral_entry_point": "tighten a constraint or shorten the solve deadline until the receding-horizon problem becomes infeasible",
   "observability": {
-    "EXECUTABLE": "no",
-    "OBSERVABLE": "no",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
     "ORACLE_BACKED": "no",
-    "INTERVENTION_READY": "unknown",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
     "OPAQUE": "no"
   },
   "lineage_relations": [],
   "acquisition_tags": [],
   "versions_preserved": [],
-  "receipts": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/do-mpc/receipts/run-do-mpc-20260912T220202Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/do-mpc/receipts/run-do-mpc-20260912T220324Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
   "nyx_handoff": {
     "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\do-mpc ; tracked techne/fossils/specimens/do-mpc",
     "where_it_came_from": "https://github.com/do-mpc/do-mpc ; ORIGINAL_AUTHORITATIVE_RELEASE @ 6ec14cb70daa189d7eb70c0e6f6d90442db01c92",
-    "how_to_run_it": "SOURCE_ONLY: do-mpc builds on CasADi + IPOPT (heavy nonlinear-optimisation stack). Preserved + tree-hashed; a runnable MPC receipt is deferred to a world with CasADi/IPOPT.",
-    "how_we_know_it_runs": "not executed; body tree_sha256 df82e517cdf342d1 pinned in UPSTREAM_HASHES.txt",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run do-mpc",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/do-mpc/receipts/run-do-mpc-20260912T220324Z.json",
     "what_humans_used_it_for": "control a constrained dynamical system by repeatedly solving, at each step, a finite-horizon optimisation over a model of the plant and applying only the first move -- anticipating the future and respecting constraints"
   },
   "seat": "Techne"

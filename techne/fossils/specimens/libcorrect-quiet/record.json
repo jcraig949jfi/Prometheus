@@ -1,0 +1,141 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "libcorrect-quiet",
+  "canonical_name": "libcorrect -- convolutional (Viterbi) and Reed-Solomon forward error correction in C (Brian Armstrong, Quiet Modem Project)",
+  "aliases": [
+    "libcorrect",
+    "correct"
+  ],
+  "lineage": "A portable SUCCESSOR/RIVAL to Phil Karn's libfec (in the vault as libfec-karn, BLOCKED by its 32-bit x86 assembly): the same two code families -- convolutional codes decoded by Viterbi, and Reed-Solomon over GF(2^8) -- reimplemented in plain C with SSE optional, plus a libfec-compatible shim. Its tests are the ADVERSARIAL PAIR: a noise/erasure injector corrupts codewords, the decoders must recover them. Deepens the ECC lineage: Rockliff RS (1991) -> Karn libfec (1990s-2000s) -> libcorrect (2016-).",
+  "domain": [
+    "error-correction",
+    "coding",
+    "adversarial",
+    "noise",
+    "communications"
+  ],
+  "era": "2016-",
+  "version": "github.com/quiet/libcorrect master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/quiet/libcorrect",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/quiet/libcorrect"
+  },
+  "hashes": {
+    "tree_sha256": "ddaf51af3e29f03b9c818f1d519d698125c96e6c96a580af8f7d8bde75ac5e3d",
+    "n_files": 76,
+    "bytes": 263406,
+    "artifacts": [
+      {
+        "filename": "https://github.com/quiet/libcorrect",
+        "sha256": null,
+        "commit": "ee82e6673a806dfdf0a969b975ab36596ecc5401"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\libcorrect-quiet",
+    "hash_list": "techne/fossils/specimens/libcorrect-quiet/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "cmake",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [
+    "cmake; libfec-compatible API optional"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "correct_convolutional_create/encode/decode; correct_reed_solomon_create/encode/decode(_with_erasures); tests/ (noise injection + decode)"
+  ],
+  "example": {
+    "command": "cmake .. && make && make check (or ./tests/convolutional && ./tests/reed_solomon)",
+    "input": "random messages corrupted by the test's noise model",
+    "output": "bit-error and block-error counts: decode succeeds within the code's correction bound"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "README.md (in the tree)",
+    "Viterbi, Error bounds for convolutional codes, IEEE IT 1967",
+    "Reed & Solomon, Polynomial Codes over Certain Finite Fields, 1960"
+  ],
+  "human_capability_summary": {
+    "built_to": "carry data across a channel that flips or erases symbols, and recover the message exactly",
+    "pressure": "noise, erasures, burst errors; portability pressure that killed the assembly-bound predecessor",
+    "success_means": "every codeword corrupted within the design bound decodes to the original message; beyond the bound, failure is detected or reported"
+  },
+  "known_human_problem_solved": "reliable communication over noisy channels",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "channel noise, symbol erasure, CPU/platform diversity",
+  "human_failure_condition": "miscorrection: the decoder returns the wrong message with confidence",
+  "behavioral_entry_point": "raise the injected error rate past the correction bound in the tests and watch decode failures appear",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "reimplementation_of",
+      "to": "libfec-karn",
+      "note": "portable C replacement for Karn's libfec; libfec-compatible shim"
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "reed-solomon-rockliff-1991",
+      "note": "Reed-Solomon over GF(2^8)"
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "viterbi-hmm-xukmin",
+      "note": "the Viterbi algorithm: decoding codes vs decoding HMM states"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityF",
+    "adversarial_pair",
+    "depth:ecc",
+    "successor",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/libcorrect-quiet/receipts/run-libcorrect-quiet-20260912T211141Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\libcorrect-quiet ; tracked techne/fossils/specimens/libcorrect-quiet",
+    "where_it_came_from": "https://github.com/quiet/libcorrect ; ORIGINAL_AUTHORITATIVE_RELEASE @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run libcorrect-quiet",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/libcorrect-quiet/receipts/run-libcorrect-quiet-20260912T211141Z.json",
+    "what_humans_used_it_for": "carry data across a channel that flips or erases symbols, and recover the message exactly"
+  },
+  "seat": "Techne"
+}

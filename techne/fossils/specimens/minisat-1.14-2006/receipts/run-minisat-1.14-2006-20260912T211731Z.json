@@ -1,0 +1,112 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "minisat-1.14-2006",
+  "receipt_id": "run-minisat-1.14-2006-20260912T211731Z",
+  "written_utc": "20260912T211731Z",
+  "runner": "docker",
+  "image": "gcc:4.9",
+  "workdir": "upstream/tree/MiniSat_v1.14",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "sat.cnf": "f3eff25183d4a35bc87d8fa78c1e06b41d14a8b3bc80237a7eb165b41a8014d9",
+    "unsat.cnf": "b053174e857acd404f0dd06bec5d81149e7bb87080e8d3219b466f280f037e22"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "e98aa45b9bfa07254073a643dd74e657bde052a6846da76f02849501e2400bcf",
+  "recipe_sha256": "205397d3cff6751a041e30152064e41031eefd7097e126a9c9661a1eea27d306",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.92,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (GCC) 4.9.4\n"
+      },
+      "stderr": {
+        "text": "stdin: is not a tty\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make rs (static release) in the preserved gcc 4.9 world",
+      "cmd": "make -s rs 2>&1 | grep -iE '\\berror' | head -5; ls minisat* 2>/dev/null | head; test -x ./minisat_static -o -x ./minisat && echo built",
+      "exit": 0,
+      "seconds": 2.13,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "minisat_static\nbuilt\n"
+      },
+      "stderr": {
+        "text": "stdin: is not a tty\n"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "satisfiable CNF",
+      "cmd": "B=./minisat_static; test -x $B || B=./minisat; $B $HARNESS/sat.cnf 2>&1 | tail -3; echo exit=$?",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "CPU time              : 0.001474 s\n\nSATISFIABLE\nexit=0\n"
+      },
+      "stderr": {
+        "text": "stdin: is not a tty\n"
+      }
+    },
+    {
+      "name": "unsatisfiable CNF",
+      "cmd": "B=./minisat_static; test -x $B || B=./minisat; $B $HARNESS/unsat.cnf 2>&1 | tail -3; echo exit=$?",
+      "exit": 0,
+      "seconds": 0.85,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "CPU time              : 0.001408 s\n\nUNSATISFIABLE\nexit=0\n"
+      },
+      "stderr": {
+        "text": "stdin: is not a tty\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "depend.mak",
+      "sha256": "17414d05a288509d585a3756d34e5fd113c63ef6140b7be613b1922a7de62a29",
+      "bytes": 582
+    },
+    {
+      "path": "Main.or",
+      "sha256": "e70143d2c978ed68d97da7609a2fbb608d8e2f05f7cb8784a1a4cb930420de8a",
+      "bytes": 19056
+    },
+    {
+      "path": "minisat_static",
+      "sha256": "6d93446d9c6165fc322dc3a20938ca5c773b5f7a041c1797946a334487b792ff",
+      "bytes": 1343552
+    },
+    {
+      "path": "Solver.or",
+      "sha256": "d9f936bc2985d56fff2c3196625e10f7c49e1d13881a593e4b621257d7e320a5",
+      "bytes": 30520
+    }
+  ],
+  "classification": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "e98aa45b9bfa07254073a643dd74e657bde052a6846da76f02849501e2400bcf",
+  "body_preserved": true
+}

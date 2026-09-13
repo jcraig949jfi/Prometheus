@@ -1,0 +1,160 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "basic-computer-games-1978",
+  "canonical_name": "BASIC Computer Games (David Ahl, 1978): HAMURABI and SUPER STAR TREK -- original BASIC listings run under Bywater BASIC",
+  "aliases": [
+    "Hammurabi",
+    "Super Star Trek",
+    "101 BASIC Computer Games"
+  ],
+  "lineage": "The hobbyist BASIC culture of the 1970s: HAMURABI (a resource-rationing simulation under scarcity and random plague/rat pressure, from DEC's 1968 'King'/'Sumer' via Ahl) and SUPER STAR TREK (Mayfield 1971; Leedom/Ahl 1974-78), the most-copied game program of its era. Preserved as the original line-numbered BASIC (from the coding-horror/basic-computer-games transcription of Ahl's book) and executed by Bywater BASIC 2.20, itself a 1990s interpreter of the classic dialect.",
+  "domain": [
+    "games",
+    "simulation",
+    "resource-rationing",
+    "legacy-culture",
+    "basic"
+  ],
+  "era": "1971-1978 (programs); 1993 (bwBASIC)",
+  "version": "coding-horror/basic-computer-games main: 43_Hammurabi/hammurabi.bas, 84_Super_Star_Trek/superstartrek.bas (as fetched 2026-09-12)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/coding-horror/basic-computer-games/main/43_Hammurabi/hammurabi.bas",
+        "filename": "hammurabi.bas",
+        "extract": false
+      },
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/coding-horror/basic-computer-games/main/84_Super_Star_Trek/superstartrek.bas",
+        "filename": "superstartrek.bas",
+        "extract": false
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "book": "Ahl (ed.), BASIC Computer Games, Microcomputer Edition, 1978",
+    "repo": "github.com/coding-horror/basic-computer-games"
+  },
+  "hashes": {
+    "tree_sha256": "3ada27a07e30b17b0e767d0d4ec1d7f5de9f8b2e67794b0fe9e9793b46239c75",
+    "n_files": 2,
+    "bytes": 24522,
+    "artifacts": [
+      {
+        "filename": "hammurabi.bas",
+        "sha256": "93fea01f8b63766a83919653f798932ba33d4ca2654b70e87a54653d60c73831",
+        "commit": null
+      },
+      {
+        "filename": "superstartrek.bas",
+        "sha256": "a80bf9f6e4a32888e89809145c778d16ebcde5feaa24b159d922edd7f5b9b94a",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\basic-computer-games-1978",
+    "hash_list": "techne/fossils/specimens/basic-computer-games-1978/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "NOASSERTION",
+    "status": "the repository is Unlicense for its ports; the 1978 listings are Ahl's book, widely republished; recorded, not asserted",
+    "evidence": "repository LICENSE + README"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "BASIC (Microsoft/Altair dialect, 1978)"
+  ],
+  "build_system": "none (interpreted)",
+  "compiler_or_interpreter": "bwBASIC 2.20 (docker prometheus-fossil-legacy:bookworm)",
+  "dependencies": [
+    "Bywater BASIC"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "bwbasic hammurabi.bas (10 turns of grain/land/people decisions); bwbasic superstartrek.bas"
+  ],
+  "example": {
+    "command": "printf '...' | bwbasic hammurabi.bas",
+    "input": "scripted yearly decisions",
+    "output": "the ten-year report (population, acres, starvation) -- deterministic given bwBASIC's RND seeding"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-legacy:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Ahl, BASIC Computer Games, 1978"
+  ],
+  "human_capability_summary": {
+    "built_to": "let a player govern a city for ten years by rationing grain between food, seed and land purchases under random harvests, rats and plague (HAMURABI); command a starship against Klingons with finite energy and torpedoes (STAR TREK)",
+    "pressure": "scarcity (grain, energy), randomness, deadlines (ten years; stardates)",
+    "success_means": "the program runs the simulation to its end state and reports it; the classic dialect executes under a later interpreter"
+  },
+  "known_human_problem_solved": "resource-rationing simulation as a game",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "scarcity, random shocks, hard time limit",
+  "human_failure_condition": "starve the people -> impeachment; run out of energy -> destruction",
+  "behavioral_entry_point": "script different rationing policies into hammurabi.bas's INPUTs and compare the ten-year outcomes",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "derived_from",
+      "to": "DEC 'The Sumer Game' (Dyment 1968) / Ahl's HAMURABI (1973)",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityG",
+    "legacy_culture:basic",
+    "scarcity",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T213705Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T214208Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T214242Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T214327Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\basic-computer-games-1978 ; tracked techne/fossils/specimens/basic-computer-games-1978",
+    "where_it_came_from": "https://raw.githubusercontent.com/coding-horror/basic-computer-games/main/43_Hammurabi/hammurabi.bas ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run basic-computer-games-1978",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T214327Z.json",
+    "what_humans_used_it_for": "let a player govern a city for ten years by rationing grain between food, seed and land purchases under random harvests, rats and plague (HAMURABI); command a starship against Klingons with finite energy and torpedoes (STAR TREK)"
+  },
+  "seat": "Techne"
+}

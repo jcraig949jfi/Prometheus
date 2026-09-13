@@ -162,3 +162,42 @@ def test_verify_all_census_counts_the_rows(specimen, tmp_path):
     assert c["specimens"] == 1 and c["differs"] == 1 and c["matches"] == 0
     saved = json.loads(out.read_text(encoding="utf-8"))
     assert saved["rows"][0]["added"] == ["tree/product.o"]
+
+
+def test_catalog_enumerates_records_without_bodies(specimen, tmp_path, monkeypatch):
+    """ARCHAEON VISIBILITY: the record is enumerable from the tracked half alone."""
+    from techne.fossils import catalog
+    rows = catalog.enumerate_fossils()
+    assert [r["fossil_id"] for r in rows] == [specimen] and rows[0]["body_present_on_this_host"] is True
+    monkeypatch.setenv("TECHNE_FOSSIL_VAULT", str(tmp_path / "nowhere"))     # a host without the bodies
+    rows = catalog.enumerate_fossils()
+    assert rows[0]["body_present_on_this_host"] is False
+    for k in ("fossil_id", "lineage", "human_purpose", "version", "run_status", "record_path", "tree_sha256"):
+        assert k in rows[0]
+    c = catalog.catalog()
+    assert c["fossils"] == 1 and c["bodies_present_on_this_host"] == 0
+
+
+def test_mirror_copies_by_tree_hash_and_verifies(specimen, tmp_path, monkeypatch):
+    monkeypatch.setattr(vault, "REPO", tmp_path / "repo"); (tmp_path / "repo").mkdir()
+    dest = tmp_path / "offhost"
+    rep = harvest.mirror(str(dest), dry_run=True)
+    assert rep["rows"][0]["status"] == "WOULD_COPY" and not dest.exists()
+    rep = harvest.mirror(str(dest))
+    row = rep["rows"][0]
+    assert row["status"] == "COPIED_VERIFIED" and row["destination_tree_sha256"] == row["source_tree_sha256"]
+    assert (dest / row["source_tree_sha256"] / "upstream" / "tree" / "hello.txt").read_bytes() == HELLO
+    rep2 = harvest.mirror(str(dest))
+    assert rep2["rows"][0]["status"] == "ALREADY_PRESENT_VERIFIED"
+    receipts = list((tmp_path / "repo" / "techne" / "fossils" / "mirror").glob("mirror-*.json"))
+    assert len(receipts) == 3, "one receipt per invocation, dry run included"
+
+
+def test_mirror_refuses_a_drifted_source_and_a_destination_inside_the_repo(specimen, tmp_path, monkeypatch):
+    monkeypatch.setattr(vault, "REPO", tmp_path / "repo"); (tmp_path / "repo").mkdir()
+    with pytest.raises(ValueError):
+        harvest.mirror(str(tmp_path / "repo" / "vault"))
+    (vault.body_dir(specimen) / "upstream" / "tree" / "junk.o").write_bytes(b"x")
+    rep = harvest.mirror(str(tmp_path / "offhost"))
+    assert rep["rows"][0]["status"] == "REFUSED_SOURCE_DRIFTED"
+    assert not (tmp_path / "offhost").exists() or not any((tmp_path / "offhost").iterdir())

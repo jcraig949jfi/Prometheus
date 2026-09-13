@@ -1,0 +1,136 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "paip-lisp-norvig-1991",
+  "canonical_name": "Paradigms of Artificial Intelligence Programming -- Norvig's Common Lisp programs (GPS, ELIZA, pattern matcher, unifier, Prolog-in-Lisp, 1991)",
+  "aliases": [
+    "PAIP",
+    "paip-lisp"
+  ],
+  "lineage": "The canonical Common Lisp exposition of classical AI machinery: Newell & Simon's General Problem Solver (means-ends analysis), Weizenbaum's ELIZA (pattern-directed rewriting), STUDENT, a unifier and a Prolog interpreter/compiler, search tools, Othello. Real problem-solving programs from the symbolic-AI culture, kept runnable by Norvig's repository under SBCL.",
+  "domain": [
+    "symbolic-AI",
+    "search",
+    "pattern-matching",
+    "unification",
+    "lisp",
+    "legacy-culture"
+  ],
+  "era": "1991 (book); repository 2018-",
+  "version": "github.com/norvig/paip-lisp main as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/norvig/paip-lisp",
+        "commit": "HEAD"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/norvig/paip-lisp",
+    "author": "Peter Norvig"
+  },
+  "hashes": {
+    "tree_sha256": "9ec5c1c33390c7524a51f8ffe1f1092cc6ac3d618089d896bafb867895688998",
+    "n_files": 358,
+    "bytes": 15231731,
+    "artifacts": [
+      {
+        "filename": "https://github.com/norvig/paip-lisp",
+        "sha256": null,
+        "commit": "9cea73837e439d331fe78d7b585e994c7113aac2"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\paip-lisp-norvig-1991",
+    "hash_list": "techne/fossils/specimens/paip-lisp-norvig-1991/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Common Lisp"
+  ],
+  "build_system": "none (load in SBCL)",
+  "compiler_or_interpreter": "SBCL 2.2.9 (docker prometheus-fossil-lang:bookworm)",
+  "dependencies": [
+    "a Common Lisp"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "lisp/auxfns.lisp then lisp/gps.lisp (GPS), lisp/eliza.lisp, lisp/patmatch.lisp, lisp/unify.lisp, lisp/prolog.lisp"
+  ],
+  "example": {
+    "command": "sbcl --script harness/run_gps.lisp",
+    "input": "the 'drive son to school' GPS problem (school-ops)",
+    "output": "the plan: look up number, telephone shop, tell shop problem, give shop money, shop installs battery, drive son to school (the book's ORACLE)"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Norvig, Paradigms of Artificial Intelligence Programming, Morgan Kaufmann 1991",
+    "Newell & Simon, GPS, a program that simulates human thought, 1961"
+  ],
+  "human_capability_summary": {
+    "built_to": "solve problems by reducing goal/state differences with operators (GPS), converse by pattern rewriting (ELIZA), and answer queries by unification and backtracking (Prolog)",
+    "pressure": "the symbolic-AI programme's demand for general methods; the book's demand that they be small and readable",
+    "success_means": "GPS finds the operator sequence the book prints; ELIZA responds; the Prolog interpreter answers member/append queries"
+  },
+  "known_human_problem_solved": "classical AI problem solving in Lisp",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "combinatorial search, goal interaction (the 'prerequisite clobbers sibling goal' problem GPS exposes)",
+  "human_failure_condition": "GPS loops or 'running around the block' (the book's own catalogue of GPS failures)",
+  "behavioral_entry_point": "feed GPS the book's pathological goal orderings (leaping before you look; recursive subgoals) and watch it fail as documented",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Newell & Simon 1961 (GPS); Weizenbaum 1966 (ELIZA); Robinson 1965 (unification)",
+      "note": ""
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "tinyscheme-1.42",
+      "note": "Lisp family: programs vs language machine"
+    }
+  ],
+  "acquisition_tags": [
+    "batch05",
+    "priorityG",
+    "legacy_culture:lisp",
+    "depth:lisp",
+    "outside_queue"
+  ],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/paip-lisp-norvig-1991/receipts/run-paip-lisp-norvig-1991-20260912T213658Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\paip-lisp-norvig-1991 ; tracked techne/fossils/specimens/paip-lisp-norvig-1991",
+    "where_it_came_from": "https://github.com/norvig/paip-lisp ; ORIGINAL_AUTHORITATIVE_RELEASE @ HEAD",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run paip-lisp-norvig-1991",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/paip-lisp-norvig-1991/receipts/run-paip-lisp-norvig-1991-20260912T213658Z.json",
+    "what_humans_used_it_for": "solve problems by reducing goal/state differences with operators (GPS), converse by pattern rewriting (ELIZA), and answer queries by unification and backtracking (Prolog)"
+  },
+  "seat": "Techne"
+}

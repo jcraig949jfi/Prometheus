@@ -1,0 +1,75 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "compact-4.2bsd-1983",
+  "receipt_id": "run-compact-4.2bsd-1983-20260912T210757Z",
+  "written_utc": "20260912T210757Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d",
+  "recipe_sha256": "9e6e1b05ed8f948c8e999c112ae82f134956885779c43ea5a1e2fab5038fe5d7",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 6.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "install gcc-multilib: the 1983 code assumes ILP32 (undeclared char *malloc() is implicit int and truncates pointers on x86-64 -> segfault, observed)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y gcc-multilib libc6-dev-i386 >/dev/null 2>&1; echo apt-done",
+      "exit": 0,
+      "seconds": 7.26,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "apt-done\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "compile as 32-bit K&R (-m32 -std=gnu89 -fcommon -w; no source change)",
+      "cmd": "gcc -m32 -std=gnu89 -fcommon -w -o $BODY/build/compact compact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; gcc -m32 -std=gnu89 -fcommon -w -o $BODY/build/uncompact uncompact.c tree.c 2>&1 | grep -iE '\\berror' | head -5; test -x $BODY/build/compact && test -x $BODY/build/uncompact && echo built",
+      "exit": 1,
+      "seconds": 0.96,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "compact.h:12:10: fatal error: sys/param.h: No such file or directory\ncompact.h:12:10: fatal error: sys/param.h: No such file or directory\ncompact.h:12:10: fatal error: sys/param.h: No such file or directory\ncompact.h:12:10: fatal error: sys/param.h: No such file or directory\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d",
+  "body_preserved": true
+}
