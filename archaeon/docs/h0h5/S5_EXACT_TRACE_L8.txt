@@ -1,0 +1,35 @@
+== shell m2 L8 opt E 3.4643
+[root] N 28 fixed 0 p1 -------- | greedy q=11110000 part {2: 6, 4: 16, 6: 6} | opt q=11110000 | greedy-under-opt-continuation same
+  [root/2] N  6 fixed 4 p1 hhhhFFFF | greedy q=10000000 part {1: 3, 3: 3} | opt q=11000000 | greedy-under-opt-continuation DIVERGE 2.6667 vs 2.0000
+    [root/2/1] N  3 fixed 5 p1 F---FFFF | greedy q=01000000 part {1: 1, 3: 2} | opt q=01000000 | greedy-under-opt-continuation same
+      [root/2/1/3] N  2 fixed 6 p1 FFhhFFFF | greedy q=00100000 part {1: 1, 3: 1} | opt q=00100000 | greedy-under-opt-continuation same
+    [root/2/3] N  3 fixed 5 p1 F+++FFFF | greedy q=01000000 part {1: 2, 3: 1} | opt q=01000000 | greedy-under-opt-continuation same
+      [root/2/3/1] N  2 fixed 6 p1 FFhhFFFF | greedy q=00100000 part {1: 1, 3: 1} | opt q=00100000 | greedy-under-opt-continuation same
+  [root/4] N 16 fixed 0 p1 -------- | greedy q=11001100 part {2: 4, 4: 8, 6: 4} | opt q=11001100 | greedy-under-opt-continuation same
+    [root/4/2] N  4 fixed 4 p1 hhFFhhFF | greedy q=10001000 part {0: 1, 2: 2, 4: 1} | opt q=10001000 | greedy-under-opt-continuation same
+      [root/4/2/2] N  2 fixed 4 p1 hhFFhhFF | greedy q=10000000 part {1: 1, 3: 1} | opt q=10000000 | greedy-under-opt-continuation same
+    [root/4/4] N  8 fixed 0 p1 -------- | greedy q=00111000 part {1: 2, 3: 2, 5: 4} | opt q=10101000 | greedy-under-opt-continuation DIVERGE 2.2500 vs 2.1250
+      [root/4/4/1] N  2 fixed 6 p1 FFhhFFFF | greedy q=00100000 part {1: 1, 3: 1} | opt q=00100000 | greedy-under-opt-continuation same
+      [root/4/4/3] N  2 fixed 6 p1 FFhhFFFF | greedy q=00100000 part {1: 1, 3: 1} | opt q=00100000 | greedy-under-opt-continuation same
+      [root/4/4/5] N  4 fixed 4 p1 hhFFFFhh | greedy q=10000010 part {0: 1, 2: 2, 4: 1} | opt q=10000010 | greedy-under-opt-continuation same
+    [root/4/6] N  4 fixed 4 p1 FFhhFFhh | greedy q=00100010 part {0: 1, 2: 2, 4: 1} | opt q=00100010 | greedy-under-opt-continuation same
+      [root/4/6/2] N  2 fixed 4 p1 FFhhFFhh | greedy q=00100000 part {1: 1, 3: 1} | opt q=00100000 | greedy-under-opt-continuation same
+  [root/6] N  6 fixed 4 p1 FFFFhhhh | greedy q=00001000 part {1: 3, 3: 3} | opt q=00001100 | greedy-under-opt-continuation DIVERGE 2.6667 vs 2.0000
+    [root/6/1] N  3 fixed 5 p1 FFFFF--- | greedy q=00000100 part {1: 1, 3: 2} | opt q=00000100 | greedy-under-opt-continuation same
+      [root/6/1/3] N  2 fixed 6 p1 FFFFFFhh | greedy q=00000010 part {1: 1, 3: 1} | opt q=00000010 | greedy-under-opt-continuation same
+    [root/6/3] N  3 fixed 5 p1 FFFFF+++ | greedy q=00000100 part {1: 2, 3: 1} | opt q=00000100 | greedy-under-opt-continuation same
+      [root/6/3/1] N  2 fixed 6 p1 FFFFFFhh | greedy q=00000010 part {1: 1, 3: 1} | opt q=00000010 | greedy-under-opt-continuation same
+== counterexample opt E 2.9167
+[root] N 24 fixed 0 p1 ----hhhh | greedy q=11001100 part {1: 2, 3: 10, 5: 10, 7: 2} | opt q=11001100 | greedy-under-opt-continuation same
+  [root/1] N  2 fixed 6 p1 hhFFFFFF | greedy q=10000000 part {2: 1, 4: 1} | opt q=10000000 | greedy-under-opt-continuation same
+  [root/3] N 10 fixed 0 p1 ----++-- | greedy q=10101010 part {1: 1, 3: 4, 5: 4, 7: 1} | opt q=10001010 | greedy-under-opt-continuation DIVERGE 2.2000 vs 2.1000
+    [root/3/3] N  4 fixed 1 p1 h--F+hh- | greedy q=01001000 part {1: 1, 3: 2, 5: 1} | opt q=01001000 | greedy-under-opt-continuation same
+      [root/3/3/3] N  2 fixed 4 p1 hFhFFhFh | greedy q=10000000 part {2: 1, 4: 1} | opt q=10000000 | greedy-under-opt-continuation same
+    [root/3/5] N  4 fixed 1 p1 -hF-h+-h | greedy q=01001000 part {1: 1, 3: 2, 5: 1} | opt q=01001000 | greedy-under-opt-continuation same
+      [root/3/5/3] N  2 fixed 4 p1 FhFhhFhF | greedy q=01000000 part {2: 1, 4: 1} | opt q=01000000 | greedy-under-opt-continuation same
+  [root/5] N 10 fixed 0 p1 ------++ | greedy q=10101010 part {1: 1, 3: 4, 5: 4, 7: 1} | opt q=00101010 | greedy-under-opt-continuation DIVERGE 2.2000 vs 2.1000
+    [root/5/3] N  4 fixed 1 p1 -Fh-h-+h | greedy q=00101000 part {1: 1, 3: 2, 5: 1} | opt q=00101000 | greedy-under-opt-continuation same
+      [root/5/3/3] N  2 fixed 4 p1 FFhhhhFF | greedy q=00100000 part {2: 1, 4: 1} | opt q=00100000 | greedy-under-opt-continuation same
+    [root/5/5] N  4 fixed 1 p1 F--h-hh+ | greedy q=00011000 part {1: 1, 3: 1, 5: 2} | opt q=00011000 | greedy-under-opt-continuation same
+      [root/5/5/5] N  2 fixed 4 p1 FhhFFhhF | greedy q=01000000 part {2: 1, 4: 1} | opt q=01000000 | greedy-under-opt-continuation same
+  [root/7] N  2 fixed 6 p1 FFhhFFFF | greedy q=00100000 part {2: 1, 4: 1} | opt q=00100000 | greedy-under-opt-continuation same

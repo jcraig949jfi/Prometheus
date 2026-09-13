@@ -51,9 +51,11 @@ PRODUCERS
     M  two-step lookahead, PEW_CONSUMING: for the top-K one-step candidates
        of W's pool, the expected (under the uniform prior) best one-step
        ER after observing the candidate's outcome, minimised; bounded
-       (K = 6 candidates x every outcome x an inner pool of 24) and
-       reported as COMPUTATIONALLY_INTRACTABLE for a regime when it
-       exceeds the preregistered time bound.
+       (K = 6 candidates x every outcome x an inner pool of 24). S5 phase 0:
+       every PEW-consuming producer runs under a deterministic WORK budget
+       (archaeon.producer.work_budget); exceeding it returns an explicit
+       BUDGET_EXHAUSTED proposal (probe None, work provenance) -- the S4
+       wall-clock fallback is gone.
 """
 from __future__ import annotations
 
@@ -66,6 +68,20 @@ from typing import Dict, List, Optional, Sequence
 
 from . import acquisition as AQ
 from . import fossil_inference as FI
+from .work_budget import BudgetExhausted, WorkBudget
+
+#: S5 phase 0: every PEW-consuming producer runs under a deterministic WORK budget (units of
+#: search: DFS nodes, partition convolution steps, probes scored). Exceeding it returns a
+#: BUDGET_EXHAUSTED proposal with the work provenance; nothing is inferred from the clock.
+DEFAULT_MAX_UNITS = 2_000_000
+
+
+def exhausted(producer_id, policy, fossils, seed_inputs, t0, exc, pool_size=None):
+    return Proposal(producer_id=producer_id, producer_version=PRODUCER_VERSION, evidence_policy=policy,
+                    evidence_snapshot_id=(snapshot_id(fossils) if fossils is not None else None), probe=None, seed_inputs=dict(seed_inputs),
+                    objective="BUDGET_EXHAUSTED before a probe was chosen", objective_value=None, tie_class=[],
+                    ancestry={"fossils_consumed": sorted({(f.bits, f.score) for f in fossils}) if fossils is not None else [], "pool_size": pool_size, "rank": None},
+                    compute_seconds=time.perf_counter() - t0, extra={"outcome": "BUDGET_EXHAUSTED", "work": exc.provenance})
 
 PRODUCER_VERSION = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()[:16]
 
@@ -110,12 +126,16 @@ def produce_U(L: int, seed_inputs: Dict[str, object]) -> Proposal:
 
 
 # ---------------------------------------------------------------- G: greedy ER over the S3 pool
-def produce_G(fossils: Sequence[FI.Fossil], seed_inputs: Dict[str, object]) -> Proposal:
-    t0 = time.perf_counter()
-    st = AQ.feasible(fossils)
-    rng = random.Random(repr(sorted(seed_inputs.items())) + ":G")
-    pool = AQ.probe_pool(st, fossils, rng, n_random=32)
-    sel = AQ.select(st, pool)
+def produce_G(fossils: Sequence[FI.Fossil], seed_inputs: Dict[str, object], max_units: int = DEFAULT_MAX_UNITS) -> Proposal:
+    t0 = time.perf_counter(); pool = None
+    try:
+        with WorkBudget(max_units):
+            st = AQ.feasible(fossils)
+            rng = random.Random(repr(sorted(seed_inputs.items())) + ":G")
+            pool = AQ.probe_pool(st, fossils, rng, n_random=32)
+            sel = AQ.select(st, pool)
+    except BudgetExhausted as exc:
+        return exhausted("G", "PEW_CONSUMING", fossils, seed_inputs, t0, exc, len(pool) if pool else None)
     return _base("G", "PEW_CONSUMING", fossils, sel.probe, dict(seed_inputs), "min expected remaining feasible targets (one step, uniform prior)",
                  sel.value.expected_remaining, sel.tie_class,
                  {"fossils_consumed": sorted({(f.bits, f.score) for f in fossils}), "pool_size": len(pool), "rank": 0, "n_feasible": st.feasible_targets}, t0,
@@ -145,12 +165,16 @@ def widened_pool(st: FI.Inference, fossils: Sequence[FI.Fossil], rng: random.Ran
     return pool
 
 
-def produce_W(fossils: Sequence[FI.Fossil], seed_inputs: Dict[str, object]) -> Proposal:
-    t0 = time.perf_counter()
-    st = AQ.feasible(fossils)
-    rng = random.Random(repr(sorted(seed_inputs.items())) + ":W")
-    pool = widened_pool(st, fossils, rng)
-    sel = AQ.select(st, pool)
+def produce_W(fossils: Sequence[FI.Fossil], seed_inputs: Dict[str, object], max_units: int = DEFAULT_MAX_UNITS) -> Proposal:
+    t0 = time.perf_counter(); pool = None
+    try:
+        with WorkBudget(max_units):
+            st = AQ.feasible(fossils)
+            rng = random.Random(repr(sorted(seed_inputs.items())) + ":W")
+            pool = widened_pool(st, fossils, rng)
+            sel = AQ.select(st, pool)
+    except BudgetExhausted as exc:
+        return exhausted("W", "PEW_CONSUMING", fossils, seed_inputs, t0, exc, len(pool) if pool else None)
     return _base("W", "PEW_CONSUMING", fossils, sel.probe, dict(seed_inputs), "min expected remaining feasible targets (one step, uniform prior) over a widened pool",
                  sel.value.expected_remaining, sel.tie_class,
                  {"fossils_consumed": sorted({(f.bits, f.score) for f in fossils}), "pool_size": len(pool), "rank": 0, "n_feasible": st.feasible_targets, "exhaustive": st.length <= 12}, t0,
@@ -158,36 +182,39 @@ def produce_W(fossils: Sequence[FI.Fossil], seed_inputs: Dict[str, object]) -> P
 
 
 # ---------------------------------------------------------------- M: bounded two-step lookahead
-def produce_M(fossils: Sequence[FI.Fossil], seed_inputs: Dict[str, object], top_k: int = 6, inner_pool: int = 24, time_bound_s: float = 60.0) -> Proposal:
-    t0 = time.perf_counter()
-    st = AQ.feasible(fossils)
-    rng = random.Random(repr(sorted(seed_inputs.items())) + ":M")
-    pool = widened_pool(st, fossils, rng)
-    ranked = sorted((AQ.value(st, q) for q in pool), key=lambda v: (v.er_numerator, v.probe))[:top_k]
-    L = st.length
-    best = None; scored = []
-    for v in ranked:
-        # expected best one-step ER after observing q's outcome, under the uniform prior over outcomes
-        exp_after = 0.0
-        for d, n_d in v.partition.items():
-            if n_d == 0:
-                continue
-            s_d = (L - d) / L
-            try:
-                st2 = AQ.feasible(list(fossils) + [FI.Fossil(v.probe, s_d)])
-            except FI.Contradiction:
-                continue
-            inner = AQ.probe_pool(st2, list(fossils) + [FI.Fossil(v.probe, s_d)], random.Random(repr(sorted(seed_inputs.items())) + ":Mi:" + v.probe + str(d)), n_random=8)[:inner_pool]
-            er2 = min(AQ.value(st2, q2).expected_remaining for q2 in inner) if st2.feasible_targets > 1 else 1.0
-            exp_after += (n_d / st.feasible_targets) * er2
-            if time.perf_counter() - t0 > time_bound_s:
-                return _base("M", "PEW_CONSUMING", fossils, ranked[0].probe, dict(seed_inputs), "two-step lookahead (bounded)", None, [ranked[0].probe],
-                             {"fossils_consumed": sorted({(f.bits, f.score) for f in fossils}), "pool_size": len(pool), "rank": None, "n_feasible": st.feasible_targets}, t0,
-                             {"intractable": True, "fallback": "one-step best of the widened pool"})
-        scored.append((exp_after, v.probe))
-        if best is None or exp_after < best[0] or (exp_after == best[0] and v.probe < best[1]):
-            best = (exp_after, v.probe)
-    ties = sorted(q for e, q in scored if e == best[0])
+def produce_M(fossils: Sequence[FI.Fossil], seed_inputs: Dict[str, object], top_k: int = 6, inner_pool: int = 24, max_units: int = DEFAULT_MAX_UNITS) -> Proposal:
+    """S5 semantic change, recorded: the S4 wall-clock fallback (return the
+    one-step best after 60 s) is REMOVED; M runs under the same deterministic
+    work budget as G and W and returns BUDGET_EXHAUSTED, never a fallback
+    probe, when it cannot finish."""
+    t0 = time.perf_counter(); pool = None
+    try:
+        with WorkBudget(max_units):
+            st = AQ.feasible(fossils)
+            rng = random.Random(repr(sorted(seed_inputs.items())) + ":M")
+            pool = widened_pool(st, fossils, rng)
+            ranked = sorted((AQ.value(st, q) for q in pool), key=lambda v: (v.er_numerator, v.probe))[:top_k]
+            L = st.length
+            best = None; scored = []
+            for v in ranked:
+                exp_after = 0.0
+                for d, n_d in v.partition.items():
+                    if n_d == 0:
+                        continue
+                    s_d = (L - d) / L
+                    try:
+                        st2 = AQ.feasible(list(fossils) + [FI.Fossil(v.probe, s_d)])
+                    except FI.Contradiction:
+                        continue
+                    inner = AQ.probe_pool(st2, list(fossils) + [FI.Fossil(v.probe, s_d)], random.Random(repr(sorted(seed_inputs.items())) + ":Mi:" + v.probe + str(d)), n_random=8)[:inner_pool]
+                    er2 = min(AQ.value(st2, q2).expected_remaining for q2 in inner) if st2.feasible_targets > 1 else 1.0
+                    exp_after += (n_d / st.feasible_targets) * er2
+                scored.append((exp_after, v.probe))
+                if best is None or exp_after < best[0] or (exp_after == best[0] and v.probe < best[1]):
+                    best = (exp_after, v.probe)
+            ties = sorted(q for e, q in scored if e == best[0])
+    except BudgetExhausted as exc:
+        return exhausted("M", "PEW_CONSUMING", fossils, seed_inputs, t0, exc, len(pool) if pool else None)
     return _base("M", "PEW_CONSUMING", fossils, best[1], dict(seed_inputs), "min expected best one-step ER after one observation (two-step lookahead, uniform prior)", best[0], ties,
                  {"fossils_consumed": sorted({(f.bits, f.score) for f in fossils}), "pool_size": len(pool), "rank": 0, "n_feasible": st.feasible_targets, "top_k": top_k, "inner_pool": inner_pool}, t0,
                  {"one_step_candidates": [(e, q) for e, q in scored]})

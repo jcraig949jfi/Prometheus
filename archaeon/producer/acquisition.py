@@ -54,6 +54,7 @@ from math import comb
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from . import fossil_inference as FI
+from .work_budget import charge as _charge
 
 
 @dataclass
@@ -96,6 +97,7 @@ def outcome_partition(state: FI.Inference, q: str) -> Dict[int, int]:
     total: Dict[int, int] = {}
     for sol in state.solutions:
         dist: Dict[int, int] = {0: 1}
+        _charge(len(state.blocks), "partition_solution_blocks")
         for b, u in zip(state.blocks, sol):
             n = len(b.positions); q1 = sum(1 for j in b.positions if q[j] == "1")
             bd = _block_mismatch_dist(n, q1, u)
@@ -170,7 +172,10 @@ class Selection:
 def select(state: FI.Inference, pool: Sequence[str]) -> Selection:
     """Minimum expected remaining feasible targets; ties reported as a class,
     named by the lexicographically smallest probe."""
-    vals = [value(state, q) for q in pool]
+    vals = []
+    for q in pool:
+        _charge(1, "probe_scored")
+        vals.append(value(state, q))
     vals.sort(key=lambda v: (v.er_numerator, v.probe))
     best = vals[0]
     ties = [v.probe for v in vals if v.er_numerator == best.er_numerator]
