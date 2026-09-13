@@ -135,7 +135,7 @@ spec("pybreaker-1.2.0",
     human_environmental_pressure="partial failure of a dependency, latency, retry storms",
     human_failure_condition="callers keep retrying a dead dependency until the caller itself falls over",
     behavioral_entry_point="vary fail_max and reset_timeout; make the dependency heal at a chosen call; read the state transitions",
-    acquisition_tags=["batch05", "priorityA", "small_mechanism", "outside_queue"],
+    acquisition_tags=["batch05", "priorityA", "small_mechanism", "queue_named_family"],
     lineage_relations=[{"relation": "algorithm_from", "to": "Nygard 2007", "note": ""}])
 
 spec("backoff-2.2.1",
@@ -191,7 +191,7 @@ spec("bsd-tcp-4.2-1983",
     human_environmental_pressure="bandwidth scarcity on shared links, packet loss, queueing delay",
     human_failure_condition="congestion collapse: throughput falls by three orders of magnitude while every host keeps retransmitting",
     behavioral_entry_point="read tcp_output.c/tcp_timer.c: no cwnd, no ssthresh; compare with the same files at BSD-4_3_Tahoe",
-    acquisition_tags=["batch05", "priorityB", "known_bad", "failed_branch", "depth:tcp", "outside_queue"],
+    acquisition_tags=["batch05", "priorityB", "known_bad", "failed_branch", "depth:tcp", "queue_named_family"],
     lineage_relations=[{"relation": "superseded", "to": "bsd-tcp-4.3-tahoe-1988", "note": "the redesign forced by the 1986 collapse"},
                        {"relation": "shares_ancestor_with", "to": "linux-tcp-congestion", "note": "the same lineage four decades later (CUBIC, BBR)"}],
     **_tcp_common)
@@ -211,7 +211,7 @@ spec("bsd-tcp-4.3-tahoe-1988",
     human_environmental_pressure="bandwidth scarcity, loss as the only congestion signal, competing flows",
     human_failure_condition="the 4.2 collapse recurs; or a single sender starves others",
     behavioral_entry_point="diff tcp_output.c/tcp_input.c against BSD-4_2: snd_cwnd, snd_ssthresh, the slow-start branch in tcp_input's ack processing",
-    acquisition_tags=["batch05", "priorityB", "historical_redesign", "depth:tcp", "outside_queue"],
+    acquisition_tags=["batch05", "priorityB", "historical_redesign", "depth:tcp", "queue_named_family"],
     lineage_relations=[{"relation": "historical_version_of", "to": "bsd-tcp-4.2-1983", "note": "same files, redesigned under pressure"},
                        {"relation": "superseded", "to": "bsd-tcp-4.3-reno-1990", "note": "fast recovery added"}],
     **_tcp_common)
@@ -231,7 +231,7 @@ spec("bsd-tcp-4.3-reno-1990",
     human_environmental_pressure="high bandwidth-delay product, isolated losses",
     human_failure_condition="multiple losses in one window still collapse it (the NewReno/SACK pressure)",
     behavioral_entry_point="the dup-ack counter (t_dupacks) and fast-recovery branch in tcp_input.c; absent in Tahoe",
-    acquisition_tags=["batch05", "priorityB", "successor", "depth:tcp", "outside_queue"],
+    acquisition_tags=["batch05", "priorityB", "successor", "depth:tcp", "queue_named_family"],
     lineage_relations=[{"relation": "historical_version_of", "to": "bsd-tcp-4.3-tahoe-1988", "note": ""},
                        {"relation": "superseded", "to": "linux-tcp-congestion", "note": "NewReno -> CUBIC -> BBR"}],
     **_tcp_common)
@@ -289,7 +289,7 @@ spec("spin-pathfinder-priority-inversion-1997",
     human_environmental_pressure="hard timing bounds, resource contention across priorities, a watchdog that treats delay as failure",
     human_failure_condition="priority inversion: the medium task runs, the low task holds the lock, the high task misses its deadline; the watchdog resets the lander",
     behavioral_entry_point="toggle the priority-inheritance option in pathfinder.pml (the model's own switch) and re-run pan: deadlock present vs absent",
-    acquisition_tags=["batch05", "priorityB", "pathology", "real_historical_failure", "outside_queue"],
+    acquisition_tags=["batch05", "priorityB", "pathology", "real_historical_failure", "queue_named_family"],
     lineage_relations=[{"relation": "derived_from", "to": "spin-6.5.2-holzmann", "note": "the same tarball; this specimen is the failing model, that one is the checker"},
                        {"relation": "algorithm_from", "to": "Sha, Rajkumar, Lehoczky 1990 (the fix: priority inheritance)", "note": ""}])
 
@@ -317,7 +317,7 @@ spec("particles-chopin-0.4",
     human_environmental_pressure="hidden state, observation noise, nonlinearity, particle degeneracy",
     human_failure_condition="weight degeneracy: one particle carries all the weight and the estimate collapses",
     behavioral_entry_point="reduce N or switch resampling off (resampling=None) and watch the ESS collapse; change the observation noise",
-    acquisition_tags=["batch05", "priorityC", "estimation", "outside_queue"],
+    acquisition_tags=["batch05", "priorityC", "estimation", "queue_named_family"],
     lineage_relations=[{"relation": "algorithm_from", "to": "Gordon, Salmond, Smith 1993", "note": ""},
                        {"relation": "shares_ancestor_with", "to": "filterpy-labbe", "note": "Bayesian filtering: Kalman (linear) vs particle (nonlinear)"}])
 
@@ -344,7 +344,7 @@ spec("emcee-3.1.6",
     human_environmental_pressure="hidden parameters, expensive/black-box likelihood, anisotropic scales",
     human_failure_condition="the chain never mixes: acceptance ~0 or ~1, autocorrelation time longer than the run, moments wrong",
     behavioral_entry_point="shrink nwalkers to 2*ndim or stretch the target's condition number; watch acceptance and autocorrelation time",
-    acquisition_tags=["batch05", "priorityC", "estimation", "outside_queue"],
+    acquisition_tags=["batch05", "priorityC", "estimation", "queue_named_family"],
     lineage_relations=[{"relation": "algorithm_from", "to": "Goodman & Weare 2010; Metropolis et al. 1953", "note": ""}])
 
 spec("tinyekf-levy",
@@ -370,7 +370,7 @@ spec("tinyekf-levy",
     human_environmental_pressure="noisy observation, hidden state, bounded memory",
     human_failure_condition="filter divergence: linearisation error or a bad noise model drives the covariance to inconsistency and the estimate away",
     behavioral_entry_point="scale the measurement-noise matrix R or corrupt a satellite's range and watch the estimate/covariance respond",
-    acquisition_tags=["batch05", "priorityC", "small_mechanism", "estimation", "outside_queue"],
+    acquisition_tags=["batch05", "priorityC", "small_mechanism", "estimation", "queue_named_family"],
     lineage_relations=[{"relation": "algorithm_from", "to": "Kalman 1960; EKF (Schmidt, 1960s Apollo navigation)", "note": ""},
                        {"relation": "shares_ancestor_with", "to": "simple-kalman-denyssene", "note": "scalar KF vs multivariate EKF"}])
 
@@ -397,7 +397,7 @@ spec("umdhmm-kanungo-1.02",
     human_environmental_pressure="hidden state, unlabeled observations, numerical underflow",
     human_failure_condition="EM converges to a poor local optimum or the likelihood underflows without scaling",
     behavioral_entry_point="change -S (the random seed / initial model) and compare the trained models; shorten the training sequence to t2.50.seq",
-    acquisition_tags=["batch05", "priorityC", "estimation", "learning", "legacy_c", "outside_queue"],
+    acquisition_tags=["batch05", "priorityC", "estimation", "learning", "legacy_c", "queue_named_family"],
     lineage_relations=[{"relation": "algorithm_from", "to": "Baum et al. 1970; Rabiner 1989", "note": ""},
                        {"relation": "shares_ancestor_with", "to": "viterbi-hmm-xukmin", "note": "HMM decode-only vs decode+train"}])
 
@@ -484,7 +484,7 @@ spec("radamsa-0.6",
     human_environmental_pressure="adversarial input, the asymmetry between one parser and unbounded malformed input",
     human_failure_condition="mutations too shallow (all rejected at the first byte) or non-reproducible",
     behavioral_entry_point="change the seed and mutation menu (-m); pipe the cases into cjson-1.7.18's parser under ASan",
-    acquisition_tags=["batch05", "priorityF", "adversarial_pair:pressure", "legacy_culture:lisp", "outside_queue"],
+    acquisition_tags=["batch05", "priorityF", "adversarial_pair:pressure", "legacy_culture:lisp", "queue_named_family"],
     lineage_relations=[{"relation": "algorithm_from", "to": "Miller et al. 1990 (fuzz)", "note": ""}])
 
 spec("cjson-1.7.18",
@@ -510,7 +510,7 @@ spec("cjson-1.7.18",
     human_environmental_pressure="adversarial input, bounded memory",
     human_failure_condition="a crafted input reads or writes out of bounds (the CVE history)",
     behavioral_entry_point="increase radamsa's case count or nesting depth (CJSON_NESTING_LIMIT); watch rejected vs parsed vs crashed",
-    acquisition_tags=["batch05", "priorityF", "adversarial_pair:response", "outside_queue"],
+    acquisition_tags=["batch05", "priorityF", "adversarial_pair:response", "queue_named_family"],
     lineage_relations=[{"relation": "shares_ancestor_with", "to": "radamsa-0.6", "note": "PAIR: pressure generator <-> defended parser (humans regarded fuzzing as the corrective for parser bugs)"}])
 
 spec("libcorrect-quiet",
@@ -699,7 +699,7 @@ spec("biriscv-branch-predictor",
     human_environmental_pressure="hard timing bound (one guess per cycle), bounded table memory, hidden state (program control flow)",
     human_failure_condition="aliasing in the pattern table makes two branches poison each other's counters",
     behavioral_entry_point="shrink NUM_BHT_ENTRIES to force aliasing; toggle GSHARE_ENABLE; compare misprediction traces on the same branch stream",
-    acquisition_tags=["batch05", "priorityH", "hardware", "hidden_state", "outside_queue"],
+    acquisition_tags=["batch05", "priorityH", "hardware", "hidden_state", "queue_named_family"],
     lineage_relations=[{"relation": "algorithm_from", "to": "Smith 1981 (bimodal); McFarling 1993 (gshare)", "note": ""},
                        {"relation": "shares_ancestor_with", "to": "picorv32", "note": "RISC-V cores: one predicts, one does not"}])
 

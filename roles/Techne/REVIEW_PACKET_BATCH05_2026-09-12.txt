@@ -1,0 +1,182 @@
+================================================================================
+REVIEW PACKET
+FOSSIL VAULT BATCH 05: PRESERVATION PROVED, 33 SPECIMENS, VAULT 90
+================================================================================
+Prepared:        2026-09-12   frozen (rows committed; main fast-forwarded)
+Seat/Instance:   Techne  m1-8c399e8f   worktree techne-pass-0912
+Charter:         roles/Techne/prompts/2026-09-12_batch05/OPERATOR_CHARTER.md
+                 sha256 a04c22d502b98e8845a58fc2b8a640793b62eb2c6089f4862774
+Location/Code:   techne/fossils/batches/batch05{,_recipes,_finalize}.py
+                 techne/fossils/{catalog.py,harvest.py,vault.py}
+                 techne/fossils/environment/fossil-legacy-toolchain.Dockerfile
+Artifacts:       techne/fossils/SECOND_SOURCE_CHECK_2026-09-12.json
+                 techne/fossils/VAULT_INTEGRITY_2026-09-12_close.json
+                 techne/fossils/CATALOG.json
+                 techne/fossils/specimens/<id>/{record,recipe}.json + receipts/
+                 roles/Nyx/INBOX_TECHNE_FOSSIL_BATCH05_2026-09-12.md
+                 roles/Techne/journal/2026-09-12.md unit 10
+Commits:         9e4e08794 charter; 994a625ca preservation layer + tooling;
+                 f6448d89c the 33 specimens; closing commit = see receipt
+Headline:        Opening and closing census both full agreement (57/57 then
+                 90/90); second-source checks 2/2 MATCH; 10 isolation re-runs
+                 all preserved; 33 acquired (30 runnable, 3 SOURCE_ONLY kernel
+                 code), do-mpc made runnable; 4 losers/redesigns preserved;
+                 vault enumerable without bodies; one host still holds every
+                 body.
+
+--------------------------------------------------------------------------------
+1. CLAIMS UNDER REVIEW
+--------------------------------------------------------------------------------
+P1  The preservation layer repaired at the reset holds: every preserved body
+    matched its pin before and after the batch, and the five files recovered
+    by archive content are the upstream bytes (independent re-fetch).
+    Falsifier: any census row DIFFERS; any restored file absent from the
+    independently fetched archive.
+P2  Every batch-05 receipt was produced without touching a preserved body
+    (body_preserved=true measured after each run).
+P3  Thirty specimens execute from their recorded origin under a recipe that
+    checks an outcome against an independent expectation where one exists
+    (26 of 33 ORACLE_BACKED; 7 activity-or-plausibility only, named).
+P4  Three lineages are deepened with computationally distinct members, four
+    of them human-history losers or redesigns (4.2BSD TCP, compact, zChaff,
+    TinySTM), not version tags.
+P5  Any consumer at or after f6448d89c can enumerate the 90 records without
+    the bodies.
+
+--------------------------------------------------------------------------------
+2. METHOD
+--------------------------------------------------------------------------------
+Gate      harvest verify --all (re-hash every upstream/ vs UPSTREAM_HASHES.txt).
+2nd src   re-fetch the recorded origin AND an independent mirror; hash the
+          archives; index every member by sha256; look up each restored file's
+          recorded hash (content, not path).
+Isolation 8 more real recipes across runners (native, wsl, docker, gcc:4.9,
+          py2.7, iverilog, python) + the 2 from the reset = 10; verify(id)
+          after each.
+Harvest   record (batch05.py) -> acquire (fetch/pin/hash) -> recipe + harness
+          (batch05_recipes.py) -> run in work/ copy -> receipt -> finalize
+          (observability, nyx_handoff from receipts). Every deviation in the
+          recipe notes. Oracles corrected only when the first output showed
+          the oracle itself was wrong, and each such correction is written.
+Catalog   techne/fossils/catalog.py reads records only; body presence is a
+          per-host flag.
+Mirror    harvest mirror --dest D: verified bodies -> D/<tree_sha256>/,
+          re-hash copy, receipt; refuses drift and in-repo destinations.
+
+--------------------------------------------------------------------------------
+3. PRIMARY RESULTS
+--------------------------------------------------------------------------------
+Census                     specimens  match  differ  missing
+-----------------------    ---------  -----  ------  -------
+opening (before batch)            57     57       0        0
+closing (after batch)             90     90       0        0
+
+Second source              recorded archive == re-fetch   restored files found
+-----------------------    ---------------------------    --------------------
+gnu-prolog-1.5.0           gprolog.org YES; gnu.org YES   3/3 in both
+zlib-1.3.1                 github YES; zlib.net/fossils   2/2 in both
+                           (independent tarball) n/a      (top-level URL 404)
+
+Isolation re-runs          10 real recipes, 10 PASS, 10 BODY PRESERVED,
+                           0 RECIPE_STATE_DEPENDENCY
+
+Batch 05 by charter priority (specimens; runnable)
+  A contention/recovery    5 (lmdb, leveldb, ck, pybreaker, backoff)      5
+  B pathologies            5 (bsd-tcp x3 SRC, odepack, spin pathfinder)   2
+  C estimation             4 (particles, emcee, tinyekf, umdhmm)          4
+  D adaptive/MPC           1 + do-mpc reclassified                        2
+  E concurrency            1 (tinystm) + ck                               1
+  F adversarial pairs      3 (radamsa<->cjson, libcorrect)                3
+  G legacy cultures        4 (paip, whitakers, basic, cobol)              4
+  H hardware               2 (arbiter, biriscv npc)                       2
+  I scientific extremes    2 (erfa, sgp4)                                 2
+  J finance                2 (vollib, pyportfolioopt)                     2
+  depth                    4 (compact, gzip 1.2.4, zchaff, minisat 1.14)  4
+  total                    33 new + 1 reclassified                         30
+
+Numbers worth checking (from the receipts)
+  lmdb   crash mid-txn: entries=1000, uncommitted key absent
+  leveldb crash after 500 unsynced puts: count=2500 after reopen
+  odepack MF=21 reaches T=4e10; MF=10 ISTATE=-1 at T=0.1109, 500 steps
+  pathfinder invalid end state, depth 4, errors: 1
+  biriscv 320 branches: bimodal late mispredicts 10, gshare 0
+  arbiter RR 4 4 4 4; fixed priority 16 0 0 0
+  backoff attempt 6, 1000 clients: 1 distinct wait; with jitter 839
+  cjson 200 radamsa cases: parsed 131 rejected 69 crashed 0 (ASan+UBSan)
+  compact 217301 -> 131897 (39.3% off); gzip -9 same sample -> 21267 (90.2%)
+  particles PF vs Kalman rmse 0.0144; emcee mean err 0.021, cov 0.028
+  vollib 196 well-conditioned round trips worst 9.0e-10; 60 ill-conditioned
+  sgp4 45 tests OK; erfa make check 2/2; umdhmm trained ll within 0.9%
+  do-mpc |x| 3.58 -> 0.17 by step 39 under |u| <= 0.5; kick at 20 recovered
+  outside the queue 16/33 (48%) -- first written 25/76%, corrected
+
+--------------------------------------------------------------------------------
+4. CONTROLS
+--------------------------------------------------------------------------------
+Instrument   test_fossil_isolation.py 11 (negative/positive/cheat controls for
+             isolation and restore; catalog with and without bodies; mirror
+             copy+verify, idempotence, refusal of drift and in-repo dest);
+             test_fossils.py 274 on the tree (every record valid, every
+             runnable specimen has a receipt).
+Real vault   isolation: 10 real recipes; census before and after.
+Failure fossils preserved failing, not repaired: 4.2BSD TCP, odepack Adams on
+             stiff, pathfinder deadlock, cobol S0C7, compact (segfault on
+             x86-64 without the ILP32 build), SUPER STAR TREK (parses under
+             neither interpreter).
+
+--------------------------------------------------------------------------------
+5. LIMITATIONS
+--------------------------------------------------------------------------------
+- whitakers-words-ada: RUNNABLE, but dictionary generation is I/O-bound on
+  the WSL2 /mnt/f mount (1477 s wall, ~20 s CPU); three recipe attempts, one
+  of them a patch that did not apply and cost a 25-minute re-run.
+- The BSD TCP series is SOURCE_ONLY: nothing runs; the collapse is readable,
+  not reproducible, until a SIMH VAX world exists (TECHNE-69).
+- No genuinely adaptive CONTROLLER (MRAC/STR) with provenance was found;
+  padasip is an adaptive identifier and says so.
+- Interpreter/dialect gaps are the interpreter's, recorded, not patched:
+  GnuCOBOL refuses CBL0001..12; Bas/bwBASIC refuse STAR TREK; GnuCOBOL
+  silently computes the S0C7 the mainframe would abend on.
+- Oracles: 7 specimens are activity/plausibility only (tinyekf, radamsa,
+  basic, cobol, bsd-tcp x3). Three oracles were corrected
+  after seeing their first output (tinyekf csv columns, vollib conditioning,
+  do-mpc horizon); each is written in the recipe notes and journal.
+- One cJSON ASan run spun 665 s before being killed; identical runs took
+  <1 s. Not diagnosed. Per-command timeouts added.
+- Some recipes install from the network at run time (pip, apt gcc-multilib,
+  casadi wheel): reproducibility depends on those registries; the pinned
+  Owl Lisp companion is the exception done right.
+- Bodies remain on one host (~1 GB, 90 bodies). Mirror built, destination
+  not named (TECHNE-65).
+- Census and oracles are Techne measuring Techne; no second seat has verified.
+
+--------------------------------------------------------------------------------
+6. REPRODUCTION
+--------------------------------------------------------------------------------
+    python -m techne.fossils.harvest verify --all      expect 90/90
+    python -m techne.fossils.catalog                   90 rows
+    python -m techne.fossils.harvest run odepack-netlib
+        expect ... RESULT OK MF= 21 ... RESULT FAILED MF= 10 ... BODY PRESERVED
+    python -m techne.fossils.harvest run biriscv-branch-predictor
+        expect late_mispredicts=0 ... RESULT OK
+    python -m pytest techne/tests/test_fossils.py techne/tests/ -q
+
+--------------------------------------------------------------------------------
+7. VERDICT
+--------------------------------------------------------------------------------
+BODIES STILL THE BODIES (open + close) ........ YES (57/57, 90/90)
+SECOND-SOURCE CHECKS ............................ 2/2 MATCH
+ISOLATION HELD ON REAL RECIPES .................. 10/10
+BATCH SIZE IN CHARTER RANGE (15-25) ............. EXCEEDED (33); no filler
+                                                  taken to hit count
+LOSERS PRESERVED ................................ 4
+CONSUMER CAN ENUMERATE WITHOUT BODIES ........... YES
+OFF-HOST COPY ................................... NO (operator decision)
+STOP RECOMMENDED? ............................... NO
+Reviewer's bottom line: is "the recipe passes in a disposable copy and the
+body's hash is unchanged after it" sufficient evidence that a specimen is
+preserved AND runnable, or must a second host reproduce one receipt before
+the vault's runnable count is trusted?
+================================================================================
+END OF PACKET
+================================================================================

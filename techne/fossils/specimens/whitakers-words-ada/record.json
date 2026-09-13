@@ -59,7 +59,7 @@
     "GNAT",
     "gprbuild"
   ],
-  "run_classification": "BROKEN_UPSTREAM",
+  "run_classification": "RUNNABLE_CONTAINER",
   "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
   "entry_points": [
     "bin/words <latin word> ; the dictionary build (makedict/makestem/makeinfl) produces DICTFILE.GEN etc."
@@ -89,10 +89,10 @@
   "human_failure_condition": "a form is parsed to a wrong lemma or missed",
   "behavioral_entry_point": "feed rare, syncopated or enclitic forms (amavisse, amaveruntque) and inspect the analysis trace",
   "observability": {
-    "EXECUTABLE": "no",
-    "OBSERVABLE": "no",
-    "ORACLE_BACKED": "no",
-    "INTERVENTION_READY": "unknown",
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
     "PATCH_INTERVENTION": "unknown",
     "OPAQUE": "no"
   },
@@ -116,13 +116,37 @@
       "ok": false,
       "classification": "BROKEN_UPSTREAM",
       "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T224633Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T224807Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T231344Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T233941Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
     }
   ],
   "nyx_handoff": {
     "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\whitakers-words-ada ; tracked techne/fossils/specimens/whitakers-words-ada",
     "where_it_came_from": "https://github.com/mk270/whitakers-words ; LATER_SAME_LINEAGE_RELEASE @ HEAD",
-    "how_to_run_it": "not executed; source pinned + tree-hashed",
-    "how_we_know_it_runs": "not executed; body tree_sha256 f660d9efaa19c586 pinned in UPSTREAM_HASHES.txt",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run whitakers-words-ada",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T233941Z.json",
     "what_humans_used_it_for": "explain any Latin word form by finding which stem plus which inflection could produce it, against a real dictionary"
   },
   "seat": "Techne"

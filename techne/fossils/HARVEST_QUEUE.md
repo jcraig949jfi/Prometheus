@@ -125,7 +125,7 @@ bwBASIC), cobol-programming-course (COBOL) -- new world prometheus-fossil-legacy
 forencich arbiter (RR vs priority), biriscv branch predictor (bimodal vs gshare) | scientific: erfa,
 python-sgp4 | finance: py_vollib, pyportfolioopt | depth: compact (Huffman LOSER, -m32 -Dvax), gzip 1.2.4
 (patent redesign), zchaff (SAT LOSER), minisat 1.14 (predecessor).
-Discovery outside this queue: 25 of 33 (76%). Failed acquisitions: NIST COBOL-85 suite (origin gone),
+Discovery outside this queue: 16 of 33 (48%; first written as 25/76% and corrected -- the queue had named the mechanism family for 17 of them). Failed acquisitions: NIST COBOL-85 suite (origin gone),
 C-Prolog (no provenance), Tierra (no source located).
 
 ## Thin axes AFTER batch 05 (target these next; do not hide)

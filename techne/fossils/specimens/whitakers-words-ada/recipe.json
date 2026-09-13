@@ -10,8 +10,8 @@
   ],
   "build": [
     {
-      "name": "gprbuild the Ada tools (make commands)",
-      "cmd": "make -s commands 2>&1 | grep -iE '\\berror' | head -5; test -x bin/words && test -x bin/wakedict && echo built",
+      "name": "gprbuild the Ada tools (make commands sorter; the sorter is a separate gpr target and the first attempt forgot it)",
+      "cmd": "make -s commands sorter 2>&1 | grep -iE '\\berror' | head -5; test -x bin/words && test -x bin/wakedict && test -x bin/sorter && echo built",
       "timeout": 900
     },
     {
@@ -22,19 +22,23 @@
   ],
   "runs": [
     {
-      "name": "parse 'amo'",
-      "cmd": "echo amo | bin/words 2>&1 | head -8",
+      "name": "parse 'amo' (command-line mode; the interactive banner is 12 lines, which is why the first attempt's head -8 saw no parse)",
+      "cmd": "bin/words amo 2>&1 | grep -viE 'loaded|copyright|updates|comments|^[[:space:]]*$' | head -8",
       "expect": {
         "exit": 0,
         "stdout_regex": "(?i)love"
       }
     },
     {
-      "name": "parse an enclitic + syncopated form: amaveruntque, amasse",
-      "cmd": "printf 'amaveruntque\\namasse\\n' | bin/words 2>&1 | head -16",
+      "name": "parse an enclitic + syncopated form: amaveruntque, amasse (TACKON -que; syncope s => vis)",
+      "cmd": "bin/words amaveruntque amasse 2>&1 | grep -viE 'loaded|copyright|updates|comments|^[[:space:]]*$' | head -14",
       "expect": {
         "exit": 0,
-        "stdout_regex": "(?i)(amo|love)"
+        "stdout_contains": [
+          "TACKON",
+          "Syncop"
+        ],
+        "stdout_regex": "(?i)love"
       }
     }
   ],

@@ -92,9 +92,11 @@ BATCH 05 -- 33 new specimens + 1 reclassified
   G. LEGACY COMPUTATIONAL CULTURES (new world prometheus-fossil-legacy: GNAT, GnuCOBOL, bwBASIC, Bas 2.5, SBCL)
     paip-lisp-norvig-1991    RUNNABLE_CONTAINER  Norvig's GPS solves the book's school problem (the
                                                  printed plan); pattern matcher + unifier. Common Lisp. ORACLE.
-    whitakers-words-ada      see closing note     tens of thousands of lines of 1990s Ada; tools build,
-                                                 dictionary generation is slow (the Ada sorter) --
-                                                 status in the record at commit time.
+    whitakers-words-ada      RUNNABLE_CONTAINER  1990s Ada, 62,084 stems: 'amo' -> amo, amare, amavi,
+                                                 amatus V (1st) 'love'; amaveruntque -> TACKON -que +
+                                                 PERF 3 P; amasse -> syncope explained. ORACLE (the
+                                                 dictionary's own entry). Dictionary generation takes
+                                                 25 min here: I/O-bound on the WSL2 mount, 19 s CPU.
     basic-computer-games-1978 RUNNABLE_CONTAINER 1978 listings, two later interpreters: Bas 2.5 runs
                                                  HAMURABI faithfully to its impeachment end state under
                                                  a starvation policy; bwBASIC runs it with dialect
@@ -154,6 +156,8 @@ FAILED / REFUSED ACQUISITIONS (reported, not hidden)
     SourceForge 404 -> ORIGIN_UNAVAILABLE. Replaced by the Open Mainframe Project course programs.
   C-Prolog (1982): only a repository of "recovered" sources with no licence or provenance -> not taken.
   Tierra: no fetchable source located this pass -> queued.
+
+Discovery outside HARVEST_QUEUE.md: 16 of 33 (48%); the queue had named the mechanism family for the other 17.
 
 Nothing decomposed. Near-duplicates kept (two SAT solvers now four, two DB engines, two arbiters,
 two BASIC interpreters on one listing). Nothing pruned by similarity.
