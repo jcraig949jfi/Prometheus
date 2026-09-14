@@ -163,3 +163,20 @@
   cheat_stride2 cells counted as core and the summary row read KILL on a clean run. Re-scored from the same rows
   with conditions named exactly (c6_score.py); harness fixed. The row data never changed.
 - Consequence: E8 can build on B6. Its exactness holds for evolved genomes, held-out seeds and odd population sizes.
+- Landed: rows 637dfe6fa, receipt ledger 26ece8c5e.
+
+## 2026-09-14 iteration 10: C6b audit of B6b (linear + tt_feat fused) -> PASS
+
+- Prepared before B6b existed: harness with the reference side validated by an E7-vs-E7 self-check (exact everywhere,
+  oracle clean, cheat caught) and a planted-divergence TRACING control (one clear flip -> KILL; the same flip under a
+  forced near-tie threshold -> counted near-tie, not KILL). Only the B6b adapter waited on B's API (35eb9b1ae).
+- Ran: B6b FusedRollout(family=linear|tt_feat) (2add9828b) vs E7's own numpy rollout, worlds 1/3/4, on E7's saved
+  evolved elites (train + 64 held-out seeds), P=1/7, 200-step-mutated populations; report-only ties and x1e20 overflow.
+  Adapter code 7fa120a6a; 3 threads with E8 on the host (host CPU 0-53% per cell).
+- Numbers (computed by code): 1008/1008 genomes exact in 30/30 core cells; 0 near-tie and 0 clear divergences;
+  brain oracle 0 mismatches over 4,533 clear held-out rows (linear 2,702, tt_feat 1,831); report-only 12/12 exact;
+  stride-2 cheat mismatched 16/16 elites in 6/6 family x world cells.
+- My float32 ORDER warning for linear (bias-first row kernel vs einsum-then-bias) did not bite on these rows; B's own
+  pre-build probe (0 mismatches over ~110k live rows) had already suggested it would not. Kept as a stated risk, not a
+  finding.
+- Consequence: E can move linear and tt_feat onto the fused path; lut_top is still unfused (row kernel exists).
