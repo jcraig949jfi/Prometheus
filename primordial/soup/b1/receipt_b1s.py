@@ -37,7 +37,7 @@ def main(argv=None):
         "engineering": {"worlds": 60, "episodes_per_world": 16, "form": "np"},
         "science": {
             "per_cheat": per,
-            "verdict": ("the >=95% floor is KILLED by fix_unaffordable (sensitivity %.3f): an unpaid write "
+            "verdict": ("the >=95%% floor is KILLED by fix_unaffordable (sensitivity %.3f): an unpaid write "
                         "can be absorbed without changing the trace; stoch_swap and no_regime_flip detected in "
                         "every exercised episode; 0 false alarms in all three" % per["fix_unaffordable"]["sensitivity"]),
             "consequence": ("B1's 320/320 equality proves the forms agree on EXERCISED behaviour. A form wrong only "
