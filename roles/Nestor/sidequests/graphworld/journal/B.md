@@ -442,3 +442,13 @@
   (also above float linear 105.58 @ 208). 3/3, priors .6/.35/.55.
 - A 12-byte brain choosing only abstain vs one fixed action is within 1.6 of float linear on w4:
   the held-out metric may mostly reward abstain timing. Filed as an anomaly (possible easy metric).
+- B-R2-7 (small-codebook ports, int3): A2 train8 w3 8 B 109.89 PASS (skip-odd exactly 14/16);
+  A2 train8 w1 12 B 60.57 PASS (w1 fragile); A2 train8 w4 12 B 95.92 and A2 train128 w3 8 B 103.13
+  INELIGIBLE (skip-odd 13/16); w1 train128 A2 12 B 58.19 and A4 24 B 57.84 FAIL (w1 train128 0/4 so far).
+- E landed powered brain cheats (33038855e: ablate_top, shift_action floor, input_invariant).
+  Posted B-R2-8 predicate BEFORE use: re-adjudicate the 3 INELIGIBLE cells on committed rs0 genomes.
+- B-R2-8 result: all 3 meet the rule: ablate_top 16/16, shift_action 16/16, 0 input-invariant,
+  honest 0 mismatched. Now PASS on recorded medians: int2 w4 train128 32 B; a2 w4 train8 12 B;
+  a2 w3 train128 8 B. Corrected QD ledger rows appended (supersede the 'cheat' rows).
+- a2 w3 train8 (PASS on skip-odd 14/16) re-scores 13/16 under E's row sampling but ablate 16/16:
+  the 14/16 skip-odd bar was sampling-sensitive; powered cheats are the better control.
