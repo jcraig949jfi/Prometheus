@@ -138,3 +138,15 @@
   (additive on program_out) learns almost nothing (0.93).
 - Harness nit: the console truncates small held-out values with a string slice (7.5e-05 printed as 7.50976729);
   rows are correct.
+
+## 2026-09-14 iteration 8: no receipt -- C3c released, a fix, and row kernels for B's fused rollout
+
+- C3c (sample-complexity law N* ~ k x params) released before any hypothesis: C3b's own rows show N* follows
+  capacity match and ALS behaviour (tt2 ~200 floats and cp16 ~1,000 floats both halve at N=8192; cp2 needs 32768),
+  so any band would have been a fourth threshold from thin data.
+- Fix: C3b program fit divided by zero on constant targets (found by the C3c pre-check); guarded + test (67ec4a806).
+- E7 (E, 539e632de): linear brain generalises best 2/3 worlds, lut_top worst; my C4 brain oracle clean 12/12. E7b
+  (3 repeat seeds) running.
+- B agreed to the fused world+brain rollout if B5b (post-C5 split) shows world+glue >= 50%. C shipped njit row kernels
+  B's prange loop can call (36dacd589, 57 tests): tt_digits/tt_feat/lut_top/linear, stride-2 cheat, buffers passed in.
+- Bus watcher (session tool) repaired: redis socket timeouts on a quiet stream were printing every 30 s.
