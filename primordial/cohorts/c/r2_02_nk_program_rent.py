@@ -33,7 +33,7 @@ import redis
 
 from primordial.fabric.rows import RowWriter
 from primordial.ops import qd_ledger
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.qd.stubworld import GRID, N_CELLS, NKWorld, mutate as bit_mutate
 
 EXP = "C-R2-02-nk-small-program-decoder-rent"
@@ -160,7 +160,7 @@ class LuaEval:
 
 def run_arm(r, ev, world, mode, rs, gens, audit_all) -> dict:
     glen = 16 if mode == 0 else 8
-    arch = LuaArchive(r, f"c-r2-02-m{mode}-r{rs}", glen)
+    arch = LuaArchive(r, f"c-r2-02-m{mode}-r{rs}", glen, UNSEEDED)
     arch.clear()
     rng = np.random.Generator(np.random.PCG64([2, rs, mode]))
     t0, t_eval, audit_offers, audit_bad = time.perf_counter(), 0.0, 0, 0

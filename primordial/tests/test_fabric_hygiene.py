@@ -44,3 +44,18 @@ def test_static_njit_decorators_cache_to_disk():
             if m and "cache=True" not in m.group("args"):
                 bad.append(f"{p.relative_to(ROOT)}:{i}: {line.strip()}")
     assert not bad, "add cache=True (JIT 6.2 s -> 0.32 s per process):\n" + "\n".join(bad)
+
+
+def test_live_tests_do_not_hardcode_a_redis_database():
+    """Concurrent builder suites flushed each other's shared db (2026-09-14); use tests._live.live_url()."""
+    bad = []
+    pat = re.compile(r"redis://127\.0\.0\.1:6390/\d+")
+    for p in (ROOT / "tests").rglob("*.py"):
+        if p.name == "_live.py" or p.resolve() == SELF:
+            continue
+        for i, line in enumerate(p.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+            if pat.search(line):
+                bad.append(f"{p.relative_to(ROOT)}:{i}: {line.strip()}")
+    assert not bad, "use primordial.tests._live.live_url():
+" + "
+".join(bad)

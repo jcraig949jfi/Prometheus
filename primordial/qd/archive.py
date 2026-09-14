@@ -100,16 +100,32 @@ def reduce_batch(cells, fits, genomes, meta):
     return cells[s], fits[s], genomes[s], meta[s]
 
 
+# C2 (round 3, builder G): sampler_seed is mandatory. A harness frozen before C2 that must keep the
+# round 1 ZRANDMEMBER sampler passes UNSEEDED explicitly; its archive reports replayable=False and its
+# saved elites say so. None, or leaving the seed out, raises.
+UNSEEDED = "UNSEEDED-pre-C2"
+
+
 class _Base:
-    def __init__(self, r: redis.Redis, run: str, glen: int, sampler_seed=None):
-        """sampler_seed None = ZRANDMEMBER (unseeded, the round 1 behaviour); else a PCG64 seed."""
+    def __init__(self, r: redis.Redis, run: str, glen: int, sampler_seed):
+        """sampler_seed: a PCG64 seed (int or int sequence), or UNSEEDED for a frozen pre-C2 harness."""
+        if sampler_seed is None:
+            raise ValueError("sampler_seed is mandatory (C2); pass a PCG64 seed, or UNSEEDED for a frozen pre-C2 harness")
+        unseeded = isinstance(sampler_seed, str)
+        if unseeded and sampler_seed != UNSEEDED:
+            raise ValueError(f"sampler_seed string {sampler_seed!r} is not UNSEEDED")
         self.r, self.run, self.glen = r, run, glen
+        self.sampler_seed = sampler_seed
         self.pre = f"pm:qd:{run}:c:"
         self.zkey = f"pm:qd:{run}:niche"
         self._sample = r.register_script(SAMPLE_LUA)
-        self.srng = None if sampler_seed is None else np.random.Generator(np.random.PCG64(sampler_seed))
+        self.srng = None if unseeded else np.random.Generator(np.random.PCG64(sampler_seed))
         if self.srng is not None:
             self._seeded = r.register_script(SEEDED_SAMPLE_LUA)
+
+    @property
+    def replayable(self) -> bool:
+        return self.srng is not None
 
     def sample(self, n: int) -> np.ndarray:
         if self.srng is not None:
@@ -133,7 +149,7 @@ class _Base:
 
 
 class LuaArchive(_Base):
-    def __init__(self, r, run, glen, sampler_seed=None):
+    def __init__(self, r, run, glen, sampler_seed):
         super().__init__(r, run, glen, sampler_seed)
         self._insert = r.register_script(INSERT_LUA)
 
@@ -163,6 +179,52 @@ class RacyArchive(_Base):
                 wins += 1
         w.execute()
         return wins
+
+
+ELITES_SCHEMA = "qd-elites-v1"
+
+
+def _plain(x):
+    if isinstance(x, (list, tuple, np.ndarray)):
+        return [_plain(v) for v in x]
+    return x if isinstance(x, str) else int(x)
+
+
+def save_elites(arch: _Base, path, run_seed) -> dict:
+    """C2: write the archive's elites for one run seed (cells ascending, genomes and meta hex) as one
+    canonical JSON document. Same archive state + same seeds -> byte-identical file."""
+    import json
+    import pathlib
+    doc = {"schema": ELITES_SCHEMA, "run": arch.run, "run_seed": _plain(run_seed),
+           "sampler_seed": _plain(arch.sampler_seed), "replayable": arch.replayable, "glen": arch.glen,
+           "elites": [[c, f, g.hex(), m.hex()] for c, (f, g, m) in sorted(arch.dump().items())]}
+    p = pathlib.Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(doc, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
+    return doc
+
+
+def load_elites(path) -> dict:
+    import json
+    import pathlib
+    doc = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    if doc.get("schema") != ELITES_SCHEMA:
+        raise ValueError(f"not a {ELITES_SCHEMA} document: {path}")
+    return doc
+
+
+def restore_elites(arch: _Base, doc: dict) -> int:
+    """Insert saved elites into arch (same genome length required); returns the archive's win count."""
+    if doc["glen"] != arch.glen:
+        raise ValueError(f"glen {doc['glen']} != archive glen {arch.glen}")
+    es = doc["elites"]
+    if not es:
+        return 0
+    cells = np.array([e[0] for e in es], np.uint32)
+    fits = np.array([e[1] for e in es], np.int32)
+    genomes = np.frombuffer(bytes.fromhex("".join(e[2] for e in es)), np.uint8).reshape(-1, arch.glen)
+    meta = np.frombuffer(bytes.fromhex("".join(e[3] for e in es)), "<u4").reshape(-1, 2)
+    return arch.insert(cells, fits, genomes, meta)
 
 
 def serial_reference(cells, fits, genomes) -> dict[int, tuple[int, bytes]]:

@@ -24,7 +24,7 @@ import time
 import numpy as np
 import redis
 
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.soup.b1.common import Encounter, make_world
 from primordial.soup.b1.np_world import NpEncounter
 
@@ -123,7 +123,7 @@ def oracle(spec: Spec, G: np.ndarray, cheat: str) -> dict:
 
 
 def qd(spec: Spec, r, run: str, cheat: str, gens: int, batch: int, seed: int) -> tuple[LuaArchive, dict]:
-    arch = LuaArchive(r, run, spec.glen)
+    arch = LuaArchive(r, run, spec.glen, UNSEEDED)
     arch.clear()
     rng = np.random.Generator(np.random.PCG64([seed, spec.gen_seed]))
     t_eval, best = 0.0, 0

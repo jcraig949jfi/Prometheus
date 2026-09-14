@@ -25,7 +25,7 @@ import redis
 from primordial.brain import genomes as gm
 from primordial.qd import e4_run as E4
 from primordial.qd import e7_run as E7
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.soup.b6.fused import FusedRollout
 
 EXP = "E9-family-ranking-fused-8-seeds"
@@ -60,7 +60,7 @@ def main() -> None:
             for rs in parse_seeds(a.run_seeds):
                 t0 = time.perf_counter()
                 g7 = E7.G7(gs, fam)
-                arch = LuaArchive(r, f"e9-{gs}-{fam}-{rs}", g7.glen)
+                arch = LuaArchive(r, f"e9-{gs}-{fam}-{rs}", g7.glen, UNSEEDED)
                 arch.clear()
                 rng = np.random.Generator(np.random.PCG64([990, rs, gs, list(gm.FAMILIES).index(fam)]))
                 fr = FusedRollout(g7.spec, a.batch, TRAIN, family=fam)

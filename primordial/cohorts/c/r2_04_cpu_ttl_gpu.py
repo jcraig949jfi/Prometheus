@@ -31,7 +31,7 @@ from primordial.brain import genomes as gm
 from primordial.fabric.rows import RowWriter
 from primordial.ops import qd_ledger
 from primordial.qd import e7_run as E7
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 
 EXP = "C-R2-04-tt-feat-w3-cpu-ttl-torch-gpu"
 ROOT = pathlib.Path(__file__).resolve().parents[3]
@@ -109,7 +109,7 @@ def main() -> None:
             t0 = time.perf_counter()
             g7 = E7.G7(GS, FAM)
             g7.fam = TorchTTFeat(g7.fam.D, g7.fam.A)
-            arch = LuaArchive(r, f"c-r2-04-{rs}", g7.glen)
+            arch = LuaArchive(r, f"c-r2-04-{rs}", g7.glen, UNSEEDED)
             arch.clear()
             rng = np.random.Generator(np.random.PCG64([990, rs, GS, list(gm.FAMILIES).index(FAM)]))  # E9's stream
             E7.rollout(g7, g7.init(np.random.Generator(np.random.PCG64(12345)), BATCH), E7.TRAIN)  # warm-up, off clock

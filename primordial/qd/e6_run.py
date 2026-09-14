@@ -25,7 +25,7 @@ import redis
 from primordial.qd import e4_run as E4
 from primordial.qd import e4b_run as E4B
 from primordial.qd import e5_run as E5
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 
 EXP = "E6-heldout-seed-generalisation"
 ROWS = E4.ROWS.with_name(f"{EXP}.jsonl")
@@ -49,7 +49,7 @@ def top_genomes(arch: LuaArchive, n: int = TOP) -> np.ndarray:
 
 
 def closed_qd(bs, r, run, gens, batch, seed) -> LuaArchive:
-    arch = LuaArchive(r, run, bs.glen)
+    arch = LuaArchive(r, run, bs.glen, UNSEEDED)
     arch.clear()
     rng = np.random.Generator(np.random.PCG64([seed, bs.gen_seed]))
     for _ in range(gens):

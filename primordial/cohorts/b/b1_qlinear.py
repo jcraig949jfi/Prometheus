@@ -32,7 +32,7 @@ from primordial.ops import qd_ledger as QL
 from primordial.qd import e7_run as E7
 from primordial.qd import e8_run as E8
 from primordial.qd import e9_run as E9
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.soup.b6.fused import FusedRollout
 
 EXP = "B-R2-1-int4-linear-nibble-w4-train128"
@@ -146,7 +146,7 @@ def main() -> None:
     with RowWriter(ROWS, EXP, commit_every_s=120) as rw:
         for rs in E9.parse_seeds(a.run_seeds):
             t0 = time.perf_counter()
-            arch = LuaArchive(r, f"b-r2-1-{gs}-{rs}-{a.tag}-b{a.bits}-a{a.acts}", q.glen)
+            arch = LuaArchive(r, f"b-r2-1-{gs}-{rs}-{a.tag}-b{a.bits}-a{a.acts}", q.glen, UNSEEDED)
             arch.clear()
             rng = np.random.Generator(np.random.PCG64([2101, rs, gs]))
             fr = FusedRollout(q.g7.spec, a.batch, TRAIN, family="linear")

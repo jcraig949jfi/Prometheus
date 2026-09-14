@@ -21,7 +21,7 @@ import redis
 
 from primordial.fabric.rows import RowWriter
 from primordial.qd import e4_run as E4
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 
 EXP = "D4-qd-sampler-nondeterminism"
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -33,7 +33,7 @@ class DetArchive(LuaArchive):
     (with replacement, like ZRANDMEMBER with a negative count)."""
 
     def __init__(self, r, run, glen, sampler_seed):
-        super().__init__(r, run, glen)
+        super().__init__(r, run, glen, sampler_seed)
         self.srng = np.random.Generator(np.random.PCG64(sampler_seed))
 
     def sample(self, n: int) -> np.ndarray:
@@ -89,7 +89,7 @@ def main(argv=None):
             spec = E4.Spec(gs)
             for name, kind, cheat, sseed in ARMS:
                 run = f"d4-{gs}-{name}"
-                arch = LuaArchive(r, run, spec.glen) if kind == "lua" else DetArchive(r, run, spec.glen, [sseed, gs])
+                arch = LuaArchive(r, run, spec.glen, UNSEEDED) if kind == "lua" else DetArchive(r, run, spec.glen, [sseed, gs])
                 out = qd(spec, arch, cheat, a.gens)
                 res[(gs, name)] = out
                 row = {"status": "cheat" if cheat else ("control" if name == "det_honest_s1" else status),
