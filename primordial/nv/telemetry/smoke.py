@@ -27,6 +27,7 @@ import tempfile
 NV = pathlib.Path(r"C:\Program Files\NVIDIA Corporation")
 NSYS = NV / "Nsight Systems 2024.4.2" / "target-windows-x64" / "nsys.exe"
 NCU = NV / "Nsight Compute 2024.3.0" / "target" / "windows-desktop-win7-x64" / "ncu.exe"
+REPORTS = pathlib.Path(r"C:\Users\jcrai\lab\pm-data\nv-telemetry")
 
 TORCH_TARGET = ("import torch; torch.set_num_threads(1); x = torch.randn(512, 512, device='cuda'); "
                 "print('cc', torch.cuda.get_device_capability(), float((x @ x).sum()))")
@@ -41,7 +42,7 @@ CUPTI_TARGET = ("import torch\nfrom torch.profiler import profile, ProfilerActiv
 FIRST_BLACKWELL = {"ncu": "2024.4 ('Added support for the Blackwell architecture.')",
                    "nsys": "not named in release notes; the 2024.4.2 failure here is admin-scoped, not GPU-scoped"}
 
-VERDICTS = ("ok", "refused_admin", "cuda_modules_failed", "cupti_invalid_device", "target_crashed",
+VERDICTS = ("ok", "refused_admin", "perm_gpu_counters", "driver_incompatible", "cuda_modules_failed", "cupti_invalid_device", "target_crashed",
             "timeout", "tool_missing", "failed")
 
 
@@ -54,6 +55,10 @@ def classify(probe: str, rc: int | None, out: str, err: str) -> str:
         return "tool_missing"
     if "requires administrator privileges" in text and rc != 0:
         return "refused_admin"
+    if "ERR_NVGPUCTRPERM" in text:
+        return "perm_gpu_counters"
+    if "Cuda driver is not compatible with Nsight Compute" in text:
+        return "driver_incompatible"
     if "Failed to load Nsight Compute CUDA modules" in text:
         return "cuda_modules_failed"
     if "CUPTI_ERROR_INVALID_DEVICE" in text:
@@ -78,14 +83,14 @@ def _run(cmd, cwd, timeout, env=None):
         return 127, "", f"tool_missing: {e}"
 
 
-def probes(py: str, work: pathlib.Path):
+def probes(py: str, work: pathlib.Path, ncu: pathlib.Path = NCU):
     return {
         "control_torch": [py, "-c", TORCH_TARGET],
         "nsys_trivial": [str(NSYS), "profile", "-t", "none", "-s", "none", "--cpuctxsw=none",
                          "-o", str(work / "nsys_trivial"), "-f", "true", "cmd.exe", "/c", "echo", "hi"],
         "nsys_cuda_torch": [str(NSYS), "profile", "-t", "cuda,nvtx", "-s", "none", "--cpuctxsw=none",
                             "-o", str(work / "nsys_cuda"), "-f", "true", py, "-c", TORCH_TARGET],
-        "ncu_torch": [str(NCU), "-o", str(work / "ncu_torch"), "-f", py, "-c", TORCH_TARGET],
+        "ncu_torch": [str(ncu), "-o", str(work / "ncu_torch"), "-f", py, "-c", TORCH_TARGET],
         "cupti_torch": [py, "-c", CUPTI_TARGET],
     }
 
@@ -102,22 +107,31 @@ def main(argv=None) -> int:
     ap.add_argument("--py", default=sys.executable)
     ap.add_argument("--timeout", type=float, default=150)
     ap.add_argument("--only", default="")
+    ap.add_argument("--ncu", default=str(NCU))
+    ap.add_argument("--exp", default="Q1-capture-smoke")
     a = ap.parse_args(argv)
     from primordial.fabric.rows import RowWriter
     env = dict(os.environ, OMP_NUM_THREADS="1", NUMBA_NUM_THREADS="1")
     work = pathlib.Path(tempfile.mkdtemp(prefix="q1_"))
-    host = {"os": platform.platform(), "nsys": tool_version(NSYS), "ncu": tool_version(NCU),
+    host = {"os": platform.platform(), "nsys": tool_version(NSYS), "ncu": tool_version(pathlib.Path(a.ncu)), "ncu_path": a.ncu,
             "gpu": _run(["nvidia-smi", "--query-gpu=name,compute_cap,driver_version", "--format=csv,noheader"],
                         None, 60)[1].strip(),
             "first_blackwell": FIRST_BLACKWELL}
     only = set(a.only.split(",")) - {""}
-    with RowWriter(a.out, "Q1-capture-smoke", commit_every_s=3600) as w:
-        for name, cmd in probes(a.py, work).items():
+    with RowWriter(a.out, a.exp, commit_every_s=3600) as w:
+        for name, cmd in probes(a.py, work, pathlib.Path(a.ncu)).items():
             if only and name not in only:
                 continue
             rc, out, err = _run(cmd, work, a.timeout, env)
             v = classify(name, rc, out, err)
             files = sorted(p.name for p in work.iterdir() if p.name.startswith(name.split("_")[0]))
+            if name == "ncu_torch" and v == "ok" and not any(f.endswith(".ncu") for f in files):
+                v = "failed"                                   # PASS needs the report file, not just rc 0
+            if files:
+                keep = REPORTS                                 # binary reports stay out of git
+                keep.mkdir(parents=True, exist_ok=True)
+                for f in files:
+                    shutil.copy2(work / f, keep / f"{a.exp}-{f}")
             status = "control" if name == "control_torch" else "record"
             w.write({"status": status, "probe": name, "verdict": v, "rc": rc, "cmd": cmd,
                      "stdout": out[-2000:], "stderr": err[-2000:], "report_files": files, "host": host})

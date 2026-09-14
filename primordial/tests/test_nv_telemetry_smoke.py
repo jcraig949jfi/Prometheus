@@ -20,6 +20,18 @@ def test_ncu_2024_3_on_blackwell():
     assert classify("ncu_torch", 139, "", err) == "cuda_modules_failed"
 
 
+def test_ncu_2026_2_driver_too_old():
+    err = ("==ERROR== Cuda driver is not compatible with Nsight Compute.\n"
+           "==ERROR== The application returned an error code (3221225477).\n")
+    assert classify("ncu_torch", 3221225477, "", err) == "driver_incompatible"
+
+
+def test_ncu_2025_2_counter_permission():
+    err = ("==ERROR== ERR_NVGPUCTRPERM - The user does not have permission to access NVIDIA GPU Performance "
+           "Counters on the target device 0.\n")
+    assert classify("ncu_torch", 1, "cc (12, 0) 1.0", err) == "perm_gpu_counters"
+
+
 def test_crash_without_ncu_text():
     assert classify("ncu_torch", 3221225477, "", "") == "target_crashed"
 
