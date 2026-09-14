@@ -32,8 +32,8 @@ told to quiesce, push and post "PAUSED for reboot":
 | W | N3 Warp MVP | GREEN, paused (8639275d8) |
 | Q | N2 Nsight MVP | GREEN with counter features BLOCKED; Q2c INDETERMINATE (regkey set, driver not reloaded) |
 | U | N5 CUDA Graphs MVP | GREEN (fc173298b); U6 throughput receipt FAIL as posted (graph vs eager >= 5x in 4/6); U6b open |
-| P | N1 precision MVP | epoch 1 done (fp8 no kernel on cc 12.0 torch cu128; int8 exact; cutlass 4.2 fails on Blackwell); quiescing |
-| T | N4 cuTensorNet MVP (WSL) | oracle + cheat 32/32; timing and topology note open; quiescing |
+| P | N1 precision MVP | GREEN, loop stopped 19:10 (P1-P4; fp16 the only free win, int8/fp8 buy bytes only; fp8 no kernel on cc 12.0 torch cu128; cutlass 4.2 fails on Blackwell). Pushed to origin/nestor/bld-p-2026-09-14 @ 03f16eb2c but NOT yet on the integration branch. After reboot: integrate P's branch (rebase onto integration, suite green, ff push) |
+| T | N4 cuTensorNet MVP (WSL) | PAUSED for reboot 19:41, pushed 568bbf691: oracle 32/32, cheat 32/32, timing 28/36 shapes (cuTN faster 22/28), topology note; open: timing d64r16 B>=262k and d64r64 (resume with a per-cell watchdog) |
 
 - Round 2 cohort sessions B-E are idle (worktrees nestor-r2-<l>). Do not
   relaunch them; round 4 gets fresh sessions.
