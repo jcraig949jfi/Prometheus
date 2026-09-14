@@ -1,8 +1,11 @@
 """E-T3 (lane B ask 2026-09-14): brain-oracle cheats with measured power, for any brain family.
 
 B's finding: E7.brain_oracle(cheat=True) (skip-odd features) caught only 13/16 int2 linear
-elites. A skip-odd cheat is only a cheat for a brain that USES odd features; a low-precision
-brain whose odd-feature weights round to 0 is invariant to it, so the oracle looks blind.
+elites. A fixed-structure cheat is only a cheat for a brain whose actions depend on that
+structure; for some brains it is (near) invariant, so the oracle looks blind. The MECHANISM on
+B's int2 elites is open: B's anomaly 1789418707943-0 shows it is NOT zero odd weights (blind
+elites' odd zero-weight fraction .31-.34, inside the run's .19-.44). This tool does not explain
+the blindness; it measures a cheat's power per elite instead of assuming it.
 
 brain_oracle_cheats(g7, g, seeds) runs one honest logged rollout (E7.rollout) and replays the
 logged live rows through three named cheat forwards. For each cheat, the oracle's detection is

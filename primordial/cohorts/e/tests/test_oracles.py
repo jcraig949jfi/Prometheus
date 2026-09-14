@@ -17,7 +17,7 @@ def test_honest_clean_and_shift_always_caught():
 
 
 def test_ablate_top_catches_a_brain_that_ignores_odd_features():
-    # the int2 failure mode: odd-feature weights are exactly 0, so skip-odd is invariant
+    # a PLANTED skip-odd invariance (odd weights exactly 0); not B's int2 mechanism (anomaly 1789418707943-0)
     g7, (p, C) = _elites(P=4, seed=1)
     W, b = p
     W[:, 1::2, :] = 0.0

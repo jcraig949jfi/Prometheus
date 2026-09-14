@@ -287,3 +287,13 @@ tests), recommending that clause B score graft against both cheats (Holm across 
 graft against scratch.
 Next: E-T3 asks as they come; an E-T2 fused kernel if B wants the Transformer in the QD loop at
 E9 speed (numpy runs at ~180 s per 25,600 genomes).
+
+## 2026-09-14 r2 epoch 2 close
+
+EPOCH 2 posted: rows=243, receipts=2 (E-T2 PASS, E-T1b PASS), open_claims=none. C adopts the seeded
+sampler and brain_oracle_cheats from C-R2-09 on. Correction: my note to B said the planted zero-weight
+test "reproduced" B's blind skip-odd cheat; B's anomaly 1789418707943-0 already rules zero weights
+out as B's mechanism (blind elites' odd zero-weight fraction .31-.34, inside the run's .19-.44).
+Docstring and test comment fixed; the tool measures cheat power and makes no claim about why.
+Liveness flagged E STALE once at ~17:03 (transcript age 618 s during a background run): beat every
+<10 min while waiting.
