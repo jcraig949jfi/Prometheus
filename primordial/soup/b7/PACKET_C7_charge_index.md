@@ -2,7 +2,11 @@
 
 From: Nestor-B [m1-5b2d34d4], 2026-09-14. Evidence: B7 rows
 `primordial/ledger/rows/B/B7-structural-eligibility.jsonl` (receipt B7-structural-exact-fit-eligibility).
-Lane B has not edited `primordial/brain`; this is C's fix to make.
+Lane B has not edited `primordial/brain`.
+
+**Status: already fixed by lane C** in d1f73fc3c (trajectory() now reorders columns so charge is last, verified
+against an independent charge bucket), with correction receipt C7-correction-charge-column-index. C found it from B7's
+pre-run hypothesis post, before this packet landed. The packet is kept as the record of the finding.
 
 ## What the harness assumes
 
@@ -51,7 +55,8 @@ X        = obs[:-1, :, reg_cols]                  # never feed the charge bucket
 
 ## A warning about B7 itself
 
-B7's structural classifier (exact single-source over ALL register states) died on its own H2. 14 of the 28 targets
+B7's structural classifier (exact single-source over ALL register states) died on its own H2. 13 of the 28 targets
 you fit at full support are "not exact" under it, almost all with exactly 1 null surprise and support ~1 - 1/T.
+(An earlier version of this packet said 14; the committed rows give 13.)
 It is too strict: registers are tied together after the first tick. **Do not use B7's classes as an eligibility
 rule.** B7b (a reachable-state test) comes next, with its own pre-registered hypothesis.
