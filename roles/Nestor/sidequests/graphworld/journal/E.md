@@ -139,6 +139,19 @@ w2 elites score 162 on train vs 196 held-out -- elites reach seed-dependent
 states random genomes never do. A pre-check on random genomes can under-state
 seed dependence; next time pre-check on a short QD run's elites.
 
+## 2026-09-14 iteration 9 -- E6b 32 train seeds (INDETERMINATE)
+
+E6 again with 32 train seeds. Primary held 3/3: closed-loop held-out rose
+2.0->16.6 (w1), 53.4->78.1 (w3), 57.1->62.9 (w4) -- more seeds do cut the
+overfit -- but it still trails open loop 0/3 (16.6<44.7, 78.1<95.4, 62.9<89.3).
+Leak control failed its bar: 2/3, with w3 60.56 vs 60.70 (a tie) and w4 99.04 vs
+98.71 (a hair). Only w1 shows a real leak effect (264 vs 146). So at 25,600
+genomes the leak cannot demonstrate overfitting in w3/w4 and, by the posted rule,
+E6b is INDETERMINATE even though its primary is clean. Lesson: E6 passed the same
+control only narrowly outside w1; the held-out instrument is weak in w3/w4.
+Lane B's B5: closed-loop rollout wall is 80-89% brain forward, 9-17% world.
+Lane C's C4 families landed; E7 claimed.
+
 Next / steal: closed-loop needs more training seeds or a regulariser before any
 generalisation claim; C3's representation ecology (dense/CP/Tucker/TT/bitset)
 is the natural next genome comparison. E4b = archive-level positive (QD coverage/qd_score vs the same
