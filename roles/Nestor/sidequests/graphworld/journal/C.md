@@ -180,3 +180,16 @@
   pre-build probe (0 mismatches over ~110k live rows) had already suggested it would not. Kept as a stated risk, not a
   finding.
 - Consequence: E can move linear and tt_feat onto the fused path; lut_top is still unfused (row kernel exists).
+- Landed: rows 30da93ef5, receipt ledger 58c11c641.
+
+## 2026-09-14 iteration 11: C7 (C2 plasticity inside B's world) released before a hypothesis
+
+- Scan: 126/399 B worlds have regime_period > 0; the flip negates every lin_op multiplier (a -> M-a, M = 65536), a real
+  change of dynamics. Clean candidates: gs 30 (T256, period 32, D6), 110, 116, 107.
+- Dev probe (dev seeds 50000.., zero actions, 1024 envs/tick): gs 30 flip changes 4/6 observed features in 87% of
+  (env,tick), yet C2's PlasticTTBrain on current-obs hex digits -> next obs has MSE 0.99-1.02 (= variance) in all 8
+  regimes, rank 1, 0 surprises; gs 116 flip changes 0 observed features. Affine mod 2^16 is not low TT rank in digits
+  (same wall as C3b), so rank-tracks-regime is untestable in B's worlds. Released (bus) instead of posting a
+  foregone KILL.
+- Next: C7b feasibility -- where is next obs an exact affine-mod-2^16 function of current obs, and is it flip-sensitive?
+  A structure-matched plastic learner is the representation C3 says should work.
