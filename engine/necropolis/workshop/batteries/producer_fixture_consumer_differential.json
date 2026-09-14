@@ -1,0 +1,39 @@
+{
+ "battery_id": "producer_fixture_consumer_differential",
+ "name": "PRODUCER -> FIXED FIXTURE -> CONSUMER -> DIFFERENTIAL",
+ "question": "Did the consumer of a dead producer's output actually depend on that output, or would any fixture have produced the same downstream verdict?",
+ "steps": [
+  {
+   "step": 1,
+   "tool_id": "NT-016",
+   "role": "PRODUCER",
+   "does": "seeded replay of the producer with an input-fingerprinting manifest (archaeon H3 pattern; other producers via NT-055 fresh-interpreter runner)"
+  },
+  {
+   "step": 2,
+   "tool_id": "NT-038",
+   "role": "FIXED FIXTURE",
+   "does": "hash the fixture spec so the same bytes are fed to every consumer arm"
+  },
+  {
+   "step": 3,
+   "tool_id": "NT-004",
+   "role": "CONSUMER",
+   "does": "the historical gate (Erebos residue eligibility as the exemplar) run on fixture and on a shuffled / constant fixture"
+  },
+  {
+   "step": 4,
+   "tool_id": "NT-033",
+   "role": "DIFFERENTIAL",
+   "does": "IDENTICAL / INDETERMINATE / NOT_IDENTICAL between arms; accuracy agreement alone cannot buy IDENTICAL"
+  },
+  {
+   "step": 5,
+   "tool_id": "NT-041",
+   "role": "DEGENERACY",
+   "does": "flag a consumer that conflates distinct fixtures (B1)"
+  }
+ ],
+ "coroner_run_required": true,
+ "output_contract": "{fixture_hash, consumer_verdict_on_fixture, consumer_verdict_on_null_fixture, differential, degenerate}; a consumer whose verdict is IDENTICAL across real and null fixtures is recorded as CONSUMER_BLIND"
+}

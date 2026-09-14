@@ -1,0 +1,2573 @@
+{
+ "schema": "necropolis.workshop.controls_result/1",
+ "git_head": "52ac826b537f7ff57279169c0b6b554d6ae0998c",
+ "started": "2026-09-14T01:57:25Z",
+ "cases": [
+  {
+   "case_id": "grading_oracle.ACCEPT.careful_reasoner_clears_R0_R3",
+   "tool_key": "grading_oracle",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "overall": 0.5938,
+    "staircase": {
+     "R0": 1.0,
+     "R1": 1.0,
+     "R2": 1.0,
+     "R3": 1.0,
+     "R5": 0.0,
+     "R6": 0.75,
+     "R7": 0.0,
+     "R8": 0.0
+    },
+    "rates": {
+     "R0": 1.0,
+     "R1": 1.0,
+     "R2": 1.0,
+     "R3": 1.0,
+     "R5": 0.0,
+     "R6": 0.75,
+     "R7": 0.0,
+     "R8": 0.0
+    }
+   },
+   "seconds": 6.67
+  },
+  {
+   "case_id": "grading_oracle.REJECT.constant_reasoner_near_zero",
+   "tool_key": "grading_oracle",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "overall": 0.0008
+   },
+   "seconds": 3.83
+  },
+  {
+   "case_id": "grading_oracle.CORRUPT_INPUT.string_trace_must_not_abort_grading",
+   "tool_key": "grading_oracle",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "FAIL",
+   "observed": {
+    "raised": "AttributeError: 'str' object has no attribute 'get'",
+    "note": "harmonia/experiments/reasoning_phase0.py::grade calls tr.get(); grade_reasoner catches reasoner exceptions but not grader ones"
+   },
+   "seconds": 2.19
+  },
+  {
+   "case_id": "grading_oracle.REJECT.crashing_reasoner_scores_zero",
+   "tool_key": "grading_oracle",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "overall": 0.0
+   },
+   "seconds": 3.42
+  },
+  {
+   "case_id": "grading_oracle.REPETITION.same_seed_same_staircase",
+   "tool_key": "grading_oracle",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {
+    "identical": true,
+    "sha": "e3c19117f6ebc572"
+   },
+   "seconds": 2.03
+  },
+  {
+   "case_id": "grading_oracle.CHEAT.reasoner_reads_probe_ground_truth",
+   "tool_key": "grading_oracle",
+   "kind": "CHEAT",
+   "verdict": "FAIL",
+   "observed": {
+    "overall": 0.75,
+    "rates": {
+     "R0": 0.0,
+     "R1": 1.0,
+     "R2": 1.0,
+     "R3": 0.0,
+     "R5": 1.0,
+     "R6": 1.0,
+     "R7": 1.0,
+     "R8": 1.0
+    },
+    "note": "cheat SUCCEEDS if overall >> chance"
+   },
+   "seconds": 5.13
+  },
+  {
+   "case_id": "grading_oracle.CHEAT.reasoner_reads_R6_data_truth",
+   "tool_key": "grading_oracle",
+   "kind": "CHEAT",
+   "verdict": "FAIL",
+   "observed": {
+    "overall": 1.0
+   },
+   "seconds": 0.02
+  },
+  {
+   "case_id": "comms_manifest.ACCEPT.roundtrip_verifies",
+   "tool_key": "comms_manifest",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "verify": "(1, [])",
+    "write": "WindowsPath('C:/Users/James/AppData/Local/Temp/nt_manifest_x47zx8ca/MANIFEST.md')"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "comms_manifest.REJECT.modified_file_detected",
+   "tool_key": "comms_manifest",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "verify_after_tamper": "(1, ['a.txt: manifest b6a98d9ce9a2 != artifact 1a88f3c3e398'])"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "comms_manifest.PARITY.crlf_and_lf_hash_equal",
+   "tool_key": "comms_manifest",
+   "kind": "PARITY",
+   "verdict": "PASS",
+   "observed": {
+    "lf": "c3f9c8c283a2b1f2",
+    "crlf": "c3f9c8c283a2b1f2"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "comms_manifest.CORRUPT_INPUT.subdirectory_file_not_covered",
+   "tool_key": "comms_manifest",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "INFO",
+   "observed": {
+    "files_present": 2,
+    "checked": 1,
+    "bad": [],
+    "reading": "flat manifest; subdirectory contents silently uncovered"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "comms_manifest.LAUNDERING.rewritten_manifest_passes_verify",
+   "tool_key": "comms_manifest",
+   "kind": "LAUNDERING",
+   "verdict": "INFO",
+   "observed": {
+    "laundering_undetected": true,
+    "verify_after_relaunder": "(1, [])",
+    "reading": "OUT OF CONTRACT: verify() checks files against the manifest beside them and has no memory; a rewritten manifest passes. Provenance requires the MANIFEST.md hash anchored elsewhere (git blob, receipt).",
+    "registry_action": "known_failure_modes + forbidden_inference on the manifest row"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "control_certifier.ACCEPT.clean_battery_certified_clean",
+   "tool_key": "control_certifier",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "CLEAN",
+    "shapes": {
+     "S1_empty_conflation": "CLEAN",
+     "S2_unconditional_constant": "CLEAN",
+     "S3_doc_behaviour_gap": "CLEAN",
+     "S4_condition_number": "CLEAN",
+     "S5_silent_nan": "CLEAN"
+    }
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "control_certifier.REJECT.defective_battery_every_shape_caught",
+   "tool_key": "control_certifier",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "CARRIES-DEFECT",
+    "shapes": {
+     "S1_empty_conflation": "CARRIES-DEFECT",
+     "S2_unconditional_constant": "CARRIES-DEFECT",
+     "S3_doc_behaviour_gap": "CARRIES-DEFECT",
+     "S4_condition_number": "CARRIES-DEFECT",
+     "S5_silent_nan": "CARRIES-DEFECT"
+    }
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "control_certifier.REJECT.missing_shape_is_uncertified_not_clean",
+   "tool_key": "control_certifier",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "UNCERTIFIED"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "truth_table_oracle.ACCEPT.known_expression_labels",
+   "tool_key": "truth_table_oracle",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "n_inputs": 3,
+    "expr": [
+     "and",
+     [
+      "and",
+      [
+       "input",
+       0
+      ],
+      [
+       "input",
+       1
+      ]
+     ],
+     [
+      "input",
+      2
+     ]
+    ],
+    "labels": [
+     1,
+     0,
+     0
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "truth_table_oracle.PERTURBATION.perturbed_expression_changes_labels",
+   "tool_key": "truth_table_oracle",
+   "kind": "PERTURBATION",
+   "verdict": "PASS",
+   "observed": {
+    "table_a_ones": 1,
+    "table_b_ones": 7
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "truth_table_oracle.CORRUPT_INPUT.malformed_expression_refused",
+   "tool_key": "truth_table_oracle",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "BooleanError"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "truth_table_oracle.CORRUPT_INPUT.wrong_width_inputs_refused",
+   "tool_key": "truth_table_oracle",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "BooleanError"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "truth_table_oracle.CORRUPT_INPUT.input_index_out_of_range_refused",
+   "tool_key": "truth_table_oracle",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "BooleanError"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pollux_pipeline.REPETITION.same_inputs_same_corr",
+   "tool_key": "pollux_pipeline",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {
+    "r1": "(1.0, 0.12663265306122448, 'pollux_correlation_attenuates_under_normalization')"
+   },
+   "seconds": 0.02
+  },
+  {
+   "case_id": "pollux_pipeline.SYNTHETIC_NULL.independent_samples_must_not_correlate",
+   "tool_key": "pollux_pipeline",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "FAIL",
+   "observed": {
+    "corr_raw_on_independent": [
+     [
+      1.0,
+      0.17020408163265305,
+      "pollux_correlation_attenuates_under_normalization"
+     ],
+     [
+      1.0,
+      0.10459183673469388,
+      "pollux_correlation_attenuates_under_normalization"
+     ],
+     [
+      1.0,
+      -0.1846938775510204,
+      "pollux_sign_flips_under_normalization"
+     ],
+     [
+      1.0,
+      0.1123469387755102,
+      "pollux_correlation_attenuates_under_normalization"
+     ],
+     [
+      1.0,
+      0.04979591836734694,
+      "pollux_correlation_attenuates_under_normalization"
+     ]
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pollux_pipeline.PERTURBATION.shuffling_one_side_changes_corr",
+   "tool_key": "pollux_pipeline",
+   "kind": "PERTURBATION",
+   "verdict": "FAIL",
+   "observed": {
+    "corr_before": [
+     1.0,
+     1.0,
+     "pollux_correlation_survives_normalization"
+    ],
+    "corr_after_shuffle": [
+     1.0,
+     1.0,
+     "pollux_correlation_survives_normalization"
+    ],
+    "reading": "equal values mean the pipeline discards pairing (sorts) before correlating"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "permutation_null.SYNTHETIC_SIGNAL.shifted_samples_small_p",
+   "tool_key": "permutation_null",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "p_home": 0.0004997501249375312,
+    "p_scipy": 0.0004997501249375312
+   },
+   "seconds": 0.45
+  },
+  {
+   "case_id": "permutation_null.SYNTHETIC_NULL.same_distribution_uniform_p",
+   "tool_key": "permutation_null",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "frac_p_below_0.05": 0.1,
+    "n": 40
+   },
+   "seconds": 0.22
+  },
+  {
+   "case_id": "permutation_null.CHEAT.label_blind_statistic_detected",
+   "tool_key": "permutation_null",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "p_cheat": 1.0,
+    "p_real": 0.000999000999000999
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "coverage_diagnostic.ACCEPT.ec_selftest_reproduces_B2",
+   "tool_key": "coverage_diagnostic",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "catalog": "B2_CEILING",
+    "full": "MIXED_INCONCLUSIVE",
+    "expressible": 0.125
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "coverage_diagnostic.SYNTHETIC_SIGNAL.all_targets_in_class_all_found_is_not_ceiling",
+   "tool_key": "coverage_diagnostic",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "MIXED_INCONCLUSIVE",
+    "expressible": 1.0,
+    "recall": 1.0
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "coverage_diagnostic.SYNTHETIC_NULL.no_in_class_recall_refuses_ceiling_call",
+   "tool_key": "coverage_diagnostic",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "MIXED_INCONCLUSIVE",
+    "expressible": 0.0
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "coverage_diagnostic.SYNTHETIC_SIGNAL.narrow_class_perfect_recall_low_coverage_is_B2",
+   "tool_key": "coverage_diagnostic",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "B2_CEILING",
+    "expressible": 0.167,
+    "ceiling_axes": {
+     "RELATION_OOV": 5
+    }
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "coverage_diagnostic.PERTURBATION.missed_in_class_target_flips_to_mixed",
+   "tool_key": "coverage_diagnostic",
+   "kind": "PERTURBATION",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "MIXED_INCONCLUSIVE",
+    "recall": 0.5
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "coverage_diagnostic.CHEAT.out_of_class_marked_found_refused",
+   "tool_key": "coverage_diagnostic",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "out-of-class target 'laundered' marked found"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "reasoning_quality_emit.ACCEPT.contested_task_detected",
+   "tool_key": "reasoning_quality_emit",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "contested": true
+   },
+   "seconds": 5.45
+  },
+  {
+   "case_id": "reasoning_quality_emit.REJECT.unanimous_task_not_contested",
+   "tool_key": "reasoning_quality_emit",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "contested": false
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "reasoning_quality_emit.ACCEPT.append_then_load_roundtrip",
+   "tool_key": "reasoning_quality_emit",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "loaded": 1,
+    "candidate_id": "cand-1"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "reasoning_quality_emit.CORRUPT_INPUT.single_evaluator_refused",
+   "tool_key": "reasoning_quality_emit",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "need >= 2 evaluators to persist a vector, got 1"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "reasoning_quality_emit.CORRUPT_INPUT.invalid_vector_refused",
+   "tool_key": "reasoning_quality_emit",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "ValueError"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "ks_ensemble.SYNTHETIC_SIGNAL.shifted_sample_small_p",
+   "tool_key": "ks_ensemble",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "ensemble": "GOE",
+    "p": 6.193799065427267e-75,
+    "n_ref": 3920
+   },
+   "seconds": 0.06
+  },
+  {
+   "case_id": "ks_ensemble.SYNTHETIC_NULL.subsample_of_reference_large_p",
+   "tool_key": "ks_ensemble",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "frac_p_below_0.05": 0.0,
+    "min_p": 0.19889446171407288
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "validate_workshop.CHEAT.negative_selftests_fire",
+   "tool_key": "validate_workshop",
+   "kind": "CHEAT",
+   "verdict": "INFO",
+   "observed": {
+    "rc": 0,
+    "note": "empty registry; selftests skipped"
+   },
+   "seconds": 0.03
+  },
+  {
+   "case_id": "kill_vector.ACCEPT.pipeline_output_builds_vector",
+   "tool_key": "kill_vector",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "type": "KillVector",
+    "n_components": 8
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "kill_vector.PERTURBATION.failing_check_changes_vector",
+   "tool_key": "kill_vector",
+   "kind": "PERTURBATION",
+   "verdict": "PASS",
+   "observed": {
+    "changed": true,
+    "len_a": 2760,
+    "len_b": 2764
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "kill_vector.REPETITION.same_input_same_vector",
+   "tool_key": "kill_vector",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {
+    "identical_excluding_timestamp": true,
+    "note": "vector carries a wall-clock `timestamp` field; byte-identity requires excluding it (measured: only differing field)"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "kill_vector.CORRUPT_INPUT.missing_check_keys",
+   "tool_key": "kill_vector",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "INFO",
+   "observed": {
+    "note": "empty check_results accepted",
+    "result": "{'components': [{'falsifier_name': 'out_of_band', 'triggered': True, 'margin': -0.0009999999999998899, 'margin_unit': 'absolute', 'metadata': {'M': 1.0}, 'precision_dps': None, 'method': 'unknown', 'c"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "residue_eligibility.ACCEPT.novel_kp_on_empty_ledger_is_eligible",
+   "tool_key": "residue_eligibility",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "criteria": [
+     "changes_routing_distribution",
+     "adds_tensor_rank"
+    ],
+    "notes": "eligible: 2 of 4 criteria fired (changes_routing_distribution, adds_tensor_rank)"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "residue_eligibility.REJECT.repeated_kp_dominant_routing_not_eligible",
+   "tool_key": "residue_eligibility",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "criteria": [],
+    "notes": "exhaust: zero criteria fired \u2014 verdict adds no routing change, no boundary localization, no prior falsification, no tensor-rank novelty. Write to exhaust log, n"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "residue_eligibility.PERTURBATION.new_domain_adds_tensor_rank",
+   "tool_key": "residue_eligibility",
+   "kind": "PERTURBATION",
+   "verdict": "PASS",
+   "observed": {
+    "criteria": [
+     "adds_tensor_rank"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "residue_eligibility.CHEAT.prior_falsification_without_signature_cannot_fire",
+   "tool_key": "residue_eligibility",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "criteria": [],
+    "prior_detail": {
+     "input_signature": null,
+     "prior_kps": [],
+     "new_kp": "kp_a",
+     "fires": false,
+     "reason": "no input_signature provided; cannot check prior"
+    }
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "d3_null_calibration.PARITY.exact_vs_simulated_false_alarm_agree",
+   "tool_key": "d3_null_calibration",
+   "kind": "PARITY",
+   "verdict": "PASS",
+   "observed": {
+    "exact": 0.03302610564004421,
+    "sim": {
+     "rate": 0.0341,
+     "se": 0.0012833002376684889,
+     "draws": 20000,
+     "seed": 20260913,
+     "fires": 682
+    }
+   },
+   "seconds": 0.26
+  },
+  {
+   "case_id": "d3_null_calibration.SYNTHETIC_SIGNAL.tighter_band_raises_false_alarm",
+   "tool_key": "d3_null_calibration",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "wide": 0.001968817744546939,
+    "tight": 0.7079069719296336
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "d3_null_calibration.REPETITION.same_seed_same_rate",
+   "tool_key": "d3_null_calibration",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {
+    "a": 0.0292,
+    "b": 0.0292
+   },
+   "seconds": 0.12
+  },
+  {
+   "case_id": "canon_r11_calibration.ACCEPT.audit_complete_when_all_declared_reported",
+   "tool_key": "canon_r11_calibration",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "complete": true,
+    "missing": [],
+    "unsupported": []
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "canon_r11_calibration.REJECT.selective_reporting_detected_by_external_ledger",
+   "tool_key": "canon_r11_calibration",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "audit": {
+     "complete": false,
+     "missing": [
+      "fails_at_7",
+      "true_1"
+     ],
+     "unsupported": []
+    },
+    "completeness": 0.5
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "canon_r11_calibration.CHEAT.refuted_without_witness_is_unsupported",
+   "tool_key": "canon_r11_calibration",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "complete": true,
+    "missing": [],
+    "unsupported": [
+     "fails_at_5"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "canon_r11_calibration.SYNTHETIC_SIGNAL.calibrated_forecaster_beats_overconfident",
+   "tool_key": "canon_r11_calibration",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "ReferenceClassForecaster": 0.3125,
+    "OverconfidentAsserter": 0.4901
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "modal_collapse_synthetic.ACCEPT.tiny_diagnostic_returns_verdict",
+   "tool_key": "modal_collapse_synthetic",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "A",
+    "keys": [
+     "d",
+     "n_bins",
+     "n_episodes",
+     "n_seeds",
+     "variants",
+     "verdict"
+    ]
+   },
+   "seconds": 0.08
+  },
+  {
+   "case_id": "modal_collapse_synthetic.SYNTHETIC_NULL.random_agent_at_chance",
+   "tool_key": "modal_collapse_synthetic",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "acc": 0.052,
+    "chance": 0.047619047619047616,
+    "raw": "{'hit_rate': 0.052, 'true_bin_distribution': [1, 6, 11, 15, 19, 19, 26, 34, 39, 45, 54, 44, 54, 36, 31, 17, 14, 15, 9, 4, 7], 'n_test': 500}"
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "z3_oracle.ACCEPT.first_check_runs",
+   "tool_key": "z3_oracle",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "rc": 0,
+    "tail": "his is NOT a claim that z3 is complete; it is a measured statement about what this seat could elicit in four seconds per query. The consumer-facing consequence: on this build an `unknown` seen in practice is most likely a budget failure, and the adapter must still report it as a third outcome rather than interpreting it.\"}], \"n_cases\": 6, \"n_decided\": 5, \"n_passed\": 5, \"all_decided_passed\": true}\n"
+   },
+   "seconds": 0.24
+  },
+  {
+   "case_id": "z3_oracle.PARITY.h1_oracle_agrees_with_truth_table",
+   "tool_key": "z3_oracle",
+   "kind": "PARITY",
+   "verdict": "PASS",
+   "observed": {
+    "rc": 0,
+    "all_passed": true,
+    "new_receipts_in_tree": [],
+    "tail": "d every `unknown` I could elicit was a budget failure, which is a fact about what I could elicit.\"], \"results_summary\": {\"parity_pairs\": 2048, \"parity_mismatches\": 0, \"distinct_pairs\": 32640, \"witnesses\": 32640, \"witness_failures\": 0, \"unknown_reasons\": [\"timeout\", \"max. resource limit exceeded\"]}}\n"
+   },
+   "seconds": 18.31
+  },
+  {
+   "case_id": "z3_oracle.REJECT.unsat_expression_reported_unsat",
+   "tool_key": "z3_oracle",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "contradiction": "unsat",
+    "tautology": "sat",
+    "z3_version": "4.16.0"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "hypothesis_minimiser.ACCEPT.h1_minimiser_runs",
+   "tool_key": "hypothesis_minimiser",
+   "kind": "ACCEPT",
+   "verdict": "ERROR",
+   "observed": {
+    "exception": "RuntimeError: DEPENDENCY_ABSENT: python package `hypothesis` is not installed for C:\\Users\\James\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe; Techne's receipt installs it for H:/Python312 (HOST_LOCAL)",
+    "trace": "Traceback (most recent call last):\n  File \"D:\\Prometheus-worktrees\\rhadamanthus-base-role\\engine\\necropolis\\workshop\\tests\\run_controls.py\", line 670, in main\n    ok, obs = fn()\n              ~~^^\n  File \"D:\\Prometheus-worktrees\\rhadamanthus-base-role\\engine\\necropolis\\workshop\\tests\\cases_b.py\", line 252, in _\n    raise RuntimeError(\"DEPENDENCY_ABSENT: python package `hypothesis` is not installed for \"\n                       f\"{sys.executable}; Techne's receipt installs it for H:/Python312 (HOST_LOCAL)\")\nRuntimeError: DEPENDENCY_ABSENT: python package `hypothesis` is not installed for C:\\Users\\James\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe; Techne's receipt installs it for H:/Python312 (HOST_LOCAL)\n"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "h3_replay.ACCEPT.top_k_returns_highest_scores",
+   "tool_key": "h3_replay",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "kept": [
+     1,
+     12,
+     17,
+     27,
+     33
+    ],
+    "expected": [
+     1,
+     12,
+     17,
+     27,
+     33
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "h3_replay.REPETITION.uniform_same_seed_same_archive",
+   "tool_key": "h3_replay",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {
+    "a": [
+     4,
+     10,
+     16,
+     18,
+     37
+    ],
+    "b": [
+     4,
+     10,
+     16,
+     18,
+     37
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "h3_replay.PERTURBATION.different_seed_different_uniform_archive",
+   "tool_key": "h3_replay",
+   "kind": "PERTURBATION",
+   "verdict": "PASS",
+   "observed": {
+    "a": [
+     4,
+     10,
+     16,
+     18,
+     37
+    ],
+    "b": [
+     7,
+     13,
+     19,
+     28,
+     35
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "h3_replay.CORRUPT_INPUT.bad_birth_status_refused",
+   "tool_key": "h3_replay",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "ValueError"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "h3_replay.ACCEPT.stream_manifest_fingerprints_inputs",
+   "tool_key": "h3_replay",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "keys": [
+     "assay_ref",
+     "descriptor_dims",
+     "duplicate_digests",
+     "n",
+     "n_failed",
+     "schema",
+     "stream_digest"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "capability_gap_fixture.ACCEPT.pytest_battery_green",
+   "tool_key": "capability_gap_fixture",
+   "kind": "ACCEPT",
+   "verdict": "FAIL",
+   "observed": {
+    "rc": 5,
+    "tail": "\n1 skipped in 0.05s\n"
+   },
+   "seconds": 0.27
+  },
+  {
+   "case_id": "null_bound_reference.ACCEPT.pytest_emission_keyed_bound_fails",
+   "tool_key": "null_bound_reference",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "rc": 0,
+    "tail": ".........                                                                [100%]\n9 passed in 0.03s\n"
+   },
+   "seconds": 0.26
+  },
+  {
+   "case_id": "null_bound_reference.REJECT.undeclared_bound_raises",
+   "tool_key": "null_bound_reference",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "TypeError (bound is a required argument)",
+    "msg": "BoundedLoop.__init__() missing 4 required positional arguments: 'name', 'tick', 'bound', and 'accoun"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "lean_runtime.ACCEPT.locator_finds_repl_and_trivial_theorem_checks",
+   "tool_key": "lean_runtime",
+   "kind": "ACCEPT",
+   "verdict": "ERROR",
+   "observed": {
+    "exception": "RuntimeError: DEPENDENCY_ABSENT: lean-repl binary not found at D:\\Prometheus-worktrees\\rhadamanthus-base-role\\external_deps\\repl\\.lake\\build\\bin\\repl.exe (locator checked $PROMETHEUS_EXTERNAL_DEPS, worktree, canonical checkout); `lake`/`lean` also absent from PATH on this host",
+    "trace": "Traceback (most recent call last):\n  File \"D:\\Prometheus-worktrees\\rhadamanthus-base-role\\engine\\necropolis\\workshop\\tests\\run_controls.py\", line 670, in main\n    ok, obs = fn()\n              ~~^^\n  File \"D:\\Prometheus-worktrees\\rhadamanthus-base-role\\engine\\necropolis\\workshop\\tests\\cases_b.py\", line 357, in _\n    repl_dir = _lean_repl_dir_or_raise()\n  File \"D:\\Prometheus-worktrees\\rhadamanthus-base-role\\engine\\necropolis\\workshop\\tests\\cases_b.py\", line 350, in _lean_repl_dir_or_raise\n    raise RuntimeError(f\"DEPENDENCY_ABSENT: lean-repl binary not found at {repl_bin} \"\n                       \"(locator checked $PROMETHEUS_EXTERNAL_DEPS, worktree, canonical checkout); \"\n                       \"`lake`/`lean` also absent from PATH on this host\")\nRuntimeError: DEPENDENCY_ABSENT: lean-repl binary not found at D:\\Prometheus-worktrees\\rhadamanthus-base-role\\external_deps\\repl\\.lake\\build\\bin\\repl.exe (locator checked $PROMETHEUS_EXTERNAL_DEPS, worktree, canonical checkout); `lake`/`lean` also absent from PATH on this host\n"
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "lean_runtime.REJECT.false_theorem_rejected",
+   "tool_key": "lean_runtime",
+   "kind": "REJECT",
+   "verdict": "ERROR",
+   "observed": {
+    "exception": "RuntimeError: DEPENDENCY_ABSENT: lean-repl binary not found at D:\\Prometheus-worktrees\\rhadamanthus-base-role\\external_deps\\repl\\.lake\\build\\bin\\repl.exe (locator checked $PROMETHEUS_EXTERNAL_DEPS, worktree, canonical checkout); `lake`/`lean` also absent from PATH on this host",
+    "trace": "Traceback (most recent call last):\n  File \"D:\\Prometheus-worktrees\\rhadamanthus-base-role\\engine\\necropolis\\workshop\\tests\\run_controls.py\", line 670, in main\n    ok, obs = fn()\n              ~~^^\n  File \"D:\\Prometheus-worktrees\\rhadamanthus-base-role\\engine\\necropolis\\workshop\\tests\\cases_b.py\", line 366, in _\n    repl_dir = _lean_repl_dir_or_raise()\n  File \"D:\\Prometheus-worktrees\\rhadamanthus-base-role\\engine\\necropolis\\workshop\\tests\\cases_b.py\", line 350, in _lean_repl_dir_or_raise\n    raise RuntimeError(f\"DEPENDENCY_ABSENT: lean-repl binary not found at {repl_bin} \"\n                       \"(locator checked $PROMETHEUS_EXTERNAL_DEPS, worktree, canonical checkout); \"\n                       \"`lake`/`lean` also absent from PATH on this host\")\nRuntimeError: DEPENDENCY_ABSENT: lean-repl binary not found at D:\\Prometheus-worktrees\\rhadamanthus-base-role\\external_deps\\repl\\.lake\\build\\bin\\repl.exe (locator checked $PROMETHEUS_EXTERNAL_DEPS, worktree, canonical checkout); `lake`/`lean` also absent from PATH on this host\n"
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "library_leak.REJECT.component_equal_to_task_answer_flagged",
+   "tool_key": "library_leak",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "worst": null,
+    "findings": "[{'component': 'c0', 'class': 'SOLVES_A_TASK', 'truth_table': '00000011', 'tasks': ['task0'], 'why': 'this component IS the answer. A search handed it finds those tasks as a size-1 leaf, and the run m"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "library_leak.ACCEPT.unrelated_component_clean",
+   "tool_key": "library_leak",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "worst": null
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "anti_anchors_registry.ACCEPT.jsonl_parses_with_attestation_grades",
+   "tool_key": "anti_anchors_registry",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "rows": 72,
+    "grade_hist": {
+     "{'grade': 'A4', 'basis': 'arXiv:1604.06431 abstract live-fetched P33: title \"No occurrence obstructions in geometric complexity theory\" (Buergisser-Ikenmeyer-Panova); kills occurrence obstructions for det vs padded perm; paper EXPLICITLY leaves multiplicity obstructions open (\"we do not rule out the general approach ... via multiplicity obstructions\") \u2014 registry true_form confirmed verbatim', 'kernel_version': None, 'upgrade_path': 'none needed (primary abstract live-verified; full-text check would be A5)'}": 1,
+     "{'grade': 'A4', 'basis': 'arXiv:2501.03970 abstract live-fetched P33: Appleby-Flammia-Kopp construction is CONDITIONAL on TWO conjectures \u2014 (1) order-1 abelian Stark for real quadratic fields AND (2) a special value identity for the Shintani-Faddeev modular cocycle. Registry named only (1); enriched.', 'kernel_version': None, 'upgrade_path': 'none needed (primary abstract live-verified; full-text check would be A5)'}": 1,
+     "{'grade': 'A4', 'basis': 'arXiv:1611.01559 abstract live-fetched P33: Shitov proves symmetric rank of a rational tensor NP-HARD, \"which proves a recent conjecture of Hillar and Lim\"; also Z-tensor-rank undecidable (Gonzalez-Ja\\'Ja\\' 1980 question). Registry true_form confirmed.', 'kernel_version': None, 'upgrade_path': 'none needed (primary abstract live-verified; full-text check would be A5)'}": 1,
+     "{'grade': 'A4', 'basis': 'arXiv:2512.15035 abs live-fetched P34: WITHDRAWN, author notice 2025-12-20 quoted: \"This paper requires significant revision to address mathematical gaps identified by expert reviewers. The claim of a complete proof is not justified in its current form.\" Registry true_form (Saxl OPEN, Lee withdrawn within 3 days for mathematical gaps) CONFIRMED. | P39: Letellier-Nam 2312.09157 abstract live-fetched via arXiv API, analogue-result quoted', 'kernel_version': None, 'upgrade_path': 'full-text theorem check -> A5'}": 1,
+     "{'grade': 'A4', 'basis': 'arXiv:2602.11309 abs live-fetched P34: Buczynski \"Cactus barriers\" \u2014 quoted: \"Using determinantal methods one cannot prove a lower bound for the border rank of a 3-way tensor of size m in each direction that exceeds 6m-4.\" Registry true_form CONFIRMED.', 'kernel_version': None, 'upgrade_path': 'full-text theorem check -> A5'}": 1,
+     "{'grade': 'A5', 'basis': 'arXiv:2603.29571 FULL TEXT extracted P34 (pypdf on fetched PDF): front matter states \"Each blog entry is generally written by one author and the author list of this manuscript is the union of the entry authors\"; Contents lists \"Entry 8 Tensor Concentration Inequalities (KL)\" and Conjecture 16 sits inside Entry 8 with first-person voice \u2014 KL = Kevin Lucca. Registry attribution CONFIRMED; wording refined: Bandeira/Dmitriev are manuscript CO-AUTHORS (union convention) and blog maintainers, not Conjecture-16 proposers.', 'kernel_version': None, 'upgrade_path': 'none needed'}": 1,
+     "{'grade': 'A5', 'basis': 'arXiv:2411.10633 FULL TEXT extracted P34 (pypdf): Theorem 1.2 quoted verbatim: \"Let r >= 2 an integer, 2 <= p < inf ... d^{1/2-1/p} <~_{r,p} C_{r,p}(d) <~_{r,p} d^{1/2 - 1/max{p,2r}} log d.\" Upper matches lower (up to log) iff p >= 2r; for p < 2r the gap is open. Registry true_form (tensor d^{1/2-1/p} polylog for p>=2r, p<2r open; sqrt(log d) matrix-only) CONFIRMED by the theorem itself.', 'kernel_version': None, 'upgrade_path': 'none needed'}": 1,
+     "{'grade': 'A4', 'basis': 'arXiv:1508.05788 abs live-fetched P35: Landsberg-Ressayre \"Permanent v. determinant: an exponential lower bound assuming symmetry...\" \u2014 quoted: \"Grenet\\'s determinantal representation for the permanent is optimal among determinantal representations respecting left multiplication by permutation and diagonal matrices\" (~half the symmetry group). Equivariant RESTRICTION confirmed. Mignon-Ressayre general-bound leg not re-fetched (cited separately in registry).', 'kernel_version': None, 'upgrade_path': 'none needed'}": 1,
+     "{'grade': 'A3', 'basis': 'arXiv:2601.19558 full PDF fetched P35, pypdf extraction: paper exists (Buczynska-Buczynski, \"Apolarity for border cactus decompositions\", 27pp), keywords include \"border cactus rank\", develops border cactus decompositions witnessing cactus-variety membership \u2014 CONSISTENT with the anchor. The specific \"DISTINCT FIFTH rank invariant\" strength claim was NOT confirmable by targeted extraction (phrase appears only in keywords; distinctness/separation statements not located \u2014 could be in mangled math or could be registry overstatement). Verdict: PARTIALLY-VERIFIED; distinctness leg OPEN.', 'kernel_version': None, 'upgrade_path': 'deep-read intro theorems for explicit distinctness statement -> A4/A5'}": 1,
+     "{'grade': 'A3', 'basis': 'Split attestation P35: EXTERNAL leg (regime split p>=2r tight / p<2r open) verified_via P34 full-text extraction of BGJLR Theorem 1.2 (arXiv:2411.10633). INTERNAL leg (\"five-region simultaneity\", \"T#72\", rarity claim) is substrate-internal analysis, not externally verifiable \u2014 marked as internal-analysis, no external grade applicable to that part.', 'kernel_version': None, 'upgrade_path': 'internal leg needs its own instrument (Learner regime-count audit)'}": 1,
+     "{'grade': 'A4', 'kernel_version': None, 'basis': \"arXiv API live-fetched P36: Harman-Ryba 2206.13769 quoted \u2014 'every irreducible representation of S_N appears in the tensor cube S^{rho_n} (x) S^{rho_n} (x) S^{rho_n}'. Cube claim CONFIRMED; vague 'centre-mersenne follow-on' citation replaced with concrete primary. Luo-Sellke fourth-power (1511.02387) also surfaced in the same query.\", 'upgrade_path': 'none needed'}": 1,
+     "{'grade': 'A4', 'basis': 'verified_via P34 live fetch of arXiv:1611.01559 (same-source as AA-003): abstract quoted \"the tensor rank over Z turns out to be undecidable\", answering the 1980 Gonzalez-Ja\\'Ja\\' question; equivalence with polynomial-system solving stated (consistent with the registry\\'s Hilbert-10th framing). CONFIRMED.', 'kernel_version': None, 'upgrade_path': 'full-text Thm check -> A5'}": 1,
+     "{'grade': 'A3', 'basis': 'P36 split: surrounding status live-verified (Shitov-2019 falsity via 2507.17890; BPR <=6 via arXiv API abstract quote); core <=7 claim UNVERIFIED (10.1016/j.laa.2024.06.016 paywalled; no arXiv version located this pass)', 'upgrade_path': 'locate LAA-2024 preprint or fetch via institutional access -> A4'}": 1,
+     "{'grade': 'A3', 'kernel_version': None, 'basis': \"P36: attribution leg live-verified via Semantic Scholar API \u2014 'Relativizations of the P =? NP Question', Baker-Gill-Solovay, 1975 (abstract withheld by publisher; SIAM epubs 403). Content leg (oracles both directions; relativizing techniques cannot settle P vs NP) rests on textbook concordance, NOT a fetched quote \u2014 stated as such.\", 'upgrade_path': 'fetch full text via open mirror or library access -> A4'}": 1,
+     "{'grade': 'A3', 'kernel_version': None, 'basis': \"P37: primary UNREACHED after 4 routes (SemanticScholar DOI 404 + search 429; razborov.uchicago page returned HTML not PDF; web.archive same; ScienceDirect 403). Attribution (Razborov-Rudich, 'Natural Proofs', JCSS 55(1) 1997, DOI 10.1006/jcss.1997.1494) is bedrock; content leg (constructivity+largeness conditions; barrier conditional on exponentially-hard PRGs) rests on textbook concordance, typed as such.\", 'upgrade_path': \"any open mirror of the JCSS text or the STOC'94 version -> A4\"}": 1,
+     "{'grade': 'A4', 'kernel_version': None, 'basis': \"P37 full text fetched (author's canonical copy) + pypdf extraction, abstract quoted: 'Any proof of P != NP will have to overcome two barriers: relativization and natural proofs... In this paper we present such a barrier, which we call algebraic relativization or algebrization.' Content of true_form consistent; citation was PHANTOM and is CORRECTED.\", 'upgrade_path': 'publisher-of-record (ACM DL) fetch -> A5'}": 1,
+     "{'grade': 'A3', 'basis': 'Clay page fetched 2026-08-18', 'kernel_version': None, 'upgrade_path': 'none needed'}": 1,
+     "{'grade': 'A3', 'basis': 'status attested by tertiary source + model-prior concordance; bound attested by author project page via HARMA-P1 live fetch; primary DOI unverified', 'kernel_version': None, 'upgrade_path': 'fetch Barina J.Supercomput 81:810 primary (institutional access or author preprint) -> A4'}": 1,
+     "{'grade': 'A2', 'basis': \"encyclopedia incident record fetched 2026-08-18 [P28 correction: source is tertiary (encyclopedia); verified_against_primary corrected True->False \u2014 the flag's semantics require primary literature]\", 'kernel_version': None, 'upgrade_path': 'pin to primary literature per feedback_verify_upstream_attributions -> A4'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00007 only', 'kernel_version': None, 'upgrade_path': 'fetch Goldbach status -> A3'}": 1,
+     "{'grade': 'A3', 'basis': 'arXiv API fetched 2026-08-18 (paper existence/version)', 'kernel_version': None, 'upgrade_path': 'per-claim checks of unification assertions remain A1'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00008 only', 'kernel_version': None, 'upgrade_path': 'per-claim primary checks -> A3'}": 1,
+     "{'grade': 'A3', 'basis': \"encyclopedia status fetched 2026-08-18 [P28 correction: source is tertiary (encyclopedia); verified_against_primary corrected True->False \u2014 the flag's semantics require primary literature]\", 'kernel_version': None, 'upgrade_path': 'pin to primary literature per feedback_verify_upstream_attributions -> A4'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00009 only', 'kernel_version': None, 'upgrade_path': 'fetch slice-ribbon candidate papers -> A3'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00009 only', 'kernel_version': None, 'upgrade_path': 'fetch the physics preprints -> A3'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00009 only; REVERSE anchor -> quarantined until A3+ per rubric rule 3', 'kernel_version': None, 'upgrade_path': 'fetch the Property-R-homological refutation paper -> A3'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00009 only', 'kernel_version': None, 'upgrade_path': 'fetch Bourgain-slicing resolution -> A3'}": 1,
+     "{'grade': 'A4', 'basis': 'DR 00056 + live arXiv primary fetch', 'kernel_version': None, 'upgrade_path': 'A5 needs independent replication literature (Carbery et al. follow-ups)'}": 1,
+     "{'grade': 'A4', 'basis': 'DR 00056 + live arXiv primary fetch (journal DOI listed)', 'kernel_version': None, 'upgrade_path': 'A5 needs Annals-page fetch or citing-survey cross-check'}": 1,
+     "{'grade': 'A4', 'basis': 'DR 00056 + live arXiv primary fetch', 'kernel_version': None, 'upgrade_path': 'A5 needs published-journal version or independent verification literature'}": 1,
+     "{'grade': 'A4', 'basis': 'DR 00070 + live arXiv primary fetch of the withdrawal itself', 'kernel_version': None, 'upgrade_path': 'A5 needs independent status survey confirming no subsequent proof'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00072 only', 'kernel_version': None, 'upgrade_path': 'fetch arXiv:1912.12545 abs page -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'DR 00098 + May couplet registry concordance (two independent internal instruments)', 'kernel_version': None, 'upgrade_path': \"fetch Shitov 'How hard is the tensor rank?' + a H10/Q survey -> A3\"}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00105 only', 'kernel_version': None, 'upgrade_path': 'fetch Cartwright-Sturmfels paper (arXiv:1004.4953) -> A3'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00123 only', 'kernel_version': None, 'upgrade_path': 'fetch Blasiak-Church-Cohn-Grochow-Naslund-Sawin-Umans barrier paper -> A3'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00129 only', 'kernel_version': None, 'upgrade_path': 'fetch Mueller-Neunhoeffer + a Foulkes status survey -> A3'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00135 only', 'kernel_version': None, 'upgrade_path': 'fetch the function-field counterexample paper + a non-vanishing survey -> A3'}": 1,
+     "{'grade': 'A3', 'basis': 'DR 00143 + May dedicated verification pass DR-008 with primary abstract quote', 'kernel_version': None, 'upgrade_path': 'fetch BCGP abelian-surfaces paper abs -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'DR 00153 + May followup 00310 (two internal instruments concordant)', 'kernel_version': None, 'upgrade_path': 'fetch arXiv:2211.02515 version history + any published acceptance -> A3/A4'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00157 only', 'kernel_version': None, 'upgrade_path': 'fetch BSTW supersingular p-part paper + BSZ 66% paper -> A3'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00180 only (widely corroborated controversy)', 'kernel_version': None, 'upgrade_path': 'fetch Scholze-Stix report + PRIMS publication notice -> A3'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00194 only', 'kernel_version': None, 'upgrade_path': 'fetch Publ. IHES papers + Clay award notice -> A3'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00206 only', 'kernel_version': None, 'upgrade_path': 'fetch Hikita arXiv abs + acceptance status -> A3/A4 (REQUIRED before decoy use \u2014 preprint axis)'}": 1,
+     "{'grade': 'A1', 'basis': 'DR report 00215 only', 'kernel_version': None, 'upgrade_path': 'fetch CGMS paper + certified R(3,9) announcement -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'Lethe DR report + registered May true-form anchor reference + model prior concordance', 'kernel_version': None, 'upgrade_path': 'fetch Odlyzko-te Riele paper record -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'Lethe DR report + registered May true-form anchor reference + model prior concordance', 'kernel_version': None, 'upgrade_path': 'fetch Annals record -> A3'}": 1,
+     "{'grade': 'A4', 'basis': 'Lethe DR + live arXiv withdrawal fetch', 'kernel_version': None, 'upgrade_path': 'A5 needs independent status survey confirming still-open'}": 1,
+     "{'grade': 'A4', 'basis': 'Lethe DR + live fetch showing post-report repair', 'kernel_version': None, 'upgrade_path': 'A5 needs v3 acceptance/refereeing evidence; RE-VERIFY before decoy use \u2014 status is in motion'}": 1,
+     "{'grade': 'A4', 'basis': 'Lethe DR + live arXiv withdrawal fetch', 'kernel_version': None, 'upgrade_path': 'A5 needs check for any subsequent repaired version (AA-048 lesson: withdrawals have time derivatives)'}": 1,
+     "{'grade': 'A4', 'basis': 'Lethe DR + live arXiv withdrawal fetch', 'kernel_version': None, 'upgrade_path': 'A5 needs KMS Claim 4.1 verification fetch'}": 1,
+     "{'grade': 'A3', 'basis': 'Lethe DR + 3 live instance fetches; the 1936 barrier paper itself not fetched', 'kernel_version': None, 'upgrade_path': 'A4 needs Davenport-Heilbronn primary fetch or a survey citation'}": 1,
+     "{'grade': 'A3', 'basis': 'May couplet + dedicated DR verification pass with primary quotes', 'kernel_version': None, 'upgrade_path': 'fetch J.AMS record -> A3'}": 1,
+     "{'grade': 'A3', 'basis': 'May couplet + dedicated DR verification pass with primary citation and revision history', 'kernel_version': None, 'upgrade_path': 'fetch arXiv:2501.03970 abs -> A3'}": 1,
+     "{'grade': 'A3', 'basis': 'May couplet + dedicated verification pass with primary (arXiv:2602.11309)', 'kernel_version': None, 'upgrade_path': 'fetch arXiv:2602.11309 abs -> A3/A4'}": 1,
+     "{'grade': 'A3', 'basis': 'May couplet + dedicated verification pass (arXiv:1508.05788 confirmed restricted)', 'kernel_version': None, 'upgrade_path': 'fetch 1508.05788 abs -> A3'}": 1,
+     "{'grade': 'A3', 'basis': 'May couplet + dedicated verification pass (fifth-invariant status confirmed alongside Waring/Border-Waring/Smoothable/Cactus)', 'kernel_version': None, 'upgrade_path': 'fetch arXiv:2601.19558 abs -> A3/A4'}": 1,
+     "{'grade': 'A2', 'basis': 'Lethe DR + May true-form anchor reference + model prior concordance', 'kernel_version': None, 'upgrade_path': 'fetch Helfgott manuscript/publication status -> A3 (publication history itself is nuanced)'}": 1,
+     "{'grade': 'A2', 'basis': 'Lethe DR + May baseline + one live-verified instance', 'kernel_version': None, 'upgrade_path': 'fetch Polymath8b record -> A3'}": 1,
+     "{'grade': 'A1', 'basis': 'DR followup report only', 'kernel_version': None, 'upgrade_path': 'fetch HLSX paper abs -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'two internal instruments + model prior concordance', 'kernel_version': None, 'upgrade_path': 'fetch BDG Annals record -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'Lethe DR + model prior concordance', 'kernel_version': None, 'upgrade_path': 'fetch the three candidate preprints for withdrawal/acceptance status -> A3/A4'}": 1,
+     "{'grade': 'A2', 'basis': 'DR + model prior concordance', 'kernel_version': None, 'upgrade_path': 'fetch Granville 1995 survey -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'May verify pass with primary citations (kill-of-own-entry)', 'kernel_version': None, 'upgrade_path': 'fetch the 2021 commutative-torus paper + the conflated later work -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'May substrate pilot + model prior concordance', 'kernel_version': None, 'upgrade_path': 'fetch AW 2008 + the 2025 communication-complexity link -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'May design report with pinned primary + model prior', 'kernel_version': None, 'upgrade_path': 'fetch Annals record -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'May instrument-design report with pinned primaries', 'kernel_version': None, 'upgrade_path': 'fetch Laga-Shnidman abs -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'May instrument report with pinned primaries + model prior', 'kernel_version': None, 'upgrade_path': 'fetch Bombieri-Vaaler record -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'May report + model prior concordance', 'kernel_version': None, 'upgrade_path': 'fetch Annals record -> A3'}": 1,
+     "{'grade': 'A2', 'basis': 'May report + model prior concordance', 'kernel_version': None, 'upgrade_path': 'fetch Gilmer + one improvement abs -> A3'}": 1,
+     "{'grade': 'A4', 'basis': 'Lethe DR + live arXiv withdrawal fetch', 'kernel_version': None, 'upgrade_path': 'A5 needs the JCSS/1411.6829 primary fetch'}": 1,
+     "{'grade': 'A4', 'basis': 'Lethe DR + live arXiv withdrawal fetch', 'kernel_version': None, 'upgrade_path': 'A5 needs the counterexample writeup if published'}": 1,
+     "{'grade': 'A4', 'basis': 'Lethe DR + live arXiv withdrawal fetch', 'kernel_version': None, 'upgrade_path': 'A5 needs Cook-Mertz primary fetch to pin the standing result'}": 1
+    },
+    "keys": [
+     "attestation",
+     "citation",
+     "false_form",
+     "id",
+     "last_verified",
+     "name",
+     "repair_log",
+     "source_report",
+     "true_form",
+     "verification_source",
+     "verified_against_primary"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "a148_obstruction.ACCEPT.imports_as_package",
+   "tool_key": "a148_obstruction",
+   "kind": "ACCEPT",
+   "verdict": "FAIL",
+   "observed": {
+    "import_error": "ModuleNotFoundError: No module named 'a149_obstruction'"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "a148_obstruction.ACCEPT.imports_in_process_with_sigma_kernel_on_path",
+   "tool_key": "a148_obstruction",
+   "kind": "ACCEPT",
+   "verdict": "FAIL",
+   "observed": {
+    "import_error": "ImportError: cannot import name 'BlockedError' from 'sigma_kernel' (D:\\Prometheus-worktrees\\rhadamanthus-base-role\\sigma_kernel\\__init__.py)",
+    "package_already_imported": true
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "a148_obstruction.ACCEPT.imports_in_fresh_interpreter_from_sigma_kernel_dir",
+   "tool_key": "a148_obstruction",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "rc": 0,
+    "stdout": "['analyze_family', 'load_kill_verdicts', 'signature_match', 'unanimous_kill_rate']",
+    "stderr_tail": ""
+   },
+   "seconds": 0.05
+  },
+  {
+   "case_id": "bswcd_null.SYNTHETIC_SIGNAL.within_stratum_dependence_is_durable",
+   "tool_key": "bswcd_null",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "DURABLE",
+    "z_score": 13.79,
+    "observed": 0.5931443613508439,
+    "null_mean": -0.0030761204816940335,
+    "null_std": 0.04323156821548647,
+    "n_strata_used": 10
+   },
+   "seconds": 0.08
+  },
+  {
+   "case_id": "bswcd_null.SYNTHETIC_NULL.stratifier_only_dependence_collapses",
+   "tool_key": "bswcd_null",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "COLLAPSES",
+    "z_score": 1.91,
+    "observed": 0.3692136474361973,
+    "null_mean": 0.3372538970524523,
+    "null_std": 0.016744331078186885
+   },
+   "seconds": 0.07
+  },
+  {
+   "case_id": "bswcd_null.REPETITION.same_seed_same_null",
+   "tool_key": "bswcd_null",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {
+    "a": 11.92,
+    "b": 11.92
+   },
+   "seconds": 0.07
+  },
+  {
+   "case_id": "pm_bootstrap.SYNTHETIC_SIGNAL.permutation_test_separates_shifted_samples",
+   "tool_key": "pm_bootstrap",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "p": 0.0004997501249375312,
+    "observed": null
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "pm_bootstrap.SYNTHETIC_NULL.permutation_test_uniform_p_under_null",
+   "tool_key": "pm_bootstrap",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "false_positive_rate": 0.04,
+    "n": 50
+   },
+   "seconds": 0.15
+  },
+  {
+   "case_id": "pm_bootstrap.ACCEPT.bootstrap_ci_covers_true_mean",
+   "tool_key": "pm_bootstrap",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "coverage_of_true_mean": 0.95,
+    "nominal": 0.95
+   },
+   "seconds": 0.05
+  },
+  {
+   "case_id": "pm_bootstrap.REJECT.matched_null_p_floor_is_one_over_n_plus_1",
+   "tool_key": "pm_bootstrap",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "p": 0.002,
+    "code_floor": 0.002,
+    "docstring_floor": 0.001
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pm_bootstrap.PARITY.holm_bonferroni_matches_hand_computation",
+   "tool_key": "pm_bootstrap",
+   "kind": "PARITY",
+   "verdict": "PASS",
+   "observed": {
+    "adjusted": [
+     0.04,
+     0.09,
+     0.09,
+     0.2
+    ],
+    "expected": [
+     0.04,
+     0.09,
+     0.09,
+     0.2
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "kill_resurrection.ACCEPT.relation_evaluator_truth_table",
+   "tool_key": "kill_resurrection",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "equal_t": true,
+    "equal_f": true,
+    "mod2": true,
+    "abs_diff": true,
+    "divides": true,
+    "unknown_relation_is_None": true,
+    "non_numeric_is_None": true
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "kill_resurrection.REJECT.equal_mod_0_is_not_true",
+   "tool_key": "kill_resurrection",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "equal_mod_0(4,4)": false
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "kill_resurrection.ACCEPT.rule_of_three",
+   "tool_key": "kill_resurrection",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "92": 0.03260869565217391
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "fossil_inference.ACCEPT.two_fossils_pin_target_set_equal_to_bruteforce",
+   "tool_key": "fossil_inference",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "agree": 25,
+    "of": 25
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "fossil_inference.CHEAT.tampered_score_raises_contradiction",
+   "tool_key": "fossil_inference",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "Contradiction",
+    "msg": "no target satisfies all 2 fossils (mismatch counts [2, 1])"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "fossil_inference.CORRUPT_INPUT.non_integer_hamming_score_rejected",
+   "tool_key": "fossil_inference",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "Contradiction",
+    "msg": "score 0.3 on length 4 is not an integer Hamming distance"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "baseline_costume.REJECT.claim_that_is_marginal_majority_is_called_costume",
+   "tool_key": "baseline_costume",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "COSTUME_OF:marginal_majority",
+    "z_vs_null": 5.964809080634606
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "baseline_costume.ACCEPT.claim_beating_every_baseline_is_not_costume",
+   "tool_key": "baseline_costume",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "DISTINCT",
+    "z_vs_null": 3.2327050096458394
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "baseline_costume.CHEAT.unique_key_identity_tie_is_marked_vacuous",
+   "tool_key": "baseline_costume",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "DISTINCT",
+    "vacuous_flag_present": true,
+    "headline": "DISTINCT: no non-vacuous catalog baseline reproduces the claim (strongest volume_weighted at 50.0% < 90%); z_vs_shuffle=5.70. (1 vacuous tie(s) excluded by the unique-key guard)"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "kill_scheme_info_audit.ACCEPT.selftest_passes",
+   "tool_key": "kill_scheme_info_audit",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "note": "module _selftest raised nothing"
+   },
+   "seconds": 0.19
+  },
+  {
+   "case_id": "kill_scheme_info_audit.SYNTHETIC_SIGNAL.mi_recovers_coordinate_dependence",
+   "tool_key": "kill_scheme_info_audit",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "mi_bits": 1.4719502620902971,
+    "perm_null95": 0.020482030707215854
+   },
+   "seconds": 0.02
+  },
+  {
+   "case_id": "kill_scheme_info_audit.SYNTHETIC_NULL.independent_labels_below_null95",
+   "tool_key": "kill_scheme_info_audit",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "mi_bits": 0.011152828560188755,
+    "perm_null95": 0.01917856837041472
+   },
+   "seconds": 0.02
+  },
+  {
+   "case_id": "ladder_leakage_audit.ACCEPT.r6_declared_leak_reproduced",
+   "tool_key": "ladder_leakage_audit",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "LEAKS",
+    "leaking_fields": [
+     "truth"
+    ],
+    "payload_reader": 100.0,
+    "chance_floor": 57.5
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "ladder_leakage_audit.SYNTHETIC_SIGNAL.planted_exact_leak_field_detected",
+   "tool_key": "ladder_leakage_audit",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "leaking_fields": [
+     "hidden_key"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "ladder_leakage_audit.SYNTHETIC_NULL.clean_probes_report_no_leak",
+   "tool_key": "ladder_leakage_audit",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "leaking_fields": []
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "ladder_leakage_audit.PERTURBATION.str_transformed_key_escapes_detection",
+   "tool_key": "ladder_leakage_audit",
+   "kind": "PERTURBATION",
+   "verdict": "INFO",
+   "observed": {
+    "leaking_fields_detected": [],
+    "note": "str(ground_truth) planted in probe.data; audit scope is exact-equality leaks only, so a CLEAN verdict does not mean no answer key is present"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "ladder_leakage_audit.ACCEPT.chance_floor_is_majority_rate",
+   "tool_key": "ladder_leakage_audit",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "pct": 70.0,
+    "val": "3"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "nemesis_cheatlib.PARITY.chance_floor_hand_parity",
+   "tool_key": "nemesis_cheatlib",
+   "kind": "PARITY",
+   "verdict": "PASS",
+   "observed": {
+    "eligible": 10,
+    "majority": "x",
+    "majority_rate": 0.6,
+    "uniform_rate": 0.3333333333333333,
+    "distinct": 3
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "nemesis_cheatlib.SYNTHETIC_SIGNAL.constant_responder_scores_exactly_majority",
+   "tool_key": "nemesis_cheatlib",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "hits": 30,
+    "eligible": 50,
+    "rate": 0.6,
+    "majority_rate": 0.6
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "nemesis_cheatlib.REJECT.empty_answers_refused_or_zero",
+   "tool_key": "nemesis_cheatlib",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "ValueError"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "nemesis_cheatlib.CORRUPT_INPUT.none_answers_count_as_answers",
+   "tool_key": "nemesis_cheatlib",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "INFO",
+   "observed": {
+    "eligible": 5,
+    "majority": "x",
+    "majority_rate": 0.4,
+    "constant_None_rate": 0.4,
+    "note": "None is not filtered anywhere in cheatlib"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pronoia_liveness.ACCEPT.recent_success_is_productive",
+   "tool_key": "pronoia_liveness",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "health": "productive"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pronoia_liveness.REJECT.heartbeat_only_is_stalled_not_productive",
+   "tool_key": "pronoia_liveness",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "health": "stalled"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pronoia_liveness.CHEAT.success_without_attempt_is_incoherent",
+   "tool_key": "pronoia_liveness",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "health": "incoherent"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pronoia_liveness.CHEAT.future_success_timestamp_is_incoherent",
+   "tool_key": "pronoia_liveness",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "health": "incoherent"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pronoia_liveness.REJECT.attempts_without_success_is_failing",
+   "tool_key": "pronoia_liveness",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "health": "failing"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "herakles_c3_null_check.ACCEPT.author_self_test_zero_failures",
+   "tool_key": "herakles_c3_null_check",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "failures": 0,
+    "lines": 16
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "herakles_c3_null_check.SYNTHETIC_SIGNAL.digest_mismatch_is_not_identical",
+   "tool_key": "herakles_c3_null_check",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "NOT_IDENTICAL",
+    "disagreed": null
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "herakles_c3_null_check.REJECT.untransformed_ic_is_indeterminate_not_identical",
+   "tool_key": "herakles_c3_null_check",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "INDETERMINATE"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "herakles_c3_null_check.CHEAT.accuracy_agreement_alone_cannot_buy_identical",
+   "tool_key": "herakles_c3_null_check",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "NOT_IDENTICAL",
+    "compared": null
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "herakles_c3_null_check.CORRUPT_INPUT.missing_transform_field_is_indeterminate",
+   "tool_key": "herakles_c3_null_check",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "INDETERMINATE"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "measurement_guard.ACCEPT.passing_control_admits_measurement",
+   "tool_key": "measurement_guard",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "value": 42,
+    "controls": [
+     "two"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "measurement_guard.REJECT.no_control_refused",
+   "tool_key": "measurement_guard",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "t: refusing to measure with no positive control"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "measurement_guard.REJECT.failing_control_blocks_value",
+   "tool_key": "measurement_guard",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "fn_ran": false
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "measurement_guard.CHEAT.type_mismatched_control_rejected",
+   "tool_key": "measurement_guard",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "note": "str/int type mismatch treated as control failure"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "icarus_tier_oracle.ACCEPT.cheat_fields_declared",
+   "tool_key": "icarus_tier_oracle",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "cheat_fields": [
+     "cex",
+     "truth"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "attacks_preflight.ACCEPT.author_selftest_all_ok",
+   "tool_key": "attacks_preflight",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "n": 9,
+    "bad": []
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "attacks_preflight.SYNTHETIC_SIGNAL.dead_field_fires_on_absent_column",
+   "tool_key": "attacks_preflight",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "findings": [
+     [
+      "dead_field[k]",
+      false
+     ],
+     [
+      "dead_field[v]",
+      true
+     ],
+     [
+      "dead_field[w]",
+      false
+     ]
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "attacks_preflight.SYNTHETIC_NULL.dead_field_silent_on_varying_columns",
+   "tool_key": "attacks_preflight",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "findings": [
+     [
+      "dead_field[k]",
+      true
+     ],
+     [
+      "dead_field[v]",
+      true
+     ]
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "stygian_bocpd.SYNTHETIC_SIGNAL.planted_mean_shift_located",
+   "tool_key": "stygian_bocpd",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "located": 60,
+    "fields": [
+     "changepoint_probabilities",
+     "hazard_rate",
+     "max_posterior",
+     "most_likely_changepoint_t",
+     "most_likely_changepoint_value",
+     "n_observations",
+     "notes"
+    ]
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "stygian_bocpd.SYNTHETIC_NULL.stationary_series_no_strong_changepoint",
+   "tool_key": "stygian_bocpd",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "max_posterior_after_5": 0.16359345322258453,
+    "fields": [
+     "changepoint_probabilities",
+     "hazard_rate",
+     "max_posterior",
+     "most_likely_changepoint_t",
+     "most_likely_changepoint_value",
+     "n_observations",
+     "notes"
+    ]
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "stygian_bocpd.REPETITION.deterministic",
+   "tool_key": "stygian_bocpd",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {},
+   "seconds": 0.01
+  },
+  {
+   "case_id": "vivarium_spec_hash.REPETITION.key_order_invariant",
+   "tool_key": "vivarium_spec_hash",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {
+    "hash": "sha256:dd5af5bcb"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "vivarium_spec_hash.PERTURBATION.one_element_changes_hash",
+   "tool_key": "vivarium_spec_hash",
+   "kind": "PERTURBATION",
+   "verdict": "PASS",
+   "observed": {},
+   "seconds": 0.0
+  },
+  {
+   "case_id": "vivarium_spec_hash.REJECT.invalid_spec_refused",
+   "tool_key": "vivarium_spec_hash",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "unknown top-level keys: ['not']; missing required keys: ['hypothesis', 'outcome_rule', 'pew', 'predi"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "charon_c1c2.ACCEPT.c1_matching_fingerprint_passes",
+   "tool_key": "charon_c1c2",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "PASS",
+    "reasons": []
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "charon_c1c2.PERTURBATION.c1_one_appended_row_fails",
+   "tool_key": "charon_c1c2",
+   "kind": "PERTURBATION",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "FAIL",
+    "reasons": [
+     "POOL_MOVED (quoted fingerprint != bytes)"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "charon_c1c2.CHEAT.c1_receipt_without_fingerprint_fails_not_indeterminate",
+   "tool_key": "charon_c1c2",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "FAIL",
+    "reasons": [
+     "RECEIPT_UNFINGERPRINTED"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "charon_c1c2.ACCEPT.c1_crlf_normalised_fingerprint_is_stable",
+   "tool_key": "charon_c1c2",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {
+    "lf": "6c7183c04104",
+    "crlf": "6c7183c04104"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "charon_c1c2.SYNTHETIC_SIGNAL.c2_loader_admitting_transport_failed_uid_fails",
+   "tool_key": "charon_c1c2",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "FAIL",
+    "fired": 1,
+    "eligible": 1
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "charon_c1c2.SYNTHETIC_NULL.c2_loader_excluding_transport_failed_uid_passes",
+   "tool_key": "charon_c1c2",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "PASS",
+    "fired": 0,
+    "eligible": 1
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "charon_c1c2.CORRUPT_INPUT.c2_no_transport_failures_is_indeterminate",
+   "tool_key": "charon_c1c2",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "INDETERMINATE",
+    "reasons": [
+     "NOTHING_COULD_HAVE_FIRED: no transport-failed rep-1 row in the pool; plant one"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "divergence_decomposition.ACCEPT.author_identity_tests_pass",
+   "tool_key": "divergence_decomposition",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "rc": 0,
+    "tail": [
+     "  4/4"
+    ]
+   },
+   "seconds": 1.3
+  },
+  {
+   "case_id": "divergence_decomposition.PARITY.ceiling_and_bounds_hand_values",
+   "tool_key": "divergence_decomposition",
+   "kind": "PARITY",
+   "verdict": "PASS",
+   "observed": {
+    "ceiling(0.5)": 0.5,
+    "bounds(D=ceiling)": [
+     0.0,
+     0.25
+    ],
+    "bounds(D=0.7)": [
+     0.09999999999999998,
+     0.35
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "divergence_decomposition.REJECT.below_ceiling_gives_zero_lower_bound",
+   "tool_key": "divergence_decomposition",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "lo": 0.0,
+    "hi": 0.15,
+    "note": "a sub-ceiling divergence licenses NO positive action effect"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pm_instrument_contract.ACCEPT.honest_meter_certified",
+   "tool_key": "pm_instrument_contract",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "name": "parity_meter",
+    "positive_ok": true,
+    "negative_ok": true,
+    "invalid_ok": true,
+    "sensitive": true,
+    "notes": []
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pm_instrument_contract.CHEAT.constant_signal_meter_refused",
+   "tool_key": "pm_instrument_contract",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "name": "parity_meter",
+    "positive_ok": true,
+    "negative_ok": false,
+    "invalid_ok": false,
+    "sensitive": false,
+    "notes": []
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pm_instrument_contract.CHEAT.meter_ignoring_invalid_input_refused",
+   "tool_key": "pm_instrument_contract",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "name": "parity_meter",
+    "positive_ok": true,
+    "negative_ok": true,
+    "invalid_ok": false,
+    "sensitive": true,
+    "notes": []
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pm_instrument_contract.REJECT.contract_without_negative_refused",
+   "tool_key": "pm_instrument_contract",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "raised": "'x' submitted without ['negative']. An instrument with no anti-case has not been"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pm_degenerate_audit.SYNTHETIC_SIGNAL.conflating_measure_flagged",
+   "tool_key": "pm_degenerate_audit",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "row": "AuditRow(module='synthetic', name='constant_measure', verdict='CONFLATES', detail='degenerate=0.0 minimal=0.0')"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "pm_degenerate_audit.SYNTHETIC_NULL.refusing_measure_not_flagged",
+   "tool_key": "pm_degenerate_audit",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "row": "AuditRow(module='synthetic', name='strict_measure', verdict='REFUSES', detail='ValueError')"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "eos_intake.CHEAT.unknown_sought_state_is_refused",
+   "tool_key": "eos_intake",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "state": "REFUSED",
+    "reason": "sought state 'ADMITTED' is not one of ('ANCHOR', 'ACQUIRE', 'RESOURCE', 'REFUSED')"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "eos_intake.CHEAT.anchor_with_no_referent_cannot_reach_pending",
+   "tool_key": "eos_intake",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "state": "REFUSED"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "eos_intake.ACCEPT.proposer_refusal_preserved",
+   "tool_key": "eos_intake",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "state": "REFUSED"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "comms_identity.ACCEPT.matching_identity_ok",
+   "tool_key": "comms_identity",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "reason": "MATCH"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "comms_identity.REJECT.wrong_database_refused",
+   "tool_key": "comms_identity",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "reason": "WRONG_ENVIRONMENT",
+    "mismatched": [
+     "db_system_id"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "comms_identity.CHEAT.unknown_environment_fails_closed",
+   "tool_key": "comms_identity",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "reason": "NO_EXPECTATION"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "comms_identity.CORRUPT_INPUT.unreadable_identity_refused_and_rolled_back",
+   "tool_key": "comms_identity",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "reason": "IDENTITY_UNREADABLE",
+    "rolled_back": 1
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "apollo_e9_score.PARITY.published_mix_adjusted_0_0667_reproduced",
+   "tool_key": "apollo_e9_score",
+   "kind": "PARITY",
+   "verdict": "PASS",
+   "observed": {
+    "rc": 0,
+    "tail": [
+     "  numeric_comparison       0/6 = 0.000  home 1.000  abst 6 guess 0",
+     "  numeric_stated_premise   0/6 = 0.000  home 1.000  abst 6 guess 0",
+     "  temporal_ordering        0/6 = 0.000  home 0.000  abst 6 guess 0",
+     "  transitivity             2/6 = 0.333  home 1.000  abst 4 guess 0",
+     "  vacuous_truth            0/6 = 0.000  home 0.000  abst 6 guess 0",
+     "REPRODUCED: E9 is reproducible from source."
+    ]
+   },
+   "seconds": 0.1
+  },
+  {
+   "case_id": "adapters_instrument_null.SYNTHETIC_NULL.sorted_spearman_is_tautological",
+   "tool_key": "adapters_instrument_null",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "TAUTOLOGICAL",
+    "observed": 1.0
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_instrument_null.SYNTHETIC_SIGNAL.honest_spearman_is_responsive",
+   "tool_key": "adapters_instrument_null",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "RESPONSIVE",
+    "observed": 0.998874296435272,
+    "shuffle_max": 0.2863039399624765
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_instrument_null.CHEAT.nondeterministic_stat_is_flagged",
+   "tool_key": "adapters_instrument_null",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "NONDETERMINISTIC"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_instrument_null.CORRUPT_INPUT.none_returning_stat_is_unmeasurable",
+   "tool_key": "adapters_instrument_null",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "UNMEASURABLE"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_instrument_null.REPETITION.same_seed_same_reading",
+   "tool_key": "adapters_instrument_null",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "RESPONSIVE"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_pollux_replay.PARITY.historical_matches_daemon_construction",
+   "tool_key": "adapters_pollux_replay",
+   "kind": "PARITY",
+   "verdict": "PASS",
+   "observed": {
+    "replay": {
+     "n_paired": 45,
+     "corr_raw": 1.0,
+     "corr_norm": 0.1126,
+     "kill_pattern": "pollux_correlation_attenuates_under_normalization",
+     "verdict": "UNVERIFIED"
+    }
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_pollux_replay.SYNTHETIC_NULL.independent_samples_corr_raw_reads_tautological",
+   "tool_key": "adapters_pollux_replay",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "corr_raw_verdict": "TAUTOLOGICAL",
+    "historical": 1.0,
+    "corr_norm_verdict": "SORT_INVARIANT",
+    "historical_verdict": "REJECTED"
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "adapters_pollux_replay.CHEAT.verdict_on_independent_samples_is_not_rejected_by_daemon",
+   "tool_key": "adapters_pollux_replay",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "historical_verdicts_on_independent_samples": {
+     "0": "UNVERIFIED",
+     "1": "UNVERIFIED",
+     "2": "UNVERIFIED",
+     "3": "REJECTED",
+     "4": "REJECTED"
+    }
+   },
+   "seconds": 0.03
+  },
+  {
+   "case_id": "adapters_resampling_null.PARITY.ks_distance_matches_scipy",
+   "tool_key": "adapters_resampling_null",
+   "kind": "PARITY",
+   "verdict": "PASS",
+   "observed": {
+    "max_abs_diff": 8.326672684688674e-17
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "adapters_resampling_null.SYNTHETIC_NULL.two_random_subsets_not_coincident",
+   "tool_key": "adapters_resampling_null",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "UNRESOLVABLE_AT_THIS_N",
+    "p_lower": [
+     0.11258278145695365,
+     0.1986754966887417,
+     0.152317880794702
+    ],
+    "split_half_hits": [
+     0,
+     0
+    ]
+   },
+   "seconds": 0.03
+  },
+  {
+   "case_id": "adapters_resampling_null.SYNTHETIC_SIGNAL.identical_gap_multiset_is_seen",
+   "tool_key": "adapters_resampling_null",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "UNRESOLVABLE_AT_THIS_N",
+    "d_observed": 0.02564102564102566,
+    "p_lower": [
+     0.0024937655860349127,
+     0.0024937655860349127
+    ],
+    "negative_p": 0.9950124688279302
+   },
+   "seconds": 0.06
+  },
+  {
+   "case_id": "adapters_resampling_null.PERTURBATION.split_half_control_fails_at_alpha_rate_for_iid_continuous",
+   "tool_key": "adapters_resampling_null",
+   "kind": "PERTURBATION",
+   "verdict": "INFO",
+   "observed": {
+    "hit_rate": 0.013333333333333334,
+    "alpha": 0.005555555555555556,
+    "resolvable_subsets": 0,
+    "of": 30,
+    "reading": "split-half positive control cannot pass for iid continuous data; FRANK-004 kill condition (2) fires on synthetic data before any grave is read"
+   },
+   "seconds": 0.51
+  },
+  {
+   "case_id": "adapters_resampling_null.CORRUPT_INPUT.too_small_to_halve_is_unresolvable",
+   "tool_key": "adapters_resampling_null",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "UNRESOLVABLE_AT_THIS_N"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_resampling_null.REPETITION.same_seed_same_null",
+   "tool_key": "adapters_resampling_null",
+   "kind": "REPETITION",
+   "verdict": "PASS",
+   "observed": {
+    "n": 50
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_jsonl_census.ACCEPT.counts_rows_keys_and_verdicts",
+   "tool_key": "adapters_jsonl_census",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "rows": 9,
+    "dead": [
+     "ghost"
+    ],
+    "verdicts": {
+     "verdict": {
+      "PROMOTED": 6,
+      "REJECTED": 3
+     }
+    }
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_jsonl_census.CORRUPT_INPUT.malformed_lines_counted_not_dropped",
+   "tool_key": "adapters_jsonl_census",
+   "kind": "CORRUPT_INPUT",
+   "verdict": "PASS",
+   "observed": {
+    "rows": 2,
+    "malformed": [
+     {
+      "line": 2,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+     },
+     {
+      "line": 3,
+      "error": "non-object row: list"
+     }
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_jsonl_census.SYNTHETIC_SIGNAL.partial_field_reported",
+   "tool_key": "adapters_jsonl_census",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "partial": {
+     "b": {
+      "present": 1,
+      "absent": 2
+     }
+    },
+    "preflight_dead": [
+     "dead_field[zzz]"
+    ]
+   },
+   "seconds": 0.02
+  },
+  {
+   "case_id": "adapters_jsonl_census.REJECT.missing_file_reported_not_invented",
+   "tool_key": "adapters_jsonl_census",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "path": "C:\\Users\\James\\AppData\\Local\\Temp\\necro_does_not_exist_944727560.jsonl",
+    "exists": false,
+    "rows": 0
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_git_census.ACCEPT.tracked_file_has_history_and_is_in_head",
+   "tool_key": "adapters_git_census",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "n_commits": 1,
+    "first": "2026-09-11T08:10:32-04:00",
+    "last": "2026-09-11T08:10:32-04:00"
+   },
+   "seconds": 0.78
+  },
+  {
+   "case_id": "adapters_git_census.SYNTHETIC_SIGNAL.deleted_path_recovered_matches_git_show",
+   "tool_key": "adapters_git_census",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "path": "agents/icarus/cycles/cycle_000/code/tests/test_tier_R0_falsification.py",
+    "deleted_in": "04e7436462ff",
+    "bytes": 2147,
+    "first_three_dead_since_jan": [
+     "agents/icarus/cycles/cycle_000/code/tests/test_tier_R0_falsification.py",
+     "agents/icarus/cycles/cycle_000/code/tests/test_tier_R1_falsification.py",
+     "agents/icarus/cycles/cycle_000/code/tests/test_tier_R2_falsification.py"
+    ]
+   },
+   "seconds": 1.39
+  },
+  {
+   "case_id": "adapters_git_census.CHEAT.recovery_into_live_tree_refused",
+   "tool_key": "adapters_git_census",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "refused": "recovery into the live tree is refused outside workshop/fixtures: comms"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_git_census.CHEAT.mutating_git_verbs_refused",
+   "tool_key": "adapters_git_census",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "refused": [
+     "checkout",
+     "reset",
+     "restore",
+     "stash"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_consumer_trace.ACCEPT.self_reference_excluded_and_known_importer_found",
+   "tool_key": "adapters_consumer_trace",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "n_external": 197,
+    "n_importers": 8,
+    "sample": [
+     "aethon/README.md",
+     "agora/symbols/__init__.py",
+     "agora/symbols/resolve.py",
+     "agora/symbols/test_manifest.py",
+     "aporia/meta/queue/techne_inbox.jsonl"
+    ]
+   },
+   "seconds": 9.86
+  },
+  {
+   "case_id": "adapters_consumer_trace.SYNTHETIC_NULL.unique_token_has_no_consumers",
+   "tool_key": "adapters_consumer_trace",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "n_hits": 0
+   },
+   "seconds": 8.33
+  },
+  {
+   "case_id": "adapters_consumer_trace.SYNTHETIC_SIGNAL.planted_importer_in_scratch_found",
+   "tool_key": "adapters_consumer_trace",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "n_external": 3,
+    "n_importers": 2
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_manifest_verify.ACCEPT.written_manifest_is_covered",
+   "tool_key": "adapters_manifest_verify",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "COVERED",
+    "checked": 2
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_manifest_verify.SYNTHETIC_SIGNAL.added_file_and_subdir_reported_uncovered",
+   "tool_key": "adapters_manifest_verify",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "UNCOVERED_FILES",
+    "unlisted_top_level": [
+     "late.txt"
+    ],
+    "uncovered_subdirectory_files": [
+     "sub/deep.txt"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_manifest_verify.PERTURBATION.one_byte_change_is_mismatch",
+   "tool_key": "adapters_manifest_verify",
+   "kind": "PERTURBATION",
+   "verdict": "PASS",
+   "observed": {
+    "verdict": "HASH_MISMATCH",
+    "bad": [
+     "a.txt: manifest b6a98d9ce9a2 != artifact 85f03290ae89"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_pg_probe.ACCEPT.plain_select_admitted",
+   "tool_key": "adapters_pg_probe",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {},
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_pg_probe.CHEAT.write_statements_refused",
+   "tool_key": "adapters_pg_probe",
+   "kind": "CHEAT",
+   "verdict": "PASS",
+   "observed": {
+    "cheats_that_passed": []
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_pg_probe.REJECT.readonly_query_never_commits_and_always_rolls_back",
+   "tool_key": "adapters_pg_probe",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "executed": [
+     "SET TRANSACTION READ ONLY",
+     "SELECT a, b FROM t"
+    ],
+    "rollbacks": 1,
+    "commits": 0
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_pg_probe.ACCEPT.network_reachability_observation",
+   "tool_key": "adapters_pg_probe",
+   "kind": "ACCEPT",
+   "verdict": "INFO",
+   "observed": {
+    "host": "192.168.1.202",
+    "port": 5432,
+    "reachable": true,
+    "error": null
+   },
+   "seconds": 0.01
+  },
+  {
+   "case_id": "adapters_sigma_runner.ACCEPT.a148_names_under_historical_convention",
+   "tool_key": "adapters_sigma_runner",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "rc": 0,
+    "n_names": 19,
+    "stderr": ""
+   },
+   "seconds": 0.1
+  },
+  {
+   "case_id": "adapters_sigma_runner.PARITY.unanimous_kill_rate_hand_check",
+   "tool_key": "adapters_sigma_runner",
+   "kind": "PARITY",
+   "verdict": "INFO",
+   "observed": {
+    "source_excerpt": "def unanimous_kill_rate(group, kills):\n    present = [r for r in group if r[\"seq_id\"] in kills]\n    if not present:\n        return 0.0, 0, 0\n    n_unanimous = sum(\n        1 for r in present\n        if UNANIMOUS_BATTERY.issubset(kills[r[\"seq_id\"]])\n    )\n    return n_unanimous / len(present), n_unanimous, len(present)\n\n\ndef relaxed_match(features):\n    \"\"\"Relaxed signature: n_steps=5, neg_x>=3, ha"
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_sigma_runner.REJECT.missing_module_reported_not_invented",
+   "tool_key": "adapters_sigma_runner",
+   "kind": "REJECT",
+   "verdict": "PASS",
+   "observed": {
+    "rc": 1
+   },
+   "seconds": 0.04
+  },
+  {
+   "case_id": "adapters_verdict_lint.SYNTHETIC_SIGNAL.unconditional_pass_flagged",
+   "tool_key": "adapters_verdict_lint",
+   "kind": "SYNTHETIC_SIGNAL",
+   "verdict": "PASS",
+   "observed": {
+    "flagged": [
+     "judge",
+     "judge2",
+     "ok"
+    ]
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_verdict_lint.SYNTHETIC_NULL.data_dependent_verdict_not_flagged",
+   "tool_key": "adapters_verdict_lint",
+   "kind": "SYNTHETIC_NULL",
+   "verdict": "PASS",
+   "observed": {
+    "flagged": []
+   },
+   "seconds": 0.0
+  },
+  {
+   "case_id": "adapters_verdict_lint.ACCEPT.scan_of_workshop_adapters_is_clean",
+   "tool_key": "adapters_verdict_lint",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "files": 13,
+    "findings": []
+   },
+   "seconds": 0.02
+  },
+  {
+   "case_id": "adapters_verdict_lint.ACCEPT.scan_of_necropolis_evidence_scripts",
+   "tool_key": "adapters_verdict_lint",
+   "kind": "ACCEPT",
+   "verdict": "INFO",
+   "observed": {
+    "files": 35,
+    "n_findings": 0,
+    "findings": []
+   },
+   "seconds": 0.16
+  },
+  {
+   "case_id": "adapters_z3_redirect.ACCEPT.first_check_runs_without_touching_ledgers",
+   "tool_key": "adapters_z3_redirect",
+   "kind": "ACCEPT",
+   "verdict": "PASS",
+   "observed": {
+    "rc": 0,
+    "touched": {
+     "receipts": [],
+     "locks": []
+    },
+    "seconds": 0.23,
+    "tail": "d the adapter must still report it as a third outcome rather than interpreting it.\"}], \"n_cases\": 6, \"n_decided\": 5, \"n_passed\": 5, \"all_decided_passed\": true}\n"
+   },
+   "seconds": 0.23
+  }
+ ],
+ "counts": {
+  "PASS": 173,
+  "FAIL": 8,
+  "INFO": 10,
+  "ERROR": 3
+ },
+ "finished": "2026-09-14T01:58:38Z"
+}

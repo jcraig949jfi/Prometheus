@@ -1,0 +1,39 @@
+{
+ "battery_id": "output_replay_null_statistic_calibration",
+ "name": "OUTPUT -> REPLAY -> NULL -> STATISTIC -> CALIBRATION",
+ "question": "Given a preserved output of a dead experiment, does the statistic it reported survive a matched null and a calibrated floor, without re-running the organism?",
+ "steps": [
+  {
+   "step": 1,
+   "tool_id": "NT-050",
+   "role": "OUTPUT",
+   "does": "census the preserved ledger: rows, malformed lines, dead fields, verdict columns, time range"
+  },
+  {
+   "step": 2,
+   "tool_id": "NT-047",
+   "role": "REPLAY",
+   "does": "instrument-null the historical statistic: TAUTOLOGICAL / NONDETERMINISTIC / RESPONSIVE before any replay is read"
+  },
+  {
+   "step": 3,
+   "tool_id": "NT-024",
+   "role": "NULL",
+   "does": "block-shuffle null preserving within-stratum structure (or NT-008 permutation null / NT-049 random-subset null as the design dictates)"
+  },
+  {
+   "step": 4,
+   "tool_id": "NT-025",
+   "role": "STATISTIC",
+   "does": "matched-null p with floor 1/(n+1); Holm-Bonferroni across the family"
+  },
+  {
+   "step": 5,
+   "tool_id": "NT-045",
+   "role": "CALIBRATION",
+   "does": "certify that the battery catches every named defect shape; NT-002 to separate B1 from B2 when the answer is 'nothing'"
+  }
+ ],
+ "coroner_run_required": true,
+ "output_contract": "per-claim row {historical_value, instrument_null_reading, null_quantile, p_floor, p_corrected, certifier_verdict, coverage_verdict}; a claim whose step-2 reading is TAUTOLOGICAL stops at step 2 with verdict INSTRUMENT_CANNOT_SEE and no p is reported"
+}
