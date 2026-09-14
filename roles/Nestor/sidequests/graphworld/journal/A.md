@@ -17,3 +17,14 @@
 - Board audit 2: C7d's kill point removed (C retracted it: the target was the charge channel). Bounty open to B.
 - A2: artifact recorded and smoke-tested (A2_BUILD.md). Baseline bench is the next A item, then A4.
 - Liveness: D's new session is checking out its worktree (locked) at 11:45; no hello yet.
+
+## 2026-09-14 quiesce (operator request), ~12:15 -- Nestor-A[m1-449a9e76]
+- B: stopped, clean, pushed (tip 5cc6c19e4); substrate 6391 left running.
+- C: stopped, clean, pushed (C7 line closed after C7e KILL); 6392 left running.
+- D: rebooted as m1-5ab220e6 at ~11:48, D1 KILL (ea659043e), D1b KILL (c277e6e8b), paused; 6393 running.
+  Next D item: D1c symbol-split move.
+- E: E10 still RUNNING (pid 26576, started 11:16; 10/24 rows at 12:11), rows + e10_run.py
+  uncommitted in gw-e. E owns the landing.
+- Boards at quiesce: kills B 9 / C 6 / D 2; bounties B:B-bounty-C7d-charge-index 1 (audited, scored);
+  steps_per_s_verified B1; branch_points_per_cpu_h E2b.
+- A open items: A2 baseline bench, A4 CHIMERA-0 harness; Daedalus packet committed but not sent.
