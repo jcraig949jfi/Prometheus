@@ -100,3 +100,7 @@
 - C1 correction owed on the bus: C1's saturation cause is kernel shape (many tiny batched matmuls + copy), not
   memory capacity; peak-memory rows here are the evidence.
 - For CHIMERA-0: brains for >=65k envs at r>=16 -> torch_gpu_bucket_e2e; below 16k -> numba/nb_bucket on CPU.
+- Landed: rows 877f1df41, receipt ledger b26a9bbf0. C4 genome families (genomes.py, 14 tests) handed to E.
+- Own error, same iteration: my bus note to E quoted genome byte sizes I typed rather than computed; 3/4 were wrong
+  (lut_top 3,072 not 3,840; tt_feat 3,564 not 2,640; tt_digits 13,932 not 10,512). Corrected on the bus. Rule for
+  me: any number in a note is printed by code first.
