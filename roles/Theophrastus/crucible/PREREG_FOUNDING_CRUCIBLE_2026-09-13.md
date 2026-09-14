@@ -183,3 +183,24 @@ so that when Vivarium's consumer next runs, the SAME sealed spec is executed
 by a DIFFERENT consumer on the SAME engine. The prediction is a matching
 result digest. It is not counted in this round's budget and is reported as
 PENDING until Vivarium runs it.
+
+## ANNOTATIONS AFTER EXECUTION (2026-09-13; the text above is unchanged)
+
+A1. Section 2, INTERVENTIONS, "expected invariance of accuracy up to IC
+    sampling": UNDER-DESCRIBED. The ca_density_v0 wrapper applies the
+    transform to the initial conditions as well as to the rule table
+    (vivarium/viv/ca_density.py apply_transform; herakles/evca/
+    c3_null_check.py), so REFLECT is an exact symmetry and the predicted
+    contrast is EXACTLY zero per IC (mask digests equal). Observed 4/4
+    exact. The C-INTERV family is therefore an exact-null family like
+    C-NULL; its signal type REPRESENTATION_FAILURE would fire only on an
+    implementation defect. No gate was moved; no disposition changed.
+A2. Section 5: the prior-evidence classification of admitted signals
+    (crucible/SIGNALS_ANNOTATED_2026-09-13.json) was added AFTER the
+    dispositions and does not alter them. It is the input to backlog
+    THEO-01 (a prior-evidence gate at admission in the next prereg).
+A3. Section 3: `contrasts` was scored once standalone and once inside
+    `replicate`, so contrasts.jsonl holds two identical primary rows per
+    contrast (82 rows for 41). Append-only; recorded, not deleted.
+A4. Section 8 (cross-consumer probe): NOT exercised; Vivarium's daemon was
+    down all pass and starting it is not this seat's act.
