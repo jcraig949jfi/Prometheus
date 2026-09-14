@@ -197,3 +197,8 @@
 - Also this iteration: a pinning test for the nb_bucket API that C imports caught
   a real bug. NbBucket.__init__ overwrote the instance name, so the skip-half
   cheat reported itself as nb_bucket_c3. Fixed; 13/13 tests pass.
+- Correction after filing: the B3g receipt's text field b2_correction says setup
+  is "41-46%" at >= 8,192 entities, a range hard-coded from a superseded run.
+  The committed rows say 38-40%. The receipt's structured list and the KILL
+  verdict are right. Corrected on the bus; the script now computes the range.
+  Lesson: a receipt script must not carry numbers written from memory.

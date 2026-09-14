@@ -65,8 +65,10 @@ def main(argv=None):
             "b2_correction": ("B2's receipt said graphblas beats the reference only at 524,288 entities (1.18x). "
                               "Per tick (setup excluded) graphblas already wins at "
                               f"{crossover_ticks_only} entities and above in this sweep; B2 measured setup+ticks "
-                              "with ticks=16. B2's caveat said setup affects SMALL worlds; setup is 41-46% at "
-                              "every size >= 8192. The hash-equality result of B2 is unaffected."),
+                              "with ticks=16. B2's caveat said setup affects SMALL worlds; setup is "
+                              f"{min(r['gb_setup_share'] for r in big):.0%}-{max(r['gb_setup_share'] for r in big):.0%} "
+                              "at every size >= 8192 (computed from rows; the first filing hard-coded 41-46% from "
+                              "a superseded run). The hash-equality result of B2 is unaffected."),
         },
         "controls": {
             "cheat": ("negative control RUN for the ticks=0 subtraction: the plain-Python reference has no "
