@@ -21,3 +21,32 @@ discriminator). Threads: 4 (conductor contract 1789425755152-0 overrides the boo
   identical elites and a byte-identical elites file, a different sampler seed differs; saved
   elites restore into a fresh archive with an equal dump; glen mismatch raises.
 - New harnesses from round 4 on must pass a real seed and save elites per run seed.
+- Pushed 3ee6df577; suite 138 passed.
+
+## 2026-09-14 epoch 1, iteration 2 -- M1 floors (w4, w1, w3): abstain beats every baseline
+
+Predicate posted before the run (bus 1789426397961-0, G-M1-floors-w134). primordial/metric/floors.py:
+abstain; best fixed action (exhaustive over 8^W, selected on the pressure's TRAIN seeds, scored on
+HELD64); uniform random action (8 policy seeds). Tests: the batched constant scorer == wforge
+replay; chunking invisible; random policy seeded.
+
+| world | pressure | abstain held64 | best fixed | random median | best baseline held64 |
+|---|---|---|---|---|---|
+| w4 | train8 | 107.75 | abstain | 11.49 | 89.94 |
+| w4 | train128 | 107.75 | abstain | 11.49 | 98.76 |
+| w1 | train8 | 88.28 | abstain | 0.00 | 35.46 |
+| w1 | train128 | 88.28 | abstain | 0.00 | 63.94 |
+| w3 | train8 | 122.63 | abstain | 0.89 | 103.16 |
+| w3 | train128 | 122.63 | abstain | 0.89 | 105.58 |
+
+Aimed at the claim, not beside it: an all-zero-codebook G7 genome (linear and tt_feat) scored by
+the production scorers, numpy E7.rollout and FusedRollout, gives exactly these numbers (w4 held64
+107.75, train8 153, train128 112.375) -- so it is the metric the baselines were scored with.
+The committed elites are below abstain on TRAIN too (w4 E9 train8 ~145 vs 153; B train128 ~105.5 vs
+112.4; w1 <=167 vs 236; w3 <=31 vs 34.5): the QD runs never reached the do-nothing policy.
+Predicate prior (w4 const ceiling >= 90): TRUE, and stronger than posed -- the ceiling IS abstain.
+Consequence: every round 2 clause A PASS was measured against a baseline below a 0-byte floor.
+Rows: primordial/ledger/rows/G/G-M1-floors-w134.jsonl; 18 floor cells (status control, floor=<kind>)
+in cells.jsonl. Not explained here: why the archives miss the abstain cell.
+Next: `qd_ledger check` reports raw and floor-normalized verdicts (BELOW_FLOOR / NO_HEADROOM); B's
+8 B cells re-judged.
