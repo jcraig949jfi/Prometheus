@@ -84,3 +84,19 @@
   hypothesis, on dev seed 100). Near-constructive predictions (H1, H3, H5) disclosed as such in the claim.
 - Would steal next: E's QD archive over representation genomes -- let selection pick the representation per
   target instead of my sweep, charged the same bytes+flops+error.
+
+## 2026-09-14 iteration 5: C1c GPU TT kernel without the gather -> KILL (fast, but my mechanism was wrong)
+
+- Ran: torch_gpu_bucket_e2e (per-core stable argsort by digit on the permuted order -- B's trick on GPU -- then 16
+  dense matmuls on contiguous slices, one host sync) vs C1 gather+bmm GPU, CUDA graph, nb_bucket, numba_par;
+  d16/d64 x r4/16/64 x B 1024..1,048,576; oracle + peak GPU memory per cell. Code f9978b5f2.
+- Numbers: d64 r64 bucket/gather 2.4x @16k, 9.3x @65k, 14.4x @262k, 16.8x @1M; vs best CPU 21.6x @262k, 25x @1M
+  (3.0M obs/s at 1M). d16 r4 bucket 22.8M obs/s at 1M. Bucket LOSES 5-10x below B~16k (22 kernel launches per core).
+- What died: (H1 mechanism) gather peak GPU memory is only 1.02x the bucket's at d64 r64 B262k -- my gather path was
+  already chunked to 256 MB, so "memory-bound" (C1 journal + C1 receipt 'finding') was WRONG as a capacity claim.
+  The win is 16 big GEMMs vs B tiny bmm's plus the r^2 copy. (H2) bucket still flattens: 1M/262k = 1.15-1.17, not
+  >=1.3. (H3) crossover later than predicted at r16 (262k at d16) and r4 (262k).
+- Controls: 180/180 honest cells valid; GPU bucket skip-half cheat caught 36/36.
+- C1 correction owed on the bus: C1's saturation cause is kernel shape (many tiny batched matmuls + copy), not
+  memory capacity; peak-memory rows here are the evidence.
+- For CHIMERA-0: brains for >=65k envs at r>=16 -> torch_gpu_bucket_e2e; below 16k -> numba/nb_bucket on CPU.
