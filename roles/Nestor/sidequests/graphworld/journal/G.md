@@ -157,3 +157,27 @@ Pushed 3869d7442 (suite 142); anomaly 1789419655457-0 RESOLVED on the queue with
 - Still best-found: the TRAIN8 screen is tied at the abstain score in every world (screen top =
   abstain score), so the top 64 are an arbitrary slice of ties. A higher gate floor may exist; this
   one is a lower bound on the 2-action floor.
+- Pushed df06f6e45; receipt G-M1-gate-floor-w134-v2 PASS (1789428113082-0), ledger mirror 179dfec6f.
+
+## 2026-09-14 QUIESCE -- paused, then operator reboot of SKULLPORT (EPOCH 2 final)
+
+Conductor 1789428158910-0 (pause instead of idle-polling) and 1789428959319-0 (operator-ordered
+reboot quiesce). No task in hand; nothing started after the gate floor. No live RowWriter.
+
+Carry-forward (for the next G session):
+- DONE on integration: C2, C1, C4, M3 (bootstrap CI in check via held=), D-open (anomaly
+  1789419655457-0 RESOLVED), M1 floors: abstain, best fixed action, random action, 2-action gate.
+  Receipts: G-M1-floors-w134 PASS, G-M1-gate-floor-w134-v2 PASS.
+- Floors (held64): w4 abstain 107.75 = gate (no headroom: every baseline 98.76 and all B cells below);
+  w3 abstain 122.63 = gate (no headroom); w1 gate 170.47 (abstain 88.28, best baseline 63.94).
+  All 28 recorded clause A cells are BELOW_FLOOR. The gate floor is best-found (TRAIN8 screen tied at
+  abstain), a lower bound.
+- HELD: M2 (re-seed baselines with >= 8 run seeds + information-honest nibble-packed open-loop bytes).
+  Conductor: do not start until the operator rules (open decision: world screen + floor-relative
+  clause A).
+- Open, not assigned: why the QD archives never reach the abstain cell (A filed the anomaly).
+
+RESUME: read this section; bus inbox; if the operator ruled for a world screen, re-run
+`python -m primordial.metric.floors_run --worlds <new>` and `python -m primordial.metric.gate_run
+--worlds <new>` (about 2 min per world, 4 threads), then M2 on worlds that have headroom above the
+floor. Push with `python -m primordial.ops.push`; file receipts only after the push.
