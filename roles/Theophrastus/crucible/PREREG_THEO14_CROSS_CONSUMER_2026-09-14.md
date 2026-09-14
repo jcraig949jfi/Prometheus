@@ -43,3 +43,31 @@ P2 not caught      the instrument is not validating; halt
 P3 fail            bench and seat disagree on a phenotype at identical
                    coordinates: an engine/wrapper-version effect, reported
                    to Vivarium, never averaged away
+
+## OUTCOMES (2026-09-14, after execution; the text above is unchanged)
+
+Artifacts: crucible/theo14/THEO14_RESULT.json, per_ic_bench.jsonl (60,000
+records), P2_CHEAT_CENSUS.json. (The run console crucible/theo14_console.log
+is gitignored by the repo *.log rule and is local-only; the JSON is the row
+record.)
+
+P1  PASS as frozen: 150/150 bench rows, every repeat, accuracy_at_T and
+    correct-mask digest equal (132 none, 6 x reflect / complement /
+    reflect_complement). ELIGIBILITY ANNOTATION: 126 of 150 rows score
+    exactly 0.0 on every repeat (all 120 C3-acq rows -- already reported
+    in archaeon/docs/h0h5/C3_2_READOUT.md, not a new fact -- plus maj and
+    6 others). On those rows an all-false mask matches for ANY seed, so
+    they cannot discriminate. The informative count is 24 rows (9 none,
+    15 transformed: 5 per symmetry; genomes exp, par, particle1,
+    particle2, GKL x4 each + two constant rules x2).
+P2  NOT CAUGHT as frozen. The frozen cheat row 81b3882e (C3-hist, maj,
+    accuracies 0,0,0,0) is one of the 126 degenerate rows: "nothing could
+    have fired". Per the outcome rule the run halted and the instrument
+    was checked before any reading: the same seed+7 cheat on all 150 rows
+    is caught on 24/24 non-degenerate rows and on 0/126 degenerate rows.
+    DISPOSITION: the prereg defect is this seat's (no eligibility check
+    on the cheat row; calibration ledger 2026-09-14). The instrument
+    validates wherever validation is possible.
+P3  PASS: GKL, exp, maj, par at N=149/320/[null]/none: no 0.01-m bin with
+    |z| >= 3 (max |z| 1.66, 2.45, 0.0, 1.53; 400 bench ICs vs 1600 seat
+    ICs per genome).

@@ -159,3 +159,20 @@ for by (H2) the nominal-p parameterisation delivering a narrower realised
 margin distribution at larger N (arithmetic: sd sqrt(p(1-p)/N)) plus (H3)
 the rule-specific N-response of c_{R,N} above. No separate mechanism
 remains; the description is retired.
+
+================================================================================
+ANNOTATION 2026-09-14 (THEO-14) to THEO-SPEC-001 TRANSPORT EVIDENCE
+================================================================================
+Added beside the original field, which is unchanged. Instrument transport
+ACROSS CONSUMERS: the per-IC re-derivation reproduces fossils produced by
+the Vivarium daemon (not this seat's adapter) for Archaeon's C3-2 specs,
+bit-exactly on 150/150 rows; informative (non-degenerate) rows 24/24,
+including 15 rows under the three exact transforms routed through
+vivarium/viv/ca_density.apply_transform. Phenotype agreement at identical
+coordinates (N=149, steps 320, [null]): GKL, exp, maj, par, no bin
+|z| >= 3. The cheat control is blind on all-zero rows by construction and
+was caught on every row where it can fire. Evidence:
+crucible/PREREG_THEO14_CROSS_CONSUMER_2026-09-14.md (outcomes),
+crucible/theo14/{THEO14_RESULT.json, P2_CHEAT_CENSUS.json,
+per_ic_bench.jsonl}. Disposition of SPEC-001 unchanged
+(MECHANISM_SPECIMEN); its instrument claim is now two-consumer.
