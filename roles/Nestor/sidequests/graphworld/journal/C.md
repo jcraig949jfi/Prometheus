@@ -246,3 +246,25 @@
   regimes exactly wherever it genuinely fits (238/238 in C7c and in C7d); what does NOT stand: a pre-registered
   eligibility rule that selects the genuinely fitting targets from sample data. A support-based fit test over several
   eligibility seed sets is the open item, for this lane later or another lane.
+
+## 2026-09-14 CORRECTION to iterations 11b-11d (C7b, C7c, C7d): charge-column indexing bug (found by lane B)
+
+- Bug: B's NpEncounter.observe_all puts the charge bucket at vals[D-1] and THEN applies the observation permutation. My C7
+  harness assumed charge is the LAST observation column: X = obs[:, :, :-1] and targets j < D-1. Computed from the genomes:
+  in 29/36 C7 worlds charge is not last. So in those worlds the learner's inputs dropped a real register and the charge
+  channel could be selected as a target.
+- Affected rows: C7b 21/29 targets, C7c 23/34, C7d 24/35 in affected worlds. The only target that WAS the charge channel:
+  C7d gs 612 j2 -- the single target behind C7d's KILL.
+- Retracted: (1) C7d's reading "a partial single-source fit whose support stays above 0.5, so misses are silent" -- it was
+  a piecewise charge bucket no affine map fits; (2) C7b's diagnosis "7 targets need >=2 registers" -- some may have been
+  single-source with the source column dropped; (3) the "count-based fit test admits partial fits" lesson and the
+  line-closing conclusion built on it. What the rows still are: correct measurements of what the buggy harness ran.
+- B found it first ("checking one indexing detail in C trajectory/X slicing"); the credit and any bounty are B's.
+- Fix: c7b_regime_plastic.trajectory reorders columns so charge is truly last (c7c/c7d import it). VERIFIED against an
+  independent step-by-step charge bucket min(15, charge//32): after the reorder the last column matches it on 0.936/0.935
+  (corrupt 16; expected 1-1/16 = 0.938), 0.874 (corrupt 8; expected 0.875) and 1.0 (clean gs 107, 248), and every other
+  column matches 0.0. A first exact-equality check on gs 612 "failed" only because corruption XORs the charge channel too.
+  No re-run until B7's structural exact-fit eligibility is posted: one clean, jointly checked attempt instead of a fourth
+  solo repair.
+- Lesson (real this time): I wrote a feature convention from memory of the observation layout instead of reading
+  observe_all, and three receipts inherited it. Read the producer of an array before slicing it.

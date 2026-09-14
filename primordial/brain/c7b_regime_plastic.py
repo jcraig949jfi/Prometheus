@@ -51,14 +51,29 @@ def git_sha() -> str:
         return "unknown"
 
 
+def charge_column(m) -> int:
+    """observe_all builds vals with the charge bucket at D-1 and THEN applies obs_perm (obs[c] = vals[perm[c]]),
+    so the charge channel sits at the column c with perm[c] == D-1 -- NOT necessarily the last column."""
+    perm = list(m.obs_perm)
+    return perm.index(len(perm) - 1)
+
+
 def trajectory(m, wid, cheat, seeds):
+    """[T, n, D] observations with columns REORDERED so the charge channel is the LAST column.
+
+    FIX (found by lane B, confirmed by C; bus 2026-09-14): C7b/C7c/C7d rows up to commit 866b79406 were produced WITHOUT
+    this reorder, so in 29/36 worlds the learner inputs dropped a real register and the charge channel was eligible as a
+    target. Downstream code keeps its `[:, :, :-1]` / `range(D - 1)` convention, which is now correct."""
     from primordial.soup.b1.np_world import NpEncounter        # lane B, read-only
     w = NpEncounter(m, wid, cheat=cheat, with_obs=True)
     o = [w.reset(seeds)[:, 0].astype(np.int64)]
     a = np.zeros((len(seeds), m.n_slots, m.act_width), np.int32)
     for _ in range(m.horizon - 1):
         o.append(w.step(a)[0][:, 0].astype(np.int64))
-    return np.stack(o)                                          # [T, n, D]
+    traj = np.stack(o)                                          # [T, n, D] in observation column order
+    cc = charge_column(m)
+    order = [c for c in range(traj.shape[2]) if c != cc] + [cc]
+    return traj[:, :, order]
 
 
 class DigitTT:
