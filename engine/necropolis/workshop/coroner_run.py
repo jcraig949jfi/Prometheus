@@ -43,8 +43,8 @@ def load_registry() -> dict[str, dict]:
 def check_plan(plan: dict) -> list[str]:
     """Structural refusals.  Returns a list of reasons; empty means the plan is well-formed."""
     errs = []
-    for k in ("plan_id", "question", "target", "hitl_status", "inputs", "tools", "actions", "controls",
-              "kill_criteria", "expected_outputs", "non_resurrection_argument"):
+    for k in ("plan_id", "question", "target", "target_grave", "invocation", "hitl_status", "inputs", "tools",
+              "actions", "controls", "kill_criteria", "expected_outputs", "non_resurrection_argument"):
         if k not in plan:
             errs.append(f"missing field {k}")
     if errs:

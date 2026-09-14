@@ -192,7 +192,7 @@ for bp in sorted(glob.glob(here("batteries", "*.json"))):
         if k not in b: err(where, f"missing {k}")
     if b.get("battery_id") != os.path.basename(bp)[:-5]: err(where, "battery_id != file name")
     for j, s in enumerate(b.get("steps", [])):
-        for k in ("stage", "tool_id", "role"):
+        for k in ("step", "tool_id", "role", "does"):
             if k not in s: err(where, f"step {j} missing {k}")
         tid = s.get("tool_id")
         if tid and tid not in by_id: err(where, f"step {j} names unregistered tool {tid}")

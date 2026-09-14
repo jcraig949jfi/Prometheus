@@ -1,7 +1,7 @@
 {
  "schema": "necropolis.workshop.controls_result/1",
- "git_head": "52ac826b537f7ff57279169c0b6b554d6ae0998c",
- "started": "2026-09-14T01:57:25Z",
+ "git_head": "2d97a6c66550aa29aa744b3e76a86844a132fd0a",
+ "started": "2026-09-14T02:33:07Z",
  "cases": [
   {
    "case_id": "grading_oracle.ACCEPT.careful_reasoner_clears_R0_R3",
@@ -31,7 +31,7 @@
      "R8": 0.0
     }
    },
-   "seconds": 6.67
+   "seconds": 6.73
   },
   {
    "case_id": "grading_oracle.REJECT.constant_reasoner_near_zero",
@@ -52,7 +52,7 @@
     "raised": "AttributeError: 'str' object has no attribute 'get'",
     "note": "harmonia/experiments/reasoning_phase0.py::grade calls tr.get(); grade_reasoner catches reasoner exceptions but not grader ones"
    },
-   "seconds": 2.19
+   "seconds": 2.23
   },
   {
    "case_id": "grading_oracle.REJECT.crashing_reasoner_scores_zero",
@@ -62,7 +62,7 @@
    "observed": {
     "overall": 0.0
    },
-   "seconds": 3.42
+   "seconds": 3.44
   },
   {
    "case_id": "grading_oracle.REPETITION.same_seed_same_staircase",
@@ -73,7 +73,7 @@
     "identical": true,
     "sha": "e3c19117f6ebc572"
    },
-   "seconds": 2.03
+   "seconds": 2.04
   },
   {
    "case_id": "grading_oracle.CHEAT.reasoner_reads_probe_ground_truth",
@@ -94,7 +94,7 @@
     },
     "note": "cheat SUCCEEDS if overall >> chance"
    },
-   "seconds": 5.13
+   "seconds": 5.12
   },
   {
    "case_id": "grading_oracle.CHEAT.reasoner_reads_R6_data_truth",
@@ -113,7 +113,7 @@
    "verdict": "PASS",
    "observed": {
     "verify": "(1, [])",
-    "write": "WindowsPath('C:/Users/James/AppData/Local/Temp/nt_manifest_x47zx8ca/MANIFEST.md')"
+    "write": "WindowsPath('C:/Users/James/AppData/Local/Temp/nt_manifest_gdic2ab5/MANIFEST.md')"
    },
    "seconds": 0.0
   },
@@ -459,7 +459,7 @@
    "observed": {
     "contested": true
    },
-   "seconds": 5.45
+   "seconds": 5.64
   },
   {
    "case_id": "reasoning_quality_emit.REJECT.unanimous_task_not_contested",
@@ -529,12 +529,13 @@
    "case_id": "validate_workshop.CHEAT.negative_selftests_fire",
    "tool_key": "validate_workshop",
    "kind": "CHEAT",
-   "verdict": "INFO",
+   "verdict": "PASS",
    "observed": {
     "rc": 0,
-    "note": "empty registry; selftests skipped"
+    "selftests_fired": 7,
+    "tail": "icate_of: rejected as required\n  note: selftest READY-with-failed-cheat: rejected as required\n  note: selftest status-outside-enum: rejected as required\n  note: selftest current_path-ghost: rejected as required\n  note: selftest fabricated-commit: rejected as required\n\nWORKSHOP VALIDATION: ALL GREEN\n"
    },
-   "seconds": 0.03
+   "seconds": 1.85
   },
   {
    "case_id": "kill_vector.ACCEPT.pipeline_output_builds_vector",
@@ -650,7 +651,7 @@
      "fires": 682
     }
    },
-   "seconds": 0.26
+   "seconds": 0.25
   },
   {
    "case_id": "d3_null_calibration.SYNTHETIC_SIGNAL.tighter_band_raises_false_alarm",
@@ -768,7 +769,7 @@
     "rc": 0,
     "tail": "his is NOT a claim that z3 is complete; it is a measured statement about what this seat could elicit in four seconds per query. The consumer-facing consequence: on this build an `unknown` seen in practice is most likely a budget failure, and the adapter must still report it as a third outcome rather than interpreting it.\"}], \"n_cases\": 6, \"n_decided\": 5, \"n_passed\": 5, \"all_decided_passed\": true}\n"
    },
-   "seconds": 0.24
+   "seconds": 0.23
   },
   {
    "case_id": "z3_oracle.PARITY.h1_oracle_agrees_with_truth_table",
@@ -781,7 +782,7 @@
     "new_receipts_in_tree": [],
     "tail": "d every `unknown` I could elicit was a budget failure, which is a fact about what I could elicit.\"], \"results_summary\": {\"parity_pairs\": 2048, \"parity_mismatches\": 0, \"distinct_pairs\": 32640, \"witnesses\": 32640, \"witness_failures\": 0, \"unknown_reasons\": [\"timeout\", \"max. resource limit exceeded\"]}}\n"
    },
-   "seconds": 18.31
+   "seconds": 17.99
   },
   {
    "case_id": "z3_oracle.REJECT.unsat_expression_reported_unsat",
@@ -921,7 +922,7 @@
    "verdict": "PASS",
    "observed": {
     "rc": 0,
-    "tail": ".........                                                                [100%]\n9 passed in 0.03s\n"
+    "tail": ".........                                                                [100%]\n9 passed in 0.04s\n"
    },
    "seconds": 0.26
   },
@@ -1122,7 +1123,7 @@
     "null_std": 0.04323156821548647,
     "n_strata_used": 10
    },
-   "seconds": 0.08
+   "seconds": 0.07
   },
   {
    "case_id": "bswcd_null.SYNTHETIC_NULL.stratifier_only_dependence_collapses",
@@ -1842,7 +1843,7 @@
      "  4/4"
     ]
    },
-   "seconds": 1.3
+   "seconds": 1.27
   },
   {
    "case_id": "divergence_decomposition.PARITY.ceiling_and_bounds_hand_values",
@@ -2148,7 +2149,7 @@
    "observed": {
     "max_abs_diff": 8.326672684688674e-17
    },
-   "seconds": 0.01
+   "seconds": 0.0
   },
   {
    "case_id": "adapters_resampling_null.SYNTHETIC_NULL.two_random_subsets_not_coincident",
@@ -2274,7 +2275,7 @@
      "dead_field[zzz]"
     ]
    },
-   "seconds": 0.02
+   "seconds": 0.0
   },
   {
    "case_id": "adapters_jsonl_census.REJECT.missing_file_reported_not_invented",
@@ -2282,7 +2283,7 @@
    "kind": "REJECT",
    "verdict": "PASS",
    "observed": {
-    "path": "C:\\Users\\James\\AppData\\Local\\Temp\\necro_does_not_exist_944727560.jsonl",
+    "path": "C:\\Users\\James\\AppData\\Local\\Temp\\necro_does_not_exist_793446317.jsonl",
     "exists": false,
     "rows": 0
    },
@@ -2298,7 +2299,7 @@
     "first": "2026-09-11T08:10:32-04:00",
     "last": "2026-09-11T08:10:32-04:00"
    },
-   "seconds": 0.78
+   "seconds": 0.77
   },
   {
    "case_id": "adapters_git_census.SYNTHETIC_SIGNAL.deleted_path_recovered_matches_git_show",
@@ -2315,7 +2316,7 @@
      "agents/icarus/cycles/cycle_000/code/tests/test_tier_R2_falsification.py"
     ]
    },
-   "seconds": 1.39
+   "seconds": 1.4
   },
   {
    "case_id": "adapters_git_census.CHEAT.recovery_into_live_tree_refused",
@@ -2348,7 +2349,7 @@
    "kind": "ACCEPT",
    "verdict": "PASS",
    "observed": {
-    "n_external": 197,
+    "n_external": 212,
     "n_importers": 8,
     "sample": [
      "aethon/README.md",
@@ -2358,7 +2359,7 @@
      "aporia/meta/queue/techne_inbox.jsonl"
     ]
    },
-   "seconds": 9.86
+   "seconds": 9.81
   },
   {
    "case_id": "adapters_consumer_trace.SYNTHETIC_NULL.unique_token_has_no_consumers",
@@ -2368,7 +2369,7 @@
    "observed": {
     "n_hits": 0
    },
-   "seconds": 8.33
+   "seconds": 8.31
   },
   {
    "case_id": "adapters_consumer_trace.SYNTHETIC_SIGNAL.planted_importer_in_scratch_found",
@@ -2477,7 +2478,7 @@
     "n_names": 19,
     "stderr": ""
    },
-   "seconds": 0.1
+   "seconds": 0.06
   },
   {
    "case_id": "adapters_sigma_runner.PARITY.unanimous_kill_rate_hand_check",
@@ -2560,14 +2561,14 @@
     "seconds": 0.23,
     "tail": "d the adapter must still report it as a third outcome rather than interpreting it.\"}], \"n_cases\": 6, \"n_decided\": 5, \"n_passed\": 5, \"all_decided_passed\": true}\n"
    },
-   "seconds": 0.23
+   "seconds": 0.24
   }
  ],
  "counts": {
-  "PASS": 173,
+  "PASS": 174,
   "FAIL": 8,
-  "INFO": 10,
+  "INFO": 9,
   "ERROR": 3
  },
- "finished": "2026-09-14T01:58:38Z"
+ "finished": "2026-09-14T02:34:21Z"
 }

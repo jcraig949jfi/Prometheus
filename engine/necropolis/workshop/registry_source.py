@@ -192,7 +192,7 @@ T("hypothesis_minimiser", "Techne hypothesis first-check (property-based minimis
 
 T("capability_gap_fixture", "Techne capability-gap fixture battery (pytest)", "techne/tests/test_capability_gap_fixture.py",
   "calibration_battery", deps=["cvxpy", "pytest"], dep_status="MISSING", dep_detail="cvxpy absent; the pytest battery is RED here for that reason",
-  inputs="pytest", outputs="green/red", scope="unknown here: never green on this host",
+  inputs="pytest invocation of the file", outputs="green/red pytest summary", scope="unknown here: never green on this host",
   forbidden="a RED caused by a missing package is not a capability finding (memory feedback_instrument_error_is_not_evidence)",
   status="NEEDS_DEPENDENCY", reason="capability_gap_fixture.ACCEPT.pytest_battery_green FAIL: cvxpy missing")
 
@@ -298,7 +298,7 @@ T("attacks_preflight", "attacks.preflight dead-field detector", "attacks/preflig
   status="READY", batteries=["artifact_provenance_hash_reader_invariant"])
 
 T("stygian_bocpd", "Stygian BOCPD changepoint loader", "charon/agents/stygian/loaders/_bocpd.py", "statistical_test",
-  inputs="series", outputs="changepoint posterior; planted shift located; stationary series quiet",
+  inputs="1-D numeric series", outputs="changepoint posterior; planted shift located; stationary series quiet",
   scope="location of a mean shift", forbidden="a changepoint is not a cause", status="READY",
   author_tests=["charon/agents/stygian/tests/test_bocpd_g10_v2.py"], frank=["FRANK-003"])
 
@@ -444,7 +444,7 @@ N("erebos_kill_tensor", "Erebos KillTensor (plugin x domain x invariant x kill_p
   "coverage_diagnostic", inputs="ledger rows", outputs="sparse count tensor, marginals", scope="coverage of kills over four axes",
   forbidden="a populated cell is a count, not a law", frank=["FRANK-003"])
 N("stygian_bootstrap_ci", "Stygian percentile bootstrap CI", "charon/agents/stygian/loaders/_bootstrap_ci.py", "resampler", det="SEEDED",
-  inputs="sample + statistic", outputs="CI", scope="CI of a statistic", forbidden="a CI is not a null",
+  inputs="sample + statistic callable", outputs="bootstrap CI (lo, hi)", scope="CI of a statistic", forbidden="a CI is not a null",
   author_tests=["charon/agents/stygian/tests/test_bootstrap_ci_g23_v2.py"], frank=["FRANK-003"])
 N("stygian_westfall_young", "Stygian Westfall-Young max-T permutation null over binary splits",
   "charon/agents/stygian/loaders/_mahler_composition_helpers.py", "null_generator", det="SEEDED",
@@ -459,7 +459,7 @@ N("battery_chain", "Techne battery-chain audit (ACCUMULATING vs DESTROYING)", "t
   inputs="chain of battery checks", outputs="direction + resolution", scope="whether later checks add or remove evidence",
   forbidden="accumulating is not sufficient", author_tests=["techne/ladder_circuits/tests/test_battery_chain.py"])
 N("fossil_isolation", "Techne fossil isolation battery", "techne/tests/test_fossil_isolation.py", "calibration_battery", deps=["pytest"],
-  inputs="pytest", outputs="12 passed", scope="that fossil readers are isolated from live state", forbidden="green is green on its fixtures",
+  inputs="pytest invocation of the file", outputs="12 passed (author run)", scope="that fossil readers are isolated from live state", forbidden="green is green on its fixtures",
   author_tests=["techne/tests/test_fossil_isolation.py"])
 N("archaeon_calibration", "Archaeon detector calibration battery D1-D6 (planted / no-effect controls)", "archaeon/calibrate.py",
   "calibration_battery", det="SEEDED", inputs="detector + synth generators", outputs="null-fire rate, hit rate, power curves",
@@ -471,7 +471,7 @@ N("archaeon_c3_readout", "Archaeon C3 readout (exact-symmetry null identity, ICC
   forbidden="ICC is agreement, not truth", author_tests=["archaeon/tests/test_c3_readout.py"])
 N("archaeon_h1h0_readout", "Archaeon H1/H0 readout (spec_hash dedup; REFUSE_INDEPENDENT_ARMS)", "archaeon/producer/h1h0_readout.py",
   "invariant_checker", deps=["viv DB for fetch"], dep_status="HOST_LOCAL",
-  inputs="rows", outputs="readout with degeneracy refusal", scope="two 'independent' arms with one spec_hash are refused",
+  inputs="H1/H0 rows", outputs="readout with degeneracy refusal", scope="two 'independent' arms with one spec_hash are refused",
   forbidden="distinct spec_hash is not independence", author_tests=["archaeon/tests/test_h1h0_readout.py"])
 N("archaeon_h5_reference", "Archaeon H5 exact neighbourhood reference + frequency-preserving null decoder",
   "archaeon/producer/h5_reference.py", "exact_oracle", inputs="decoder + class map", outputs="exact reference over 49,152 edges; sampled-vs-exact check",
@@ -484,7 +484,7 @@ N("arachne_frozen_specimen", "Arachne frozen specimen loader with manifest verif
   inputs="archive run dir", outputs="Specimen; manifest verified", scope="that the archived graph is the archived graph",
   forbidden="verified bytes, not verified science", author_tests=["roles/Arachne/science/tests/test_specimen_and_stats.py"])
 N("herakles_workspace_guard", "Herakles workspace guard (assert_not_canonical / is_main_worktree)", "herakles/workspace.py",
-  "invariant_checker", inputs="cwd", outputs="raises on the canonical worktree", scope="execution-context guard",
+  "invariant_checker", inputs="current working directory", outputs="raises on the canonical worktree", scope="execution-context guard",
   forbidden="not-canonical is not isolated", author_tests=["herakles/tests/test_workspace.py"])
 N("incubation_d_vm", "incubation_d homoiconic VM (typed failure descriptors, block hash)", "incubation_d/vm/machine.py", "replay_harness",
   inputs="object program", outputs="result or VMError.descriptor; deterministic", scope="deterministic replay substrate",
@@ -512,7 +512,7 @@ N("charon_generator_quality_probe", "Charon generator quality probe (COUNTER_EQU
   "charon/quality/generator_quality_probe.py", "failure_classifier", inputs="kill ledger", outputs="per-generator classification",
   scope="which generators only ever produce one kill pattern", forbidden="counter-equivalence is not uselessness", frank=["FRANK-003"])
 N("failure_primitive_atlas", "Harmonia failure-primitive atlas detectors FP-001..004 + void map",
-  "harmonia/primitives/failure_primitives.py", "failure_classifier", inputs="rows", outputs="FP flags, atlas validation, void report",
+  "harmonia/primitives/failure_primitives.py", "failure_classifier", inputs="run rows", outputs="FP flags, atlas validation, void report",
   scope="typed failure shapes over a run", forbidden="an FP flag is a shape, not a cause (failure-signature doctrine)")
 N("lane_exhaustion_audit", "Harmonia lane exhaustion rubric (EXHAUSTION@v1 over hand-curated ledger)",
   "harmonia/diagnostics/lane_exhaustion_audit.py", "failure_classifier", inputs="event ledger", outputs="rubric verdict per lane",
@@ -547,12 +547,12 @@ T("evidence_wiki_store_identity_guard", "Evidence-wiki store identity guard (ew.
   inputs="store connection", outputs="identity verdict", scope="unknown here", forbidden="none established",
   status="NEEDS_DEPENDENCY", reason="DB-bound; not executable without credentials", author_tests=["evidence_wiki/tests/test_store_identity_guard.py"])
 T("comms_instances", "comms instance registry (api)", "comms/api.py", "db_probe", deps=["Postgres credentials"], dep_status="HOST_LOCAL",
-  dep_detail="1 passed / 6 errors here: needs EW_DB credentials", inputs="db", outputs="instance rows", scope="who is registered",
+  dep_detail="1 passed / 6 errors here: needs EW_DB credentials", inputs="EW_DB connection", outputs="instance rows", scope="who is registered",
   forbidden="registered is not alive (status columns are fossils)", status="NEEDS_DEPENDENCY", reason="DB-bound",
   author_tests=["comms/tests/test_instances.py"])
 T("thesauros_audit_all_tables", "Thesauros audit_all_tables (per-table counts, null rates, orphans, staleness)", "thesauros/audit_all_tables.py",
   "db_probe", deps=["Postgres credentials"], dep_status="HOST_LOCAL", dep_detail="connects at import; NOT executed",
-  inputs="db", outputs="audit report", scope="unknown here", forbidden="none established", status="NEEDS_ADAPTER",
+  inputs="EW_DB connection", outputs="audit report", scope="unknown here", forbidden="none established", status="NEEDS_ADAPTER",
   inspected=True, notes="must be wrapped by pg_readonly_probe before any coroner use; connects at import time")
 T("alethelia_rules", "Alethelia anomaly rules (stale heartbeats, zombies, dormant shadow input)", "agents/alethelia/alethelia.py",
   "liveness_attestor", deps=["Postgres credentials"], dep_status="HOST_LOCAL", inputs="db + git + queues",
@@ -560,7 +560,7 @@ T("alethelia_rules", "Alethelia anomaly rules (stale heartbeats, zombies, dorman
   status="NEEDS_VALIDATION", reason="author test file collects no tests (rc 3); rule logic not controlled",
   author_tests=["agents/alethelia/test_alethelia.py"])
 T("icarus_holdout_R1", "Icarus holdout R1 battery", "agents/icarus/holdout/test_holdout_R1.py", "calibration_battery", deps=["pytest"],
-  inputs="pytest", outputs="3 failed here", scope="unknown", forbidden="a red battery whose cause is unread is not a finding",
+  inputs="pytest invocation of the file", outputs="3 failed here (cause unread)", scope="unknown: RED cause not yet read", forbidden="a red battery whose cause is unread is not a finding",
   status="BROKEN", reason="3 failed in author run; cause not diagnosed (recorded, not repaired)",
   author_tests=["agents/icarus/holdout/test_holdout_R1.py"])
 

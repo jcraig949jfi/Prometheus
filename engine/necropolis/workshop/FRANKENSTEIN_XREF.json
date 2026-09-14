@@ -1,0 +1,992 @@
+{
+ "_README": "Measured cross-reference of FRANK-002/003/004 against the workshop registry and the reachable tree (harvest charter VIII).  Nothing here ran a monster.  'missing_here' means the package is absent for THIS interpreter (3.14.4); other hosts differ.",
+ "generated_by": "engine/necropolis/workshop/build_frankenstein_xref.py",
+ "monsters": {
+  "FRANK-002": {
+   "title": "Nous repair: give the forge a control arm so the sampler's contribution becomes measurable",
+   "grave": "Nous",
+   "cleric_gate_status": "PROPOSED",
+   "consumer_reachable_now": false,
+   "depends_on_frontier": false,
+   "organs": [
+    {
+     "organ_id": "nous.code.0",
+     "organ_type": "transform",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "agents/nous/src/concepts.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "agents/nous/src/concepts.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "nous.code.1",
+     "organ_type": "transform",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "agents/nous/src/scorer.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "agents/nous/src/scorer.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "nous.code.2",
+     "organ_type": "transform",
+     "in_monster": true,
+     "executed_by_necromancer": false,
+     "location": "agents/nous/src/nous.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "agents/nous/src/nous.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [
+       "agora",
+       "concepts",
+       "openai",
+       "scorer"
+      ],
+      "local_sys_path_imports": [
+       "agora",
+       "concepts",
+       "scorer"
+      ],
+      "missing_here": [
+       "openai"
+      ]
+     }
+    },
+    {
+     "organ_id": "nous.code.3",
+     "organ_type": "transform",
+     "in_monster": false,
+     "executed_by_necromancer": false,
+     "location": "agents/nous/src/rescore.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "agents/nous/src/rescore.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [
+       "scorer"
+      ],
+      "local_sys_path_imports": [
+       "scorer"
+      ],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "nous.data.0",
+     "organ_type": "failure_corpus",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "agents/nous/runs/",
+     "kind": "DIR",
+     "exists": true,
+     "resolved": "agents/nous/runs",
+     "n_py": 0
+    },
+    {
+     "organ_id": "nous.data.1",
+     "organ_type": "failure_corpus",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "agents/nous/data/priority_triples.json",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "agents/nous/data/priority_triples.json"
+    },
+    {
+     "organ_id": "nous.data.2",
+     "organ_type": "failure_corpus",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "agents/hephaestus/ledger.jsonl",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "agents/hephaestus/ledger.jsonl"
+    },
+    {
+     "organ_id": "nous.schemas.0",
+     "organ_type": "interface_contract",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "responses.jsonl",
+     "kind": "FILE",
+     "exists": false
+    },
+    {
+     "organ_id": "nous.schemas.1",
+     "organ_type": "interface_contract",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "nous.operators.0",
+     "organ_type": "routing_mechanism",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "nous.operators.1",
+     "organ_type": "routing_mechanism",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "nous.tests.0",
+     "organ_type": "measurement_instrument",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "dossiers/nous_evidence/nous_scorer_replay.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/nous_evidence/nous_scorer_replay.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [
+       "scorer"
+      ],
+      "local_sys_path_imports": [
+       "scorer"
+      ],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "nous.tests.1",
+     "organ_type": "measurement_instrument",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "dossiers/nous_evidence/nous_forge_join.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/nous_evidence/nous_forge_join.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [
+       "hephaestus",
+       "numpy"
+      ],
+      "local_sys_path_imports": [
+       "hephaestus"
+      ],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "nous.tests.2",
+     "organ_type": "measurement_instrument",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "dossiers/nous_evidence/nous_salvage_reproduce.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/nous_evidence/nous_salvage_reproduce.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [
+       "concepts"
+      ],
+      "local_sys_path_imports": [
+       "concepts"
+      ],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "nous.representation_hints.0",
+     "organ_type": "informative_failure_mode",
+     "in_monster": true,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "nous.representation_hints.1",
+     "organ_type": "informative_failure_mode",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "forged/",
+     "kind": "PATH",
+     "exists": false
+    }
+   ],
+   "plan_named_scripts": [
+    {
+     "named": "dossiers/nous_evidence/nous_forge_join.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/nous_evidence/nous_forge_join.py"
+    },
+    {
+     "named": "dossiers/nous_evidence/nous_salvage_reproduce.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/nous_evidence/nous_salvage_reproduce.py"
+    },
+    {
+     "named": "dossiers/nous_evidence/nous_scorer_replay.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/nous_evidence/nous_scorer_replay.py"
+    },
+    {
+     "named": "nous_forge_join.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/nous_evidence/nous_forge_join.py"
+    }
+   ],
+   "workshop_tools": [
+    {
+     "tool_id": "NT-077",
+     "name": "Coeus trace-defects (perm_p_difference, magnitude-matched noise null over Nous->RLVF->forge)",
+     "status": "NEEDS_VALIDATION",
+     "path": "roles/Coeus/science/trace_defects.py",
+     "dependency_status": "ALL_PRESENT"
+    },
+    {
+     "tool_id": "NT-082",
+     "name": "Hephaestus knockout ablation (Gate 6; per-engine disable)",
+     "status": "NEEDS_DEPENDENCY",
+     "path": "agents/hephaestus/src/knockout_ablation.py",
+     "dependency_status": "MISSING"
+    }
+   ],
+   "organ_summary": {
+    "total": 16,
+    "in_monster": 7,
+    "located": 10,
+    "unlocated_or_missing": [
+     "nous.schemas.0",
+     "nous.schemas.1",
+     "nous.operators.0",
+     "nous.operators.1",
+     "nous.representation_hints.0",
+     "nous.representation_hints.1"
+    ]
+   },
+   "blocking_dependencies": [
+    {
+     "dep": "frozen Hephaestus judge attested by judge_version + api_state on every ledger row",
+     "measured": {
+      "path": "agents/hephaestus/ledger.jsonl",
+      "rows": 6661,
+      "unparseable": 0,
+      "rows_with_field": {
+       "judge_version": 0,
+       "api_state": 0,
+       "model": 1352,
+       "frame": 4694
+      }
+     },
+     "status": "UNATTESTABLE_FROM_LEDGER",
+     "consequence": "cleric_gate note (i): if no frozen judge can be attested the monster is not runnable; stage 0 stops before spend"
+    },
+    {
+     "dep": "python package openai (hephaestus forge judge client)",
+     "status": "MISSING",
+     "workshop_tool": "NT-082 heph_knockout_ablation NEEDS_DEPENDENCY"
+    },
+    {
+     "dep": "LLM spend for 1000 hypotheses + 1000 forge judgements (stage 1)",
+     "status": "HITL_SPEND_AUTHORISATION_REQUIRED",
+     "consequence": "outside CORONER RUN scope (CORONER_RUN.md M-clauses cover reads and replays; generation is X4/X5)"
+    },
+    {
+     "dep": "consumer (frozen-judge forge ledger) reachable_now",
+     "status": "False"
+    }
+   ],
+   "judge_attestation_census": {
+    "path": "agents/hephaestus/ledger.jsonl",
+    "rows": 6661,
+    "unparseable": 0,
+    "rows_with_field": {
+     "judge_version": 0,
+     "api_state": 0,
+     "model": 1352,
+     "frame": 4694
+    }
+   }
+  },
+  "FRANK-003": {
+   "title": "Erebos repair: run the Layer-2 routing statistic over a ledger of real Layer-1 verdicts only",
+   "grave": "Erebos",
+   "cleric_gate_status": "PROPOSED",
+   "consumer_reachable_now": true,
+   "depends_on_frontier": false,
+   "organs": [
+    {
+     "organ_id": "erebos.code.0",
+     "organ_type": "transform",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "charon/agents/stygian/loaders/",
+     "kind": "DIR",
+     "exists": true,
+     "resolved": "charon/agents/stygian/loaders",
+     "n_py": 40
+    },
+    {
+     "organ_id": "erebos.code.1",
+     "organ_type": "measurement_instrument",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "charon/agents/erebos/generators/",
+     "kind": "DIR",
+     "exists": true,
+     "resolved": "charon/agents/erebos/generators",
+     "n_py": 29
+    },
+    {
+     "organ_id": "erebos.code.2",
+     "organ_type": "measurement_instrument",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "charon/agents/erebos/_cross_cell_motif.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "charon/agents/erebos/_cross_cell_motif.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "erebos.code.3",
+     "organ_type": "transform",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "scripts/composed_claim_consumer_audit.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "scripts/composed_claim_consumer_audit.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "erebos.data.0",
+     "organ_type": "failure_corpus",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "pivot/",
+     "kind": "DIR",
+     "exists": true,
+     "resolved": "pivot",
+     "n_py": 0
+    },
+    {
+     "organ_id": "erebos.data.1",
+     "organ_type": "failure_corpus",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json"
+    },
+    {
+     "organ_id": "erebos.schemas.0",
+     "organ_type": "interface_contract",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "charon/agents/erebos/generators/_base.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "charon/agents/erebos/generators/_base.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "erebos.schemas.1",
+     "organ_type": "interface_contract",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "erebos.schemas.2",
+     "organ_type": "interface_contract",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "erebos.operators.0",
+     "organ_type": "measurement_instrument",
+     "in_monster": true,
+     "executed_by_necromancer": false,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "erebos.operators.1",
+     "organ_type": "routing_mechanism",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "erebos.operators.2",
+     "organ_type": "routing_mechanism",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "erebos.tests.0",
+     "organ_type": "measurement_instrument",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "charon/agents/erebos/",
+     "kind": "DIR",
+     "exists": true,
+     "resolved": "charon/agents/erebos",
+     "n_py": 122
+    },
+    {
+     "organ_id": "erebos.tests.1",
+     "organ_type": "measurement_instrument",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "charon/agents/erebos/tests/",
+     "kind": "DIR",
+     "exists": true,
+     "resolved": "charon/agents/erebos/tests",
+     "n_py": 53
+    },
+    {
+     "organ_id": "erebos.tests.2",
+     "organ_type": "measurement_instrument",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "charon/agents/stygian/tests/",
+     "kind": "DIR",
+     "exists": true,
+     "resolved": "charon/agents/stygian/tests",
+     "n_py": 25
+    },
+    {
+     "organ_id": "erebos.representation_hints.0",
+     "organ_type": "informative_failure_mode",
+     "in_monster": true,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "erebos.representation_hints.1",
+     "organ_type": "informative_failure_mode",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "erebos.representation_hints.2",
+     "organ_type": "informative_failure_mode",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    }
+   ],
+   "plan_named_scripts": [
+    {
+     "named": "cleric_lift_only_calibration.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/erebos_evidence/cleric_lift_only_calibration.py"
+    },
+    {
+     "named": "dossiers/erebos_evidence/cleric_lift_only_calibration.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/erebos_evidence/cleric_lift_only_calibration.py"
+    },
+    {
+     "named": "pair_aware_permutation_null.py",
+     "exists": true,
+     "resolved": "charon/agents/erebos/sprint1/phase3/pair_aware_permutation_null.py"
+    },
+    {
+     "named": "permutation_null.py",
+     "exists": true,
+     "ambiguous": [
+      "roles/Lexis/instruments/permutation_null.py",
+      "harmonia/router/permutation_null.py",
+      "charon/agents/erebos/sprint1/phase3/permutation_null.py"
+     ]
+    }
+   ],
+   "workshop_tools": [
+    {
+     "tool_id": "NT-004",
+     "name": "Erebos residue-eligibility gate (novel kill-pattern admission)",
+     "status": "READY",
+     "path": "charon/agents/erebos/_residue_eligibility.py",
+     "dependency_status": "ALL_PRESENT"
+    },
+    {
+     "tool_id": "NT-037",
+     "name": "Stygian BOCPD changepoint loader",
+     "status": "READY",
+     "path": "charon/agents/stygian/loaders/_bocpd.py",
+     "dependency_status": "ALL_PRESENT"
+    },
+    {
+     "tool_id": "NT-058",
+     "name": "Erebos residue revocation registry",
+     "status": "NEEDS_VALIDATION",
+     "path": "charon/agents/erebos/_residue_revocation.py",
+     "dependency_status": "ALL_PRESENT"
+    },
+    {
+     "tool_id": "NT-059",
+     "name": "Erebos KillTensor (plugin x domain x invariant x kill_pattern counts)",
+     "status": "NEEDS_VALIDATION",
+     "path": "charon/agents/erebos/_kill_tensor.py",
+     "dependency_status": "ALL_PRESENT"
+    },
+    {
+     "tool_id": "NT-060",
+     "name": "Stygian percentile bootstrap CI",
+     "status": "NEEDS_VALIDATION",
+     "path": "charon/agents/stygian/loaders/_bootstrap_ci.py",
+     "dependency_status": "ALL_PRESENT"
+    },
+    {
+     "tool_id": "NT-061",
+     "name": "Stygian Westfall-Young max-T permutation null over binary splits",
+     "status": "NEEDS_VALIDATION",
+     "path": "charon/agents/stygian/loaders/_mahler_composition_helpers.py",
+     "dependency_status": "ALL_PRESENT"
+    },
+    {
+     "tool_id": "NT-078",
+     "name": "Charon generator quality probe (COUNTER_EQUIVALENT kill patterns per generator)",
+     "status": "NEEDS_VALIDATION",
+     "path": "charon/quality/generator_quality_probe.py",
+     "dependency_status": "ALL_PRESENT"
+    }
+   ],
+   "organ_summary": {
+    "total": 18,
+    "in_monster": 8,
+    "located": 10,
+    "unlocated_or_missing": [
+     "erebos.schemas.1",
+     "erebos.schemas.2",
+     "erebos.operators.0",
+     "erebos.operators.1",
+     "erebos.operators.2",
+     "erebos.representation_hints.0",
+     "erebos.representation_hints.1",
+     "erebos.representation_hints.2"
+    ]
+   },
+   "blocking_dependencies": [
+    {
+     "dep": "historical kill_ledger.jsonl / kill_ledger_enriched.jsonl bytes",
+     "status": "ABSENT (gitignored state/, both trees) -- plan already says it does not read them",
+     "consequence": "stage 0 must REGENERATE the verdict-only ledger; the on-record 699-row numbers are not replayable from bytes"
+    },
+    {
+     "dep": "third-party packages for the harnesses",
+     "status": "see organs[*].import_health.missing_here"
+    },
+    {
+     "dep": "test suites 146 / 608+1 / 59 must reproduce (plan (a))",
+     "status": "NOT_RE_RUN_BY_KEEPER (author-run pytest counts only; workshop AUTHOR_TESTS.json)"
+    }
+   ]
+  },
+  "FRANK-004": {
+   "title": "Pollux repair: replace the rank correlation of truncations with a two-sample spacing-distribution test under a random-subset null",
+   "grave": "Pollux",
+   "cleric_gate_status": "PROPOSED",
+   "consumer_reachable_now": true,
+   "depends_on_frontier": false,
+   "organs": [
+    {
+     "organ_id": "pollux.code.0",
+     "organ_type": "transform",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "charon/agents/pollux/daemon.py::_mean_spacing_normalize",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "charon/agents/pollux/daemon.py",
+     "symbols": {
+      "_mean_spacing_normalize": true
+     },
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "pollux.code.1",
+     "organ_type": "transform",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "charon/agents/pollux/daemon.py::_spearman",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "charon/agents/pollux/daemon.py",
+     "symbols": {
+      "_spearman": true
+     },
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "pollux.code.2",
+     "organ_type": "transform",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "charon/agents/pollux/daemon.py::_load_subset and its 7 selector kinds",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "charon/agents/pollux/daemon.py",
+     "symbols": {
+      "_load_subset": true,
+      "its 7 selector kinds": false
+     },
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "pollux.code.3",
+     "organ_type": "measurement_instrument",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "dossiers/pollux_evidence/pollux_instrument_null.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/pollux_evidence/pollux_instrument_null.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "pollux.code.4",
+     "organ_type": "transform",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "dossiers/pollux_evidence/pollux_rescan.py::replay_rotation",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/pollux_evidence/pollux_rescan.py",
+     "symbols": {
+      "replay_rotation": true
+     },
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "pollux.code.5",
+     "organ_type": "measurement_instrument",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "dossiers/pollux_evidence/cleric_chance_floor.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/pollux_evidence/cleric_chance_floor.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "pollux.code.6",
+     "organ_type": "transform",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "dossiers/_keeper_evidence/pollux_replay_corrected.py",
+     "kind": "FILE",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/_keeper_evidence/pollux_replay_corrected.py",
+     "import_health": {
+      "compiles": true,
+      "third_party_imports": [],
+      "local_sys_path_imports": [],
+      "missing_here": []
+     }
+    },
+    {
+     "organ_id": "pollux.data.0",
+     "organ_type": "failure_corpus",
+     "in_monster": true,
+     "executed_by_necromancer": true,
+     "location": "pollux_instrument_null_result.json",
+     "kind": "FILE",
+     "exists": false
+    },
+    {
+     "organ_id": "pollux.data.1",
+     "organ_type": "failure_corpus",
+     "in_monster": false,
+     "executed_by_necromancer": true,
+     "location": "dossiers/_keeper_evidence/",
+     "kind": "DIR",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/_keeper_evidence",
+     "n_py": 4
+    },
+    {
+     "organ_id": "pollux.schemas.0",
+     "organ_type": "interface_contract",
+     "in_monster": true,
+     "executed_by_necromancer": false,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "pollux.schemas.1",
+     "organ_type": "interface_contract",
+     "in_monster": false,
+     "executed_by_necromancer": false,
+     "location": "daemon.py",
+     "kind": "FILE",
+     "exists": false
+    },
+    {
+     "organ_id": "pollux.operators.0",
+     "organ_type": "routing_mechanism",
+     "in_monster": false,
+     "executed_by_necromancer": false,
+     "location": "Settle/",
+     "kind": "PATH",
+     "exists": false
+    },
+    {
+     "organ_id": "pollux.tests.0",
+     "organ_type": "measurement_instrument",
+     "in_monster": false,
+     "executed_by_necromancer": false,
+     "location": "charon/agents/pollux/",
+     "kind": "DIR",
+     "exists": true,
+     "resolved": "charon/agents/pollux",
+     "n_py": 2
+    },
+    {
+     "organ_id": "pollux.representation_hints.0",
+     "organ_type": "informative_failure_mode",
+     "in_monster": true,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "pollux.representation_hints.1",
+     "organ_type": "informative_failure_mode",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "pollux.representation_hints.2",
+     "organ_type": "informative_failure_mode",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "pollux.representation_hints.3",
+     "organ_type": "informative_failure_mode",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    },
+    {
+     "organ_id": "pollux.representation_hints.4",
+     "organ_type": "informative_failure_mode",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "settle/",
+     "kind": "PATH",
+     "exists": false
+    },
+    {
+     "organ_id": "pollux.representation_hints.5",
+     "organ_type": "informative_failure_mode",
+     "in_monster": false,
+     "executed_by_necromancer": null,
+     "location": "",
+     "kind": "NONE",
+     "exists": null
+    }
+   ],
+   "plan_named_scripts": [
+    {
+     "named": "charon/agents/pollux/daemon.py",
+     "exists": true,
+     "resolved": "charon/agents/pollux/daemon.py"
+    },
+    {
+     "named": "cleric_chance_floor.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/pollux_evidence/cleric_chance_floor.py"
+    },
+    {
+     "named": "dossiers/pollux_evidence/cleric_chance_floor.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/pollux_evidence/cleric_chance_floor.py"
+    },
+    {
+     "named": "dossiers/pollux_evidence/pollux_rescan.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/pollux_evidence/pollux_rescan.py"
+    },
+    {
+     "named": "pollux_instrument_null.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/pollux_evidence/pollux_instrument_null.py"
+    },
+    {
+     "named": "pollux_rescan.py",
+     "exists": true,
+     "resolved": "engine/necropolis/dossiers/pollux_evidence/pollux_rescan.py"
+    },
+    {
+     "named": "prometheus_math/databases/_mahler_data.py",
+     "exists": true,
+     "resolved": "prometheus_math/databases/_mahler_data.py"
+    }
+   ],
+   "workshop_tools": [
+    {
+     "tool_id": "NT-006",
+     "name": "anomaly_surface two-sample KS (ensemble vs reference)",
+     "status": "READY",
+     "path": "prometheus_math/research/anomaly_surface.py",
+     "dependency_status": "ALL_PRESENT"
+    },
+    {
+     "tool_id": "NT-010",
+     "name": "Pollux daemon statistic (sorted-Spearman + mean-spacing normalise + classify)",
+     "status": "UNTRUSTED",
+     "path": "charon/agents/pollux/daemon.py",
+     "dependency_status": "ALL_PRESENT"
+    },
+    {
+     "tool_id": "NT-048",
+     "name": "Pollux statistic replay (historical construction, unchanged daemon logic)",
+     "status": "READY",
+     "path": "engine/necropolis/workshop/adapters/pollux_statistic_replay.py",
+     "dependency_status": "ALL_PRESENT"
+    },
+    {
+     "tool_id": "NT-049",
+     "name": "Random-subset resampling null + KS + split-half / Poisson controls (FRANK-004 organ 6)",
+     "status": "READY_WITH_CAVEAT",
+     "path": "engine/necropolis/workshop/adapters/resampling_null.py",
+     "dependency_status": "ALL_PRESENT"
+    }
+   ],
+   "organ_summary": {
+    "total": 19,
+    "in_monster": 6,
+    "located": 9,
+    "unlocated_or_missing": [
+     "pollux.data.0",
+     "pollux.schemas.0",
+     "pollux.schemas.1",
+     "pollux.operators.0",
+     "pollux.representation_hints.0",
+     "pollux.representation_hints.1",
+     "pollux.representation_hints.2",
+     "pollux.representation_hints.3",
+     "pollux.representation_hints.4",
+     "pollux.representation_hints.5"
+    ]
+   },
+   "blocking_dependencies": [
+    {
+     "dep": "scipy (ks_2samp parity)",
+     "status": "PRESENT"
+    },
+    {
+     "dep": "MAHLER_TABLE (prometheus_math/databases/_mahler_data.py)",
+     "status": "PRESENT"
+    },
+    {
+     "dep": "split-half positive control passable",
+     "status": "DEAD_BEFORE_RUN",
+     "measured": "run_controls.py::adapters_resampling_null.PERTURBATION.split_half_control_fails_at_alpha_rate_for_iid_continuous (hit rate 0.0133, 0/30 resolvable)",
+     "consequence": "kill criterion (2) fires on synthetic data; see coroner_plans/CR-001 pre_run_findings PRF-1; design must be refiled before HITL"
+    }
+   ]
+  }
+ }
+}

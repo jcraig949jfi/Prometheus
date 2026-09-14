@@ -7,8 +7,22 @@
   "monster": "FRANK-004",
   "agent": "Pollux"
  },
+ "target_grave": "engine/necropolis/dossiers/pollux.dossier.json",
  "hitl_status": "PROPOSED",
  "approval": null,
+ "invocation": {
+  "dry_check": "python engine/necropolis/workshop/coroner_run.py engine/necropolis/workshop/coroner_plans/CR-001_pollux_frank004.json",
+  "execute": "python engine/necropolis/workshop/coroner_run.py engine/necropolis/workshop/coroner_plans/CR-001_pollux_frank004.json --execute",
+  "preconditions": [
+   "hitl_status set to APPROVED by James",
+   "approval.record names a file that resolves under the repo",
+   "all 8 inputs re-fingerprint to sha256_lf recorded here",
+   "every tool in tools is READY / READY_WITH_CAVEAT in TOOLS.jsonl"
+  ],
+  "cwd": "repository root (worktree of branch rhadamanthus/tool-harvest-2026-09-11 or main after merge)",
+  "writes": "engine/necropolis/workshop/coroner_plans/CR-001/runs/<utc timestamp>/ only",
+  "expected_wall_clock": "under 5 minutes (9 pairs x 5 seeds x 1000 draws x 2 nulls of a 2-sample KS on <= 1500 gaps)"
+ },
  "prepared_by": "Rhadamanthus",
  "prepared": "2026-09-13",
  "inputs": [
