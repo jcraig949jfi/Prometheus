@@ -309,3 +309,12 @@
 - Result: held64 median 59.91 (IQR 6.40, 8 runs) < 75.72 -> FAIL. Oracles clean, skip_lin 16/16 and skip-odd 16/16 caught.
 - The budget bit harder than derived: 13-14 gens, not ~40 -- process_time counts the 3 numba threads. Derivation error, disclosed.
 - Train kept 92% of E9 (133.3 vs 143.9) but held-out only 76% -> anomaly filed (discriminator: gens sweep with checkpoints).
+
+## 2026-09-14 round 2 iteration 2: C-R2-02 drawn cell small_program/nk_stub/decoder_rent/redis_lua -> FAIL
+
+- Draw seed 1525295780674006649. No axis had a definition except the NK world. Built: 8-instruction 16-byte register
+  program (target-blind ops), decoder + NK eval + archive all in Redis Lua, rent 16384/active instruction, bitset
+  control through the same Lua evaluator at equal offers. Harness bcb39ff52, prior 0.15; 3-gen dev smoke disclosed.
+- Result: best net 2.655M vs bitset 3.026M, 8/8 lower -> FAIL. Oracles clean (0/38400 offers, all elites); cheats caught.
+- Not predicted: program coverage 0.943 vs 0.774 fully separated, QD +4.4%; best programs keep 7.5/8 instructions
+  under rent. Anomaly filed. Likely popcount-descriptor shortcut via fill/clear ops -- unverified, that is D's to split.
