@@ -58,6 +58,55 @@ honest >= 0.957. The tt_feat max normalised logit error reaches 2.0 at
 fp8_sim and 0.63 at int8. That is a sign flip of the normalised logits on
 some row, so agreement, not the logit error, is the metric.
 
-Next: P3, the held64 delta on w4 with 8 run seeds, per precision (fp32 as the
-reference genome set), and QD rows through RowWriter. The predicate is
-posted before the run.
+## 2026-09-14 iteration 3 -- P3 closed-loop held64 delta on w4, 8 seeds (GATE PASS, CONTROL FAIL as posted)
+
+The predicate was posted first (bus 1789426796165-0). The harness is
+primordial/nv/precision/p3_w4.py with tests/test_p3_w4.py (36 precision
+tests pass; the shared suite gives 69 passed, 1 skipped). 106 rows are
+committed at 8d4016cc1 in primordial/ledger/rows/P/P3-precision-w4-held64.jsonl:
+80 run rows, 16 cheat rows and 10 qd_cell rows, all status dev or cheat.
+Setup:
+- E9 full top-16 elites, w4, run seeds 0-7.
+- E7.rollout on HELD64, with the brain forward swapped for PrecisionFamily
+  (per-genome quantization scales).
+- E7.brain_oracle on HELD8 for on-policy clear-row agreement.
+- cpu, 1 thread; the whole run took about 60 s.
+
+GATE: fp32 held64 == E9 held64_per_seed EXACTLY in 16/16. The torch fp32
+forward reproduces lane E's float32 numba numbers bit for bit on this world.
+
+Figures below are the median held64 delta vs fp32 (min..max over 8 seeds),
+then the median and min on-policy clear-row agreement, then genome bytes.
+  linear  fp32    0      agree 1.000        313
+  linear  fp16   +0.002 (-0.02..+0.18)  1.000 / 0.9998  169
+  linear  bf16   +0.097 (-0.06..+0.25)  0.9985 / 0.9954 169
+  linear  int8   +0.087 (-0.13..+0.33)  0.9984 / 0.9946 105
+  linear  fp8sim +0.191 (-0.59..+0.71)  0.9926 / 0.9734 105
+  tt_feat fp32    0      agree 1.000        4741
+  tt_feat fp16   +0.006 (-0.01..+0.06)  1.000 / 0.9983  2383
+  tt_feat bf16   +0.079 (-0.18..+0.49)  0.9973 / 0.9924 2383
+  tt_feat int8   +0.148 (-0.83..+0.59)  0.9895 / 0.9795 1216
+  tt_feat fp8sim -0.249 (-1.02..+1.27)  0.9701 / 0.9580 1216
+Held64 IQR per family is about 6-7, so every delta is inside one IQR.
+PRIOR: all held. fp16 and bf16 have |median delta| <= 0.1 and agreement
+>= 0.997. int8 agreement is >= 0.9895. fp8_sim has agreement >= 0.970 and
+the largest |delta| in both families.
+
+CONTROL: FAIL as posted, 15/16 (posted bar: cheat agreement < 0.9 in 16/16).
+tt_feat cheats sit at 0.42-0.72 (8/8). Linear seed 4's cheat had pooled
+agreement 0.954, although E7's per-elite oracle still flagged 14/16 elites
+(189 of 4096 rows). Other linear seeds: 0.71-0.88. The pooled 0.9 bar was
+set without an attainable-range check. More important: a skip-odd linear
+cheat (half the features) can reach 0.954 pooled agreement, while honest
+fp8_sim bottoms out at 0.973. So pooled agreement ALONE barely separates a
+structurally broken brain from a quantized one, and the precision gene's
+exactness metric must keep a per-elite mismatch count. Also: the cheat
+RAISED held64 on 4/8 linear seeds, so the held64 delta alone is not an
+exactness signal (below-floor policies).
+
+Scope: every held64 here is below the w4 abstain floor 107.75 (conductor
+1789426590314-0). These rows are exactness-vs-bytes engineering, not clause A.
+
+Next: P4 cost under the O5 lease (wall and VRAM per precision on cuda,
+including linear int8_intmm), then the per-elite mismatch column added to the
+qd_cell rows.
