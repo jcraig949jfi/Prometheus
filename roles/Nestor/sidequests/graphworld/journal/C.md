@@ -118,3 +118,23 @@
   in 5/5 worlds; cheat (skip odd cores) wrong on 56-72% of clear rows.
 - Next gain is not in the brain alone: the remaining ~25-30% is B's world step + digits() + Python glue per tick.
   A compiled loop over T ticks (world + brain in one numba call) is a B+C joint item.
+- Landed: rows c7765f03b, receipt ledger 87e7bb029. E told forward_fast is exact and safe to switch.
+
+## 2026-09-14 iteration 7: C3b ecology learned from samples -> KILL (by an error bar I should have computed)
+
+- Ran: C3's 5 tables learned from N in {128..32768} noisy samples (noise 0.3 sd), scored on every unseen cell;
+  learners dense / TT r1-8 (ALS) / CP R1-16 (ALS) / additive / pairwise / tiny program / mean baseline; "learns" =
+  held-out >= 0.05 below the mean predictor. Seeds 0-2 redraw samples. Code 61f35debb.
+- What died: H2's error bar. The 45-byte program won program_in at EVERY N in 15/15 cells, but held-out was
+  1.3e-3 / 1.7e-3 / 1.0e-3 in three small-N cells, above my <=1e-3. That bar came from dev seed 100 (5e-4, 7e-4);
+  the affine fit's own variance is ~2 sigma^2/N = 1.4e-3 at N=128, computable before posting. Third time a bar set
+  from one dev draw instead of arithmetic died (C1, C5, C3b).
+- What held: H3 -- nothing but the in-vocabulary program learns from <=512 samples (24/24 cells); H5 noise never
+  learns; H4 dense never wins; leak probe dense_leak 15/15 LEAK, honest 210/210 bit-identical CLEAN.
+- Informative: H1 (winner bytes grow with N) 5/9 -- tt_rank2 is learned at its true size (tt2, 827 B) from N=2048
+  in seed 1 and stays there; separable_decay picks cp16 then cp8. Growth is real for program_out (293 -> 4,209 B)
+  but a correct small representation does not need to grow.
+- For E7: "fewer bytes generalise" is true only when the few bytes have the target's structure; a wrong small form
+  (additive on program_out) learns almost nothing (0.93).
+- Harness nit: the console truncates small held-out values with a string slice (7.5e-05 printed as 7.50976729);
+  rows are correct.
