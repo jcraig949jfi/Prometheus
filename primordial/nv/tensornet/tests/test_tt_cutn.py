@@ -82,6 +82,21 @@ def test_n4_timing_combine_ratios_and_breakeven():
     assert r["cheat_caught"] == [1, 1]
 
 
+def test_n4_timing_combine_cli_joins_resume_files(tmp_path, capsys):
+    import json
+    from primordial.nv.tensornet import n4_timing
+    cell = lambda side, B, t: {"kind": "cell", "side": side, "d": 64, "r": 16, "B": B, "stride": 1,
+                               "t_median_s": t, "plan_s": 0.2, "valid": True}
+    a, b, t = tmp_path / "a.jsonl", tmp_path / "b.jsonl", tmp_path / "t.jsonl"
+    a.write_text(json.dumps(cell("cutn", 1024, 0.01)) + "\n")
+    b.write_text(json.dumps({"kind": "header"}) + "\n" + json.dumps(cell("cutn", 262144, 0.5)) + "\n")
+    t.write_text(json.dumps(cell("torch", 1024, 0.04)) + "\n" + json.dumps(cell("torch", 262144, 0.05)) + "\n")
+    out = tmp_path / "c.json"
+    assert n4_timing.main(["--side", "combine", "--cutn", f"{a},{b}", "--torch", str(t), "--out", str(out)]) == 0
+    res = json.loads(out.read_text())
+    assert res["n_shapes"] == 2 and res["cutn_faster_shapes"] == 1 and len(res["cutn_files"]) == 2
+
+
 def test_n4_timing_cutn_quick_is_exact_and_cheat_caught(tmp_path):
     _gpu()
     import json

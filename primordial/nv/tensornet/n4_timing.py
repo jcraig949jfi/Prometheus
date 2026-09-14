@@ -241,7 +241,9 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     only = {tuple(int(v) for v in c.split(":")) for c in a.configs.split(",") if c} or None
     if a.side == "combine":
-        res = {"exp_id": EXP_ID, "kind": "combine", **combine(_read(a.cutn), _read(a.torch))}
+        cutn_rows = [row for p in a.cutn.split(",") for row in _read(p)]      # first pass + resume files
+        res = {"exp_id": EXP_ID, "kind": "combine", "cutn_files": a.cutn.split(","), "torch_file": a.torch,
+               **combine(cutn_rows, _read(a.torch))}
         text = json.dumps(res, indent=1)
         if a.out:
             pathlib.Path(a.out).write_text(text + "\n", encoding="utf-8", newline="\n")

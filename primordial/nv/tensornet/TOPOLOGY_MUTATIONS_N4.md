@@ -34,4 +34,13 @@ Amortise it per process, not per genome.
   3.1 s median (vs 0.19 s at B=262k, ~16x for 4x rows), which reads as spill past the 16 GB card.
   The planner reported num_slices = 1 everywhere (no slicing chosen under default memory limits).
 
-Speed vs the torch bucket kernel: see the combine section below (filled from the leased torch rows).
+## Speed vs the torch bucket kernel (leased, 28 of 36 shapes; rows N4-timing-combine.json)
+
+- Exactness holds on every measured cell on both sides, and the cuTN cheat is caught 5/5.
+- cuTN executes faster on 22 of 28 shapes: 2.3-11.7x at B <= 16k, and about 1x at d64 r4 with B >= 262k.
+  The bucket kernel wins at r >= 16 with large B (0.03-0.59x), where the cuTN pool runs into memory spill.
+- Planning never dominates where cuTN wins: break-even at 0.8-45 executions, excluding the 1.23 s first-plan
+  cell and a 1.00x tie.
+- Confound: small-B e2e is CPU-dispatch dominated and the two sides ran under different host CPU load. The
+  lease covers the GPU only, so the small-B ratios are recorded, not a clean kernel comparison.
+- Missing: d64 r16 B >= 262k and all of d64 r64 (timeout, then a hung resume during the reboot quiesce).
