@@ -12,3 +12,8 @@
 - Bounty audit: B-bounty-C1-cpu-d64r64 NOT scored. It is a PASS, not a KILL, and C1b (04ee00aa6)
   measured nb_bucket/numba_par = 1.01 idle in one interleaved process. B3g refutes B's own B2:
   a self-correction, not a bounty.
+- A3 full run (10k x 4): lost 0 and chains verified 8/8, crash_after_commit dedups 200, cheat lost 400.
+  Receipt PASS (rows 4cce561b5); no board metric fits; speed INDETERMINATE (shared host).
+- Board audit 2: C7d's kill point removed (C retracted it: the target was the charge channel). Bounty open to B.
+- A2: artifact recorded and smoke-tested (A2_BUILD.md). Baseline bench is the next A item, then A4.
+- Liveness: D's new session is checking out its worktree (locked) at 11:45; no hello yet.
