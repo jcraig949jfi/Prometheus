@@ -209,12 +209,82 @@ for cp in sorted(glob.glob(here("coroner_plans", "CR-*.json"))):
               "expected_outputs", "non_resurrection_argument", "hitl_status", "tools"):
         if k not in c: err(where, f"missing {k}")
     if c.get("hitl_status") not in ("PROPOSED", "APPROVED", "REJECTED", "EXECUTED"):
-        err(where, f"hitl_status {c.get('hitl_status')!r} invalid")
+        err(where, f"hitl_status {c.get('hitl_status')!r} invalid (DEAD_BEFORE_RUN is a disposition, never a plan status)")
     if c.get("hitl_status") == "EXECUTED" and not c.get("execution_receipt"):
         err(where, "EXECUTED without execution_receipt")
     for tid in c.get("tools", []):
         if tid not in by_id: err(where, f"names unregistered tool {tid}")
+    par = c.get("parent_plan")
+    if par is not None and (not isinstance(par, dict) or not par.get("plan_id") or not par.get("sha256_lf")):
+        err(where, "parent_plan must be {plan_id, sha256_lf}")
     notes.append(f"coroner plan {c.get('plan_id')}: {c.get('hitl_status')}")
+
+# ---------------------------------------------------------------- coroner dispositions (CORONER_RUN.md section 7)
+# A disposition is written beside a plan, never into it.  D1: the plan bytes must still
+# match the hash under which it was disposed -- a drift here is an ERROR, not a note,
+# because "never silently repair the plan and retain its identity" (R-CR-2).
+import hashlib
+def _sha_lf(path):
+    b = open(path, "rb").read()
+    if b"\0" not in b[:4096]: b = b.replace(b"\r\n", b"\n")
+    return hashlib.sha256(b).hexdigest()
+
+def disposition_checks(d, where):
+    for k in ("disposition_id", "plan_id", "plan_file", "plan_sha256_lf", "disposition", "killed_by", "hypothesis_status",
+              "ruled_by", "ruling_source", "recorded_by", "recorded", "plan_modified_in_place"):
+        if k not in d: err(where, f"missing {k}")
+    if d.get("disposition") not in ("DEAD_BEFORE_RUN", "SUPERSEDED", "WITHDRAWN"):
+        err(where, f"disposition {d.get('disposition')!r} invalid")
+    if d.get("plan_modified_in_place") is not False:
+        err(where, "plan_modified_in_place must be false (R-CR-2)")
+    pf = d.get("plan_file")
+    if pf:
+        fp = here(pf)
+        if not os.path.exists(fp): err(where, f"plan_file {pf} does not exist")
+        elif _sha_lf(fp) != d.get("plan_sha256_lf"):
+            err(where, f"plan {pf} bytes no longer match the disposed hash {str(d.get('plan_sha256_lf'))[:12]} (D1: a plan repaired in place has lost its identity)")
+    kb = d.get("killed_by") or {}
+    if d.get("disposition") == "DEAD_BEFORE_RUN":
+        for k in ("control_case", "control_result_file", "control_result_sha256_lf", "what_died"):
+            if not kb.get(k): err(where, f"DEAD_BEFORE_RUN without killed_by.{k} (D2: name what fired)")
+        if kb.get("grave_touched") is not False: err(where, "DEAD_BEFORE_RUN must assert killed_by.grave_touched == false")
+        crf = kb.get("control_result_file")
+        if crf and os.path.exists(here(crf)):
+            got = _sha_lf(here(crf))
+            notes.append(f"disposition {d.get('disposition_id')} control result {crf}: " + ("MATCH" if got == kb.get("control_result_sha256_lf") else f"DRIFT (disposed {str(kb.get('control_result_sha256_lf'))[:10]}, now {got[:10]})"))
+        cc = kb.get("control_case")
+        if cc and os.path.exists(here("tests", "controls_result.json")):
+            cases = {x.get("case_id") for x in json.load(open(here("tests", "controls_result.json"), encoding="utf-8")).get("cases", [])}
+            if cc not in cases: err(where, f"killed_by.control_case {cc} is not a case in tests/controls_result.json")
+    for child in d.get("descendants") or []:
+        if not glob.glob(here("coroner_plans", f"{child}_*.json")): err(where, f"descendant {child} has no plan file")
+
+dispositions = []
+dp = here("coroner_plans", "DISPOSITIONS.jsonl")
+if os.path.exists(dp):
+    for i, l in enumerate(open(dp, encoding="utf-8").read().splitlines(), 1):
+        if not l.strip(): continue
+        try: d = json.loads(l)
+        except Exception as e: err("DISPOSITIONS", f"line {i} does not parse: {e}"); continue
+        dispositions.append(d); disposition_checks(d, f"DISPOSITIONS:{d.get('disposition_id', i)}")
+    ids = [d.get("disposition_id") for d in dispositions]
+    if len(ids) != len(set(ids)): err("DISPOSITIONS", "duplicate disposition_id")
+    for d in dispositions:
+        notes.append(f"disposition {d.get('disposition_id')}: {d.get('plan_id')} {d.get('disposition')} (ruled_by {d.get('ruled_by')}; hypothesis: {str(d.get('hypothesis_status'))[:40]})")
+
+def _expect_disposition_reject(label, mutate):
+    if not dispositions: notes.append(f"selftest {label}: skipped (no dispositions)"); return
+    before = len(errors)
+    bad = copy.deepcopy(dispositions[0]); mutate(bad)
+    disposition_checks(bad, f"SELFTEST:{label}")
+    if len(errors) == before: errors.append(f"[SELFTEST] {label}: validator ACCEPTED a disposition it must reject")
+    else: del errors[before:]; notes.append(f"selftest {label}: rejected as required")
+
+_expect_disposition_reject("disposition-hash-drift", lambda d: d.update(plan_sha256_lf="0" * 64))
+_expect_disposition_reject("disposition-modified-in-place", lambda d: d.update(plan_modified_in_place=True))
+_expect_disposition_reject("disposition-grave-touched", lambda d: d["killed_by"].update(grave_touched=True))
+_expect_disposition_reject("disposition-unnamed-control", lambda d: d["killed_by"].update(control_case="not.a.case"))
+_expect_disposition_reject("disposition-orphan-descendant", lambda d: d.update(descendants=["CR-999"]))
 
 # ---------------------------------------------------------------- self-tests of the validator
 def _expect_reject(label, mutate):
