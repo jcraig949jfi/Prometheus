@@ -74,7 +74,12 @@ def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--worlds", default="1,2,3,4,5"); p.add_argument("--scale", type=float, default=1.0)
     p.add_argument("--port", type=int, default=6394); p.add_argument("--tag", default="full")
+    p.add_argument("--train-seeds", type=int, default=8, help="train on seeds 9100..9100+N-1 (E6: 8)")
+    p.add_argument("--exp", default=EXP, help="exp_id; rows go to ledger/rows/E/<exp>.jsonl")
     a = p.parse_args()
+    global TRAIN, ROWS
+    TRAIN = np.arange(9100, 9100 + a.train_seeds, dtype=np.int64)
+    ROWS = E4.ROWS.with_name(f"{a.exp}.jsonl")
     HOT.mkdir(parents=True, exist_ok=True)
     r = redis.Redis(port=a.port)
     og, ob = max(1, int(100 * a.scale)), 256
@@ -92,7 +97,8 @@ def main() -> None:
         larch, _ = E4B.qd(spec, r, f"e6-leak-{gs}", E4B.nb_evaluate, "", og, ob, 602)
         ltop = top_genomes(larch); larch.clear()
         row = {
-            "exp_id": EXP, "tag": a.tag, "gen_seed": gs, "eligible": gs in ELIGIBLE, "T": spec.T,
+            "exp_id": a.exp, "tag": a.tag, "gen_seed": gs, "eligible": gs in ELIGIBLE, "T": spec.T,
+            "train_seeds": len(TRAIN),
             "open_genomes": og * ob, "closed_genomes": cg * cb, "top": TOP,
             "open_train": open_score(spec, otop, TRAIN), "closed_train": closed_score(bs, ctop, TRAIN),
             "open_held64": open_score(spec, otop, HELD64), "closed_held64": closed_score(bs, ctop, HELD64),
