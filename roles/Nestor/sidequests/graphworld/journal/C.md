@@ -22,5 +22,24 @@
   and it changed two headline numbers.
 - Landed: code + rows 6ca207daf (ancestor of integration verified after a non-ff rebase; first local SHA
   45d6cf80f was rewritten, never stamped). Receipt KILL filed with git=6ca207daf, board-eligible.
-- Would steal next: B's numba soup as the stub world for C2, and E's warning that end-state checks go blind
+- Would steal next (from iteration 1): B's numba soup as the stub world for C2, and E's warning that end-state checks go blind
   at scale (C2's regime-leak probe must be scored per window, not at the end).
+
+## 2026-09-14 iteration 2: C2 plastic rank -> PASS by the posted rule (2 of 5 sub-predictions missed)
+
+- Ran: plastic TT regressor (online ALS on a sliding buffer, surprise grow+flush, TT-rounding under memory charge
+  lam=1e-4 where bond sigma^2 = MSE) in three regime worlds (real = exact rank 1,4,2,8; soft = decaying spectra
+  scored vs the charge-rounded true function; null = all rank 4 with fake labels), seeds 0-2, vs fixed8, fixed2
+  and a flag-reading cheat. Code 8cd41d65a (pushed before the run), 27 runs x 3 replays.
+- Numbers: real within +-1 of r* 24/24 regimes, rho 0.99-1.0, switch response 21/21, 0 false surprises. Null spread
+  0.0 x3. Soft: order tracks (rho 0.95-0.99) but rank below oracle in 92% of regimes, within +-1 62.5% (predicted <=50%).
+- What died: memory at parity. Plastic uses 31% of fixed8's params but steady excess MSE 0.016-0.027 vs 0.0014 --
+  the charge buys memory with ~10x error, not for free. And soft within+-1 exceeded my bar.
+- Controls: flag-shift invariance probe flagged the leak brain 9/9, honest 18/18 clean + deterministic. The tracking
+  score alone could NOT see the leak (rho gap <= 0.006) -- a probe aimed at the claim, not at the score.
+- Construct limit: in the real world rank recovery is close to guaranteed by rounding exact low-rank targets; the
+  soft world is the honest test and only its ordering held.
+- Bounty against me landed: B's nb_bucket (counting sort by digit + contiguous saxpy runs) beat my numba_par at
+  d64 r64 B4096 on 3 threads, ~143k vs 101.5k obs/s (3e7fbc89c). Steal it for C3 and for the GPU no-gather kernel.
+- Next: C3 representation ecology (dense / CP / Tucker / TT / bitset / tiny program on one task, Pareto of memory,
+  flops, error); the C2 lambda sweep is the TT column's Pareto front for free.
