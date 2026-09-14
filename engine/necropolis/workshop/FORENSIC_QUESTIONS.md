@@ -12,7 +12,7 @@ PARTIAL = necessary sub-question or restricted class.  Candidates are NOT answer
 | FQ-04 | Did the producer change between claim and evaluation? | ANSWERABLE_RESTRICTED | RESTRICTED: graves that fingerprinted their producer (record-limited) | 5 | 1 | 3 |
 | FQ-05 | Did the judge have access to answer-bearing information? | ANSWERABLE_RESTRICTED | RESTRICTED: exact-equality leaks only | 2 | 1 | 2 |
 | FQ-06 | Was the search weak or the domain empty? | ANSWERABLE_RESTRICTED | RESTRICTED: graves with a declared class | 2 | 1 | 4 |
-| FQ-07 | Was the gate vacuous? | ANSWERABLE | GENERAL | 3 | 3 | 2 |
+| FQ-07 | Was the gate vacuous? | ANSWERABLE_RESTRICTED | RESTRICTED: literal-vocabulary vacuity only; a refusal that is an unreachable branch of a conditional is invisible to the lint (case POLLUX 2026-09-14, ADJUDICATION D9) | 3 | 3 | 2 |
 | FQ-08 | Was the consumer absent? | ANSWERABLE_RESTRICTED | RESTRICTED: static consumption; runtime consumption only where logged | 1 | 3 | 0 |
 | FQ-09 | Was the claimed evidence actually pipeline state? | ANSWERABLE | GENERAL | 5 | 1 | 2 |
 | FQ-10 | Was the comparator measuring the intended quantity? | ANSWERABLE_RESTRICTED | RESTRICTED: degeneracy, costume and scale; not semantic mismatch | 2 | 5 | 2 |
@@ -94,9 +94,9 @@ Verdict: **ANSWERABLE_RESTRICTED** (scope: RESTRICTED: graves with a declared cl
 
 ## FQ-07 Was the gate vacuous?
 
-Verdict: **ANSWERABLE** (scope: GENERAL).  Instrument must: evidence the gate could and did refuse something
+Verdict: **ANSWERABLE_RESTRICTED** (scope: RESTRICTED: literal-vocabulary vacuity only; a refusal that is an unreachable branch of a conditional is invisible to the lint (case POLLUX 2026-09-14, ADJUDICATION D9)).  Instrument must: evidence the gate could and did refuse something
 
-- NT-056 DIRECT [EVIDENCE] literal-verdict lint: a gate that returns one verdict unconditionally
+- NT-056 DIRECT [EVIDENCE] literal-verdict lint: a gate that returns one verdict unconditionally (verdict vocabulary only; cannot see an unreachable refusal branch -- case POLLUX D9)
 - NT-034 DIRECT [EVIDENCE] measurement guard: gate refuses when control absent or type-mismatched
 - NT-019 DIRECT [EVIDENCE] Atalanta null_bound: bound had to be declared before emissions were counted
 - NT-004 PARTIAL [EVIDENCE] Erebos residue gate replayed on ledger rows: did it ever refuse
@@ -212,6 +212,6 @@ Verdict: **PARTIAL** (scope: PARTIAL: p floors only, no power).  Instrument must
 
 ## Summary
 
-- verdicts: {'ANSWERABLE': 2, 'ANSWERABLE_RESTRICTED': 10, 'PARTIAL': 4, 'EMPTY': 0}
+- verdicts: {'ANSWERABLE': 1, 'ANSWERABLE_RESTRICTED': 11, 'PARTIAL': 4, 'EMPTY': 0}
 - admissible tools mapped: 44 / 45
 - admissible tools answering no question: NT-003

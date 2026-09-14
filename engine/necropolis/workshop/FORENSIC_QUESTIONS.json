@@ -438,14 +438,14 @@
    "id": "FQ-07",
    "question": "Was the gate vacuous?",
    "instrument_must": "evidence the gate could and did refuse something",
-   "verdict": "ANSWERABLE",
-   "scope": "GENERAL",
+   "verdict": "ANSWERABLE_RESTRICTED",
+   "scope": "RESTRICTED: literal-vocabulary vacuity only; a refusal that is an unreachable branch of a conditional is invisible to the lint (case POLLUX 2026-09-14, ADJUDICATION D9)",
    "admissible_instruments": [
     {
      "tool_id": "NT-056",
      "name": "Literal-verdict lint (functions that return the same verdict unconditionally)",
      "role": "DIRECT",
-     "how": "literal-verdict lint: a gate that returns one verdict unconditionally",
+     "how": "literal-verdict lint: a gate that returns one verdict unconditionally (verdict vocabulary only; cannot see an unreachable refusal branch -- case POLLUX D9)",
      "necropolis_status": "READY",
      "admissible_as": "EVIDENCE"
     },
@@ -1173,8 +1173,8 @@
  "summary": {
   "questions": 16,
   "verdicts": {
-   "ANSWERABLE": 2,
-   "ANSWERABLE_RESTRICTED": 10,
+   "ANSWERABLE": 1,
+   "ANSWERABLE_RESTRICTED": 11,
    "PARTIAL": 4,
    "EMPTY": 0
   },
