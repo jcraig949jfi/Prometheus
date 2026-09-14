@@ -65,6 +65,31 @@ The workload is a torch linear-brain forward, 4096 x 9 -> 16.
 - Not done: a B6 fused rollout row. B6 is a CPU numba kernel, so its GPU features
   are trivially zero. It gets a wall/host-only row next.
 
+## Q4 B6 fused rollout row + aborted refusal rows -- PASS (predicate 1789427597891-0, rows f436c6ba8)
+
+- B6b fused linear, world 4, P=128, 8 train seeds, metered by unpriv.measure:
+  h2d = d2h = cuda ops = peak memory = 0 for the CPU numba kernel. Fitness and
+  cells == E7.rollout 128/128 under the meter. A host sleep adds +50.5 ms of wall
+  (3.0 -> 53.5 ms).
+- Six refusal rows are re-filed with status aborted (nsys x2, ncu 2024.3, CUPTI,
+  ncu 2026.2.1, ncu 2025.2.1). They are reclassified by today's classify(),
+  which A asked for.
+  Defect: stderr_first is empty on the three ncu rows because ncu writes to stdout.
+  The verdicts are correct, since classify reads both streams. Fixed in code
+  afterwards; the committed rows were not rewritten.
+
+## Package Q acceptance (DELEGATION_BRIEFS_R3_R6.md sQ)
+
+| item | state |
+|---|---|
+| ncu/nsys capture of one B6 fused rollout and one torch GPU forward, or a documented refusal naming the first cc 12.0 version | REFUSAL documented: nsys needs admin. ncu first supports Blackwell in 2024.4. ncu 2025.2.1 loads but is blocked by ERR_NVGPUCTRPERM. ncu 2026.2.1 needs a newer driver |
+| parser: kernel time share, H2D/D2H bytes, peak memory, memory-bound flag -> engineering rows | DONE unprivileged (Q3b, Q4). memory_bound is unstable. Counter-derived features are BLOCKED(ERR_NVGPUCTRPERM) |
+| cheat: injected host sleep or extra device copy moves the right feature | DONE: copy 8/8 exact bytes, sleep 8/8 (Q3b). Sleep on B6 (Q4) |
+
+GREEN with BLOCKED counter features. Reopen when the operator enables GPU
+counters for all users: `smoke.py --only control_torch,ncu_torch --ncu <2025.2.1 ncu.exe>`
+(A posts 'Q2b go').
+
 What would unblock capture (operator decisions, not taken by the lane):
 1. nsys: one elevated capture (admin shell), or a newer nsys that does not
    abort on the Reflex ETW provider (unverified).

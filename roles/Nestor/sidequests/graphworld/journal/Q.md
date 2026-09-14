@@ -71,3 +71,20 @@ judge_q3b gives PASS. Copy cheat 8/8 exact +147456 bytes, sleep cheat 8/8, no fa
 stall. The memory_bound flag is unstable here and not trusted.
 Open: Q4 B6 fused rollout host-only row plus aborted-status refusal rows (A asked
 for status aborted on Q1/Q2 evidence); Q2b rerun on 'Q2b go'.
+
+## 2026-09-14 iteration 4 -- Q4 (PASS); package green; PAUSE
+
+Predicate 1789427597891-0 posted before the run. Rows f436c6ba8.
+B6b fused linear w4 P=128: every GPU feature is exactly 0, the metered rollout ==
+E7.rollout 128/128, and a host sleep adds +50.5 ms. Six refusal rows are re-filed
+as aborted and reclassified by code. Defect: stderr_first is empty for the three
+ncu rows (ncu writes to stdout). The verdicts are unaffected. Fixed in code, and
+the committed rows were left as they are.
+Acceptance check (README table): the capture is a documented REFUSAL,
+unprivileged features are DONE, and the cheats are DONE. Counter features are
+BLOCKED(ERR_NVGPUCTRPERM). Package green -> pause per s0.8. Reopen trigger:
+A posts 'Q2b go' after the operator's counter toggle.
+Lessons: (1) I ran Q3 before its predicate. Posting the claim is now the first
+tool call of each item. (2) A first-use cost inside a timed region reads as a
+false host stall. Warm the meter first. (3) Rebasing right before a busy
+integration push raced twice. Re-fetch and push immediately after the suite.
