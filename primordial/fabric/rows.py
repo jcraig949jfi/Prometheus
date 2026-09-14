@@ -18,8 +18,16 @@ Commits touch ONLY the rows file (`git commit --only`), retry on index.lock,
 and do not push (pushing mid-run races the lane's own rebase). The lane pushes
 as usual; the integration push carries these commits.
 
+O3 (round 3): a writer refuses to open, and commit_path refuses to commit,
+without a real PM_TAG (unset, empty, or "untagged"). While open, a writer keeps
+a live marker in its worktree's git dir (<git-dir>/pm-rowwriters/); markers of
+dead processes are pruned on read. primordial.ops.push reads them and pushes
+fast-forward only while any writer is live (a rebase under a live writer
+wedges it: its commits land on the pre-rebase HEAD).
+
 CLI (for rows written by other tools):
     python -m primordial.fabric.rows commit PATH --exp EXP_ID
+    python -m primordial.fabric.rows live [REPO]
 """
 from __future__ import annotations
 
@@ -40,6 +48,48 @@ def _git(repo, *a, timeout=120):
     return subprocess.run(["git", "-C", str(repo), *a], capture_output=True, text=True, timeout=timeout)
 
 
+BAD_TAGS = ("", "untagged")
+
+
+def require_tag() -> str:
+    tag = os.environ.get("PM_TAG", "").strip()
+    if tag in BAD_TAGS:
+        raise RuntimeError("PM_TAG is not set: rows cannot be attributed (run `python -m comms instance` and export PM_TAG)")
+    return tag
+
+
+def pid_alive(pid: int) -> bool:
+    import psutil                             # never os.kill(pid, 0): on Windows it terminates the process
+    try:
+        q = psutil.Process(int(pid))
+        return q.is_running() and q.status() != psutil.STATUS_ZOMBIE
+    except psutil.Error:
+        return False
+
+
+def writers_dir(repo) -> pathlib.Path:
+    q = _git(repo, "rev-parse", "--absolute-git-dir")
+    if q.returncode != 0:
+        raise RuntimeError(f"{repo} is not inside a git worktree")
+    return pathlib.Path(q.stdout.strip()) / "pm-rowwriters"
+
+
+def live_writers(repo=".") -> list[dict]:
+    """Live RowWriters of this worktree; markers of dead processes are removed."""
+    d = writers_dir(repo)
+    out = []
+    for m in sorted(d.glob("*.json")) if d.exists() else []:
+        try:
+            rec = json.loads(m.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if pid_alive(rec.get("pid", -1)):
+            out.append(rec)
+        else:
+            m.unlink(missing_ok=True)
+    return out
+
+
 def repo_root(path) -> pathlib.Path:
     p = pathlib.Path(path).resolve()
     q = _git(p.parent if p.suffix else p, "rev-parse", "--show-toplevel")
@@ -54,7 +104,7 @@ def commit_path(path, exp_id: str, note: str = "", repo=None, tries: int = 10) -
     repo = pathlib.Path(repo) if repo else repo_root(path)
     rel = path.relative_to(repo).as_posix()
     lane = os.environ.get("PM_LANE", "?")
-    tag = os.environ.get("PM_TAG", "untagged")
+    tag = require_tag()
     msg = f"{lane}[{tag}]: rows {exp_id}{(' ' + note) if note else ''}\n\nNestor-Instance: {lane} {tag}\n"
     delay = 0.5
     for _ in range(tries):
@@ -77,6 +127,7 @@ def commit_path(path, exp_id: str, note: str = "", repo=None, tries: int = 10) -
 
 class RowWriter:
     def __init__(self, path, exp_id: str, commit_every_s: float = 60.0, repo=None):
+        self.tag = require_tag()
         self.path = pathlib.Path(path).resolve()
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.exp_id = exp_id
@@ -86,6 +137,11 @@ class RowWriter:
         self.n = self.n_committed = 0
         self.last_commit = time.monotonic()
         self.closed = False
+        d = writers_dir(self.repo)
+        d.mkdir(parents=True, exist_ok=True)
+        self.marker = d / f"{os.getpid()}-{id(self):x}.json"
+        self.marker.write_text(json.dumps({"pid": os.getpid(), "tag": self.tag, "exp_id": exp_id,
+                                           "path": str(self.path), "ts": round(time.time(), 3)}), encoding="utf-8")
         atexit.register(self.close)
         for sig in ("SIGTERM", "SIGBREAK"):
             if hasattr(signal, sig):
@@ -128,6 +184,7 @@ class RowWriter:
                 commit_path(self.path, self.exp_id, note or f"(close, {self.n} total)", self.repo)
                 self.n_committed = self.n
         finally:
+            self.marker.unlink(missing_ok=True)
             try:
                 atexit.unregister(self.close)
             except Exception:                 # pragma: no cover
@@ -147,7 +204,15 @@ def main(argv=None) -> int:
     c = sub.add_parser("commit")
     c.add_argument("path")
     c.add_argument("--exp", required=True)
+    lv = sub.add_parser("live")
+    lv.add_argument("repo", nargs="?", default=".")
     a = ap.parse_args(argv)
+    if a.cmd == "live":
+        w = live_writers(a.repo)
+        for rec in w:
+            print(json.dumps(rec, sort_keys=True))
+        print(f"{len(w)} live writer(s)")
+        return 0
     print(commit_path(a.path, a.exp) or "nothing to commit")
     return 0
 

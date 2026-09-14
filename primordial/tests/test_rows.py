@@ -13,6 +13,12 @@ def git(repo, *a):
     return subprocess.run(["git", "-C", str(repo), *a], capture_output=True, text=True, check=True).stdout.strip()
 
 
+@pytest.fixture(autouse=True)
+def tagged(monkeypatch):
+    monkeypatch.setenv("PM_TAG", "t-0000")
+    monkeypatch.setenv("PM_LANE", "F")
+
+
 @pytest.fixture
 def repo(tmp_path):
     git(tmp_path, "init", "-q")
