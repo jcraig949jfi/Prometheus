@@ -48,6 +48,33 @@ def test_tie_break_is_smaller_genome_regardless_of_order(r):
     a.clear()
 
 
+def test_seeded_sample_reproduces_and_stays_in_archive(r):
+    c, f, g, m = _offers(3, 400)
+    got = []
+    for run in ("test-seed-a", "test-seed-b"):
+        a = LuaArchive(r, run, GLEN, sampler_seed=[7, 1])
+        a.clear()
+        a.insert(c[:200], f[:200], g[:200], m[:200])      # different insertion batching, same final state
+        a.insert(c[200:], f[200:], g[200:], m[200:])
+        got.append(np.concatenate([a.sample(64), a.sample(64)]))
+        stored = {v[1] for v in a.dump().values()}
+        assert all(row.tobytes() in stored for row in got[-1])
+        a.clear()
+    assert np.array_equal(got[0], got[1])
+    b = LuaArchive(r, "test-seed-c", GLEN, sampler_seed=[7, 2])
+    b.clear()
+    b.insert(c, f, g, m)
+    assert not np.array_equal(np.concatenate([b.sample(64), b.sample(64)]), got[0])
+    assert len({row.tobytes() for row in got[0]}) > 16      # spread over cells, not one cell
+    b.clear()
+
+
+def test_seeded_sample_empty_archive(r):
+    a = LuaArchive(r, "test-seed-empty", GLEN, sampler_seed=1)
+    a.clear()
+    assert a.sample(8).shape == (0, GLEN)
+
+
 def test_sample_returns_archive_genomes(r):
     a = LuaArchive(r, "test-smp", GLEN)
     a.clear()

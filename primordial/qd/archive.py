@@ -59,6 +59,26 @@ for i, c in ipairs(ms) do out[i] = redis.call('HGET', ARGV[1] .. c, 'g') end
 return table.concat(out)
 """
 
+# Seeded sampling (lane D ask 2026-09-14, D4: ZRANDMEMBER is unseeded, so a fixed run seed gave a
+# different archive every run). The client draws uniforms from its PCG64; the server maps each to a
+# cell of the numerically sorted cell list, atomically, with replacement. Same archive state + same
+# sampler_seed -> same parents.
+SEEDED_SAMPLE_LUA = r"""
+local ms = redis.call('ZRANGE', KEYS[1], 0, -1)
+local n = #ms
+if n == 0 then return '' end
+local cs = {}
+for i, c in ipairs(ms) do cs[i] = tonumber(c) end
+table.sort(cs)
+local u, out = ARGV[2], {}
+for i = 0, #u / 8 - 1 do
+  local j = math.floor(struct.unpack('<d', u, 8 * i + 1) * n) + 1
+  if j > n then j = n end
+  out[i + 1] = redis.call('HGET', ARGV[1] .. cs[j], 'g')
+end
+return table.concat(out)
+"""
+
 
 def order_key(fit: np.ndarray, genomes: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """(fit, genome rank) as sortable arrays: best elite = max fit, then min genome.
@@ -81,14 +101,22 @@ def reduce_batch(cells, fits, genomes, meta):
 
 
 class _Base:
-    def __init__(self, r: redis.Redis, run: str, glen: int):
+    def __init__(self, r: redis.Redis, run: str, glen: int, sampler_seed=None):
+        """sampler_seed None = ZRANDMEMBER (unseeded, the round 1 behaviour); else a PCG64 seed."""
         self.r, self.run, self.glen = r, run, glen
         self.pre = f"pm:qd:{run}:c:"
         self.zkey = f"pm:qd:{run}:niche"
         self._sample = r.register_script(SAMPLE_LUA)
+        self.srng = None if sampler_seed is None else np.random.Generator(np.random.PCG64(sampler_seed))
+        if self.srng is not None:
+            self._seeded = r.register_script(SEEDED_SAMPLE_LUA)
 
     def sample(self, n: int) -> np.ndarray:
-        raw = self._sample(keys=[self.zkey], args=[self.pre, n])
+        if self.srng is not None:
+            u = self.srng.random(n).astype("<f8").tobytes()
+            raw = self._seeded(keys=[self.zkey], args=[self.pre, u])
+        else:
+            raw = self._sample(keys=[self.zkey], args=[self.pre, n])
         return np.frombuffer(raw, dtype=np.uint8).reshape(-1, self.glen) if raw else np.empty((0, self.glen), np.uint8)
 
     def dump(self) -> dict[int, tuple[int, bytes, bytes]]:
@@ -105,8 +133,8 @@ class _Base:
 
 
 class LuaArchive(_Base):
-    def __init__(self, r, run, glen):
-        super().__init__(r, run, glen)
+    def __init__(self, r, run, glen, sampler_seed=None):
+        super().__init__(r, run, glen, sampler_seed)
         self._insert = r.register_script(INSERT_LUA)
 
     def insert(self, cells, fits, genomes, meta) -> int:
