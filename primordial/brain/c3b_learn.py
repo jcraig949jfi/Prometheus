@@ -124,6 +124,8 @@ def fit_program(idx, y, _):
     X = _unflat(idx).T.astype(np.int16)
     t = y - y.mean()
     tt_ = float(t @ t)
+    if tt_ == 0.0:                                  # constant targets: any program with alpha 0 is exact
+        return c3.pack("program", [np.array([0.0, y.mean()], np.float32)], (0, 1, 2, 3, 0, 0, 0))
     best = (np.inf, None, 0.0, 0.0)
     for a, b, c, d in itertools.permutations(range(4)):
         for o1 in c3.OPS:

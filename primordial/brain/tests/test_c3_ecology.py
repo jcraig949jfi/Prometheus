@@ -41,6 +41,14 @@ def test_cheat_ref_is_flagged_and_honest_is_not():
     assert not c3.mismatch(rel_b, rel_m)
 
 
+def test_c3b_program_fit_on_constant_targets_does_not_divide_by_zero():
+    from primordial.brain import c3b_learn as L
+    idx = np.arange(64)
+    y = np.full(64, 0.25)
+    blob = L.fit_program(idx, y, np.zeros(c3.SHAPE))
+    assert np.allclose(c3.decode(blob), 0.25, atol=1e-6)
+
+
 def test_pareto_basic():
     pts = [{"rep": "a", "bytes": 1, "rel_mse": 1.0}, {"rep": "b", "bytes": 2, "rel_mse": 0.5},
            {"rep": "c", "bytes": 3, "rel_mse": 0.6}]
