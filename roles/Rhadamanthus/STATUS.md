@@ -1,8 +1,23 @@
 # Rhadamanthus status
 
-Currency: 2026-09-13 (harvest close; workshop on branch
-rhadamanthus/tool-harvest-2026-09-11; receipt at
-prompts/2026-09-11_harvest/RECEIPT.md).
+Currency: 2026-09-14 (court close; branch rhadamanthus/tool-harvest-2026-09-11
+pushed to main by fast-forward; receipt at prompts/2026-09-14_court/RECEIPT.md;
+freeze engine/necropolis/workshop/FREEZE_2026-09-14.json).
+
+court state (2026-09-14 charter, prompts/2026-09-14_court/):
+  Coroner contract v1.0 legislated (R-CR-1..3 ruled); DISP-001 records CR-001
+  DEAD_BEFORE_RUN beside an untouched plan.  Admissibility ladder structural
+  (45 admissible / 93).  Forensic map 16 questions: ANSWERABLE 1 /
+  ANSWERABLE_RESTRICTED 11 / PARTIAL 4 / EMPTY 0; validator-enforced; only
+  downward movement recorded.  Case POLLUX adjudicated with separated
+  Necromancer + Cleric and a solo control arm (case_pollux/): DESIGN_ERROR as
+  question-instrument mismatch; MEASUREMENT_ERROR admitted unranked;
+  CONSUMER_ABSENT qualified inert; hypothesis UNTESTED; NO_FAIR_TEST_ON_RECORD;
+  eight items unresolved on purpose; ZERO Zombies; no monster raised; no
+  coroner descendant (RQ-1, RQ-14/15).  RQ-1..19 to Techne and others.
+  HITL owed: H-A..H-D (RECEIPT item 15).  Next case only when charged
+  (RHAD-49); no graveyard-wide campaign.
+
 
 harvest state (2026-09-11 harvest charter, prompts/2026-09-11_harvest/):
   engine/necropolis/workshop/ holds a 93-row registry (TOOLS.jsonl,
