@@ -56,11 +56,14 @@ def git_sha() -> str:
 def b6b_run(g7, g, seeds, stride: int = 1, record=None):
     """Run lane B's B6b fused rollout for g7.fam on genome batch g = (params_tuple, codebook).
 
-    Must return (fitness int32 [P], cells uint32 [P], done_tick [P*k], logs dict with 'idx' [T, nr, S] and
-    'obs' [T, nr, S, D], rec env indices). Filled in from B6b's posted run() signature once B6b lands;
-    until then it refuses to run rather than guess an API.
+    Returns (fitness int32 [P], cells uint32 [P], done_tick [P*k], logs dict with 'idx' [T, nr, S] and
+    'obs' [T, nr, S, D], rec env indices). API as posted by B for B6b (2add9828b, bus 1789394981128-0):
+    FusedRollout(g7.spec, P, seeds, family=...).run((params, codebook), brain_stride=, record=).
+    With record = arange(P*k), log slot j is env j.
     """
-    raise NotImplementedError("B6b not landed yet: fill in from B's posted FusedRollout family API")
+    from primordial.soup.b6.fused import FusedRollout      # lane B, read-only
+    fr = FusedRollout(g7.spec, len(g[1]), np.asarray(seeds, np.int64), family=g7.fam.name)
+    return fr.run(g, brain_stride=stride, record=record)
 
 
 # ------------------------------------------------------------------ reference side
