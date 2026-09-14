@@ -27,6 +27,16 @@ def test_clause_a_pass_fail_ineligible():
     assert Q.check(rows, "w1", "p", 99.0, 5, 10, 8)["verdict"] == "NO_BASELINE"
 
 
+def test_check_is_stable_after_the_candidate_is_appended():
+    # lane B ask 2026-09-14: a front over ALL rows let an appended dominating candidate evict its
+    # baseline, so the same candidate PASSed before the append and failed after it
+    rows = [row(90.0, 312), row(80.0, 4000, rep="tt_feat")]
+    before = Q.check(rows, "w4", "p", 98.2, 2.8, 48, 8)
+    rows.append(row(98.2, 48, iqr=2.8, baseline=False, rep="int4_linear"))
+    after = Q.check(rows, "w4", "p", 98.2, 2.8, 48, 8)
+    assert before["verdict"] == after["verdict"] == "PASS" and before == after
+
+
 def test_pareto_drops_dominated_and_non_record_rows():
     rows = [row(90.0, 312), row(80.0, 4000, rep="tt_feat"), row(95.0, 5000, rep="tt_digits"),
             row(99.0, 100, rep="cheat", status="cheat")]

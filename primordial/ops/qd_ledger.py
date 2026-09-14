@@ -133,7 +133,9 @@ def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True) -
         return {"verdict": "INELIGIBLE", "why": "oracles not clean"}
     if runs < 8:
         return {"verdict": "INELIGIBLE", "why": f"{runs} run seeds < 8"}
-    base = [r for r in pareto(rows, world, pressure) if r.get("baseline")]
+    # front over BASELINE rows only: a front over all rows lets an appended candidate that
+    # dominates a baseline evict it, flipping that candidate's own PASS to FAIL (lane B ask, 2026-09-14)
+    base = pareto([r for r in rows if r.get("baseline")], world, pressure)
     if not base:
         return {"verdict": "NO_BASELINE", "why": f"no baseline cell for {world} {pressure}"}
     for b in base:
