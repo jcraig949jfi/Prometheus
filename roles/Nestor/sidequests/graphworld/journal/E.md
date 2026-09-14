@@ -92,7 +92,23 @@ below B's ~80% floor; late unpaid writes after death are invisible to the hash.
 Receipt filed after push; a first land attempt stopped because the journal edit
 was uncommitted (rebase refused), and no receipt went out.
 
-Next / steal: E4b = archive-level positive (QD coverage/qd_score vs the same
+## 2026-09-14 iteration 6 -- E5 closed-loop TT brains in B's world (FAIL)
+
+First three-lane piece: lane C's TTPolicy (r=3, A=8, + an 8xW action codebook)
+as the genome, lane B's NpEncounter as the world, lane E's archive and a
+population-batched float32 forward. 5 worlds, 60 gens x 128 (7,680 genomes).
+Both oracles held everywhere: world (recorded actions replayed in wforge, hash +
+charge) honest 0/16 failing and skip_lin 16/16 caught in 5/5; brain (C's ref64
+argmax on recorded obs) 0 mismatches over 1,873-4,095 clear rows per world, and
+the skip-odd-cores forward caught 16/16 in 5/5. Science FAILED: closed-loop best
+> E4b open-loop best in 0/5 (586<1890, 1164<1728, 156<276, 1092<1224, tie 4690),
+although brains filled more cells (353-472 vs 118-231). Caveat posted before the
+run: 3.3x fewer genomes than E4b, so this does not show closed loop is worse,
+only that it did not win at this budget. skip_lin again had 0 charge mismatches
+in 3/5 worlds: only the trace hash sees it.
+
+Next / steal: equal-budget E5b (25,600 genomes) before any claim about closed vs
+open loop; C2's plastic rank as adapt() inside an episode. E4b = archive-level positive (QD coverage/qd_score vs the same
 number of random genomes inserted into an archive), closed-loop genomes (C's TT
 policy on obs), and B's numba form for eval. B's batched Encounter to replace the NK stub; C1's TT cores as
 the genome for E1; E2 branch points with a random-filler control; E3 with
