@@ -92,6 +92,7 @@ except Exception as e:
 
 ACCEPT_KINDS = {"ACCEPT", "SYNTHETIC_SIGNAL", "PARITY", "REPETITION"}
 REJECT_KINDS = {"REJECT", "CHEAT", "SYNTHETIC_NULL", "CORRUPT_INPUT", "PERTURBATION", "LAUNDERING"}
+RUNNER = "engine/necropolis/workshop/tests/run_controls.py"   # a self_test whose path starts here was RUN BY THE KEEPER
 
 _git_ok = None
 def git_has(sha):
@@ -145,6 +146,31 @@ def row_checks(t, where, ids, check_git=True):
     if st == "HISTORICAL_ONLY" and not t.get("historical_path"): err(where, "HISTORICAL_ONLY without historical_path")
     if st == "NEEDS_DEPENDENCY" and t["dependency_status"] == "ALL_PRESENT":
         err(where, "NEEDS_DEPENDENCY but dependency_status ALL_PRESENT")
+    # admissibility ladder (court charter 2026-09-14): each rung needs the one below it, and
+    # admissible needs ALL of them plus a READY-family status.  The ladder is derived from
+    # measurements; these checks catch a row where the status string and the measurements
+    # disagree, in either direction.
+    adm = t.get("admissibility") or {}
+    if adm:
+        keeper = any(s["path"].startswith(RUNNER) for s in t["self_tests"])
+        if adm.get("admissible"):
+            if st not in ("READY", "READY_WITH_CAVEAT"): err(where, f"admissible but status {st}")
+            if adm.get("controlled") != "KEEPER": err(where, "admissible without Keeper controls (author tests are not controls)")
+            if adm.get("executes") != "KEEPER_CONTROLS": err(where, f"admissible but executes={adm.get('executes')}")
+            if adm.get("imports") != "IMPORT_OK" or not adm.get("path_exists"): err(where, "admissible but a lower rung is not measured OK")
+            if adm.get("blocked_by") is not None: err(where, "admissible with blocked_by set")
+            cs = adm.get("control_state", {})
+            if cs.get("fail") or cs.get("error"): err(where, f"admissible with control_state fail={cs.get('fail')} error={cs.get('error')}")
+            want = "EVIDENCE_WITH_CAVEAT" if st == "READY_WITH_CAVEAT" else "EVIDENCE"
+            if adm.get("admissible_as") != want: err(where, f"admissible_as {adm.get('admissible_as')} but status {st} requires {want}")
+        else:
+            if adm.get("admissible_as") != "NOT_ADMISSIBLE": err(where, "not admissible but admissible_as is not NOT_ADMISSIBLE")
+            if not adm.get("blocked_by"): err(where, "not admissible without blocked_by")
+            if st in ("READY", "READY_WITH_CAVEAT"): err(where, f"status {st} but admissibility says NOT_ADMISSIBLE ({adm.get('blocked_by')})")
+        if adm.get("controlled") == "KEEPER" and not keeper: err(where, "controlled=KEEPER but no self_test path is the Keeper runner")
+        if keeper and adm.get("controlled") != "KEEPER": err(where, "Keeper controls on record but controlled != KEEPER")
+        if st == "UNTRUSTED" and adm.get("admissible"): err(where, "UNTRUSTED can never be admissible")
+        if st == "HISTORICAL_ONLY" and adm.get("path_exists"): err(where, "HISTORICAL_ONLY with path_exists true")
     # paths
     if st != "HISTORICAL_ONLY":
         cp = t["current_path"]
@@ -279,6 +305,27 @@ def _expect_disposition_reject(label, mutate):
     disposition_checks(bad, f"SELFTEST:{label}")
     if len(errors) == before: errors.append(f"[SELFTEST] {label}: validator ACCEPTED a disposition it must reject")
     else: del errors[before:]; notes.append(f"selftest {label}: rejected as required")
+
+# admissibility ladder negative self-tests
+def _mut_admissible_untrusted(b):
+    b["necropolis_status"] = "UNTRUSTED"; b["status_reason"] = "x"
+    b["self_tests"] = [{"kind": "ACCEPT", "path": RUNNER + "::x", "result": "PASS"}, {"kind": "CHEAT", "path": RUNNER + "::y", "result": "FAIL"}]
+    b["admissibility"]["admissible"] = True; b["admissibility"]["admissible_as"] = "EVIDENCE"; b["admissibility"]["blocked_by"] = None
+def _mut_author_only_admissible(b):
+    b["admissibility"]["controlled"] = "AUTHOR_ONLY"; b["admissibility"]["admissible"] = True
+def _mut_caveat_as_plain_evidence(b):
+    b["necropolis_status"] = "READY_WITH_CAVEAT"; b["caveat"] = "c"; b["admissibility"]["admissible"] = True
+    b["admissibility"]["admissible_as"] = "EVIDENCE"; b["admissibility"]["blocked_by"] = None
+def _mut_ready_but_not_admissible(b):
+    b["admissibility"]["admissible"] = False; b["admissibility"]["admissible_as"] = "NOT_ADMISSIBLE"; b["admissibility"]["blocked_by"] = "IMPORTS"
+_ready_rows = [t for t in tools if t.get("necropolis_status") == "READY" and t.get("admissibility", {}).get("admissible")]
+if _ready_rows:
+    for label, mut in (("admissible-untrusted", _mut_admissible_untrusted), ("author-tests-as-controls", _mut_author_only_admissible),
+                       ("caveat-silently-evidence", _mut_caveat_as_plain_evidence), ("ready-but-ladder-blocked", _mut_ready_but_not_admissible)):
+        before = len(errors); bad = copy.deepcopy(_ready_rows[0]); mut(bad)
+        row_checks(bad, f"SELFTEST:{label}", set(ids), check_git=False)
+        if len(errors) == before: errors.append(f"[SELFTEST] {label}: validator ACCEPTED a row it must reject")
+        else: del errors[before:]; notes.append(f"selftest {label}: rejected as required")
 
 _expect_disposition_reject("disposition-hash-drift", lambda d: d.update(plan_sha256_lf="0" * 64))
 _expect_disposition_reject("disposition-modified-in-place", lambda d: d.update(plan_modified_in_place=True))

@@ -103,9 +103,14 @@ def check_plan(plan: dict, plan_path: Path | None = None) -> list[str]:
                     "(DEAD_BEFORE_RUN lives in DISPOSITIONS.jsonl, never in the plan file)")
     reg = load_registry()
     for tid in plan["tools"]:
-        st = reg.get(tid, {}).get("necropolis_status")
+        row = reg.get(tid, {})
+        st = row.get("necropolis_status")
+        adm = row.get("admissibility") or {}
         if st not in RUNNABLE:
             errs.append(f"tool {tid} is {st}; only READY / READY_WITH_CAVEAT may be invoked")
+        elif not adm.get("admissible"):
+            # the status string is not the authority; the measured ladder is
+            errs.append(f"tool {tid} is {st} but not forensically admissible (blocked_by={adm.get('blocked_by')})")
     for a in plan["actions"]:
         if a.get("may") not in MAY:
             errs.append(f"action {a.get('step')} names no MAY clause (got {a.get('may')!r})")
@@ -199,7 +204,9 @@ def execute(plan: dict, plan_path: Path) -> Path:
               "started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
               "approval_record": (plan.get("approval") or {}).get("record"),
               "inputs": [{**i, "sha256_lf_at_run": sha256_lf(REPO / i["path"])[0]} for i in plan["inputs"]],
-              "tools": {t: {"source_commit": reg[t]["source_commit"], "necropolis_status": reg[t]["necropolis_status"]} for t in plan["tools"]},
+              "tools": {t: {"source_commit": reg[t]["source_commit"], "necropolis_status": reg[t]["necropolis_status"],
+                            "admissibility": reg[t].get("admissibility"), "caveat": reg[t].get("caveat")} for t in plan["tools"]},
+              "registry_sha256_lf": sha256_lf(HERE / "TOOLS.jsonl")[0],
               "steps": []}
     sys.path.insert(0, str(REPO))
     for a in plan["actions"]:

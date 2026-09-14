@@ -10,7 +10,7 @@
     "source_commit", "tool_class", "deterministic", "mutates_state", "requires_model",
     "dependencies", "dependency_status", "input_contract", "output_contract",
     "historical_consumers", "last_verified_execution", "self_tests", "known_failure_modes",
-    "evidentiary_scope", "forbidden_inference", "necropolis_status", "harvest"
+    "evidentiary_scope", "forbidden_inference", "necropolis_status", "harvest", "admissibility"
   ],
   "properties": {
     "schema_version": {"const": "1.0.0"},
@@ -81,6 +81,23 @@
     "duplicate_of": {"type": "string", "pattern": "^NT-[0-9]{3}$"},
     "caveat": {"type": "string"},
     "necropolis_adapter": {"type": ["string", "null"], "description": "repo-relative path of the NECROPOLIS ADAPTER wrapping this instrument, if one was written"},
+    "admissibility": {
+      "type": "object", "additionalProperties": false,
+      "description": "The ladder PATH EXISTS != IMPORTS != EXECUTES != CONTROLLED != FORENSICALLY ADMISSIBLE, each rung measured separately (court charter 2026-09-14, TOOL ADMISSIBILITY). Derived by registry_source.py from measurements; never hand-set. admissible is true only for READY / READY_WITH_CAVEAT rows whose controls were RUN BY THE KEEPER; author tests never satisfy the CONTROLLED rung.",
+      "required": ["path_exists", "imports", "executes", "controlled", "control_state", "admissible", "admissible_as", "blocked_by"],
+      "properties": {
+        "path_exists": {"type": "boolean"},
+        "imports": {"type": "string", "enum": ["IMPORT_OK", "IMPORT_FAIL", "NOT_MEASURED"]},
+        "executes": {"type": "string", "enum": ["KEEPER_CONTROLS", "AUTHOR_TESTS_ONLY", "ERROR", "NOT_MEASURED"]},
+        "controlled": {"type": "string", "enum": ["KEEPER", "AUTHOR_ONLY", "NONE"]},
+        "control_state": {"type": "object", "additionalProperties": false, "required": ["pass", "fail", "error", "info", "artifact", "git_head"],
+          "properties": {"pass": {"type": "integer"}, "fail": {"type": "integer"}, "error": {"type": "integer"}, "info": {"type": "integer"},
+                         "artifact": {"type": ["string", "null"]}, "git_head": {"type": ["string", "null"]}}},
+        "admissible": {"type": "boolean"},
+        "admissible_as": {"type": "string", "enum": ["EVIDENCE", "EVIDENCE_WITH_CAVEAT", "NOT_ADMISSIBLE"]},
+        "blocked_by": {"type": ["string", "null"], "description": "the first rung that fails, or the status that blocks, for a non-admissible row"}
+      }
+    },
     "layer": {"type": "string", "enum": ["ORIGINAL_SCIENTIFIC_LOGIC", "NECROPOLIS_ADAPTER", "NECROPOLIS_VALIDATION"], "description": "which of the three layers the current_path IS"},
     "frankenstein_refs": {"type": "array", "items": {"type": "string", "pattern": "^FRANK-[0-9]{3}$"}},
     "battery_refs": {"type": "array", "items": {"type": "string"}},

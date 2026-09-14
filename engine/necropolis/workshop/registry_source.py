@@ -600,8 +600,67 @@ def load_controls(path: Path) -> dict:
     return {"meta": d, "by": by}
 
 
+def admissibility(r: dict, cases: list, self_tests: list, status: str, author: dict, import_verify: dict, controls: dict) -> dict:
+    """The ladder PATH EXISTS != IMPORTS != EXECUTES != CONTROLLED != ADMISSIBLE, every rung
+    from a measurement on record.  Nothing here is set by hand; a row cannot be admissible
+    without Keeper-run controls whatever its status string says (court charter, TOOL
+    ADMISSIBILITY)."""
+    path = r["path"]
+    path_exists = bool(path) and (REPO / path).exists()
+    keeper_cases = [c for c in cases if c["verdict"] != "INFO"]
+    n_pass = sum(1 for c in keeper_cases if c["verdict"] == "PASS")
+    n_fail = sum(1 for c in keeper_cases if c["verdict"] == "FAIL")
+    n_err = sum(1 for c in keeper_cases if c["verdict"] == "ERROR")
+    n_info = sum(1 for c in cases if c["verdict"] == "INFO")
+    ran_ok = any(c["verdict"] != "ERROR" for c in cases)
+    author_ran = any(tp in author for tp in r["author_tests"])
+    iv = (import_verify.get(path) or {}).get("import") if path else None
+    if ran_ok or (author_ran and any(author[tp].get("rc") == 0 for tp in r["author_tests"] if tp in author)):
+        imports = "IMPORT_OK"          # the controls / author tests imported it to run it
+    elif iv == "IMPORT_OK":
+        imports = "IMPORT_OK"
+    elif iv and iv.startswith("IMPORT_FAIL"):
+        imports = "IMPORT_FAIL"
+    elif cases and not ran_ok:
+        imports = "IMPORT_FAIL" if any("ImportError" in json.dumps(c.get("observed"), default=str) or "ModuleNotFound" in json.dumps(c.get("observed"), default=str) for c in cases) else "NOT_MEASURED"
+    else:
+        imports = "NOT_MEASURED"
+    if ran_ok:
+        executes = "KEEPER_CONTROLS"
+    elif cases:
+        executes = "ERROR"
+    elif author_ran:
+        executes = "AUTHOR_TESTS_ONLY"
+    else:
+        executes = "NOT_MEASURED"
+    controlled = "KEEPER" if keeper_cases else ("AUTHOR_ONLY" if author_ran else "NONE")
+    blocked = None
+    if not path_exists:
+        blocked = "PATH_EXISTS"
+    elif imports != "IMPORT_OK":
+        blocked = "IMPORTS"
+    elif executes != "KEEPER_CONTROLS":
+        blocked = "EXECUTES" if executes in ("ERROR", "NOT_MEASURED") else "CONTROLLED (author tests only)"
+    elif controlled != "KEEPER":
+        blocked = "CONTROLLED"
+    elif status not in ("READY", "READY_WITH_CAVEAT"):
+        blocked = f"STATUS {status}"
+    elif n_fail or n_err:
+        blocked = f"CONTROLS {n_fail} FAIL / {n_err} ERROR"
+    admissible = blocked is None
+    return {"path_exists": path_exists, "imports": imports, "executes": executes, "controlled": controlled,
+            "control_state": {"pass": n_pass, "fail": n_fail, "error": n_err, "info": n_info,
+                              "artifact": "engine/necropolis/workshop/tests/controls_result.json" if cases else None,
+                              "git_head": controls["meta"].get("git_head") if cases else None},
+            "admissible": admissible,
+            "admissible_as": "NOT_ADMISSIBLE" if not admissible else ("EVIDENCE_WITH_CAVEAT" if status == "READY_WITH_CAVEAT" else "EVIDENCE"),
+            "blocked_by": blocked}
+
+
 def build(controls: dict, head: str) -> tuple[list[dict], list[str]]:
     author = json.loads(AUTHOR_TESTS.read_text(encoding="utf-8")) if AUTHOR_TESTS.exists() else {}
+    iv_path = HERE / "candidates" / "import_verify.json"
+    import_verify = json.loads(iv_path.read_text(encoding="utf-8")) if iv_path.exists() else {}
     consumers = json.loads(CONSUMERS.read_text(encoding="utf-8")) if CONSUMERS.exists() else {}
     finished = controls["meta"].get("finished", "")[:10]
     out, errors = [], []
@@ -655,6 +714,7 @@ def build(controls: dict, head: str) -> tuple[list[dict], list[str]]:
                    "result": "; ".join(str(author[tp].get("summary")) for tp in r["author_tests"] if tp in author)}
         row = {
             "schema_version": "1.0.0", "tool_id": f"NT-{i:03d}", "name": r["name"],
+            "admissibility": admissibility(r, cases, self_tests, status, author, import_verify, controls),
             "provenance": {"origin": r["origin"], "author_seat": "unknown" if r["origin"] != "NECROPOLIS_BUILT" else KEEPER,
                            "discovered_by": KEEPER, "discovery_loop": r["loop"],
                            **({"techne_inventory_id": r["techne_id"]} if r["techne_id"] else {}),
