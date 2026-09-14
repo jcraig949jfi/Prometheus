@@ -166,6 +166,18 @@ Noise warning: tt_digits is E6's TT re-run with a different RNG and moved 53.4 -
 87.7 (w3), 57.1 -> 51.1 (w4), 2.0 -> 6.0 (w1): single-run top-16 held-out means
 are noisy, so the family ranking needs repeats before anyone leans on it.
 
+## 2026-09-14 iteration 11 -- E7b C4 families x 3 run seeds (PASS, inside the noise)
+
+36 runs (4 families x w4/w1/w3 x run seeds 0-2), oracles clean in all 36.
+Linear had the best MEDIAN held-out in 3/3 (w4 83.2, w1 29.7, w3 98.8), so the
+posted bar passed. But its lead over the runner-up is inside the run-to-run range
+in 3/3 worlds (w4 gap 2.0 vs range 31.0; w1 19.3 vs 23.6; w3 7.0 vs 21.8) -- I
+predicted that for >=1 world and got it everywhere. tt_digits is the noisiest
+(w3 17.5 .. 86.8); lut_top is reliably poor. What survives: linear is never worse
+than second and is the only family that holds up in w1 (obs corruption + delay).
+What doesn't: any claim that linear is separated from tt_feat/tt_digits.
+B6 (lane B) fused closed-loop rollout passed meanwhile; next E work adopts it.
+
 Next / steal: closed-loop needs more training seeds or a regulariser before any
 generalisation claim; C3's representation ecology (dense/CP/Tucker/TT/bitset)
 is the natural next genome comparison. E4b = archive-level positive (QD coverage/qd_score vs the same
