@@ -1,0 +1,153 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "spacewar-pdp1-1962",
+  "canonical_name": "Spacewar! 2B (25 March 1962) -- Steve Russell et al., MIT, for the DEC PDP-1",
+  "aliases": [
+    "Spacewar",
+    "spacewar 2b"
+  ],
+  "lineage": "Written in 1961-62 by Steve Russell, Martin Graetz, Wayne Wiitanen and others on MIT's PDP-1, with the starfield (Expensive Planetarium) by Peter Samson and gravity by Dan Edwards. Two ships under player control orbit a central star; thrust, rotation, torpedoes and hyperspace are computed in real time on an 18-bit machine with 4096 words of core and a Type 30 point-plotting CRT. Widely held to be the first widely distributed digital video game. The body preserved here is the AUTHENTIC 25 Mar 1962 assembly listing, not the later reconstructed-from-binary variant, which masswerk publishes separately.",
+  "domain": [
+    "games",
+    "real-time",
+    "simulation",
+    "graphics",
+    "interactive",
+    "pre1970"
+  ],
+  "era": "1962 (body: assembly source dated 25 Mar 1962)",
+  "version": "spacewar 2b, 25 Mar 1962 (authentic source, as published by masswerk.at)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.masswerk.at/spacewar/sources/spacewar_2b_25mar62.txt",
+        "filename": "spacewar_2b_25mar62.txt",
+        "extract": false,
+        "sha256": "cc11e0e8939f190862c6cb64735006cf00c1293c0e96d145b17628bd4b9b5179"
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "masswerk.at/spacewar/sources",
+    "note": "the 25 Mar 1962 listing, distinguished by the archive itself from the 2 Apr 62 binary reconstruction"
+  },
+  "hashes": {
+    "tree_sha256": "66d682d8313e7afe0129b1b1183d87ecbf4861f5f8b5f17c6c6dfbdb6b8d5bc2",
+    "n_files": 1,
+    "bytes": 12976,
+    "artifacts": [
+      {
+        "filename": "spacewar_2b_25mar62.txt",
+        "sha256": "cc11e0e8939f190862c6cb64735006cf00c1293c0e96d145b17628bd4b9b5179",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\spacewar-pdp1-1962",
+    "hash_list": "techne/fossils/specimens/spacewar-pdp1-1962/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "NOASSERTION",
+    "status": "historical artifact; Spacewar was distributed freely by its authors",
+    "evidence": "masswerk.at source archive; the authors placed it in the public domain by practice"
+  },
+  "acquisition_date": "2026-09-14",
+  "language": [
+    "PDP-1 macro assembly"
+  ],
+  "build_system": "PDP-1 assembler (macro)",
+  "compiler_or_interpreter": "none preserved in-vault; requires a PDP-1 assembler",
+  "dependencies": [
+    "a DEC PDP-1 with Type 30 CRT, or an emulator of one"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "the assembled tape is loaded and started from the PDP-1 console"
+  ],
+  "example": {
+    "command": "assemble and run under a PDP-1 simulator with a Type 30 display",
+    "input": "console test-word switches select options; two players use control boxes",
+    "output": "two ships orbiting a gravitating star on a point-plotting CRT"
+  },
+  "environment": {
+    "machine": "DEC PDP-1",
+    "word_size": "18-bit",
+    "number_representation": "one's complement",
+    "memory": "4096 words of core (typical)",
+    "character_set": "FIODEC / concise code",
+    "os": "none -- the program owns the machine",
+    "display": "Type 30 point-plotting CRT",
+    "storage": "paper tape",
+    "runner": "none yet"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Graetz, The Origin of Spacewar, Creative Computing 1981",
+    "Computer History Museum PDP-1 restoration project documentation"
+  ],
+  "human_capability_summary": {
+    "built_to": "demonstrate what an interactive computer with a CRT could do, by making two human-controlled ships duel under real gravity in real time",
+    "pressure": "18-bit words, 4096 words of core, no floating point, no operating system, and a display that must be refreshed by the program itself while the game logic runs",
+    "success_means": "the simulation stays responsive and the orbits remain believable within the machine's cycle budget"
+  },
+  "known_human_problem_solved": "real-time interactive simulation on a machine with no OS and no spare cycles",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "scarce core, scarce cycles, program-refreshed display, no floating point",
+  "human_failure_condition": "the display flickers or the game slows as object count rises; integer overflow distorts the orbits",
+  "behavioral_entry_point": "vary the gravity constant and torpedo parameters and watch orbital stability; the computation budget is the real constraint",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "inspired_by",
+      "to": "Bob Wyatt / E. E. Smith Lensman space opera (per Graetz)",
+      "note": ""
+    }
+  ],
+  "acquisition_tags": [
+    "batch12",
+    "pre1970",
+    "original_body",
+    "games",
+    "extinct_world",
+    "outside_queue"
+  ],
+  "historical_disposition": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [
+      {
+        "kind": "retrospective",
+        "ref": "Graetz, The Origin of Spacewar, Creative Computing 1981",
+        "says": "Describes Spacewar's creation on the PDP-1 at MIT and its spread to other PDP-1 installations; the program is tied to that machine and its display."
+      },
+      {
+        "kind": "project_documentation",
+        "ref": "Computer History Museum PDP-1 restoration",
+        "says": "Spacewar is demonstrated on a restored PDP-1 because the machine it requires is no longer in ordinary existence; roughly 53 PDP-1s were built."
+      }
+    ],
+    "audit_note": "HISTORICAL_ONLY refers to the WORLD, not to a defeat: Spacewar was not out-competed, its machine simply ceased to exist. Old is not loser; this is recorded as extinction of an environment."
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\spacewar-pdp1-1962 ; tracked techne/fossils/specimens/spacewar-pdp1-1962",
+    "where_it_came_from": "https://www.masswerk.at/spacewar/sources/spacewar_2b_25mar62.txt ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "SOURCE_ONLY (BODY_RECOVERED_WORLD_NAMED): the 25 Mar 1962 PDP-1 assembly is preserved and hashed. Running it needs a PDP-1 with a Type 30 CRT, an 18-bit one's-complement machine with no OS, plus a period assembler. simh carries a PDP-1 simulator, so a world is REACHABLE -- it was not built this round, and the fossil is not called runnable until it is.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 66d682d8313e7afe pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "demonstrate what an interactive computer with a CRT could do, by making two human-controlled ships duel under real gravity in real time"
+  },
+  "seat": "Techne"
+}

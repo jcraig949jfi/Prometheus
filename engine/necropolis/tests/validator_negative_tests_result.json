@@ -1,0 +1,183 @@
+{
+ "base_dossier": "coeus.dossier.json",
+ "reject_cases": 11,
+ "reject_caught": 11,
+ "cheat_cases": 8,
+ "cheat_passes_unchecked": 7,
+ "control_green": true,
+ "results": [
+  {
+   "case": "control_unmutated",
+   "kind": "CONTROL",
+   "rejected": false,
+   "errors": [],
+   "verdict": "GREEN"
+  },
+  {
+   "case": "classification_FAILED",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] coeus.dossier.json.disposition.classification: 'FAILED' not in enum ['TRUE_CORPSE', 'CAPABILITY_BOUND', 'NO_FAIR_TEST_ON_RECORD', 'PREMISE_ALIVE_IMPLEMENTATION_DEAD', 'PRODUCER_BLOCKED', 'CONSUMER_BLOCKED', 'REPRESENTATION_FAILURE', 'MEASUREMENT_FAILURE', 'ORCHESTRATION_FAILURE', 'RESOURCE_BLOCKED', 'SUPERSEDED_BUT_ORGANS_SALVAGEABLE', 'NO_DESIGN_FAILURE_ESTABLISHED', 'NEEDS_MORE_EVIDENCE']",
+    "- [coeus.dossier.json] forbidden generic classification 'FAILED' (Necropolis rejects undifferentiated FAILED)"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "TRUE_CORPSE_with_UNFAIR",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] TRUE_CORPSE requires primary_cause HYPOTHESIS_FAILURE/PREMISE_FAILURE (was MEASUREMENT_ERROR); pick the neighbour the stack supports",
+    "- [coeus.dossier.json] fair_test UNFAIR is incompatible with TRUE_CORPSE"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "HYPOTHESIS_FAILURE_with_UNFAIR",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] primary_cause HYPOTHESIS_FAILURE requires fair_test FAIR (was UNFAIR): a strong claim needs a fair test",
+    "- [coeus.dossier.json] primary_cause HYPOTHESIS_FAILURE with NOT_EXAMINED ['EXECUTION'] / load-bearing INVALID ['DESIGN', 'CONFIGURATION', 'INSTRUMENTATION', 'MEASUREMENT'] in DESIGN..MEASUREMENT"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "FAIR_with_load_bearing_INVALID",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] fair_test FAIR but DESIGN..MEASUREMENT has NOT_EXAMINED ['EXECUTION'] / load-bearing INVALID ['DESIGN', 'CONFIGURATION', 'INSTRUMENTATION', 'MEASUREMENT']"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "NOT_EXAMINED_with_cause_class",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] stack.ECOSYSTEM is NOT_EXAMINED but carries cause classes ['ECOSYSTEM_FAILURE']"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "VALID_with_no_evidence",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] stack.IMPLEMENTATION is VALID with no evidence (LAW N17: write NOT_EXAMINED)"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "primary_cause_not_on_any_layer",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] primary_cause ECOSYSTEM_FAILURE is not carried by any layer of the stack"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "cause_class_on_inadmissible_layer",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] stack.DESIGN carries cause classes ['MEASUREMENT_ERROR'] not admissible on that layer",
+    "- [coeus.dossier.json] contributing cause DESIGN_ERROR is not carried by any layer of the stack"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "OVERTURNED_with_no_errors",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] death_certificates[0] is OVERTURNED but lists no errors"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "agent_id_not_in_ROSTER",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] descendant_candidate.parent 'Coeus' != identity.agent_id 'NotOnRoster'",
+    "- [coeus.dossier.json] identity.agent_id 'NotOnRoster' does not resolve to a ROSTER agent_id",
+    "- [ORGANS.jsonl] notonroster.code.0: source_agent 'NotOnRoster' not in ROSTER",
+    "- [ORGANS.jsonl] notonroster.code.1: source_agent 'NotOnRoster' not in ROSTER",
+    "- [ORGANS.jsonl] notonroster.code.2: source_agent 'NotOnRoster' not in ROSTER",
+    "- [ORGANS.jsonl] notonroster.data.0: source_agent 'NotOnRoster' not in ROSTER"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "PREMISE_FAILURE_without_premise_exclusion",
+   "kind": "REJECT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] PREMISE_FAILURE without premise_exclusion: the strongest claim is admitted only after the alternatives are excluded"
+   ],
+   "verdict": "OK"
+  },
+  {
+   "case": "hallucinated_evidence_path",
+   "kind": "CHEAT",
+   "rejected": false,
+   "errors": [],
+   "verdict": "PASSES_UNCHECKED"
+  },
+  {
+   "case": "empty_kill_boundary",
+   "kind": "CHEAT",
+   "rejected": true,
+   "errors": [
+    "- [coeus.dossier.json] coeus.dossier.json.autopsy.kill_boundary: string shorter than minLength 12 ('')"
+   ],
+   "verdict": "CAUGHT"
+  },
+  {
+   "case": "empty_surviving_claims_without_TRUE_CORPSE",
+   "kind": "CHEAT",
+   "rejected": false,
+   "errors": [],
+   "verdict": "PASSES_UNCHECKED"
+  },
+  {
+   "case": "non_load_bearing_by_assertion_makes_FAIR",
+   "kind": "CHEAT",
+   "rejected": false,
+   "errors": [],
+   "verdict": "PASSES_UNCHECKED"
+  },
+  {
+   "case": "every_certificate_NOT_REVIEWED",
+   "kind": "CHEAT",
+   "rejected": false,
+   "errors": [],
+   "verdict": "PASSES_UNCHECKED"
+  },
+  {
+   "case": "all_evidence_is_prose_README",
+   "kind": "CHEAT",
+   "rejected": false,
+   "errors": [],
+   "verdict": "PASSES_UNCHECKED"
+  },
+  {
+   "case": "fair_test_without_scope",
+   "kind": "CHEAT",
+   "rejected": false,
+   "errors": [],
+   "verdict": "PASSES_UNCHECKED"
+  },
+  {
+   "case": "all_NOT_EXAMINED_but_classified_REPRESENTATION_FAILURE",
+   "kind": "CHEAT",
+   "rejected": false,
+   "errors": [],
+   "verdict": "PASSES_UNCHECKED"
+  }
+ ]
+}

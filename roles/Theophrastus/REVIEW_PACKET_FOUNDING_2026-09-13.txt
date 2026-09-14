@@ -1,0 +1,208 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+THEOPHRASTUS FOUNDING ROUND -- IS THE ECOLOGICAL EXPLORATION LOOP REAL?
+================================================================================
+Prepared:        2026-09-13   frozen (rows committed with verdicts)
+Location/Code:   theophrastus/ (cell, ecology, controls, contrast, adapter,
+                 crucible, tests); roles/Theophrastus/ (recon, crucible,
+                 reqs, ledgers, journal)
+Artifacts:       roles/Theophrastus/crucible/FOUNDING_ROUND_REPORT_2026-09-13.md
+                 roles/Theophrastus/recon/CAPABILITY_MATRIX_2026-09-13.md
+                 roles/Theophrastus/reqs/THEO-REQ-00{1,2,3}_*.md
+                 roles/Theophrastus/ledgers/{rows,cells,contrasts,signals,
+                 dead}.jsonl
+Version/Hash:    prereg 05ee51977 (before any execution); rows+verdicts
+                 fcbbdd2da; merged/pushed 48390790d, 57e15dc34 (ancestors
+                 of origin/main); charter sha256 00b8916b31e4fd19...
+Headline:        LOOP IS REAL. 46 executions on live SFE eng_8a37a5d3, 46
+                 PEW fossils (namespace theophrastus), 41/41 declared
+                 contrasts eligible, 23 REPRODUCIBLE under the prereg rule
+                 (14 are positive controls the record predicts; 9 are new
+                 to the record), 9 exact nulls, replay identical n=3, all
+                 10 self-control cheats caught. ZERO discoveries claimed.
+
+--------------------------------------------------------------------------------
+1. CLAIM / SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+A new seat (Theophrastus) can perform contrast-first exploration of
+MECHANISM x PRESSURE x WORLD x BRANCH x INTERVENTION on the SAME engine and
+executor Archaeon/Vivarium use, without forking the substrate, and its
+explorer detects its own failure modes. Pre-registered falsifiers: any
+preregistered cheat passing undetected; a replay digest mismatch under a
+BIT_DETERMINISTIC claim; a positive-control contrast (published + C1-e)
+failing to fire; an execution FAILED or INCONCLUSIVE. None occurred.
+
+--------------------------------------------------------------------------------
+2. METHOD / SETUP / SUBSTRATE
+--------------------------------------------------------------------------------
+Engine: SFE eng_8a37a5d305969034d488c43e, schema 8, engine_source_hash
+sha256:5380cb90..., Harmonia conformance gate CONFORMANT (exit 0, 67/67
+routes). Consumer: Theophrastus's own SFE client cli_74b888ed5ee82365bf6d5895
+driving Vivarium's SfeRunner (viv/runner.py) as a LIBRARY, so lease,
+audit envelope, repeat semantics, outcome rule and science profile are
+byte-for-byte the bench's. Kind: ca_density_v0 (Vivarium contract,
+Herakles semantics). Fossils: PEW pew.fossil.v2, namespace "theophrastus"
+(never prod). Queue: untouched. Vivarium daemon: down all pass; not
+started (not this seat's act).
+
+--------------------------------------------------------------------------------
+3. GROUND TRUTH / CERTIFICATION / KEY DEFINITIONS
+--------------------------------------------------------------------------------
+CELL = content-hashed coordinate (rule hex; (n_cells, steps, radius);
+(density set, n_ic, criterion); transform; branch members + relation;
+seed_root; repeat block). spec_hash = Vivarium's own hash of the derived
+sealed v3 spec. execution_hash = the executor-visible subset (alias and
+no-op surface). CONTRAST(A,B) = p_A - p_B over 800 ICs per cell,
+SE_D = sqrt(SE_A^2 + SE_B^2) <= 0.0250. Positive controls: published_P
+(genomes.py, RECOVERED_SPECIMEN) and Herakles C1-e (17/18 reproduced).
+
+--------------------------------------------------------------------------------
+4. INPUTS / DATA / CONDITIONS / BASELINES
+--------------------------------------------------------------------------------
+Mechanisms   maj, GKL (hand-designed); exp, par (GA-evolved 1993-95)
+Branches     hand_designed vs ga_evolved_1993_95 (evidence: genomes.py
+             kind/source; ancestry recorded UNKNOWN)
+Worlds       W149=(149,320) bench world; W599=(599,1198); neighbours
+             W149h=(149,298), W599h=(599,1286)
+Pressures    P_iid=[null] unbiased; P_unif=10-density grid, 10 ICs each;
+             P_iid_T = at_T criterion (exact-null neighbour)
+Interv.      NONE; REFLECT (exact symmetry: table AND ICs mirrored)
+Bench prior  150 completed ca_density_v0 rows, ALL at W149/P_iid.
+
+--------------------------------------------------------------------------------
+5. PROCEDURE / METRICS / STATISTICS
+--------------------------------------------------------------------------------
+Prereg committed first (05ee51977). Coverage 25 cells (seed 20260913):
+16 coverage + 4 REFLECT + 4 horizon + 1 criterion. Replication 16 cells
+(seed 20260914). Replay 2 cells x 3. Budget 45 executions / 3600 s.
+Rule: NO_SIGNAL |z|<2; WEAK 2<=|z|<4 or failed replication;
+REPRODUCIBLE |z|>=4 in BOTH passes, same sign; INSTRUMENT_BLOCKED on
+any FAILED/partial/INCONCLUSIVE side. 41 contrasts declared in 6 families.
+Attainable range [-1,1]; 4-SE bar <= 0.100; predicted large contrast
+(exp across worlds, 0.137) sits above it; GKL across worlds (0.050)
+below it -- both stated before running.
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULT
+--------------------------------------------------------------------------------
+Executions       46 (1 smoke unscored + 25 + 16 + 4)   COMPLETED 46/46
+Fossils          46 written, read back, namespace theophrastus
+Outcome rule     SURVIVED 46/46 (criteria_agree)
+Eligible         41/41 primary, 41/41 final
+
+Family     n   NO_SIGNAL  WEAK  REPRODUCIBLE  note
+--------   --  ---------  ----  ------------  ---------------------------
+C-WORLD     8      1        3        3        exp obsolescence predicted
+C-PRESS     8      0        0        8        uniform-density lifts all
+C-BRANCH   16      3        1       12        maj structural zero drives 8
+C-INTERV    4      4        0        0        EXACT identity (digests)
+C-RES       4      4        0        0        EXACT identity (converged)
+C-NULL      1      1        0        0        EXACT identity
+
+Coverage cells, p over 800 ICs (SE <= 0.0177), P_iid / P_unif:
+Rule   W149            W599            published P_iid 149 / 599
+-----  --------------  --------------  -------------------------
+maj    0.0000 / 0.320  0.0000 / 0.215  0.000 / 0.000
+GKL    0.8125 / 0.975  0.7550 / 0.994  0.816 / 0.766
+exp    0.6713 / 0.904  0.5500 / 0.828  0.652 / 0.515
+par    0.7500 / 0.965  0.7238 / 0.985  0.769 / 0.725
+
+Signals admitted: THEO-SIGNAL-0001..0023. Post-hoc prior-evidence class
+(dispositions unchanged): PUBLISHED+C1E 7, C1E_AT_149_ONLY 7,
+NEW_TO_RECORD 9 (every uniform-density contrast at N=599).
+Dead terrain: 5 cells (maj under P_iid, exact zero).
+
+--------------------------------------------------------------------------------
+7. DELIVERABLE / ARTIFACT + ACCEPTANCE CRITERIA
+--------------------------------------------------------------------------------
+Charter deliverables 1-17 ............ all present (FOUNDING_ROUND_REPORT)
+Capability matrix .................... 8 NATIVE, 4 REP, 2 AWK, 2 MISSING
+Change requirements .................. REQ-001 Mnemosyne (PEW ecology
+                                       selector), REQ-002 Vivarium (kind
+                                       axis annotation), REQ-003 Proteus
+                                       (composition op); comms #239-#241
+Rows ship with verdicts .............. yes (fcbbdd2da)
+Prereg precedes rows ................. yes (05ee51977 < fcbbdd2da)
+No LLM in selection .................. yes (tested, C9)
+No prod PEW writes, no queue writes .. yes
+
+--------------------------------------------------------------------------------
+8. CONTROLS / ABLATIONS / STRESS TESTS
+--------------------------------------------------------------------------------
+C1  duplicate cell ............. unit + LIVE (25/25 refused on re-proposal)
+C2  coordinate alias ........... unit (two labels, one execution_hash)
+C3  changed world as same ...... unit (W149 label, steps 298 -> refused)
+C4  branch without evidence .... unit
+C5  no-op intervention ......... unit
+C6  nondeterministic replay .... unit (mismatch flagged; honest label ok)
+C7  missing provenance ......... unit
+C8  stale result reuse ......... unit (build / instance / spec)
+C9  LLM rationale in select .... unit (loud rationale cannot reorder)
+C10 budget overrun ............. unit + LIVE (2/2 blocked at 45/45)
+CHEAT-SIGNAL fake |D|=0.5 ...... refused (no rows/stencil/replication)
+Null regions: C-INTERV, C-RES, C-NULL all exact zero; maj dead terrain
+recorded and skipped by coverage mode.
+Two explorer defects were found BY the cheats and fixed before any live
+cell: alias/no-op keyed on spec_hash (the sealed spec carries the pew
+identity block) -> re-keyed on execution_hash; wall budget under-count.
+
+--------------------------------------------------------------------------------
+9. INDEPENDENT / ADVERSARIAL VERIFICATION
+--------------------------------------------------------------------------------
+Positive control against an INDEPENDENT offline instrument (Herakles
+C1-e, run_c1e.py, not via SFE) and the published tables: all eight P_iid
+cells within 2 SE of published; exp W599 +0.035 (2.0 SE, same direction
+as C1-e's own +0.008). REFLECT identity agrees with Archaeon's C3 (72/72
+IDENTICAL). Pre-commit registry probes atk013/014/015 PASS on both
+commits. No same-model audit is claimed as verification.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- 14 of 23 admitted signals are positive controls: the admission gate has
+  no prior-evidence notion. A sustained crawler needs one (THEO-01).
+- The 9 NEW_TO_RECORD signals are all "uniform-density regime at N=599";
+  the cheapest reading is a PRESSURE x WORLD interaction the prereg did
+  NOT declare, so it is not scored. n=800 ICs per cell is coarse.
+- Contrasts live in this seat's ledger, not in SFE comparison families
+  (THEO-05); branch relations have no substrate home (G4).
+- PEW players are name-based ("evca:GKL"); question posted to Herakles
+  (comms #242). The bench wrote no players, so cross-producer player
+  queries do not work yet.
+- Cross-consumer probe (same spec via Vivarium's daemon) NOT run: daemon
+  down. contrasts.jsonl holds duplicate primary rows (82 for 41).
+- One engine build, one kind, one executor; nothing here generalises to
+  other kinds without REQ-002.
+
+--------------------------------------------------------------------------------
+11. REPRODUCTION
+--------------------------------------------------------------------------------
+From a linked worktree (never the canonical checkout), origin/main at or
+after 57e15dc34:
+    python -m pytest theophrastus/tests archaeon/tests/test_base_role.py -q
+        -> 30 passed
+    python -c "from theophrastus import ecology as E; \
+      print(E.cell('exp','W599','P_iid').spec_hash)"
+    python -m theophrastus.crucible report        (reads the ledgers)
+Live re-run needs an SFE token (register once; see adapter.py) and the
+Harmonia gate: roles/Harmonia/contracts/conformance_check.py --contract
+roles/Harmonia/contracts/sfe_contract.json. Spot-check a fossil:
+GET /api/v1/fossil/encounters/ENC-theophrastus-9bad834acc1d1044 (smoke).
+Replay digests to match: bb88142db2cf... (GKL/W149/P_iid),
+04689f27607d... (exp/W599/P_iid).
+
+--------------------------------------------------------------------------------
+12. VERDICT / DECISION
+--------------------------------------------------------------------------------
+LOOP_NOT_DEMONSTRATED .............. no
+LOOP_REAL_SUBSTRATE_UNCHANGED ...... YES
+SIGNALS_ARE_DISCOVERIES ............ no (forbidden; 14/23 are controls)
+SUSTAINED_CRAWL_LICENSED_NOW ....... no (needs THEO-01 prior gate,
+                                     interaction families, rule-10 bound)
+STOP_RECOMMENDED ................... no; next round is THEO-01/02/03
+Reviewer's bottom line: is a REPRODUCIBLE_SIGNAL that the record already
+predicts correctly counted as an instrument PASS rather than a signal --
+and should the prior-evidence gate be prereg'd before the second round?
+================================================================================
+END OF PACKET
+================================================================================

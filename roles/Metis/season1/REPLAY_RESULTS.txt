@@ -1,0 +1,158 @@
+EPISODE E1_GREEDY_LORA
+CUTOFF  2026-06-03
+CLAIM   GENUINE_REASONING
+
+ADMITTED EVIDENCE (4): E1.ood_countermath, E1.per_source_scores, E1.raw_delta, E1.shuffle_control
+
+INDEPENDENT REASONS: 1 (from 4 supporting items)
+  [DEPENDENT] E1.ood_countermath, E1.per_source_scores, E1.raw_delta, E1.shuffle_control   shared: ADAPTER_V1, FORMAT_GAIN
+
+LIVE COMPETING EXPLANATIONS: BASE_RATE_PRIORS, FORMAT_FOLLOWING, VALUE_MEMORIZATION
+
+VETOES (4):
+  AGREEMENT_NOT_ADDITIVE: E1.ood_countermath, E1.per_source_scores, E1.raw_delta, E1.shuffle_control
+      4 evidence items collapse to ONE independent reason: they share load-bearing upstream ['ADAPTER_V1', 'FORMAT_GAIN']. Agreement among them is a property of the shared ancestor, not corroboration.
+  CONFIDENCE_VETO: BASE_RATE_PRIORS
+      competing explanation BASE_RATE_PRIORS (the adapter learned which relation types usually hold, with no object or value knowledge) is not eliminated by any admitted evidence item; confidence in 'GENUINE_REASONING' must not be compounded until it is
+  CONFIDENCE_VETO: FORMAT_FOLLOWING
+      competing explanation FORMAT_FOLLOWING (the adapter learned to emit a parseable True/False verdict; the base model could not) is not eliminated by any admitted evidence item; confidence in 'GENUINE_REASONING' must not be compounded until it is
+  CONFIDENCE_VETO: VALUE_MEMORIZATION
+      competing explanation VALUE_MEMORIZATION (the adapter memorized invariant values of objects seen in training) is not eliminated by any admitted evidence item; confidence in 'GENUINE_REASONING' must not be compounded until it is
+
+NEXT DISCRIMINATOR: RELATION_BASE_RATE_ORACLE  (cost MINUTES)
+      Compute, per relation type, the majority label over the training corpus; predict it on the eval set with no object and no value knowledge. Requires no GPU, no training, no new data -- the corpus is already built. If the adapter does not clear this floor by a wide margin, the bulk of the headline is background base rates.
+  rejected ENTITY_DISJOINT_SPLIT: NOT_CHEAPER_THAN_BASELINE
+  rejected SCORE_COUNTERMATH_WITH_GOLD_LABELS: NOT_AVAILABLE_AT_CUTOFF
+
+==========================================================================
+
+EPISODE E1b_GREEDY_LORA_AFTER_DISCRIMINATORS  (POSITIVE CONTROL)
+CUTOFF  2026-06-04
+CLAIM   NARROW_RELATIONAL_REASONING_PRESENT
+
+ADMITTED EVIDENCE (3): E1b.base_rate_oracle, E1b.entity_disjoint_shown, E1b.parse_fail_zero_both_arms
+
+INDEPENDENT REASONS: 2 (from 3 supporting items)
+  [DEPENDENT] E1b.base_rate_oracle, E1b.entity_disjoint_shown   shared: GOLD_EVAL_E_SHOWN
+  [single] E1b.parse_fail_zero_both_arms
+
+LIVE COMPETING EXPLANATIONS: (none)
+
+VETOES (1):
+  AGREEMENT_NOT_ADDITIVE: E1b.base_rate_oracle, E1b.entity_disjoint_shown
+      2 evidence items collapse to ONE independent reason: they share load-bearing upstream ['GOLD_EVAL_E_SHOWN']. Agreement among them is a property of the shared ancestor, not corroboration.
+
+NEXT DISCRIMINATOR: none proposed
+  rejected MULTI_STEP_CLAIMS_WHERE_PRIORS_CANNOT_SUBSTITUTE: NOTHING_LIVE_TO_DISCRIMINATE
+
+==========================================================================
+
+EPISODE E2_APOLLO_LIFT_APRIL_CUTOFF
+CUTOFF  2026-04-06
+CLAIM   LLM_MUTATION_WORTHLESS
+
+ADMITTED EVIDENCE (4): E2.elites_all_drift, E2.llm_alive_zero, E2.llm_analysis_narrative, E2.stagnation_note
+
+INDEPENDENT REASONS: 1 (from 3 supporting items)
+  [DEPENDENT] E2.elites_all_drift, E2.llm_alive_zero, E2.llm_analysis_narrative   shared: AOS_LINEAGE_COUNTER, EVOLUTION_MONITOR_RUN
+
+LIVE COMPETING EXPLANATIONS: LINEAGE_COUNTER_BROKEN, TOO_EARLY_TO_MEASURE
+
+VETOES (5):
+  AGREEMENT_NOT_ADDITIVE: E2.elites_all_drift, E2.llm_alive_zero, E2.llm_analysis_narrative
+      3 evidence items collapse to ONE independent reason: they share load-bearing upstream ['AOS_LINEAGE_COUNTER', 'EVOLUTION_MONITOR_RUN']. Agreement among them is a property of the shared ancestor, not corroboration.
+  CONFIDENCE_VETO: LINEAGE_COUNTER_BROKEN
+      competing explanation LINEAGE_COUNTER_BROKEN (the survival counter does not observe LLM lineage; survivors exist but are not counted) is not eliminated by any admitted evidence item; confidence in 'LLM_MUTATION_WORTHLESS' must not be compounded until it is
+  CONFIDENCE_VETO: TOO_EARLY_TO_MEASURE
+      competing explanation TOO_EARLY_TO_MEASURE (at generation 53 with near-zero accuracy margins, selection has barely acted on anything) is not eliminated by any admitted evidence item; confidence in 'LLM_MUTATION_WORTHLESS' must not be compounded until it is
+  INSTRUMENT_VETO: E2.llm_alive_zero
+      instrument AOS_LINEAGE_COUNTER: metric pinned at its degenerate boundary in every observed stratum while its generator is independently measured active -- measurement failure explains the observation as well as the phenomenon does
+  INSTRUMENT_VETO: E2.elites_all_drift
+      instrument AOS_LINEAGE_COUNTER: metric pinned at its degenerate boundary in every observed stratum while its generator is independently measured active -- measurement failure explains the observation as well as the phenomenon does
+
+NEXT DISCRIMINATOR: LINEAGE_CHEAT_CONTROL  (cost MINUTES)
+      Inject one known-good LLM-tagged mutation, force it into the elite set, and read llm_alive. If the counter still reports zero, the counter is blind and every llm_alive row ever recorded is void. This is the base role's cheat control: success deliberately injected, to show the measurement channel can observe the thing it claims to measure. Costs one run of minutes against a 24-hour 800-generation experiment.
+  rejected RUN_800_GEN_LLM_MODE: NO_DISCRIMINATORY_POWER
+
+==========================================================================
+
+EPISODE E3_SAXL
+CUTOFF  2026-05-11
+CLAIM   SAXL_IS_SOLVED
+
+ADMITTED EVIDENCE (3): E3.cube_result, E3.fourth_power_result, E3.registry_row
+
+INDEPENDENT REASONS: 1 (from 3 supporting items)
+  [DEPENDENT] E3.cube_result, E3.fourth_power_result, E3.registry_row   shared: LLM_RECALL_OF_PREPRINT
+
+LIVE COMPETING EXPLANATIONS: ANALOGUE_CONFLATED, PROOF_WITHDRAWN
+
+VETOES (6):
+  AGREEMENT_NOT_ADDITIVE: E3.cube_result, E3.fourth_power_result, E3.registry_row
+      3 evidence items collapse to ONE independent reason: they share load-bearing upstream ['LLM_RECALL_OF_PREPRINT']. Agreement among them is a property of the shared ancestor, not corroboration.
+  CONFIDENCE_VETO: ANALOGUE_CONFLATED
+      competing explanation ANALOGUE_CONFLATED (a proved analogue for a different object (the tensor CUBE, or unipotent characters of a Lie-type group) has been read as the conjecture proper) is not eliminated by any admitted evidence item; confidence in 'SAXL_IS_SOLVED' must not be compounded until it is
+  CONFIDENCE_VETO: PROOF_WITHDRAWN
+      competing explanation PROOF_WITHDRAWN (the claimed proof was retracted by its own author and the conjecture is open) is not eliminated by any admitted evidence item; confidence in 'SAXL_IS_SOLVED' must not be compounded until it is
+  STALE_VETO: E3.registry_row
+      contrary information was available at 2025-12-20, at or before this cutoff, and is not incorporated
+  STALE_VETO: E3.cube_result
+      contrary information was available at 2025-12-20, at or before this cutoff, and is not incorporated
+  STALE_VETO: E3.fourth_power_result
+      contrary information was available at 2025-12-20, at or before this cutoff, and is not incorporated
+
+NEXT DISCRIMINATOR: CHECK_OBJECT_MATCHES_CLAIM  (cost MINUTES)
+      Read each supporting citation's own statement of what it proves and compare the OBJECT (square vs cube vs fourth power vs unipotent characters) against the object in the claim. Requires no external fetch: the discrepancy is on the face of the cited titles.
+  rejected COMMISSION_DEEP_RESEARCH_SURVEY: NOT_CHEAPER_THAN_BASELINE
+
+==========================================================================
+
+EPISODE E4_GEOMETRY_1
+CUTOFF  2026-04-17
+CLAIM   LOW_LATENT_RANK_IS_STRUCTURAL
+
+ADMITTED EVIDENCE (5): E4.loading_density_coincidence, E4.method_a_naive_svd, E4.method_b_svt, E4.method_c_agreement_matrix, E4.variance_decomposition
+
+INDEPENDENT REASONS: 1 (from 4 supporting items)
+  [DEPENDENT] E4.method_a_naive_svd, E4.method_b_svt, E4.method_c_agreement_matrix, E4.variance_decomposition   shared: OBSERVATION_MASK, TENSOR_V1, ZERO_MEANS_UNOBSERVED
+
+LIVE COMPETING EXPLANATIONS: METHOD_ASSUMPTION_VIOLATION, MISSINGNESS_ARTIFACT
+
+VETOES (3):
+  AGREEMENT_NOT_ADDITIVE: E4.method_a_naive_svd, E4.method_b_svt, E4.method_c_agreement_matrix, E4.variance_decomposition
+      4 evidence items collapse to ONE independent reason: they share load-bearing upstream ['OBSERVATION_MASK', 'TENSOR_V1', 'ZERO_MEANS_UNOBSERVED']. Agreement among them is a property of the shared ancestor, not corroboration.
+  CONFIDENCE_VETO: METHOD_ASSUMPTION_VIOLATION
+      competing explanation METHOD_ASSUMPTION_VIOLATION (SVT assumes continuous entries, missing-at-random and low-rank-plus-Gaussian structure; on a sparse ordinal matrix where 0 means unobserved the output is a diagnostic number, not a rank) is not eliminated by any admitted evidence item; confidence in 'LOW_LATENT_RANK_IS_STRUCTURAL' must not be compounded until it is
+  CONFIDENCE_VETO: MISSINGNESS_ARTIFACT
+      competing explanation MISSINGNESS_ARTIFACT (the rank estimate is produced by the non-random observation mask; most-tested cells are most-loaded, and density marginals alone generate the apparent low rank) is not eliminated by any admitted evidence item; confidence in 'LOW_LATENT_RANK_IS_STRUCTURAL' must not be compounded until it is
+
+NEXT DISCRIMINATOR: PERMUTE_THE_MASK_ALONE  (cost MINUTES)
+      Hold the rank statistic fixed; resample only the observation mask to preserve row and column densities, and recompute. If the statistic survives mask-only resampling the rank is about the matrix; if it does not, it is about who tested what. Needs no new data, no new instrument and no new theory -- the mask and the estimator are both already in hand. This is the test Harmonia built on 2026-04-29 as missingness_confound_v01, ten days after the retraction, which measured roughly 52 percent of the rank-flavoured signal attributable to density marginals alone.
+  rejected ORDINAL_MNAR_MATRIX_FACTORIZATION: NOT_CHEAPER_THAN_BASELINE
+
+==========================================================================
+
+EPISODE E5_EREBOS_COMPOSITION
+CUTOFF  2026-05-27
+CLAIM   EREBOS_COMPOSES_REAL_STRUCTURE
+
+ADMITTED EVIDENCE (4): E5.25_archetypes_designed, E5.621_tests, E5.four_model_convergence, E5.sprint1_10_of_10
+
+INDEPENDENT REASONS: 1 (from 4 supporting items)
+  [DEPENDENT] E5.25_archetypes_designed, E5.621_tests, E5.four_model_convergence, E5.sprint1_10_of_10   shared: GENERATOR_ARCHITECTURE
+
+LIVE COMPETING EXPLANATIONS: INFRASTRUCTURE_ONLY, NO_LIVE_CONSUMER, SYNTHETIC_FIXTURE_CIRCULARITY
+
+VETOES (4):
+  AGREEMENT_NOT_ADDITIVE: E5.25_archetypes_designed, E5.621_tests, E5.four_model_convergence, E5.sprint1_10_of_10
+      4 evidence items collapse to ONE independent reason: they share load-bearing upstream ['GENERATOR_ARCHITECTURE']. Agreement among them is a property of the shared ancestor, not corroboration.
+  CONFIDENCE_VETO: INFRASTRUCTURE_ONLY
+      competing explanation INFRASTRUCTURE_ONLY (the code is correct and well-tested; correctness of the machinery says nothing about whether its output is true of the world) is not eliminated by any admitted evidence item; confidence in 'EREBOS_COMPOSES_REAL_STRUCTURE' must not be compounded until it is
+  CONFIDENCE_VETO: NO_LIVE_CONSUMER
+      competing explanation NO_LIVE_CONSUMER (nothing downstream validates a composed claim, so no composed claim has been tested against anything) is not eliminated by any admitted evidence item; confidence in 'EREBOS_COMPOSES_REAL_STRUCTURE' must not be compounded until it is
+  CONFIDENCE_VETO: SYNTHETIC_FIXTURE_CIRCULARITY
+      competing explanation SYNTHETIC_FIXTURE_CIRCULARITY (the passing fixtures were authored alongside the generators, so the pass measures agreement between a program and its own test data) is not eliminated by any admitted evidence item; confidence in 'EREBOS_COMPOSES_REAL_STRUCTURE' must not be compounded until it is
+
+NEXT DISCRIMINATOR: PERMUTATION_NULL_ON_REAL_LEDGER  (cost HOURS)
+      Take the strongest composed claim, run it against real (grown, non-synthetic) ledger rows, and compare its lift to a permutation null over several seeds. This is exactly what Phase 3.K did on 2026-06-03 and the answer was p=0.105 with a 7-seed mean of 0.102, with the triplet motif falsified below null. Running it on one archetype before building twenty-five costs hours against the weeks that went into the remaining generators.
+  rejected BUILD_REMAINING_ARCHETYPES: NO_DISCRIMINATORY_POWER

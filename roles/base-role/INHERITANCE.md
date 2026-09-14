@@ -51,6 +51,7 @@ Every role below carries the banner on its primary document(s):
 | Skopos | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before and has never had a charter; agents/skopos/README.md is the March 2026 agent README, annotated by the seat file, not stamped) |
 | StructuralMathematician | RESPONSIBILITIES.md (already) |
 | Techne | RESPONSIBILITIES.md (already), CHARTER.md (already) |
+| Theophrastus | RESPONSIBILITIES.md, CHARTER.md (created 2026-09-13 on the seat's founding pass; new seat, computational ecology / combinatorial exploration; self-service row per Archaeon ruling #39) |
 | Vivarium | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 
 Roles with no document received a stub RESPONSIBILITIES.md to fill. Stamping is an annotation on line 2; nothing else in any seat file was changed.

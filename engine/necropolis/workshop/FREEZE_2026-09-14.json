@@ -1,0 +1,76 @@
+{
+ "schema": "necropolis.workshop.freeze/1",
+ "frozen_at": "2026-09-14",
+ "reported_in": "roles/Rhadamanthus/prompts/2026-09-14_court/RECEIPT.md",
+ "reported_commit": "5a95f4071",
+ "tag": "necropolis-court-2026-09-14",
+ "status_counts": {
+  "UNTRUSTED": 2,
+  "READY": 38,
+  "READY_WITH_CAVEAT": 7,
+  "NEEDS_VALIDATION": 31,
+  "NEEDS_DEPENDENCY": 9,
+  "NEEDS_ADAPTER": 2,
+  "BROKEN": 1,
+  "HISTORICAL_ONLY": 3
+ },
+ "admissibility_counts": {
+  "NOT_ADMISSIBLE": 48,
+  "EVIDENCE": 38,
+  "EVIDENCE_WITH_CAVEAT": 7
+ },
+ "rows": 93,
+ "controls": {
+  "git_head": "2d97a6c66550aa29aa744b3e76a86844a132fd0a",
+  "counts": {
+   "PASS": 174,
+   "FAIL": 8,
+   "INFO": 9,
+   "ERROR": 3
+  },
+  "cases": 194
+ },
+ "dispositions": [
+  "DISP-001:CR-001:DEAD_BEFORE_RUN"
+ ],
+ "reader": "validate_workshop.py recomputes these hashes on every run and prints FREEZE MATCH / FREEZE DRIFT per file; drift is expected once the registry is regenerated and is a note, not an error",
+ "rule": "the reported state is this record, not the working tree; a later regeneration does not rewrite it (R-CR-2 spirit: descendants cite parents)",
+ "files": {
+  "TOOLS.jsonl": {
+   "sha256_lf": "112eeac95067d19cdaa0351cf3eba94d9c02af95ced0ebc8ab30f21ea32682f3",
+   "bytes_lf": 231316
+  },
+  "tests/controls_result.json": {
+   "sha256_lf": "86beeedc9c350774ba1f2045da79470651bbf28dc205bc611493962cec4879bf",
+   "bytes_lf": 84477
+  },
+  "CORONER_RUN.md": {
+   "sha256_lf": "f043486441556322320bb047c34ba405559012e6c562e21f666e3b7cf31daf3c",
+   "bytes_lf": 10329
+  },
+  "coroner_plans/DISPOSITIONS.jsonl": {
+   "sha256_lf": "6df1cf48d1bc8ff69ba7afe260318c57cc4c6dfc35d98e40d2041b3ca16b79a5",
+   "bytes_lf": 2842
+  },
+  "FRANKENSTEIN_XREF.json": {
+   "sha256_lf": "27bd349ddf7c90c6b7227d290d2cb3bd0517d129237677e3b7e48306d29298fa",
+   "bytes_lf": 28756
+  },
+  "CANDIDATE_INDEX.jsonl": {
+   "sha256_lf": "08ac2fb9693668536d73aa023f0a8a32210b4898e30d4537cc26c5f891431eaa",
+   "bytes_lf": 448227
+  },
+  "FORENSIC_QUESTIONS.json": {
+   "sha256_lf": "10560e2960e8337087ec495ab06c9c34334248b173286d20f6fe2d700f29563c",
+   "bytes_lf": 46968
+  },
+  "TOOL_SCHEMA.json": {
+   "sha256_lf": "473a5c6e5ab1ea8acb3deff3e8242301a7e624e87243e3014918aa48bb6eb950",
+   "bytes_lf": 9606
+  },
+  "coroner_plans/CR-001_pollux_frank004.json": {
+   "sha256_lf": "86e949f26f2f6e9f2053cc7dece15bc5a76199c3d6047b791374907099f454f1",
+   "bytes_lf": 11640
+  }
+ }
+}

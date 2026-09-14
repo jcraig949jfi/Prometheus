@@ -1,0 +1,1115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus://engine/necropolis/SCHEMA.json",
+  "title": "Necropolis Dossier",
+  "version": "1.0.0",
+  "description": "One historical Prometheus agent examined as an experimental organism. A Necromancer fills identity..disposition (and optionally descendant_candidate); a Cleric may later implement the descendant. This schema is a compatible SUPERSET of engine/ledger/AGENT_AUTOPSIES.jsonl (the autopsy layer) joined to a descendant-experiment layer. See CHARTER.md for the laws it enforces.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "identity",
+    "autopsy",
+    "disposition",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "kind": {
+      "const": "necropolis_dossier"
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent_id",
+        "source_paths",
+        "evidence_baseline"
+      ],
+      "properties": {
+        "agent_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "MUST resolve to a ROSTER.jsonl agent_id."
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "historical_machine": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "M1..M4 or null/unknown."
+        },
+        "historical_kind": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "tool|daemon|operator|pipeline-stage|healthcheck|machineprobe"
+        },
+        "historical_operator": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Repo paths inspected as evidence (code, state, artifacts)."
+        },
+        "evidence_baseline": {
+          "type": "string",
+          "minLength": 7,
+          "description": "Git SHA at which the evidence was read."
+        }
+      }
+    },
+    "original_organism": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "premise": {
+          "type": "string",
+          "description": "The hypothesis the agent embodied: if we do X, Y follows."
+        },
+        "mechanism": {
+          "type": "string",
+          "description": "How it was meant to work."
+        },
+        "producers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "intended_consumers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "observed_history": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "run_period": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "measurements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "artifact_counts": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "actual_consumers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "consumption_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Paths/queries proving downstream consumption (or its absence). See CONSUMPTION.jsonl seam in SEAMS.md."
+        }
+      }
+    },
+    "autopsy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kill_boundary",
+        "surviving_claims",
+        "failure_classes",
+        "death_certificates",
+        "cause_of_death_stack",
+        "fair_test",
+        "primary_cause"
+      ],
+      "properties": {
+        "prior_verdicts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Raw citations of earlier dispositions/autopsies (LAW N11). Each is reviewed in death_certificates; none is trusted here."
+        },
+        "death_certificates": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source",
+              "claim",
+              "review"
+            ],
+            "properties": {
+              "source": {
+                "type": "string",
+                "minLength": 4,
+                "description": "Where the historical verdict lives (AGENT_AUTOPSIES.jsonl row, pivot dossier section, disposition plan row)."
+              },
+              "claim": {
+                "type": "string",
+                "minLength": 8,
+                "description": "The verdict as written, quoted or tightly paraphrased."
+              },
+              "review": {
+                "type": "string",
+                "enum": [
+                  "UPHELD",
+                  "PARTIALLY_UPHELD",
+                  "OVERTURNED",
+                  "NOT_REVIEWED"
+                ],
+                "description": "The Necromancer's review of the certificate. NOT_REVIEWED is honest for a transcription."
+              },
+              "errors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "What the certificate got wrong. Required non-empty for PARTIALLY_UPHELD / OVERTURNED."
+              }
+            }
+          },
+          "description": "LAW N17: NECROPOLIS DOES NOT INHERIT DEATH CERTIFICATES. Every historical verdict is a claim under review; this is the review. prior_verdicts holds the raw citations."
+        },
+        "cause_of_death_stack": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "HYPOTHESIS",
+            "DESIGN",
+            "IMPLEMENTATION",
+            "CONFIGURATION",
+            "EXECUTION",
+            "INSTRUMENTATION",
+            "MEASUREMENT",
+            "INTERPRETATION",
+            "ECOSYSTEM"
+          ],
+          "properties": {
+            "HYPOTHESIS": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding",
+                "evidence",
+                "cause_classes"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "VALID",
+                    "INVALID",
+                    "NOT_EXAMINED"
+                  ],
+                  "description": "Was THIS layer actually valid? VALID needs executed evidence; NOT_EXAMINED is honest; INVALID names at least one cause class."
+                },
+                "finding": {
+                  "type": "string",
+                  "minLength": 8
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths under dossiers/<agent>_evidence/ or the repo. Required non-empty for VALID and INVALID."
+                },
+                "cause_classes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "HYPOTHESIS_FAILURE",
+                      "DESIGN_ERROR",
+                      "IMPLEMENTATION_ERROR",
+                      "CONFIGURATION_ERROR",
+                      "EXECUTION_ERROR",
+                      "INSTRUMENT_ERROR",
+                      "MEASUREMENT_ERROR",
+                      "INTERPRETATION_ERROR",
+                      "IDENTITY_PROVENANCE_ERROR",
+                      "CAPABILITY_CEILING",
+                      "ECOSYSTEM_FAILURE",
+                      "PREMISE_FAILURE"
+                    ]
+                  },
+                  "description": "Cause classes this layer supports. Empty for NOT_EXAMINED. Empty for VALID except on HYPOTHESIS, where VALID + HYPOTHESIS_FAILURE/PREMISE_FAILURE means a fair test falsified it."
+                },
+                "load_bearing": {
+                  "type": "boolean",
+                  "description": "For INVALID: did the defect change the historical answer (true), or was it measured not to (false, with evidence)? A layer may be invalid and non-load-bearing; say which."
+                }
+              },
+              "description": "Was the proposition well-posed and reachable by an experiment at all? VALID here does not mean true; the outcome lives in cause_classes."
+            },
+            "DESIGN": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding",
+                "evidence",
+                "cause_classes"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "VALID",
+                    "INVALID",
+                    "NOT_EXAMINED"
+                  ],
+                  "description": "Was THIS layer actually valid? VALID needs executed evidence; NOT_EXAMINED is honest; INVALID names at least one cause class."
+                },
+                "finding": {
+                  "type": "string",
+                  "minLength": 8
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths under dossiers/<agent>_evidence/ or the repo. Required non-empty for VALID and INVALID."
+                },
+                "cause_classes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "HYPOTHESIS_FAILURE",
+                      "DESIGN_ERROR",
+                      "IMPLEMENTATION_ERROR",
+                      "CONFIGURATION_ERROR",
+                      "EXECUTION_ERROR",
+                      "INSTRUMENT_ERROR",
+                      "MEASUREMENT_ERROR",
+                      "INTERPRETATION_ERROR",
+                      "IDENTITY_PROVENANCE_ERROR",
+                      "CAPABILITY_CEILING",
+                      "ECOSYSTEM_FAILURE",
+                      "PREMISE_FAILURE"
+                    ]
+                  },
+                  "description": "Cause classes this layer supports. Empty for NOT_EXAMINED. Empty for VALID except on HYPOTHESIS, where VALID + HYPOTHESIS_FAILURE/PREMISE_FAILURE means a fair test falsified it."
+                },
+                "load_bearing": {
+                  "type": "boolean",
+                  "description": "For INVALID: did the defect change the historical answer (true), or was it measured not to (false, with evidence)? A layer may be invalid and non-load-bearing; say which."
+                }
+              },
+              "description": "Could the experiment as designed answer the question it purported to answer? (comparators, controls, chance floor, holdout structure, consumer at birth)"
+            },
+            "IMPLEMENTATION": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding",
+                "evidence",
+                "cause_classes"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "VALID",
+                    "INVALID",
+                    "NOT_EXAMINED"
+                  ],
+                  "description": "Was THIS layer actually valid? VALID needs executed evidence; NOT_EXAMINED is honest; INVALID names at least one cause class."
+                },
+                "finding": {
+                  "type": "string",
+                  "minLength": 8
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths under dossiers/<agent>_evidence/ or the repo. Required non-empty for VALID and INVALID."
+                },
+                "cause_classes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "HYPOTHESIS_FAILURE",
+                      "DESIGN_ERROR",
+                      "IMPLEMENTATION_ERROR",
+                      "CONFIGURATION_ERROR",
+                      "EXECUTION_ERROR",
+                      "INSTRUMENT_ERROR",
+                      "MEASUREMENT_ERROR",
+                      "INTERPRETATION_ERROR",
+                      "IDENTITY_PROVENANCE_ERROR",
+                      "CAPABILITY_CEILING",
+                      "ECOSYSTEM_FAILURE",
+                      "PREMISE_FAILURE"
+                    ]
+                  },
+                  "description": "Cause classes this layer supports. Empty for NOT_EXAMINED. Empty for VALID except on HYPOTHESIS, where VALID + HYPOTHESIS_FAILURE/PREMISE_FAILURE means a fair test falsified it."
+                },
+                "load_bearing": {
+                  "type": "boolean",
+                  "description": "For INVALID: did the defect change the historical answer (true), or was it measured not to (false, with evidence)? A layer may be invalid and non-load-bearing; say which."
+                }
+              },
+              "description": "Did the code do what the design said? (gates, selectors, loaders, skip sets, label construction, retry policy as written vs as intended)"
+            },
+            "CONFIGURATION": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding",
+                "evidence",
+                "cause_classes"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "VALID",
+                    "INVALID",
+                    "NOT_EXAMINED"
+                  ],
+                  "description": "Was THIS layer actually valid? VALID needs executed evidence; NOT_EXAMINED is honest; INVALID names at least one cause class."
+                },
+                "finding": {
+                  "type": "string",
+                  "minLength": 8
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths under dossiers/<agent>_evidence/ or the repo. Required non-empty for VALID and INVALID."
+                },
+                "cause_classes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "HYPOTHESIS_FAILURE",
+                      "DESIGN_ERROR",
+                      "IMPLEMENTATION_ERROR",
+                      "CONFIGURATION_ERROR",
+                      "EXECUTION_ERROR",
+                      "INSTRUMENT_ERROR",
+                      "MEASUREMENT_ERROR",
+                      "INTERPRETATION_ERROR",
+                      "IDENTITY_PROVENANCE_ERROR",
+                      "CAPABILITY_CEILING",
+                      "ECOSYSTEM_FAILURE",
+                      "PREMISE_FAILURE"
+                    ]
+                  },
+                  "description": "Cause classes this layer supports. Empty for NOT_EXAMINED. Empty for VALID except on HYPOTHESIS, where VALID + HYPOTHESIS_FAILURE/PREMISE_FAILURE means a fair test falsified it."
+                },
+                "load_bearing": {
+                  "type": "boolean",
+                  "description": "For INVALID: did the defect change the historical answer (true), or was it measured not to (false, with evidence)? A layer may be invalid and non-load-bearing; say which."
+                }
+              },
+              "description": "Thresholds, comparators, parameter regimes, model ids, datasets, corpus paths, caps, seeds: was the run configured so that it could be informative?"
+            },
+            "EXECUTION": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding",
+                "evidence",
+                "cause_classes"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "VALID",
+                    "INVALID",
+                    "NOT_EXAMINED"
+                  ],
+                  "description": "Was THIS layer actually valid? VALID needs executed evidence; NOT_EXAMINED is honest; INVALID names at least one cause class."
+                },
+                "finding": {
+                  "type": "string",
+                  "minLength": 8
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths under dossiers/<agent>_evidence/ or the repo. Required non-empty for VALID and INVALID."
+                },
+                "cause_classes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "HYPOTHESIS_FAILURE",
+                      "DESIGN_ERROR",
+                      "IMPLEMENTATION_ERROR",
+                      "CONFIGURATION_ERROR",
+                      "EXECUTION_ERROR",
+                      "INSTRUMENT_ERROR",
+                      "MEASUREMENT_ERROR",
+                      "INTERPRETATION_ERROR",
+                      "IDENTITY_PROVENANCE_ERROR",
+                      "CAPABILITY_CEILING",
+                      "ECOSYSTEM_FAILURE",
+                      "PREMISE_FAILURE"
+                    ]
+                  },
+                  "description": "Cause classes this layer supports. Empty for NOT_EXAMINED. Empty for VALID except on HYPOTHESIS, where VALID + HYPOTHESIS_FAILURE/PREMISE_FAILURE means a fair test falsified it."
+                },
+                "load_bearing": {
+                  "type": "boolean",
+                  "description": "For INVALID: did the defect change the historical answer (true), or was it measured not to (false, with evidence)? A layer may be invalid and non-load-bearing; say which."
+                }
+              },
+              "description": "Was the intended experiment actually executed faithfully? (runs happened, state persisted, artifacts kept, no silent fallbacks or partial runs)"
+            },
+            "INSTRUMENTATION": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding",
+                "evidence",
+                "cause_classes"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "VALID",
+                    "INVALID",
+                    "NOT_EXAMINED"
+                  ],
+                  "description": "Was THIS layer actually valid? VALID needs executed evidence; NOT_EXAMINED is honest; INVALID names at least one cause class."
+                },
+                "finding": {
+                  "type": "string",
+                  "minLength": 8
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths under dossiers/<agent>_evidence/ or the repo. Required non-empty for VALID and INVALID."
+                },
+                "cause_classes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "HYPOTHESIS_FAILURE",
+                      "DESIGN_ERROR",
+                      "IMPLEMENTATION_ERROR",
+                      "CONFIGURATION_ERROR",
+                      "EXECUTION_ERROR",
+                      "INSTRUMENT_ERROR",
+                      "MEASUREMENT_ERROR",
+                      "INTERPRETATION_ERROR",
+                      "IDENTITY_PROVENANCE_ERROR",
+                      "CAPABILITY_CEILING",
+                      "ECOSYSTEM_FAILURE",
+                      "PREMISE_FAILURE"
+                    ]
+                  },
+                  "description": "Cause classes this layer supports. Empty for NOT_EXAMINED. Empty for VALID except on HYPOTHESIS, where VALID + HYPOTHESIS_FAILURE/PREMISE_FAILURE means a fair test falsified it."
+                },
+                "load_bearing": {
+                  "type": "boolean",
+                  "description": "For INVALID: did the defect change the historical answer (true), or was it measured not to (false, with evidence)? A layer may be invalid and non-load-bearing; say which."
+                }
+              },
+              "description": "Could the apparatus observe the proposed phenomenon at all? (gate not vacuous, judge frozen, instrument above chance, chance floor published)"
+            },
+            "MEASUREMENT": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding",
+                "evidence",
+                "cause_classes"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "VALID",
+                    "INVALID",
+                    "NOT_EXAMINED"
+                  ],
+                  "description": "Was THIS layer actually valid? VALID needs executed evidence; NOT_EXAMINED is honest; INVALID names at least one cause class."
+                },
+                "finding": {
+                  "type": "string",
+                  "minLength": 8
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths under dossiers/<agent>_evidence/ or the repo. Required non-empty for VALID and INVALID."
+                },
+                "cause_classes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "HYPOTHESIS_FAILURE",
+                      "DESIGN_ERROR",
+                      "IMPLEMENTATION_ERROR",
+                      "CONFIGURATION_ERROR",
+                      "EXECUTION_ERROR",
+                      "INSTRUMENT_ERROR",
+                      "MEASUREMENT_ERROR",
+                      "INTERPRETATION_ERROR",
+                      "IDENTITY_PROVENANCE_ERROR",
+                      "CAPABILITY_CEILING",
+                      "ECOSYSTEM_FAILURE",
+                      "PREMISE_FAILURE"
+                    ]
+                  },
+                  "description": "Cause classes this layer supports. Empty for NOT_EXAMINED. Empty for VALID except on HYPOTHESIS, where VALID + HYPOTHESIS_FAILURE/PREMISE_FAILURE means a fair test falsified it."
+                },
+                "load_bearing": {
+                  "type": "boolean",
+                  "description": "For INVALID: did the defect change the historical answer (true), or was it measured not to (false, with evidence)? A layer may be invalid and non-load-bearing; say which."
+                }
+              },
+              "description": "Is the recorded quantity the quantity the design named? (instrument state not in the outcome column, the metric does not carry its own answer)"
+            },
+            "INTERPRETATION": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding",
+                "evidence",
+                "cause_classes"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "VALID",
+                    "INVALID",
+                    "NOT_EXAMINED"
+                  ],
+                  "description": "Was THIS layer actually valid? VALID needs executed evidence; NOT_EXAMINED is honest; INVALID names at least one cause class."
+                },
+                "finding": {
+                  "type": "string",
+                  "minLength": 8
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths under dossiers/<agent>_evidence/ or the repo. Required non-empty for VALID and INVALID."
+                },
+                "cause_classes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "HYPOTHESIS_FAILURE",
+                      "DESIGN_ERROR",
+                      "IMPLEMENTATION_ERROR",
+                      "CONFIGURATION_ERROR",
+                      "EXECUTION_ERROR",
+                      "INSTRUMENT_ERROR",
+                      "MEASUREMENT_ERROR",
+                      "INTERPRETATION_ERROR",
+                      "IDENTITY_PROVENANCE_ERROR",
+                      "CAPABILITY_CEILING",
+                      "ECOSYSTEM_FAILURE",
+                      "PREMISE_FAILURE"
+                    ]
+                  },
+                  "description": "Cause classes this layer supports. Empty for NOT_EXAMINED. Empty for VALID except on HYPOTHESIS, where VALID + HYPOTHESIS_FAILURE/PREMISE_FAILURE means a fair test falsified it."
+                },
+                "load_bearing": {
+                  "type": "boolean",
+                  "description": "For INVALID: did the defect change the historical answer (true), or was it measured not to (false, with evidence)? A layer may be invalid and non-load-bearing; say which."
+                }
+              },
+              "description": "Did the historical conclusion follow from the evidence? Includes identity/provenance: was the right artifact, run, component attributed to the verdict?"
+            },
+            "ECOSYSTEM": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "verdict",
+                "finding",
+                "evidence",
+                "cause_classes"
+              ],
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "VALID",
+                    "INVALID",
+                    "NOT_EXAMINED"
+                  ],
+                  "description": "Was THIS layer actually valid? VALID needs executed evidence; NOT_EXAMINED is honest; INVALID names at least one cause class."
+                },
+                "finding": {
+                  "type": "string",
+                  "minLength": 8
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Paths under dossiers/<agent>_evidence/ or the repo. Required non-empty for VALID and INVALID."
+                },
+                "cause_classes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "HYPOTHESIS_FAILURE",
+                      "DESIGN_ERROR",
+                      "IMPLEMENTATION_ERROR",
+                      "CONFIGURATION_ERROR",
+                      "EXECUTION_ERROR",
+                      "INSTRUMENT_ERROR",
+                      "MEASUREMENT_ERROR",
+                      "INTERPRETATION_ERROR",
+                      "IDENTITY_PROVENANCE_ERROR",
+                      "CAPABILITY_CEILING",
+                      "ECOSYSTEM_FAILURE",
+                      "PREMISE_FAILURE"
+                    ]
+                  },
+                  "description": "Cause classes this layer supports. Empty for NOT_EXAMINED. Empty for VALID except on HYPOTHESIS, where VALID + HYPOTHESIS_FAILURE/PREMISE_FAILURE means a fair test falsified it."
+                },
+                "load_bearing": {
+                  "type": "boolean",
+                  "description": "For INVALID: did the defect change the historical answer (true), or was it measured not to (false, with evidence)? A layer may be invalid and non-load-bearing; say which."
+                }
+              },
+              "description": "Did anything consume what the producer emitted; was the producer starved, orchestrated, or resourced so that it could matter?"
+            }
+          },
+          "description": "Mandatory cause-of-death stack (LAW N17). Every layer is asked: was this layer actually valid? Filled before disposition; the validator refuses HYPOTHESIS_FAILURE / PREMISE_FAILURE unless the layers DESIGN..MEASUREMENT are VALID or INVALID-but-measured-non-load-bearing, and none is NOT_EXAMINED."
+        },
+        "fair_test": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "verdict",
+            "finding",
+            "evidence"
+          ],
+          "properties": {
+            "verdict": {
+              "type": "string",
+              "enum": [
+                "FAIR",
+                "UNFAIR",
+                "UNDETERMINED"
+              ],
+              "description": "The first question of every autopsy: what evidence establishes that this experiment ever received a fair test? FAIR requires DESIGN..MEASUREMENT all VALID or INVALID-but-measured-non-load-bearing, none NOT_EXAMINED."
+            },
+            "scope": {
+              "type": "string",
+              "description": "The window / configuration the verdict applies to, when the organism had eras (e.g. post-2026-03-27 honest-battery window only)."
+            },
+            "finding": {
+              "type": "string",
+              "minLength": 8
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "primary_cause": {
+          "type": "string",
+          "enum": [
+            "HYPOTHESIS_FAILURE",
+            "DESIGN_ERROR",
+            "IMPLEMENTATION_ERROR",
+            "CONFIGURATION_ERROR",
+            "EXECUTION_ERROR",
+            "INSTRUMENT_ERROR",
+            "MEASUREMENT_ERROR",
+            "INTERPRETATION_ERROR",
+            "IDENTITY_PROVENANCE_ERROR",
+            "CAPABILITY_CEILING",
+            "ECOSYSTEM_FAILURE",
+            "PREMISE_FAILURE",
+            "UNDETERMINED"
+          ],
+          "description": "The proximate cause the evidence best supports. Must appear in some layer's cause_classes. UNDETERMINED only with NOT_EXAMINED layers or classification NEEDS_MORE_EVIDENCE. PREMISE_FAILURE is the strong claim and is admitted only after every other class has been excluded (premise_exclusion non-empty)."
+        },
+        "contributing_causes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "HYPOTHESIS_FAILURE",
+              "DESIGN_ERROR",
+              "IMPLEMENTATION_ERROR",
+              "CONFIGURATION_ERROR",
+              "EXECUTION_ERROR",
+              "INSTRUMENT_ERROR",
+              "MEASUREMENT_ERROR",
+              "INTERPRETATION_ERROR",
+              "IDENTITY_PROVENANCE_ERROR",
+              "CAPABILITY_CEILING",
+              "ECOSYSTEM_FAILURE",
+              "PREMISE_FAILURE"
+            ]
+          },
+          "description": "Every other cause class the stack supports, in order of weight. Frankenstein reads these as repair targets (F7)."
+        },
+        "premise_exclusion": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 12
+          },
+          "description": "Required for PREMISE_FAILURE: the alternative assemblies / repairs / fair tests that were tried and also failed, with evidence paths. Without this the strongest admissible claim is HYPOTHESIS_FAILURE (this experiment falsified this proposition), not PREMISE_FAILURE (the idea itself appears dead)."
+        },
+        "failure_classes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 2
+          },
+          "description": "Mechanistic failure typing. SHOULD reference an AUTOPSY_TAXONOMY.md cluster when applicable (DEAD-GATING, LOW-BITS-EMISSION, BOUNDED-MENU-SATURATION, SELECTION-DECOUPLED-FROM-SIGNAL, SEAM-BROKEN, SEMANTIC-TASK-SYNTACTIC-TOOL) or NO-DESIGN-FAILURE-ESTABLISHED. The generic label FAILED is forbidden here and in disposition.classification."
+        },
+        "kill_boundary": {
+          "type": "string",
+          "minLength": 12,
+          "description": "LAW N4: the STRONGEST proposition the evidence legitimately killed, and no stronger. State what is excluded, not merely that it died."
+        },
+        "surviving_claims": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "LAW N5: mechanisms/premises STILL compatible with the evidence. May be empty only for a defended TRUE_CORPSE."
+        },
+        "uncertainty": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "contradictory_evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "capability_contingency": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "frontier_dependent": {
+              "type": "boolean",
+              "description": "Did the kill boundary depend materially on a moving technological frontier?"
+            },
+            "frontiers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Named frontiers: model capability, context length, tool use, coding ability, inference cost, verifier integration, model reliability, ..."
+            },
+            "era_bound_claim": {
+              "type": "string",
+              "description": "The claim as it SHOULD be stated: 'era-E model + mechanism + representation + budget could not do X'."
+            },
+            "what_would_move_it": {
+              "type": "string",
+              "description": "What changed capability would re-open the boundary, if any."
+            }
+          },
+          "required": [
+            "frontier_dependent"
+          ],
+          "description": "LAW N16: record whether 'too early' is part of the kill, so it can be tested rather than assumed."
+        }
+      }
+    },
+    "residue": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "LAW N7: typed salvage, not prose.",
+      "properties": {
+        "salvageable_code": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "salvageable_data": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "salvageable_schemas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "salvageable_operators": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "salvageable_tests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "representation_hints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "classification",
+        "rationale"
+      ],
+      "properties": {
+        "classification": {
+          "type": "string",
+          "enum": [
+            "TRUE_CORPSE",
+            "CAPABILITY_BOUND",
+            "NO_FAIR_TEST_ON_RECORD",
+            "PREMISE_ALIVE_IMPLEMENTATION_DEAD",
+            "PRODUCER_BLOCKED",
+            "CONSUMER_BLOCKED",
+            "REPRESENTATION_FAILURE",
+            "MEASUREMENT_FAILURE",
+            "ORCHESTRATION_FAILURE",
+            "RESOURCE_BLOCKED",
+            "SUPERSEDED_BUT_ORGANS_SALVAGEABLE",
+            "NO_DESIGN_FAILURE_ESTABLISHED",
+            "NEEDS_MORE_EVIDENCE"
+          ],
+          "description": "The archaeological state. There is deliberately NO generic FAILED value; the validator hard-rejects it. TRUE_CORPSE requires primary_cause HYPOTHESIS_FAILURE or PREMISE_FAILURE and fair_test FAIR. CAPABILITY_BOUND: killed at power under an era capability the kill boundary names (primary_cause CAPABILITY_CEILING); Frankenstein's lane. NO_FAIR_TEST_ON_RECORD: the evidence establishes the historical experiment could not have answered its own question (fair_test UNFAIR); the hypothesis stands untested, and that is a finding, not a gap."
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 12
+        }
+      }
+    },
+    "descendant_candidate": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "description": "OPTIONAL. Present only when a descendant is PROPOSED. If present the validator enforces LAW N6 (consumer + consumption_proof), N8 (changed_design), N9 (expected_if_alive/dead + kill_condition). A dossier with no proposed descendant sets this to null.",
+      "required": [
+        "id",
+        "parent",
+        "changed_design",
+        "consumer",
+        "consumption_proof",
+        "expected_if_alive",
+        "expected_if_dead",
+        "kill_condition"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent": {
+          "type": "string",
+          "minLength": 1,
+          "description": "MUST equal identity.agent_id."
+        },
+        "changed_design": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "LAW N8: exactly what differs from the historical organism."
+        },
+        "preserved_mechanism": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "consumer": {
+          "type": "string",
+          "minLength": 1,
+          "description": "LAW N6: a concrete named downstream consumer."
+        },
+        "consumption_proof": {
+          "type": "string",
+          "minLength": 1,
+          "description": "LAW N6: the mechanism that will PROVE consumption (e.g. a CONSUMPTION.jsonl row with a measured effect)."
+        },
+        "expected_if_alive": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_if_dead": {
+          "type": "string",
+          "minLength": 1
+        },
+        "positive_control": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "negative_or_decoy_control": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kill_condition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "LAW N9: the pre-declared condition that ends the resurrection experiment as a failure."
+        },
+        "resource_budget": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "investigator",
+        "branch",
+        "baseline_sha",
+        "commands_run"
+      ],
+      "properties": {
+        "investigator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "Necromancer",
+            "Cleric",
+            "Keeper"
+          ]
+        },
+        "branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseline_sha": {
+          "type": "string",
+          "minLength": 7
+        },
+        "evidence_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "commands_run": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "unresolved_questions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "created": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

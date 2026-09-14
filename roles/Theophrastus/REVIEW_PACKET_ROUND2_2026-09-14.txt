@@ -1,0 +1,183 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+THEOPHRASTUS ROUND 2 -- DISSECTING THE W599/P_unif CARCASS INTO MECHANISMS
+================================================================================
+Prepared:        2026-09-14   frozen (rows committed with dispositions)
+Location/Code:   theophrastus/{dissect,curves,round2}.py (+ ecology.py r2)
+Artifacts:       roles/Theophrastus/specimens/SPECIMENS_ROUND2_2026-09-14.md
+                 crucible/ROUND2_DISSECTION_PLAN_2026-09-14.md
+                 roles/Theophrastus/crucible/round2/{stepA_tests.json,
+                 ADAPTIVE_RECORD_01.json, ADAPTIVE_RECORD_02.json,
+                 ROUND2_SCORE.json, per_ic.jsonl, per_ic_round2.jsonl,
+                 per_ic_validation.json}; ledgers/rows.jsonl (phase round2)
+                 reqs/THEO-REQ-004..006; roles/Vivarium/INBOX_THEOPHRASTUS_*
+Version/Hash:    prompt sha256 acb4bd5f9021...; plan 64e4189e7 (before Step A);
+                 Step A + frozen record aa2d2d29d (before execution);
+                 round-2 rows + specimens cd8d4c87c
+Headline:        MECHANISM_SPECIMEN_HARVESTED (THEO-SPEC-001 MARGIN_RESPONSE)
+                 + MECHANISM_BOUNDED (THEO-SPEC-002 ONE_CLASS_COLLAPSE, exp)
+                 + MECHANISM_CANDIDATE (THEO-CAND-003 maj boundary shift)
+                 + the founding "P_unif x W599 interaction" retired as
+                 ECOLOGICAL_CORRELATION_ONLY. 21 new executions, 59/59
+                 fossils re-derived bit-exactly, 2 cheats caught, 4
+                 explanations killed, 1 transport failed and preserved.
+
+--------------------------------------------------------------------------------
+1. CARCASS CONSUMED
+--------------------------------------------------------------------------------
+Nine founding contrasts (NEW_TO_RECORD) around P_unif at W599: every
+rule lifted by the uniform-density ensemble, with a rule-specific sign of
+the world dependence (GKL/par rise with N under P_unif, exp/maj fall).
+
+--------------------------------------------------------------------------------
+2. COMPETING EXPLANATIONS (frozen in the plan before Step A)
+--------------------------------------------------------------------------------
+H1 margin mediation (success depends on the IC only via realised count k)
+H2 nominal-p parameterisation artifact (margin sd sqrt(p(1-p)/N))
+H3 rule-intrinsic finite-size response at fixed margin
+H4 convergence horizon      H5 criterion geometry (already dead)
+H6 branch-specific response shape / complement asymmetry
+H7 nothing transportable
+
+--------------------------------------------------------------------------------
+3. DISCRIMINATION RULES
+--------------------------------------------------------------------------------
+Step A, zero cells: re-derive every IC of every fossil from its repeat
+seed; REQUIRE bit-exact accuracy + mask digest; then per-IC tables.
+Binomial z per 0.01-margin bin, >= 20 ICs a side; a bin |z| >= 3 is a
+break. Steps B-E: 20 cells with predictions frozen per cell from the
+signed-margin curve applied to the cell's own regenerated ICs
+(ADAPTIVE_RECORD_01); pass = within 2*sqrt(se_pred^2 + se_obs^2).
+Harvest gate (plan s3): SPECIMEN = A + B + D + scaling verdict +
+counterexamples; BOUNDED = A + B without transport; etc.
+
+--------------------------------------------------------------------------------
+4. CELLS EXECUTED / 5. INTERVENTIONS
+--------------------------------------------------------------------------------
+21 rows (20 planned + 1 retry), 20 COMPLETED, 1 FAILED (substrate
+validator, s15), 21 fossils in PEW ns theophrastus, 168 observations.
+    B  10  single-density INVERT / boundary cells (exp, par, GKL, maj)
+    C   2  ATTENUATE horizon (steps halved) under P_unif
+    D   4  TRANSPLANT the analysis to a held-out rule (particle1)
+    E   4  SCALE world to N=999 (exp, GKL)
+    +   1  retry of the refused cell at n_ic=50 x 16 (ADAPTIVE_RECORD_02)
+Plus the offline ISOLATE: 29,800 + 16,000 per-IC records.
+
+--------------------------------------------------------------------------------
+6. EXPLANATIONS KILLED / 7. SURVIVING
+--------------------------------------------------------------------------------
+KILLED   H4 horizon: halved steps bit-identical (2/2 digests equal)
+KILLED   H5 criterion: criteria_agree 67/67 rows
+KILLED   H3 in ABSOLUTE-count form: by_abs_count chi2 208-614/28 vs
+         by_m 41-127/27 for every rule
+KILLED   H6 as a BRANCH property: particle1 (GA-evolved) symmetric,
+         max |z| 2.1 (transport failed, preserved)
+KILLED   "P_unif x W599 interaction" as a mechanism: = H2 + H3
+SURVIVE  H1 (8/8 + 2/2 held-out; also exact by exchangeability)
+         H2 (arithmetic; contributes)  H3 in RELATIVE-margin form,
+         rule-specific sign  H6 as a RULE property (exp, par)
+
+--------------------------------------------------------------------------------
+8. BOUNDARIES / INVARIANCES
+--------------------------------------------------------------------------------
+Rule   sym?  N-trend at fixed m           boundary / geometry
+-----  ----  ---------------------------  ---------------------------------
+GKL    yes   sharpens 149->599->999       success 1.0 by m ~.05 (599)
+par    no    sharpens 149->599 (999 n/a)  favours d<1/2; z +10 at m=0
+exp    no    saturated by 599 (=999)      ONE-CLASS: 1.0 on d>1/2 at all
+                                          m; .00-.04 on d<1/2 to m~.05,
+                                          .35 at m~.10, .76 at ~.20
+maj    yes   boundary moves outward       m* ~.27 (149) -> >.30 (599)
+Invariances: ensemble (fixed m), horizon, criterion, reflection: exact.
+
+--------------------------------------------------------------------------------
+9. TRANSPORT / 10. COUNTEREXAMPLES
+--------------------------------------------------------------------------------
+particle1 (never used to form H1-H7): H1 holds (chi2 2.1/4, 3.7/2);
+asymmetry ABSENT -> branch-level claim dead. World transport: the curve
+FORM transports, values do not (GKL W999 P_iid .7925 vs .7236 predicted
+from the 599 curve; exp W999 P_unif .789 vs .823). Kind transport:
+untested. Counterexamples preserved: particle1 symmetry; 3 under-
+resolved-bin misses (maj .576/.529, .130/.155; exp .348/.304); the two
+W999 misses; the FAILED row itself.
+
+--------------------------------------------------------------------------------
+11. CANDIDATES / 12. SPECIMENS / 13. REJECTED / 14. DUPLICATES
+--------------------------------------------------------------------------------
+THEO-SPEC-001 MARGIN_RESPONSE .......... MECHANISM_SPECIMEN
+   soup-bound as (a) margin-controlled density pressure (expressible
+   today), (b) an offline per-IC phenotype instrument validated 59/59,
+   (c) a stated envelope: constructive within 2 SE where a bin holds
+   >= ~100 ICs (7/7), 2-3 SE off where < 50 (3/3, right direction)
+THEO-SPEC-002 ONE_CLASS_COLLAPSE (exp) . MECHANISM_BOUNDED
+   cause at the table level UNKNOWN (needs THEO-REQ-005); detector
+   transports; published P_599/P_999 of exp are a constant classifier's
+THEO-CAND-003 MAJ_BOUNDARY_SHIFT ....... MECHANISM_CANDIDATE (stopped:
+   below binomial resolution without exact-count ICs, THEO-REQ-006)
+"P_unif x W599 interaction" ............ ECOLOGICAL_CORRELATION_ONLY
+"GA branch => asymmetric" .............. TRANSPORT_FAILED
+Duplicates: none in Prometheus (Nyx catalogue, Herakles C1-e, Techne
+checked); the literature knew the direction, not the instrument.
+
+--------------------------------------------------------------------------------
+15. SUBSTRATE BLOCKERS / 16. CHANGE REQUIREMENTS
+--------------------------------------------------------------------------------
+- Vivarium result validator refuses a legal length-64 witness (row rou1
+  FAILED after 6/8 repeats); per-IC outcomes absent above 64 failures
+  -> THEO-REQ-004 (Vivarium, cc Herakles) + INBOX defect note
+- no table-level intervention with provenance -> THEO-REQ-005 (Herakles,
+  cc Vivarium, Proteus)
+- no exact-count ICs -> THEO-REQ-006 (Herakles, cc Vivarium)
+- REQ-001..003 from the founding round still open (no replies yet)
+
+--------------------------------------------------------------------------------
+17. COMPUTE / 18. EVIDENCE POINTERS / 19. CHEATS / 20. DEAD TERRAIN
+--------------------------------------------------------------------------------
+21 executions of 45; adapter wall 315.8 s; executor 301.5 s; offline
+re-derivation ~3 min for 59 rows; one engine eng_8a37a5d3, one build.
+Evidence: files in the Artifacts line; every number recomputes from
+per_ic*.jsonl + rows.jsonl.
+CHEAT-A perturbed seed breaks the re-derivation ..... caught
+CHEAT-B wrong rule's curve (.9998 vs obs .3475) ...... misses (caught)
+C1-C10 of the founding round in force (0 refusals, 0 budget blocks)
+Dead terrain: the FAILED exp/W599/P_d40 spec (do not re-run at n_ic=100
+until REQ-004); maj under P_iid remains structurally dead.
+
+--------------------------------------------------------------------------------
+21. LIMITATIONS
+--------------------------------------------------------------------------------
+- Curve resolution is the binding limit at boundaries (3/10 misses).
+- H1 is exact by exchangeability for Bernoulli generators; its empirical
+  pass is an instrument check, not a discovery, and is stated as such.
+- SPEC-002's cause is UNKNOWN; "block-expanding" is the literature's
+  label, not something tested here.
+- GKL at W999 P_iid measured .7925 (n=800) vs published .757 / C1-e
+  .749: 2.5 SE; flagged, not read.
+- The specimens are kind-specific (ca_density_v0); nothing here claims
+  transport to another kind.
+
+--------------------------------------------------------------------------------
+22. REPRODUCTION
+--------------------------------------------------------------------------------
+From a linked worktree at or after this packet's commit:
+    python -m theophrastus.dissect          -> 38/38 match, CHEAT-A caught
+    python -m theophrastus.curves           -> stepA_tests.json
+    python -m theophrastus.round2 score     -> ROUND2_SCORE.json
+    python -m pytest theophrastus/tests -q  -> 19 passed
+
+--------------------------------------------------------------------------------
+23. VERDICT
+--------------------------------------------------------------------------------
+NO_MECHANISM_EXTRACTED ............... no
+MECHANISM_CANDIDATE_ONLY ............. THEO-CAND-003 only
+MECHANISM_PARTIALLY_ISOLATED ......... no
+MECHANISM_BOUNDED .................... THEO-SPEC-002
+MECHANISM_SPECIMEN_HARVESTED ......... YES, THEO-SPEC-001
+Reviewer's bottom line: is a per-IC response curve that is exact by
+construction (exchangeability) but was never instrumented, invariance-
+tested or made constructive in Prometheus a MECHANISM specimen for the
+soup, or an instrument? The seat says: both, and the pressure primitive
+is the ingredient.
+================================================================================
+END OF PACKET
+================================================================================

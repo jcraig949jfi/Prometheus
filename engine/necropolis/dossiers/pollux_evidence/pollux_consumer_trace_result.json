@@ -1,0 +1,278 @@
+{
+ "script": "pollux_consumer_trace.py",
+ "C1_hecate": {
+  "citations": [
+   {
+    "path": "charon/agents/hecate/daemon.py",
+    "needle": "pollux",
+    "found": true,
+    "line": 33,
+    "note": "LEDGER_CANDIDATES registers the Pollux ledger"
+   },
+   {
+    "path": "charon/agents/hecate/daemon.py",
+    "needle": "appear under >=2 distinct generator_ids",
+    "found": true,
+    "line": 269,
+    "note": "cross-generator MI restricted to patterns shared by >=2 generators"
+   },
+   {
+    "path": "charon/agents/hecate/daemon.py",
+    "needle": "pollux_no_correlation_observed",
+    "found": true,
+    "line": 325,
+    "note": "the 2026-05-25 seam comment names the one Pollux pattern the instrument can never emit"
+   },
+   {
+    "path": "charon/agents/hecate/daemon.py",
+    "needle": "r\"^(stygian|pollux|nephele|moros|acheron|lethe|hecate|\"",
+    "found": true,
+    "line": 330,
+    "note": "prefix-strip canonicalization"
+   }
+  ],
+  "canonical_tails": {
+   "pollux_sign_flips_under_normalization": "sign_flips_under_normalization",
+   "pollux_correlation_survives_normalization": "correlation_survives_normalization",
+   "pollux_no_correlation_observed": "no_correlation_observed",
+   "pollux_correlation_attenuates_under_normalization": "correlation_attenuates_under_normalization"
+  },
+  "other_generators_emitting_same_tail": {
+   "sign_flips_under_normalization": [],
+   "correlation_survives_normalization": [],
+   "no_correlation_observed": [],
+   "correlation_attenuates_under_normalization": []
+  },
+  "pollux_can_enter_crossgen_set": false,
+  "finding": "Pollux's canonical tails are emitted by no other generator on the tree, so under Hecate's own rule (>=2 generators) Pollux rows are excluded from the cross-generator MI by construction. Their information content is irrelevant to that number."
+ },
+ "C2_stygian": {
+  "citations": [
+   {
+    "path": "charon/agents/stygian/daemon.py",
+    "needle": "if source == \"pollux\":",
+    "found": true,
+    "line": 225,
+    "note": "queue rows from Pollux become POLLUX-<pair> problems"
+   },
+   {
+    "path": "charon/agents/stygian/daemon.py",
+    "needle": "hardness = \"POLLUX_SURVIVOR\"",
+    "found": true,
+    "line": 243,
+    "note": "hardness tag"
+   },
+   {
+    "path": "charon/agents/stygian/executor.py",
+    "needle": "if problem_id.startswith(\"POLLUX-\"):",
+    "found": true,
+    "line": 229,
+    "note": "executor branch for Pollux survivors"
+   },
+   {
+    "path": "charon/agents/stygian/executor.py",
+    "needle": "reason=\"pollux_survivor_loader_not_yet_implemented\"",
+    "found": true,
+    "line": 234,
+    "note": "short-circuit: no validation ever ran"
+   },
+   {
+    "path": "charon/agents/pollux/daemon.py",
+    "needle": "queue = stygian_priority_queue()",
+    "found": true,
+    "line": 535,
+    "note": "Pollux enqueues PROMOTED pairs"
+   }
+  ],
+  "loaders_dir_has_pollux_survivor": false,
+  "loaders_dir_files_mentioning_pollux": [
+   "charon/agents/stygian/loaders/composition_g15_ledger_mi.py",
+   "charon/agents/stygian/loaders/composition_g15_v2_real_verdict_mi.py",
+   "charon/agents/stygian/loaders/composition_g19_ledger_transitivity.py",
+   "charon/agents/stygian/loaders/composition_g19_v2_recursive_obligations.py"
+  ],
+  "finding": "The closed loop Pollux was built for (PROMOTED -> Stygian v10 battery) was a stub for the whole run: every POLLUX-* problem short-circuits to an UNVERIFIED row. No PROMOTED pair was ever battery-validated."
+ },
+ "C3_erebos": {
+  "citations": [
+   {
+    "path": "charon/agents/erebos/daemon.py",
+    "needle": "REPO_ROOT / \"charon\" / \"agents\" / \"pollux\" / \"state\" / \"kill_ledger.jsonl\"",
+    "found": true,
+    "line": 58,
+    "note": "Erebos reads the Pollux ledger"
+   },
+   {
+    "path": "charon/agents/erebos/daemon.py",
+    "needle": "pollux = _filter_substantive_recent(_read_jsonl(POLLUX_LEDGER), LOOKBACK_DAYS)",
+    "found": true,
+    "line": 154,
+    "note": "as substantive recent rows"
+   },
+   {
+    "path": "charon/agents/erebos/daemon.py",
+    "needle": "pollux_recent=",
+    "found": true,
+    "line": 476,
+    "note": "reported per tick"
+   }
+  ],
+  "finding": "Erebos consumed Pollux pair names as composition inputs (second-channel summaries show composed ids ending in Pollux pair names, e.g. -x-narrow_band_1.10_1.20_vs_1.30_1.50). Whether those compositions bore anything is Erebos's grave, not this one."
+ },
+ "C4_ergon_learner": {
+  "citations": [
+   {
+    "path": "ergon/learner/greedy/sources.py",
+    "needle": "path = PROM / \"charon/agents/pollux/state/kill_ledger.jsonl\"",
+    "found": true,
+    "line": 162,
+    "note": "Learner reads the Pollux ledger directly"
+   },
+   {
+    "path": "ergon/learner/greedy/sources.py",
+    "needle": "gold = False  # kill_ledger entries are, by construction, the ones that did NOT survive",
+    "found": true,
+    "line": 189,
+    "note": "EVERY row labelled False, PROMOTED rows included"
+   },
+   {
+    "path": "ergon/learner/greedy/sources.py",
+    "needle": "source=\"pollux\", tier=1,",
+    "found": true,
+    "line": 197,
+    "note": "tier-1, trust_weight 1.0"
+   },
+   {
+    "path": "ergon/learner/greedy/ablate_sources.py",
+    "needle": "\"pollux\"",
+    "found": true,
+    "line": 27,
+    "note": "leave-one-source-out ablation family"
+   },
+   {
+    "path": "roles/Ergon/GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md",
+    "needle": "minus_pollux     0.8092",
+    "found": true,
+    "line": 43,
+    "note": "recorded ablation result"
+   },
+   {
+    "path": "roles/Ergon/GREEDY_FOLLOWUP_PROGRESS_2026-06-07.md",
+    "needle": "pollux gold claims are all-False templated",
+    "found": true,
+    "line": 50,
+    "note": "Ergon's own reading: template class-learning"
+   },
+   {
+    "path": "pivot/COMPONENT_DOSSIERS_2026-06-24.md",
+    "needle": "The Ergon Learner has ZERO references to generator_id=pollux",
+    "found": true,
+    "line": 396,
+    "note": "the 06-24 certificate this contradicts"
+   }
+  ],
+  "manifests": {
+   "manifest_v1": {
+    "source_stats.pollux": {
+     "yielded": 286,
+     "skipped": 0,
+     "by_outcome": {
+      "rejected": 286
+     }
+    },
+    "train_summary.by_source.pollux": 86,
+    "gold_eval_summary.by_source.pollux": 200
+   },
+   "manifest_e_shown": {
+    "source_stats.pollux": {
+     "yielded": 286,
+     "skipped": 0,
+     "by_outcome": {
+      "rejected": 286
+     }
+    },
+    "train_summary.by_source.pollux": 286,
+    "gold_eval_summary.by_source.pollux": null
+   },
+   "manifest_e_hidden": {
+    "source_stats.pollux": {
+     "yielded": 286,
+     "skipped": 0,
+     "by_outcome": {
+      "rejected": 286
+     }
+    },
+    "train_summary.by_source.pollux": 286,
+    "gold_eval_summary.by_source.pollux": null
+   }
+  },
+  "finding": "The only spine consumer that ever trained on Pollux rows (all 286, three corpora, 2026-06-07..10) assigned gold=False to every row regardless of verdict, so the 39 PROMOTED rows were taught as 'does NOT survive normalization'. The verdict bit was discarded at the seam; the ablation (minus_pollux: slice 1.0 -> 0.395) measures a template classifier, as Ergon itself recorded. The 2026-06-24 dossier's 'ZERO Learner references' is false on the tree it was written against (sources.py landed 7e38227ee, 2026-06-10)."
+ },
+ "runtime_state_on_this_tree": {
+  "charon/agents/pollux/state/kill_ledger.jsonl": false,
+  "charon/agents/pollux/state/pair_history.json": false,
+  "charon/agents/pollux/state/settled_pairs.json": false,
+  "charon/agents/pollux/state/candidate_pool_idx.json": false,
+  "charon/agents/pollux/artifacts": false,
+  "charon/agents/hecate/artifacts": false,
+  "charon/agents/stygian/loaders/pollux_survivor.py": false
+ },
+ "CONSUMPTION_rows_naming_pollux": [
+  {
+   "ts": "2026-08-21T09:12Z",
+   "object": "AUTOPSY batch (Nemesis, Nephele, Pollux) \u2014 18/21",
+   "consumed_by": "engine/ledger/AGENT_AUTOPSIES.jsonl (3 typed records)",
+   "effect": {
+    "reading": "one NEW class (BOUNDED-MENU-SATURATION = the gen-30 wall at agent scale), one latent-form extension of DEAD-GATING (proxy gate blind to zombie-production), one cluster confirmation (LOW-BITS static-rescan) that mechanically explains the Hecate MI null",
+    "residue": "3 remain (Polyhymnia, Sophia, Telos); dedup/merge at 21/21"
+   },
+   "summary": "The taxonomy gains its menu-saturation class and its first latent (unexercised) failure typing."
+  },
+  {
+   "ts": "2026-08-21T09:47Z",
+   "object": "AUTOPSY TIER COMPLETE 21/21 + dedup/merge",
+   "consumed_by": "engine/ledger/AUTOPSY_TAXONOMY.md (the tier's consumable product, written for the next agent generation's designer)",
+   "effect": {
+    "reading": "11 raw classes merge to 5 clusters + 1 singleton; 16 typed findings, 5 clean nulls, 2 LATENT typings introduced; 6 KEEPs; 3 interlocks where records explain each other (Pollux->Hecate MI null the cleanest)",
+    "residue": "the taxonomy's invariants are candidate constitutional material for any germline/next-gen agent charter \u2014 routed to James via PULSE, and Techne is the natural adjudicator for the design-invariant claims"
+   },
+   "summary": "Three months of agent history compressed into six design invariants with evidence trails."
+  }
+ ],
+ "keeper_second_channel": {
+  "path": "engine/necropolis/dossiers/_keeper_evidence/intelligence_outputs_census_result.json",
+  "rows": 286,
+  "first": "2026-05-24 03:08:13.064436-04:00",
+  "last": "2026-05-30 11:55:23.880165-04:00",
+  "distinct_output_summary": 9,
+  "stages": [
+   {
+    "stage": "pollux_tick_complete",
+    "success": true,
+    "n": 286,
+    "first": "2026-05-24 03:08:13.064436-04:00",
+    "last": "2026-05-30 11:55:23.880165-04:00"
+   }
+  ],
+  "first_three_summaries": [
+   "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235",
+   "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992",
+   "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+  ],
+  "mechanism_note": "Written by the Pollux daemon itself in the same tick as the ledger row: dual-recorded, single-mechanism. Used only to test mechanism predictions (9 static pairs -> 9 distinct summaries; corr_norm values match today's rescan to 4 dp), never to confirm P69's count."
+ },
+ "keeper_fleet_halt": {
+  "path": "engine/necropolis/dossiers/_keeper_evidence/fleet_halt_census_result.json",
+  "note": "fleet-wide last rows 2026-05-30 11:40..12:25 local; Pollux stopped with the fleet"
+ },
+ "all_citations_found": true,
+ "citations_not_found": [],
+ "summary": {
+  "consumers_wired": 4,
+  "consumers_that_used_the_verdict_bit": 0,
+  "hecate": "excluded Pollux by vocabulary (>=2-generator rule)",
+  "stygian": "stub; survivor loader never built",
+  "erebos": "read pair names as composition inputs",
+  "learner": "trained on all rows with verdict overwritten to False"
+ }
+}

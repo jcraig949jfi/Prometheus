@@ -1,0 +1,75 @@
+{
+ "table": "agora.intelligence_outputs",
+ "graves": {
+  "pollux": {
+   "rows": 286,
+   "first_finished_at": "2026-05-24 03:08:13.064436-04:00",
+   "last_finished_at": "2026-05-30 11:55:23.880165-04:00",
+   "distinct_run_id": 0,
+   "distinct_cycle_id": 286,
+   "distinct_output_summary": 9,
+   "stages": [
+    {
+     "stage": "pollux_tick_complete",
+     "success": true,
+     "n": 286,
+     "first": "2026-05-24 03:08:13.064436-04:00",
+     "last": "2026-05-30 11:55:23.880165-04:00"
+    }
+   ],
+   "first_three_summaries": [
+    "pair=deg10_vs_deg12 kp=pollux_sign_flips_under_normalization verdict=REJECTED raw=1.0 norm=-0.2235",
+    "pair=deg14_vs_deg16 kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3992",
+    "pair=salem_vs_pisot kp=pollux_correlation_survives_normalization verdict=PROMOTED raw=1.0 norm=0.3985"
+   ],
+   "heartbeats": [
+    {
+     "agent": "Pollux",
+     "status": "online",
+     "last_heartbeat": "2026-05-30 11:55:23.901164-04:00"
+    }
+   ]
+  },
+  "erebos": {
+   "rows": 213,
+   "first_finished_at": "2026-05-26 02:32:46.281328-04:00",
+   "last_finished_at": "2026-05-30 11:59:24.030048-04:00",
+   "distinct_run_id": 0,
+   "distinct_cycle_id": 213,
+   "distinct_output_summary": 212,
+   "stages": [
+    {
+     "stage": "erebos_tick_complete",
+     "success": true,
+     "n": 213,
+     "first": "2026-05-26 02:32:46.281328-04:00",
+     "last": "2026-05-30 11:59:24.030048-04:00"
+    }
+   ],
+   "first_three_summaries": [
+    "plugin=g01_intersection composed=EREBOS-G01-HECATE-h1_hunter_found_counterexample-x-narrow_band_1.10_1.20_vs_1.30_1.50 stygian_recent=166 pollux_recent=95 enqueued=True",
+    "plugin=g02_contrast composed=EREBOS-G02-BL-C-002-x-cm_vs_non_cm stygian_recent=166 pollux_recent=95 enqueued=True",
+    "plugin=g01_intersection composed=EREBOS-G01-HECATE-h1_hunter_found_counterexample-x-lehmer_witness_neighborhood stygian_recent=166 pollux_recent=96 enqueued=True"
+   ],
+   "heartbeats": [
+    {
+     "agent": "Erebos",
+     "status": "online",
+     "last_heartbeat": "2026-05-30 11:59:24.161566-04:00"
+    }
+   ]
+  },
+  "nous": {
+   "rows": 0,
+   "first_finished_at": "None",
+   "last_finished_at": "None",
+   "distinct_run_id": 0,
+   "distinct_cycle_id": 0,
+   "distinct_output_summary": 0,
+   "stages": [],
+   "first_three_summaries": [],
+   "heartbeats": []
+  }
+ },
+ "total_rows": 15502
+}

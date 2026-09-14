@@ -1,11 +1,11 @@
 {
  "schema": "techne.fossil.catalog/1",
- "written_utc": "2026-09-13T21:06:41Z",
+ "written_utc": "2026-09-14T00:05:14Z",
  "records_root": "F:/Prometheus-worktrees/techne-pass-0912/techne/fossils/specimens",
  "vault_root_on_this_host": "F:\\Prometheus\\vault\\fossils",
- "fossils": 117,
+ "fossils": 121,
  "runnable": 105,
- "bodies_present_on_this_host": 117,
+ "bodies_present_on_this_host": 121,
  "fields": [
   "fossil_id",
   "canonical_name",
@@ -1549,6 +1549,77 @@
    "mirror_available": "no_mirror_configured"
   },
   {
+   "fossil_id": "cosell-eliza-bbn-lisp-1969",
+   "canonical_name": "ELIZA in BBN-LISP (1969, revised 1972) -- Bernie Cosell's independent implementation at BBN",
+   "lineage": "Bernie Cosell wrote an ELIZA independently at BBN in LISP, having read the CACM description rather than the code. A SECOND, independent organism solving the same problem in a different language and a different world -- BBN-LISP on a PDP-10 rather than MAD-SLIP on a 7094 under CTSS. Its behaviour and structure are therefore an independent answer to the same pressure, not a port.",
+   "ancestry": [
+    {
+     "relation": "reimplementation_of",
+     "to": "eliza-weizenbaum-mad-slip-1965",
+     "note": "independent, from the published description rather than from the code"
+    }
+   ],
+   "human_purpose": "reproduce the conversational behaviour described in the CACM paper, from the description alone, in LISP",
+   "human_environmental_pressure": "reconstructing behaviour from a paper rather than from source; a different machine and language",
+   "version": "coselleliza1969and1972.lisp, as released via elizagen.org",
+   "era": "1969 (body: the file is dated 1969 and 1972 by its own name and content)",
+   "language": [
+    "BBN-LISP"
+   ],
+   "domain": [
+    "conversational-ai",
+    "natural-language",
+    "pattern-matching",
+    "early-ai",
+    "lisp",
+    "pre1970"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "no",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "eliza-weizenbaum-mad-slip-1965",
+    "evidence": [
+     {
+      "kind": "archived_technical_discussion",
+      "ref": "elizagen.org Cosell materials",
+      "says": "Cosell's BBN-LISP ELIZA is published with its own session transcript and author attribution; BBN-LISP and the PDP-10/TENEX world it ran in are no longer in use."
+     }
+    ],
+    "audit_note": "HISTORICAL_ONLY describes the extinct world. No claim is made that this implementation lost to Weizenbaum's; they are independent answers, and which was 'better' is not established by any evidence I hold."
+   },
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "CC-BY-like",
+   "acquisition_tags": [
+    "batch12",
+    "pre1970",
+    "original_body",
+    "early_ai",
+    "independent_reimplementation",
+    "extinct_world"
+   ],
+   "tree_sha256": "5d5a33159ddfafebbfcc8239a98c6c07cfbe566442a8c6bf0c5115f1c01986cf",
+   "record_path": "techne/fossils/specimens/cosell-eliza-bbn-lisp-1969/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\cosell-eliza-bbn-lisp-1969",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
    "fossil_id": "des-reference",
    "canonical_name": "DES -- the Data Encryption Standard, withdrawn after its key length became breakable",
    "lineage": "DES (IBM/NSA, adopted as FIPS 46 in 1977) was THE block cipher of the era: 64-bit blocks, a 56-bit key, 16 Feistel rounds. Its structure was never broken in practice; its KEY LENGTH was. The EFF built Deep Crack in 1998 and exhausted the keyspace in days, and NIST ran a public competition whose winner, Rijndael, became AES. Preserved as archival/defensive reference material only -- the fossil is the cipher, not an attack.",
@@ -1991,6 +2062,88 @@
    "mirror_available": "no_mirror_configured"
   },
   {
+   "fossil_id": "eliza-weizenbaum-mad-slip-1965",
+   "canonical_name": "ELIZA (1965) -- Joseph Weizenbaum's ORIGINAL MAD-SLIP implementation for CTSS on the IBM 7094",
+   "lineage": "The actual program behind the 1966 CACM paper, lost for over fifty years and located by Jeff Shrager in the MIT archives in 2021 in a folder labelled COMPUTER CONVERSATIONS (1965). Written in MAD (Michigan Algorithm Decoder) using Weizenbaum's own SLIP list-processing library, running under CTSS on the IBM 7094. This is the ANCESTOR of the vault's eliza-anthay-1966, which is a modern faithful reconstruction of the same program -- so the vault now holds the original and a reconstruction of it, which can be compared.",
+   "ancestry": [
+    {
+     "relation": "historical_version_of",
+     "to": "eliza-anthay-1966",
+     "note": "the vault's eliza-anthay-1966 is a modern FAITHFUL reconstruction of THIS body; original and reconstruction are now both held"
+    },
+    {
+     "relation": "shares_ancestor_with",
+     "to": "cosell-eliza-bbn-lisp-1969",
+     "note": "independent reimplementation in a different language and world"
+    }
+   ],
+   "human_purpose": "study man-machine conversation by transforming the user's own sentences through a replaceable script of keyword rules",
+   "human_environmental_pressure": "no native string handling; list processing hand-built; a 6-bit character set; CTSS time limits",
+   "version": "MAD-SLIP transcription + the CACM script, as released CC0 via elizagen.org",
+   "era": "1965 (body: the archival listing, folder-dated 1965; the CACM paper is 1966)",
+   "language": [
+    "MAD (Michigan Algorithm Decoder)",
+    "SLIP"
+   ],
+   "domain": [
+    "conversational-ai",
+    "natural-language",
+    "pattern-matching",
+    "early-ai",
+    "list-processing",
+    "pre1970"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "no",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "cosell-eliza-bbn-lisp-1969",
+    "evidence": [
+     {
+      "kind": "archived_technical_discussion",
+      "ref": "elizagen.org recovery record (Shrager, 2021)",
+      "says": "The original ELIZA source was missing for decades and was located in the MIT archives in 2021; it had not been runnable in its own environment in the interim."
+     },
+     {
+      "kind": "original_paper",
+      "ref": "Weizenbaum, CACM 9(1), 1966",
+      "says": "Describes ELIZA as running under CTSS on the IBM 7094 and written in MAD-SLIP."
+     }
+    ],
+    "audit_note": "HISTORICAL_ONLY is a statement about the WORLD (CTSS/7094/MAD/SLIP are all gone), not a claim that ELIZA was defeated. No supersession evidence is asserted."
+   },
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "CC0-1.0",
+   "acquisition_tags": [
+    "batch12",
+    "pre1970",
+    "original_body",
+    "early_ai",
+    "extinct_world",
+    "ancestor_of_vault_fossil"
+   ],
+   "tree_sha256": "20266056630b3650e28df5e1a24c583a6b1a0cf9b935f37788b9746cd23c5853",
+   "record_path": "techne/fossils/specimens/eliza-weizenbaum-mad-slip-1965/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\eliza-weizenbaum-mad-slip-1965",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
    "fossil_id": "emcee-3.1.6",
    "canonical_name": "emcee 3.1.6 -- the MCMC Hammer: affine-invariant ensemble sampler (Foreman-Mackey, Hogg, Lang, Goodman)",
    "lineage": "Markov chain Monte Carlo (Metropolis et al. 1953; Hastings 1970) via Goodman & Weare's affine-invariant ensemble 'stretch move' (2010), implemented for astronomy (2012) and used in thousands of papers. A compact, inspectable sampler: walkers, proposals, acceptance fractions, autocorrelation time.",
@@ -2044,7 +2197,8 @@
    "recipe_path": "techne/fossils/specimens/emcee-3.1.6/recipe.json",
    "receipts": [
     "techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260912T214502Z.json",
-    "techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260912T215619Z.json"
+    "techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260912T215619Z.json",
+    "techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260913T215405Z.json"
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\emcee-3.1.6",
@@ -2442,7 +2596,8 @@
    "recipe_path": "techne/fossils/specimens/filterpy-labbe/recipe.json",
    "receipts": [
     "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260912T164217Z.json",
-    "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260912T164310Z.json"
+    "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260912T164310Z.json",
+    "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260913T215428Z.json"
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\filterpy-labbe",
@@ -3903,6 +4058,84 @@
    "mirror_available": "no_mirror_configured"
   },
   {
+   "fossil_id": "lisp-1-5-ibm7090-1962",
+   "canonical_name": "LISP 1.5 (1962) -- the IBM 7090 implementation, machine-readable transcription of the original assembly",
+   "lineage": "McCarthy's LISP as implemented for the IBM 7090 by Hart, Levin and the MIT group, distributed with the 1962 LISP 1.5 Programmer's Manual. The body here is a machine-readable transcription of the original 7090 assembly listing (lisp15.asm, ~500 KB) together with the LISP-level sources. LISP is the branch that SURVIVED the early list-processing competition; its principal rival IPL-V (Newell, Shaw and Simon at RAND, from 1956) survives in this search only as scanned manuals, with no machine-readable body found -- an asymmetry that is itself evidence about what gets preserved.",
+   "ancestry": [
+    {
+     "relation": "shares_ancestor_with",
+     "to": "femtolisp",
+     "note": "the vault holds a modern Lisp; this is a 1962 one. Techne records the shared domain, not equivalence"
+    }
+   ],
+   "human_purpose": "evaluate symbolic expressions -- programs as data -- on a machine designed for numeric work, with automatic storage reclamation",
+   "human_environmental_pressure": "fixed core, no OS memory management, numeric-oriented hardware",
+   "version": "informatimago/lisp-1-5 machine-readable transcription of the 1962 sources",
+   "era": "1962 (body: transcription of the original 7090 assembly sources)",
+   "language": [
+    "IBM 7090 assembly (FAP)",
+    "LISP"
+   ],
+   "domain": [
+    "programming-language",
+    "interpreter",
+    "list-processing",
+    "symbolic",
+    "early-ai",
+    "garbage-collection",
+    "pre1970"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "no",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "IPL-V (no machine-readable body located)",
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Bobrow & Raphael, CACM 7(4) 1964",
+      "says": "Compares COMIT, IPL-V, LISP 1.5 and SLIP as the competing list-processing languages of the period, establishing that they were contemporaneous rivals."
+     },
+     {
+      "kind": "project_documentation",
+      "ref": "Computer History Museum Software Preservation Group, LISP 1.5 family",
+      "says": "Documents the LISP 1.5 sources and their transcription as preserved historical artifacts."
+     }
+    ],
+    "audit_note": "HISTORICAL_ONLY refers to THIS 1962 body and its 7090 world. LISP as a language lineage is emphatically still ACTIVE; no supersession is claimed. The rival IPL-V is recorded as a rival, NOT as a defeated loser: I hold no evidence establishing why the ecosystem moved."
+   },
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "NOASSERTION",
+   "acquisition_tags": [
+    "batch12",
+    "pre1970",
+    "original_body",
+    "language",
+    "winner_of_pair",
+    "extinct_world"
+   ],
+   "tree_sha256": "36e31960ceddb8666282b20ac7274dd16b722db2d3998fbaa111ee679883a076",
+   "record_path": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\lisp-1-5-ibm7090-1962",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
    "fossil_id": "lmdb-0.9.31",
    "canonical_name": "LMDB 0.9.31 -- Lightning Memory-Mapped Database (Howard Chu, Symas / OpenLDAP)",
    "lineage": "B+tree key-value store with single-writer/multi-reader MVCC and copy-on-write pages: crash consistency WITHOUT a write-ahead log (two meta pages, the last committed root wins). Descends from OpenLDAP's back-mdb work (2011); rival to Berkeley DB and to log-structured stores such as LevelDB.",
@@ -5119,7 +5352,8 @@
     "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T055950Z.json",
     "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T060041Z.json",
     "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T060157Z.json",
-    "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T060238Z.json"
+    "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T060238Z.json",
+    "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T215440Z.json"
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\pid-autotune-hirschmann",
@@ -5353,7 +5587,8 @@
    "receipts": [
     "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164222Z.json",
     "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164322Z.json",
-    "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164354Z.json"
+    "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164354Z.json",
+    "techne/fossils/specimens/python-control/receipts/run-python-control-20260913T215513Z.json"
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\python-control",
@@ -5416,7 +5651,8 @@
    "receipts": [
     "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260912T214648Z.json",
     "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260912T215810Z.json",
-    "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260912T220043Z.json"
+    "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260912T220043Z.json",
+    "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260913T215311Z.json"
    ],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\python-sgp4-2.23",
@@ -5786,6 +6022,82 @@
    "receipts": [],
    "body_present_on_this_host": true,
    "body_path": "F:\\Prometheus\\vault\\fossils\\souffle-2.4.1",
+   "mirror_available": "no_mirror_configured"
+  },
+  {
+   "fossil_id": "spacewar-pdp1-1962",
+   "canonical_name": "Spacewar! 2B (25 March 1962) -- Steve Russell et al., MIT, for the DEC PDP-1",
+   "lineage": "Written in 1961-62 by Steve Russell, Martin Graetz, Wayne Wiitanen and others on MIT's PDP-1, with the starfield (Expensive Planetarium) by Peter Samson and gravity by Dan Edwards. Two ships under player control orbit a central star; thrust, rotation, torpedoes and hyperspace are computed in real time on an 18-bit machine with 4096 words of core and a Type 30 point-plotting CRT. Widely held to be the first widely distributed digital video game. The body preserved here is the AUTHENTIC 25 Mar 1962 assembly listing, not the later reconstructed-from-binary variant, which masswerk publishes separately.",
+   "ancestry": [
+    {
+     "relation": "inspired_by",
+     "to": "Bob Wyatt / E. E. Smith Lensman space opera (per Graetz)",
+     "note": ""
+    }
+   ],
+   "human_purpose": "demonstrate what an interactive computer with a CRT could do, by making two human-controlled ships duel under real gravity in real time",
+   "human_environmental_pressure": "scarce core, scarce cycles, program-refreshed display, no floating point",
+   "version": "spacewar 2b, 25 Mar 1962 (authentic source, as published by masswerk.at)",
+   "era": "1962 (body: assembly source dated 25 Mar 1962)",
+   "language": [
+    "PDP-1 macro assembly"
+   ],
+   "domain": [
+    "games",
+    "real-time",
+    "simulation",
+    "graphics",
+    "interactive",
+    "pre1970"
+   ],
+   "run_status": "SOURCE_ONLY",
+   "test_status": "NO_TESTS",
+   "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "oracle_backed": "no",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": [
+     {
+      "kind": "retrospective",
+      "ref": "Graetz, The Origin of Spacewar, Creative Computing 1981",
+      "says": "Describes Spacewar's creation on the PDP-1 at MIT and its spread to other PDP-1 installations; the program is tied to that machine and its display."
+     },
+     {
+      "kind": "project_documentation",
+      "ref": "Computer History Museum PDP-1 restoration",
+      "says": "Spacewar is demonstrated on a restored PDP-1 because the machine it requires is no longer in ordinary existence; roughly 53 PDP-1s were built."
+     }
+    ],
+    "audit_note": "HISTORICAL_ONLY refers to the WORLD, not to a defeat: Spacewar was not out-competed, its machine simply ceased to exist. Old is not loser; this is recorded as extinction of an environment."
+   },
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "NOASSERTION",
+   "acquisition_tags": [
+    "batch12",
+    "pre1970",
+    "original_body",
+    "games",
+    "extinct_world",
+    "outside_queue"
+   ],
+   "tree_sha256": "66d682d8313e7afe0129b1b1183d87ecbf4861f5f8b5f17c6c6dfbdb6b8d5bc2",
+   "record_path": "techne/fossils/specimens/spacewar-pdp1-1962/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": true,
+   "body_path": "F:\\Prometheus\\vault\\fossils\\spacewar-pdp1-1962",
    "mirror_available": "no_mirror_configured"
   },
   {

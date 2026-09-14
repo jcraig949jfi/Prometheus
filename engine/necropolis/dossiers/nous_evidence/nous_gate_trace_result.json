@@ -1,0 +1,383 @@
+{
+ "hephaestus_input_loaders": {
+  "load_nous_results_defs": 1,
+  "load_all_nous_results_defs": 1,
+  "_load_nous_calls": 2,
+  "non_nous_input_mentions": {
+   "failure_mining": 0,
+   "failure_cluster": 0,
+   "learner": 0,
+   "Learner": 0,
+   "priority_triples": 0,
+   "seed_forge": 0
+  },
+  "cli_nous_run_flag": true,
+  "nous_gate_is_input_dependency": true,
+  "main_forge_reads_only_nous": true
+ },
+ "filter_results_drops": {
+  "is_unproductive": true,
+  "empty_response": true,
+  "min_score_default": "0.0"
+ },
+ "ledger_orphans_no_nous_record": {
+  "n": 1212,
+  "by_day": {
+   "2026-03-31": 776,
+   "2026-04-01": 81,
+   "2026-04-02": 355
+  },
+  "all_concepts_in_95_dict": 1212,
+  "frames": {
+   "E": 292,
+   "A": 65,
+   "C": 191,
+   "B": 226,
+   "F": 123,
+   "D": 166,
+   "G": 105,
+   "H": 44
+  },
+  "status": {
+   "scrap": 1210,
+   "forged": 2
+  },
+  "scrap_or_forge_record_on_disk": 0
+ },
+ "coeus_weights": {
+  "file_exists": true,
+  "n_influence": 95,
+  "boosted_gt1.5": 21,
+  "suppressed_lt0.5": 2,
+  "first_commit": [
+   "da42cc7e0 2026-03-25 10:46:46 -0400"
+  ],
+  "last_commit": "5573808c7 2026-03-27 06:49:01 -0400",
+  "expected_frac_boosted_if_uniform": 0.221,
+  "per_run_skew": {
+   "20260324_112138": {
+    "n_entries": 3,
+    "frac_slots_from_boosted_concepts": 0.444,
+    "top3": [
+     [
+      "Thermodynamics",
+      2
+     ],
+     [
+      "Compressed Sensing",
+      1
+     ],
+     [
+      "Nash Equilibrium",
+      1
+     ]
+    ]
+   },
+   "20260324_115258": {
+    "n_entries": 87,
+    "frac_slots_from_boosted_concepts": 0.211,
+    "top3": [
+     [
+      "Fractal Geometry",
+      15
+     ],
+     [
+      "Fourier Transforms",
+      14
+     ],
+     [
+      "Ergodic Theory",
+      14
+     ]
+    ]
+   },
+   "20260324_131206": {
+    "n_entries": 696,
+    "frac_slots_from_boosted_concepts": 0.264,
+    "top3": [
+     [
+      "Type Theory",
+      83
+     ],
+     [
+      "Free Energy Principle",
+      77
+     ],
+     [
+      "Maximum Entropy",
+      76
+     ]
+    ]
+   },
+   "20260324_214225": {
+    "n_entries": 664,
+    "frac_slots_from_boosted_concepts": 0.286,
+    "top3": [
+     [
+      "Model Checking",
+      80
+     ],
+     [
+      "Type Theory",
+      79
+     ],
+     [
+      "Free Energy Principle",
+      78
+     ]
+    ]
+   },
+   "20260325_062155": {
+    "n_entries": 184,
+    "frac_slots_from_boosted_concepts": 0.252,
+    "top3": [
+     [
+      "Model Checking",
+      17
+     ],
+     [
+      "Type Theory",
+      15
+     ],
+     [
+      "Renormalization",
+      15
+     ]
+    ]
+   },
+   "20260325_085453": {
+    "n_entries": 77,
+    "frac_slots_from_boosted_concepts": 0.372,
+    "top3": [
+     [
+      "Ergodic Theory",
+      25
+     ],
+     [
+      "Bayesian Inference",
+      16
+     ],
+     [
+      "Mechanism Design",
+      10
+     ]
+    ]
+   },
+   "20260325_132552": {
+    "n_entries": 3030,
+    "frac_slots_from_boosted_concepts": 0.307,
+    "top3": [
+     [
+      "Free Energy Principle",
+      351
+     ],
+     [
+      "Mechanism Design",
+      333
+     ],
+     [
+      "Sensitivity Analysis",
+      312
+     ]
+    ]
+   },
+   "20260327_043111": {
+    "n_entries": 88,
+    "frac_slots_from_boosted_concepts": 0.231,
+    "top3": [
+     [
+      "Fractal Geometry",
+      16
+     ],
+     [
+      "Category Theory",
+      11
+     ],
+     [
+      "Ergodic Theory",
+      10
+     ]
+    ]
+   },
+   "20260327_070604": {
+    "n_entries": 34,
+    "frac_slots_from_boosted_concepts": 0.353,
+    "top3": [
+     [
+      "Category Theory",
+      17
+     ],
+     [
+      "Topology",
+      8
+     ],
+     [
+      "Free Energy Principle",
+      7
+     ]
+    ]
+   },
+   "20260327_075209": {
+    "n_entries": 145,
+    "frac_slots_from_boosted_concepts": 0.271,
+    "top3": [
+     [
+      "Gauge Theory",
+      21
+     ],
+     [
+      "Renormalization",
+      19
+     ],
+     [
+      "Category Theory",
+      15
+     ]
+    ]
+   },
+   "20260327_143330": {
+    "n_entries": 305,
+    "frac_slots_from_boosted_concepts": 0.286,
+    "top3": [
+     [
+      "Holography Principle",
+      32
+     ],
+     [
+      "Sensitivity Analysis",
+      29
+     ],
+     [
+      "Mechanism Design",
+      27
+     ]
+    ]
+   },
+   "20260327_203534": {
+    "n_entries": 605,
+    "frac_slots_from_boosted_concepts": 0.276,
+    "top3": [
+     [
+      "Maximum Entropy",
+      64
+     ],
+     [
+      "Free Energy Principle",
+      60
+     ],
+     [
+      "Mechanism Design",
+      56
+     ]
+    ]
+   }
+  }
+ },
+ "priority_triples": {
+  "n": 15,
+  "in_committed_nous_runs": 2,
+  "in_forge_ledger": 11,
+  "wire_commit": "302c002d3 2026-03-28 03:59:38 -0400 Wire priority_triples.json into Nous combination generator",
+  "last_committed_nous_run_start": "2026-03-27T20:38:22.493950"
+ },
+ "dictionary": {
+  "n_concepts": 95,
+  "n_fields_measured": 20,
+  "n_mechanism_types": 4,
+  "readme_field_claims": [
+   "18"
+  ],
+  "readme_20_30pct_claim": true
+ },
+ "descendants_under_forge": {
+  "forge/v2/nous_t2": {
+   "runs": 33,
+   "first": [
+    "20260402T141947Z"
+   ],
+   "last": [
+    "20260404T135440Z"
+   ],
+   "entries": 1515,
+   "first_commit": [
+    "b674a9976 2026-04-03"
+   ]
+  },
+  "forge/v3/nous_t3": {
+   "runs": 1,
+   "first": [
+    "20260402T161210Z"
+   ],
+   "last": [
+    "20260402T161210Z"
+   ],
+   "entries": 10,
+   "first_commit": [
+    "b674a9976 2026-04-03"
+   ]
+  }
+ },
+ "launch_coupling": {
+  "nous_runs": 13,
+  "forge_runs": 22,
+  "forge_started_within_30s_of_nous": [
+   [
+    "20260324_214225",
+    "20260324_214229",
+    4.0
+   ],
+   [
+    "20260325_132552",
+    "20260325_132556",
+    4.0
+   ],
+   [
+    "20260327_070604",
+    "20260327_070608",
+    4.0
+   ],
+   [
+    "20260327_075209",
+    "20260327_075213",
+    4.0
+   ],
+   [
+    "20260327_143330",
+    "20260327_143334",
+    4.0
+   ],
+   [
+    "20260327_203534",
+    "20260327_203539",
+    5.0
+   ]
+  ]
+ },
+ "env_presence_listing_only": {
+  ".env_in_agents_nous": false,
+  "keys.py_at_root": false,
+  "nous_uses_keys.py": false,
+  "sys_exit_on_missing_key": true
+ },
+ "agora_instrumentation": {
+  "commit": "8b8676272 2026-05-13 09:48:56 -0400",
+  "last_committed_run_dir": "20260327_203534",
+  "runs_after_commit": []
+ },
+ "consumption_seam": {
+  "techne/registry/concepts_index.jsonl": true
+ },
+ "nous_source_commits": [
+  "8b8676272 2026-05-13 Portfolio chip 3 + reasoning-forge autopsies + portfolio monitor",
+  "6058e6eb1 2026-03-29 Hephaestus forge v7 + humanreadable expansion + agent updates + doc cleanup",
+  "302c002d3 2026-03-28 Wire priority_triples.json into Nous combination generator",
+  "d65f243a0 2026-03-27 Overnight gap closing: CAITL survivor, gap-targeted Nous triples, updated coverage",
+  "8af6ba9e5 2026-03-27 Complete pending tasks: 89-cat eval, fingerprints, quartets, dedup, RLVF weighting, honesty metric, Tier B fix, Nous weights, A/D design",
+  "45f225f51 2026-03-25 Batch 4 pipeline results: 140 forge tools, 63/100 Nemesis grid, 1748 Nous combos",
+  "923d11c66 2026-03-25 Harden error handling across all 21 pipeline modules",
+  "7b4903a00 2026-03-25 Update all docs: build plan, 4 agent READMEs reflecting full pipeline state",
+  "2a186ba24 2026-03-25 Phase 3-4: RLVF fitness function, provenance gate, failure-driven forge, dual feedback loops",
+  "da42cc7e0 2026-03-25 Forge pipeline v2: Coeus causal intelligence, NCD baseline, 15-trap battery, continuous operation",
+  "2f3e4eb6f 2026-03-24 Ignis v2 + Nous + Hephaestus: ejection mechanism characterized, eval framework expanded"
+ ]
+}

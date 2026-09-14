@@ -1,0 +1,39 @@
+{
+ "battery_id": "artifact_provenance_hash_reader_invariant",
+ "name": "ARTIFACT -> PROVENANCE -> HASH -> READER -> INVARIANT",
+ "question": "Is this artifact the artifact the record says it is, and does an independent reader confirm the invariant the record asserts?",
+ "steps": [
+  {
+   "step": 1,
+   "tool_id": "NT-051",
+   "role": "PROVENANCE",
+   "does": "git history of the artifact path: first/last commit, deletions, renames"
+  },
+  {
+   "step": 2,
+   "tool_id": "NT-053",
+   "role": "HASH",
+   "does": "manifest verify with coverage: COVERED / UNCOVERED_FILES / HASH_MISMATCH + manifest self-hash to anchor elsewhere"
+  },
+  {
+   "step": 3,
+   "tool_id": "NT-044",
+   "role": "HASH (receipt)",
+   "does": "C1: receipt carries a fingerprint that matches; unfingerprinted pools FAIL, not INDETERMINATE"
+  },
+  {
+   "step": 4,
+   "tool_id": "NT-050",
+   "role": "READER",
+   "does": "independent census of the artifact's rows and fields"
+  },
+  {
+   "step": 5,
+   "tool_id": "NT-036",
+   "role": "INVARIANT",
+   "does": "dead-field / partial-field findings over the declared columns; NT-027 fossil inference where fossils pin a target set"
+  }
+ ],
+ "coroner_run_required": false,
+ "output_contract": "{history, manifest_verdict, manifest_self_hash_lf, receipt_c1, census, invariant_findings}; a COVERED manifest whose self-hash has no external anchor is reported COVERED_UNANCHORED"
+}
