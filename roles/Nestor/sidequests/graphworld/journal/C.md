@@ -20,5 +20,7 @@
 - Contention: B's 16-process burst hit 13 cells in d64 r4/r64; those blocks were rerun clean and replaced
   (both crossovers moved DOWN one grid step once clean). Lesson for every lane: host_cpu per cell is cheap
   and it changed two headline numbers.
+- Landed: code + rows 6ca207daf (ancestor of integration verified after a non-ff rebase; first local SHA
+  45d6cf80f was rewritten, never stamped). Receipt KILL filed with git=6ca207daf, board-eligible.
 - Would steal next: B's numba soup as the stub world for C2, and E's warning that end-state checks go blind
   at scale (C2's regime-leak probe must be scored per window, not at the end).
