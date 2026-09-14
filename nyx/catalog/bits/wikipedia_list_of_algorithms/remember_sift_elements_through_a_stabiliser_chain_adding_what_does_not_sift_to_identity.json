@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.remember.sift_elements_through_a_stabiliser_chain_adding_what_does_not_sift_to_identity",
+  "name": "sift elements through a stabiliser chain, adding whatever does not sift to the identity",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+  ],
+  "mechanism": "fix a sequence of points; at each level keep one representative for every place the level's point can be sent; to sift an element, at each level compose with the inverse of the representative that undoes its action on that point; an element that sifts to the identity is already generated, otherwise its residue is added as a new generator and the affected levels are re-closed",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Schreier–Sims algorithm' in section Computational mathematics / Abstract algebra: computing a base and strong generating set (BSGS) of a permutation group",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REMEMBER",
+  "in_geometry": "SET",
+  "out_geometry": "TREE",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a permutation action",
+    "a base of points (policy)"
+  ],
+  "fails_when": [
+    "a poor base makes the chain long"
+  ],
+  "instances": [
+    "Schreier–Sims algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

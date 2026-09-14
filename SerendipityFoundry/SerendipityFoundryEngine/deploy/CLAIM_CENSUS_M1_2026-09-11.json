@@ -1,0 +1,262 @@
+{
+ "by_status": {
+  "INCONCLUSIVE": 1,
+  "RETRACTED": 2,
+  "SUPPORTED": 5
+ },
+ "census_at": "2026-09-11T21:21:54Z",
+ "census_tool_schema_version": 8,
+ "claims": [
+  {
+   "analysis_exp_id": "exp_869cdf0d70d6d47a64788cfc",
+   "analysis_world_id": "wld_a49cece3b075d5273b2878b0",
+   "claim_id": "clm_8147da20434a23fd77338a90",
+   "client_id": "cli_312abdc59fb0f82a9ec8dbd5",
+   "client_name": "daedalus-v6-live",
+   "content_hash": "sha256:c8b0df98d4b6bb26037e2cc2ff8f1d7eac667be60743beb867408fd4880c7e30",
+   "created_ts": 1788637181.9045403,
+   "estimand": "effect of noise on terminal score",
+   "family_id": "fam_da00bfbaaf1c12569ade51ba",
+   "family_members": 4,
+   "relevance_floor": {
+    "smd": 0.2
+   },
+   "replication": {
+    "new_world_draws": true,
+    "reimplemented": false
+   },
+   "science": {
+    "engine_source_hash": "sha256:128645e64b9b7a09c456e263f54ff0e30aa0d44c9683c305f42e476664c68bf6",
+    "profile_findings": [],
+    "sealed_at_creation": true
+   },
+   "status": "RETRACTED",
+   "transport_domain": [
+    "landscapeA"
+   ]
+  },
+  {
+   "analysis_exp_id": "exp_869cdf0d70d6d47a64788cfc",
+   "analysis_world_id": "wld_a49cece3b075d5273b2878b0",
+   "claim_id": "clm_0ed57a2388e611e776b5e0e3",
+   "client_id": "cli_312abdc59fb0f82a9ec8dbd5",
+   "client_name": "daedalus-v6-live",
+   "content_hash": "sha256:af3b371c3cabdceaeb0b0f168681a63097415bc243837d40fb37e6683a3aa79d",
+   "created_ts": 1788637182.0216942,
+   "estimand": "holds everywhere",
+   "family_id": null,
+   "family_members": null,
+   "relevance_floor": null,
+   "replication": {},
+   "science": {
+    "engine_source_hash": "sha256:128645e64b9b7a09c456e263f54ff0e30aa0d44c9683c305f42e476664c68bf6",
+    "profile_findings": [
+     {
+      "code": "TRANSPORT_OVERREACH",
+      "excess": [
+       "\"landscapeZ\""
+      ],
+      "message": "the claimed transport domain includes values the cited analysis never tested"
+     },
+     {
+      "code": "NO_REPLICATION_DECLARED",
+      "message": "a SUPPORTED claim declares no replication dimensions; the engine records this and enforces nothing"
+     }
+    ],
+    "sealed_at_creation": true
+   },
+   "status": "SUPPORTED",
+   "transport_domain": [
+    "landscapeA",
+    "landscapeZ"
+   ]
+  },
+  {
+   "analysis_exp_id": "exp_abd78684680675833a3a20e0",
+   "analysis_world_id": "wld_7e428d0561d2b240f58a0a7e",
+   "claim_id": "clm_53395f3e1801e3dd1a175cba",
+   "client_id": "cli_8c821dcdba9905f5ae80aaab",
+   "client_name": "daedalus-v6-live",
+   "content_hash": "sha256:397e49d979d1b7d1ec18f00aa9777d51c57938439357e221295a7f398753decf",
+   "created_ts": 1788637342.9691598,
+   "estimand": "effect of noise on terminal score",
+   "family_id": "fam_10e74f4d0321c48c93d5846a",
+   "family_members": 4,
+   "relevance_floor": {
+    "smd": 0.2
+   },
+   "replication": {
+    "new_world_draws": true,
+    "reimplemented": false
+   },
+   "science": {
+    "engine_source_hash": "sha256:7b46e2b5f86847fab0e029ef24b7d0dd7010dffad19af81fd5f7c9be083f6659",
+    "profile_findings": [],
+    "sealed_at_creation": true
+   },
+   "status": "RETRACTED",
+   "transport_domain": [
+    "landscapeA"
+   ]
+  },
+  {
+   "analysis_exp_id": "exp_abd78684680675833a3a20e0",
+   "analysis_world_id": "wld_7e428d0561d2b240f58a0a7e",
+   "claim_id": "clm_489964c7d14f7189c0f65bda",
+   "client_id": "cli_8c821dcdba9905f5ae80aaab",
+   "client_name": "daedalus-v6-live",
+   "content_hash": "sha256:96d2811688800d97eef5b2a6976c19736fe4ac04779e6f7a102a26e3a84af9da",
+   "created_ts": 1788637343.098914,
+   "estimand": "holds everywhere",
+   "family_id": null,
+   "family_members": null,
+   "relevance_floor": null,
+   "replication": {},
+   "science": {
+    "engine_source_hash": "sha256:7b46e2b5f86847fab0e029ef24b7d0dd7010dffad19af81fd5f7c9be083f6659",
+    "profile_findings": [
+     {
+      "code": "TRANSPORT_OVERREACH",
+      "excess": [
+       "\"landscapeZ\""
+      ],
+      "message": "the claimed transport domain includes values the cited analysis never tested"
+     },
+     {
+      "code": "NO_REPLICATION_DECLARED",
+      "message": "a SUPPORTED claim declares no replication dimensions; the engine records this and enforces nothing"
+     }
+    ],
+    "sealed_at_creation": true
+   },
+   "status": "SUPPORTED",
+   "transport_domain": [
+    "landscapeA",
+    "landscapeZ"
+   ]
+  },
+  {
+   "analysis_exp_id": "exp_b5e53c3ea0d4e59d5ffc9407",
+   "analysis_world_id": "wld_99631b784b0525851016ce99",
+   "claim_id": "clm_ddc4ba32e1c834d2cd760147",
+   "client_id": "cli_0b255e884d938af0de3aadaa",
+   "client_name": "daedalus-analyst-probe-20260906",
+   "content_hash": "sha256:cbd6dbd57acab26973370cb14152be7e60a955325c380910846b61c103c50a03",
+   "created_ts": 1788679010.8704517,
+   "estimand": "probe: effect of X on Y",
+   "family_id": "fam_783bef2d525c8fc53dee6971",
+   "family_members": 1,
+   "relevance_floor": null,
+   "replication": {},
+   "science": {
+    "engine_source_hash": "sha256:7b46e2b5f86847fab0e029ef24b7d0dd7010dffad19af81fd5f7c9be083f6659",
+    "profile_findings": [
+     {
+      "code": "TRANSPORT_OVERREACH",
+      "excess": [
+       "\"landscapeB\""
+      ],
+      "message": "the claimed transport domain includes values the cited analysis never tested"
+     },
+     {
+      "code": "NO_REPLICATION_DECLARED",
+      "message": "a SUPPORTED claim declares no replication dimensions; the engine records this and enforces nothing"
+     }
+    ],
+    "sealed_at_creation": true
+   },
+   "status": "SUPPORTED",
+   "transport_domain": [
+    "landscapeB",
+    "harmonia-worlds"
+   ]
+  },
+  {
+   "analysis_exp_id": "exp_1acaaf7523ba06c7ee7b3f9d",
+   "analysis_world_id": "wld_99631b784b0525851016ce99",
+   "claim_id": "clm_c483dd0de8a3a3cf04438209",
+   "client_id": "cli_0b255e884d938af0de3aadaa",
+   "client_name": "daedalus-analyst-probe-20260906",
+   "content_hash": "sha256:8e508e2c87e487bcaa414c4d9bfd5746c7033676517ab4849e0097976dd3033a",
+   "created_ts": 1788679019.1048343,
+   "estimand": "probe: non-analysis citation",
+   "family_id": null,
+   "family_members": null,
+   "relevance_floor": null,
+   "replication": {},
+   "science": {
+    "engine_source_hash": "sha256:7b46e2b5f86847fab0e029ef24b7d0dd7010dffad19af81fd5f7c9be083f6659",
+    "profile_findings": [
+     {
+      "analysis_exp_id": "exp_1acaaf7523ba06c7ee7b3f9d",
+      "code": "CLAIM_CITES_NON_ANALYSIS",
+      "message": "the cited experiment declares no source set, so the claim's evidentiary base is not recorded"
+     }
+    ],
+    "sealed_at_creation": true
+   },
+   "status": "INCONCLUSIVE",
+   "transport_domain": null
+  },
+  {
+   "analysis_exp_id": "exp_cd14a962aae4a54891a842d6",
+   "analysis_world_id": "wld_a1f838f0332a539254ccf5a5",
+   "claim_id": "clm_c8319fe4eac0542f5c06669e",
+   "client_id": "cli_cbd87fe2d46356f291632e3b",
+   "client_name": "f9-verify",
+   "content_hash": "sha256:efa88a21ee58f75fe9b679d8396faa33e23825e6875a52247c738cb4a25393cd",
+   "created_ts": 1788679566.1142662,
+   "estimand": "effect of X on Y",
+   "family_id": null,
+   "family_members": null,
+   "relevance_floor": null,
+   "replication": {
+    "new_world_draws": true
+   },
+   "science": {
+    "engine_source_hash": "sha256:7b46e2b5f86847fab0e029ef24b7d0dd7010dffad19af81fd5f7c9be083f6659",
+    "profile_findings": [],
+    "sealed_at_creation": true
+   },
+   "status": "SUPPORTED",
+   "transport_domain": [
+    "landscapeA"
+   ]
+  },
+  {
+   "analysis_exp_id": "exp_4dbaa3ba2622083cbbe6da07",
+   "analysis_world_id": "wld_a1f838f0332a539254ccf5a5",
+   "claim_id": "clm_b9a5fe93e1013064667ed658",
+   "client_id": "cli_cbd87fe2d46356f291632e3b",
+   "client_name": "f9-verify",
+   "content_hash": "sha256:5dd0cd584f3c085b2ff1564cd1fae65cea7708dd689a4d8d6d56f92b67a52508",
+   "created_ts": 1788679629.7968936,
+   "estimand": "effect of X on Y (no declared_n variant)",
+   "family_id": null,
+   "family_members": null,
+   "relevance_floor": null,
+   "replication": {
+    "new_world_draws": true
+   },
+   "science": {
+    "engine_source_hash": "sha256:7b46e2b5f86847fab0e029ef24b7d0dd7010dffad19af81fd5f7c9be083f6659",
+    "profile_findings": [],
+    "sealed_at_creation": true
+   },
+   "status": "SUPPORTED",
+   "transport_domain": [
+    "landscapeA"
+   ]
+  }
+ ],
+ "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+ "ledger_schema_version": 8,
+ "n_claims": 8,
+ "owners_included": [
+  "daedalus-analyst-probe-20260906",
+  "daedalus-v6-live",
+  "f9-verify"
+ ],
+ "read_path": "deploy-side ledger export (mode=ro); NOT an engine read route; NOT gated by read grants",
+ "schema": "sfe_claim_census.v1"
+}

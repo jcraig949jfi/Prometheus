@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compare.set_overlap_ratio",
+  "name": "set overlap ratio",
+  "lineage": [
+    "search",
+    "symbolic reasoning"
+  ],
+  "mechanism": "measure similarity of two sets as the size of their intersection scaled by their sizes",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Dice's coefficient (also known as the Dice coefficient)' in section Combinatorial algorithms / Sequence algorithms / Approximate sequence matching: a similarity measure related to the Jaccard index",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Trigram search': search for text when the exact syntax or spelling of the target object is not precisely known",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPARE",
+  "in_geometry": "SET",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "SIMILARITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEAR",
+  "requires": [
+    "a way to form the two sets (e.g. n-grams: policy)"
+  ],
+  "fails_when": [
+    "ignores order entirely",
+    "small sets give coarse values"
+  ],
+  "instances": [
+    "Dice's coefficient (also known as the Dice coefficient)",
+    "Trigram search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIRECT",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "NONE"
+}

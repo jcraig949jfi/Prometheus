@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.hypothesis_shrinker.adaptive_step_search.cut1",
+  "specimen": "hypothesis_shrinker",
+  "name": "adaptive step search: find the largest k such that a monotone predicate holds at k, by a linear scan to 4, exponential probing, then binary search",
+  "scale": "PRIMITIVE",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "hypothesis junkdrawer.find_integer",
+    "sources": [
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/junkdrawer.py find_integer (linear 1..4; lo=4, hi=5 doubling while f(hi); binary search to lo+1==hi; f(0) assumed true)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/call sites: shrinker.py _node_program (repeat count and leftward offset), lower_common_node_offset, redistribute_numeric_pairs, lower_integers_together; shrinking/integer.py shift_right / mask_high_bits / shrink_by_multiples; ordering.py sort_regions; collection.py delete_k",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/hypothesis_shrinker/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "One def in the pinned bytes; located by the name the flow gave (every adaptive loop calls it). Origin INHERITED, and the boundary is the def -- Nyx notes this as a case where the programmer's boundary looks correct (ruling: a low inherited rate is not the goal).",
+    "mechanism": "Try k = 1..4; if any fails return the last success. Otherwise double hi from 5 until f(hi) fails, then binary search between the last success and the first failure. Returns lo with f(lo) true and f(lo+1) false. Turns O(k) successive successes into O(log k) evaluations when the predicate is monotone in k.",
+    "input": "a predicate f: int -> bool, monotone (true up to some k*, false after), with f(0) assumed true",
+    "output": "an integer lo; f(lo) is true and f(lo+1) is false (if monotone; otherwise some local boundary)",
+    "state": "none",
+    "assumptions": "monotonicity of f in k; that small answers are common (hence the linear scan first, stated in the comment); that f is cheap enough that doubling overshoot is acceptable",
+    "interface": "find_integer(f) -> int",
+    "fitness_value": "unknown -- claimed: 'O(m) successful calls into O(log m)' (the Shrinker docstring says this about adaptive passes). Not measured here; the number of calls saved on a fixture is directly countable by wrapping f.",
+    "failure_landscape": "(a) non-monotone f: returns some boundary, not the largest k; every caller silently assumes monotonicity; (b) an f that is expensive and true for large k costs a doubling overshoot; (c) f(0) is never checked, so a caller whose base case fails gets a wrong answer.",
+    "ablation": "unknown -- designed: replace by a linear scan. Prediction: identical results, evaluations grow from O(log k) to O(k) on runs of deletable elements. Cheap to run standalone (P-a family) -- scheduled in ablations/.",
+    "decomposability": "linear probe / exponential probe / binary search -- three textbook pieces; the composition (linear first) is the only design decision.",
+    "composability": "Any 'how many of these can I do at once' loop; Proteus's enumerator does not need it, but any Prometheus organism that deletes or repeats adaptively could host it verbatim. Ancestor-free: it imports nothing.",
+    "human_prior": "That the answer is usually small (linear scan to 4 first). Stated in the comment as a cost argument.",
+    "control": "Positive: find_integer(lambda k: k <= 37) == 37. Negative: a non-monotone f (true at 1..3, false at 4, true at 5..) returns 3, not 5+ -- the organ does not promise the global boundary. Cheat: a caller passing a non-monotone f and reporting the result as 'the largest' is the misuse to catch.",
+    "cheat": "Counting the returned k as 'progress made' when f was non-monotone; control: assert f(lo) and not f(lo+1) after the call."
+  },
+  "alternative_cuts": [],
+  "pressure_refs": []
+}

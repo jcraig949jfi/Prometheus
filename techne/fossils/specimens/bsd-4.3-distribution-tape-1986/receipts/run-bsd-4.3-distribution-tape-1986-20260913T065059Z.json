@@ -1,0 +1,107 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "bsd-4.3-distribution-tape-1986",
+  "receipt_id": "run-bsd-4.3-distribution-tape-1986-20260913T065059Z",
+  "written_utc": "20260913T065059Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-simh:bookworm",
+  "workdir": "build",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "boot42": "a7bacc518350f4ebb1c21e7f578f91dd843ef42c26d912a1a9d227b2fac07eff",
+    "boot42.uue": "2bf6d3076eae6a398109da5af98732e805a0c6855ed1b7804139da22b34ded8b",
+    "bsd43_install_stage1.exp": "48af60f3828f2fb640fc637c2013936e6f7a7a32a8ff32ae4a1d7f8e7b5f5410",
+    "bsd43_install_stage2.exp": "3ddebff86193e468b35940e08e16298237cef117641bca3f3f9e5ee8b05c537c",
+    "bsd43_tcp_experiment.exp": "83e3a4b4de1a0965704572879bad24ff6ed5e4d75f1cb63b989f29ce6523c7e4",
+    "simh_mktape.py": "75d337011fb0ca82e7f7991a2288a6407f3b581aa3f7a1fc8b551edf2f51fabf"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "0b4517d6e80cb0bad20540f778f29bb3d07b7a988310093d1beca2f5f9dea7de",
+  "recipe_sha256": "28b4609a753321c1446fc9eef714a0445230ab59b67f0754199e19eef71b9fba",
+  "patches": [],
+  "probe": [
+    {
+      "name": "simh",
+      "cmd": "cat /usr/local/share/simh-commit.txt; printf 'show version\nexit\n' > /tmp/v.ini; vax780 /tmp/v.ini 2>&1 | head -2",
+      "exit": 0,
+      "seconds": 7.38,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "a1f57fa3738ed31148d31126ba1a7278ff845c6d\n\nVAX 11/780 simulator Open SIMH V4.1-0 Current        git commit id: a1f57fa3\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "assemble the .tap from the tape files (stand 512B records; miniroot/rootdump/usr.tar 10240) and gunzip the miniroot as a raw disk",
+      "cmd": "python3 $HARNESS/simh_mktape.py 43bsd.tap $BODY/upstream/stand.gz:512 $BODY/upstream/miniroot.gz:10240 $BODY/upstream/rootdump.gz:10240 $BODY/upstream/usr.tar.gz:10240 && gunzip -c $BODY/upstream/miniroot.gz > miniroot.raw && echo built",
+      "exit": 0,
+      "seconds": 2.14,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "/w/upstream/stand.gz: 208 records of 512 bytes\n/w/upstream/miniroot.gz: 205 records of 10240 bytes\n/w/upstream/rootdump.gz: 446 records of 10240 bytes\n/w/upstream/usr.tar.gz: 3038 records of 10240 bytes\ntap sha256 9f501bc368fbc660917a68620da880fc0a651e45133c904a7e25c6550d52d837\nbuilt\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "boot the 4.3BSD GENERIC kernel (6 Jun 1986) on an emulated VAX-11/780 from the miniroot, then restore the root filesystem from tape with the release's own xtr -- the fossil kernel (containing bsd-tcp-4.3-reno's ancestor TCP) actually EXECUTES",
+      "cmd": "rm -f rq.dsk; expect $HARNESS/bsd43_install_stage1.exp miniroot.raw rq.dsk 43bsd.tap $HARNESS/boot42 > stage1.log 2>&1; grep -a -E 'STAGE1|4.3 BSD UNIX #1|Root filesystem extracted' stage1.log",
+      "exit": 0,
+      "seconds": 16.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n4.3 BSD UNIX #1: Fri Jun  6 19:55:29 PDT 1986\nSTAGE1: kernel banner seen\nSTAGE1: miniroot single-user shell\nRoot filesystem extracted\nSTAGE1: root filesystem extracted\nSTAGE1: done\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "43bsd.tap",
+      "sha256": "9f501bc368fbc660917a68620da880fc0a651e45133c904a7e25c6550d52d837",
+      "bytes": 37913052
+    },
+    {
+      "path": "miniroot.raw",
+      "sha256": "1d5ad41008df6ff23410b8ddbe1c8a3da654caddaa9e566a5efdf1f27eed460d",
+      "bytes": 9069568
+    },
+    {
+      "path": "rq.dsk",
+      "sha256": "6301869d343e154457304d5ccf4cc3effdd5317b7f9462edde8eeef21d45f785",
+      "bytes": 456228864
+    },
+    {
+      "path": "simh_run.ini",
+      "sha256": "6db558a1ca782305af5f5eb9b4cdeccd575ae48c1e8e27dd08782bee5d22bf41",
+      "bytes": 261
+    },
+    {
+      "path": "stage1.log",
+      "sha256": "e7207fd041e4b3469c561c6408cb53dfe1f39ede8148b05be1dd5c824ced06b3",
+      "bytes": 2436
+    }
+  ],
+  "classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "0b4517d6e80cb0bad20540f778f29bb3d07b7a988310093d1beca2f5f9dea7de",
+  "body_preserved": true
+}

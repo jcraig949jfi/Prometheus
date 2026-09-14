@@ -1,16 +1,20 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-09-09 02:15:01 AM UTC*
+*Generated: 2026-09-11 07:14:58 PM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
 
 ## Act on this
 
-*(no daemons require intervention)*
+**Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
+No heartbeat for 149929min (8995787s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+Investigate the process on M3 and restart, or kill watchdog if intentional.
 
 ## Watch this
 
-*(nothing trending toward intervention)*
+**No Deep Research dispatched or received in last 24h**
+DR pipeline idle. Either Pythia's queue is empty or upstream intent (Aporia tickets) hasn't been refilled.
+Check Pythia queue depth; refill DR ticket inbox if dry.
 
 ## Parked threads — yours to unstick (644 parked, 2 decisions pending)
 
@@ -47,10 +51,12 @@ https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 133 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 1 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
-**0 agents ALIVE** ().
+**2 agents ALIVE** (Pronoia, MachineProbe-M4).
+
+**Anomalies tracked:** 28 (Apollo, Hephaestus, Clio, Pythia, Hypatia).
 
 ---
 *Deterministic brief (primary mode) — every line computed from state; no LLM in the loop.*

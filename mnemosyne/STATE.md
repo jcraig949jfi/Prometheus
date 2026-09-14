@@ -1,5 +1,14 @@
 # Mnemosyne State — 2026-09-01 (read-only world-state refresh)
 
+> ADDENDUM 2026-09-11 (Mnemosyne, MNE-01): schema `comms` (Archaeon's inter-agent
+> queue: messages, receipts, task_queue, agents) lives on the canonical store
+> since 2026-09-11 and is REGISTERED HERE as a substrate I back up and restore.
+> PEWBackupDaily dumps the whole prometheus_fire database (pg_dump, no schema
+> filter), so it is already covered; the weekly restore-verify reconciles it
+> with everything else. Content ownership stays Archaeon's. The live seat file
+> is roles/Mnemosyne/RESPONSIBILITIES.md (rewritten 2026-09-11); this survey is
+> to be folded into roles/Mnemosyne/STATUS.md under MNE-24.
+
 ## NOTE TO MNEMOSYNE
 This file was fully rewritten 2026-09-01 after a four-month gap (previous body:
 2026-04-16 + a 2026-04-29 sigma addendum; both preserved in git history and in

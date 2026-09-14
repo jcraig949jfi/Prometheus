@@ -1,0 +1,206 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "femtolisp",
+  "receipt_id": "run-femtolisp-20260912T152717Z",
+  "written_utc": "20260912T152717Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "b77cf0506ab8362ef47b504cb2f42f2476a11b7694fb1751ecfd239485ea08ed",
+  "recipe_sha256": "20e6e0a58d6e7b2b523bda2a8b85b559958d075fb21333167d552b3b08a9cb6b",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make release",
+      "cmd": "make -s release 2>&1 | grep -viE 'warning' | tail -3; test -x ./flisp",
+      "exit": 0,
+      "seconds": 4.37,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "      |               ^~\nar: creating libllt.a\nar: creating libflisp.a\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "evaluate an expression",
+      "cmd": "echo '(princ (+ 1 2 (* 3 4)))' | ./flisp",
+      "exit": 0,
+      "seconds": 0.92,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ";  _\n; |_ _ _ |_ _ |  . _ _\n; | (-||||_(_)|__|_)|_)\n;-------------------|----------------------------------------------------------\n\n> 15#t\n\n> \n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "femtolisp's own unittest.lsp",
+      "cmd": "cd tests && ../flisp unittest.lsp 2>&1 | tail -12; echo UNITDONE",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "all tests pass\nUNITDONE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "builtins.o",
+      "sha256": "9a79bd406345ad83ce5c671c035d91141ebdd3a12f059ba88996b19331480f79",
+      "bytes": 26352
+    },
+    {
+      "path": "equalhash.o",
+      "sha256": "2df5a24b02faee10c23bfb579deeea8e4d71e091783016cd5701802ed8bdf286",
+      "bytes": 3176
+    },
+    {
+      "path": "flisp",
+      "sha256": "fbacc9132cc32c4180e66604b01d21eb04b67076acd3209af7e4fadc6224dd04",
+      "bytes": 208208
+    },
+    {
+      "path": "flisp.o",
+      "sha256": "d5bd1eee50f2ff28e19b16f2255492c34385178c627996bcdfa782c918ec41e4",
+      "bytes": 229776
+    },
+    {
+      "path": "flmain.o",
+      "sha256": "f86be6ab619bc080d7727851b36b38877b9f622a040aa085016b23550bff4177",
+      "bytes": 3592
+    },
+    {
+      "path": "iostream.o",
+      "sha256": "391fc2fbe02783758e634eb31cf96f88cbf2eb0ef3a98487d9eaf976e462d458",
+      "bytes": 26856
+    },
+    {
+      "path": "libflisp.a",
+      "sha256": "18a973b1ebcc5162ca7300b035fe374b0a3bc27fbe4150750dc8851cd3753b09",
+      "bytes": 320636
+    },
+    {
+      "path": "llt/bitvector-ops.o",
+      "sha256": "98af23460e98e3d51bad45646b7881e697afbf8452252e7a8145711e59f1d79c",
+      "bytes": 13360
+    },
+    {
+      "path": "llt/bitvector.o",
+      "sha256": "ccfc4ce70e3a3f886419e90b5180fea20eefc756200764b3613fbff96a6cbb5c",
+      "bytes": 2528
+    },
+    {
+      "path": "llt/dirpath.o",
+      "sha256": "91ce0c43a08453e42e5c6dba55e6eb47685c800726a3b50db12ce174baf07655",
+      "bytes": 2136
+    },
+    {
+      "path": "llt/dump.o",
+      "sha256": "95490fb1b59d010d50be11dc39515b675341439fc4f533f04d2831e1d87b0824",
+      "bytes": 3352
+    },
+    {
+      "path": "llt/hashing.o",
+      "sha256": "34f683003ae359695e806634e46a5f0236a8409a26276fb312fbc2dfed5299ac",
+      "bytes": 5144
+    },
+    {
+      "path": "llt/htable.o",
+      "sha256": "99f20acbf470732a3760e13531f67e42ba849bbdac80efed7e7d5e3ed774b04b",
+      "bytes": 1912
+    },
+    {
+      "path": "llt/int2str.o",
+      "sha256": "7a4bbeb9c00bc78d198e4e5e206c347b11dafcd4a16ea243d9eae144ec245857",
+      "bytes": 1376
+    },
+    {
+      "path": "llt/ios.o",
+      "sha256": "e50fc4459818ec3a1a65bf68e76fd8b67a2d43b8c2a17f71782f12d7eb22d62d",
+      "bytes": 18608
+    },
+    {
+      "path": "llt/libllt.a",
+      "sha256": "8692407fc4c5a0e66a98426ccf0b5ec20b0db7b7372a7b62e67e8308c7abaad5",
+      "bytes": 89434
+    },
+    {
+      "path": "llt/lltinit.o",
+      "sha256": "06092b860b20f0a031ba091c576ce475302603120af9ba0c5629773437834e6f",
+      "bytes": 2952
+    },
+    {
+      "path": "llt/ptrhash.o",
+      "sha256": "e4c94188c3122bb1f90c8bb8320c5dd76949da0d4421b0864ee502aa0a463098",
+      "bytes": 2992
+    },
+    {
+      "path": "llt/random.o",
+      "sha256": "1970ed102e4e3cd21dafca89b0852ea0aa476732bb23e214b781c1303702bc46",
+      "bytes": 6152
+    },
+    {
+      "path": "llt/socket.o",
+      "sha256": "c9cd2de1b251bf6036dde41a851980e10bb3da20964eb606e47c6308fce12fe7",
+      "bytes": 5472
+    },
+    {
+      "path": "llt/timefuncs.o",
+      "sha256": "8d35ff73f173432d9002ef9daa4ca95e359e15da6b43fd128c64730067d498b4",
+      "bytes": 3136
+    },
+    {
+      "path": "llt/utf8.o",
+      "sha256": "07dbebca5ecd2f45ae46dc89937684521787c8fa9a75df67dbf17b6fb490b584",
+      "bytes": 16976
+    },
+    {
+      "path": "string.o",
+      "sha256": "422efe8538574fea2b004bfcb2d388403afd44e5bd47ad48afa5ad1f0465366e",
+      "bytes": 19824
+    },
+    {
+      "path": "table.o",
+      "sha256": "1d14a356c2131a446af3cb8544b7112db92b4a9a7dd62e8ae083b0b278fa2165",
+      "bytes": 10032
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true
+}

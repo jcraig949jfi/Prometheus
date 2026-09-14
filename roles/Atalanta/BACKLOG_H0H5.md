@@ -7,9 +7,53 @@ roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md.
 
     <ID> | <item> | <lane> | <milestone> | <size> | <blocked_on> | <evidence of done>
 
-Nothing below ATALANTA-01 is executable until ATALANTA-01 is ruled, except
-ATALANTA-04, ATALANTA-05 and ATALANTA-11, which are startable today. The
-first five rows are the ones this seat starts when told to work.
+SUPERSEDED 2026-09-11 by the ruling below; the original line is kept as
+written: "Nothing below ATALANTA-01 is executable until ATALANTA-01 is
+ruled, except ATALANTA-04, ATALANTA-05 and ATALANTA-11, which are
+startable today. The first five rows are the ones this seat starts when
+told to work." The rows themselves are left unedited; their disposition is
+in the status block.
+
+## Status after the 2026-09-11 ruling and ATALANTA-04
+
+    ATALANTA-01  RULED by the operator 2026-09-11: RETIRE-AND-LIFT-ASSET.
+    ATALANTA-04  DONE. DEAD_GATING_SPECIMEN.md + census + invariant +
+                 reference/ (9 controls, 9 passed) + ledgers/.
+    ATALANTA-03  TAKEN BY ARCHAEON: now base rule 9. Superseded here.
+    ATALANTA-05  TAKEN BY ARCHAEON: comms fails closed off-M1 and names
+                 EW_DB_HOST; documented in comms/README.md.
+    ATALANTA-22  PARTLY ANSWERED: a second recording channel was found
+                 (agora.intelligence_outputs, 354 + 305 rows). It is an
+                 independent RECORD, not an independent MEASUREMENT --
+                 one witness, two statements -- so the 354 keeps its
+                 August M1 attribution and is not upgraded.
+    ATALANTA-06/07/08/09/10/12/13/14/17  CLOSED BY THE RULING: all are
+                 daemon repairs or revival steps. The daemon is retired.
+    ATALANTA-19  ANSWERED by SALVAGE_ASSESSMENT_2026-09-11.md: no lane
+                 remains and nothing uniquely useful is left inside the
+                 agent. Clean retirement recommended.
+    ATALANTA-02  STILL OPEN and still not this host's to do: the M1
+                 filesystem residue. Lower value now that the telemetry
+                 channel has been recovered.
+    ATALANTA-15  ANSWERED: pheme_upstream_not_found 354 and
+                 pheme_self_audit_null 305 -- identical to Atalanta's
+                 counts, from agents launched in the same commit and
+                 ticking within a second of each other. One failure
+                 deployed twice, not two failures.
+    ATALANTA-16  ANSWERED IN PART: no shared source for the phantom
+                 apollo/runs path was found. What was established is that
+                 two authors invented it independently in the same week,
+                 which is evidence about the system permitting guesses,
+                 not about a common source. Recorded as a NULL with its
+                 search scope, per doctrine.
+    ATALANTA-20  THE REMAINING ACT if the operator accepts retirement.
+    ATALANTA-21  HANDED to the Necropolis Keeper in the Archaeon report,
+                 with the telemetry census script as the starting point.
+
+New, arising from this pass and NOT owned by this seat:
+    the two machine probes (M1 and M2) fire every five minutes and fail
+    every time, with no owner and no alarm route; cause unresolved with
+    two hypotheses eliminated. Routed to Archaeon.
 
 ATALANTA-01 | Rule the disposition left blank in the June dossier: retire-after-HITL, refactor-to-config-driven-upstream, adapt-to-eval-feedstock, or retire-and-lift-asset | TOOLS | program | XL | operator decision (NEW: what happens to a consumer seat whose producer is dormant by ruling) | the HITL line at pivot/COMPONENT_DOSSIERS_2026-06-24.md:179 filled in, or a D-nn row in archaeon/docs/expansion/DECISIONS.md
 ATALANTA-02 | Locate and preserve the M1 runtime residue (354 artifacts, state.json, events.jsonl) before it is lost, or record in writing that it is already gone | TOOLS | program | S | a seat with M1 filesystem access (none on SPECTREX5) | a committed census file under roles/Atalanta/archive/ giving the artifact count and the state.json fields, or a committed note saying the residue is unrecoverable and on what evidence

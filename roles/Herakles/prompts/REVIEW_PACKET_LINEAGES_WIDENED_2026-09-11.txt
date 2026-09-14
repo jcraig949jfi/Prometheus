@@ -1,0 +1,119 @@
+REVIEW PACKET  Herakles  2026-09-11  the collider widened to four lineages
+================================================================================
+
+SEAT      Herakles (retrospective instrument). Built from c8d576e41 in the
+          herakles-comms-queue worktree, branch herakles/comms-queue-2026-09-11.
+SCOPE     Queue items 1-2 of the 2026-09-11 Archaeon prompt (msg 9) and
+          backlog L-1, L-2, L-3, L-4, L-5, C-1, C-3, X-4.
+CONFLICT  I wrote every protocol, transcription, criterion and verdict
+          here. No independent failure mode has examined any of it.
+
+WHAT WAS DONE
+--------------------------------------------------------------------------------
+Three papers the 09-10 catalogue marked NOT_FOUND / NEW LEAD were on
+their authors' own web sites. Each was hashed on retrieval, its protocol
+committed before its run, and its printed tables transcribed and executed.
+
+  Capcarrere, Sipper, Tomassini 1996, PRL 77:4969   (radius 1)
+    rule 184 / 226 under a BLOCK output convention at T = ceil(N/2).
+    New criterion block_output_score. Footnote [13] (256-rule screen):
+      184, 226 : 1.000 on 14000 ICs each, both IC variants   (theorem)
+      57, 99   : 0.563 / 0.561 Bernoulli, 0.580 / 0.580 uniform-density
+                 vs published "about 60%"; band [0.50, 0.70] preregistered
+      ranking  : "then 57 and 99" reproduces under Bernoulli(0.5) ICs ONLY;
+                 under uniform density rules 168/172/224/228 overtake them
+    Chance floor 0.5 (constant rule), analytic and measured. Rule 184
+    under the fixed-point criterion: 0.000. That mismatch is now a number.
+
+  Juille and Pollack 1998, GP-98 (coevolution, Brandeis)
+    Table 2: five 128-bit tables in binary. GKL transcribed == GKL
+    derived 128/128 (calibration). Table 1 at N = 149/599/999, C1-e
+    conventions, Bonferroni z = 2.935: 15 of 15 cells REPRODUCED,
+    largest |diff|/SE 2.73 (coev1, N = 599). coev1 0.8548, coev2 0.8574
+    at N = 149 (published 0.851, 0.860). Mis-paired cheat table 0.440.
+
+  Andre, Bennett, Koza 1996, GP-96 (genetic programming, Stanford)
+    Table 2: GKL, Davis 1995, Das 1995, GP rule. GKL 128/128. GP rule and
+    Das 1995 BIT-IDENTICAL to the 1998 reprint under two independent
+    transcriptions. Paper's convention is horizon 600 (not 2N): 4 of 4
+    cells REPRODUCED at z = 2.498; abk_gp 0.8243 vs 82.326% over 10^7.
+    Horizon 298 vs 600 differ by <= 0.0001 for all four rules.
+
+  Also: Wolz & de Oliveira 2008 citation found (JCA 3(4):289-312), no
+  bytes; the "Das rule" other papers reprint is the 1995 HAND-WRITTEN
+  rule, not the 1994 GA rule (L-5 advanced); CRITERIA.md lists all five
+  criteria with what each is comparable to (three: NOTHING), range,
+  floor, eligible count, SE unit.
+
+NUMBERS, PROVENANCE GRADE
+--------------------------------------------------------------------------------
+  All measured figures: ARTIFACT_IN_HAND, rows committed beside them.
+  Published figures: PRIMARY_SOURCE_READ, line-numbered in each protocol.
+  Every table transcription is calibrated on GKL derived from its
+  definition; two of the five new radius-3 organisms have two agreeing
+  printings, three have one.
+
+WHAT CHANGED IN THE COLLIDER
+--------------------------------------------------------------------------------
+  Before: 6 organisms, one lineage (EvCA group), two printed tables.
+  After:  11 radius-3 organisms + 2 radius-1, four lineages; EVOLVED
+          organisms from three search processes (bit-string GA 1993-95,
+          GP with ADFs 1996, coevolution with resource sharing 1998),
+          each reproduced against its own printed figure.
+  X-4 (second-lineage historical arm) is answered on the recovery side.
+  The C3-hist arm still needs Vivarium to take coev1, coev2, abk_gp,
+  das1995, davis1995 as ca_density organisms. That is a handover.
+
+WHAT WOULD FALSIFY THIS
+--------------------------------------------------------------------------------
+  - Any IC on which rule 184 fails the block convention (a theorem).
+  - A second seed at N = 599 putting coev1 again > 2.7 SE below 0.810:
+    then the 1998 horizon convention (assumed = 2N) is a lead.
+  - An independent transcription of ABK Table 2 differing in any bit of
+    Davis 1995, the only single-printing rule.
+  - A third IC distribution reproducing every clause of footnote [13]
+    would demote the Bernoulli lead to "one of several".
+
+WHAT I GOT WRONG THIS PASS, ON THE RECORD
+--------------------------------------------------------------------------------
+  - Protocol for Capcarrere mis-attributed IC variant B to evca.make_ics
+    (which is variant A). Annotated, not rewritten; the runs were as
+    defined.
+  - The ABK transcription and cross-check ran before that specimen's
+    protocol was committed. Stated in the protocol. The gated run came
+    after.
+  - Catalogue draft attributed the C1-e discrepant cell to exp; it is
+    particle2. Fixed before commit.
+
+WHAT SHOULD STOP
+--------------------------------------------------------------------------------
+  No further compute on any of these eleven rules under these criteria;
+  no band came within 0.2 SE of firing. The next value is a handover
+  (Vivarium organisms) and two recoveries: the evolved cellular-
+  programming lattices of Sipper 1996 (a different object; needs a new
+  kind) and the Wolz & de Oliveira 2008 rules (publisher-gated).
+  Not worth continuing: hunting the 1994 GA rule's table to prove par's
+  identity; a figure match at 0.769 is what the question can afford.
+
+REPRODUCTION
+--------------------------------------------------------------------------------
+  python -m herakles.eca.tools.run_capcarrere_screen            (69 s)
+  python herakles/specimens/spec-juille-pollack-1998/derived/transcribe.py
+  python herakles/specimens/spec-juille-pollack-1998/derived/
+         run_reproduction.py                                    (597 s)
+  python herakles/specimens/spec-andre-bennett-koza-1996/derived/transcribe.py
+  python herakles/specimens/spec-andre-bennett-koza-1996/derived/
+         run_reproduction.py                                    (83 s)
+  python -m pytest herakles -q                                  (137 pass)
+  All refuse the canonical checkout.
+
+QUEUE STATE
+--------------------------------------------------------------------------------
+  Item 1 BOOTSTRAP pointer            DONE
+  Item 2 catalogue table              DONE (herakles/lineages/
+                                            CATALOGUE_2026-09-11.md)
+  Item 3 H2 repair plan one-command   NOT STARTED (Vivarium has not
+                                            registered ca_stream_v2)
+  Item 4 synchronisation analogue     NOT STARTED
+  Talos #50                           NONE, posted
+================================================================================

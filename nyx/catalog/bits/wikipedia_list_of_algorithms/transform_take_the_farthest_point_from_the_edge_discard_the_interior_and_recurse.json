@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.take_the_farthest_point_from_the_edge_discard_the_interior_and_recurse",
+  "name": "take the farthest point from the edge, discard the triangle's interior, and recurse on the two new edges",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "from a starting edge between two extreme points, find the point farthest from it; that point is on the hull; drop every point inside the triangle it forms, and recurse on the two edges from it; a random-like input gives linearithmic time",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Quickhull' in section Computational mathematics / Geometry: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "PARTITION_BY_VALUE",
+  "iteration": "NONE",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a point-to-line distance"
+  ],
+  "fails_when": [
+    "quadratic when the points lie near a circle"
+  ],
+  "instances": [
+    "Quickhull"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.order.partition_around_pivot"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

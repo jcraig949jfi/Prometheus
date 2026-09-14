@@ -1,0 +1,76 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "verilog-rr-arbiter",
+  "receipt_id": "run-verilog-rr-arbiter-20260912T202757Z",
+  "written_utc": "20260912T202757Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "tb_techne.v": "2634eabac43ec52d7c0e4248cf386ab130a0e331dc687bbe3c336ff829635610"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "b87f9278bbf6a9630ee8e487f67fe6ab7f45b2239610491b2c3a45fc434058e8",
+  "recipe_sha256": "d6e69dad24e12b09f37b27aaef988523b36bac22fe6467dc0537d77e96f4f257",
+  "patches": [],
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V 2>&1 | head -1",
+      "exit": 0,
+      "seconds": 0.84,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Icarus Verilog version 11.0 (stable) ()\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile Techne observation tb + arbiter",
+      "cmd": "iverilog -o $BODY/arb.vvp $HARNESS/tb_techne.v round_robin_arbiter.v 2>&1 | grep -viE 'warning' | tail -4; test -f $BODY/arb.vvp",
+      "exit": 0,
+      "seconds": 0.89,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "hold all four requests high; confirm the grant rotates to every requester",
+      "cmd": "vvp -N $BODY/arb.vvp 2>&1 | tail -20",
+      "exit": 0,
+      "seconds": 0.84,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "cycle=0 req=1111 grant=0000\ncycle=1 req=1111 grant=0001\ncycle=2 req=1111 grant=0000\ncycle=3 req=1111 grant=0010\ncycle=4 req=1111 grant=0000\ncycle=5 req=1111 grant=0100\ncycle=6 req=1111 grant=0000\ncycle=7 req=1111 grant=1000\ncycle=8 req=1111 grant=0000\ncycle=9 req=1111 grant=0001\ncycle=10 req=1111 grant=0000\ncycle=11 req=1111 grant=0010\ncycle=12 req=1111 grant=0000\ncycle=13 req=1111 grant=0100\ncycle=14 req=1111 grant=0000\ncycle=15 req=1111 grant=1000\nARBITER_ROTATES_ALL_FOUR\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "b87f9278bbf6a9630ee8e487f67fe6ab7f45b2239610491b2c3a45fc434058e8",
+  "body_preserved": true
+}

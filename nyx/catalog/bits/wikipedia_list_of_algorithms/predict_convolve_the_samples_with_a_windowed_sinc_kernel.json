@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.convolve_the_samples_with_a_windowed_sinc_kernel",
+  "name": "convolve the samples with a windowed sinc kernel",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "compressors"
+  ],
+  "mechanism": "each output value is a weighted sum of the nearby input samples, the weights being an ideal reconstruction kernel (sinc) multiplied by a window that cuts it off after a few lobes; the window trades ringing against blur",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lanczos resampling (\"Lanzosh\")' in section Computational mathematics / Numerical algorithms / Interpolation and extrapolation: a multivariate interpolation method used to compute new values for any digitally sampled data",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "FUNCTION",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "PRECOMPUTED_TABLE",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "uniformly spaced samples",
+    "a window width (policy)"
+  ],
+  "fails_when": [
+    "ringing near edges; not monotone"
+  ],
+  "instances": [
+    "Lanczos resampling (\"Lanzosh\")"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

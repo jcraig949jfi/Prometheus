@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.eliminate_the_vertex_of_smallest_degree_first",
+  "name": "eliminate the vertex of smallest degree first",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "repeatedly pick the vertex with the fewest current neighbours, eliminate it (its neighbours become mutually connected, which is exactly the fill that factorisation would create), and record the order; the ordering keeps the fill small",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Minimum degree algorithm' in section Computational mathematics / Numerical algorithms / Linear algebra: permute the rows and columns of a symmetric sparse matrix before applying the Cholesky decomposition",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a symmetric sparsity pattern",
+    "a degree-tracking structure"
+  ],
+  "fails_when": [
+    "greedy; no optimality guarantee (the exact problem is hard)"
+  ],
+  "instances": [
+    "Minimum degree algorithm"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.select.move_to_fewest_onward_options"
+    },
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.search.cover_by_choosing_column_with_fewest_options"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

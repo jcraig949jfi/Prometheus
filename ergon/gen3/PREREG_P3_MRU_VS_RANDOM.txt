@@ -1,0 +1,210 @@
+======================================================================
+ERGON PROJECT 3 -- IS THE INHERITED MRU RULE HARMFUL?
+PREREGISTRATION, frozen before the first experimental organism-evaluation.
+======================================================================
+
+Authority: Tier A gate packet c3797f865 ("RUN NEXT the one discriminating
+experiment: I0 MRU vs I3 RANDOM at n=100"); operator via Archaeon, comms
+message 2 of 2026-09-11 (ERGON-03 then ERGON-02); ruling 6 in
+roles/Ergon/INBOX_ARCHAEON_BASE_ROLE_RULINGS_2026-09-11.md.
+
+THE QUESTION
+
+    DOES RETENTION POLICY MEASURABLY MATTER IN THIS CONSUMER AT ALL?
+
+    I3 RANDOM versus I0 D5_BASELINE_MRU, and nothing else.
+
+Project 1 (2026-09-02) bounded the SELECTION question: principled selection
+does not beat arbitrary churn (-0.31 pp, 95% CI [-1.12, +0.55] pp, n 100).
+Gen-1B's headline I1 - I0 = +2.78 pp (Holm 0.0040, n 30) then has exactly
+two readings left, and this experiment separates them:
+
+    (a) MRU is actively harmful: evicting the oldest resident throws away
+        artifacts the search would have used, and ANY churn beats it.
+        Prediction: I3 - I0 >= T.
+    (b) Gen-1B's I1 - I0 was inflated the same way its I1 - I3 was (a
+        marginal contrast selected for attention). Prediction: I3 - I0 is
+        a bounded null, and the honest position becomes "retention policy
+        does not measurably matter in this consumer"; Gen-1B's headline
+        falls with it.
+
+----------------------------------------------------------------------
+1. INSTRUMENT FIRST -- WHAT WAS SHOWN BEFORE THIS FILE WAS WRITTEN
+----------------------------------------------------------------------
+All four artifacts are committed in the commit BEFORE this preregistration
+so the order is in git history (base s2):
+
+  ergon/gen3/mde_p3.json          MDE under the frozen rule at n 100, sigma
+                                  frozen at 0.0429 (the larger of Gen-1B's
+                                  I3 - I0 SD 0.0363 and P1's I1 - I3 SD
+                                  0.0429): MDE80 1.22 pp, MDE90 1.41 pp;
+                                  expected SE 0.43 pp; T = 2.00 pp is 4.7 SE
+                                  from zero; power at T 0.995; expected CI
+                                  half-width 0.84 pp. Granularity: 2.38 pp
+                                  per lineage, 0.0238 pp on the mean.
+  ergon/gen3/gatefire_p3.json     five constructed worlds through the exact
+                                  inference path: HARMFUL -> MRU_HARMFUL,
+                                  HARMLESS -> RETENTION_POLICY_DOES_NOT_
+                                  MEASURABLY_MATTER, MRU_BETTER -> MRU_BETTER_
+                                  THAN_RANDOM, TIED -> INDETERMINATE, SHORT
+                                  (n 50) -> INDETERMINATE. 5 of 5 correct.
+  ergon/gen3/cheat_control.json   the REAL channel with success injected:
+                                  the oracle witness of task 1 (and 1 + 2)
+                                  planted into the I0 library before that
+                                  task, n 30, L 200..229. I0 vs I0dup (same
+                                  seeds) 30/30 tied: the channel is
+                                  deterministic. PLANT2 fired MRU_HARMFUL
+                                  (+6.67 pp, p 0.00002). PLANT1 was
+                                  INDETERMINATE by the SE branch (SE 1.04
+                                  pp > 1.00 pp at n 30; mean +3.33 pp,
+                                  p 0.0045). That check FAILED as written
+                                  and the file stands unchanged.
+  ergon/gen3/cheat_control_n100.json
+                                  the one-task control re-run at the
+                                  experiment's n (L 200..299), criterion
+                                  fixed before the run in its docstring:
+                                  p < 0.05 with a harmful label. Its result
+                                  is in that file and in the commit that
+                                  carries it; the experiment did not start
+                                  until it passed.
+  ergon/gen3/p3_analyze.py        the inference path. `decide` is the only
+                                  route from CFRs to a verdict; the controls
+                                  and the experiment use it unchanged.
+
+----------------------------------------------------------------------
+2. THE MEANINGFULNESS THRESHOLD -- INHERITED, NOT CHOSEN AFRESH
+----------------------------------------------------------------------
+    THRESHOLD  T = 2.00 pp   (PREREG_P1_2026-09-01.txt section 2: one task in
+                              forty-two; ~18% of the whole library effect)
+
+Inherited so the two bounded nulls (P1 on selection, P3 on retention) are
+comparable. T is STRATEGIC: a real effect below T is reported as real and
+below scale, never as absent. T sits 4.7 expected SE from zero (mde_p3.json),
+so the gate is outside its own measurement error (base s2).
+
+----------------------------------------------------------------------
+3. DESIGN
+----------------------------------------------------------------------
+arms                I0 D5_BASELINE_MRU (evict the oldest resident; the
+                    inherited D-5 semantics), I3 RANDOM (evict a uniformly
+                    random resident). No other arm.
+n                   100 FRESH paired lineages per arm
+battery             the frozen 42 non-control D-5 tasks (F1-F4)
+budget              30,000 evaluations per task
+cap                 64
+admission           frozen m1.admissions
+search core         frozen m1.m1_rx
+policy code         ergon/gen1b/gen1_run.py, UNCHANGED (blob
+                    577125847aabf6a3087d06935e39701cffc751be, the same blob
+                    as Gen-1B and Project 1); called verbatim by
+                    ergon/gen3/p3_common.py
+pairing             lineage L uses the same nav_base = 200000 + 1000 L in
+                    both arms; the policy rng is 50000 + L (unused by I0)
+seed space          L in 300..399. Disjoint from Gen-1B (0..29), Project 1
+                    (100..199) and the cheat controls (200..299). No lineage
+                    of any earlier run is reused or pooled.
+execution           lineages distributed over a process pool (p3_common.
+                    run_jobs); each lineage is an independent unit with its
+                    own seeds, so the pool changes no number. Every lineage
+                    writes its rows and summary to ergon/gen3/p3_results/
+                    before it is reported.
+
+WHY FRESH LINEAGES. Gen-1B's 30 I0/I3 lineages have been seen (I3 - I0 was
++1.27 pp, p 0.054 uncorrected). Extending a seen set is optional stopping.
+Project 3 is an INDEPENDENT REPLICATION at larger n; Gen-1B's rows are not
+pooled in and do not enter the primary analysis.
+
+----------------------------------------------------------------------
+4. ANALYSIS -- FIXED HERE (p3_analyze.py)
+----------------------------------------------------------------------
+endpoint            per-lineage CFR (fraction of 42 tasks solved in budget)
+unit of inference   LINEAGE
+contrast            mean of the 100 paired deltas, I3 - I0
+                    (positive = MRU is worse than churn)
+test                two-sided paired sign-flip permutation, 50,000 draws,
+                    seed 909093
+multiplicity        NONE. One preregistered contrast.
+CI                  95% percentile bootstrap resampling LINEAGES, 20,000 draws
+secondary reported  per-arm mean and SD, sign split, per-lineage deltas in
+                    full, gate distance in SE
+
+No subgroup, task-level, family-level or stratum-level analysis enters the
+decision. No rescue of a failing contrast.
+
+----------------------------------------------------------------------
+5. DECISION RULE -- COMPLETE AND EXHAUSTIVE
+----------------------------------------------------------------------
+Let d = observed mean delta (I3 - I0), p = permutation p-value, [lo, hi]
+the 95% bootstrap CI, SE the standard error of the deltas.
+
+    INDETERMINATE                       checked FIRST, before p is read:
+        eligible pairs < 100, OR any interpretability assertion of section
+        7 fails, OR all 100 pairs are tied (nothing could have fired), OR
+        SE > T/2 = 1.00 pp (the gate would be inside two SE of zero).
+        The statistic is still reported beside the label.
+
+    MRU_HARMFUL                         p < 0.05  AND  d >= T
+    MRU_HARMFUL_BELOW_USEFUL_SCALE      p < 0.05  AND  0 < d < T
+    MRU_BETTER_THAN_RANDOM              p < 0.05  AND  d < 0
+    RETENTION_POLICY_DOES_NOT_MEASURABLY_MATTER
+                                        p >= 0.05  AND  -T < lo  AND  hi < T
+        (a bounded null on BOTH sides: the data exclude a strategically
+        meaningful effect in either direction)
+    UNDERPOWERED                        p >= 0.05  AND  NOT (-T < lo AND hi < T)
+
+CONSEQUENCES, stated now so they cannot be improvised later:
+
+    MRU_HARMFUL                 the Gen-1B headline stands as "MRU is
+                                harmful", not as "selection works"; ERGON-06
+                                (measure a deletion) proceeds against the
+                                I3 comparator, since any rule must beat
+                                churn, not MRU.
+    MRU_HARMFUL_BELOW_SCALE     reported as real and below scale; ERGON-06
+                                proceeds against I3; the Gen-1B +2.78 pp is
+                                annotated as not replicated at scale.
+    MRU_BETTER_THAN_RANDOM      the inherited rule is not the problem; the
+                                Gen-1B I1 - I0 contrast is annotated as
+                                unexplained by MRU harm; ERGON-06 proceeds
+                                against I0.
+    DOES_NOT_MEASURABLY_MATTER  the Gen-1B headline falls (annotation, not
+                                deletion, in ergon/gen1b/); the honest
+                                position is that retention policy does not
+                                measurably matter in this consumer at cap
+                                64 and budget 30,000; ERGON-06 and ERGON-07
+                                are re-premised before they run (the
+                                comparator for a deletion is then
+                                "keep everything to cap", and the question
+                                moves to whether the CAP matters).
+    UNDERPOWERED                reported with n and the CI; no extension
+                                of this run (section 6); a successor run
+                                needs its own preregistration.
+
+----------------------------------------------------------------------
+6. STOPPING
+----------------------------------------------------------------------
+Fixed length: 100 lineages per arm. No interim analysis, no extension, no
+early stop. If the run cannot complete, the completed lineages are reported
+with their count and the verdict is INDETERMINATE (eligibility), never
+reinterpreted.
+
+----------------------------------------------------------------------
+7. WHAT WOULD MAKE THIS RUN UNINTERPRETABLE (asserted in p3_analyze.validity)
+----------------------------------------------------------------------
+  - any arm ending a lineage with other than 64 artifacts
+  - any lineage with other than 42 task rows
+  - nav_base differing between the arms of a lineage (broken pairing)
+  - reuse of a Gen-1B, Project 1 or cheat-control lineage index (disjoint
+    by construction; the summaries carry the index)
+  - the frozen runner blob differing from 577125847aabf6a3087d06935e39701cffc751be
+
+----------------------------------------------------------------------
+8. CONFLICTS DECLARED (seat constraint 1)
+----------------------------------------------------------------------
+This seat built the I0 rule's inheritance (D-5) and the Gen-1B headline
+that this experiment may retire. Both directions are conflicts: a HARMFUL
+verdict keeps the seat's retention programme alive; a DOES_NOT_MATTER
+verdict lets the seat drop a thread that has been expensive. The rule above
+is mechanical and the rows ship with the verdict so a reviewer can rerun
+p3_analyze.decide on them without this seat.
+
+-- Ergon, 2026-09-11, before the first experimental organism-evaluation.

@@ -1,0 +1,124 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "picorv32",
+  "canonical_name": "PicoRV32 -- a size-optimised RISC-V CPU core in Verilog (Clifford Wolf / YosysHQ)",
+  "aliases": [
+    "picorv32",
+    "PicoRV32"
+  ],
+  "lineage": "PicoRV32 (2015-, Clifford Wolf): a small RV32I[MC] processor as synthesisable Verilog with a self-checking testbench; the reference small core of the open RISC-V / Yosys ecosystem",
+  "domain": [
+    "hardware",
+    "cpu",
+    "verilog",
+    "sequential-logic",
+    "finite-state-machine",
+    "processor"
+  ],
+  "era": "2015-",
+  "version": "github.com/YosysHQ/picorv32 main branch as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/YosysHQ/picorv32",
+        "commit": "ef203c2b0a3fb793280f5114941416c425c5b461",
+        "commit_resolved": "ef203c2b0a3fb793280f5114941416c425c5b461",
+        "commit_date": "2026-09-07T20:01:21+12:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/YosysHQ/picorv32"
+  },
+  "hashes": {
+    "tree_sha256": "647455da29695832218941a94052b274f9ce2cf7b1b57d59eddfdfb5d661d653",
+    "n_files": 247,
+    "bytes": 761713,
+    "artifacts": [
+      {
+        "filename": "https://github.com/YosysHQ/picorv32",
+        "sha256": null,
+        "commit": "ef203c2b0a3fb793280f5114941416c425c5b461"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\picorv32",
+    "hash_list": "techne/fossils/specimens/picorv32/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "ISC",
+    "status": "permissive",
+    "evidence": "LICENSE in repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Verilog"
+  ],
+  "build_system": "iverilog (simulation)",
+  "compiler_or_interpreter": "Icarus Verilog (docker prometheus-fossil-hw)",
+  "dependencies": [
+    "iverilog",
+    "a RISC-V gcc for the firmware test (optional)"
+  ],
+  "run_classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "picorv32.v (the core); testbench.v / picorv32_tb"
+  ],
+  "example": {
+    "command": "iverilog -o tb testbench.v picorv32.v && vvp tb",
+    "input": "a compiled firmware image or the built-in test",
+    "output": "the testbench's PASS/trap report and register trace"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-hw:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "github.com/YosysHQ/picorv32 README",
+    "RISC-V ISA spec"
+  ],
+  "human_capability_summary": {
+    "built_to": "execute the RISC-V RV32I instruction set as a small synthesisable processor -- fetch, decode, a state-machine control path, register file, and an ALU -- for FPGAs and teaching",
+    "pressure": "silicon area and timing: the core trades cycles-per-instruction for a tiny gate count, an explicit area/speed decision",
+    "success_means": "correct execution of RISC-V programs (its self-checking testbench passes) within the gate budget"
+  },
+  "known_human_problem_solved": "running a real instruction set on minimal hardware",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/picorv32/receipts/run-picorv32-20260912T153506Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/picorv32/receipts/run-picorv32-20260912T153756Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_EMULATED",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\picorv32 ; tracked techne/fossils/specimens/picorv32/",
+    "where_it_came_from": "{'repo': 'github.com/YosysHQ/picorv32'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; ISC",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run picorv32",
+    "how_we_know_it_runs": "RUNNABLE_EMULATED / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/picorv32/receipts/run-picorv32-20260912T153756Z.json",
+    "what_humans_used_it_for": "execute the RISC-V RV32I instruction set as a small synthesisable processor -- fetch, decode, a state-machine control path, register file, and an ALU -- for FPGAs and teaching"
+  },
+  "seat": "Techne"
+}

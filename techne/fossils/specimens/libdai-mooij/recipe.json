@@ -1,0 +1,60 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "apt boost + gmp, then make the library and examples (Makefile.LINUX; no source change)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y libboost-dev libboost-program-options-dev libboost-test-dev libgmp-dev >/dev/null 2>&1; cp Makefile.LINUX Makefile.conf; make -s -j4 lib examples 2>&1 | grep -iE '\\berror' | head -5; ls examples/example_sprinkler examples/example 2>&1; test -x examples/example_sprinkler && echo built",
+      "timeout": 1800
+    },
+    {
+      "name": "the same apt + make in the run container is repeated per command (one container per command)",
+      "cmd": "echo noted"
+    }
+  ],
+  "runs": [
+    {
+      "name": "sprinkler network: build it, write sprinkler.fg, exact marginals (junction tree)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y libboost-dev libboost-program-options-dev libboost-test-dev libgmp-dev >/dev/null 2>&1; cp Makefile.LINUX Makefile.conf; make -s -j4 lib examples >/dev/null 2>&1; ./examples/example_sprinkler 2>&1 | tail -8",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "P(W=1) = 0.6471"
+        ]
+      },
+      "timeout": 1800
+    },
+    {
+      "name": "BELIEF PROPAGATION on the same factor graph beside the exact answer (examples/example: JTree exact, then loopy BP, then MF/TreeEP/Gibbs)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y libboost-dev libboost-program-options-dev libboost-test-dev libgmp-dev >/dev/null 2>&1; cp Makefile.LINUX Makefile.conf; make -s -j4 lib examples >/dev/null 2>&1; ./examples/example_sprinkler >/dev/null 2>&1; ./examples/example sprinkler.fg 2>&1 | grep -iE 'exact|belief propagation|BP|marginal|\\(' | head -40",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)belief propagation"
+      },
+      "timeout": 1800
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: the sprinkler network is LOOPY (Cloudy -> Sprinkler and Rain -> WetGrass), so loopy BP must agree with the exact marginals on Cloudy/Sprinkler/Rain (1e-6) and DIFFER on WetGrass -- the documented inexactness of loopy BP, measured",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y libboost-dev libboost-program-options-dev libboost-test-dev libgmp-dev python3 >/dev/null 2>&1; cp Makefile.LINUX Makefile.conf; make -s -j4 lib examples >/dev/null 2>&1; ./examples/example_sprinkler >/dev/null 2>&1; ./examples/example sprinkler.fg > $BODY/build/example.out 2>&1; python3 $HARNESS/bp_vs_exact.py $BODY/build/example.out",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESULT OK"
+        ]
+      },
+      "timeout": 1800
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: example.cpp prints the exact (JTree) variable marginals and then the loopy-BP marginals for the same factor graph. CORRECTION 2026-09-13: I first wrote the sprinkler network down as a tree; it is loopy, and BP converged in 2 passes to P(WetGrass=1) = 0.5985 against the exact 0.6471 while matching the three upstream variables exactly -- the oracle now asserts that shape (agreement upstream, a >0.01 discrepancy inside the loop). Boost/GMP from apt in each run container, recorded (one container per command). Observed 2026-09-13: P(W=1) = 0.6471, P(S=1|W=1) = 0.4298, P(R=1|W=1) = 0.7079."
+}

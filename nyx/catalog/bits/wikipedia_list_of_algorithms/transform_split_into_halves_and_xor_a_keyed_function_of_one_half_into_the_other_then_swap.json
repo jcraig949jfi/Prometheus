@@ -1,0 +1,61 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap",
+  "name": "split into halves, XOR a keyed function of one half into the other, then swap",
+  "lineage": [
+    "network protocols",
+    "error-correcting systems"
+  ],
+  "mechanism": "split the block in two; each round computes a keyed function of the right half and XORs it into the left, then swaps the halves; because the function is only ever XORed in, decryption is the same sequence with the round keys reversed, and the round function need not be invertible",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Data Encryption Standard (DES), sometimes DE Algorithm, winner of NBS selection competition, replaced by AES for most pu' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Blowfish': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Twofish': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Tiny Encryption Algorithm (TEA)': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DATA_INDEPENDENT",
+  "iteration": "SWEEP",
+  "cost": "CONSTANT",
+  "requires": [
+    "a keyed round function (data)",
+    "a key schedule"
+  ],
+  "fails_when": [
+    "too few rounds or a weak round function yields differential attacks"
+  ],
+  "instances": [
+    "Data Encryption Standard (DES), sometimes DE Algorithm, winner of NBS selection competition, replaced by AES for most pu",
+    "Blowfish",
+    "Twofish",
+    "Tiny Encryption Algorithm (TEA)"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.transform.repeat_rounds_of_byte_substitution_positional_permutation_and_round_key_mixing"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

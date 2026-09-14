@@ -1,0 +1,75 @@
+{
+  "method": "text census; see module docstring; NOT an elaboration",
+  "mathlib4_sha": "c9f8814322b00af24869d176c1896117d10e5d35",
+  "attribute_sites_total": 48082,
+  "sample_n": 400,
+  "seed": 20260911,
+  "counts": {
+    "EQ": 265,
+    "IFF": 60,
+    "NEG": 0,
+    "AND": 0,
+    "OTHER": 75
+  },
+  "non_eq_fraction_in_sample": 0.338,
+  "examples": {
+    "EQ": [
+      {
+        "file": "Mathlib\\Order\\RelIso\\Basic.lean",
+        "line": 635,
+        "conclusion": "e.symm (e x) = x"
+      },
+      {
+        "file": "Mathlib\\Algebra\\Category\\ModuleCat\\Basic.lean",
+        "line": 295,
+        "conclusion": "i.toLinearEquiv = i.hom.hom"
+      },
+      {
+        "file": "Mathlib\\RingTheory\\PowerSeries\\Log.lean",
+        "line": 47,
+        "conclusion": "coeff n (log A) = if n = 0 then 0 else algebraMap ℚ A ((-1 : ℚ) ^ (n + 1) / n)"
+      }
+    ],
+    "IFF": [
+      {
+        "file": "Mathlib\\Geometry\\Euclidean\\Sphere\\Basic.lean",
+        "line": 351,
+        "conclusion": "Cospherical (Subtype.val '' ps) ↔ Cospherical ps"
+      },
+      {
+        "file": "Mathlib\\Data\\Rat\\Cast\\Order.lean",
+        "line": 170,
+        "conclusion": "(p : K) ≤ 1 ↔ p ≤ 1"
+      },
+      {
+        "file": "Mathlib\\LinearAlgebra\\Ray.lean",
+        "line": 482,
+        "conclusion": "SameRay R (r • v) v ↔ 0 ≤ r ∨ v = 0"
+      }
+    ],
+    "NEG": [],
+    "AND": [],
+    "OTHER": [
+      {
+        "file": "Mathlib\\Data\\Finset\\Prod.lean",
+        "line": 325,
+        "conclusion": "Disjoint s.diag s.offDiag"
+      },
+      {
+        "file": "Mathlib\\Algebra\\MonoidAlgebra\\MapDomain.lean",
+        "line": 372,
+        "conclusion": "@[to_additive (attr"
+      },
+      {
+        "file": "Mathlib\\Topology\\Order\\OrderClosed.lean",
+        "line": 329,
+        "conclusion": "@[to_dual (attr"
+      }
+    ]
+  },
+  "grade": {
+    "attribute_sites_total": "T1-LOCAL",
+    "counts": "T1-LOCAL for what the regex saw",
+    "shape_inference": "T3"
+  }
+}

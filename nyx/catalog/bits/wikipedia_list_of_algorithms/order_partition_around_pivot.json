@@ -1,0 +1,56 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.partition_around_pivot",
+  "name": "partition around a pivot and recurse",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "choose a pivot, rearrange the sequence so everything smaller precedes everything larger, then sort the two sides independently",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Quicksort' in section Combinatorial algorithms / Sequence algorithms / Sequence sorting: divide list into two, with all items on the first list coming before all items on the second list.; then sort the two lists. Often the method of choice",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Samplesort': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a total order",
+    "a pivot rule (policy)"
+  ],
+  "fails_when": [
+    "bad pivots give quadratic time",
+    "not stable"
+  ],
+  "instances": [
+    "Quicksort",
+    "Samplesort"
+  ],
+  "related": [
+    {
+      "rel": "GENERALIZES",
+      "id": "bit.select.kth_by_partition"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "PARTITION_BY_VALUE",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.3 strategy refined DIVIDE_CONQUER -> PARTITION_BY_VALUE (control q.strategy_separates_sorts)",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "NONE"
+}

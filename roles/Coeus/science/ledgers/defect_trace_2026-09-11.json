@@ -1,0 +1,1625 @@
+{
+ "kind": "coeus_residue_defect_trace",
+ "created": "2026-09-11",
+ "produced_by": "roles/Coeus/science/trace_defects.py",
+ "base_sha": "05b1134e6",
+ "refits_nothing": true,
+ "inputs": {
+  "agents/coeus/graphs/concept_scores.json": true,
+  "agents/coeus/graphs/causal_graph.json": true,
+  "agents/coeus/graphs/adversarial_graph.json": true,
+  "agents/coeus/enrichments/*.json": 4031,
+  "agents/hephaestus/forge/*.py": 366,
+  "agents/nous/runs/*/responses.jsonl": 5918
+ },
+ "F1_documentation_contradiction": {
+  "question": "Does the shipped README agree with the artifacts committed beside it?",
+  "readme_path": "agents/coeus/README.md",
+  "claims_checked": 12,
+  "claims_agreeing": 0,
+  "claims_disagreeing": 12,
+  "sign_reversals": [
+   "Implementability is the only Nous score dimension predicting forge success (+0.221)"
+  ],
+  "rows": [
+   {
+    "claim": "Implementability is the only Nous score dimension predicting forge success (+0.221)",
+    "artifact": "causal_graph.json score_dag.implementability",
+    "claimed": 0.221,
+    "actual": -0.467,
+    "agrees": false,
+    "sign_reversed": true
+   },
+   {
+    "claim": "Criticality forge effect +1.155",
+    "artifact": "concept_scores.json concept_influence['Criticality'].forge_effect",
+    "claimed": 1.155,
+    "actual": 0.3514,
+    "agrees": false,
+    "sign_reversed": false
+   },
+   {
+    "claim": "Sparse Autoencoders forge effect +0.919",
+    "artifact": "concept_influence['Sparse Autoencoders'].forge_effect",
+    "claimed": 0.919,
+    "actual": 0.2753,
+    "agrees": false,
+    "sign_reversed": false
+   },
+   {
+    "claim": "Active Inference forge effect +0.789",
+    "artifact": "concept_influence['Active Inference'].forge_effect",
+    "claimed": 0.789,
+    "actual": 0.2007,
+    "agrees": false,
+    "sign_reversed": false
+   },
+   {
+    "claim": "Falsificationism forge effect +0.655",
+    "artifact": "concept_influence['Falsificationism'].forge_effect",
+    "claimed": 0.655,
+    "actual": 0.3222,
+    "agrees": false,
+    "sign_reversed": false
+   },
+   {
+    "claim": "Topology forge effect -0.462",
+    "artifact": "concept_influence['Topology'].forge_effect",
+    "claimed": -0.462,
+    "actual": -0.0563,
+    "agrees": false,
+    "sign_reversed": false
+   },
+   {
+    "claim": "Epigenetics forge effect -0.299",
+    "artifact": "concept_influence['Epigenetics'].forge_effect",
+    "claimed": -0.299,
+    "actual": 0.0,
+    "agrees": false,
+    "sign_reversed": false
+   },
+   {
+    "claim": "Criticality (+1.249 forge, 38% adversarial) flagged as Goodharting",
+    "artifact": "adversarial_graph.json adversarial_survival['Criticality'].survival_rate",
+    "claimed": 0.38,
+    "actual": 0.3615,
+    "agrees": false,
+    "sign_reversed": false
+   },
+   {
+    "claim": "Compressed Sensing (0% forge, 70% adversarial) identified as undervalued",
+    "artifact": "adversarial_survival['Compressed Sensing'].survival_rate",
+    "claimed": 0.7,
+    "actual": 0.5327,
+    "agrees": false,
+    "sign_reversed": false
+   },
+   {
+    "claim": "Top synergy: Ergodic Theory + Theory of Mind (+0.446)",
+    "artifact": "concept_scores.json pair_synergy max",
+    "claimed": 0.446,
+    "actual": null,
+    "agrees": false,
+    "sign_reversed": false
+   },
+   {
+    "claim": "Topology forge rate 0%",
+    "artifact": "causal_graph.json forge_rate_by_concept['Topology']",
+    "claimed": 0.0,
+    "actual": 0.1111,
+    "agrees": false,
+    "sign_reversed": false
+   },
+   {
+    "claim": "Epigenetics forge rate 0%",
+    "artifact": "forge_rate_by_concept['Epigenetics']",
+    "claimed": 0.0,
+    "actual": 0.2143,
+    "agrees": false,
+    "sign_reversed": false
+   }
+  ],
+  "method_label_mismatch": {
+   "readme_advertises": [
+    "NOTEARS",
+    "GES",
+    "FCI",
+    "LiNGAM",
+    "DAGMA"
+   ],
+   "graph_method_field": "lasso_regression",
+   "confounders_found": 0,
+   "dagma_divergences": 0,
+   "readme_mentions_causal": 14
+  },
+  "stale_path_in_readme": {
+   "readme_says": "hephaestus/src/rlvf_fitness.py",
+   "file_is_at": "agents/hephaestus/src/rlvf_fitness.py",
+   "readme_path_exists": false
+  }
+ },
+ "F2_denominator_loss": {
+  "question": "Which published extreme scores rest on a tiny denominator?",
+  "goodhart_rows": 30,
+  "rows_publishing_a_denominator": 0,
+  "rows_at_an_extreme_rate_0_or_1": 7,
+  "extreme_rows_and_their_denominators": [
+   {
+    "concept": "Abstract Interpretation",
+    "rate": 1.0,
+    "n_tasks": 1,
+    "n_survived": 1,
+    "verdict": "Low forge priority but high adversarial robustness \u2014 undervalued"
+   },
+   {
+    "concept": "Adaptive Control",
+    "rate": 1.0,
+    "n_tasks": 2,
+    "n_survived": 2,
+    "verdict": "Low forge priority but high adversarial robustness \u2014 undervalued"
+   },
+   {
+    "concept": "Counterfactual Reasoning",
+    "rate": 1.0,
+    "n_tasks": 2,
+    "n_survived": 2,
+    "verdict": "Low forge priority but high adversarial robustness \u2014 undervalued"
+   },
+   {
+    "concept": "Dual Process Theory",
+    "rate": 1.0,
+    "n_tasks": 1,
+    "n_survived": 1,
+    "verdict": "Low forge priority but high adversarial robustness \u2014 undervalued"
+   },
+   {
+    "concept": "Epigenetics",
+    "rate": 1.0,
+    "n_tasks": 1,
+    "n_survived": 1,
+    "verdict": "Low forge priority but high adversarial robustness \u2014 undervalued"
+   },
+   {
+    "concept": "Gauge Theory",
+    "rate": 1.0,
+    "n_tasks": 4,
+    "n_survived": 4,
+    "verdict": "Low forge priority but high adversarial robustness \u2014 undervalued"
+   },
+   {
+    "concept": "Hoare Logic",
+    "rate": 1.0,
+    "n_tasks": 1,
+    "n_survived": 1,
+    "verdict": "Low forge priority but high adversarial robustness \u2014 undervalued"
+   }
+  ],
+  "concepts_at_or_below_denominator": {
+   "1": [
+    "Abstract Interpretation",
+    "Dual Process Theory",
+    "Epigenetics",
+    "Hoare Logic"
+   ],
+   "2": [
+    "Abstract Interpretation",
+    "Adaptive Control",
+    "Counterfactual Reasoning",
+    "Dual Process Theory",
+    "Epigenetics",
+    "Hoare Logic"
+   ],
+   "4": [
+    "Abstract Interpretation",
+    "Adaptive Control",
+    "Compositional Semantics",
+    "Counterfactual Reasoning",
+    "Dual Process Theory",
+    "Epigenetics",
+    "Gauge Theory",
+    "Hoare Logic",
+    "Metamorphic Testing",
+    "Symbiosis"
+   ],
+   "10": [
+    "Abstract Interpretation",
+    "Adaptive Control",
+    "Compositional Semantics",
+    "Counterfactual Reasoning",
+    "Dual Process Theory",
+    "Epigenetics",
+    "Gauge Theory",
+    "Hoare Logic",
+    "Metamorphic Testing",
+    "Swarm Intelligence",
+    "Symbiosis"
+   ]
+  },
+  "all_rows": [
+   {
+    "concept": "Abstract Interpretation",
+    "published_adversarial_survival": 1.0,
+    "published_forge_effect": -0.0819,
+    "published_divergence": 1.0819,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 1,
+    "n_survived": 1,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Active Inference",
+    "published_adversarial_survival": 0.3479,
+    "published_forge_effect": 0.2007,
+    "published_divergence": -0.1472,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 1397,
+    "n_survived": 486,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Adaptive Control",
+    "published_adversarial_survival": 1.0,
+    "published_forge_effect": -0.0303,
+    "published_divergence": 1.0303,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 2,
+    "n_survived": 2,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Chaos Theory",
+    "published_adversarial_survival": 0.367,
+    "published_forge_effect": 0.2384,
+    "published_divergence": -0.1286,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 1692,
+    "n_survived": 621,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Cognitive Load Theory",
+    "published_adversarial_survival": 0.7143,
+    "published_forge_effect": 0.0202,
+    "published_divergence": 0.6941,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 63,
+    "n_survived": 45,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Compositional Semantics",
+    "published_adversarial_survival": 0.6667,
+    "published_forge_effect": 0.0164,
+    "published_divergence": 0.6503,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 3,
+    "n_survived": 2,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Counterfactual Reasoning",
+    "published_adversarial_survival": 1.0,
+    "published_forge_effect": 0.0237,
+    "published_divergence": 0.9763,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 2,
+    "n_survived": 2,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Criticality",
+    "published_adversarial_survival": 0.3615,
+    "published_forge_effect": 0.3514,
+    "published_divergence": -0.0101,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 2285,
+    "n_survived": 826,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Dual Process Theory",
+    "published_adversarial_survival": 1.0,
+    "published_forge_effect": -0.1791,
+    "published_divergence": 1.1791,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 1,
+    "n_survived": 1,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Embodied Cognition",
+    "published_adversarial_survival": 0.8182,
+    "published_forge_effect": -0.0168,
+    "published_divergence": 0.835,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 11,
+    "n_survived": 9,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Emergence",
+    "published_adversarial_survival": 0.3364,
+    "published_forge_effect": 0.146,
+    "published_divergence": -0.1904,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 110,
+    "n_survived": 37,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Epigenetics",
+    "published_adversarial_survival": 1.0,
+    "published_forge_effect": 0.0,
+    "published_divergence": 1.0,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 1,
+    "n_survived": 1,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Ergodic Theory",
+    "published_adversarial_survival": 0.3694,
+    "published_forge_effect": 0.2846,
+    "published_divergence": -0.0848,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 1451,
+    "n_survived": 536,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Falsificationism",
+    "published_adversarial_survival": 0.3434,
+    "published_forge_effect": 0.3222,
+    "published_divergence": -0.0212,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 1322,
+    "n_survived": 454,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Free Energy Principle",
+    "published_adversarial_survival": 0.3508,
+    "published_forge_effect": 0.3873,
+    "published_divergence": 0.0365,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 4558,
+    "n_survived": 1599,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Gauge Theory",
+    "published_adversarial_survival": 1.0,
+    "published_forge_effect": -0.0481,
+    "published_divergence": 1.0481,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 4,
+    "n_survived": 4,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Hoare Logic",
+    "published_adversarial_survival": 1.0,
+    "published_forge_effect": 0.0354,
+    "published_divergence": 0.9646,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 1,
+    "n_survived": 1,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Holography Principle",
+    "published_adversarial_survival": 0.7385,
+    "published_forge_effect": -0.1293,
+    "published_divergence": 0.8678,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 65,
+    "n_survived": 48,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Mechanism Design",
+    "published_adversarial_survival": 0.3791,
+    "published_forge_effect": 0.2489,
+    "published_divergence": -0.1302,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 2279,
+    "n_survived": 864,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Metamorphic Testing",
+    "published_adversarial_survival": 0.6667,
+    "published_forge_effect": 0.072,
+    "published_divergence": 0.5947,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 3,
+    "n_survived": 2,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Network Science",
+    "published_adversarial_survival": 0.3581,
+    "published_forge_effect": 0.1663,
+    "published_divergence": -0.1918,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 215,
+    "n_survived": 77,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Neural Plasticity",
+    "published_adversarial_survival": 0.2878,
+    "published_forge_effect": 0.1279,
+    "published_divergence": -0.1599,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 469,
+    "n_survived": 135,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Phase Transitions",
+    "published_adversarial_survival": 0.3268,
+    "published_forge_effect": 0.1361,
+    "published_divergence": -0.1907,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 667,
+    "n_survived": 218,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Pragmatics",
+    "published_adversarial_survival": 0.3632,
+    "published_forge_effect": 0.2426,
+    "published_divergence": -0.1206,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 1542,
+    "n_survived": 560,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Property-Based Testing",
+    "published_adversarial_survival": 0.6154,
+    "published_forge_effect": -0.082,
+    "published_divergence": 0.6974,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 13,
+    "n_survived": 8,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Sensitivity Analysis",
+    "published_adversarial_survival": 0.8571,
+    "published_forge_effect": 0.038,
+    "published_divergence": 0.8191,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 21,
+    "n_survived": 18,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Sparse Autoencoders",
+    "published_adversarial_survival": 0.3715,
+    "published_forge_effect": 0.2753,
+    "published_divergence": -0.0962,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 1039,
+    "n_survived": 386,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Swarm Intelligence",
+    "published_adversarial_survival": 0.8,
+    "published_forge_effect": -0.0446,
+    "published_divergence": 0.8446,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 5,
+    "n_survived": 4,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Symbiosis",
+    "published_adversarial_survival": 0.6667,
+    "published_forge_effect": -0.0854,
+    "published_divergence": 0.7521,
+    "verdict_text": "Low forge priority but high adversarial robustness \u2014 undervalued",
+    "n_tasks_in_adversarial_graph": 3,
+    "n_survived": 2,
+    "denominator_published_in_goodhart_row": false
+   },
+   {
+    "concept": "Thermodynamics",
+    "published_adversarial_survival": 0.3968,
+    "published_forge_effect": 0.22,
+    "published_divergence": -0.1768,
+    "verdict_text": "High forge success but low adversarial robustness \u2014 may be Goodharting",
+    "n_tasks_in_adversarial_graph": 1119,
+    "n_survived": 444,
+    "denominator_published_in_goodhart_row": false
+   }
+  ],
+  "units_defect": {
+   "field_name": "n_tasks",
+   "sum_over_concepts": 37035,
+   "n_adversarial_tasks_field": 92,
+   "reading": "n_tasks counts tool-by-task pairings, not tasks; the independent sample behind every rate in the file is the n_adversarial_tasks figure",
+   "concepts_total": 97,
+   "concepts_with_n_tasks_under_10": 15,
+   "concepts_with_n_tasks_under_30": 19
+  }
+ },
+ "F3_unfiltered_weight_consumption": {
+  "question": "If the RLVF consumer had applied a minimum denominator, which of the forged tools would have carried a different weight?",
+  "consumer": "agents/hephaestus/src/rlvf_fitness.py::_load_weights (L70-100)",
+  "consumer_applies_a_minimum_n": false,
+  "tools_on_disk": 366,
+  "tools_with_no_matching_concept_so_weight_is_neutral_1_0": 0,
+  "tools_touching_at_least_one_concept_with_n_tasks_under_10": 47,
+  "min_n_10": {
+   "tools_whose_weight_changes": 47,
+   "largest_absolute_change": 0.3603,
+   "worst_10": [
+    {
+     "tool": "gauge_theory_x_multi-armed_bandits_x_counterfactual_reasoning",
+     "as_shipped": 0.8199,
+     "with_min_n": 0.4596,
+     "delta": -0.3603,
+     "concept_n_tasks": [
+      4,
+      470,
+      2
+     ]
+    },
+    {
+     "tool": "pragmatics_x_hoare_logic_x_satisfiability",
+     "as_shipped": 0.6816,
+     "with_min_n": 0.3632,
+     "delta": -0.3184,
+     "concept_n_tasks": [
+      1542,
+      1,
+      null
+     ]
+    },
+    {
+     "tool": "gauge_theory_x_sparse_autoencoders_x_compositional_semantics",
+     "as_shipped": 0.6794,
+     "with_min_n": 0.3715,
+     "delta": -0.3079,
+     "concept_n_tasks": [
+      4,
+      1039,
+      3
+     ]
+    },
+    {
+     "tool": "sparse_coding_x_adaptive_control_x_pragmatics",
+     "as_shipped": 0.5277,
+     "with_min_n": 0.2916,
+     "delta": -0.2361,
+     "concept_n_tasks": [
+      100,
+      2,
+      1542
+     ]
+    },
+    {
+     "tool": "thermodynamics_x_gauge_theory_x_kolmogorov_complexity",
+     "as_shipped": 0.537,
+     "with_min_n": 0.3055,
+     "delta": -0.2315,
+     "concept_n_tasks": [
+      1119,
+      4,
+      294
+     ]
+    },
+    {
+     "tool": "ergodic_theory_x_measure_theory_x_dual_process_theory",
+     "as_shipped": 0.5517,
+     "with_min_n": 0.3276,
+     "delta": -0.2241,
+     "concept_n_tasks": [
+      1451,
+      98,
+      1
+     ]
+    },
+    {
+     "tool": "sparse_autoencoders_x_neural_plasticity_x_abstract_interpretation",
+     "as_shipped": 0.5531,
+     "with_min_n": 0.3296,
+     "delta": -0.2235,
+     "concept_n_tasks": [
+      1039,
+      469,
+      1
+     ]
+    },
+    {
+     "tool": "sparse_autoencoders_x_neural_plasticity_x_hoare_logic",
+     "as_shipped": 0.5531,
+     "with_min_n": 0.3296,
+     "delta": -0.2235,
+     "concept_n_tasks": [
+      1039,
+      469,
+      1
+     ]
+    },
+    {
+     "tool": "gauge_theory_x_global_workspace_theory_x_pragmatics",
+     "as_shipped": 0.5574,
+     "with_min_n": 0.3361,
+     "delta": -0.2213,
+     "concept_n_tasks": [
+      4,
+      288,
+      1542
+     ]
+    },
+    {
+     "tool": "adaptive_control_x_mechanism_design_x_maximum_entropy",
+     "as_shipped": 0.5582,
+     "with_min_n": 0.3373,
+     "delta": -0.2209,
+     "concept_n_tasks": [
+      2,
+      2279,
+      484
+     ]
+    }
+   ]
+  },
+  "min_n_30": {
+   "tools_whose_weight_changes": 63,
+   "largest_absolute_change": 0.3603,
+   "worst_10": [
+    {
+     "tool": "gauge_theory_x_multi-armed_bandits_x_counterfactual_reasoning",
+     "as_shipped": 0.8199,
+     "with_min_n": 0.4596,
+     "delta": -0.3603,
+     "concept_n_tasks": [
+      4,
+      470,
+      2
+     ]
+    },
+    {
+     "tool": "pragmatics_x_hoare_logic_x_satisfiability",
+     "as_shipped": 0.6816,
+     "with_min_n": 0.3632,
+     "delta": -0.3184,
+     "concept_n_tasks": [
+      1542,
+      1,
+      null
+     ]
+    },
+    {
+     "tool": "gauge_theory_x_sparse_autoencoders_x_compositional_semantics",
+     "as_shipped": 0.6794,
+     "with_min_n": 0.3715,
+     "delta": -0.3079,
+     "concept_n_tasks": [
+      4,
+      1039,
+      3
+     ]
+    },
+    {
+     "tool": "free_energy_principle_x_property-based_testing_x_sensitivity_analysis",
+     "as_shipped": 0.6078,
+     "with_min_n": 0.3508,
+     "delta": -0.257,
+     "concept_n_tasks": [
+      4558,
+      13,
+      21
+     ]
+    },
+    {
+     "tool": "sparse_coding_x_adaptive_control_x_pragmatics",
+     "as_shipped": 0.5277,
+     "with_min_n": 0.2916,
+     "delta": -0.2361,
+     "concept_n_tasks": [
+      100,
+      2,
+      1542
+     ]
+    },
+    {
+     "tool": "thermodynamics_x_gauge_theory_x_kolmogorov_complexity",
+     "as_shipped": 0.537,
+     "with_min_n": 0.3055,
+     "delta": -0.2315,
+     "concept_n_tasks": [
+      1119,
+      4,
+      294
+     ]
+    },
+    {
+     "tool": "ergodic_theory_x_measure_theory_x_dual_process_theory",
+     "as_shipped": 0.5517,
+     "with_min_n": 0.3276,
+     "delta": -0.2241,
+     "concept_n_tasks": [
+      1451,
+      98,
+      1
+     ]
+    },
+    {
+     "tool": "sparse_autoencoders_x_neural_plasticity_x_abstract_interpretation",
+     "as_shipped": 0.5531,
+     "with_min_n": 0.3296,
+     "delta": -0.2235,
+     "concept_n_tasks": [
+      1039,
+      469,
+      1
+     ]
+    },
+    {
+     "tool": "sparse_autoencoders_x_neural_plasticity_x_hoare_logic",
+     "as_shipped": 0.5531,
+     "with_min_n": 0.3296,
+     "delta": -0.2235,
+     "concept_n_tasks": [
+      1039,
+      469,
+      1
+     ]
+    },
+    {
+     "tool": "gauge_theory_x_global_workspace_theory_x_pragmatics",
+     "as_shipped": 0.5574,
+     "with_min_n": 0.3361,
+     "delta": -0.2213,
+     "concept_n_tasks": [
+      4,
+      288,
+      1542
+     ]
+    }
+   ]
+  }
+ },
+ "F4_selection_trace_against_a_matched_noise_null": {
+  "question": "Which forge-queue admissions could the Coeus boost have changed, above a magnitude-matched noise null?",
+  "consumer": "agents/hephaestus/src/hephaestus.py::filter_results L1122-1124",
+  "nous_entries_with_concept_names": 5918,
+  "sd_of_nous_composite": 1.0432,
+  "sd_of_coeus_boost": 0.5235,
+  "boost_to_composite_sd_ratio": 0.502,
+  "null": {
+   "draws": 200,
+   "seed": 20260911,
+   "construction": "gaussian noise with the same standard deviation as the Coeus boost, added to the Nous composite; this is the control the 2026-08-20 autopsy lacked"
+  },
+  "cuts": {
+   "top_20": {
+    "observed_fraction_of_the_cut_replaced": 0.85,
+    "null_mean": 0.9032,
+    "null_p95": 1.0,
+    "null_max": 1.0,
+    "p_value_observed_ge_null": 0.845,
+    "reading": "INSIDE the magnitude-matched noise null"
+   },
+   "top_25": {
+    "observed_fraction_of_the_cut_replaced": 0.84,
+    "null_mean": 0.886,
+    "null_p95": 1.0,
+    "null_max": 1.0,
+    "p_value_observed_ge_null": 0.85,
+    "reading": "INSIDE the magnitude-matched noise null"
+   },
+   "top_50": {
+    "observed_fraction_of_the_cut_replaced": 0.84,
+    "null_mean": 0.8039,
+    "null_p95": 0.88,
+    "null_max": 0.98,
+    "p_value_observed_ge_null": 0.33,
+    "reading": "INSIDE the magnitude-matched noise null"
+   },
+   "top_100": {
+    "observed_fraction_of_the_cut_replaced": 0.71,
+    "null_mean": 0.6811,
+    "null_p95": 0.75,
+    "null_max": 0.79,
+    "p_value_observed_ge_null": 0.275,
+    "reading": "INSIDE the magnitude-matched noise null"
+   },
+   "top_200": {
+    "observed_fraction_of_the_cut_replaced": 0.62,
+    "null_mean": 0.5561,
+    "null_p95": 0.605,
+    "null_max": 0.635,
+    "p_value_observed_ge_null": 0.015,
+    "reading": "informative"
+   },
+   "top_366": {
+    "observed_fraction_of_the_cut_replaced": 0.6284,
+    "null_mean": 0.5268,
+    "null_p95": 0.5601,
+    "null_max": 0.6093,
+    "p_value_observed_ge_null": 0.0,
+    "reading": "informative"
+   }
+  },
+  "pair_synergy_share": {
+   "entries_in_shipped_pair_synergy": 1009,
+   "positives_the_synergies_were_fit_on": 352,
+   "median_share_of_the_boost_magnitude_coming_from_pair_synergy": 0.3723,
+   "triples_where_synergy_dominates_the_boost": 2465
+  }
+ },
+ "F4b_the_cut_that_actually_existed": {
+  "question": "In the mode the pipeline actually ran, what selection decision existed at all, and could the boost have changed it?",
+  "the_cut_that_existed": {
+   "continuous_mode": "args.all = True, top_n stays None (hephaestus.py L2398-2402)",
+   "consequence": "filter_results applies NO top-N in continuous mode; it sorts the entire backlog. There is no admission decision to contaminate. What the boost changed is ATTEMPT ORDER.",
+   "runonce_mode_default_top_n": 20,
+   "why_order_still_selects": "the forge stopped in May 2026 with the backlog unexhausted, so order decided who was attempted before the instrument died"
+  },
+  "nous_entries": 5918,
+  "ever_attempted": 5625,
+  "never_attempted": 293,
+  "never_attempted_fraction": 0.0495,
+  "mean_coeus_boost_attempted": 0.3268,
+  "mean_coeus_boost_never_attempted": 0.2941,
+  "difference_in_boost_attempted_minus_never": 0.0327,
+  "permutation_p_two_sided": 0.305,
+  "same_test_on_the_nous_composite_for_contrast": {
+   "difference": -0.0551,
+   "permutation_p_two_sided": 0.335
+  },
+  "ledger_reason_histogram_top": [
+   [
+    "api_call_failed",
+    2176
+   ],
+   [
+    "",
+    413
+   ],
+   [
+    "trap_battery_failed (acc=34% cal=0% ncd_acc=42% ncd_cal=46%)",
+    129
+   ],
+   [
+    "trap_battery_failed (acc=20% cal=7% ncd_acc=20% ncd_cal=7%)",
+    108
+   ],
+   [
+    "trap_battery_failed (acc=13% cal=0% ncd_acc=20% ncd_cal=7%)",
+    70
+   ],
+   [
+    "trap_battery_failed (acc=20% cal=0% ncd_acc=20% ncd_cal=7%)",
+    48
+   ],
+   [
+    "validation:runtime_error: ValueError: could not convert string to float: ''",
+    48
+   ],
+   [
+    "scrap:model_declined (unproductive)",
+    45
+   ]
+  ],
+  "attempts_whose_outcome_is_instrument_state_not_tool_quality": 2176,
+  "what_cannot_be_recovered": "whether the ordering changed forge YIELD. The ledger stores no priority, rank or queue-position field and no A/B was run, so the counterfactual queue is not reconstructable from the committed record. This is a permanent gap, not a pending measurement."
+ },
+ "F5_realized_reach_of_the_directives": {
+  "question": "Where did the directive text actually reach an irreversible act?",
+  "path": "hephaestus.load_enrichment L626 -> build_code_gen_prompt(enrichment=...) L1186 and L1432: the directive strings enter the code-generation prompt",
+  "enrichments_written_at": "2026-03-27T06:49",
+  "ledger_entries": 6651,
+  "ledger_entries_with_an_enrichment_file_on_disk": 3839,
+  "attempts_after_the_enrichments_were_written": 5069,
+  "attempts_after_AND_with_an_enrichment_available": 2257,
+  "of_those_forged": 21,
+  "forged_total_in_ledger": 385,
+  "reading": "this is the realized reach of the directives: an upper bound on the attempts whose prompt could have carried them. It is an upper bound, not a count of loads: the ledger records no enrichment_used field, so whether the file was read on a given attempt is not recoverable."
+ },
+ "F6_generative_consumer_nous_sampling": {
+  "question": "Did the denominator-free rates change which triples Nous GENERATED, not merely their order in the forge queue?",
+  "consumer": "agents/nous/src/nous.py::_load_coeus_weights L113-172, used L237-239",
+  "consumer_is_generative": true,
+  "concept_pool_source": "agents/nous/src/concepts.py CONCEPTS",
+  "concepts_in_pool": 95,
+  "weight_histogram": {
+   "0.3": 2,
+   "1.0": 68,
+   "1.5": 3,
+   "2.0": 6,
+   "2.5": 16
+  },
+  "concepts_whose_weight_is_decided_by_an_adversarial_rate": 30,
+  "of_those_decided_by_a_denominator_under_10": 11,
+  "the_tiny_denominator_rows": [
+   {
+    "concept": "Epigenetics",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 1
+   },
+   {
+    "concept": "Dual Process Theory",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 1
+   },
+   {
+    "concept": "Abstract Interpretation",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 1
+   },
+   {
+    "concept": "Hoare Logic",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 1
+   },
+   {
+    "concept": "Adaptive Control",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 2
+   },
+   {
+    "concept": "Counterfactual Reasoning",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 2
+   },
+   {
+    "concept": "Symbiosis",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 3
+   },
+   {
+    "concept": "Compositional Semantics",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 3
+   },
+   {
+    "concept": "Metamorphic Testing",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 3
+   },
+   {
+    "concept": "Gauge Theory",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 4
+   },
+   {
+    "concept": "Swarm Intelligence",
+    "weight": 2.5,
+    "branch": "undervalued_boost",
+    "n_tasks": 5
+   }
+  ],
+  "reading": "the undervalued_boost branch raises a concept to 2.5x the base sampling weight on the strength of survival_rate > 0.6, and the shipped file records survival_rate 1.0 for concepts measured once. Nothing in the path checks a denominator.",
+  "correction_recorded": "this seat's first pass reported no external consumer of goodhart_indicators; that came from a grep piped through head. The claim was wrong and is retracted here.",
+  "all_rows": [
+   {
+    "concept": "Topology",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 191
+   },
+   {
+    "concept": "Category Theory",
+    "sampling_weight": 2.0,
+    "branch": "forge_effect>0.05",
+    "adversarial_n_tasks": 261
+   },
+   {
+    "concept": "Fourier Transforms",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 97
+   },
+   {
+    "concept": "Prime Number Theory",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 5
+   },
+   {
+    "concept": "Fractal Geometry",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 470
+   },
+   {
+    "concept": "Tensor Decomposition",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 284
+   },
+   {
+    "concept": "Ergodic Theory",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 1451
+   },
+   {
+    "concept": "Information Theory",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 476
+   },
+   {
+    "concept": "Bayesian Inference",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 478
+   },
+   {
+    "concept": "Graph Theory",
+    "sampling_weight": 0.3,
+    "branch": "forge_effect<-0.2",
+    "adversarial_n_tasks": null
+   },
+   {
+    "concept": "Measure Theory",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 98
+   },
+   {
+    "concept": "Dynamical Systems",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 99
+   },
+   {
+    "concept": "Chaos Theory",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 1692
+   },
+   {
+    "concept": "Thermodynamics",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 1119
+   },
+   {
+    "concept": "Quantum Mechanics",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 5
+   },
+   {
+    "concept": "Phase Transitions",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 667
+   },
+   {
+    "concept": "Renormalization",
+    "sampling_weight": 2.0,
+    "branch": "forge_effect>0.05",
+    "adversarial_n_tasks": 323
+   },
+   {
+    "concept": "Statistical Mechanics",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 253
+   },
+   {
+    "concept": "Gauge Theory",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 4
+   },
+   {
+    "concept": "Holography Principle",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 65
+   },
+   {
+    "concept": "Reservoir Computing",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 232
+   },
+   {
+    "concept": "Genetic Algorithms",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 210
+   },
+   {
+    "concept": "Neural Architecture Search",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 280
+   },
+   {
+    "concept": "Attention Mechanisms",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 99
+   },
+   {
+    "concept": "Sparse Autoencoders",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 1039
+   },
+   {
+    "concept": "Reinforcement Learning",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 237
+   },
+   {
+    "concept": "Monte Carlo Tree Search",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 92
+   },
+   {
+    "concept": "Compressed Sensing",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 107
+   },
+   {
+    "concept": "Program Synthesis",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 92
+   },
+   {
+    "concept": "Cellular Automata",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 71
+   },
+   {
+    "concept": "Constraint Satisfaction",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 190
+   },
+   {
+    "concept": "Differentiable Programming",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 384
+   },
+   {
+    "concept": "Evolution",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 416
+   },
+   {
+    "concept": "Immune Systems",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 203
+   },
+   {
+    "concept": "Neural Plasticity",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 469
+   },
+   {
+    "concept": "Gene Regulatory Networks",
+    "sampling_weight": 2.0,
+    "branch": "forge_effect>0.05",
+    "adversarial_n_tasks": 165
+   },
+   {
+    "concept": "Symbiosis",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 3
+   },
+   {
+    "concept": "Ecosystem Dynamics",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 185
+   },
+   {
+    "concept": "Morphogenesis",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 260
+   },
+   {
+    "concept": "Epigenetics",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 1
+   },
+   {
+    "concept": "Swarm Intelligence",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 5
+   },
+   {
+    "concept": "Apoptosis",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": null
+   },
+   {
+    "concept": "Dual Process Theory",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 1
+   },
+   {
+    "concept": "Metacognition",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 281
+   },
+   {
+    "concept": "Embodied Cognition",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 11
+   },
+   {
+    "concept": "Predictive Coding",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 385
+   },
+   {
+    "concept": "Active Inference",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 1397
+   },
+   {
+    "concept": "Global Workspace Theory",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 288
+   },
+   {
+    "concept": "Analogical Reasoning",
+    "sampling_weight": 2.0,
+    "branch": "forge_effect>0.05",
+    "adversarial_n_tasks": 273
+   },
+   {
+    "concept": "Cognitive Load Theory",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 63
+   },
+   {
+    "concept": "Theory of Mind",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": null
+   },
+   {
+    "concept": "Wavelet Transforms",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 214
+   },
+   {
+    "concept": "Spectral Analysis",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 330
+   },
+   {
+    "concept": "Kalman Filtering",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 114
+   },
+   {
+    "concept": "Matched Filtering",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": null
+   },
+   {
+    "concept": "Epistemology",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 429
+   },
+   {
+    "concept": "Falsificationism",
+    "sampling_weight": 1.5,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 1322
+   },
+   {
+    "concept": "Pragmatism",
+    "sampling_weight": 0.3,
+    "branch": "forge_effect<-0.2",
+    "adversarial_n_tasks": 108
+   },
+   {
+    "concept": "Phenomenology",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 100
+   },
+   {
+    "concept": "Dialectics",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 286
+   },
+   {
+    "concept": "Abductive Reasoning",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 452
+   },
+   {
+    "concept": "Self-Organized Criticality",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 2
+   },
+   {
+    "concept": "Emergence",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 110
+   },
+   {
+    "concept": "Network Science",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 215
+   },
+   {
+    "concept": "Autopoiesis",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 278
+   },
+   {
+    "concept": "Criticality",
+    "sampling_weight": 1.5,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 2285
+   },
+   {
+    "concept": "Kolmogorov Complexity",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 294
+   },
+   {
+    "concept": "Error Correcting Codes",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 103
+   },
+   {
+    "concept": "Causal Inference",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 114
+   },
+   {
+    "concept": "Hebbian Learning",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 309
+   },
+   {
+    "concept": "Neural Oscillations",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 257
+   },
+   {
+    "concept": "Neuromodulation",
+    "sampling_weight": 2.0,
+    "branch": "forge_effect>0.05",
+    "adversarial_n_tasks": 469
+   },
+   {
+    "concept": "Sparse Coding",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 100
+   },
+   {
+    "concept": "Feedback Control",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 381
+   },
+   {
+    "concept": "Optimal Control",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 190
+   },
+   {
+    "concept": "Adaptive Control",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 2
+   },
+   {
+    "concept": "Compositionality",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 755
+   },
+   {
+    "concept": "Pragmatics",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 1542
+   },
+   {
+    "concept": "Mechanism Design",
+    "sampling_weight": 1.0,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 2279
+   },
+   {
+    "concept": "Nash Equilibrium",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 299
+   },
+   {
+    "concept": "Multi-Armed Bandits",
+    "sampling_weight": 2.0,
+    "branch": "forge_effect>0.05",
+    "adversarial_n_tasks": 470
+   },
+   {
+    "concept": "Free Energy Principle",
+    "sampling_weight": 1.5,
+    "branch": "goodhart_demote",
+    "adversarial_n_tasks": 4558
+   },
+   {
+    "concept": "Maximum Entropy",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 484
+   },
+   {
+    "concept": "Type Theory",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 887
+   },
+   {
+    "concept": "Model Checking",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 741
+   },
+   {
+    "concept": "Proof Theory",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 12
+   },
+   {
+    "concept": "Compositional Semantics",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 3
+   },
+   {
+    "concept": "Counterfactual Reasoning",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 2
+   },
+   {
+    "concept": "Normalized Compression Distance",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": 1
+   },
+   {
+    "concept": "Metamorphic Testing",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 3
+   },
+   {
+    "concept": "Property-Based Testing",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 13
+   },
+   {
+    "concept": "Abstract Interpretation",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 1
+   },
+   {
+    "concept": "Hoare Logic",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 1
+   },
+   {
+    "concept": "Sensitivity Analysis",
+    "sampling_weight": 2.5,
+    "branch": "undervalued_boost",
+    "adversarial_n_tasks": 21
+   },
+   {
+    "concept": "Satisfiability",
+    "sampling_weight": 1.0,
+    "branch": "neutral",
+    "adversarial_n_tasks": null
+   }
+  ]
+ },
+ "enrichment_directive_census": {
+  "enrichment_files": 4031,
+  "directives_by_class": {
+   "driver": 0,
+   "inhibitor": 2179,
+   "neutral": 7243,
+   "other": 2671
+  },
+  "distinct_concepts_told_to_be_the_core_pattern": [],
+  "distinct_concepts_told_NOT_to_be_used_for_scoring": [
+   "Abstract Interpretation",
+   "Apoptosis",
+   "Attention Mechanisms",
+   "Autopoiesis",
+   "Dual Process Theory",
+   "Fourier Transforms",
+   "Graph Theory",
+   "Holography Principle",
+   "Matched Filtering",
+   "Maximum Entropy",
+   "Monte Carlo Tree Search",
+   "Optimal Control",
+   "Pragmatism",
+   "Prime Number Theory",
+   "Property-Based Testing",
+   "Satisfiability",
+   "Self-Organized Criticality",
+   "Symbiosis",
+   "Topology"
+  ],
+  "strong_directive_concepts_also_in_the_tiny_n_adversarial_set": [
+   "Abstract Interpretation",
+   "Dual Process Theory",
+   "Prime Number Theory",
+   "Self-Organized Criticality",
+   "Symbiosis"
+  ],
+  "note": "the directives are built from forge_effect, which the Necropolis kill attributes to the forge calendar; this census counts how far that text reached, it does not re-test the effect"
+ }
+}

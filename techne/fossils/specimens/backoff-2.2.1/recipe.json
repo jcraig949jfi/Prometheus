@@ -1,0 +1,37 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/backoff-2.2.1",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "timeout": 900
+    }
+  ],
+  "runs": [
+    {
+      "name": "schedule (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/schedule.py",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "jitter=False distinct_wait_values=1"
+        ],
+        "stdout_regex": "jitter=True distinct_wait_values=([2-9]\\d|\\d{3,})"
+      },
+      "timeout": 1800
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: without jitter 1000 clients share ONE wait value at attempt 6 (they re-collide); with full jitter the values spread (distinct >= 20)."
+}

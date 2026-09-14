@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.hash_so_near_points_collide",
+  "name": "hash so that near points collide with high probability",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "choose random hash functions under which two points collide with probability increasing in their similarity, bucket points by several such hashes, and answer a near-neighbour query by checking only the query's buckets",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Locality-sensitive hashing (LSH)' in section Computer science / Machine learning and statistical classification: a method of performing probabilistic dimension reduction of high-dimensional data",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PARTITION",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "SIMILARITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "a similarity with a matching hash family (a human prior)"
+  ],
+  "fails_when": [
+    "false negatives; many tables for high recall"
+  ],
+  "instances": [
+    "Locality-sensitive hashing (LSH)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

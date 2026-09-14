@@ -1,0 +1,70 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "corewar-redcode",
+  "receipt_id": "run-corewar-redcode-20260912T153435Z",
+  "written_utc": "20260912T153435Z",
+  "runner": "docker",
+  "image": "python:2.7-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "c1929dc0440cbac70a726aee6fd10811f9c80ebb7f347c1236f87e6b92d0a089",
+  "recipe_sha256": "554541796a8d4b2ce940e9a714b78815bff55927298693b5f6f3fbe8bb6a9d60",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version 2>&1",
+      "exit": 0,
+      "seconds": 6.24,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 2.7.18\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "run the MARS + Redcode-assembler unit tests",
+      "cmd": "python tests.py 2>&1 | tail -15",
+      "exit": 0,
+      "seconds": 1.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.821s\n\nOK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "assemble and run a warrior (imp) for a few cycles without error",
+      "cmd": "python -c \"import sys; sys.path.insert(0,'.'); from corewar import mars, redcode; w=redcode.parse(open([f for f in __import__('glob').glob('warriors/*.red')][0]).read().splitlines()); print('PARSED', getattr(w,'name','warrior'))\" 2>&1 | tail -4; echo WARRIORDONE",
+      "exit": 0,
+      "seconds": 0.93,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "('PARSED', 'Dwarf Avan\\xe7ado')\nWARRIORDONE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true
+}

@@ -1,0 +1,45 @@
+{
+ "schema": "archaeon.canary.reconciliation.v0",
+ "at": "2026-09-12T16:0xZ",
+ "queue_row": {
+  "experiment_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+  "request_key": "rk-canary-2026-09-12-1",
+  "candidate_set_id": "cs-40a8239f45904b56",
+  "family_id": "fam-canary-2026-09-12",
+  "arm_id": "resample_best",
+  "spec_hash": "sha256:3caf3b11e0229257cd5f626bdb0afd9425c815896da7a8f2675bf497ef2e2174",
+  "status": "completed",
+  "submitted": "2026-09-12T15:56:46Z",
+  "finished": "2026-09-12T15:57:00Z",
+  "events": ["claimed 15:56:51", "running 15:56:53", "selection_bound 15:56:57 (alternatives_recorded 0)", "pew_written 15:57:00", "completed 15:57:00"]
+ },
+ "sfe": {
+  "experiment": "exp_8d968652a8a6b0c9885ec716 state OBSERVED committed_seq 129396; spec_hash equals the queue spec_hash",
+  "observation": "obs_52ac5c2564a0deaf0d3ed303 created_seq 129400 outcome SURVIVED evidence_class ENGINE_WORK_RESULT",
+  "world": "wld_13b3caf41573e37f015bf9ff name viv-3caf3b11e0229257 seed_root 926994 client cli_5680df58 (vivarium)",
+  "engine_held_spec": "bits 001001000001100110000100 seed_root 926994 length 24",
+  "selection_family": "fam_0c130ce17314326b264a8db5 kind selection, 1 member with role selected"
+ },
+ "pew": {
+  "encounter": "ENC-archaeon-4f6625f91b2e304b namespace prod outcome SURVIVED sfe_world_id wld_13b3caf41573e37f015bf9ff run_key exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0 sfe_event_seq 129400",
+  "producer_block": "request_key rk-canary-2026-09-12-1, candidate_set_id cs-40a8239f45904b56, policy_version canary.region_directed_by_hand.v0, template_id bitstring.resample_region.v0@PROPOSED",
+  "encounters_for_request_key": 1
+ },
+ "result": {"score": 0.5416666666666666, "solved": false, "outcome": "SURVIVED", "conformance": "CONFORMANT"},
+ "counts": {"queue_rows_in_candidate_set": 1, "archaeon_rows_created_since_submission": 1},
+ "acceptance": {
+  "selected_with_fossils_rows_gt_0": "yes (corpus:9ff9b911920024b5f16349bb, 1029 rows, 53 regions)",
+  "exactly_one_row": "yes",
+  "fresh_candidate_set_id": "yes (auto cs-40a8239f45904b56, registered 1, cancelled 0)",
+  "no_WROTE_RANDOM_admission": "yes: human row, decision ADMITTED (autonomous quota does not apply), selection_basis region_directed_by_hand",
+  "downstream_result_returned": "yes, 14 s after submission",
+  "alternatives": 0,
+  "refs_reconcile": "yes: spec_hash identical in queue and engine; PEW producer block carries the request_key and candidate_set_id"
+ },
+ "assumptions": [
+  "the fossil evidence used is the METRIC on directable landscapes, not a fired detector (none fires on any bitstring region; all hold n=1)",
+  "the specimen resamples the LANDSCAPE (seed_root 926994, length 24) and lands as a NEW world; the chart keys regions by world, so D3 will not pool it with wld_8e73e722b2b2d883d917b5c0 -- a chart limitation, recorded, not hidden",
+  "the PROPOSED template bitstring.resample_region.v0 was used only as a deterministic builder under a human row; it is not admitted and the tick menu is unchanged",
+  "the raw-ledger path is temporary; B1 was not issued at 15:54 UTC (read_grants holds no row for cli_1029e9255a074157a1b3ba1e)"
+ ]
+}

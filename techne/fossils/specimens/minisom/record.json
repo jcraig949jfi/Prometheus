@@ -1,0 +1,126 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "minisom",
+  "canonical_name": "MiniSom -- a minimal Self-Organizing Map in Python (Giuseppe Vettigli)",
+  "aliases": [
+    "minisom",
+    "SOM",
+    "Kohonen map"
+  ],
+  "lineage": "The Self-Organizing Map (Kohonen 1982): an unsupervised connectionist network whose neurons arrange on a grid and adapt so that nearby neurons respond to similar inputs -- competitive learning that forms a topology-preserving map of the data",
+  "domain": [
+    "connectionist",
+    "self-organizing-map",
+    "unsupervised-learning",
+    "competitive-learning",
+    "adaptation",
+    "clustering"
+  ],
+  "era": "1982 lineage; this impl 2015",
+  "version": "github.com/JustGlowing/minisom master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/JustGlowing/minisom",
+        "commit": "2eb8bd75596c57dd6260d4f0feef839bc0d22d07",
+        "commit_resolved": "2eb8bd75596c57dd6260d4f0feef839bc0d22d07",
+        "commit_date": "2026-06-09T11:41:31+01:00"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/JustGlowing/minisom"
+  },
+  "hashes": {
+    "tree_sha256": "6a09c9f371ea8e0c7b68dcdf04fa3398f7e4bdc1356f8fe0d3c5170d82ed24df",
+    "n_files": 139,
+    "bytes": 13315408,
+    "artifacts": [
+      {
+        "filename": "https://github.com/JustGlowing/minisom",
+        "sha256": null,
+        "commit": "2eb8bd75596c57dd6260d4f0feef839bc0d22d07"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\minisom",
+    "hash_list": "techne/fossils/specimens/minisom/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Python"
+  ],
+  "build_system": "single file minisom.py (numpy)",
+  "compiler_or_interpreter": "CPython 3.11 + numpy (docker python:3.11-slim)",
+  "dependencies": [
+    "numpy"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "MiniSom(x,y,input_len).train() then winner()/quantization_error()"
+  ],
+  "example": {
+    "command": "Techne harness: train a small SOM on clustered 2-D points, check the quantization error drops and nearby cells map nearby clusters",
+    "input": "clustered feature vectors",
+    "output": "a trained map; quantization error decreasing over training"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "python:3.11-slim"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Kohonen, Self-Organized Formation of Topologically Correct Feature Maps, 1982"
+  ],
+  "human_capability_summary": {
+    "built_to": "learn, without labels, a low-dimensional (grid) representation of high-dimensional data where neighbouring grid cells respond to similar inputs -- competitive, neighbourhood-cooperative weight adaptation",
+    "pressure": "unlabelled high-dimensional data with unknown structure; the map must discover clusters and topology by competition alone",
+    "success_means": "a topology-preserving map: similar inputs excite nearby neurons, and quantization error falls as it self-organises"
+  },
+  "known_human_problem_solved": "unsupervised topology-preserving mapping (Kohonen SOM)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "unlabelled, high-dimensional data; no supervisory signal",
+  "human_failure_condition": "a bad learning rate/neighbourhood schedule leaves the map twisted or collapsed -- it fails to separate the clusters",
+  "behavioral_entry_point": "shrink the neighbourhood radius or learning-rate schedule, or feed non-clustered noise, and watch the map fail to organise",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/minisom/receipts/run-minisom-20260912T163938Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/minisom/receipts/run-minisom-20260912T164039Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\minisom ; tracked techne/fossils/specimens/minisom",
+    "where_it_came_from": "https://github.com/JustGlowing/minisom ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ 2eb8bd75596c57dd6260d4f0feef839bc0d22d07",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run minisom",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/minisom/receipts/run-minisom-20260912T164039Z.json",
+    "what_humans_used_it_for": "learn, without labels, a low-dimensional (grid) representation of high-dimensional data where neighbouring grid cells respond to similar inputs -- competitive, neighbourhood-cooperative weight adaptation"
+  },
+  "seat": "Techne"
+}

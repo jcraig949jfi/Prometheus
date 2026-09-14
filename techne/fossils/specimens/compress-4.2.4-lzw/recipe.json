@@ -1,0 +1,34 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/ncompress-4.2.4.6",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -i 'error:' ; ls compress 2>/dev/null; test -x ./compress || (gcc -w -O2 -o compress *.c 2>&1 | grep -i error: ; test -x ./compress)"
+    }
+  ],
+  "runs": [
+    {
+      "name": "LZW round trip on the source itself",
+      "cmd": "F=$(ls *.c | head -1); ./compress -c $F > $BODY/c.Z && ./compress -dc $BODY/c.Z | cmp - $F && echo ROUNDTRIP_OK $(stat -c %s $F) '->' $(stat -c %s $BODY/c.Z)",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "ROUNDTRIP_OK"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Same LZW round-trip oracle as the batch-01 ncompress-5.0 specimen, run on the 1992-era 4.2.4 code -- the two together are the one-specimen-many-versions pair (lineage edge recorded)."
+}

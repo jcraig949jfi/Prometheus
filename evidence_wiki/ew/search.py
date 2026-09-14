@@ -19,6 +19,57 @@ from . import db as ewdb
 
 DERIVED = Path(__file__).resolve().parent.parent / "derived"
 _MODEL = None
+_MODEL_LOCK = __import__("threading").Lock()
+# Warm-up record, read by the service's health endpoint. Measured
+# 2026-09-11 on M1 after a host reboot: the FIRST hybrid search after a
+# cold start took 80 s (torch + sentence-transformers import from a cold
+# disk cache, plus an unauthenticated Hugging Face hub round trip), while
+# every later one took 0.01 s. Loading inside a request thread, with no
+# lock, let every concurrent first caller start its own load; the
+# threadpool filled with loaders and the health endpoint (also sync)
+# starved. So: one loader, under a lock, started at service startup, and
+# the hub is not consulted when the model is already cached locally.
+MODEL_STATE = {"ready": False, "loading": False, "error": None,
+               "load_seconds": None, "loaded_at": None}
+
+
+def _hub_offline_if_cached(name):
+    """Never let a hub round trip sit in the load path when the weights are
+    already on disk. HF_HUB_OFFLINE set by the environment is respected."""
+    import os
+    if "HF_HUB_OFFLINE" in os.environ:
+        return
+    home = os.environ.get("HF_HOME") or (Path.home() / ".cache" / "huggingface")
+    hub = Path(home) / "hub"
+    if (hub / f"models--sentence-transformers--{name}").exists():
+        os.environ["HF_HUB_OFFLINE"] = "1"
+
+
+def load_model(name="all-MiniLM-L6-v2"):
+    """Load the embedding model exactly once per process; safe to call from
+    any thread. Returns the model, or raises the load error."""
+    global _MODEL
+    import time
+    if _MODEL is not None:
+        return _MODEL
+    with _MODEL_LOCK:
+        if _MODEL is not None:
+            return _MODEL
+        MODEL_STATE["loading"] = True
+        t0 = time.time()
+        try:
+            _hub_offline_if_cached(name)
+            from sentence_transformers import SentenceTransformer
+            m = SentenceTransformer(name)
+        except Exception as e:  # recorded, not swallowed: health reports it
+            MODEL_STATE.update({"loading": False, "error": f"{type(e).__name__}: {e}"[:300],
+                                "load_seconds": round(time.time() - t0, 2)})
+            raise
+        _MODEL = m
+        MODEL_STATE.update({"ready": True, "loading": False, "error": None,
+                            "load_seconds": round(time.time() - t0, 2),
+                            "loaded_at": time.strftime("%Y-%m-%dT%H:%M:%S")})
+        return _MODEL
 
 
 def _tok(s):
@@ -71,11 +122,7 @@ class SearchIndex:
 
     # -------------------------------------------------------- embedding
     def _model(self):
-        global _MODEL
-        if _MODEL is None:
-            from sentence_transformers import SentenceTransformer
-            _MODEL = SentenceTransformer("all-MiniLM-L6-v2")
-        return _MODEL
+        return load_model()
 
     def embeddings(self):
         if self._emb is None:

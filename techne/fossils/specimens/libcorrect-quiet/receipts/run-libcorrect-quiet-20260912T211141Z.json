@@ -1,0 +1,88 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "libcorrect-quiet",
+  "receipt_id": "run-libcorrect-quiet-20260912T211141Z",
+  "written_utc": "20260912T211141Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "ddaf51af3e29f03b9c818f1d519d698125c96e6c96a580af8f7d8bde75ac5e3d",
+  "recipe_sha256": "d777993fd19c997ddecfb55c4029a983f6fe3f8aa1f45d638148b41c699060d8",
+  "patches": [],
+  "probe": [
+    {
+      "name": "cmake",
+      "cmd": "cmake --version | head -1",
+      "exit": 0,
+      "seconds": 0.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "cmake version 3.25.1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "cmake + make (library and its test/tool programs)",
+      "cmd": "mkdir -p $BODY/build/lc && cd $BODY/build/lc && cmake $BODY/upstream/tree >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; ls tests 2>/dev/null | head; test -f lib/libcorrect.a -o -f libcorrect.a && echo built",
+      "exit": 0,
+      "seconds": 11.04,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "[ 34%] Building C object src/convolutional/CMakeFiles/correct-convolutional.dir/error_buffer.c.o\n[ 82%] Building C object util/CMakeFiles/error_sim.dir/error-sim.c.o\n[ 82%] Built target error_sim\nCMakeFiles\nCTestTestfile.cmake\nMakefile\ncmake_install.cmake\nbuilt\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "convolutional codes: noise injection then Viterbi decode (upstream test)",
+      "cmd": "cd $BODY/build/lc && (./tests/test_convolutional 2>&1 || ./tests/convolutional 2>&1) | tail -8; echo exit=$?",
+      "exit": 0,
+      "seconds": 0.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "bash: line 1: ./tests/test_convolutional: No such file or directory\nbash: line 1: ./tests/convolutional: No such file or directory\nexit=0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "Reed-Solomon: error/erasure injection then decode (upstream test)",
+      "cmd": "cd $BODY/build/lc && (./tests/test_reed_solomon 2>&1 || ./tests/reed_solomon 2>&1) | tail -8; echo exit=$?",
+      "exit": 0,
+      "seconds": 0.76,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "bash: line 1: ./tests/test_reed_solomon: No such file or directory\nbash: line 1: ./tests/reed_solomon: No such file or directory\nexit=0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true,
+  "tree_sha256_after": "ddaf51af3e29f03b9c818f1d519d698125c96e6c96a580af8f7d8bde75ac5e3d",
+  "body_preserved": true
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "leveldb-1.23",
+  "receipt_id": "run-leveldb-1.23-20260912T211026Z",
+  "written_utc": "20260912T211026Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/leveldb-1.23",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "recover.cc": "e8c3c66172b69f33a1e50b0ab4291ebb5c8c249f0721fc9bd08ce126d2b22ba7"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "9f24633cc601cdeb2bc7ee6edf135b093c305da050cd88f47681a7871debc983",
+  "recipe_sha256": "0dd4fdb561b884b59cdf28c7f4b245534e33ac06666bc545ea61ffa83d75f462",
+  "patches": [],
+  "probe": [
+    {
+      "name": "cmake",
+      "cmd": "cmake --version | head -1; g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.77,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "cmake version 3.25.1\ng++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "cmake + make libleveldb (tests/benchmarks off: googletest is a submodule absent from the release tarball)",
+      "cmd": "mkdir -p $BODY/build/ldb && cd $BODY/build/ldb && cmake -DCMAKE_BUILD_TYPE=Release -DLEVELDB_BUILD_TESTS=OFF -DLEVELDB_BUILD_BENCHMARKS=OFF $BODY/upstream/tree/leveldb-1.23 >/dev/null && make -s leveldb 2>&1 | grep -iE '\\berror' | head -3; test -f libleveldb.a && echo built",
+      "exit": 0,
+      "seconds": 44.8,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "compile Techne's log-recovery driver",
+      "cmd": "g++ -std=c++11 -O1 -Iinclude -o $BODY/build/recover $HARNESS/recover.cc $BODY/build/ldb/libleveldb.a -lpthread && echo built",
+      "exit": 0,
+      "seconds": 1.22,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "write 2000 keys and close cleanly",
+      "cmd": "rm -rf $BODY/build/db && $BODY/build/recover $BODY/build/db write 0 2000",
+      "exit": 0,
+      "seconds": 1.22,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "wrote 2000\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "CRASH: write 500 more (acknowledged, unsynced) and _exit() without closing -- they live only in the .log",
+      "cmd": "$BODY/build/recover $BODY/build/db crash 2000 2500; echo exit=$?",
+      "exit": 0,
+      "seconds": 0.94,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "crashing after 500 acknowledged unsynced puts (no Close)\nexit=1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "reopen: RecoverLogFile replays the log (the recovery property: 2500 present)",
+      "cmd": "$BODY/build/recover $BODY/build/db count",
+      "exit": 0,
+      "seconds": 0.91,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "count=2500 key002400 present? yes\nRECOVERY OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "9f24633cc601cdeb2bc7ee6edf135b093c305da050cd88f47681a7871debc983",
+  "body_preserved": true
+}

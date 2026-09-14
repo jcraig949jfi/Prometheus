@@ -1,0 +1,580 @@
+{
+  "census": "NEM-14",
+  "workspace": {
+    "base_sha": "0548bde8454f49aa1c713beeb79e00deb46404a6",
+    "branch": "nemesis/nem14-floor-census-2026-09-11",
+    "worktree_path": "D:\\Prometheus-worktrees\\nemesis-adopt",
+    "dirty": false,
+    "main_worktree": false,
+    "allow_canonical_override": false
+  },
+  "tier1_total": 53,
+  "scoring_instruments": 37,
+  "na": 16,
+  "by_state": {
+    "F3": 18,
+    "F2": 6,
+    "F1": 11,
+    "F0": 2,
+    "UNCLASSIFIED": 0
+  },
+  "by_floor_kind": {
+    "CHANCE": 12,
+    "RELEVANCE": 5,
+    "CHANNEL": 6,
+    "ANALYTIC": 1,
+    "WITHDRAWN": 1,
+    "NONE": 12
+  },
+  "chance_floor_count": 12,
+  "Q1_f0_plus_f1_fraction": 0.3514,
+  "Q1_verdict": "LOST",
+  "Q2_keyword_positive_reaching_F2_F3": 0.7059,
+  "Q2_verdict": "LOST",
+  "Q3_terminal_instruments_at_F0_F1": [
+    "roles/Harmonia/contracts/conformance_check.py",
+    "roles/Harmonia/science/d3_dossier_adjudication.py",
+    "roles/Harmonia/science/s2_ablation_honesty.py"
+  ],
+  "Q3_verdict": "HELD",
+  "audit_the_auditor": {
+    "instrument_shaped_in_index": 376,
+    "instrument_shaped_on_disk": 40,
+    "visible_fraction": 0.1064,
+    "missed_by_a_filesystem_auditor": 336
+  },
+  "unclassified": [],
+  "classified_but_not_numeric": [],
+  "rows": [
+    {
+      "path": "roles/Arachne/science/branch_fitness.py",
+      "seat": "Arachne",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "child_greater rate over eligible branches",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "MIN_ELIGIBLE=20 with an explicit INDETERMINATE branch; emits eligible and ties; null_discounted_nodes"
+    },
+    {
+      "path": "roles/Arachne/science/census.py",
+      "seat": "Arachne",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": false,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Arachne/science/emergence.py",
+      "seat": "Arachne",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "emergence/ARI statistics",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits c_nulls, null_aris, null_min/mean/max; a 'controls' entry point runs instrument controls alone"
+    },
+    {
+      "path": "roles/Arachne/science/feral_autopsy.py",
+      "seat": "Arachne",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Arachne/science/harvest_audit.py",
+      "seat": "Arachne",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Arachne/science/specimen.py",
+      "seat": "Arachne",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "reconstructed lineage counts",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "null_p per step; positive control computes the same function two ways"
+    },
+    {
+      "path": "roles/Clymene/science/build_ledger.py",
+      "seat": "Clymene",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Clymene/science/consumption_audit.py",
+      "seat": "Clymene",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Clymene/science/model_audit.py",
+      "seat": "Clymene",
+      "state": "F3",
+      "floor_kind": "CHANNEL",
+      "headline_metric": "model integrity pass rate",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "INTEGRITY_CHANNEL_CHEAT: the channel must detect a deliberate corruption"
+    },
+    {
+      "path": "roles/Clymene/science/model_audit_resume.py",
+      "seat": "Clymene",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": false,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Clymene/science/repo_audit.py",
+      "seat": "Clymene",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Clymene/science/weights_probe.py",
+      "seat": "Clymene",
+      "state": "F3",
+      "floor_kind": "CHANNEL",
+      "headline_metric": "weights reachability",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "control: a known-open file must be 200 and a fabricated one must not; prints CONTROL PASS"
+    },
+    {
+      "path": "roles/Coeus/science/trace_defects.py",
+      "seat": "Coeus",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "F4 selection-trace effect vs matched noise",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits null_mean/null_max/null_p95 and p_value_observed_ge_null; NULL_DRAWS=200; magnitude-matched noise null"
+    },
+    {
+      "path": "roles/Harmonia/contracts/conformance_check.py",
+      "seat": "Harmonia",
+      "state": "F0",
+      "floor_kind": "NONE",
+      "headline_metric": "four-state conformance verdict (DRIFT/UNREACHABLE/INCOMPLETE/OK)",
+      "terminal": true,
+      "keyword_positive": false,
+      "evidence": "NO floor vocabulary anywhere in 276 lines. TERMINAL: D-22 and WORKING_CONTRACT s8 make every consumer run this before work and HALT on DRIFT or a wrong engine_instance_id. Nothing establishes the rate at which it would emit OK on an engine it has never seen"
+    },
+    {
+      "path": "roles/Harmonia/contracts/generate_sfe_contract.py",
+      "seat": "Harmonia",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Harmonia/contracts/workspace_guard.py",
+      "seat": "Harmonia",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": false,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Harmonia/science/c3band.py",
+      "seat": "Harmonia",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Harmonia/science/c3opt.py",
+      "seat": "Harmonia",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Harmonia/science/c3size.py",
+      "seat": "Harmonia",
+      "state": "F2",
+      "floor_kind": "ANALYTIC",
+      "headline_metric": "floor rate after aggregating repeats",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "simulates whether aggregating 4 repeats restores the floor rate; analytic/simulated, not a null draw"
+    },
+    {
+      "path": "roles/Harmonia/science/d3_dossier_adjudication.py",
+      "seat": "Harmonia",
+      "state": "F1",
+      "floor_kind": "WITHDRAWN",
+      "headline_metric": "D3 fires / eligible",
+      "terminal": true,
+      "keyword_positive": true,
+      "evidence": "prints 'Both D3 nulls were calibrated on I.I.D. draws. They do not apply here.' -- the null is WITHDRAWN in place and the fire count is still reported; honest, and it leaves the headline without a floor"
+    },
+    {
+      "path": "roles/Harmonia/science/d3_live_corpus_calibration.py",
+      "seat": "Harmonia",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "D3 fire rate on the live corpus",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "coin-flip null rng.random()<0.5; prints 30 fires / 77 eligible = 0.390 with the eligible count"
+    },
+    {
+      "path": "roles/Harmonia/science/ha1num.py",
+      "seat": "Harmonia",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Harmonia/science/s10_second_organism.py",
+      "seat": "Harmonia",
+      "state": "F1",
+      "floor_kind": "NONE",
+      "headline_metric": "second-organism effect",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "seeded RNG throughout for simulation, but no baseline/null key in the emitted payload"
+    },
+    {
+      "path": "roles/Harmonia/science/s11_v6_redteam.py",
+      "seat": "Harmonia",
+      "state": "F2",
+      "floor_kind": "RELEVANCE",
+      "headline_metric": "red-team survival",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "relevance_floor smd 0.2 declared; no chance arm emitted"
+    },
+    {
+      "path": "roles/Harmonia/science/s12_organism2_estimation.py",
+      "seat": "Harmonia",
+      "state": "F2",
+      "floor_kind": "RELEVANCE",
+      "headline_metric": "organism-2 effect d",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "FLOOR, ALPHA = 0.5, 0.05; true d=0.329 reported as BELOW the 0.5 floor"
+    },
+    {
+      "path": "roles/Harmonia/science/s13_family_reconciliation.py",
+      "seat": "Harmonia",
+      "state": "F1",
+      "floor_kind": "NONE",
+      "headline_metric": "family reconciliation outcome",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "asks whether control relocates; no baseline emitted"
+    },
+    {
+      "path": "roles/Harmonia/science/s14_truthful_records_false_science.py",
+      "seat": "Harmonia",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "false-positive science rate",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "generator is NULL, both arms from one distribution; null_score()"
+    },
+    {
+      "path": "roles/Harmonia/science/s15_fossilization_boundary.py",
+      "seat": "Harmonia",
+      "state": "F1",
+      "floor_kind": "NONE",
+      "headline_metric": "fossilization boundary",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "compares projections modulo random ids; no baseline emitted"
+    },
+    {
+      "path": "roles/Harmonia/science/s16_boundary_inventory.py",
+      "seat": "Harmonia",
+      "state": "F2",
+      "floor_kind": "RELEVANCE",
+      "headline_metric": "boundary inventory counts",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "relevance_floor smd 0.2; the module's own text asks what baseline/reference set applies"
+    },
+    {
+      "path": "roles/Harmonia/science/s17_prospective_fragility.py",
+      "seat": "Harmonia",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "fragility ranking top-1",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "four baselines scored on the same population: random, empirical base rate, n, CI width; emits random_top1"
+    },
+    {
+      "path": "roles/Harmonia/science/s18_fossil_directed_selection.py",
+      "seat": "Harmonia",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "policy-C selection yield",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "A_random = uniform over unexecuted pairs, named as the strongest simple fossil baseline"
+    },
+    {
+      "path": "roles/Harmonia/science/s1_known_null_campaign.py",
+      "seat": "Harmonia",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "celebrated cells on a null grid",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "ground truth null BY CONSTRUCTION; permutation test; emits null_grid_celebrated/comparisons"
+    },
+    {
+      "path": "roles/Harmonia/science/s2_ablation_honesty.py",
+      "seat": "Harmonia",
+      "state": "F0",
+      "floor_kind": "NONE",
+      "headline_metric": "ablation honesty",
+      "terminal": true,
+      "keyword_positive": false,
+      "evidence": "NO floor vocabulary anywhere in 240 lines despite three terminal-vocabulary hits"
+    },
+    {
+      "path": "roles/Harmonia/science/s3_player_classes_and_replay.py",
+      "seat": "Harmonia",
+      "state": "F1",
+      "floor_kind": "NONE",
+      "headline_metric": "player-class effect",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "notes loops 1-2 were null by construction; THIS loop emits no null arm of its own"
+    },
+    {
+      "path": "roles/Harmonia/science/s4_interactions_and_truncation.py",
+      "seat": "Harmonia",
+      "state": "F1",
+      "floor_kind": "NONE",
+      "headline_metric": "interaction / truncation effect",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "seeded RNG for simulation only; observes that a surviving subset is not random, without a random arm"
+    },
+    {
+      "path": "roles/Harmonia/science/s5_hidden_moderators.py",
+      "seat": "Harmonia",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "sign-flip count across 36 cells",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "the contrast ITSELF is hill-climbing vs RANDOM SAMPLING, so the chance arm is one of the two arms rather than a separate emitted key; inherited from SE-1b (d=0.60 vs random). Bonferroni threshold for the full grid is reported beside the descriptive count"
+    },
+    {
+      "path": "roles/Harmonia/science/s6_selection_bias.py",
+      "seat": "Harmonia",
+      "state": "F2",
+      "floor_kind": "RELEVANCE",
+      "headline_metric": "promotion rate under selection",
+      "terminal": true,
+      "keyword_positive": true,
+      "evidence": "FLOOR=0.5 relevance floor; promoted() gates on p<alpha AND |d|>=floor; emits reject_below_floor"
+    },
+    {
+      "path": "roles/Harmonia/science/s7_transportability.py",
+      "seat": "Harmonia",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "transported effect d",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits baseline_d, baseline_sd, delta_vs_baseline"
+    },
+    {
+      "path": "roles/Harmonia/science/s8_does_c7_transport.py",
+      "seat": "Harmonia",
+      "state": "F1",
+      "floor_kind": "NONE",
+      "headline_metric": "does C7 transport (effect d)",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "FLOOR, ALPHA defined at module level but neither a chance arm nor a baseline value is emitted"
+    },
+    {
+      "path": "roles/Harmonia/science/s9_expressiveness.py",
+      "seat": "Harmonia",
+      "state": "F2",
+      "floor_kind": "RELEVANCE",
+      "headline_metric": "expressiveness coverage",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "relevance_floor smd 0.5; A4 crossover treatment-then-control ordering recorded"
+    },
+    {
+      "path": "roles/Harmonia/science/se1_first_preregistered_experiment.py",
+      "seat": "Harmonia",
+      "state": "F3",
+      "floor_kind": "CHANCE",
+      "headline_metric": "hill-climb effect d",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "ARM_NULL_A/ARM_NULL_B known-null arms + ARM_SAMPLE random sampler; emits null_d, null_arms_quiet"
+    },
+    {
+      "path": "roles/Hermes/science/convergence/probe.py",
+      "seat": "Hermes",
+      "state": "F3",
+      "floor_kind": "CHANNEL",
+      "headline_metric": "convergence collision rate",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "collides_with_a_control() with three named control kinds (non_failure, different_failure, same_symptom)"
+    },
+    {
+      "path": "roles/Hermes/science/convergence/record.py",
+      "seat": "Hermes",
+      "state": "F1",
+      "floor_kind": "NONE",
+      "headline_metric": "convergence record counts",
+      "terminal": false,
+      "keyword_positive": false,
+      "evidence": "no floor vocabulary anywhere in the module"
+    },
+    {
+      "path": "roles/Hermes/science/convergence/signature.py",
+      "seat": "Hermes",
+      "state": "F1",
+      "floor_kind": "NONE",
+      "headline_metric": "signature collision behaviour",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "names a 'null strategy: what you get if you hash everything verbatim' in prose; no value emitted"
+    },
+    {
+      "path": "roles/Hypatia/science/ladder_parse_census.py",
+      "seat": "Hypatia",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Hypatia/science/seam_contract_test.py",
+      "seat": "Hypatia",
+      "state": "F3",
+      "floor_kind": "CHANNEL",
+      "headline_metric": "seam contract confirmed",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits claim_confirmed + positive_control + cheat_control together; cheat is a smuggled dict payload"
+    },
+    {
+      "path": "roles/Kairos/science/claim_lint.py",
+      "seat": "Kairos",
+      "state": "F1",
+      "floor_kind": "NONE",
+      "headline_metric": "lint findings by severity",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "checks whether OTHER seats' packets carry null/controls/eligible_count; publishes no floor for its own finding counts. Conflict noted: this seat and Kairos are adjacent lanes"
+    },
+    {
+      "path": "roles/Nemesis/science/cheatlib.py",
+      "seat": "Nemesis",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Polyhymnia/science/lincode_decoders.py",
+      "seat": "Polyhymnia",
+      "state": "F1",
+      "floor_kind": "NONE",
+      "headline_metric": "decoder success rate",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "make_random()/random_rows() build a RANDOM DECODER that would serve as a chance arm; it is not emitted as a baseline beside the headline"
+    },
+    {
+      "path": "roles/Polyhymnia/science/probe_01_run.py",
+      "seat": "Polyhymnia",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Polyhymnia/science/saturation_curve.py",
+      "seat": "Polyhymnia",
+      "state": "NA",
+      "floor_kind": "NONE",
+      "headline_metric": "-",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "emits no headline number (enumeration, IO, schema, or a pure transform)"
+    },
+    {
+      "path": "roles/Talos/science/characterize_corpus.py",
+      "seat": "Talos",
+      "state": "F3",
+      "floor_kind": "CHANNEL",
+      "headline_metric": "corpus duplication / characterisation",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "planted-row positive control and a cheat control run on a synthetic shard BEFORE the real shards"
+    },
+    {
+      "path": "roles/Talos/science/semantic_faithfulness.py",
+      "seat": "Talos",
+      "state": "F3",
+      "floor_kind": "CHANNEL",
+      "headline_metric": "semantic faithfulness rate",
+      "terminal": false,
+      "keyword_positive": true,
+      "evidence": "controls() runs first and ABORTS on failure: positive (planted docstring) and execution control"
+    }
+  ]
+}

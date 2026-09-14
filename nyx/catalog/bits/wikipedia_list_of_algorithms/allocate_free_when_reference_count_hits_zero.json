@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.allocate.free_when_reference_count_hits_zero",
+  "name": "free an object when its reference count reaches zero",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "keep a count of references on each object, adjust it on every pointer store, and free the object (decrementing its children) when the count reaches zero",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Reference counting' in section Distributed systems algorithms / Memory allocation and deallocation algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ALLOCATE",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "MONOTONE",
+  "strategy": "INCREMENTAL",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "a hook on every pointer write"
+  ],
+  "fails_when": [
+    "cycles are never freed",
+    "cost on every store"
+  ],
+  "instances": [
+    "Reference counting"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

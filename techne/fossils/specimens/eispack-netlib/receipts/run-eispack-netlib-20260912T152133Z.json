@@ -1,0 +1,61 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "eispack-netlib",
+  "receipt_id": "run-eispack-netlib-20260912T152133Z",
+  "written_utc": "20260912T152133Z",
+  "runner": "native",
+  "image": null,
+  "workdir": "build",
+  "harness_sha256": {
+    "drv.f": "d5f61148ce690b71f8549853ad1b1d33664fcc6db7bec10af68bdb89dde94bca"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "e99d6c66e52f3b3cebb1c2aae230315ebaab7b3436978f71cd68eb71be38b7df",
+  "recipe_sha256": "3065d592dcb0da9088918d17de39d5411198a8a585916b5c0370ca5d295d8ec0",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 1,
+      "seconds": 0.18,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: cd: F:/Prometheus/vault/fossils/eispack-netlib/build: No such file or directory\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile EISPACK + a Techne driver on rs (symmetric eigenvalues)",
+      "cmd": "gfortran -std=legacy -w -O1 -o eispack_test.exe $HARNESS/drv.f $BODY/upstream/*.f 2>&1 | grep -i 'error:'; test -x eispack_test.exe",
+      "exit": 1,
+      "seconds": 0.17,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: cd: F:/Prometheus/vault/fossils/eispack-netlib/build: No such file or directory\n"
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

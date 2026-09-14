@@ -1,0 +1,397 @@
+{
+ "schema": "nyx.catalog.eval/0",
+ "id": "EVAL01",
+ "question": "Can the frozen catalogue retrieve a relevant algorithmic bit from a behavioural description it was not designed around?",
+ "frozen": {
+  "main_sha": "bc37f828d39b3a5037c75efb4fec9468c01cde8b",
+  "expected_main_sha": "bc37f828d39b3a5037c75efb4fec9468c01cde8b",
+  "n_bit_files": 321,
+  "bits_digest_sha256": "6af7ae914f68e9b9e92de143d4a6e27560dcf89fb4fb67503c9cdfe505d4c0e2",
+  "search_py_sha256": "215b52a8e48d37179ef24922d9306fc8b7bd9bac019757e0dc9d9ce56f408a78",
+  "schema_py_sha256": "8077918ec9fad1de28728752c22169d8832aaa250d0cfe236c62a277fd8b7ef1",
+  "vocabulary": "schema.py as at frozen sha (v0.4)"
+ },
+ "mapping_rule": "For each description Nyx set an axis ONLY where the redacted text states or directly implies its value; lists mean the text is ambiguous between two vocabulary values; unstated axes are omitted. Nyx did not open any bit file while mapping. Disclosed bias: Nyx knows the vocabulary and remembers many signatures; an independent mapper is the cheapest falsification of this step.",
+ "outcome_rules": {
+  "HIT": "a bit in expected_hit appears in top-k",
+  "RELATED": "no HIT and a bit in related appears in top-k",
+  "MISS": "neither",
+  "k": [
+   1,
+   5
+  ]
+ },
+ "failure_classes": {
+  "COVERAGE": "expected_hit is empty (no bit for the mechanism exists at the frozen sha) -- decided BEFORE the run",
+  "REPRESENTATION": "an expected_hit bit exists but scores < 1.0 on at least one queried axis (the mapped axes and the bit's signature disagree)",
+  "RANKING": "an expected_hit bit scores 1.0 on all queried axes but is not top-1, and the tie group at the top score has <= 5 members",
+  "SIGNATURE_COLLISION": "the tie group at the top score has > 5 members (the query does not separate them)",
+  "SURPRISING_CROSS_LINEAGE": "a top-5 bit outside expected_hit and related whose mechanism, read afterwards, is a genuine behavioural analogue; this is a JUDGMENT recorded post hoc and marked as such"
+ },
+ "post_hoc_repair": "none permitted: no vocabulary, signature, query or bit changes after seeing results",
+ "queries": [
+  {
+   "id": "Q01_archaeon_reserve_allocation",
+   "source_artifact": "archaeon/producer/allocation.py (module docstring)",
+   "source_kind": "seat code, Archaeon",
+   "authored_by": "not Nyx (see source)",
+   "description_verbatim": "WP-X6: the exploration reserve, allocated across FAMILIES first.\n\nRule R1 (SELECTION_RULES.md): each lane's daily quota is partitioned into an\nESTABLISHED share and a RESERVE share. The reserve may be drawn only by\nfamilies that are young or thin. The failure this prevents: an established\nfamily with a hundred templates absorbs every draw a young family with one\ntemplate would otherwise get.\n\nDesign, per the order:\n\n* **Family first, template second.** A draw chooses an eligible FAMILY by a\n  declared bounded-fairness rule (deficit round-robin, deterministic replay),\n  then a template within it. A family with 100 templates and a family with 1\n  receive the same family-level entitlement (X6-a).\n* **Family identity is explicit.** A template names its family in a\n  ``family`` field. Templates without one belong to the implicit family\n  ``kind:<kind>``, which is ESTABLISHED by construction: an alias or an extra\n  template never creates a new entitlement (X6-c).\n* **Classification precedence.** established if the family is in the policy's\n  ``established`` list; else reserve-eligible if young (admitted within\n  ``young_days``) or thin (fewer than ``thin_rows`` published rows in the\n  lane); else established. Admission age comes from the family's EARLIEST\n  admitted template.\n* **Unspent stays unspent.** With no reserve-eligible family the reserve is\n  recorded as unspent, never hand",
+   "description_redacted_for_mapping": "WP-X6: the exploration reserve, allocated across FAMILIES first.\n\nRule R1 (SELECTION_RULES.md): each lane's daily quota is partitioned into an\nESTABLISHED share and a RESERVE share. The reserve may be drawn only by\nfamilies that are young or thin. The failure this prevents: an established\nfamily with a hundred templates absorbs every draw a young family with one\ntemplate would otherwise get.\n\nDesign, per the order:\n\n* **Family first, template second.** A draw chooses an eligible FAMILY by a\n  declared bounded-fairness rule ([name], deterministic replay),\n  then a template within it. A family with 100 templates and a family with 1\n  receive the same family-level entitlement (X6-a).\n* **Family identity is explicit.** A template names its family in a\n  ``family`` field. Templates without one belong to the implicit family\n  ``kind:<kind>``, which is ESTABLISHED by construction: an alias or an extra\n  template never creates a new entitlement (X6-c).\n* **Classification precedence.** established if the family is in the policy's\n  ``established`` list; else reserve-eligible if young (admitted within\n  ``young_days``) or thin (fewer than ``thin_rows`` published rows in the\n  lane); else established. Admission age comes from the family's EARLIEST\n  admitted template.\n* **Unspent stays unspent.** With no reserve-eligible family the reserve is\n  recorded as unspent, never hand",
+   "redacted_names": [
+    "deficit round-robin"
+   ],
+   "query_axes": {
+    "verb": [
+     "SCHEDULE",
+     "ALLOCATE"
+    ],
+    "in_geometry": [
+     "SET",
+     "MULTISET"
+    ],
+    "state_req": "GLOBAL",
+    "control": "SCHEDULED"
+   },
+   "expected_hit": [
+    "bit.schedule.allocate_by_group_entitlement"
+   ],
+   "related": [
+    "bit.schedule.rotate_fixed_quanta_over_ready_queue",
+    "bit.schedule.demote_tasks_that_use_their_whole_quantum",
+    "bit.allocate.split_power_of_two_blocks_and_coalesce_buddies",
+    "bit.schedule.assign_next_ready_task_to_first_free_machine"
+   ],
+   "hit_rule": "top-k contains a bit in expected_hit",
+   "related_rule": "top-k contains a bit in related (and no HIT)",
+   "miss_rule": "neither",
+   "coverage_note": "a fair-share / group-entitlement scheduler is catalogued (from the OS section); HIT is possible"
+  },
+  {
+   "id": "Q02_archaeon_coverage_biased_exploration",
+   "source_artifact": "archaeon/explore.py (module docstring)",
+   "source_kind": "seat code, Archaeon",
+   "authored_by": "not Nyx (see source)",
+   "description_verbatim": "Exploration fallback.\n\nWhen no detector fires, Archaeon still proposes an experiment. This is\nDELIBERATE EXPLORATION, not an error condition and not a verdict about the\ncorpus. Nothing in this module may be read as \"there was nothing to find\".\n\nPolicy: coverage-biased, not uniform. Uniform RNG re-samples the dense regions\nin proportion to how dense they already are, which is the opposite of what an\narchaeology service wants. The bias is the simplest one that is still\ninspectable by hand:\n\n  1. Enumerate the LEGAL cells: the observed (world_family x player_family)\n     grid, plus every world x player combination those families license.\n  2. Count observations per cell from the fossil record.\n  3. NEVER-SAMPLED legal cells are preferred outright (they carry the most\n     coverage per run).\n  4. Otherwise take cells at or below the ``undersampled_quantile`` of the\n     occupied-cell count distribution.\n  5. Choose among the survivors with a seeded PRNG.\n\nReproducibility is the point. The recorded ``seed`` and ``candidate_set_hash``\ntogether let anyone re-derive exactly why this cell was chosen: the hash pins\nthe candidate set the seed indexed into, so a later corpus that would have\nproduced a different set is detectable rather than silently different.\n\nThe seed is derived from the corpus hash and the UTC day, so two Archaeon\ninstances reading the same corpus on the same day propos",
+   "description_redacted_for_mapping": "Exploration fallback.\n\nWhen no detector fires, Archaeon still proposes an experiment. This is\nDELIBERATE EXPLORATION, not an error condition and not a verdict about the\ncorpus. Nothing in this module may be read as \"there was nothing to find\".\n\nPolicy: coverage-biased, not uniform. Uniform RNG re-samples the dense regions\nin proportion to how dense they already are, which is the opposite of what an\narchaeology service wants. The bias is the simplest one that is still\ninspectable by hand:\n\n  1. Enumerate the LEGAL cells: the observed (world_family x player_family)\n     grid, plus every world x player combination those families license.\n  2. Count observations per cell from the fossil record.\n  3. NEVER-SAMPLED legal cells are preferred outright (they carry the most\n     coverage per run).\n  4. Otherwise take cells at or below the ``undersampled_quantile`` of the\n     occupied-cell count distribution.\n  5. Choose among the survivors with a seeded PRNG.\n\nReproducibility is the point. The recorded ``seed`` and ``candidate_set_hash``\ntogether let anyone re-derive exactly why this cell was chosen: the hash pins\nthe candidate set the seed indexed into, so a later corpus that would have\nproduced a different set is detectable rather than silently different.\n\nThe seed is derived from the corpus hash and the UTC day, so two Archaeon\ninstances reading the same corpus on the same day propos",
+   "redacted_names": [],
+   "query_axes": {
+    "verb": [
+     "SAMPLE",
+     "SELECT"
+    ],
+    "in_geometry": "MAP",
+    "order_req": "TOTAL",
+    "state_req": [
+     "GLOBAL",
+     "EXTERNAL"
+    ],
+    "strategy": "GREEDY"
+   },
+   "expected_hit": [],
+   "related": [
+    "bit.sample.draw_in_proportion_to_score",
+    "bit.archive.descriptor_keyed_niching",
+    "bit.partition.representation_selection_by_occupancy",
+    "bit.select.move_to_fewest_onward_options",
+    "bit.remember.evict_by_balancing_recency_and_frequency_lists",
+    "bit.sample.pick_best_of_random_subset"
+   ],
+   "hit_rule": "top-k contains a bit in expected_hit",
+   "related_rule": "top-k contains a bit in related (and no HIT)",
+   "miss_rule": "neither",
+   "coverage_note": "no least-visited-first sampling bit is known to be catalogued; HIT impossible by expectation -> a top-5 RELATED is the best available outcome; otherwise COVERAGE miss"
+  },
+  {
+   "id": "Q03_archaeon_cadence_gate",
+   "source_artifact": "archaeon/cadence.py (module docstring)",
+   "source_kind": "seat code, Archaeon",
+   "authored_by": "not Nyx (see source)",
+   "description_verbatim": "Cadence enforcement: at most SIX autonomous proposals per UTC day, at least\nFOUR HOURS apart, unevadeable by concurrent instances.\n\nThe enforcement lives in PostgreSQL. This module is the client of it, and it is\nwritten so that *its own correctness is not required*: if everything here were\nwrong, the partial unique index on ``(lane, utc_day, day_ordinal)`` would still\ncap the day at six.\n\nThe transaction shape, in order, is the whole design:\n\n    BEGIN\n      SELECT ... FROM archaeon.cadence_gate WHERE gate_id='lane:<lane>' FOR UPDATE\n          -- serializes every concurrent Archaeon enqueue in this lane\n      SELECT count(*), max(created_at), now()          -- DATABASE clock\n        FROM archaeon.experiment_queue\n       WHERE lane = <lane>\n         AND source_reason IN ('weak_signal','exploration')\n         AND utc_day = (now() AT TIME ZONE 'UTC')::date\n      -- refuse on daily cap, or on min separation\n      INSERT ... day_ordinal = <count>                  -- unique index backstop\n    COMMIT\n\nFour deliberate choices:\n\n* **The database clock, never the process clock.** ``now()`` is read inside the\n  transaction and used for every comparison. Two machines have two system\n  clocks and one database; only the database clock can order them.\n\n* **The gate is taken BEFORE the count.** Taken after, two instances would both\n  read a stale count and both believe they were within the cap",
+   "description_redacted_for_mapping": "Cadence enforcement: at most SIX autonomous proposals per UTC day, at least\nFOUR HOURS apart, unevadeable by concurrent instances.\n\nThe enforcement lives in PostgreSQL. This module is the client of it, and it is\nwritten so that *its own correctness is not required*: if everything here were\nwrong, the partial unique index on ``(lane, utc_day, day_ordinal)`` would still\ncap the day at six.\n\nThe transaction shape, in order, is the whole design:\n\n    BEGIN\n      SELECT ... FROM archaeon.cadence_gate WHERE gate_id='lane:<lane>' FOR UPDATE\n          -- serializes every concurrent Archaeon enqueue in this lane\n      SELECT count(*), max(created_at), now()          -- DATABASE clock\n        FROM archaeon.experiment_queue\n       WHERE lane = <lane>\n         AND source_reason IN ('weak_signal','exploration')\n         AND utc_day = (now() AT TIME ZONE 'UTC')::date\n      -- refuse on daily cap, or on min separation\n      INSERT ... day_ordinal = <count>                  -- unique index backstop\n    COMMIT\n\nFour deliberate choices:\n\n* **The database clock, never the process clock.** ``now()`` is read inside the\n  transaction and used for every comparison. Two machines have two system\n  clocks and one database; only the database clock can order them.\n\n* **The gate is taken BEFORE the count.** Taken after, two instances would both\n  read a stale count and both believe they were within the cap",
+   "redacted_names": [],
+   "query_axes": {
+    "verb": "BOUND",
+    "in_geometry": "STREAM",
+    "out_geometry": "BOOLEAN",
+    "order_req": "TOTAL",
+    "state_req": "EXTERNAL",
+    "control": "REACTIVE"
+   },
+   "expected_hit": [],
+   "related": [
+    "bit.bound.hold_small_sends_until_previous_is_acknowledged",
+    "bit.bound.double_the_wait_after_each_collision",
+    "bit.synchronize.flag_intent_then_yield_by_turn_variable",
+    "bit.synchronize.pass_a_single_token_along_a_tree"
+   ],
+   "hit_rule": "top-k contains a bit in expected_hit",
+   "related_rule": "top-k contains a bit in related (and no HIT)",
+   "miss_rule": "neither",
+   "coverage_note": "no rate-limiter / token-bucket bit is known to be catalogued; expected COVERAGE miss unless a RELATED bound surfaces"
+  },
+  {
+   "id": "Q04_vivarium_queue_claim",
+   "source_artifact": "vivarium/viv/queue.py (module docstring)",
+   "source_kind": "seat code, Vivarium",
+   "authored_by": "not Nyx (see source)",
+   "description_verbatim": "The queue state machine.\n\nEvery function here takes an open connection and does NOT commit: the caller\nowns the transaction boundary, because a transition and its event row must land\ntogether or not at all.\n\nThe invariants are enforced in the DATABASE (migrations/001), not here:\n\n  * a unique partial index on `active_singleton` makes two simultaneously\n    claimed/running rows impossible, so a race loses with unique_violation\n    rather than double-running an experiment;\n  * a BEFORE UPDATE trigger freezes terminal rows whole and rejects every\n    transition outside the legal graph;\n  * an append-only trigger on the events table refuses UPDATE and DELETE.\n\nThis module's job is to make the legal moves and write down that it made them.\nIt never chooses WHICH experiment deserves to run on any ground other than\n(priority, created_at) -- there is no scheduling intelligence and there is not\nmeant to be.",
+   "description_redacted_for_mapping": "The queue state machine.\n\nEvery function here takes an open connection and does NOT commit: the caller\nowns the transaction boundary, because a transition and its event row must land\ntogether or not at all.\n\nThe invariants are enforced in the DATABASE (migrations/001), not here:\n\n  * a unique partial index on `active_singleton` makes two simultaneously\n    claimed/running rows impossible, so a race loses with unique_violation\n    rather than double-running an experiment;\n  * a BEFORE UPDATE trigger freezes terminal rows whole and rejects every\n    transition outside the legal graph;\n  * an append-only trigger on the events table refuses UPDATE and DELETE.\n\nThis module's job is to make the legal moves and write down that it made them.\nIt never chooses WHICH experiment deserves to run on any ground other than\n(priority, created_at) -- there is no scheduling intelligence and there is not\nmeant to be.",
+   "redacted_names": [],
+   "query_axes": {
+    "verb": "SYNCHRONIZE",
+    "in_geometry": "RECORD",
+    "state_req": "EXTERNAL",
+    "control": "REACTIVE",
+    "guarantee": [
+     "SOUND",
+     "EXACT"
+    ]
+   },
+   "expected_hit": [],
+   "related": [
+    "bit.synchronize.flag_intent_then_yield_by_turn_variable",
+    "bit.synchronize.pass_a_single_token_along_a_tree",
+    "bit.synchronize.agree_by_majority_promises_then_majority_accepts",
+    "bit.repair.replay_log_forward_then_undo_uncommitted",
+    "bit.synchronize.enter_after_all_replies_deferring_lower_priority"
+   ],
+   "hit_rule": "top-k contains a bit in expected_hit",
+   "related_rule": "top-k contains a bit in related (and no HIT)",
+   "miss_rule": "neither",
+   "coverage_note": "no unique-constraint / optimistic-claim bit is known to be catalogued; expected COVERAGE miss unless a mutual-exclusion bit surfaces as RELATED"
+  },
+  {
+   "id": "Q05_vivarium_cegis_loop",
+   "source_artifact": "vivarium/viv/cegis_boolean.py (module docstring)",
+   "source_kind": "seat code, Vivarium (semantics owned by Proteus)",
+   "authored_by": "not Nyx (see source)",
+   "description_verbatim": "`cegis_boolean_v1` -- a bounded CEGIS loop, sealed inside one kind.\n\nWHERE THE ADAPTIVE PART LIVES. Inside here, and nowhere else. The loop chooses\nits next candidate and its next counterexample from its own previous internal\nresults, and every input that governs those choices -- the candidate policy and\nits seed, the case ordering, the source pack, the component library, the caps,\nthe trace bound and the termination rule -- is SEALED in work.payload and\ntherefore inside spec_hash. The generic Vivarium runner sees a kind name and a\nresult; it never learns that a search happened. That is C3's whole requirement,\nand it is structural rather than promised: `viv/executors.py` calls this with a\npayload, a seed and frozen artifact data, and there is no route back out.\n\nPROTEUS OWNS THE SEMANTICS. The grammar, the compiler, the VM, the independent\ntruth-table evaluator and the ordered-first-witness rule are\n`proteus/eval/boolean.py` and `proteus/eval/library.py`. Nothing here decides\nwhat a Boolean program means. In particular NOT IS COMPILED AS `XOR x, ONE` --\ntheir decision, for their stated reason (the VM's NOT is a 32-bit complement\nand leaves {0,1} on the first negation), and this file never emits an opcode of\nits own.\n\nWHY THE CAPS ARE THE EXPERIMENT. The candidate ENUMERATION ORDER is fixed by\nthe sealed seed, so the first candidate that satisfies the target is the same\nexpressi",
+   "description_redacted_for_mapping": "`[name]` -- a bounded [name] loop, sealed inside one kind.\n\nWHERE THE ADAPTIVE PART LIVES. Inside here, and nowhere else. The loop chooses\nits next candidate and its next counterexample from its own previous internal\nresults, and every input that governs those choices -- the candidate policy and\nits seed, the case ordering, the source pack, the component library, the caps,\nthe trace bound and the termination rule -- is SEALED in work.payload and\ntherefore inside spec_hash. The generic Vivarium runner sees a kind name and a\nresult; it never learns that a search happened. That is [name]'s whole requirement,\nand it is structural rather than promised: `viv/executors.py` calls this with a\npayload, a seed and frozen artifact data, and there is no route back out.\n\nPROTEUS OWNS THE SEMANTICS. The grammar, the compiler, the VM, the independent\ntruth-table evaluator and the ordered-first-witness rule are\n`proteus/eval/boolean.py` and `proteus/eval/library.py`. Nothing here decides\nwhat a Boolean program means. In particular NOT IS COMPILED AS `XOR x, ONE` --\ntheir decision, for their stated reason (the VM's NOT is a 32-bit complement\nand leaves {0,1} on the first negation), and this file never emits an opcode of\nits own.\n\nWHY THE CAPS ARE THE EXPERIMENT. The candidate ENUMERATION ORDER is fixed by\nthe sealed seed, so the first candidate that satisfies the target is the same\nexpressi",
+   "redacted_names": [
+    "CEGIS",
+    "cegis_boolean_v1",
+    "C3"
+   ],
+   "query_axes": {
+    "verb": "SEARCH",
+    "in_geometry": [
+     "PREDICATE",
+     "SET"
+    ],
+    "out_geometry": "PROGRAM",
+    "state_req": "LOCAL",
+    "strategy": "INCREMENTAL",
+    "guarantee": "TERMINATES"
+   },
+   "expected_hit": [
+    "bit.repair.add_violated_constraint_and_resolve"
+   ],
+   "related": [
+    "bit.search.recognition_guided_enumeration",
+    "bit.search.decision_tree_enumeration_of_a_procedure",
+    "bit.search.assign_propagate_backtrack",
+    "bit.compress.repeated_subexpression_abstraction"
+   ],
+   "hit_rule": "top-k contains a bit in expected_hit",
+   "related_rule": "top-k contains a bit in related (and no HIT)",
+   "miss_rule": "neither",
+   "coverage_note": "the counterexample-guided mechanism is catalogued under verb REPAIR (from the SMT lineage); the description says 'search' -> a REPRESENTATION miss on the verb axis is the predicted failure"
+  },
+  {
+   "id": "Q06_vault_cmaes",
+   "source_artifact": "techne/fossils/specimens/c-cmaes-hansen/record.json (human_capability_summary)",
+   "source_kind": "Techne fossil record",
+   "authored_by": "not Nyx (see source)",
+   "description_verbatim": "built_to: minimise a black-box, possibly noisy and ill-conditioned objective in continuous space without derivatives | pressure: non-separable, badly scaled landscapes where gradient methods fail or are unavailable | success_means: reaching the optimum's function value within tolerance in a small multiple of the dimension's evaluations",
+   "description_redacted_for_mapping": "built_to: minimise a black-box, possibly noisy and ill-conditioned objective in continuous space without derivatives | pressure: non-separable, badly scaled landscapes where gradient methods fail or are unavailable | success_means: reaching the optimum's function value within tolerance in a small multiple of the dimension's evaluations",
+   "redacted_names": [],
+   "query_axes": {
+    "verb": "SEARCH",
+    "in_geometry": "FUNCTION",
+    "out_geometry": [
+     "TENSOR",
+     "SCALAR"
+    ],
+    "metric_req": [
+     "NONE",
+     "DISTANCE"
+    ],
+    "guarantee": [
+     "APPROXIMATE",
+     "PROBABILISTIC_BOUND"
+    ]
+   },
+   "expected_hit": [
+    "bit.sample.refit_distribution_to_elite_samples"
+   ],
+   "related": [
+    "bit.search.reflect_expand_contract_simplex",
+    "bit.search.evaluate_at_random_points",
+    "bit.search.climb_then_restart_from_random",
+    "bit.generate.perturb_by_scaled_difference_of_others",
+    "bit.search.accept_worse_moves_with_cooling_probability",
+    "bit.search.move_toward_own_and_group_best",
+    "bit.search.adaptive_step_search"
+   ],
+   "hit_rule": "top-k contains a bit in expected_hit",
+   "related_rule": "top-k contains a bit in related (and no HIT)",
+   "miss_rule": "neither",
+   "coverage_note": "the expected bit is catalogued under verb SAMPLE; the description says 'minimise' -> a REPRESENTATION miss on the verb axis is the predicted failure; the query is broad so a SIGNATURE COLLISION among optimisers is also predicted"
+  },
+  {
+   "id": "Q07_vault_minisat",
+   "source_artifact": "techne/fossils/specimens/minisat-2.2.0/record.json (human_capability_summary)",
+   "source_kind": "Techne fossil record",
+   "authored_by": "not Nyx (see source)",
+   "description_verbatim": "built_to: decide propositional satisfiability of large CNF formulas and, when satisfiable, produce a model | pressure: industrial verification instances with millions of clauses; the need for a small, readable, extensible solver others could build on | success_means: correct SAT/UNSAT answers (models checkable, UNSAT trusted or proof-logged) fast on competition and industrial benchmarks",
+   "description_redacted_for_mapping": "built_to: decide propositional satisfiability of large CNF formulas and, when satisfiable, produce a model | pressure: industrial verification instances with millions of clauses; the need for a small, readable, extensible solver others could build on | success_means: correct SAT/UNSAT answers (models checkable, UNSAT trusted or proof-logged) fast on competition and industrial benchmarks",
+   "redacted_names": [],
+   "query_axes": {
+    "verb": [
+     "SEARCH",
+     "VERIFY"
+    ],
+    "in_geometry": "PREDICATE",
+    "out_geometry": [
+     "BOOLEAN",
+     "MAP"
+    ],
+    "guarantee": "COMPLETE"
+   },
+   "expected_hit": [
+    "bit.search.assign_propagate_backtrack"
+   ],
+   "related": [
+    "bit.search.depth_first_with_undo",
+    "bit.repair.add_violated_constraint_and_resolve",
+    "bit.repair.reassign_conflicting_variable_to_least_conflict_value",
+    "bit.search.cover_by_choosing_column_with_fewest_options",
+    "bit.search.wildcard_match_by_backtracking"
+   ],
+   "hit_rule": "top-k contains a bit in expected_hit",
+   "related_rule": "top-k contains a bit in related (and no HIT)",
+   "miss_rule": "neither",
+   "coverage_note": "HIT possible"
+  },
+  {
+   "id": "Q08_vault_lzw",
+   "source_artifact": "techne/fossils/specimens/ncompress-5.0-lzw-1985/record.json (human_capability_summary)",
+   "source_kind": "Techne fossil record",
+   "authored_by": "not Nyx (see source)",
+   "description_verbatim": "built_to: shrink files losslessly with an adaptive dictionary that needs no side information | pressure: 1980s disk and modem bandwidth; the patent history of LZW is why gzip displaced it | success_means: exact reconstruction after decompression, with a good compression ratio on text",
+   "description_redacted_for_mapping": "built_to: shrink files losslessly with an adaptive dictionary that needs no side information | pressure: 1980s disk and modem bandwidth; the patent history of [name] is why [name] displaced it | success_means: exact reconstruction after decompression, with a good compression ratio on text",
+   "redacted_names": [
+    "LZW",
+    "gzip"
+   ],
+   "query_axes": {
+    "verb": "COMPRESS",
+    "in_geometry": [
+     "STRING",
+     "STREAM"
+    ],
+    "out_geometry": [
+     "BITSTRING",
+     "SEQUENCE"
+    ],
+    "state_req": [
+     "LOCAL",
+     "GLOBAL"
+    ],
+    "guarantee": "EXACT",
+    "strategy": [
+     "INCREMENTAL",
+     "STREAMING"
+    ]
+   },
+   "expected_hit": [],
+   "related": [
+    "bit.compress.replace_repeat_with_back_reference",
+    "bit.compress.merge_most_frequent_adjacent_pair",
+    "bit.compress.repeated_subexpression_abstraction",
+    "bit.predict.blend_context_statistics_with_escape",
+    "bit.compress.narrow_interval_by_symbol_probabilities"
+   ],
+   "hit_rule": "top-k contains a bit in expected_hit",
+   "related_rule": "top-k contains a bit in related (and no HIT)",
+   "miss_rule": "neither",
+   "coverage_note": "no adaptive-dictionary (LZ78-type) bit is known to be catalogued; expected COVERAGE miss with a RELATED back-reference/dictionary bit in top-5"
+  },
+  {
+   "id": "Q09_vault_ldpc",
+   "source_artifact": "techne/fossils/specimens/ldpc-codes-neal-2001/record.json (human_capability_summary)",
+   "source_kind": "Techne fossil record",
+   "authored_by": "not Nyx (see source)",
+   "description_verbatim": "built_to: correct transmission errors with sparse-graph codes decoded by iterative probabilistic message passing | pressure: approach the Shannon limit with practical decoding complexity | success_means: block/bit error rate after decoding, at a given channel noise, near the code's threshold",
+   "description_redacted_for_mapping": "built_to: correct transmission errors with sparse-graph codes decoded by iterative probabilistic message passing | pressure: approach the Shannon limit with practical decoding complexity | success_means: block/bit error rate after decoding, at a given channel noise, near the code's threshold",
+   "redacted_names": [],
+   "query_axes": {
+    "verb": "CORRECT",
+    "in_geometry": [
+     "GRAPH",
+     "BITSTRING"
+    ],
+    "out_geometry": "BITSTRING",
+    "state_req": "LOCAL",
+    "strategy": "FIXPOINT_ITERATION",
+    "iteration": "PARALLEL_ROUNDS",
+    "guarantee": [
+     "APPROXIMATE",
+     "PROBABILISTIC_BOUND"
+    ]
+   },
+   "expected_hit": [],
+   "related": [
+    "bit.predict.forward_backward_posteriors_on_a_trellis",
+    "bit.correct.locate_errors_by_solving_syndrome_equations",
+    "bit.correct.syndrome_locates_single_error",
+    "bit.accumulate.stationary_scores_by_propagation",
+    "bit.repair.prune_domains_until_arc_consistent"
+   ],
+   "hit_rule": "top-k contains a bit in expected_hit",
+   "related_rule": "top-k contains a bit in related (and no HIT)",
+   "miss_rule": "neither",
+   "coverage_note": "no belief-propagation-on-a-sparse-graph bit is known to be catalogued (only 2 CORRECT bits exist, both algebraic); expected COVERAGE miss; the interesting question is whether message-passing bits from OTHER verbs surface"
+  },
+  {
+   "id": "Q10_vault_tscp_chess",
+   "source_artifact": "techne/fossils/specimens/tscp-1.81-kerrigan-1997/record.json (human_capability_summary)",
+   "source_kind": "Techne fossil record",
+   "authored_by": "not Nyx (see source)",
+   "description_verbatim": "built_to: play legal, reasonable chess with the smallest readable code, so people could learn how chess programs search | pressure: the branching factor of chess: search must prune (alpha-beta), order moves (killers, history) and resolve tactics (quiescence) | success_means: playing strength on a clock; here, deterministic best-move output at a fixed depth",
+   "description_redacted_for_mapping": "built_to: play legal, reasonable chess with the smallest readable code, so people could learn how chess programs search | pressure: the branching factor of chess: search must prune ([name]), order moves ([name]) and resolve tactics ([name]) | success_means: playing strength on a clock; here, deterministic best-move output at a fixed depth",
+   "redacted_names": [
+    "alpha-beta",
+    "killers, history",
+    "quiescence"
+   ],
+   "query_axes": {
+    "verb": [
+     "SEARCH",
+     "BOUND"
+    ],
+    "in_geometry": "TREE",
+    "order_req": "TOTAL",
+    "strategy": "BRANCH_AND_BOUND",
+    "guarantee": [
+     "DETERMINISTIC",
+     "EXACT"
+    ]
+   },
+   "expected_hit": [
+    "bit.bound.prune_branches_outside_window"
+   ],
+   "related": [
+    "bit.search.branch_and_prune_by_bound",
+    "bit.bound.raise_depth_limit_and_restart",
+    "bit.bound.keep_only_k_best_frontier",
+    "bit.search.expand_deepest_first",
+    "bit.bound.strategy_switch_on_depth"
+   ],
+   "hit_rule": "top-k contains a bit in expected_hit",
+   "related_rule": "top-k contains a bit in related (and no HIT)",
+   "miss_rule": "neither",
+   "coverage_note": "HIT possible; names redacted before mapping"
+  }
+ ]
+}

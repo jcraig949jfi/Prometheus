@@ -1,0 +1,84 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "go-explore-uber-2022",
+  "receipt_id": "run-go-explore-uber-2022-20260912T142512Z",
+  "written_utc": "20260912T142512Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-goexplore:min",
+  "workdir": "upstream/tree/robustified",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "67bfdebe5f01b0bf3b3df32e6b72e98476fbcc578f55b90b9c999ece28fba6c0",
+  "recipe_sha256": "f4ead9a888ca4cc73c416660f64f849fdd16ef7122f47fe33a2706e9c1e0ac64",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python + numpy + gym",
+      "cmd": "python --version; python -c 'import numpy,gym,cv2,scipy,matplotlib,loky; print(\"numpy\",numpy.__version__,\"gym\",gym.__version__)'",
+      "exit": 0,
+      "seconds": 6.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.7.17\nnumpy 1.18.4 gym 0.10.11\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "the archive/return-then-explore core imports (goexplore.py + its non-MuJoCo chain)",
+      "cmd": "for m in basics import_ai explorers utils goexplore montezuma_env generic_atari_env; do python -c \"import goexplore_py.$m\" || exit 1; done; echo IMPORTS_OK",
+      "exit": 0,
+      "seconds": 3.15,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "IMPORTS_OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "the two MuJoCo-coupled modules are named blocked, not silently skipped",
+      "cmd": "python -c 'import goexplore_py.randselectors' 2>&1; echo rc=$?; python -c 'import goexplore_py.complex_fetch_env' 2>&1 | grep -i mujoco",
+      "exit": 0,
+      "seconds": 1.94,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "WARNING: could not import mujoco_py. This means robotics environments will not work\nrc=0\nWARNING: could not import mujoco_py. This means robotics environments will not work\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "goexplore.py (archive, cells, return-then-explore) is importable and exposes its module surface",
+      "cmd": "python -c \"import goexplore_py.goexplore as g; print('DONE' in dir(g), 'has_goexplore_module', bool(g.__file__))\"",
+      "exit": 0,
+      "seconds": 1.5,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "True has_goexplore_module True\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

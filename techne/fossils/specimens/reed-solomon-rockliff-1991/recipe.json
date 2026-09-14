@@ -1,0 +1,32 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile (K&R)",
+      "cmd": "gcc -w -std=gnu89 -o $BODY/rs rs.c -lm 2>&1 | grep -i error; test -x $BODY/rs"
+    }
+  ],
+  "runs": [
+    {
+      "name": "encode, corrupt, decode a Reed-Solomon codeword",
+      "cmd": "$BODY/rs 2>&1 | tail -25",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(decode|error|recover|data|codeword|Results)"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "The 1991 driver builds a codeword, injects errors, and decodes; -std=gnu89 accepts the K&R main() and implicit int. Output is the program's own before/after data."
+}

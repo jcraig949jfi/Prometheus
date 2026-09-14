@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.allocate.split_power_of_two_blocks_and_coalesce_buddies",
+  "name": "split power-of-two blocks and coalesce buddies",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "keep free lists per power-of-two size; serve a request by splitting a larger block in halves until the size fits; on free, merge a block with its buddy (the other half of its parent) whenever the buddy is also free",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Buddy memory allocation' in section Distributed systems algorithms / Memory allocation and deallocation algorithms: an algorithm to allocate memory such with less fragmentation",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ALLOCATE",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "CALLBACK",
+  "guarantee": "EXACT",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "a power-of-two size ladder"
+  ],
+  "fails_when": [
+    "internal fragmentation up to half a block"
+  ],
+  "instances": [
+    "Buddy memory allocation"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

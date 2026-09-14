@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.bound.fill_a_large_memory_pseudorandomly_then_read_it_back_in_a_data_dependent_order",
+  "name": "fill a large memory pseudorandomly, then read it back in a data-dependent order",
+  "lineage": [
+    "operating systems",
+    "memory managers"
+  ],
+  "mechanism": "expand the input into a large array of pseudorandom blocks, then perform many rounds in which the current value selects which stored block to mix in next; computing the result without keeping the whole array forces recomputation, so the cost is memory times time and cannot be parallelised cheaply",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'scrypt' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Argon2': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "BOUND",
+  "in_geometry": "STRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "LINEAR",
+  "requires": [
+    "a memory size parameter (policy)"
+  ],
+  "fails_when": [
+    "data-dependent access leaks timing; the memory parameter must fit the legitimate device"
+  ],
+  "instances": [
+    "scrypt",
+    "Argon2"
+  ],
+  "related": [
+    {
+      "rel": "GENERALIZES",
+      "id": "bit.bound.iterate_a_one_way_function_a_tunable_number_of_times_to_slow_each_guess"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

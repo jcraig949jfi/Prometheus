@@ -1,0 +1,94 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "l1-adaptive-control-basics-xkhainguyen",
+  "receipt_id": "run-l1-adaptive-control-basics-xkhainguyen-20260913T055759Z",
+  "written_utc": "20260913T055759Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-octave:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "axis.m": "95dd54398d3b8d2ca52dbe6b626d7bbfe2855074c3f44406e93693fdf531d353",
+    "clc.m": "ef78fe6dcdc2671533fbb34dac2d79cf8d658b3d7760a83263f2527aeb4e3211",
+    "clear.m": "cc0215a5934e0276248f6a0392da5ceafed06385bb78eb5b037328b8b25a56da",
+    "close.m": "6b23cc75f4435f893d6e34a734603a210c12d512de48cdbd637ca818d0089d37",
+    "drawnow.m": "4b91014109143d1d7db6777433ab31a7d1c7437073c68a8da098caecc9aebcae",
+    "figure.m": "5a7e73bf88d8173407264a832f3bca6702c60d6157665f286b1e03ec7d925744",
+    "grid.m": "0acecd73b20d603f04326f96a3567d14e89aecd65ae2a919c2b063354410b61a",
+    "hold.m": "86d3a99eeb66a14a5bce85b1420cb730917f2b298e3eb110f5a026331f3deb4d",
+    "legend.m": "4fea3bc1e9f30c06f6df2fbfdc2d461409046f6a451629d96496f13c1804b240",
+    "plot.m": "b07a950531e32f8156c07121250e6d557fa3ec9ccc9c0252922d795b6863ff48",
+    "stairs.m": "802ba1e3168187f36ff47edd1f00692f99e7fc4af93cee2117d81f3e876e399a",
+    "subplot.m": "34b6b7c46fd549f7d93f94d4348606b7f6a34abae7f84beb158cd8dd0c78f950",
+    "techne_run_script.m": "b64387810edfd131c787c51913681ddb0d78c3fd0abb398c8b17941c2d2d9965",
+    "text.m": "ae78a6c8e6401986fa3e5cd8dd0ab158c93e7f2ce6083ff01cbcbe8bd83116f6",
+    "title.m": "e56fc8dcc18ebd6fde75e6a8d277d667656fa06a9138b15457dbfd278018c411",
+    "xlabel.m": "d96620626613e5897e41da51837af73134c15631737448f5037556d064c69548",
+    "xlim.m": "6aafcb313f4b2737572f4a30a6530d8054c38fc7e10e582872f34066340aff44",
+    "ylabel.m": "7715f62efeca47fae052143bdc48611fc51743332d734c620415e122e7ab781f",
+    "ylim.m": "7c79a0e845834326b2fcadd78f51d96e4b44d7fa52f276c64b20182993cfd44b"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "3029795a9e754436d70be8321e4481e8166ebe03b82fade737f9261fbb3c01c0",
+  "recipe_sha256": "c0b7b89807a66a6e1581dfe92973f284318480aa398de29beb7b49548ec21610",
+  "patches": [],
+  "probe": [
+    {
+      "name": "octave",
+      "cmd": "octave --version | head -1",
+      "exit": 0,
+      "seconds": 0.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Octave, version 7.3.0\n"
+      },
+      "stderr": {
+        "text": "octave: X11 DISPLAY environment variable not set\noctave: disabling GUI features\n"
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "MainL1_ODE1_v1.m: predictor + piecewise-constant adaptive law + first-order filter against a plant hit by three disturbance pulses; print how the estimate tracks the disturbance",
+      "cmd": "octave --no-gui --no-window-system -p $HARNESS --eval \"techne_run_script('MainL1_ODE1_v1.m'); idx=@(a,b) find(t>=a & t<b); w1=idx(0.012,0.02); w2=idx(0.09,0.2); ds = interp1(ts, sigma_hat, t, 'previous', 'extrap'); printf('disturbance window 1: mean d=%.1f mean sigma_hat=%.1f\\n', mean(d(w1)), mean(ds(w1))); printf('quiet window: mean d=%.1f mean sigma_hat=%.1f\\n', mean(d(w2)), mean(ds(w2))); printf('max |x| = %.4f ; final |x_tilde| = %.5f\\n', max(abs(x)), abs(x_tilde(end)));\" 2>&1 | tail -6",
+      "exit": 0,
+      "seconds": 1.01,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "warning: function /w/harness/clear.m shadows a built-in function\nwarning: function /w/harness/drawnow.m shadows a built-in function\ndisturbance window 1: mean d=100.0 mean sigma_hat=0.0\nquiet window: mean d=0.0 mean sigma_hat=-0.9\nmax |x| = 4.6502 ; final |x_tilde| = 0.00000\nerror: ignoring const execution_exception& while preparing to exit\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: the adaptive estimate follows the disturbance (|mean(sigma_hat) - mean(d)| < 20% of the pulse in window 1) and returns near zero after it",
+      "cmd": "octave --no-gui --no-window-system -p $HARNESS --eval \"techne_run_script('MainL1_ODE1_v1.m'); idx=@(a,b) find(t>=a & t<b); w1=idx(0.012,0.02); w2=idx(0.09,0.2); ds = interp1(ts, sigma_hat, t, 'previous', 'extrap'); e1 = abs(mean(ds(w1)) - mean(d(w1)))/abs(mean(d(w1))); e2 = abs(mean(ds(w2))); printf('rel_err_pulse1=%.3f quiet_abs=%.3f\\n', e1, e2); exit((e1 < 0.2 && e2 < 10) ? 0 : 1);\" 2>&1 | tail -2",
+      "exit": 0,
+      "seconds": 0.88,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "                                                                                                                                                                                                                                                                                                                                      ^\nerror: ignoring const execution_exception& while preparing to exit\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "3029795a9e754436d70be8321e4481e8166ebe03b82fade737f9261fbb3c01c0",
+  "body_preserved": true
+}

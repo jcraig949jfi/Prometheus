@@ -1,0 +1,1188 @@
+[
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Asymmetric (public key) encryption:",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Digital signatures (asymmetric authentication):",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cryptographic hash functions (see also the section on message authentication codes):",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cryptographically secure pseudo-random number generators",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Key exchange",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Key derivation functions, often used for password hashing and key stretching",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Message authentication codes (symmetric authentication algorithms, which take a key as a parameter):",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Secret sharing, secret splitting, key splitting, M of N algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Symmetric (secret key) encryption:",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Post-quantum cryptography",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Elliptic curve cryptography",
+  "decision": "NOT_A_BIT",
+  "reason": "a choice of group (data) under which the exponent-based mechanisms run; the mechanisms are catalogued under their generic forms"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "MAE1",
+  "decision": "DEFER",
+  "reason": "not identifiable from the bare name; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "RSA",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.exponentiate_in_a_group_whose_order_only_the_key_holder_knows",
+   "name": "exponentiate in a group whose order only the key holder knows",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "raise the message to a public exponent modulo a product of two secret primes; only someone who knows the primes knows the group order and can compute the inverse exponent that undoes the operation; the same pair of exponents, applied in the other order, produces and checks a signature",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a modulus whose factorisation is secret",
+    "padding (policy) before exponentiation"
+   ],
+   "fails_when": [
+    "deterministic without padding; broken if the modulus is factored"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.transform.square_and_multiply_by_the_binary_digits_of_the_exponent"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Diffie–Hellman key exchange",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.synchronize.each_party_raises_the_others_public_power_to_its_own_secret",
+   "name": "each party raises the other's public power to its own secret exponent",
+   "lineage": [
+    "network protocols",
+    "distributed systems"
+   ],
+   "mechanism": "each side picks a secret exponent and publishes the generator raised to it; each then raises the other's published value to its own secret; because exponents commute the two results agree, and an observer holding only the two published values cannot form it",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SYNCHRONIZE",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a group where the exponent is hard to recover",
+    "an authenticated channel for the public values"
+   ],
+   "fails_when": [
+    "an active party in the middle substitutes both public values"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.transform.square_and_multiply_by_the_binary_digits_of_the_exponent"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Elliptic-curve Diffie–Hellman (ECDH)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.synchronize.each_party_raises_the_others_public_power_to_its_own_secret"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "ElGamal",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.mask_the_message_with_a_fresh_shared_secret_from_an_ephemeral_exponent",
+   "name": "mask the message with a fresh shared secret derived from an ephemeral exponent",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "the sender picks a fresh secret exponent, publishes the generator raised to it, forms the shared value from the recipient's public power, and multiplies the message by that value; the recipient recomputes the shared value from the published ephemeral and divides it out",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "RANDOMIZED",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a fresh random exponent per message"
+   ],
+   "fails_when": [
+    "reusing the ephemeral leaks the ratio of two messages; ciphertext is twice the message size"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.synchronize.each_party_raises_the_others_public_power_to_its_own_secret"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "NTRUEncrypt",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.mask_by_a_random_multiple_of_the_public_key_and_recover_by_a_secret_multiply_and_rounding",
+   "name": "mask by a random multiple of the public key; recover by a secret multiplication that keeps the noise small enough to round away",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "the public key is a quotient of two secret polynomials with tiny coefficients; encrypt by adding a random small multiple of it to the message; multiplying the result by the secret denominator cancels the random part into something with small coefficients, so reducing modulo the small modulus and rounding recovers the message",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "FUNCTION",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "two moduli and coefficient-size bounds (data)"
+   ],
+   "fails_when": [
+    "rare decryption failures when the noise exceeds the rounding margin"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "ECDSA and Deterministic ECDSA",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.verify.sign_with_an_inverted_ephemeral_exponent_binding_hash_key_and_commitment",
+   "name": "sign with an inverted ephemeral exponent that binds the hash, the secret key and a commitment",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "pick an ephemeral exponent, publish a commitment (the generator raised to it, reduced to a number); the signature's second part is the inverse of the ephemeral times (message hash plus secret key times commitment); the verifier recombines the public key, the commitment and the hash and checks that the commitment reappears; the deterministic variant derives the ephemeral from the hash and the secret so it can never repeat",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "VERIFY",
+   "in_geometry": "STRING",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "RANDOMIZED",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a never-repeating ephemeral exponent",
+    "a hash of the message"
+   ],
+   "fails_when": [
+    "a repeated or biased ephemeral reveals the secret key"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.transform.square_and_multiply_by_the_binary_digits_of_the_exponent"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "DSA, and its variants:",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.verify.sign_with_an_inverted_ephemeral_exponent_binding_hash_key_and_commitment"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "EdDSA (Ed25519)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.verify.sign_by_adding_the_hash_of_commitment_and_message_times_the_secret_to_the_nonce",
+   "name": "sign by adding the hash of (commitment, message) times the secret to the nonce",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "derive a nonce from the secret and the message, publish its commitment, and output nonce plus hash(commitment, public key, message) times the secret; the verifier checks that the generator raised to that sum equals the commitment times the public key raised to the same hash; no inversion is needed and the check is one linear relation",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "VERIFY",
+   "in_geometry": "STRING",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a deterministic nonce derivation",
+    "a hash of commitment, key and message"
+   ],
+   "fails_when": [
+    "a fault during nonce derivation reveals the key"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.verify.sign_with_an_inverted_ephemeral_exponent_binding_hash_key_and_commitment"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "RSA",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.exponentiate_in_a_group_whose_order_only_the_key_holder_knows"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "MD5",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start",
+   "name": "chain a compression function over padded blocks from a fixed start",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems",
+    "databases"
+   ],
+   "mechanism": "pad the message to whole blocks with its length appended; start from a fixed state and, for each block, replace the state by a fixed one-way compression of (state, block); the final state is the digest, so a collision in the compression function is a collision in the whole",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "STRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "DETERMINISTIC",
+   "strategy": "STREAMING",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a one-way compression function (data)"
+   ],
+   "fails_when": [
+    "length extension: anyone knowing the digest can continue the chain"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "SHA-1",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "SHA-2 (SHA-224, SHA-256, SHA-384, SHA-512)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "RIPEMD-160",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Tiger (TTH), usually used in Tiger tree hashes",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "WHIRLPOOL",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "BLAKE",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "SHA-3 (SHA3-224, SHA3-256, SHA3-384, SHA3-512, SHAKE128, SHAKE256)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.absorb_blocks_by_xor_into_a_wide_state_between_permutations_then_squeeze",
+   "name": "absorb blocks by XOR into part of a wide state between permutations, then squeeze output from the same part",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "keep a state much wider than the output; XOR each message block into the exposed part of the state and apply a fixed permutation to the whole; when the message is consumed, read the exposed part as output, permuting again for more; the hidden part of the state is never directly touched by input or read as output",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "STRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "DETERMINISTIC",
+   "strategy": "STREAMING",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a wide fixed permutation (data)",
+    "a rate/capacity split (policy)"
+   ],
+   "fails_when": [
+    "security is bounded by the hidden capacity, not the output length"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Blum Blum Shub",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.square_modulo_a_secret_composite_and_emit_a_low_bit_each_step",
+   "name": "square modulo a secret composite and emit a low bit each step",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "start from a seed coprime to a product of two secret primes; repeatedly replace the state by its square modulo that product, emitting the lowest bit (or a few) each time; predicting the next bit is as hard as factoring the modulus",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "SCALAR",
+   "out_geometry": "STREAM",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a secret two-prime modulus"
+   ],
+   "fails_when": [
+    "one modular squaring per bit -- very slow"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Linear-feedback shift register (note",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.shift_a_register_feeding_back_the_xor_of_tapped_bits",
+   "name": "shift a register, feeding back the XOR of tapped bits",
+   "lineage": [
+    "error-correcting systems",
+    "network protocols",
+    "games"
+   ],
+   "mechanism": "each step shifts every bit one place, outputs the bit that falls off, and fills the vacated place with the XOR of a fixed set of tap positions; with taps from a primitive polynomial the sequence runs through every nonzero state before repeating",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "BITSTRING",
+   "out_geometry": "STREAM",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "DETERMINISTIC",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "CONSTANT",
+   "requires": [
+    "a tap set (data)"
+   ],
+   "fails_when": [
+    "linear: a short run of output reveals the taps and the state"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.detect.polynomial_division_remainder_check"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Yarrow algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.accumulate_entropy_into_pools_and_reseed_a_cipher_counter_generator_when_a_pool_fills",
+   "name": "accumulate entropy into pools and reseed a cipher-counter generator when a pool fills",
+   "lineage": [
+    "operating systems",
+    "network protocols"
+   ],
+   "mechanism": "feed unpredictable events into hash-based pools; output comes from a block cipher encrypting a counter under the current key; when a pool has collected enough estimated entropy, hash it into a new key so an attacker who learned the old state is locked out again",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "STREAM",
+   "out_geometry": "STREAM",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "REACTIVE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "ADAPTIVE_SWITCH",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "entropy estimates for the inputs (policy)",
+    "a block cipher and a hash"
+   ],
+   "fails_when": [
+    "entropy estimation is the weak point: an over-estimate reseeds too early with guessable material"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Fortuna, intended as an improvement on Yarrow algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.schedule.use_pool_k_only_on_every_2_to_the_k_th_reseed",
+   "name": "use pool k only on every 2^k-th reseed",
+   "lineage": [
+    "operating systems",
+    "network protocols"
+   ],
+   "mechanism": "spread incoming events round-robin over many pools; at the n-th reseed include pool k only if 2^k divides n; the high pools therefore accumulate for very long stretches, so however slow the true entropy trickles in, some pool eventually gathers enough unseen material to recover -- with no entropy estimation at all",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SCHEDULE",
+   "in_geometry": "STREAM",
+   "out_geometry": "STREAM",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "SCHEDULED",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "DATA_INDEPENDENT",
+   "iteration": "PRIORITY",
+   "cost": "CONSTANT",
+   "requires": [
+    "a reseed counter",
+    "many pools"
+   ],
+   "fails_when": [
+    "recovery time is a multiple of the true entropy rate, not immediate"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.generate.accumulate_entropy_into_pools_and_reseed_a_cipher_counter_generator_when_a_pool_fills"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "PBKDF2",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.bound.iterate_a_one_way_function_a_tunable_number_of_times_to_slow_each_guess",
+   "name": "iterate a one-way function a tunable number of times to slow each guess",
+   "lineage": [
+    "operating systems",
+    "network protocols"
+   ],
+   "mechanism": "derive the key by applying a keyed one-way function to the password and salt, then re-applying it to its own output for a chosen number of rounds (combining the round outputs); the legitimate user pays the cost once, an attacker pays it per guess, and the round count is raised as hardware gets faster",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "BOUND",
+   "in_geometry": "STRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "DETERMINISTIC",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a salt per password",
+    "an iteration count (policy)"
+   ],
+   "fails_when": [
+    "parallel hardware makes pure time cost cheap; no memory cost"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "bcrypt",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.bound.iterate_a_one_way_function_a_tunable_number_of_times_to_slow_each_guess"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "scrypt",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.bound.fill_a_large_memory_pseudorandomly_then_read_it_back_in_a_data_dependent_order",
+   "name": "fill a large memory pseudorandomly, then read it back in a data-dependent order",
+   "lineage": [
+    "operating systems",
+    "memory managers"
+   ],
+   "mechanism": "expand the input into a large array of pseudorandom blocks, then perform many rounds in which the current value selects which stored block to mix in next; computing the result without keeping the whole array forces recomputation, so the cost is memory times time and cannot be parallelised cheaply",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "BOUND",
+   "in_geometry": "STRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "DETERMINISTIC",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "LINEAR",
+   "requires": [
+    "a memory size parameter (policy)"
+   ],
+   "fails_when": [
+    "data-dependent access leaks timing; the memory parameter must fit the legitimate device"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "GENERALIZES",
+     "id": "bit.bound.iterate_a_one_way_function_a_tunable_number_of_times_to_slow_each_guess"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Argon2",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.bound.fill_a_large_memory_pseudorandomly_then_read_it_back_in_a_data_dependent_order"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "HMAC",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.detect.hash_the_message_under_an_inner_key_then_hash_the_result_under_an_outer_key",
+   "name": "hash the message under an inner key, then hash that result under an outer key",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "XOR the key with one fixed pad and prepend it to the message, hash; XOR the key with a second pad, prepend it to that digest, hash again; the outer hash blocks anyone from extending the inner one, so a tag cannot be forged without the key even if the hash alone is extensible",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "DETECT",
+   "in_geometry": "STRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "DETERMINISTIC",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "an underlying hash"
+   ],
+   "fails_when": [
+    "two hash passes over the key material; only as strong as the hash's compression"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Poly1305",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.detect.evaluate_the_message_as_a_polynomial_at_a_secret_point_then_add_a_one_time_mask",
+   "name": "evaluate the message as a polynomial at a secret point, then add a one-time mask",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "split the message into blocks and treat them as coefficients of a polynomial; evaluate it at a secret point modulo a prime by running multiply-and-add over the blocks; add a one-time secret value so the evaluation point is never exposed; two messages agreeing at the point is a low-probability event bounded by the degree",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "DETECT",
+   "in_geometry": "STRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "STREAMING",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a fresh one-time mask per message"
+   ],
+   "fails_when": [
+    "reusing the mask reveals the secret point"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.search.rolling_hash_pattern_match"
+    },
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.detect.polynomial_division_remainder_check"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Shamir's secret sharing",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.hide_the_secret_as_the_constant_term_of_a_random_polynomial_and_hand_out_evaluations",
+   "name": "hide the secret as the constant term of a random polynomial and hand out evaluations",
+   "lineage": [
+    "distributed systems",
+    "network protocols"
+   ],
+   "mechanism": "choose a random polynomial of degree one less than the threshold, with the secret as its constant term; give each holder one evaluation point; any threshold-many points determine the polynomial and so the secret, while fewer leave every value equally likely",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "RANDOMIZED",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "arithmetic in a field larger than the secret"
+   ],
+   "fails_when": [
+    "a dishonest holder can submit a false share undetected without an extra check"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.predict.fit_the_unique_polynomial_through_all_the_points"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Blakey's scheme",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.hand_out_hyperplanes_that_meet_only_at_the_secret_point",
+   "name": "hand out hyperplanes that meet only at the secret point",
+   "lineage": [
+    "distributed systems"
+   ],
+   "mechanism": "place the secret as one coordinate of a point in a space whose dimension equals the threshold; give each holder a random hyperplane through that point; threshold-many hyperplanes intersect in exactly the point, fewer in a line or larger flat that leaves the secret open",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "RANDOMIZED",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "linear algebra over a field"
+   ],
+   "fails_when": [
+    "shares are larger than the secret; fewer than threshold shares still narrow the secret to a flat unless coordinates are chosen carefully"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.partition.hide_the_secret_as_the_constant_term_of_a_random_polynomial_and_hand_out_evaluations"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Advanced Encryption Standard (AES), winner of NIST competition, also known as Rijndael",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.repeat_rounds_of_byte_substitution_positional_permutation_and_round_key_mixing",
+   "name": "repeat rounds of byte substitution, positional permutation and round-key mixing",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "arrange the block as a small grid of bytes; each round replaces every byte through a fixed nonlinear table, moves bytes to new positions, mixes each column linearly, and XORs in a round key derived from the master key; a dozen rounds make every output bit depend nonlinearly on every input and key bit; decryption runs the inverse steps backward",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "BITSTRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DATA_INDEPENDENT",
+   "iteration": "SWEEP",
+   "cost": "CONSTANT",
+   "requires": [
+    "a substitution table and a key schedule (data)"
+   ],
+   "fails_when": [
+    "table lookups leak through cache timing without constant-time implementation"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Data Encryption Standard (DES), sometimes DE Algorithm, winner of NBS selection competition, replaced by AES for most pu",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap",
+   "name": "split into halves, XOR a keyed function of one half into the other, then swap",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "split the block in two; each round computes a keyed function of the right half and XORs it into the left, then swaps the halves; because the function is only ever XORed in, decryption is the same sequence with the round keys reversed, and the round function need not be invertible",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "BITSTRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DATA_INDEPENDENT",
+   "iteration": "SWEEP",
+   "cost": "CONSTANT",
+   "requires": [
+    "a keyed round function (data)",
+    "a key schedule"
+   ],
+   "fails_when": [
+    "too few rounds or a weak round function yields differential attacks"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.transform.repeat_rounds_of_byte_substitution_positional_permutation_and_round_key_mixing"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Blowfish",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Twofish",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Tiny Encryption Algorithm (TEA)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "IDEA",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.apply_a_keyed_function_to_the_difference_of_the_halves_and_add_it_to_both",
+   "name": "apply a keyed function to the difference of the halves and add the result to both",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "each round forms the difference of the two halves, passes it through a keyed function, and adds the same output to both halves (then swaps or reshuffles); the difference is unchanged by the addition, so the step is invertible for any round function, like the XOR-into-one-half design but touching both halves",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "BITSTRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DATA_INDEPENDENT",
+   "iteration": "SWEEP",
+   "cost": "CONSTANT",
+   "requires": [
+    "a keyed round function mixing several group operations"
+   ],
+   "fails_when": [
+    "weak-key classes when key words are zero"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.transform.split_into_halves_and_xor_a_keyed_function_of_one_half_into_the_other_then_swap"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Salsa20",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.mix_a_word_state_by_repeated_add_rotate_xor_rounds_with_injected_key_words",
+   "name": "mix a word state by repeated add-rotate-XOR rounds with injected key words",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "load key, nonce, counter and constants into a small array of machine words; repeat rounds that only add words, rotate words by fixed amounts and XOR words together (in a quarter-round pattern across rows then columns); add the initial state back at the end; the output serves as a keystream block, a block cipher, or a keyed compression depending on how it is wrapped",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "BITSTRING",
+   "out_geometry": "BITSTRING",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DATA_INDEPENDENT",
+   "iteration": "SWEEP",
+   "cost": "CONSTANT",
+   "requires": [
+    "word addition, rotation and XOR only (no tables)"
+   ],
+   "fails_when": [
+    "rotation constants and round count are the whole design; too few rounds are distinguishable"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "ChaCha20 updated variant of Salsa20",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.mix_a_word_state_by_repeated_add_rotate_xor_rounds_with_injected_key_words"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Threefish",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.mix_a_word_state_by_repeated_add_rotate_xor_rounds_with_injected_key_words"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "SipHash",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.mix_a_word_state_by_repeated_add_rotate_xor_rounds_with_injected_key_words"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "RC4 (cipher)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.walk_a_key_scrambled_permutation_swapping_two_entries_per_output_byte",
+   "name": "walk a key-scrambled permutation, swapping two entries per output byte",
+   "lineage": [
+    "network protocols",
+    "error-correcting systems"
+   ],
+   "mechanism": "initialise a permutation of all byte values and scramble it by swaps driven by the key; then, per output byte, advance one index, move a second index by the value found there, swap the two entries, and output the entry at the position given by their sum",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "BITSTRING",
+   "out_geometry": "STREAM",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "DETERMINISTIC",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "CONSTANT",
+   "requires": [
+    "a 256-entry state"
+   ],
+   "fails_when": [
+    "the first output bytes are biased; related-key weaknesses"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.sample.uniform_permutation_by_swaps"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Proof-of-work algorithms",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.vary_a_nonce_until_the_hash_falls_below_a_target",
+   "name": "vary a nonce until the hash falls below a target",
+   "lineage": [
+    "distributed systems",
+    "network protocols"
+   ],
+   "mechanism": "append a counter to the data and hash; if the result is not below the target, change the counter and hash again; the expected number of tries is set by the target, and anyone can verify the winning counter with one hash",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "STRING",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "SWEEP",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a hash whose output is unpredictable",
+    "a target (policy)"
+   ],
+   "fails_when": [
+    "the cost is pure waste by design; specialised hardware concentrates it"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.search.enumerate_all_candidates"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+  }
+ }
+]

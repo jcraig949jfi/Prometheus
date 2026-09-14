@@ -1,0 +1,30 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "guile",
+      "cmd": "guile --version | head -1"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "unification + interleaving search on a tiny relation",
+      "cmd": "guile --no-auto-compile -l microKanren.scm -l $HARNESS/harness.scm -c '(exit 0)' 2>&1 | tail -6",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "MICROKANREN_OK",
+          "disj-answers: 2"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "microKanren.scm defines empty-state, ==, call/fresh, disj, conj as streams. The harness poses (== q 5) (one answer) and (disj (== q 1) (== q 2)) (two answers) and pulls the streams. If guile rejects a name (the paper's variant vs this file's), the receipt shows the exact symbol and the run is BROKEN_UPSTREAM until the harness matches the file -- Techne does not edit microKanren.scm."
+}

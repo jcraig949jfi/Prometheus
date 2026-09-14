@@ -27,6 +27,23 @@ import time
 import urllib.parse
 from typing import Any, Callable, Optional
 
+# -- deadlines --------------------------------------------------------------
+# The engine waits up to ENGINE_BUSY_TIMEOUT_S for SQLite's write lock before
+# it gives up and answers 500 (sfe/store.py Store(timeout=30.0)). SQLite's busy
+# handler accumulates SLEEP time, not wall time, so the wait it actually runs
+# overshoots the configured bound: 33.11 s measured on M1
+# (SerendipityFoundryEngine/deploy/WRITE_PATH_PROFILE_2026-09-10.json,
+# deadlines.engine_lock_wait_s). A client whose socket timeout was the SAME
+# 30 s therefore gave up ~3 s BEFORE the engine did, in a window where the
+# engine may still commit -- the caller reports failure for a write that
+# landed (backlog A1). The client's default is DERIVED from the engine bound
+# with a margin that covers the measured overshoot, not set to a lookalike
+# number. Pass timeout= explicitly to override; the relationship is pinned by
+# tests/test_sfe_client_deadline.py on the engine side.
+ENGINE_BUSY_TIMEOUT_S = 30.0
+DEADLINE_MARGIN = 1.5
+DEFAULT_TIMEOUT_S = ENGINE_BUSY_TIMEOUT_S * DEADLINE_MARGIN   # 45.0 s
+
 
 class EngineError(Exception):
     def __init__(self, status: int, detail: Any):
@@ -37,7 +54,8 @@ class EngineError(Exception):
 class EngineClient:
     def __init__(self, base_url: str, token: Optional[str] = None, *,
                  cafile: Optional[str] = None, insecure: bool = False,
-                 timeout: float = 30.0, session_key: Optional[str] = None,
+                 timeout: float = DEFAULT_TIMEOUT_S,
+                 session_key: Optional[str] = None,
                  client_id: Optional[str] = None):
         self._u = urllib.parse.urlsplit(base_url.rstrip("/"))
         if self._u.scheme not in ("http", "https"):

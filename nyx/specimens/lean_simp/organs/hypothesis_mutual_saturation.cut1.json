@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.lean_simp.hypothesis_mutual_saturation.cut1",
+  "specimen": "lean_simp",
+  "name": "hypothesis mutual saturation: every hypothesis in the context becomes a rule; each hypothesis is rewritten by all the others and the goal by all; repeat until nothing changes",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "Lean 4 simp_all, SimpAll.lean",
+    "sources": [
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/SimpAll.lean lines 19-37 Entry/State, 39-54 initEntries (every Prop hypothesis added to the store as an fvar rule; nondependent ones queued for simplification), 59-124 loop (for each entry: erase itself from the store, simplify its type, re-add the new version; then the target; modified flag), 125-150 main",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/lean_simp/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Lean 4 simp_all (SimpAll.lean). Coincides with a file; found by the file.",
+    "mechanism": "Collect the propositional hypotheses; add each as a rewrite rule keyed by its fvar. Loop: for each nondependent hypothesis h, remove h's own rule, simplify h's type with the rest of the store, and if it changed replace both the hypothesis and its rule; then simplify the goal; repeat while anything changed. A hypothesis that becomes False closes the goal; one that becomes True is dropped.",
+    "input": "a goal (MVarId) with its local context; the base store and simprocs",
+    "output": "Option MVarId (none if closed) and stats",
+    "state": "the evolving store (a hypothesis's rule is replaced as the hypothesis changes); the modified flag; usedTheorems",
+    "assumptions": "that hypotheses are usable as rewrite rules in whichever oriented form rule_canonicalization gives them; that rewriting a hypothesis by the others and vice versa converges (there is no perm guard between two hypotheses h1: a = b, h2: b = a -- termination is by maxSteps inside each simp call and by the outer loop's 'nothing changed')",
+    "interface": "simpAll(goal, ctx, simprocs) -> (Option goal, stats)",
+    "fitness_value": "Turns a context of facts into a mutually normalised set: facts stated in different vocabularies get rewritten into one another's terms without the user naming which. Claimed; not measured.",
+    "failure_landscape": "(a) quadratic in the number of hypotheses per round; (b) two hypotheses that rewrite each other oscillate until the step cap; (c) a hypothesis used to rewrite another is then itself rewritten, and the ORDER of the entries decides the fixpoint reached -- order-dependence is a confluence failure the source does not guard; (d) dependent hypotheses are added as rules but never themselves simplified.",
+    "ablation": "Designed, not measured: freeze the store (do not replace a rule when its hypothesis changes). Prediction: fewer rounds, stale rules fire; some goals no longer close.",
+    "decomposability": "Into (1) 'facts become rules' (that is rule_canonicalization applied to fvars: already a separate organ), (2) the self-exclusion-then-rewrite step, (3) the outer changed-flag fixpoint. Only (2) is specific to this organ.",
+    "composability": "Any organism holding a SET of facts that should be kept mutually normalised; the pattern is independent of Lean once a rewriter exists. It is a possible pressure-source for Vivarium ('facts arrive in mismatched vocabularies') more than an organ for Archaeon.",
+    "human_prior": "That a hypothesis should not rewrite itself (self-exclusion) and that the goal is rewritten last; both are ordering conventions.",
+    "control": "Positive: from h1: x = 2, h2: y = x + 1, goal y = 3, simp_all closes. Negative: with no hypotheses it behaves as simp. Cheat control: plant h1: a = b, h2: b = a and require termination WITH a diagnostic (step cap or perm rejection) rather than silent success.",
+    "cheat": "Closing goals by finding a False hypothesis after a wrong rewrite (unsound rewriting) would look like power; the control is a kernel-checked proof, which needs Lean execution."
+  },
+  "alternative_cuts": [
+    "CUTS.md c13-alt: simp_all is a POLICY over the traversal organ (a loop calling simp) and not a separate mechanism"
+  ],
+  "pressure_refs": []
+}

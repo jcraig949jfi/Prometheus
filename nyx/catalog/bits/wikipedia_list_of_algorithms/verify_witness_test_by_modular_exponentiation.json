@@ -1,0 +1,56 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.verify.witness_test_by_modular_exponentiation",
+  "name": "probable-prime test by a modular-exponentiation witness",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "pick a random base and check an identity that every prime satisfies for that base (base to the modulus minus one is one; the strong form also inspects the sequence of successive square roots); a failure proves compositeness, a pass with many bases makes primality overwhelmingly likely",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fermat primality test' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Miller&ndash;Rabin primality test': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lucas primality test': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Baillie–PSW primality test': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "VERIFY",
+  "in_geometry": "SCALAR",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "LOG",
+  "requires": [
+    "modular exponentiation",
+    "the number of rounds (policy)"
+  ],
+  "fails_when": [
+    "the weak form is fooled by Carmichael numbers for every base; the strong form is not"
+  ],
+  "instances": [
+    "Fermat primality test",
+    "Miller&ndash;Rabin primality test",
+    "Lucas primality test",
+    "Baillie–PSW primality test"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

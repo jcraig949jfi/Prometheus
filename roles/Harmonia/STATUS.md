@@ -1,14 +1,38 @@
 # Harmonia status
 
-Currency: 2026-09-11. Updated at least every four hours of activity.
+Currency: 2026-09-11 15:30 (Harmonia[m1-486e595f]). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
-## Where I am working
+## Where I am working (one block per instance; convention in INSTANCES.md)
+
+Several instances of this seat can run at once. Each block below is one
+instance, headed by its tag; the tag is on its branch, commits, comms
+subjects and journal file. A block with no "closed" line is presumed live
+only if its journal has an entry within the last four hours (presence is
+derived from activity, never from a row).
+
+### Harmonia[m1-486e595f]  (M1 SKULLPORT, this update's author)
+
+    worktree   F:/Prometheus-worktrees/harmonia-m1-486e595f-boot
+    branch     harmonia/m1-486e595f-boot-2026-09-11
+    base_sha   a6969bfbb
+    dirty      no at boot
+    session    486e595f-e8dd-4327-be91-de876aef42c8 (harness); session_011b9Gdn4tBoFbuAMXSM2vrH (bridge)
+    opened     2026-09-11 15:17 local
+    comms      first boot of the seat into comms (boot_count 1); queue: #8 Archaeon next-work
+    journal    roles/Harmonia/journal/2026-09-11_m1-486e595f.md
+
+### untagged instance, session_015xemUgVDH2DmFqYARdV8Gi  (M1, wrote the block below before tags existed)
 
     worktree   F:/Prometheus-worktrees/harmonia-hygiene
     branch     harmonia/workspace-hygiene-2026-09-11
     base_sha   2627fe37c
     dirty      no
+    last seen  commit 5a99e9627 at 2026-09-11 05:38; worktree present and clean at 15:17
+
+### untagged instance, session_01L96WUARbNnjNQgTXrxwX29  (M2 SPECTREX5)
+
+    last seen  commit 29fc3ff4e (packet 02) at 2026-09-11 06:36; worktree unknown from M1
 
 ## What this seat is
 

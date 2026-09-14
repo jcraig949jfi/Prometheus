@@ -1,0 +1,1262 @@
+{
+ "schema": "techne.fossil.preservation_census/1",
+ "written_utc": "2026-09-14T00:06:24Z",
+ "n": 121,
+ "by_status": {
+  "SELF_CONTAINED": 101,
+  "FULLY_PINNED_EXTERNALS": 2,
+  "UNPINNED_EXTERNAL_DEPENDENCY": 18
+ },
+ "network_dependent": 18,
+ "rule": "body_status from submodules/lfs/artifact pinning; recipe_status from network fetches in recipe.json; status = worse of the two. Mechanical, no judgement.",
+ "rows": [
+  {
+   "specimen_id": "arduino-pid",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "avida",
+   "status": "FULLY_PINNED_EXTERNALS",
+   "body_status": "FULLY_PINNED_EXTERNALS",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 3,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "backoff-2.2.1",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "basic-computer-games-1978",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "bdwgc-8.2.6",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "biriscv-branch-predictor",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "bsd-4.2-distribution-tape-1983",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "bsd-4.3-distribution-tape-1986",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "bsd-4.3-reno-distribution-tape-1990",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "bsd-tcp-4.2-1983",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "bsd-tcp-4.3-reno-1990",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "bsd-tcp-4.3-tahoe-1988",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "buddy-alloc-spaskalev",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "buddy-bdd",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "bzip2-1.0.8",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "c-cmaes-hansen",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "cjson-1.7.18",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "clips-6.4.2-nasa",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "cobol-programming-course-omp",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "cocagne-plain-paxos",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "compact-4.2bsd-1983",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "apt-get -qq install"
+   ]
+  },
+  {
+   "specimen_id": "compress-4.2.4-lzw",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "concurrencykit-0.7.2",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "corewar-redcode",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "cosell-eliza-bbn-lisp-1969",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "des-reference",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "dlmalloc",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "dmtcp-3.1.2",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "do-mpc",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "eispack-netlib",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "eispack-netlib-1976",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "eliza-anthay-1966",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "eliza-weizenbaum-mad-slip-1965",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "emcee-3.1.6",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "eprover-2.6",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "erfa-2.0.1",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "espresso-logic",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "femtolisp",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "ff-planner-2.3",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "fftpack-netlib",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "filterpy-labbe",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "genann",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "glibc-rwlock-writer-starvation-2.36",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "glpk-5.0",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "gnu-apl-2.0",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "gnu-prolog-1.5.0",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "go-explore-uber-2022",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "go-runtime-deadlock-fixtures-1.22",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "graphplan-blum-furst-1995",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "gzip-1.2.4-1993",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "hashicorp-memberlist-0.5.4",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "hopfield-takyamamoto",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "indirect-self-tuning-regulator-liaosteve",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "kissfft-131.1.0",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "l1-adaptive-control-basics-xkhainguyen",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "lapack-reference",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "ldpc-codes-neal-2001",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "leveldb-1.23",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "libcorrect-quiet",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "libdai-mooij",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "apt-get -qq install"
+   ]
+  },
+  {
+   "specimen_id": "libfec-karn",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "linpack-netlib-1979",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "linpackd-netlib-1979",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "linux-tcp-congestion",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "lisp-1-5-ibm7090-1962",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "lmdb-0.9.31",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "lru-cache-goldsborough",
+   "status": "FULLY_PINNED_EXTERNALS",
+   "body_status": "FULLY_PINNED_EXTERNALS",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 1,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "md5-rfc1321",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "microkanren-scheme",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "minisat-1.14-2006",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "minisat-2.2.0",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "minisom",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "minpack-netlib-1980",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "ncompress-5.0-lzw-1985",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "odepack-netlib",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "openssl-1.0.1f-heartbleed",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "padasip-1.2.2",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "paip-lisp-norvig-1991",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "pari-gp-2.17",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "particles-chopin-0.4",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "pforth",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "picorv32",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "picosat-965",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "pid-autotune-hirschmann",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "py-vollib-lets-be-rational",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "pybreaker-1.2.0",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "pyportfolioopt-1.5.5",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "python-control",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "python-sgp4-2.23",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "apt-get -qq install",
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "quadpack-netlib",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "radamsa-0.6",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "redlock-py-redis-2014",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "apt-get -qq install",
+    "pip install"
+   ]
+  },
+  {
+   "specimen_id": "reed-solomon-rockliff-1991",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "simple-kalman-denyssene",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "souffle-2.4.1",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "spacewar-pdp1-1962",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "spdylay",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "spin-6.5.2-holzmann",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "spin-pathfinder-priority-inversion-1997",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "sqlite-3.49.1-amalgamation",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "ssw-smith-waterman",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "swipl-9.2.9",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "tiny-aes-c",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "tinycc",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "tinyekf-levy",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "tinyscheme-1.42",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "tinystm-marlier",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "tscp-1.81-kerrigan-1997",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "umdhmm-kanungo-1.02",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "valgrind-helgrind-fixtures-3.19",
+   "status": "UNPINNED_EXTERNAL_DEPENDENCY",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NETWORK_DEPENDENT",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": [
+    "apt-get -qq install"
+   ]
+  },
+  {
+   "specimen_id": "verilog-arbiter-forencich",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "verilog-generic-fifo",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "verilog-rr-arbiter",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "verilog-uart2bus",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "viterbi-hmm-xukmin",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "walksat-v56",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "whitakers-words-ada",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "willemt-raft",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "xv6-riscv",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "zchaff-2007",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  },
+  {
+   "specimen_id": "zlib-1.3.1",
+   "status": "SELF_CONTAINED",
+   "body_status": "SELF_CONTAINED",
+   "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+   "submodules": 0,
+   "submodules_missing": [],
+   "unpinned_artifacts": [],
+   "network_fetch_in_recipe": []
+  }
+ ]
+}

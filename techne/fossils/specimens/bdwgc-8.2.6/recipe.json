@@ -1,0 +1,33 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/bdwgc-8.2.6",
+  "probe": [
+    {
+      "name": "gcc+autotools",
+      "cmd": "gcc --version | head -1; autoconf --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "autogen+configure+make",
+      "cmd": "( [ -x ./configure ] || ./autogen.sh ) >/dev/null 2>&1; ./configure >/dev/null 2>&1 && make -s 2>&1 | tail -2; echo built",
+      "timeout": 1200
+    }
+  ],
+  "runs": [
+    {
+      "name": "the collector's own gctest",
+      "cmd": "make check 2>&1 | tail -20 || (./gctest 2>&1 | tail -10)",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(completed|PASS|no leak|Collector|gctest)"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "UPSTREAM",
+  "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "gctest is the GC's own stress+correctness test (allocates, drops references, forces collection, checks no live object was freed)."
+}

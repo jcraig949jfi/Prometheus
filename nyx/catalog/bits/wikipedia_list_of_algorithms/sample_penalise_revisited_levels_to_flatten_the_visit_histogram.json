@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.sample.penalise_revisited_levels_to_flatten_the_visit_histogram",
+  "name": "penalise revisited levels to flatten the visit histogram",
+  "lineage": [
+    "numerical methods",
+    "biological and artificial dynamical systems"
+  ],
+  "mechanism": "keep a running estimate of how many states share each energy level; accept moves by the ratio of those estimates so frequently visited levels become less attractive, multiply the estimate of every visited level by a factor, and shrink the factor each time the visit histogram is flat; the estimate converges to the true density of states",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Wang and Landau algorithm' in section Computational mathematics / Numerical algorithms / Monte Carlo: an extension of Metropolis–Hastings algorithm sampling",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SAMPLE",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "DISTRIBUTION",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "ADAPTIVE_SWITCH",
+  "iteration": "RANDOM",
+  "cost": "UNKNOWN",
+  "requires": [
+    "a discretised energy axis",
+    "a flatness criterion (policy)"
+  ],
+  "fails_when": [
+    "the modification factor saturates the error; flatness tests are heuristic"
+  ],
+  "instances": [
+    "Wang and Landau algorithm"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.sample.propose_a_move_and_accept_by_the_density_ratio"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

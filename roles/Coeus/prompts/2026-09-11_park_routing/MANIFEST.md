@@ -1,0 +1,10 @@
+# Manifest for 2026-09-11_park_routing
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- 00_COMMON.md  sha256:43b7942ebdf4c9537c51c7b5209297e0ad4705f57eab8f3e8dcf71c60f54107f
+- 01_TO_Kairos_law_n13_packet.md  sha256:ae89bf7e448f6554845d299f1032f4fdb9cc203975714a66fcd6f2351ab321e9
+- 02_TO_Mnemosyne_keeper_residue_and_config.md  sha256:4b2d9e432e8b5b33da81ff49564d5f7dd71d33926028affafa286db8b0b40023
+- 03_TO_Hephaestus_rlvf_and_ledger_fields.md  sha256:17538754da57f6435c8cb580066f27498cd1b2e83286962f6d959af2c417c1ce
+- 04_TO_Archaeon_ownership_and_two_registry_items.md  sha256:faf63ee0b2d525934c1a1f0bf4f4c896e978f13f7ee05f2635a1d53f7a9c4d1e
+- 05_TO_PipelineOrchestrator_nous_sampling_defect.md  sha256:3d2ab6bd44a03e38e805d3dc184b5e9f963e45cd76cfe56dcbd507275be3388d

@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.sample.propose_a_move_and_accept_by_the_density_ratio",
+  "name": "propose a move and accept it with probability given by the density ratio",
+  "lineage": [
+    "numerical methods",
+    "biological and artificial dynamical systems"
+  ],
+  "mechanism": "from the current point draw a proposal; accept it with probability equal to the ratio of the target density at the proposal to that at the current point (corrected for an asymmetric proposal), capped at one, otherwise stay; the sequence of points has the target as its long-run distribution",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Metropolis–Hastings algorithm' in section Computational mathematics / Numerical algorithms / Monte Carlo: used to generate a sequence of samples from the probability distribution of one or more variables",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SAMPLE",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "LINEAR",
+  "requires": [
+    "the target density up to a constant",
+    "a proposal distribution (policy)"
+  ],
+  "fails_when": [
+    "slow mixing between separated modes; correlated samples"
+  ],
+  "instances": [
+    "Metropolis–Hastings algorithm"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.search.accept_worse_moves_with_cooling_probability"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

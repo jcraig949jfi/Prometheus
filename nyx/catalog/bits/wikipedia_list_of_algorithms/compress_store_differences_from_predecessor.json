@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.store_differences_from_predecessor",
+  "name": "store differences from the predecessor",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "replace each value by its difference from the previous value (or from a prediction), so slowly varying data becomes small numbers that a later stage codes cheaply",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Delta encoding' in section Information theory and signal processing / Coding theory / Lossless compression algorithms: aid to compression of data in which sequential data occurs frequently",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Incremental encoding': delta encoding applied to sequences of strings",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPRESS",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "subtractable values"
+  ],
+  "fails_when": [
+    "one corrupted value corrupts everything after it"
+  ],
+  "instances": [
+    "Delta encoding",
+    "Incremental encoding"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

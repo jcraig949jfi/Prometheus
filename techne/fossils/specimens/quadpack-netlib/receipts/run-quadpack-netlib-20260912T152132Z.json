@@ -1,0 +1,61 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "quadpack-netlib",
+  "receipt_id": "run-quadpack-netlib-20260912T152132Z",
+  "written_utc": "20260912T152132Z",
+  "runner": "native",
+  "image": null,
+  "workdir": "build",
+  "harness_sha256": {
+    "drv.f": "0a2acab3edeb45fe8b6ecc85b119a846869c0de3a4238f7778dcccdb2d9264b6"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "ce19f0ece2a4357010b4d0aad5f306f592e664e0b83794ec2ed18dd2bb4c9690",
+  "recipe_sha256": "bb095b639b0f32ed56986b2f3a8f6d86aefdc2510f3601e33fec5598ed7a3e66",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 1,
+      "seconds": 0.21,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: cd: F:/Prometheus/vault/fossils/quadpack-netlib/build: No such file or directory\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile QUADPACK + a Techne driver on dqags (adaptive integration)",
+      "cmd": "gfortran -std=legacy -w -O1 -o quadpack_test.exe $HARNESS/drv.f $BODY/upstream/*.f 2>&1 | grep -i 'error:'; test -x quadpack_test.exe",
+      "exit": 1,
+      "seconds": 0.19,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: cd: F:/Prometheus/vault/fossils/quadpack-netlib/build: No such file or directory\n"
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

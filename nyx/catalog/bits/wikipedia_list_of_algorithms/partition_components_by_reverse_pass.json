@@ -1,0 +1,48 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.partition.components_by_reverse_pass",
+  "name": "strong components by a second pass on the reversed graph",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "run a depth-first traversal to order vertices by finishing time, then traverse the reversed graph in decreasing finishing order; each traversal from an unvisited vertex collects exactly one strongly connected component",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Kosaraju's algorithm' in section Combinatorial algorithms / Graph algorithms / Subgraphs: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PARTITION",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "cost": "LINEAR",
+  "requires": [
+    "the reversed graph"
+  ],
+  "fails_when": [
+    "two passes and a reversal"
+  ],
+  "instances": [
+    "Kosaraju's algorithm"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.expand_deepest_first"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "LIFO",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

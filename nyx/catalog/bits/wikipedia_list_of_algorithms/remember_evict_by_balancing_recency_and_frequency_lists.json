@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.remember.evict_by_balancing_recency_and_frequency_lists",
+  "name": "evict by balancing a recency list against a frequency list",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "keep two lists, one of items seen once recently and one of items seen more than once, plus ghost lists of what was recently evicted from each; a hit in a ghost list grows the corresponding list's target size, so the split between recency and frequency adapts to the workload",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Adaptive replacement cache' in section Operating systems algorithms: better performance than LRU",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Clock with Adaptive Replacement (CAR)': a page replacement algorithm with performance comparable to adaptive replacement cache",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REMEMBER",
+  "in_geometry": "STREAM",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "REACTIVE",
+  "guarantee": "NONE",
+  "strategy": "ADAPTIVE_SWITCH",
+  "iteration": "PRIORITY",
+  "cost": "CONSTANT",
+  "requires": [
+    "ghost metadata for evicted keys"
+  ],
+  "fails_when": [
+    "metadata overhead; patented history"
+  ],
+  "instances": [
+    "Adaptive replacement cache",
+    "Clock with Adaptive Replacement (CAR)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

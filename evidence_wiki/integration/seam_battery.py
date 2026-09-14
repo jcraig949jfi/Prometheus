@@ -25,8 +25,13 @@ from ew import workspace  # noqa: E402
 workspace.assert_not_canonical("run a PEW battery")
 FIX = json.loads((HERE / "integration" / "fixture_harmonia_v1.json")
                  .read_text(encoding="utf-8"))
-SFE_DB = (HERE.parent / "SerendipityFoundry" / "SerendipityFoundryEngine" /
-          "var" / "engine.db")
+# Same resolution as pew_battery._sfe_db(): PEW_SFE_DB, then config
+# sfe_db_path (untracked config.local.json; the engine left the tree on
+# 2026-09-11), then the tree-local path. The tree-local file in a worktree
+# does not exist, and the canonical checkout's copy is stale.
+sys.path.insert(0, str(HERE / "integration"))
+from pew_battery import _sfe_db  # noqa: E402
+SFE_DB = _sfe_db()
 R = []
 
 

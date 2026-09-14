@@ -1,0 +1,38 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [
+    {
+      "name": "apt redis-server + pip install . (same container as the run; recorded)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y redis-server >/dev/null 2>&1; redis-server --version | head -1; pip install -q . 2>&1 | tail -1; echo built",
+      "timeout": 900
+    }
+  ],
+  "runs": [
+    {
+      "name": "three redis instances; two clients contend; TTL shorter than the holder's work -> the lease expires under the first holder (Kleppmann's scenario, observed)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y redis-server >/dev/null 2>&1; pip install -q . >/dev/null 2>&1; python $HARNESS/lease.py 2>&1 | tail -20",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "mutual exclusion while valid: OK",
+          "lease expired under a live holder"
+        ],
+        "stdout_regex": "validity_ms=\\d+"
+      },
+      "timeout": 600
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle A (the mechanism): with TTL 2000 ms, client B cannot acquire while A holds a valid lease, and acquires after A releases. Oracle B (the documented weakness): with TTL 300 ms and A 'working' for 1000 ms, B acquires while A still believes it holds the lock -- two holders. Both recorded as behaviour; the 2014/2016 debate is cited in the record, not adjudicated."
+}

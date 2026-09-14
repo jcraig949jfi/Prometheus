@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.detect.check_digit_by_nonabelian_group_operation",
+  "name": "check digit by a non-commutative group operation",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "fold the digits through a fixed non-commutative operation table with a position-dependent permutation, so that the check digit changes under every single-digit error and every adjacent transposition",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Verhoeff algorithm' in section Information theory and signal processing / Coding theory / Error detection and correction: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Damm algorithm': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "DETECT",
+  "in_geometry": "STRING",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "PRECOMPUTED_TABLE",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "the operation and permutation tables"
+  ],
+  "fails_when": [
+    "catches only the error classes it was designed for"
+  ],
+  "instances": [
+    "Verhoeff algorithm",
+    "Damm algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

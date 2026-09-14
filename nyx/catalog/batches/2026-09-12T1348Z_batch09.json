@@ -1,0 +1,1713 @@
+[
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Multivariate interpolation",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Eigenvalue algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Matrix multiplication algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Solving systems of linear equations",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Sparse matrix algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Pareto interpolation",
+  "decision": "DEFER",
+  "reason": "a parametric estimator (fit a two-parameter law to two bracketing points and read off the median); the list line does not fix the mechanism; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Linear interpolation",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.weight_the_two_neighbours_by_position_along_the_segment",
+   "name": "weight the two neighbouring samples by position along the segment",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "find the two samples that bracket the query, and return the value that lies the same fraction of the way between them as the query lies between their positions",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "FUNCTION",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "ordered sample positions"
+   ],
+   "fails_when": [
+    "kinks at every sample; error grows with curvature"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bilinear interpolation",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.weight_the_two_neighbours_by_position_along_the_segment"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Nearest-neighbor interpolation",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.copy_the_value_of_the_nearest_sample",
+   "name": "copy the value of the nearest sample",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "return the value of whichever sample lies closest to the query; the result is piecewise constant with jumps midway between samples",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "FUNCTION",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "a distance to each sample"
+   ],
+   "fails_when": [
+    "discontinuous; blocky under magnification"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Polynomial interpolation",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.fit_the_unique_polynomial_through_all_the_points",
+   "name": "fit the unique polynomial through all the points",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "through n+1 points there is exactly one polynomial of degree at most n; construct it (by a basis of products that vanish at all other points, or by solving for coefficients) and evaluate it at the query",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "FUNCTION",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "distinct sample positions"
+   ],
+   "fails_when": [
+    "wild oscillation between equally spaced points as the degree grows"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lagrange interpolation",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.fit_the_unique_polynomial_through_all_the_points"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Neville's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.build_higher_degree_interpolants_from_pairs_of_lower_ones",
+   "name": "build each higher-degree interpolant from a pair of lower-degree ones",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "start with the sample values as degree-zero interpolants; combine each adjacent pair into the degree-one interpolant at the query point by a position-weighted blend, then pairs of those into degree two, and so on up a triangular tableau to a single value",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DYNAMIC_PROGRAMMING",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a single query point"
+   ],
+   "fails_when": [
+    "one query per tableau; quadratic work"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.predict.fit_the_unique_polynomial_through_all_the_points"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hermite interpolation",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.fit_a_polynomial_matching_values_and_derivatives_at_the_points",
+   "name": "fit a polynomial matching both values and derivatives at the points",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "raise the degree so that at each sample the polynomial matches not only the value but also the first few derivatives; each matched derivative is one more linear condition on the coefficients",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "FUNCTION",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "derivative values at the samples"
+   ],
+   "fails_when": [
+    "needs derivatives that measured data rarely provides"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "GENERALIZES",
+     "id": "bit.predict.fit_the_unique_polynomial_through_all_the_points"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Birkhoff interpolation",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.fit_a_polynomial_matching_values_and_derivatives_at_the_points"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Spline interpolation",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots",
+   "name": "join low-degree pieces with matching derivatives at the knots",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "use a separate low-degree polynomial on each interval between samples, and choose their coefficients so that values and the first few derivatives agree where pieces meet; smoothness comes from the joins, not from a high degree",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "FUNCTION",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "ordered knots",
+    "end conditions (policy)"
+   ],
+   "fails_when": [
+    "overshoot near steep data; a change in one sample moves the whole curve (for natural splines)"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.predict.fit_the_unique_polynomial_through_all_the_points"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cubic interpolation",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bicubic interpolation",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Tricubic interpolation",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Monotone cubic interpolation",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.clamp_the_knot_slopes_so_every_piece_stays_monotone",
+   "name": "clamp the slopes at the knots so every piece stays monotone",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "estimate a slope at each knot from its neighbours, then limit each slope (to zero at local extremes, and to a bound from the adjacent secants elsewhere) so that no cubic piece can overshoot between two increasing or two decreasing samples",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "FUNCTION",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "MONOTONE",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "ordered knots"
+   ],
+   "fails_when": [
+    "loses one order of accuracy where slopes are clamped"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "De Boor algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.repeatedly_blend_adjacent_control_points_at_the_parameter",
+   "name": "repeatedly blend adjacent control points at the parameter until one remains",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "games"
+   ],
+   "mechanism": "replace each adjacent pair of control points by their weighted average at the parameter value (weights from the knot positions), then repeat on the shorter list until a single point remains; that point is the curve value, and only convex combinations are ever formed",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DYNAMIC_PROGRAMMING",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "control points and (for the general form) a knot vector"
+   ],
+   "fails_when": [
+    "quadratic in the degree per evaluation"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.predict.build_higher_degree_interpolants_from_pairs_of_lower_ones"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "De Casteljau's algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.repeatedly_blend_adjacent_control_points_at_the_parameter"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lanczos resampling (\"Lanzosh\")",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.convolve_the_samples_with_a_windowed_sinc_kernel",
+   "name": "convolve the samples with a windowed sinc kernel",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "compressors"
+   ],
+   "mechanism": "each output value is a weighted sum of the nearby input samples, the weights being an ideal reconstruction kernel (sinc) multiplied by a window that cuts it off after a few lobes; the window trades ringing against blur",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "FUNCTION",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "PRECOMPUTED_TABLE",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "uniformly spaced samples",
+    "a window width (policy)"
+   ],
+   "fails_when": [
+    "ringing near edges; not monotone"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Trigonometric interpolation",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.decompose_signal_into_basis_coefficients"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Power iteration",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.multiply_by_the_matrix_repeatedly_and_renormalise",
+   "name": "multiply by the matrix repeatedly and renormalise",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "apply the matrix to a vector, rescale to unit length, and repeat; the component along the dominant eigenvector grows fastest, so the vector converges to it and the growth factor to its eigenvalue",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "TENSOR",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a matrix-vector product"
+   ],
+   "fails_when": [
+    "slow when the two largest eigenvalues are close; finds only the dominant one"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.accumulate.stationary_scores_by_propagation"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Inverse iteration",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.repeatedly_solve_with_a_shifted_matrix_to_amplify_the_nearest_eigenvector",
+   "name": "repeatedly solve with a shifted matrix to amplify the eigenvector nearest the shift",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "instead of multiplying by the matrix, solve a linear system with the matrix minus a chosen shift each round; the eigenvalue closest to the shift becomes the dominant one of the inverse, so the vector converges to its eigenvector",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "TENSOR",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a linear solve per round",
+    "a shift near the wanted eigenvalue (policy)"
+   ],
+   "fails_when": [
+    "each round costs a solve; a shift exactly on an eigenvalue is singular"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.search.multiply_by_the_matrix_repeatedly_and_renormalise"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Rayleigh quotient iteration",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.move_the_shift_to_the_current_quotient_each_round",
+   "name": "move the shift to the current quotient each round",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "run the shifted-solve iteration but, after each round, replace the shift by the current vector's own estimate of its eigenvalue (the quotient of the two inner products); convergence becomes cubic near a solution",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "TENSOR",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "ADAPTIVE_SWITCH",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a fresh factorisation every round"
+   ],
+   "fails_when": [
+    "which eigenvalue it finds depends on the start"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.search.repeatedly_solve_with_a_shifted_matrix_to_amplify_the_nearest_eigenvector"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "QR algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.factor_into_orthogonal_times_triangular_and_remultiply_in_reverse",
+   "name": "factor into orthogonal times triangular, remultiply in reverse order, repeat",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "factor the matrix as an orthogonal factor times an upper-triangular factor, multiply them back in the opposite order to get a similar matrix, and repeat; the sub-diagonal decays and the eigenvalues appear on the diagonal (shifts and deflation accelerate it)",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "MATRIX",
+   "out_geometry": "MATRIX",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "an orthogonal-triangular factorisation"
+   ],
+   "fails_when": [
+    "cubic per iteration without a preliminary reduction to compact form"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Jacobi method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.rotate_in_a_plane_to_zero_the_largest_off_diagonal_entry_repeatedly",
+   "name": "rotate in a plane to zero the largest off-diagonal entry, repeatedly",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "pick the largest off-diagonal element of a symmetric matrix, apply the plane rotation that makes it zero (touching only its two rows and columns), and repeat; the sum of squared off-diagonals falls every step and the diagonal converges to the eigenvalues",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "MATRIX",
+   "out_geometry": "MATRIX",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "MONOTONE",
+   "strategy": "GREEDY",
+   "iteration": "PRIORITY",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a symmetric matrix"
+   ],
+   "fails_when": [
+    "zeroed entries refill; many sweeps"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Krylov methods (for large sparse matrix problems; third most-important numerical method class of the 20th century as ran",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.solve_within_the_span_of_successive_matrix_powers_of_a_vector",
+   "name": "solve within the span of successive matrix powers of a vector",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "build the subspace spanned by a vector, the matrix times it, the matrix squared times it, and so on, using only matrix-vector products; project the problem onto that growing subspace and solve the small projected problem, whose solution converges to the true one long before the subspace fills the space",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "TENSOR",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a matrix-vector product only (matrix need not be stored)"
+   ],
+   "fails_when": [
+    "the raw powers become nearly parallel; an orthogonalisation step is needed in practice"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Arnoldi iteration",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.solve_within_the_span_of_successive_matrix_powers_of_a_vector"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lanczos iteration",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.solve_within_the_span_of_successive_matrix_powers_of_a_vector"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Conjugate gradient",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.step_along_conjugate_directions"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Biconjugate gradient method",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.step_along_conjugate_directions"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gram–Schmidt process",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.subtract_the_projections_onto_the_previous_vectors_then_normalise",
+   "name": "subtract the projections onto the previous vectors, then normalise",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "take the vectors in order; from each, subtract its projection onto every vector already processed so that what remains is perpendicular to all of them, then scale it to unit length; the spans are preserved at every prefix",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "an inner product"
+   ],
+   "fails_when": [
+    "orthogonality is lost in floating point unless the subtraction is done one vector at a time (the modified form)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cannon's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.shift_blocks_around_a_torus_so_each_node_multiplies_its_current_pair",
+   "name": "shift blocks around a torus so each node always multiplies a matching pair",
+   "lineage": [
+    "distributed systems",
+    "numerical methods"
+   ],
+   "mechanism": "lay both matrices out in blocks on a square grid of nodes, skew the rows of one and the columns of the other so that every node holds a pair whose product belongs to it, multiply and accumulate, then shift one matrix left and the other up by one node and repeat for as many rounds as the grid is wide",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "MATRIX",
+   "out_geometry": "MATRIX",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "EXTERNAL",
+   "control": "SCHEDULED",
+   "guarantee": "EXACT",
+   "strategy": "DATA_INDEPENDENT",
+   "iteration": "PARALLEL_ROUNDS",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a square node grid with wrap-around neighbours",
+    "memory for one block of each operand per node"
+   ],
+   "fails_when": [
+    "non-square grids or non-divisible sizes"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Strassen algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.multiply_by_splitting_into_fewer_subproducts"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Coppersmith–Winograd algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.multiply_by_splitting_into_fewer_subproducts"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Freivalds' algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.verify.compare_both_sides_applied_to_a_random_vector",
+   "name": "compare both sides applied to a random vector",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers",
+    "error-correcting systems"
+   ],
+   "mechanism": "to check a claimed product, draw a random vector, multiply the claimed result by it and multiply the two factors by it in sequence, and compare; a wrong claim survives with probability at most one half per trial, and the check costs only matrix-vector products",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "VERIFY",
+   "in_geometry": "MATRIX",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a source of random vectors"
+   ],
+   "fails_when": [
+    "one-sided: it never rejects a correct claim, but can accept a wrong one"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gaussian elimination",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.eliminate_each_variable_below_its_pivot_then_back_substitute",
+   "name": "eliminate each variable below its pivot, then back-substitute",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "for each column in turn, subtract multiples of the pivot row from the rows below so that column is zero beneath the pivot; the system becomes triangular and is solved from the last variable upward",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "MATRIX",
+   "out_geometry": "TENSOR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a nonzero pivot (row swaps supply one)"
+   ],
+   "fails_when": [
+    "small pivots amplify rounding; cubic cost; fill-in destroys sparsity"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gauss–Jordan elimination",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.eliminate_each_variable_below_its_pivot_then_back_substitute"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Tridiagonal matrix algorithm (Thomas algorithm)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.eliminate_each_variable_below_its_pivot_then_back_substitute"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gauss–Seidel method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.update_each_variable_in_turn_from_the_latest_values_of_the_others",
+   "name": "update each variable in turn from the latest values of the others",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "sweep through the equations; solve each for its own variable using the most recent values of all the others (including those updated earlier in the same sweep), and repeat sweeps until the changes are small",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "TENSOR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "diagonal dominance or a similar condition for convergence"
+   ],
+   "fails_when": [
+    "diverges on many matrices; inherently sequential within a sweep"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.repair.reassign_conflicting_variable_to_least_conflict_value"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Successive over-relaxation (SOR)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.overshoot_each_update_by_a_fixed_relaxation_factor",
+   "name": "overshoot each update by a fixed relaxation factor",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "wherever an iteration would move a variable to a new value, move it further along the same direction by a fixed factor greater than one (or less than one to damp); the right factor can cut the number of sweeps by an order of magnitude",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "TENSOR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a base fixed-point sweep",
+    "a relaxation factor (policy, between 0 and 2)"
+   ],
+   "fails_when": [
+    "a factor at or beyond 2 diverges; the best factor is problem-dependent"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "COMPOSES_WITH",
+     "id": "bit.search.update_each_variable_in_turn_from_the_latest_values_of_the_others"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Levinson recursion",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.extend_the_solution_one_order_at_a_time_using_the_shift_structure",
+   "name": "extend the solution one order at a time using the shift structure",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers",
+    "compressors"
+   ],
+   "mechanism": "for a matrix whose entries depend only on the difference of their indices, the solution of the order-n system is obtained from the order-(n-1) solution and its reversal by one inner product and one scaling, so the whole solve costs a square rather than a cube",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "MATRIX",
+   "out_geometry": "TENSOR",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "constant-along-diagonals structure"
+   ],
+   "fails_when": [
+    "numerically weaker than elimination on ill-conditioned inputs"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Stone's method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.iterate_corrections_through_an_incomplete_factorisation_that_keeps_the_sparsity",
+   "name": "iterate corrections through an incomplete factorisation that keeps the sparsity pattern",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "factor the sparse matrix approximately into lower and upper triangular factors that are forced to keep the original sparsity pattern (the mismatch is chosen to partly cancel), then repeatedly solve for a correction to the residual through these cheap factors",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "TENSOR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a grid-structured sparse matrix",
+    "a cancellation parameter (policy)"
+   ],
+   "fails_when": [
+    "convergence depends on the parameter; not general-purpose"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "SMAWK Algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.prune_dominated_columns_then_recurse_on_the_even_rows_for_row_maxima",
+   "name": "prune dominated columns, then recurse on the even rows to find all row maxima",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers",
+    "compressors"
+   ],
+   "mechanism": "in a matrix whose row-maximum positions never move left as you go down, first delete columns that can hold no row maximum (a stack pass comparing adjacent columns), then solve recursively on the even rows and fill the odd rows by scanning only between their neighbours' answers; total work linear in the dimensions",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "LIFO",
+   "cost": "LINEAR",
+   "requires": [
+    "total monotonicity of the matrix"
+   ],
+   "fails_when": [
+    "the monotonicity condition is the whole assumption; it is not checked"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cuthill–McKee algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.number_vertices_by_breadth_first_levels_from_a_peripheral_start",
+   "name": "number vertices by breadth-first levels from a peripheral start",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "start at a vertex of low degree far from the centre, visit the graph level by level breadth-first (neighbours in increasing degree), and number the vertices in visiting order (reversing the order at the end); connected vertices then have nearby numbers so the matrix nonzeros hug the diagonal",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "GREEDY",
+   "iteration": "FIFO",
+   "cost": "LINEAR",
+   "requires": [
+    "a symmetric sparsity pattern"
+   ],
+   "fails_when": [
+    "a bad starting vertex gives a wide band"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.search.expand_frontier_level_by_level"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Minimum degree algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.eliminate_the_vertex_of_smallest_degree_first",
+   "name": "eliminate the vertex of smallest degree first",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "repeatedly pick the vertex with the fewest current neighbours, eliminate it (its neighbours become mutually connected, which is exactly the fill that factorisation would create), and record the order; the ordering keeps the fill small",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "GRAPH",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "GREEDY",
+   "iteration": "PRIORITY",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a symmetric sparsity pattern",
+    "a degree-tracking structure"
+   ],
+   "fails_when": [
+    "greedy; no optimality guarantee (the exact problem is hard)"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.select.move_to_fewest_onward_options"
+    },
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.search.cover_by_choosing_column_with_fewest_options"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Symbolic Cholesky decomposition",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.compute_the_fill_pattern_before_the_numeric_factorisation",
+   "name": "compute the fill pattern before the numeric factorisation",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+   ],
+   "mechanism": "using only which entries are nonzero, simulate the factorisation on the graph to find every position that will become nonzero, allocate exactly that storage, and then run the numeric factorisation into the preallocated pattern with no dynamic growth",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "GRAPH",
+   "out_geometry": "GRAPH",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a fixed elimination order"
+   ],
+   "fails_when": [
+    "pivoting for stability changes the pattern and invalidates it"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Metropolis–Hastings algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.sample.propose_a_move_and_accept_by_the_density_ratio",
+   "name": "propose a move and accept it with probability given by the density ratio",
+   "lineage": [
+    "numerical methods",
+    "biological and artificial dynamical systems"
+   ],
+   "mechanism": "from the current point draw a proposal; accept it with probability equal to the ratio of the target density at the proposal to that at the current point (corrected for an asymmetric proposal), capped at one, otherwise stay; the sequence of points has the target as its long-run distribution",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SAMPLE",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "LINEAR",
+   "requires": [
+    "the target density up to a constant",
+    "a proposal distribution (policy)"
+   ],
+   "fails_when": [
+    "slow mixing between separated modes; correlated samples"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.search.accept_worse_moves_with_cooling_probability"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gibbs sampling",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.sample.redraw_one_variable_from_its_conditional_given_the_rest",
+   "name": "redraw one variable from its conditional given the rest",
+   "lineage": [
+    "numerical methods",
+    "biological and artificial dynamical systems"
+   ],
+   "mechanism": "cycle through the variables; replace each in turn by a fresh draw from its distribution conditioned on the current values of all the others; every such move is accepted, and the joint sequence converges to the target",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SAMPLE",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a samplable conditional for every variable"
+   ],
+   "fails_when": [
+    "strongly coupled variables move very slowly"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.search.update_each_variable_in_turn_from_the_latest_values_of_the_others"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hybrid Monte Carlo",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.sample.propose_by_simulating_momentum_dynamics_then_accept",
+   "name": "propose by simulating momentum dynamics, then accept or reject",
+   "lineage": [
+    "numerical methods",
+    "biological and artificial dynamical systems"
+   ],
+   "mechanism": "give the current point a random momentum, simulate frictionless motion under the potential given by the negative log density for a fixed time with a reversible integrator, and accept the endpoint by the usual ratio test on the total energy; long coherent moves replace random-walk steps",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SAMPLE",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "LINEAR",
+   "requires": [
+    "a gradient of the log density",
+    "a reversible integrator and a step length (policy)"
+   ],
+   "fails_when": [
+    "discrete variables; step-length tuning"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.sample.propose_a_move_and_accept_by_the_density_ratio"
+    },
+    {
+     "rel": "REQUIRES",
+     "id": "bit.predict.advance_position_from_two_previous_positions_and_acceleration"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Wang and Landau algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.sample.penalise_revisited_levels_to_flatten_the_visit_histogram",
+   "name": "penalise revisited levels to flatten the visit histogram",
+   "lineage": [
+    "numerical methods",
+    "biological and artificial dynamical systems"
+   ],
+   "mechanism": "keep a running estimate of how many states share each energy level; accept moves by the ratio of those estimates so frequently visited levels become less attractive, multiply the estimate of every visited level by a factor, and shrink the factor each time the visit histogram is flat; the estimate converges to the true density of states",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SAMPLE",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "DISTRIBUTION",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "ADAPTIVE_SWITCH",
+   "iteration": "RANDOM",
+   "cost": "UNKNOWN",
+   "requires": [
+    "a discretised energy axis",
+    "a flatness criterion (policy)"
+   ],
+   "fails_when": [
+    "the modification factor saturates the error; flatness tests are heuristic"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.sample.propose_a_move_and_accept_by_the_density_ratio"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "MISER algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.sample.split_the_region_where_the_variance_is_largest_and_allocate_samples_to_it",
+   "name": "split the region where the variance is largest and allocate samples in proportion",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "spend a few samples estimating the variance of the integrand in each half of the region along each axis, split along the axis that most reduces total variance, give each half a share of the remaining samples proportional to its estimated spread, and recurse until the budget is small",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SAMPLE",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "RANDOM",
+   "cost": "LINEAR",
+   "requires": [
+    "a bounded region",
+    "a minimum sample budget per leaf (policy)"
+   ],
+   "fails_when": [
+    "variance estimates from few samples misdirect the split"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bisection method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.halve_the_bracket_keeping_the_half_with_the_sign_change",
+   "name": "halve the bracket, keeping the half with the sign change",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "given two points where the function has opposite signs, evaluate at the midpoint and keep whichever half still changes sign; the bracket halves every step, so the error is known exactly in advance",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "a continuous function and an initial sign change"
+   ],
+   "fails_when": [
+    "one bit per evaluation; cannot find roots without a sign change (even multiplicity)"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.search.halve_sorted_range"
+    },
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.search.unimodal_bracket"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "False position method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.step_to_the_zero_of_the_chord_while_keeping_the_sign_change",
+   "name": "step to the zero of the chord across the bracket, keeping the sign change",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "draw the straight line between the two bracket endpoints and take its zero as the new point; replace whichever endpoint has the same sign, so the bracket is never lost; a stale endpoint is handled by halving its weight (the Illinois modification)",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "ADAPTIVE_SWITCH",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "an initial sign change"
+   ],
+   "fails_when": [
+    "one endpoint can stick for many steps without the weighting fix"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.search.halve_the_bracket_keeping_the_half_with_the_sign_change"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Secant method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.step_to_the_zero_of_a_model_fitted_through_the_last_few_points",
+   "name": "step to the zero of a model fitted through the last few points",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "fit a simple model (a line through the last two points, a parabola or an exponential through the last three) and take its zero as the next point; no derivative is needed and convergence is superlinear, but no bracket is kept",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "GREEDY",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "two or three starting points"
+   ],
+   "fails_when": [
+    "divergence when the model is poor; complex iterates for the parabola form"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.search.step_to_the_zero_of_the_local_linearisation"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Muller's method",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.step_to_the_zero_of_a_model_fitted_through_the_last_few_points"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Ridder's method",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.step_to_the_zero_of_a_model_fitted_through_the_last_few_points"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Newton's method",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.step_to_the_zero_of_the_local_linearisation"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Halley's method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.step_to_the_zero_of_the_local_second_order_rational_model",
+   "name": "step to the zero of the local second-order rational model",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "use the value, first and second derivative at the current point to fit a hyperbola (a rational function of degree one over one) tangent to the function, and jump to its zero; the error cubes each step near a simple root",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "GREEDY",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "first and second derivatives"
+   ],
+   "fails_when": [
+    "the second derivative is often unavailable or expensive"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "GENERALIZES",
+     "id": "bit.search.step_to_the_zero_of_the_local_linearisation"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "ITP method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.project_the_interpolated_step_into_a_shrinking_bisection_window",
+   "name": "project the interpolated step into a shrinking bisection window",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "compute the chord's zero, nudge it toward the midpoint by a controlled amount, then clip it into a window around the midpoint whose width shrinks so that the worst case still halves the bracket like bisection; on smooth functions the clipped step is the fast one",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "ADAPTIVE_SWITCH",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "an initial sign change",
+    "two tuning constants (policy)"
+   ],
+   "fails_when": [
+    "nothing in the worst case beyond bisection; constants matter for the average case"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "COMPOSES_WITH",
+     "id": "bit.search.halve_the_bracket_keeping_the_half_with_the_sign_change"
+    },
+    {
+     "rel": "COMPOSES_WITH",
+     "id": "bit.search.step_to_the_zero_of_the_chord_while_keeping_the_sign_change"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+  }
+ }
+]

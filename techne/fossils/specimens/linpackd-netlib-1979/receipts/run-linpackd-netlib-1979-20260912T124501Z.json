@@ -1,0 +1,91 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "linpackd-netlib-1979",
+  "receipt_id": "run-linpackd-netlib-1979-20260912T124501Z",
+  "written_utc": "20260912T124501Z",
+  "runner": "native",
+  "image": null,
+  "workdir": "build",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "568392d920a61e0ef0b715d670f9e78bfcaad1ed1228f71c1731454af25b27c7",
+  "recipe_sha256": "942327c1a43f18a3458b32ed2b514df5c08fbc9ecc241062a986d2e91188c473",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 0,
+      "seconds": 0.21,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Fortran (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r4) 15.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile",
+      "cmd": "gfortran -O2 -std=legacy -o linpackd.exe $BODY/upstream/linpackd.f",
+      "exit": 0,
+      "seconds": 0.5,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "linpackd 100x100",
+      "cmd": "./linpackd.exe < /dev/null",
+      "exit": 0,
+      "seconds": 0.23,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": " Please send the results of this run to:\n\n Jack J. Dongarra\n Computer Science Department\n University of Tennessee\n Knoxville, Tennessee 37996-1300\n\n Fax: 865-974-8296\n\n Internet: dongarra@cs.utk.edu\n\n This is version 29.5.04.\n\n     norm. resid      resid           machep         x(1)          x(n)\n  1.25501937E+00  1.39332990E-14  2.22044605E-16  1.00000000E+00  1.00000000E+00\n\n\n    times are reported for matrices of order   100\n      dgefa      dgesl      total     mflops       unit      ratio       b(1)\n times for array with leading dimension of 201\n  0.000E+00  0.000E+00  0.000E+00   Infinity  0.000E+00  0.000E+00 -9.159E-15\n  0.000E+00  0.000E+00  0.000E+00   Infinity  0.000E+00  0.000E+00  1.000E+00\n  0.000E+00  0.000E+00  0.000E+00   Infinity  0.000E+00  0.000E+00  1.000E+00\n  0.000E+00  0.000E+00  0.000E+00   Infinity  0.000E+00  0.000E+00  5.298E+02\n\n times for array with leading dimension of 200\n  0.000E+00  0.000E+00  0.000E+00   Infinity  0.000E+00  0.000E+00  1.000E+00\n  0.000E+00  0.000E+00  0.000E+00   Infinity  0.000E+00  0.000E+00  1.000E+00\n  0.000E+00  0.000E+00  0.000E+00   Infinity  0.000E+00  0.000E+00  1.000E+00\n  0.000E+00  0.000E+00  0.000E+00   Infinity  0.000E+00  0.000E+00  5.298E+02\n  end of tests -- this version dated 05/29/04\n"
+      },
+      "stderr": {
+        "text": "Note: The following floating-point exceptions are signalling: IEEE_DIVIDE_BY_ZERO\n"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "normalised residual below the classic threshold 30",
+      "cmd": "./linpackd.exe < /dev/null | awk '/norm. resid/{getline; print ($1+0 < 30) ? \"RESID_OK \" $1 : \"RESID_BAD \" $1}'",
+      "exit": 0,
+      "seconds": 0.19,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "RESID_OK 1.25501937E+00\n"
+      },
+      "stderr": {
+        "text": "Note: The following floating-point exceptions are signalling: IEEE_DIVIDE_BY_ZERO\n"
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "linpackd.exe",
+      "sha256": "eaba95e50159d5e1710a869b9be5d0132525395d54161cdcf5846275828f8869",
+      "bytes": 78685
+    }
+  ],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

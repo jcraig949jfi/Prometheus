@@ -1,0 +1,117 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "genann",
+  "canonical_name": "genann -- a minimal feedforward neural network in C (Lewis Van Winkle)",
+  "aliases": [
+    "genann"
+  ],
+  "lineage": "The perceptron/MLP lineage (Rosenblatt 1958 -> Rumelhart backprop 1986): genann is a tiny ANSI C multilayer perceptron trained by backpropagation -- the connectionist update rule and forward pass in a few hundred readable lines",
+  "domain": [
+    "connectionist",
+    "neural-network",
+    "perceptron",
+    "backpropagation",
+    "adaptation",
+    "learning"
+  ],
+  "era": "1958/1986 lineage; this impl 2015",
+  "version": "github.com/codeplea/genann master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/codeplea/genann",
+        "commit": "8dcd1db031c53176cffcbe4a7530ce040bb59b1d",
+        "commit_resolved": "8dcd1db031c53176cffcbe4a7530ce040bb59b1d",
+        "commit_date": "2026-08-08T05:34:34-05:00"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/codeplea/genann"
+  },
+  "hashes": {
+    "tree_sha256": "e35c6295244d4553a6043efd57f4ec261c9d86cb29398da01543d0730b25577f",
+    "n_files": 19,
+    "bytes": 77605,
+    "artifacts": [
+      {
+        "filename": "https://github.com/codeplea/genann",
+        "sha256": null,
+        "commit": "8dcd1db031c53176cffcbe4a7530ce040bb59b1d"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\genann",
+    "hash_list": "techne/fossils/specimens/genann/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Zlib",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make (its own examples + tests)",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "genann_init / genann_train (backprop) / genann_run (forward); the shipped XOR + IRIS examples"
+  ],
+  "example": {
+    "command": "make; run the XOR example -- train a 2-2-1 net by backprop until it learns exclusive-or",
+    "input": "the XOR truth table",
+    "output": "the trained net outputs ~0/1 correctly on all four inputs"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Rosenblatt, The Perceptron, 1958",
+    "Rumelhart, Hinton, Williams, Learning representations by back-propagating errors, 1986"
+  ],
+  "human_capability_summary": {
+    "built_to": "learn a nonlinear input-output mapping from examples by adjusting connection weights via gradient descent (backpropagation) through a layered network",
+    "pressure": "a mapping (like XOR) that no single linear unit can represent; the network must distribute the function across hidden units and learn the weights from data alone",
+    "success_means": "the trained network generalises the target function (e.g. learns XOR, classifies IRIS) from examples"
+  },
+  "known_human_problem_solved": "supervised learning of nonlinear functions by a connectionist network",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "a nonlinearly-separable task, learning from examples only (no programmed rule)",
+  "human_failure_condition": "failure to converge (bad learning rate / local minimum) or overfitting -- the net memorises noise and does not generalise",
+  "behavioral_entry_point": "change the learning rate or hidden-layer size, or corrupt the training labels, and watch convergence/generalisation change",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/genann/receipts/run-genann-20260912T162533Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\genann ; tracked techne/fossils/specimens/genann",
+    "where_it_came_from": "https://github.com/codeplea/genann ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ 8dcd1db031c53176cffcbe4a7530ce040bb59b1d",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run genann",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/genann/receipts/run-genann-20260912T162533Z.json",
+    "what_humans_used_it_for": "learn a nonlinear input-output mapping from examples by adjusting connection weights via gradient descent (backpropagation) through a layered network"
+  },
+  "seat": "Techne"
+}

@@ -1,0 +1,115 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "femtolisp",
+  "canonical_name": "femtolisp -- a small, fast Scheme-ish Lisp (Jeff Bezanson)",
+  "aliases": [
+    "femtolisp",
+    "flisp"
+  ],
+  "lineage": "femtolisp (2008-, Jeff Bezanson): a compact Lisp with a bytecode compiler, mark-and-sweep GC, tail calls and a numeric tower; the language that bootstraps parts of Julia's front end",
+  "domain": [
+    "languages",
+    "interpreters",
+    "lisp",
+    "bytecode",
+    "garbage-collection",
+    "virtual-machine"
+  ],
+  "era": "2008-",
+  "version": "github.com/JeffBezanson/femtolisp master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/JeffBezanson/femtolisp",
+        "commit": "ec7601076a976f845bc05ad6bd3ed5b8cde58a97",
+        "commit_resolved": "ec7601076a976f845bc05ad6bd3ed5b8cde58a97",
+        "commit_date": "2019-06-06T19:55:40-04:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/JeffBezanson/femtolisp"
+  },
+  "hashes": {
+    "tree_sha256": "2ce026b954ff3d073425706072e15e103038f30c475a57e15bd64a7009d6f788",
+    "n_files": 136,
+    "bytes": 3722804,
+    "artifacts": [
+      {
+        "filename": "https://github.com/JeffBezanson/femtolisp",
+        "sha256": null,
+        "commit": "ec7601076a976f845bc05ad6bd3ed5b8cde58a97"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\femtolisp",
+    "hash_list": "techne/fossils/specimens/femtolisp/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "LICENSE in repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "Lisp"
+  ],
+  "build_system": "make",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "./flisp (REPL); ./flisp file.lsp"
+  ],
+  "example": {
+    "command": "echo '(princ (+ 1 2))' | ./flisp",
+    "input": "Lisp forms",
+    "output": "3"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "github.com/JeffBezanson/femtolisp"
+  ],
+  "human_capability_summary": {
+    "built_to": "evaluate a Lisp by compiling s-expressions to a compact bytecode and running them on a stack VM with garbage collection -- small and fast enough to embed and to bootstrap a larger language",
+    "pressure": "the interpretation overhead of naive tree-walking; the memory pressure of a numeric tower; correctness of tail calls and GC",
+    "success_means": "Lisp programs compile and run correctly and quickly; its own test suite passes"
+  },
+  "known_human_problem_solved": "a small compiled-to-bytecode Lisp",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/femtolisp/receipts/run-femtolisp-20260912T152717Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\femtolisp ; tracked techne/fossils/specimens/femtolisp/",
+    "where_it_came_from": "{'repo': 'github.com/JeffBezanson/femtolisp'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; BSD-3-Clause",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run femtolisp",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/femtolisp/receipts/run-femtolisp-20260912T152717Z.json",
+    "what_humans_used_it_for": "evaluate a Lisp by compiling s-expressions to a compact bytecode and running them on a stack VM with garbage collection -- small and fast enough to embed and to bootstrap a larger language"
+  },
+  "seat": "Techne"
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.largest_intersection_of_intervals",
+  "name": "the interval where the most sources agree",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "given intervals from several sources, sort their endpoints, sweep counting how many intervals cover each point, and return the region covered by the most sources (tolerating a stated number of faulty ones)",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Marzullo's algorithm' in section Distributed systems algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "SET",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "intervals with error bounds"
+  ],
+  "fails_when": [
+    "a majority of liars wins"
+  ],
+  "instances": [
+    "Marzullo's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

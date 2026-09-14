@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.bound.choose_step_length_by_sufficient_decrease",
+  "name": "choose a step length by sufficient decrease",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "given a descent direction, try a step and shrink it until the objective decreases by at least a fraction of what the gradient predicts, so each step is neither too long to diverge nor accepted blindly",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Line search' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "BOUND",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "NONE",
+  "control": "CALLBACK",
+  "guarantee": "MONOTONE",
+  "strategy": "ADAPTIVE_SWITCH",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "a descent direction",
+    "a decrease fraction (policy)"
+  ],
+  "fails_when": [
+    "many objective evaluations per step on badly scaled problems"
+  ],
+  "instances": [
+    "Line search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

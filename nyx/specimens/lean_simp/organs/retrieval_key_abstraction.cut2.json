@@ -1,0 +1,56 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.lean_simp.retrieval_key_abstraction.cut2",
+  "specimen": "lean_simp",
+  "name": "key-path flattening with wildcard positions and root-reduction-until-bad-key (the relevance TABLE that decides which positions become wildcards is split out as POLICY c25)",
+  "scale": "PRIMITIVE",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "Lean 4 DiscrTree.pushArgs / ignoreArg / shouldAddAsStar / reduceDT, as configured by simp",
+    "sources": [
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/DiscrTree/Main.lean lines 69-115 (ignoreArg: instances -> wildcard; implicit args -> wildcard unless a type; proofs -> wildcard), 170-200 (isOffset/shouldAddAsStar: Nat.succ / +k terms -> star), 204-247 (reduce / reduceUntilBadKey / reduceDT: unfold until the head would become a bad key), 267-333 (pushArgs / mkPath)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 DiscrTree/Types.lean lines 15-24: Key = star | other | lit | fvar | const(name, arity) | arrow | proj",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/SimpTheorems.lean lines 365-371 mkSimpTheoremKeys: keys = DiscrTree.mkPath lhs noIndexAtArgs; Types.lean 70-71 indexConfig: the reduction settings used for indexing are DERIVED from Simp.Config (so zeta := false at the tactic turns off zeta in the index); Rewrite.lean 169-172: 'this is how we indexed the discrimination tree. See issue #1815'",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/lean_simp/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Lean 4 core, DiscrTree module (2019 header, de Moura). The trie itself (CUTS.md c03) is generic; this record is ONLY the abstraction function from Expr to key path and the rules of what it forgets. Nyx cut inside the module; the module does not cut here.",
+    "mechanism": "Given a term and a per-position predicate 'discriminating or not' (supplied by c25), reduce the head until unfolding would make it a non-constant; emit head constant + arity; for each argument emit a wildcard if the predicate says so, else recurse; metavariables are wildcards. Output: a flat key path comparable between ingestion and lookup. CUT-2 removed the table's contents from this record; they are c25.",
+    "input": "an Expr (a rule's lhs at ingestion, or a goal subterm at lookup), a Bool noIndexAtArgs, and the ambient MetaM reducibility/config (the simp indexConfig)",
+    "output": "Array Key (a path); at lookup the same function is run on the target so the two paths are comparable",
+    "state": "reads the environment (parameter infos, reducibility, unfold definitions) and the Meta config in force; the keys stored in the trie are computed ONCE at attribute time with simpGlobalConfig (SimpTheorems.lean 249) while the lookup keys are computed with the tactic's indexConfig -- two configs, one comparison (the state dependence this record extrudes)",
+    "assumptions": "proof irrelevance (so proof arguments never discriminate); that instance arguments are 'morally canonical' (comment 80-82); that a type-valued implicit argument discriminates usefully while a non-type one does not; that unfolding a definition at the root would usually destroy a useful key",
+    "interface": "mkPath(e: Expr, noIndexAtArgs: Bool) -> Array Key under a MetaM config; getMatchWithExtra(tree, e) -> candidates with the number of unmatched trailing args",
+    "fitness_value": "unknown -- claimed: sublinear candidate retrieval over a large store. Not measured; the source's own diagnostics (triedThmCounter) would measure it under a Lean run.",
+    "failure_landscape": "(a) 'bad keys': a rule whose lhs reduces to a wildcard or 'other' at the root matches everything or nothing -- the specimen instruments this itself (Types.lean 242 thmsWithBadKeys; Rewrite.lean 262-270 diagnoseWhenNoIndex); (b) config skew: rules indexed under one reduction setting and looked up under another silently never match (the source's own remark about zeta and issue 2669 at DiscrTree/Types.lean 45-56); (c) offset-as-star is a hard-coded special case for Nat only (TODO at 188-191); (d) instance-forgetting makes two rules that differ only by instance indistinguishable at retrieval, so priority and order decide; (e) eta: etaExpandedStrict? handling at 207-210 and 232-234 is a patch for a class of misses.",
+    "ablation": "unknown -- A1 (Simp.Config.index := false) is the source's own switch; predicted: same rewrites, more candidates tried; not run.",
+    "decomposability": "Done at CUT-2: table (c25, POLICY) vs flattening (this record) vs trie (c03, SCAFFOLDING). Independent variation is real: index := false bypasses the flattening but the table still governs the root; a different table with the same flattening is what any other substrate would write.",
+    "composability": "Any store of patterns over a term language with a notion of 'arguments that should not discriminate': Proteus expression trees, CA rule descriptions, Archaeon's H3 behavioural keys. The forgetting table is the part that needs re-deciding per substrate; the trie is off the shelf.",
+    "human_prior": "After the split, the prior left in THIS record is only 'unfold until the head would stop being a constant' (reduceUntilBadKey) and 'metavariables are wildcards'. Everything about instances, implicits, proofs and offsets moved to c25.",
+    "control": "Positive: two terms differing only in an instance argument must produce identical key paths; a term with a proof argument and one with a different proof must produce identical paths. Negative: two terms differing in an explicit argument constant must produce different paths. Cheat control: with index := false the SAME rewrites must occur (only candidate counts change); a difference in results is a bug in the abstraction, not a feature. None executed in CUT-1.",
+    "cheat": "An index that returns every rule (all-wildcard keys) passes every 'did the right rule get found' test while doing no retrieval work; the cheat control is the candidate count per lookup, which must be far below the store size on the positive fixtures, AND the bad-key diagnostic must be zero on a curated store."
+  },
+  "alternative_cuts": [
+    "CUTS.md c03: the abstraction and the trie are one organ (the DiscrTree module as shipped); Nyx separated them at CUT-1 because only the abstraction carries specimen-specific decisions; preserved as an alternative cut",
+    "CUT-2 split: the relevance table is c25 POLICY. Independence check: c02 (flattening) and c25 (table) can be varied independently -- the table is a predicate parameter; c02 and c03 (trie) can each be removed with the other meaningful (all-wildcard keys vs linear comparison of paths)."
+  ],
+  "pressure_refs": [
+    "pressure.lean_simp.retrieval_at_store_scale.cut1"
+  ],
+  "cut": "CUT-2",
+  "derived_from": "organs/retrieval_key_abstraction.cut1.json (preserved; CUT-2 narrows, never replaces)"
+}

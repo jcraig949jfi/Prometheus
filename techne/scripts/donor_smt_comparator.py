@@ -63,7 +63,10 @@ def _check_model(model, constraints) -> bool:
 
 def solve_cvc5(names, constraints) -> dict:
     from techne.lib.donors import get
-    art = get("cvc5").propose("check_int_constraints",
+    import techne.lib.donors.retired.cvc5_adapter  # noqa: F401  (adapter RETIRED 2026-09-12, TECHNE-51)
+    # This comparator is the 2026-08-31 redundancy evidence; re-running it is archaeology,
+    # so it reaches the retired adapter through the flag the gate requires.
+    art = get("cvc5", include_retired=True).propose("check_int_constraints",
                               {"vars": names, "constraints": constraints})
     return {"result": art.payload["result"], "model": art.payload["model"]}
 

@@ -1,0 +1,3668 @@
+{
+ "schema": "techne.fossil.world_preservation/1",
+ "written_utc": "2026-09-14T00:06:23Z",
+ "lattice": {
+  "-1": "N_A",
+  "0": "UNKNOWN",
+  "1": "FLOATING",
+  "2": "NAMED",
+  "3": "PINNED"
+ },
+ "n": 121,
+ "distribution": {
+  "BODY_PRESERVATION": {
+   "PINNED": 121
+  },
+  "EXTERNAL_SOURCE_PRESERVATION": {
+   "PINNED": 121
+  },
+  "BUILD_WORLD_PRESERVATION": {
+   "PINNED": 67,
+   "FLOATING": 15,
+   "N_A": 13,
+   "UNKNOWN": 24,
+   "NAMED": 2
+  },
+  "RUN_WORLD_PRESERVATION": {
+   "PINNED": 75,
+   "FLOATING": 17,
+   "UNKNOWN": 24,
+   "NAMED": 5
+  }
+ },
+ "world_reproducible_count": 74,
+ "world_reproducible_but_single_host": 68,
+ "note": "Backfilled mechanically from existing evidence. A mutable tag is NAMED, never PINNED. A network fetch in a phase makes that phase FLOATING whatever the image. The distribution is not beautified.",
+ "rows": [
+  {
+   "specimen_id": "arduino-pid",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "avida",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "backoff-2.2.1",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "build fetches from the network with no recorded closure"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "basic-computer-games-1978",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-legacy:bookworm pinned to sha256:d45f7ee4300d and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-legacy:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "bdwgc-8.2.6",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "biriscv-branch-predictor",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-hw:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "bsd-4.2-distribution-tape-1983",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "bsd-4.3-distribution-tape-1986",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-simh:bookworm pinned to sha256:fd57c207dbd2 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-simh:bookworm pinned to sha256:fd57c207dbd2 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-simh:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "bsd-4.3-reno-distribution-tape-1990",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "bsd-tcp-4.2-1983",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "bsd-tcp-4.3-reno-1990",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "bsd-tcp-4.3-tahoe-1988",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "buddy-alloc-spaskalev",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "buddy-bdd",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "bzip2-1.0.8",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "c-cmaes-hansen",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "cjson-1.7.18",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "clips-6.4.2-nasa",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "cobol-programming-course-omp",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-legacy:bookworm pinned to sha256:d45f7ee4300d and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-legacy:bookworm pinned to sha256:d45f7ee4300d and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-legacy:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "cocagne-plain-paxos",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image python:2.7-slim pinned to sha256:6c1ffdff499e and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "python:2.7-slim",
+   "world_is_single_host": false,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "compact-4.2bsd-1983",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "build fetches from the network with no recorded closure"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "compress-4.2.4-lzw",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "concurrencykit-0.7.2",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "corewar-redcode",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image python:2.7-slim pinned to sha256:6c1ffdff499e and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "python:2.7-slim",
+   "world_is_single_host": false,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "cosell-eliza-bbn-lisp-1969",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "des-reference",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "dlmalloc",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "dmtcp-3.1.2",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "do-mpc",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "build fetches from the network with no recorded closure"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "eispack-netlib",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "native runner: the host toolchain is the world and is not recorded"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "native runner: the host toolchain is the world and is not recorded"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "eispack-netlib-1976",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "eliza-anthay-1966",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "eliza-weizenbaum-mad-slip-1965",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "emcee-3.1.6",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 2,
+     "state": "NAMED",
+     "why": "build fetches under a recorded closure of 2 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 2,
+     "state": "NAMED",
+     "why": "runs fetches under a recorded closure of 2 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
+    }
+   },
+   "min_level": 2,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "NAMED"
+  },
+  {
+   "specimen_id": "eprover-2.6",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "erfa-2.0.1",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "espresso-logic",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "femtolisp",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "ff-planner-2.3",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "fftpack-netlib",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "native runner: the host toolchain is the world and is not recorded"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "native runner: the host toolchain is the world and is not recorded"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "filterpy-labbe",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 2,
+     "state": "NAMED",
+     "why": "runs fetches under a recorded closure of 3 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
+    }
+   },
+   "min_level": 2,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "NAMED"
+  },
+  {
+   "specimen_id": "genann",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "glibc-rwlock-writer-starvation-2.36",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "glpk-5.0",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "gnu-apl-2.0",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "gnu-prolog-1.5.0",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "go-explore-uber-2022",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-goexplore:min pinned to sha256:af4c01436230 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-goexplore:min",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "go-runtime-deadlock-fixtures-1.22",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image golang:1.22-bookworm pinned to sha256:3d699e4d15d0 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image golang:1.22-bookworm pinned to sha256:3d699e4d15d0 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "golang:1.22-bookworm",
+   "world_is_single_host": false,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "graphplan-blum-furst-1995",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "gzip-1.2.4-1993",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "hashicorp-memberlist-0.5.4",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image golang:1.24-bookworm pinned to sha256:1a6d4452c65d and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image golang:1.24-bookworm pinned to sha256:1a6d4452c65d and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "golang:1.24-bookworm",
+   "world_is_single_host": false,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "hopfield-takyamamoto",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "indirect-self-tuning-regulator-liaosteve",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-octave:bookworm pinned to sha256:e2bf54f3a40d and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-octave:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "kissfft-131.1.0",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "l1-adaptive-control-basics-xkhainguyen",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-octave:bookworm pinned to sha256:e2bf54f3a40d and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-octave:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "lapack-reference",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "ldpc-codes-neal-2001",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "leveldb-1.23",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "libcorrect-quiet",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "libdai-mooij",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "build fetches from the network with no recorded closure"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "libfec-karn",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-i386:bookworm pinned to sha256:807210be4521 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-i386:bookworm pinned to sha256:807210be4521 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-i386:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "linpack-netlib-1979",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "linpackd-netlib-1979",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "native runner: the host toolchain is the world and is not recorded"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "native runner: the host toolchain is the world and is not recorded"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "linux-tcp-congestion",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "lisp-1-5-ibm7090-1962",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "lmdb-0.9.31",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "lru-cache-goldsborough",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "md5-rfc1321",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-i386:bookworm pinned to sha256:807210be4521 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-i386:bookworm pinned to sha256:807210be4521 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-i386:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "microkanren-scheme",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "minisat-1.14-2006",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image gcc:4.9 pinned to sha256:6356ef8b29cc and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image gcc:4.9 pinned to sha256:6356ef8b29cc and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "gcc:4.9",
+   "world_is_single_host": false,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "minisat-2.2.0",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image gcc:4.9 pinned to sha256:6356ef8b29cc and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image gcc:4.9 pinned to sha256:6356ef8b29cc and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "gcc:4.9",
+   "world_is_single_host": false,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "minisom",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "minpack-netlib-1980",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "native runner: the host toolchain is the world and is not recorded"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "native runner: the host toolchain is the world and is not recorded"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "ncompress-5.0-lzw-1985",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "odepack-netlib",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "openssl-1.0.1f-heartbleed",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "padasip-1.2.2",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "build fetches from the network with no recorded closure"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "paip-lisp-norvig-1991",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "pari-gp-2.17",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "particles-chopin-0.4",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "build fetches from the network with no recorded closure"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "pforth",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "picorv32",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-hw:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "picosat-965",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "pid-autotune-hirschmann",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 2,
+     "state": "NAMED",
+     "why": "runs fetches under a recorded closure of 11 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
+    }
+   },
+   "min_level": 2,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "NAMED"
+  },
+  {
+   "specimen_id": "py-vollib-lets-be-rational",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "build fetches from the network with no recorded closure"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "pybreaker-1.2.0",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "build fetches from the network with no recorded closure"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "pyportfolioopt-1.5.5",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "build fetches from the network with no recorded closure"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "python-control",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": -1,
+     "state": "N_A",
+     "why": "this fossil has no build steps; there is no build world to pin"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 2,
+     "state": "NAMED",
+     "why": "runs fetches under a recorded closure of 12 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
+    }
+   },
+   "min_level": 2,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "NAMED"
+  },
+  {
+   "specimen_id": "python-sgp4-2.23",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 2,
+     "state": "NAMED",
+     "why": "build fetches under a recorded closure of 2 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 2,
+     "state": "NAMED",
+     "why": "runs fetches under a recorded closure of 2 pinned versions (harness/world_constraints.txt); composition is fixed, availability is not"
+    }
+   },
+   "min_level": 2,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "NAMED"
+  },
+  {
+   "specimen_id": "quadpack-netlib",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "native runner: the host toolchain is the world and is not recorded"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "native runner: the host toolchain is the world and is not recorded"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "radamsa-0.6",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "redlock-py-redis-2014",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "build fetches from the network with no recorded closure"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "python:3.11-slim",
+   "world_is_single_host": false,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "reed-solomon-rockliff-1991",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "simple-kalman-denyssene",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "souffle-2.4.1",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "spacewar-pdp1-1962",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "spdylay",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "spin-6.5.2-holzmann",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "spin-pathfinder-priority-inversion-1997",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "sqlite-3.49.1-amalgamation",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "ssw-smith-waterman",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "swipl-9.2.9",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "tiny-aes-c",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "tinycc",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "tinyekf-levy",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "tinyscheme-1.42",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "tinystm-marlier",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "tscp-1.81-kerrigan-1997",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no image recorded for a wsl runner"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "umdhmm-kanungo-1.02",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "valgrind-helgrind-fixtures-3.19",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 1,
+     "state": "FLOATING",
+     "why": "runs fetches from the network with no recorded closure"
+    }
+   },
+   "min_level": 1,
+   "world_reproducible": false,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "FLOATING"
+  },
+  {
+   "specimen_id": "verilog-arbiter-forencich",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-hw:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "verilog-generic-fifo",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-hw:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "verilog-rr-arbiter",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-hw:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "verilog-uart2bus",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-hw:bookworm pinned to sha256:6830f14d63d2 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-hw:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "viterbi-hmm-xukmin",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "walksat-v56",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-lang:bookworm pinned to sha256:fa93c8894c94 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-lang:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "whitakers-words-ada",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-legacy:bookworm pinned to sha256:d45f7ee4300d and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-legacy:bookworm pinned to sha256:d45f7ee4300d and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-legacy:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "willemt-raft",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "xv6-riscv",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "zchaff-2007",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  },
+  {
+   "specimen_id": "zlib-1.3.1",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in build"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "image prometheus-fossil-c:bookworm pinned to sha256:faeec8375055 and no network fetch in runs"
+    }
+   },
+   "min_level": 3,
+   "world_reproducible": true,
+   "world_image": "prometheus-fossil-c:bookworm",
+   "world_is_single_host": true,
+   "overall": "PINNED"
+  }
+ ]
+}

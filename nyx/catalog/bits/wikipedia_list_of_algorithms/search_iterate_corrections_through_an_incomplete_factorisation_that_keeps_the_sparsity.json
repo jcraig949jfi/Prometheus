@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.iterate_corrections_through_an_incomplete_factorisation_that_keeps_the_sparsity",
+  "name": "iterate corrections through an incomplete factorisation that keeps the sparsity pattern",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "factor the sparse matrix approximately into lower and upper triangular factors that are forced to keep the original sparsity pattern (the mismatch is chosen to partly cancel), then repeatedly solve for a correction to the residual through these cheap factors",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Stone's method' in section Computational mathematics / Numerical algorithms / Linear algebra: also known as the strongly implicit procedure or SIP, is an algorithm for solving a sparse linear system of equations",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "TENSOR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a grid-structured sparse matrix",
+    "a cancellation parameter (policy)"
+  ],
+  "fails_when": [
+    "convergence depends on the parameter; not general-purpose"
+  ],
+  "instances": [
+    "Stone's method"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

@@ -1,0 +1,53 @@
+{
+ "edges": [
+  {
+   "edge": "returned_fossil",
+   "encounter_id": "ENC-archaeon-d5249eb3a6eb5c14",
+   "obs_id": "obs_cb93f6686be2371ef197da02",
+   "queue_experiment_id": "73958790-bb79-463c-b55e-a5e8c7cf19a8",
+   "run_id": "exp_31f4f62bf74b2c778c56c1df:wrk_b506b988d95e621a3162fca8",
+   "sfe_entry_hash": "sha256:7959bd3e90769fc0eb360f8a101d98812f55e21fbb9ad02281c5e71a19b795f2",
+   "sfe_event_seq": 129335,
+   "sfe_world_id": "wld_9db43731c4e4aaac27ebe527"
+  },
+  {
+   "edge": "sfe",
+   "entry_hash_verified": true,
+   "evidence_class": "ENGINE_WORK_RESULT",
+   "exp_id": "exp_31f4f62bf74b2c778c56c1df",
+   "obs_id": "obs_cb93f6686be2371ef197da02",
+   "outcome": "SURVIVED",
+   "spec_hash": "sha256:85651a45b8be77b7f36ad6c56fbbfd86c96048a2ff6dff79ba8de9506042174e",
+   "work_id": "wrk_b506b988d95e621a3162fca8",
+   "world_id": "wld_9db43731c4e4aaac27ebe527"
+  },
+  {
+   "arm_id": null,
+   "candidate_set_id": "cs-c1fb2785584b4074",
+   "created_by": "archaeon",
+   "edge": "queue_row",
+   "experiment_id": "73958790-bb79-463c-b55e-a5e8c7cf19a8",
+   "family_id": null,
+   "request_key": "rk-4aef046a6f844f50",
+   "source_reason": "exploration",
+   "spec_hash_verified": true
+  },
+  {
+   "chosen_region": null,
+   "corpus_hash": "corpus:e3b0c44298fc1c149afbf4c8",
+   "corpus_rows": 0,
+   "corpus_table": null,
+   "edge": "selection_decision",
+   "mode": "exploration",
+   "policy": "menu.uniform.v0@archaeon.tick.v0",
+   "preregistration": null,
+   "schema": "archaeon.tick.v0",
+   "selection_rule": null,
+   "template_content_hash": "sha256:2eec40a543552cc83de47ccb87d885fe3d490cc3bb8318900abbe40f784201bb"
+  }
+ ],
+ "returned_fossil": "ENC-archaeon-d5249eb3a6eb5c14",
+ "schema": "fossil_ancestry.v1",
+ "verdict": "ANCESTRY_UNIFORM",
+ "why": "the decision record declares no fossil input (policy menu.uniform.v0@archaeon.tick.v0, corpus rows 0); no ancestor by design"
+}

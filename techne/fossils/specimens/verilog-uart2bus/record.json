@@ -1,0 +1,119 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "verilog-uart2bus",
+  "canonical_name": "UART-to-bus protocol controller (Verilog, freecores)",
+  "aliases": [
+    "uart2bus",
+    "uart controller"
+  ],
+  "lineage": "A UART receiver/transmitter with a bus-interface FSM: it synchronises to an asynchronous serial line (start-bit detection, mid-bit sampling, framing), a protocol state machine coping with timing and framing errors -- classic sequential control under timing pressure",
+  "domain": [
+    "hardware",
+    "protocol-controller",
+    "finite-state-machine",
+    "serial",
+    "synchronization",
+    "verilog"
+  ],
+  "era": "classic (this Verilog impl)",
+  "version": "github.com/freecores/uart2bus master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/freecores/uart2bus",
+        "commit": "f85211ec749895de51a3eaaff620b17c00a5f41a",
+        "commit_resolved": "f85211ec749895de51a3eaaff620b17c00a5f41a",
+        "commit_date": "2012-02-25T10:48:40Z"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/freecores/uart2bus (OpenCores)"
+  },
+  "hashes": {
+    "tree_sha256": "3b41bf158603334d2b93d267637134759522d8c508cef6f700452585dc34da7a",
+    "n_files": 46,
+    "bytes": 403163,
+    "artifacts": [
+      {
+        "filename": "https://github.com/freecores/uart2bus",
+        "sha256": null,
+        "commit": "f85211ec749895de51a3eaaff620b17c00a5f41a"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\verilog-uart2bus",
+    "hash_list": "techne/fossils/specimens/verilog-uart2bus/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "see repo (OpenCores)",
+    "status": "read before redistribution",
+    "evidence": "repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Verilog"
+  ],
+  "build_system": "iverilog + a Techne testbench feeding serial frames",
+  "compiler_or_interpreter": "Icarus Verilog (docker prometheus-fossil-hw)",
+  "dependencies": [
+    "iverilog"
+  ],
+  "run_classification": "RUNNABLE_EMULATED",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "the UART RX/TX FSM + the bus-command interpreter"
+  ],
+  "example": {
+    "command": "Techne testbench: drive a serial byte at the configured baud, capture the received byte and framing-error flag",
+    "input": "a bit-timed serial waveform",
+    "output": "the decoded byte(s); framing error on a corrupted stop bit"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-hw:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "OpenCores uart2bus documentation"
+  ],
+  "human_capability_summary": {
+    "built_to": "receive asynchronous serial data with no shared clock -- detect the start bit, sample each bit at mid-period, check framing -- and turn decoded bytes into bus read/write commands",
+    "pressure": "no shared clock between sender and receiver, clock drift, and line noise that corrupts bit timing and framing",
+    "success_means": "correctly decoded bytes across clock drift, with framing errors flagged rather than silently mis-decoded"
+  },
+  "known_human_problem_solved": "clock-domain-crossing serial reception and bus control",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "no shared clock, clock drift, line noise, tight bit-timing",
+  "human_failure_condition": "mis-sampling a bit (drift/noise) silently corrupts the byte, or a missed start bit desynchronises the whole stream",
+  "behavioral_entry_point": "skew the serial baud slightly from the receiver's, or corrupt a stop bit, and watch the framing-error flag / mis-decode",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/verilog-uart2bus/receipts/run-verilog-uart2bus-20260912T162148Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_EMULATED",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\verilog-uart2bus ; tracked techne/fossils/specimens/verilog-uart2bus",
+    "where_it_came_from": "https://github.com/freecores/uart2bus ; ORIGINAL_AUTHORITATIVE_RELEASE @ f85211ec749895de51a3eaaff620b17c00a5f41a",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run verilog-uart2bus",
+    "how_we_know_it_runs": "RUNNABLE_EMULATED / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/verilog-uart2bus/receipts/run-verilog-uart2bus-20260912T162148Z.json",
+    "what_humans_used_it_for": "receive asynchronous serial data with no shared clock -- detect the start bit, sample each bit at mid-period, check framing -- and turn decoded bytes into bus read/write commands"
+  },
+  "seat": "Techne"
+}

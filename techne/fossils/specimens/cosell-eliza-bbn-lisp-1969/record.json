@@ -1,0 +1,159 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "cosell-eliza-bbn-lisp-1969",
+  "canonical_name": "ELIZA in BBN-LISP (1969, revised 1972) -- Bernie Cosell's independent implementation at BBN",
+  "aliases": [
+    "Cosell ELIZA",
+    "BBN-LISP ELIZA"
+  ],
+  "lineage": "Bernie Cosell wrote an ELIZA independently at BBN in LISP, having read the CACM description rather than the code. A SECOND, independent organism solving the same problem in a different language and a different world -- BBN-LISP on a PDP-10 rather than MAD-SLIP on a 7094 under CTSS. Its behaviour and structure are therefore an independent answer to the same pressure, not a port.",
+  "domain": [
+    "conversational-ai",
+    "natural-language",
+    "pattern-matching",
+    "early-ai",
+    "lisp",
+    "pre1970"
+  ],
+  "era": "1969 (body: the file is dated 1969 and 1972 by its own name and content)",
+  "version": "coselleliza1969and1972.lisp, as released via elizagen.org",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1966_Cosell_BBNLISP/coselleliza1969and1972.lisp",
+        "filename": "coselleliza1969and1972.lisp",
+        "extract": false,
+        "sha256": "3f7004d603cf828c9fbe030b0363be16cc3dbccb223c101e67e09b24ed374987"
+      },
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1966_Cosell_BBNLISP/coselleliza1969and1972.transcript",
+        "filename": "coselleliza1969and1972.transcript",
+        "extract": false,
+        "sha256": "5aff013107d26e0cb4e59984462cad2a4ea9109ff71752e83b3fb5e05dc1ca93"
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "elizagen.org, 1966_Cosell_BBNLISP",
+    "date_discrepancy": "the DIRECTORY is labelled 1966; the FILE is named and dated 1969 and 1972. The artifact wins: this record is dated 1969, not 1966."
+  },
+  "hashes": {
+    "tree_sha256": "5d5a33159ddfafebbfcc8239a98c6c07cfbe566442a8c6bf0c5115f1c01986cf",
+    "n_files": 2,
+    "bytes": 140897,
+    "artifacts": [
+      {
+        "filename": "coselleliza1969and1972.lisp",
+        "sha256": "3f7004d603cf828c9fbe030b0363be16cc3dbccb223c101e67e09b24ed374987",
+        "commit": null
+      },
+      {
+        "filename": "coselleliza1969and1972.transcript",
+        "sha256": "5aff013107d26e0cb4e59984462cad2a4ea9109ff71752e83b3fb5e05dc1ca93",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\cosell-eliza-bbn-lisp-1969",
+    "hash_list": "techne/fossils/specimens/cosell-eliza-bbn-lisp-1969/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "CC-BY-like",
+    "status": "released by the author via elizagen",
+    "evidence": "ElizaLispCCLicense notice in the elizagen directory"
+  },
+  "acquisition_date": "2026-09-14",
+  "language": [
+    "BBN-LISP"
+  ],
+  "build_system": "BBN-LISP interpreter",
+  "compiler_or_interpreter": "none preserved in-vault; requires BBN-LISP (later Interlisp) on a PDP-10",
+  "dependencies": [
+    "BBN-LISP on a DEC PDP-10 / TENEX"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "the LISP functions are loaded into BBN-LISP and driven from the REPL"
+  ],
+  "example": {
+    "command": "load into a BBN-LISP and call the top-level function",
+    "input": "a typed English sentence",
+    "output": "an ELIZA-style reply; a session transcript ships beside the source"
+  },
+  "environment": {
+    "machine": "DEC PDP-10",
+    "word_size": "36-bit",
+    "number_representation": "two's complement",
+    "character_set": "ASCII/SIXBIT",
+    "os": "TENEX (BBN)",
+    "interpreter": "BBN-LISP",
+    "storage": "disk",
+    "runner": "none yet"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Weizenbaum, ELIZA, CACM 9(1) 1966 (the description Cosell worked from)",
+    "elizagen.org Cosell materials and session transcript"
+  ],
+  "human_capability_summary": {
+    "built_to": "reproduce the conversational behaviour described in the CACM paper, from the description alone, in LISP",
+    "pressure": "the same illusion must be produced with list structure and no access to the original code",
+    "success_means": "a session transcript that behaves like the published dialogues"
+  },
+  "known_human_problem_solved": "scripted natural-language dialogue, reached independently",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "reconstructing behaviour from a paper rather than from source; a different machine and language",
+  "human_failure_condition": "same class: unmatched input falls through to deflection",
+  "behavioral_entry_point": "the shipped transcript is a behavioural record; compare its replies against the MAD-SLIP original on the same inputs",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "reimplementation_of",
+      "to": "eliza-weizenbaum-mad-slip-1965",
+      "note": "independent, from the published description rather than from the code"
+    }
+  ],
+  "acquisition_tags": [
+    "batch12",
+    "pre1970",
+    "original_body",
+    "early_ai",
+    "independent_reimplementation",
+    "extinct_world"
+  ],
+  "historical_disposition": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "eliza-weizenbaum-mad-slip-1965",
+    "evidence": [
+      {
+        "kind": "archived_technical_discussion",
+        "ref": "elizagen.org Cosell materials",
+        "says": "Cosell's BBN-LISP ELIZA is published with its own session transcript and author attribution; BBN-LISP and the PDP-10/TENEX world it ran in are no longer in use."
+      }
+    ],
+    "audit_note": "HISTORICAL_ONLY describes the extinct world. No claim is made that this implementation lost to Weizenbaum's; they are independent answers, and which was 'better' is not established by any evidence I hold."
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\cosell-eliza-bbn-lisp-1969 ; tracked techne/fossils/specimens/cosell-eliza-bbn-lisp-1969",
+    "where_it_came_from": "https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1966_Cosell_BBNLISP/coselleliza1969and1972.lisp ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "SOURCE_ONLY (BODY_RECOVERED_WORLD_NAMED): BBN-LISP on a PDP-10 under TENEX. A session transcript ships with the source and is preserved beside it as a behavioural record made in the original world.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 5d5a33159ddfafeb pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "reproduce the conversational behaviour described in the CACM paper, from the description alone, in LISP"
+  },
+  "seat": "Techne"
+}

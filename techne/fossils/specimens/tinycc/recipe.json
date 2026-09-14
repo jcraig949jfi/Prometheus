@@ -1,0 +1,44 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "configure+make",
+      "cmd": "bash ./configure >/dev/null 2>&1 && make -s 2>&1 | grep -viE 'warning' | tail -3; test -x ./tcc"
+    }
+  ],
+  "runs": [
+    {
+      "name": "tcc compiles and runs a C program in memory",
+      "cmd": "echo 'int main(){int s=0,i;for(i=1;i<=9;i++)s+=i;return s;}' > $BODY/t.c && ./tcc -B. -run $BODY/t.c; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "exit=45"
+        ]
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "tcc compiles itself is out of scope; instead check -run of a second program",
+      "cmd": "echo 'int main(){return 7*6;}' > $BODY/u.c && ./tcc -B. -run $BODY/u.c; echo rc=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "rc=42"
+        ]
+      }
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "tcc -run parses, type-checks, generates code and executes in memory; the exit code is the program's return, an oracle (sum 1..9 = 45; 7*6 = 42)."
+}

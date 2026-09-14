@@ -306,3 +306,69 @@ def test_a_digestless_result_ref_is_refused_outside_seam_mode():
     with pytest.raises(S.StreamError, match="seam-mode"):
         S.validate(header, rows)
     S.validate(header, rows, seam_mode=True)   # allowed, and recorded
+
+
+# --------------------------------------------------------------------------- TECHNE-23
+# The seam's two named weaknesses, fired in the FAILING direction. A seam that only ever
+# sees well-formed input has not shown it can refuse anything.
+
+def _rec_with_digest(sid, digest):
+    r = _arch_record(sid)
+    r["candidate_digest"] = digest
+    return r
+
+
+@pytest.mark.parametrize("bad", [
+    "sha256:notahash",                              # wrong length
+    "md5:" + "a" * 32,                              # wrong algorithm label
+    "sha256:" + "A" * 64,                           # upper-case hex is not the declared form
+    "",                                             # empty
+    "sha256:" + "0" * 63,                           # one short
+])
+def test_w1_a_carried_digest_of_the_wrong_shape_is_refused(bad):
+    from techne.h3_retention import archaeon_seam as SEAM
+    with pytest.raises(S.StreamError, match="declared shape"):
+        SEAM.from_candidates([_rec_with_digest(0, bad)], edges=EDGES, stream_id="t")
+
+
+def test_w1_shape_check_is_not_vacuous_on_the_real_stream():
+    import json, pathlib, re
+    p = pathlib.Path("techne/h3_retention/c3_2/candidates.json")
+    if not p.exists():
+        pytest.skip("real stream not on this tree")
+    rows = json.loads(p.read_text(encoding="utf-8"))
+    rows = rows if isinstance(rows, list) else rows.get("candidates") or rows.get("rows")
+    assert rows and all(S.CARRIED_DIGEST_SHAPE.fullmatch(r["candidate_digest"]) for r in rows)
+
+
+def test_w2_a_result_ref_whose_bytes_disagree_with_the_resolver_is_refused():
+    from techne.h3_retention import archaeon_seam as SEAM
+    rec = _arch_record(0)                        # declares byte_size 100
+    short = lambda rref: b"x" * 99
+    with pytest.raises(S.StreamError, match="declares 100 bytes, resolver returned 99"):
+        SEAM.from_candidates([rec], edges=EDGES, stream_id="t", resolver=short)
+    with pytest.raises(S.StreamError, match="does not resolve"):
+        SEAM.from_candidates([rec], edges=EDGES, stream_id="t", resolver=lambda rref: None)
+
+
+def test_w2_positive_a_resolver_that_agrees_on_length_passes_and_says_what_it_checked():
+    from techne.h3_retention import archaeon_seam as SEAM
+    rec = _arch_record(0)
+    st, _ = SEAM.from_candidates([rec], edges=EDGES, stream_id="t",
+                                 resolver=lambda rref: b"x" * int(rref["bytes"]))
+    assert st.validation["result_refs_resolved"] is True
+    assert st.validation["result_refs_without_a_content_digest"] == 1
+
+
+def test_w2_the_weakness_itself_wrong_content_of_the_right_length_is_NOT_caught():
+    """This is W2 stated as a test: in seam mode a result_ref has no content digest, so a
+    resolver returning the right NUMBER of bytes with the wrong CONTENT passes. The seam
+    record says so ('lost: content verification'); this test pins that the loss is real,
+    so nobody reads 'resolver checked' as 'content verified'."""
+    from techne.h3_retention import archaeon_seam as SEAM
+    rec = _arch_record(0)
+    st, seam = SEAM.from_candidates([rec], edges=EDGES, stream_id="t",
+                                    resolver=lambda rref: b"?" * int(rref["bytes"]))
+    assert st.rows[0].result_ref["digest"] is None
+    w2 = next(w for w in seam["WEAKENED_AT_THE_SEAM"] if w["id"] == "W2")
+    assert "content verification" in w2["lost"]

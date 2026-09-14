@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.reduce_difference_to_goal_by_operator",
+  "name": "reduce the difference to the goal by choosing an operator",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "compare the current state to the goal, pick the largest difference, choose an operator known to reduce that kind of difference, recursively make its preconditions true, apply it, and repeat",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'General Problem Solver' in section Combinatorial algorithms / Graph algorithms / Graph search: a seminal theorem-proving algorithm intended to work as a universal problem solver machine.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "RECORD",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a difference table from differences to operators (a human prior)"
+  ],
+  "fails_when": [
+    "interacting subgoals undo each other",
+    "the difference table is the whole intelligence"
+  ],
+  "instances": [
+    "General Problem Solver"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "LIFO",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

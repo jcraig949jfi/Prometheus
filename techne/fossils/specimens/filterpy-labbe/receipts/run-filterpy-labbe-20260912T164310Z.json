@@ -1,0 +1,208 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "filterpy-labbe",
+  "receipt_id": "run-filterpy-labbe-20260912T164310Z",
+  "written_utc": "20260912T164310Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.py": "63398fe348d8677fdd5b4dec009da74d9ea17084e4ca2e53bcfd91c0ebe34548"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "c7592f02163aef1d42504b50a30e88f0d1346f47660cd5739be87ee5d53f832d",
+  "recipe_sha256": "b297342b6d53f456c1ccf740f27dacd2658bc89cd713e74776a33a06391a813e",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.93,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "Kalman track of a noisy constant-velocity target",
+      "cmd": "pip install -q numpy scipy >/dev/null 2>&1 && PYTHONPATH=. python $HARNESS/drv.py",
+      "exit": 0,
+      "seconds": 10.16,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "rmse_sensor 2.749 rmse_filter 1.172\nFILTERPY_OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "filterpy/common/__pycache__/discretization.cpython-311.pyc",
+      "sha256": "008376b98b727095268b2baa41631820fb72be8519a15728b64edc271461e0d0",
+      "bytes": 11832
+    },
+    {
+      "path": "filterpy/common/__pycache__/kinematic.cpython-311.pyc",
+      "sha256": "c4a9cc883263a97d65afbf29ee7aaeb295259b18665cd12b786a5fd47048dcb5",
+      "bytes": 6039
+    },
+    {
+      "path": "filterpy/discrete_bayes/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "ccd21293d073014283f4bae1de79a88136a27790f43a1fa2cb526cf966ade7ab",
+      "bytes": 748
+    },
+    {
+      "path": "filterpy/discrete_bayes/__pycache__/discrete_bayes.cpython-311.pyc",
+      "sha256": "7664227020a0d5053f71230e014060f0d36e28a1fef425ec1158e26789a9e00f",
+      "bytes": 4220
+    },
+    {
+      "path": "filterpy/gh/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "849f70bcf75fa8b757d417acb85f8eca96c4965b00e0a0f6255c4369c307c17c",
+      "bytes": 619
+    },
+    {
+      "path": "filterpy/gh/__pycache__/gh_filter.cpython-311.pyc",
+      "sha256": "331347d7c4cfffceeb519770c3cbdb8cb584bdce07af1d70107f63556ed815a2",
+      "bytes": 34520
+    },
+    {
+      "path": "filterpy/hinfinity/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "c65c197e9f231b73c3e9c6c9bec6202aecb44a800c7ef3d0c6a2d7e32e1d8d3d",
+      "bytes": 747
+    },
+    {
+      "path": "filterpy/hinfinity/__pycache__/hinfinity_filter.cpython-311.pyc",
+      "sha256": "97ecb13244ecab27259928a93485aac588e6d0a7956de6d25673c80a77dedc9d",
+      "bytes": 10908
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "72f74374332b7f681ee6623a01b51573e0dea0f90660b24773a7098fe251e3e0",
+      "bytes": 1062
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/CubatureKalmanFilter.cpython-311.pyc",
+      "sha256": "bf66094328caff1e68377ceb2448e054503ac7a42a653ee377cbd3812e7812db",
+      "bytes": 16968
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/EKF.cpython-311.pyc",
+      "sha256": "fad762dccc0fdc2950bbd88926d7400daba78bb692e5d311fb251f16f2b83bf0",
+      "bytes": 18454
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/ensemble_kalman_filter.cpython-311.pyc",
+      "sha256": "5b2d4b36d68dad0c8de916504e90deb2f4b5c977fd0d505d4f41acf29474c560",
+      "bytes": 12255
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/fading_memory.cpython-311.pyc",
+      "sha256": "6b60d5645b1c2197c5ef6e6831ead4195921c0b9031cb0118cc6a4248132579a",
+      "bytes": 18616
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/fixed_lag_smoother.cpython-311.pyc",
+      "sha256": "0a1ec6338e188fe60083d365847b5d5fd48a19ace7cef264440a8fea7caf9f3b",
+      "bytes": 12927
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/IMM.cpython-311.pyc",
+      "sha256": "959cb2db78cf6bd6a5504c65469cd3b59d35a7c824b6040b51bae36e34699d63",
+      "bytes": 11929
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/information_filter.cpython-311.pyc",
+      "sha256": "354b8933aaab30ffc39a7e577466661a34c99ab284e5cd43420ae74d675a720a",
+      "bytes": 15437
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/kalman_filter.cpython-311.pyc",
+      "sha256": "612bee31cb9c37b0b803900982a0d9db08754824a924b6149cff88b6af13f1da",
+      "bytes": 70306
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/mmae.cpython-311.pyc",
+      "sha256": "1670c379c8507d8b7e18c53fa941ef42be2ee618066dab6067c3673321ef2f7d",
+      "bytes": 8618
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/sigma_points.cpython-311.pyc",
+      "sha256": "b59df1e66d2f1103fc0bae482151279a21add4245dea89814659c4c1b53821f5",
+      "bytes": 21431
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/square_root.cpython-311.pyc",
+      "sha256": "d0b6bf6b6f92907af601a066b6a73678a957232a2c0dceac7f3145090fdf1a7d",
+      "bytes": 15197
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/UKF.cpython-311.pyc",
+      "sha256": "782d80be1f0e715261691386536580044a10245d8790a4204815cafbf24ad7c7",
+      "bytes": 32644
+    },
+    {
+      "path": "filterpy/kalman/__pycache__/unscented_transform.cpython-311.pyc",
+      "sha256": "61ea3972b6dc56409535e59d5ce19ca637a1f58c112bd3005f2d96bb7da2f85d",
+      "bytes": 3866
+    },
+    {
+      "path": "filterpy/leastsq/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "e7ed41c70927fca3b8f552cb35d60bc6730bdfc4b5f0d392b71bb02b6ca859f5",
+      "bytes": 774
+    },
+    {
+      "path": "filterpy/leastsq/__pycache__/least_squares.cpython-311.pyc",
+      "sha256": "cafa8fb132129ab84d01a5ba769bf29a457005c3758a7892a50d3152b44a4250",
+      "bytes": 8995
+    },
+    {
+      "path": "filterpy/memory/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "71a131367467ce7456e5c338657c0c343883fa63d5f42e3e98ee379c4c03aef0",
+      "bytes": 741
+    },
+    {
+      "path": "filterpy/memory/__pycache__/fading_memory.cpython-311.pyc",
+      "sha256": "2a7f93c3e314bdeedf64d33d9edba5c2875bd736d8838cbe15285f3a00768b4d",
+      "bytes": 8180
+    },
+    {
+      "path": "filterpy/monte_carlo/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "0c281fbde715561f6a574375037a24a112179165e5045c737cc7408ec2f1a01d",
+      "bytes": 742
+    },
+    {
+      "path": "filterpy/monte_carlo/__pycache__/resampling.cpython-311.pyc",
+      "sha256": "aeff023d8e8e13955e31ddf256f33d2816342288939f1f54ff65397f0bb5e7ec",
+      "bytes": 5988
+    },
+    {
+      "path": "filterpy/stats/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "3d832dfa7226bf84672158ff8524fd7e08e7a776124ac600a6f15fbf407cea7b",
+      "bytes": 593
+    },
+    {
+      "path": "filterpy/stats/__pycache__/stats.cpython-311.pyc",
+      "sha256": "9594fa7c62b8af3b83a62f138a94be4caf17888cd7e26642bf8e62b07e561fa3",
+      "bytes": 40917
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

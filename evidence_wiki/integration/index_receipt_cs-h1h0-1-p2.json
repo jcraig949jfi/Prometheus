@@ -1,0 +1,727 @@
+{
+ "candidate_set_id": "cs-h1h0-1-p2",
+ "indexed_at": "2026-09-11T14:54:17",
+ "namespace": "prod",
+ "command": "python ops/index_candidate_sets.py --candidate-set cs-h1h0-1-p2 --namespace prod --all-statuses",
+ "all_statuses": true,
+ "workspace": {
+  "base_sha": "81ab7c7dc1bd767b05e3e1b528aad47c447de535",
+  "branch": "mnemosyne/baserole-adopt",
+  "worktree_path": "F:\\Prometheus-worktrees\\mnemosyne-baserole\\evidence_wiki",
+  "dirty": true
+ },
+ "counts": {
+  "rows_total": 73,
+  "rows_completed": 11,
+  "rows_skipped": 0,
+  "rows_by_status": {
+   "completed": 11,
+   "failed": 20,
+   "cancelled": 42
+  },
+  "rows_indexed_non_completed": 62,
+  "refs_inserted": 44,
+  "refs_duplicate_identical": 0,
+  "refs_conflict": 0,
+  "refs_rejected": 0
+ },
+ "refs_by_kind": {
+  "EXPERIMENT": 11,
+  "OBSERVATION": 11,
+  "ENCOUNTER": 11,
+  "RECEIPT": 11
+ },
+ "artifacts_present": 0,
+ "rows_with_unresolved_references": [
+  {
+   "experiment_id": "9c50a96b-9ec2-49b4-9de7-74bf74940aa7",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "da461807-895c-49de-ad1d-897e77be1461",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "4fd0648b-68a9-4d8d-8406-8aceeeb93e26",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "c9f2e220-c382-4a1f-993b-a31f0a50c626",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "bed3fc62-84ec-45d9-968a-8d78956f9ee3",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "df714f29-06e9-4a1d-a7fd-6391d5ace55c",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "d6b5a5fa-433a-4f2b-98ee-1c9a1dc308a9",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "f3746df3-49b1-4783-a5b4-74a09066b4db",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "9438944a-5aea-4304-abcb-ca07aea332ee",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "a76478e3-2faf-4210-a29f-d903ef9fcb5a",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "2fc996cd-e310-49a2-8e72-5cfe9cdf4083",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "432d9610-efea-43ee-8e88-34d201a23eb9",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "c3fb04f4-4c65-464a-985b-ce59ef82b0d6",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "d13c8595-88ef-415a-b17f-7f37eb93e9e5",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "94de4211-3707-4a90-b201-94228d3c32c1",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "c053ff77-bf6c-4b2a-a4d9-79f547b3dd2a",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "c9b538c5-80f0-4b3f-9d6c-c3fe9a0c5742",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "e29bd117-cfbc-49bb-8341-a62167d2e9bf",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "dca936bb-714a-4fca-9a34-8dfbad19bb8d",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "d57ee031-42bc-47df-813d-1194a7bf42b9",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "045019c4-026c-4a4b-995f-dfcf3f131a83",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "fb0fdd2c-2f81-458f-81bb-8812749d94fa",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "d0740eba-2706-47f2-aad8-69f06d91f399",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "30c7a535-7c60-4aee-b3f8-3525cd809d84",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "a87aea49-c192-4d6a-92f7-1dab50e92f44",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "a63c6621-15f5-4c49-8d68-5dca97e2605d",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "1c3958a5-45ae-41d2-8784-7f737bf94499",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "029cf6cc-8cc0-4c7c-a421-70705e752df2",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "f85fa84b-fd0e-45d0-8bfd-fa2d763cc856",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "c81cb0f8-3fb6-4dea-aa1a-d1f9e7ba4eff",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "223ae6d8-2daa-4412-b4d2-f4b1870bc4a8",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "e8017e19-ed1c-4fdd-9418-d05cb2e91b65",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "81580be6-90e0-4cc6-bae2-ed1d43ab4704",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "867cb169-5868-475e-bb9b-28f7d8efab8b",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "6adccfbb-1a94-423a-962f-3d0f1c11ff90",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "deda3355-6815-486a-aa41-239481a9ec09",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "43ffcc1c-2816-4b45-922d-038ce2b0b73a",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "cc35e5c5-5c60-4ded-9436-463668e33903",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "cc9ba83b-636d-4ff4-844d-608687a2a0e1",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "2c3b7f2b-ac21-4850-8385-60fa75162547",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "8a19606e-e418-4c1d-b3af-20e6c780d8ff",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "5a9c29be-d78f-4209-bb82-7dba42a967d9",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "9883f316-43e5-48e1-afe8-528f5051d382",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "62b042fe-5a98-424f-93df-fd6e7177f7cf",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "250a3e9c-61c1-4060-9336-19f7f2f62c99",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "4124a158-6a31-4d73-b2a1-3c76e533152d",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "fc28cd04-94f0-473f-8606-8e568fd8d6d7",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "ce072d96-da3a-402e-a8a7-655b23960cb7",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "0fbd7b69-68e5-4b5d-8e47-2ee375e5df09",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "d58388c4-f54b-4c96-8bf7-0660fbc3102f",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "2820569d-e920-4952-a45d-d437dd3dfb79",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "149dc3d5-55ca-4c48-b2cf-7de36f982df5",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "b533e87e-ede8-4b51-bdf4-545b37bedfad",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "27e128f7-4bd3-43fd-a920-c25f92b4212c",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "1c783ad3-acc6-4573-bc6e-2be6cc50e358",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "92a828ba-092c-4a4a-b4fb-6a62508a366f",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "53189583-a8a4-466d-8948-bb12dd1a071e",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "dacd3c22-f9d5-42ed-9fd6-916bc6b3f2d5",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "489003e5-8b5b-4cb4-82aa-5f7619fe2f51",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "88fc7cd6-ebdd-48e9-8d51-99a7a52c0e1f",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "22f8cd70-50f6-465f-936f-0b1bb986f204",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id",
+    "ARTIFACT: no source id",
+    "ARTIFACT: no source id"
+   ]
+  },
+  {
+   "experiment_id": "904ae787-ccf7-4927-9dbe-c947ceac9942",
+   "sfe_experiment_id": null,
+   "reasons": [
+    "EXPERIMENT: no source id",
+    "OBSERVATION: no source id",
+    "ENCOUNTER: no source id",
+    "RECEIPT: no source id"
+   ]
+  }
+ ],
+ "n_rows_with_unresolved_references": 62,
+ "errors": [],
+ "axis_derivation": {
+  "software_stage": "alpha when the row's declared authority says alpha, else null",
+  "connection_evidence": "runnable (typed end-to-end execution with an engine observation and resource receipt); never demonstrated-transfer",
+  "scientific_outcome": "inconclusive -- PEW records the ABSENCE of an adjudicated outcome and never adjudicates one",
+  "reproduction_state": "benchmark-attempted for a completed executed row"
+ },
+ "reference_only": "every digest is engine-supplied on the queue row; no scientific bytes were read, copied or recomputed",
+ "seconds": 1.1
+}

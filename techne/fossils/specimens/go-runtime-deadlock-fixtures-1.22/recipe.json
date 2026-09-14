@@ -1,0 +1,94 @@
+{
+  "runner": "docker",
+  "image": "golang:1.22-bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "go",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go version"
+    }
+  ],
+  "build": [
+    {
+      "name": "stage the two testprog files as a module-less main package (crash_test.go is the expectation file, not built)",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; mkdir -p $BODY/build/prog && cp deadlock.go main.go $BODY/build/prog/ && cd $BODY/build/prog && go mod init testprog >/dev/null 2>&1; go vet . 2>&1 | tail -2; go build -o $BODY/build/testprog . && echo built",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "SimpleDeadlock: main blocks on a channel nobody sends to",
+      "cmd": "cd $BODY/build && ./testprog SimpleDeadlock 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+      "expect": {
+        "stdout_contains": [
+          "all goroutines are asleep - deadlock!",
+          "exit=2"
+        ]
+      },
+      "timeout": 120
+    },
+    {
+      "name": "LockedDeadlock: the deadlock with the main goroutine locked to its thread",
+      "cmd": "cd $BODY/build && ./testprog LockedDeadlock 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+      "expect": {
+        "stdout_contains": [
+          "all goroutines are asleep - deadlock!",
+          "exit=2"
+        ]
+      },
+      "timeout": 120
+    },
+    {
+      "name": "LockedDeadlock2: two goroutines, one locked, both waiting",
+      "cmd": "cd $BODY/build && ./testprog LockedDeadlock2 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+      "expect": {
+        "stdout_contains": [
+          "all goroutines are asleep - deadlock!",
+          "exit=2"
+        ]
+      },
+      "timeout": 120
+    },
+    {
+      "name": "GoexitDeadlock: main calls Goexit while others block",
+      "cmd": "cd $BODY/build && ./testprog GoexitDeadlock 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+      "expect": {
+        "stdout_contains": [
+          "no goroutines (main called runtime.Goexit) - deadlock!",
+          "exit=2"
+        ]
+      },
+      "timeout": 120
+    },
+    {
+      "name": "GoexitExit: main's Goexit after its helpers finish -- crash_test.go expects the Goexit deadlock diagnosis here too",
+      "cmd": "cd $BODY/build && ./testprog GoexitExit 2>&1 | head -6; echo exit=${PIPESTATUS[0]}",
+      "expect": {
+        "stdout_contains": [
+          "no goroutines (main called runtime.Goexit) - deadlock!",
+          "exit=2"
+        ]
+      },
+      "timeout": 120
+    },
+    {
+      "name": "control: a fixture that is NOT a deadlock (MainGoroutineID panics on purpose): a crash with no deadlock diagnosis",
+      "cmd": "cd $BODY/build && ./testprog MainGoroutineID 2>&1 | head -3; echo exit=${PIPESTATUS[0]}",
+      "expect": {
+        "stdout_contains": [
+          "panic: test",
+          "goroutine 1 [running]"
+        ],
+        "stdout_not_contains": [
+          "deadlock"
+        ]
+      },
+      "timeout": 120
+    }
+  ],
+  "tests": [],
+  "test_kind": "UPSTREAM",
+  "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: crash_test.go's expected strings for each case ('all goroutines are asleep - deadlock!' exit 2; GoexitDeadlock's 'no goroutines (main called runtime.Goexit) - deadlock!'; GoexitExit also ends in the Goexit diagnosis -- my first 'control' expectation of exit 3 was wrong and is replaced by MainGoroutineID, which panics: a crash that is not a deadlock). The fixtures run unmodified; only main.go's other registered cases (in files not fetched) are absent, so the package holds these two files. Concurrent machinery executes: real goroutines block on real channels and the runtime's checkdead fires."
+}

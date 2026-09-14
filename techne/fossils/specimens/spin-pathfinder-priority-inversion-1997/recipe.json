@@ -1,0 +1,48 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/Spin-version-6.5.2",
+  "probe": [
+    {
+      "name": "gcc/bison",
+      "cmd": "gcc --version | head -1; bison --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "build SPIN 6.5.2 (the instrument) from the same tarball",
+      "cmd": "cd Src && make -s 2>&1 | grep -v -i warning | grep -iE '\\berror' | head -3; test -x ./spin && echo built",
+      "timeout": 900
+    },
+    {
+      "name": "generate + compile the verifier for pathfinder.pml",
+      "cmd": "cd Examples && ../Src/spin -a pathfinder.pml 2>&1 | tail -2; gcc -O2 -w -o $BODY/build/pan pan.c && echo built"
+    }
+  ],
+  "runs": [
+    {
+      "name": "PATHOLOGY: exhaustive search finds the deadlock (invalid end state) -- the Pathfinder reset",
+      "cmd": "cd Examples && $BODY/build/pan 2>&1 | grep -E 'invalid end state|errors:|States|pan:' | head -8",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "invalid end state",
+          "errors: 1"
+        ]
+      }
+    },
+    {
+      "name": "replay the counterexample trail (the schedule: low holds the mutex, high blocks, low cannot run)",
+      "cmd": "cd Examples && ../Src/spin -t -p pathfinder.pml 2>&1 | tail -12",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(mutex|busy|waiting)"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "The specimen is the FAILING model, preserved failing (not repaired). SPIN is built from the same tarball as the instrument; the vault's spin-6.5.2-holzmann record is the checker. pan finds the invalid end state that models the 1997 resets."
+}

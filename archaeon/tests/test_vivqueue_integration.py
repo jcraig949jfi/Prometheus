@@ -164,6 +164,34 @@ def test_registration_is_atomic(conn, lane):
     assert vq.candidate_set(conn, csid) is None
 
 
+def test_a_candidate_set_id_cannot_be_reused_across_submits(conn, lane):
+    """Vivarium #181 item 4: cs-h5-1-r1's 24 rows were 24 submit calls sharing
+    one candidate_set_id, so the consumer bound each as one-chosen-over-23.
+    A set is ONE atomic registration; a second call naming the same id is
+    refused (positive), a fresh id is not (negative), and the campaign
+    grouping that used to ride on the id rides on source_evidence.campaign_set
+    (cheat: the grouping survives without the misbinding)."""
+    csid = "cs-reuse-" + uuid.uuid4().hex[:8]
+    r = vq.submit(conn, candidates=_cands(1), selected_index=0, source_reason="human",
+                  config=_cfg(lane), candidate_set_id=csid)
+    assert r["candidate_set_id"] == csid
+    with pytest.raises(vq.CandidateSetReused):
+        vq.submit(conn, candidates=_cands(1), selected_index=0, source_reason="human",
+                  config=_cfg(lane), candidate_set_id=csid)
+    conn.rollback()
+    cands = _cands(2)
+    for c in cands:
+        c["source_evidence"] = vq.campaign_set_key(c["source_evidence"], "cs-campaign-" + csid)
+    ids = [vq.submit(conn, candidates=[c], selected_index=0, source_reason="human", config=_cfg(lane))["selected_experiment_id"]
+           for c in cands]
+    cur = conn.cursor()
+    cur.execute("SELECT count(*) FROM " + VIVQ + " WHERE " + vq.campaign_rows_filter(), ("cs-campaign-" + csid, "cs-campaign-" + csid))
+    assert cur.fetchone()[0] == 2
+    cur.execute("SELECT candidate_set_id FROM " + VIVQ + " WHERE experiment_id::text = ANY(%s)", ([str(i) for i in ids],))
+    sets = {r[0] for r in cur.fetchall()}
+    assert len(sets) == 2 and all(vq.candidate_set(conn, s)["registered"] == 1 for s in sets)   # two honest sets of one
+
+
 def test_single_candidate_is_an_honest_set_of_one(conn, lane):
     r = vq.submit(conn, candidates=_cands(1), selected_index=0,
                   source_reason="exploration", config=_cfg(lane))

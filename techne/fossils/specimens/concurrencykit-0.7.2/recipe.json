@@ -1,0 +1,70 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/ck-0.7.2",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1; nproc"
+    }
+  ],
+  "build": [
+    {
+      "name": "configure + make the library",
+      "cmd": "./configure >/dev/null 2>&1 && make -s 2>&1 | grep -iE '\\berror' | head -3; test -f src/libck.a && echo built",
+      "timeout": 900
+    },
+    {
+      "name": "build the spinlock / backoff / ring validation programs",
+      "cmd": "for d in ck_spinlock ck_backoff ck_ring; do make -s -C regressions/$d/validate 2>&1 | grep -iE '\\berror' | head -2; done; ls regressions/ck_spinlock/validate | grep -v '\\.' | head -20",
+      "timeout": 900
+    }
+  ],
+  "runs": [
+    {
+      "name": "ticket spinlock under 4-way contention (validate: no lost update)",
+      "cmd": "./regressions/ck_spinlock/validate/ck_ticket 4 1 2>&1 | tail -3; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "exit=0"
+        ]
+      }
+    },
+    {
+      "name": "MCS queue lock under 4-way contention",
+      "cmd": "./regressions/ck_spinlock/validate/ck_mcs 4 1 2>&1 | tail -3; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "exit=0"
+        ]
+      }
+    },
+    {
+      "name": "exponential backoff primitive (ck_backoff_eb)",
+      "cmd": "./regressions/ck_backoff/validate/validate 2>&1 | tail -3; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "exit=0"
+        ]
+      }
+    },
+    {
+      "name": "lock-free SPSC ring",
+      "cmd": "./regressions/ck_ring/validate/ck_ring_spsc 2 1 65536 2>&1 | tail -3; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "exit=0"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "UPSTREAM",
+  "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Runs four of ck's own validation programs (they assert their invariants and exit non-zero on violation). The full regression suite is long; a subset is recorded."
+}

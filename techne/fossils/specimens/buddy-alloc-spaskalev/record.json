@@ -1,0 +1,117 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "buddy-alloc-spaskalev",
+  "canonical_name": "buddy_alloc -- a header-only buddy memory allocator (Stanislav Paskalev)",
+  "aliases": [
+    "buddy_alloc",
+    "buddy allocator"
+  ],
+  "lineage": "Buddy allocation (Knowlton 1965, Knuth): split memory into power-of-two blocks, merge free 'buddies' on release; the allocator behind many kernels' page allocators, trading internal fragmentation for O(log n) alloc/free and fast coalescing",
+  "domain": [
+    "memory-allocation",
+    "operating-systems",
+    "buddy-system",
+    "resource-management",
+    "scarcity"
+  ],
+  "era": "1965 (this impl modern)",
+  "version": "github.com/spaskalev/buddy_alloc master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/spaskalev/buddy_alloc",
+        "commit": "53adbbbf7844655cac26c6050115098bd7fe8327",
+        "commit_resolved": "53adbbbf7844655cac26c6050115098bd7fe8327",
+        "commit_date": "2026-07-15T08:26:23+03:00"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/spaskalev/buddy_alloc"
+  },
+  "hashes": {
+    "tree_sha256": "38db38112475eef217db6cbec5cdfa1214805241ad6b8fd243e3c92e0dbbbe21",
+    "n_files": 21,
+    "bytes": 200849,
+    "artifacts": [
+      {
+        "filename": "https://github.com/spaskalev/buddy_alloc",
+        "sha256": null,
+        "commit": "53adbbbf7844655cac26c6050115098bd7fe8327"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\buddy-alloc-spaskalev",
+    "hash_list": "techne/fossils/specimens/buddy-alloc-spaskalev/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "0BSD",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "header-only; compile a Techne driver (or the repo's own tests)",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "buddy_init / buddy_malloc / buddy_free over a fixed arena"
+  ],
+  "example": {
+    "command": "the repo's own tests, or a Techne driver: allocate/free within a fixed arena, exercise buddy split/merge, check no overlap and successful coalescing",
+    "input": "an allocation workload in a bounded arena",
+    "output": "all blocks valid; the arena coalesces back to free"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Knowlton, A Fast Storage Allocator, CACM 1965",
+    "Knuth, TAOCP Vol 1"
+  ],
+  "human_capability_summary": {
+    "built_to": "allocate and free memory from a FIXED arena in power-of-two blocks, merging freed buddies so large blocks become available again -- fast coalescing under a hard capacity bound",
+    "pressure": "a fixed, bounded arena (no asking the OS for more) where fragmentation must be fought or large requests fail while small free blocks litter the arena",
+    "success_means": "requests satisfied while any contiguous block of the size exists, with bounded internal fragmentation and O(log n) operations"
+  },
+  "known_human_problem_solved": "fixed-arena allocation with fast coalescing (the buddy system)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "a fixed memory arena, fragmentation, mixed allocation sizes",
+  "human_failure_condition": "fragmentation defeats it: a large request fails though enough total memory is free (just not contiguous); the kernel/embedded system runs out of usable memory",
+  "behavioral_entry_point": "allocate many small blocks then a large one, freeing in an adversarial order, to induce fragmentation failure in the bounded arena",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/buddy-alloc-spaskalev/receipts/run-buddy-alloc-spaskalev-20260912T162521Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\buddy-alloc-spaskalev ; tracked techne/fossils/specimens/buddy-alloc-spaskalev",
+    "where_it_came_from": "https://github.com/spaskalev/buddy_alloc ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ 53adbbbf7844655cac26c6050115098bd7fe8327",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run buddy-alloc-spaskalev",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/buddy-alloc-spaskalev/receipts/run-buddy-alloc-spaskalev-20260912T162521Z.json",
+    "what_humans_used_it_for": "allocate and free memory from a FIXED arena in power-of-two blocks, merging freed buddies so large blocks become available again -- fast coalescing under a hard capacity bound"
+  },
+  "seat": "Techne"
+}

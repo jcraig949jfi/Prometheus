@@ -1,0 +1,38 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "gfortran -std=legacy: rs + tred2 + tql2 + harness driver",
+      "cmd": "cp $HARNESS/driver.f . && gfortran -std=legacy -w -O2 -o eig driver.f rs.f tred2.f tql2.f tred1.f tqlrat.f pythag.f epslon.f tql1.f 2>&1 | grep -iE 'error|undefined' | head -8; test -x ./eig && echo BUILT",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "all eigenvalues/vectors of the 3x3 tridiagonal [2,-1;-1,2,-1;-1,2] (exact spectrum 2-sqrt2, 2, 2+sqrt2)",
+      "cmd": "./eig 2>&1 | head -12",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "0.585786",
+          "2.000000",
+          "3.414214"
+        ]
+      },
+      "timeout": 600
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: the second-difference matrix has the closed-form spectrum 2-sqrt(2)=0.5857864, 2, 2+sqrt(2)=3.4142136, so EISPACK is graded against exact mathematics rather than another program. rs is called with matz=1 so it routes through tred2+tql2 (the routines preserved here); matz=0 would need tred1/tqlrat, which are not in this body -- recorded, not worked around."
+}

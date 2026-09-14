@@ -1,0 +1,136 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "reed-solomon-rockliff-1991",
+  "canonical_name": "Reed-Solomon encoder/decoder -- Simon Rockliff (1989/1991)",
+  "aliases": [
+    "rs.c",
+    "Rockliff Reed-Solomon",
+    "eccpage rs"
+  ],
+  "lineage": "Rockliff RS (1989-1991, University of Adelaide): a textbook Reed-Solomon coder over GF(2^m) -- generate the field, build the generator polynomial, systematic encode, and Berlekamp-Massey + Forney erasure/error decode; the widely-copied reference on eccpage.com",
+  "domain": [
+    "error-correcting-codes",
+    "coding-theory",
+    "galois-field",
+    "algebraic-codes"
+  ],
+  "era": "1989-1991",
+  "version": "eccpage.com/rs.c as served 2026-09-12 (single file, self-dated 26 June 1991)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "http://www.eccpage.com/rs.c",
+        "filename": "rs.c",
+        "extract": false,
+        "sha256": "0cbf100e85e773ced2056c5eb3954981d2d2d44d4b6727145d3a12a86c00972e",
+        "bytes": 15784
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "site": "eccpage.com",
+    "author": "Simon Rockliff",
+    "dated": "1989-09-21 / 1991-06-26 in the header"
+  },
+  "hashes": {
+    "tree_sha256": "5a38a755ff062098c8a9730f2a3bb3e3baa434fc874d2643bd8eea5851f54744",
+    "n_files": 1,
+    "bytes": 15784,
+    "artifacts": [
+      {
+        "filename": "rs.c",
+        "sha256": "0cbf100e85e773ced2056c5eb3954981d2d2d44d4b6727145d3a12a86c00972e",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\reed-solomon-rockliff-1991",
+    "hash_list": "techne/fossils/specimens/reed-solomon-rockliff-1991/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "public (Rockliff: 'This program may be freely modified and/or given to whoever wants it')",
+    "status": "the header grants free use",
+    "evidence": "rs.c header lines"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C (K&R)"
+  ],
+  "build_system": "cc rs.c",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [
+    "libm"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "main() in rs.c: generate_gf, encode_rs, then inject errors and decode"
+  ],
+  "example": {
+    "command": "gcc -w -o rs rs.c -lm && ./rs",
+    "input": "none (the driver builds a codeword, corrupts it, and decodes)",
+    "output": "the recovered data, showing errors corrected"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "eccpage.com",
+    "Reed & Solomon 1960; Berlekamp 1968; Massey 1969"
+  ],
+  "human_capability_summary": {
+    "built_to": "encode data with Reed-Solomon redundancy and recover it after a bounded number of symbol errors and erasures, over a Galois field",
+    "pressure": "burst errors on storage and transmission channels (CDs, DVB, deep space) where up to t symbol errors must be corrected exactly",
+    "success_means": "the decoded message equals the original whenever the error count is within the code's correction bound t"
+  },
+  "known_human_problem_solved": "algebraic block error correction (Reed-Solomon)",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/reed-solomon-rockliff-1991/receipts/run-reed-solomon-rockliff-1991-20260912T143252Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/reed-solomon-rockliff-1991/receipts/run-reed-solomon-rockliff-1991-20260912T143343Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\reed-solomon-rockliff-1991 ; tracked techne/fossils/specimens/reed-solomon-rockliff-1991/",
+    "where_it_came_from": "{'site': 'eccpage.com', 'author': 'Simon Rockliff', 'dated': '1989-09-21 / 1991-06-26 in the header'} ; HISTORICAL_ARCHIVE_MIRROR ; public (Rockliff: 'This program may be freely modified and/or given to whoever wants it')",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run reed-solomon-rockliff-1991",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/reed-solomon-rockliff-1991/receipts/run-reed-solomon-rockliff-1991-20260912T143343Z.json",
+    "what_humans_used_it_for": "encode data with Reed-Solomon redundancy and recover it after a bounded number of symbol errors and erasures, over a Galois field"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "ldpc-codes-neal-2001",
+      "note": "both error-correcting codes; algebraic block code vs sparse-graph code"
+    }
+  ],
+  "acquisition_tags": [
+    "error-correcting-codes",
+    "coding-theory",
+    "galois-field",
+    "algebraic-codes"
+  ],
+  "hardware_assumptions": ""
+}

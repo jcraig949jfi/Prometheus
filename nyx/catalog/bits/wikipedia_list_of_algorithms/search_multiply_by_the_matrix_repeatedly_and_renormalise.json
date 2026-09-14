@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.multiply_by_the_matrix_repeatedly_and_renormalise",
+  "name": "multiply by the matrix repeatedly and renormalise",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "apply the matrix to a vector, rescale to unit length, and repeat; the component along the dominant eigenvector grows fastest, so the vector converges to it and the growth factor to its eigenvalue",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Power iteration' in section Computational mathematics / Numerical algorithms / Linear algebra: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "TENSOR",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a matrix-vector product"
+  ],
+  "fails_when": [
+    "slow when the two largest eigenvalues are close; finds only the dominant one"
+  ],
+  "instances": [
+    "Power iteration"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.accumulate.stationary_scores_by_propagation"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

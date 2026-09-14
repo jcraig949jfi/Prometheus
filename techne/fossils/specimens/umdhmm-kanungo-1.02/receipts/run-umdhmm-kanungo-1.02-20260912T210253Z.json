@@ -1,0 +1,72 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "umdhmm-kanungo-1.02",
+  "receipt_id": "run-umdhmm-kanungo-1.02-20260912T210253Z",
+  "written_utc": "20260912T210253Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "56f67cde1a1e01748d49a39265d574ea7adb7eadb5963c35f53f32d2ef8d1753",
+  "recipe_sha256": "ab2064f2e3b610f08e099d012bd3bc936fb002eb351f657a0d1b26be6c4d361b",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make (esthmm, testfor, testvit, genseq)",
+      "cmd": "make -s 2>&1 | grep -iE '\\berror' | head -3; test -x ./esthmm && test -x ./testfor && echo built",
+      "exit": 1,
+      "seconds": 0.9,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "nrutil.c:13:10: fatal error: malloc/malloc.h: No such file or directory\nmake: *** [<builtin>: nrutil.o] Error 1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [
+    {
+      "path": "genseq.o",
+      "sha256": "3b6800b435248ba7e19b4d7097ca8a0fbfcb4286f591d7fd911ca4a000ff0a20",
+      "bytes": 11176
+    },
+    {
+      "path": "sequence.o",
+      "sha256": "1f7ccea18d7abc79c4e84ff61aa7e347cd2f895fc842178495e7b75c3966489b",
+      "bytes": 10664
+    }
+  ],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "NO_TESTS",
+  "ok": false,
+  "tree_sha256_after": "56f67cde1a1e01748d49a39265d574ea7adb7eadb5963c35f53f32d2ef8d1753",
+  "body_preserved": true
+}

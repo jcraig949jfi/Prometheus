@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.schedule.rotate_fixed_quanta_over_ready_queue",
+  "name": "rotate fixed time quanta over the ready queue",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "give each ready task a fixed time slice in cyclic order, moving a task to the back of the queue when its slice ends",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Round-robin scheduling' in section Operating systems algorithms / Scheduling: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SCHEDULE",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "SCHEDULED",
+  "guarantee": "DETERMINISTIC",
+  "strategy": "DIRECT",
+  "iteration": "FIFO",
+  "cost": "CONSTANT",
+  "requires": [
+    "a quantum (policy)"
+  ],
+  "fails_when": [
+    "quantum too small thrashes, too large approaches first-come"
+  ],
+  "instances": [
+    "Round-robin scheduling"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

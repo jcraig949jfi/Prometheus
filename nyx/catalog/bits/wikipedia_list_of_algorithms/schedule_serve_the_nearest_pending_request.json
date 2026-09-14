@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.schedule.serve_the_nearest_pending_request",
+  "name": "serve the nearest pending request",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "always serve the pending request closest to the current position",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Shortest seek first' in section Operating systems algorithms / I/O scheduling / Disk scheduling: Disk scheduling algorithm to reduce seek time.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SCHEDULE",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "LOG",
+  "requires": [
+    "a distance"
+  ],
+  "fails_when": [
+    "far requests starve"
+  ],
+  "instances": [
+    "Shortest seek first"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.select.move_to_nearest_unvisited"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

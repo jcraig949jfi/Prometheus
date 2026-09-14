@@ -12,6 +12,7 @@ archive at all.
 from __future__ import annotations
 
 import hashlib
+import re
 import json
 import pathlib
 from dataclasses import dataclass, field
@@ -74,6 +75,10 @@ class Stream:
 
 
 # --------------------------------------------------------------------------- validation
+#: The producer's declared digest shape (archaeon/docs/h0h5/H3_STREAM_FORMAT.md line 11).
+CARRIED_DIGEST_SHAPE = re.compile(r"sha256:[0-9a-f]{64}")
+
+
 def _require(cond: bool, prop: str, msg: str, seq: int | None = None) -> None:
     if not cond:
         raise StreamError(prop, msg, seq=seq)
@@ -133,8 +138,15 @@ def validate(header: dict, raw_rows: list[dict], *, resolver=None, seam_mode: bo
         # --- 2. candidate digests
         payload = r.get("payload")
         if payload is None and seam_mode:
-            _require(isinstance(r.get("candidate_digest"), str) and r["candidate_digest"],
-                     "digests", "a carried digest must still be a non-empty string", seq=seq)
+            # TECHNE-23 (2026-09-12): a carried digest cannot be recomputed (W1), but it CAN
+            # be held to the shape the producer declares -- "sha256 over the canonical
+            # candidate payload" (H3_STREAM_FORMAT.md) -- so a truncated, mislabelled or
+            # placeholder digest is refused instead of carried. Verified non-vacuous on the
+            # real cs-c3-2 stream: 150/150 match.
+            cd = r.get("candidate_digest")
+            _require(isinstance(cd, str) and bool(CARRIED_DIGEST_SHAPE.fullmatch(cd)),
+                     "digests", f"a carried digest must have the declared shape "
+                                f"sha256:<64 hex>; got {cd!r}", seq=seq)
             carried_digests += 1
         else:
             _require(isinstance(payload, dict), "digests", "payload must be an object", seq=seq)

@@ -1,0 +1,72 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "eispack-netlib",
+  "receipt_id": "run-eispack-netlib-20260912T152558Z",
+  "written_utc": "20260912T152558Z",
+  "runner": "native",
+  "image": null,
+  "workdir": "upstream",
+  "harness_sha256": {
+    "drv.f": "d5f61148ce690b71f8549853ad1b1d33664fcc6db7bec10af68bdb89dde94bca"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "b42d2185d65bbe0d7975a95246a29ff38b56ce48fb24e0fe568dc923e5e9f7f0",
+  "recipe_sha256": "dcfa479a4dfc5ed178366caf0f3e2b2bdc32a1c97b8a3ccd4b3bf909c61735b4",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 0,
+      "seconds": 0.2,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Fortran (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r4) 15.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile EISPACK + a Techne driver on rs (symmetric eigenvalues)",
+      "cmd": "gfortran -std=legacy -w -O1 -o $BODY/eispack_test.exe $HARNESS/drv.f *.f 2>&1 | grep -i 'error:'; test -x $BODY/eispack_test.exe",
+      "exit": 0,
+      "seconds": 5.53,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "eigenvalues of a matrix with known spectrum",
+      "cmd": "$BODY/eispack_test.exe 2>&1 | tail -10",
+      "exit": 0,
+      "seconds": 0.24,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": " EISPACK_OK eig=   2.0000000000000000        3.0000000000000000        4.0000000000000000     \n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

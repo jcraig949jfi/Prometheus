@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.trade_time_derivatives_for_space_derivatives_then_difference",
+  "name": "trade time derivatives for space derivatives via the equation, then difference",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "expand the next time level as a Taylor series in time, use the governing equation to rewrite each time derivative as a space derivative, then replace those by centred differences on the grid; second-order in both time and space",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lax–Wendroff for wave equations' in section Computational mathematics / Numerical algorithms / Differential equation solving: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "MATRIX",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a hyperbolic (wave-like) equation",
+    "a step ratio inside the stability bound"
+  ],
+  "fails_when": [
+    "oscillations near discontinuities (dispersive)"
+  ],
+  "instances": [
+    "Lax–Wendroff for wave equations"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.transform.replace_derivatives_by_difference_quotients_on_a_grid"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

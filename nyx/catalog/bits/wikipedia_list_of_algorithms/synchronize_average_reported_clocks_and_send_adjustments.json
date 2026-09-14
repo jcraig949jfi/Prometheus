@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.synchronize.average_reported_clocks_and_send_adjustments",
+  "name": "average the reported clocks and send each node its adjustment",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "a coordinator polls every clock, discards outliers, averages the rest, and sends each node the signed adjustment it should apply, so no single clock is the truth",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Berkeley algorithm' in section Distributed systems algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SYNCHRONIZE",
+  "in_geometry": "SET",
+  "out_geometry": "MAP",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "SCHEDULED",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "PARALLEL_ROUNDS",
+  "cost": "LINEAR",
+  "requires": [
+    "a coordinator",
+    "an outlier rule (policy)"
+  ],
+  "fails_when": [
+    "the coordinator is a single point of failure"
+  ],
+  "instances": [
+    "Berkeley algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

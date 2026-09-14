@@ -1,0 +1,76 @@
+{
+  "attack": "NEMESIS-01",
+  "target": "agents/eos/src/intake.py",
+  "target_owner": "Eos",
+  "run_at": "2026-09-11T17:23:13.927537+00:00",
+  "workspace": {
+    "base_sha": "73e6f46c17f8d69894985a5ae80e6151f4741931",
+    "branch": "nemesis/eos-scorer-attack-2026-09-11",
+    "worktree_path": "D:\\Prometheus-worktrees\\nemesis-adopt",
+    "dirty": false,
+    "main_worktree": false,
+    "allow_canonical_override": false
+  },
+  "seed": 20260911,
+  "eligible_referent_files_on_disk": 4059,
+  "tracked_files_in_index": 39578,
+  "populations": {
+    "NULL": {
+      "n": 30,
+      "crossed": 0,
+      "rate": 0.0,
+      "states": {
+        "REFUSED": 30
+      }
+    },
+    "A": {
+      "n": 200,
+      "crossed": 184,
+      "rate": 0.92,
+      "states": {
+        "PENDING_ADMISSION": 184,
+        "REFUSED": 16
+      }
+    },
+    "C": {
+      "n": 30,
+      "crossed": 30,
+      "rate": 1.0,
+      "states": {
+        "RESOURCE": 30
+      }
+    },
+    "B_POS": {
+      "n": 3,
+      "crossed": 0,
+      "rate": 0.0,
+      "states": {
+        "REFUSED": 3
+      }
+    },
+    "B": {
+      "n": 8,
+      "crossed": 8,
+      "rate": 1.0,
+      "states": {
+        "PENDING_ADMISSION": 8
+      }
+    }
+  },
+  "shrink": {
+    "start_cost_chars": 422,
+    "final_cost_chars": 22,
+    "steps": 400,
+    "minimal_referent_path": ".gitignore",
+    "minimal_token_len": 1,
+    "minimal_token_repr": "'o'",
+    "minimal_falsifier_len": 20,
+    "minimal_rationale_len": 1,
+    "minimal_rationale_repr": "'T'"
+  },
+  "enumerable_anchor_population": {
+    "files_on_disk_usable": 4059,
+    "tracked_files_in_index": 39578,
+    "note": "each usable file yields at least one crossing referent; distinct single-character tokens per file multiply it further"
+  }
+}

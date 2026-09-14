@@ -41,11 +41,12 @@ def fetch(conn, candidate_set=SETS) -> List[Dict[str, Any]]:
     spec hash), and the original stays in the queue as its record."""
     sets = [candidate_set] if isinstance(candidate_set, str) else list(candidate_set)
     cur = conn.cursor()
-    cur.execute("SELECT candidate_set_id, arm_id, source_evidence->>'label', status, spec_hash, sfe_experiment_id, "
+    cur.execute("SELECT COALESCE(candidate_set_id, source_evidence->>'campaign_set'), arm_id, source_evidence->>'label', status, spec_hash, sfe_experiment_id, "
                 "result_summary->'result'->'repeats', result_summary->>'outcome', result_summary->'repeat'->'seeds', "
                 "experiment_spec->'world'->>'seed_root', experiment_spec->'work'->'payload'->>'rule_hex' "
-                "FROM viv.research_experiment_queue WHERE candidate_set_id = ANY(%s) ORDER BY candidate_set_id, arm_id, source_evidence->>'label'",
-                (sets,))
+                "FROM viv.research_experiment_queue WHERE (candidate_set_id = ANY(%s) OR source_evidence->>'campaign_set' = ANY(%s)) "
+                "ORDER BY 1, arm_id, source_evidence->>'label'",
+                (sets, sets))
     rows, by_label = [], {}
     for cs, arm, label, status, spec_hash, exp, reps, outcome, seeds, seed_root, rule_hex in cur.fetchall():
         results = [r.get("result", r) for r in (reps or [])] if status == "completed" else []

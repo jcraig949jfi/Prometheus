@@ -1,0 +1,146 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "ff-planner-2.3",
+  "receipt_id": "run-ff-planner-2.3-20260912T143441Z",
+  "written_utc": "20260912T143441Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/FF-v2.3",
+  "harness_sha256": {
+    "gripper_domain.pddl": "f980ce40ac71a64e68199ee1c57fd94ef3ae9c459239fd70f484a6263673e47d",
+    "gripper_prob.pddl": "9d0dfa13e42d6b118ec34b9fba31fc132a9ba3bacca433db3bba230ef1834114"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "a771bb5de2d01b712da6b7497fde0f42c25fd2d949d34209698ef1be083c70e0",
+  "recipe_sha256": "a9a378a57e7dbcb72652c4038623e28915174833fcbfd522f972260a904928ef",
+  "patches": [],
+  "probe": [
+    {
+      "name": "toolchain",
+      "cmd": "gcc --version | head -1; bison --version | head -1; flex --version",
+      "exit": 0,
+      "seconds": 0.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\nbison (GNU Bison) 3.8.2\nflex 2.6.4\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -viE 'warning|deprecat' | tail -3; test -x ./ff",
+      "exit": 1,
+      "seconds": 5.73,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "/usr/bin/ld: scan-fct_pddl.tab.o:/w/upstream/tree/FF-v2.3/lex-fct_pddl.l:9: multiple definition of `gbracket_count'; main.o:/w/upstream/tree/FF-v2.3/main.c:147: first defined here\ncollect2: error: ld returned 1 exit status\nmake: *** [makefile:74: ff] Error 1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [
+    {
+      "path": "inst_easy.o",
+      "sha256": "5860169c48c6834527528f62bd71be94a7df0c647d4f2a7c13776144c4c20674",
+      "bytes": 211912
+    },
+    {
+      "path": "inst_final.o",
+      "sha256": "50e17592292d91efa4fb5f40b656f757710306cea343239b1fc6bab6d8f3e90b",
+      "bytes": 126616
+    },
+    {
+      "path": "inst_hard.o",
+      "sha256": "9f090f22f141b2de8f28c626fed7d80fe3a6a08dd304cdd153609e443365de80",
+      "bytes": 131448
+    },
+    {
+      "path": "inst_pre.o",
+      "sha256": "eaed024be8273ff388cb46a34b434d2a74e81f02fcf109a3b7787a666bcde51a",
+      "bytes": 270360
+    },
+    {
+      "path": "lex.fct_pddl.c",
+      "sha256": "17035275ebfc080e3dae6043bf8670d8931a87d8807cde092a21654aaceb6edb",
+      "bytes": 58795
+    },
+    {
+      "path": "lex.ops_pddl.c",
+      "sha256": "5d944fd108edbdc7fe77c5ba5581e4f72133a64eb3b28a30f379610a4a56d73a",
+      "bytes": 58906
+    },
+    {
+      "path": "main.o",
+      "sha256": "c8a2fbfa9efaec6cf39ab00be63be4e044b767e47c255c126920e09bf9e737f4",
+      "bytes": 58320
+    },
+    {
+      "path": "memory.o",
+      "sha256": "13d166aadabce3883289c0a510540dcf478dbdcd4106c92afcd545d984cc4a08",
+      "bytes": 89536
+    },
+    {
+      "path": "orderings.o",
+      "sha256": "b44179bd094e73ea9dc45ce92ed1a009f9f393183ef2e9f656a83769daf3d042",
+      "bytes": 28672
+    },
+    {
+      "path": "output.o",
+      "sha256": "6e0d71bda743e2c69b0ec0d256f20442b77614a1d02fb0af33ef803fd3ae6fde",
+      "bytes": 68480
+    },
+    {
+      "path": "parse.o",
+      "sha256": "65254d1a254efe02c326f30ff8dc73c9049561d0a0daf736ffcb988bf4f84a1d",
+      "bytes": 108480
+    },
+    {
+      "path": "relax.o",
+      "sha256": "db672c107fe4b45e3b14dbfc50bf5a58d62358e2d5143a6c3aa8d526a6c46183",
+      "bytes": 61816
+    },
+    {
+      "path": "scan-fct_pddl.tab.c",
+      "sha256": "6bfdb8fb4f0a780304440b7595a5b9e0c4cd680895f4c501e3746d03eefadfdf",
+      "bytes": 66203
+    },
+    {
+      "path": "scan-fct_pddl.tab.o",
+      "sha256": "dcbaa094e3d32ea6f24cb3bdc90c17a0b60fcf86dd64a1d2b669e71e5e86ad10",
+      "bytes": 106416
+    },
+    {
+      "path": "scan-ops_pddl.tab.c",
+      "sha256": "87b267ae6e15a9d5e75ee051c7fd890d59a4cb6f7879eb24d79738098e49b5d2",
+      "bytes": 72928
+    },
+    {
+      "path": "scan-ops_pddl.tab.o",
+      "sha256": "606a4c78bfbe34f6503826b07d41bbcf29f802023f74a3fc4f7499e6ac37aefe",
+      "bytes": 123920
+    },
+    {
+      "path": "search.o",
+      "sha256": "bdd4433a8ff97afb3c61e78a47fbe14dee55d616da08c2ee4eeb5b4917088f29",
+      "bytes": 93832
+    }
+  ],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

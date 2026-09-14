@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.assign_propagate_backtrack",
+  "name": "assign a variable, propagate forced consequences, backtrack on conflict",
+  "lineage": [
+    "constraint solving",
+    "theorem proving"
+  ],
+  "mechanism": "choose an unassigned variable and a value, repeatedly assign every literal forced by a clause with one unassigned literal, and on an empty clause undo to the last choice and try the other value",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Davis–Putnam–Logemann–Loveland algorithm (DPLL)' in section Computational mathematics / Optimization algorithms: an algorithm for deciding the satisfiability of propositional logic formula in conjunctive normal form, i.e. for solving the CNF-SAT problem",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Chaff algorithm': an algorithm for solving instances of the Boolean satisfiability problem",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Davis–Putnam algorithm': check the validity of a first-order logic formula",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SET",
+  "out_geometry": "MAP",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "BACKTRACKING",
+  "iteration": "LIFO",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "clauses in conjunctive normal form",
+    "a variable-choice rule (policy; the whole practical difference)"
+  ],
+  "fails_when": [
+    "exponential without learning; clause learning and watched literals are the engineering (Chaff)"
+  ],
+  "instances": [
+    "Davis–Putnam–Logemann–Loveland algorithm (DPLL)",
+    "Chaff algorithm",
+    "Davis–Putnam algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

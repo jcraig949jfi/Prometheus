@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.schedule.run_the_shortest_remaining_work_first",
+  "name": "run the shortest remaining work first",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "choose the ready job with the least remaining service time, preempting when a shorter job arrives, which minimises mean waiting time",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Shortest job next' in section Operating systems algorithms / Scheduling: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Shortest remaining time': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SCHEDULE",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "LOG",
+  "requires": [
+    "known or estimated service times"
+  ],
+  "fails_when": [
+    "long jobs starve"
+  ],
+  "instances": [
+    "Shortest job next",
+    "Shortest remaining time"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.work_in_a_scaled_residue_form_so_reduction_becomes_a_shift",
+  "name": "work in a scaled residue form so that reduction becomes a multiply and a shift",
+  "lineage": [
+    "numerical methods",
+    "computer arithmetic",
+    "error-correcting systems"
+  ],
+  "mechanism": "represent every residue multiplied by a power of the machine radix; then reducing a product modulo the odd modulus needs only a multiplication by a precomputed inverse and a shift, never a trial division; convert in once and out once",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Montgomery reduction' in section Computational mathematics / Numerical algorithms / Elementary and special functions: an algorithm that allows modular arithmetic to be performed efficiently when the modulus is large",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "PRECOMPUTED_TABLE",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "an odd modulus",
+    "one precomputed inverse of the modulus modulo the radix"
+  ],
+  "fails_when": [
+    "a single operation is not cheaper; only a chain of them pays for the conversions"
+  ],
+  "instances": [
+    "Montgomery reduction"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

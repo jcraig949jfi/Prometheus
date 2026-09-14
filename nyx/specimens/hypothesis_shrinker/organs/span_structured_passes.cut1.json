@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.hypothesis_shrinker.span_structured_passes.cut1",
+  "specimen": "hypothesis_shrinker",
+  "name": "span-structured passes: moves that use the generator's record of WHICH choices belong together (spans, labels, discard marks) -- replace a span by its simplest values, by a same-label descendant, reorder same-label siblings, delete discarded spans, delete runs of nodes",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "hypothesis Shrinker.try_trivial_spans / pass_to_descendant / reorder_spans / remove_discarded / node_program, over data.Span",
+    "sources": [
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinker.py 1748-1770 (try_trivial_spans), 1030-1075 (pass_to_descendant), 1842-1875 (reorder_spans via Ordering keyed by sort_key), 1300-1330 (remove_discarded), 1345-1375 + 1900-1925 (node_program / run_node_program)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/data.py 169-260 (Span: label, parent, start, end, depth, discarded, choice_count, children -- produced by generation)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/hypothesis_shrinker/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Five defs in the pinned bytes, united at drawing by the foreign state they all consume; DISCOVERED. The spans themselves are produced by strategies during generation (data.py), outside the shrinker.",
+    "mechanism": "Each pass reads the span record of the current best and proposes a structurally meaningful edit: (a) replace all choices inside one span by their index-0 values, then re-read the span's new content; (b) replace a span by a descendant span with the same label (a recursive strategy's subtree for its parent); (c) reorder same-label children of a span into sort_key order using the Ordering shrinker; (d) delete every span marked discarded (rejection-sampled values) in one go; (e) delete n contiguous nodes adaptively. All go through c01's acceptance.",
+    "input": "the current best's nodes and its Spans (start/end/label/parent/discarded); a chooser (c04) for which span/which descendant",
+    "output": "candidate choice sequences proposed to acceptance",
+    "state": "none of its own; reads the span record; pass_to_descendant caches descendant lists per (label, i) at the current target",
+    "assumptions": "that spans align with semantic units of the generated value (they do by construction of the strategies); that same-label spans are interchangeable in type (a recursive strategy's subtrees); that a discarded span can be removed without changing the enclosing value (the strategy asserted this when it marked it)",
+    "interface": "pass(chooser) -> None, proposing via consider_new_nodes; requires a Spans record on the target",
+    "fitness_value": "unknown -- claimed: these are the only passes that can make STRUCTURAL moves (subtree replacement, sibling reordering) rather than value moves; without spans the shrinker would see a flat sequence. Which pass earns its keep on the Proteus fixture is exactly what the profiling report prints and was not run at CUT-1 (P-b).",
+    "failure_landscape": "(a) entirely dependent on the generator having recorded useful spans: a strategy without spans (or a provider that does not record them) leaves only node_program deletions; (b) pass_to_descendant needs SAME label -- a recursive strategy whose alternatives carry different labels cannot be collapsed; (c) O(spans^2) for descendant search (docstring); (d) reorder uses sort_key, so it may reorder AWAY from the consumer's order.",
+    "ablation": "unknown -- designed: the engine's debug profiling lists useful/useless passes per run; running the Proteus worst case with report_debug_info shows which of these fired. Not run at CUT-1; P-b in ablations/.",
+    "decomposability": "Each of the five is separately removable from the pass list; they share only the span reader. The reader (data.Span) is the coupling to the ecosystem.",
+    "composability": "Any organism whose generated values carry a structural record of what came from where. Proteus's programs have a tree structure that the choice sequence encodes only through the recursive strategy's spans -- so the transfer question is whether a Prometheus host records spans at all. None does.",
+    "human_prior": "That the generator's grouping is the right grouping for simplification; that a subtree of the same strategy is 'simpler' than its parent (true under shortlex by length, but it is the parent's label that licenses the move).",
+    "control": "Positive: a recursive one_of strategy generating a nested Not(Not(x)) must be reducible by pass_to_descendant to x when the predicate allows. Negative: with a flat strategy (no nested spans) pass_to_descendant never fires (chooser exhausts). Cheat: a pass that deletes a non-discarded span and 'succeeds' because the predicate is insensitive to it is not a structural insight; control: the same deletion must fail on a predicate that reads the span.",
+    "cheat": "Success attributed to structure when it came from node_program's blind deletion; control: run with node_program passes removed."
+  },
+  "alternative_cuts": [
+    "CUTS.md c10: the repair cluster and these passes are one 'engine-shape-aware' organ (cut C)"
+  ],
+  "pressure_refs": []
+}

@@ -188,16 +188,18 @@ def issue(conn, rows: Optional[List[Dict[str, Any]]] = None,
                                        "scientific claim."),
                          "upstream_selection_history": "UNKNOWN"})
              for r in rows]
-    # Every candidate is selected: register all, cancel none. vivqueue.submit
-    # selects one; issue each as its own set-of-one is dishonest (they are one
-    # family), so we submit the set once per row with the same candidate_set_id
-    # and no cancellation, via the human path (no cadence, no ordinal).
+    # Every candidate is selected: register all, cancel none. A shared
+    # candidate_set_id was the wrong carrier for that (Vivarium #181 item 4:
+    # each row was bound as one-chosen-over-N in SFE); the family is the
+    # grouping, and source_evidence.campaign_set carries the campaign id.
+    # Human path (no cadence, no ordinal).
     csid = "cs-" + CAMPAIGN_ID.lower()
     results = []
     for i, cand in enumerate(cands):
+        cand["source_evidence"] = vq.campaign_set_key(cand.get("source_evidence") or {}, csid)
         res = vq.submit(conn, candidates=[cand], selected_index=0,
                         source_reason="human", created_by="archaeon",
-                        config=config, candidate_set_id=csid)
+                        config=config)
         results.append(res["selected_experiment_id"])
     return {"campaign": CAMPAIGN_ID, "candidate_set_id": csid,
             "experiment_ids": results, "registered": len(results)}

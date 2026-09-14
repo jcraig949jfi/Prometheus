@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.advance_position_from_two_previous_positions_and_acceleration",
+  "name": "advance position from the two previous positions and the acceleration",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "biological and artificial dynamical systems"
+  ],
+  "mechanism": "new position = twice the current position minus the previous position plus acceleration times step squared; velocity never appears, the update is time-reversible and conserves an energy-like quantity over long runs",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Verlet integration ()' in section Computational mathematics / Numerical algorithms / Differential equation solving: integrate Newton's equations of motion",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "second-order dynamics (acceleration from position only)"
+  ],
+  "fails_when": [
+    "velocity-dependent forces break the symmetry; step length must be fixed"
+  ],
+  "instances": [
+    "Verlet integration ()"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

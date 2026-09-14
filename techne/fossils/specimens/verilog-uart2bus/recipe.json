@@ -1,0 +1,38 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree/verilog",
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V 2>&1 | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile UART2bus rtl + the tb_uart2bus_top bench",
+      "cmd": "iverilog -Ibench -Irtl -o $BODY/uart.vvp bench/tb_uart2bus_top.v bench/reg_file_model.v $(ls rtl/*.v) 2>&1 | grep -viE 'warning' | tail -6; test -f $BODY/uart.vvp"
+    }
+  ],
+  "runs": [
+    {
+      "name": "drive serial frames into the UART->bus controller, watch the register writes/reads",
+      "cmd": "vvp -N $BODY/uart.vvp 2>&1 | tail -30; echo UART2BUSDONE",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "UART2BUSDONE"
+        ],
+        "stdout_not_contains": [
+          "ERROR",
+          "Error"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_EMULATED",
+  "notes": "The shipped tb_uart2bus_top drives serial frames through uart_tasks and checks the register-file model; the decoded byte + framing are the observable protocol-FSM decisions under timing pressure. behavioral_entry_point: skew the baud divisor or corrupt a stop bit."
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "libfec-karn",
+  "receipt_id": "run-libfec-karn-20260912T153815Z",
+  "written_utc": "20260912T153815Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "e140027b76e27d81b19322968c6d54cfaf0c768d1d4c14807cb742cce737770f",
+  "recipe_sha256": "3383f39dae466d4ebb274477037633263cbe637966f90a661df79afe94e8582c",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.68,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "configure+make vtest27",
+      "cmd": "( [ -x ./configure ] && ./configure >/dev/null 2>&1 || true ); make -s vtest27 ARCH_OPTION='-march=x86-64 -mmmx -msse -msse2' 2>&1 | grep -viE 'warning' | tail -4; ls vtest27 2>/dev/null; test -x ./vtest27",
+      "exit": 1,
+      "seconds": 0.7,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "cc1: error: CPU you selected does not support x86-64 instruction set\nmake: *** [makefile:153: viterbi27_mmx.o] Error 1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

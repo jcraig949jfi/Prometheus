@@ -1,0 +1,43 @@
+{
+ "code": {
+  "_may_cross_reads_scopes": false,
+  "claim_work_reads_scopes": false,
+  "get_routes_under_read": [
+   "/v2/read/grants",
+   "/v2/read/observations",
+   "/v2/read/scopes",
+   "/v2/read/worlds"
+  ],
+  "import_artifact_reads_scopes": false,
+  "mutating_routes_under_read": [
+   "/v2/read/grants/{grant_id}/revoke",
+   "/v2/read/scopes",
+   "/v2/read/scopes/{sid}/grants",
+   "/v2/read/scopes/{sid}/worlds"
+  ]
+ },
+ "db": "D:\\Prometheus-data\\sfe\\engine.db",
+ "grantee_client_id": "cli_1029e9255a074157a1b3ba1e",
+ "grants": [
+  {
+   "created_ts": 1789231944.6544864,
+   "grant_id": "gnt_1ecdeae69f800240e03221ed",
+   "granted_by": "cli_5680df5896815e185078c9c6",
+   "granted_by_is_owner": true,
+   "grantee_name": "archaeon",
+   "note": "B1: read-only corpus for Archaeon parity check; vivarium-created campaign worlds (viv- prefix); owner Vivarium 2026-09-12",
+   "owner_client_id": "cli_5680df5896815e185078c9c6",
+   "owner_name": "vivarium",
+   "owner_prefixed_worlds_missing_from_scope": 24,
+   "revoked_ts": null,
+   "scope_id": "scp_1be32ffbe7c9bf3b29ec8d85",
+   "scope_name": "archaeon-campaigns",
+   "worlds_in_scope": 592,
+   "worlds_in_scope_not_owned_by_owner": [],
+   "worlds_in_scope_with_prefix": 592
+  }
+ ],
+ "read_only": true,
+ "schema": "read_grant_verification.v1",
+ "verdict": "GRANT_PRESENT"
+}

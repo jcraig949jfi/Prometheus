@@ -1,0 +1,37 @@
+{
+  "runner": "wsl",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -i -E '^.*error' ; test -x ./decode && test -x ./make-ldpc"
+    }
+  ],
+  "runs": [
+    {
+      "name": "make-ldpc / encode / transmit / decode / verify pipeline on a small random code",
+      "cmd": "mkdir -p $BODY/build && cd $BODY/build && S=$BODY/upstream/tree && $S/make-ldpc ex.pchk 20 40 1 evenboth 3 2>&1 && $S/make-gen ex.pchk ex.gen dense 2>&1 && $S/rand-src ex.src 1 20x10 2>&1 && $S/encode ex.pchk ex.gen ex.src ex.enc 2>&1 && $S/transmit ex.enc ex.rec 1 bsc 0.05 2>&1 && $S/decode ex.pchk ex.rec ex.dec bsc 0.05 prprp 100 2>&1 && $S/verify ex.pchk ex.dec ex.gen ex.src 2>&1",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(decoded|bit error rate|block)"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "upstream test script",
+      "cmd": "make test 2>&1 | tail -15",
+      "expect": {
+        "exit": 0
+      }
+    }
+  ],
+  "test_kind": "UPSTREAM",
+  "classification_if_ok": "RUNNABLE_NATIVE"
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.keep_a_negative_remainder_and_add_next_step_instead_of_restoring",
+  "name": "keep a negative remainder and add at the next step instead of restoring",
+  "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+  ],
+  "mechanism": "subtract the divisor from the shifted remainder every step; if the result goes negative do not undo it -- emit a negative digit and ADD the divisor at the next step instead; a final fix-up converts the signed digits to an ordinary quotient",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Non-restoring division' in section Computational mathematics / Numerical algorithms / Elementary and special functions: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a signed-digit quotient representation"
+  ],
+  "fails_when": [
+    "needs the final conversion step"
+  ],
+  "instances": [
+    "Non-restoring division"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.transform.bring_down_a_digit_and_subtract_the_largest_fitting_multiple"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

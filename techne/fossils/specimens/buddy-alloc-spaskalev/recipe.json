@@ -1,0 +1,35 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile driver against the header",
+      "cmd": "gcc -O2 -w -I. -o $BODY/bd $HARNESS/drv.c 2>&1 | grep -i 'error:' | head -3; test -x $BODY/bd"
+    }
+  ],
+  "runs": [
+    {
+      "name": "alloc/free 500 blocks in a 1MB arena, then coalesce",
+      "cmd": "$BODY/bd",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "COALESCE_OK",
+          "BUDDY_OK"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: after freeing everything, a half-arena allocation must succeed -- the buddy merges freed blocks back. behavioral_entry_point: free in an adversarial order to induce fragmentation failure."
+}

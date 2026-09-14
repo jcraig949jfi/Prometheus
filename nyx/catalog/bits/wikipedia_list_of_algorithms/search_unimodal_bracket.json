@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.unimodal_bracket",
+  "name": "bracket a unimodal optimum",
+  "lineage": [
+    "optimization",
+    "search"
+  ],
+  "mechanism": "evaluate a unimodal function at two interior points of an interval, discard the outer third that cannot contain the optimum, and repeat until the interval is small",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Ternary search' in section Combinatorial algorithms / Sequence algorithms / Sequence search: a technique for finding the minimum or maximum of a function that is either strictly increasing and then strictly decreasing or vice versa",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LOG",
+  "requires": [
+    "unimodality on the interval"
+  ],
+  "fails_when": [
+    "multimodal functions bracket a local optimum silently"
+  ],
+  "instances": [
+    "Ternary search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIVIDE_CONQUER",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "NONE"
+}

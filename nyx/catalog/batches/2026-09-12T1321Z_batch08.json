@@ -1,0 +1,1198 @@
+[
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Partial differential equation:",
+  "decision": "NOT_A_BIT",
+  "reason": "a header, problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Computation of π:",
+  "decision": "NOT_A_BIT",
+  "reason": "a header, problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Division algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a header, problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Exponentiation:",
+  "decision": "NOT_A_BIT",
+  "reason": "a header, problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hyperbolic and Trigonometric Functions:",
+  "decision": "NOT_A_BIT",
+  "reason": "a header, problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Multiplication algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a header, problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Multiplicative inverse Algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a header, problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Square and Nth root of a number:",
+  "decision": "NOT_A_BIT",
+  "reason": "a header, problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Summation:",
+  "decision": "NOT_A_BIT",
+  "reason": "a header, problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Methods of computing square roots",
+  "decision": "NOT_A_BIT",
+  "reason": "a header, problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Rounding functions",
+  "decision": "NOT_A_BIT",
+  "reason": "a family of conventions (which way to round) -- policy, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Borwein's algorithm",
+  "decision": "DEFER",
+  "reason": "several distinct iterations share the name (quadratic, quartic, nonic); the list line does not say which; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Unrestricted algorithm",
+  "decision": "DEFER",
+  "reason": "the list line names a property (no preset precision limit), not a mechanism; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Euler method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.advance_state_by_step_times_current_slope",
+   "name": "advance the state by the step times the current slope",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "from the current state evaluate the rate of change once, move the state by that rate times the step length, and repeat; nothing from earlier steps is kept",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a rate function evaluable at any state",
+    "a step length (policy)"
+   ],
+   "fails_when": [
+    "first-order error; unstable on stiff problems unless the step is tiny"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Euler integration",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.advance_state_by_step_times_current_slope"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Backward Euler method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.advance_state_by_the_slope_at_the_new_point",
+   "name": "advance the state by the slope taken at the new point",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "choose the next state so that the rate evaluated AT that next state, times the step, is exactly the move from the current state; each step is therefore an equation to solve, usually by a few fixed-point or Newton iterations",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a solver for the per-step implicit equation"
+   ],
+   "fails_when": [
+    "each step costs a solve; damps genuine oscillations along with instabilities"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.predict.advance_state_by_step_times_current_slope"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Trapezoidal rule (differential equations)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.advance_state_by_the_mean_of_old_and_new_slopes",
+   "name": "advance the state by the mean of the old and new slopes",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "choose the next state so that the move equals the step times the average of the rate at the current state and the rate at the next state; implicit like the backward step but second-order and non-damping",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a solver for the per-step implicit equation"
+   ],
+   "fails_when": [
+    "oscillatory (not damped) error on very stiff components"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.predict.advance_state_by_the_slope_at_the_new_point"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Crank–Nicolson method for diffusion equations",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.predict.advance_state_by_the_mean_of_old_and_new_slopes"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Runge–Kutta methods",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.combine_slopes_sampled_within_the_step",
+   "name": "combine slopes sampled at trial points inside the step",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "evaluate the rate at the current state, use it to reach a trial point part-way through the step, evaluate again there, repeat for a fixed number of stages, and advance by a fixed weighted combination of the sampled slopes chosen so low-order errors cancel",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a rate function evaluable at trial states",
+    "a tableau of stage weights (data)"
+   ],
+   "fails_when": [
+    "several rate evaluations per step; explicit forms still fail on stiff problems"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "GENERALIZES",
+     "id": "bit.predict.advance_state_by_step_times_current_slope"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Linear multistep methods",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.advance_by_fixed_combination_of_previous_states_and_slopes",
+   "name": "advance by a fixed linear combination of previous states and slopes",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "keep a window of the last few states and their rates; the next state is a fixed linear combination of them (and, in implicit forms, of its own rate), so only one new rate evaluation is needed per step",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a start-up procedure to fill the window",
+    "fixed coefficient sets (data)"
+   ],
+   "fails_when": [
+    "changing the step length invalidates the window; some coefficient sets are unstable"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.predict.combine_slopes_sampled_within_the_step"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Verlet integration ()",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.predict.advance_position_from_two_previous_positions_and_acceleration",
+   "name": "advance position from the two previous positions and the acceleration",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "biological and artificial dynamical systems"
+   ],
+   "mechanism": "new position = twice the current position minus the previous position plus acceleration times step squared; velocity never appears, the update is time-reversible and conserves an energy-like quantity over long runs",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PREDICT",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "second-order dynamics (acceleration from position only)"
+   ],
+   "fails_when": [
+    "velocity-dependent forces break the symmetry; step length must be fixed"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Finite difference method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.replace_derivatives_by_difference_quotients_on_a_grid",
+   "name": "replace derivatives by difference quotients on a grid",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "lay a grid over the domain, replace each derivative in the equation by a difference of neighbouring grid values divided by the spacing, and solve the resulting algebraic system for the grid values",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "MATRIX",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "a regular grid",
+    "boundary values"
+   ],
+   "fails_when": [
+    "irregular domains fit badly; error scales with spacing to a low power"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lax–Wendroff for wave equations",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.trade_time_derivatives_for_space_derivatives_then_difference",
+   "name": "trade time derivatives for space derivatives via the equation, then difference",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "expand the next time level as a Taylor series in time, use the governing equation to rewrite each time derivative as a space derivative, then replace those by centred differences on the grid; second-order in both time and space",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "MATRIX",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a hyperbolic (wave-like) equation",
+    "a step ratio inside the stability bound"
+   ],
+   "fails_when": [
+    "oscillations near discontinuities (dispersive)"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.transform.replace_derivatives_by_difference_quotients_on_a_grid"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Multigrid methods (MG methods), a group of algorithms for solving differential equations using a hierarchy of discretiza",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.smooth_on_the_fine_grid_and_correct_from_coarser_grids",
+   "name": "smooth on the fine grid, correct from coarser grids",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "a few relaxation sweeps on the fine grid remove the rapidly varying error; the remaining residual is transferred to a coarser grid where the slowly varying error is cheap to solve (recursively), the coarse correction is interpolated back and added, and a final smoothing sweep cleans the interpolation",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "MATRIX",
+   "out_geometry": "TENSOR",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a hierarchy of grids with transfer operators",
+    "a smoother that kills high-frequency error"
+   ],
+   "fails_when": [
+    "anisotropic or non-elliptic operators defeat the smoother/coarse split"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Spigot algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.emit_digits_of_a_constant_from_a_bounded_carry_state",
+   "name": "emit digits of a constant one at a time from a bounded carry state",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "represent the constant as a series in a mixed-radix form, keep only the current remainders of each term, and at each step multiply through by the output base and carry to release the next digit; earlier digits are never stored or reused",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "STREAM",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "STREAMING",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a series with rational terms for the constant"
+   ],
+   "fails_when": [
+    "quadratic in the digit count for the classic form"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bailey–Borwein–Plouffe formula",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.generate.emit_digits_of_a_constant_from_a_bounded_carry_state"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Binary splitting",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.accumulate.evaluate_a_rational_series_by_recursive_halving",
+   "name": "evaluate a rational series by recursively halving the term range",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "split the range of terms in half, compute for each half an exact triple (product of denominators, product of numerators, partial sum numerator) recursively, and combine the two triples with a few big multiplications; one division at the end",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ACCUMULATE",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "rational terms",
+    "fast big-integer multiplication"
+   ],
+   "fails_when": [
+    "irrational or non-hypergeometric terms"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Chudnovsky algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.accumulate.evaluate_a_rational_series_by_recursive_halving"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gauss–Legendre algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.iterate_arithmetic_and_geometric_means_to_their_common_limit",
+   "name": "iterate the arithmetic and geometric means to their common limit",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "replace a pair of numbers by their arithmetic mean and their geometric mean; the two converge quadratically to a common value, and a running correction term built from their squared differences yields the constant",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "a square root at full precision each round"
+   ],
+   "fails_when": [
+    "each round needs full-precision arithmetic; no partial digits until the end"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Kahan summation algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.accumulate.carry_the_rounding_error_of_each_addition_into_the_next",
+   "name": "carry the rounding error of each addition into the next",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "after adding a term to the running sum, recover what was lost to rounding by subtracting back, and add that lost piece to the next term before it is summed; the error no longer grows with the number of terms",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ACCUMULATE",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "STREAMING",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "rounding that is deterministic and recoverable by subtraction"
+   ],
+   "fails_when": [
+    "compilers that reassociate the arithmetic remove the correction"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Long division",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.bring_down_a_digit_and_subtract_the_largest_fitting_multiple",
+   "name": "bring down a digit and subtract the largest fitting multiple",
+   "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+   ],
+   "mechanism": "from the most significant end, append the next digit of the dividend to the partial remainder, find the largest single digit whose multiple of the divisor fits, emit that digit and subtract; the remainder carries to the next position",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "comparison and subtraction on the partial remainder"
+   ],
+   "fails_when": [
+    "one digit per step; quadratic in length"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Restoring division",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.bring_down_a_digit_and_subtract_the_largest_fitting_multiple"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Non-restoring division",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.keep_a_negative_remainder_and_add_next_step_instead_of_restoring",
+   "name": "keep a negative remainder and add at the next step instead of restoring",
+   "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+   ],
+   "mechanism": "subtract the divisor from the shifted remainder every step; if the result goes negative do not undo it -- emit a negative digit and ADD the divisor at the next step instead; a final fix-up converts the signed digits to an ordinary quotient",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a signed-digit quotient representation"
+   ],
+   "fails_when": [
+    "needs the final conversion step"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.transform.bring_down_a_digit_and_subtract_the_largest_fitting_multiple"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "SRT division",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.choose_quotient_digit_from_a_table_on_leading_bits_with_redundant_digits",
+   "name": "choose the quotient digit from a table on the leading bits, using a redundant digit set",
+   "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+   ],
+   "mechanism": "look at only a few leading bits of the partial remainder and divisor and read the next quotient digit from a small table; because the digit set is redundant (includes negatives) a slightly wrong choice is corrected by later digits rather than by a comparison",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "PRECOMPUTED_TABLE",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a digit-selection table (data) and a redundant digit set"
+   ],
+   "fails_when": [
+    "a wrong table entry gives systematically wrong results (the 1994 processor bug)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Goldschmidt division",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.scale_numerator_and_denominator_by_a_common_factor_toward_one",
+   "name": "scale numerator and denominator by a common factor that drives the denominator to one",
+   "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+   ],
+   "mechanism": "multiply both numerator and denominator by the same factor (two minus the denominator) each round; the denominator converges quadratically to one and the numerator to the quotient; the two multiplications per round are independent and can run in parallel",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "a denominator scaled into a fixed interval near one"
+   ],
+   "fails_when": [
+    "rounding errors accumulate (no self-correction, unlike the reciprocal-refinement route)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Newton's method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.step_to_the_zero_of_the_local_linearisation",
+   "name": "step to the zero of the local linearisation",
+   "lineage": [
+    "numerical methods",
+    "scientific software"
+   ],
+   "mechanism": "at the current guess, replace the function by its tangent line and jump to where that line crosses zero; repeat -- the error roughly squares each step once close",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "GREEDY",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "a derivative at every guess",
+    "a starting guess in the basin"
+   ],
+   "fails_when": [
+    "divergence or cycling from a poor start; flat derivative"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "GENERALIZES",
+     "id": "bit.search.step_to_minimum_of_local_quadratic"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Newton–Raphson division",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.step_to_the_zero_of_the_local_linearisation"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "nth root algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.step_to_the_zero_of_the_local_linearisation"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Alpha max plus beta min algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.approximate_a_norm_by_weighted_larger_and_smaller_magnitudes",
+   "name": "approximate a norm by a weighted sum of the larger and smaller magnitudes",
+   "lineage": [
+    "numerical methods",
+    "computer arithmetic",
+    "controllers"
+   ],
+   "mechanism": "take the absolute values of the two components, scale the larger by one constant and the smaller by another, and add; the constants are chosen so the worst-case relative error over all angles is minimised",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "CONSTANT",
+   "requires": [
+    "two constants (data)"
+   ],
+   "fails_when": [
+    "error of a few percent; not a substitute where the exact norm matters"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Exponentiating by squaring",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.square_and_multiply_by_the_binary_digits_of_the_exponent",
+   "name": "square, and multiply in by the binary digits of the exponent",
+   "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+   ],
+   "mechanism": "scan the exponent bit by bit; square the accumulator at every bit and multiply in the base only where the bit is set, so the number of multiplications is proportional to the bit length rather than the exponent",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "SWEEP",
+   "cost": "LOG",
+   "requires": [
+    "an associative operation"
+   ],
+   "fails_when": [
+    "not minimal in multiplications; leaks the exponent through timing if data-dependent"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Addition-chain exponentiation",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.shortest_chain_of_sums_reaching_the_exponent",
+   "name": "find a short chain of sums reaching the exponent, one multiplication per link",
+   "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+   ],
+   "mechanism": "search for a sequence starting at one in which every element is the sum of two earlier elements and the last is the exponent; each link then costs one multiplication of already-computed powers, so a short chain gives a minimal-multiplication power",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "BRANCH_AND_BOUND",
+   "iteration": "LIFO",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a fixed exponent worth optimising for"
+   ],
+   "fails_when": [
+    "finding the shortest chain is hard; heuristics give near-minimal chains"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "GENERALIZES",
+     "id": "bit.transform.square_and_multiply_by_the_binary_digits_of_the_exponent"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "CORDIC",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.apply_fixed_shrinking_elementary_steps_choosing_each_sign_by_the_residual",
+   "name": "apply a fixed sequence of shrinking elementary steps, choosing each sign by the residual",
+   "lineage": [
+    "numerical methods",
+    "computer arithmetic",
+    "controllers"
+   ],
+   "mechanism": "a table holds the angle (or log) of each elementary factor whose tangent (or ratio) is a power of two; step through the table, at each entry rotating or scaling in whichever direction reduces the remaining target, using only shifts and adds; the accumulated direction bits and the residual give the function value",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "PRECOMPUTED_TABLE",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a table of elementary angles or logs (data)",
+    "shift and add only"
+   ],
+   "fails_when": [
+    "one bit of precision per step; a final scale constant"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "BKM algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.apply_fixed_shrinking_elementary_steps_choosing_each_sign_by_the_residual"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Montgomery reduction",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.work_in_a_scaled_residue_form_so_reduction_becomes_a_shift",
+   "name": "work in a scaled residue form so that reduction becomes a multiply and a shift",
+   "lineage": [
+    "numerical methods",
+    "computer arithmetic",
+    "error-correcting systems"
+   ],
+   "mechanism": "represent every residue multiplied by a power of the machine radix; then reducing a product modulo the odd modulus needs only a multiplication by a precomputed inverse and a shift, never a trial division; convert in once and out once",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "PRECOMPUTED_TABLE",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "an odd modulus",
+    "one precomputed inverse of the modulus modulo the radix"
+   ],
+   "fails_when": [
+    "a single operation is not cheaper; only a chain of them pays for the conversions"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Booth's multiplication algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.recode_runs_of_ones_as_one_subtract_and_one_add",
+   "name": "recode runs of ones in the multiplier as one subtract and one add",
+   "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+   ],
+   "mechanism": "scan adjacent pairs of multiplier bits; a run of ones contributes a subtraction of the multiplicand at its start and an addition at its end instead of one addition per bit, and the same rule handles negative two's-complement multipliers without a sign case",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "two's-complement operands"
+   ],
+   "fails_when": [
+    "alternating bit patterns are the worst case (no runs)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Karatsuba algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.multiply_by_splitting_into_fewer_subproducts"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Toom–Cook multiplication",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.multiply_by_splitting_into_fewer_subproducts"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Schönhage–Strassen algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.multiply_by_transform_pointwise_product_inverse"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Fürer's algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.multiply_by_transform_pointwise_product_inverse"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Filtered back-projection",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.filter_each_projection_then_smear_it_back_along_its_rays",
+   "name": "filter each projection, then smear it back along its rays",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "scientific software"
+   ],
+   "mechanism": "apply a ramp high-pass filter to each one-dimensional projection, then add each filtered projection back into the image along the rays that produced it; the filter cancels the blur that plain smearing would give",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "MATRIX",
+   "out_geometry": "MATRIX",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "projections at many angles",
+    "a one-dimensional filter"
+   ],
+   "fails_when": [
+    "few or noisy angles give streak artefacts"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Level set method (LSM)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.represent_a_moving_boundary_as_the_zero_level_of_an_evolving_field",
+   "name": "represent a moving boundary as the zero level of an evolving field",
+   "lineage": [
+    "numerical methods",
+    "scientific software",
+    "biological and artificial dynamical systems"
+   ],
+   "mechanism": "instead of tracking boundary points, store a field over the whole grid whose zero contour is the boundary; evolve the field by a speed equation and read the boundary off wherever the field crosses zero, so merging and splitting need no special handling",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "FUNCTION",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a grid over the whole domain",
+    "periodic re-initialisation to a distance field"
+   ],
+   "fails_when": [
+    "one dimension more storage than the boundary itself; the field drifts from a distance function"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+  }
+ }
+]

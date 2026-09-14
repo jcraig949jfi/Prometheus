@@ -1,0 +1,42 @@
+{
+  "runner": "wsl",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile example_short",
+      "cmd": "gcc -O2 -o $BODY/evo1 src/example_short.c src/cmaes.c -lm 2>&1 | grep -i error; test -x $BODY/evo1"
+    }
+  ],
+  "runs": [
+    {
+      "name": "example_short: minimise the cigtab test function via CMA-ES",
+      "cmd": "mkdir -p $BODY/build && cd $BODY/build && cp -f $BODY/upstream/tree/cmaes_initials.par $BODY/upstream/tree/cmaes_signals.par . && $BODY/evo1 2>&1 | tail -16",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(stop|fbestever|function value|clock)"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "the run terminates on a declared stopping criterion",
+      "cmd": "cd $BODY/build && $BODY/evo1 2>&1 | grep -i -E 'stop|fbestever|TolFun|MaxIter' | head -5; echo DONE",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "DONE"
+        ],
+        "stdout_regex": "(?i)(stop|fbestever|tolfun|maxiter)"
+      }
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_NATIVE",
+  "notes": "example_short.c is the self-contained example (example1.c is not in this release); it optimises the built-in felli/rosenbrock test function and writes cmaes outcome files into the cwd, so the recipe runs it in $BODY/build and never writes upstream/. example_short seeds from the clock, so the exact trajectory is not reproducible run-to-run; the test checks the log SHAPE is stable rather than asserting byte-identity."
+}

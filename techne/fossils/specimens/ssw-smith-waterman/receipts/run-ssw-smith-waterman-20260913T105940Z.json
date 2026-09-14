@@ -1,0 +1,108 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "ssw-smith-waterman",
+  "receipt_id": "run-ssw-smith-waterman-20260913T105940Z",
+  "written_utc": "20260913T105940Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/src",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "query.fa": "a63dc1c1cf8de4cc31266cb755a4bf239e592ed1a56f1e4ac8ae2175af8ebaa2",
+    "ref.fa": "0808a64874c339d88ff16aefaf31ad7daf39c69ed2d7db9cf0c4fca58d121691"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "3d5056fdb387b085dce770a5e7b708c0401368793d2187dc74f3a2889830f5fb",
+  "recipe_sha256": "b51d59fc77f11cdb38722272e67ce5063ce2367200b8458424dded85c1464c97",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.96,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make (ssw_test)",
+      "cmd": "make -s 2>&1 | grep -iE '\\berror' | head -3; test -x ./ssw_test && echo built",
+      "exit": 0,
+      "seconds": 2.77,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "local-align a query against a reference sharing a conserved core (SIMD Smith-Waterman): optimal score + CIGAR",
+      "cmd": "./ssw_test -c $HARNESS/ref.fa $HARNESS/query.fa 2>&1 | grep -iE 'optimal|score|target|cigar|=' | head -12",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "target_name: ref\noptimal_alignment_score: 80\tsuboptimal_alignment_score: 66\tstrand: +\ttarget_begin: 25\ttarget_end: 64\tquery_begin: 1\tquery_end: 40\nTarget:       25    GGGGCCCCAAAATTTTACGTACGTACGTACGTACGTACGT    64\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "example_c",
+      "sha256": "91997e2aa79eaf35fec9483d59b403a5355cfda290997533d4106a3d01bf775a",
+      "bytes": 25208
+    },
+    {
+      "path": "example_cpp",
+      "sha256": "f3927e8189189c47de7a8686f19d5abae27a0be404e55dedd932c6dce5e4e86a",
+      "bytes": 52216
+    },
+    {
+      "path": "libssw.so",
+      "sha256": "3a2296fb12eb32e0e4571e1b03dc9e882f21caa6e73af9a4434b308863f82984",
+      "bytes": 24384
+    },
+    {
+      "path": "ssw.o",
+      "sha256": "94ce07a744f6d8e50abb7cb57625b8657cc4a2bcf34856ba47b4cc36ae741216",
+      "bytes": 16528
+    },
+    {
+      "path": "ssw_cpp.o",
+      "sha256": "8d7e94da57e5823a58ea40dbe9c11d947ec265b7b5aa7817957e81b25269f7ba",
+      "bytes": 28912
+    },
+    {
+      "path": "ssw_test",
+      "sha256": "41fd0c6a7b8aa57f0100c1befcb55764d41c2efe38a8917c5e84817158aeafbc",
+      "bytes": 38632
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "3d5056fdb387b085dce770a5e7b708c0401368793d2187dc74f3a2889830f5fb",
+  "body_preserved": true
+}

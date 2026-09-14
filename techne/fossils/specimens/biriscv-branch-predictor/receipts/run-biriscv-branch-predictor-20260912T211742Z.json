@@ -1,0 +1,78 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "biriscv-branch-predictor",
+  "receipt_id": "run-biriscv-branch-predictor-20260912T211742Z",
+  "written_utc": "20260912T211742Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "tb_npc.v": "171b0a4d7f0b3a6766af80a41a6fb5ab44e2f6c19019f7785e4ec29b9c3911a6"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "7ba854a7912cd236c743bd857c47695486a65aa07dcb97480881c41aa85f0e8b",
+  "recipe_sha256": "9545391b88ef94a90e4b190969de2ce09440b6fb8a551cac725af80cfc56f769",
+  "patches": [],
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V | head -1",
+      "exit": 0,
+      "seconds": 0.76,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Icarus Verilog version 11.0 (stable) ()\n"
+      },
+      "stderr": {
+        "text": "Unable to get version from \"/usr/lib/x86_64-linux-gnu/ivl/ivlpp -V\"\nUnable to get version from \"/usr/lib/x86_64-linux-gnu/ivl/ivl -V -C\"/tmp/ivrlh1a7dd803\" -C\"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf\"\"\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile biriscv_npc with Techne's testbench (bimodal BHT + BTB)",
+      "cmd": "iverilog -g2012 -I src/core -o $BODY/build/sim $HARNESS/tb_npc.v src/core/biriscv_npc.v 2>&1 | grep -v warning | head -5; test -f $BODY/build/sim && echo built",
+      "exit": 0,
+      "seconds": 0.78,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "a loop branch taken 7x then not-taken, 40 iterations: mispredictions early vs late",
+      "cmd": "vvp -n $BODY/build/sim | tail -12",
+      "exit": 0,
+      "seconds": 0.76,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'RESULT OK'"
+      ],
+      "stdout": {
+        "text": "it=38 k=6 actual=00000100  bimodal->00000100 ok   gshare->00000100 ok \nit=38 k=7 actual=00000118  bimodal->00000100 MIS  gshare->00000118 ok \nit=39 k=0 actual=00000100  bimodal->00000100 ok   gshare->00000100 ok \nit=39 k=1 actual=00000100  bimodal->00000100 ok   gshare->00000100 ok \nit=39 k=2 actual=00000100  bimodal->00000100 ok   gshare->00000100 ok \nit=39 k=3 actual=00000100  bimodal->00000100 ok   gshare->00000100 ok \nit=39 k=4 actual=00000100  bimodal->00000100 ok   gshare->00000100 ok \nit=39 k=5 actual=00000100  bimodal->00000100 ok   gshare->00000100 ok \nit=39 k=6 actual=00000100  bimodal->00000100 ok   gshare->00000100 ok \nit=39 k=7 actual=00000118  bimodal->00000100 MIS  gshare->00000118 ok \nmispredicts over 320 branches: bimodal total=41 early(it<10)=11 late(it>=30)=10 | gshare total=4 early=4 late_mispredicts=0\nRESULT    OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "7ba854a7912cd236c743bd857c47695486a65aa07dcb97480881c41aa85f0e8b",
+  "body_preserved": true
+}

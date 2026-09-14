@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.reweight_misclassified_and_add_weak_learner",
+  "name": "reweight misclassified examples and add a weak learner",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "train a simple learner on weighted examples, increase the weights of the examples it got wrong and decrease the others, train the next learner on the reweighted set, and combine all learners by weighted vote according to their accuracy",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'AdaBoost' in section Computer science / Machine learning and statistical classification: adaptive boosting",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'LogitBoost': logistic regression boosting",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SET",
+  "out_geometry": "FUNCTION",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "GREEDY",
+  "iteration": "FIFO",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a weak learner better than chance",
+    "a round count (policy)"
+  ],
+  "fails_when": [
+    "label noise gets ever more weight"
+  ],
+  "instances": [
+    "AdaBoost",
+    "LogitBoost"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

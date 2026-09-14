@@ -81,6 +81,7 @@ def _load_mossinghoff_snapshot():
 # 1. Authority-based tests (>= 2 required)
 # ---------------------------------------------------------------------------
 
+@pytest.mark.slow   # TECHNE-21: measured 2026-09-12, 249 s of the suite's 721 s; run with -m "not slow"
 def test_authority_mossinghoff_snapshot_178_entries():
     """Batch agrees with stored Mahler measures across the catalog.
 
@@ -310,6 +311,7 @@ def test_edge_chunked_matches_unchunked():
 # 4. Composition tests (>= 2 required)
 # ---------------------------------------------------------------------------
 
+@pytest.mark.slow   # TECHNE-21: measured 2026-09-12, 235 s of the suite's 721 s; run with -m "not slow"
 def test_composition_batch_then_sort_matches_sorted_scalars():
     """Sorting batch output reproduces sorting of per-poly scalar output.
 
@@ -324,6 +326,7 @@ def test_composition_batch_then_sort_matches_sorted_scalars():
     assert np.allclose(M_batch_sorted, M_scalar_sorted, atol=1e-10)
 
 
+@pytest.mark.slow   # TECHNE-21: measured 2026-09-12, 236 s of the suite's 721 s; run with -m "not slow"
 def test_composition_batch_then_filter_below_M_matches_scalar_pipeline():
     """Batch + filter_below_M agrees with the per-poly scalar pipeline.
 

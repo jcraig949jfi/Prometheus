@@ -1,0 +1,57 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "verilog-generic-fifo",
+  "receipt_id": "run-verilog-generic-fifo-20260912T162146Z",
+  "written_utc": "20260912T162146Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "71549df2068e4712d08e36abdace415f88bad4cafed1651f5ba217e69dc284a4",
+  "recipe_sha256": "bd83093f582a5edd5ac491cfee9368602ac0b25a02c8f526e793b7f724758cde",
+  "patches": [],
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V 2>&1 | head -1",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Icarus Verilog version 11.0 (stable) ()\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile OpenCores bench + all FIFO rtl variants",
+      "cmd": "iverilog -Ibench/verilog -Irtl/verilog -o $BODY/fifo.vvp bench/verilog/test_bench_top.v $(ls rtl/verilog/*.v) 2>&1 | grep -viE 'warning' | tail -6; test -f $BODY/fifo.vvp",
+      "exit": 1,
+      "seconds": 0.91,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "rtl/verilog/generic_fifo_sc_b.v:190: error: Unknown module type: generic_dpram\nrtl/verilog/generic_fifo_dc.v:175: error: Unknown module type: generic_dpram\n10 error(s) during elaboration.\n*** These modules were missing:\n        generic_dpram referenced 5 times.\n***\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.lean_simp.recursive_side_condition_discharge.cut2",
+  "specimen": "lean_simp",
+  "name": "recursive side-condition discharge: a guard is proved by re-entering the same normaliser on it (the depth cap, the 'True or rfl' success criterion, and the cache-protection discipline are policy/cluster, split out)",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "Lean 4 simp, Rewrite.dischargeDefault? / discharge?' / synthesizeArgs",
+    "sources": [
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/Rewrite.lean lines 626-639 dischargeDefault?: simp e; if the result unifies by rfl or is True, a proof is built; 608-624 dischargeRfl for higher-order ?g patterns; 31-56 discharge?' depth cap, withPreservedCache, usedTheorems rollback; 57-107 synthesizeArgs: instance args by TC synthesis, Prop args by the discharger, the tactic.skipAssignedInstances compat flag",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/Types.lean lines 73, 108 (maxDischargeDepth, dischargeDepth) and 421-434 (Methods.discharge?, wellBehavedDischarge: 'must not be set to true IF discharge? access local declarations with index >= Context.lctxInitIndices when contextual := false ... it would prevent us from aggressively caching')",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/Main.lean lines 766-770: the tactic-supplied discharger is installed with wellBehavedDischarge := false",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/lean_simp/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Lean 4 simp. The discharger slot is a Methods field; the DEFAULT discharger is simp itself. Found by reading synthesizeArgs and asking what proves the Prop arguments; the boundary coincides with defs dischargeDefault? and discharge?'.",
+    "mechanism": "When a rule matched but has hypotheses left as metavariables, each instance-implicit one is solved by type-class synthesis and checked defeq to what unification assigned (57-107); each Prop one is handed to the discharger. The default discharger runs the whole simplifier on the hypothesis; success is 'it became True' or 'it became an equation provable by rfl'. Depth is capped by maxDischargeDepth; the memo cache is snapshotted and restored around the call (withPreservedCache) and the used-theorem set is rolled back on failure so failed attempts leave no trace.",
+    "input": "a hypothesis type (Prop), the current context and methods, the depth counter",
+    "output": "Option Expr: a proof term, or none; side effect: the rule is not applied if any hypothesis fails",
+    "state": "unknown -- after moving cache snapshot/restore and the wellBehavedDischarge contract to c14, what remains is the depth counter; whether the recursion reads anything else (options like tactic.skipAssignedInstances, the local context watermark) is not established from the lines read.",
+    "assumptions": "that the same normaliser that rewrites the goal is a good prover for side conditions; that 'reaches True' is the right success criterion; that a depth cap is an acceptable substitute for a termination argument; that instance arguments must be checked defeq to the unifier's choice (the comment at 66-83 records that a stricter check was tried and abandoned)",
+    "interface": "discharge?(hyp: Expr) -> SimpM (Option Expr), pluggable (Methods.discharge?); the tactic can supply any TacticM discharger (Elab/Tactic/Simp.lean 37-63 tacticToDischarge) at the price of wellBehavedDischarge := false",
+    "fitness_value": "unknown -- claimed: conditional rules fire without user proofs. The default/tactic discharger success rate is instrumented (trace class) and not measured.",
+    "failure_landscape": "(a) depth exhaustion returns notProved silently: a rule that needed depth 3 when the cap is 2 just does not fire, indistinguishable from 'condition false'; (b) recursive self-call means side-condition cost is unbounded by the goal's size; (c) the caching contract is by DECLARATION (wellBehavedDischarge) not by check -- a user discharger that lies gets wrong cached results; (d) instance defeq failures are a known pain point (comment 66-83) and were relaxed for convenience, which is a soundness-preserving but completeness-affecting policy.",
+    "ablation": "unknown -- A5 (discharge := none) and A6 (depth 0/1/2) designed, not run; A6 is tactic-level configuration and cheap.",
+    "decomposability": "Into (1) the slot (a function-typed field: SCAFFOLDING), (2) the default strategy 'normalise the hypothesis and accept True' (the mechanism), (3) the state-protection discipline around the call (belongs to c14 memo-validity). The record is (2)+(3) at CUT-1; CUT-2 may split them.",
+    "composability": "Any rule engine with conditional rules; the pattern 'the engine is its own side-condition prover, depth-bounded' transfers to any Prometheus organism that has rules with guards. Archaeon's H3 behavioural rules have no guards today, so no live consumer; recorded.",
+    "human_prior": "That side conditions are 'easy' relative to the goal (hence the same tool suffices and a small depth cap is fine); that soundness is non-negotiable while completeness is tunable (the depth cap, the relaxed instance check).",
+    "control": "Positive: a conditional rule whose hypothesis simplifies to True in one step fires at depth >= 1. Negative: the same rule with a false hypothesis never fires (and the result is unchanged, not wrong). Cheat control: a discharger that returns a bogus proof term must be caught by the isDefEq x proof check at line 47-49 -- verify that a wrong-typed proof is rejected (.failedAssign) rather than accepted. None executed.",
+    "cheat": "Assuming the side condition (returning sorry-like proofs) makes every conditional rule fire and inflates 'simplification power'; the control is the false-hypothesis negative fixture whose answer must remain unchanged."
+  },
+  "alternative_cuts": [
+    "CUTS.md c14: the state-protection discipline (withPreservedCache, usedTheorems rollback, wellBehavedDischarge) is part of the memo-validity cluster, not of the discharger; Nyx bundled them at CUT-1 and expects to split at CUT-2",
+    "CUT-2: 'is this an organ or policy?' The recursion (engine proves its own guards) is the mechanism; maxDischargeDepth and 'accept True or rfl' are POLICY parameters on it and are named as such here rather than split into ledger rows (they have no independent behaviour)."
+  ],
+  "pressure_refs": [
+    "pressure.lean_simp.conditional_facts_must_be_paid_for.cut1"
+  ],
+  "cut": "CUT-2",
+  "derived_from": "organs/recursive_side_condition_discharge.cut1.json (preserved; CUT-2 narrows, never replaces)"
+}

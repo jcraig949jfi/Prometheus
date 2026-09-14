@@ -1,0 +1,38 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -viE 'warning' | tail -3; ls viterbi viterbi_test 2>/dev/null; test -x ./viterbi_test || test -x ./viterbi"
+    }
+  ],
+  "runs": [
+    {
+      "name": "the shipped Viterbi/HMM test",
+      "cmd": "./viterbi_test 2>&1 | tail -10 || make test 2>&1 | tail -10; echo VITERBIDONE",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "VITERBIDONE"
+        ],
+        "stdout_not_contains": [
+          "FAIL",
+          "error"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "UPSTREAM",
+  "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "viterbi_test is the upstream oracle: decode a known HMM's observation sequence and check the most-likely path. behavioral_entry_point: perturb transition/emission probabilities."
+}

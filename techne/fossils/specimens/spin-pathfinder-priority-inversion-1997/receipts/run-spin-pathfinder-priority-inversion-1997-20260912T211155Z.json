@@ -1,0 +1,298 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "spin-pathfinder-priority-inversion-1997",
+  "receipt_id": "run-spin-pathfinder-priority-inversion-1997-20260912T211155Z",
+  "written_utc": "20260912T211155Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/Spin-version-6.5.2",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "30afd80d875d786f950a59d0ccbac8b19eebc1e2c5c4138f678fc3139cd15de5",
+  "recipe_sha256": "02a6b01081d833d4623e9f77453f1b89312c52cee4bf00e4e0ce6e37b5e7678c",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc/bison",
+      "cmd": "gcc --version | head -1; bison --version | head -1",
+      "exit": 0,
+      "seconds": 0.77,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\nbison (GNU Bison) 3.8.2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "build SPIN 6.5.2 (the instrument) from the same tarball",
+      "cmd": "cd Src && make -s 2>&1 | grep -v -i warning | grep -iE '\\berror' | head -3; test -x ./spin && echo built",
+      "exit": 0,
+      "seconds": 6.34,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "generate + compile the verifier for pathfinder.pml",
+      "cmd": "cd Examples && ../Src/spin -a pathfinder.pml 2>&1 | tail -2; gcc -O2 -w -o $BODY/build/pan pan.c && echo built",
+      "exit": 0,
+      "seconds": 1.58,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "PATHOLOGY: exhaustive search finds the deadlock (invalid end state) -- the Pathfinder reset",
+      "cmd": "cd Examples && $BODY/build/pan 2>&1 | grep -E 'invalid end state|errors:|States|pan:' | head -8",
+      "exit": 0,
+      "seconds": 0.8,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "pan:1: invalid end state (at depth 4)\npan: wrote pathfinder.pml.trail\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 5, errors: 1\npan: elapsed time 0.01 seconds\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "replay the counterexample trail (the schedule: low holds the mutex, high blocks, low cannot run)",
+      "cmd": "cd Examples && ../Src/spin -t -p pathfinder.pml 2>&1 | tail -12",
+      "exit": 0,
+      "seconds": 0.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "  2:\tproc  1 (low:1) pathfinder.pml:41 (state 2)\t[((mutex==free))]\n  3:\tproc  1 (low:1) pathfinder.pml:41 (state 3)\t[mutex = busy]\n  4:\tproc  1 (low:1) pathfinder.pml:42 (state 5)\t[l_state = running]\n  5:\tproc  0 (high:1) pathfinder.pml:27 (state 1)\t[h_state = waiting]\nspin: trail ends after 5 steps\n#processes: 2\n\t\th_state = waiting\n\t\tl_state = running\n\t\tmutex = busy\n  5:\tproc  1 (low:1) pathfinder.pml:46 (state 8)\n  5:\tproc  0 (high:1) pathfinder.pml:28 (state 4)\n2 processes created\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "Examples/pan.b",
+      "sha256": "0422ada5911a8b3f3a50f00417f96911434ce96b40c9bc08a57bed96d7134a1b",
+      "bytes": 1011
+    },
+    {
+      "path": "Examples/pan.c",
+      "sha256": "8920036e55adaf27e07330e7cb5b24eb5255ec07c6bdcd7087fb5eea23b530d5",
+      "bytes": 330838
+    },
+    {
+      "path": "Examples/pan.h",
+      "sha256": "3474a7e48d6e45646dd35825788c526449752a228d85a1618a8a5adf1e4d8203",
+      "bytes": 16406
+    },
+    {
+      "path": "Examples/pan.m",
+      "sha256": "7d7651bbb4cc8e5ffdbfd033a05fba481ba4e8400c73b5dd282b756eff6470af",
+      "bytes": 3884
+    },
+    {
+      "path": "Examples/pan.p",
+      "sha256": "e3964994b10afbaa8e890c4062c2f0c2f634a1cf8713182dba33f89aa19024c8",
+      "bytes": 56174
+    },
+    {
+      "path": "Examples/pan.t",
+      "sha256": "5bf4dc331d7c67f6872c7106b51097965e3fd1345d7744863b7ab7bf6e800a33",
+      "bytes": 20626
+    },
+    {
+      "path": "Examples/pathfinder.pml.trail",
+      "sha256": "3382bc98e8b4368aa4d95eb6bb999c1f5843828da77b5a473d585ae69b294650",
+      "bytes": 34
+    },
+    {
+      "path": "Src/dstep.o",
+      "sha256": "db6a449d5b3ff044fd65d92f73a48dfa3ad9309a57b12e76de4d6ec7f52f1e7c",
+      "bytes": 17728
+    },
+    {
+      "path": "Src/flow.o",
+      "sha256": "f7af3cec32b4f9169b4f168abdad90c99a83c54a34a89fc3945a856ea99ca914",
+      "bytes": 32488
+    },
+    {
+      "path": "Src/guided.o",
+      "sha256": "bb9b6412cc13146f8c7cd2806cf4b0312d43a63f4411fb2fda97c3a79925fb32",
+      "bytes": 16712
+    },
+    {
+      "path": "Src/main.o",
+      "sha256": "ad12e585a001120b6bbb7619f9d9df91a8de438cdc116367a3dd819696cb737e",
+      "bytes": 87384
+    },
+    {
+      "path": "Src/mesg.o",
+      "sha256": "943b2d51cd46bdbe56e52653858011777de22ba2012b0f3f70aaa423f4a7ee49",
+      "bytes": 29592
+    },
+    {
+      "path": "Src/msc_tcl.o",
+      "sha256": "cf91774bc8be09ddf59213c0283dbfc0affd5f7a079dbcbe81d880f6feb34d7e",
+      "bytes": 18336
+    },
+    {
+      "path": "Src/pangen1.o",
+      "sha256": "ba419b9a26573382111d09ac0d2930b4f798047a4c3a7e2b7d44f55fe18accf1",
+      "bytes": 754608
+    },
+    {
+      "path": "Src/pangen2.o",
+      "sha256": "b9e9b4bc8ae96db3d9c5985fef5428d52d7f5951228ea564a67b185797e84ea7",
+      "bytes": 443936
+    },
+    {
+      "path": "Src/pangen3.o",
+      "sha256": "ed0a26c4d0298502b0fc028829fe373ac56cd2d17e82e3307acfa9c8556831b7",
+      "bytes": 28024
+    },
+    {
+      "path": "Src/pangen4.o",
+      "sha256": "bec12d4ffb5ccd5e5a9897e56097ffa0ded141a693f47372a5fc69ff0352067d",
+      "bytes": 17176
+    },
+    {
+      "path": "Src/pangen5.o",
+      "sha256": "db02df1d27b0c9893a489e36feeb150b5924137ca1379d393f9cebb982ec01a3",
+      "bytes": 19688
+    },
+    {
+      "path": "Src/pangen6.o",
+      "sha256": "a293d9aa7d7049304d01b1dc276de50bf6e70452aafe6aa8c8837335351bd216",
+      "bytes": 43928
+    },
+    {
+      "path": "Src/pangen7.o",
+      "sha256": "0a174791ffe849fd84db90e0215a4d9258804b2502c2c8d86332457598aa72df",
+      "bytes": 26864
+    },
+    {
+      "path": "Src/reprosrc.o",
+      "sha256": "3721c8e627e5ceece284f5dbac9ca6542552f5f8f556006cc2cfd5216922161b",
+      "bytes": 24040
+    },
+    {
+      "path": "Src/run.o",
+      "sha256": "930255cfa090d48e7162d5955a5c99d38cf4a91a5d7597242cc60d84bd70c163",
+      "bytes": 28752
+    },
+    {
+      "path": "Src/sched.o",
+      "sha256": "d8f4612e2eb21f68c96ca9468966e028fdac8e8eed5c684b2356f06b07323886",
+      "bytes": 40560
+    },
+    {
+      "path": "Src/spin",
+      "sha256": "17f75d4a66d062113e9a2d67f27ad567613ca6617ff145e82a060e667d3deab7",
+      "bytes": 1320144
+    },
+    {
+      "path": "Src/spin.o",
+      "sha256": "395bec243c78ef17cf6f09e0cb84cdf0040da45f0ab138c4392ae9b278aa7f4f",
+      "bytes": 55792
+    },
+    {
+      "path": "Src/spinlex.o",
+      "sha256": "8759328a30f51e99a538641806b8a90a8aa9137892da9c1920712a10bae9a67c",
+      "bytes": 70088
+    },
+    {
+      "path": "Src/structs.o",
+      "sha256": "03ec136be37cca5ef2afd01882621880af31be13fdd55193200345980b01edcb",
+      "bytes": 19736
+    },
+    {
+      "path": "Src/sym.o",
+      "sha256": "84b2e79d380c267efcf50df64e11c5c84631c2cc969c0b4eacffce58a63aed6a",
+      "bytes": 22920
+    },
+    {
+      "path": "Src/tl_buchi.o",
+      "sha256": "68ea4d071c46da613140e1494859508e3bab8f209156225c6d69887b3671d6b5",
+      "bytes": 17008
+    },
+    {
+      "path": "Src/tl_cache.o",
+      "sha256": "44238a5f1067fa65f500e1b96c4b62670b0b8c7df643702c10940fcd250481ca",
+      "bytes": 8736
+    },
+    {
+      "path": "Src/tl_lex.o",
+      "sha256": "036509d2419c38c4249edae04ef169c73ffd003a7489b5dc92a6eedfcdeb28b7",
+      "bytes": 10112
+    },
+    {
+      "path": "Src/tl_main.o",
+      "sha256": "ea2d332d74c030629658517c7c71c6067f8440b447b1f396dab5edaec2ad969e",
+      "bytes": 12504
+    },
+    {
+      "path": "Src/tl_mem.o",
+      "sha256": "2f98f359b6868f35e781a503dea5b8690c20df05acc9a036487b772ab28ef0c7",
+      "bytes": 3632
+    },
+    {
+      "path": "Src/tl_parse.o",
+      "sha256": "8a8330a6cfac2732eb5cfc56d4a426b84c648571d33d08e8425aadfd1c7ac5c5",
+      "bytes": 8512
+    },
+    {
+      "path": "Src/tl_rewrt.o",
+      "sha256": "2765ba930962e14e8a5eda52618328b76468c8bfe3f43b6aad9a6ce43db89c19",
+      "bytes": 8144
+    },
+    {
+      "path": "Src/tl_trans.o",
+      "sha256": "14b9910c0bd1e95abf7644dd554c674faee872af3c319012c6ed9f68beccf8f3",
+      "bytes": 25624
+    },
+    {
+      "path": "Src/vars.o",
+      "sha256": "6d619ff352775fa6baa36c99c1cc0b25a69777bdb97b177b1b8b6298941be3f4",
+      "bytes": 16800
+    },
+    {
+      "path": "Src/y.output",
+      "sha256": "cdb5fca5450933beea595ceefd195b77cbed8b140254f7a7c17957dd7a8d3df9",
+      "bytes": 263377
+    },
+    {
+      "path": "Src/y.tab.h",
+      "sha256": "31d0659d2a65b3fd59fccc14a94cfdde5d6e35f6ca2cbd40f86685553c042900",
+      "bytes": 8759
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "30afd80d875d786f950a59d0ccbac8b19eebc1e2c5c4138f678fc3139cd15de5",
+  "body_preserved": true
+}

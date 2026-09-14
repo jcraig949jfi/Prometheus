@@ -1,0 +1,55 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.mix_a_word_state_by_repeated_add_rotate_xor_rounds_with_injected_key_words",
+  "name": "mix a word state by repeated add-rotate-XOR rounds with injected key words",
+  "lineage": [
+    "network protocols",
+    "error-correcting systems"
+  ],
+  "mechanism": "load key, nonce, counter and constants into a small array of machine words; repeat rounds that only add words, rotate words by fixed amounts and XOR words together (in a quarter-round pattern across rows then columns); add the initial state back at the end; the output serves as a keystream block, a block cipher, or a keyed compression depending on how it is wrapped",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Salsa20' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'ChaCha20 updated variant of Salsa20': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Threefish': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'SipHash': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DATA_INDEPENDENT",
+  "iteration": "SWEEP",
+  "cost": "CONSTANT",
+  "requires": [
+    "word addition, rotation and XOR only (no tables)"
+  ],
+  "fails_when": [
+    "rotation constants and round count are the whole design; too few rounds are distinguishable"
+  ],
+  "instances": [
+    "Salsa20",
+    "ChaCha20 updated variant of Salsa20",
+    "Threefish",
+    "SipHash"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

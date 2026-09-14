@@ -1,0 +1,30 @@
+{
+  "season": 1,
+  "positives_passed": "1/4",
+  "controls_correctly_rejected": "2/2",
+  "g5_indeterminate_positives": [
+    "ladders/run1_POS-1_atalanta.jsonl",
+    "ladders/run1_POS-3_nephele.jsonl"
+  ],
+  "cheat2_all_rejected": true,
+  "cheat2": {
+    "PKT-ATALANTA.json": {
+      "rejected": true,
+      "clause": "(c) terminal does not transitively depend on any evidence step"
+    },
+    "PKT-HYPATIA.json": {
+      "rejected": true,
+      "clause": "(c) terminal does not transitively depend on any evidence step"
+    },
+    "PKT-NEPHELE.json": {
+      "rejected": true,
+      "clause": "(c) terminal does not transitively depend on any evidence step"
+    },
+    "PKT-IRIS.json": {
+      "rejected": true,
+      "clause": "(c) terminal does not transitively depend on any evidence step"
+    }
+  },
+  "verdict": "INDETERMINATE",
+  "verdict_reason": "G5 indeterminate on 2 positive cases (floor 50% specific density); the unsupported-step measure is too thin to read"
+}

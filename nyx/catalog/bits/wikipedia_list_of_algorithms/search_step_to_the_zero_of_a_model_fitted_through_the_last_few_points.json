@@ -1,0 +1,55 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.step_to_the_zero_of_a_model_fitted_through_the_last_few_points",
+  "name": "step to the zero of a model fitted through the last few points",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "fit a simple model (a line through the last two points, a parabola or an exponential through the last three) and take its zero as the next point; no derivative is needed and convergence is superlinear, but no bracket is kept",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Secant method' in section Computational mathematics / Numerical algorithms / Root finding: 2-point, 1-sided",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Muller's method': 3-point, quadratic interpolation",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Ridder's method': 3-point, exponential scaling",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "GREEDY",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "two or three starting points"
+  ],
+  "fails_when": [
+    "divergence when the model is poor; complex iterates for the parabola form"
+  ],
+  "instances": [
+    "Secant method",
+    "Muller's method",
+    "Ridder's method"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.search.step_to_the_zero_of_the_local_linearisation"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

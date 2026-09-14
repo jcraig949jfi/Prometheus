@@ -1,5 +1,5 @@
 {
- "ran_at": "2026-09-11T03:40:25",
+ "ran_at": "2026-09-11T14:49:20",
  "n_scored": 14,
  "n_pass": 14,
  "skipped": [
@@ -11,19 +11,19 @@
    "gate": "L0_local_run",
    "pass": true,
    "skipped": false,
-   "detail": "engine=eng_8a37a5d305969034d488c43e session=ses_2cd43a45e49470d4a604915b affinity=STRICT"
+   "detail": "engine=eng_8a37a5d305969034d488c43e session=ses_1a3126a18f3e148c4022e4f7 affinity=STRICT"
   },
   {
    "gate": "A_correct_lineage_verifies",
    "pass": true,
    "skipped": false,
-   "detail": "write=200 stored_engine=eng_8a37a5d305969034d488c43e stored_session=ses_2cd43a45e49470d4a604915b affinity=STRICT"
+   "detail": "write=200 stored_engine=eng_8a37a5d305969034d488c43e stored_session=ses_1a3126a18f3e148c4022e4f7 affinity=STRICT"
   },
   {
    "gate": "F_random_session_lineage_refused",
    "pass": true,
    "skipped": false,
-   "detail": "HTTP 409 cross_session_splice: world wld_a0f8e26b51a9d4e1245b4d29 on engine eng_8a37a5d305969034d488c43e is already bound to session ses_2cd43a45e494"
+   "detail": "HTTP 409 cross_session_splice: world wld_42dd66b56ad8a5ce9d30daa5 on engine eng_8a37a5d305969034d488c43e is already bound to session ses_1a3126a18f3e"
   },
   {
    "gate": "F2_unverifiable_fingerprint_stored_not_promoted",
@@ -77,7 +77,7 @@
    "gate": "SB_split_brain_fork_refused",
    "pass": true,
    "skipped": false,
-   "detail": "HTTP 409 split_brain_ledger_fork: engine eng_8a37a5d305969034d488c43e already recorded a DIFFERENT entry_hash at event_seq 104439 (stored sha256:c5f875ba0520bf"
+   "detail": "HTTP 409 split_brain_ledger_fork: engine eng_8a37a5d305969034d488c43e already recorded a DIFFERENT entry_hash at event_seq 128464 (stored sha256:52b01c81720e89"
   },
   {
    "gate": "SB2_fork_event_recorded",
@@ -89,7 +89,7 @@
    "gate": "B_wrong_session_refused",
    "pass": true,
    "skipped": false,
-   "detail": "HTTP 409 splice_refused=True engine_binds_session=None cross_session_splice: world wld_a0f8e26b51a9d4e1245b4d29 on engine eng_8a37a5d305969034d488c43e is already bou"
+   "detail": "HTTP 409 splice_refused=True engine_binds_session=None cross_session_splice: world wld_42dd66b56ad8a5ce9d30daa5 on engine eng_8a37a5d305969034d488c43e is already bou"
   },
   {
    "gate": "P_peer_engine_anchor_not_verified",

@@ -1,0 +1,57 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "c-cmaes-hansen",
+  "receipt_id": "run-c-cmaes-hansen-20260912T125114Z",
+  "written_utc": "20260912T125114Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "742bea2d0389ebc0e94809dedb98db597d9eb7bc465a7af0efdb0bc3c417ffe4",
+  "recipe_sha256": "aa9489769330093fc46e92ec4a4139722787a406c51f27c5c8afe75e631764ef",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile example1",
+      "cmd": "gcc -O2 -o $BODY/../c-cmaes-hansen/evo1 src/example1.c src/cmaes.c -lm 2>&1 | grep -i error; mv -f $BODY/../c-cmaes-hansen/evo1 $BODY/evo1 2>/dev/null; test -x $BODY/evo1",
+      "exit": 1,
+      "seconds": 0.7,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "cc1: fatal error: src/example1.c: No such file or directory\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "NO_TESTS",
+  "ok": false
+}

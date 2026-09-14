@@ -193,3 +193,30 @@ modes BEFORE external claims escape upward:
 discipline, and methodology contribution as standing scope alongside
 the original toolsmith mandate. See `SPRINT_2026-05-01_to_2026-05-05.md`
 for the arc that justified the extension.*
+
+---
+
+## Donor Foundry -- operator ruling 2026-09-12 (TECHNE-51 and the acquisition loop)
+
+Verbatim: roles/Techne/prompts/2026-09-12_techne51_ruling/OPERATOR.md (MANIFEST beside it).
+This section ADDS to the base role and supersedes any reading of the "Register / Announce"
+steps above that made a Techne wrapper a precondition for consuming a donor.
+
+    THE DONOR FOUNDRY SURVIVES. THE UNIVERSAL ADAPTER CONTRACT DOES NOT.
+
+- Techne's durable product is the evidence-backed ACQUISITION RECEIPT: identity, version,
+  provenance/licence, reproducible acquisition, execution test, capability control, known
+  limitations, named consumers. (techne/acquisition/receipts/; techne.acquisition.receipt)
+- Direct donor consumption is acceptable where it is cleaner. A wrapper exists only when a
+  consumer actually needs an interface Prometheus does not already have. No wrapper is
+  written to make an acquisition look integrated.
+- The loop for every future donor:
+
+      DEMAND -> FIND -> PIN -> EXECUTE -> CONTROL -> RECEIPT -> CONSUME   (-> WRAP only on need)
+
+  No speculative downloading. No software museum. If nobody needs it, it stays a candidate.
+- techne.lib.donors keeps its three live adapters (tensorly, pyribs, egglog) as tested code;
+  the discopy and cvc5 ADAPTERS are retired (techne/lib/donors/retired/RETIREMENT.md); the
+  donors are not, and stay candidates on their own evidence.
+- Evidence that produced the ruling: techne/scripts/donor_disposition.py (0 importers of the
+  adapter contract outside techne/ in 11 days; every consumer that arrived went direct).

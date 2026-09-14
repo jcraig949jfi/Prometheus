@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.eliminate_each_variable_below_its_pivot_then_back_substitute",
+  "name": "eliminate each variable below its pivot, then back-substitute",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "for each column in turn, subtract multiples of the pivot row from the rows below so that column is zero beneath the pivot; the system becomes triangular and is solved from the last variable upward",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gaussian elimination' in section Computational mathematics / Numerical algorithms / Linear algebra: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gauss–Jordan elimination': solves systems of linear equations",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Tridiagonal matrix algorithm (Thomas algorithm)': solves systems of tridiagonal equations",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "MATRIX",
+  "out_geometry": "TENSOR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a nonzero pivot (row swaps supply one)"
+  ],
+  "fails_when": [
+    "small pivots amplify rounding; cubic cost; fill-in destroys sparsity"
+  ],
+  "instances": [
+    "Gaussian elimination",
+    "Gauss–Jordan elimination",
+    "Tridiagonal matrix algorithm (Thomas algorithm)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

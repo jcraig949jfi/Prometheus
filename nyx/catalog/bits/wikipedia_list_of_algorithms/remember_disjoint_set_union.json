@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.remember.disjoint_set_union",
+  "name": "disjoint-set union with path compression",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "keep a forest of sets where each element points toward a representative; find follows pointers and flattens them on the way, union links one representative under the other by rank, so many merges and membership tests cost near-constant time each",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Tarjan's off-line lowest common ancestors algorithm' in section Combinatorial algorithms / Graph algorithms: computes lowest common ancestors for pairs of nodes in a tree",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REMEMBER",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "cost": "LOG",
+  "requires": [
+    "elements with identity"
+  ],
+  "fails_when": [
+    "no deletion or split of sets",
+    "the near-constant bound is amortised, not per-operation"
+  ],
+  "instances": [
+    "Tarjan's off-line lowest common ancestors algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "NONE",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

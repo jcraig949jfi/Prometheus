@@ -1,0 +1,49 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.allocate.copy_live_objects_to_a_fresh_space",
+  "name": "copy live objects to a fresh space",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "copy every reachable object from the current space into an empty one, leaving forwarding addresses so later references are updated, then discard the old space whole; a breadth-first copy needs only the destination space as its queue",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Semi-space collector' in section Distributed systems algorithms / Memory allocation and deallocation algorithms: an early copying collector",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cheney's algorithm': an improvement on the Semi-space collector",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Generational garbage collector': Fast garbage collectors that segregate memory by age",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ALLOCATE",
+  "in_geometry": "GRAPH",
+  "out_geometry": "GRAPH",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "SCHEDULED",
+  "guarantee": "SOUND",
+  "strategy": "DIRECT",
+  "iteration": "FIFO",
+  "cost": "LINEAR",
+  "requires": [
+    "twice the memory"
+  ],
+  "fails_when": [
+    "half the address space idle"
+  ],
+  "instances": [
+    "Semi-space collector",
+    "Cheney's algorithm",
+    "Generational garbage collector"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

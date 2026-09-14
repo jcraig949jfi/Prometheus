@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.sample.refit_distribution_to_elite_samples",
+  "name": "refit a sampling distribution to its elite samples",
+  "lineage": [
+    "evolutionary computation",
+    "optimization"
+  ],
+  "mechanism": "draw candidates from a parametrised distribution, keep the best fraction, refit the distribution's parameters to those elites, and repeat so the distribution concentrates on good regions",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cross-entropy method' in section Computational mathematics / Optimization algorithms: a general Monte Carlo approach to combinatorial and continuous multi-extremal optimization and importance sampling",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Evolution strategy': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SAMPLE",
+  "in_geometry": "DISTRIBUTION",
+  "out_geometry": "DISTRIBUTION",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "strategy": "RANDOMIZED",
+  "iteration": "PARALLEL_ROUNDS",
+  "cost": "UNKNOWN",
+  "requires": [
+    "a parametrised distribution family (a human prior)",
+    "an elite fraction (policy)"
+  ],
+  "fails_when": [
+    "premature concentration; the family may not contain the optimum's neighbourhood"
+  ],
+  "instances": [
+    "Cross-entropy method",
+    "Evolution strategy"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

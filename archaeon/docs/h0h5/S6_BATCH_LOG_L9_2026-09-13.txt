@@ -1,0 +1,161 @@
+L 9 state 1 / 210 N 5 {'G': 1.8, 'A_entropy_0': 1.8, 'A_lb2_0': 1.8, 'A_v2w_0': 1.8, 'B_v2w_10': 1.8, 'B_v2w_20': 1.8, 'B_lb2_20': 1.8, 'CTRL_0': 1.8, 'CTRL_20': 1.8} V* 1.6 t=0s
+L 9 state 26 / 210 N 6 {'G': 1.833, 'A_entropy_0': 1.833, 'A_lb2_0': 1.833, 'A_v2w_0': 1.833, 'B_v2w_10': 1.833, 'B_v2w_20': 1.833, 'B_lb2_20': 1.833, 'CTRL_0': 1.833, 'CTRL_20': 1.833} V* 1.833 t=8s
+L 9 state 51 / 210 N 6 {'G': 2.0, 'A_entropy_0': 2.0, 'A_lb2_0': 2.0, 'A_v2w_0': 2.0, 'B_v2w_10': 2.0, 'B_v2w_20': 2.0, 'B_lb2_20': 1.833, 'CTRL_0': 2.0, 'CTRL_20': 1.833} V* 1.833 t=21s
+L 9 state 76 / 210 N 6 {'G': 1.833, 'A_entropy_0': 1.833, 'A_lb2_0': 1.833, 'A_v2w_0': 1.833, 'B_v2w_10': 1.833, 'B_v2w_20': 1.833, 'B_lb2_20': 1.833, 'CTRL_0': 1.833, 'CTRL_20': 1.833} V* 1.833 t=33s
+L 9 state 101 / 210 N 7 {'G': 2.286, 'A_entropy_0': 2.286, 'A_lb2_0': 2.0, 'A_v2w_0': 2.0, 'B_v2w_10': 2.0, 'B_v2w_20': 2.0, 'B_lb2_20': 2.0, 'CTRL_0': 2.0, 'CTRL_20': 2.0} V* 2.0 t=50s
+L 9 state 126 / 210 N 9 {'G': 3.222, 'A_entropy_0': 3.222, 'A_lb2_0': 3.222, 'A_v2w_0': 3.222, 'B_v2w_10': 3.222, 'B_v2w_20': 3.222, 'B_lb2_20': 3.222, 'CTRL_0': 3.222, 'CTRL_20': 3.222} V* 3.222 t=97s
+L 9 state 151 / 210 N 10 {'G': 2.6, 'A_entropy_0': 2.6, 'A_lb2_0': 2.6, 'A_v2w_0': 2.6, 'B_v2w_10': 2.6, 'B_v2w_20': 2.6, 'B_lb2_20': 2.6, 'CTRL_0': 2.6, 'CTRL_20': 2.6} V* 2.6 t=150s
+L 9 state 176 / 210 N 12 {'G': 2.667, 'A_entropy_0': 2.667, 'A_lb2_0': 2.667, 'A_v2w_0': 2.583, 'B_v2w_10': 2.583, 'B_v2w_20': 2.583, 'B_lb2_20': 2.583, 'CTRL_0': 2.667, 'CTRL_20': 2.583} V* 2.583 t=217s
+L 9 state 201 / 210 N 16 {'G': 2.875, 'A_entropy_0': 2.875, 'A_lb2_0': 2.875, 'A_v2w_0': 2.875, 'B_v2w_10': 2.875, 'B_v2w_20': 2.875, 'B_lb2_20': 2.812, 'CTRL_0': 2.875, 'CTRL_20': 2.812} V* 2.812 t=364s
+L 9 state 210 / 210 N 18 {'G': 3.111, 'A_entropy_0': 3.111, 'A_lb2_0': 3.0, 'A_v2w_0': 3.0, 'B_v2w_10': 3.0, 'B_v2w_20': 3.0, 'B_lb2_20': 3.056, 'CTRL_0': 3.0, 'CTRL_20': 3.0} V* 3.0 t=568s
+{
+ "states": 210,
+ "gap_states": 113,
+ "gap_fraction": 0.5380952380952381,
+ "aggregate_gap_fraction_of_G": 0.05918121452663041,
+ "gap_present": true,
+ "G_median_units": 417.5,
+ "arms": {
+  "A_entropy_0": {
+   "recovery": 0.6128997006699293,
+   "median_state_recovery": 0.0,
+   "gap_improved": 29,
+   "gap_worsened": 4,
+   "gap_unchanged": 80,
+   "worsened_states_all": 10,
+   "worsened_fraction_all": 0.047619047619047616,
+   "worst_regression_rel": 0.04761904761904764,
+   "aggregate_probe_reduction_rel": 0.034973069412166574,
+   "residual_to_O": 0.3871002993300709,
+   "median_units": 438.5,
+   "max_units": 3131,
+   "active_fraction": 0.9752618676175618,
+   "regression_eligible_ok": true,
+   "work_ok": true
+  },
+  "A_lb2_0": {
+   "recovery": 0.6921318952819879,
+   "median_state_recovery": 0.0,
+   "gap_improved": 47,
+   "gap_worsened": 0,
+   "gap_unchanged": 66,
+   "worsened_states_all": 0,
+   "worsened_fraction_all": 0.0,
+   "worst_regression_rel": 0.0,
+   "aggregate_probe_reduction_rel": 0.0409612061754066,
+   "residual_to_O": 0.30786810471801224,
+   "median_units": 1404.5,
+   "max_units": 18619,
+   "active_fraction": 0.9753086419753086,
+   "regression_eligible_ok": true,
+   "work_ok": true
+  },
+  "A_v2w_0": {
+   "recovery": 0.699579512519599,
+   "median_state_recovery": 0.0,
+   "gap_improved": 49,
+   "gap_worsened": 0,
+   "gap_unchanged": 64,
+   "worsened_states_all": 0,
+   "worsened_fraction_all": 0.0,
+   "worst_regression_rel": 0.0,
+   "aggregate_probe_reduction_rel": 0.0414019652088579,
+   "residual_to_O": 0.3004204874804012,
+   "median_units": 3648.75,
+   "max_units": 18734,
+   "active_fraction": 0.9768643306379156,
+   "regression_eligible_ok": true,
+   "work_ok": true
+  },
+  "B_v2w_10": {
+   "recovery": 0.7237254715636434,
+   "median_state_recovery": 0.0,
+   "gap_improved": 55,
+   "gap_worsened": 1,
+   "gap_unchanged": 57,
+   "worsened_states_all": 1,
+   "worsened_fraction_all": 0.004761904761904762,
+   "worst_regression_rel": 0.028571428571428647,
+   "aggregate_probe_reduction_rel": 0.04283095239099475,
+   "residual_to_O": 0.2762745284363569,
+   "median_units": 3642.5,
+   "max_units": 32459,
+   "active_fraction": 0.984916704187303,
+   "regression_eligible_ok": true,
+   "work_ok": true
+  },
+  "B_v2w_20": {
+   "recovery": 0.7237254715636434,
+   "median_state_recovery": 0.0,
+   "gap_improved": 55,
+   "gap_worsened": 1,
+   "gap_unchanged": 57,
+   "worsened_states_all": 1,
+   "worsened_fraction_all": 0.004761904761904762,
+   "worst_regression_rel": 0.028571428571428647,
+   "aggregate_probe_reduction_rel": 0.04283095239099475,
+   "residual_to_O": 0.2762745284363569,
+   "median_units": 3781.75,
+   "max_units": 36535,
+   "active_fraction": 0.9988743809095002,
+   "regression_eligible_ok": true,
+   "work_ok": true
+  },
+  "B_lb2_20": {
+   "recovery": 0.8620468475317149,
+   "median_state_recovery": 1.0,
+   "gap_improved": 90,
+   "gap_worsened": 1,
+   "gap_unchanged": 22,
+   "worsened_states_all": 18,
+   "worsened_fraction_all": 0.08571428571428572,
+   "worst_regression_rel": 0.049999999999999975,
+   "aggregate_probe_reduction_rel": 0.04715067210480363,
+   "residual_to_O": 0.1379531524682854,
+   "median_units": 1733.5,
+   "max_units": 33167,
+   "active_fraction": 0.9977416440831075,
+   "regression_eligible_ok": false,
+   "work_ok": true
+  },
+  "CTRL_0": {
+   "recovery": 0.6968356535373214,
+   "median_state_recovery": 0.0,
+   "gap_improved": 48,
+   "gap_worsened": 0,
+   "gap_unchanged": 65,
+   "worsened_states_all": 2,
+   "worsened_fraction_all": 0.009523809523809525,
+   "worst_regression_rel": 0.03225806451612891,
+   "aggregate_probe_reduction_rel": 0.040914810487674896,
+   "residual_to_O": 0.3031643464626789,
+   "median_units": 403.25,
+   "max_units": 3115,
+   "active_fraction": 0.9708193041526375,
+   "regression_eligible_ok": true,
+   "work_ok": true
+  },
+  "CTRL_20": {
+   "recovery": 0.8649451228203545,
+   "median_state_recovery": 1.0,
+   "gap_improved": 91,
+   "gap_worsened": 0,
+   "gap_unchanged": 22,
+   "worsened_states_all": 0,
+   "worsened_fraction_all": 0.0,
+   "worst_regression_rel": 0.0,
+   "aggregate_probe_reduction_rel": 0.05118850286739407,
+   "residual_to_O": 0.13505487717964568,
+   "median_units": 403.25,
+   "max_units": 2840,
+   "active_fraction": 0.9988646684831971,
+   "regression_eligible_ok": true,
+   "work_ok": true
+  }
+ },
+ "blind_exact": {
+  "states": 178,
+  "R_mean": 3.5903203258290075,
+  "G_mean_same_states": 2.3538604341975127
+ }
+}

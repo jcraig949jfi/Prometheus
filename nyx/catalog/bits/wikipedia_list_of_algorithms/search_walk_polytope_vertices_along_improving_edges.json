@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.walk_polytope_vertices_along_improving_edges",
+  "name": "walk polytope vertices along improving edges",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "start at a vertex of the feasible polytope and repeatedly move along an edge to an adjacent vertex with better objective until no adjacent vertex improves, which at a vertex of a linear program is the optimum",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Simplex algorithm' in section Computational mathematics / Optimization algorithms: an algorithm for solving linear programming problems",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Dantzig–Wolfe decomposition': an algorithm for solving linear programming problems with special structure",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Delayed column generation': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "linear objective and constraints",
+    "a pivot rule (policy; anti-cycling)"
+  ],
+  "fails_when": [
+    "exponential worst case; degenerate vertices cycle without a rule"
+  ],
+  "instances": [
+    "Simplex algorithm",
+    "Dantzig–Wolfe decomposition",
+    "Delayed column generation"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

@@ -1,0 +1,88 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "arduino-pid",
+  "receipt_id": "run-arduino-pid-20260912T163837Z",
+  "written_utc": "20260912T163837Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "Arduino.h": "3143fa1a42a0d12f6c4f47c2fd45b6c79dbb621dfc43eb4d4d700c630e6f70d6",
+    "drv.cpp": "80e034ff884835662f266504c4a3aaf7ffcb414d8e8c2eaa735679dff388a614"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "f4b65bd9cdf08236942485491bb73de0c5e3e4d16a357450e4f21bc0932c902b",
+  "recipe_sha256": "09772bf1a6c96cbdd09721f817cdf5996b17e45158a9f77f1883fbfc69d4b81d",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.96,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile PID + plant harness",
+      "cmd": "g++ -O2 -DARDUINO=10800 -I. -I$HARNESS -o $BODY/pid $HARNESS/drv.cpp PID_v1.cpp 2>&1 | grep -i 'error:'; test -x $BODY/pid",
+      "exit": 0,
+      "seconds": 1.15,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "SWEEP",
+      "cmd": "for g in \"2 1 0.05\" \"1 0.5 0.02\" \"3 2 0.05\" \"2 2 0.05\" \"1 1 0.02\" \"5 3 0.05\"; do $BODY/pid $g; done",
+      "exit": 0,
+      "seconds": 0.85,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Kp=2.0 final=2.0100 late_crossings=0 late_max=2.010\nPID_MARGINAL\nKp=1.0 final=1.0050 late_crossings=0 late_max=1.005\nPID_CONVERGED\nKp=3.0 final=3.0200 late_crossings=0 late_max=3.020\nPID_MARGINAL\nKp=2.0 final=2.0200 late_crossings=0 late_max=2.020\nPID_MARGINAL\nKp=1.0 final=1.0100 late_crossings=0 late_max=1.010\nPID_CONVERGED\nKp=5.0 final=5.0300 late_crossings=0 late_max=5.030\nPID_UNSTABLE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "pathological: 20x proportional gain drives the loop UNSTABLE",
+      "cmd": "$BODY/pid 200.0",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Kp=200.0 final=50.0000 late_crossings=0 late_max=50.000\nPID_UNSTABLE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

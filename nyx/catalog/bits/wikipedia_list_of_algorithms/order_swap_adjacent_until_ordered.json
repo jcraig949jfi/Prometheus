@@ -1,0 +1,63 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.swap_adjacent_until_ordered",
+  "name": "swap out-of-order neighbours until none remain",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "repeatedly pass over the sequence swapping adjacent (or gapped) pairs that are out of order until a pass makes no swap",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bubble sort' in section Combinatorial algorithms / Sequence algorithms / Sequence sorting: for each pair of indices, swap the items if out of order",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cocktail shaker sort or bidirectional bubble sort, a bubble sort traversing the list alternately from front to back and ': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Comb sort': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gnome sort': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Odd–even sort': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a total order"
+  ],
+  "fails_when": [
+    "quadratic; each pass moves an element at most one step (gap variants fix this)"
+  ],
+  "instances": [
+    "Bubble sort",
+    "Cocktail shaker sort or bidirectional bubble sort, a bubble sort traversing the list alternately from front to back and ",
+    "Comb sort",
+    "Gnome sort",
+    "Odd–even sort"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "EXCHANGE",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

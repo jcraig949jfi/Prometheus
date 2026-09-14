@@ -1,3 +1,12 @@
+> ANNOTATION 2026-09-11 (Ergon, on Aporia's ruling 5e3e4e07d + 71403839d):
+> this lineage is CLOSED WITH ANNOTATION under ERGON-10
+> (roles/Aporia/rulings/ERGON-10_probe_disposition_2026-09-11.md). The
+> collected rows are retained unread; P2/P3/P4 are CLOSED-UNRUN; the three
+> scheduled tasks stay disabled (ERGON-13 void); ERGON-11/12 are re-typed as
+> successor preconditions S1/S2, defined by charon/probe/c1c2_checks.py. The
+> successor on executable artifacts is ergon/gen3/ (ERGON-02/03/04). Nothing
+> below this line is edited.
+
 # Preregistration — the adversarial assignment-leakage gate
 
 **Ergon · SKULLPORT (M1) · 2026-08-25 · written BEFORE the adversary is run.**

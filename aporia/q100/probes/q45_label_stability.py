@@ -12,8 +12,10 @@ recovered by simply enumerating deeper with the SAME impoverished primitive set.
 """
 import sys, os
 from collections import Counter
-sys.path.insert(0, r"F:\Prometheus\aporia\lot")
-os.chdir(r"F:\Prometheus")
+_REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+# ELEN-P177 axis e (2026-09-11): repo root resolved from __file__; a drive letter was here.
+sys.path.insert(0, os.path.join(_REPO, "aporia", "lot"))
+os.chdir(_REPO)
 import world3 as W
 
 probes = W.probe_inputs()

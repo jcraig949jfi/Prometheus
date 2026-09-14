@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.weight_the_two_neighbours_by_position_along_the_segment",
+  "name": "weight the two neighbouring samples by position along the segment",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "find the two samples that bracket the query, and return the value that lies the same fraction of the way between them as the query lies between their positions",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Linear interpolation' in section Computational mathematics / Numerical algorithms / Interpolation and extrapolation: a method of curve fitting using linear polynomials",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bilinear interpolation': an extension of linear interpolation for interpolating functions of two variables on a regular grid",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "FUNCTION",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "ordered sample positions"
+  ],
+  "fails_when": [
+    "kinks at every sample; error grows with curvature"
+  ],
+  "instances": [
+    "Linear interpolation",
+    "Bilinear interpolation"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

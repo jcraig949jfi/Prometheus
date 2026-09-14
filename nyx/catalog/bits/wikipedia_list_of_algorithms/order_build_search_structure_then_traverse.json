@@ -1,0 +1,48 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.build_search_structure_then_traverse",
+  "name": "build a search structure then traverse it in order",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "insert every element into a structure that keeps order (a search tree or trie), then read the structure out in order",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Tree sort (binary tree sort)' in section Combinatorial algorithms / Sequence algorithms / Sequence sorting: build binary tree, then traverse it to create sorted list",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Burstsort': build a compact, cache efficient burst trie and then traverse it to create sorted output",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "an ordered container with insertion"
+  ],
+  "fails_when": [
+    "degenerate trees on sorted input unless balanced"
+  ],
+  "instances": [
+    "Tree sort (binary tree sort)",
+    "Burstsort"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "INCREMENTAL",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

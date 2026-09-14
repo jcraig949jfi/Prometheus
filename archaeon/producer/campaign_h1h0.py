@@ -451,16 +451,17 @@ def issue(conn, rows: Sequence[Dict[str, Any]], *, locators_by_digest: Optional[
                 if missing:
                     raise RuntimeError("row {} needs locators for {}".format(r["request_key"], missing))
                 from viv import queue as vivq
+                ev = vq.campaign_set_key(ev, csid)          # grouping, not a selection (Vivarium #181 item 4)
                 eid = vivq.enqueue(conn, created_by=created_by, source_reason="human", source_evidence=ev,
                                    experiment_spec=r["spec"], schema=vq._schema(), request_key=r["request_key"],
-                                   family_id=r["family_id"], arm_id=r["arm_id"], candidate_set_id=csid,
+                                   family_id=r["family_id"], arm_id=r["arm_id"], candidate_set_id=None,
                                    artifact_locators={d: locators_by_digest[d] for d in r["artifact_digests"]})
                 conn.commit()
             else:
                 cand = vq.make_candidate(r["spec"], family_id=r["family_id"], arm_id=r["arm_id"],
-                                         request_key=r["request_key"], source_evidence=ev)
+                                         request_key=r["request_key"], source_evidence=vq.campaign_set_key(ev, csid))
                 res = vq.submit(conn, candidates=[cand], selected_index=0, source_reason="human",
-                                created_by=created_by, config=config, candidate_set_id=csid)
+                                created_by=created_by, config=config)
                 eid = res["selected_experiment_id"]
             ids.append(eid)
     cost = C.CostEvent("generation", csid, m.resources([C.Resource("items", len(ids), "count", "count", "measured")]),
@@ -476,7 +477,7 @@ def source_results_from_queue(conn, candidate_set: str = "cs-h1h0-1-p1", split: 
     by_id = {t["task_id"]: t for t in split["source"]}
     cur = conn.cursor()
     cur.execute("SELECT source_evidence->>'task_id', result_summary->'result'->'repeats' FROM viv.research_experiment_queue "
-                "WHERE candidate_set_id=%s AND status='completed'", (candidate_set,))
+                "WHERE " + vq.campaign_rows_filter() + " AND status='completed'", (candidate_set, candidate_set))
     out = []
     for task_id, reps in cur.fetchall():
         res = (reps[0].get("result", reps[0]) if reps else {})

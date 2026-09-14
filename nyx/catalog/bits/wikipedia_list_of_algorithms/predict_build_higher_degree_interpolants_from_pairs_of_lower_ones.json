@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.build_higher_degree_interpolants_from_pairs_of_lower_ones",
+  "name": "build each higher-degree interpolant from a pair of lower-degree ones",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "start with the sample values as degree-zero interpolants; combine each adjacent pair into the degree-one interpolant at the query point by a position-weighted blend, then pairs of those into degree two, and so on up a triangular tableau to a single value",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Neville's algorithm' in section Computational mathematics / Numerical algorithms / Interpolation and extrapolation: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DYNAMIC_PROGRAMMING",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a single query point"
+  ],
+  "fails_when": [
+    "one query per tableau; quadratic work"
+  ],
+  "instances": [
+    "Neville's algorithm"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.predict.fit_the_unique_polynomial_through_all_the_points"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

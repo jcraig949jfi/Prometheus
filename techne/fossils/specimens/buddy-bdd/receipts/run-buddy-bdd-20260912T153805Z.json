@@ -1,0 +1,83 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "buddy-bdd",
+  "receipt_id": "run-buddy-bdd-20260912T153805Z",
+  "written_utc": "20260912T153805Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/buddy-2.4",
+  "harness_sha256": {
+    "drv.c": "356ed41c7baadbaa91e6aff8a3809024ed23b0371e0b547fbb8c9f3f57fcb50b"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "8090220207a7cae1411b7459f4c03507c4a809adabc4d7c32d38ac83470e597e",
+  "recipe_sha256": "45da8c917045b4244c914b02ca6ddb9d67af1a3cdb23948d75ae9d49a74b3c1e",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.68,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "configure+make",
+      "cmd": "./configure >/dev/null 2>&1 && make -s 2>&1 | tail -2; find . -name libbdd.a | head -1",
+      "exit": 0,
+      "seconds": 8.13,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Making all in solitare\nMaking all in doc\n./src/.libs/libbdd.a\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "build a BDD and read node + satcount off it",
+      "cmd": "INC=$(dirname $(find $BODY/upstream/tree -name bdd.h | head -1)); LIB=$(dirname $(find $BODY/upstream/tree -name libbdd.a | head -1)); gcc -O2 -I$INC -o $BODY/bddt $HARNESS/drv.c -L$LIB -lbdd -lm && LD_LIBRARY_PATH=$LIB $BODY/bddt",
+      "exit": 0,
+      "seconds": 0.95,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "nodes=3 satcount=3\nBDD_OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "config.log",
+      "sha256": "453e2278f29b8fee2f1c8430b8a5360e9445685e2e4a1e7f2593329da297ce43",
+      "bytes": 84269
+    },
+    {
+      "path": "libtool",
+      "sha256": "4228189b8d6d62b98077dc38957a082fa1383e6141cb1f261b0d1a461d925128",
+      "bytes": 213169
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

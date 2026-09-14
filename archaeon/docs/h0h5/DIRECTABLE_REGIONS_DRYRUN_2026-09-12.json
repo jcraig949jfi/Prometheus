@@ -1,0 +1,661 @@
+{
+ "schema": "archaeon.directable_regions_dryrun.v0",
+ "at": "2026-09-12T03:31:31.815902+00:00",
+ "corpus": {
+  "chart": "sfe.candidate_score.v0",
+  "rows": 1029,
+  "corpus_hash": "corpus:1490d92f4580f0c28f46101f",
+  "regions": 50,
+  "window": {
+   "lookback_rows": 2000,
+   "order": "observations.created_seq DESC",
+   "join": "observations JOIN experiments JOIN worlds",
+   "returned": 1029,
+   "tenancy": {
+    "admitted_client_names": [
+     "harmonia-m2",
+     "vivarium",
+     "vivarium@m1",
+     "vivarium@skullport"
+    ],
+    "admitted_client_ids": 5,
+    "excluded_attested_by_client_name": {
+     "daedalus-livebar-1788603716": 1,
+     "daedalus-livebar-1788605636": 1,
+     "daedalus-livebar-1788606140": 1,
+     "daedalus-livebar-1788621643": 1,
+     "daedalus-viv-probe-1788678744": 1,
+     "demo-corpus-owner": 3,
+     "e2e-autoconsumer": 2,
+     "harmonia-integration": 17,
+     "vivarium-demo-7342e0ac": 3,
+     "vivarium-probe": 1,
+     "vivarium-selftest": 26,
+     "vivarium-test": 29,
+     "vivarium@crashtest": 2,
+     "vivarium@e2e-viv": 4
+    },
+    "evidence_classes": [
+     "ENGINE_WORK_RESULT"
+    ],
+    "schema_version": 8,
+    "snapshot": "single transaction",
+    "basis": "interim raw read with declared tenancy + evidence filter; a cross-tenant read grant is Daedalus's to build"
+   },
+   "unattributed_multi_player_experiments": 0
+  }
+ },
+ "template_proposed": {
+  "template_id": "bitstring.resample_region.v0",
+  "status": "PROPOSED",
+  "required_region_fields": [
+   "length",
+   "seed_root"
+  ]
+ },
+ "ranked_fired": [
+  {
+   "rank": 0,
+   "detector": "LOCAL_VARIANCE_ANOMALY",
+   "signal_id": "sig:5b8933f0b2aa8e4a",
+   "region": "wld_fdd0fb47f38e997cb119765b",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_fdd0fb47f38e997cb119765b",
+    "seed_root": 338286106430019777
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 4.019560846315011
+  },
+  {
+   "rank": 1,
+   "detector": "LOCAL_VARIANCE_ANOMALY",
+   "signal_id": "sig:8ed4ffef80a84781",
+   "region": "wld_826bef4559d8fb5aafcb7631",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_826bef4559d8fb5aafcb7631",
+    "seed_root": 3556034065902218869
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.9196233704985466
+  },
+  {
+   "rank": 2,
+   "detector": "LOCAL_VARIANCE_ANOMALY",
+   "signal_id": "sig:26a144283298dadd",
+   "region": "wld_434316ad8357ccb9ce59957b",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_434316ad8357ccb9ce59957b",
+    "seed_root": 1416916012841057279
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.7512988773088085
+  },
+  {
+   "rank": 3,
+   "detector": "LOCAL_VARIANCE_ANOMALY",
+   "signal_id": "sig:4ba047cf611d3fac",
+   "region": "wld_1e82112706d8af72d5b9316f",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_1e82112706d8af72d5b9316f",
+    "seed_root": 951420524752217316
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.6817660232048515
+  },
+  {
+   "rank": 4,
+   "detector": "LOCAL_VARIANCE_ANOMALY",
+   "signal_id": "sig:f11fdbf92088f56f",
+   "region": "wld_4ec098bcd0b3bdf280e543d4",
+   "rows_in_region": 13,
+   "region_params": {
+    "world_id": "wld_4ec098bcd0b3bdf280e543d4",
+    "seed_root": 3615668571496669123
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.6213745541836073
+  },
+  {
+   "rank": 5,
+   "detector": "LOCAL_VARIANCE_ANOMALY",
+   "signal_id": "sig:64886909cf6ba4c3",
+   "region": "wld_38bc9269056f9db9c9f13193",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_38bc9269056f9db9c9f13193",
+    "seed_root": 2378806381273012477
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.5575241377490525
+  },
+  {
+   "rank": 6,
+   "detector": "LOCAL_VARIANCE_ANOMALY",
+   "signal_id": "sig:f49ac87b60fb3383",
+   "region": "wld_2ac2083bd33d390ee206ee46",
+   "rows_in_region": 12,
+   "region_params": {
+    "world_id": "wld_2ac2083bd33d390ee206ee46",
+    "seed_root": 3949232249495356175
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.413274233628102
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_1f01ee275b0d5df77da2c74d",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_1f01ee275b0d5df77da2c74d",
+    "seed_root": 1573024549257189084
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_2ac2083bd33d390ee206ee46",
+   "rows_in_region": 12,
+   "region_params": {
+    "world_id": "wld_2ac2083bd33d390ee206ee46",
+    "seed_root": 3949232249495356175
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_2ef34961b36e422cf93bad5f",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_2ef34961b36e422cf93bad5f",
+    "seed_root": 772895596897237841
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_3036c4179d747af1482ce93e",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_3036c4179d747af1482ce93e",
+    "seed_root": 962323460380633900
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_7f77e57e03a93bac957ccf60",
+   "rows_in_region": 28,
+   "region_params": {
+    "world_id": "wld_7f77e57e03a93bac957ccf60",
+    "seed_root": 495383480547272649
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_826bef4559d8fb5aafcb7631",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_826bef4559d8fb5aafcb7631",
+    "seed_root": 3556034065902218869
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_86f5d9b8420763117b52ef12",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_86f5d9b8420763117b52ef12",
+    "seed_root": 812190750983626192
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_98f81408c25f147feae3f1aa",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_98f81408c25f147feae3f1aa",
+    "seed_root": 1198967003831854505
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_b0e3724556ea1864cf01ab07",
+   "rows_in_region": 28,
+   "region_params": {
+    "world_id": "wld_b0e3724556ea1864cf01ab07",
+    "seed_root": 4229966161413604893
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_b19055b7658e50f1543976ad",
+   "rows_in_region": 28,
+   "region_params": {
+    "world_id": "wld_b19055b7658e50f1543976ad",
+    "seed_root": 2068932437602028890
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_ba0ef154dc10e7d925a25255",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_ba0ef154dc10e7d925a25255",
+    "seed_root": 2767001302117053924
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_c41c84bb216085dba4f19922",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_c41c84bb216085dba4f19922",
+    "seed_root": 245435672647215011
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_d17a970c03739ef62a921ce9",
+   "rows_in_region": 34,
+   "region_params": {
+    "world_id": "wld_d17a970c03739ef62a921ce9",
+    "seed_root": 1600843464644111182
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_d4471951939865986c2b526b",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_d4471951939865986c2b526b",
+    "seed_root": 1407292261527503901
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_d471d039aec198eba0f7300c",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_d471d039aec198eba0f7300c",
+    "seed_root": 1409218102676291502
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 7,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:c2f4b0df9b3dc65e",
+   "region": "wld_fdd0fb47f38e997cb119765b",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_fdd0fb47f38e997cb119765b",
+    "seed_root": 338286106430019777
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.3188479758243807
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_1e82112706d8af72d5b9316f",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_1e82112706d8af72d5b9316f",
+    "seed_root": 951420524752217316
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_1f01ee275b0d5df77da2c74d",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_1f01ee275b0d5df77da2c74d",
+    "seed_root": 1573024549257189084
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_2ac2083bd33d390ee206ee46",
+   "rows_in_region": 12,
+   "region_params": {
+    "world_id": "wld_2ac2083bd33d390ee206ee46",
+    "seed_root": 3949232249495356175
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_7f77e57e03a93bac957ccf60",
+   "rows_in_region": 28,
+   "region_params": {
+    "world_id": "wld_7f77e57e03a93bac957ccf60",
+    "seed_root": 495383480547272649
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_98f81408c25f147feae3f1aa",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_98f81408c25f147feae3f1aa",
+    "seed_root": 1198967003831854505
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_b0e3724556ea1864cf01ab07",
+   "rows_in_region": 28,
+   "region_params": {
+    "world_id": "wld_b0e3724556ea1864cf01ab07",
+    "seed_root": 4229966161413604893
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_ba0ef154dc10e7d925a25255",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_ba0ef154dc10e7d925a25255",
+    "seed_root": 2767001302117053924
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_c41c84bb216085dba4f19922",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_c41c84bb216085dba4f19922",
+    "seed_root": 245435672647215011
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_de53acff9fc8d311e19c74ea",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_de53acff9fc8d311e19c74ea",
+    "seed_root": 13303903192167465
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_e19a2adee8043846b2309871",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_e19a2adee8043846b2309871",
+    "seed_root": 3000897454408660942
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 8,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:09e3ed2f2e801b57",
+   "region": "wld_fdd0fb47f38e997cb119765b",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_fdd0fb47f38e997cb119765b",
+    "seed_root": 338286106430019777
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.2938342710828223
+  },
+  {
+   "rank": 9,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:788dc9c3749d62e2",
+   "region": "wld_2ef34961b36e422cf93bad5f",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_2ef34961b36e422cf93bad5f",
+    "seed_root": 772895596897237841
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.242908412256621
+  },
+  {
+   "rank": 9,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:788dc9c3749d62e2",
+   "region": "wld_38bc9269056f9db9c9f13193",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_38bc9269056f9db9c9f13193",
+    "seed_root": 2378806381273012477
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.242908412256621
+  },
+  {
+   "rank": 9,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:788dc9c3749d62e2",
+   "region": "wld_4ca8397f1f9a60b8db5cb467",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_4ca8397f1f9a60b8db5cb467",
+    "seed_root": 1321445516266063514
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.242908412256621
+  },
+  {
+   "rank": 9,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:788dc9c3749d62e2",
+   "region": "wld_4ec098bcd0b3bdf280e543d4",
+   "rows_in_region": 13,
+   "region_params": {
+    "world_id": "wld_4ec098bcd0b3bdf280e543d4",
+    "seed_root": 3615668571496669123
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.242908412256621
+  },
+  {
+   "rank": 9,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:788dc9c3749d62e2",
+   "region": "wld_79f0e0a1b64846fda47b7d7a",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_79f0e0a1b64846fda47b7d7a",
+    "seed_root": 3105052145061103438
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.242908412256621
+  },
+  {
+   "rank": 9,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:788dc9c3749d62e2",
+   "region": "wld_cddfd4e3c1044980c64dd95f",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_cddfd4e3c1044980c64dd95f",
+    "seed_root": 230010291769394942
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.242908412256621
+  },
+  {
+   "rank": 9,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:788dc9c3749d62e2",
+   "region": "wld_d471d039aec198eba0f7300c",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_d471d039aec198eba0f7300c",
+    "seed_root": 1409218102676291502
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.242908412256621
+  },
+  {
+   "rank": 9,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:788dc9c3749d62e2",
+   "region": "wld_de53acff9fc8d311e19c74ea",
+   "rows_in_region": 35,
+   "region_params": {
+    "world_id": "wld_de53acff9fc8d311e19c74ea",
+    "seed_root": 13303903192167465
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.242908412256621
+  },
+  {
+   "rank": 9,
+   "detector": "BOUNDARY_TRANSITION_HINT",
+   "signal_id": "sig:788dc9c3749d62e2",
+   "region": "wld_e8bab9584af4131e8bbf7be4",
+   "rows_in_region": 40,
+   "region_params": {
+    "world_id": "wld_e8bab9584af4131e8bbf7be4",
+    "seed_root": 1769354736396099914
+   },
+   "directable": false,
+   "why": "missing length",
+   "score": 3.242908412256621
+  }
+ ],
+ "n_directable": 0
+}

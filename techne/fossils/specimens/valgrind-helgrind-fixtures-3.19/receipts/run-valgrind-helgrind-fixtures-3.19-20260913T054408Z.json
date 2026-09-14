@@ -1,0 +1,116 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "valgrind-helgrind-fixtures-3.19",
+  "receipt_id": "run-valgrind-helgrind-fixtures-3.19-20260913T054408Z",
+  "written_utc": "20260913T054408Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/valgrind-3.19.0/helgrind/tests",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "7b0af7d84bd262752ab521f125dfc6f3310488b08e69c8eda0f1c3cfb2b95c4d",
+  "recipe_sha256": "1bcb6068bf05c5223582744bdd697a908209f6ee53b9c9e48862a8fb039c0013",
+  "patches": [],
+  "probe": [
+    {
+      "name": "valgrind (installed for the run; Debian's 3.19.0 matches the fixture version)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --version",
+      "exit": 0,
+      "seconds": 10.22,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "valgrind-3.19.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile five fixtures with pthreads, unmodified",
+      "cmd": "for t in tc01_simple_race tc05_simple_race tc09_bad_unlock tc13_laog1 tc19_shadowmem; do gcc -O0 -g -pthread -w -o $BODY/build/$t $t.c || echo FAIL $t; done; ls $BODY/build | tr '\\n' ' '",
+      "exit": 0,
+      "seconds": 1.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "FAIL tc09_bad_unlock\nFAIL tc19_shadowmem\ntc01_simple_race tc05_simple_race tc13_laog1 "
+      },
+      "stderr": {
+        "text": "tc09_bad_unlock.c:8:10: fatal error: config.h: No such file or directory\n    8 | #include \"config.h\"\n      |          ^~~~~~~~~~\ncompilation terminated.\ntc19_shadowmem.c:7:10: fatal error: helgrind/helgrind.h: No such file or directory\n    7 | #include \"helgrind/helgrind.h\"\n      |          ^~~~~~~~~~~~~~~~~~~~~\ncompilation terminated.\n"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "RACE: tc01_simple_race natively (completes, error invisible) then under helgrind (Possible data race reported at the planted line)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; $BODY/build/tc01_simple_race; echo native_exit=$?; valgrind --tool=helgrind -q $BODY/build/tc01_simple_race 2>&1 | grep -E 'Possible data race|tc01_simple_race.c:|by thread|ERROR SUMMARY' | head -8; grep -c 'Possible data race' tc01_simple_race.stderr.exp",
+      "exit": 0,
+      "seconds": 14.58,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "native_exit=0\n==452==    by 0x1091CB: main (tc01_simple_race.c:22)\n==452== Possible data race during read of size 4 at 0x10C03C by thread #1\n==452==    at 0x1091FA: main (tc01_simple_race.c:28)\n==452== This conflicts with a previous write of size 4 by thread #2\n==452==    at 0x10918A: child_fn (tc01_simple_race.c:14)\n==452== Possible data race during write of size 4 at 0x10C03C by thread #1\n==452==    at 0x109203: main (tc01_simple_race.c:28)\n==452== This conflicts with a previous write of size 4 by thread #2\n2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "LOCK ORDER (deadlock precursor): tc13_laog1 -- two threads take two locks in opposite orders; helgrind's lock-order graph reports the inversion",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --tool=helgrind -q $BODY/build/tc13_laog1 2>&1 | grep -E 'lock order|violated|acquired|ERROR SUMMARY' | head -8; grep -c 'lock order' tc13_laog1.stderr.exp",
+      "exit": 0,
+      "seconds": 14.32,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "==450== Thread #1: lock order \"0x1FFF000AD0 before 0x1FFF000AA0\" violated\n1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "BAD UNLOCK: tc09_bad_unlock -- unlocking a mutex the thread does not hold / an unlocked mutex",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --tool=helgrind -q $BODY/build/tc09_bad_unlock 2>&1 | grep -E 'unlock|not locked|ERROR SUMMARY' | head -6",
+      "exit": 0,
+      "seconds": 10.5,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "valgrind: /w/build/tc09_bad_unlock: No such file or directory\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "RACE (second fixture): tc05_simple_race",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --tool=helgrind -q $BODY/build/tc05_simple_race 2>&1 | grep -E 'Possible data race|ERROR SUMMARY' | head -4",
+      "exit": 0,
+      "seconds": 14.29,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "==450== Possible data race during read of size 4 at 0x10C080 by thread #1\n==450== Possible data race during write of size 4 at 0x10C080 by thread #1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true,
+  "tree_sha256_after": "7b0af7d84bd262752ab521f125dfc6f3310488b08e69c8eda0f1c3cfb2b95c4d",
+  "body_preserved": true
+}

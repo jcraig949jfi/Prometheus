@@ -1,0 +1,35 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/buddy-2.4",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "configure+make",
+      "cmd": "./configure >/dev/null 2>&1 && make -s 2>&1 | tail -2; find . -name libbdd.a | head -1",
+      "timeout": 900
+    }
+  ],
+  "runs": [
+    {
+      "name": "build a BDD and read node + satcount off it",
+      "cmd": "INC=$(dirname $(find $BODY/upstream/tree -name bdd.h | head -1)); LIB=$(dirname $(find $BODY/upstream/tree -name libbdd.a | head -1)); gcc -O2 -I$INC -o $BODY/bddt $HARNESS/drv.c -L$LIB -lbdd -lm && LD_LIBRARY_PATH=$LIB $BODY/bddt",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "BDD_OK"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Techne driver builds (a&b)|(a&c) as a BDD and checks satcount == 3 (the assignments a=1,b=1 with c free plus a=1,c=1,b=0). An oracle for the canonical representation: the function has exactly 3 satisfying assignments over {a,b,c}."
+}

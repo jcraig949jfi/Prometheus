@@ -1,0 +1,131 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "glpk-5.0",
+  "canonical_name": "GLPK 5.0 (GNU Linear Programming Kit) -- Andrew Makhorin",
+  "aliases": [
+    "glpk",
+    "glpsol"
+  ],
+  "lineage": "GLPK (2000-, Makhorin): revised primal/dual SIMPLEX and a primal-dual INTERIOR-POINT method for LP, plus branch-and-cut MIP and the GNU MathProg modelling language; a complete free LP/MIP solver ecosystem",
+  "domain": [
+    "optimization",
+    "linear-programming",
+    "integer-programming",
+    "simplex",
+    "interior-point",
+    "branch-and-bound"
+  ],
+  "era": "2000 (5.0 rel. 2020)",
+  "version": "5.0 from ftp.gnu.org",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://ftp.gnu.org/gnu/glpk/glpk-5.0.tar.gz",
+        "filename": "glpk-5.0.tar.gz",
+        "sha256": "4a1013eebb50f728fc601bdd833b0b2870333c3b3e5a816eeba921d95bec6f15",
+        "bytes": 4132649,
+        "extracted_to": "upstream/tree/glpk-5.0"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "archive": "ftp.gnu.org/gnu/glpk",
+    "release": "5.0"
+  },
+  "hashes": {
+    "tree_sha256": "c0b0bdcab06c9d5c21cbde9e4d07275fd2b382206cca70afd0bf6fa8c85820d2",
+    "n_files": 530,
+    "bytes": 14560575,
+    "artifacts": [
+      {
+        "filename": "glpk-5.0.tar.gz",
+        "sha256": "4a1013eebb50f728fc601bdd833b0b2870333c3b3e5a816eeba921d95bec6f15",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\glpk-5.0",
+    "hash_list": "techne/fossils/specimens/glpk-5.0/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-3.0-or-later",
+    "status": "copyleft",
+    "evidence": "COPYING in tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "./configure && make",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./glpsol --lp <model> --output <sol>",
+    "libglpk C API"
+  ],
+  "example": {
+    "command": "glpsol --math model.mod (a MathProg LP/MIP)",
+    "input": "a MathProg or CPLEX-LP model",
+    "output": "the optimal objective and variable values"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "GLPK Reference Manual",
+    "gnu.org/software/glpk"
+  ],
+  "human_capability_summary": {
+    "built_to": "solve linear programs (simplex or interior-point) and mixed-integer programs (branch-and-cut) to proven optimality, from a modelling-language description",
+    "pressure": "large sparse LPs where the choice of pivot rule / interior path decides speed, and MIPs where branching and cutting decide tractability",
+    "success_means": "the certified optimal (or optimal-integer) solution, or a proof of infeasibility/unboundedness"
+  },
+  "known_human_problem_solved": "linear and mixed-integer optimisation to optimality",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/glpk-5.0/receipts/run-glpk-5.0-20260912T143613Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/glpk-5.0/receipts/run-glpk-5.0-20260912T143908Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\glpk-5.0 ; tracked techne/fossils/specimens/glpk-5.0/",
+    "where_it_came_from": "{'archive': 'ftp.gnu.org/gnu/glpk', 'release': '5.0'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; GPL-3.0-or-later",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run glpk-5.0",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/glpk-5.0/receipts/run-glpk-5.0-20260912T143908Z.json",
+    "what_humans_used_it_for": "solve linear programs (simplex or interior-point) and mixed-integer programs (branch-and-cut) to proven optimality, from a modelling-language description"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "optimization",
+    "linear-programming",
+    "integer-programming",
+    "simplex",
+    "interior-point",
+    "branch-and-bound"
+  ],
+  "hardware_assumptions": ""
+}

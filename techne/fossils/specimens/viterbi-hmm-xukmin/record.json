@@ -1,0 +1,122 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "viterbi-hmm-xukmin",
+  "canonical_name": "Viterbi / HMM decoder (compact C++ reference, Min Xu)",
+  "aliases": [
+    "viterbi",
+    "hmm-viterbi"
+  ],
+  "lineage": "The Viterbi algorithm (1967) over a Hidden Markov Model (Rabiner 1989): find the most-likely hidden state path for an observation sequence by dynamic programming over the trellis; this is a small, tested C++ reference of the HMM + Viterbi decode",
+  "domain": [
+    "estimation",
+    "hidden-markov-model",
+    "viterbi",
+    "dynamic-programming",
+    "sequence-modelling",
+    "hidden-state"
+  ],
+  "era": "1967/1989 lineage; this impl modern",
+  "version": "github.com/xukmin/viterbi master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/xukmin/viterbi",
+        "commit": "8f75d4bd1cfbcf1a58b55b4d0bc81ca8530f10bb",
+        "commit_resolved": "8f75d4bd1cfbcf1a58b55b4d0bc81ca8530f10bb",
+        "commit_date": "2024-01-07T00:53:44-08:00"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/xukmin/viterbi"
+  },
+  "hashes": {
+    "tree_sha256": "090ce20d7d7c9b28970092ebdac2c6ec16b3f86113bdaecbfa67299a113d5433",
+    "n_files": 7,
+    "bytes": 33888,
+    "artifacts": [
+      {
+        "filename": "https://github.com/xukmin/viterbi",
+        "sha256": null,
+        "commit": "8f75d4bd1cfbcf1a58b55b4d0bc81ca8530f10bb"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\viterbi-hmm-xukmin",
+    "hash_list": "techne/fossils/specimens/viterbi-hmm-xukmin/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "see repo LICENSE.md",
+    "status": "read before redistribution",
+    "evidence": "repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C++"
+  ],
+  "build_system": "make (ships viterbi_test.cpp + viterbi_main.cpp)",
+  "compiler_or_interpreter": "g++ 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "Viterbi decode over an HMM (states, transition, emission, observations) -> most-likely state path; the shipped test + main"
+  ],
+  "example": {
+    "command": "make && ./viterbi_test (and ./viterbi < a sample HMM+observation)",
+    "input": "an HMM (transition/emission) + an observation sequence",
+    "output": "the most-likely hidden state path"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Viterbi, Error bounds for convolutional codes..., 1967",
+    "Rabiner, A Tutorial on Hidden Markov Models, 1989"
+  ],
+  "human_capability_summary": {
+    "built_to": "recover the most-likely sequence of hidden states that produced an observed sequence, by dynamic programming over the HMM trellis (predict-then-max at each step)",
+    "pressure": "the true state sequence is never observed, only noisy emissions; the number of possible paths is exponential in sequence length",
+    "success_means": "the decoded path matches the true generating states on the test HMM; likelihood computed correctly"
+  },
+  "known_human_problem_solved": "most-likely-path inference in a hidden Markov model (Viterbi)",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "hidden state, noisy/ambiguous emissions, exponential path space",
+  "human_failure_condition": "a wrong transition/emission model yields a wrong decoded path -- a speech recogniser or gene finder built on it makes systematic errors",
+  "behavioral_entry_point": "perturb the emission or transition probabilities, or make two states' emissions overlap, and watch the decoded path change; the shipped test is the oracle",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [
+    {
+      "note": "the richer historical GHMM (Baum-Welch training + forward-backward, MPI-MG, autotools C) is queued as a heavier same-lineage companion"
+    }
+  ],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/viterbi-hmm-xukmin/receipts/run-viterbi-hmm-xukmin-20260912T162528Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\viterbi-hmm-xukmin ; tracked techne/fossils/specimens/viterbi-hmm-xukmin",
+    "where_it_came_from": "https://github.com/xukmin/viterbi ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ 8f75d4bd1cfbcf1a58b55b4d0bc81ca8530f10bb",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run viterbi-hmm-xukmin",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/viterbi-hmm-xukmin/receipts/run-viterbi-hmm-xukmin-20260912T162528Z.json",
+    "what_humans_used_it_for": "recover the most-likely sequence of hidden states that produced an observed sequence, by dynamic programming over the HMM trellis (predict-then-max at each step)"
+  },
+  "seat": "Techne"
+}

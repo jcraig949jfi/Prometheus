@@ -1,0 +1,69 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/lmdb-LMDB_0.9.31/libraries/liblmdb",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make liblmdb + the shipped mtest drivers",
+      "cmd": "make -s liblmdb.a mtest mtest3 2>&1 | grep -iE '\\berror' | head -3; test -x ./mtest && test -f liblmdb.a && echo built"
+    },
+    {
+      "name": "compile Techne's crash-recovery driver against liblmdb.a",
+      "cmd": "gcc -O1 -I. -o $BODY/build/crash $HARNESS/crash.c liblmdb.a -lpthread && echo built"
+    }
+  ],
+  "runs": [
+    {
+      "name": "upstream mtest (random put/get/del + cursor scan)",
+      "cmd": "rm -rf testdb && mkdir testdb && ./mtest 2>&1 | tail -3 && echo MTEST_OK",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "MTEST_OK"
+        ]
+      }
+    },
+    {
+      "name": "commit 1000 entries",
+      "cmd": "rm -rf $BODY/build/db && mkdir -p $BODY/build/db && $BODY/build/crash $BODY/build/db commit",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "committed 1000"
+        ]
+      }
+    },
+    {
+      "name": "CRASH: a second process puts 500 more inside an open transaction and _exit()s without committing",
+      "cmd": "$BODY/build/crash $BODY/build/db crash; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "exit=1"
+        ]
+      }
+    },
+    {
+      "name": "reopen and count (the recovery property: the uncommitted 500 must be absent, the 1000 present)",
+      "cmd": "$BODY/build/crash $BODY/build/db count",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "entries=1000",
+          "RECOVERY OK"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: after a writer dies mid-transaction the database opens at the last committed root (1000 entries), with no repair step. Upstream mtest also run."
+}

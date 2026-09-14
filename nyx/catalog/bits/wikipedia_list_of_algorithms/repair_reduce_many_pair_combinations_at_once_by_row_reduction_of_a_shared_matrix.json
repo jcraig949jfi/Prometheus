@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.reduce_many_pair_combinations_at_once_by_row_reduction_of_a_shared_matrix",
+  "name": "reduce many pair combinations at once by row reduction of a shared matrix",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+  ],
+  "mechanism": "instead of reducing one pair combination at a time, select a whole batch of pairs of the same size, write them and everything needed to reduce them as rows of one matrix over the monomials, row-reduce once, and add every new leading term that appears",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Faugère F4 algorithm' in section Computational mathematics / Computer algebra: finds a Gröbner basis (also mentions the F5 algorithm)",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "WELL_FOUNDED",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "TERMINATES",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "SORTED_GLOBAL",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "sparse linear algebra"
+  ],
+  "fails_when": [
+    "matrices can be huge; many rows reduce to zero (the F5 criterion avoids them)"
+  ],
+  "instances": [
+    "Faugère F4 algorithm"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.repair.add_the_reduced_combination_of_each_pair_until_every_pair_reduces_to_zero"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

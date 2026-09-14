@@ -1,0 +1,2046 @@
+{
+  "artifact": "charon/probe/c1c2_gate_fire_2026-09-11.json",
+  "backlog": "CHARON-01",
+  "ruling": "charon/probe/RULINGS_2026-09-01.md",
+  "checks_version": "c1c2_checks/1.0 (2026-09-11)",
+  "ts_utc": "2026-09-11T19:24:19+00:00",
+  "workspace": {
+    "base_sha": "7f80c28330171aa17d8cb45484386c7da46de086",
+    "branch": "charon/comms-2026-09-11",
+    "worktree_path": "F:\\Prometheus-worktrees\\charon-comms-2026-09-11",
+    "dirty": false,
+    "main_worktree": false,
+    "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+    "allow_canonical_override": false
+  },
+  "guard": {
+    "base_sha": "7f80c28330171aa17d8cb45484386c7da46de086",
+    "branch": "charon/comms-2026-09-11",
+    "worktree_path": "F:\\Prometheus-worktrees\\charon-comms-2026-09-11",
+    "dirty": false,
+    "main_worktree": false,
+    "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+    "allow_canonical_override": false
+  },
+  "head": "7f80c28330171aa17d8cb45484386c7da46de086",
+  "loader": "ergon.probe.assemble.load_prepass (ledger_id='nearmiss_mix')",
+  "loader_last_commit": "c6736671c 2026-08-23 02:43:21 -0400",
+  "pool_last_commit": {
+    "A": "e40556e68 2026-08-24 18:06:49 -0400",
+    "B": "d5e372cb9 2026-08-30 11:04:33 -0400"
+  },
+  "results": {
+    "C1_blockA_manifest_meta_as_receipt": {
+      "check": "C1_pool_fingerprint",
+      "verdict": "FAIL",
+      "reasons": [
+        "RECEIPT_UNFINGERPRINTED"
+      ],
+      "eligible_count": 1,
+      "fired_count": 1,
+      "rows": [
+        {
+          "pool": "blockA_p1_prepass",
+          "path": "F:/Prometheus-worktrees/charon-comms-2026-09-11/ergon/probe/ledgers/campaign/p1_prepass.jsonl",
+          "actual": {
+            "sha256": "c1bafa4a0f38275959fe1848e0094fa2fa573f0b579410076f2e84745ac9e5d6",
+            "record_count": 415,
+            "normalisation": "CRLF->LF before hashing; record_count = non-blank lines"
+          },
+          "result": "FAIL",
+          "reason": "RECEIPT_UNFINGERPRINTED"
+        }
+      ],
+      "detail": {
+        "receipt_has_field": false,
+        "preregistration_given": false
+      },
+      "ruling": "charon/probe/RULINGS_2026-09-01.md",
+      "checks_version": "c1c2_checks/1.0 (2026-09-11)"
+    },
+    "C1_blockB_no_receipt": {
+      "check": "C1_pool_fingerprint",
+      "verdict": "FAIL",
+      "reasons": [
+        "RECEIPT_UNFINGERPRINTED"
+      ],
+      "eligible_count": 1,
+      "fired_count": 1,
+      "rows": [
+        {
+          "pool": "blockB_p1_prepass",
+          "path": "F:/Prometheus-worktrees/charon-comms-2026-09-11/ergon/probe/ledgers/campaign_blockB/p1_prepass.jsonl",
+          "actual": {
+            "sha256": "bdf04966090e7f703dfa47c63632778d8eb3a621d4a42b4d4b336f8f47dd260a",
+            "record_count": 534,
+            "normalisation": "CRLF->LF before hashing; record_count = non-blank lines"
+          },
+          "result": "FAIL",
+          "reason": "RECEIPT_UNFINGERPRINTED"
+        }
+      ],
+      "detail": {
+        "receipt_has_field": false,
+        "preregistration_given": false
+      },
+      "ruling": "charon/probe/RULINGS_2026-09-01.md",
+      "checks_version": "c1c2_checks/1.0 (2026-09-11)"
+    },
+    "C1_current_fingerprints_for_a_successor": {
+      "blockA_p1_prepass": {
+        "sha256": "c1bafa4a0f38275959fe1848e0094fa2fa573f0b579410076f2e84745ac9e5d6",
+        "record_count": 415,
+        "normalisation": "CRLF->LF before hashing; record_count = non-blank lines"
+      },
+      "blockB_p1_prepass": {
+        "sha256": "bdf04966090e7f703dfa47c63632778d8eb3a621d4a42b4d4b336f8f47dd260a",
+        "record_count": 534,
+        "normalisation": "CRLF->LF before hashing; record_count = non-blank lines"
+      }
+    },
+    "C2_blockA_live": {
+      "check": "C2_transport_not_residue",
+      "verdict": "FAIL",
+      "reasons": [
+        "FABRICATION_RENDERED: 6 transport-failed rows admitted as residue"
+      ],
+      "eligible_count": 6,
+      "fired_count": 6,
+      "rows": [
+        {
+          "seq": 56,
+          "uid": "nearmiss_mix-M30-00055",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 58,
+          "uid": "nearmiss_mix-M30-00057",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 60,
+          "uid": "nearmiss_mix-M30-00059",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 75,
+          "uid": "nearmiss_mix-M30-00074",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 146,
+          "uid": "nearmiss_mix-M30-00145",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 169,
+          "uid": "nearmiss_mix-M30-00168",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        }
+      ],
+      "detail": {
+        "pool": "F:/Prometheus-worktrees/charon-comms-2026-09-11/ergon/probe/ledgers/campaign/p1_prepass.jsonl",
+        "fingerprint": {
+          "sha256": "c1bafa4a0f38275959fe1848e0094fa2fa573f0b579410076f2e84745ac9e5d6",
+          "record_count": 415,
+          "normalisation": "CRLF->LF before hashing; record_count = non-blank lines"
+        },
+        "raw_rows": 415,
+        "rep1_rows": 206,
+        "rep1_ok_rows": 200,
+        "rep1_transport_failed_rows": 6,
+        "rep1_transport_failed_uids": 6,
+        "rep1_rows_without_status": 0,
+        "loader_admitted_records": 206,
+        "loader_admitted_uids": 200,
+        "loader_exposes_seq": true,
+        "transport_failed_rows_rendered": 6,
+        "transport_failed_uids_rendered": 6,
+        "transport_failed_rows_unattributable": 0,
+        "failed_uids_shared_with_an_ok_row": 6,
+        "error_types": {
+          "HTTP504": 5,
+          "HTTP529": 1
+        },
+        "inclusion_preregistered": false,
+        "rendered_failed_uids": [
+          "nearmiss_mix-M30-00055",
+          "nearmiss_mix-M30-00057",
+          "nearmiss_mix-M30-00059",
+          "nearmiss_mix-M30-00074",
+          "nearmiss_mix-M30-00145",
+          "nearmiss_mix-M30-00168"
+        ],
+        "rendered_failed_rows": [
+          [
+            "nearmiss_mix-M30-00055",
+            56
+          ],
+          [
+            "nearmiss_mix-M30-00057",
+            58
+          ],
+          [
+            "nearmiss_mix-M30-00059",
+            60
+          ],
+          [
+            "nearmiss_mix-M30-00074",
+            75
+          ],
+          [
+            "nearmiss_mix-M30-00145",
+            146
+          ],
+          [
+            "nearmiss_mix-M30-00168",
+            169
+          ]
+        ]
+      },
+      "ruling": "charon/probe/RULINGS_2026-09-01.md",
+      "checks_version": "c1c2_checks/1.0 (2026-09-11)"
+    },
+    "C2_blockB_live": {
+      "check": "C2_transport_not_residue",
+      "verdict": "FAIL",
+      "reasons": [
+        "FABRICATION_RENDERED: 55 transport-failed rows admitted as residue"
+      ],
+      "eligible_count": 55,
+      "fired_count": 55,
+      "rows": [
+        {
+          "seq": 9,
+          "uid": "nearmiss_mixB-M30-00008",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 47,
+          "uid": "nearmiss_mixB-M30-00046",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 53,
+          "uid": "nearmiss_mixB-M30-00052",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 73,
+          "uid": "nearmiss_mixB-M30-00072",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 76,
+          "uid": "nearmiss_mixB-M30-00075",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 80,
+          "uid": "nearmiss_mixB-M30-00079",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 83,
+          "uid": "nearmiss_mixB-M30-00082",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 92,
+          "uid": "nearmiss_mixB-M30-00091",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 120,
+          "uid": "nearmiss_mixB-M30-00119",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 122,
+          "uid": "nearmiss_mixB-M30-00121",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 123,
+          "uid": "nearmiss_mixB-M30-00122",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 124,
+          "uid": "nearmiss_mixB-M30-00008",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 133,
+          "uid": "nearmiss_mixB-M30-00121",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 138,
+          "uid": "nearmiss_mixB-M30-00126",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 139,
+          "uid": "nearmiss_mixB-M30-00127",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 140,
+          "uid": "nearmiss_mixB-M30-00128",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 141,
+          "uid": "nearmiss_mixB-M30-00129",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 143,
+          "uid": "nearmiss_mixB-M30-00131",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 145,
+          "uid": "nearmiss_mixB-M30-00133",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 146,
+          "uid": "nearmiss_mixB-M30-00134",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 147,
+          "uid": "nearmiss_mixB-M30-00135",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 150,
+          "uid": "nearmiss_mixB-M30-00138",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 151,
+          "uid": "nearmiss_mixB-M30-00139",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 152,
+          "uid": "nearmiss_mixB-M30-00140",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 153,
+          "uid": "nearmiss_mixB-M30-00141",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 154,
+          "uid": "nearmiss_mixB-M30-00142",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 162,
+          "uid": "nearmiss_mixB-M30-00150",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 170,
+          "uid": "nearmiss_mixB-M30-00158",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 176,
+          "uid": "nearmiss_mixB-M30-00164",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 177,
+          "uid": "nearmiss_mixB-M30-00165",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 178,
+          "uid": "nearmiss_mixB-M30-00166",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 179,
+          "uid": "nearmiss_mixB-M30-00167",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 180,
+          "uid": "nearmiss_mixB-M30-00168",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 181,
+          "uid": "nearmiss_mixB-M30-00169",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 182,
+          "uid": "nearmiss_mixB-M30-00170",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 183,
+          "uid": "nearmiss_mixB-M30-00171",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 184,
+          "uid": "nearmiss_mixB-M30-00172",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 185,
+          "uid": "nearmiss_mixB-M30-00173",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 187,
+          "uid": "nearmiss_mixB-M30-00175",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 190,
+          "uid": "nearmiss_mixB-M30-00178",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 191,
+          "uid": "nearmiss_mixB-M30-00179",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 202,
+          "uid": "nearmiss_mixB-M30-00190",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 203,
+          "uid": "nearmiss_mixB-M30-00191",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 205,
+          "uid": "nearmiss_mixB-M30-00193",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 206,
+          "uid": "nearmiss_mixB-M30-00194",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 207,
+          "uid": "nearmiss_mixB-M30-00195",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 208,
+          "uid": "nearmiss_mixB-M30-00196",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 215,
+          "uid": "nearmiss_mixB-M30-00203",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 217,
+          "uid": "nearmiss_mixB-M30-00205",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 218,
+          "uid": "nearmiss_mixB-M30-00206",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 221,
+          "uid": "nearmiss_mixB-M30-00209",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 223,
+          "uid": "nearmiss_mixB-M30-00211",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 228,
+          "uid": "nearmiss_mixB-M30-00216",
+          "status": "http_error",
+          "error_type": "HTTP504",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 230,
+          "uid": "nearmiss_mixB-M30-00218",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        },
+        {
+          "seq": 231,
+          "uid": "nearmiss_mixB-M30-00219",
+          "status": "http_error",
+          "error_type": "HTTP529",
+          "attempt_text_len": 0,
+          "uid_shared_with_ok_row": true,
+          "rendered_by_loader": true,
+          "unattributable": false
+        }
+      ],
+      "detail": {
+        "pool": "F:/Prometheus-worktrees/charon-comms-2026-09-11/ergon/probe/ledgers/campaign_blockB/p1_prepass.jsonl",
+        "fingerprint": {
+          "sha256": "bdf04966090e7f703dfa47c63632778d8eb3a621d4a42b4d4b336f8f47dd260a",
+          "record_count": 534,
+          "normalisation": "CRLF->LF before hashing; record_count = non-blank lines"
+        },
+        "raw_rows": 534,
+        "rep1_rows": 275,
+        "rep1_ok_rows": 220,
+        "rep1_transport_failed_rows": 55,
+        "rep1_transport_failed_uids": 53,
+        "rep1_rows_without_status": 0,
+        "loader_admitted_records": 275,
+        "loader_admitted_uids": 220,
+        "loader_exposes_seq": true,
+        "transport_failed_rows_rendered": 55,
+        "transport_failed_uids_rendered": 53,
+        "transport_failed_rows_unattributable": 0,
+        "failed_uids_shared_with_an_ok_row": 53,
+        "error_types": {
+          "HTTP504": 12,
+          "HTTP529": 43
+        },
+        "inclusion_preregistered": false,
+        "rendered_failed_uids": [
+          "nearmiss_mixB-M30-00008",
+          "nearmiss_mixB-M30-00046",
+          "nearmiss_mixB-M30-00052",
+          "nearmiss_mixB-M30-00072",
+          "nearmiss_mixB-M30-00075",
+          "nearmiss_mixB-M30-00079",
+          "nearmiss_mixB-M30-00082",
+          "nearmiss_mixB-M30-00091",
+          "nearmiss_mixB-M30-00119",
+          "nearmiss_mixB-M30-00121",
+          "nearmiss_mixB-M30-00122",
+          "nearmiss_mixB-M30-00126",
+          "nearmiss_mixB-M30-00127",
+          "nearmiss_mixB-M30-00128",
+          "nearmiss_mixB-M30-00129",
+          "nearmiss_mixB-M30-00131",
+          "nearmiss_mixB-M30-00133",
+          "nearmiss_mixB-M30-00134",
+          "nearmiss_mixB-M30-00135",
+          "nearmiss_mixB-M30-00138",
+          "nearmiss_mixB-M30-00139",
+          "nearmiss_mixB-M30-00140",
+          "nearmiss_mixB-M30-00141",
+          "nearmiss_mixB-M30-00142",
+          "nearmiss_mixB-M30-00150",
+          "nearmiss_mixB-M30-00158",
+          "nearmiss_mixB-M30-00164",
+          "nearmiss_mixB-M30-00165",
+          "nearmiss_mixB-M30-00166",
+          "nearmiss_mixB-M30-00167",
+          "nearmiss_mixB-M30-00168",
+          "nearmiss_mixB-M30-00169",
+          "nearmiss_mixB-M30-00170",
+          "nearmiss_mixB-M30-00171",
+          "nearmiss_mixB-M30-00172",
+          "nearmiss_mixB-M30-00173",
+          "nearmiss_mixB-M30-00175",
+          "nearmiss_mixB-M30-00178",
+          "nearmiss_mixB-M30-00179",
+          "nearmiss_mixB-M30-00190",
+          "nearmiss_mixB-M30-00191",
+          "nearmiss_mixB-M30-00193",
+          "nearmiss_mixB-M30-00194",
+          "nearmiss_mixB-M30-00195",
+          "nearmiss_mixB-M30-00196",
+          "nearmiss_mixB-M30-00203",
+          "nearmiss_mixB-M30-00205",
+          "nearmiss_mixB-M30-00206",
+          "nearmiss_mixB-M30-00209",
+          "nearmiss_mixB-M30-00211",
+          "nearmiss_mixB-M30-00216",
+          "nearmiss_mixB-M30-00218",
+          "nearmiss_mixB-M30-00219"
+        ],
+        "rendered_failed_rows": [
+          [
+            "nearmiss_mixB-M30-00008",
+            9
+          ],
+          [
+            "nearmiss_mixB-M30-00008",
+            124
+          ],
+          [
+            "nearmiss_mixB-M30-00046",
+            47
+          ],
+          [
+            "nearmiss_mixB-M30-00052",
+            53
+          ],
+          [
+            "nearmiss_mixB-M30-00072",
+            73
+          ],
+          [
+            "nearmiss_mixB-M30-00075",
+            76
+          ],
+          [
+            "nearmiss_mixB-M30-00079",
+            80
+          ],
+          [
+            "nearmiss_mixB-M30-00082",
+            83
+          ],
+          [
+            "nearmiss_mixB-M30-00091",
+            92
+          ],
+          [
+            "nearmiss_mixB-M30-00119",
+            120
+          ],
+          [
+            "nearmiss_mixB-M30-00121",
+            122
+          ],
+          [
+            "nearmiss_mixB-M30-00121",
+            133
+          ],
+          [
+            "nearmiss_mixB-M30-00122",
+            123
+          ],
+          [
+            "nearmiss_mixB-M30-00126",
+            138
+          ],
+          [
+            "nearmiss_mixB-M30-00127",
+            139
+          ],
+          [
+            "nearmiss_mixB-M30-00128",
+            140
+          ],
+          [
+            "nearmiss_mixB-M30-00129",
+            141
+          ],
+          [
+            "nearmiss_mixB-M30-00131",
+            143
+          ],
+          [
+            "nearmiss_mixB-M30-00133",
+            145
+          ],
+          [
+            "nearmiss_mixB-M30-00134",
+            146
+          ],
+          [
+            "nearmiss_mixB-M30-00135",
+            147
+          ],
+          [
+            "nearmiss_mixB-M30-00138",
+            150
+          ],
+          [
+            "nearmiss_mixB-M30-00139",
+            151
+          ],
+          [
+            "nearmiss_mixB-M30-00140",
+            152
+          ],
+          [
+            "nearmiss_mixB-M30-00141",
+            153
+          ],
+          [
+            "nearmiss_mixB-M30-00142",
+            154
+          ],
+          [
+            "nearmiss_mixB-M30-00150",
+            162
+          ],
+          [
+            "nearmiss_mixB-M30-00158",
+            170
+          ],
+          [
+            "nearmiss_mixB-M30-00164",
+            176
+          ],
+          [
+            "nearmiss_mixB-M30-00165",
+            177
+          ],
+          [
+            "nearmiss_mixB-M30-00166",
+            178
+          ],
+          [
+            "nearmiss_mixB-M30-00167",
+            179
+          ],
+          [
+            "nearmiss_mixB-M30-00168",
+            180
+          ],
+          [
+            "nearmiss_mixB-M30-00169",
+            181
+          ],
+          [
+            "nearmiss_mixB-M30-00170",
+            182
+          ],
+          [
+            "nearmiss_mixB-M30-00171",
+            183
+          ],
+          [
+            "nearmiss_mixB-M30-00172",
+            184
+          ],
+          [
+            "nearmiss_mixB-M30-00173",
+            185
+          ],
+          [
+            "nearmiss_mixB-M30-00175",
+            187
+          ],
+          [
+            "nearmiss_mixB-M30-00178",
+            190
+          ],
+          [
+            "nearmiss_mixB-M30-00179",
+            191
+          ],
+          [
+            "nearmiss_mixB-M30-00190",
+            202
+          ],
+          [
+            "nearmiss_mixB-M30-00191",
+            203
+          ],
+          [
+            "nearmiss_mixB-M30-00193",
+            205
+          ],
+          [
+            "nearmiss_mixB-M30-00194",
+            206
+          ],
+          [
+            "nearmiss_mixB-M30-00195",
+            207
+          ],
+          [
+            "nearmiss_mixB-M30-00196",
+            208
+          ],
+          [
+            "nearmiss_mixB-M30-00203",
+            215
+          ],
+          [
+            "nearmiss_mixB-M30-00205",
+            217
+          ],
+          [
+            "nearmiss_mixB-M30-00206",
+            218
+          ],
+          [
+            "nearmiss_mixB-M30-00209",
+            221
+          ],
+          [
+            "nearmiss_mixB-M30-00211",
+            223
+          ],
+          [
+            "nearmiss_mixB-M30-00216",
+            228
+          ],
+          [
+            "nearmiss_mixB-M30-00218",
+            230
+          ],
+          [
+            "nearmiss_mixB-M30-00219",
+            231
+          ]
+        ]
+      },
+      "ruling": "charon/probe/RULINGS_2026-09-01.md",
+      "checks_version": "c1c2_checks/1.0 (2026-09-11)"
+    },
+    "C2_blockB_COPY_planted_504": {
+      "copy_sha256_lf": "7d67e30429c5b1eea68f8deffda1ab70ebd5bdd2546510b476e14c7db6c069c8",
+      "copy_record_count": 535,
+      "planted_row": {
+        "key": [
+          1,
+          "charon-planted-504-2026-09-11"
+        ],
+        "status": "http_error",
+        "error_type": "HTTP504",
+        "latency_s": 302.0,
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "extracted_int": null,
+        "attempt_text": "",
+        "solver": "charon:planted",
+        "derives_from_gold": false,
+        "ts_utc": "2026-09-11T19:24:19+00:00",
+        "host": "charon",
+        "executor": "charon"
+      },
+      "planted_row_result": {
+        "seq": 535,
+        "uid": "charon-planted-504-2026-09-11",
+        "status": "http_error",
+        "error_type": "HTTP504",
+        "attempt_text_len": 0,
+        "uid_shared_with_ok_row": false,
+        "rendered_by_loader": true,
+        "unattributable": false
+      },
+      "verdict": {
+        "check": "C2_transport_not_residue",
+        "verdict": "FAIL",
+        "reasons": [
+          "FABRICATION_RENDERED: 56 transport-failed rows admitted as residue"
+        ],
+        "eligible_count": 56,
+        "fired_count": 56,
+        "rows": [
+          {
+            "seq": 9,
+            "uid": "nearmiss_mixB-M30-00008",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 47,
+            "uid": "nearmiss_mixB-M30-00046",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 53,
+            "uid": "nearmiss_mixB-M30-00052",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 73,
+            "uid": "nearmiss_mixB-M30-00072",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 76,
+            "uid": "nearmiss_mixB-M30-00075",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 80,
+            "uid": "nearmiss_mixB-M30-00079",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 83,
+            "uid": "nearmiss_mixB-M30-00082",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 92,
+            "uid": "nearmiss_mixB-M30-00091",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 120,
+            "uid": "nearmiss_mixB-M30-00119",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 122,
+            "uid": "nearmiss_mixB-M30-00121",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 123,
+            "uid": "nearmiss_mixB-M30-00122",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 124,
+            "uid": "nearmiss_mixB-M30-00008",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 133,
+            "uid": "nearmiss_mixB-M30-00121",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 138,
+            "uid": "nearmiss_mixB-M30-00126",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 139,
+            "uid": "nearmiss_mixB-M30-00127",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 140,
+            "uid": "nearmiss_mixB-M30-00128",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 141,
+            "uid": "nearmiss_mixB-M30-00129",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 143,
+            "uid": "nearmiss_mixB-M30-00131",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 145,
+            "uid": "nearmiss_mixB-M30-00133",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 146,
+            "uid": "nearmiss_mixB-M30-00134",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 147,
+            "uid": "nearmiss_mixB-M30-00135",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 150,
+            "uid": "nearmiss_mixB-M30-00138",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 151,
+            "uid": "nearmiss_mixB-M30-00139",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 152,
+            "uid": "nearmiss_mixB-M30-00140",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 153,
+            "uid": "nearmiss_mixB-M30-00141",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 154,
+            "uid": "nearmiss_mixB-M30-00142",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 162,
+            "uid": "nearmiss_mixB-M30-00150",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 170,
+            "uid": "nearmiss_mixB-M30-00158",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 176,
+            "uid": "nearmiss_mixB-M30-00164",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 177,
+            "uid": "nearmiss_mixB-M30-00165",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 178,
+            "uid": "nearmiss_mixB-M30-00166",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 179,
+            "uid": "nearmiss_mixB-M30-00167",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 180,
+            "uid": "nearmiss_mixB-M30-00168",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 181,
+            "uid": "nearmiss_mixB-M30-00169",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 182,
+            "uid": "nearmiss_mixB-M30-00170",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 183,
+            "uid": "nearmiss_mixB-M30-00171",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 184,
+            "uid": "nearmiss_mixB-M30-00172",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 185,
+            "uid": "nearmiss_mixB-M30-00173",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 187,
+            "uid": "nearmiss_mixB-M30-00175",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 190,
+            "uid": "nearmiss_mixB-M30-00178",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 191,
+            "uid": "nearmiss_mixB-M30-00179",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 202,
+            "uid": "nearmiss_mixB-M30-00190",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 203,
+            "uid": "nearmiss_mixB-M30-00191",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 205,
+            "uid": "nearmiss_mixB-M30-00193",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 206,
+            "uid": "nearmiss_mixB-M30-00194",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 207,
+            "uid": "nearmiss_mixB-M30-00195",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 208,
+            "uid": "nearmiss_mixB-M30-00196",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 215,
+            "uid": "nearmiss_mixB-M30-00203",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 217,
+            "uid": "nearmiss_mixB-M30-00205",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 218,
+            "uid": "nearmiss_mixB-M30-00206",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 221,
+            "uid": "nearmiss_mixB-M30-00209",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 223,
+            "uid": "nearmiss_mixB-M30-00211",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 228,
+            "uid": "nearmiss_mixB-M30-00216",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 230,
+            "uid": "nearmiss_mixB-M30-00218",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 231,
+            "uid": "nearmiss_mixB-M30-00219",
+            "status": "http_error",
+            "error_type": "HTTP529",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": true,
+            "rendered_by_loader": true,
+            "unattributable": false
+          },
+          {
+            "seq": 535,
+            "uid": "charon-planted-504-2026-09-11",
+            "status": "http_error",
+            "error_type": "HTTP504",
+            "attempt_text_len": 0,
+            "uid_shared_with_ok_row": false,
+            "rendered_by_loader": true,
+            "unattributable": false
+          }
+        ],
+        "detail": {
+          "pool": "C:/Users/jcrai/AppData/Local/Temp/charon_c1c2_al10n7si/p1_prepass.PLANTED.jsonl",
+          "fingerprint": {
+            "sha256": "7d67e30429c5b1eea68f8deffda1ab70ebd5bdd2546510b476e14c7db6c069c8",
+            "record_count": 535,
+            "normalisation": "CRLF->LF before hashing; record_count = non-blank lines"
+          },
+          "raw_rows": 535,
+          "rep1_rows": 276,
+          "rep1_ok_rows": 220,
+          "rep1_transport_failed_rows": 56,
+          "rep1_transport_failed_uids": 54,
+          "rep1_rows_without_status": 0,
+          "loader_admitted_records": 276,
+          "loader_admitted_uids": 221,
+          "loader_exposes_seq": true,
+          "transport_failed_rows_rendered": 56,
+          "transport_failed_uids_rendered": 54,
+          "transport_failed_rows_unattributable": 0,
+          "failed_uids_shared_with_an_ok_row": 53,
+          "error_types": {
+            "HTTP504": 13,
+            "HTTP529": 43
+          },
+          "inclusion_preregistered": false,
+          "rendered_failed_uids": [
+            "charon-planted-504-2026-09-11",
+            "nearmiss_mixB-M30-00008",
+            "nearmiss_mixB-M30-00046",
+            "nearmiss_mixB-M30-00052",
+            "nearmiss_mixB-M30-00072",
+            "nearmiss_mixB-M30-00075",
+            "nearmiss_mixB-M30-00079",
+            "nearmiss_mixB-M30-00082",
+            "nearmiss_mixB-M30-00091",
+            "nearmiss_mixB-M30-00119",
+            "nearmiss_mixB-M30-00121",
+            "nearmiss_mixB-M30-00122",
+            "nearmiss_mixB-M30-00126",
+            "nearmiss_mixB-M30-00127",
+            "nearmiss_mixB-M30-00128",
+            "nearmiss_mixB-M30-00129",
+            "nearmiss_mixB-M30-00131",
+            "nearmiss_mixB-M30-00133",
+            "nearmiss_mixB-M30-00134",
+            "nearmiss_mixB-M30-00135",
+            "nearmiss_mixB-M30-00138",
+            "nearmiss_mixB-M30-00139",
+            "nearmiss_mixB-M30-00140",
+            "nearmiss_mixB-M30-00141",
+            "nearmiss_mixB-M30-00142",
+            "nearmiss_mixB-M30-00150",
+            "nearmiss_mixB-M30-00158",
+            "nearmiss_mixB-M30-00164",
+            "nearmiss_mixB-M30-00165",
+            "nearmiss_mixB-M30-00166",
+            "nearmiss_mixB-M30-00167",
+            "nearmiss_mixB-M30-00168",
+            "nearmiss_mixB-M30-00169",
+            "nearmiss_mixB-M30-00170",
+            "nearmiss_mixB-M30-00171",
+            "nearmiss_mixB-M30-00172",
+            "nearmiss_mixB-M30-00173",
+            "nearmiss_mixB-M30-00175",
+            "nearmiss_mixB-M30-00178",
+            "nearmiss_mixB-M30-00179",
+            "nearmiss_mixB-M30-00190",
+            "nearmiss_mixB-M30-00191",
+            "nearmiss_mixB-M30-00193",
+            "nearmiss_mixB-M30-00194",
+            "nearmiss_mixB-M30-00195",
+            "nearmiss_mixB-M30-00196",
+            "nearmiss_mixB-M30-00203",
+            "nearmiss_mixB-M30-00205",
+            "nearmiss_mixB-M30-00206",
+            "nearmiss_mixB-M30-00209",
+            "nearmiss_mixB-M30-00211",
+            "nearmiss_mixB-M30-00216",
+            "nearmiss_mixB-M30-00218",
+            "nearmiss_mixB-M30-00219"
+          ],
+          "rendered_failed_rows": [
+            [
+              "charon-planted-504-2026-09-11",
+              535
+            ],
+            [
+              "nearmiss_mixB-M30-00008",
+              9
+            ],
+            [
+              "nearmiss_mixB-M30-00008",
+              124
+            ],
+            [
+              "nearmiss_mixB-M30-00046",
+              47
+            ],
+            [
+              "nearmiss_mixB-M30-00052",
+              53
+            ],
+            [
+              "nearmiss_mixB-M30-00072",
+              73
+            ],
+            [
+              "nearmiss_mixB-M30-00075",
+              76
+            ],
+            [
+              "nearmiss_mixB-M30-00079",
+              80
+            ],
+            [
+              "nearmiss_mixB-M30-00082",
+              83
+            ],
+            [
+              "nearmiss_mixB-M30-00091",
+              92
+            ],
+            [
+              "nearmiss_mixB-M30-00119",
+              120
+            ],
+            [
+              "nearmiss_mixB-M30-00121",
+              122
+            ],
+            [
+              "nearmiss_mixB-M30-00121",
+              133
+            ],
+            [
+              "nearmiss_mixB-M30-00122",
+              123
+            ],
+            [
+              "nearmiss_mixB-M30-00126",
+              138
+            ],
+            [
+              "nearmiss_mixB-M30-00127",
+              139
+            ],
+            [
+              "nearmiss_mixB-M30-00128",
+              140
+            ],
+            [
+              "nearmiss_mixB-M30-00129",
+              141
+            ],
+            [
+              "nearmiss_mixB-M30-00131",
+              143
+            ],
+            [
+              "nearmiss_mixB-M30-00133",
+              145
+            ],
+            [
+              "nearmiss_mixB-M30-00134",
+              146
+            ],
+            [
+              "nearmiss_mixB-M30-00135",
+              147
+            ],
+            [
+              "nearmiss_mixB-M30-00138",
+              150
+            ],
+            [
+              "nearmiss_mixB-M30-00139",
+              151
+            ],
+            [
+              "nearmiss_mixB-M30-00140",
+              152
+            ],
+            [
+              "nearmiss_mixB-M30-00141",
+              153
+            ],
+            [
+              "nearmiss_mixB-M30-00142",
+              154
+            ],
+            [
+              "nearmiss_mixB-M30-00150",
+              162
+            ],
+            [
+              "nearmiss_mixB-M30-00158",
+              170
+            ],
+            [
+              "nearmiss_mixB-M30-00164",
+              176
+            ],
+            [
+              "nearmiss_mixB-M30-00165",
+              177
+            ],
+            [
+              "nearmiss_mixB-M30-00166",
+              178
+            ],
+            [
+              "nearmiss_mixB-M30-00167",
+              179
+            ],
+            [
+              "nearmiss_mixB-M30-00168",
+              180
+            ],
+            [
+              "nearmiss_mixB-M30-00169",
+              181
+            ],
+            [
+              "nearmiss_mixB-M30-00170",
+              182
+            ],
+            [
+              "nearmiss_mixB-M30-00171",
+              183
+            ],
+            [
+              "nearmiss_mixB-M30-00172",
+              184
+            ],
+            [
+              "nearmiss_mixB-M30-00173",
+              185
+            ],
+            [
+              "nearmiss_mixB-M30-00175",
+              187
+            ],
+            [
+              "nearmiss_mixB-M30-00178",
+              190
+            ],
+            [
+              "nearmiss_mixB-M30-00179",
+              191
+            ],
+            [
+              "nearmiss_mixB-M30-00190",
+              202
+            ],
+            [
+              "nearmiss_mixB-M30-00191",
+              203
+            ],
+            [
+              "nearmiss_mixB-M30-00193",
+              205
+            ],
+            [
+              "nearmiss_mixB-M30-00194",
+              206
+            ],
+            [
+              "nearmiss_mixB-M30-00195",
+              207
+            ],
+            [
+              "nearmiss_mixB-M30-00196",
+              208
+            ],
+            [
+              "nearmiss_mixB-M30-00203",
+              215
+            ],
+            [
+              "nearmiss_mixB-M30-00205",
+              217
+            ],
+            [
+              "nearmiss_mixB-M30-00206",
+              218
+            ],
+            [
+              "nearmiss_mixB-M30-00209",
+              221
+            ],
+            [
+              "nearmiss_mixB-M30-00211",
+              223
+            ],
+            [
+              "nearmiss_mixB-M30-00216",
+              228
+            ],
+            [
+              "nearmiss_mixB-M30-00218",
+              230
+            ],
+            [
+              "nearmiss_mixB-M30-00219",
+              231
+            ]
+          ]
+        },
+        "ruling": "charon/probe/RULINGS_2026-09-01.md",
+        "checks_version": "c1c2_checks/1.0 (2026-09-11)"
+      }
+    },
+    "C1_copy_vs_live_fingerprint": {
+      "check": "C1_pool_fingerprint",
+      "verdict": "FAIL",
+      "reasons": [
+        "POOL_MOVED (quoted fingerprint != bytes)"
+      ],
+      "eligible_count": 1,
+      "fired_count": 1,
+      "rows": [
+        {
+          "pool": "blockB_p1_prepass",
+          "path": "C:/Users/jcrai/AppData/Local/Temp/charon_c1c2_al10n7si/p1_prepass.PLANTED.jsonl",
+          "actual": {
+            "sha256": "7d67e30429c5b1eea68f8deffda1ab70ebd5bdd2546510b476e14c7db6c069c8",
+            "record_count": 535,
+            "normalisation": "CRLF->LF before hashing; record_count = non-blank lines"
+          },
+          "quoted": {
+            "sha256": "bdf04966090e7f703dfa47c63632778d8eb3a621d4a42b4d4b336f8f47dd260a",
+            "record_count": 534
+          },
+          "result": "FAIL",
+          "reason": "POOL_MOVED (quoted fingerprint != bytes)"
+        }
+      ],
+      "detail": {
+        "receipt_has_field": true,
+        "preregistration_given": false
+      },
+      "ruling": "charon/probe/RULINGS_2026-09-01.md",
+      "checks_version": "c1c2_checks/1.0 (2026-09-11)"
+    }
+  }
+}

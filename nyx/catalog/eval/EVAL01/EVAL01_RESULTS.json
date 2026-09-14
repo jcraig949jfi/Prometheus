@@ -1,0 +1,1089 @@
+{
+ "schema": "nyx.catalog.eval.results/0",
+ "id": "EVAL01",
+ "prereg_commit": "6a6deb29d9b030109546b7e1ef403015da7217cf",
+ "frozen": {
+  "main_sha": "bc37f828d39b3a5037c75efb4fec9468c01cde8b",
+  "expected_main_sha": "bc37f828d39b3a5037c75efb4fec9468c01cde8b",
+  "n_bit_files": 321,
+  "bits_digest_sha256": "6af7ae914f68e9b9e92de143d4a6e27560dcf89fb4fb67503c9cdfe505d4c0e2",
+  "search_py_sha256": "215b52a8e48d37179ef24922d9306fc8b7bd9bac019757e0dc9d9ce56f408a78",
+  "schema_py_sha256": "8077918ec9fad1de28728752c22169d8832aaa250d0cfe236c62a277fd8b7ef1",
+  "vocabulary": "schema.py as at frozen sha (v0.4)"
+ },
+ "bits_loaded": 321,
+ "post_hoc_repair": "NO -- nothing changed between prereg and run (digests asserted)",
+ "summary": {
+  "top1": {
+   "HIT": 3,
+   "RELATED": 3,
+   "MISS": 4
+  },
+  "top5": {
+   "HIT": 3,
+   "RELATED": 4,
+   "MISS": 3
+  },
+  "failure_classes": {
+   "COVERAGE": [
+    "Q02_archaeon_coverage_biased_exploration",
+    "Q03_archaeon_cadence_gate",
+    "Q04_vivarium_queue_claim",
+    "Q08_vault_lzw",
+    "Q09_vault_ldpc"
+   ],
+   "NONE (HIT@1)": [
+    "Q01_archaeon_reserve_allocation",
+    "Q10_vault_tscp_chess"
+   ],
+   "REPRESENTATION": [
+    "Q05_vivarium_cegis_loop",
+    "Q06_vault_cmaes",
+    "Q07_vault_minisat"
+   ]
+  }
+ },
+ "results": [
+  {
+   "id": "Q01_archaeon_reserve_allocation",
+   "top5": [
+    {
+     "score": 1.0,
+     "id": "bit.schedule.allocate_by_group_entitlement",
+     "disagrees": {}
+    },
+    {
+     "score": 0.875,
+     "id": "bit.schedule.rotate_fixed_quanta_over_ready_queue",
+     "disagrees": {
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.75,
+     "id": "bit.allocate.copy_live_objects_to_a_fresh_space",
+     "disagrees": {
+      "in_geometry": 0.0
+     }
+    },
+    {
+     "score": 0.75,
+     "id": "bit.allocate.mark_reachable_then_free_unmarked",
+     "disagrees": {
+      "in_geometry": 0.0
+     }
+    },
+    {
+     "score": 0.75,
+     "id": "bit.schedule.use_pool_k_only_on_every_2_to_the_k_th_reseed",
+     "disagrees": {
+      "in_geometry": 0.0
+     }
+    }
+   ],
+   "top_score": 1.0,
+   "tie_group_size": 1,
+   "tie_group": [
+    "bit.schedule.allocate_by_group_entitlement"
+   ],
+   "expected_and_related_positions": {
+    "bit.schedule.allocate_by_group_entitlement": {
+     "rank": 1,
+     "score": 1.0,
+     "disagrees": {}
+    },
+    "bit.schedule.rotate_fixed_quanta_over_ready_queue": {
+     "rank": 2,
+     "score": 0.875,
+     "disagrees": {
+      "state_req": "LOCAL"
+     }
+    },
+    "bit.schedule.demote_tasks_that_use_their_whole_quantum": {
+     "rank": 7,
+     "score": 0.625,
+     "disagrees": {
+      "state_req": "LOCAL",
+      "control": "REACTIVE"
+     }
+    },
+    "bit.allocate.split_power_of_two_blocks_and_coalesce_buddies": {
+     "rank": 14,
+     "score": 0.5,
+     "disagrees": {
+      "in_geometry": "SCALAR",
+      "control": "CALLBACK"
+     }
+    },
+    "bit.schedule.assign_next_ready_task_to_first_free_machine": {
+     "rank": 40,
+     "score": 0.375,
+     "disagrees": {
+      "in_geometry": "DAG",
+      "state_req": "LOCAL",
+      "control": "REACTIVE"
+     }
+    }
+   },
+   "failure_class": "NONE (HIT@1)",
+   "n_axes_queried": 4,
+   "outcome_top1": "HIT",
+   "outcome_top5": "HIT"
+  },
+  {
+   "id": "Q02_archaeon_coverage_biased_exploration",
+   "top5": [
+    {
+     "score": 1.0,
+     "id": "bit.archive.cell_replacement_by_fitness",
+     "disagrees": {}
+    },
+    {
+     "score": 0.8,
+     "id": "bit.search.order_gated_greedy_acceptance",
+     "disagrees": {
+      "in_geometry": 0.5,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.7,
+     "id": "bit.repair.reassign_conflicting_variable_to_least_conflict_value",
+     "disagrees": {
+      "verb": 0.0,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.7,
+     "id": "bit.select.add_cheapest_edge_joining_components",
+     "disagrees": {
+      "in_geometry": 0.0,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.7,
+     "id": "bit.select.each_component_picks_cheapest_outgoing_edge",
+     "disagrees": {
+      "in_geometry": 0.0,
+      "state_req": 0.5
+     }
+    }
+   ],
+   "top_score": 1.0,
+   "tie_group_size": 1,
+   "tie_group": [
+    "bit.archive.cell_replacement_by_fitness"
+   ],
+   "expected_and_related_positions": {
+    "bit.select.move_to_fewest_onward_options": {
+     "rank": 9,
+     "score": 0.7,
+     "disagrees": {
+      "in_geometry": "GRAPH",
+      "state_req": "LOCAL"
+     }
+    },
+    "bit.remember.evict_by_balancing_recency_and_frequency_lists": {
+     "rank": 74,
+     "score": 0.4,
+     "disagrees": {
+      "verb": "REMEMBER",
+      "in_geometry": "STREAM",
+      "strategy": "ADAPTIVE_SWITCH"
+     }
+    },
+    "bit.sample.draw_in_proportion_to_score": {
+     "rank": 77,
+     "score": 0.4,
+     "disagrees": {
+      "in_geometry": "SET",
+      "state_req": "NONE",
+      "strategy": "RANDOMIZED"
+     }
+    },
+    "bit.sample.pick_best_of_random_subset": {
+     "rank": 78,
+     "score": 0.4,
+     "disagrees": {
+      "in_geometry": "SET",
+      "state_req": "NONE",
+      "strategy": "RANDOMIZED"
+     }
+    },
+    "bit.partition.representation_selection_by_occupancy": {
+     "rank": 186,
+     "score": 0.2,
+     "disagrees": {
+      "verb": "PARTITION",
+      "in_geometry": "SEQUENCE",
+      "order_req": "NONE",
+      "strategy": "RANDOMIZED"
+     }
+    },
+    "bit.archive.descriptor_keyed_niching": {
+     "rank": 282,
+     "score": 0.0,
+     "disagrees": {
+      "verb": "PARTITION",
+      "in_geometry": "SEQUENCE",
+      "order_req": "NONE",
+      "state_req": "NONE",
+      "strategy": "DISTRIBUTION"
+     }
+    }
+   },
+   "failure_class": "COVERAGE",
+   "n_axes_queried": 5,
+   "outcome_top1": "MISS",
+   "outcome_top5": "MISS"
+  },
+  {
+   "id": "Q03_archaeon_cadence_gate",
+   "top5": [
+    {
+     "score": 0.75,
+     "id": "bit.synchronize.enter_after_all_replies_deferring_lower_priority",
+     "disagrees": {
+      "verb": 0.0,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.583,
+     "id": "bit.detect.termination_by_conserved_weight",
+     "disagrees": {
+      "verb": 0.0,
+      "order_req": 0.0,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.583,
+     "id": "bit.generate.accumulate_entropy_into_pools_and_reseed_a_cipher_counter_generator_when_a_pool_fills",
+     "disagrees": {
+      "verb": 0.0,
+      "out_geometry": 0.0,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.583,
+     "id": "bit.predict.update_value_toward_reward_plus_discounted_best_next",
+     "disagrees": {
+      "verb": 0.0,
+      "out_geometry": 0.0,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.583,
+     "id": "bit.remember.evict_by_balancing_recency_and_frequency_lists",
+     "disagrees": {
+      "verb": 0.0,
+      "out_geometry": 0.0,
+      "state_req": 0.5
+     }
+    }
+   ],
+   "top_score": 0.75,
+   "tie_group_size": 1,
+   "tie_group": [
+    "bit.synchronize.enter_after_all_replies_deferring_lower_priority"
+   ],
+   "expected_and_related_positions": {
+    "bit.bound.double_the_wait_after_each_collision": {
+     "rank": 7,
+     "score": 0.5,
+     "disagrees": {
+      "in_geometry": "SCALAR",
+      "out_geometry": "SCALAR",
+      "state_req": "LOCAL"
+     }
+    },
+    "bit.bound.hold_small_sends_until_previous_is_acknowledged": {
+     "rank": 8,
+     "score": 0.5,
+     "disagrees": {
+      "out_geometry": "STREAM",
+      "order_req": "NONE",
+      "state_req": "LOCAL"
+     }
+    },
+    "bit.synchronize.flag_intent_then_yield_by_turn_variable": {
+     "rank": 19,
+     "score": 0.417,
+     "disagrees": {
+      "verb": "SYNCHRONIZE",
+      "in_geometry": "BOOLEAN",
+      "order_req": "NONE",
+      "state_req": "GLOBAL"
+     }
+    },
+    "bit.synchronize.pass_a_single_token_along_a_tree": {
+     "rank": 35,
+     "score": 0.333,
+     "disagrees": {
+      "verb": "SYNCHRONIZE",
+      "in_geometry": "TREE",
+      "order_req": "NONE",
+      "state_req": "LOCAL"
+     }
+    }
+   },
+   "failure_class": "COVERAGE",
+   "n_axes_queried": 6,
+   "outcome_top1": "MISS",
+   "outcome_top5": "MISS"
+  },
+  {
+   "id": "Q04_vivarium_queue_claim",
+   "top5": [
+    {
+     "score": 0.7,
+     "id": "bit.synchronize.agree_by_majority_promises_then_majority_accepts",
+     "disagrees": {
+      "in_geometry": 0.0,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.7,
+     "id": "bit.synchronize.enter_after_all_replies_deferring_lower_priority",
+     "disagrees": {
+      "in_geometry": 0.0,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.7,
+     "id": "bit.synchronize.flag_intent_then_yield_by_turn_variable",
+     "disagrees": {
+      "in_geometry": 0.0,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.6,
+     "id": "bit.synchronize.pass_a_single_token_along_a_tree",
+     "disagrees": {
+      "in_geometry": 0.0,
+      "state_req": 0.0
+     }
+    },
+    {
+     "score": 0.5,
+     "id": "bit.detect.termination_by_conserved_weight",
+     "disagrees": {
+      "verb": 0.0,
+      "in_geometry": 0.0,
+      "state_req": 0.5
+     }
+    }
+   ],
+   "top_score": 0.7,
+   "tie_group_size": 3,
+   "tie_group": [
+    "bit.synchronize.agree_by_majority_promises_then_majority_accepts",
+    "bit.synchronize.enter_after_all_replies_deferring_lower_priority",
+    "bit.synchronize.flag_intent_then_yield_by_turn_variable"
+   ],
+   "expected_and_related_positions": {
+    "bit.synchronize.agree_by_majority_promises_then_majority_accepts": {
+     "rank": 1,
+     "score": 0.7,
+     "disagrees": {
+      "in_geometry": "SET",
+      "state_req": "GLOBAL"
+     }
+    },
+    "bit.synchronize.enter_after_all_replies_deferring_lower_priority": {
+     "rank": 2,
+     "score": 0.7,
+     "disagrees": {
+      "in_geometry": "STREAM",
+      "state_req": "GLOBAL"
+     }
+    },
+    "bit.synchronize.flag_intent_then_yield_by_turn_variable": {
+     "rank": 3,
+     "score": 0.7,
+     "disagrees": {
+      "in_geometry": "BOOLEAN",
+      "state_req": "GLOBAL"
+     }
+    },
+    "bit.synchronize.pass_a_single_token_along_a_tree": {
+     "rank": 4,
+     "score": 0.6,
+     "disagrees": {
+      "in_geometry": "TREE",
+      "state_req": "LOCAL"
+     }
+    },
+    "bit.repair.replay_log_forward_then_undo_uncommitted": {
+     "rank": 25,
+     "score": 0.3,
+     "disagrees": {
+      "verb": "REPAIR",
+      "in_geometry": "STREAM",
+      "state_req": "GLOBAL",
+      "control": "SCHEDULED"
+     }
+    }
+   },
+   "failure_class": "COVERAGE",
+   "n_axes_queried": 5,
+   "outcome_top1": "RELATED",
+   "outcome_top5": "RELATED"
+  },
+  {
+   "id": "Q05_vivarium_cegis_loop",
+   "top5": [
+    {
+     "score": 0.583,
+     "id": "bit.search.grow_a_simplex_toward_the_origin_using_support_points_of_the_difference_shape",
+     "disagrees": {
+      "out_geometry": 0.0,
+      "guarantee": 0.0,
+      "strategy": 0.5
+     }
+    },
+    {
+     "score": 0.583,
+     "id": "bit.search.reflect_expand_contract_simplex",
+     "disagrees": {
+      "out_geometry": 0.0,
+      "guarantee": 0.0,
+      "strategy": 0.5
+     }
+    },
+    {
+     "score": 0.5,
+     "id": "bit.detect.sweep_a_line_and_test_only_neighbours_in_the_active_order_at_each_event",
+     "disagrees": {
+      "verb": 0.0,
+      "out_geometry": 0.0,
+      "guarantee": 0.0
+     }
+    },
+    {
+     "score": 0.5,
+     "id": "bit.generate.sweep_a_line_maintaining_a_front_of_parabolic_arcs_with_site_and_circle_events",
+     "disagrees": {
+      "verb": 0.0,
+      "out_geometry": 0.0,
+      "guarantee": 0.0
+     }
+    },
+    {
+     "score": 0.5,
+     "id": "bit.predict.adjust_weights_by_misclassified_example",
+     "disagrees": {
+      "verb": 0.0,
+      "in_geometry": 0.0,
+      "out_geometry": 0.0
+     }
+    }
+   ],
+   "top_score": 0.583,
+   "tie_group_size": 2,
+   "tie_group": [
+    "bit.search.grow_a_simplex_toward_the_origin_using_support_points_of_the_difference_shape",
+    "bit.search.reflect_expand_contract_simplex"
+   ],
+   "expected_and_related_positions": {
+    "bit.search.assign_propagate_backtrack": {
+     "rank": 7,
+     "score": 0.5,
+     "disagrees": {
+      "out_geometry": "MAP",
+      "guarantee": "COMPLETE",
+      "strategy": "BACKTRACKING"
+     }
+    },
+    "bit.search.decision_tree_enumeration_of_a_procedure": {
+     "rank": 51,
+     "score": 0.333,
+     "disagrees": {
+      "in_geometry": "FUNCTION",
+      "out_geometry": "SEQUENCE",
+      "guarantee": "COMPLETE",
+      "strategy": "BACKTRACKING"
+     }
+    },
+    "bit.repair.add_violated_constraint_and_resolve": {
+     "rank": 66,
+     "score": 0.333,
+     "disagrees": {
+      "verb": "REPAIR",
+      "in_geometry": "MATRIX",
+      "out_geometry": "SCALAR",
+      "guarantee": "MONOTONE"
+     }
+    },
+    "bit.compress.repeated_subexpression_abstraction": {
+     "rank": 147,
+     "score": 0.167,
+     "disagrees": {
+      "verb": "COMPRESS",
+      "in_geometry": "TREE",
+      "out_geometry": "TREE",
+      "state_req": "GLOBAL",
+      "guarantee": "LOCAL_OPTIMUM",
+      "strategy": "GREEDY"
+     }
+    },
+    "bit.search.recognition_guided_enumeration": {
+     "rank": 220,
+     "score": 0.083,
+     "disagrees": {
+      "verb": "GENERATE",
+      "in_geometry": "FUNCTION",
+      "out_geometry": "STREAM",
+      "state_req": "GLOBAL",
+      "guarantee": "NONE",
+      "strategy": "BRANCH_AND_BOUND"
+     }
+    }
+   },
+   "failure_class": "REPRESENTATION",
+   "n_axes_queried": 6,
+   "outcome_top1": "MISS",
+   "outcome_top5": "MISS"
+  },
+  {
+   "id": "Q06_vault_cmaes",
+   "top5": [
+    {
+     "score": 1.0,
+     "id": "bit.search.accept_worse_moves_with_cooling_probability",
+     "disagrees": {}
+    },
+    {
+     "score": 1.0,
+     "id": "bit.search.evaluate_at_random_points",
+     "disagrees": {}
+    },
+    {
+     "score": 1.0,
+     "id": "bit.search.step_to_the_zero_of_a_model_fitted_through_the_last_few_points",
+     "disagrees": {}
+    },
+    {
+     "score": 1.0,
+     "id": "bit.search.step_to_the_zero_of_the_local_linearisation",
+     "disagrees": {}
+    },
+    {
+     "score": 1.0,
+     "id": "bit.search.step_to_the_zero_of_the_local_second_order_rational_model",
+     "disagrees": {}
+    }
+   ],
+   "top_score": 1.0,
+   "tie_group_size": 5,
+   "tie_group": [
+    "bit.search.accept_worse_moves_with_cooling_probability",
+    "bit.search.evaluate_at_random_points",
+    "bit.search.step_to_the_zero_of_a_model_fitted_through_the_last_few_points",
+    "bit.search.step_to_the_zero_of_the_local_linearisation",
+    "bit.search.step_to_the_zero_of_the_local_second_order_rational_model"
+   ],
+   "expected_and_related_positions": {
+    "bit.search.accept_worse_moves_with_cooling_probability": {
+     "rank": 1,
+     "score": 1.0,
+     "disagrees": {}
+    },
+    "bit.search.evaluate_at_random_points": {
+     "rank": 2,
+     "score": 1.0,
+     "disagrees": {}
+    },
+    "bit.search.climb_then_restart_from_random": {
+     "rank": 7,
+     "score": 0.8,
+     "disagrees": {
+      "guarantee": "LOCAL_OPTIMUM"
+     }
+    },
+    "bit.search.adaptive_step_search": {
+     "rank": 27,
+     "score": 0.6,
+     "disagrees": {
+      "in_geometry": "PREDICATE",
+      "guarantee": "EXACT"
+     }
+    },
+    "bit.search.reflect_expand_contract_simplex": {
+     "rank": 49,
+     "score": 0.6,
+     "disagrees": {
+      "in_geometry": "SET",
+      "guarantee": "NONE"
+     }
+    },
+    "bit.search.move_toward_own_and_group_best": {
+     "rank": 124,
+     "score": 0.4,
+     "disagrees": {
+      "in_geometry": "SET",
+      "out_geometry": "SET",
+      "guarantee": "NONE"
+     }
+    },
+    "bit.generate.perturb_by_scaled_difference_of_others": {
+     "rank": 207,
+     "score": 0.2,
+     "disagrees": {
+      "verb": "GENERATE",
+      "in_geometry": "SET",
+      "out_geometry": "SET",
+      "guarantee": "NONE"
+     }
+    },
+    "bit.sample.refit_distribution_to_elite_samples": {
+     "rank": 241,
+     "score": 0.2,
+     "disagrees": {
+      "verb": "SAMPLE",
+      "in_geometry": "DISTRIBUTION",
+      "out_geometry": "DISTRIBUTION",
+      "guarantee": "NONE"
+     }
+    }
+   },
+   "failure_class": "REPRESENTATION",
+   "n_axes_queried": 5,
+   "outcome_top1": "RELATED",
+   "outcome_top5": "RELATED"
+  },
+  {
+   "id": "Q07_vault_minisat",
+   "top5": [
+    {
+     "score": 0.75,
+     "id": "bit.search.assign_propagate_backtrack",
+     "disagrees": {
+      "in_geometry": 0.0
+     }
+    },
+    {
+     "score": 0.75,
+     "id": "bit.search.expand_deepest_first",
+     "disagrees": {
+      "in_geometry": 0.0
+     }
+    },
+    {
+     "score": 0.75,
+     "id": "bit.search.expand_frontier_level_by_level",
+     "disagrees": {
+      "in_geometry": 0.0
+     }
+    },
+    {
+     "score": 0.5,
+     "id": "bit.rewrite.recursive_side_condition_discharge",
+     "disagrees": {
+      "out_geometry": 0.0,
+      "guarantee": 0.0
+     }
+    },
+    {
+     "score": 0.5,
+     "id": "bit.search.adaptive_step_search",
+     "disagrees": {
+      "out_geometry": 0.0,
+      "guarantee": 0.0
+     }
+    }
+   ],
+   "top_score": 0.75,
+   "tie_group_size": 3,
+   "tie_group": [
+    "bit.search.assign_propagate_backtrack",
+    "bit.search.expand_deepest_first",
+    "bit.search.expand_frontier_level_by_level"
+   ],
+   "expected_and_related_positions": {
+    "bit.search.assign_propagate_backtrack": {
+     "rank": 1,
+     "score": 0.75,
+     "disagrees": {
+      "in_geometry": "SET"
+     }
+    },
+    "bit.search.cover_by_choosing_column_with_fewest_options": {
+     "rank": 11,
+     "score": 0.5,
+     "disagrees": {
+      "in_geometry": "MATRIX",
+      "out_geometry": "SET"
+     }
+    },
+    "bit.search.depth_first_with_undo": {
+     "rank": 12,
+     "score": 0.5,
+     "disagrees": {
+      "in_geometry": "FUNCTION",
+      "out_geometry": "RECORD"
+     }
+    },
+    "bit.search.wildcard_match_by_backtracking": {
+     "rank": 21,
+     "score": 0.5,
+     "disagrees": {
+      "in_geometry": "STRING",
+      "guarantee": "EXACT"
+     }
+    },
+    "bit.repair.reassign_conflicting_variable_to_least_conflict_value": {
+     "rank": 52,
+     "score": 0.25,
+     "disagrees": {
+      "verb": "REPAIR",
+      "in_geometry": "MAP",
+      "guarantee": "NONE"
+     }
+    },
+    "bit.repair.add_violated_constraint_and_resolve": {
+     "rank": 244,
+     "score": 0.0,
+     "disagrees": {
+      "verb": "REPAIR",
+      "in_geometry": "MATRIX",
+      "out_geometry": "SCALAR",
+      "guarantee": "MONOTONE"
+     }
+    }
+   },
+   "failure_class": "REPRESENTATION",
+   "n_axes_queried": 4,
+   "outcome_top1": "HIT",
+   "outcome_top5": "HIT"
+  },
+  {
+   "id": "Q08_vault_lzw",
+   "top5": [
+    {
+     "score": 0.917,
+     "id": "bit.compress.replace_repeat_with_back_reference",
+     "disagrees": {
+      "strategy": 0.5
+     }
+    },
+    {
+     "score": 0.833,
+     "id": "bit.order.vector_of_per_process_counters",
+     "disagrees": {
+      "verb": 0.0
+     }
+    },
+    {
+     "score": 0.75,
+     "id": "bit.compress.narrow_interval_by_symbol_probabilities",
+     "disagrees": {
+      "in_geometry": 0.5,
+      "guarantee": 0.0
+     }
+    },
+    {
+     "score": 0.75,
+     "id": "bit.compress.store_differences_from_predecessor",
+     "disagrees": {
+      "in_geometry": 0.5,
+      "strategy": 0.0
+     }
+    },
+    {
+     "score": 0.75,
+     "id": "bit.order.build_search_structure_then_traverse",
+     "disagrees": {
+      "verb": 0.0,
+      "in_geometry": 0.5
+     }
+    }
+   ],
+   "top_score": 0.917,
+   "tie_group_size": 1,
+   "tie_group": [
+    "bit.compress.replace_repeat_with_back_reference"
+   ],
+   "expected_and_related_positions": {
+    "bit.compress.replace_repeat_with_back_reference": {
+     "rank": 1,
+     "score": 0.917,
+     "disagrees": {
+      "strategy": "GREEDY"
+     }
+    },
+    "bit.compress.narrow_interval_by_symbol_probabilities": {
+     "rank": 3,
+     "score": 0.75,
+     "disagrees": {
+      "in_geometry": "SEQUENCE",
+      "guarantee": "OPTIMAL"
+     }
+    },
+    "bit.compress.merge_most_frequent_adjacent_pair": {
+     "rank": 6,
+     "score": 0.667,
+     "disagrees": {
+      "in_geometry": "SEQUENCE",
+      "guarantee": "NONE",
+      "strategy": "GREEDY"
+     }
+    },
+    "bit.compress.repeated_subexpression_abstraction": {
+     "rank": 51,
+     "score": 0.417,
+     "disagrees": {
+      "in_geometry": "TREE",
+      "out_geometry": "TREE",
+      "guarantee": "LOCAL_OPTIMUM",
+      "strategy": "GREEDY"
+     }
+    },
+    "bit.predict.blend_context_statistics_with_escape": {
+     "rank": 68,
+     "score": 0.417,
+     "disagrees": {
+      "verb": "PREDICT",
+      "in_geometry": "SEQUENCE",
+      "out_geometry": "DISTRIBUTION",
+      "guarantee": "NONE"
+     }
+    }
+   },
+   "failure_class": "COVERAGE",
+   "n_axes_queried": 6,
+   "outcome_top1": "RELATED",
+   "outcome_top5": "RELATED"
+  },
+  {
+   "id": "Q09_vault_ldpc",
+   "top5": [
+    {
+     "score": 0.643,
+     "id": "bit.transform.move_each_vertex_to_the_mean_of_its_neighbours",
+     "disagrees": {
+      "verb": 0.0,
+      "out_geometry": 0.0,
+      "state_req": 0.5
+     }
+    },
+    {
+     "score": 0.571,
+     "id": "bit.repair.prune_domains_until_arc_consistent",
+     "disagrees": {
+      "verb": 0.5,
+      "out_geometry": 0.0,
+      "guarantee": 0.0,
+      "iteration": 0.5
+     }
+    },
+    {
+     "score": 0.571,
+     "id": "bit.search.iterate_pairwise_forces_to_equilibrium",
+     "disagrees": {
+      "verb": 0.0,
+      "out_geometry": 0.0,
+      "guarantee": 0.0
+     }
+    },
+    {
+     "score": 0.5,
+     "id": "bit.accumulate.stationary_scores_by_propagation",
+     "disagrees": {
+      "verb": 0.0,
+      "out_geometry": 0.0,
+      "state_req": 0.5,
+      "guarantee": 0.0
+     }
+    },
+    {
+     "score": 0.5,
+     "id": "bit.order.number_vertices_by_breadth_first_levels_from_a_peripheral_start",
+     "disagrees": {
+      "verb": 0.0,
+      "out_geometry": 0.0,
+      "strategy": 0.0,
+      "iteration": 0.5
+     }
+    }
+   ],
+   "top_score": 0.643,
+   "tie_group_size": 1,
+   "tie_group": [
+    "bit.transform.move_each_vertex_to_the_mean_of_its_neighbours"
+   ],
+   "expected_and_related_positions": {
+    "bit.repair.prune_domains_until_arc_consistent": {
+     "rank": 2,
+     "score": 0.571,
+     "disagrees": {
+      "verb": "REPAIR",
+      "out_geometry": "MAP",
+      "guarantee": "MONOTONE",
+      "iteration": "FIFO"
+     }
+    },
+    "bit.accumulate.stationary_scores_by_propagation": {
+     "rank": 4,
+     "score": 0.5,
+     "disagrees": {
+      "verb": "ACCUMULATE",
+      "out_geometry": "MAP",
+      "state_req": "GLOBAL",
+      "guarantee": "EXACT"
+     }
+    },
+    "bit.correct.syndrome_locates_single_error": {
+     "rank": 9,
+     "score": 0.429,
+     "disagrees": {
+      "state_req": "NONE",
+      "guarantee": "EXACT",
+      "strategy": "PRECOMPUTED_TABLE",
+      "iteration": "SWEEP"
+     }
+    },
+    "bit.correct.locate_errors_by_solving_syndrome_equations": {
+     "rank": 125,
+     "score": 0.143,
+     "disagrees": {
+      "in_geometry": "SEQUENCE",
+      "out_geometry": "SEQUENCE",
+      "state_req": "NONE",
+      "guarantee": "EXACT",
+      "strategy": "DIRECT",
+      "iteration": "NONE"
+     }
+    },
+    "bit.predict.forward_backward_posteriors_on_a_trellis": {
+     "rank": 152,
+     "score": 0.143,
+     "disagrees": {
+      "verb": "PREDICT",
+      "in_geometry": "SEQUENCE",
+      "out_geometry": "DISTRIBUTION",
+      "guarantee": "EXACT",
+      "strategy": "DYNAMIC_PROGRAMMING",
+      "iteration": "SWEEP"
+     }
+    }
+   },
+   "failure_class": "COVERAGE",
+   "n_axes_queried": 7,
+   "outcome_top1": "MISS",
+   "outcome_top5": "RELATED"
+  },
+  {
+   "id": "Q10_vault_tscp_chess",
+   "top5": [
+    {
+     "score": 1.0,
+     "id": "bit.bound.prune_branches_outside_window",
+     "disagrees": {}
+    },
+    {
+     "score": 0.8,
+     "id": "bit.search.probe_bins_in_order_of_boundary_distance",
+     "disagrees": {
+      "guarantee": 0.0
+     }
+    },
+    {
+     "score": 0.6,
+     "id": "bit.search.adaptive_step_search",
+     "disagrees": {
+      "in_geometry": 0.0,
+      "strategy": 0.0
+     }
+    },
+    {
+     "score": 0.6,
+     "id": "bit.bound.fill_a_large_memory_pseudorandomly_then_read_it_back_in_a_data_dependent_order",
+     "disagrees": {
+      "in_geometry": 0.0,
+      "strategy": 0.0
+     }
+    },
+    {
+     "score": 0.6,
+     "id": "bit.bound.iterate_a_one_way_function_a_tunable_number_of_times_to_slow_each_guess",
+     "disagrees": {
+      "in_geometry": 0.0,
+      "strategy": 0.0
+     }
+    }
+   ],
+   "top_score": 1.0,
+   "tie_group_size": 1,
+   "tie_group": [
+    "bit.bound.prune_branches_outside_window"
+   ],
+   "expected_and_related_positions": {
+    "bit.bound.prune_branches_outside_window": {
+     "rank": 1,
+     "score": 1.0,
+     "disagrees": {}
+    },
+    "bit.search.branch_and_prune_by_bound": {
+     "rank": 7,
+     "score": 0.6,
+     "disagrees": {
+      "in_geometry": "FUNCTION",
+      "guarantee": "OPTIMAL"
+     }
+    },
+    "bit.bound.keep_only_k_best_frontier": {
+     "rank": 35,
+     "score": 0.4,
+     "disagrees": {
+      "in_geometry": "SET",
+      "guarantee": "NONE",
+      "strategy": "GREEDY"
+     }
+    },
+    "bit.bound.raise_depth_limit_and_restart": {
+     "rank": 149,
+     "score": 0.2,
+     "disagrees": {
+      "in_geometry": "FUNCTION",
+      "order_req": "NONE",
+      "guarantee": "COMPLETE",
+      "strategy": "ADAPTIVE_SWITCH"
+     }
+    },
+    "bit.bound.strategy_switch_on_depth": {
+     "rank": 150,
+     "score": 0.2,
+     "disagrees": {
+      "in_geometry": "FUNCTION",
+      "order_req": "NONE",
+      "guarantee": "PROBABILISTIC_BOUND",
+      "strategy": "ADAPTIVE_SWITCH"
+     }
+    },
+    "bit.search.expand_deepest_first": {
+     "rank": 227,
+     "score": 0.2,
+     "disagrees": {
+      "in_geometry": "GRAPH",
+      "order_req": "NONE",
+      "guarantee": "COMPLETE",
+      "strategy": "INCREMENTAL"
+     }
+    }
+   },
+   "failure_class": "NONE (HIT@1)",
+   "n_axes_queried": 5,
+   "outcome_top1": "HIT",
+   "outcome_top5": "HIT"
+  }
+ ]
+}

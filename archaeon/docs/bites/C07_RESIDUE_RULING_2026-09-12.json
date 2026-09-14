@@ -1,0 +1,16 @@
+{
+ "schema": "archaeon.organ_ruling.v0",
+ "at": "2026-09-12T16:1xZ",
+ "organ": "c07 standalone_value_shrinkers (nyx/specimens/hypothesis_shrinker/organs/standalone_value_shrinkers.cut1|cut2.json)",
+ "ruling": "RESIDUE / NO CURRENT CONSUMER",
+ "bound": "one bounded search of the tracked tree for an EXISTING object that is (1) naturally sequence-valued, (2) int-orderable elements or an already-existing one-line ordering conversion, (3) already inside an existing Boolean predicate, (4) with a real consumer objective where shrinking that sequence matters; no new representation layer. One grep pass over proteus, archaeon/producer, herakles, vivarium/viv, techne/acquisition for predicate functions taking sequence-typed arguments, then four named candidates examined by hand.",
+ "grep_result": "no predicate function in those trees takes a sequence-typed argument (seq/order/ordering/perm/bits/table/genome/rule/stream/events/assignments/cases) and returns bool",
+ "candidates_examined": [
+  {"object": "Proteus case orderings: proteus/eval/boolean.py::case_order / ordered_assignments (a permutation of the 8 input assignments)", "criteria": "(1) yes; (2) elements are assignment tuples, a one-line int conversion exists (case_bits); (3) NO existing Boolean predicate takes an ordering -- boolean_spec(ordering=...) feeds evaluate(), which returns a result dict; no function f(ordering)->bool exists; (4) no consumer objective over orderings today", "verdict": "fails (3) and (4)"},
+  {"object": "H3 candidate streams: archaeon/producer/h3_replay.py policies take Sequence[Candidate]", "criteria": "(1) yes; (2) elements are Candidate records, not int-orderable; (3) the predicate is per item (birth_status), not over the sequence; (4) the objective (archive scoring) is over the ARCHIVE, not over a shrunk stream", "verdict": "fails (2), (3), (4)"},
+  {"object": "EvCA rule tables (herakles/evca), sequences of 0/1", "criteria": "(1) yes; (2) yes; (3) NO function f(table)->bool in the tree (success masks are per-IC arrays; golden reproduction is a test, not a consumer predicate); (4) no objective asks for a lexicographically smaller table", "verdict": "fails (3) and (4)"},
+  {"object": "evaluate_bitstring payload bits (a 0/1 string)", "criteria": "(1) yes; (2) one-line int() per char; (3) 'solved' is an existing Boolean outcome field; (4) fixed length: Collection's deletions produce invalid candidates, and 'a zero-ward smaller bitstring that still solves' has no consumer (only the target solves)", "verdict": "fails (4), and (1) only nominally"}
+ ],
+ "prior_bite": "archaeon/docs/bites/BITE_c07_still_solves_2026-09-12.json -- INTERFACE_INSUFFICIENT at Techne's harness / Proteus still_solves (tree values)",
+ "consequence": "c07 is not reopened again absent a newly created natural consumer that holds a sequence inside a Boolean predicate. INTERFACE_INSUFFICIENT at Techne/Proteus is not a reason to invent compatibility machinery; none was invented."
+}

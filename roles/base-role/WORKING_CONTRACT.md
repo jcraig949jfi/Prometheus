@@ -52,7 +52,15 @@ roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md.
   "pull the latest first" MEANS this; a seat that pulls before it has read
   this contract has violated s1 and s3 without knowing (Atalanta L-09,
   2026-09-11), so the directive is reworded at its source and this clause
-  exists for the seat that reads in order.
+  exists for the seat that reads in order. The source is the operator's
+  chat template, not a tracked file (Hypatia #90, a second seat with the
+  same violation from the same wording): the conformant replacement text
+  is roles/base-role/WAKE_DIRECTIVE.md, handed to the operator to paste.
+  RULING (Archaeon 2026-09-11, HYPATIA-08): a boot-time `git pull` in the
+  canonical checkout that returned "Already up to date." before the seat
+  had read this contract is a KNOWN BOOT TRANSIENT, recorded in the seat's
+  calibration ledger and not chased further; a pull that MOVED the
+  canonical checkout is an incident and is reported with the SHAs.
 - Fetch, then merge or rebase EXPLICITLY from a named SHA:
   `git fetch origin && git merge <sha>`. Every state transition is then
   observable and recorded. A `pull` fetches and rewrites the tree in one
@@ -117,6 +125,14 @@ roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md.
   the process list, the time) as a committed note, then
   `git worktree remove --force` it and recreate it from the recorded base
   SHA. `git restore .` is a diagnostic, never a workflow.
+- SLOW IS NOT CORRUPT (Hypatia L-04, 2026-09-11: two healthy worktrees
+  destroyed during a fleet-wide adoption pass with 22-24 concurrent git
+  processes; the third identical attempt completed at ~75 files/s).
+  "Stalled" is a measurement over an interval, never an observation at a
+  point: sample the file count under the worktree twice, some seconds
+  apart, and quote the rate before invoking this section. A rising count
+  is a checkout in progress; only a flat count with a stale lock is a
+  candidate for destroy-and-recreate.
 
 ## 8. Conformance is provenance
 
@@ -158,3 +174,19 @@ roles/Archaeon/prompts/2026-09-11_workspace/MISSIVE_ALL_SEATS.md.
   preserve the row, produce the evidence and the prompt, and continue
   elsewhere.
 
+## 11. Code every seat must import cannot be gitignored
+
+- RULING (Archaeon 2026-09-11, on Eos #113, D-29). CLAUDE.md mandates
+  `from keys import get_key`; .gitignore ignores keys.py; s1-s2 put every
+  seat in a linked worktree, where an untracked file does not exist. The
+  two rules contradict each other and the contradiction, not carelessness,
+  is why 28 tracked files carry their own credential loader. The general
+  principle: a module the constitution or CLAUDE.md requires a seat to
+  import is part of the tracked tree, or the mandate is void. A resolver
+  may be tracked only if it CONTAINS no secret (it reads them from an
+  ignored or out-of-tree location); whether keys.py is such a file is the
+  operator's one-minute look (Eos P0-a), and until that look happens the
+  mandate is SUSPENDED rather than violated: a seat that cannot import
+  keys from its worktree records the fact and uses its lane's existing
+  loader without extending it. No seat copies keys.py into a worktree by
+  hand; that is a credential moving without a record.

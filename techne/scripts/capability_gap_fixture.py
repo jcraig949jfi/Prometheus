@@ -39,14 +39,115 @@ import numpy as np
 FREE_SOLVERS = ("CLARABEL", "SCS")
 AUTHORITY_THETA_C5 = 5 ** 0.5     # Lovasz theta of the 5-cycle
 
+#: A relative error above this is WRONG under any requirement anyone would set --
+#: it is worse than two significant digits. It is NOT an accuracy requirement and
+#: must not be read as one: nobody has declared one (see ACCURACY_REQUIREMENT
+#: below). It exists only to separate "solver returned the answer" from "solver
+#: returned a confident wrong number", and `threshold_robustness` in the output
+#: measures how far it could move without changing a single classification.
+#: One bar governs every arm (A, B and C) since TECHNE-45; a fixture with a different
+#: bar per arm would be choosing its thresholds after seeing what each arm achieves.
+SILENTLY_WRONG_REL = 1e-2
 
-def _theta_problem(A: np.ndarray):
-    import cvxpy as cp
-    n = A.shape[0]
-    X = cp.Variable((n, n), symmetric=True)
-    cons = [X >> 0, cp.trace(X) == 1]
-    cons += [X[i, j] == 0 for i in range(n) for j in range(i + 1, n) if A[i, j]]
-    return cp.Problem(cp.Maximize(cp.sum(X)), cons)
+
+class _ThetaProblem:
+    """The Lovasz theta SDP for adjacency A, keeping hold of the pieces the
+    CERTIFICATE needs afterwards: the variable, the edge list, and the edge
+    constraint whose duals seed the upper bound.
+
+    The edge constraints are one vectorised equality `X[ei, ej] == 0` rather than
+    one constraint per edge (the 2026-09-10 form). Same problem; the dual comes
+    back as one vector aligned with (ei, ej), which is what `certificate` reads.
+    """
+
+    def __init__(self, A: np.ndarray):
+        import cvxpy as cp
+        n = A.shape[0]
+        self.n = n
+        self.ei, self.ej = np.where(np.triu(A, 1) > 0)
+        self.X = cp.Variable((n, n), symmetric=True)
+        self.edge_con = self.X[self.ei, self.ej] == 0
+        self.prob = cp.Problem(cp.Maximize(cp.sum(self.X)),
+                               [self.X >> 0, cp.trace(self.X) == 1, self.edge_con])
+
+    def solve(self, solver: str, **kw):
+        v = self.prob.solve(solver=solver, **kw)
+        return v, self.prob.status
+
+    def certificate(self) -> dict | None:
+        """[lb, ub] bracketing theta, computed by numpy from what the solver RETURNED
+        and never from what it REPORTED.
+
+        lb: the returned X made exactly feasible -- edge entries zeroed, then
+            |lambda_min| * I added if lambda_min < 0 (a shift keeps the edges at
+            zero; a clip does not), trace rescaled to 1. sum(X') <= theta whatever
+            the solver said.
+        ub: Lovasz's theta_3 form -- for ANY symmetric Y supported on the edge set,
+            theta <= lambda_max(J + Y). The direction of Y is the solver's dual
+            vector for the edge constraints; the scalar in front of it is chosen by a
+            1-D minimisation of lambda_max, which is convex in that scalar. The
+            bound is valid at every scalar, so a dual-scaling convention (cvxpy
+            reports 2y for a symmetric-variable equality) cannot make it wrong,
+            only loose.
+        Returns None when the solver handed back no X or no duals; the caller
+        records UNCERTIFIED rather than inventing a bracket.
+        """
+        Xv = self.X.value
+        y = self.edge_con.dual_value
+        if Xv is None or y is None:
+            return None
+        Xv = np.asarray(Xv, dtype=float)
+        if not np.all(np.isfinite(Xv)):
+            return None
+        n = self.n
+        Xp = (Xv + Xv.T) / 2
+        Xp[self.ei, self.ej] = 0.0
+        Xp[self.ej, self.ei] = 0.0
+        # Make it PSD by SHIFTING, never by eigen-clipping. The first version
+        # clipped negative eigenvalues and reconstructed; the reconstruction puts
+        # small nonzeros back on the edges, so "feasible by construction" was
+        # false, and on Petersen with SCS the "lower bound" came out ABOVE the
+        # literature value 4 (4.000018). The bound control caught it. Adding
+        # |lambda_min| * I keeps every off-diagonal entry, hence every edge, exactly
+        # zero, and the result is PSD to the accuracy of eigvalsh.
+        lam_min = float(np.linalg.eigvalsh(Xp)[0])
+        if lam_min < 0:
+            Xp = Xp + (-lam_min) * np.eye(n)
+        tr = float(np.trace(Xp))
+        if not tr > 0:
+            return None
+        Xp /= tr
+        lb = float(Xp.sum())
+
+        y = np.asarray(y, dtype=float).ravel()
+        if not np.all(np.isfinite(y)) or y.shape[0] != self.ei.shape[0]:
+            return None
+        Y0 = np.zeros((n, n))
+        Y0[self.ei, self.ej] = y
+        Y0 = Y0 + Y0.T
+        J = np.ones((n, n))
+
+        def lam_max(t: float) -> float:
+            return float(np.linalg.eigvalsh(J + t * Y0)[-1])
+
+        from scipy.optimize import minimize_scalar
+        cands = [(-1.0, lam_max(-1.0)), (-0.5, lam_max(-0.5)), (0.0, lam_max(0.0)),
+                 (0.5, lam_max(0.5)), (1.0, lam_max(1.0))]
+        t_best, ub = min(cands, key=lambda c: c[1])
+        try:
+            r = minimize_scalar(lam_max, bounds=(t_best - 1.0, t_best + 1.0),
+                                method="bounded", options={"xatol": 1e-10})
+            if np.isfinite(r.fun) and r.fun < ub:
+                t_best, ub = float(r.x), float(r.fun)
+        except Exception:                                        # noqa: BLE001
+            pass
+        return {"lb": lb, "ub": ub, "dual_scale": t_best,
+                "width_rel": (ub - lb) / abs(ub) if ub else None,
+                "primal_projection_moved": float(np.abs(Xp - (Xv + Xv.T) / 2).max())}
+
+
+def _theta_problem(A: np.ndarray) -> _ThetaProblem:
+    return _ThetaProblem(A)
 
 
 def _cycle(n: int) -> np.ndarray:
@@ -63,17 +164,166 @@ def _random_graph(n: int, p: float, seed: int) -> np.ndarray:
     return A + A.T
 
 
+# ---------------------------------------------------------------------------
+# Graph families with a CLOSED-FORM theta, so the scale arm has a ground truth
+# the solver under test did not supply. All three are vertex-transitive, where
+# Lovasz's bound theta(G) = -n*lambda_min(A) / (lambda_max(A) - lambda_min(A))
+# is attained for edge-transitive graphs; the values below are the standard
+# ones (Lovasz 1979 for cycles and Kneser; Paley by self-complementarity,
+# theta(G)*theta(complement G) = n for vertex-transitive G).
+# ---------------------------------------------------------------------------
+
+def _odd_cycle_theta(n: int) -> float:
+    if n % 2 == 0:
+        raise ValueError("closed form is for ODD cycles")
+    c = float(np.cos(np.pi / n))
+    return n * c / (1 + c)
+
+
+def _paley(p: int) -> np.ndarray:
+    """Paley graph on GF(p), p prime, p = 1 mod 4: i ~ j iff i - j is a nonzero square."""
+    if p % 4 != 1 or any(p % q == 0 for q in range(2, int(p ** 0.5) + 1)):
+        raise ValueError("Paley needs a prime p = 1 (mod 4)")
+    squares = {(x * x) % p for x in range(1, p)}
+    A = np.zeros((p, p))
+    for i in range(p):
+        for j in range(i + 1, p):
+            if (i - j) % p in squares:
+                A[i, j] = A[j, i] = 1
+    return A
+
+
+def _paley_theta(p: int) -> float:
+    return float(p) ** 0.5
+
+
+def _kneser(m: int, k: int) -> np.ndarray:
+    """Kneser K(m, k): vertices are the k-subsets of an m-set, adjacent iff disjoint."""
+    from itertools import combinations
+    verts = list(combinations(range(m), k))
+    sets = [frozenset(v) for v in verts]
+    n = len(verts)
+    A = np.zeros((n, n))
+    for i in range(n):
+        for j in range(i + 1, n):
+            if not (sets[i] & sets[j]):
+                A[i, j] = A[j, i] = 1
+    return A
+
+
+def _kneser_theta(m: int, k: int) -> float:
+    from math import comb
+    return float(comb(m - 1, k - 1))
+
+
+#: The scale arm's closed-form families, sized beside the existing random graphs.
+CLOSED_FORM_FAMILIES = (
+    ("odd_cycle", 21, lambda: _cycle(21), _odd_cycle_theta(21)),
+    ("odd_cycle", 61, lambda: _cycle(61), _odd_cycle_theta(61)),
+    ("odd_cycle", 121, lambda: _cycle(121), _odd_cycle_theta(121)),
+    ("paley", 29, lambda: _paley(29), _paley_theta(29)),
+    ("paley", 61, lambda: _paley(61), _paley_theta(61)),
+    ("paley", 113, lambda: _paley(113), _paley_theta(113)),
+    ("kneser", (7, 2), lambda: _kneser(7, 2), _kneser_theta(7, 2)),
+    ("kneser", (9, 3), lambda: _kneser(9, 3), _kneser_theta(9, 3)),
+    ("kneser", (10, 3), lambda: _kneser(10, 3), _kneser_theta(10, 3)),
+)
+
+#: Tolerance, relative to ub, for "value lies inside its own certificate" under
+#: the PREREGISTERED rule (roles/Techne/journal/2026-09-11.md). Kept, and every row
+#: still reports its class under it, because the rule was AMENDED after a control
+#: fired -- see _classify_certified.
+CERT_INSIDE_TOL = 1e-6
+
+
+def _classify_certified_prereg(status, value, cert, bar=SILENTLY_WRONG_REL):
+    """The rule exactly as preregistered: inside [lb - 1e-6 ub, ub + 1e-6 ub] and
+    width <= bar is CERTIFIED; outside is SILENTLY_WRONG; inside-but-loose is
+    INDETERMINATE. Retained verbatim so the amendment below is auditable."""
+    if value is None or not np.isfinite(value):
+        return "DECLARED_FAILURE" if status != "optimal" else "OPTIMAL_BUT_NO_VALUE"
+    if status != "optimal":
+        return "DECLARED_FAILURE"
+    if cert is None:
+        return "UNCERTIFIED"
+    lb, ub = cert["lb"], cert["ub"]
+    tol = CERT_INSIDE_TOL * abs(ub)
+    if not (lb - tol <= value <= ub + tol):
+        return "SILENTLY_WRONG"
+    if cert["width_rel"] is None or cert["width_rel"] > bar:
+        return "INDETERMINATE"
+    return "CERTIFIED"
+
+
+CERTIFICATE_RULE_AMENDMENT = (
+    "AMENDED 2026-09-11 AFTER A CONTROL FIRED, before the fixture was run. The "
+    "preregistered rule held a certificate-scored row to a 1e-6 'inside' tolerance "
+    "while holding a closed-form row to the 1e-2 bar -- two standards, contradicting "
+    "the same preregistration's 'one bar governs every arm'. The control that exposed "
+    "it: SCS on a 14-vertex random graph reported 6.0000632 against a certified "
+    "bracket [5.99989, 6.00000001]; the preregistered rule called that SILENTLY_WRONG "
+    "(1.05e-5 above ub) while the closed-form rule would call the identical error "
+    "CORRECT. The amended rule judges the WORST-CASE error of the value against every "
+    "theta in the bracket, at the one bar. Both classes are recorded on every row "
+    "(certificate_class, certificate_class_prereg); the preregistered class is not "
+    "deleted, and the fact it was pointing at -- a reported objective that no feasible "
+    "X can attain -- is kept as reported_value_outside_certificate_rel.")
+
+
+def _classify_certified(status, value, cert, bar=SILENTLY_WRONG_REL):
+    """The certificate classes (amended rule; CERTIFICATE_RULE_AMENDMENT says why).
+
+        err_bound = max(|value - lb|, |value - ub|) / |ub|   worst case over theta in [lb, ub]
+        outside   = max(lb - value, value - ub, 0) / |ub|   how far the value leaves the bracket
+
+        CERTIFIED       err_bound <= bar    (the value is within the bar of EVERY theta the
+                                             certificate allows)
+        SILENTLY_WRONG  outside  >  bar     (status optimal, value farther than the bar from
+                                             any theta the certificate allows)
+        INDETERMINATE   otherwise           (the bracket is too loose to certify at the bar,
+                                             or the value sits within the bar of the bracket
+                                             but not of every point in it)
+
+    The two INSTRUMENT branches stay distinct from the solver branches: INDETERMINATE
+    and UNCERTIFIED are never counted as passes."""
+    if value is None or not np.isfinite(value):
+        return "DECLARED_FAILURE" if status != "optimal" else "OPTIMAL_BUT_NO_VALUE"
+    if status != "optimal":
+        return "DECLARED_FAILURE"
+    if cert is None:
+        return "UNCERTIFIED"
+    lb, ub = cert["lb"], cert["ub"]
+    if not ub:
+        return "INDETERMINATE"
+    err_bound = max(abs(value - lb), abs(value - ub)) / abs(ub)
+    outside = max(lb - value, value - ub, 0.0) / abs(ub)
+    if err_bound <= bar:
+        return "CERTIFIED"
+    if outside > bar:
+        return "SILENTLY_WRONG"
+    return "INDETERMINATE"
+
+
+def _certificate_error_fields(value, cert) -> dict:
+    """The numbers the amended rule reads, recorded on the row so a reader can
+    re-derive the class without trusting it."""
+    if value is None or cert is None or not cert.get("ub"):
+        return {}
+    lb, ub = cert["lb"], cert["ub"]
+    return {"certified_error_bound_rel": max(abs(value - lb), abs(value - ub)) / abs(ub),
+            "reported_value_outside_certificate_rel": max(lb - value, value - ub, 0.0) / abs(ub)}
+
+
+def _old_criterion_failed(status) -> bool:
+    """The criterion arms A and B used before TECHNE-45, kept so the receipt can say
+    which rows it would have scored differently. It reads only the status string."""
+    return status not in ("optimal",)
+
+
 #: The eps in X >> eps I. Part of the problem statement, so the closed form below
 #: depends on it and it is named rather than inlined twice.
 ILLCOND_EPS = 1e-6
 
-#: A relative error above this is WRONG under any requirement anyone would set --
-#: it is worse than two significant digits. It is NOT an accuracy requirement and
-#: must not be read as one: nobody has declared one (see ACCURACY_REQUIREMENT
-#: below). It exists only to separate "solver returned the answer" from "solver
-#: returned a confident wrong number", and `threshold_robustness` in the output
-#: measures how far it could move without changing a single classification.
-SILENTLY_WRONG_REL = 1e-2
 
 
 def _illcond_data(m: int, spread_log10: float, seed: int):
@@ -368,39 +618,188 @@ def _illcond_summary(rows) -> dict:
     }
 
 
-def run_sdp(out_path: str | None) -> dict:
+INSTRUMENT_CLASSES = ("INDETERMINATE", "UNCERTIFIED", "OPTIMAL_BUT_NO_VALUE")
+
+
+def _ab_reclassification(cases: list, previous: dict | None) -> dict:
+    """TECHNE-45's receipt: what the correctness criterion says about arms A and B
+    beside what the status criterion said, row by row; plus a value-by-value
+    comparison against the previously COMMITTED result so any drift from the
+    vectorised edge constraint is visible rather than assumed away.
+    """
+    ab = [c for c in cases if c["case"].startswith(("A_", "B_"))]
+    changed = [c for c in ab if bool(c.get("failed")) != bool(c.get("old_criterion_failed"))]
+    instr = [c for c in ab if c.get("class") in INSTRUMENT_CLASSES]
+    closed = [c for c in ab if "expected" in c]
+    certd = [c for c in ab if c.get("certificate") is not None]
+    bracket_fail = [c for c in closed if c.get("certificate_brackets_truth") is False]
+    prev_rows = {}
+    if previous:
+        for c in previous.get("cases", []):
+            if c["case"].startswith(("A_", "B_")):
+                prev_rows[(c["case"], c["solver"])] = c
+    drift = []
+    for c in ab:
+        pc = prev_rows.get((c["case"], c["solver"]))
+        if pc is None or pc.get("value") is None or c.get("value") is None:
+            continue
+        drift.append({"case": c["case"], "solver": c["solver"],
+                      "value_previous": pc["value"], "value_now": c["value"],
+                      "rel_change": abs(c["value"] - pc["value"]) / max(abs(pc["value"]), 1e-300),
+                      "status_previous": pc.get("status"), "status_now": c.get("status"),
+                      "failed_previous": pc.get("failed"), "failed_now": c.get("failed")})
+    widths = [c["certificate"]["width_rel"] for c in certd
+              if c["certificate"].get("width_rel") is not None]
+    prereg_diff = [c for c in ab if c.get("certificate_class") is not None
+                   and c.get("certificate_class") != c.get("certificate_class_prereg")]
+    exceed = [c for c in ab if c.get("reported_value_outside_certificate_rel")]
+    return {
+        "certificate_rule_amendment": CERTIFICATE_RULE_AMENDMENT,
+        "rows_where_prereg_and_amended_certificate_rules_DISAGREE": [
+            {"case": c["case"], "solver": c["solver"],
+             "certificate_class_prereg": c["certificate_class_prereg"],
+             "certificate_class": c["certificate_class"],
+             "reported_value_outside_certificate_rel":
+                 c.get("reported_value_outside_certificate_rel")} for c in prereg_diff],
+        "rows_whose_reported_value_no_feasible_X_attains": [
+            {"case": c["case"], "solver": c["solver"], "value": c["value"],
+             "ub": c["certificate"]["ub"],
+             "outside_rel": c["reported_value_outside_certificate_rel"]} for c in exceed],
+        "rule": ("a row FAILS iff its class is not CORRECT (closed form known) or CERTIFIED "
+                 "(bracket computed by numpy from the returned matrices). INDETERMINATE and "
+                 "UNCERTIFIED are failures of the INSTRUMENT, listed apart, and never a "
+                 "candidate gap."),
+        "eligible_rows": len(ab),
+        "rows_where_old_and_new_criteria_DISAGREE": [
+            {"case": c["case"], "solver": c["solver"], "status": c.get("status"),
+             "class": c.get("class"), "old_criterion_failed": c.get("old_criterion_failed"),
+             "failed_now": c.get("failed")} for c in changed],
+        "n_disagree": len(changed),
+        "class_counts": {k: sum(1 for c in ab if c.get("class") == k)
+                         for k in sorted({c.get("class") for c in ab}, key=str)},
+        "instrument_could_not_decide": [
+            {"case": c["case"], "solver": c["solver"], "class": c["class"],
+             "certificate": c.get("certificate")} for c in instr],
+        "certificate_validation_on_closed_forms": {
+            "n_closed_form_rows": len(closed),
+            "n_with_certificate": sum(1 for c in closed if c.get("certificate") is not None),
+            "n_bracket_truth": sum(1 for c in closed if c.get("certificate_brackets_truth")),
+            "n_bracket_FAIL": len(bracket_fail),
+            "failures": [{"case": c["case"], "solver": c["solver"],
+                          "expected": c["expected"], "certificate": c["certificate"]}
+                         for c in bracket_fail],
+            "reading": ("every closed-form row's certificate must bracket the literature "
+                        "value; one that does not voids every certificate-scored row"),
+        },
+        "certificate_width_rel": {"min": min(widths) if widths else None,
+                                  "max": max(widths) if widths else None,
+                                  "n": len(widths)},
+        "value_drift_vs_previous_committed_result": {
+            "n_compared": len(drift),
+            "max_rel_change": max((d["rel_change"] for d in drift), default=None),
+            "rows": drift,
+            "note": ("the edge constraints are now one vectorised equality instead of one "
+                     "constraint per edge, so the values are re-measured rather than carried; "
+                     "any change is shown here, not assumed to be nil"),
+        },
+    }
+
+
+def run_sdp(out_path: str | None, previous_path: str | None = None) -> dict:
     import cvxpy as cp
+
+    previous = None
+    for cand in (previous_path, out_path):
+        if cand and pathlib.Path(cand).exists():
+            try:
+                previous = json.loads(pathlib.Path(cand).read_text(encoding="utf-8"))
+            except Exception:                                        # noqa: BLE001
+                previous = None
+            break
 
     cases = []
 
-    # A. AUTHORITY ANCHOR. theta(C_5) = sqrt(5). If the free path misses this, nothing else
-    #    measured here means anything.
-    prob = _theta_problem(_cycle(5))
-    for s in FREE_SOLVERS:
-        t = time.perf_counter()
-        try:
-            v = prob.solve(solver=s)
-            cases.append({"case": "A_authority_theta_C5", "solver": s, "status": prob.status,
-                          "value": v, "expected": AUTHORITY_THETA_C5,
-                          "abs_error": abs(v - AUTHORITY_THETA_C5),
-                          "ms": round((time.perf_counter() - t) * 1000, 1), "failed": False})
-        except Exception as exc:
-            cases.append({"case": "A_authority_theta_C5", "solver": s, "failed": True,
-                          "error": f"{type(exc).__name__}: {exc}"})
+    def _theta_case(case: str, A: np.ndarray, truth: float | None, meta: dict) -> None:
+        """One theta instance through both free solvers, scored on CORRECTNESS.
 
-    # B. SCALE. Where does the free interior-point path stop being affordable?
-    for n in (20, 60, 120):
-        p = _theta_problem(_random_graph(n, 0.3, seed=0))
+        TECHNE-45. Before this, arm A wrote `failed: False` unconditionally (it
+        recorded abs_error and then ignored it) and arm B wrote `failed = status
+        not in ("optimal",)` with no ground truth at all -- the same blindness
+        ELEN-TECHNE-38 found in arm C, unmeasured. Now every row carries a class
+        from `_classify` (closed form known) or `_classify_certified` (closed form
+        unknown; a numpy-computed bracket instead), a `failed` derived from that
+        class, and `old_criterion_failed` so the receipt can show the two side by
+        side. The certificate is computed for every row, known truth or not: on
+        the closed-form families it is the CHECK that the certificate code brackets
+        a value nobody here computed.
+        """
         for s in FREE_SOLVERS:
+            p = _theta_problem(A)
             t = time.perf_counter()
+            row = {"case": case, "solver": s, **meta, "n": int(A.shape[0]),
+                   "n_edges": int(p.ei.shape[0])}
             try:
-                v = p.solve(solver=s)
-                cases.append({"case": f"B_scale_n{n}", "solver": s, "status": p.status,
-                              "value": v, "ms": round((time.perf_counter() - t) * 1000, 0),
-                              "failed": p.status not in ("optimal",)})
-            except Exception as exc:
-                cases.append({"case": f"B_scale_n{n}", "solver": s, "failed": True,
-                              "error": f"{type(exc).__name__}: {exc}"})
+                v, status = p.solve(s)
+                row.update({"status": status,
+                            "value": None if v is None else float(v),
+                            "ms": round((time.perf_counter() - t) * 1000, 1)})
+            except Exception as exc:                                  # noqa: BLE001
+                row.update({"status": "RAISED", "value": None,
+                            "ms": round((time.perf_counter() - t) * 1000, 1),
+                            "error": f"{type(exc).__name__}: {exc}", "class": "RAISED",
+                            "failed": True, "old_criterion_failed": True})
+                cases.append(row)
+                continue
+            cert = p.certificate()
+            row["certificate"] = cert
+            row.update(_certificate_error_fields(row["value"], cert))
+            row["certificate_class"] = _classify_certified(status, row["value"], cert)
+            row["certificate_class_prereg"] = _classify_certified_prereg(status, row["value"],
+                                                                         cert)
+            if truth is not None:
+                row["expected"] = truth
+                klass, rel = _classify(status, row["value"], truth)
+                row["rel_error"] = rel
+                row["abs_error"] = (None if row["value"] is None
+                                    else abs(row["value"] - truth))
+                row["significant_digits"] = (None if rel is None else
+                                             (16.0 if rel <= 0 else
+                                              round(float(-np.log10(rel)), 2)))
+                # The certificate must bracket the KNOWN value; if it does not, the
+                # certificate code is wrong and every certificate-scored row is void.
+                row["certificate_brackets_truth"] = (
+                    None if cert is None else
+                    bool(cert["lb"] - CERT_INSIDE_TOL * abs(cert["ub"]) <= truth
+                         <= cert["ub"] + CERT_INSIDE_TOL * abs(cert["ub"])))
+                row["class"] = klass
+            else:
+                row["class"] = row["certificate_class"]
+            row["failed"] = row["class"] not in ("CORRECT", "CERTIFIED")
+            row["old_criterion_failed"] = _old_criterion_failed(status)
+            cases.append(row)
+
+    # A. AUTHORITY ANCHOR. theta(C_5) = sqrt(5). If the free path misses this, nothing else
+    #    measured here means anything. Scored against sqrt(5), not against `optimal`.
+    _theta_case("A_authority_theta_C5", _cycle(5), AUTHORITY_THETA_C5,
+                {"family": "odd_cycle", "param": 5, "truth_source": "Lovasz 1979, closed form"})
+
+    # B. SCALE. Where does the free interior-point path stop being affordable -- and
+    #    is what it returns there CORRECT? Two kinds of row:
+    #      B_scale_n*      the roadmap's shape (random G(n, 0.3), seed 0), no closed
+    #                      form, scored by the numpy certificate;
+    #      B_closed_*      vertex-transitive families at comparable n with a closed-form
+    #                      theta the solver never saw, scored against it AND certified.
+    for n in (20, 60, 120):
+        _theta_case(f"B_scale_n{n}", _random_graph(n, 0.3, seed=0), None,
+                    {"family": "random_gnp", "param": {"n": n, "p": 0.3, "seed": 0},
+                     "truth_source": "none -- certificate only"})
+    for fam, param, build, truth in CLOSED_FORM_FAMILIES:
+        tag = param if isinstance(param, int) else "%dc%d" % param
+        _theta_case(f"B_closed_{fam}_{tag}", build(), truth,
+                    {"family": fam, "param": param,
+                     "truth_source": {"odd_cycle": "n cos(pi/n)/(1+cos(pi/n)), Lovasz 1979",
+                                      "paley": "sqrt(p): self-complementary + vertex-transitive",
+                                      "kneser": "C(m-1,k-1), Lovasz 1979"}[fam]})
 
     # C. CONDITIONING. Rebuilt after ELEN-TECHNE-38 invalidated the first version.
     #    SEEDS ARE SWEPT, NOT PICKED. The old case hardcoded seed=7 and never
@@ -418,7 +817,14 @@ def run_sdp(out_path: str | None) -> dict:
     by_case: dict[str, list] = {}
     for c in cases:
         by_case.setdefault(c["case"], []).append(c)
-    all_free_fail = sorted(k for k, v in by_case.items() if all(x.get("failed") for x in v))
+    # A SOLVER failure on every free solver is a candidate gap. An INSTRUMENT
+    # failure (the certificate could not decide) is not: it is listed under
+    # techne45.instrument_could_not_decide and counts against the fixture, not
+    # against the free path.
+    all_free_fail = sorted(k for k, v in by_case.items()
+                           if all(x.get("failed") and x.get("class") not in INSTRUMENT_CLASSES
+                                  for x in v))
+    ab_reclass = _ab_reclassification(cases, previous)
 
     # A CANDIDATE GAP REQUIRES THE NORMALISED ARM TO FAIL. The unscaled arm failing
     # is a missing preprocessing step in our own call, worth $0 to fix, and the
@@ -435,7 +841,10 @@ def run_sdp(out_path: str | None) -> dict:
         all_free_fail.append("C_illcond(normalised): " + ", ".join(illcond_candidate))
 
     doc = {
-        "schema": "techne.capability_gap_fixture/1",
+        "schema": "techne.capability_gap_fixture/2",
+        "schema_change": ("/2 (TECHNE-45): arms A and B carry class / failed derived from "
+                          "correctness (closed form or numpy certificate), old_criterion_failed "
+                          "beside it, and nine closed-form scale rows; see techne45"),
         "target": "sdp",
         "roadmap_claim_under_test": "REQ-029 named MOSEK as the upgrade path from SCS for "
                                    "pm.optimization.solve_sdp. This measures whether the free "
@@ -454,6 +863,7 @@ def run_sdp(out_path: str | None) -> dict:
         "verdict": ("NO GAP MEASURED -- the free path handled every regime tested"
                     if not all_free_fail else
                     "CANDIDATE GAP in %s" % all_free_fail),
+        "techne45": ab_reclass,
         "illcond": illcond_summary,
         "scs_tolerance_arm": {k: v for k, v in scs_tol.items() if k != "rows"},
         "accuracy_requirement": ACCURACY_REQUIREMENT,
@@ -529,18 +939,30 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--target", default="sdp", choices=["sdp"])
     ap.add_argument("--out", default="techne/acquisition/GAP_FIXTURE_SDP.json")
+    ap.add_argument("--previous", default=None,
+                    help="previously committed result to diff arms A/B against (default: --out)")
     a = ap.parse_args(argv)
 
-    doc = run_sdp(a.out)
+    doc = run_sdp(a.out, a.previous)
     print(f"=== capability gap fixture: {a.target} ===")
     print(f"free path       {doc['free_path']['solvers']} (both $0); cvxpy "
           f"{doc['free_path']['cvxpy']}")
-    print(f"{'case':<24} {'solver':<10} {'status':<22} {'value':>16} {'ms':>8}  failed")
+    print(f"{'case':<28} {'solver':<9} {'status':<20} {'value':>14} {'ms':>8} "
+          f"{'class':<16} failed old")
     for c in doc["cases"]:
         val = c.get("value")
-        vs = f"{val:16.8f}" if isinstance(val, float) else f"{str(val):>16}"
-        print(f"{c['case']:<24} {c['solver']:<10} {str(c.get('status','ERROR')):<22} {vs} "
-              f"{str(c.get('ms','')):>8}  {'YES' if c.get('failed') else ''}")
+        vs = f"{val:14.6f}" if isinstance(val, float) else f"{str(val):>14}"
+        print(f"{c['case']:<28} {c['solver']:<9} {str(c.get('status','ERROR')):<20} {vs} "
+              f"{str(c.get('ms','')):>8} {str(c.get('class','')):<16} "
+              f"{'YES' if c.get('failed') else '-':<6} "
+              f"{'YES' if c.get('old_criterion_failed') else '-'}")
+    t45 = doc["techne45"]
+    print(f"\nTECHNE-45       {t45['eligible_rows']} A/B rows; old and new criteria disagree on "
+          f"{t45['n_disagree']}; classes {t45['class_counts']}")
+    cv = t45["certificate_validation_on_closed_forms"]
+    print(f"                certificate brackets the literature value on "
+          f"{cv['n_bracket_truth']} of {cv['n_closed_form_rows']} closed-form rows "
+          f"({cv['n_bracket_FAIL']} FAIL)")
     print(f"\nVERDICT         {doc['verdict']}")
     print(f"                {doc['n_failed']} of {doc['n_cases']} solver-runs failed")
     print(f"CAVEAT          {doc['CAVEAT'][:150]}...")

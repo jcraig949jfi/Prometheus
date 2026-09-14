@@ -1,0 +1,53 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.lean_simp.retrieval_key_abstraction.cut1",
+  "specimen": "lean_simp",
+  "name": "retrieval key abstraction: a term is flattened to a key path in which proofs, instances, non-type implicits, numerals-with-offsets and reducible heads are deliberately forgotten",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "Lean 4 DiscrTree.pushArgs / ignoreArg / shouldAddAsStar / reduceDT, as configured by simp",
+    "sources": [
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/DiscrTree/Main.lean lines 69-115 (ignoreArg: instances -> wildcard; implicit args -> wildcard unless a type; proofs -> wildcard), 170-200 (isOffset/shouldAddAsStar: Nat.succ / +k terms -> star), 204-247 (reduce / reduceUntilBadKey / reduceDT: unfold until the head would become a bad key), 267-333 (pushArgs / mkPath)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 DiscrTree/Types.lean lines 15-24: Key = star | other | lit | fvar | const(name, arity) | arrow | proj",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/SimpTheorems.lean lines 365-371 mkSimpTheoremKeys: keys = DiscrTree.mkPath lhs noIndexAtArgs; Types.lean 70-71 indexConfig: the reduction settings used for indexing are DERIVED from Simp.Config (so zeta := false at the tactic turns off zeta in the index); Rewrite.lean 169-172: 'this is how we indexed the discrimination tree. See issue #1815'",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/lean_simp/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Lean 4 core, DiscrTree module (2019 header, de Moura). The trie itself (CUTS.md c03) is generic; this record is ONLY the abstraction function from Expr to key path and the rules of what it forgets. Nyx cut inside the module; the module does not cut here.",
+    "mechanism": "Given a term, reduce its head until further unfolding would produce a non-constant head (so `List.map f o List.map g` keeps `o` as its key, comment at 212-216); emit the head constant with its arity as the first key; for each argument decide from the function's parameter info whether it is a proof, an instance, or a non-type implicit -- if so emit a wildcard instead of descending; if it is a Nat offset term emit a wildcard; otherwise recurse. Metavariables emit wildcards. The output is a flat key array whose wildcards make the later trie lookup match ANY term at that position.",
+    "input": "an Expr (a rule's lhs at ingestion, or a goal subterm at lookup), a Bool noIndexAtArgs, and the ambient MetaM reducibility/config (the simp indexConfig)",
+    "output": "Array Key (a path); at lookup the same function is run on the target so the two paths are comparable",
+    "state": "reads the environment (parameter infos, reducibility, unfold definitions) and the Meta config in force; the keys stored in the trie are computed ONCE at attribute time with simpGlobalConfig (SimpTheorems.lean 249) while the lookup keys are computed with the tactic's indexConfig -- two configs, one comparison (the state dependence this record extrudes)",
+    "assumptions": "proof irrelevance (so proof arguments never discriminate); that instance arguments are 'morally canonical' (comment 80-82); that a type-valued implicit argument discriminates usefully while a non-type one does not; that unfolding a definition at the root would usually destroy a useful key",
+    "interface": "mkPath(e: Expr, noIndexAtArgs: Bool) -> Array Key under a MetaM config; getMatchWithExtra(tree, e) -> candidates with the number of unmatched trailing args",
+    "fitness_value": "A rule store of 10^4-10^5 entries is searched by walking one key path instead of trying every rule; the forgetting rules are what let a rule stated over an abstract instance match a concrete term. The trade is recall for speed: anything forgotten cannot be used to discriminate, so more candidates are returned and unification pays. Claimed from source comments; the speed/recall numbers are not measured here.",
+    "failure_landscape": "(a) 'bad keys': a rule whose lhs reduces to a wildcard or 'other' at the root matches everything or nothing -- the specimen instruments this itself (Types.lean 242 thmsWithBadKeys; Rewrite.lean 262-270 diagnoseWhenNoIndex); (b) config skew: rules indexed under one reduction setting and looked up under another silently never match (the source's own remark about zeta and issue 2669 at DiscrTree/Types.lean 45-56); (c) offset-as-star is a hard-coded special case for Nat only (TODO at 188-191); (d) instance-forgetting makes two rules that differ only by instance indistinguishable at retrieval, so priority and order decide; (e) eta: etaExpandedStrict? handling at 207-210 and 232-234 is a patch for a class of misses.",
+    "ablation": "The specimen carries its own ablation switch: Simp.Config.index := false makes rewrite? use getMatchLiberal, root symbol only (Rewrite.lean 206-210, 240-262, comment: 'Lean 3 style'). Prediction: same results, more candidates tried per subterm, slower; a rule that only the full path would reject is caught by unification instead. Not run in CUT-1 (no Lean execution). This is the one PERTURBED boundary in the specimen that the source hands over for free.",
+    "decomposability": "Yes, into (1) the generic trie (c03, SCAFFOLDING), (2) the forgetting policy table (ignoreArg, shouldAddAsStar) which is PARAMETERIZATION-scale and carries all the priors, (3) the root-reduction rule reduceUntilBadKey. (2) is exactly what a different logic or a different corpus would change.",
+    "composability": "Any store of patterns over a term language with a notion of 'arguments that should not discriminate': Proteus expression trees, CA rule descriptions, Archaeon's H3 behavioural keys. The forgetting table is the part that needs re-deciding per substrate; the trie is off the shelf.",
+    "human_prior": "Which argument positions are 'morally canonical' is decided by humans (instances) and by the elaborator's binder annotations (implicit vs explicit): the index inherits the type theory's binder discipline as its notion of relevance. The Nat-offset special case is a hand-written prior about arithmetic literals.",
+    "control": "Positive: two terms differing only in an instance argument must produce identical key paths; a term with a proof argument and one with a different proof must produce identical paths. Negative: two terms differing in an explicit argument constant must produce different paths. Cheat control: with index := false the SAME rewrites must occur (only candidate counts change); a difference in results is a bug in the abstraction, not a feature. None executed in CUT-1.",
+    "cheat": "An index that returns every rule (all-wildcard keys) passes every 'did the right rule get found' test while doing no retrieval work; the cheat control is the candidate count per lookup, which must be far below the store size on the positive fixtures, AND the bad-key diagnostic must be zero on a curated store."
+  },
+  "alternative_cuts": [
+    "CUTS.md c03: the abstraction and the trie are one organ (the DiscrTree module as shipped); Nyx separated them at CUT-1 because only the abstraction carries specimen-specific decisions; preserved as an alternative cut"
+  ],
+  "pressure_refs": [
+    "pressure.lean_simp.retrieval_at_store_scale.cut1"
+  ]
+}

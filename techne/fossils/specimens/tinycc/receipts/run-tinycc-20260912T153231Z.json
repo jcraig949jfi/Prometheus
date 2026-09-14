@@ -1,0 +1,265 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "tinycc",
+  "receipt_id": "run-tinycc-20260912T153231Z",
+  "written_utc": "20260912T153231Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "926f8626193eebf953c48cb590cb5d1b0bb51cbe7cd653df1557f16efb5a460c",
+  "recipe_sha256": "3ba54c22b44f9bedfa5e9561b820bcd2c4a2f65f4766cade62b252bc3405dd08",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 1.06,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "configure+make",
+      "cmd": "sh ./configure >/dev/null 2>&1 && make -s 2>&1 | grep -viE 'warning' | tail -3; test -x ./tcc",
+      "exit": 0,
+      "seconds": 6.65,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "(skipping tcc-doc.html - no makeinfo)\n(skipping tcc-doc.info - no makeinfo)\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "tcc compiles and runs a C program in memory",
+      "cmd": "echo 'int main(){int s=0,i;for(i=1;i<=9;i++)s+=i;return s;}' > $BODY/t.c && ./tcc -run $BODY/t.c; echo exit=$?",
+      "exit": 0,
+      "seconds": 0.91,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'exit=45'"
+      ],
+      "stdout": {
+        "text": "exit=1\n"
+      },
+      "stderr": {
+        "text": "tcc: error: file 'runmain.o' not found\ntcc: error: file 'libtcc1.a' not found\n"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "tcc compiles itself is out of scope; instead check -run of a second program",
+      "cmd": "echo 'int main(){return 7*6;}' > $BODY/u.c && ./tcc -run $BODY/u.c; echo rc=$?",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'rc=42'"
+      ],
+      "stdout": {
+        "text": "rc=1\n"
+      },
+      "stderr": {
+        "text": "tcc: error: file 'runmain.o' not found\ntcc: error: file 'libtcc1.a' not found\n"
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "bcheck.o",
+      "sha256": "11ace8dd0b1bdb3aba734a9557fb1e4bc437d601fa8ec8d496a5759b46ae4132",
+      "bytes": 146962
+    },
+    {
+      "path": "bcheck_run.o",
+      "sha256": "524bf9a2449d68ef2e9779f063106c604a76fc357229dd7430415317a6566bb5",
+      "bytes": 156779
+    },
+    {
+      "path": "bt-exe.o",
+      "sha256": "47e46747626cefb03ddd819951d1b2f18c0b71c20aca698736a65efe8b446ddb",
+      "bytes": 19433
+    },
+    {
+      "path": "bt-log.o",
+      "sha256": "72e1ac001c9b996f03f6de4b8caadf3e0df8933f597f48d6ccb760230103a6c1",
+      "bytes": 2297
+    },
+    {
+      "path": "c2str.exe",
+      "sha256": "4c1df5528729ec86fc40ac228e33ebe783b8b3dfc0b18ea376dc6f4e1c8cb97c",
+      "bytes": 16856
+    },
+    {
+      "path": "config.h",
+      "sha256": "f9574d20babca8cb3d7fc43dc6eea2acdc5aa3e88016dff9af1ff106bf4c4f63",
+      "bytes": 519
+    },
+    {
+      "path": "config.mak",
+      "sha256": "ef0a22c2e9af56a1e416154f1ad2891debad31e1ecf71fc23e50a326d16551fe",
+      "bytes": 573
+    },
+    {
+      "path": "config.texi",
+      "sha256": "5643e47eb1df2b810e2645b00d1c2ed20ab7662f166f73d14b4b5b821aaf11f9",
+      "bytes": 22
+    },
+    {
+      "path": "i386-asm.o",
+      "sha256": "440bcffe5ae70b7a69238e37c6ef5e35feedad7b318953ebc7a1eb1babdc686e",
+      "bytes": 28528
+    },
+    {
+      "path": "lib/alloca-bt.o",
+      "sha256": "b07bf0b8f567be289da3d550e56b49a9e0f0cbee379539035a2d044750ae41e3",
+      "bytes": 1098
+    },
+    {
+      "path": "lib/alloca.o",
+      "sha256": "15a58e7eee8a0d50de4ff08442bad81b9e8418deba9d04cea29e9515dca51e28",
+      "bytes": 1002
+    },
+    {
+      "path": "lib/atomic.o",
+      "sha256": "537a8cb8e1100cb5ff17d8efc8f91cfa4c453a0458c9475a0b128e595ee8b1fd",
+      "bytes": 2458
+    },
+    {
+      "path": "lib/builtin.o",
+      "sha256": "37b6bb4365cb24416e5ce6f8b50a1d585df7ec5992aefa93d49400f0d8ef2326",
+      "bytes": 4665
+    },
+    {
+      "path": "lib/dsohandle.o",
+      "sha256": "775d8524adbf0400ff726375d124b5a33b8ae5b7e4d2b965b6232fae4b20996a",
+      "bytes": 970
+    },
+    {
+      "path": "lib/libtcc1.o",
+      "sha256": "48d23e83799522eee9e9d10651339db433f641fd6d4937e1a1be737b7e3963d0",
+      "bytes": 3929
+    },
+    {
+      "path": "lib/stdatomic.o",
+      "sha256": "a47bf797a4be11536de44b64b21b8908e5c724111ab26927caa0ee9cdc6df90a",
+      "bytes": 18345
+    },
+    {
+      "path": "lib/tcov.o",
+      "sha256": "57d58a126aa272ad2d2118777e418328960440634cd9f9c6f17f36ffc1888c76",
+      "bytes": 12025
+    },
+    {
+      "path": "lib/va_list.o",
+      "sha256": "9314ca396cdb7512826fe7537ee8a503fd0749797e7982c936834011592b67d1",
+      "bytes": 1753
+    },
+    {
+      "path": "libtcc.a",
+      "sha256": "618236d6b2735adba3b36ea3b7f59f725b7bca6958c0efd17d959ad616a4af01",
+      "bytes": 611976
+    },
+    {
+      "path": "libtcc.o",
+      "sha256": "7e2aa9b0964ff38bf6cf9a278b62410ab11bbac3d6153ba6325aafebf068670a",
+      "bytes": 40384
+    },
+    {
+      "path": "libtcc1.a",
+      "sha256": "7fac7e6c3717e8e82e7b424a69f5ff47f61eea49ea5448e791ebecc208800215",
+      "bytes": 49362
+    },
+    {
+      "path": "runmain.o",
+      "sha256": "c4d28fa3699c6c5f752f25f4a24bb66db73dcaa8a1b8a7496e9b9deecf7d210d",
+      "bytes": 3353
+    },
+    {
+      "path": "tcc",
+      "sha256": "74d13417bfd2df0b58041a9cccb0059f17bd9a40f93e9769a58ff228bfd9b636",
+      "bytes": 360744
+    },
+    {
+      "path": "tcc-doc.pod",
+      "sha256": "bc7072c48bf45c1c082522311c0ca63645ad5d3eeea2518d3df83edda73e04cc",
+      "bytes": 13393
+    },
+    {
+      "path": "tcc.1",
+      "sha256": "112210c40d1a18a236cd741d19634042970457ca1d7fd27f8ea043f1a37ad183",
+      "bytes": 22534
+    },
+    {
+      "path": "tcc.o",
+      "sha256": "467ddd5a29f024b2c3138d6f70462829c963dcd75879c415b078739129b29d53",
+      "bytes": 24872
+    },
+    {
+      "path": "tccasm.o",
+      "sha256": "5a2aca1c79525265220e3c101a04a8ee3de84512679744654cfc39bd3a3ca779",
+      "bytes": 36728
+    },
+    {
+      "path": "tccdbg.o",
+      "sha256": "0f5c6e5669a9ecfd64838641c954dedd645ab1b1d5b0fb6d3cd1c3d6eec38855",
+      "bytes": 53576
+    },
+    {
+      "path": "tccdefs_.h",
+      "sha256": "944e5631039a11a4d948274650fdea3b76ec88424b0473d992450eec014509ac",
+      "bytes": 12201
+    },
+    {
+      "path": "tccelf.o",
+      "sha256": "f9bb05dd264c44c0c5b2522b74aa830a4d13fafb2a35fb6c53220f8e0253c211",
+      "bytes": 66440
+    },
+    {
+      "path": "tccgen.o",
+      "sha256": "b05032dd063c00cd18ce5a2635376e0a60ce58ab366abd1810b3501efeefac4e",
+      "bytes": 193864
+    },
+    {
+      "path": "tccpp.o",
+      "sha256": "c0280a2b2789a4c6fc55113eb894e087020f97f0b17bb51174fc15fb5d63e7e5",
+      "bytes": 112368
+    },
+    {
+      "path": "tccrun.o",
+      "sha256": "505d8c9086fa3afb742f2cd541e16b35962ce021d4f2f991dad847ebbee3d7ab",
+      "bytes": 22328
+    },
+    {
+      "path": "x86_64-gen.o",
+      "sha256": "3102add293160dd1225b9d0d7d6aa7de755ccd6a9983038f496e9e22553ed0a1",
+      "bytes": 44784
+    },
+    {
+      "path": "x86_64-link.o",
+      "sha256": "5df121f1bfc1c84758a8c8511396a1f2274e67f5c89ae8ef7ed8e5cd5931afbe",
+      "bytes": 7024
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_FAIL",
+  "ok": false
+}

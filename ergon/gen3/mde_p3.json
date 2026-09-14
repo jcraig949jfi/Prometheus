@@ -1,0 +1,60 @@
+{
+ "alpha": 0.05,
+ "attainable": {
+  "mean_delta_granularity_pp": 0.0238,
+  "per_lineage_delta_bounds_pp": [
+   -100.0,
+   100.0
+  ],
+  "per_lineage_delta_granularity_pp": 2.381,
+  "practical_bound_note": "arm CFRs in P1 ranged 0.19..0.40 per lineage; a mean delta beyond about 20 pp would exceed every measured lineage"
+ },
+ "chosen_rule": {
+  "ci": "95% percentile bootstrap over lineages, 20000 draws",
+  "contrast": "I3 RANDOM - I0 MRU, the only contrast",
+  "reason": "one contrast so no multiplicity correction is owed (the Gen-1 lesson); T inherited from P1 section 2 (one task in forty-two) so the two bounded nulls are comparable; T is 4.7 SE from zero, so the gate is outside its own measurement error",
+  "test": "two-sided paired sign-flip permutation, 50000 draws, seed 909093",
+  "threshold_pp": 2.0
+ },
+ "eligible": {
+  "expected_tied_fraction_from_p1": 0.2,
+  "note": "a tied pair contributes zero to the sign-flip null and is still eligible; only all-tied is INDETERMINATE",
+  "pairing": "nav_base = 200000 + 1000 L, identical across arms",
+  "pairs_by_construction": 100
+ },
+ "expected_ci_halfwidth_pp": 0.84,
+ "expected_se_pp": 0.429,
+ "gate_in_se": 4.66,
+ "indeterminate_se_branch": {
+  "equivalent_per_lineage_sd_pp": 10.0,
+  "fires_if_observed_se_pp_exceeds": 1.0
+ },
+ "mde": {
+  "frozen": {
+   "mde80_pp": 1.22,
+   "mde90_pp": 1.41,
+   "sigma": 0.0429
+  },
+  "gen1b_I3_minus_I0_n30": {
+   "mde80_pp": 1.03,
+   "mde90_pp": 1.18,
+   "sigma": 0.0363
+  },
+  "p1_I1_minus_I3_n100": {
+   "mde80_pp": 1.23,
+   "mde90_pp": 1.4,
+   "sigma": 0.0429
+  }
+ },
+ "n_pairs": 100,
+ "n_perm": 2000,
+ "n_trials": 3000,
+ "power_at_T": 0.995,
+ "seed": 20260911,
+ "sigma_frozen": 0.0429,
+ "sigma_sources": {
+  "gen1b_I3_minus_I0_n30": 0.0363,
+  "p1_I1_minus_I3_n100": 0.0429
+ },
+ "threshold_pp": 2.0
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.grow_a_surface_from_a_front_edge_adding_one_triangle_at_a_time",
+  "name": "grow a surface from a front edge, adding one triangle at a time",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "scientific software"
+  ],
+  "mechanism": "start from a seed triangle; keep the boundary edges as a front; for each front edge choose the nearby point that forms the best-shaped triangle satisfying a local empty-sphere test, add it, and update the front; stop when the front is empty",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Marching triangles' in section Computational mathematics / Geometry: reconstruct two-dimensional surface geometry from an unstructured point cloud",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "SET",
+  "out_geometry": "GRAPH",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "GREEDY",
+  "iteration": "FIFO",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "a point cloud dense relative to surface curvature",
+    "a neighbour query"
+  ],
+  "fails_when": [
+    "holes where sampling is sparse; fronts can collide"
+  ],
+  "instances": [
+    "Marching triangles"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.select.grow_tree_by_cheapest_crossing_edge"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

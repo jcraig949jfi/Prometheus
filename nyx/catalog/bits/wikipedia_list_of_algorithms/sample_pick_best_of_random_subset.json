@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.sample.pick_best_of_random_subset",
+  "name": "pick the best of a random subset",
+  "lineage": [
+    "evolutionary computation",
+    "optimization"
+  ],
+  "mechanism": "draw a small random subset and choose its best member, so selection pressure is set by the subset size rather than by score scale",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Tournament selection' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SAMPLE",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "CONSTANT",
+  "requires": [
+    "a total order on scores",
+    "a subset size (policy)"
+  ],
+  "fails_when": [
+    "size 1 is random search; size n is truncation"
+  ],
+  "instances": [
+    "Tournament selection"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

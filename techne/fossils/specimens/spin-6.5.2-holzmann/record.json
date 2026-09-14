@@ -1,0 +1,128 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "spin-6.5.2-holzmann",
+  "canonical_name": "SPIN 6.5.2 model checker -- Gerard Holzmann",
+  "aliases": [
+    "spin",
+    "Spin",
+    "Promela"
+  ],
+  "lineage": "SPIN (1989-, Bell Labs / JPL, Gerard Holzmann): explicit-state model checker for Promela; on-the-fly LTL verification via nested depth-first search, partial-order reduction, bitstate hashing",
+  "domain": [
+    "model-checking",
+    "verification",
+    "concurrency",
+    "protocols",
+    "search"
+  ],
+  "era": "1989 (6.5.2 released 2020)",
+  "version": "git tag version-6.5.2, github.com/nimble-code/Spin (the author's repository)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://github.com/nimble-code/Spin/archive/refs/tags/version-6.5.2.tar.gz",
+        "filename": "Spin-version-6.5.2.tar.gz",
+        "sha256": "e46a3bd308c4cd213cc466a8aaecfd5cedc02241190f3cb9a1d1b87e5f37080a",
+        "bytes": 6084903,
+        "extracted_to": "upstream/tree/Spin-version-6.5.2"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/nimble-code/Spin",
+    "tag": "version-6.5.2"
+  },
+  "hashes": {
+    "tree_sha256": "30afd80d875d786f950a59d0ccbac8b19eebc1e2c5c4138f678fc3139cd15de5",
+    "n_files": 171,
+    "bytes": 13505633,
+    "artifacts": [
+      {
+        "filename": "Spin-version-6.5.2.tar.gz",
+        "sha256": "e46a3bd308c4cd213cc466a8aaecfd5cedc02241190f3cb9a1d1b87e5f37080a",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\spin-6.5.2-holzmann",
+    "hash_list": "techne/fossils/specimens/spin-6.5.2-holzmann/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause (Spin's LICENSE since 6.5)",
+    "status": "permissive",
+    "evidence": "LICENSE in the tarball"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C",
+    "yacc"
+  ],
+  "build_system": "make in Src/ (needs yacc/bison)",
+  "compiler_or_interpreter": "gcc + bison (docker debian:bookworm image, see environment/)",
+  "dependencies": [
+    "bison or yacc",
+    "gcc for the generated verifier pan.c"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "spin -a model.pml -> pan.c; gcc -o pan pan.c; ./pan",
+    "spin -run model.pml"
+  ],
+  "example": {
+    "command": "spin -run Examples/... or a Techne smoke model",
+    "input": "Promela model",
+    "output": "verification result: errors: 0 or a counterexample trail"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm (techne/fossils/environment/fossil-c-toolchain.Dockerfile)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Holzmann, The SPIN Model Checker: Primer and Reference Manual, 2003",
+    "spinroot.com"
+  ],
+  "human_capability_summary": {
+    "built_to": "prove that a concurrent protocol or program model satisfies safety and liveness properties, or produce a concrete counterexample execution",
+    "pressure": "state explosion in asynchronous systems; telephony and spacecraft software whose bugs are interleaving-dependent",
+    "success_means": "an exhaustive (or bitstate-approximate) search reporting no errors, or a trail that reproduces a violation"
+  },
+  "known_human_problem_solved": "finding concurrency bugs by exhaustive state-space search",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/spin-6.5.2-holzmann/receipts/run-spin-6.5.2-holzmann-20260912T125057Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\spin-6.5.2-holzmann ; tracked techne/fossils/specimens/spin-6.5.2-holzmann/",
+    "where_it_came_from": "{'repo': 'github.com/nimble-code/Spin', 'tag': 'version-6.5.2'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; BSD-3-Clause (Spin's LICENSE since 6.5)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run spin-6.5.2-holzmann",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/spin-6.5.2-holzmann/receipts/run-spin-6.5.2-holzmann-20260912T125057Z.json",
+    "what_humans_used_it_for": "prove that a concurrent protocol or program model satisfies safety and liveness properties, or produce a concrete counterexample execution"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "model-checking",
+    "verification",
+    "concurrency",
+    "protocols",
+    "search"
+  ],
+  "hardware_assumptions": ""
+}

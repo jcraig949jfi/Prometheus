@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.move_toward_own_and_group_best",
+  "name": "move toward own best and group best",
+  "lineage": [
+    "evolutionary computation",
+    "optimization"
+  ],
+  "mechanism": "each candidate keeps a velocity updated toward its own best-seen position and the group's best-seen position with random weights, and moves by that velocity each round",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Particle swarm' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bees algorithm': a search algorithm which mimics the food foraging behavior of swarms of honey bees",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "strategy": "RANDOMIZED",
+  "iteration": "PARALLEL_ROUNDS",
+  "cost": "LINEAR",
+  "requires": [
+    "a continuous space with a distance",
+    "inertia and attraction weights (policy)"
+  ],
+  "fails_when": [
+    "premature convergence to the group best"
+  ],
+  "instances": [
+    "Particle swarm",
+    "Bees algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

@@ -1,0 +1,932 @@
+FORENSIC INSTRUMENT INVENTORY -- built 2026-09-12T01:10:53Z at 01e4812a5 (44 candidates)
+
+#   id                         import   callers tests art  git_last   lead
+----------------------------------------------------------------------------------------------------
+1   evidence_wiki              IMPORTS  16      9     6    2026-09-11 DB/query inspection tools
+2   comms_manifest             IMPORTS  3       1     8    2026-09-11 provenance/manifest machinery
+3   techne_manifest_io         IMPORTS  4       1     8    2026-09-09 provenance/manifest machinery
+4   archaeon_workspace         IMPORTS  63      1     8    2026-09-11 provenance/manifest machinery
+5   donor_adapters             IMPORTS  2       1     4    2026-08-31 techne
+6   z3_oracle                  IMPORTS  6       1     1    2026-09-11 exact-match and symbolic oracles
+7   hypothesis_minimiser       IMPORTS  3       1     3    2026-09-11 exact-match and symbolic oracles
+8   grading_oracle             IMPORTS  2       1     0    2026-08-16 grading-oracle staircase
+9   verifier_lens              IMPORTS  5       2     0    2026-08-16 exact-match and symbolic oracles
+10  adversarial_registry       IMPORTS  0       1     1    2026-08-22 anti-anchor battery
+11  kill_vector                IMPORTS  0       11    2    2026-05-10 KillVector computation
+12  lean_runtime               IMPORTS  1       13    0    2026-05-29 Lean runtime / proof-search adapter
+13  reasoning_quality_emit     IMPORTS  1       2     0    2026-06-10 reasoning_quality_emit
+14  canon_r11_calibration      IMPORTS  0       3     2    2026-08-21 calibration modules
+15  promotion_replay_audit     IMPORTS  0       1     3    2026-06-23 historical replay harnesses
+16  h3_replay                  IMPORTS  0       2     8    2026-09-10 historical replay harnesses
+17  capability_gap_fixture     IMPORTS  0       1     1    2026-09-11 techne
+18  truth_table_oracle         IMPORTS  8       4     0    2026-09-10 exact-match and symbolic oracles
+19  d3_detectors               IMPORTS  0       2     2    2026-09-07 other
+20  modal_collapse_synthetic   IMPORTS  0       2     4    2026-05-04 other
+21  null_bound_reference       N/A      0       1     2    2026-09-11 other
+22  coverage_diagnostic        IMPORTS  0       0     2    2026-06-27 coverage diagnostic
+23  anti_anchors_registry      N/A      0       0     8    2026-08-20 anti-anchor battery
+24  control_certifier          IMPORTS  0       0     2    2026-08-24 anti-anchor battery
+25  defect_battery             IMPORTS  0       0     3    2026-08-24 anti-anchor battery
+26  zoo_runner                 IMPORTS  0       0     1    2026-08-20 model-zoo runner
+27  proteus_replay             IMPORTS  0       0     5    2026-09-11 historical replay harnesses
+28  comms_queue                IMPORTS  2       2     4    2026-09-11 DB/query inspection tools
+29  registry_probes            IMPORTS  0       0     1    2026-08-24 provenance/manifest machinery
+30  conformance_check          N/A      0       0     2    2026-09-11 provenance/manifest machinery
+31  dependency_vetting         IMPORTS  0       0     2    2026-08-31 techne
+32  license_audit              IMPORTS  0       0     1    2026-09-10 techne
+33  discovery_pipeline         IMPORTS  13      8     3    2026-05-04 other
+34  kill_vector_navigator      IMPORTS  0       2     0    2026-05-04 KillVector computation
+35  residue_eligibility        IMPORTS  0       1     0    2026-05-28 residue gate
+36  anchor_density             IMPORTS  0       1     0    2026-05-07 calibration modules
+37  viv_pew                    IMPORTS  0       0     1    2026-09-10 historical replay harnesses
+38  library_leak               IMPORTS  0       0     8    2026-09-11 other
+39  mathlib_signature_extractor IMPORTS  0       1     0    2026-05-22 other
+40  rhea_lean_verifier         IMPORTS  0       0     0    2026-03-24 Lean runtime / proof-search adapter
+41  claim_check                IMPORTS  0       0     0    2026-08-24 techne
+42  sampling_lint              IMPORTS  0       0     0    2026-08-24 techne
+43  probe_residue_census       IMPORTS  0       0     0    2026-08-16 techne
+44  anti_anchor_registry       FAILS    0       0     1    2026-05-02 anti-anchor battery
+
+====================================================================================================
+1. evidence_wiki   [score 12]   lead: DB/query inspection tools
+----------------------------------------------------------------------------------------------------
+path          evidence_wiki/ew
+git last      {'sha': 'a36a8234d', 'date': '2026-09-11'}
+identity      Prometheus-native (Mnemosyne)
+licence       repo
+invocation    from evidence_wiki import ew (the API is the contract; never query the DB directly); skill: evidence-wiki
+verbs         query inspect trace
+import        IMPORTS
+wrapper       skill evidence-wiki
+tests         evidence_wiki/tests/test_agent_identity.py, evidence_wiki/tests/test_conflict_diagnostics.py, evidence_wiki/tests/test_distributed_demo.py, evidence_wiki/tests/test_distributed_v3.py, evidence_wiki/tests/test_fail_closed_ingress.py, evidence_wiki/tests/test_firewall_v3.py, evidence_wiki/tests/test_store_identity_guard.py, evidence_wiki/tests/test_watchdog.py, evidence_wiki/tests/test_writepath_v1.py
+test run      PASS  15 passed, 2 warnings in 65.49s (0:01:05)
+control       evidence_wiki/tests/*; evidence_wiki/integration/*_results.json
+callers       16 outside own package  archaeon/fossils.py, archaeon/producer/c3_null_adapter.py, archaeon/producer/c3_readout.py, archaeon/producer/campaign.py, archaeon/producer/campaign_c3.py, archaeon/producer/campaign_h1h0.py; 0 inside it
+artifacts     evidence_wiki/integration/battery_results.json (2026-09-11), evidence_wiki/integration/closure_results.json (2026-09-11), evidence_wiki/integration/h0h5_results.json (2026-09-11), evidence_wiki/integration/lineage_results.json (2026-09-11)
+last exec     evidence_wiki/integration/battery_results.json
+failures      needs Postgres; batteries need sfe_db_path. Running its suite REWRITES two tracked result JSONs (evidence_wiki/tests/distributed_demo_results.json, writepath_v1_results.json) -- a test that mutates tracked artefacts; restored with git checkout here, reported to Mnemosyne
+consumers     all seats via skill
+necropolis    query claims, counterevidence, provenance chains, orphaned findings
+====================================================================================================
+2. comms_manifest   [score 12]   lead: provenance/manifest machinery
+----------------------------------------------------------------------------------------------------
+path          comms/manifest.py
+git last      {'sha': '8bb162a77', 'date': '2026-09-11'}
+identity      Prometheus-native
+licence       repo
+invocation    python -m comms.manifest write <dir> / verify <dir>
+verbs         hash diff validate
+import        IMPORTS
+wrapper       none
+tests         comms/tests/test_manifest.py
+test run      PASS  2 passed in 0.14s
+control       comms/tests/test_manifest.py: LF and CRLF working copies cannot produce different hashes
+callers       3 outside own package  agora/symbols/__init__.py, agora/symbols/resolve.py, roles/Arachne/science/specimen.py; 0 inside it
+artifacts     roles/Apollo/prompts/2026-09-11_h3_dead_world_control/MANIFEST.md (2026-09-11), roles/Apollo/prompts/2026-09-11_task2_ack/MANIFEST.md (2026-09-11), roles/Arachne/prompts/2026-09-11_reactivation/MANIFEST.md (2026-09-11), roles/Arachne/prompts/2026-09-11_report_archaeon/MANIFEST.md (2026-09-11)
+last exec     roles/Techne/prompts/2026-09-11_donor_foundry/MANIFEST.md (today)
+failures      hashes text; binary policy unverified here. NOTE: agora/symbols/test_manifest.py and tests/test_manifest.py are the dead April Agora's (ModuleNotFoundError: redis), not this module's
+consumers     every prompt directory
+necropolis    prove a prompt or artefact is the one that was issued
+====================================================================================================
+3. techne_manifest_io   [score 12]   lead: provenance/manifest machinery
+----------------------------------------------------------------------------------------------------
+path          techne/acquisition/manifest_io.py
+git last      {'sha': '95daf6e57', 'date': '2026-09-09'}
+identity      Prometheus-native (Techne, 2026-09-09)
+licence       repo
+invocation    python -m techne.scripts.acquire / tool_check / license_audit (receipts under techne/acquisition/receipts/)
+verbs         hash trace validate
+import        IMPORTS
+wrapper       techne.acquisition.receipt
+tests         techne/tests/test_acquisition.py
+test run      PASS  32 passed in 1.25s
+control       techne/tests/test_acquisition.py (stage-honesty test over receipts; D-23 guard tests)
+callers       4 outside own package  techne/scripts/acquire.py, techne/scripts/license_audit.py, techne/scripts/reconcile_packet.py, techne/scripts/tool_check.py; 0 inside it
+artifacts     techne/acquisition/receipts/adapter_qualification-hypothesis-20260911T065011Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-hypothesis-20260911T065703Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-pyribs-20260911T064533Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-pyribs-20260911T064556Z.json (2026-09-11)
+last exec     techne/acquisition/receipts/*.json (2026-09-11)
+failures      tool_cache_versioned false: artefacts not reproducible from base_sha alone
+consumers     Techne; Archaeon reads receipts
+necropolis    hash-pinned lock + digests for every acquired donor
+====================================================================================================
+4. archaeon_workspace   [score 12]   lead: provenance/manifest machinery
+----------------------------------------------------------------------------------------------------
+path          archaeon/workspace.py
+git last      {'sha': '709417ab9', 'date': '2026-09-11'}
+identity      Prometheus-native (Archaeon, D-23)
+licence       repo
+invocation    from archaeon.workspace import receipt, assert_not_canonical
+verbs         trace validate
+import        IMPORTS
+wrapper       techne/workspace.py copies the guard
+tests         archaeon/tests/test_workspace.py
+test run      PASS  4 passed in 1.66s
+control       archaeon/tests/test_base_role.py (linked worktree passes guard)
+callers       63 outside own package  agents/alethelia/alethelia.py, agents/arachne/swarm.py, agents/arachne/traverse.py, agents/eos/src/contact_witness.py, agents/eos/src/eos_daemon.py, agents/eos/src/first_season.py; 0 inside it
+artifacts     archaeon/docs/h0h5/CONFORMANCE_WIRING_RECEIPT_2026-09-11.json (2026-09-11), archaeon/docs/h0h5/H5_1_R1_ISSUE_RECEIPT_2026-09-11.json (2026-09-11), archaeon/docs/h0h5/H1H0_PHASE2_PUBLISH_RECEIPT_2026-09-10.json (2026-09-10), archaeon/docs/h0h5/ISSUE_RECEIPTS_2026-09-10.c3-2.json (2026-09-10)
+last exec     every receipt since 2026-09-11
+failures      none known (archaeon/tests/test_base_role.py carries the pre-existing Mnemosyne banner failure, not this module's)
+consumers     every entry point per D-23
+necropolis    where was this row built (base_sha, worktree, dirty)
+====================================================================================================
+5. donor_adapters   [score 12]   lead: techne
+----------------------------------------------------------------------------------------------------
+path          techne/lib/donors
+git last      {'sha': '3e9c5b064', 'date': '2026-08-31'}
+identity      Prometheus adapters over tensorly 0.9.0, ribs 0.12.0, discopy 1.2.2, egglog 13.2.0, cvc5 1.3.4
+licence       BSD-3 / MIT / BSD-3 / MIT / BSD-3
+invocation    from techne.lib import donors; donors.available(); donors.get('tensorly').propose(...)
+verbs         solve normalize extract sample
+import        IMPORTS
+wrapper       is the wrapper
+tests         techne/tests/test_donor_adapters.py
+test run      PASS  58 passed, 4 skipped in 3.74s
+control       techne/tests/test_donor_adapters.py T1-T10 (58 passed, 4 skipped on 2026-08-31)
+callers       2 outside own package  techne/scripts/donor_inventory.py, techne/scripts/donor_smt_comparator.py; 0 inside it
+artifacts     techne/donor_inventory.json (2026-08-31), techne/donor_d5_compat_2026-08-31.json (2026-08-31), techne/donor_smt_comparison_2026-08-31.json (2026-08-31), techne/donor_tensor_parity_2026-08-31.json (2026-08-31)
+last exec     techne/donor_inventory.json (2026-08-31)
+failures      cvc5 teardown segfault worked around by ordering (B3); zero callers outside Techne (B5)
+consumers     NONE outside techne/ as of 2026-08-31 (re-measured in callers field)
+necropolis    deterministic, provenance-carrying donor calls with the native selection relation declared
+====================================================================================================
+6. z3_oracle   [score 12]   lead: exact-match and symbolic oracles
+----------------------------------------------------------------------------------------------------
+path          techne/acquisition
+git last      {'sha': '99628d759', 'date': '2026-09-11'}
+identity      github.com/Z3Prover/z3, z3-solver 5.0.0.0
+licence       MIT
+invocation    import z3 (z3-solver 5.0.0.0); qualified as H1's oracle: 2048/2048 parity vs proteus.eval.boolean.truth_table
+verbs         prove solve validate
+import        IMPORTS
+ext probe     python -c "import z3; print(z3.get_version_string())" -> rc 0  5.0.0 
+wrapper       techne/lib/donors/cvc5_adapter.py is the SMT sibling; z3 used directly
+tests         techne/tests/test_acquisition.py
+test run      PASS  32 passed in 1.19s
+control       techne/acquisition/receipts/adapter_qualification-z3-20260910T222642Z.json: exhaustive, every witness independently validated (QUALIFIED_PENDING_HARMONIA_RULING)
+callers       6 outside own package  charon/agents/erebos/generators/_predicate_handles.py, harmonia/experiments/m0_anticalibration.py, harmonia/experiments/z3_backend.py, harmonia/soak/falsecert_z3_battery.py, prometheus_math/optimization.py, techne/scripts/donor_smt_comparator.py; 0 inside it
+artifacts     techne/acquisition/receipts/adapter_qualification-z3-20260910T222642Z.json (2026-09-10)
+last exec     that receipt
+failures      UNKNOWN-by-incompleteness never elicited on this build (TECHNE-22 open)
+consumers     harmonia.experiments.verifier_lens; H1 (Proteus)
+necropolis    independent oracle for Boolean/SMT-shaped claims
+====================================================================================================
+7. hypothesis_minimiser   [score 12]   lead: exact-match and symbolic oracles
+----------------------------------------------------------------------------------------------------
+path          techne/acquisition
+git last      {'sha': '99628d759', 'date': '2026-09-11'}
+identity      github.com/HypothesisWorks/hypothesis
+licence       MPL-2.0
+invocation    import hypothesis (6.165.10); qualified as witness minimiser over H1 programs
+verbs         sample falsify
+import        IMPORTS
+ext probe     python -c "import hypothesis; print(hypothesis.__version__)" -> rc 0  6.165.10 
+wrapper       techne/acquisition/checks
+tests         techne/tests/test_acquisition.py
+test run      PASS  32 passed in 1.19s
+control       receipt adapter_qualification-hypothesis-20260911T065703Z.json: SOUND 45/45, NOT MINIMAL 24/45
+callers       3 outside own package  prometheus_math/adversarial_fixtures.py, proteus/eval/hypothesis_strategy.py, techne/ladder_circuits/adversarial_registry.py; 0 inside it
+artifacts     techne/acquisition/receipts/adapter_qualification-hypothesis-20260911T065011Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-hypothesis-20260911T065703Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-hypothesis-20260910T222740Z.json (2026-09-10)
+last exec     that receipt
+failures      usefulness not established (enumeration cheaper at 8 assignments)
+consumers     none named
+necropolis    shrink a failing input to a minimal failing case
+====================================================================================================
+8. grading_oracle   [score 10]   lead: grading-oracle staircase
+----------------------------------------------------------------------------------------------------
+path          harmonia/services/grading_oracle.py
+git last      {'sha': '5e23d2a52', 'date': '2026-08-16'}
+identity      Prometheus-native (Harmonia, 2026-06)
+licence       repo
+invocation    from harmonia.services.grading_oracle import grade_reasoner; grade_reasoner(callable_or_'pkg.mod:fn')
+verbs         grade validate falsify
+import        IMPORTS
+wrapper       is itself the wrapper over reasoning_phase0 + verifier_lens
+tests         harmonia/tests/test_grading_oracle_emit.py
+test run      PASS  5 passed in 10.30s
+control       harmonia/tests/test_grading_oracle_emit.py (emit-path tests); NO cheat control found that feeds a self-grading reasoner and asserts refusal
+callers       2 outside own package  harmonia/diagnostics/ladder_liveness_audit.py, harmonia/soak/denominator_impact.py; 0 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located on tree (no committed grade report found by glob harmonia/**/grade*.json)
+failures      depends on harmonia.experiments.reasoning_phase0 probes and verifier_lens (z3/sympy); fails closed by design
+consumers     theseus/handoff/ergon_handoff.py imports reasoning_quality_emit path; harmonia/soak/denominator_impact.py imports grade_reasoner
+necropolis    grade a resurrected or archived reasoner on a frozen ladder without trusting its self-report
+====================================================================================================
+9. verifier_lens   [score 10]   lead: exact-match and symbolic oracles
+----------------------------------------------------------------------------------------------------
+path          harmonia/experiments/verifier_lens.py
+git last      {'sha': '494ee2e20', 'date': '2026-08-16'}
+identity      Prometheus-native over z3-solver + sympy
+licence       repo; z3 MIT, sympy BSD
+invocation    from harmonia.experiments.verifier_lens import verify; verify(probe, answer)
+verbs         prove validate falsify
+import        IMPORTS
+wrapper       none needed
+tests         harmonia/experiments/test_verifier_lens.py, harmonia/experiments/test_verifier_z3.py
+test run      PASS  36 passed in 15.52s
+control       grep for tests: see `tests` field; no cheat control located by name
+callers       5 outside own package  agents/icarus/tier_oracle.py, harmonia/diagnostics/detector_band_audit.py, harmonia/services/grading_oracle.py, harmonia/soak/pinC_wrapper_replication.py, harmonia/soak/verifier_lens_boundary.py; 1 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located
+failures      fails closed when kind not dispatchable (by design)
+consumers     harmonia.services.grading_oracle
+necropolis    independent re-certification of a recorded answer
+====================================================================================================
+10. adversarial_registry   [score 10]   lead: anti-anchor battery
+----------------------------------------------------------------------------------------------------
+path          techne/ladder_circuits/adversarial_registry.py
+git last      {'sha': '39ec02891', 'date': '2026-08-22'}
+identity      Prometheus-native over hypothesis (Techne cycle 038)
+licence       repo; hypothesis MPL-2.0
+invocation    from techne.ladder_circuits.adversarial_registry import ... (hypothesis property search for violations of each instrument's advertised invariant)
+verbs         falsify sample
+import        IMPORTS
+wrapper       none
+tests         techne/ladder_circuits/tests/test_adversarial_registry.py
+test run      PASS  7 passed in 10.93s
+control       measures which instruments passed a hand-written anti-case and fail a generated one
+callers       0 outside own package (NONE); 0 inside it
+artifacts     techne/ladder_circuits/adversarial_registry.py (2026-08-22)
+last exec     see artifacts
+failures      invariants follow from what each instrument advertises; nothing beyond that
+consumers     techne ladder cycles
+necropolis    generate a violating input for an instrument's advertised invariant instead of trusting its fixture
+====================================================================================================
+11. kill_vector   [score 10]   lead: KillVector computation
+----------------------------------------------------------------------------------------------------
+path          prometheus_math/kill_vector.py
+git last      {'sha': '0e2d78c33', 'date': '2026-05-10'}
+identity      Prometheus-native (Techne, 2026-05-03/04)
+licence       repo
+invocation    from prometheus_math.kill_vector import KillVector, KillComponent
+verbs         falsify measure trace
+import        IMPORTS
+wrapper       none
+tests         prometheus_math/tests/test_cross_machine_audit.py, prometheus_math/tests/test_kill_vector.py, prometheus_math/tests/test_kill_vector_multiprecision.py, prometheus_math/tests/test_kill_vector_precision.py, prometheus_math/tests/test_kill_vector_v2.py, prometheus_math/tests/test_killvector_v2_fuzz.py, prometheus_math/tests/test_native_kill_vector_pilot.py, prometheus_math/tests/test_region_densification_pilot.py, prometheus_math/tests/test_replay_capsule_determinism.py, prometheus_math/tests/test_stability_adapters.py, prometheus_math/tests/test_triangulation_independence_audit.py
+test run      PASS  292 passed in 21.32s
+control       prometheus_math/tests/test_kill_vector*.py (unit); precision metadata spec sigma_kernel/PRECISION_METADATA_SPEC.md; no cheat control located
+callers       0 outside own package (NONE); 9 inside it
+artifacts     prometheus_math/_kill_vector_learner_results.json (2026-05-04), prometheus_math/_native_kill_vector_pilot.json (2026-05-04)
+last exec     see artifacts
+failures      12-component battery is Lehmer/number-theory shaped
+consumers     110 files mention kill_vector (rg); see callers field for importers
+necropolis    typed per-falsifier margins with precision, so 'what killed it' is a vector not a label
+====================================================================================================
+12. lean_runtime   [score 10]   lead: Lean runtime / proof-search adapter
+----------------------------------------------------------------------------------------------------
+path          agents/_shared/external_tools/lean_runtime
+git last      {'sha': 'd576dc98d', 'date': '2026-05-29'}
+identity      Prometheus-native session wrapper over Lean 4 (elan)
+licence       repo; Lean 4 Apache-2.0
+invocation    from agents._shared.external_tools.lean_runtime import LeanSession; agents._shared.proof_search.lean_adapter.LeanProofSystem
+verbs         prove validate
+import        IMPORTS
+ext probe     lean --version -> rc 0  Lean (version 4.0.0-nightly-2023-06-07, commit d5348dfac847, Release) 
+wrapper       agents/_shared/proof_search/lean_adapter.py (Layer 2); agents/_shared/external_tools/locate.py (Techne 2026-09-11, finds the host-local build from any worktree)
+tests         agents/_shared/external_tools/tests/test_01_lake_env_lean_runs.py, agents/_shared/external_tools/tests/test_02_streaming_spawn.py, agents/_shared/external_tools/tests/test_03_lean_repl_handshake.py, agents/_shared/external_tools/tests/test_04_lean_repl_env_threading.py, agents/_shared/external_tools/tests/test_05_lean_session_typed_command.py, agents/_shared/external_tools/tests/test_06_lean_session_typed_tactic.py, agents/_shared/external_tools/tests/test_07_chained_tactic_proof.py, agents/_shared/external_tools/tests/test_08_session_crash_handling.py, agents/_shared/external_tools/tests/test_09_end_to_end_bfs.py, agents/_shared/proof_search/tests/test_01_mock_engine.py, agents/_shared/proof_search/tests/test_02_lean_integration.py, agents/_shared/proof_search/tests/test_03_walk_1_bridge.py, agents/_shared/proof_search/tests/test_04_mathlib_end_to_end.py
+test run      PASS  31 passed, 3 skipped in 39.40s
+control       MEASURED 2026-09-11: 32 of 32 pass against the canonical build (lean4 v4.30.0 + mathlib4 via lean-repl): handshake, typed command, typed tactic, chained tactic proof, crash handling, end-to-end BFS, mathlib end-to-end. Before the locator fix every one of them SKIPPED from a worktree ('lean-repl not built'), which is how a live donor reads as dead
+callers       1 outside own package  agents/_shared/proof_search/lean_adapter.py; 0 inside it
+artifacts     NONE matching declared globs
+last exec     this pass: pytest agents/_shared/external_tools/tests agents/_shared/proof_search/tests (30 passed, 1 cold-cache timeout, 3 skipped); the timeout re-ran warm as 2 passed in 16.7 s
+failures      build is host-local and gitignored (external_deps/repl, external_deps/mathlib4 in the CANONICAL checkout only); first cold start decompresses the mathlib cache (143 s) and can exceed the 600 s session timeout -- warm the cache once; walk_1 jsonl fixture missing (3 skips)
+consumers     agents/_shared/proof_search/walk_1_bridge.py
+necropolis    re-check a recorded proof sketch without the model that produced it
+====================================================================================================
+13. reasoning_quality_emit   [score 10]   lead: reasoning_quality_emit
+----------------------------------------------------------------------------------------------------
+path          prometheus_math/reasoning_quality_emit.py
+git last      {'sha': 'd32304d27', 'date': '2026-06-10'}
+identity      Prometheus-native (spec v0.1)
+licence       repo
+invocation    from prometheus_math.reasoning_quality_emit import emit ... (per-evaluator score VECTOR before combination)
+verbs         trace measure
+import        IMPORTS
+wrapper       none
+tests         harmonia/tests/test_grading_oracle_emit.py, prometheus_math/tests/test_reasoning_quality_emit.py
+test run      PASS  21 passed in 10.07s
+control       prometheus_math/tests/test_reasoning_quality_emit.py; harmonia/tests/test_grading_oracle_emit.py
+callers       1 outside own package  harmonia/services/grading_oracle.py; 0 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located
+failures      refuses single-evaluator vectors by design
+consumers     harmonia.services.grading_oracle, theseus/handoff/ergon_handoff.py
+necropolis    recover the per-head score vector a verdict was combined from, if it was ever persisted
+====================================================================================================
+14. canon_r11_calibration   [score 10]   lead: calibration modules
+----------------------------------------------------------------------------------------------------
+path          techne/ladder_circuits/canon_r11_calibration.py
+git last      {'sha': 'db87f38a0', 'date': '2026-08-21'}
+identity      Prometheus-native (Techne, 2026-08)
+licence       repo
+invocation    python -m techne.ladder_circuits.canon_r11_calibration
+verbs         calibrate measure
+import        IMPORTS
+wrapper       none
+tests         prometheus_math/tests/test_calibration.py, techne/ladder_circuits/tests/test_canon_r11_calibration.py, techne/ladder_circuits/tests/test_sweep_pass2b.py
+test run      PASS  34 passed in 18.00s
+control       techne/ladder_circuits/tests/test_canon_r11_calibration.py
+callers       0 outside own package (NONE); 0 inside it
+artifacts     techne/ladder_circuits/canon_r11_calibration.py (2026-08-21), techne/ladder_circuits/tests/test_canon_r11_calibration.py (2026-08-21)
+last exec     see artifacts
+failures      see test
+consumers     see callers
+necropolis    calibration anchors for the R11 ladder rung
+====================================================================================================
+15. promotion_replay_audit   [score 10]   lead: historical replay harnesses
+----------------------------------------------------------------------------------------------------
+path          theseus/scripts/promotion_replay_audit.py
+git last      {'sha': '1f86b2590', 'date': '2026-06-23'}
+identity      Prometheus-native (Techne M0.5, 2026-06-23)
+licence       repo
+invocation    python -m theseus.scripts.promotion_replay_audit --ledger --out <f>; ... --stride 13 --out <f>
+verbs         replay validate query
+import        IMPORTS
+wrapper       none
+tests         theseus/tests/test_promotion_replay_audit.py
+test run      PASS  9 passed in 0.14s
+control       theseus/tests/test_promotion_replay_audit.py (9 tests, 2026-06-23)
+callers       0 outside own package (NONE); 0 inside it
+artifacts     pivot/promotion_replay_audit_stride13.json (2026-06-23), pivot/promotion_ledger_census.json (2026-06-23), pivot/promotion_ledger_census_2026-06-23.json (2026-06-23)
+last exec     pivot/promotion_replay_audit_stride13.json, pivot/promotion_ledger_census.json (2026-06-23)
+failures      streams gz ledgers; needs the corpus on disk; formula-version dependent (2,351 fossil)
+consumers     Charon 6499cc19 built the polycentric census with it
+necropolis    replay a promotion verdict from stored features; census of provenance gaps
+====================================================================================================
+16. h3_replay   [score 10]   lead: historical replay harnesses
+----------------------------------------------------------------------------------------------------
+path          archaeon/producer/h3_replay.py
+git last      {'sha': 'a687e8874', 'date': '2026-09-10'}
+identity      Prometheus-native (Archaeon, 2026-09-10)
+licence       repo
+invocation    python -m archaeon.producer.h3_replay (see archaeon/docs/h0h5/H3_STREAM_FORMAT.md)
+verbs         replay compare
+import        IMPORTS
+wrapper       techne/h3_retention/archaeon_seam.py
+tests         archaeon/tests/test_h3_dead_stream.py, archaeon/tests/test_h3_replay.py
+test run      PASS  15 passed in 0.45s
+control       archaeon/tests/test_h3_replay.py, archaeon/tests/test_h3_dead_stream.py; Techne cross-implementation agreement (identical retained set, receipt 2026-09-10)
+callers       0 outside own package (NONE); 0 inside it
+artifacts     techne/acquisition/receipts/adapter_qualification-pyribs-20260911T064533Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-pyribs-20260911T064556Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-pyribs-20260911T064702Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-pyribs-20260911T064705Z.json (2026-09-11)
+last exec     techne/acquisition/receipts/adapter_qualification-pyribs-20260911T065018Z.json (cs-c3-2 replay)
+failures      W1 digest carried not recomputed; W2 replay_ref has no content digest (named weaknesses)
+consumers     techne.h3_retention (Techne), Ludus H3
+necropolis    replay a frozen candidate stream through a retention policy
+====================================================================================================
+17. capability_gap_fixture   [score 10]   lead: techne
+----------------------------------------------------------------------------------------------------
+path          techne/scripts/capability_gap_fixture.py
+git last      {'sha': '99628d759', 'date': '2026-09-11'}
+identity      Prometheus-native over cvxpy/CLARABEL/SCS
+licence       repo; Apache-2.0 solvers
+invocation    python -m techne.scripts.capability_gap_fixture --target sdp --out <f>
+verbs         solve measure calibrate
+import        IMPORTS
+wrapper       none
+tests         techne/tests/test_capability_gap_fixture.py
+test run      PASS  17 passed in 0.91s
+control       techne/tests/test_capability_gap_fixture.py: positive, cheat, negative, bound (17 tests, 2026-09-11)
+callers       0 outside own package (NONE); 0 inside it
+artifacts     techne/acquisition/GAP_FIXTURE_SDP.json (2026-09-11)
+last exec     techne/acquisition/GAP_FIXTURE_SDP.json (2026-09-11, schema /2)
+failures      scale arm stops at n=120; no accuracy requirement declared (TECHNE-46)
+consumers     Harmonia/Aporia (TECHNE-46)
+necropolis    template for a gap fixture with independent ground truth and a SILENTLY_WRONG class
+====================================================================================================
+18. truth_table_oracle   [score 10]   lead: exact-match and symbolic oracles
+----------------------------------------------------------------------------------------------------
+path          proteus/eval/boolean.py
+git last      {'sha': '5dc8b3e40', 'date': '2026-09-10'}
+identity      Prometheus-native (Proteus)
+licence       repo
+invocation    from proteus.eval.boolean import truth_table
+verbs         prove validate
+import        IMPORTS
+wrapper       none
+tests         proteus/tests/test_case_ordering.py, proteus/tests/test_h1_boolean.py, proteus/tests/test_shrink.py, vivarium/tests/test_cegis_boolean.py
+test run      PASS  113 passed in 5.36s
+control       parity with z3 2048/2048 (Techne receipt 2026-09-10)
+callers       8 outside own package  techne/acquisition/checks/hypothesis_h1_minimiser.py, techne/acquisition/checks/hypothesis_program_minimiser.py, techne/acquisition/checks/stitch_on_boolean.py, techne/acquisition/checks/z3_h1_oracle.py, techne/scripts/export_component_library.py, vivarium/viv/artifacts.py; 5 inside it
+artifacts     NONE matching declared globs
+last exec     techne z3 receipt
+failures      exhaustive; affordable only at small n
+consumers     Proteus H1, Techne z3 qualification
+necropolis    exact-match oracle for Boolean programs
+====================================================================================================
+19. d3_detectors   [score 10]   lead: other
+----------------------------------------------------------------------------------------------------
+path          archaeon/calibrate_d3_null.py
+git last      {'sha': '4322225c3', 'date': '2026-09-07'}
+identity      Prometheus-native (Archaeon)
+licence       repo
+invocation    python -m archaeon.calibrate_d3_null (d3.v1 admitted D-20; d3.v2 behind calibration firewall D-21)
+verbs         measure calibrate falsify
+import        IMPORTS
+wrapper       none
+tests         archaeon/tests/test_repeat_blocker.py, archaeon/tests/test_wp0d_d3_and_campaign.py
+test run      PASS  16 passed in 0.77s
+control       archaeon/tests/test_detectors.py; Harmonia denominator finding (v0's 28/30 LOWER fires were a denominator artefact)
+callers       0 outside own package (NONE); 0 inside it
+artifacts     archaeon/docs/h0h5/D3_LIVE_DOSSIER_2026-09-10.json (2026-09-10), archaeon/docs/d3_null_reconciliation.json (2026-09-07)
+last exec     see artifacts
+failures      v0 denominator artefact (recorded)
+consumers     archaeon tick
+necropolis    signal detector with its own null calibration -- and a recorded false-fire history
+====================================================================================================
+20. modal_collapse_synthetic   [score 10]   lead: other
+----------------------------------------------------------------------------------------------------
+path          prometheus_math/modal_collapse_synthetic.py
+git last      {'sha': 'cda018015', 'date': '2026-05-04'}
+identity      Prometheus-native (Techne, 2026-05-04)
+licence       repo
+invocation    python -m prometheus_math.modal_collapse_synthetic
+verbs         falsify calibrate
+import        IMPORTS
+wrapper       modal_collapse_continuous.py
+tests         prometheus_math/tests/test_modal_collapse_continuous.py, prometheus_math/tests/test_modal_collapse_synthetic.py
+test run      PASS  31 passed in 13.48s
+control       IS the synthetic null control (known ground truth env)
+callers       0 outside own package (NONE); 1 inside it
+artifacts     prometheus_math/_modal_collapse_continuous_results.json (2026-05-04), prometheus_math/_modal_collapse_synthetic_results.json (2026-05-04), prometheus_math/MODAL_COLLAPSE_CONTINUOUS_RESULTS.md (2026-05-04), prometheus_math/MODAL_COLLAPSE_SYNTHETIC_RESULTS.md (2026-05-04)
+last exec     see artifacts
+failures      synthetic env only
+consumers     Techne calibration discipline
+necropolis    run a dead pipeline on a synthetic env where nothing is discoverable; lifts there are class-prior recovery
+====================================================================================================
+21. null_bound_reference   [score 10]   lead: other
+----------------------------------------------------------------------------------------------------
+path          roles/Atalanta/reference
+git last      {'sha': '827d021eb', 'date': '2026-09-11'}
+identity      Prometheus-native (Atalanta, D-27)
+licence       repo
+invocation    python -m pytest roles/Atalanta/reference (nine controls incl. test_null_bound.py)
+verbs         validate calibrate
+import        N/A
+wrapper       none
+tests         roles/Atalanta/reference/test_null_bound.py
+test run      PASS  9 passed in 0.15s
+control       test_null_bound.py asserts an emission-keyed bound FAILS (354/354)
+callers       0 outside own package (NONE); 0 inside it
+artifacts     roles/Atalanta/reference/null_bound.py (2026-09-11), roles/Atalanta/reference/test_null_bound.py (2026-09-11)
+last exec     adoption commit e89e2ab98
+failures      none known
+consumers     every loop owner (rule 10)
+necropolis    the reference for 'did this loop park itself or just keep emitting'
+====================================================================================================
+22. coverage_diagnostic   [score 9]   lead: coverage diagnostic
+----------------------------------------------------------------------------------------------------
+path          harmonia/diagnostics/coverage_diagnostic.py
+git last      {'sha': '2350a1de9', 'date': '2026-06-27'}
+identity      Prometheus-native (Harmonia, 2026-06-22)
+licence       repo
+invocation    from harmonia.diagnostics.coverage_diagnostic import coverage, render; python harmonia/diagnostics/run_coverage_sweep.py
+verbs         measure calibrate
+import        IMPORTS
+wrapper       run_coverage_sweep.py
+tests         NONE
+test run      NO_TESTS  
+control       separates B1/B2 by SHAPE; curated target lists are illustrative (its own words); no planted-ceiling control located
+callers       0 outside own package (NONE); 1 inside it
+artifacts     harmonia/diagnostics/coverage_sweep_results.json (2026-06-27), harmonia/diagnostics/COVERAGE_SWEEP_RESULTS.md (2026-06-27)
+last exec     see artifacts
+failures      target lists hand-curated
+consumers     harmonia/experiments/hypothesis_class_coverage_audit.py, harmonia/probe/exp1_verdict_adequacy_census.py, harmonia/runners/astraea_mvp_v3.py
+necropolis    decide whether a dead campaign's '0 novel' was terrain exhaustion or an expressiveness ceiling
+====================================================================================================
+23. anti_anchors_registry   [score 9]   lead: anti-anchor battery
+----------------------------------------------------------------------------------------------------
+path          techne/registry/anti_anchors.jsonl
+git last      {'sha': '8a8d0d5f5', 'date': '2026-08-20'}
+identity      Prometheus-native registry (Aporia rubric 2026-08-18; Techne registry)
+licence       repo
+invocation    techne/registry/anti_anchors.jsonl (72 anchors, attestation A0-A5 per ATTESTATION_RUBRIC.md); build via python techne/registry/build_*_index.py; withdrawal_probes.jsonl (16) and collision_probes.jsonl (18) beside it
+verbs         falsify validate query
+import        N/A
+wrapper       techne/registry/build_*_index.py
+tests         NONE
+test run      NO_TESTS  
+control       ATTESTATION_RUBRIC.md grades each anchor's evidence A0-A5; AA-003 double-correction and AA-019 kernel-soundness are the recorded self-corrections; no executable test over the jsonl located
+callers       0 outside own package (NONE); 0 inside it
+artifacts     techne/registry/anti_anchors.jsonl (2026-08-20), techne/registry/concepts_index.jsonl (2026-08-20), techne/registry/methods_index.jsonl (2026-08-20), techne/registry/symbols_index.jsonl (2026-08-20)
+last exec     techne/registry/anti_anchors.jsonl last touched 2026-08-20 (8a8d0d5f5)
+failures      a registry, not a runner: nothing here executes; consumers must read the attestation grade, not the verdict
+consumers     Learner corpus / decoy assembly / taint checks per the rubric's own consumer line; prometheus_math extract_anti_anchor_claims_v0_1
+necropolis    the curated list of false forms with their true forms and evidence grade -- a decoy and taint source for forensic re-reads
+====================================================================================================
+24. control_certifier   [score 9]   lead: anti-anchor battery
+----------------------------------------------------------------------------------------------------
+path          techne/ladder_circuits/control_certifier.py
+git last      {'sha': '0ee3229d2', 'date': '2026-08-24'}
+identity      Prometheus-native (Techne cartography cycle 058, 2026-08)
+licence       repo
+invocation    from techne.ladder_circuits.control_certifier import ... (certify a negative control against every defect shape; mechanical, caller-supplied oracle)
+verbs         validate calibrate falsify
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       techne/ladder_circuits/tests/*; built because two authored controls carried the defect under study (cycles 055, 057) -- that history is the calibration record
+callers       0 outside own package (NONE); 0 inside it
+artifacts     techne/ladder_circuits/control_certifier.py (2026-08-24), techne/ladder_circuits/certification_provenance.py (2026-08-21)
+last exec     see artifacts
+failures      certification is relative to its taxonomy of shapes; a control can carry a shape the taxonomy lacks
+consumers     techne cartography cycles; none outside techne located
+necropolis    was the dead experiment's negative control itself defective
+====================================================================================================
+25. defect_battery   [score 9]   lead: anti-anchor battery
+----------------------------------------------------------------------------------------------------
+path          techne/ladder_circuits/defect_battery.py
+git last      {'sha': '96e4c1179', 'date': '2026-08-24'}
+identity      Prometheus-native (Techne cycle 057)
+licence       repo
+invocation    from techne.ladder_circuits.defect_battery import TRUTH, ... (each shape twice: defective and clean; ground truth authored)
+verbs         calibrate measure falsify
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       IS a control battery: authored defects with ground truth by construction, clean halves give the false-positive rate
+callers       0 outside own package (NONE); 0 inside it
+artifacts     techne/ladder_circuits/defect_battery.py (2026-08-24), techne/ladder_circuits/defect_battery.py (2026-08-24), techne/ladder_circuits/battery_chain.py (2026-08-21)
+last exec     see artifacts
+failures      authored shapes only
+consumers     techne ladder cycles
+necropolis    score a forensic probe's verdicts against authored ground truth before trusting it on a corpse
+====================================================================================================
+26. zoo_runner   [score 9]   lead: model-zoo runner
+----------------------------------------------------------------------------------------------------
+path          harmonia/experiments/run_zoo_matrix.py
+git last      {'sha': '8728e7e53', 'date': '2026-08-20'}
+identity      Prometheus-native (Harmonia, 2026-05-29)
+licence       repo
+invocation    python harmonia/experiments/zoo_inventory.py --quick; python harmonia/experiments/run_zoo_matrix.py
+verbs         sample measure
+import        IMPORTS
+wrapper       zoo_inventory.py
+tests         NONE
+test run      NO_TESTS  
+control       harmonia/tests/test_zoo_matrix.py (fakes injected for pacer/grader); live reachability needs credentials
+callers       0 outside own package (NONE); 0 inside it
+artifacts     harmonia/experiments/zoo_inventory_result.json (2026-06-09)
+last exec     see artifacts
+failures      external APIs; rate limits; credentials via keys/.env (D-29 keys.py mandate SUSPENDED)
+consumers     harmonia/soak/_prefix/run_zoo_matrix_prefix.py
+necropolis    re-grade an archived examinee set under identical pacing (needs live models)
+====================================================================================================
+27. proteus_replay   [score 9]   lead: historical replay harnesses
+----------------------------------------------------------------------------------------------------
+path          proteus/v0_6/run_replay.py
+git last      {'sha': 'd884b3513', 'date': '2026-09-11'}
+identity      Prometheus-native (Proteus v0.6)
+licence       repo
+invocation    python -m proteus.v0_6.run_replay (see run_replay_compare.py, run_replay_sensitivity.py)
+verbs         replay compare
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       run_replay_sensitivity.py exists; test status in tests field
+callers       0 outside own package (NONE); 0 inside it
+artifacts     proteus/v0_6/REPLAY_COMPARISON.json (2026-09-03), proteus/v0_6/REPLAY_py311.json (2026-09-03), proteus/v0_6/REPLAY_py312.json (2026-09-03), proteus/v0_6/REPLAY_SENSITIVITY_COMPARISON.json (2026-09-03)
+last exec     see artifacts
+failures      unknown
+consumers     see callers
+necropolis    replay Proteus v0.6 runs
+====================================================================================================
+28. comms_queue   [score 9]   lead: DB/query inspection tools
+----------------------------------------------------------------------------------------------------
+path          comms
+git last      {'sha': 'f7d7c2eac', 'date': '2026-09-11'}
+identity      Prometheus-native (Archaeon, 2026-09-11)
+licence       repo
+invocation    python -m comms {sync,inbox,tasks,post,who,show,status}
+verbs         query trace hash
+import        IMPORTS
+wrapper       none
+tests         comms/tests/test_comms.py, comms/tests/test_identity.py
+test run      FAIL  1 failed, 5 passed in 1.88s
+control       comms/tests/test_manifest.py (LF/CRLF fixture)
+callers       2 outside own package  agents/alethelia/alethelia.py, evidence_wiki/ew/db.py; 0 inside it
+artifacts     comms/tests/test_comms.py (2026-09-11), comms/tests/test_identity.py (2026-09-11), comms/tests/test_manifest.py (2026-09-11), comms/tests/__init__.py (2026-09-11)
+last exec     this seat's own sync receipts (today)
+failures      Postgres schema comms; instance-aware since 10b75cbb0. comms/tests/test_identity.py: 5 failed / 13 passed on this host 2026-09-11 (db identity registry: m2-local-fork check not ok; fork and canonical table counts equal 41=41) -- reported to Archaeon, not touched
+consumers     every seat
+necropolis    who said what when, with sha256 per message
+====================================================================================================
+29. registry_probes   [score 9]   lead: provenance/manifest machinery
+----------------------------------------------------------------------------------------------------
+path          attacks/probes
+git last      {'sha': 'cf58080fd', 'date': '2026-08-24'}
+identity      Prometheus-native (Charon attacks)
+licence       repo
+invocation    run at every commit by the registry hook (atk013/014/015); see attacks/probes/*.py
+verbs         validate trace
+import        IMPORTS
+wrapper       commit hook
+tests         NONE
+test run      NO_TESTS  
+control       baseline-ratcheted; atk014 checks an estimator against ground truth; atk015 every verdict has committed rows
+callers       0 outside own package (NONE); 0 inside it
+artifacts     attacks/known_failing.json (2026-08-24)
+last exec     printed at this seat's commits today (PASS x3)
+failures      probes only what they were written for
+consumers     every commit
+necropolis    detect an unsourced verdict before it lands
+====================================================================================================
+30. conformance_check   [score 9]   lead: provenance/manifest machinery
+----------------------------------------------------------------------------------------------------
+path          roles/Harmonia/contracts/conformance_check.py
+git last      {'sha': '7d302b5ae', 'date': '2026-09-11'}
+identity      Prometheus-native (Harmonia, D-22)
+licence       repo
+invocation    python roles/Harmonia/contracts/conformance_check.py (four-state gate; D-22; wired in archaeon/conformance.py)
+verbs         validate diff hash
+import        N/A
+wrapper       archaeon/conformance.py
+tests         NONE
+test run      NO_TESTS  
+control       roles/Harmonia/contracts/fixtures; verify_gate_states.sh
+callers       0 outside own package (NONE); 0 inside it
+artifacts     archaeon/docs/h0h5/CONFORMANCE_WIRING_RECEIPT_2026-09-11.json (2026-09-11), roles/Harmonia/contracts/fixtures/sfe_contract_schema6_frozen.json (2026-09-10)
+last exec     archaeon CONFORMANCE_WIRING_RECEIPT_2026-09-11.json
+failures      DRIFT/UNREACHABLE halt by design
+consumers     archaeon.conformance; Vivarium half asked (F-28)
+necropolis    prove a consumer ran against the engine build it claims
+====================================================================================================
+31. dependency_vetting   [score 9]   lead: techne
+----------------------------------------------------------------------------------------------------
+path          techne/scripts/dependency_vetting.py
+git last      {'sha': '3e9c5b064', 'date': '2026-08-31'}
+identity      Prometheus-native (Techne)
+licence       repo
+invocation    python -m techne.scripts.dependency_vetting --set gen0_donors --report <f>
+verbs         validate query
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       resolves identity from distribution metadata; name-collision table in TECHNE_GEN0_DONOR_HANDOFF.txt s6
+callers       0 outside own package (NONE); 0 inside it
+artifacts     techne/dependency_vetting_gen0_2026-08-31.json (2026-08-31), techne/dependency_vetting_2026-08-27.json (2026-08-27)
+last exec     techne/dependency_vetting_gen0_2026-08-31.json
+failures      defeats name collision only; no source review
+consumers     Techne
+necropolis    is this installed thing the project it claims to be
+====================================================================================================
+32. license_audit   [score 9]   lead: techne
+----------------------------------------------------------------------------------------------------
+path          techne/scripts/license_audit.py
+git last      {'sha': '681e0cc62', 'date': '2026-09-10'}
+identity      Prometheus-native (Techne, 2026-09-09)
+licence       repo
+invocation    python -m techne.scripts.license_audit
+verbs         validate query
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       techne/acquisition/LICENSE_EVIDENCE.json carries evidence grade per claim; D-17 correction is the calibration record
+callers       0 outside own package (NONE); 0 inside it
+artifacts     techne/acquisition/LICENSE_EVIDENCE.json (2026-09-10)
+last exec     techne/acquisition/LICENSE_EVIDENCE.json
+failures      a licence claim is only as good as the artefact listing it is attached to (three wrong positions on stitch)
+consumers     Techne; Archaeon D-17
+necropolis    licence/provenance of any harvested tool before export
+====================================================================================================
+33. discovery_pipeline   [score 9]   lead: other
+----------------------------------------------------------------------------------------------------
+path          prometheus_math/discovery_pipeline.py
+git last      {'sha': '1b1f0c668', 'date': '2026-05-04'}
+identity      Prometheus-native (Techne, 2026-05)
+licence       repo
+invocation    from prometheus_math.discovery_pipeline import ... (5-catalog cross-check + 4-fold falsification)
+verbs         falsify validate
+import        IMPORTS
+wrapper       none
+tests         aporia/experiments/reasoning_steering/stage0b/tests/test_damage.py, prometheus_math/tests/test_catalog_consistency.py, prometheus_math/tests/test_discovery_pipeline.py, prometheus_math/tests/test_kill_vector.py, prometheus_math/tests/test_pivot_bughunt.py, prometheus_math/tests/test_relative_claim.py, prometheus_math/tests/test_withheld_benchmark.py, techne/ladder_circuits/tests/test_battery_chain.py
+test run      PASS  175 passed in 90.55s (0:01:30)
+control       see tests field
+callers       13 outside own package  aporia/experiments/reasoning_steering/stage0b/damage.py, charon/diagnostics/substrate_tester_fire_14_harness.py, charon/diagnostics/substrate_tester_fire_16_harness.py, charon/diagnostics/substrate_tester_fire_1_harness.py, charon/diagnostics/substrate_tester_fire_22_harness.py, charon/diagnostics/substrate_tester_fire_29_harness.py; 6 inside it
+artifacts     prometheus_math/_discovery_v2_pilot.json (2026-05-05), prometheus_math/_discovery_v2_pilot_seeded.json (2026-05-05), prometheus_math/_discovery_v2_pilot_smoke.json (2026-05-05)
+last exec     see artifacts
+failures      catalog-completeness caveat
+consumers     see callers
+necropolis    re-run the falsification battery on a fossil
+====================================================================================================
+34. kill_vector_navigator   [score 8]   lead: KillVector computation
+----------------------------------------------------------------------------------------------------
+path          prometheus_math/kill_vector_navigator.py
+git last      {'sha': 'caa22f231', 'date': '2026-05-04'}
+identity      Prometheus-native (Techne, 2026-05)
+licence       repo
+invocation    from prometheus_math.kill_vector_navigator import ...
+verbs         measure sample
+import        IMPORTS
+wrapper       none
+tests         prometheus_math/tests/test_kill_vector_navigator.py, prometheus_math/tests/test_region_densification_pilot.py
+test run      PASS  33 passed in 16.86s
+control       prometheus_math/tests/test_kill_vector_navigator*.py if present
+callers       0 outside own package (NONE); 1 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located
+failures      policy primitive; ranks operators by E[||kill_vector||]
+consumers     see callers
+necropolis    rank which falsifier to try next on a fossil
+====================================================================================================
+35. residue_eligibility   [score 8]   lead: residue gate
+----------------------------------------------------------------------------------------------------
+path          charon/agents/erebos/_residue_eligibility.py
+git last      {'sha': 'f7f7ac38f', 'date': '2026-05-28'}
+identity      Prometheus-native (Charon/Erebos, 2026-05-27)
+licence       repo
+invocation    from charon.agents.erebos._residue_eligibility import ... (4-criteria eligibility gate)
+verbs         validate falsify
+import        IMPORTS
+wrapper       none
+tests         charon/agents/erebos/tests/test_residue_eligibility.py
+test run      PASS  23 passed in 0.15s
+control       charon/agents/erebos/tests/test_residue_eligibility.py
+callers       0 outside own package (NONE); 2 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located
+failures      depends on kill_pattern_registry
+consumers     charon/agents/erebos/sprint1/a1_memory_ablation.py, a5_redundancy_reduction.py, _residue_revocation.py
+necropolis    decide whether a dead experiment's failures were navigable residue or exhaust
+====================================================================================================
+36. anchor_density   [score 8]   lead: calibration modules
+----------------------------------------------------------------------------------------------------
+path          prometheus_math/anchor_density.py
+git last      {'sha': 'ab1769818', 'date': '2026-05-07'}
+identity      Prometheus-native
+licence       repo
+invocation    from prometheus_math.anchor_density import ...
+verbs         calibrate measure
+import        IMPORTS
+wrapper       none
+tests         prometheus_math/tests/test_anchor_density.py
+test run      PASS  24 passed in 9.04s
+control       prometheus_math/tests/test_anchor_density*.py if present
+callers       0 outside own package (NONE); 0 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located
+failures      unknown
+consumers     see callers
+necropolis    calibration-anchor density over a corpus (HARD-4)
+====================================================================================================
+37. viv_pew   [score 6]   lead: historical replay harnesses
+----------------------------------------------------------------------------------------------------
+path          vivarium/viv/pew.py
+git last      {'sha': '7964397f6', 'date': '2026-09-10'}
+identity      Prometheus-native (Vivarium)
+licence       repo
+invocation    vivarium PEW (publication/evidence writer) -- see vivarium docs
+verbs         replay trace
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       vivarium/tests (see tests field)
+callers       0 outside own package (NONE); 0 inside it
+artifacts     vivarium/specs/example_with_pew.json (2026-09-06)
+last exec     Mnemosyne PEW pinned at e301547dd (memory note)
+failures      unknown
+consumers     Mnemosyne (pinned worktree)
+necropolis    evidence publication path for replays
+====================================================================================================
+38. library_leak   [score 6]   lead: other
+----------------------------------------------------------------------------------------------------
+path          vivarium/viv/library_leak.py
+git last      {'sha': '6bcbd0937', 'date': '2026-09-11'}
+identity      Prometheus-native (Vivarium, 2026-09-11)
+licence       repo
+invocation    from vivarium.viv.library_leak import ... (semantic leak check over a held-out split)
+verbs         falsify validate
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       vivarium/tests (see tests field); adopted as TECHNE-14's verdict (found the same 3 leaks; agreement was coincidence)
+callers       0 outside own package (NONE); 0 inside it
+artifacts     techne/acquisition/receipts/adapter_qualification-stitch_rust_core-20260911T063509Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-stitch_rust_core-20260911T063529Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-stitch_rust_core-20260911T063607Z.json (2026-09-11), techne/acquisition/receipts/adapter_qualification-stitch_rust_core-20260911T063644Z.json (2026-09-11)
+last exec     techne/acquisition/receipts/adapter_qualification-stitch_rust_core-20260911T074111Z.json
+failures      only sees targets with a solution
+consumers     Techne TECHNE-14; Vivarium
+necropolis    did an abstraction library hand a search its answers
+====================================================================================================
+39. mathlib_signature_extractor   [score 5]   lead: other
+----------------------------------------------------------------------------------------------------
+path          theseus/scripts/mathlib_signature_extractor.py
+git last      {'sha': '9b526bc15', 'date': '2026-05-22'}
+identity      Prometheus-native (Theseus)
+licence       repo; mathlib Apache-2.0
+invocation    python theseus/scripts/mathlib_signature_extractor.py
+verbs         extract query
+import        IMPORTS
+wrapper       none
+tests         theseus/tests/test_mathlib_signature_extractor.py
+test run      PASS  8 passed in 0.18s
+control       NONE located
+callers       0 outside own package (NONE); 0 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located
+failures      needs a mathlib checkout
+consumers     theseus/scripts/mathlib_score_and_select.py
+necropolis    extract declared signatures from a Lean library
+====================================================================================================
+40. rhea_lean_verifier   [score 4]   lead: Lean runtime / proof-search adapter
+----------------------------------------------------------------------------------------------------
+path          rhea/src/lean_verifier.py
+git last      {'sha': '318f04c63', 'date': '2026-03-24'}
+identity      Prometheus-native (Rhea, 2026-04)
+licence       repo
+invocation    from rhea.src.lean_verifier import ... (translate chain -> Lean 4 -> compile)
+verbs         prove validate
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       NONE located
+callers       0 outside own package (NONE); 0 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located
+failures      translation step is heuristic; binary compiles-or-not
+consumers     rhea/src/proof_corpus.py, rhea/src/close_the_loop.py
+necropolis    binary compile check on archived chains
+====================================================================================================
+41. claim_check   [score 4]   lead: techne
+----------------------------------------------------------------------------------------------------
+path          techne/scripts/claim_check.py
+git last      {'sha': 'c89b036a9', 'date': '2026-08-24'}
+identity      Prometheus-native (Techne)
+licence       repo
+invocation    python -m techne.scripts.claim_check
+verbs         validate diff
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       see tests field
+callers       0 outside own package (NONE); 0 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located
+failures      unknown
+consumers     see callers
+necropolis    check a written claim against its rows
+====================================================================================================
+42. sampling_lint   [score 4]   lead: techne
+----------------------------------------------------------------------------------------------------
+path          techne/scripts/sampling_lint.py
+git last      {'sha': 'c1ae45732', 'date': '2026-08-24'}
+identity      Prometheus-native (Techne, 2026-08-24)
+licence       repo
+invocation    python -m techne.scripts.sampling_lint
+verbs         sample validate
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       see tests field
+callers       0 outside own package (NONE); 0 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located
+failures      pattern-based
+consumers     see callers
+necropolis    did the dead experiment read a prefix (files[:N]) instead of stratifying
+====================================================================================================
+43. probe_residue_census   [score 4]   lead: techne
+----------------------------------------------------------------------------------------------------
+path          techne/scripts/probe_residue_census.py
+git last      {'sha': '3a2c0d49d', 'date': '2026-08-16'}
+identity      Prometheus-native (Techne)
+licence       repo
+invocation    python -m techne.scripts.probe_residue_census
+verbs         query measure
+import        IMPORTS
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       see tests field
+callers       0 outside own package (NONE); 0 inside it
+artifacts     NONE matching declared globs
+last exec     NONE located
+failures      unknown
+consumers     Ergon probe
+necropolis    census of residue left by probe ledgers
+====================================================================================================
+44. anti_anchor_registry   [score 3]   lead: anti-anchor battery
+----------------------------------------------------------------------------------------------------
+path          sigma_kernel/a148_obstruction.py
+git last      {'sha': 'd121ccdec', 'date': '2026-05-02'}
+identity      Prometheus-native (sigma_kernel, 2026-05)
+licence       repo
+invocation    python sigma_kernel/a148_obstruction.py (and a149_obstruction.py, a148_validation.py); anti_anchor substrate blocks via aporia/scripts/parse_substrate_blocks.py
+verbs         falsify measure
+import        FAILS  -- ModuleNotFoundError: No module named 'a149_obstruction'
+wrapper       none
+tests         NONE
+test run      NO_TESTS  
+control       sigma_kernel/a148_validation.py records anti_anchors list; no independent control located
+callers       0 outside own package (NONE); 0 inside it
+artifacts     sigma_kernel/a148_validation_results.json (2026-05-01)
+last exec     see artifacts
+failures      ties to A148/A149 OEIS obstruction work of 2026-05; hard-coded to that campaign
+consumers     prometheus_math/tests/test_extract_anti_anchor_claims_v0_1.py; charon/agents/_base.py reads anti-anchor flags
+necropolis    the ledger of kills that did NOT match a signature -- where a claim's own counterexamples live

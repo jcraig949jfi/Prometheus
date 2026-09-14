@@ -1,0 +1,488 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "adapter_qualification-scipy_resampling-20260912T010316Z",
+  "stage": "ADAPTER_QUALIFICATION",
+  "does_not_establish": [
+    "INSTALLATION",
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "LOCAL_SCIENTIFIC_BENEFIT"
+  ],
+  "entry_id": "scipy_resampling",
+  "tool": "scipy",
+  "design_version": "1.0",
+  "written_utc": "2026-09-12T01:03:16+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "01e4812a5d2bdaefa65768f44c8519571b24dbd7",
+    "branch": "techne/pass-2026-09-11",
+    "dirty": true
+  },
+  "workspace": {
+    "base_sha": "01e4812a5d2bdaefa65768f44c8519571b24dbd7",
+    "branch": "techne/pass-2026-09-11",
+    "worktree_path": "F:\\Prometheus-worktrees\\techne-pass-0911",
+    "dirty": true,
+    "main_worktree": false,
+    "inside_canonical_checkout": false,
+    "session_temporary_worktree": false,
+    "durable_worktree": true,
+    "allow_canonical_override": false,
+    "tool_cache": "F:\\Prometheus-worktrees\\techne-pass-0911\\vault\\techne_tools",
+    "tool_cache_versioned": false,
+    "tool_cache_note": "host-local and gitignored. base_sha pins this seat's CODE; it does not pin the installed tools, whose identity is the hash-pinned lock and the recorded artifact digests."
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "H:\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "F:\\Prometheus-worktrees\\techne-pass-0911\\vault\\techne_tools",
+    "tool_cache_source": "techne/config.local.json or the vault/ default",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "scipy_version": "1.17.1",
+    "reference_implementation": "cartography/shared/scripts/falsification_battery.py::f1_permutation_null (verbatim p-value logic)",
+    "census_2026-09-11": {
+      "hand_rolled_permutation_bootstrap_defs": 124,
+      "files": 111,
+      "files_calling_scipy_permutation_test_or_bootstrap": 22,
+      "method": "git grep -c -P 'def\\s+\\w*(permut|bootstrap|shuffle_null|null_dist)\\w*\\s*\\(' -- '*.py' (non-test)"
+    },
+    "positive_control": {
+      "n_fixtures": 40,
+      "planted_shift_sd": 1.0,
+      "n_per_arm": 30,
+      "home_rejects_at_0.01": 32,
+      "scipy_rejects_at_0.01": 32
+    },
+    "negative_control": {
+      "n_fixtures": 40,
+      "home_rejects_at_0.05": 2,
+      "scipy_rejects_at_0.05": 1,
+      "expected_rejects_at_0.05": 2.0,
+      "pvalue_agreement_within_3_mc_se": "40/40",
+      "max_abs_pvalue_diff": 0.049475262368815554
+    },
+    "cheat_control": {
+      "label_blind_implementation_rejects_at_0.01": 0,
+      "reading": "0 of 40 means the harness sees a wrong implementation as wrong"
+    },
+    "rows": {
+      "positive": [
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.014492753623188406,
+          "scipy": 0.011494252873563218
+        },
+        {
+          "home": 0.0014992503748125937,
+          "scipy": 0.001999000499750125
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.01199400299850075,
+          "scipy": 0.022988505747126436
+        },
+        {
+          "home": 0.01999000499750125,
+          "scipy": 0.014992503748125937
+        },
+        {
+          "home": 0.0009995002498750624,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.057971014492753624,
+          "scipy": 0.057971014492753624
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0009995002498750624
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0009995002498750624
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.0009995002498750624,
+          "scipy": 0.0009995002498750624
+        },
+        {
+          "home": 0.010994502748625687,
+          "scipy": 0.009995002498750625
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0009995002498750624
+        },
+        {
+          "home": 0.0009995002498750624,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.006496751624187906,
+          "scipy": 0.0069965017491254375
+        },
+        {
+          "home": 0.0014992503748125937,
+          "scipy": 0.0014992503748125937
+        },
+        {
+          "home": 0.014492753623188406,
+          "scipy": 0.015492253873063468
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.08445777111444278,
+          "scipy": 0.0769615192403798
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.006496751624187906,
+          "scipy": 0.00849575212393803
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.0074962518740629685,
+          "scipy": 0.0069965017491254375
+        },
+        {
+          "home": 0.0014992503748125937,
+          "scipy": 0.001999000499750125
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.0014992503748125937,
+          "scipy": 0.001999000499750125
+        },
+        {
+          "home": 0.008995502248875561,
+          "scipy": 0.015492253873063468
+        },
+        {
+          "home": 0.001999000499750125,
+          "scipy": 0.0029985007496251873
+        },
+        {
+          "home": 0.0009995002498750624,
+          "scipy": 0.0009995002498750624
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.00399800099950025,
+          "scipy": 0.0024987506246876563
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        },
+        {
+          "home": 0.05997001499250375,
+          "scipy": 0.05247376311844078
+        },
+        {
+          "home": 0.0004997501249375312,
+          "scipy": 0.0004997501249375312
+        }
+      ],
+      "negative": [
+        {
+          "home": 0.4312843578210895,
+          "scipy": 0.41879060469765117,
+          "abs_diff": 0.012493753123438311,
+          "within_3se": true
+        },
+        {
+          "home": 0.7566216891554223,
+          "scipy": 0.7916041979010495,
+          "abs_diff": 0.03498250874562725,
+          "within_3se": true
+        },
+        {
+          "home": 0.9080459770114943,
+          "scipy": 0.9155422288855573,
+          "abs_diff": 0.007496251874062998,
+          "within_3se": true
+        },
+        {
+          "home": 0.45027486256871563,
+          "scipy": 0.47226386806596704,
+          "abs_diff": 0.021989005497251413,
+          "within_3se": true
+        },
+        {
+          "home": 0.12643678160919541,
+          "scipy": 0.13043478260869565,
+          "abs_diff": 0.003998000999500234,
+          "within_3se": true
+        },
+        {
+          "home": 0.07246376811594203,
+          "scipy": 0.07146426786606697,
+          "abs_diff": 0.0009995002498750655,
+          "within_3se": true
+        },
+        {
+          "home": 0.34832583708145926,
+          "scipy": 0.35932033983008493,
+          "abs_diff": 0.010994502748625679,
+          "within_3se": true
+        },
+        {
+          "home": 0.25687156421789104,
+          "scipy": 0.2518740629685157,
+          "abs_diff": 0.0049975012493753135,
+          "within_3se": true
+        },
+        {
+          "home": 0.7551224387806097,
+          "scipy": 0.7526236881559221,
+          "abs_diff": 0.002498750624687629,
+          "within_3se": true
+        },
+        {
+          "home": 0.9335332333833083,
+          "scipy": 0.9295352323838081,
+          "abs_diff": 0.003998000999500206,
+          "within_3se": true
+        },
+        {
+          "home": 0.8555722138930535,
+          "scipy": 0.8365817091454273,
+          "abs_diff": 0.018990504747626202,
+          "within_3se": true
+        },
+        {
+          "home": 0.08195902048975512,
+          "scipy": 0.08595702148925537,
+          "abs_diff": 0.003998000999500248,
+          "within_3se": true
+        },
+        {
+          "home": 0.06746626686656672,
+          "scipy": 0.057971014492753624,
+          "abs_diff": 0.009495252373813094,
+          "within_3se": true
+        },
+        {
+          "home": 0.19290354822588707,
+          "scipy": 0.1904047976011994,
+          "abs_diff": 0.0024987506246876567,
+          "within_3se": true
+        },
+        {
+          "home": 0.47176411794102946,
+          "scipy": 0.4682658670664668,
+          "abs_diff": 0.0034982508745626806,
+          "within_3se": true
+        },
+        {
+          "home": 0.45827086456771615,
+          "scipy": 0.45027486256871563,
+          "abs_diff": 0.007996001999000524,
+          "within_3se": true
+        },
+        {
+          "home": 0.8545727136431784,
+          "scipy": 0.8455772113943029,
+          "abs_diff": 0.008995502248875575,
+          "within_3se": true
+        },
+        {
+          "home": 0.5027486256871564,
+          "scipy": 0.5172413793103449,
+          "abs_diff": 0.01449275362318847,
+          "within_3se": true
+        },
+        {
+          "home": 0.04997501249375312,
+          "scipy": 0.051974012993503245,
+          "abs_diff": 0.001999000499750124,
+          "within_3se": true
+        },
+        {
+          "home": 0.9900049975012494,
+          "scipy": 0.9880059970014993,
+          "abs_diff": 0.001999000499750103,
+          "within_3se": true
+        },
+        {
+          "home": 0.7736131934032984,
+          "scipy": 0.7766116941529235,
+          "abs_diff": 0.0029985007496251548,
+          "within_3se": true
+        },
+        {
+          "home": 0.769615192403798,
+          "scipy": 0.7646176911544228,
+          "abs_diff": 0.004997501249375258,
+          "within_3se": true
+        },
+        {
+          "home": 0.2288855572213893,
+          "scipy": 0.25837081459270367,
+          "abs_diff": 0.029485257371314355,
+          "within_3se": true
+        },
+        {
+          "home": 0.4362818590704648,
+          "scipy": 0.4452773613193403,
+          "abs_diff": 0.00899550224887552,
+          "within_3se": true
+        },
+        {
+          "home": 0.03798100949525238,
+          "scipy": 0.03798100949525238,
+          "abs_diff": 0.0,
+          "within_3se": true
+        },
+        {
+          "home": 0.8210894552723638,
+          "scipy": 0.8205897051474262,
+          "abs_diff": 0.0004997501249375258,
+          "within_3se": true
+        },
+        {
+          "home": 0.5572213893053474,
+          "scipy": 0.5592203898050975,
+          "abs_diff": 0.001999000499750103,
+          "within_3se": true
+        },
+        {
+          "home": 0.519240379810095,
+          "scipy": 0.526736631684158,
+          "abs_diff": 0.007496251874062998,
+          "within_3se": true
+        },
+        {
+          "home": 0.48575712143928035,
+          "scipy": 0.4362818590704648,
+          "abs_diff": 0.049475262368815554,
+          "within_3se": true
+        },
+        {
+          "home": 0.18340829585207397,
+          "scipy": 0.17991004497751126,
+          "abs_diff": 0.0034982508745627083,
+          "within_3se": true
+        },
+        {
+          "home": 0.7061469265367316,
+          "scipy": 0.7066466766616691,
+          "abs_diff": 0.0004997501249375258,
+          "within_3se": true
+        },
+        {
+          "home": 0.29735132433783107,
+          "scipy": 0.3103448275862069,
+          "abs_diff": 0.012993503248375837,
+          "within_3se": true
+        },
+        {
+          "home": 0.25537231384307846,
+          "scipy": 0.24287856071964017,
+          "abs_diff": 0.012493753123438284,
+          "within_3se": true
+        },
+        {
+          "home": 0.9950024987506247,
+          "scipy": 0.992503748125937,
+          "abs_diff": 0.00249875062468774,
+          "within_3se": true
+        },
+        {
+          "home": 0.5687156421789106,
+          "scipy": 0.5817091454272864,
+          "abs_diff": 0.012993503248375782,
+          "within_3se": true
+        },
+        {
+          "home": 0.20889555222388806,
+          "scipy": 0.1934032983508246,
+          "abs_diff": 0.015492253873063466,
+          "within_3se": true
+        },
+        {
+          "home": 0.9050474762618691,
+          "scipy": 0.9095452273863068,
+          "abs_diff": 0.004497751124437732,
+          "within_3se": true
+        },
+        {
+          "home": 0.21339330334832585,
+          "scipy": 0.21489255372313842,
+          "abs_diff": 0.0014992503748125774,
+          "within_3se": true
+        },
+        {
+          "home": 0.08295852073963018,
+          "scipy": 0.08695652173913043,
+          "abs_diff": 0.003998000999500248,
+          "within_3se": true
+        },
+        {
+          "home": 0.23388305847076463,
+          "scipy": 0.21389305347326337,
+          "abs_diff": 0.019990004997501254,
+          "within_3se": true
+        }
+      ]
+    }
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "NOT_QUALIFIED",
+  "verdict": "DISAGREEMENT recorded; see observations",
+  "consumers_named": [
+    "Nemesis (chance floors, cheat controls)",
+    "Rhadamanthus (forensic re-tests)",
+    "any seat about to write a permutation loop"
+  ]
+}

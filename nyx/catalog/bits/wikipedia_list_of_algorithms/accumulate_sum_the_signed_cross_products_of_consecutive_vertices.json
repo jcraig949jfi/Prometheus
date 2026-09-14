@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.accumulate.sum_the_signed_cross_products_of_consecutive_vertices",
+  "name": "sum the signed cross products of consecutive vertices",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "walk the vertices in order, add each x times the next y and subtract each y times the next x, wrapping at the end; half the absolute total is the area and its sign gives the orientation",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Shoelace algorithm' in section Computational mathematics / Geometry: determine the area of a polygon whose vertices are described by ordered pairs in the plane",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ACCUMULATE",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "vertices in boundary order"
+  ],
+  "fails_when": [
+    "self-intersecting polygons give signed cancellation"
+  ],
+  "instances": [
+    "Shoelace algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

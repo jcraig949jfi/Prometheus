@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.shrink_enclosing_ellipsoid_by_separating_cut",
+  "name": "shrink an enclosing ellipsoid by a separating cut",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "keep an ellipsoid known to contain the optimum, query a separating hyperplane at its centre, and replace it by the smallest ellipsoid containing the half that remains, so the volume shrinks by a fixed factor each step",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Ellipsoid method' in section Computational mathematics / Optimization algorithms: is an algorithm for solving convex optimization problems",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a separation oracle"
+  ],
+  "fails_when": [
+    "slow in practice despite polynomial bound"
+  ],
+  "instances": [
+    "Ellipsoid method"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.prune_dominated_columns_then_recurse_on_the_even_rows_for_row_maxima",
+  "name": "prune dominated columns, then recurse on the even rows to find all row maxima",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers",
+    "compressors"
+  ],
+  "mechanism": "in a matrix whose row-maximum positions never move left as you go down, first delete columns that can hold no row maximum (a stack pass comparing adjacent columns), then solve recursively on the even rows and fill the odd rows by scanning only between their neighbours' answers; total work linear in the dimensions",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'SMAWK Algorithm' in section Computational mathematics / Numerical algorithms / Linear algebra: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "LIFO",
+  "cost": "LINEAR",
+  "requires": [
+    "total monotonicity of the matrix"
+  ],
+  "fails_when": [
+    "the monotonicity condition is the whole assumption; it is not checked"
+  ],
+  "instances": [
+    "SMAWK Algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

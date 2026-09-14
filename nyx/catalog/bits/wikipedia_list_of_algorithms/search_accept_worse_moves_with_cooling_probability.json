@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.accept_worse_moves_with_cooling_probability",
+  "name": "accept worse moves with a cooling probability",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "propose a random neighbour; accept it if better, and if worse accept it with a probability that decreases with how much worse it is and with a temperature that is lowered over time, so early search roams and late search settles",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Simulated annealing' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Stochastic tunneling': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "UNKNOWN",
+  "requires": [
+    "a neighbourhood",
+    "a cooling schedule (policy; decides everything)"
+  ],
+  "fails_when": [
+    "schedule too fast freezes in a poor basin"
+  ],
+  "instances": [
+    "Simulated annealing",
+    "Stochastic tunneling"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

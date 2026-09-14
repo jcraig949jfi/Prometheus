@@ -1,0 +1,87 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "c-cmaes-hansen",
+  "receipt_id": "run-c-cmaes-hansen-20260912T125307Z",
+  "written_utc": "20260912T125307Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "742bea2d0389ebc0e94809dedb98db597d9eb7bc465a7af0efdb0bc3c417ffe4",
+  "recipe_sha256": "ccbcc3d7328bc154d89a71e92833e231c2d9c3981771e43a529ff6f383b1a82e",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile example_short",
+      "cmd": "gcc -O2 -o $BODY/evo1 src/example_short.c src/cmaes.c -lm 2>&1 | grep -i error; test -x $BODY/evo1",
+      "exit": 0,
+      "seconds": 0.88,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "example_short: optimise the rosenbrock/felli test function",
+      "cmd": "cd $BODY/build 2>/dev/null || mkdir -p $BODY/build && cd $BODY/build && $BODY/evo1 2>&1 | tail -14",
+      "exit": 0,
+      "seconds": 0.1,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(fitness|f\\(x\\)|stop|iteration|best|function value)/"
+      ],
+      "stdout": {
+        "text": "\n -- Sat Sep 12 08:53:08 2026\n cmaes_readpara_t(): problem dimension N undefined.\n   (no default value available).\n *** CMA-ES ABORTED, see errcmaes.err *** \n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "the CMA-ES run is repeatable (example_short seeds from time by default; the SHAPE of the log is stable)",
+      "cmd": "cd $BODY/build && a=$($BODY/evo1 2>&1 | grep -ci -E 'stop|iteration|function'); b=$($BODY/evo1 2>&1 | grep -ci -E 'stop|iteration|function'); echo \"lines $a $b\"; test \"$a\" = \"$b\" && echo STABLE_SHAPE",
+      "exit": 0,
+      "seconds": 0.1,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "lines 0 0\nSTABLE_SHAPE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

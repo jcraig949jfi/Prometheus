@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.schedule.allocate_by_group_entitlement",
+  "name": "allocate processor time by group entitlement",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "assign each user or group an entitled share and schedule so that consumed time tracks the entitlements, penalising groups above their share",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fair-share scheduling' in section Operating systems algorithms / Scheduling: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SCHEDULE",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "SCHEDULED",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "LOG",
+  "requires": [
+    "entitlements (policy)"
+  ],
+  "fails_when": [
+    "accounting granularity"
+  ],
+  "instances": [
+    "Fair-share scheduling"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

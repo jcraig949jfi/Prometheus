@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.iterate_arithmetic_and_geometric_means_to_their_common_limit",
+  "name": "iterate the arithmetic and geometric means to their common limit",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "replace a pair of numbers by their arithmetic mean and their geometric mean; the two converge quadratically to a common value, and a running correction term built from their squared differences yields the constant",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gauss–Legendre algorithm' in section Computational mathematics / Numerical algorithms / Elementary and special functions: computes the digits of pi",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "a square root at full precision each round"
+  ],
+  "fails_when": [
+    "each round needs full-precision arithmetic; no partial digits until the end"
+  ],
+  "instances": [
+    "Gauss–Legendre algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

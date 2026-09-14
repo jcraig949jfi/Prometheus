@@ -1,135 +1,25 @@
 {
-  "_what_this_is": "A CANDIDATE build, for review. Nothing has been deployed and no service was restarted. Applying it means copying these files into the deployment tree and restarting, after which deploy/verify_deploy.py should be re-pinned and re-run.",
-  "candidate_commit": "af304b0a097244239b31f1ab0d93d84058077a98",
-  "candidate_branch": "daedalus/deploy-schema8",
-  "engine_source_hash": "sha256:62090a6d9b3e360b7c75f0fea6b6cb348845c2da88c644ffc0cdcf45860a8023",
-  "schema_version": 8,
-  "deployed_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
-  "deployed_schema_version": 8,
-  "live_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
-  "live_schema_version": 8,
-  "identities": {
-    "git_commit": {
-      "value": "af304b0a097244239b31f1ab0d93d84058077a98",
-      "branch": "daedalus/deploy-schema8",
-      "build_files_commit": "b91880a2dccf1630d6b1c47cff14a73f46e8ef4a",
-      "names": "a TREE in history",
-      "authority": "best-effort. It is the tree this candidate was cut from; it is NOT proof that the tree reproduces the build, and /v2/version's source_commit has named a commit that could not. HEAD in particular moves for reasons unrelated to this build, which is why build_files_commit is recorded beside it."
-    },
-    "engine_source_hash": {
-      "value": "sha256:62090a6d9b3e360b7c75f0fea6b6cb348845c2da88c644ffc0cdcf45860a8023",
-      "names": "the RUNTIME BUILD",
-      "authority": "AUTHORITATIVE. sha256 over sorted sfe/*.py, each contributing name + NUL + LF-normalized bytes + NUL, computed at import by sfe/release.py. LF normalization is why a checkout's line-ending convention cannot change build identity."
-    },
-    "schema_version": {
-      "value": 8,
-      "names": "the SHAPE OF THE LEDGER",
-      "authority": "authoritative for the DATA. It moves only forward: an older engine opened against a newer ledger REFUSES to start (sfe/store.py, 'refusing to run'), so a code-only rollback across a schema change is a loud outage rather than a silent downgrade."
-    },
-    "engine_instance_id": {
-      "live_value": "eng_8a37a5d305969034d488c43e",
-      "development_value": "eng_7927865777ccef60724f423e",
-      "names": "the LEDGER ITSELF",
-      "authority": "authoritative for the DATABASE. Minted once per database and stored in meta; it travels with the substrate, not the path or the host. A code deploy does NOT change it, and a changed value after a deploy means the service was pointed at a different ledger."
-    },
-    "mapping": [
-      "git_commit -> engine_source_hash : MANY-TO-ONE and not guaranteed. Two commits whose sfe/*.py agree produce one build hash; a commit whose tree was never copied into the deployment tree produces none.",
-      "engine_source_hash -> schema_version : ONE-TO-ONE. SCHEMA_VERSION is a constant inside the hashed source, so a build cannot disagree with itself about the schema it writes.",
-      "schema_version -> engine_instance_id : INDEPENDENT. A migration changes the shape of a ledger and never its identity.",
-      "engine_instance_id -> engine_source_hash : INDEPENDENT. One ledger outlives many builds; one build serves many ledgers. The development receipt and production share a build hash and have DIFFERENT instance ids, which is exactly the property that lets a receipt be taken on a development ledger at all."
-    ]
-  },
-  "rollback": {
-    "crosses_a_migration": false,
-    "code": [
-      "Copy the DEPLOYED pin's files back into the deployment tree from a checkout you own -- never `git checkout -- .` or `git clean` in F:/Prometheus, which carries other roles' uncommitted work.",
-      "Restart with the documented procedure: stop the scheduled task, tree-kill the venv stub (Stop-ScheduledTask alone orphans the process tree and the orphan keeps the socket while the OLD build serves), confirm the port is free, start, allow ~20s to bind.",
-      "Re-run deploy/verify_deploy.py against the restored pin."
-    ],
-    "data": [
-      "BEFORE deploying: stop the service and take a snapshot with VACUUM INTO. A file copy of a live SQLite database with a WAL is not a snapshot.",
-      "The migration runs on first open and is additive; nothing is back-filled. There is no down-migration.",
-      "This candidate does not move the schema, so the ledger is unchanged and a code-only revert is sufficient."
-    ],
-    "instance_id_invariant": "engine_instance_id must be IDENTICAL before and after, in both directions. If it changes, the service was pointed at a different ledger and the rollback has not restored state -- it has replaced it."
-  },
-  "conformance_pin": {
-    "contract": "roles/Harmonia/contracts/sfe_contract.json",
-    "pinned_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
-    "pinned_schema_version": 8,
-    "pinned_engine_instance_id": "eng_8a37a5d305969034d488c43e",
-    "candidate_engine_source_hash": "sha256:62090a6d9b3e360b7c75f0fea6b6cb348845c2da88c644ffc0cdcf45860a8023",
-    "candidate_schema_version": 8,
-    "live_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
-    "live_schema_version": 8,
-    "hash_matches_candidate": false,
-    "hash_matches_live": true,
-    "note": "conformance_check.py is FAIL-CLOSED and compares engine_source_hash EXACTLY, so it halts the automated seats on any build change -- including one that changes no route. Regenerate the contract (generate_sfe_contract.py) in the SAME window as the deploy, or the seats stop on a build that is otherwise fine. If the pin already disagrees with the LIVE service, it was stale before this candidate and the regeneration is overdue independently of this deploy."
-  },
-  "receipt": "SerendipityFoundry/SerendipityFoundryEngine/deploy/TRACKA_JOINT_RECEIPT.json",
-  "files_changed": [
-    {
-      "file": "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py",
-      "deployed": "f301fb51fca90e13",
-      "candidate": "d1756fd519faf95d"
-    }
+ "_what_this_is": "A CANDIDATE build, for review. Nothing has been deployed and no service was restarted. Applying it = advance the pinned worktree F:\\Prometheus-worktrees\\daedalus-sfengine to candidate_commit (detached), restart the SFEngine task, verify /v2/version reports engine_source_hash below, re-pin deploy/DEPLOYED_BUILD.json.",
+ "candidate_commit": "8c53d04e68515f8515b4c6c4a57a3f4623efc478",
+ "candidate_branch": "main (pushed from daedalus/d23-workspace)",
+ "engine_source_hash": "sha256:726275da9c8daa30ea2fff5e66e9a1df53aa5263256d342602fad25cb415d75c",
+ "schema_version": 8,
+ "deployed_engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+ "deployed_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8",
+ "changes_since_deployed": [
+  "C7 ba0769ac7: the completion response says what it indexed (indexed_artifacts)",
+  "A6: sfe/attestation.py intent journal + middleware wiring + X-SFE-Request-Id; --incidents-dir (default <db dir>/incidents)",
+  "B3: GET /v2/health (measured quantities only) + write-lock acquisition timing in store.write()"
+ ],
+ "surface_delta_vs_contract": {
+  "routes_removed": 0,
+  "routes_added": [
+   "GET /v2/health"
   ],
-  "files_added": [],
-  "files_total": 12,
-  "files": {
-    "SerendipityFoundry/SerendipityFoundryEngine/sfe/__init__.py": {
-      "sha256_lf": "3485154f05c4aef08e9a5b5a99213aed9cd544846969bb56840c73b24f31e1ae",
-      "bytes_lf": 71
-    },
-    "SerendipityFoundry/SerendipityFoundryEngine/sfe/api.py": {
-      "sha256_lf": "7ba1594e077715b3e4146daf8ca76b4d01cc44835c34d3dbbb7672a265f70a89",
-      "bytes_lf": 67509
-    },
-    "SerendipityFoundry/SerendipityFoundryEngine/sfe/canary.py": {
-      "sha256_lf": "88fb02720fdd5b9b8464481db14cd3da8dd509ac4bcd9e2f71203ae06b193238",
-      "bytes_lf": 11304
-    },
-    "SerendipityFoundry/SerendipityFoundryEngine/sfe/errors.py": {
-      "sha256_lf": "b782dc7cedce6e8ece28b8eca7d48ad28f396dba4e35211e0e95c362fcbfa1f1",
-      "bytes_lf": 3676
-    },
-    "SerendipityFoundry/SerendipityFoundryEngine/sfe/events.py": {
-      "sha256_lf": "802ddcd96f1c1ea09eca476020e4aeb9e06f2d49f385275347c5d0fea99698b7",
-      "bytes_lf": 9971
-    },
-    "SerendipityFoundry/SerendipityFoundryEngine/sfe/executors.py": {
-      "sha256_lf": "9f58efd7562a437cdc1e3776d8ad21902dc7b68142ae3c9a6beb7204afec8bd5",
-      "bytes_lf": 22008
-    },
-    "SerendipityFoundry/SerendipityFoundryEngine/sfe/ids.py": {
-      "sha256_lf": "eea82aa6b13a3732728f7531cbc52fa92dfc1a03637a0a2804f06c0cf3a7e08c",
-      "bytes_lf": 4191
-    },
-    "SerendipityFoundry/SerendipityFoundryEngine/sfe/release.py": {
-      "sha256_lf": "7dad4ad6b016714d5e2c30a3756b3131f92cdc352a24a8cb5450d2b6957cd868",
-      "bytes_lf": 1717
-    },
-    "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py": {
-      "sha256_lf": "d1756fd519faf95dfacebb213fc7d95a27e20e3b5efa0b6234cc12f444bd978c",
-      "bytes_lf": 258725
-    },
-    "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py": {
-      "sha256_lf": "cd16b6fda6060e23f581fcbb50e2074200d67137c89821d1e3d6c678a37715b8",
-      "bytes_lf": 42267
-    },
-    "SerendipityFoundry/SerendipityFoundryEngine/serve.py": {
-      "sha256_lf": "26e4df8de166e1028f622bc2cc26402324842431bfabcd2968590c4c34b1fe4b",
-      "bytes_lf": 4204
-    },
-    "SerendipityFoundry/SerendipityFoundryClient/sfclient/client.py": {
-      "sha256_lf": "9592c1270bfcc510dd5bad97371efa941f5441b431d8bebd435e5d5a5ec6b118",
-      "bytes_lf": 42340
-    }
-  },
-  "review_notes": {
-    "schema_change": null,
-    "build_identity_moves": true,
-    "conformance_drift": "Harmonia's conformance_check.py pins engine_source_hash exactly and is fail-closed, so any build change stops the automated seats until her contract is regenerated. Batch the regeneration into the same window.",
-    "restart_procedure": "Stop-ScheduledTask alone orphans the process tree and the orphan keeps the socket while the OLD build serves. Stop the task, tree-kill the venv stub, confirm the port is free, then start. Allow up to ~20s to bind."
-  }
+  "scoping_flips": 0,
+  "gate_state_on_production_ledger": "3 INCOMPLETE (measured against a scratch engine of this tree with Harmonia's conformance_check.py, 2026-09-12)"
+ },
+ "held_because": "the restart trips both wired consumers' gates into state 3 until roles/Harmonia/contracts/sfe_contract.json is regenerated for this hash (Harmonia's lane; asked on comms). Deploy in one window after that, per the operator's bundle instruction.",
+ "tests": "469 passed, 0 xfailed on the merged tree",
+ "prepared_at": "2026-09-12T16:24:04Z"
 }

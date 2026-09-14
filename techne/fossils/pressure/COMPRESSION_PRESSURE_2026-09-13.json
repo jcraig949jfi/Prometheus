@@ -1,0 +1,142 @@
+{
+ "schema": "techne.fossil.compression_pressure/1",
+ "written_utc": "2026-09-13T06:34:17Z",
+ "payloads": "text (compressible), random (incompressible), repeat (ABCD x 75000), zeros -- 300 KB each except text",
+ "note": "raw behaviour of preserved codecs over one shared payload set; ratio = compressed/original; round_trip_ok is cmp of decompress(compress(x)) vs x. NOT a ranking.",
+ "codecs": [
+  "gzip-1.2.4",
+  "zlib-1.3.1",
+  "bzip2-1.0.8",
+  "ncompress-5.0"
+ ],
+ "rows": [
+  {
+   "codec": "gzip-1.2.4",
+   "payload": "random",
+   "original_bytes": 300000,
+   "compressed_bytes": 300068,
+   "ratio": 1.0002,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "gzip-1.2.4",
+   "payload": "repeat",
+   "original_bytes": 300000,
+   "compressed_bytes": 330,
+   "ratio": 0.0011,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "gzip-1.2.4",
+   "payload": "text",
+   "original_bytes": 327301,
+   "compressed_bytes": 31697,
+   "ratio": 0.0968,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "gzip-1.2.4",
+   "payload": "zeros",
+   "original_bytes": 300000,
+   "compressed_bytes": 325,
+   "ratio": 0.0011,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "zlib-1.3.1",
+   "payload": "random",
+   "original_bytes": 300000,
+   "compressed_bytes": 300113,
+   "ratio": 1.0004,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "zlib-1.3.1",
+   "payload": "repeat",
+   "original_bytes": 300000,
+   "compressed_bytes": 330,
+   "ratio": 0.0011,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "zlib-1.3.1",
+   "payload": "text",
+   "original_bytes": 327301,
+   "compressed_bytes": 31717,
+   "ratio": 0.0969,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "zlib-1.3.1",
+   "payload": "zeros",
+   "original_bytes": 300000,
+   "compressed_bytes": 325,
+   "ratio": 0.0011,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "bzip2-1.0.8",
+   "payload": "random",
+   "original_bytes": 300000,
+   "compressed_bytes": 301762,
+   "ratio": 1.0059,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "bzip2-1.0.8",
+   "payload": "repeat",
+   "original_bytes": 300000,
+   "compressed_bytes": 53,
+   "ratio": 0.0002,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "bzip2-1.0.8",
+   "payload": "text",
+   "original_bytes": 327301,
+   "compressed_bytes": 20878,
+   "ratio": 0.0638,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "bzip2-1.0.8",
+   "payload": "zeros",
+   "original_bytes": 300000,
+   "compressed_bytes": 47,
+   "ratio": 0.0002,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "ncompress-5.0",
+   "payload": "random",
+   "original_bytes": 300000,
+   "compressed_bytes": 380811,
+   "ratio": 1.2694,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "ncompress-5.0",
+   "payload": "repeat",
+   "original_bytes": 300000,
+   "compressed_bytes": 2004,
+   "ratio": 0.0067,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "ncompress-5.0",
+   "payload": "text",
+   "original_bytes": 327301,
+   "compressed_bytes": 38415,
+   "ratio": 0.1174,
+   "round_trip_ok": true
+  },
+  {
+   "codec": "ncompress-5.0",
+   "payload": "zeros",
+   "original_bytes": 300000,
+   "compressed_bytes": 941,
+   "ratio": 0.0031,
+   "round_trip_ok": true
+  }
+ ]
+}

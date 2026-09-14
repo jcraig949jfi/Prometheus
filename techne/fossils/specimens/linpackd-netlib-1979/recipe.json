@@ -1,0 +1,45 @@
+{
+  "runner": "native",
+  "workdir": "build",
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile",
+      "cmd": "gfortran -O2 -std=legacy -o linpackd.exe $BODY/upstream/linpackd.f"
+    }
+  ],
+  "runs": [
+    {
+      "name": "linpackd 100x100",
+      "cmd": "./linpackd.exe < /dev/null",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "norm. resid",
+          "This is version 29.5.04."
+        ],
+        "stdout_regex": "norm\\. resid.*\\n\\s*([0-9.E+-]+)\\s+([0-9.E+-]+)"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "normalised residual below the classic threshold 30",
+      "cmd": "./linpackd.exe < /dev/null | awk '/norm. resid/{getline; print ($1+0 < 30) ? \"RESID_OK \" $1 : \"RESID_BAD \" $1}'",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESID_OK"
+        ]
+      }
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_NATIVE",
+  "notes": "build/ is created by the recipe under the body; upstream/ untouched. 'Infinity' MFLOPS is the 1979 SECOND() timer's resolution, recorded not patched."
+}

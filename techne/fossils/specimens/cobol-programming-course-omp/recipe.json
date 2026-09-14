@@ -1,0 +1,52 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-legacy:bookworm",
+  "workdir": "upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl",
+  "probe": [
+    {
+      "name": "cobc",
+      "cmd": "cobc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile PAYROL00 (payroll arithmetic), SRCHBIN (SEARCH ALL over the account file) and CBL0014 (the course's deliberate S0C7 data exception) with GnuCOBOL; also record that CBL0001..CBL0012 are REFUSED (PROGRAM-ID without its terminating period: IBM Enterprise COBOL tolerates it, GnuCOBOL 3.1.2 does not, every -std tried)",
+      "cmd": "cobc -x -o $BODY/build/payrol00 PAYROL00.cobol 2>&1 | tail -2; cobc -x -o $BODY/build/srchbin SRCHBIN.cobol 2>&1 | tail -2; cobc -x -o $BODY/build/cbl0014 CBL0014.cobol 2>&1 | tail -2; cobc -x -std=ibm -o /tmp/c1 CBL0001.cobol 2>&1 | head -1; test -x $BODY/build/payrol00 && test -x $BODY/build/srchbin && test -x $BODY/build/cbl0014 && echo built"
+    }
+  ],
+  "runs": [
+    {
+      "name": "PAYROL00: hours x rate -> gross pay, PICTURE-edited output",
+      "cmd": "$BODY/build/payrol00; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "Gross Pay:",
+          "exit=0"
+        ]
+      }
+    },
+    {
+      "name": "SRCHBIN: load the 45-record EBCDIC/COMP-3 account file (DDNAME ACCTREC mapped through DD_ACCTREC) into a table and SEARCH ALL (binary search) for account 18011809",
+      "cmd": "cd ../data && DD_ACCTREC=data $BODY/build/srchbin 2>&1 | cat -v | tail -5; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)found"
+      }
+    },
+    {
+      "name": "PATHOLOGY CBL0014: the course's deliberate S0C7 (data exception: arithmetic on an invalid packed-decimal field) -- what GnuCOBOL does with it is recorded, not judged",
+      "cmd": "$BODY/build/cbl0014 2>&1 | cat -v | head -6; echo exit=$?",
+      "expect": {
+        "stdout_contains": [
+          "Triggering S0C7"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "The course's first twelve programs are REFUSED by GnuCOBOL (PROGRAM-ID line lacks a terminating period; IBM's compiler accepts it) -- a dialect gap of the interpreter world, recorded in the build step's output, never patched into the source. The data file is EBCDIC with packed-decimal amounts: SRCHBIN's account-number key (PIC X, EBCDIC bytes) and the literal 18011809 (ASCII) would not compare equal, so 'Not Found' is a possible honest outcome; the receipt keeps what the program printed. CBL0014 is preserved as a FAILURE fossil (S0C7)."
+}

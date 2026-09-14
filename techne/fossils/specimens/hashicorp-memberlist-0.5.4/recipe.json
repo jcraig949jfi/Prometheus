@@ -1,0 +1,40 @@
+{
+  "runner": "docker",
+  "image": "golang:1.24-bookworm",
+  "workdir": "upstream/tree/memberlist-0.5.4",
+  "probe": [
+    {
+      "name": "go",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go version"
+    }
+  ],
+  "build": [
+    {
+      "name": "go build (modules from go.sum, fetched at run time -- recorded)",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go build ./... 2>&1 | tail -3; echo built",
+      "timeout": 900
+    }
+  ],
+  "runs": [
+    {
+      "name": "SWIM probing and suspicion: the package's own tests for probe, indirect ping, suspect -> dead, gossip (loopback, unreachable peers)",
+      "cmd": "export PATH=$PATH:/usr/local/go/bin; go test -count=1 -run 'TestMemberList_Probe$|TestMemberList_ProbeNode_Suspect$|TestMemberList_ProbeNode_Suspect_Dogpile|TestMemberList_ProbeNode_Awareness_Degraded|TestMemberList_SuspectNode|TestMemberList_DeadNode|TestMemberList_Gossip|TestMemberlist_Join$|TestMemberlist_Leave$' -v . 2>&1 | grep -E '^(=== RUN|--- (PASS|FAIL)|PASS|FAIL|ok)' | head -40",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "--- PASS: TestMemberList_ProbeNode_Suspect",
+          "--- PASS: TestMemberList_DeadNode"
+        ],
+        "stdout_not_contains": [
+          "--- FAIL"
+        ]
+      },
+      "timeout": 900
+    }
+  ],
+  "tests": [],
+  "test_kind": "UPSTREAM",
+  "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "The upstream tests construct members in-process on loopback with unreachable addresses and assert the suspect/dead transitions and gossip; that is the oracle. Test names are those of v0.5.4 (state_test.go, memberlist_test.go). go.mod requires go >= 1.24, so the run world is golang:1.24-bookworm (first attempt with 1.22 refused to build; recorded)."
+}

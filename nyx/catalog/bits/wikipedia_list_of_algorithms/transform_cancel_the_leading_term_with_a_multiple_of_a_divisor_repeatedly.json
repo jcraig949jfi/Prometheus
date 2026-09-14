@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.cancel_the_leading_term_with_a_multiple_of_a_divisor_repeatedly",
+  "name": "cancel the leading term with a multiple of a divisor, repeatedly",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+  ],
+  "mechanism": "while some divisor's leading term divides the current leading term, subtract the matching multiple of that divisor and record it in the quotient; a leading term that no divisor divides is moved to the remainder; terms are taken in a fixed order so the process ends",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Polynomial long division' in section Computational mathematics / Computer algebra: an algorithm for dividing a polynomial by another polynomial of the same or lower degree",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Multivariate division algorithm': for polynomials in several indeterminates",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "FUNCTION",
+  "order_req": "WELL_FOUNDED",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a term order in which leading terms decrease"
+  ],
+  "fails_when": [
+    "with several divisors the remainder depends on their order unless the set is closed"
+  ],
+  "instances": [
+    "Polynomial long division",
+    "Multivariate division algorithm"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.transform.bring_down_a_digit_and_subtract_the_largest_fitting_multiple"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

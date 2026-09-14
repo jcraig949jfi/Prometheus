@@ -1,0 +1,32 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V 2>&1 | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "build testbench_ez (no firmware, no riscv-gcc)",
+      "cmd": "iverilog -o $BODY/tb_ez.vvp testbench_ez.v picorv32.v 2>&1 | grep -viE 'warning' | tail -3; test -f $BODY/tb_ez.vvp"
+    }
+  ],
+  "runs": [
+    {
+      "name": "run the self-contained testbench_ez",
+      "cmd": "vvp -N $BODY/tb_ez.vvp 2>&1 | tail -25",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(ifetch|DONE|TRAP|finished|cycles|passed)"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_EMULATED",
+  "notes": "Simulated in Icarus Verilog (an event-driven HDL simulator = RUNNABLE_EMULATED). The full 'make test' needs a RISC-V gcc to build firmware.hex; testbench_ez.v carries its own inline program so the core actually fetches/decodes/executes here without a cross-toolchain -- the receipt shows the ifetch/read/write bus trace of the RV32I core running, ending in the classic jump-to-self spin. A full firmware run under a RISC-V gcc is queued."
+}

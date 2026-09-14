@@ -1,0 +1,184 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "gzip-1.2.4-1993",
+  "receipt_id": "run-gzip-1.2.4-1993-20260912T210109Z",
+  "written_utc": "20260912T210109Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/gzip-1.2.4",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719",
+  "recipe_sha256": "29fb8f4bb2434a597e3312aee13090911b460efbd1410515d939dbe9dfb7258a",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.87,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "1993 configure + make with modern-compiler accommodations (-fcommon -std=gnu89 -w; no source change)",
+      "cmd": "./configure >/dev/null 2>&1; make -s CFLAGS='-O1 -fcommon -std=gnu89 -w' 2>&1 | grep -iE '\\berror' | head -5; test -x ./gzip && echo built",
+      "exit": 0,
+      "seconds": 2.44,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "round trip the same 200 KB sample used for compact; report the ratio",
+      "cmd": "awk 'BEGIN{for(i=0;i<4000;i++) printf(\"the quick brown fox %d jumps over the lazy dog %d\\n\", i, i*7)}' > $BODY/build/sample && ./gzip -c -9 $BODY/build/sample > $BODY/build/s.gz && ls -l $BODY/build/s.gz | awk '{print \"gzip -9 bytes:\", $5}' && ./gzip -dc $BODY/build/s.gz | cmp - $BODY/build/sample && echo ROUNDTRIP OK",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gzip -9 bytes: 21267\nROUNDTRIP OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "version banner",
+      "cmd": "./gzip -V 2>&1 | head -2",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gzip 1.2.4 (18 Aug 93)\nCompilation options:\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "bits.o",
+      "sha256": "7054418037102f0429903c466b725147778eb2b66ca69da29f290a5878568e98",
+      "bytes": 4432
+    },
+    {
+      "path": "config.status",
+      "sha256": "525811330b050df1fbceb098a2e861186a7d7f5eea9b7826fd87fa98b111bc30",
+      "bytes": 1819
+    },
+    {
+      "path": "crypt.o",
+      "sha256": "5ad80e54a36fa1f91c320ee3a4869a759255c77787d9a4b7208616abc2ce2cfb",
+      "bytes": 808
+    },
+    {
+      "path": "deflate.o",
+      "sha256": "e5e12e7ad54edcfcaa6bcaec806d9cd7f7d216649e34f1c876be933cd5e86dc6",
+      "bytes": 8696
+    },
+    {
+      "path": "getopt.o",
+      "sha256": "24d0865bcda9c0dcd6727b1a98725320ecf11517c8c4f13882457582f7acdae1",
+      "bytes": 808
+    },
+    {
+      "path": "gunzip",
+      "sha256": "81adbb7eb635ee0859eaaeaddbbe4bf8fbbff1ebe006b5733a8bb7c6193d6733",
+      "bytes": 75192
+    },
+    {
+      "path": "gzip",
+      "sha256": "81adbb7eb635ee0859eaaeaddbbe4bf8fbbff1ebe006b5733a8bb7c6193d6733",
+      "bytes": 75192
+    },
+    {
+      "path": "gzip.o",
+      "sha256": "781ccbe74cfa8cbccd1cc951c108e4ddc2d3b12b09962946e38392bd9cf09502",
+      "bytes": 51808
+    },
+    {
+      "path": "inflate.o",
+      "sha256": "a97ebc5b6d1b8bb2061e83db46aa9ef6c58791d03db3091df0ea779a8a2fad12",
+      "bytes": 13776
+    },
+    {
+      "path": "lzw.o",
+      "sha256": "2cb75655e48b4cbf4d06f5f1b5f8234e4829ce9d7877e609d5551e3736a912e6",
+      "bytes": 1712
+    },
+    {
+      "path": "Makefile",
+      "sha256": "d36c02826d22445cfc82b516497577dc3d0c2904c6749c1c7d71a99be282b36a",
+      "bytes": 12329
+    },
+    {
+      "path": "trees.o",
+      "sha256": "297b547e7f0e3ade05305f6b6b358a6386073eb4755c38a46f40b85666e29730",
+      "bytes": 13864
+    },
+    {
+      "path": "unlzh.o",
+      "sha256": "9a3ec33216f56afbca64ee02d52a817241bb402cc61eaae3bc6b1c80086f8001",
+      "bytes": 6664
+    },
+    {
+      "path": "unlzw.o",
+      "sha256": "6a899b4b656dfe60ab61fbe306d53ec6cc68da5fe3b01f33e790877d6de688c5",
+      "bytes": 6176
+    },
+    {
+      "path": "unpack.o",
+      "sha256": "4210f988c74319e41a5aa61b31b5def1754c9c9e23b5aba7c70facdf0f050056",
+      "bytes": 5728
+    },
+    {
+      "path": "unzip.o",
+      "sha256": "3c11b5796c8f4ca00be8d1d3d8ed7f4a55034d6b0e969fad9be421e91b55422a",
+      "bytes": 7512
+    },
+    {
+      "path": "util.o",
+      "sha256": "0653464a073c2064208d0fbe1eae0e47a8a65df7a95286c80a41746d09b875d9",
+      "bytes": 10848
+    },
+    {
+      "path": "zcat",
+      "sha256": "81adbb7eb635ee0859eaaeaddbbe4bf8fbbff1ebe006b5733a8bb7c6193d6733",
+      "bytes": 75192
+    },
+    {
+      "path": "zip.o",
+      "sha256": "12acaa1ac005b5130c1151b16f64e9e205ad5202b52e1f770c3d69f70aac2e5b",
+      "bytes": 5416
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719",
+  "body_preserved": true
+}

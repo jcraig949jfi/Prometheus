@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.verify.divide_by_each_candidate_up_to_root",
+  "name": "divide by each candidate up to the square root",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "test divisibility of the target by each prime (or each integer) up to its square root; the first divisor found is a factor, and none found means prime",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Trial division' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "VERIFY",
+  "in_geometry": "SCALAR",
+  "out_geometry": "BOOLEAN",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "nothing beyond division"
+  ],
+  "fails_when": [
+    "exponential in the bit length"
+  ],
+  "instances": [
+    "Trial division"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

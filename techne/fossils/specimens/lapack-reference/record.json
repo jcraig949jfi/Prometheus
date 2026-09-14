@@ -1,0 +1,135 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "lapack-reference",
+  "canonical_name": "LAPACK (reference) -- the blocked successor that superseded LINPACK and EISPACK",
+  "aliases": [
+    "LAPACK",
+    "dgetrf",
+    "Reference-LAPACK"
+  ],
+  "lineage": "LAPACK (Anderson et al., 1992-) rewrote the LINPACK/EISPACK functionality around BLOCKED algorithms expressed in Level-3 BLAS (matrix-matrix), so that data loaded into cache is reused O(block) times. It is the WINNER of this pair: same mathematics, different memory-access structure. Kept here as the rival, so the loser can be compared on a shared problem without Techne deciding why it won.",
+  "domain": [
+    "numerical-linear-algebra",
+    "scientific-computing",
+    "dense-linear-algebra",
+    "successor"
+  ],
+  "era": "1992- (LAPACK); this checkout modern",
+  "version": "github.com/Reference-LAPACK/lapack as of 2026-09-13 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/Reference-LAPACK/lapack",
+        "commit": "6b64b63b358202a45999e061055fedb9fe736f9e",
+        "commit_resolved": "6b64b63b358202a45999e061055fedb9fe736f9e"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/Reference-LAPACK/lapack"
+  },
+  "hashes": {
+    "tree_sha256": "d6f94c154171da32f48c9bb28466a9945544d2fb958d3fb23e3f813f84b6330e",
+    "n_files": 6776,
+    "bytes": 68472023,
+    "artifacts": [
+      {
+        "filename": "https://github.com/Reference-LAPACK/lapack",
+        "sha256": null,
+        "commit": "6b64b63b358202a45999e061055fedb9fe736f9e"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\lapack-reference",
+    "hash_list": "techne/fossils/specimens/lapack-reference/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "LICENSE in the tree"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "Fortran 90",
+    "C"
+  ],
+  "build_system": "cmake or make (reference BLAS + LAPACK)",
+  "compiler_or_interpreter": "gfortran (docker prometheus-fossil-c:bookworm)",
+  "dependencies": [
+    "a Fortran compiler"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "dgetrf -- blocked LU factorisation (the Level-3 answer to LINPACK's dgefa)"
+  ],
+  "example": {
+    "command": "build reference BLAS+LAPACK, call dgetrf on the same matrices given to dgefa",
+    "input": "the shared LU problem",
+    "output": "the same factorisation; time/MFLOPS is the comparable quantity"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Anderson et al., LAPACK Users' Guide, SIAM"
+  ],
+  "human_capability_summary": {
+    "built_to": "provide LINPACK/EISPACK functionality at high performance on machines with memory hierarchies, by blocking the algorithms onto Level-3 BLAS",
+    "pressure": "the same O(n^3) arithmetic, but on machines where memory bandwidth, not flops, is the binding constraint",
+    "success_means": "the same numerical answer at a large multiple of the unblocked rate"
+  },
+  "known_human_problem_solved": "high-performance dense linear algebra on cache-based machines",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "memory hierarchy: data movement costs more than arithmetic",
+  "human_failure_condition": "with a badly chosen block size or an unoptimised BLAS it degenerates toward the unblocked rate",
+  "behavioral_entry_point": "vary the block size (ILAENV) and matrix size and watch the rate move",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "rewrote",
+      "to": "linpack-netlib-1979",
+      "note": "same functionality, blocked for cache"
+    },
+    {
+      "relation": "rewrote",
+      "to": "eispack-netlib-1976",
+      "note": "same functionality, blocked for cache"
+    }
+  ],
+  "acquisition_tags": [
+    "batch09",
+    "successor",
+    "winner_of_pair",
+    "numerical",
+    "pair_linear_algebra"
+  ],
+  "historical_disposition": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "linpack-netlib-1979",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\lapack-reference ; tracked techne/fossils/specimens/lapack-reference",
+    "where_it_came_from": "https://github.com/Reference-LAPACK/lapack ; ORIGINAL_AUTHORITATIVE_RELEASE @ HEAD",
+    "how_to_run_it": "SOURCE_ONLY this round: acquired as the WINNER of the LINPACK/EISPACK pair so the comparison exists, but the reference BLAS+LAPACK build (6776 files) was not run in this pass. The LINPACK-vs-LAPACK rate dataset is therefore NOT done -- named, not faked.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 d6f94c154171da32 pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "provide LINPACK/EISPACK functionality at high performance on machines with memory hierarchies, by blocking the algorithms onto Level-3 BLAS"
+  },
+  "seat": "Techne"
+}

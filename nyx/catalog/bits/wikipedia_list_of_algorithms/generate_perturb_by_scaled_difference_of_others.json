@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.perturb_by_scaled_difference_of_others",
+  "name": "perturb a candidate by a scaled difference of two others",
+  "lineage": [
+    "evolutionary computation",
+    "optimization"
+  ],
+  "mechanism": "for each member of a population form a trial by adding a scaled difference of two other members to a third, mix it with the member coordinate-wise, and keep whichever of trial and member scores better",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Differential evolution' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "strategy": "RANDOMIZED",
+  "iteration": "PARALLEL_ROUNDS",
+  "cost": "LINEAR",
+  "requires": [
+    "a real-valued vector encoding",
+    "a scale factor and crossover rate (policy)"
+  ],
+  "fails_when": [
+    "step scale is tied to population spread; collapses when the population converges"
+  ],
+  "instances": [
+    "Differential evolution"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

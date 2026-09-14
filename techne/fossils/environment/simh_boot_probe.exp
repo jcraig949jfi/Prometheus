@@ -1,0 +1,34 @@
+#!/usr/bin/expect -f
+# Batch 06 / TECHNE-69 step 1: does the standalone boot on tape file 1 load under vax780?
+# usage: simh_boot_probe.exp <tap> <disk>
+set timeout 60
+set tap [lindex $argv 0]
+set dsk [lindex $argv 1]
+log_user 1
+spawn vax780
+expect "sim>"
+send "set cpu 8M\r"; expect "sim>"
+send "set rp0 rp06\r"; expect "sim>"
+send "attach rp0 $dsk\r"
+expect {
+    "Overwrite last track" { send "N\r"; exp_continue }
+    "sim>" {}
+}
+send "attach ts0 $tap\r"; expect "sim>"
+send "show ts0\r"; expect "sim>"
+# The VAX-11/780 has no tape boot ROM: the console loads the standalone `boot` program (tape
+# file 1, gunzipped to a flat binary) into memory and starts it with the boot-device register
+# set to the tape -- the procedure a real 780 console (LSI-11 + RX01) performed.
+set stand [lindex $argv 2]
+send "load -o $stand 0\r"; expect "sim>"
+# the stripped `boot` begins with MOVL #0x70000,SP at offset 0: start there (R11 = boothowto 0)
+send "deposit r11 0\r"; expect "sim>"
+send "run 0\r"
+expect {
+    -re ": $" { puts "\nPROBE: standalone boot prompt reached"; }
+    "Boot" { exp_continue }
+    timeout { puts "\nPROBE: TIMEOUT waiting for the standalone boot prompt"; exit 2 }
+}
+send "\005"
+expect "sim>" { send "exit\r" }
+expect eof

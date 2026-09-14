@@ -329,6 +329,7 @@ def submit(conn, *, candidates: Sequence[Dict[str, Any]],
     for c in candidates:
         c["source_evidence"] = dict(c.get("source_evidence") or {}, conformance=conf_rec, workspace=ws_rec)
 
+    assert_candidate_set_unused(conn, csid)      # after the gate: a halt opens no cursor
     cur = conn.cursor()
     try:
         if autonomous:
@@ -374,6 +375,44 @@ def submit(conn, *, candidates: Sequence[Dict[str, Any]],
     except Exception:
         conn.rollback()
         raise
+
+
+class CandidateSetReused(ValueError):
+    """A candidate_set_id names ONE atomic registration (one submit call,
+    one transaction, one selection). Reusing it across calls turns
+    "registered before selection" from a property into a claim, and makes
+    Vivarium bind every later row as one-chosen-over-N (Vivarium #181 item
+    4: cs-h5-1-r1 rows bound selected=1 alternatives=23 although all 24
+    executed). A campaign whose members ALL execute is not a candidate set;
+    it groups its rows by source_evidence.campaign_set (campaign_set_key)."""
+
+
+def assert_candidate_set_unused(conn, candidate_set_id: str) -> None:
+    cur = conn.cursor()
+    cur.execute("SELECT count(*) FROM {q} WHERE candidate_set_id = %s".format(q=QUEUE), (candidate_set_id,))
+    n = int(cur.fetchone()[0])
+    if n:
+        raise CandidateSetReused(
+            "candidate_set_id {!r} already has {} registered row(s); a set is registered in ONE submit call. "
+            "For a campaign whose rows all execute, pass candidate_set_id=None and put the campaign id in "
+            "source_evidence['campaign_set'].".format(candidate_set_id, n))
+
+
+CAMPAIGN_SET_KEY = "campaign_set"
+
+
+def campaign_set_key(source_evidence: Dict[str, Any], campaign_set: str) -> Dict[str, Any]:
+    """Stamp the campaign grouping on a row's provenance (not a selection)."""
+    return dict(source_evidence, **{CAMPAIGN_SET_KEY: campaign_set})
+
+
+def campaign_rows_filter(column_prefix: str = "") -> str:
+    """SQL fragment matching a campaign's rows in EITHER shape: rows issued
+    before 2026-09-11 evening carry the campaign id in candidate_set_id
+    (the one-chosen-over-N misbinding, kept as history); rows issued after
+    carry it in source_evidence.campaign_set. Bind the SAME id twice."""
+    p = column_prefix
+    return "({p}candidate_set_id = %s OR {p}source_evidence->>'campaign_set' = %s)".format(p=p)
 
 
 def candidate_set(conn, candidate_set_id: str) -> Optional[Dict[str, Any]]:

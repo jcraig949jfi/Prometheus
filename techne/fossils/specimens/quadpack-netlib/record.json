@@ -1,0 +1,1123 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "quadpack-netlib",
+  "canonical_name": "QUADPACK -- Piessens/de Doncker adaptive quadrature (1983)",
+  "aliases": [
+    "quadpack"
+  ],
+  "lineage": "quadpack (netlib historical distribution): the authoritative Fortran source as served by netlib.org, the authors' own channel",
+  "domain": [
+    "scientific-computing",
+    "numerical-integration",
+    "adaptive",
+    "numerical"
+  ],
+  "era": "1976-1985",
+  "version": "netlib.org/quadpack as served 2026-09-12 (per-file; no tarball endpoint)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqag.f",
+        "filename": "dqag.f",
+        "extract": false,
+        "sha256": "625267148a1282a43ae348282cd8ff2bc794103eef4ed02c6e6f296a097d6809",
+        "bytes": 8091
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqage.f",
+        "filename": "dqage.f",
+        "extract": false,
+        "sha256": "1a66c327d0f5614149561e682809aed23c0e047c60d25d598b2596ded8ab27bd",
+        "bytes": 13649
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqagi.f",
+        "filename": "dqagi.f",
+        "extract": false,
+        "sha256": "b95b73b8e101efd13ff4f815538eb5ce22ccccdb9f5f9aa3781de8059949d85f",
+        "bytes": 8802
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqagie.f",
+        "filename": "dqagie.f",
+        "extract": false,
+        "sha256": "7cf2ff5c185ddeb930eb106f91e4a19fd0f49fcee9c113da7af621f152be75b2",
+        "bytes": 17947
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqagp.f",
+        "filename": "dqagp.f",
+        "extract": false,
+        "sha256": "d6486bfe67fcceff8aaf56a6c4e4509b1f511f6c1a251885b00ee01db8119417",
+        "bytes": 10517
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqagpe.f",
+        "filename": "dqagpe.f",
+        "extract": false,
+        "sha256": "f21cacb31ba7011b6723347651f5b8801ea85d224fe01791090ca1a55a7604d8",
+        "bytes": 21286
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqags.f",
+        "filename": "dqags.f",
+        "extract": false,
+        "sha256": "53642bc1c5a0d83a3d2f4ce4d05355ceb6198ea4ae86dab3ddb532a4c671490c",
+        "bytes": 8393
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqagse.f",
+        "filename": "dqagse.f",
+        "extract": false,
+        "sha256": "6d1c3ae36964cfd904a5bc5282f4c87431ed2a1fa4531dc25be9ae8041aaecac",
+        "bytes": 17381
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqawc.f",
+        "filename": "dqawc.f",
+        "extract": false,
+        "sha256": "39b517b9035ba275f96914dc8f22c1b50b9a949f4e9908c32665d2157fedc504",
+        "bytes": 7757
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqawce.f",
+        "filename": "dqawce.f",
+        "extract": false,
+        "sha256": "6ffbe8bded7f694d193c69bd93e013b225ad00012b7803efe2bbfb78c97b3553",
+        "bytes": 12260
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqawf.f",
+        "filename": "dqawf.f",
+        "extract": false,
+        "sha256": "57cdbfc874ff9968127280ba0d2040102d02e0a30999f090c47b0bceeec38f47",
+        "bytes": 11027
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqawfe.f",
+        "filename": "dqawfe.f",
+        "extract": false,
+        "sha256": "db17d6a68309fbea13e56540a85ab5eb23ce8419d238bef3a7fbb676a5307a2e",
+        "bytes": 15436
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqawo.f",
+        "filename": "dqawo.f",
+        "extract": false,
+        "sha256": "8f539df18583f18174d67faada656668be39a6a27289d342fb64702135bbc3d0",
+        "bytes": 10480
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqawoe.f",
+        "filename": "dqawoe.f",
+        "extract": false,
+        "sha256": "e7b9be59564a68fbecc9d63c79d8255ca111edbbe7865e5613e2e13af996b01c",
+        "bytes": 21404
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqaws.f",
+        "filename": "dqaws.f",
+        "extract": false,
+        "sha256": "70fbe1e22555656294a6920b96caadd569e41f693cc786e8070080845c3c227a",
+        "bytes": 8962
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqawse.f",
+        "filename": "dqawse.f",
+        "extract": false,
+        "sha256": "b0b93b1be93723d0ca49f0a27dee6475ffff642ac8b28f27013abecabc2cde8d",
+        "bytes": 14040
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqc25c.f",
+        "filename": "dqc25c.f",
+        "extract": false,
+        "sha256": "f03eae211283443a72fca917eff77d2ba7d8ba4a6e0d449209377270ce56affd",
+        "bytes": 5982
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqc25f.f",
+        "filename": "dqc25f.f",
+        "extract": false,
+        "sha256": "3500852e5124eba6afce29b14767a506377d994a0935e7acc3762646b250d38e",
+        "bytes": 13556
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqc25s.f",
+        "filename": "dqc25s.f",
+        "extract": false,
+        "sha256": "46fabca20a1a5a317c6d0a058e71687956c44a0d5582baa6084ee64a4be59820",
+        "bytes": 11158
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqcheb.f",
+        "filename": "dqcheb.f",
+        "extract": false,
+        "sha256": "458429c0d98495cda32897ce02b3e48bf09e54728615659e221c9f9439138ae6",
+        "bytes": 4987
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqelg.f",
+        "filename": "dqelg.f",
+        "extract": false,
+        "sha256": "1a0cdbaed8ab0b95c56e50e8359ee48282030b178330819b8907f021819923c4",
+        "bytes": 6014
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqk15.f",
+        "filename": "dqk15.f",
+        "extract": false,
+        "sha256": "471664a145516508ce6147f1a425d7d3d7f3afe50fd9584ffff020749f534276",
+        "bytes": 6607
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqk15i.f",
+        "filename": "dqk15i.f",
+        "extract": false,
+        "sha256": "3998968b2c246fa2c5157121b274464969dcfb2b30d6000b8d5680297ab1a65d",
+        "bytes": 7782
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqk15w.f",
+        "filename": "dqk15w.f",
+        "extract": false,
+        "sha256": "8a22cc286fb75524f42486d735e26c0241b0470c7fffe98ac57606f26089a0dd",
+        "bytes": 6847
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqk21.f",
+        "filename": "dqk21.f",
+        "extract": false,
+        "sha256": "4f89799878f42504549e952bf999d5e80e5253096a77dfe074f6353a92cceed7",
+        "bytes": 7091
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqk31.f",
+        "filename": "dqk31.f",
+        "extract": false,
+        "sha256": "72017e6f65cd3ee9b49ed067962fd0254d077fa735821929aa46cdba30b75e9d",
+        "bytes": 7976
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqk41.f",
+        "filename": "dqk41.f",
+        "extract": false,
+        "sha256": "3cc35dfb473cd7ccd7525307a698bfab99f4e3c509f541fa7afe706e80e92489",
+        "bytes": 8810
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqk51.f",
+        "filename": "dqk51.f",
+        "extract": false,
+        "sha256": "a0ff6ad1b7cf30a4454494ed9fc1eddfefdb8fa12e8f0d8c173444616b13b55c",
+        "bytes": 9707
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqk61.f",
+        "filename": "dqk61.f",
+        "extract": false,
+        "sha256": "39decfe58e8892e38e58827335306b0ebbf04d6fb4d701f68edbac8857ee0f72",
+        "bytes": 10320
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqmomo.f",
+        "filename": "dqmomo.f",
+        "extract": false,
+        "sha256": "2f16f8261d01380a87dfe8aef9b80af9ff3aab69f38e7c3c9088391375c80477",
+        "bytes": 4011
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqng.f",
+        "filename": "dqng.f",
+        "extract": false,
+        "sha256": "6bf53c95855a25712d4189b15b01bf898b12d5ed5f68429b14ae31022c954a13",
+        "bytes": 17671
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqpsrt.f",
+        "filename": "dqpsrt.f",
+        "extract": false,
+        "sha256": "5ca2446ce3cfedd1f222fed695c4985cfd034d0586f55da7da2d7342c7fcfcd4",
+        "bytes": 4243
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqwgtc.f",
+        "filename": "dqwgtc.f",
+        "extract": false,
+        "sha256": "12d830f621245e1f2ef24a17b0f4481dc123b55a6f9e20f28adea6c8bdb68c23",
+        "bytes": 651
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqwgtf.f",
+        "filename": "dqwgtf.f",
+        "extract": false,
+        "sha256": "6894da2afec55d562fd0a8f28f60a5e656afb46ad8b82a6971f5f8b56609ce96",
+        "bytes": 632
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/dqwgts.f",
+        "filename": "dqwgts.f",
+        "extract": false,
+        "sha256": "fcdb0a63e566f140bb13b3d4c52db37439901164ffcfcc02843e482d1bbab358",
+        "bytes": 924
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qag.f",
+        "filename": "qag.f",
+        "extract": false,
+        "sha256": "f7624cb874fc473c17645379459c628c02ff8f497352e8b381560b1033de7226",
+        "bytes": 7969
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qage.f",
+        "filename": "qage.f",
+        "extract": false,
+        "sha256": "86478dcedfec4789bf3e6d3e885c6081d60ae99a9e3901ad8fae90d9e226dfa0",
+        "bytes": 13455
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qagi.f",
+        "filename": "qagi.f",
+        "extract": false,
+        "sha256": "d5426cde3e3c082d1b1728ed00323ddcbfa6cc971d312266538d18913a8f9d75",
+        "bytes": 8716
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qagie.f",
+        "filename": "qagie.f",
+        "extract": false,
+        "sha256": "6b86e27611cf41a6fe48c4c8c84f9b4827b5454b25328d53768739d4896612cd",
+        "bytes": 17852
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qagp.f",
+        "filename": "qagp.f",
+        "extract": false,
+        "sha256": "28f02885cafe62b5109b6602bf1849b6d9eb5f3f85697060d6e9ac0d4fa81e51",
+        "bytes": 10369
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qagpe.f",
+        "filename": "qagpe.f",
+        "extract": false,
+        "sha256": "81aa43193842579d25b07742fe720e9673ed9e6b7f84194de2b9c56075f608b0",
+        "bytes": 21160
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qags.f",
+        "filename": "qags.f",
+        "extract": false,
+        "sha256": "6558f1609c979586583945d60ef3e37c3b6e9addbaaa82f8cd92461973e80f48",
+        "bytes": 8274
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qagse.f",
+        "filename": "qagse.f",
+        "extract": false,
+        "sha256": "7ad32600ad8e4feb7cc676178ca64218487a706ee818c6739ee741977a762985",
+        "bytes": 17228
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qawc.f",
+        "filename": "qawc.f",
+        "extract": false,
+        "sha256": "361a008fc316bd4392d9d061c6cc4989f0b4d1bfdee3f5234d85d363b8756bca",
+        "bytes": 7634
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qawce.f",
+        "filename": "qawce.f",
+        "extract": false,
+        "sha256": "57696a18b25055502b365727f7558ec459f38ec7c5b3702c4a35e387c587271b",
+        "bytes": 12079
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qawf.f",
+        "filename": "qawf.f",
+        "extract": false,
+        "sha256": "bfd140534c42ae2a98b09352c236e0ddd5903b45d90e59cb1732294390ba12b4",
+        "bytes": 10916
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qawfe.f",
+        "filename": "qawfe.f",
+        "extract": false,
+        "sha256": "d8b415bdf99d1a23816adb766a2c0ddde0f31b6cd9ddfa8f77a947479b8828fe",
+        "bytes": 15273
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qawo.f",
+        "filename": "qawo.f",
+        "extract": false,
+        "sha256": "c6a48273bdb9c20e83776904a4ab873d6a5756395a22abc9f7d03ff094c6d5ec",
+        "bytes": 10314
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qawoe.f",
+        "filename": "qawoe.f",
+        "extract": false,
+        "sha256": "79f890c164d8075c83636dd5f4e464cf0086afbd6badd07176d4949604dffe29",
+        "bytes": 21238
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qaws.f",
+        "filename": "qaws.f",
+        "extract": false,
+        "sha256": "01bcc620a35a4123d918ecaccd267be9dd560afba387022437acd8244369f50f",
+        "bytes": 8815
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qawse.f",
+        "filename": "qawse.f",
+        "extract": false,
+        "sha256": "e6761850158dccd9b9f9a4b94053bd2e01758b13989cbe6df9a7084b583b74ca",
+        "bytes": 13865
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qc25c.f",
+        "filename": "qc25c.f",
+        "extract": false,
+        "sha256": "b74a41a1d97771ae0d81067413a291c3c7dea9178d6e5682c68c47d1fd15fc10",
+        "bytes": 5563
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qc25f.f",
+        "filename": "qc25f.f",
+        "extract": false,
+        "sha256": "bed0acd3886f8bf34bb4999744aa2e20e0f2af9341432b95ffbe91720eace762",
+        "bytes": 12859
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qc25s.f",
+        "filename": "qc25s.f",
+        "extract": false,
+        "sha256": "ed799eb8715dc2f3d00f8d0bad6b6e8442e467e29babe1525c2ed86edf5a1598",
+        "bytes": 10728
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qcheb.f",
+        "filename": "qcheb.f",
+        "extract": false,
+        "sha256": "af3fe889fa8b48a9e98e19f675a69221a6de3df9adb8686c3e5d5eabe2b5299d",
+        "bytes": 4908
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qelg.f",
+        "filename": "qelg.f",
+        "extract": false,
+        "sha256": "29d6c5f472ed9d01a248fe0c0b9b647089c95176ba7b51a57ab9544cdda3271e",
+        "bytes": 5917
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qk15.f",
+        "filename": "qk15.f",
+        "extract": false,
+        "sha256": "e7d54ae07615a4f0e229c0d90ea22eefe5b66b7c12870509dd0c70c8ab82f5d2",
+        "bytes": 5746
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qk15i.f",
+        "filename": "qk15i.f",
+        "extract": false,
+        "sha256": "70c0d97cecee91de64ecaa256de499f9f68b60b9ef25f8168f8999e307eb4db4",
+        "bytes": 7245
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qk15w.f",
+        "filename": "qk15w.f",
+        "extract": false,
+        "sha256": "6f8316250c61b7902a5d2cd38b4bdb4dc89e5885ff012c47f56f6f1376808d91",
+        "bytes": 6711
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qk21.f",
+        "filename": "qk21.f",
+        "extract": false,
+        "sha256": "768d1a936047e6bc56cd16408c4b95c689e1dc50482421a306b5937b95f8897f",
+        "bytes": 6084
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qk31.f",
+        "filename": "qk31.f",
+        "extract": false,
+        "sha256": "fbc83ebdf40fd4617bd08639cf0412a6d7bbe506d815fc8e3a8282599457f5da",
+        "bytes": 6575
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qk41.f",
+        "filename": "qk41.f",
+        "extract": false,
+        "sha256": "8b4a0b1cfd38ee3e428e59a0f78f1e1d4515404de8ed92cdd9c6aaae6fb46083",
+        "bytes": 7084
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qk51.f",
+        "filename": "qk51.f",
+        "extract": false,
+        "sha256": "1fcab48ba5674f8178e2d10b272c1a2bd8e31500e72aa4b9ae2ae71cdf83f187",
+        "bytes": 7562
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qk61.f",
+        "filename": "qk61.f",
+        "extract": false,
+        "sha256": "8cfb0a7647d29394eb0170ed549bf87b3f5cffd18b261e630ca004641ab7aeb6",
+        "bytes": 8017
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qmomo.f",
+        "filename": "qmomo.f",
+        "extract": false,
+        "sha256": "cfa288732576a2f363e77e65fb075861eb893ccc01c0ad133349132c5bd506e5",
+        "bytes": 3927
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qng.f",
+        "filename": "qng.f",
+        "extract": false,
+        "sha256": "151231080c8bbdd2aab818772040ec96d80eede65f9a6ced6d13068535f345ab",
+        "bytes": 13999
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qpsrt.f",
+        "filename": "qpsrt.f",
+        "extract": false,
+        "sha256": "1e0fbd6c2a4f1c25ee5e16fe64f5cfb6751f99642934ecb488ad605d33b7643d",
+        "bytes": 4285
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qwgtc.f",
+        "filename": "qwgtc.f",
+        "extract": false,
+        "sha256": "c584efde7942ffdeff22ff61c34841fdc6c998d96a489caa5d5191f0e3634e8e",
+        "bytes": 614
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qwgtf.f",
+        "filename": "qwgtf.f",
+        "extract": false,
+        "sha256": "c5f6ca16f50e361d3d9a71695b6648b5aac2609e009b8cb78bb35aea1ae4a81d",
+        "bytes": 582
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/qwgts.f",
+        "filename": "qwgts.f",
+        "extract": false,
+        "sha256": "253f4f18aca55affff57c1e12491a4f7ab353ab4db156061c1956b741fb452bd",
+        "bytes": 875
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/readme",
+        "filename": "readme",
+        "extract": false,
+        "sha256": "1b793978aaf78ac8b5a3149c312ad69e66d740b0be4445294a24828016167d06",
+        "bytes": 4738
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/doc",
+        "filename": "doc",
+        "extract": false,
+        "sha256": "6bccfa84cd1b61e13a5583f8aaa825c88dcafc6fdfed949eef18f95f3ab41979",
+        "bytes": 18910
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/quadpack/changes",
+        "filename": "changes",
+        "extract": false,
+        "sha256": "066ff0e85592dbcb6ac716b60f3850ebfc549bbadfbd334a9343cc9bc83daf63",
+        "bytes": 653
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/blas/d1mach.f",
+        "filename": "d1mach.f",
+        "extract": false,
+        "sha256": "4284086126220923bcee0b6cfda533c7d60094fdfa8dd5a7e211158d19b0a13a",
+        "bytes": 7523
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/blas/r1mach.f",
+        "filename": "r1mach.f",
+        "extract": false,
+        "sha256": "4df83453a46590557d36131cfa9c0f08fa1c6b6e671831a96ea166825eb39ca2",
+        "bytes": 7861
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/linpack/dgtsl.f",
+        "filename": "dgtsl.f",
+        "extract": false,
+        "sha256": "029508251a8fa54de81b25479064ed944904b8fe193c194766c860d6e415cc6e",
+        "bytes": 3240
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/linpack/sgtsl.f",
+        "filename": "sgtsl.f",
+        "extract": false,
+        "sha256": "d877a7b996fce08176ab82e2ef73389c3016f1e6c84e1448d88d147afc2e2208",
+        "bytes": 3165
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "netlib.org/quadpack"
+  },
+  "hashes": {
+    "tree_sha256": "36fcd9b89b93a2c342cca1cd2e6b1d5e645164eaa47b898e2bd84217e6aaec7e",
+    "n_files": 77,
+    "bytes": 712929,
+    "artifacts": [
+      {
+        "filename": "dqag.f",
+        "sha256": "625267148a1282a43ae348282cd8ff2bc794103eef4ed02c6e6f296a097d6809",
+        "commit": null
+      },
+      {
+        "filename": "dqage.f",
+        "sha256": "1a66c327d0f5614149561e682809aed23c0e047c60d25d598b2596ded8ab27bd",
+        "commit": null
+      },
+      {
+        "filename": "dqagi.f",
+        "sha256": "b95b73b8e101efd13ff4f815538eb5ce22ccccdb9f5f9aa3781de8059949d85f",
+        "commit": null
+      },
+      {
+        "filename": "dqagie.f",
+        "sha256": "7cf2ff5c185ddeb930eb106f91e4a19fd0f49fcee9c113da7af621f152be75b2",
+        "commit": null
+      },
+      {
+        "filename": "dqagp.f",
+        "sha256": "d6486bfe67fcceff8aaf56a6c4e4509b1f511f6c1a251885b00ee01db8119417",
+        "commit": null
+      },
+      {
+        "filename": "dqagpe.f",
+        "sha256": "f21cacb31ba7011b6723347651f5b8801ea85d224fe01791090ca1a55a7604d8",
+        "commit": null
+      },
+      {
+        "filename": "dqags.f",
+        "sha256": "53642bc1c5a0d83a3d2f4ce4d05355ceb6198ea4ae86dab3ddb532a4c671490c",
+        "commit": null
+      },
+      {
+        "filename": "dqagse.f",
+        "sha256": "6d1c3ae36964cfd904a5bc5282f4c87431ed2a1fa4531dc25be9ae8041aaecac",
+        "commit": null
+      },
+      {
+        "filename": "dqawc.f",
+        "sha256": "39b517b9035ba275f96914dc8f22c1b50b9a949f4e9908c32665d2157fedc504",
+        "commit": null
+      },
+      {
+        "filename": "dqawce.f",
+        "sha256": "6ffbe8bded7f694d193c69bd93e013b225ad00012b7803efe2bbfb78c97b3553",
+        "commit": null
+      },
+      {
+        "filename": "dqawf.f",
+        "sha256": "57cdbfc874ff9968127280ba0d2040102d02e0a30999f090c47b0bceeec38f47",
+        "commit": null
+      },
+      {
+        "filename": "dqawfe.f",
+        "sha256": "db17d6a68309fbea13e56540a85ab5eb23ce8419d238bef3a7fbb676a5307a2e",
+        "commit": null
+      },
+      {
+        "filename": "dqawo.f",
+        "sha256": "8f539df18583f18174d67faada656668be39a6a27289d342fb64702135bbc3d0",
+        "commit": null
+      },
+      {
+        "filename": "dqawoe.f",
+        "sha256": "e7b9be59564a68fbecc9d63c79d8255ca111edbbe7865e5613e2e13af996b01c",
+        "commit": null
+      },
+      {
+        "filename": "dqaws.f",
+        "sha256": "70fbe1e22555656294a6920b96caadd569e41f693cc786e8070080845c3c227a",
+        "commit": null
+      },
+      {
+        "filename": "dqawse.f",
+        "sha256": "b0b93b1be93723d0ca49f0a27dee6475ffff642ac8b28f27013abecabc2cde8d",
+        "commit": null
+      },
+      {
+        "filename": "dqc25c.f",
+        "sha256": "f03eae211283443a72fca917eff77d2ba7d8ba4a6e0d449209377270ce56affd",
+        "commit": null
+      },
+      {
+        "filename": "dqc25f.f",
+        "sha256": "3500852e5124eba6afce29b14767a506377d994a0935e7acc3762646b250d38e",
+        "commit": null
+      },
+      {
+        "filename": "dqc25s.f",
+        "sha256": "46fabca20a1a5a317c6d0a058e71687956c44a0d5582baa6084ee64a4be59820",
+        "commit": null
+      },
+      {
+        "filename": "dqcheb.f",
+        "sha256": "458429c0d98495cda32897ce02b3e48bf09e54728615659e221c9f9439138ae6",
+        "commit": null
+      },
+      {
+        "filename": "dqelg.f",
+        "sha256": "1a0cdbaed8ab0b95c56e50e8359ee48282030b178330819b8907f021819923c4",
+        "commit": null
+      },
+      {
+        "filename": "dqk15.f",
+        "sha256": "471664a145516508ce6147f1a425d7d3d7f3afe50fd9584ffff020749f534276",
+        "commit": null
+      },
+      {
+        "filename": "dqk15i.f",
+        "sha256": "3998968b2c246fa2c5157121b274464969dcfb2b30d6000b8d5680297ab1a65d",
+        "commit": null
+      },
+      {
+        "filename": "dqk15w.f",
+        "sha256": "8a22cc286fb75524f42486d735e26c0241b0470c7fffe98ac57606f26089a0dd",
+        "commit": null
+      },
+      {
+        "filename": "dqk21.f",
+        "sha256": "4f89799878f42504549e952bf999d5e80e5253096a77dfe074f6353a92cceed7",
+        "commit": null
+      },
+      {
+        "filename": "dqk31.f",
+        "sha256": "72017e6f65cd3ee9b49ed067962fd0254d077fa735821929aa46cdba30b75e9d",
+        "commit": null
+      },
+      {
+        "filename": "dqk41.f",
+        "sha256": "3cc35dfb473cd7ccd7525307a698bfab99f4e3c509f541fa7afe706e80e92489",
+        "commit": null
+      },
+      {
+        "filename": "dqk51.f",
+        "sha256": "a0ff6ad1b7cf30a4454494ed9fc1eddfefdb8fa12e8f0d8c173444616b13b55c",
+        "commit": null
+      },
+      {
+        "filename": "dqk61.f",
+        "sha256": "39decfe58e8892e38e58827335306b0ebbf04d6fb4d701f68edbac8857ee0f72",
+        "commit": null
+      },
+      {
+        "filename": "dqmomo.f",
+        "sha256": "2f16f8261d01380a87dfe8aef9b80af9ff3aab69f38e7c3c9088391375c80477",
+        "commit": null
+      },
+      {
+        "filename": "dqng.f",
+        "sha256": "6bf53c95855a25712d4189b15b01bf898b12d5ed5f68429b14ae31022c954a13",
+        "commit": null
+      },
+      {
+        "filename": "dqpsrt.f",
+        "sha256": "5ca2446ce3cfedd1f222fed695c4985cfd034d0586f55da7da2d7342c7fcfcd4",
+        "commit": null
+      },
+      {
+        "filename": "dqwgtc.f",
+        "sha256": "12d830f621245e1f2ef24a17b0f4481dc123b55a6f9e20f28adea6c8bdb68c23",
+        "commit": null
+      },
+      {
+        "filename": "dqwgtf.f",
+        "sha256": "6894da2afec55d562fd0a8f28f60a5e656afb46ad8b82a6971f5f8b56609ce96",
+        "commit": null
+      },
+      {
+        "filename": "dqwgts.f",
+        "sha256": "fcdb0a63e566f140bb13b3d4c52db37439901164ffcfcc02843e482d1bbab358",
+        "commit": null
+      },
+      {
+        "filename": "qag.f",
+        "sha256": "f7624cb874fc473c17645379459c628c02ff8f497352e8b381560b1033de7226",
+        "commit": null
+      },
+      {
+        "filename": "qage.f",
+        "sha256": "86478dcedfec4789bf3e6d3e885c6081d60ae99a9e3901ad8fae90d9e226dfa0",
+        "commit": null
+      },
+      {
+        "filename": "qagi.f",
+        "sha256": "d5426cde3e3c082d1b1728ed00323ddcbfa6cc971d312266538d18913a8f9d75",
+        "commit": null
+      },
+      {
+        "filename": "qagie.f",
+        "sha256": "6b86e27611cf41a6fe48c4c8c84f9b4827b5454b25328d53768739d4896612cd",
+        "commit": null
+      },
+      {
+        "filename": "qagp.f",
+        "sha256": "28f02885cafe62b5109b6602bf1849b6d9eb5f3f85697060d6e9ac0d4fa81e51",
+        "commit": null
+      },
+      {
+        "filename": "qagpe.f",
+        "sha256": "81aa43193842579d25b07742fe720e9673ed9e6b7f84194de2b9c56075f608b0",
+        "commit": null
+      },
+      {
+        "filename": "qags.f",
+        "sha256": "6558f1609c979586583945d60ef3e37c3b6e9addbaaa82f8cd92461973e80f48",
+        "commit": null
+      },
+      {
+        "filename": "qagse.f",
+        "sha256": "7ad32600ad8e4feb7cc676178ca64218487a706ee818c6739ee741977a762985",
+        "commit": null
+      },
+      {
+        "filename": "qawc.f",
+        "sha256": "361a008fc316bd4392d9d061c6cc4989f0b4d1bfdee3f5234d85d363b8756bca",
+        "commit": null
+      },
+      {
+        "filename": "qawce.f",
+        "sha256": "57696a18b25055502b365727f7558ec459f38ec7c5b3702c4a35e387c587271b",
+        "commit": null
+      },
+      {
+        "filename": "qawf.f",
+        "sha256": "bfd140534c42ae2a98b09352c236e0ddd5903b45d90e59cb1732294390ba12b4",
+        "commit": null
+      },
+      {
+        "filename": "qawfe.f",
+        "sha256": "d8b415bdf99d1a23816adb766a2c0ddde0f31b6cd9ddfa8f77a947479b8828fe",
+        "commit": null
+      },
+      {
+        "filename": "qawo.f",
+        "sha256": "c6a48273bdb9c20e83776904a4ab873d6a5756395a22abc9f7d03ff094c6d5ec",
+        "commit": null
+      },
+      {
+        "filename": "qawoe.f",
+        "sha256": "79f890c164d8075c83636dd5f4e464cf0086afbd6badd07176d4949604dffe29",
+        "commit": null
+      },
+      {
+        "filename": "qaws.f",
+        "sha256": "01bcc620a35a4123d918ecaccd267be9dd560afba387022437acd8244369f50f",
+        "commit": null
+      },
+      {
+        "filename": "qawse.f",
+        "sha256": "e6761850158dccd9b9f9a4b94053bd2e01758b13989cbe6df9a7084b583b74ca",
+        "commit": null
+      },
+      {
+        "filename": "qc25c.f",
+        "sha256": "b74a41a1d97771ae0d81067413a291c3c7dea9178d6e5682c68c47d1fd15fc10",
+        "commit": null
+      },
+      {
+        "filename": "qc25f.f",
+        "sha256": "bed0acd3886f8bf34bb4999744aa2e20e0f2af9341432b95ffbe91720eace762",
+        "commit": null
+      },
+      {
+        "filename": "qc25s.f",
+        "sha256": "ed799eb8715dc2f3d00f8d0bad6b6e8442e467e29babe1525c2ed86edf5a1598",
+        "commit": null
+      },
+      {
+        "filename": "qcheb.f",
+        "sha256": "af3fe889fa8b48a9e98e19f675a69221a6de3df9adb8686c3e5d5eabe2b5299d",
+        "commit": null
+      },
+      {
+        "filename": "qelg.f",
+        "sha256": "29d6c5f472ed9d01a248fe0c0b9b647089c95176ba7b51a57ab9544cdda3271e",
+        "commit": null
+      },
+      {
+        "filename": "qk15.f",
+        "sha256": "e7d54ae07615a4f0e229c0d90ea22eefe5b66b7c12870509dd0c70c8ab82f5d2",
+        "commit": null
+      },
+      {
+        "filename": "qk15i.f",
+        "sha256": "70c0d97cecee91de64ecaa256de499f9f68b60b9ef25f8168f8999e307eb4db4",
+        "commit": null
+      },
+      {
+        "filename": "qk15w.f",
+        "sha256": "6f8316250c61b7902a5d2cd38b4bdb4dc89e5885ff012c47f56f6f1376808d91",
+        "commit": null
+      },
+      {
+        "filename": "qk21.f",
+        "sha256": "768d1a936047e6bc56cd16408c4b95c689e1dc50482421a306b5937b95f8897f",
+        "commit": null
+      },
+      {
+        "filename": "qk31.f",
+        "sha256": "fbc83ebdf40fd4617bd08639cf0412a6d7bbe506d815fc8e3a8282599457f5da",
+        "commit": null
+      },
+      {
+        "filename": "qk41.f",
+        "sha256": "8b4a0b1cfd38ee3e428e59a0f78f1e1d4515404de8ed92cdd9c6aaae6fb46083",
+        "commit": null
+      },
+      {
+        "filename": "qk51.f",
+        "sha256": "1fcab48ba5674f8178e2d10b272c1a2bd8e31500e72aa4b9ae2ae71cdf83f187",
+        "commit": null
+      },
+      {
+        "filename": "qk61.f",
+        "sha256": "8cfb0a7647d29394eb0170ed549bf87b3f5cffd18b261e630ca004641ab7aeb6",
+        "commit": null
+      },
+      {
+        "filename": "qmomo.f",
+        "sha256": "cfa288732576a2f363e77e65fb075861eb893ccc01c0ad133349132c5bd506e5",
+        "commit": null
+      },
+      {
+        "filename": "qng.f",
+        "sha256": "151231080c8bbdd2aab818772040ec96d80eede65f9a6ced6d13068535f345ab",
+        "commit": null
+      },
+      {
+        "filename": "qpsrt.f",
+        "sha256": "1e0fbd6c2a4f1c25ee5e16fe64f5cfb6751f99642934ecb488ad605d33b7643d",
+        "commit": null
+      },
+      {
+        "filename": "qwgtc.f",
+        "sha256": "c584efde7942ffdeff22ff61c34841fdc6c998d96a489caa5d5191f0e3634e8e",
+        "commit": null
+      },
+      {
+        "filename": "qwgtf.f",
+        "sha256": "c5f6ca16f50e361d3d9a71695b6648b5aac2609e009b8cb78bb35aea1ae4a81d",
+        "commit": null
+      },
+      {
+        "filename": "qwgts.f",
+        "sha256": "253f4f18aca55affff57c1e12491a4f7ab353ab4db156061c1956b741fb452bd",
+        "commit": null
+      },
+      {
+        "filename": "readme",
+        "sha256": "1b793978aaf78ac8b5a3149c312ad69e66d740b0be4445294a24828016167d06",
+        "commit": null
+      },
+      {
+        "filename": "doc",
+        "sha256": "6bccfa84cd1b61e13a5583f8aaa825c88dcafc6fdfed949eef18f95f3ab41979",
+        "commit": null
+      },
+      {
+        "filename": "changes",
+        "sha256": "066ff0e85592dbcb6ac716b60f3850ebfc549bbadfbd334a9343cc9bc83daf63",
+        "commit": null
+      },
+      {
+        "filename": "d1mach.f",
+        "sha256": "4284086126220923bcee0b6cfda533c7d60094fdfa8dd5a7e211158d19b0a13a",
+        "commit": null
+      },
+      {
+        "filename": "r1mach.f",
+        "sha256": "4df83453a46590557d36131cfa9c0f08fa1c6b6e671831a96ea166825eb39ca2",
+        "commit": null
+      },
+      {
+        "filename": "dgtsl.f",
+        "sha256": "029508251a8fa54de81b25479064ed944904b8fe193c194766c860d6e415cc6e",
+        "commit": null
+      },
+      {
+        "filename": "sgtsl.f",
+        "sha256": "d877a7b996fce08176ab82e2ef73389c3016f1e6c84e1448d88d147afc2e2208",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\quadpack-netlib",
+    "hash_list": "techne/fossils/specimens/quadpack-netlib/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "public-domain (netlib)",
+    "status": "unrestricted",
+    "evidence": "netlib distribution"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Fortran 77"
+  ],
+  "build_system": "gfortran per-routine; test driver where present",
+  "compiler_or_interpreter": "gfortran (WinLibs 15.2, native)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "the package's driver / test program where one is shipped; else the named routines"
+  ],
+  "example": {
+    "command": "see recipe.json",
+    "input": "the shipped test.f driver or a Techne driver",
+    "output": "the routine's results"
+  },
+  "environment": {
+    "runner": "native"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "netlib.org/quadpack"
+  ],
+  "human_capability_summary": {
+    "built_to": "numerically integrate a function of one variable, ADAPTING the subdivision to the estimated error (Gauss-Kronrod rules + epsilon extrapolation), including singular and infinite ranges",
+    "pressure": "an integrand whose difficulty varies across the interval; fixed rules waste effort or miss features, so the routine spends evaluations where the estimated error is largest",
+    "success_means": "the returned integral is within the requested absolute/relative tolerance, with a returned error estimate; QUADPACK's own test battery"
+  },
+  "known_human_problem_solved": "Piessens/de Doncker adaptive quadrature (1983)",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152132Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152213Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152424Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152540Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152641Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\quadpack-netlib ; tracked techne/fossils/specimens/quadpack-netlib/",
+    "where_it_came_from": "{'archive': 'netlib.org/quadpack'} ; HISTORICAL_ARCHIVE_MIRROR ; public-domain (netlib)",
+    "how_to_run_it": "recipe.json (runner native); python -m techne.fossils.harvest run quadpack-netlib",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152641Z.json",
+    "what_humans_used_it_for": "numerically integrate a function of one variable, ADAPTING the subdivision to the estimated error (Gauss-Kronrod rules + epsilon extrapolation), including singular and infinite ranges"
+  },
+  "seat": "Techne"
+}

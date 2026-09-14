@@ -1,0 +1,262 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "padasip-1.2.2",
+  "receipt_id": "run-padasip-1.2.2-20260912T214445Z",
+  "written_utc": "20260912T214445Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/padasip-1.2.2",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "identify.py": "312a72716fbadd22f6d77e4e0ed4d8f5b9389bd79746ac7e971a26d65d60d9e4"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "843358e3a62ec8653536c70a7643f346053c661288287c1a303596792c371ab8",
+  "recipe_sha256": "4287c4b0bb9ca8fe5cd8362c4a6a2860a34c0021a330316e30012e8b0191e771",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 7.31,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "identify (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/identify.py",
+      "exit": 0,
+      "seconds": 7.9,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "NLMS before-change w=[ 0.498 -0.299  0.2    0.099] err=0.0017 | after-change w=[-0.204  0.403  0.097 -0.299] err=0.0039\nRLS before-change w=[ 0.5   -0.301  0.201  0.1  ] err=0.0011 | after-change w=[-0.2    0.399  0.099 -0.301] err=0.0012\nRESULT OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "build/lib/padasip/__init__.py",
+      "sha256": "b68551f368ba4eed9e88c18522d9625e9025daa0a9ee54cba64b2aac5f5897c2",
+      "bytes": 2002
+    },
+    {
+      "path": "build/lib/padasip/ann/__init__.py",
+      "sha256": "5579b62bfd9a86368ddee12c95068935368d010c27225ebfd2b22f22c6df4988",
+      "bytes": 171
+    },
+    {
+      "path": "build/lib/padasip/ann/mlp.py",
+      "sha256": "263948ddc468cc7dc5b73228ed2bd390b07d979587627e25302db99e465928ff",
+      "bytes": 13773
+    },
+    {
+      "path": "build/lib/padasip/detection/__init__.py",
+      "sha256": "b1a025bb290c02a63aaba2992ff0f5e5a7e81746b0bf344cf3ad529bce48ec47",
+      "bytes": 764
+    },
+    {
+      "path": "build/lib/padasip/detection/elbnd.py",
+      "sha256": "5ca3b7f8591b6a61ea5fdc61f9b329398ea9699e9176b8423c2dc9b6a959261d",
+      "bytes": 3350
+    },
+    {
+      "path": "build/lib/padasip/detection/ese.py",
+      "sha256": "f300d0ca1d271229da12e9acc247e7d3dac271a6bfae689a3671aee2cb45cae3",
+      "bytes": 4062
+    },
+    {
+      "path": "build/lib/padasip/detection/le.py",
+      "sha256": "10217379cf407ae88a5ac17dc99a4ddb1ebf47485c7f3b087617b50286baa45d",
+      "bytes": 5814
+    },
+    {
+      "path": "build/lib/padasip/filters/__init__.py",
+      "sha256": "8165710ce479d8e6f3837b8e42a2f7352d6b7bbb0555dfd29ea5bf72d4abe931",
+      "bytes": 8412
+    },
+    {
+      "path": "build/lib/padasip/filters/ap.py",
+      "sha256": "963c500bf17fa19900209a921584f7a24c9c608903b9af75380093ac91a53265",
+      "bytes": 4827
+    },
+    {
+      "path": "build/lib/padasip/filters/base_filter.py",
+      "sha256": "48b3eccddaabd4c532aaa8a889c33dba57b18832dccd4c45a055952925f9d1ee",
+      "bytes": 9726
+    },
+    {
+      "path": "build/lib/padasip/filters/gmcc.py",
+      "sha256": "d7bf68a296d15b745b75e15155c47de1a7cd0a7a0b2b3894a748283160fd56f4",
+      "bytes": 2217
+    },
+    {
+      "path": "build/lib/padasip/filters/gngd.py",
+      "sha256": "cc0ed336b59f500917819b03ce9e6af4faee17206c52b887fae7fc4fd31ae278",
+      "bytes": 2464
+    },
+    {
+      "path": "build/lib/padasip/filters/llncosh.py",
+      "sha256": "8ecf342d833017c73a993574e5f7da3d0d8b1d971ef4aa1a198d783f7598d01d",
+      "bytes": 2312
+    },
+    {
+      "path": "build/lib/padasip/filters/lmf.py",
+      "sha256": "fb00a29edb98d562c1e2c531cdcd030d484a50bee7d63ae0bcf3aac1520e9c6f",
+      "bytes": 2547
+    },
+    {
+      "path": "build/lib/padasip/filters/lms.py",
+      "sha256": "77810205c6424714f4a36ccb8fb2c22a2328117e524918dd298f281ed69dbde3",
+      "bytes": 4414
+    },
+    {
+      "path": "build/lib/padasip/filters/nlmf.py",
+      "sha256": "c62a97c17800689a38539e15e47a408c155af9ffdb3a84779a9a0e601c3c4acd",
+      "bytes": 2713
+    },
+    {
+      "path": "build/lib/padasip/filters/nlms.py",
+      "sha256": "72e6b041e25c9b8a034c4c9858b61d5edd47d857022554bb047d3945034b9f7d",
+      "bytes": 4580
+    },
+    {
+      "path": "build/lib/padasip/filters/nsslms.py",
+      "sha256": "46ad428a3236049b310d6b7e343afc9d39e59ee732ad5815115200a4c1e755c6",
+      "bytes": 2765
+    },
+    {
+      "path": "build/lib/padasip/filters/ocnlms.py",
+      "sha256": "097a37845e483872750d63df71e8181990c2bab09a45abcb9a40a7ed56317e37",
+      "bytes": 5088
+    },
+    {
+      "path": "build/lib/padasip/filters/rls.py",
+      "sha256": "4ef765ec05a459c961546980a766bcd2f3de165dff543cdacc58ceb0358e842c",
+      "bytes": 5154
+    },
+    {
+      "path": "build/lib/padasip/filters/sslms.py",
+      "sha256": "27d3fdc6575f0b23ac98a67f4c3b044fbb0454591f3662d240cde19ab5e86ad0",
+      "bytes": 2593
+    },
+    {
+      "path": "build/lib/padasip/filters/vslms_ang.py",
+      "sha256": "311675e7f6121dfde95a8fa5a60a7cf5bd871e9e40beac9398bcaea49e96bfb4",
+      "bytes": 2667
+    },
+    {
+      "path": "build/lib/padasip/filters/vslms_benveniste.py",
+      "sha256": "7b91eb9d987371d9cd529f7caa05b56d2c12dfb1aa36b181c7d49b49d9f05864",
+      "bytes": 2661
+    },
+    {
+      "path": "build/lib/padasip/filters/vslms_mathews.py",
+      "sha256": "7b0fe685e48da123cf88402a4a1344413e5bf4f7faf0797ed887c3b38f0b10cb",
+      "bytes": 2423
+    },
+    {
+      "path": "build/lib/padasip/misc/__init__.py",
+      "sha256": "849368680d7efe65ae2549fa2c2301cde81f4c5a674ef11d80d08468dac25ab7",
+      "bytes": 249
+    },
+    {
+      "path": "build/lib/padasip/misc/error_evaluation.py",
+      "sha256": "e921c4f2982ae7e1311df6fdea7058c6b8c15866e4fda82ec917ec4984820f42",
+      "bytes": 5833
+    },
+    {
+      "path": "build/lib/padasip/preprocess/__init__.py",
+      "sha256": "6afe4e2217001e97ce0002514dd3a498d9bb6d3df76ddb70dcdd49309c3595a2",
+      "bytes": 380
+    },
+    {
+      "path": "build/lib/padasip/preprocess/input_from_history.py",
+      "sha256": "5a98b47a49c216a7025a5cd268ce1eb55cac45d675d3080d223f77a687fac2f3",
+      "bytes": 1914
+    },
+    {
+      "path": "build/lib/padasip/preprocess/lda.py",
+      "sha256": "86a225aae837f3c67508c8a2561fc687ef2f77b1704518e66d01071074849148",
+      "bytes": 5736
+    },
+    {
+      "path": "build/lib/padasip/preprocess/pca.py",
+      "sha256": "72c4ae4c217f385e7ab02b462aac14ad769eeff38a71d272928a3d4705bb1a8a",
+      "bytes": 3361
+    },
+    {
+      "path": "build/lib/padasip/preprocess/standardize.py",
+      "sha256": "8ccf4d83aec2aae9ab0e38d6c1e70dc44d5cd5285fc356be0bc36ccc86cb4cf3",
+      "bytes": 2215
+    },
+    {
+      "path": "build/lib/padasip/preprocess/standardize_back.py",
+      "sha256": "c4e5b889bd4a668dcc291873efda24bf70d043497782a8973a44e61d24eb8d30",
+      "bytes": 1310
+    },
+    {
+      "path": "padasip.egg-info/dependency_links.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    {
+      "path": "padasip.egg-info/PKG-INFO",
+      "sha256": "1f9a530f3c16420d85dcf2c353b80de7e6ce88038f86e83e326fb3938a7b581b",
+      "bytes": 3149
+    },
+    {
+      "path": "padasip.egg-info/requires.txt",
+      "sha256": "e09f656c130b9c08b2c5ab7187c891295e449ed77febea2a6ceee9cc98ccb0fc",
+      "bytes": 6
+    },
+    {
+      "path": "padasip.egg-info/SOURCES.txt",
+      "sha256": "e90e902b2b03130ebc4e3eef69ac2ca885565e15e72d7f07ce45f9e41139d057",
+      "bytes": 1067
+    },
+    {
+      "path": "padasip.egg-info/top_level.txt",
+      "sha256": "03e7c5d7b4bd3e27481dee34a6602953b3baa94166760eeff5291c576bc1c174",
+      "bytes": 8
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "843358e3a62ec8653536c70a7643f346053c661288287c1a303596792c371ab8",
+  "body_preserved": true
+}

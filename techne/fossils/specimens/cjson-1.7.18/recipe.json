@@ -1,0 +1,48 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/cJSON-1.7.18",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile cJSON + Techne's parse-all driver under AddressSanitizer",
+      "cmd": "gcc -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -I. -o $BODY/build/parse_all cJSON.c $HARNESS/parse_all.c 2>&1 | grep -iE '\\berror' | head -3; test -x $BODY/build/parse_all && echo built"
+    }
+  ],
+  "runs": [
+    {
+      "name": "the valid seed parses",
+      "cmd": "$BODY/build/parse_all $HARNESS/seed.json",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "parsed=1",
+          "crashed=0"
+        ]
+      },
+      "timeout": 120
+    },
+    {
+      "name": "ADVERSARIAL: 200 radamsa-mutated cases; every one must parse or be rejected, none may crash (ASan/UBSan)",
+      "cmd": "$BODY/build/parse_all $HARNESS/cases/*.json 2>&1 | tail -3",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "crashed=0"
+        ],
+        "stdout_regex": "rejected=[1-9]"
+      },
+      "timeout": 300
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "PAIR half 2 (response). Cases are the tracked output of radamsa-0.6 (seed 1). A crash would appear as an ASan report and a non-zero exit."
+}

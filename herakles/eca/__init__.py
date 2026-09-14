@@ -13,4 +13,7 @@ from .core import (  # noqa: F401
     derive_constant_zero, derive_constant_one, derive_identity,
     derive_shift_left, derive_shift_right, derive_xor_neighbours,
     HAND_DERIVED,
+    make_ics, density, adjacent_pairs, block_output_correct,
+    block_output_score, uniform_at_T_correct, uniform_at_T_score,
+    planted_block_configuration,
 )

@@ -1,0 +1,44 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile driver against the header library",
+      "cmd": "g++ -O2 -std=c++17 -Iinclude -o $BODY/lru $HARNESS/drv.cpp 2>&1 | grep -i 'error:' | head -5; test -x $BODY/lru"
+    }
+  ],
+  "runs": [
+    {
+      "name": "LRU evicts the least-recently-inserted key",
+      "cmd": "$BODY/lru",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "LRU_EVICT_OK"
+        ]
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "pathological: working set >> capacity thrashes (hit rate -> 0)",
+      "cmd": "$BODY/lru",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "LRU_THRASH_CONFIRMED"
+        ]
+      }
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle for eviction: key 1 (least-recently-inserted; lookup does not reorder in this library) is dropped. The thrash run is the FAILURE-axis receipt: a working set of 1000 against capacity 10 collapses the hit rate under 5%."
+}

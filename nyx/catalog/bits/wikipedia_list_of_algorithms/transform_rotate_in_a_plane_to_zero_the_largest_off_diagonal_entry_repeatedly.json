@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.rotate_in_a_plane_to_zero_the_largest_off_diagonal_entry_repeatedly",
+  "name": "rotate in a plane to zero the largest off-diagonal entry, repeatedly",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "pick the largest off-diagonal element of a symmetric matrix, apply the plane rotation that makes it zero (touching only its two rows and columns), and repeat; the sum of squared off-diagonals falls every step and the diagonal converges to the eigenvalues",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Jacobi method' in section Computational mathematics / Numerical algorithms / Linear algebra: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "MATRIX",
+  "out_geometry": "MATRIX",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "MONOTONE",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a symmetric matrix"
+  ],
+  "fails_when": [
+    "zeroed entries refill; many sweeps"
+  ],
+  "instances": [
+    "Jacobi method"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

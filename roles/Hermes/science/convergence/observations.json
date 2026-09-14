@@ -1,0 +1,335 @@
+{
+  "_doc": [
+    "Failure Convergence Probe -- the dataset. Hermes, 2026-09-11.",
+    "",
+    "Five historical cases in which more than one seat independently met",
+    "substantially the same underlying failure. Each OBSERVATION is what that",
+    "seat actually had AT THE POINT OF FAILURE -- the exception text, the exit",
+    "code, the empty result -- transcribed from its committed record, with the",
+    "file and line it came from. Nothing here is a diagnosis. Where a seat's",
+    "record only preserves a paraphrase, that is marked and the row is excluded",
+    "from exact-match scoring.",
+    "",
+    "The discipline this dataset exists to enforce: a signature may only read",
+    "fields present in `observed`. Anything in `diagnosis` is what the seat",
+    "worked out afterwards and is NOT available when the record is created.",
+    "That separation is the whole experiment; a probe that reads `diagnosis`",
+    "is measuring hindsight."
+  ],
+  "cases": [
+    {
+      "id": "CASE-A",
+      "class": "configuration / environment",
+      "title": "resolver reaches a database with the right name and the wrong identity",
+      "date": "2026-09-11",
+      "same_underlying_failure": true,
+      "why_same": "One cause: evidence_wiki/config.json ships db_host=localhost, and on M2 that is a fork of the canonical store. Established independently by four of the five observers before any of them saw the others.",
+      "observations": [
+        {
+          "observer": "Atalanta",
+          "command": "python -m comms sync Atalanta",
+          "observed": {
+            "exception_type": "psycopg2.errors.UndefinedTable",
+            "message": "relation \"comms.messages\" does not exist",
+            "exit_state": "raised"
+          },
+          "source": "roles/Atalanta/journal/2026-09-11.md:48",
+          "diagnosis": "resolver reached the M2 local fork"
+        },
+        {
+          "observer": "Eos",
+          "command": "python -m comms sync Eos",
+          "observed": {
+            "exception_type": "psycopg2.errors.UndefinedTable",
+            "message": "relation \"comms.messages\" does not exist",
+            "exit_state": "raised"
+          },
+          "source": "roles/Eos/journal/2026-09-11.md:32",
+          "diagnosis": "wrong database, not a missing schema"
+        },
+        {
+          "observer": "Coeus",
+          "command": "python -m comms boot Coeus",
+          "observed": {
+            "exception_type": "psycopg2.errors.UndefinedTable",
+            "message": "relation \"comms.agents\" does not exist",
+            "exit_state": "raised"
+          },
+          "source": "roles/Coeus/journal/2026-09-11.md:93",
+          "diagnosis": "would have forked the queue had init been run"
+        },
+        {
+          "observer": "Clymene",
+          "command": "python -m comms who",
+          "observed": {
+            "exception_type": "psycopg2.errors.UndefinedTable",
+            "message": "relation \"comms.agents\" does not exist",
+            "exit_state": "raised"
+          },
+          "source": "roles/Clymene/calibration/LEDGER.md:70",
+          "diagnosis": "connection succeeding is not reaching the right store"
+        },
+        {
+          "observer": "Hermes",
+          "command": "python -m comms boot Hermes",
+          "observed": {
+            "exception_type": "psycopg2.errors.UndefinedTable",
+            "message": "relation \"comms.agents\" does not exist",
+            "exit_state": "raised"
+          },
+          "source": "roles/Hermes/journal/2026-09-11.md:111",
+          "diagnosis": "local fork; refused to run comms init"
+        }
+      ]
+    },
+    {
+      "id": "CASE-B",
+      "class": "broken interface / contract",
+      "title": "comms boot refuses a seat whose roles/<Seat>/ directory does not exist yet",
+      "date": "2026-09-11",
+      "same_underlying_failure": true,
+      "why_same": "One cause: comms.api.roster() enumerates roles/*, so a seat is unaddressable until its directory is committed, while comms sync accepts it. Recorded as a known asymmetry in Archaeon's ruling #39.",
+      "observations": [
+        {
+          "observer": "Arachne",
+          "command": "python -m comms boot Arachne",
+          "observed": {
+            "exception_type": "ValueError",
+            "message": "unknown agent 'Arachne'",
+            "exit_state": "raised"
+          },
+          "source": "roles/Arachne/journal/2026-09-11.md:22",
+          "diagnosis": "roster is roles/*"
+        },
+        {
+          "observer": "Clymene",
+          "command": "python -m comms boot Clymene",
+          "observed": {
+            "exception_type": "ValueError",
+            "message": "unknown agent 'Clymene'",
+            "exit_state": "raised"
+          },
+          "source": "roles/Clymene/journal/2026-09-11.md:50",
+          "diagnosis": "roles/Clymene did not exist yet"
+        },
+        {
+          "observer": "Pheme",
+          "command": "python -m comms boot Pheme",
+          "observed": {
+            "exception_type": "ValueError",
+            "message": "unknown agent 'Pheme'",
+            "exit_state": "raised"
+          },
+          "source": "roles/Pheme/journal/2026-09-11.md:38",
+          "diagnosis": "correct refusal"
+        },
+        {
+          "observer": "Polyhymnia",
+          "command": "python -m comms boot Polyhymnia",
+          "observed": {
+            "exception_type": "ValueError",
+            "message": "unknown agent 'Polyhymnia'",
+            "exit_state": "raised"
+          },
+          "source": "roles/Polyhymnia/journal/2026-09-11.md:38",
+          "diagnosis": "the roster is roles/*"
+        },
+        {
+          "observer": "Rhadamanthus",
+          "command": "python -m comms boot Rhadamanthus",
+          "observed": {
+            "exception_type": "ValueError",
+            "message": "unknown agent 'Rhadamanthus'",
+            "exit_state": "raised"
+          },
+          "source": "roles/Rhadamanthus/journal/2026-09-11.md:36",
+          "paraphrased": true,
+          "paraphrase_note": "the journal records \"unknown agent\" without the quoted seat name; reconstructed form assumed identical in shape, and the row is excluded from exact-match scoring",
+          "diagnosis": "roles/Rhadamanthus/ absent"
+        },
+        {
+          "observer": "Talos",
+          "command": "python -m comms boot Talos",
+          "observed": {
+            "exception_type": "ValueError",
+            "message": "unknown agent 'Talos'",
+            "exit_state": "raised"
+          },
+          "source": "roles/Talos/journal/2026-09-11.md:44",
+          "diagnosis": "refused before roles/Talos existed"
+        },
+        {
+          "observer": "Hermes",
+          "command": "python -m comms boot Hermes",
+          "observed": {
+            "exception_type": "ValueError",
+            "message": "unknown agent 'Hermes'",
+            "exit_state": "raised"
+          },
+          "source": "roles/Hermes/journal/2026-09-11.md:107",
+          "diagnosis": "roster derived from roles/*"
+        }
+      ]
+    },
+    {
+      "id": "CASE-C",
+      "class": "tooling / silent-drop contract",
+      "title": "an artifact the base role mandates is written into a gitignored path",
+      "date": "2026-09-11 (and earlier)",
+      "same_underlying_failure": false,
+      "why_same": "CORRECTED 2026-09-11, by this probe, against its author. Originally labelled same_underlying_failure=true because a human reader sees one family: 'a mandated artifact path is gitignored'. The signatures refused to converge them and were right. journal/ at .gitignore:275 and archive/ at .gitignore:89 are two different defects needing two different edits; Vivarium's fix would not have fixed Ergon's. The original label was exactly the hindsight equivalence the operator's brief forbids, and it was made by the seat running the probe.",
+      "observations": [
+        {
+          "observer": "Vivarium",
+          "command": "git add roles/Vivarium/journal/2026-09-11.md",
+          "observed": {
+            "exception_type": "NoError",
+            "message": "git check-ignore -q roles/<Seat>/journal/ returns 0 for every seat tested",
+            "exit_state": "silent_success",
+            "ignored_path": "roles/Vivarium/journal/",
+            "gitignore_line": 275,
+            "gitignore_rule": "journal/"
+          },
+          "source": "commit aee89ff8b message",
+          "diagnosis": "base role mandates a directory .gitignore drops for all 27 seats"
+        },
+        {
+          "observer": "Ergon",
+          "command": "write roles/Ergon/archive/<superseded file>",
+          "observed": {
+            "exception_type": "NoError",
+            "message": "git check-ignore -q roles/<Seat>/archive/ returns 0 for every seat",
+            "exit_state": "silent_success",
+            "ignored_path": "roles/Ergon/archive/",
+            "gitignore_line": 89,
+            "gitignore_rule": "archive/"
+          },
+          "source": "commit 772edf15e message",
+          "diagnosis": "same class as Vivarium's; used superseded/ instead and reported it"
+        },
+        {
+          "observer": "(unnamed, earlier)",
+          "command": "write the qualification harness output",
+          "observed": {
+            "exception_type": "NoError",
+            "message": "evidence written into an ignored directory; caught only because somebody went looking",
+            "exit_state": "silent_success",
+            "ignored_path": "unrecorded",
+            "gitignore_line": null,
+            "gitignore_rule": null
+          },
+          "source": "commit 30e2c3022, cited in aee89ff8b's message",
+          "paraphrased": true,
+          "paraphrase_note": "no point-of-failure artifact survives; only Vivarium's retrospective mention. Row is kept because excluding it would flatter the result, and it is scored as UNSIGNABLE.",
+          "diagnosis": "unknown at the time"
+        }
+      ],
+      "label_corrected": true
+    },
+    {
+      "id": "CASE-D",
+      "class": "stale assumption / upstream liveness",
+      "title": "a loop was launched against an input that had stopped or never existed",
+      "date": "2026-05 to 2026-09",
+      "same_underlying_failure": false,
+      "why_same": "Base rule 9 groups these four as one lesson. They are NOT one failure: four different loops consumed four different inputs that were absent for four different reasons. Included precisely to test whether the probe manufactures equivalence that a human reader can see but a signature cannot.",
+      "observations": [
+        {
+          "observer": "Pheme",
+          "command": "agents/pheme/daemon.py --loop",
+          "observed": {
+            "exception_type": "NoError",
+            "message": "UPSTREAM_NOT_FOUND",
+            "exit_state": "no_op",
+            "tick_count": 354,
+            "rows_produced": 0,
+            "missing_input": "ergon/learner/evals | ergon/evals | ergon/diagnostic_c/eval_runs"
+          },
+          "source": "roles/Pheme/QUEUE_ARCHAEOLOGY_2026-09-11.md:25; artifacts/354 upstream_not_found_*.json",
+          "diagnosis": "the eval root never existed"
+        },
+        {
+          "observer": "Talos",
+          "command": "agents/talos/daemon.py",
+          "observed": {
+            "exception_type": "NoError",
+            "message": "stream produced 0 examples",
+            "exit_state": "no_op",
+            "tick_count": 160,
+            "rows_produced": 0,
+            "missing_input": "apollo/runs"
+          },
+          "source": "roles/Talos/ARCHAEOLOGY_2026-09-11.md:23",
+          "diagnosis": "apollo/runs never existed"
+        },
+        {
+          "observer": "Atalanta",
+          "command": "the P47 loop",
+          "observed": {
+            "exception_type": "NoError",
+            "message": "no rows",
+            "exit_state": "no_op",
+            "tick_count": null,
+            "rows_produced": 0,
+            "missing_input": "the P47 upstream"
+          },
+          "source": "roles/Atalanta/prompts/2026-09-11_seat_adoption/REPORT_ARCHAEON_old_seat.md:68",
+          "paraphrased": true,
+          "paraphrase_note": "no point-of-failure artifact quoted in the record available to this probe",
+          "diagnosis": "upstream stopped"
+        },
+        {
+          "observer": "Moros",
+          "command": "the Moros loop",
+          "observed": {
+            "exception_type": "unrecorded",
+            "message": "external API upstream absent",
+            "exit_state": "no_op",
+            "tick_count": null,
+            "rows_produced": 0,
+            "missing_input": "an external API"
+          },
+          "source": "roles/Atalanta/prompts/2026-09-11_seat_adoption/REPORT_ARCHAEON_old_seat.md:68",
+          "paraphrased": true,
+          "paraphrase_note": "known only through Atalanta's summary; no Moros-side artifact was located",
+          "diagnosis": "external dependency"
+        }
+      ]
+    },
+    {
+      "id": "CASE-E",
+      "class": "process violation with no error signal",
+      "title": "git pull run in the canonical checkout before the contract forbidding it was read",
+      "date": "2026-09-11",
+      "same_underlying_failure": true,
+      "why_same": "One cause: a wake directive said 'pull the latest first' and D-23 s1/s3 forbid it; the contract is read at boot step 4, after the first command. Archaeon reworded the directive at its source.",
+      "observations": [
+        {
+          "observer": "Atalanta",
+          "command": "git pull",
+          "observed": {
+            "exception_type": "NoError",
+            "message": "Already up to date.",
+            "exit_state": "success",
+            "exit_code": 0
+          },
+          "source": "roles/Atalanta/calibration/LEDGER.md:79 (L-09)",
+          "diagnosis": "violated D-23 s1 and s3"
+        },
+        {
+          "observer": "Hermes",
+          "command": "git pull",
+          "observed": {
+            "exception_type": "NoError",
+            "message": "Already up to date.",
+            "exit_state": "success",
+            "exit_code": 0
+          },
+          "source": "roles/Hermes/calibration/CALIBRATION.md row 8",
+          "diagnosis": "violated D-23 s1 and s3"
+        }
+      ],
+      "specificity_note": "The observation is a SUCCESS ('Already up to date.', exit 0). CTL-4 shows the key also matches an entirely legitimate up-to-date fetch. High sensitivity, zero specificity: signable only in the sense that a key can be computed, not in the sense that the key means anything. Classified UNSIGNABLE by the specificity-aware classifier."
+    }
+  ]
+}

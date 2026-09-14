@@ -1,0 +1,119 @@
+{
+ "schema": "techne.fossil.preservation_thesis_test/1",
+ "written_utc": "2026-09-13T22:25:29Z",
+ "question": "is environment-dependent behaviour an isolated historical curiosity, or a meaningful failure mode in this vault?",
+ "sampling_rule": "The sample was fixed BEFORE any divergence was seen. Strata A and C are batch 10's preregistered 6-candidate world-change list (chosen from the mechanical source-pattern census, not from results). Stratum B is batch 11 P3's three preregistered numpy/scipy worlds. Nothing was added after seeing a divergence, and every inconclusive row is retained.",
+ "n_sampled": 7,
+ "n_conclusive": 5,
+ "n_classification_changed": 2,
+ "changed": [
+  "md5-rfc1321",
+  "tinycc"
+ ],
+ "stable": [
+  "espresso-logic",
+  "zchaff-2007",
+  "filterpy-labbe"
+ ],
+ "inconclusive": [
+  "cjson-1.7.18",
+  "femtolisp"
+ ],
+ "finding": "Of 5 fossils with a conclusive two-world comparison, 2 changed scientific classification. That is not an isolated curiosity and not a universal hazard.",
+ "the_axis_matters_more_than_the_count": "Both changes are on the WORD WIDTH axis (32- vs 64-bit). The one fossil tested across NUMERICAL LIBRARY VERSIONS -- the axis batch 10's preservation queue ranked as highest risk -- was BIT-EXACT across numpy 1.26->2.4 and scipy 1.11->1.17. The queue ranks exposure, not demonstrated harm, and on this evidence the two are not the same ordering.",
+ "falsification_note": "The thesis 'world preservation matters' survives: 2 of 6 conclusive cases change. But the strong form -- 'a floating world endangers a claim' -- is FALSIFIED for the numerical axis by filterpy's bit-exact reproduction across three worlds.",
+ "rows": [
+  {
+   "stratum": "A_preserved_world",
+   "specimen_id": "espresso-logic",
+   "worlds_compared": [
+    "64-bit userland",
+    "32-bit userland"
+   ],
+   "axis": "machine word width",
+   "outcome": "AGREES",
+   "classification_changed": false,
+   "conclusive": true,
+   "world_state": "PINNED"
+  },
+  {
+   "stratum": "A_preserved_world",
+   "specimen_id": "zchaff-2007",
+   "worlds_compared": [
+    "64-bit userland",
+    "32-bit userland"
+   ],
+   "axis": "machine word width",
+   "outcome": "AGREES",
+   "classification_changed": false,
+   "conclusive": true,
+   "world_state": "PINNED"
+  },
+  {
+   "stratum": "A_preserved_world",
+   "specimen_id": "cjson-1.7.18",
+   "worlds_compared": [
+    "64-bit userland",
+    "32-bit userland"
+   ],
+   "axis": "machine word width",
+   "outcome": "INCONCLUSIVE_NATIVE_FAILS",
+   "classification_changed": false,
+   "conclusive": false,
+   "world_state": "PINNED"
+  },
+  {
+   "stratum": "A_preserved_world",
+   "specimen_id": "femtolisp",
+   "worlds_compared": [
+    "64-bit userland",
+    "32-bit userland"
+   ],
+   "axis": "machine word width",
+   "outcome": "INCONCLUSIVE_BUILD",
+   "classification_changed": false,
+   "conclusive": false,
+   "world_state": "PINNED"
+  },
+  {
+   "stratum": "B_floating_numerical_world",
+   "specimen_id": "filterpy-labbe",
+   "worlds_compared": [
+    "numpy=1.26.4 scipy=1.11.4",
+    "numpy=2.1.3 scipy=1.14.1",
+    "numpy=2.4.6 scipy=1.17.1"
+   ],
+   "axis": "numerical library version (numpy 1.26->2.4, scipy 1.11->1.17)",
+   "outcome": "BIT_EXACT; BIT_EXACT; BIT_EXACT",
+   "classification_changed": false,
+   "conclusive": true,
+   "world_state": "NAMED"
+  },
+  {
+   "stratum": "C_environment_sensitive",
+   "specimen_id": "md5-rfc1321",
+   "worlds_compared": [
+    "64-bit userland",
+    "32-bit userland"
+   ],
+   "axis": "machine word width",
+   "outcome": "DIVERGES",
+   "classification_changed": true,
+   "conclusive": true,
+   "world_state": "PINNED"
+  },
+  {
+   "stratum": "C_environment_sensitive",
+   "specimen_id": "tinycc",
+   "worlds_compared": [
+    "64-bit userland",
+    "32-bit userland"
+   ],
+   "axis": "machine word width",
+   "outcome": "DIVERGES",
+   "classification_changed": true,
+   "conclusive": true,
+   "world_state": "PINNED"
+  }
+ ]
+}

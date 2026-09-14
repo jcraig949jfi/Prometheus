@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.block_then_scan",
+  "name": "jump by blocks then scan",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "probe a sorted sequence at fixed strides until the target is passed, then scan linearly within the last block",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Jump search (or block search)' in section Combinatorial algorithms / Sequence algorithms / Sequence search: linear search on a smaller subset of the sequence",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "sorted sequence",
+    "a stride (policy; square root of length is the usual)"
+  ],
+  "fails_when": [
+    "worse than halving; useful only when backward moves are expensive"
+  ],
+  "instances": [
+    "Jump search (or block search)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIRECT",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

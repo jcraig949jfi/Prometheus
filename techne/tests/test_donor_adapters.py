@@ -16,10 +16,14 @@ import pytest
 
 from techne.lib import donors as D
 from techne.lib.donors.contract import (
+    RETIRED,
     NO_SELECTION, DonorAdapter, DonorArtifact, DonorError, SelectionRelation, canonical_digest,
 )
 
-ADAPTERS = sorted(D.registry)
+# Retired adapters (TECHNE-51, 2026-09-12) are exercised by test_retired_adapters.py, which
+# imports them explicitly; they are excluded here so an import-order accident cannot make
+# this battery silently cover or silently skip them.
+ADAPTERS = sorted(n for n in D.registry if n not in RETIRED)
 
 #: One exercisable (capability, payload, config, seed) fixture per adapter. Chosen small and
 #: exact so the battery runs in seconds and so T3's determinism claim is testable rather than

@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.add_the_reduced_combination_of_each_pair_until_every_pair_reduces_to_zero",
+  "name": "add the reduced combination of each pair until every pair reduces to zero",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+  ],
+  "mechanism": "for every pair in the current set, form the combination that cancels their leading terms, reduce it by the whole set, and if anything remains add it as a new member; when every pair reduces to zero the set is closed and reduction by it decides membership",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Buchberger's algorithm' in section Computational mathematics / Computer algebra: finds a Gröbner basis",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "WELL_FOUNDED",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "TERMINATES",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "FIFO",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a well-founded order on leading terms"
+  ],
+  "fails_when": [
+    "intermediate expression swell; doubly exponential worst case"
+  ],
+  "instances": [
+    "Buchberger's algorithm"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.repair.add_violated_constraint_and_resolve"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

@@ -1,0 +1,1064 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "particles-chopin-0.4",
+  "receipt_id": "run-particles-chopin-0.4-20260913T061510Z",
+  "written_utc": "20260913T061510Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/particles-0.4",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "pf_vs_kalman.py": "e8b4a86fe40f25eaed65e3059948467b25ff12b1d224faa45b00710639ce9559",
+    "pmmh.py": "da170ae4178cf705e909d243efb8792e9e332e438b7ab37018e4c8a7eed84b85"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "e27cbce29e5f876c07ff42487879d9ee04db7b1b2d59fad93336834c9a15be6c",
+  "recipe_sha256": "d1b4ee7b91c05fc2cf79dbbb8a39300dbe7c9c1a66e93aa1a5f60dc309fc2c3f",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 20.54,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "pf_vs_kalman (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/pf_vs_kalman.py",
+      "exit": 0,
+      "seconds": 26.2,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "T=200 N=5000 rmse(PF mean, Kalman mean)=0.0144  final ESS-ish logLt=-305.29\nfirst 5 Kalman means: [3.366 3.133 1.863 1.655 0.926]\nfirst 5 PF     means: [3.409 3.132 1.867 1.657 0.919]\nRESULT OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "particle MCMC (PMMH, Andrieu-Doucet-Holenstein 2010) over the stochastic-volatility model's parameters -- batch 06 phase 5, an old fossil made more useful",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/pmmh.py",
+      "exit": 0,
+      "seconds": 34.74,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'RESULT OK'"
+      ],
+      "stdout": {
+        "text": "T=150 Nx=100 niter=400 burn=100; acceptance ~ 0.381\ntrue      : {'mu': -1.0, 'rho': 0.9, 'sigma': 0.3}\npost. mean: {'mu': -1.267, 'rho': 0.453, 'sigma': 0.893}\nRESULT FAIL\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "build/lib/book/filtering/adaptive_resampling.py",
+      "sha256": "fb065a211094b2c313aeeff882960b7e697389afe819be4cbcb9e30c38c6c4d1",
+      "bytes": 2120
+    },
+    {
+      "path": "build/lib/book/filtering/comparing_bootstrap_guided_apf_lingauss.py",
+      "sha256": "7d519be52fe258e38cfee733f07f13df7e83c307d62cf31622d0f19a70584b85",
+      "bytes": 2936
+    },
+    {
+      "path": "build/lib/book/filtering/comparing_bootstrap_guided_apf_stochvol.py",
+      "sha256": "0aa8902607042d3cfc8d2c61cfffb10b30f64b8e7d773c4fffae1a2177c6ae67",
+      "bytes": 3159
+    },
+    {
+      "path": "build/lib/book/filtering/neurodecoding.py",
+      "sha256": "8202d168a2f5ed9784409ef0ce5a3d2c399d0ea781d34252ad15c96d5ac97ef3",
+      "bytes": 7713
+    },
+    {
+      "path": "build/lib/book/kalman/check_kalman.py",
+      "sha256": "b942d80c03cbb0d5ebce65dc3fb3a67c1d536dc6461798e0ab325f242c0824a5",
+      "bytes": 2620
+    },
+    {
+      "path": "build/lib/book/mcmc/compare_mcmc_samplers_stochvol.py",
+      "sha256": "bb8bd1dd231d3936b0e2523fd511a40ebd778f528472863df6d2a913c5633b78",
+      "bytes": 8420
+    },
+    {
+      "path": "build/lib/book/mle/compare_smc_sqmc_malik_and_pitt.py",
+      "sha256": "e02bd60173dfcb4f64568a3f96d3cdd666c57a4de64b812c859b5e26dc6a1ad5",
+      "bytes": 2159
+    },
+    {
+      "path": "build/lib/book/mle/contour_loglik_ecological.py",
+      "sha256": "a4f870babb971087ae2b6e6eb746eae40c8ba8226edf46e0ec0390c15cecaa66",
+      "bytes": 2080
+    },
+    {
+      "path": "build/lib/book/mle/contour_loglik_stochvol.py",
+      "sha256": "a58202812dd18884d68926688da39ea3b4fac2f1f3f38f55d2fe9494de51c61d",
+      "bytes": 2009
+    },
+    {
+      "path": "build/lib/book/mle/hurzeler_kunsch.py",
+      "sha256": "6a6cad932755ecd579889785442492d5658db65bfbf7fc1cbea8a86b13490bba",
+      "bytes": 2039
+    },
+    {
+      "path": "build/lib/book/mle/malikpitt_interpolation.py",
+      "sha256": "d2948a2741ebd5e700cf1f2fd789f9ae6f3f1c78607be29d89d64276caf8e952",
+      "bytes": 1984
+    },
+    {
+      "path": "build/lib/book/mle/mle_neuro.py",
+      "sha256": "a5c946ffcceca16a2aecb353dd581744b57b2957adef84650304aef0b6a736aa",
+      "bytes": 7427
+    },
+    {
+      "path": "build/lib/book/mle/variability_loglik_estimates.py",
+      "sha256": "28d637134bd31069f436025045f0262b975882274a24da772fe0150e80b905e8",
+      "bytes": 2795
+    },
+    {
+      "path": "build/lib/book/pmcmc/pgibbs_ecological.py",
+      "sha256": "d6201a55fd1557328d834cfc269cee2f34f025630b0491c26e06790c613b58e0",
+      "bytes": 7338
+    },
+    {
+      "path": "build/lib/book/pmcmc/pmmh_biased_lingauss.py",
+      "sha256": "de37ca37d866d28c635b44c1c7e4e8f8b86008a4bd3797c512f8e0b68e34cbff",
+      "bytes": 4543
+    },
+    {
+      "path": "build/lib/book/pmcmc/pmmh_cost.py",
+      "sha256": "b7603ec85b0997931e0288eb9a531044302c38497cabd7d17e000136fb06bcad",
+      "bytes": 2066
+    },
+    {
+      "path": "build/lib/book/pmcmc/pmmh_lingauss.py",
+      "sha256": "cb45f7e1a3e22b7df89f8db32e6a6a95c01fbdf30aa3d5d00800c4d7335a4f65",
+      "bytes": 6274
+    },
+    {
+      "path": "build/lib/book/pmcmc/pmmh_lingauss_varying_scale.py",
+      "sha256": "d5a73d6f26d5dcdbe719dc6284b0813083f9716036a6faf5f056ce6ff9d4ea76",
+      "bytes": 3000
+    },
+    {
+      "path": "build/lib/book/resampling/compare_cpu_time_resampling.py",
+      "sha256": "037faa1323d9f33cb5ff653b872cad43a89c12df419d33a81568e81be9962a8e",
+      "bytes": 2681
+    },
+    {
+      "path": "build/lib/book/resampling/compare_tv_distance_resampling.py",
+      "sha256": "dcceb92ffd37a71c3f2e365567571b5cd04c4eb9cd6b0106ac8b7e916d1803a0",
+      "bytes": 2180
+    },
+    {
+      "path": "build/lib/book/smc2/smc2_stochvol_leverage.py",
+      "sha256": "f8fb25b9273292a463aff4681cbc1e10ec455c3d4a06dd77331e1fc321afe165",
+      "bytes": 5075
+    },
+    {
+      "path": "build/lib/book/smc_samplers/logistic_reg.py",
+      "sha256": "e232a4c136361cb77641d487ac4aa3dd73b21ce1feb1ef6f2461cf759a4e9fb5",
+      "bytes": 7712
+    },
+    {
+      "path": "build/lib/book/smoothing/offline_smoothing.py",
+      "sha256": "e851c9587cd3c8247b7d247f88920ac6f97a0e5260b6dc46f8bf9bb7332af032",
+      "bytes": 5376
+    },
+    {
+      "path": "build/lib/book/smoothing/online_smoothing.py",
+      "sha256": "463657a63359db677929c2dd006559f2ed3d362e0e8bf36efac88ae59ab3481a",
+      "bytes": 4554
+    },
+    {
+      "path": "build/lib/book/smoothing/plot_genealogy.py",
+      "sha256": "1863253f0d3c46e5b4b469d23b0a6aff097615e8cdfd9e8198efda64040ace79",
+      "bytes": 1079
+    },
+    {
+      "path": "build/lib/book/sqmc/sqmc_as_dim_grows.py",
+      "sha256": "eb25d426b48da679583d4bd807e3ed9c9e6233f774f643b260160032ad0d3c12",
+      "bytes": 3314
+    },
+    {
+      "path": "build/lib/book/sqmc/sqmc_gordon.py",
+      "sha256": "c2f03e20903ed9ac34e0e35f5fba5370f9d939e17fd476be371ec548c40ed29b",
+      "bytes": 2306
+    },
+    {
+      "path": "build/lib/build/lib/book/filtering/adaptive_resampling.py",
+      "sha256": "fb065a211094b2c313aeeff882960b7e697389afe819be4cbcb9e30c38c6c4d1",
+      "bytes": 2120
+    },
+    {
+      "path": "build/lib/build/lib/book/filtering/comparing_bootstrap_guided_apf_lingauss.py",
+      "sha256": "7d519be52fe258e38cfee733f07f13df7e83c307d62cf31622d0f19a70584b85",
+      "bytes": 2936
+    },
+    {
+      "path": "build/lib/build/lib/book/filtering/comparing_bootstrap_guided_apf_stochvol.py",
+      "sha256": "0aa8902607042d3cfc8d2c61cfffb10b30f64b8e7d773c4fffae1a2177c6ae67",
+      "bytes": 3159
+    },
+    {
+      "path": "build/lib/build/lib/book/filtering/neurodecoding.py",
+      "sha256": "8202d168a2f5ed9784409ef0ce5a3d2c399d0ea781d34252ad15c96d5ac97ef3",
+      "bytes": 7713
+    },
+    {
+      "path": "build/lib/build/lib/book/kalman/check_kalman.py",
+      "sha256": "b942d80c03cbb0d5ebce65dc3fb3a67c1d536dc6461798e0ab325f242c0824a5",
+      "bytes": 2620
+    },
+    {
+      "path": "build/lib/build/lib/book/mcmc/compare_mcmc_samplers_stochvol.py",
+      "sha256": "bb8bd1dd231d3936b0e2523fd511a40ebd778f528472863df6d2a913c5633b78",
+      "bytes": 8420
+    },
+    {
+      "path": "build/lib/build/lib/book/mle/compare_smc_sqmc_malik_and_pitt.py",
+      "sha256": "e02bd60173dfcb4f64568a3f96d3cdd666c57a4de64b812c859b5e26dc6a1ad5",
+      "bytes": 2159
+    },
+    {
+      "path": "build/lib/build/lib/book/mle/contour_loglik_ecological.py",
+      "sha256": "a4f870babb971087ae2b6e6eb746eae40c8ba8226edf46e0ec0390c15cecaa66",
+      "bytes": 2080
+    },
+    {
+      "path": "build/lib/build/lib/book/mle/contour_loglik_stochvol.py",
+      "sha256": "a58202812dd18884d68926688da39ea3b4fac2f1f3f38f55d2fe9494de51c61d",
+      "bytes": 2009
+    },
+    {
+      "path": "build/lib/build/lib/book/mle/hurzeler_kunsch.py",
+      "sha256": "6a6cad932755ecd579889785442492d5658db65bfbf7fc1cbea8a86b13490bba",
+      "bytes": 2039
+    },
+    {
+      "path": "build/lib/build/lib/book/mle/malikpitt_interpolation.py",
+      "sha256": "d2948a2741ebd5e700cf1f2fd789f9ae6f3f1c78607be29d89d64276caf8e952",
+      "bytes": 1984
+    },
+    {
+      "path": "build/lib/build/lib/book/mle/mle_neuro.py",
+      "sha256": "a5c946ffcceca16a2aecb353dd581744b57b2957adef84650304aef0b6a736aa",
+      "bytes": 7427
+    },
+    {
+      "path": "build/lib/build/lib/book/mle/variability_loglik_estimates.py",
+      "sha256": "28d637134bd31069f436025045f0262b975882274a24da772fe0150e80b905e8",
+      "bytes": 2795
+    },
+    {
+      "path": "build/lib/build/lib/book/pmcmc/pgibbs_ecological.py",
+      "sha256": "d6201a55fd1557328d834cfc269cee2f34f025630b0491c26e06790c613b58e0",
+      "bytes": 7338
+    },
+    {
+      "path": "build/lib/build/lib/book/pmcmc/pmmh_biased_lingauss.py",
+      "sha256": "de37ca37d866d28c635b44c1c7e4e8f8b86008a4bd3797c512f8e0b68e34cbff",
+      "bytes": 4543
+    },
+    {
+      "path": "build/lib/build/lib/book/pmcmc/pmmh_cost.py",
+      "sha256": "b7603ec85b0997931e0288eb9a531044302c38497cabd7d17e000136fb06bcad",
+      "bytes": 2066
+    },
+    {
+      "path": "build/lib/build/lib/book/pmcmc/pmmh_lingauss.py",
+      "sha256": "cb45f7e1a3e22b7df89f8db32e6a6a95c01fbdf30aa3d5d00800c4d7335a4f65",
+      "bytes": 6274
+    },
+    {
+      "path": "build/lib/build/lib/book/pmcmc/pmmh_lingauss_varying_scale.py",
+      "sha256": "d5a73d6f26d5dcdbe719dc6284b0813083f9716036a6faf5f056ce6ff9d4ea76",
+      "bytes": 3000
+    },
+    {
+      "path": "build/lib/build/lib/book/resampling/compare_cpu_time_resampling.py",
+      "sha256": "037faa1323d9f33cb5ff653b872cad43a89c12df419d33a81568e81be9962a8e",
+      "bytes": 2681
+    },
+    {
+      "path": "build/lib/build/lib/book/resampling/compare_tv_distance_resampling.py",
+      "sha256": "dcceb92ffd37a71c3f2e365567571b5cd04c4eb9cd6b0106ac8b7e916d1803a0",
+      "bytes": 2180
+    },
+    {
+      "path": "build/lib/build/lib/book/smc2/smc2_stochvol_leverage.py",
+      "sha256": "f8fb25b9273292a463aff4681cbc1e10ec455c3d4a06dd77331e1fc321afe165",
+      "bytes": 5075
+    },
+    {
+      "path": "build/lib/build/lib/book/smc_samplers/logistic_reg.py",
+      "sha256": "e232a4c136361cb77641d487ac4aa3dd73b21ce1feb1ef6f2461cf759a4e9fb5",
+      "bytes": 7712
+    },
+    {
+      "path": "build/lib/build/lib/book/smoothing/offline_smoothing.py",
+      "sha256": "e851c9587cd3c8247b7d247f88920ac6f97a0e5260b6dc46f8bf9bb7332af032",
+      "bytes": 5376
+    },
+    {
+      "path": "build/lib/build/lib/book/smoothing/online_smoothing.py",
+      "sha256": "463657a63359db677929c2dd006559f2ed3d362e0e8bf36efac88ae59ab3481a",
+      "bytes": 4554
+    },
+    {
+      "path": "build/lib/build/lib/book/smoothing/plot_genealogy.py",
+      "sha256": "1863253f0d3c46e5b4b469d23b0a6aff097615e8cdfd9e8198efda64040ace79",
+      "bytes": 1079
+    },
+    {
+      "path": "build/lib/build/lib/book/sqmc/sqmc_as_dim_grows.py",
+      "sha256": "eb25d426b48da679583d4bd807e3ed9c9e6233f774f643b260160032ad0d3c12",
+      "bytes": 3314
+    },
+    {
+      "path": "build/lib/build/lib/book/sqmc/sqmc_gordon.py",
+      "sha256": "c2f03e20903ed9ac34e0e35f5fba5370f9d939e17fd476be371ec548c40ed29b",
+      "bytes": 2306
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/filtering/adaptive_resampling.py",
+      "sha256": "fb065a211094b2c313aeeff882960b7e697389afe819be4cbcb9e30c38c6c4d1",
+      "bytes": 2120
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/filtering/comparing_bootstrap_guided_apf_lingauss.py",
+      "sha256": "7d519be52fe258e38cfee733f07f13df7e83c307d62cf31622d0f19a70584b85",
+      "bytes": 2936
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/filtering/comparing_bootstrap_guided_apf_stochvol.py",
+      "sha256": "0aa8902607042d3cfc8d2c61cfffb10b30f64b8e7d773c4fffae1a2177c6ae67",
+      "bytes": 3159
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/filtering/neurodecoding.py",
+      "sha256": "8202d168a2f5ed9784409ef0ce5a3d2c399d0ea781d34252ad15c96d5ac97ef3",
+      "bytes": 7713
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/kalman/check_kalman.py",
+      "sha256": "b942d80c03cbb0d5ebce65dc3fb3a67c1d536dc6461798e0ab325f242c0824a5",
+      "bytes": 2620
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/mcmc/compare_mcmc_samplers_stochvol.py",
+      "sha256": "bb8bd1dd231d3936b0e2523fd511a40ebd778f528472863df6d2a913c5633b78",
+      "bytes": 8420
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/mle/compare_smc_sqmc_malik_and_pitt.py",
+      "sha256": "e02bd60173dfcb4f64568a3f96d3cdd666c57a4de64b812c859b5e26dc6a1ad5",
+      "bytes": 2159
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/mle/contour_loglik_ecological.py",
+      "sha256": "a4f870babb971087ae2b6e6eb746eae40c8ba8226edf46e0ec0390c15cecaa66",
+      "bytes": 2080
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/mle/contour_loglik_stochvol.py",
+      "sha256": "a58202812dd18884d68926688da39ea3b4fac2f1f3f38f55d2fe9494de51c61d",
+      "bytes": 2009
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/mle/hurzeler_kunsch.py",
+      "sha256": "6a6cad932755ecd579889785442492d5658db65bfbf7fc1cbea8a86b13490bba",
+      "bytes": 2039
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/mle/malikpitt_interpolation.py",
+      "sha256": "d2948a2741ebd5e700cf1f2fd789f9ae6f3f1c78607be29d89d64276caf8e952",
+      "bytes": 1984
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/mle/mle_neuro.py",
+      "sha256": "a5c946ffcceca16a2aecb353dd581744b57b2957adef84650304aef0b6a736aa",
+      "bytes": 7427
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/mle/variability_loglik_estimates.py",
+      "sha256": "28d637134bd31069f436025045f0262b975882274a24da772fe0150e80b905e8",
+      "bytes": 2795
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/pmcmc/pgibbs_ecological.py",
+      "sha256": "d6201a55fd1557328d834cfc269cee2f34f025630b0491c26e06790c613b58e0",
+      "bytes": 7338
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/pmcmc/pmmh_biased_lingauss.py",
+      "sha256": "de37ca37d866d28c635b44c1c7e4e8f8b86008a4bd3797c512f8e0b68e34cbff",
+      "bytes": 4543
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/pmcmc/pmmh_cost.py",
+      "sha256": "b7603ec85b0997931e0288eb9a531044302c38497cabd7d17e000136fb06bcad",
+      "bytes": 2066
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/pmcmc/pmmh_lingauss.py",
+      "sha256": "cb45f7e1a3e22b7df89f8db32e6a6a95c01fbdf30aa3d5d00800c4d7335a4f65",
+      "bytes": 6274
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/pmcmc/pmmh_lingauss_varying_scale.py",
+      "sha256": "d5a73d6f26d5dcdbe719dc6284b0813083f9716036a6faf5f056ce6ff9d4ea76",
+      "bytes": 3000
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/resampling/compare_cpu_time_resampling.py",
+      "sha256": "037faa1323d9f33cb5ff653b872cad43a89c12df419d33a81568e81be9962a8e",
+      "bytes": 2681
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/resampling/compare_tv_distance_resampling.py",
+      "sha256": "dcceb92ffd37a71c3f2e365567571b5cd04c4eb9cd6b0106ac8b7e916d1803a0",
+      "bytes": 2180
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/smc2/smc2_stochvol_leverage.py",
+      "sha256": "f8fb25b9273292a463aff4681cbc1e10ec455c3d4a06dd77331e1fc321afe165",
+      "bytes": 5075
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/smc_samplers/logistic_reg.py",
+      "sha256": "e232a4c136361cb77641d487ac4aa3dd73b21ce1feb1ef6f2461cf759a4e9fb5",
+      "bytes": 7712
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/smoothing/offline_smoothing.py",
+      "sha256": "e851c9587cd3c8247b7d247f88920ac6f97a0e5260b6dc46f8bf9bb7332af032",
+      "bytes": 5376
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/smoothing/online_smoothing.py",
+      "sha256": "463657a63359db677929c2dd006559f2ed3d362e0e8bf36efac88ae59ab3481a",
+      "bytes": 4554
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/smoothing/plot_genealogy.py",
+      "sha256": "1863253f0d3c46e5b4b469d23b0a6aff097615e8cdfd9e8198efda64040ace79",
+      "bytes": 1079
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/sqmc/sqmc_as_dim_grows.py",
+      "sha256": "eb25d426b48da679583d4bd807e3ed9c9e6233f774f643b260160032ad0d3c12",
+      "bytes": 3314
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/book/sqmc/sqmc_gordon.py",
+      "sha256": "c2f03e20903ed9ac34e0e35f5fba5370f9d939e17fd476be371ec548c40ed29b",
+      "bytes": 2306
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/docs/source/conf.py",
+      "sha256": "2e6e96ed2a69cb8cb700b63fa62cf762edab830294354e21fc807414192e3e59",
+      "bytes": 9501
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/binarySMC/boston.py",
+      "sha256": "0f77079a1f7ca8dbbfeb51a4f906b4f19a0423c37d93c04d6f75377caf9a8ff4",
+      "bytes": 1746
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/binarySMC/concrete.py",
+      "sha256": "9d837978cda36d5cb66f74cb157eebb7d606c2ad2c3a3a8d4c195e02df2b12f2",
+      "bytes": 1897
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/binarySMC/lost_time.py",
+      "sha256": "0c539a0b91d3b04d1272e1f26521f5765a21aeb5387c9b2206ce1932ea46bade",
+      "bytes": 2392
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/complexity_smoothing/ffbs_cox_model.py",
+      "sha256": "baf70a4d4aab883615e1c673e02ab37000905e57872f352bad6a372a5986f272",
+      "bytes": 4899
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/complexity_smoothing/hybrid_paris.py",
+      "sha256": "0115e712b98e20cc938a64205c2bb0e77c11535784e98935ce2f0e037026f3a4",
+      "bytes": 5104
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/complexity_smoothing/mle_neuro.py",
+      "sha256": "1226c6652c1a6ecbe6e7e068f3f63a624e269775a6b978244708d558f27bbc4e",
+      "bytes": 3792
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/complexity_smoothing/mle_neuro_nrsteps.py",
+      "sha256": "dc8cf42a70590481acb00d5e6593b0640f481691971d30e7b6f8b72e7438970f",
+      "bytes": 2564
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/complexity_smoothing/nr_mcmc_steps.py",
+      "sha256": "44b21cc6c98e0c8fe4859ec310978e6ca47cb11ad00b670b533c74c51f270827",
+      "bytes": 4842
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/nested/tempering_vs_nested_logistic.py",
+      "sha256": "2697dde024575b8b780d4c9d4f9560c478de1b5ecba8946540b41f5d50c6b61e",
+      "bytes": 3094
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/nested/vanilla_nested_logistic.py",
+      "sha256": "67c781113baa33207230eec91d0c7ed57ffeec73ddb3357a67c5351164cfeb17",
+      "bytes": 2193
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/wastefreeSMC/logistic.py",
+      "sha256": "2f611cf188822e2f3e27b5c6d03b911a5403955f97294ad7f8a0676a80acc25f",
+      "bytes": 4523
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/wastefreeSMC/variance_estimates_ibis.py",
+      "sha256": "4dbbc8c7e596afa4b395334d86cfcfe6266d893d9ada55c25965209a4e434048",
+      "bytes": 4517
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/papers/wastefreeSMC/variance_estimates_tempering.py",
+      "sha256": "db4844c2a2ec1f54d204f067dedd5d346dda62fbb401317add048bcc2f791614",
+      "bytes": 3079
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/__init__.py",
+      "sha256": "0ecee215d841cd184598e3234c820f4d930139be78575010dd541cedd684dced",
+      "bytes": 123
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/binary_smc.py",
+      "sha256": "12f2726fab78c58cb0ee33614d772266c52426d07278ecf5e7c014a698d0d7b0",
+      "bytes": 10186
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/collectors.py",
+      "sha256": "569b47fd808523bb5d177e34f261d22a6c5796611dbc25f187558b8c180bb3a1",
+      "bytes": 14878
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/core.py",
+      "sha256": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+      "bytes": 18465
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/datasets.py",
+      "sha256": "82eb1c654ce92b581987f3740c81dcdde91bb35e7eed30a10839a655578ffce1",
+      "bytes": 10871
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/distributions.py",
+      "sha256": "096978abc8ac18f8b3c49a46a47262752071ab043ab1de36ba61407ada0185f4",
+      "bytes": 35987
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/hilbert.py",
+      "sha256": "4ba20e94805536cda224a668578b5fff06be619a2e54ebe44bca8ac6d051c4d8",
+      "bytes": 9747
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/hmm.py",
+      "sha256": "db2c021a061faebae0162a989725f582b7e545d1ad1a9dd49803f820dbe046ab",
+      "bytes": 8959
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/kalman.py",
+      "sha256": "592b13e6533a79920cf624d46120dd850866e3db9fe94fbbc93d84807e0eb987",
+      "bytes": 16737
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/mcmc.py",
+      "sha256": "5e1fa6e9679eb9f76dea8b1d33af9ad6e8db99ba84d68ed1839d5a5a67771fc2",
+      "bytes": 20119
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/nested.py",
+      "sha256": "5f5231aa5fc2689ffb26f4896eff5c88e431415b7c7c56aafe0a9f0cc93bb5cb",
+      "bytes": 12832
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/resampling.py",
+      "sha256": "6657f40f1a7cafecdfe958bdd0fb2403b3f06cc31ced294abc1eebcfc0f24e18",
+      "bytes": 19711
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/rqmc.py",
+      "sha256": "67e5a2e3b2e1ac71a3126df1dceab7eb3e447d83590b8371e9cef836ab195793",
+      "bytes": 415
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/smc_samplers.py",
+      "sha256": "61c55ba8a8e5d07ec48fcc4e3c7a09ad324ccebad705c16b3e044807d1d95bcd",
+      "bytes": 36515
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/smoothing.py",
+      "sha256": "42e1c23eb69696e2610e7913d65cbd4ccaf9ac18292aab8063680fa8c1770dcb",
+      "bytes": 24485
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/state_space_models.py",
+      "sha256": "ad4d554ce73f52b19aa355f6888c23b3159d5d1f38dc6244b5ce843d5329d7bc",
+      "bytes": 21702
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/utils.py",
+      "sha256": "645bff15bb756f786b0f364900fd76ebd07b57e7b6caa4a86abf9ba3108a934a",
+      "bytes": 8212
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/variance_estimators.py",
+      "sha256": "5e8fc1ddee52663d2e43c72235aa57e8814674fc82623b58dd60657c63c6e7c7",
+      "bytes": 6474
+    },
+    {
+      "path": "build/lib/build/lib/build/lib/particles/variance_mcmc.py",
+      "sha256": "0a63e2597b2d327c939ca40613868030250cb4bd398a07045720ff72edca521f",
+      "bytes": 7257
+    },
+    {
+      "path": "build/lib/build/lib/docs/source/conf.py",
+      "sha256": "2e6e96ed2a69cb8cb700b63fa62cf762edab830294354e21fc807414192e3e59",
+      "bytes": 9501
+    },
+    {
+      "path": "build/lib/build/lib/papers/binarySMC/boston.py",
+      "sha256": "0f77079a1f7ca8dbbfeb51a4f906b4f19a0423c37d93c04d6f75377caf9a8ff4",
+      "bytes": 1746
+    },
+    {
+      "path": "build/lib/build/lib/papers/binarySMC/concrete.py",
+      "sha256": "9d837978cda36d5cb66f74cb157eebb7d606c2ad2c3a3a8d4c195e02df2b12f2",
+      "bytes": 1897
+    },
+    {
+      "path": "build/lib/build/lib/papers/binarySMC/lost_time.py",
+      "sha256": "0c539a0b91d3b04d1272e1f26521f5765a21aeb5387c9b2206ce1932ea46bade",
+      "bytes": 2392
+    },
+    {
+      "path": "build/lib/build/lib/papers/complexity_smoothing/ffbs_cox_model.py",
+      "sha256": "baf70a4d4aab883615e1c673e02ab37000905e57872f352bad6a372a5986f272",
+      "bytes": 4899
+    },
+    {
+      "path": "build/lib/build/lib/papers/complexity_smoothing/hybrid_paris.py",
+      "sha256": "0115e712b98e20cc938a64205c2bb0e77c11535784e98935ce2f0e037026f3a4",
+      "bytes": 5104
+    },
+    {
+      "path": "build/lib/build/lib/papers/complexity_smoothing/mle_neuro.py",
+      "sha256": "1226c6652c1a6ecbe6e7e068f3f63a624e269775a6b978244708d558f27bbc4e",
+      "bytes": 3792
+    },
+    {
+      "path": "build/lib/build/lib/papers/complexity_smoothing/mle_neuro_nrsteps.py",
+      "sha256": "dc8cf42a70590481acb00d5e6593b0640f481691971d30e7b6f8b72e7438970f",
+      "bytes": 2564
+    },
+    {
+      "path": "build/lib/build/lib/papers/complexity_smoothing/nr_mcmc_steps.py",
+      "sha256": "44b21cc6c98e0c8fe4859ec310978e6ca47cb11ad00b670b533c74c51f270827",
+      "bytes": 4842
+    },
+    {
+      "path": "build/lib/build/lib/papers/nested/tempering_vs_nested_logistic.py",
+      "sha256": "2697dde024575b8b780d4c9d4f9560c478de1b5ecba8946540b41f5d50c6b61e",
+      "bytes": 3094
+    },
+    {
+      "path": "build/lib/build/lib/papers/nested/vanilla_nested_logistic.py",
+      "sha256": "67c781113baa33207230eec91d0c7ed57ffeec73ddb3357a67c5351164cfeb17",
+      "bytes": 2193
+    },
+    {
+      "path": "build/lib/build/lib/papers/wastefreeSMC/logistic.py",
+      "sha256": "2f611cf188822e2f3e27b5c6d03b911a5403955f97294ad7f8a0676a80acc25f",
+      "bytes": 4523
+    },
+    {
+      "path": "build/lib/build/lib/papers/wastefreeSMC/variance_estimates_ibis.py",
+      "sha256": "4dbbc8c7e596afa4b395334d86cfcfe6266d893d9ada55c25965209a4e434048",
+      "bytes": 4517
+    },
+    {
+      "path": "build/lib/build/lib/papers/wastefreeSMC/variance_estimates_tempering.py",
+      "sha256": "db4844c2a2ec1f54d204f067dedd5d346dda62fbb401317add048bcc2f791614",
+      "bytes": 3079
+    },
+    {
+      "path": "build/lib/build/lib/particles/__init__.py",
+      "sha256": "0ecee215d841cd184598e3234c820f4d930139be78575010dd541cedd684dced",
+      "bytes": 123
+    },
+    {
+      "path": "build/lib/build/lib/particles/binary_smc.py",
+      "sha256": "12f2726fab78c58cb0ee33614d772266c52426d07278ecf5e7c014a698d0d7b0",
+      "bytes": 10186
+    },
+    {
+      "path": "build/lib/build/lib/particles/collectors.py",
+      "sha256": "569b47fd808523bb5d177e34f261d22a6c5796611dbc25f187558b8c180bb3a1",
+      "bytes": 14878
+    },
+    {
+      "path": "build/lib/build/lib/particles/core.py",
+      "sha256": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+      "bytes": 18465
+    },
+    {
+      "path": "build/lib/build/lib/particles/datasets.py",
+      "sha256": "82eb1c654ce92b581987f3740c81dcdde91bb35e7eed30a10839a655578ffce1",
+      "bytes": 10871
+    },
+    {
+      "path": "build/lib/build/lib/particles/distributions.py",
+      "sha256": "096978abc8ac18f8b3c49a46a47262752071ab043ab1de36ba61407ada0185f4",
+      "bytes": 35987
+    },
+    {
+      "path": "build/lib/build/lib/particles/hilbert.py",
+      "sha256": "4ba20e94805536cda224a668578b5fff06be619a2e54ebe44bca8ac6d051c4d8",
+      "bytes": 9747
+    },
+    {
+      "path": "build/lib/build/lib/particles/hmm.py",
+      "sha256": "db2c021a061faebae0162a989725f582b7e545d1ad1a9dd49803f820dbe046ab",
+      "bytes": 8959
+    },
+    {
+      "path": "build/lib/build/lib/particles/kalman.py",
+      "sha256": "592b13e6533a79920cf624d46120dd850866e3db9fe94fbbc93d84807e0eb987",
+      "bytes": 16737
+    },
+    {
+      "path": "build/lib/build/lib/particles/mcmc.py",
+      "sha256": "5e1fa6e9679eb9f76dea8b1d33af9ad6e8db99ba84d68ed1839d5a5a67771fc2",
+      "bytes": 20119
+    },
+    {
+      "path": "build/lib/build/lib/particles/nested.py",
+      "sha256": "5f5231aa5fc2689ffb26f4896eff5c88e431415b7c7c56aafe0a9f0cc93bb5cb",
+      "bytes": 12832
+    },
+    {
+      "path": "build/lib/build/lib/particles/resampling.py",
+      "sha256": "6657f40f1a7cafecdfe958bdd0fb2403b3f06cc31ced294abc1eebcfc0f24e18",
+      "bytes": 19711
+    },
+    {
+      "path": "build/lib/build/lib/particles/rqmc.py",
+      "sha256": "67e5a2e3b2e1ac71a3126df1dceab7eb3e447d83590b8371e9cef836ab195793",
+      "bytes": 415
+    },
+    {
+      "path": "build/lib/build/lib/particles/smc_samplers.py",
+      "sha256": "61c55ba8a8e5d07ec48fcc4e3c7a09ad324ccebad705c16b3e044807d1d95bcd",
+      "bytes": 36515
+    },
+    {
+      "path": "build/lib/build/lib/particles/smoothing.py",
+      "sha256": "42e1c23eb69696e2610e7913d65cbd4ccaf9ac18292aab8063680fa8c1770dcb",
+      "bytes": 24485
+    },
+    {
+      "path": "build/lib/build/lib/particles/state_space_models.py",
+      "sha256": "ad4d554ce73f52b19aa355f6888c23b3159d5d1f38dc6244b5ce843d5329d7bc",
+      "bytes": 21702
+    },
+    {
+      "path": "build/lib/build/lib/particles/utils.py",
+      "sha256": "645bff15bb756f786b0f364900fd76ebd07b57e7b6caa4a86abf9ba3108a934a",
+      "bytes": 8212
+    },
+    {
+      "path": "build/lib/build/lib/particles/variance_estimators.py",
+      "sha256": "5e8fc1ddee52663d2e43c72235aa57e8814674fc82623b58dd60657c63c6e7c7",
+      "bytes": 6474
+    },
+    {
+      "path": "build/lib/build/lib/particles/variance_mcmc.py",
+      "sha256": "0a63e2597b2d327c939ca40613868030250cb4bd398a07045720ff72edca521f",
+      "bytes": 7257
+    },
+    {
+      "path": "build/lib/docs/source/conf.py",
+      "sha256": "2e6e96ed2a69cb8cb700b63fa62cf762edab830294354e21fc807414192e3e59",
+      "bytes": 9501
+    },
+    {
+      "path": "build/lib/papers/binarySMC/boston.py",
+      "sha256": "0f77079a1f7ca8dbbfeb51a4f906b4f19a0423c37d93c04d6f75377caf9a8ff4",
+      "bytes": 1746
+    },
+    {
+      "path": "build/lib/papers/binarySMC/concrete.py",
+      "sha256": "9d837978cda36d5cb66f74cb157eebb7d606c2ad2c3a3a8d4c195e02df2b12f2",
+      "bytes": 1897
+    },
+    {
+      "path": "build/lib/papers/binarySMC/lost_time.py",
+      "sha256": "0c539a0b91d3b04d1272e1f26521f5765a21aeb5387c9b2206ce1932ea46bade",
+      "bytes": 2392
+    },
+    {
+      "path": "build/lib/papers/complexity_smoothing/ffbs_cox_model.py",
+      "sha256": "baf70a4d4aab883615e1c673e02ab37000905e57872f352bad6a372a5986f272",
+      "bytes": 4899
+    },
+    {
+      "path": "build/lib/papers/complexity_smoothing/hybrid_paris.py",
+      "sha256": "0115e712b98e20cc938a64205c2bb0e77c11535784e98935ce2f0e037026f3a4",
+      "bytes": 5104
+    },
+    {
+      "path": "build/lib/papers/complexity_smoothing/mle_neuro.py",
+      "sha256": "1226c6652c1a6ecbe6e7e068f3f63a624e269775a6b978244708d558f27bbc4e",
+      "bytes": 3792
+    },
+    {
+      "path": "build/lib/papers/complexity_smoothing/mle_neuro_nrsteps.py",
+      "sha256": "dc8cf42a70590481acb00d5e6593b0640f481691971d30e7b6f8b72e7438970f",
+      "bytes": 2564
+    },
+    {
+      "path": "build/lib/papers/complexity_smoothing/nr_mcmc_steps.py",
+      "sha256": "44b21cc6c98e0c8fe4859ec310978e6ca47cb11ad00b670b533c74c51f270827",
+      "bytes": 4842
+    },
+    {
+      "path": "build/lib/papers/nested/tempering_vs_nested_logistic.py",
+      "sha256": "2697dde024575b8b780d4c9d4f9560c478de1b5ecba8946540b41f5d50c6b61e",
+      "bytes": 3094
+    },
+    {
+      "path": "build/lib/papers/nested/vanilla_nested_logistic.py",
+      "sha256": "67c781113baa33207230eec91d0c7ed57ffeec73ddb3357a67c5351164cfeb17",
+      "bytes": 2193
+    },
+    {
+      "path": "build/lib/papers/wastefreeSMC/logistic.py",
+      "sha256": "2f611cf188822e2f3e27b5c6d03b911a5403955f97294ad7f8a0676a80acc25f",
+      "bytes": 4523
+    },
+    {
+      "path": "build/lib/papers/wastefreeSMC/variance_estimates_ibis.py",
+      "sha256": "4dbbc8c7e596afa4b395334d86cfcfe6266d893d9ada55c25965209a4e434048",
+      "bytes": 4517
+    },
+    {
+      "path": "build/lib/papers/wastefreeSMC/variance_estimates_tempering.py",
+      "sha256": "db4844c2a2ec1f54d204f067dedd5d346dda62fbb401317add048bcc2f791614",
+      "bytes": 3079
+    },
+    {
+      "path": "build/lib/particles/__init__.py",
+      "sha256": "0ecee215d841cd184598e3234c820f4d930139be78575010dd541cedd684dced",
+      "bytes": 123
+    },
+    {
+      "path": "build/lib/particles/binary_smc.py",
+      "sha256": "12f2726fab78c58cb0ee33614d772266c52426d07278ecf5e7c014a698d0d7b0",
+      "bytes": 10186
+    },
+    {
+      "path": "build/lib/particles/collectors.py",
+      "sha256": "569b47fd808523bb5d177e34f261d22a6c5796611dbc25f187558b8c180bb3a1",
+      "bytes": 14878
+    },
+    {
+      "path": "build/lib/particles/core.py",
+      "sha256": "1c99eb9884fc49a45c7e02e24d0d897c92e2300111385160628b97fe313ffb3c",
+      "bytes": 18465
+    },
+    {
+      "path": "build/lib/particles/datasets/boston_house_prices.csv",
+      "sha256": "d98212636026544fc9b9c0f372e5f819872e6fa6fa757ab025efdda22180f2d6",
+      "bytes": 34742
+    },
+    {
+      "path": "build/lib/particles/datasets/concrete.csv",
+      "sha256": "ebfbd624c890ac455a837c294addf9ef55baa14a512e4a84ec74fb8be5b4a6e0",
+      "bytes": 58254
+    },
+    {
+      "path": "build/lib/particles/datasets/eeg_eye_state.data",
+      "sha256": "e6eccba033d8ce56d38d2f0cca2087356705425a5a2ddbb1012ef3b892bd5a4b",
+      "bytes": 1696428
+    },
+    {
+      "path": "build/lib/particles/datasets/GBP_vs_USD_9798.txt",
+      "sha256": "d65799de7b398505095b323162faed0df4974d6751d93f0c40a814c566d40522",
+      "bytes": 23431
+    },
+    {
+      "path": "build/lib/particles/datasets/indian_liver_patient.csv",
+      "sha256": "809d787447151f1d5fce7540256d5eb44d10b2c90ef737e6d43bd5fcbd7b5fe4",
+      "bytes": 21582
+    },
+    {
+      "path": "build/lib/particles/datasets/nutria.txt",
+      "sha256": "0de18f3e557619df4b59e037028145ea647d7af5ab35a262afb74446fec4a195",
+      "bytes": 3000
+    },
+    {
+      "path": "build/lib/particles/datasets/pima-indians-diabetes.data",
+      "sha256": "06f5b7c2cd7bca686fda4f92eab5f61e7ff6426a9acefa2e3dda04fc54293cf5",
+      "bytes": 23279
+    },
+    {
+      "path": "build/lib/particles/datasets/sonar.all-data",
+      "sha256": "e90434cdbf00fcf93ffa911fe447ae25606979658e60f1d32e155c3b5240234d",
+      "bytes": 87776
+    },
+    {
+      "path": "build/lib/particles/datasets/thaldata.csv",
+      "sha256": "a248dafb6486d3bad5ec45d83ace4af254edf03f306759d73e0bcd0b2e6c0fea",
+      "bytes": 6007
+    },
+    {
+      "path": "build/lib/particles/datasets.py",
+      "sha256": "82eb1c654ce92b581987f3740c81dcdde91bb35e7eed30a10839a655578ffce1",
+      "bytes": 10871
+    },
+    {
+      "path": "build/lib/particles/distributions.py",
+      "sha256": "096978abc8ac18f8b3c49a46a47262752071ab043ab1de36ba61407ada0185f4",
+      "bytes": 35987
+    },
+    {
+      "path": "build/lib/particles/hilbert.py",
+      "sha256": "4ba20e94805536cda224a668578b5fff06be619a2e54ebe44bca8ac6d051c4d8",
+      "bytes": 9747
+    },
+    {
+      "path": "build/lib/particles/hmm.py",
+      "sha256": "db2c021a061faebae0162a989725f582b7e545d1ad1a9dd49803f820dbe046ab",
+      "bytes": 8959
+    },
+    {
+      "path": "build/lib/particles/kalman.py",
+      "sha256": "592b13e6533a79920cf624d46120dd850866e3db9fe94fbbc93d84807e0eb987",
+      "bytes": 16737
+    },
+    {
+      "path": "build/lib/particles/mcmc.py",
+      "sha256": "5e1fa6e9679eb9f76dea8b1d33af9ad6e8db99ba84d68ed1839d5a5a67771fc2",
+      "bytes": 20119
+    },
+    {
+      "path": "build/lib/particles/nested.py",
+      "sha256": "5f5231aa5fc2689ffb26f4896eff5c88e431415b7c7c56aafe0a9f0cc93bb5cb",
+      "bytes": 12832
+    },
+    {
+      "path": "build/lib/particles/resampling.py",
+      "sha256": "6657f40f1a7cafecdfe958bdd0fb2403b3f06cc31ced294abc1eebcfc0f24e18",
+      "bytes": 19711
+    },
+    {
+      "path": "build/lib/particles/rqmc.py",
+      "sha256": "67e5a2e3b2e1ac71a3126df1dceab7eb3e447d83590b8371e9cef836ab195793",
+      "bytes": 415
+    },
+    {
+      "path": "build/lib/particles/smc_samplers.py",
+      "sha256": "61c55ba8a8e5d07ec48fcc4e3c7a09ad324ccebad705c16b3e044807d1d95bcd",
+      "bytes": 36515
+    },
+    {
+      "path": "build/lib/particles/smoothing.py",
+      "sha256": "42e1c23eb69696e2610e7913d65cbd4ccaf9ac18292aab8063680fa8c1770dcb",
+      "bytes": 24485
+    },
+    {
+      "path": "build/lib/particles/state_space_models.py",
+      "sha256": "ad4d554ce73f52b19aa355f6888c23b3159d5d1f38dc6244b5ce843d5329d7bc",
+      "bytes": 21702
+    },
+    {
+      "path": "build/lib/particles/utils.py",
+      "sha256": "645bff15bb756f786b0f364900fd76ebd07b57e7b6caa4a86abf9ba3108a934a",
+      "bytes": 8212
+    },
+    {
+      "path": "build/lib/particles/variance_estimators.py",
+      "sha256": "5e8fc1ddee52663d2e43c72235aa57e8814674fc82623b58dd60657c63c6e7c7",
+      "bytes": 6474
+    },
+    {
+      "path": "build/lib/particles/variance_mcmc.py",
+      "sha256": "0a63e2597b2d327c939ca40613868030250cb4bd398a07045720ff72edca521f",
+      "bytes": 7257
+    },
+    {
+      "path": "particles.egg-info/dependency_links.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    {
+      "path": "particles.egg-info/PKG-INFO",
+      "sha256": "75ba3a5917792a15b33141b1749ed735e195e59234346bf3c9f805e3659e26a1",
+      "bytes": 4650
+    },
+    {
+      "path": "particles.egg-info/requires.txt",
+      "sha256": "5dc9146af1a0c4ca7832c9525c007d82bf12d642cd68b320b5191d1ba89511f1",
+      "bytes": 145
+    },
+    {
+      "path": "particles.egg-info/SOURCES.txt",
+      "sha256": "8f56de3aebb8f313562801040a1e783b373e3510b7a8b1eae73aaf5bb07bd4e9",
+      "bytes": 2509
+    },
+    {
+      "path": "particles.egg-info/top_level.txt",
+      "sha256": "b342d7774f36cdab89ad8d521a43d5c235a95e677d7d1a83d7b80903a4b8b115",
+      "bytes": 33
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "e27cbce29e5f876c07ff42487879d9ee04db7b1b2d59fad93336834c9a15be6c",
+  "body_preserved": true
+}

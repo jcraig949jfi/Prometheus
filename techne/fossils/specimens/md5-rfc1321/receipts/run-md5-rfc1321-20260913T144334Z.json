@@ -1,0 +1,82 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "md5-rfc1321",
+  "receipt_id": "run-md5-rfc1321-20260913T144334Z",
+  "written_utc": "20260913T144334Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "2a63ad17b696314834ac04c79153ef9cd7c93ba4c0a62d32d43ee5e136d184ae",
+  "recipe_sha256": "c50c3886482231634509bfcc13e4b1da6db4f4793d44d39a994aeb20eff29f33",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.8,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "extract the appendix sources from the RFC text, then compile with -DMD=5",
+      "cmd": "sed -n '/^A\\.1 global\\.h/,/^A\\.2 md5\\.h/p' rfc1321.txt | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' > global.h; sed -n '/^A\\.2 md5\\.h/,/^A\\.3 md5c\\.c/p' rfc1321.txt | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' > md5.h; sed -n '/^A\\.3 md5c\\.c/,/^A\\.4 mddriver\\.c/p' rfc1321.txt | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' > md5c.c; sed -n '/^A\\.4 mddriver\\.c/,/^A\\.5 Test suite/p' rfc1321.txt | grep -v '\\[Page ' | grep -v '^RFC 1321' | tr -d '\\f' > mddriver.c; wc -l global.h md5.h md5c.c mddriver.c; gcc -w -DMD=5 -o mddriver md5c.c mddriver.c 2>&1 | head -5; test -x ./mddriver && echo BUILT",
+      "exit": 1,
+      "seconds": 0.91,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "   40 global.h\n   46 md5.h\n  379 md5c.c\n  261 mddriver.c\n  726 total\nmd5c.c:1:2: error: expected \u00e2\u20ac\u02dc=\u00e2\u20ac\u2122, \u00e2\u20ac\u02dc,\u00e2\u20ac\u2122, \u00e2\u20ac\u02dc;\u00e2\u20ac\u2122, \u00e2\u20ac\u02dcasm\u00e2\u20ac\u2122 or \u00e2\u20ac\u02dc__attribute__\u00e2\u20ac\u2122 before numeric constant\n    1 | A.3 md5c.c\n      |  ^~\nIn file included from md5c.c:28:\nglobal.h:40:2: error: expected \u00e2\u20ac\u02dc=\u00e2\u20ac\u2122, \u00e2\u20ac\u02dc,\u00e2\u20ac\u2122, \u00e2\u20ac\u02dc;\u00e2\u20ac\u2122, \u00e2\u20ac\u02dcasm\u00e2\u20ac\u2122 or \u00e2\u20ac\u02dc__attribute__\u00e2\u20ac\u2122 before numeric constant\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [
+    {
+      "path": "global.h",
+      "sha256": "2905f015de24514c7d118783896d036fbf30800b125730992fd0698750188fee",
+      "bytes": 812
+    },
+    {
+      "path": "md5.h",
+      "sha256": "a5ad707a55b70865472566713ba011eb87e2ed09c5f6f4b183e19a961ba19ee8",
+      "bytes": 1379
+    },
+    {
+      "path": "md5c.c",
+      "sha256": "6382de612c0a7654ffee504bebab9b41f19e31b0a1ddba0a64f0c196f8f4553f",
+      "bytes": 10493
+    },
+    {
+      "path": "mddriver.c",
+      "sha256": "6c15299857d9b2d6e14d8f66eef02425e3e69b1627e0b5833830bcf2b4b387ea",
+      "bytes": 4918
+    }
+  ],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "2a63ad17b696314834ac04c79153ef9cd7c93ba4c0a62d32d43ee5e136d184ae",
+  "body_preserved": true
+}

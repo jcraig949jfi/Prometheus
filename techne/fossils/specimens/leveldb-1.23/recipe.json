@@ -1,0 +1,60 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/leveldb-1.23",
+  "probe": [
+    {
+      "name": "cmake",
+      "cmd": "cmake --version | head -1; g++ --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "cmake + make libleveldb (tests/benchmarks off: googletest is a submodule absent from the release tarball)",
+      "cmd": "mkdir -p $BODY/build/ldb && cd $BODY/build/ldb && cmake -DCMAKE_BUILD_TYPE=Release -DLEVELDB_BUILD_TESTS=OFF -DLEVELDB_BUILD_BENCHMARKS=OFF $BODY/upstream/tree/leveldb-1.23 >/dev/null && make -s leveldb 2>&1 | grep -iE '\\berror' | head -3; test -f libleveldb.a && echo built",
+      "timeout": 900
+    },
+    {
+      "name": "compile Techne's log-recovery driver",
+      "cmd": "g++ -std=c++11 -O1 -Iinclude -o $BODY/build/recover $HARNESS/recover.cc $BODY/build/ldb/libleveldb.a -lpthread && echo built"
+    }
+  ],
+  "runs": [
+    {
+      "name": "write 2000 keys and close cleanly",
+      "cmd": "rm -rf $BODY/build/db && $BODY/build/recover $BODY/build/db write 0 2000",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "wrote 2000"
+        ]
+      }
+    },
+    {
+      "name": "CRASH: write 500 more (acknowledged, unsynced) and _exit() without closing -- they live only in the .log",
+      "cmd": "$BODY/build/recover $BODY/build/db crash 2000 2500; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "exit=1"
+        ]
+      }
+    },
+    {
+      "name": "reopen: RecoverLogFile replays the log (the recovery property: 2500 present)",
+      "cmd": "$BODY/build/recover $BODY/build/db count",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "count=2500",
+          "RECOVERY OK"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: acknowledged writes that never reached a table survive a process crash via write-ahead-log replay on open. DEVIATION: upstream unit tests not built (googletest submodule not in the tarball)."
+}

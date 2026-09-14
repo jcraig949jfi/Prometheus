@@ -66,6 +66,11 @@ def _daemon_with(monkeypatch, viv, tmp_path):
     d._reports = []
     d._preflight_pew = lambda: None
     d._sleep = lambda _s: None
+    # Rule 10: a daemon without a declared bound is not constructible, so the
+    # fixture declares one -- large enough that no test here parks by accident.
+    d.var = tmp_path
+    d.notify = lambda rec, **_k: {"posted": False, "test": True}
+    d.configure_bound({_daemon.BOUND_KEY: 10_000, _daemon.SEAT_KEY: "Archaeon"})
     monkeypatch.setattr(_daemon, "_VAR", tmp_path)
     class _Conn:
         def close(self):

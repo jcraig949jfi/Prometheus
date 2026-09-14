@@ -1,0 +1,1025 @@
+{
+ "arm": "asdeployed",
+ "burst": 600,
+ "copy_bytes": 286388224,
+ "copy_from": "F:/Prometheus-data/sfe/engine.db",
+ "engine": {
+  "api": "v2",
+  "engine_instance_id": "eng_8a37a5d305969034d488c43e",
+  "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
+  "max_artifact_bytes": 33554432,
+  "registration_open": true,
+  "runtime": "serendipity-foundry-sfe",
+  "schema_version": 8,
+  "science_profile": "warn",
+  "session_enforcement": "advisory",
+  "source_commit": "d5be5ec4b86ad4ec70afaaf4fd1e2a88d01c54e8"
+ },
+ "quiet_rows": 8,
+ "schema": "c9_burst_stall.v1",
+ "serial_rows": 12,
+ "slow_calls": [
+  {
+   "at_s": 18.9,
+   "dt_s": 7.67,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 18.6,
+   "dt_s": 8.19,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 39.2,
+   "dt_s": 9.46,
+   "op": "events",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 39.2,
+   "dt_s": 9.71,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 62.5,
+   "dt_s": 6.32,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 62.2,
+   "dt_s": 7.17,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 71.7,
+   "dt_s": 8.21,
+   "op": "events",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 71.7,
+   "dt_s": 8.71,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 89.7,
+   "dt_s": 8.04,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 89.6,
+   "dt_s": 8.22,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 131.2,
+   "dt_s": 8.43,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 131.1,
+   "dt_s": 8.51,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 170.3,
+   "dt_s": 7.72,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 170.1,
+   "dt_s": 8.19,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 182.6,
+   "dt_s": 5.13,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 191.5,
+   "dt_s": 6.3,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 191.0,
+   "dt_s": 7.47,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 213.7,
+   "dt_s": 9.26,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 213.5,
+   "dt_s": 9.89,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 231.1,
+   "dt_s": 6.09,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 231.0,
+   "dt_s": 6.4,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 242.3,
+   "dt_s": 5.31,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 265.9,
+   "dt_s": 6.75,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 265.6,
+   "dt_s": 7.07,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 283.1,
+   "dt_s": 7.5,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 282.6,
+   "dt_s": 8.72,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 314.4,
+   "dt_s": 5.18,
+   "op": "events",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 314.3,
+   "dt_s": 5.27,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 325.6,
+   "dt_s": 5.48,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 325.4,
+   "dt_s": 5.89,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 350.9,
+   "dt_s": 7.79,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 350.6,
+   "dt_s": 8.46,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 366.5,
+   "dt_s": 6.77,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 366.4,
+   "dt_s": 7.17,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 394.9,
+   "dt_s": 5.62,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 394.3,
+   "dt_s": 6.25,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 412.8,
+   "dt_s": 8.18,
+   "op": "events",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 412.7,
+   "dt_s": 8.45,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 436.3,
+   "dt_s": 5.12,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 457.9,
+   "dt_s": 5.9,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 457.9,
+   "dt_s": 5.98,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 478.4,
+   "dt_s": 8.39,
+   "op": "events",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 478.4,
+   "dt_s": 8.69,
+   "op": "experiment",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 492.0,
+   "dt_s": 6.75,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 491.8,
+   "dt_s": 7.29,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 527.1,
+   "dt_s": 6.74,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 527.1,
+   "dt_s": 7.17,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 581.9,
+   "dt_s": 6.89,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 581.7,
+   "dt_s": 7.2,
+   "op": "family_member",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 597.6,
+   "dt_s": 14.98,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "reader"
+  },
+  {
+   "at_s": 597.5,
+   "dt_s": 15.15,
+   "op": "experiment",
+   "outcome": "ok",
+   "phase": "burst",
+   "who": "producer"
+  },
+  {
+   "at_s": 637.5,
+   "dt_s": 5.5,
+   "op": "audit_envelope",
+   "outcome": "ok",
+   "phase": "quiet",
+   "who": "reader"
+  },
+  {
+   "at_s": 637.3,
+   "dt_s": 5.89,
+   "op": "start",
+   "outcome": "ok",
+   "phase": "quiet",
+   "who": "consumer"
+  }
+ ],
+ "summary": {
+  "burst/consumer": {
+   "errors": {},
+   "max_s": 0.23,
+   "n": 132,
+   "over_10s": 0,
+   "p50_s": 0.045,
+   "p95_s": 0.176
+  },
+  "burst/producer": {
+   "errors": {},
+   "max_s": 15.154,
+   "n": 1200,
+   "over_10s": 1,
+   "p50_s": 0.135,
+   "p95_s": 2.674
+  },
+  "burst/reader": {
+   "errors": {},
+   "max_s": 14.977,
+   "n": 762,
+   "over_10s": 1,
+   "p50_s": 0.043,
+   "p95_s": 3.174
+  },
+  "quiet/consumer": {
+   "errors": {},
+   "max_s": 5.89,
+   "n": 88,
+   "over_10s": 0,
+   "p50_s": 0.124,
+   "p95_s": 1.306
+  },
+  "quiet/reader": {
+   "errors": {},
+   "max_s": 5.496,
+   "n": 62,
+   "over_10s": 0,
+   "p50_s": 0.047,
+   "p95_s": 1.142
+  }
+ },
+ "t_burst_s": 633.8,
+ "t_total_s": 671.6,
+ "vacuum_into_s": 3.2,
+ "wal_bytes_at_end": 90672,
+ "wal_max_bytes": 1058872,
+ "wal_samples": 1313,
+ "wal_trace": [
+  [
+   0.0,
+   0
+  ],
+  [
+   5.1,
+   959992
+  ],
+  [
+   10.2,
+   0
+  ],
+  [
+   15.2,
+   32
+  ],
+  [
+   20.4,
+   164832
+  ],
+  [
+   25.4,
+   164832
+  ],
+  [
+   30.6,
+   45352
+  ],
+  [
+   36.1,
+   32
+  ],
+  [
+   41.1,
+   234872
+  ],
+  [
+   46.2,
+   234872
+  ],
+  [
+   51.4,
+   32
+  ],
+  [
+   56.4,
+   32992
+  ],
+  [
+   61.5,
+   24752
+  ],
+  [
+   66.7,
+   218392
+  ],
+  [
+   71.9,
+   218392
+  ],
+  [
+   77.0,
+   218392
+  ],
+  [
+   82.2,
+   189552
+  ],
+  [
+   87.3,
+   56
+  ],
+  [
+   92.4,
+   185432
+  ],
+  [
+   97.4,
+   185432
+  ],
+  [
+   102.5,
+   156592
+  ],
+  [
+   107.5,
+   37112
+  ],
+  [
+   112.6,
+   189552
+  ],
+  [
+   117.8,
+   0
+  ],
+  [
+   122.9,
+   45352
+  ],
+  [
+   128.0,
+   164832
+  ],
+  [
+   133.1,
+   164832
+  ],
+  [
+   138.2,
+   164832
+  ],
+  [
+   143.2,
+   173072
+  ],
+  [
+   148.3,
+   148352
+  ],
+  [
+   153.4,
+   0
+  ],
+  [
+   158.5,
+   37112
+  ],
+  [
+   163.6,
+   214272
+  ],
+  [
+   168.8,
+   56
+  ],
+  [
+   173.9,
+   168952
+  ],
+  [
+   178.9,
+   49472
+  ],
+  [
+   184.1,
+   164832
+  ],
+  [
+   189.3,
+   24752
+  ],
+  [
+   194.3,
+   185432
+  ],
+  [
+   199.5,
+   45352
+  ],
+  [
+   204.7,
+   4152
+  ],
+  [
+   209.8,
+   193672
+  ],
+  [
+   214.9,
+   189552
+  ],
+  [
+   219.9,
+   189552
+  ],
+  [
+   225.1,
+   37112
+  ],
+  [
+   230.3,
+   24752
+  ],
+  [
+   235.3,
+   148352
+  ],
+  [
+   240.5,
+   4152
+  ],
+  [
+   245.6,
+   218392
+  ],
+  [
+   250.7,
+   173072
+  ],
+  [
+   255.7,
+   0
+  ],
+  [
+   260.7,
+   173072
+  ],
+  [
+   265.9,
+   173072
+  ],
+  [
+   271.0,
+   173072
+  ],
+  [
+   276.0,
+   0
+  ],
+  [
+   281.3,
+   45352
+  ],
+  [
+   286.3,
+   210152
+  ],
+  [
+   291.5,
+   24752
+  ],
+  [
+   296.7,
+   32
+  ],
+  [
+   301.7,
+   173072
+  ],
+  [
+   307.0,
+   32
+  ],
+  [
+   312.0,
+   24752
+  ],
+  [
+   317.1,
+   173072
+  ],
+  [
+   322.2,
+   24752
+  ],
+  [
+   327.4,
+   148352
+  ],
+  [
+   332.4,
+   24752
+  ],
+  [
+   337.6,
+   32992
+  ],
+  [
+   342.7,
+   32
+  ],
+  [
+   347.8,
+   32
+  ],
+  [
+   352.9,
+   201912
+  ],
+  [
+   357.9,
+   201912
+  ],
+  [
+   363.0,
+   164832
+  ],
+  [
+   368.1,
+   185432
+  ],
+  [
+   373.3,
+   32
+  ],
+  [
+   378.4,
+   416152
+  ],
+  [
+   383.4,
+   32
+  ],
+  [
+   388.6,
+   135992
+  ],
+  [
+   393.8,
+   24752
+  ],
+  [
+   398.9,
+   140112
+  ],
+  [
+   404.0,
+   56
+  ],
+  [
+   409.1,
+   197792
+  ],
+  [
+   414.3,
+   201912
+  ],
+  [
+   419.3,
+   201912
+  ],
+  [
+   424.5,
+   189552
+  ],
+  [
+   429.6,
+   156592
+  ],
+  [
+   434.6,
+   57712
+  ],
+  [
+   439.9,
+   140112
+  ],
+  [
+   445.0,
+   156592
+  ],
+  [
+   450.0,
+   24752
+  ],
+  [
+   455.1,
+   45352
+  ],
+  [
+   460.2,
+   144232
+  ],
+  [
+   465.2,
+   32
+  ],
+  [
+   470.4,
+   0
+  ],
+  [
+   475.5,
+   24752
+  ],
+  [
+   480.6,
+   189552
+  ],
+  [
+   485.7,
+   189552
+  ],
+  [
+   490.9,
+   160712
+  ],
+  [
+   495.9,
+   177192
+  ],
+  [
+   501.2,
+   32
+  ],
+  [
+   506.2,
+   156592
+  ],
+  [
+   511.3,
+   32
+  ],
+  [
+   516.3,
+   140112
+  ],
+  [
+   521.6,
+   37112
+  ],
+  [
+   526.8,
+   32
+  ],
+  [
+   531.9,
+   152472
+  ],
+  [
+   537.1,
+   32
+  ],
+  [
+   542.2,
+   24752
+  ],
+  [
+   547.3,
+   152472
+  ],
+  [
+   552.4,
+   37112
+  ],
+  [
+   557.6,
+   24752
+  ],
+  [
+   562.6,
+   24752
+  ],
+  [
+   567.8,
+   37112
+  ],
+  [
+   572.9,
+   160712
+  ],
+  [
+   578.0,
+   148352
+  ],
+  [
+   583.2,
+   218392
+  ],
+  [
+   588.3,
+   218392
+  ],
+  [
+   593.4,
+   173072
+  ],
+  [
+   598.6,
+   0
+  ],
+  [
+   603.7,
+   0
+  ],
+  [
+   608.7,
+   0
+  ],
+  [
+   613.8,
+   127752
+  ],
+  [
+   618.8,
+   45352
+  ],
+  [
+   623.9,
+   32
+  ],
+  [
+   629.0,
+   37112
+  ],
+  [
+   634.2,
+   28872
+  ],
+  [
+   639.3,
+   131872
+  ],
+  [
+   644.5,
+   28872
+  ],
+  [
+   649.6,
+   28872
+  ],
+  [
+   654.6,
+   0
+  ],
+  [
+   659.8,
+   57712
+  ],
+  [
+   664.9,
+   119512
+  ],
+  [
+   670.4,
+   32
+  ]
+ ]
+}

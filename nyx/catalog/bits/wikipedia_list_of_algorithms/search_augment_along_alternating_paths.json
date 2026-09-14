@@ -1,0 +1,60 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.augment_along_alternating_paths",
+  "name": "augment a matching along alternating paths",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "repeatedly find a path that alternates between unmatched and matched edges from a free vertex to another free vertex and flip its edges, growing the matching by one each time until no such path exists",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hopcroft–Karp algorithm' in section Combinatorial algorithms / Graph algorithms: convert a bipartite graph to a maximum-cardinality matching",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Blossom algorithm': algorithm for constructing maximum-cardinality matching on graphs.",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hungarian algorithm': algorithm for finding a perfect matching",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hungarian method': a combinatorial optimization algorithm which solves the assignment problem in polynomial time",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "INCREMENTAL",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a graph",
+    "for weighted variants: dual potentials"
+  ],
+  "fails_when": [
+    "general graphs need odd-cycle contraction to find the paths",
+    "phases and shortest paths are the difference between quadratic and better"
+  ],
+  "instances": [
+    "Hopcroft–Karp algorithm",
+    "Blossom algorithm",
+    "Hungarian algorithm",
+    "Hungarian method"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "FIFO",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

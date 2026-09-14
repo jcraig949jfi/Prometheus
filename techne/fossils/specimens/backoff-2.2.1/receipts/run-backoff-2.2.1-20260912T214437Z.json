@@ -1,0 +1,80 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "backoff-2.2.1",
+  "receipt_id": "run-backoff-2.2.1-20260912T214437Z",
+  "written_utc": "20260912T214437Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/backoff-2.2.1",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "schedule.py": "50f3a8a2c8abefa2a2c91b94352d316a129d6b3e3319024f4fa3c2caad6ca152"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "488002d80d9becf538ba6106282356e95020c502d22cec663b3d6830ed77b5cb",
+  "recipe_sha256": "6804f997b4d7d609206c900cc27bcc77a44b92d8700600f19f92e7b053716b35",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.96,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 3.26,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "schedule (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/schedule.py",
+      "exit": 1,
+      "seconds": 3.53,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0",
+        "stdout lacks 'jitter=False distinct_wait_values=1'",
+        "stdout does not match /jitter=True distinct_wait_values=([2-9]\\d|\\d{3,})/"
+      ],
+      "stdout": {
+        "text": "expo schedule: [None, 1, 2, 4, 8, 16, 32, 60]\n"
+      },
+      "stderr": {
+        "text": "Traceback (most recent call last):\n  File \"/w/harness/schedule.py\", line 6, in <module>\n    print(\"full_jitter sample:\", [round(backoff.full_jitter(next(g)), 3) for _ in range(8)])\n                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/w/harness/schedule.py\", line 6, in <listcomp>\n    print(\"full_jitter sample:\", [round(backoff.full_jitter(next(g)), 3) for _ in range(8)])\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/site-packages/backoff/_jitter.py\", line 28, in full_jitter\n    return random.uniform(0, value)\n           ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/random.py\", line 522, in uniform\n    return a + (b - a) * self.random()\n                ~~^~~\nTypeError: unsupported operand type(s) for -: 'NoneType' and 'int'\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "488002d80d9becf538ba6106282356e95020c502d22cec663b3d6830ed77b5cb",
+  "body_preserved": true
+}

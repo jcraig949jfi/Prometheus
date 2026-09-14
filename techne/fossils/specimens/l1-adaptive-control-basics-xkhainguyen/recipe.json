@@ -1,0 +1,36 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-octave:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "octave",
+      "cmd": "octave --version | head -1"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "MainL1_ODE1_v1.m: predictor + piecewise-constant adaptive law (Ts=10 ms) + first-order filter against a plant hit by three disturbance pulses (d=100 at 10-20 ms; 300+500 sin at 40-50 ms; 500 sin - 500 at 70-80 ms); the sampled estimate sigma_hat, and the control u, printed",
+      "cmd": "octave --no-gui --no-window-system -p $HARNESS --eval \"techne_run_script('MainL1_ODE1_v1.m'); printf('ts   = %s\\n', mat2str(ts(1:12),3)); printf('sigma_hat = %s\\n', mat2str(sigma_hat(1:12),4)); printf('sigma_hat(3) (estimate of the d=100 pulse, one sample late) = %.2f\\n', sigma_hat(3)); printf('max|u| = %.1f (the control that counters the -500 pulse); final sigma_hat = %.3f; max|x| = %.3f\\n', max(abs(u)), sigma_hat(end), max(abs(x)));\" 2>&1 | grep -v warning | tail -6",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "sigma_hat\\(3\\) .* = \\d+\\.\\d+"
+      },
+      "timeout": 600
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: the estimate of the first pulse is within 10% of d=100, and the estimate returns below 1 after the last pulse",
+      "cmd": "octave --no-gui --no-window-system -p $HARNESS --eval \"techne_run_script('MainL1_ODE1_v1.m'); printf('pulse1_est=%.3f final_est=%.4f\\n', sigma_hat(3), abs(sigma_hat(end)));\" 2>&1 | grep pulse1_est | awk '{print; split($1,a,\"=\"); split($2,b,\"=\"); exit (a[2] > 90 && a[2] < 110 && b[2] < 1) ? 0 : 1}'",
+      "expect": {
+        "exit": 0
+      },
+      "timeout": 600
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "The script defines its functions after the script body (MATLAB R2016b style); Octave only defines script-local functions when execution reaches them and the script's `clear all` would erase them, so the harness runner techne_run_script.m evaluates the FUNCTIONS block first and then the body, with `clear` shadowed by a no-op stub -- a harness-level accommodation, the .m file untouched. Observed 2026-09-13: sigma_hat(3) = 98.02 for the d=100 pulse (one adaptive sample late), max|u| = 453 against the -500 pulse. The first oracle (windowed interp1 of the sampled law) was mis-aligned by that one-sample lag and read 0; replaced by the sampled sequence itself. Octave's exit code from --eval is unreliable after an error, so pass/fail is decided in the shell from the printed numbers."
+}

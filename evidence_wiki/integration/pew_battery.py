@@ -38,6 +38,17 @@ def _sfe_db():
     env = os.environ.get("PEW_SFE_DB")
     if env:
         return Path(env)
+    # config-driven (config.local.json `sfe_db_path`, untracked): the engine
+    # moved off the tree on 2026-09-11 (Daedalus, D-23) and the canonical
+    # checkout's var/engine.db is a STALE COPY that stopped at 03:48 local;
+    # the battery graded PEW against it for hours. Never a drive letter here.
+    try:
+        from ew import db as _ewdb
+        cfgp = _ewdb.load_config().get("sfe_db_path")
+        if cfgp and Path(cfgp).exists():
+            return Path(cfgp)
+    except Exception:
+        pass
     local = HERE.parent / "SerendipityFoundry" / "SerendipityFoundryEngine" / "var" / "engine.db"
     if local.exists():
         return local
@@ -108,9 +119,19 @@ def real_sfe_run():
     ob = c.execute("SELECT obs_id, outcome, work_id, created_seq FROM "
                    "observations WHERE exp_id=? ORDER BY created_seq LIMIT 1",
                    (exp["exp_id"],)).fetchone()
+    # The anchor is the OBSERVATION_RECORDED event of THIS experiment (its
+    # refs carry exp_id), never the world's latest event: a world keeps
+    # accruing CHECKPOINT/CLAIM events, so "latest for the world" changed the
+    # anchor under a fixed (encounter_id, run_id) and the row 409'd against
+    # its own earlier self (2026-09-11 14:46, stored seq 104779 vs 104993).
     ev = c.execute("SELECT event_seq, event_id, entry_hash, ts FROM events "
-                   "WHERE world_id=? ORDER BY event_seq DESC LIMIT 1",
-                   (exp["world_id"],)).fetchone()
+                   "WHERE world_id=? AND event_type='OBSERVATION_RECORDED' "
+                   "AND refs LIKE ? ORDER BY event_seq LIMIT 1",
+                   (exp["world_id"], f'%"{exp["exp_id"]}"%')).fetchone()
+    if not ev:  # pre-refs ledgers: fall back to the world's latest, disclosed
+        ev = c.execute("SELECT event_seq, event_id, entry_hash, ts FROM events "
+                       "WHERE world_id=? ORDER BY event_seq DESC LIMIT 1",
+                       (exp["world_id"],)).fetchone()
     wk = c.execute("SELECT work_id, status, result_hash FROM work_items "
                    "WHERE work_id=?", (exp["work_id"],)).fetchone()
     c.close()
@@ -407,6 +428,26 @@ def main():
          f"world={rec.get('world_id')} player={(rec.get('players') or [None])[0]} "
          f"run={rec.get('run_id')} outcome={rec.get('outcome')} "
          f"anchor={str(rec.get('sfe_entry_hash'))[:24]}...")
+    # E14 ------------- PRODUCTIVE, not merely PRESENT (Apollo #21, 2026-09-11)
+    # /health is liveness on the event loop and answers even when every
+    # worker thread is wedged, so it proves nothing about search. The
+    # property is: health reports the embedding model ready, and one
+    # bounded hybrid search (the path that hung for 60 s x3 on 2026-09-11)
+    # answers inside the budget. Budget 15 s: measured 0.01-0.23 s warm.
+    hj = c.get("health").json()
+    st = hj.get("search") or {}
+    t0 = time.time()
+    try:
+        sr = c.get("search", q="watchdog probe", k=1, mode="hybrid")
+        srch_ok, srch_detail = sr.status_code == 200, f"http={sr.status_code}"
+    except Exception as e:
+        srch_ok, srch_detail = False, f"search raised {type(e).__name__}"
+    dt = time.time() - t0
+    ok = bool(st.get("ready")) and srch_ok and dt < 15
+    gate("E14_productive_not_present", ok,
+         f"search.ready={st.get('ready')} loading={st.get('loading')} "
+         f"error={st.get('error')} load_s={st.get('load_seconds')} "
+         f"hybrid_search {srch_detail} in {round(dt*1000)}ms (budget 15000)")
     return finish(real_id=real["encounter_id"], real_run=real["run_id"])
 
 

@@ -60,7 +60,27 @@ python -m viv.cli tick                         # exactly one tick, JSON out
 python -m viv.cli health                       # machine-readable health
 python -m viv.cli errata                       # declared contamination
 python -m viv.cli sfe-identity [--ensure]      # the DURABLE SFE identity
+python -m viv.cli stop [--force]               # stop AFTER the current tick; refuses if no live worker
+python -m viv.cli unpark --by X --reason ...   # the only clearance for a rule-10 park
 ```
+
+## Rule 10 (D-27): the consumer parks itself
+
+`config.json` declares `nonproductive_tick_bound` (17280 = 24 h at the 5 s idle
+interval) and `accountable_seat` (Archaeon). Productive means a row EXECUTED,
+FAILED or REJECTED; a heartbeat or a log line is not. On the bound the daemon
+writes `<var_dir>/park-<worker>.json`, posts one comms report to the
+accountable seat and exits **3**. It also parks on the FIRST FAILED row of a
+class in `halt_on_failure_classes` (`ENGINE_TRANSPORT`, accountable Daedalus):
+an engine episode halts one row, not eleven. A parked worker refuses to start;
+`unpark` renames the record to `park-<worker>.cleared-<utc>.json` with who and
+why. `status` and `health` show a park and exit non-zero on one.
+
+State (`var_dir`: `VIV_VAR_DIR` > config `var_dir` > `vivarium/var`) holds the
+stop flag, park records and the daemon's own per-line-flushed log
+`consumer-<worker>.log`; the heartbeat's `build.var_dir` says where the running
+worker keeps it, and `stop` writes there. `build.code.base_sha` is the RUNNING
+revision (C6); `build.instance.tag` is the comms instance tag.
 
 ## SFE integration invariants
 

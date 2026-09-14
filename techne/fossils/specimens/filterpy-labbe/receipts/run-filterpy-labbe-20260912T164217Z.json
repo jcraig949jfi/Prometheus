@@ -1,0 +1,76 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "filterpy-labbe",
+  "receipt_id": "run-filterpy-labbe-20260912T164217Z",
+  "written_utc": "20260912T164217Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.py": "63398fe348d8677fdd5b4dec009da74d9ea17084e4ca2e53bcfd91c0ebe34548"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "c7592f02163aef1d42504b50a30e88f0d1346f47660cd5739be87ee5d53f832d",
+  "recipe_sha256": "c935f45f68d0fb3c8bf721025f23222e403f929e2a53185dca326d4a4b06ec39",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.96,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "Kalman track of a noisy constant-velocity target",
+      "cmd": "pip install -q numpy scipy . >/dev/null 2>&1 && python $HARNESS/drv.py",
+      "exit": 1,
+      "seconds": 2.35,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0",
+        "stdout lacks 'FILTERPY_OK'"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "filterpy/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "4476a8aad5b34d40b7ff033e59e8343b59737e118815707090b056b77c897e92",
+      "bytes": 1016
+    },
+    {
+      "path": "filterpy/common/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "fd5f61aadb88743760796aacea88a78eab9b670b9dc5ac961608270338821321",
+      "bytes": 706
+    },
+    {
+      "path": "filterpy/common/__pycache__/helpers.cpython-311.pyc",
+      "sha256": "a4876ccf2ba7e8d07c87b7a1a591af16952d27f749759406a0b0363a50dced50",
+      "bytes": 20956
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

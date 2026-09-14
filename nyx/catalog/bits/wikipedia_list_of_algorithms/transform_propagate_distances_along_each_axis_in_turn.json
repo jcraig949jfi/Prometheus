@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.propagate_distances_along_each_axis_in_turn",
+  "name": "propagate distances along each axis in turn",
+  "lineage": [
+    "scientific software",
+    "computational geometry"
+  ],
+  "mechanism": "compute for every grid cell its distance to the nearest marked cell by handling one axis at a time: a pass along rows gives the nearest marked cell within each row, then a pass along columns combines those row results (as a lower envelope of parabolas) into true distances; each pass is linear",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Euclidean distance transform' in section Computational mathematics / Geometry: computes the distance between every point in a grid and a discrete collection of points.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "MATRIX",
+  "out_geometry": "MATRIX",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a separable distance (sum of per-axis terms)"
+  ],
+  "fails_when": [
+    "non-separable metrics"
+  ],
+  "instances": [
+    "Euclidean distance transform"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

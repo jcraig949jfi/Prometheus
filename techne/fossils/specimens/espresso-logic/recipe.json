@@ -1,0 +1,46 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/espresso-src",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make 2>&1 | grep -viE 'warning' | tail -2; test -x ../bin/espresso"
+    }
+  ],
+  "runs": [
+    {
+      "name": "minimise a shipped PLA example",
+      "cmd": "E=$(ls $BODY/upstream/tree/examples/* | head -1); ../bin/espresso $E 2>&1 | tail -20; echo USED $E",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(\\.p |\\.o |\\.i |product|USED)"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "the minimised cover verifies against the original function (espresso -do verify)",
+      "cmd": "E=$(ls $BODY/upstream/tree/examples/* | head -1); ../bin/espresso $E > $BODY/min.pla 2>/dev/null; ../bin/espresso -do verify $E $BODY/min.pla 2>&1 | tail -5; echo VERIFYDONE",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "VERIFYDONE"
+        ],
+        "stdout_not_contains": [
+          "differ",
+          "ERROR"
+        ]
+      }
+    }
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "espresso -do verify re-checks that the minimised SOP cover computes the SAME Boolean function as the input -- an oracle for the minimiser (correct function, fewer terms)."
+}

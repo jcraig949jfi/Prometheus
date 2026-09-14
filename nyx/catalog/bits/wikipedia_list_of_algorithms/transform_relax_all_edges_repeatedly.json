@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.relax_all_edges_repeatedly",
+  "name": "relax every edge repeatedly",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "start with infinite costs except the source and repeat, once per vertex, a pass that lowers each edge's head cost to the tail cost plus the edge weight when that is smaller; a change on the final pass reveals a negative cycle",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bellman–Ford algorithm' in section Combinatorial algorithms / Graph algorithms / Routing for graphs: computes shortest paths in a weighted graph (where some of the edge weights may be negative)",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "GRAPH",
+  "out_geometry": "MAP",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "FIXPOINT_ITERATION",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "edge weights (negative allowed)"
+  ],
+  "fails_when": [
+    "quadratic-ish; early exit when a pass changes nothing"
+  ],
+  "instances": [
+    "Bellman–Ford algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "SWEEP",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

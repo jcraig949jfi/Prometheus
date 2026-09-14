@@ -1,0 +1,44 @@
+{
+ "candidate_set_id": "cs-h1h0-1-p2-r1",
+ "indexed_at": "2026-09-11T14:54:19",
+ "namespace": "prod",
+ "command": "python ops/index_candidate_sets.py --candidate-set cs-h1h0-1-p2-r1 --namespace prod",
+ "all_statuses": false,
+ "workspace": {
+  "base_sha": "81ab7c7dc1bd767b05e3e1b528aad47c447de535",
+  "branch": "mnemosyne/baserole-adopt",
+  "worktree_path": "F:\\Prometheus-worktrees\\mnemosyne-baserole\\evidence_wiki",
+  "dirty": true
+ },
+ "counts": {
+  "rows_total": 14,
+  "rows_completed": 14,
+  "rows_skipped": 0,
+  "rows_by_status": {
+   "completed": 14
+  },
+  "rows_indexed_non_completed": 0,
+  "refs_inserted": 56,
+  "refs_duplicate_identical": 0,
+  "refs_conflict": 0,
+  "refs_rejected": 0
+ },
+ "refs_by_kind": {
+  "EXPERIMENT": 14,
+  "OBSERVATION": 14,
+  "ENCOUNTER": 14,
+  "RECEIPT": 14
+ },
+ "artifacts_present": 0,
+ "rows_with_unresolved_references": [],
+ "n_rows_with_unresolved_references": 0,
+ "errors": [],
+ "axis_derivation": {
+  "software_stage": "alpha when the row's declared authority says alpha, else null",
+  "connection_evidence": "runnable (typed end-to-end execution with an engine observation and resource receipt); never demonstrated-transfer",
+  "scientific_outcome": "inconclusive -- PEW records the ABSENCE of an adjudicated outcome and never adjudicates one",
+  "reproduction_state": "benchmark-attempted for a completed executed row"
+ },
+ "reference_only": "every digest is engine-supplied on the queue row; no scientific bytes were read, copied or recomputed",
+ "seconds": 1.5
+}

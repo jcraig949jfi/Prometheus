@@ -1,0 +1,272 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "python-sgp4-2.23",
+  "receipt_id": "run-python-sgp4-2.23-20260912T220043Z",
+  "written_utc": "20260912T220043Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/sgp4-2.23",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "verify.py": "520c2f05c47ed0434cbeda37db4e73dc70c0d25e4fa7089fe39ac39ecfc93409"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "f75b0c555b5bee6976b6eecfb06c8a5f661e1a35c11f28ba8afbaa25de1d89bf",
+  "recipe_sha256": "34d80e7cab6cb09fa516072b7af76b595b41c120a9286a5af4812071a493c0b0",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.96,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "apt build-essential + pip install the acquired source (+ pinned deps)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y build-essential >/dev/null 2>&1; pip install -q numpy . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 24.2,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "verify (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y build-essential >/dev/null 2>&1; pip install -q numpy . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/verify.py",
+      "exit": 0,
+      "seconds": 28.53,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ".............................................\n----------------------------------------------------------------------\nRan 45 tests in 0.084s\n\nOK\n\naccelerated: True\nRESULT OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/__init__.py",
+      "sha256": "d5f5323715b3947b08b37cc243f6f5b55fa4c3723d5b64f7f555f0525259a1e9",
+      "bytes": 30426
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/alpha5.py",
+      "sha256": "98b6a004d971f25f837a0efa1f073e6bc6a36314fd1448b3078473db9ab4267a",
+      "bytes": 606
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/api.py",
+      "sha256": "e61f7a4b1ddd026a0cfd147ef18cf2eaf1aee9e05eae9098677cbd811f519bf3",
+      "bytes": 882
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/conveniences.py",
+      "sha256": "b890b860b76eb32f45d8d18e9107495a64fcc83e560f7765be9d41c1f4f5079c",
+      "bytes": 3527
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/earth_gravity.py",
+      "sha256": "70057a3a1ed33c96b8c191c28c4012b4d2fdbd55b5775ec9bdaaabf78f418879",
+      "bytes": 375
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/exporter.py",
+      "sha256": "43a57182525d1b04148981ba316046a6ffd36931d98132bdac24777eecbc998d",
+      "bytes": 4773
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/ext.py",
+      "sha256": "31240fe331e03d3427adf8afc113838a6a09ab769d5c484b8c13c7cbf1fc6287",
+      "bytes": 17276
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/functions.py",
+      "sha256": "8947e790097ae705f35244a3233a8b0ec61b214873618a241488686993b79e40",
+      "bytes": 3140
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/io.py",
+      "sha256": "c989a4154b43a18a973026cfaa92a510d8714a1e2360443b44e83c10e7e5c347",
+      "bytes": 10594
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/model.py",
+      "sha256": "d0b0f18df621e7887889bdee3eacb214db49235c5041565a0bf3dc4331be550c",
+      "bytes": 7490
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/omm.py",
+      "sha256": "5176564a9afa32fba162b85cd79780ef6942d4770b947b65f6a18be4494dd94c",
+      "bytes": 1972
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/propagation.py",
+      "sha256": "fa851ca7d8710eb54d684de61bc84cc8a3687241518e4ee4cfe8249e0fb33a92",
+      "bytes": 74497
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/sample_omm.csv",
+      "sha256": "ae4468450e821633bf4f7ceca299b00b23c36116929b8baeb9b7908683c8c8be",
+      "bytes": 367
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/sample_omm.xml",
+      "sha256": "6821663c19c20bddd4d29b14e46d04327545b328c1c58b33c3bcb08fd3e1336b",
+      "bytes": 1177
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/SGP4-VER.TLE",
+      "sha256": "d246d1d9d768ace445a38a965713fa9ba52d80fd8a41a0502ff83d7acffe2881",
+      "bytes": 8616
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/tcppver.out",
+      "sha256": "687bf28dbe52df86e8e60ab5cb4a08d1aa3dbcaf4e63b1f7ab95f044fbe3833b",
+      "bytes": 140162
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/tests.py",
+      "sha256": "354e8257a1d5d76751693161595514ad6c55f6ba433c8ed2bd49ea92f5a4d409",
+      "bytes": 31662
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/vallado_cpp.cpython-311-x86_64-linux-gnu.so",
+      "sha256": "b6a0d9cf2e6d8d1d77fb7727f8a188fa78935c30ab7956a164de440a6490ea1c",
+      "bytes": 229376
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/wrapper.py",
+      "sha256": "f73cbaf65e1594c3b6b565212677f066b90efc9ebec31ea3633a893ea3116d67",
+      "bytes": 2283
+    },
+    {
+      "path": "build/lib.linux-x86_64-cpython-311/sgp4/wulfgar.py",
+      "sha256": "78dcf4f36b94188f2c8e4179b252cc59f2b65ae7812854d1f70993e54fcfa331",
+      "bytes": 815
+    },
+    {
+      "path": "build/temp.linux-x86_64-cpython-311/extension/SGP4.o",
+      "sha256": "2b6ee96957932ba866bfca2cfa7c5f0e9925742c70be3de5ad4c1bafa023f4fd",
+      "bytes": 230440
+    },
+    {
+      "path": "build/temp.linux-x86_64-cpython-311/extension/wrapper.o",
+      "sha256": "6c95d4c94b03dab668f096f2a2f7fd90861b1ca16bc705e2758ad018b34a1bfb",
+      "bytes": 112168
+    },
+    {
+      "path": "sgp4/__pycache__/__init__.cpython-311.pyc",
+      "sha256": "e26a04653bdd15beba014bd47be6f28f5e1f63d5e63f461d929982da65f4f8a8",
+      "bytes": 30578
+    },
+    {
+      "path": "sgp4/__pycache__/alpha5.cpython-311.pyc",
+      "sha256": "6e3869152c5366e72e1afdda8b3b5f85e351efc791a5fa9e48221e8f6565e8d8",
+      "bytes": 1455
+    },
+    {
+      "path": "sgp4/__pycache__/api.cpython-311.pyc",
+      "sha256": "bead26984eb50c79d3a529f5c9fb2ad014ac57a52387323ca758e88e8aff4c61",
+      "bytes": 1189
+    },
+    {
+      "path": "sgp4/__pycache__/conveniences.cpython-311.pyc",
+      "sha256": "39b0f74eb835733a38402eff2212ada6241b6505ae0d147ad7c6472ce1c88159",
+      "bytes": 5573
+    },
+    {
+      "path": "sgp4/__pycache__/earth_gravity.cpython-311.pyc",
+      "sha256": "b4ed91c3bb4c742366d7fed1403c14b48b3887d89f3180e81418636fc6ee379c",
+      "bytes": 650
+    },
+    {
+      "path": "sgp4/__pycache__/exporter.cpython-311.pyc",
+      "sha256": "d9fc86263c15bc8d03b81ded97b04d2ed19cdaba147346e1bb6f0ee404932285",
+      "bytes": 7022
+    },
+    {
+      "path": "sgp4/__pycache__/ext.cpython-311.pyc",
+      "sha256": "d2b1536a63ec8b3b7a848848791f186e04840fb9caba812ae7aca79bd281d980",
+      "bytes": 8691
+    },
+    {
+      "path": "sgp4/__pycache__/functions.cpython-311.pyc",
+      "sha256": "fa9c26e5495fb0cf7ec9cda4611e2e7c21708083274f62700ba8b989db7a788a",
+      "bytes": 3958
+    },
+    {
+      "path": "sgp4/__pycache__/io.cpython-311.pyc",
+      "sha256": "46e899450dc1857aaf22197a48a70cdd87bf6fc27c1ea5ea9a8641e6c567d573",
+      "bytes": 9950
+    },
+    {
+      "path": "sgp4/__pycache__/model.cpython-311.pyc",
+      "sha256": "36e1c28f3d53536cd339af758cd9b8dc8378ee661e7c7f863b27132357d4aa6e",
+      "bytes": 9168
+    },
+    {
+      "path": "sgp4/__pycache__/omm.cpython-311.pyc",
+      "sha256": "b063d6c1a4bbc273e463cda255edc6df306b9639a03180d1ed29fd42b593e552",
+      "bytes": 4053
+    },
+    {
+      "path": "sgp4/__pycache__/propagation.cpython-311.pyc",
+      "sha256": "a66b12e05a44f7d63b908dd89636c5b47020f8d07ffefe0a15cecdd8ce19a5ca",
+      "bytes": 50790
+    },
+    {
+      "path": "sgp4/__pycache__/tests.cpython-311.pyc",
+      "sha256": "48d21937e2c29879b955c5fccb6d27ae1b08e7241b8d23fe1c7771664195be71",
+      "bytes": 46193
+    },
+    {
+      "path": "sgp4/__pycache__/wrapper.cpython-311.pyc",
+      "sha256": "e86c470b228f3ae2aa16e48267e39a8096510539a5220952647d34e2e48c127e",
+      "bytes": 3448
+    },
+    {
+      "path": "sgp4/__pycache__/wulfgar.cpython-311.pyc",
+      "sha256": "eadfa12b330ad988d9658d81668dcadb4eda7e3f05bd272a803e4b6ffce1baee",
+      "bytes": 1913
+    },
+    {
+      "path": "sgp4.egg-info/PKG-INFO",
+      "sha256": "07b9dfbcc1f69254bca78d0388ccf73197cdbed3e332cd8cce3262fffdf0ccc0",
+      "bytes": 31497
+    },
+    {
+      "path": "sgp4.egg-info/SOURCES.txt",
+      "sha256": "7a5bade0ce73ca0a95374bc9fdaf39d45eb63f0a766962fa400c11cbd7a28eee",
+      "bytes": 530
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "f75b0c555b5bee6976b6eecfb06c8a5f661e1a35c11f28ba8afbaa25de1d89bf",
+  "body_preserved": true
+}

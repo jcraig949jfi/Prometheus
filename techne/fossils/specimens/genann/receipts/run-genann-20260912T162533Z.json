@@ -1,0 +1,176 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "genann",
+  "receipt_id": "run-genann-20260912T162533Z",
+  "written_utc": "20260912T162533Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "e35c6295244d4553a6043efd57f4ec261c9d86cb29398da01543d0730b25577f",
+  "recipe_sha256": "2c5a92fec8e406609db5a7458b9bd9185341e382e2dbd1c918cc6dfdb7d1d6d1",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make (examples + test)",
+      "cmd": "make -s 2>&1 | grep -viE 'warning' | tail -3; test -x ./example1 || ls example1",
+      "exit": 0,
+      "seconds": 1.72,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\tcopy          pass:60765   fail: 0      1ms\n\tsigmoid       pass:400001   fail: 0      2ms\nALL TESTS PASSED (521586/521586)\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "train a net by backprop to learn XOR",
+      "cmd": "./example1 2>&1 | tail -12",
+      "exit": 0,
+      "seconds": 0.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GENANN example 1.\nTrain a small ANN to the XOR function using backpropagation.\nOutput for [0, 0] is 0.\nOutput for [0, 1] is 1.\nOutput for [1, 0] is 1.\nOutput for [1, 1] is 1.\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "genann's own unit test",
+      "cmd": "make -s check 2>&1 | tail -6; echo GENANNTEST",
+      "exit": 0,
+      "seconds": 0.89,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\tgradient tanh pass:14   fail: 0      0ms\n\tgradient relu pass:14   fail: 0      0ms\n\tpersist       pass:60765   fail: 0     28ms\n\tcopy          pass:60765   fail: 0      0ms\n\tsigmoid       pass:400001   fail: 0      2ms\nALL TESTS PASSED (521586/521586)\nGENANNTEST\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "example1",
+      "sha256": "65280ec407fa562947f3a508a4ec4f27bb350a0b3164000116f61120ecc1fdbf",
+      "bytes": 50768
+    },
+    {
+      "path": "example1.d",
+      "sha256": "cd5f77bb6cb704f9c833dbf2fa1db9b8154af9c0a7863dd276bbba421736dffd",
+      "bytes": 32
+    },
+    {
+      "path": "example1.o",
+      "sha256": "75b24e2f22b07f622b2f32ac9c4786f0a13818754e09d213f1b9ce7e0e92ec51",
+      "bytes": 11056
+    },
+    {
+      "path": "example2",
+      "sha256": "b2ab132c68498fdc00fcf05943dc2164d525c8711b94718a9fb406993d952690",
+      "bytes": 51632
+    },
+    {
+      "path": "example2.d",
+      "sha256": "f4cd5716851baad529d1101c6bc816f359ae415749e629de6bddb77e4672563a",
+      "bytes": 32
+    },
+    {
+      "path": "example2.o",
+      "sha256": "c325e0abcd68c8c74ce4b0f7c2e93ce0fbcde77528396828821684c3d49d0abd",
+      "bytes": 13136
+    },
+    {
+      "path": "example3",
+      "sha256": "93f07fb48c74171a47d4ec0acc26ba578858a4c182939b3930ce9e8968c0cc2c",
+      "bytes": 51344
+    },
+    {
+      "path": "example3.d",
+      "sha256": "9d2a323d5d4c7343da0b5defa5c923459417235da7843f90902300cd9b716d3c",
+      "bytes": 32
+    },
+    {
+      "path": "example3.o",
+      "sha256": "8160978bb8ddccb6f914983af503007ff36fa9a7aa8c3c98ef4664448d78f90d",
+      "bytes": 12992
+    },
+    {
+      "path": "example4",
+      "sha256": "712080d459f69546d784ccb420327acf3c1bbeea4959545ecca87976a61bf0e1",
+      "bytes": 54888
+    },
+    {
+      "path": "example4.d",
+      "sha256": "2a89ee39623762661bd4e582df1b68b9939dfa0cac6ca4de736815dcf67ce1f1",
+      "bytes": 32
+    },
+    {
+      "path": "example4.o",
+      "sha256": "8cc87777a91f54fedefb8441538dc5ceb8fad6ec934582eaa925dcb13c0566f8",
+      "bytes": 21536
+    },
+    {
+      "path": "genann.d",
+      "sha256": "4211339314a1b7fc446cecd3171c71059c70e94dc930efd525c47cde7e3f0fb6",
+      "bytes": 28
+    },
+    {
+      "path": "genann.o",
+      "sha256": "8dd512ae8e8fcd318f01e098f889642b39b5219e27bf7b27d5392c8db9a41332",
+      "bytes": 50240
+    },
+    {
+      "path": "persist.txt",
+      "sha256": "448557ded48986b606251fb4c2b66341d6e97c7337db6407d0ad25f340de3951",
+      "bytes": 1670736
+    },
+    {
+      "path": "test",
+      "sha256": "03f2f814c9143f77fc3e2f29da849de1e1bcd54fb6cf32cd97efcee6c4d1c1cb",
+      "bytes": 76016
+    },
+    {
+      "path": "test.d",
+      "sha256": "51de11e281960806a6fb9d3915c4d5636bff35fa4317df74262ef04a00d6bd95",
+      "bytes": 35
+    },
+    {
+      "path": "test.o",
+      "sha256": "c43cec5283691a5045e9b055a306e39779c291d5001394849cbecaf4e54c97b5",
+      "bytes": 69168
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": true
+}

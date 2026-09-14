@@ -1,0 +1,50 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-legacy:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gnat/gprbuild",
+      "cmd": "gnatmake --version | head -1; gprbuild --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "gprbuild the Ada tools (make commands sorter; the sorter is a separate gpr target and the first attempt forgot it)",
+      "cmd": "make -s commands sorter 2>&1 | grep -iE '\\berror' | head -5; test -x bin/words && test -x bin/wakedict && test -x bin/sorter && echo built",
+      "timeout": 900
+    },
+    {
+      "name": "generate the dictionary files with the Makefile's own steps, each under its own timeout (make data hung once at wakedict for 19 min with a 0-byte DICTFILE.GEN; run by hand the same command finished in <60 s; the Ada sorter over 39k stems is the long pole)",
+      "cmd": "timeout 600 bash -c 'echo g | bin/wakedict DICTLINE.GEN' >/dev/null 2>&1; mv -f STEMLIST.GEN STEMLIST_generated.GEN; timeout 2400 bash -c 'bin/sorter < stemlist-sort.txt' >/dev/null 2>&1; mv -f STEMLIST_new.GEN STEMLIST.GEN 2>/dev/null; timeout 600 bash -c 'echo g | bin/makestem STEMLIST.GEN' >/dev/null 2>&1; timeout 600 bash -c 'echo g | bin/makeewds DICTLINE.GEN' >/dev/null 2>&1; LC_COLLATE=C sort -o EWDSLIST.GEN EWDSLIST.GEN; timeout 600 bin/makeefil >/dev/null 2>&1; timeout 600 bin/makeinfl INFLECTS.LAT >/dev/null 2>&1; ls -la DICTFILE.GEN STEMFILE.GEN INDXFILE.GEN EWDSFILE.GEN INFLECTS.SEC 2>&1 | awk '{print $5, $9}'; test -s STEMFILE.GEN && test -s INDXFILE.GEN && echo built",
+      "timeout": 3600
+    }
+  ],
+  "runs": [
+    {
+      "name": "parse 'amo' (command-line mode; the interactive banner is 12 lines, which is why the first attempt's head -8 saw no parse)",
+      "cmd": "bin/words amo 2>&1 | grep -viE 'loaded|copyright|updates|comments|^[[:space:]]*$' | head -8",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)love"
+      }
+    },
+    {
+      "name": "parse an enclitic + syncopated form: amaveruntque, amasse (TACKON -que; syncope s => vis)",
+      "cmd": "bin/words amaveruntque amasse 2>&1 | grep -viE 'loaded|copyright|updates|comments|^[[:space:]]*$' | head -14",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "TACKON",
+          "Syncop"
+        ],
+        "stdout_regex": "(?i)love"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: the dictionary's own entry for amo/amare ('love'). The build regenerates the .GEN dictionary files from the DICTLINE/INFLECTS sources. MEASURED 2026-09-12: bin/sorter over the 39k-line stem list took 25m42s wall with 19 s user CPU -- it is I/O-bound on the WSL2 /mnt/f 9p mount (many small writes to WORK.), not slow Ada; on a native filesystem it would be seconds. The recipe gives it 2400 s."
+}

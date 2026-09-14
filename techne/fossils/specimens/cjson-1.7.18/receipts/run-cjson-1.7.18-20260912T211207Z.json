@@ -1,0 +1,93 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "cjson-1.7.18",
+  "receipt_id": "run-cjson-1.7.18-20260912T211207Z",
+  "written_utc": "20260912T211207Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/cJSON-1.7.18",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "parse_all.c": "7c2c73a89d60d1f59c6d15d644ce3b4fd85dc30b435b32c1d71f057bcd424a6c",
+    "seed.json": "1438abc8675362185b5b552b70c2ca9676e780057f4002f84d6ee33f9c37a984"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "04d713005ebce02fb84b14a70240fdb46171128c372baaf39f349031bc3c1ffe",
+  "recipe_sha256": "fd107ab6955cafee77ab214313fea0015b666fcfc6b45a02d06f98561bbd862e",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.88,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile cJSON + Techne's parse-all driver under AddressSanitizer",
+      "cmd": "gcc -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -I. -o $BODY/build/parse_all cJSON.c $HARNESS/parse_all.c 2>&1 | grep -iE '\\berror' | head -3; test -x $BODY/build/parse_all && echo built",
+      "exit": 0,
+      "seconds": 1.6,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "the valid seed parses",
+      "cmd": "$BODY/build/parse_all $HARNESS/seed.json",
+      "exit": 0,
+      "seconds": 0.92,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "files=1 parsed=1 rejected=0 crashed=0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "ADVERSARIAL: 200 radamsa-mutated cases; every one must parse or be rejected, none may crash (ASan/UBSan)",
+      "cmd": "$BODY/build/parse_all $HARNESS/cases/*.json 2>&1 | tail -3",
+      "exit": 0,
+      "seconds": 0.84,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /rejected=[1-9]/"
+      ],
+      "stdout": {
+        "text": "files=1 parsed=0 rejected=0 crashed=0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "04d713005ebce02fb84b14a70240fdb46171128c372baaf39f349031bc3c1ffe",
+  "body_preserved": true
+}

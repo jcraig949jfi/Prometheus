@@ -5,11 +5,11 @@ F:\Prometheus-worktrees\mnemosyne-baserole on mnemosyne/baserole-adopt.
 
 The first five are what I start today.
 
-MNE-01 | Correct the seat file: currency date, drop the drive letters, retire the dead Redis/lmfdb phases, replace the standing "BLOCKED on James" items | EVIDENCE | program | S | operator ruling on the four quoted conflicts | roles/Mnemosyne/RESPONSIBILITIES.md with a currency date and no absolute paths
-MNE-02 | Commit the dated journal and keep it per pass | EVIDENCE | program | S | none | roles/Mnemosyne/journal/2026-09-11.md
-MNE-03 | Write and commit the prompt that unblocks binds_session, addressed to Daedalus, with its sha256 | EVIDENCE | program | S | none (the BLOCKER is Daedalus's; the prompt is mine) | roles/Mnemosyne/prompts/2026-09-11_binds_session/ with MANIFEST
-MNE-04 | Write and commit the prompt for the engine writer-lease (split-brain prevention), addressed to Daedalus, with its sha256 | ENGINE | program | S | none | roles/Mnemosyne/prompts/2026-09-11_writer_lease/ with MANIFEST
-MNE-05 | Re-index cs-c3-2 as its remaining 43 rows complete, and commit the delta receipt | EVIDENCE | alpha | S | Vivarium completing the rows | integration/index_receipt_cs-c3-2.json with rows_completed 150
+MNE-01 | DONE 2026-09-11: seat file rewritten under the ruling; April file kept verbatim as RESPONSIBILITIES_2026-04_historical.md; comms schema registered in mnemosyne/STATE.md | EVIDENCE | program | S | none | roles/Mnemosyne/RESPONSIBILITIES.md, currency 2026-09-11, no drive letters
+MNE-02 | DONE 2026-09-11 (5c51e8a0a, kept per pass) | EVIDENCE | program | S | none | roles/Mnemosyne/journal/2026-09-11.md
+MNE-03 | DONE 2026-09-11 (75c2f5fcc): prompt to Daedalus committed at roles/Mnemosyne/prompts/2026-09-11_daedalus/01_BINDS_SESSION.md with MANIFEST | EVIDENCE | program | S | Daedalus's answer | the answer, in my inbox
+MNE-04 | DONE 2026-09-11 (75c2f5fcc): prompt to Daedalus committed at roles/Mnemosyne/prompts/2026-09-11_daedalus/02_WRITER_LEASE.md with MANIFEST | ENGINE | program | S | Daedalus's answer | the answer, in my inbox
+MNE-05 | Re-index cs-c3-2 (150/150 completed as of 2026-09-11 14:15) and commit the delta receipt; folded into MNE-34 | EVIDENCE | alpha | S | none | integration/index_receipt_cs-c3-2.json with rows_completed 150
 MNE-06 | Build WP-X5 witness presence index against a real witness | EVIDENCE | beta | M | Vivarium (a witness to index) + operator D-15 | one program-witness and one CA-witness round trip, resolved to authoritative content
 MNE-07 | Build the typed lineage edge route (ANCESTOR/MUTATION/TRANSFER with declared mapping) | EVIDENCE | beta | M | operator D-15 ordering with X5 | POST /api/v1/fossil/edges with the idempotent/409 battery green
 MNE-08 | Add the off-host prod-view visibility endpoint so a remote writer can check its own namespace hygiene | EVIDENCE | beta | S | none | GET returning objects by agent visible in ew.*_prod, plus a gate
@@ -35,3 +35,11 @@ MNE-27 | Add a namespace census endpoint so test/prod separation is checkable re
 MNE-28 | Verify the fork witness fires across a real engine restore onto a second host | ENGINE | 1.0 | L | Daedalus plus a second host | a receipt showing 409 split_brain_ledger_fork from a genuine restore
 MNE-29 | Decide retention for ledger_fork_events and session_splice_events | EVIDENCE | program | XL | NEW: are refused-contradiction records kept forever | DECISIONS.md row
 MNE-30 | Add a machine-readable contract version to every read payload so a consumer can pin | EVIDENCE | beta | S | none | field present and asserted in the h0h5 battery
+MNE-31 | DONE 2026-09-11 (0653e64e1, deployed e301547dd): watchdog measures the property; model warmed at startup; E14 | ENGINE | program | S | none | evidence_wiki/scripts/ew_watchdog.ps1, tests/test_watchdog.py 6/6, watchdog.log ok lines
+MNE-32 | DONE 2026-09-11 (b08a4f0de): per-agent scoped tokens; Kairos read-only identity issued (R-4) | EVIDENCE | program | S | none | tests/test_agent_identity.py 6/6; tracker R-4; comms reply to Kairos
+MNE-33 | DONE 2026-09-11 (a36a8234d): store-identity guard in ew.db (Hermes #69) | EVIDENCE | program | S | none | tests/test_store_identity_guard.py 3/3
+MNE-34 | Index cs-c3-2 (150), cs-c3-2-r1, cs-h1h0-1-p2 all statuses, -p2-r1, -p2b, cs-h5-1 as typed refs, with --all-statuses reporting UNRESOLVED for rows without engine digests | EVIDENCE | alpha | M | cs-h5-1-r1 still queued (24 rows) | one index receipt per set under evidence_wiki/integration/
+MNE-35 | Port the property probe (authenticated search, last-success line, present-but-dead restart) to ew_watchdog_m2.ps1 | ENGINE | program | S | an M2 session to verify the tick | watchdog_m2.log ok lines on M2
+MNE-36 | Enforce the rule-10 BOUND in the watchdog script: after 12 consecutive non-productive ticks park and post to Mnemosyne via comms | ENGINE | program | S | none | the script branch plus a test that trips it
+MNE-37 | Move battery result files out of the tracked tree or stop tracking them: a battery run in the pinned worktree dirtied five tracked files | EVIDENCE | program | S | none | results written under derived/ or a ledger table; rule-7 dirtiness cannot recur
+MNE-38 | Bind the service on both address families or document 127.0.0.1 everywhere: "localhost" costs ~2 s per call on M1 (::1 tried first) | ENGINE | program | S | none | measured latency under 0.2 s via the documented URL, skill text updated

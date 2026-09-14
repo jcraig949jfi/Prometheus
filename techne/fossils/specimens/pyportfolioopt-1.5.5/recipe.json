@@ -1,0 +1,36 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/pyportfolioopt-1.5.5",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q pandas . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "timeout": 1800
+    }
+  ],
+  "runs": [
+    {
+      "name": "minvol (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q pandas . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/minvol.py",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "RESULT OK"
+        ]
+      },
+      "timeout": 2700
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: feasibility (weights sum to 1, long-only) and dominance (the min-volatility portfolio's variance is below the equal-weight variance) on the bundled 20-asset price history. Profitability is not scored."
+}

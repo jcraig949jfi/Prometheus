@@ -1,0 +1,59 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "simple-kalman-denyssene",
+  "receipt_id": "run-simple-kalman-denyssene-20260912T162526Z",
+  "written_utc": "20260912T162526Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/src",
+  "harness_sha256": {
+    "drv.cpp": "ccac1ea20af3e46e3a49ecd95fff555251d797e954c175976542fa08f5d2e7e1"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "91e2463153d7bb5b132c18077bb4ee9c5b4207a43bb3a60245958ac071f083d6",
+  "recipe_sha256": "a8144be96bfe21fadbbdb1219b263c373b15447eab95de238810f92b7f501994",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.72,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile filter + harness",
+      "cmd": "g++ -O2 -I. -o $BODY/kf $HARNESS/drv.cpp SimpleKalmanFilter.cpp 2>&1 | grep -i 'error:'; test -x $BODY/kf",
+      "exit": 1,
+      "seconds": 0.91,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "SimpleKalmanFilter.cpp:7:10: fatal error: Arduino.h: No such file or directory\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

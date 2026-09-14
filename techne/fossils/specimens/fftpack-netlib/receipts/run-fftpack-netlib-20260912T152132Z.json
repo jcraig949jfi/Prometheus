@@ -1,0 +1,59 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "fftpack-netlib",
+  "receipt_id": "run-fftpack-netlib-20260912T152132Z",
+  "written_utc": "20260912T152132Z",
+  "runner": "native",
+  "image": null,
+  "workdir": "build",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "e45ea77a24e418253549e373389e5116a8873cf2a15faf60ec505416c35b68d2",
+  "recipe_sha256": "ceca7a171a31becc9413e981ec7cee71118ae528bd9a816c4186add975bec4dd",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 1,
+      "seconds": 0.18,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: cd: F:/Prometheus/vault/fossils/fftpack-netlib/build: No such file or directory\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile FFTPACK + its test.f driver",
+      "cmd": "gfortran -std=legacy -w -O1 -o fftpack_test.exe $BODY/upstream/test.f $BODY/upstream/*.f 2>&1 | grep -i 'error:' ; test -x fftpack_test.exe",
+      "exit": 1,
+      "seconds": 0.18,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "bash: line 1: cd: F:/Prometheus/vault/fossils/fftpack-netlib/build: No such file or directory\n"
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "NO_TESTS",
+  "ok": false
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.shift_a_register_feeding_back_the_xor_of_tapped_bits",
+  "name": "shift a register, feeding back the XOR of tapped bits",
+  "lineage": [
+    "error-correcting systems",
+    "network protocols",
+    "games"
+  ],
+  "mechanism": "each step shifts every bit one place, outputs the bit that falls off, and fills the vacated place with the XOR of a fixed set of tap positions; with taps from a primitive polynomial the sequence runs through every nonzero state before repeating",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Linear-feedback shift register (note' in section Computer science / Cryptography: many LFSR-based algorithms are weak or have been broken)",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "STREAM",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "CONSTANT",
+  "requires": [
+    "a tap set (data)"
+  ],
+  "fails_when": [
+    "linear: a short run of output reveals the taps and the state"
+  ],
+  "instances": [
+    "Linear-feedback shift register (note"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.detect.polynomial_division_remainder_check"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

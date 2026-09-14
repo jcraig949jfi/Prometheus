@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.sample.contract_random_edges_until_two",
+  "name": "contract random edges until two vertices remain",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "repeatedly pick a uniformly random edge and merge its endpoints (keeping parallel edges) until two vertices remain; the edges between them are a cut that is minimum with a known probability, so repeat and keep the best",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Karger's algorithm' in section Combinatorial algorithms / Graph algorithms / Network theory: a Monte Carlo method to compute the minimum cut of a connected graph",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SAMPLE",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a uniform random edge choice"
+  ],
+  "fails_when": [
+    "needs many repetitions for high confidence"
+  ],
+  "instances": [
+    "Karger's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "RANDOM",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

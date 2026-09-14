@@ -1,0 +1,132 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "c-cmaes-hansen",
+  "canonical_name": "c-cmaes -- Nikolaus Hansen's C reference implementation of CMA-ES",
+  "aliases": [
+    "cmaes",
+    "CMA-ES",
+    "c-cmaes"
+  ],
+  "lineage": "CMA-ES (1996-, Hansen & Ostermeier): evolution strategy with covariance matrix adaptation and cumulative step-size adaptation; this is the author's own ANSI C code (cmaes.c), the ancestor of every pycma-style port",
+  "domain": [
+    "optimization",
+    "evolutionary-computation",
+    "black-box-optimization",
+    "stochastic-search"
+  ],
+  "era": "1996 (C code 2003-2014)",
+  "version": "github.com/CMA-ES/c-cmaes default branch as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/CMA-ES/c-cmaes",
+        "commit": "4450d3deccf2aacb6aa955d8216cfc4461699c60",
+        "commit_resolved": "4450d3deccf2aacb6aa955d8216cfc4461699c60",
+        "commit_date": "2026-02-21T01:38:53+01:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/CMA-ES/c-cmaes"
+  },
+  "hashes": {
+    "tree_sha256": "742bea2d0389ebc0e94809dedb98db597d9eb7bc465a7af0efdb0bc3c417ffe4",
+    "n_files": 19,
+    "bytes": 202515,
+    "artifacts": [
+      {
+        "filename": "https://github.com/CMA-ES/c-cmaes",
+        "sha256": null,
+        "commit": "4450d3deccf2aacb6aa955d8216cfc4461699c60"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\c-cmaes-hansen",
+    "hash_list": "techne/fossils/specimens/c-cmaes-hansen/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "custom permissive (Hansen: 'may be used, modified, redistributed' with notice)",
+    "status": "see cmaes.c header / LICENSE",
+    "evidence": "tree"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "makefile (example1, example2)",
+  "compiler_or_interpreter": "gcc 13 (WSL2)",
+  "dependencies": [
+    "libm"
+  ],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./evo1 (example1.c: optimise a test function from cmaes_initials.par)"
+  ],
+  "example": {
+    "command": "make && ./evo1",
+    "input": "cmaes_initials.par (dimension, initial x, sigma, seed)",
+    "output": "iteration log and the best-ever solution"
+  },
+  "environment": {
+    "runner": "wsl"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Hansen, The CMA Evolution Strategy: A Tutorial, arXiv:1604.00772",
+    "cmaes.c comments"
+  ],
+  "human_capability_summary": {
+    "built_to": "minimise a black-box, possibly noisy and ill-conditioned objective in continuous space without derivatives",
+    "pressure": "non-separable, badly scaled landscapes where gradient methods fail or are unavailable",
+    "success_means": "reaching the optimum's function value within tolerance in a small multiple of the dimension's evaluations"
+  },
+  "known_human_problem_solved": "derivative-free continuous optimisation with learned search-distribution geometry",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/c-cmaes-hansen/receipts/run-c-cmaes-hansen-20260912T125114Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/c-cmaes-hansen/receipts/run-c-cmaes-hansen-20260912T125307Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/c-cmaes-hansen/receipts/run-c-cmaes-hansen-20260912T125333Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\c-cmaes-hansen ; tracked techne/fossils/specimens/c-cmaes-hansen/",
+    "where_it_came_from": "{'repo': 'github.com/CMA-ES/c-cmaes'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; custom permissive (Hansen: 'may be used, modified, redistributed' with notice)",
+    "how_to_run_it": "recipe.json (runner wsl); python -m techne.fossils.harvest run c-cmaes-hansen",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/c-cmaes-hansen/receipts/run-c-cmaes-hansen-20260912T125333Z.json",
+    "what_humans_used_it_for": "minimise a black-box, possibly noisy and ill-conditioned objective in continuous space without derivatives"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "optimization",
+    "evolutionary-computation",
+    "black-box-optimization",
+    "stochastic-search"
+  ],
+  "hardware_assumptions": ""
+}

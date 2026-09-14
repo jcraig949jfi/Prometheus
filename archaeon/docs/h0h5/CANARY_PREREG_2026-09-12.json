@@ -1,0 +1,109 @@
+{
+ "schema": "archaeon.canary.prereg.v0",
+ "at": "2026-09-12T15:56:20.501327+00:00",
+ "status": "PREREGISTERED_NOT_SUBMITTED",
+ "purpose": "operator order 2026-09-12: prove ONE evidence-informed specimen can cross the ecology; a HUMAN row (source_reason human), not the tick",
+ "fossil_evidence_consulted": {
+  "corpus_hash": "corpus:9ff9b911920024b5f16349bb",
+  "rows": 1029,
+  "regions": 53,
+  "source": "sqlite file:F:/Prometheus-data/sfe/engine.db?mode=ro via archaeon/config.local.json sfe_db (temporary raw-ledger path; B1 grant not issued as of 15:54 UTC)",
+  "directable_regions": 24,
+  "table": "archaeon/docs/h0h5/_directable_landscapes_2026-09-12.json"
+ },
+ "selection_rule_preregistered": "among directable regions (seed_root AND length recoverable from the ledger), the HIGHEST metric; tie -> earliest created_ts",
+ "why_this_specimen": "no detector fires on any bitstring region (every one holds n=1); the operator asked for an evidence-informed single row, so the evidence used is the fossil METRIC on directable landscapes: resample the best-scoring landscape seen so far (a 'worth interrogating again' region by score, not by detector). This is the region-directed policy's move done BY HAND once, under a human row; the template stays PROPOSED and the tick's menu is untouched.",
+ "chosen_region": {
+  "region": "wld_8e73e722b2b2d883d917b5c0",
+  "world": "viv-13d121336aeb3327",
+  "created_ts": 1788949626.9564033,
+  "n": 1,
+  "metric": 0.75,
+  "seed_root": 926994,
+  "length": 24,
+  "bits": "000111101010100111011110",
+  "obs": "obs_d57501bd03d010e1c7c12797",
+  "exp": "exp_4a36b0ad58fbc0e1de90a6d5",
+  "pew": "ENC-archaeon-f84f653c25247083"
+ },
+ "region_ctx": {
+  "seed_root": 926994,
+  "length": 24,
+  "world_id": "wld_8e73e722b2b2d883d917b5c0"
+ },
+ "template": {
+  "template_id": "bitstring.resample_region.v0",
+  "status": "PROPOSED",
+  "used_as": "builder only (draw_params + kindspec); NOT admitted; NOT on the tick's menu"
+ },
+ "draw": {
+  "seed": 9348016296033464784,
+  "seed_inputs": {
+   "lane": "prod",
+   "day": "2026-09-12",
+   "nonce": "canary-2026-09-12",
+   "template_id": "bitstring.resample_region.v0"
+  },
+  "params": {
+   "length": 24,
+   "seed_root": 926994,
+   "bits": "001001000001100110000100"
+  }
+ },
+ "spec": {
+  "spec_version": 2,
+  "world": {
+   "seed_root": 926994
+  },
+  "hypothesis": "the supplied candidate does not solve the seed-926994 length-24 onemax landscape",
+  "prediction": {
+   "solved": false,
+   "basis": "24 independent bit positions; the target is derived from the seed and the length"
+  },
+  "work": {
+   "kind": "evaluate_bitstring",
+   "payload": {
+    "bits": "001001000001100110000100",
+    "length": 24
+   }
+  },
+  "outcome_rule": {
+   "field": "solved",
+   "op": "==",
+   "value": false,
+   "if_true": "SURVIVED",
+   "if_false": "FALSIFIED",
+   "if_indeterminate": "INCONCLUSIVE"
+  },
+  "pew": {
+   "required": true,
+   "encounter_id": "ENC-archaeon-4f6625f91b2e304b",
+   "players": []
+  }
+ },
+ "spec_hash": "sha256:3caf3b11e0229257cd5f626bdb0afd9425c815896da7a8f2675bf497ef2e2174",
+ "spec_hash_already_published_in_lane": false,
+ "expected": {
+  "work_kind": "evaluate_bitstring",
+  "spec_version": 2,
+  "observations": 1,
+  "typed_outcome": "one ENGINE_WORK_RESULT observation with a numeric score in [0,1] against target(seed_root=926994,length=24); PEW encounter outcome SURVIVED; selection.alternatives 0 (singleton candidate set)",
+  "new_world": "Vivarium creates a NEW world for the row, so the chart will key it as a NEW region (regions are worlds); the landscape (seed_root,length) is the one resampled -- a chart limitation recorded, not hidden"
+ },
+ "submission_plan": {
+  "call": "vq.submit(candidates=[cand], selected_index=0, source_reason='human', created_by='archaeon', config=DEFAULT)  # candidate_set_id=None -> fresh cs-<hex>",
+  "family_id": "fam-canary-2026-09-12",
+  "arm_id": "resample_best",
+  "request_key": "rk-canary-2026-09-12-1",
+  "cadence": "human row; autonomous quota untouched; exactly one submit call"
+ },
+ "acceptance": [
+  "selected with fossils.rows > 0",
+  "exactly one row",
+  "fresh candidate_set_id",
+  "no WROTE_RANDOM admission (human row, selection_basis region_directed_by_hand)",
+  "downstream result returns",
+  "selection.alternatives == 0",
+  "SFE and PEW refs reconcile to this spec_hash"
+ ]
+}

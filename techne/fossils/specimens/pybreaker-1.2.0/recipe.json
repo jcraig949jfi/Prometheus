@@ -1,0 +1,39 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/pybreaker-1.2.0",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "timeout": 900
+    }
+  ],
+  "runs": [
+    {
+      "name": "breaker_trace (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/breaker_trace.py",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "closed->open",
+          "open->half-open",
+          "half-open->closed",
+          "final closed"
+        ]
+      },
+      "timeout": 1800
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: the three-state trace CLOSED->OPEN (after fail_max failures) ->HALF-OPEN (after reset_timeout) ->CLOSED (probe succeeds), plus fast-fail while OPEN."
+}

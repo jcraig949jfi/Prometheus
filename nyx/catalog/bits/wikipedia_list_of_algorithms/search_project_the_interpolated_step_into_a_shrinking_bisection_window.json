@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.project_the_interpolated_step_into_a_shrinking_bisection_window",
+  "name": "project the interpolated step into a shrinking bisection window",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "compute the chord's zero, nudge it toward the midpoint by a controlled amount, then clip it into a window around the midpoint whose width shrinks so that the worst case still halves the bracket like bisection; on smooth functions the clipped step is the fast one",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'ITP method' in section Computational mathematics / Numerical algorithms / Root finding: minmax optimal and superlinear convergence simultaneously",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "ADAPTIVE_SWITCH",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "an initial sign change",
+    "two tuning constants (policy)"
+  ],
+  "fails_when": [
+    "nothing in the worst case beyond bisection; constants matter for the average case"
+  ],
+  "instances": [
+    "ITP method"
+  ],
+  "related": [
+    {
+      "rel": "COMPOSES_WITH",
+      "id": "bit.search.halve_the_bracket_keeping_the_half_with_the_sign_change"
+    },
+    {
+      "rel": "COMPOSES_WITH",
+      "id": "bit.search.step_to_the_zero_of_the_chord_while_keeping_the_sign_change"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

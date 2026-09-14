@@ -1,0 +1,70 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "fftpack-netlib",
+  "receipt_id": "run-fftpack-netlib-20260912T152209Z",
+  "written_utc": "20260912T152209Z",
+  "runner": "native",
+  "image": null,
+  "workdir": "upstream",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "e45ea77a24e418253549e373389e5116a8873cf2a15faf60ec505416c35b68d2",
+  "recipe_sha256": "187b7bfe2daa3eebe86a25e8f0ae5939017ed09ee545c94f5838f7f254a5d321",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 0,
+      "seconds": 0.23,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Fortran (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r4) 15.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile FFTPACK + its test.f driver",
+      "cmd": "gfortran -std=legacy -w -O1 -o $BODY/fftpack_test.exe test.f $(ls *.f | grep -v '^test.f$') 2>&1 | grep -i 'error:' ; test -x $BODY/fftpack_test.exe",
+      "exit": 0,
+      "seconds": 3.18,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "the shipped FFTPACK self-test",
+      "cmd": "$BODY/fftpack_test.exe 2>&1 | tail -30",
+      "exit": 0,
+      "seconds": 0.25,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "0N  120 RFFTF   0.278E-05 RFFTB   0.684E-03 RFFTFB  0.477E-06 SINT    0.135E-05 SINTFB  0.101E-05 COST    0.132E-05\n        COSTFB  0.322E-05 SINQF   0.298E-03 SINQB   0.210E-05 SINQFB  0.298E-06 COSQF   0.683E-06 COSQB   0.216E-05\n        COSQFB  0.298E-06 DEZF    0.572E-05 DEZB    0.138E-04 DEZFB   0.226E-05 CFFTF   0.560E-05 CFFTB   0.471E-04\n        CFFTFB  0.540E-06\n0N   54 RFFTF   0.468E-06 RFFTB   0.305E-04 RFFTFB  0.238E-06 SINT    0.336E-06 SINTFB  0.894E-06 COST    0.472E-06\n        COSTFB  0.954E-06 SINQF   0.648E-04 SINQB   0.442E-06 SINQFB  0.238E-06 COSQF   0.238E-06 COSQB   0.309E-06\n        COSQFB  0.298E-06 DEZF    0.931E-06 DEZB    0.492E-05 DEZFB   0.536E-06 CFFTF   0.141E-05 CFFTB   0.954E-05\n        CFFTFB  0.267E-06\n0N   49 RFFTF   0.455E-06 RFFTB   0.496E-04 RFFTFB  0.477E-06 SINT    0.105E-05 SINTFB  0.715E-06 COST    0.730E-06\n        COSTFB  0.226E-05 SINQF   0.458E-04 SINQB   0.954E-06 SINQFB  0.536E-06 COSQF   0.253E-06 COSQB   0.681E-06\n        COSQFB  0.656E-06 DEZF    0.842E-06 DEZB    0.462E-05 DEZFB   0.536E-06 CFFTF   0.209E-05 CFFTB   0.142E-04\n        CFFTFB  0.762E-06\n0N   32 RFFTF   0.447E-06 RFFTB   0.286E-04 RFFTFB  0.179E-06 SINT    0.417E-06 SINTFB  0.298E-06 COST    0.387E-06\n        COSTFB  0.864E-06 SINQF   0.265E-04 SINQB   0.477E-06 SINQFB  0.298E-06 COSQF   0.194E-06 COSQB   0.186E-06\n        COSQFB  0.179E-06 DEZF    0.954E-06 DEZB    0.243E-05 DEZFB   0.596E-06 CFFTF   0.116E-05 CFFTB   0.683E-05\n        CFFTFB  0.267E-06\n0N    4 RFFTF   0.149E-07 RFFTB   0.149E-06 RFFTFB  0.596E-07 SINT    0.149E-07 SINTFB  0.596E-07 COST    0.745E-08\n        COSTFB  0.596E-07 SINQF   0.954E-06 SINQB   0.298E-07 SINQFB  0.596E-07 COSQF   0.373E-07 COSQB   0.745E-07\n        COSQFB  0.179E-06 DEZF    0.298E-07 DEZB    0.119E-06 DEZFB   0.596E-07 CFFTF   0.211E-07 CFFTB   0.802E-07\n        CFFTFB  0.745E-07\n0N    3 RFFTF   0.397E-07 RFFTB   0.596E-07 RFFTFB  0.298E-07 SINT    0.397E-07 SINTFB  0.596E-07 COST    0.596E-07\n        COSTFB  0.179E-06 SINQF   0.179E-06 SINQB   0.397E-07 SINQFB  0.596E-07 COSQF   0.248E-07 COSQB   0.695E-07\n        COSQFB  0.119E-06 DEZF    0.119E-06 DEZB    0.596E-07 DEZFB   0.596E-07 CFFTF   0.795E-07 CFFTB   0.119E-06\n        CFFTFB  0.942E-07\n0N    2 RFFTF   0.000E+00 RFFTB   0.000E+00 RFFTFB  0.000E+00 SINT    0.000E+00 SINTFB  0.000E+00 COST    0.000E+00\n        COSTFB  0.596E-07 SINQF   0.000E+00 SINQB   0.000E+00 SINQFB  0.596E-07 COSQF   0.000E+00 COSQB   0.149E-07\n        COSQFB  0.000E+00 DEZF    0.000E+00 DEZB    0.000E+00 DEZFB   0.000E+00 CFFTF   0.000E+00 CFFTB   0.596E-07\n        CFFTFB  0.596E-07\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "NO_TESTS",
+  "ok": true
+}

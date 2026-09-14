@@ -1,0 +1,132 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "walksat-v56",
+  "canonical_name": "WalkSAT -- Kautz and Selman (stochastic local search for SAT)",
+  "aliases": [
+    "walksat",
+    "WalkSAT",
+    "GSAT/WalkSAT"
+  ],
+  "lineage": "GSAT (1992) -> WalkSAT (1994, Selman, Kautz, Cohen): STOCHASTIC LOCAL SEARCH for SAT -- flip the variable that minimises broken clauses, with a random-walk escape; an incomplete solver that finds models fast but never proves UNSAT. The opposite paradigm to CDCL (MiniSat/PicoSAT).",
+  "domain": [
+    "sat",
+    "stochastic-local-search",
+    "search",
+    "optimization"
+  ],
+  "era": "1994 (this repo the maintained C source)",
+  "version": "Kautz's Walksat repository default branch as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://gitlab.com/HenryKautz/Walksat/-/archive/master/Walksat-master.tar.gz",
+        "filename": "Walksat-master.tar.gz",
+        "sha256": "3f2cc50b5ca7e27927934dab5a2c4b1ca21e183fcd66df620a466ca488f997d0",
+        "bytes": 11553919,
+        "extracted_to": "upstream/tree/Walksat-master"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "gitlab.com/HenryKautz/Walksat"
+  },
+  "hashes": {
+    "tree_sha256": "b65452d65d50b26e27f8185d7a0d430eca3c9dc6c34bd8df2ead372f8aba7bd2",
+    "n_files": 203,
+    "bytes": 69670335,
+    "artifacts": [
+      {
+        "filename": "Walksat-master.tar.gz",
+        "sha256": "3f2cc50b5ca7e27927934dab5a2c4b1ca21e183fcd66df620a466ca488f997d0",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\walksat-v56",
+    "hash_list": "techne/fossils/specimens/walksat-v56/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "custom academic (Kautz/Selman; see the source header)",
+    "status": "read header before redistribution",
+    "evidence": "source header"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "./walksat < cnf",
+    "./makewff (instance generator)"
+  ],
+  "example": {
+    "command": "./walksat -seed 1 < sat.cnf",
+    "input": "DIMACS CNF on stdin",
+    "output": "ASSIGNMENT FOUND / no solution found, with flip statistics"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-lang:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Selman, Kautz, Cohen, Local Search Strategies for Satisfiability Testing, 1994",
+    "gitlab.com/HenryKautz/Walksat"
+  ],
+  "human_capability_summary": {
+    "built_to": "find a satisfying assignment for a hard SAT instance quickly by hill-climbing on the count of unsatisfied clauses with random restarts and walks",
+    "pressure": "instances where systematic search is too slow but a model exists; the trade of completeness for speed",
+    "success_means": "an assignment satisfying all clauses within a flip budget; it cannot report UNSAT"
+  },
+  "known_human_problem_solved": "fast (incomplete) satisfiability by local search",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/walksat-v56/receipts/run-walksat-v56-20260912T143448Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\walksat-v56 ; tracked techne/fossils/specimens/walksat-v56/",
+    "where_it_came_from": "{'repo': 'gitlab.com/HenryKautz/Walksat'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; custom academic (Kautz/Selman; see the source header)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run walksat-v56",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/walksat-v56/receipts/run-walksat-v56-20260912T143448Z.json",
+    "what_humans_used_it_for": "find a satisfying assignment for a hard SAT instance quickly by hill-climbing on the count of unsatisfied clauses with random restarts and walks"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "shares_ancestor_with",
+      "to": "picosat-965",
+      "note": "same problem (SAT), opposite paradigm: stochastic local search vs CDCL"
+    },
+    {
+      "relation": "derived_from",
+      "to": "GSAT (Selman/Levesque/Mitchell 1992)",
+      "note": "WalkSAT is the random-walk successor to GSAT"
+    }
+  ],
+  "acquisition_tags": [
+    "sat",
+    "stochastic-local-search",
+    "search",
+    "optimization"
+  ],
+  "hardware_assumptions": ""
+}

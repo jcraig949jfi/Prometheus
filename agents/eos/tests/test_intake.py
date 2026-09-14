@@ -26,8 +26,8 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 REPO = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(SRC))
 
-from intake import (Claim, Item, INDETERMINATE, PENDING, SELF_PATHS, classify,  # noqa: E402
-                    check_capability_absent, check_rationale_admissible, summarise)
+from intake import (Claim, Item, INDETERMINATE, NOT_EXAMINED, PENDING, SELF_PATHS,  # noqa: E402
+                    classify, check_capability_absent, check_rationale_admissible, summarise)
 
 FALSIFIER = ("If the named object's measured behaviour is unchanged after this item is read, "
              "the anchor was useless and the row is deleted with its reason.")
@@ -74,13 +74,18 @@ def test_positive_real_referent_reaches_pending(tmp_path):
     assert all(c.passed for c in v.checks)
 
 
-def test_positive_resource_from_our_own_measurement_terminates():
-    now = datetime.now(timezone.utc)
-    c = Claim(sought="RESOURCE", rationale="Called today; status and latency recorded.",
-              observation={"endpoint": "https://export.arxiv.org/api/query", "status": 200,
-                           "observed_at": now.isoformat(), "observed_by": "eos-intake",
-                           "latency_ms": 431})
-    assert classify(_item("r-1"), c).state == "RESOURCE"
+def test_positive_resource_from_a_committed_probe_artifact_reaches_pending(tmp_path):
+    """A RESOURCE claim backed by the real probe artifact passes every check --
+    and still stops at PENDING_ADMISSION, because after NEMESIS-01 the gate
+    settles no terminal state but REFUSED."""
+    art = REPO / "roles" / "Eos" / "intake" / "probe_arxiv.json"
+    if not art.is_file():
+        pytest.skip("probe artifact absent")
+    c = Claim(sought="RESOURCE", rationale="Called by this seat; the artifact is committed.",
+              observation_ref="roles/Eos/intake/probe_arxiv.json#0")
+    v = classify(_item("r-1"), c)
+    assert v.state == PENDING, v.reason
+    assert all(ch.passed for ch in v.checks)
 
 
 # --- CHEAT ----------------------------------------------------------------
@@ -113,7 +118,11 @@ def test_cheat_documented_free_tier_is_not_a_resource():
                            "observed_at": datetime.now(timezone.utc).isoformat(),
                            "observed_by": "provider-documentation"})
     v = classify(_item("r-2"), c)
-    assert v.state == "REFUSED" and "observed_by" in v.reason
+    # Since NEMESIS-01 this is refused one step earlier and for a stronger
+    # reason: a self-asserted observation dict is not accepted at all, so the
+    # honest mislabel never even reaches the observed_by check.
+    assert v.state == "REFUSED"
+    assert "self-asserted observation dict is no longer accepted" in v.reason
 
 
 def test_cheat_stale_measurement_is_refused():
@@ -219,3 +228,87 @@ def test_reports_dir_stays_ignored():
     r = subprocess.run(["git", "check-ignore", "-q", "agents/eos/reports/x.md"],
                        cwd=str(REPO), capture_output=True, timeout=60)
     assert r.returncode == 0
+
+
+# --- NEMESIS-01: the forged label, and the states that are not refusals ----
+
+def test_cheat_forged_observer_label_is_refused():
+    """THE HOLE NEMESIS FOUND. Before 2026-09-11 the gate read the observation
+    out of the claim and believed `observed_by == "eos-intake"`; 30 of 30
+    fabricated observations pointing at a never-called host settled a TERMINAL
+    RESOURCE state.
+
+    Eos's own cheat control tested the HONEST mislabel
+    (observed_by="provider-documentation") and passed. It never tested the
+    forged label, which is the structural shape of gate blind spots: they sit
+    where the author's imagination of cheating stopped, and an honest author
+    imagines honest mistakes.
+
+    Credit: Nemesis, NEMESIS-01, roles/Nemesis/attacks/2026-09-11_eos_intake_gate/.
+    """
+    forged = Claim(sought="RESOURCE", rationale="Called it, honestly.",
+                   observation={"endpoint": "https://nemesis-never-called.invalid/v1",
+                                "status": 200, "latency_ms": 12, "bytes": 4096,
+                                "observed_at": datetime.now(timezone.utc).isoformat(),
+                                "observed_by": "eos-intake"})
+    v = classify(_item("forged"), forged)
+    assert v.state == "REFUSED", (
+        "a fabricated observation carrying the correct observer label settled {}; "
+        "the gate is believing a string again".format(v.state))
+    assert "observation_ref" in v.reason or "self-asserted" in v.reason
+
+
+def test_cheat_forged_artifact_path_is_refused():
+    c = Claim(sought="RESOURCE", rationale="Backed by an artifact.",
+              observation_ref="roles/Eos/intake/does_not_exist.json#0")
+    assert classify(_item("forged2"), c).state == "REFUSED"
+
+
+def test_the_gate_settles_no_terminal_state_but_refused():
+    """The season law: Eos may prove an item does not deserve an interruption,
+    and may prove an interruption is structurally possible. It may not prove
+    that an external idea is important. RESOURCE was the one carve-out and it
+    broke; there are no carve-outs now."""
+    art = REPO / "roles" / "Eos" / "intake" / "probe_arxiv.json"
+    states = set()
+    for c in (_anchor("roles/base-role/RESPONSIBILITIES.md#No LLM adjudicates"),
+              _anchor("nope/nope.md#x"),
+              Claim(sought="RESOURCE", rationale="Real artifact.",
+                    observation_ref="roles/Eos/intake/probe_arxiv.json#0")):
+        if c.sought == "RESOURCE" and not art.is_file():
+            continue
+        states.add(classify(_item(), c).state)
+    assert states <= {"REFUSED", PENDING, INDETERMINATE, NOT_EXAMINED}, states
+    assert not ({"ANCHOR", "ACQUIRE", "RESOURCE"} & states)
+
+
+def test_auto_generated_referent_is_not_examined_not_refused():
+    """NEMESIS-01b: 49 of the first season's 51 'refusals' were an
+    auto-generated referent pointing into a directory that has never existed.
+    Those verdicts would have been identical whatever the item said. A refusal
+    that cannot be about the item is not evidence about the item."""
+    c = Claim(sought="ANCHOR", rationale=CLEAN,
+              referent="research/frontier/popA_whatever.md#relevance",
+              falsifier=FALSIFIER, proposed_by="eos-intake/auto-constructor")
+    v = classify(_item(), c)
+    assert v.state == NOT_EXAMINED, v.reason
+    assert v.state != "REFUSED"
+
+
+def test_a_hand_written_bad_referent_is_still_a_refusal():
+    """The NOT_EXAMINED escape hatch must not swallow real refusals: a human
+    who names a non-existent file has made a claim and it is refused."""
+    c = Claim(sought="ANCHOR", rationale=CLEAN,
+              referent="research/frontier/popA_whatever.md#relevance",
+              falsifier=FALSIFIER, proposed_by="a-person")
+    assert classify(_item(), c).state == "REFUSED"
+
+
+def test_capability_search_reads_the_index_not_the_working_tree():
+    """NEMESIS-01 second finding: `git grep` without --cached searches only
+    what is on disk. Measured 43 vs 97 files for one literal in a sparse
+    worktree -- 44 per cent of the evidence, while still reporting '0 hits in
+    the tracked tree'."""
+    import inspect
+    import intake as m
+    assert "--cached" in inspect.getsource(m._git_grep_count)

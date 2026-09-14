@@ -1,0 +1,99 @@
+{
+ "schema": "techne.fossil.corewar_tournament/1",
+ "written_utc": "2026-09-13T11:48:42Z",
+ "fossil_driven": "corewar-redcode",
+ "core_size": 8000,
+ "max_steps": 4000,
+ "rounds_per_pair": 15,
+ "method": "round-robin among classic Redcode warriors (Imp, Dwarf, Gemini, Mice, Core Clear) in an 8000-cell MARS core; each pair plays 15 rounds with randomised placement; record how many rounds each warrior is still executing (non-empty task queue) at the end.",
+ "note": "raw survival counts of preserved 1984 Core War warriors; NOT a strategy ranking. Imp is a one-instruction self-copier, Dwarf a bomber, Gemini a self-mover, Mice a replicator, Core Clear a sweeper -- different survival machinery. What the spread means is Nyx's question.",
+ "warriors": [
+  "imp",
+  "dwarf",
+  "gemini",
+  "mice",
+  "coreclear"
+ ],
+ "rows": [
+  {
+   "a": "imp",
+   "b": "dwarf",
+   "b_survives": 2,
+   "mutual_or_timeout": 13,
+   "rounds": 15,
+   "a_survives": 0
+  },
+  {
+   "a": "imp",
+   "b": "gemini",
+   "b_survives": 1,
+   "mutual_or_timeout": 14,
+   "rounds": 15,
+   "a_survives": 0
+  },
+  {
+   "a": "imp",
+   "b": "mice",
+   "b_survives": 6,
+   "mutual_or_timeout": 9,
+   "rounds": 15,
+   "a_survives": 0
+  },
+  {
+   "a": "imp",
+   "b": "coreclear",
+   "b_survives": 0,
+   "mutual_or_timeout": 15,
+   "rounds": 15,
+   "a_survives": 0
+  },
+  {
+   "a": "dwarf",
+   "b": "gemini",
+   "b_survives": 0,
+   "mutual_or_timeout": 0,
+   "rounds": 15,
+   "a_survives": 15
+  },
+  {
+   "a": "dwarf",
+   "b": "mice",
+   "b_survives": 1,
+   "mutual_or_timeout": 14,
+   "rounds": 15,
+   "a_survives": 0
+  },
+  {
+   "a": "dwarf",
+   "b": "coreclear",
+   "b_survives": 2,
+   "mutual_or_timeout": 6,
+   "rounds": 15,
+   "a_survives": 7
+  },
+  {
+   "a": "gemini",
+   "b": "mice",
+   "b_survives": 14,
+   "mutual_or_timeout": 1,
+   "rounds": 15,
+   "a_survives": 0
+  },
+  {
+   "a": "gemini",
+   "b": "coreclear",
+   "b_survives": 9,
+   "mutual_or_timeout": 3,
+   "rounds": 15,
+   "a_survives": 3
+  },
+  {
+   "a": "mice",
+   "b": "coreclear",
+   "b_survives": 0,
+   "mutual_or_timeout": 11,
+   "rounds": 15,
+   "a_survives": 4
+  }
+ ]
+}

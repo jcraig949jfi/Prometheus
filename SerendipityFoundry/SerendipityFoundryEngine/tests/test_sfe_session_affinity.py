@@ -415,6 +415,9 @@ def _engine_db(client) -> str:
 # this list is a deliberate act that shows up in review.
 EXEMPT = {
     ("GET", "/v2/version"):        "liveness/identity; no auth, no resource",
+    ("GET", "/v2/health"):         "B3 2026-09-12: measured health; no auth, no per-client resource "
+                                   "(counts and timings only; no ids, no tokens); a foreign key is "
+                                   "irrelevant because nothing here is owned",
     ("GET", "/v2/openapi.json"):   "the contract itself; must be readable to "
                                    "discover how to send a session at all",
     ("GET", "/v2/docs"):           "human documentation UI",

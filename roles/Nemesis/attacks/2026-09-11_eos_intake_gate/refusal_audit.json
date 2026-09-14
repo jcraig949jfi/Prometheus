@@ -1,0 +1,60 @@
+{
+  "audited": "roles/Eos/intake/ledger_2026-09-11.json",
+  "workspace": {
+    "base_sha": "90f4aeef6ba60c0730a856f453eb2a154b63d109",
+    "branch": "nemesis/eos-scorer-attack-2026-09-11",
+    "worktree_path": "D:\\Prometheus-worktrees\\nemesis-adopt",
+    "dirty": false,
+    "main_worktree": false,
+    "allow_canonical_override": false
+  },
+  "total_verdicts": 58,
+  "counts": {
+    "ANCHOR": 0,
+    "ACQUIRE": 0,
+    "RESOURCE": 1,
+    "REFUSED": 51,
+    "PENDING_ADMISSION": 6,
+    "INDETERMINATE": 0
+  },
+  "refused": 51,
+  "refused_missing_referent_file": 49,
+  "of_those_referent_named_after_the_item": 49,
+  "referent_directory_prefixes": [
+    [
+      "research/frontier",
+      49
+    ]
+  ],
+  "refusal_signatures": [
+    {
+      "failed_checks": [
+        "not_already_absorbed",
+        "referent_resolves"
+      ],
+      "n": 45
+    },
+    {
+      "failed_checks": [
+        "not_already_absorbed",
+        "rationale_admissible",
+        "referent_resolves"
+      ],
+      "n": 4
+    },
+    {
+      "failed_checks": [
+        "destination"
+      ],
+      "n": 1
+    },
+    {
+      "failed_checks": [
+        "observation_is_ours"
+      ],
+      "n": 1
+    }
+  ],
+  "research_frontier_exists": false,
+  "research_exists": false
+}

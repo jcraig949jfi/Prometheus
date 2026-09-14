@@ -1,0 +1,26 @@
+{
+ "schema": "archaeon.fossil_metabolism_s4.prereg.v0",
+ "status": "PREREGISTERED_BEFORE_THE_BATCH",
+ "question": "Given several legitimate experiment producers with different inductive biases, when does each produce the most decision-useful evidence? Should Prometheus preserve producer plurality?",
+ "loops": "LOOP 2 (ecology) proposes; LOOP 4 (the synthetic harness, standing in for the runner) executes and returns the exact score; LOOP 1 (the scoring executor) is never steered mid-run; LOOP 3 (Keeper) set the question and thresholds in this file and receives the verdict. Crossings: evidence IN (fossils -> PEW_CONSUMING producers), proposal OUT (probe + provenance -> harness). The hidden target never crosses (tests).",
+ "producers": {
+  "U": {"policy": "PEW_BLIND", "behaviour": "seeded uniform probe; signature carries no evidence"},
+  "G": {"policy": "PEW_CONSUMING", "behaviour": "S3 exact one-step ER over the S3 fossil-centred pool (unchanged objective and pool)"},
+  "W": {"policy": "PEW_CONSUMING", "behaviour": "same exact objective over a widened pool: exhaustive 2^L at L <= 12; else G's pool + 256 seeded global uniform probes + 32 antipodal probes (posterior mode flipped on ~half its non-fixed positions)"},
+  "M": {"policy": "PEW_CONSUMING", "behaviour": "bounded two-step lookahead over W's top-6 one-step candidates (inner pool 24); run ONLY for L <= 16; any regime where a selection exceeds 60 s is recorded COMPUTATIONALLY_INTRACTABLE for M and M is omitted there"}
+ },
+ "regimes": {"L": [8, 12, 16, 24, 32], "initial_fossils_n0": [1, 3], "n0_3_geometry": "the production-like S1 state: one uniform candidate x0, x0 with one seeded bit flipped, and one further uniform candidate (all scored exactly)", "seeds": {"8": 30, "12": 30, "16": 30, "24": 30, "32": 10}, "same_target_and_initial_evidence_for_every_arm": true, "arms_evidence_isolated": "each arm holds its own fossil list; nothing returned to one arm is visible to another"},
+ "budget": {"probes_per_arm": {"8": 4, "12": 6, "16": 8, "24": 10, "32": 12}, "derivation": "chosen from S3 WITHOUT looking at S4: one below S3's mean probes-to-identify for U at each L (5.1/7.5/8.3/10.5 -> 4/6/8/10), so the uniform arm has NOT saturated at the endpoint; L 32 extrapolated (+2)"},
+ "primary_metric": {"name": "normalised area under the uncertainty trajectory (nAUC)", "definition": "nAUC = (1/(B*L)) * sum_{k=1..B} log2|T_k| where T_k is the arm's feasible set after its k-th probe and B the budget; the fraction of the prior's bits still open, averaged over the early budget; lower is better; rewards acquiring information EARLIER", "unit": "paired per world (same target, same initial evidence) between producers"},
+ "secondary_metrics": ["per step: log2|T|, marginal information gain (bits), cumulative gain, fixed bits, immediate task score, Hamming distance to nearest fossil, partition size and entropy, compute seconds, redundancy flag (probe equals an existing fossil, or ER == N, i.e. zero information)", "probes to identification with censoring at B+1", "producer x regime table of mean nAUC and of the count of worlds where the producer is the (tied-)best", "convergence: fraction of steps at which G and W (and M) propose the identical probe, by remaining log2|T| bucket", "complementarity: conditional on G's marginal gain at a step being in the bottom quartile of its regime, the paired gain of W and of U at that same state (U evaluated on G's evidence state as a counterfactual probe, so the comparison is per state)"],
+ "verdict_rule_preregistered": {
+  "PRODUCER_PLURALITY_SUPPORTED": "there exist at least two regimes (an (L, n0) cell each) in which DIFFERENT producers are the paired-best on nAUC, each with a paired mean advantage over the other of >= 0.02 nAUC and a one-sided exact sign test p < 0.05 over that cell's seeds; regime membership is observable without the target (L, n0, and the initial feasible-set size)",
+  "SINGLE_POLICY_DOMINATES": "one producer is paired-best (>= 0.02 nAUC, p < 0.05) in every cell where any difference is significant, and no cell shows a different winner at that bar",
+  "NO_SEPARATION": "no cell separates any two producers at the bar",
+  "COMPUTATIONALLY_INTRACTABLE": "recorded per producer per regime (M expected at L >= 24; W or G if a selection exceeds 60 s)",
+  "note": "task score is measured and reported; it is not part of the rule. Counting INFORMATION_PROGRESS rows is not a metric here."
+ },
+ "stopping_rule": "every (L, n0, seed) once; no re-runs; no seed selection after the fact",
+ "assumptions": ["uniform prior over the feasible set for every expectation", "exact scores", "producers are frozen at PRODUCER_VERSION (sha256 of s4_producers.py) recorded on every proposal"],
+ "runner": "archaeon/docs/h0h5/S4_RUNNER_2026-09-12.py -> S4_RESULTS_2026-09-12.json"
+}

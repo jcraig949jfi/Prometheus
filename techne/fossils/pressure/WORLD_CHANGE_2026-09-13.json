@@ -1,0 +1,98 @@
+{
+ "schema": "techne.fossil.world_change/1",
+ "written_utc": "2026-09-13T22:17:44Z",
+ "census": "techne/fossils/ENV_ASSUMPTION_CENSUS_2026-09-13.json",
+ "other_world_rule": "the world that differs from the fossil's native image (64-bit <-> 32-bit)",
+ "positive_control": "md5-rfc1321 must report DIVERGES; if it does not, the method is broken",
+ "positive_control_held": true,
+ "tested": [
+  "md5-rfc1321",
+  "cjson-1.7.18"
+ ],
+ "full_candidate_set": [
+  "md5-rfc1321",
+  "cjson-1.7.18",
+  "femtolisp",
+  "espresso-logic",
+  "zchaff-2007",
+  "tinycc"
+ ],
+ "not_tested_this_round": [
+  "bdwgc-8.2.6",
+  "dmtcp-3.1.2",
+  "glpk-5.0",
+  "gnu-prolog-1.5.0",
+  "pari-gp-2.17",
+  "valgrind-helgrind-fixtures-3.19",
+  "openssl-1.0.1f-heartbleed (SOURCE_ONLY)",
+  "xv6-riscv (NOT_ATTEMPTED)"
+ ],
+ "rows_trustworthy": true,
+ "natural_specimens_found": [],
+ "note": "A world probe never persists; recorded classifications are untouched. INCONCLUSIVE_BUILD is not evidence of environment-dependent correctness.",
+ "rows": [
+  {
+   "specimen_id": "md5-rfc1321",
+   "native_image": "prometheus-fossil-i386:bookworm",
+   "other_image": "prometheus-fossil-c:bookworm",
+   "native": {
+    "classification": "RUNNABLE_CONTAINER",
+    "ok": true,
+    "builds": true,
+    "failed_runs": []
+   },
+   "other": {
+    "classification": "BUILDS_BUT_NOT_RUN",
+    "ok": false,
+    "builds": true,
+    "failed_runs": [
+     [
+      "stdout lacks 'sizeof_unsigned_long=4'"
+     ],
+     [
+      "stdout lacks 'd41d8cd98f00b204e9800998ecf8427e'",
+      "stdout lacks '0cc175b9c0f1b6a831c399e269772661'",
+      "stdout lacks '900150983cd24fb0d6963f7d28e17f72'"
+     ]
+    ]
+   },
+   "verdict": "DIVERGES",
+   "recorded_classification": "RUNNABLE_CONTAINER"
+  },
+  {
+   "specimen_id": "cjson-1.7.18",
+   "native_image": "prometheus-fossil-c:bookworm",
+   "other_image": "prometheus-fossil-i386:bookworm",
+   "native": {
+    "classification": "BUILDS_BUT_NOT_RUN",
+    "ok": false,
+    "builds": true,
+    "failed_runs": [
+     [
+      "exit -1 != expected 0",
+      "stdout lacks 'crashed=0'",
+      "stdout does not match /rejected=[1-9]/"
+     ]
+    ]
+   },
+   "other": {
+    "classification": "BUILDS_BUT_NOT_RUN",
+    "ok": false,
+    "builds": true,
+    "failed_runs": [
+     [
+      "exit 127 != expected 0",
+      "stdout lacks 'parsed=1'",
+      "stdout lacks 'crashed=0'"
+     ],
+     [
+      "stdout lacks 'crashed=0'",
+      "stdout does not match /rejected=[1-9]/"
+     ]
+    ]
+   },
+   "verdict": "INCONCLUSIVE_NATIVE_FAILS",
+   "recorded_classification": "RUNNABLE_CONTAINER"
+  }
+ ]
+}

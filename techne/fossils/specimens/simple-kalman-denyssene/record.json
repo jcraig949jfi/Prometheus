@@ -1,0 +1,122 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "simple-kalman-denyssene",
+  "canonical_name": "SimpleKalmanFilter -- a compact scalar Kalman filter (Denys Sene)",
+  "aliases": [
+    "SimpleKalmanFilter",
+    "kalman"
+  ],
+  "lineage": "Kalman filter (1960, Rudolf Kalman): recursive least-squares estimation of hidden state from noisy measurements via predict/update; this is a minimal scalar C++ reference for embedded sensor smoothing",
+  "domain": [
+    "estimation",
+    "kalman-filter",
+    "state-estimation",
+    "sensor-fusion",
+    "signal-reconstruction"
+  ],
+  "era": "1960 (this impl modern)",
+  "version": "github.com/denyssene/SimpleKalmanFilter master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/denyssene/SimpleKalmanFilter",
+        "commit": "fc29b517874b40f9bd8f802f3cb2579ccc651855",
+        "commit_resolved": "fc29b517874b40f9bd8f802f3cb2579ccc651855",
+        "commit_date": "2025-10-29T15:31:05-03:00"
+      }
+    ]
+  },
+  "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+  "source_identity": {
+    "repo": "github.com/denyssene/SimpleKalmanFilter"
+  },
+  "hashes": {
+    "tree_sha256": "91e2463153d7bb5b132c18077bb4ee9c5b4207a43bb3a60245958ac071f083d6",
+    "n_files": 10,
+    "bytes": 122917,
+    "artifacts": [
+      {
+        "filename": "https://github.com/denyssene/SimpleKalmanFilter",
+        "sha256": null,
+        "commit": "fc29b517874b40f9bd8f802f3cb2579ccc651855"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\simple-kalman-denyssene",
+    "hash_list": "techne/fossils/specimens/simple-kalman-denyssene/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C++"
+  ],
+  "build_system": "compile the .cpp with a Techne driver",
+  "compiler_or_interpreter": "g++ 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "SimpleKalmanFilter::updateEstimate(measurement) -> filtered estimate"
+  ],
+  "example": {
+    "command": "Techne harness: a constant true value + Gaussian measurement noise; check the filtered variance << raw variance",
+    "input": "noisy measurements of a hidden constant",
+    "output": "an estimate whose error variance is far below the measurement noise"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Kalman, A New Approach to Linear Filtering and Prediction Problems, 1960"
+  ],
+  "human_capability_summary": {
+    "built_to": "recover a hidden true value from a stream of noisy measurements by recursively combining a prediction with each new observation, weighted by their uncertainties",
+    "pressure": "measurement noise and the impossibility of observing the true state directly; a naive average lags, a raw reading is jittery",
+    "success_means": "an estimate that tracks the true state with error variance far below the raw measurement noise"
+  },
+  "known_human_problem_solved": "optimal recursive estimation of hidden state under noise",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "noisy observation, hidden (unobservable) true state",
+  "human_failure_condition": "a mistuned filter either lags reality (over-smooths) or passes the noise through (under-smooths); a navigation estimate drifts and the vehicle mislocates",
+  "behavioral_entry_point": "raise the measurement-noise level, or feed a step change in the hidden value, and watch the estimate's lag/variance trade-off",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/simple-kalman-denyssene/receipts/run-simple-kalman-denyssene-20260912T162526Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/simple-kalman-denyssene/receipts/run-simple-kalman-denyssene-20260912T162714Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\simple-kalman-denyssene ; tracked techne/fossils/specimens/simple-kalman-denyssene",
+    "where_it_came_from": "https://github.com/denyssene/SimpleKalmanFilter ; PSEUDOCODE_PLUS_REFERENCE_IMPL @ fc29b517874b40f9bd8f802f3cb2579ccc651855",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run simple-kalman-denyssene",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/simple-kalman-denyssene/receipts/run-simple-kalman-denyssene-20260912T162714Z.json",
+    "what_humans_used_it_for": "recover a hidden true value from a stream of noisy measurements by recursively combining a prediction with each new observation, weighted by their uncertainties"
+  },
+  "seat": "Techne"
+}

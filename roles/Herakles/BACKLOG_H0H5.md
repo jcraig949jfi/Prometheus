@@ -8,25 +8,28 @@ Ordered by lane, not by priority; priority is the operator's.
 
 ## LIT -- recovery and lineages
 
-**L-1 OPEN. Juille and Pollack 1998 coevolved rule.** Highest-value single
+**L-1 DONE 2026-09-11 (was OPEN; author-site PDF, 15/15 cells reproduced, see herakles/specimens/spec-juille-pollack-1998/REPORT.md). Juille and Pollack 1998 coevolved rule.** Highest-value single
 recovery: a different SEARCH PROCESS, not another run of the same one.
 Needs the GP-1998 proceedings. Bar: transcribe, execute, reproduce the
 published figure under a named criterion.
 BLOCKED ON: fetch access.
 
-**L-2 OPEN. Capcarrere, Sipper, Tomassini 1996, PRL 77(24):4969-4971.** A
+**L-2 DONE 2026-09-11 (was OPEN; author-site PDF, footnote [13] reproduced, criterion block_output declared, see spec-capcarrere-r1-density/REPORT.md). Capcarrere, Sipper, Tomassini 1996, PRL 77(24):4969-4971.** A
 radius-1 density classifier, executable in `eca_rule_eval_v1` the day it is
 recovered. Carries a DIFFERENT output convention and therefore needs its own
 criterion declared beside the existing three. BLOCKED ON: fetch access.
 
-**L-3 OPEN. Andre, Bennett, Koza 1996 GP rule.** A different REPRESENTATION.
+**L-3 DONE 2026-09-11 (was OPEN; author-site PDF, GP rule bit-identical across two printings, reproduced under both 2N and 600-step conventions, see spec-andre-bennett-koza-1996/). Andre, Bennett, Koza 1996 GP rule.** A different REPRESENTATION.
 Proc. First Annual Conf. on Genetic Programming, pages 3-11.
 BLOCKED ON: fetch access.
 
 **L-4 OPEN. Wolz and de Oliveira 2008.** Named in the field map, no citation
 recovered. First step is finding the citation, not the table.
+> 2026-09-11: citation recovered, J. Cellular Automata 3(4):289-312, 2008 (publisher
+> index and author's publication list). No PDF on either; publisher-gated. Stays OPEN
+> on bytes. BLOCKED ON: publisher access.
 
-**L-5 OPEN. Resolve the Das/Mitchell/Crutchfield 1994-95 provenance.** Are
+**L-5 OPEN, advanced 2026-09-11: the "Das rule" reprinted by ABK 1996 and JP 1998 is the 1995 HAND-WRITTEN Das rule (now held, RECOVERED); ABK Table 1's 76.9% for the 1994 GA rule equals par's published 0.769, consistent with par being that rule and not proof. Resolve the Das/Mitchell/Crutchfield 1994-95 provenance.** Are
 `par`, `particle1`, `particle2` the specific rules of those papers or siblings
 from other runs? Today this is AMBIGUOUS and calling them recovered would be a
 provenance claim I cannot support.
@@ -53,7 +56,7 @@ present. Same first question as L-9: dossier or route.
 
 ## CRIT -- criteria and their conventions
 
-**C-1 OPEN. One table of every CA criterion and its published-figure
+**C-1 DONE 2026-09-11 (herakles/CRITERIA.md; five criteria now). One table of every CA criterion and its published-figure
 convention.** Four now exist: `at_T`, `stable`, `cellwise_majority_match`,
 `synchronisation`. Only `at_T` is comparable to a published P. That sentence
 needs to live in one place before a fifth is added.
@@ -63,7 +66,7 @@ needs to live in one place before a fifth is added.
 arbitrary initial conditions. Until something does, a score of 0.0 cannot be
 separated from an unreachable target. Depends on L-7.
 
-**C-3 OPEN. Attainable range and eligible count for every criterion, in the
+**C-3 DONE 2026-09-11 (herakles/CRITERIA.md second table). Attainable range and eligible count for every criterion, in the
 same table as C-1.** `at_T` gives random tables the single point {0};
 `cellwise_majority_match` gives them [0.4939, 0.5099]. That contrast is the
 argument for having more than one criterion and it should be stated once.
@@ -121,6 +124,6 @@ untestable without them. HELD until then.
 them as recorded. Filed to Vivarium; listed here because my checker's verdict
 depends on it.
 
-**X-4 OPEN. Second-lineage C3-hist arm.** The whole point of L-1..L-4: a
+**X-4 OPEN, recovery side DONE 2026-09-11: evolved organisms from three search processes now held and reproduced (herakles/lineages/CATALOGUE_2026-09-11.md); remaining step is Vivarium taking coev1, coev2, abk_gp, das1995, davis1995 as ca_density organisms. Second-lineage C3-hist arm.** The whole point of L-1..L-4: a
 historical arm with one lineage in it is a historical arm with one lineage in
 it. No cross-lineage claim is available until at least one lands.

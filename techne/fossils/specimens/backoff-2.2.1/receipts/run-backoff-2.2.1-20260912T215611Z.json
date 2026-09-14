@@ -1,0 +1,76 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "backoff-2.2.1",
+  "receipt_id": "run-backoff-2.2.1-20260912T215611Z",
+  "written_utc": "20260912T215611Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree/backoff-2.2.1",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "schedule.py": "2585eb4d28a1261d139478f2a6647e2830f97e4c8442b2ca6bac9ee7e06a3ec1"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "488002d80d9becf538ba6106282356e95020c502d22cec663b3d6830ed77b5cb",
+  "recipe_sha256": "6804f997b4d7d609206c900cc27bcc77a44b92d8700600f19f92e7b053716b35",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.85,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 3.31,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "schedule (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q  . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/schedule.py",
+      "exit": 0,
+      "seconds": 3.32,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "expo schedule: [1, 2, 4, 8, 16, 32, 60, 60]\nfull_jitter sample: [0.134, 1.695, 3.055, 2.041, 7.927, 14.384, 41.702, 100.957]\njitter=False distinct_wait_values=1 max_share=1.000\njitter=True distinct_wait_values=839 max_share=0.004\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "488002d80d9becf538ba6106282356e95020c502d22cec663b3d6830ed77b5cb",
+  "body_preserved": true
+}

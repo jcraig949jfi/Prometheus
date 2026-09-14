@@ -127,6 +127,30 @@ database writes, model training and experiment runners:
    parks itself with a typed gate and stops. Rule 8 makes dormancy visible
    after the fact; this rule prevents the launch.
 
+10. A LOOP MAY NOT OUTLIVE ITS OWN USEFULNESS SILENTLY (Atalanta #86/#97,
+   adopted 2026-09-11, D-27; the operator's reading: "containment rather
+   than prevention -- it turns 354 perfectly punctual useless ticks into
+   at most N useless ticks"). (a) BOUND: every persistent loop declares an
+   integer bound N on CONSECUTIVE NON-PRODUCTIVE ticks, where productive
+   is the loop's rule-8 productivity signal and NOTHING ELSE -- never
+   whether the tick emitted something. Atalanta wrote a well-formed
+   artifact on every one of its 354 dead ticks and scores 354/354 under
+   any emission-keyed bound; a rule 10 rewritten to key on emission is
+   decorative, and roles/Atalanta/reference/test_null_bound.py asserts
+   that failure so the regression is testable. On the Nth tick the loop
+   PARKS ITSELF: typed park record, lock released, stop; a parked loop
+   resumes on explicit clearance, never on restart. (b) RECIPIENT: the
+   park posts exactly one comms message to a NAMED SEAT accountable for
+   answering it. A loop that declares no bound, or whose bound names no
+   seat, may not be launched. The registry carries both as columns
+   (`bound`, `accountable_seat`); a loop already running at adoption
+   carries UNDECLARED until its owner migrates it, and the self-test
+   ratchets that count downward only. Reference implementation and nine
+   controls: roles/Atalanta/reference/. The stronger prevention rule --
+   a consumer may not name its producer's output location; the producer
+   declares it -- is NOT bundled here; it is opened as its own decision
+   (D-28) because it touches every producer and must be costed alone.
+
 PRESENT is not ACTIVE is not PRODUCTIVE is not VALID. A task can exist in
 the scheduler (present), fire on schedule with exit 0 (active), produce
 rows or advance state (productive), and still be wrong (valid is the
@@ -204,6 +228,14 @@ reads instead of any local memory directory.
    machine, model and tier (light: haiku/sonnet; heavy: opus/fable),
    session and harness metadata to comms.agents, the table the program
    reads to know who is online for delegation (`python -m comms who`).
+   A seat may run as several INSTANCES at once (D-24 amendment 3, Harmonia
+   #154): every comms call carries a derived tag <machine>-<8 of the
+   harness session id> (`python -m comms instance`), `who` lists instances
+   beneath the seat, unseen messages are per instance, and a claim race
+   tells the loser it lost. When more than one instance of your seat may
+   be running, put the tag in your subjects, journal file names and
+   commit trailers as roles/Harmonia/INSTANCES.md does, so two instances
+   are never indistinguishable in any log.
 2. Read your own entry file first: BOOTSTRAP.md if you have one, else
    RESPONSIBILITIES.md, then CHARTER.md, then METHOD.md, then the newest
    prompt addressed to you under roles/<Seat>/prompts/ and roles/*/prompts/,

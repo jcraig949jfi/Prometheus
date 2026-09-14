@@ -203,9 +203,11 @@ def issue(conn, rows: Optional[List[Dict[str, Any]]] = None, config=None) -> Dic
                                                   "authority": "first CA corpus: acquisition, baselines, "
                                                                "exact-symmetry nulls, and the frozen random "
                                                                "control; not a fossil-directed proposal",
-                                                  "upstream_selection_history": "UNKNOWN"})
+                                                  "upstream_selection_history": "UNKNOWN",
+                                                  vq.CAMPAIGN_SET_KEY: csid})
+        # all members execute: campaign grouping, not a candidate set (Vivarium #181 item 4)
         res = vq.submit(conn, candidates=[cand], selected_index=0, source_reason="human",
-                        created_by="archaeon", config=config, candidate_set_id=csid)
+                        created_by="archaeon", config=config)
         ids.append(res["selected_experiment_id"])
     return {"campaign": CAMPAIGN_ID, "candidate_set_id": csid, "experiment_ids": ids, "registered": len(ids)}
 
@@ -230,9 +232,10 @@ def reissue(conn, labels: List[str], suffix: str = "R1", config=None) -> Dict[st
                                                   "reissue_of_request_key": r["request_key"],
                                                   "reissue_reason": "ENGINE_TRANSPORT failure on the first attempt; same spec, same hash",
                                                   "selection_basis": "operator_directed_family",
-                                                  "authority": "re-attempt of a transport-failed row", "upstream_selection_history": "UNKNOWN"})
+                                                  "authority": "re-attempt of a transport-failed row", "upstream_selection_history": "UNKNOWN",
+                                                  vq.CAMPAIGN_SET_KEY: csid})
         res = vq.submit(conn, candidates=[cand], selected_index=0, source_reason="human",
-                        created_by="archaeon", config=config, candidate_set_id=csid)
+                        created_by="archaeon", config=config)
         ids.append(res["selected_experiment_id"])
     return {"campaign": CAMPAIGN_ID, "candidate_set_id": csid, "experiment_ids": ids, "labels": labels}
 

@@ -1,0 +1,34 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V 2>&1 | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile Techne observation tb + arbiter",
+      "cmd": "iverilog -o $BODY/arb.vvp $HARNESS/tb_techne.v round_robin_arbiter.v 2>&1 | grep -viE 'warning' | tail -4; test -f $BODY/arb.vvp"
+    }
+  ],
+  "runs": [
+    {
+      "name": "hold all four requests high; confirm the grant rotates to every requester",
+      "cmd": "vvp -N $BODY/arb.vvp 2>&1 | tail -20",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "ARBITER_ROTATES_ALL_FOUR"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_EMULATED",
+  "notes": "Oracle: under full contention every requester must eventually be granted (no starvation) -- that is the round-robin property. The arbiter RTL is unmodified; Techne only supplies stimulus+observation. behavioral_entry_point: vary the req pattern per cycle."
+}

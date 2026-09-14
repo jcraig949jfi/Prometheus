@@ -1,0 +1,134 @@
+{
+  "schema": "eos.sources/v1",
+  "written_at": "2026-09-11",
+  "what_this_is": "External INFORMATION SOURCES. Not model providers: none has a completions interface, model names or token accounting, and three need no credential. prometheus_llm is the program's one model API and this file does not duplicate, mirror or synchronise with it. If prometheus_llm's maintainer claims these belong there, this file is migrated once and deleted.",
+  "retired_from_the_old_registry": {
+    "covered_by_prometheus_llm": [
+      "cerebras",
+      "google_gemini",
+      "groq",
+      "openrouter"
+    ],
+    "model_providers_offered_once_to_prometheus_llm": [
+      "github_models",
+      "huggingface_inference",
+      "sambanova",
+      "together_ai"
+    ],
+    "local_model_weights_inventory": [
+      "qwen_coder_3b",
+      "qwen_coder_7b",
+      "deepseek_coder_6_7b",
+      "starcoder2_3b"
+    ],
+    "where_they_went": "roles/Eos/archive/api_registry_2026-04-01.json (byte-preserved)"
+  },
+  "rule": "A row is not usable capacity until `observation` is non-null and younger than decay_days. A provider's documented free tier is a label.",
+  "sources": {
+    "arxiv_api": {
+      "id": "arxiv_api",
+      "kind": "SOURCE",
+      "returns": "Atom XML records of preprints",
+      "auth": "none",
+      "documented_limit": "1 request per 3 seconds",
+      "limit_read_on": "2026-04-01",
+      "limit_source": "the provider's documentation as recorded in April; NOT re-read",
+      "budget_rule": "at or under 75 percent of the documented limit (the Dawn Constitution)",
+      "observation": {
+        "endpoint": "http://export.arxiv.org/api/query?search_query=cat%3Acs.NE+AND+abs%3A%22quality+diversity%22&start=0&max_results=12&sortBy=submittedDate&sortOrder=descending",
+        "observed_at": "2026-09-11T16:03:41.110784+00:00",
+        "status": 200,
+        "latency_ms": 431,
+        "items_returned": 12,
+        "observed_by": "eos-intake"
+      },
+      "state": "MEASURED",
+      "note": "called 2026-09-11 by this seat",
+      "decay_days": 30
+    },
+    "openalex": {
+      "id": "openalex",
+      "kind": "SOURCE",
+      "returns": "JSON academic metadata records",
+      "auth": "none (polite pool wants a mailto)",
+      "documented_limit": "10 req/sec with email, 1 req/sec without",
+      "limit_read_on": "2026-04-01",
+      "limit_source": "the provider's documentation as recorded in April; NOT re-read",
+      "budget_rule": "at or under 75 percent of the documented limit (the Dawn Constitution)",
+      "observation": null,
+      "state": "UNVERIFIED",
+      "note": "never called by this seat; every limit below is the provider's claim",
+      "decay_days": 30
+    },
+    "semantic_scholar": {
+      "id": "semantic_scholar",
+      "kind": "SOURCE",
+      "returns": "JSON paper records with TLDRs and citation edges",
+      "auth": "api_key",
+      "documented_limit": "1 req/sec with key",
+      "limit_read_on": "2026-04-01",
+      "limit_source": "the provider's documentation as recorded in April; NOT re-read",
+      "budget_rule": "at or under 75 percent of the documented limit (the Dawn Constitution)",
+      "observation": null,
+      "state": "REJECTED",
+      "note": "403 with a present key, Techne 0d76ac34d, 2026-08-31",
+      "decay_days": 30
+    },
+    "crossref": {
+      "id": "crossref",
+      "kind": "SOURCE",
+      "returns": "JSON publication metadata by DOI",
+      "auth": "none (polite pool wants a mailto)",
+      "documented_limit": "50 req/sec polite pool",
+      "limit_read_on": "2026-04-01",
+      "limit_source": "the provider's documentation as recorded in April; NOT re-read",
+      "budget_rule": "at or under 75 percent of the documented limit (the Dawn Constitution)",
+      "observation": null,
+      "state": "UNVERIFIED",
+      "note": "never called by this seat; every limit below is the provider's claim",
+      "decay_days": 30
+    },
+    "tavily": {
+      "id": "tavily",
+      "kind": "SOURCE",
+      "returns": "parsed page content for agent consumption",
+      "auth": "api_key",
+      "documented_limit": "~1 req/sec on free tier",
+      "limit_read_on": "2026-04-01",
+      "limit_source": "the provider's documentation as recorded in April; NOT re-read",
+      "budget_rule": "at or under 75 percent of the documented limit (the Dawn Constitution)",
+      "observation": null,
+      "state": "UNVERIFIED",
+      "note": "never called by this seat; every limit below is the provider's claim",
+      "decay_days": 30
+    },
+    "serper_dev": {
+      "id": "serper_dev",
+      "kind": "SOURCE",
+      "returns": "web search result lists",
+      "auth": "api_key",
+      "documented_limit": "reasonable",
+      "limit_read_on": "2026-04-01",
+      "limit_source": "the provider's documentation as recorded in April; NOT re-read",
+      "budget_rule": "at or under 75 percent of the documented limit (the Dawn Constitution)",
+      "observation": null,
+      "state": "PARKED",
+      "note": "2,500 LIFETIME budget; unspent, and it stays unspent until a typed query set exists (EOS-R8)",
+      "decay_days": 30
+    },
+    "google_custom_search": {
+      "id": "google_custom_search",
+      "kind": "SOURCE",
+      "returns": "web search result lists",
+      "auth": "api_key",
+      "documented_limit": "100 queries/day",
+      "limit_read_on": "2026-04-01",
+      "limit_source": "the provider's documentation as recorded in April; NOT re-read",
+      "budget_rule": "at or under 75 percent of the documented limit (the Dawn Constitution)",
+      "observation": null,
+      "state": "UNVERIFIED",
+      "note": "never called by this seat; every limit below is the provider's claim",
+      "decay_days": 30
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.replay_log_forward_then_undo_uncommitted",
+  "name": "replay the log forward, then undo the uncommitted",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "after a crash, scan the write-ahead log forward re-applying every logged change (including changes of transactions that will be undone) to reach the exact pre-crash state, then scan backward undoing the changes of transactions that never committed, logging the undos so a second crash is safe",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Algorithms for Recovery and Isolation Exploiting Semantics (ARIES)' in section Database algorithms: transaction recovery",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "STREAM",
+  "out_geometry": "RECORD",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "SCHEDULED",
+  "guarantee": "SOUND",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a write-ahead log with sequence numbers",
+    "pages stamped with the last applied log number"
+  ],
+  "fails_when": [
+    "log must be forced before data; a log gap is unrecoverable"
+  ],
+  "instances": [
+    "Algorithms for Recovery and Isolation Exploiting Semantics (ARIES)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

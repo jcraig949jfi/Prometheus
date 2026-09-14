@@ -1,0 +1,305 @@
+{
+ "schema": "techne.fossil.ghost_worlds/1",
+ "written_utc": "2026-09-14T00:03:43Z",
+ "question": "are the 68 local-image-dependent worlds recoverable, and how?",
+ "n_local_images": 8,
+ "by_classification": {
+  "REBUILDABLE_NOT_BIT_EXACT": 8
+ },
+ "total_dependent_fossils": 71,
+ "finding": "A preserved Dockerfile makes these worlds REPLACEABLE IN FUNCTION, not RECOVERABLE IN IDENTITY. Every recipe starts FROM a mutable tag and installs packages from a live index, so a rebuild is a different world -- which is exactly the distinction batch 11 showed can change an answer.",
+ "rescue_action": "docker save each image to a content-addressed tarball stored off-host. That preserves the bytes the receipts were produced in. Pinning FROM by digest and snapshotting apt would make FUTURE rebuilds exact, but cannot recover the images that already exist.",
+ "ranked_rescue_list": [
+  {
+   "rank": 1,
+   "image": "prometheus-fossil-c:bookworm",
+   "dependent_fossils": 40,
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "action": "docker save to a content-addressed tarball held OFF-HOST -- the only step that preserves these exact bytes; rebuilding cannot"
+  },
+  {
+   "rank": 2,
+   "image": "prometheus-fossil-lang:bookworm",
+   "dependent_fossils": 16,
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "action": "docker save to a content-addressed tarball held OFF-HOST -- the only step that preserves these exact bytes; rebuilding cannot"
+  },
+  {
+   "rank": 3,
+   "image": "prometheus-fossil-hw:bookworm",
+   "dependent_fossils": 6,
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "action": "docker save to a content-addressed tarball held OFF-HOST -- the only step that preserves these exact bytes; rebuilding cannot"
+  },
+  {
+   "rank": 4,
+   "image": "prometheus-fossil-legacy:bookworm",
+   "dependent_fossils": 3,
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "action": "docker save to a content-addressed tarball held OFF-HOST -- the only step that preserves these exact bytes; rebuilding cannot"
+  },
+  {
+   "rank": 5,
+   "image": "prometheus-fossil-i386:bookworm",
+   "dependent_fossils": 2,
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "action": "docker save to a content-addressed tarball held OFF-HOST -- the only step that preserves these exact bytes; rebuilding cannot"
+  },
+  {
+   "rank": 6,
+   "image": "prometheus-fossil-octave:bookworm",
+   "dependent_fossils": 2,
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "action": "docker save to a content-addressed tarball held OFF-HOST -- the only step that preserves these exact bytes; rebuilding cannot"
+  },
+  {
+   "rank": 7,
+   "image": "prometheus-fossil-goexplore:min",
+   "dependent_fossils": 1,
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "action": "docker save to a content-addressed tarball held OFF-HOST -- the only step that preserves these exact bytes; rebuilding cannot"
+  },
+  {
+   "rank": 8,
+   "image": "prometheus-fossil-simh:bookworm",
+   "dependent_fossils": 1,
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "action": "docker save to a content-addressed tarball held OFF-HOST -- the only step that preserves these exact bytes; rebuilding cannot"
+  }
+ ],
+ "rows": [
+  {
+   "image": "prometheus-fossil-c:bookworm",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM",
+   "image_id": "sha256:faeec8375055",
+   "dependent_fossils": 40,
+   "dependents": [
+    "arduino-pid",
+    "buddy-alloc-spaskalev",
+    "bzip2-1.0.8",
+    "cjson-1.7.18",
+    "compact-4.2bsd-1983",
+    "compress-4.2.4-lzw",
+    "concurrencykit-0.7.2",
+    "des-reference",
+    "dlmalloc",
+    "dmtcp-3.1.2",
+    "eispack-netlib-1976",
+    "eprover-2.6",
+    "espresso-logic",
+    "genann",
+    "glibc-rwlock-writer-starvation-2.36",
+    "gnu-apl-2.0",
+    "gzip-1.2.4-1993",
+    "leveldb-1.23",
+    "libcorrect-quiet",
+    "libdai-mooij",
+    "linpack-netlib-1979",
+    "lmdb-0.9.31",
+    "lru-cache-goldsborough",
+    "odepack-netlib",
+    "pari-gp-2.17",
+    "radamsa-0.6",
+    "simple-kalman-denyssene",
+    "spin-6.5.2-holzmann",
+    "spin-pathfinder-priority-inversion-1997",
+    "ssw-smith-waterman",
+    "tiny-aes-c",
+    "tinycc",
+    "tinyekf-levy",
+    "tinystm-marlier",
+    "umdhmm-kanungo-1.02",
+    "valgrind-helgrind-fixtures-3.19",
+    "viterbi-hmm-xukmin",
+    "willemt-raft",
+    "zchaff-2007",
+    "zlib-1.3.1"
+   ],
+   "dockerfile": "techne/fossils/environment/fossil-c-toolchain.Dockerfile",
+   "base_image": "debian:bookworm-slim",
+   "base_pinned_by_digest": false,
+   "apt_install": true,
+   "apt_version_pinned": false,
+   "source_commits_pinned": [],
+   "floating_inputs": [
+    "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest",
+    "apt-get install with no version pins resolves against a live index"
+   ],
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "why": "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest; apt-get install with no version pins resolves against a live index"
+  },
+  {
+   "image": "prometheus-fossil-lang:bookworm",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM",
+   "image_id": "sha256:fa93c8894c94",
+   "dependent_fossils": 16,
+   "dependents": [
+    "avida",
+    "bdwgc-8.2.6",
+    "buddy-bdd",
+    "eliza-anthay-1966",
+    "erfa-2.0.1",
+    "femtolisp",
+    "ff-planner-2.3",
+    "glpk-5.0",
+    "gnu-prolog-1.5.0",
+    "kissfft-131.1.0",
+    "microkanren-scheme",
+    "paip-lisp-norvig-1991",
+    "pforth",
+    "picosat-965",
+    "reed-solomon-rockliff-1991",
+    "walksat-v56"
+   ],
+   "dockerfile": "techne/fossils/environment/fossil-lang-toolchain.Dockerfile",
+   "base_image": "debian:bookworm-slim",
+   "base_pinned_by_digest": false,
+   "apt_install": true,
+   "apt_version_pinned": false,
+   "source_commits_pinned": [],
+   "floating_inputs": [
+    "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest",
+    "apt-get install with no version pins resolves against a live index"
+   ],
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "why": "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest; apt-get install with no version pins resolves against a live index"
+  },
+  {
+   "image": "prometheus-fossil-hw:bookworm",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM",
+   "image_id": "sha256:6830f14d63d2",
+   "dependent_fossils": 6,
+   "dependents": [
+    "biriscv-branch-predictor",
+    "picorv32",
+    "verilog-arbiter-forencich",
+    "verilog-generic-fifo",
+    "verilog-rr-arbiter",
+    "verilog-uart2bus"
+   ],
+   "dockerfile": "techne/fossils/environment/fossil-hw-toolchain.Dockerfile",
+   "base_image": "debian:bookworm-slim",
+   "base_pinned_by_digest": false,
+   "apt_install": true,
+   "apt_version_pinned": false,
+   "source_commits_pinned": [],
+   "floating_inputs": [
+    "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest",
+    "apt-get install with no version pins resolves against a live index"
+   ],
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "why": "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest; apt-get install with no version pins resolves against a live index"
+  },
+  {
+   "image": "prometheus-fossil-legacy:bookworm",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM",
+   "image_id": "sha256:d45f7ee4300d",
+   "dependent_fossils": 3,
+   "dependents": [
+    "basic-computer-games-1978",
+    "cobol-programming-course-omp",
+    "whitakers-words-ada"
+   ],
+   "dockerfile": "techne/fossils/environment/fossil-legacy-toolchain.Dockerfile",
+   "base_image": "debian:bookworm-slim",
+   "base_pinned_by_digest": false,
+   "apt_install": true,
+   "apt_version_pinned": false,
+   "source_commits_pinned": [],
+   "floating_inputs": [
+    "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest",
+    "apt-get install with no version pins resolves against a live index"
+   ],
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "why": "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest; apt-get install with no version pins resolves against a live index"
+  },
+  {
+   "image": "prometheus-fossil-i386:bookworm",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM",
+   "image_id": "sha256:807210be4521",
+   "dependent_fossils": 2,
+   "dependents": [
+    "libfec-karn",
+    "md5-rfc1321"
+   ],
+   "dockerfile": "techne/fossils/environment/fossil-i386-toolchain.Dockerfile",
+   "base_image": "i386/debian:bookworm-slim",
+   "base_pinned_by_digest": false,
+   "apt_install": true,
+   "apt_version_pinned": false,
+   "source_commits_pinned": [],
+   "floating_inputs": [
+    "base image 'i386/debian:bookworm-slim' is a MUTABLE TAG, not a digest",
+    "apt-get install with no version pins resolves against a live index"
+   ],
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "why": "base image 'i386/debian:bookworm-slim' is a MUTABLE TAG, not a digest; apt-get install with no version pins resolves against a live index"
+  },
+  {
+   "image": "prometheus-fossil-octave:bookworm",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM",
+   "image_id": "sha256:e2bf54f3a40d",
+   "dependent_fossils": 2,
+   "dependents": [
+    "indirect-self-tuning-regulator-liaosteve",
+    "l1-adaptive-control-basics-xkhainguyen"
+   ],
+   "dockerfile": "techne/fossils/environment/fossil-octave-toolchain.Dockerfile",
+   "base_image": "debian:bookworm-slim",
+   "base_pinned_by_digest": false,
+   "apt_install": true,
+   "apt_version_pinned": false,
+   "source_commits_pinned": [],
+   "floating_inputs": [
+    "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest",
+    "apt-get install with no version pins resolves against a live index"
+   ],
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "why": "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest; apt-get install with no version pins resolves against a live index"
+  },
+  {
+   "image": "prometheus-fossil-goexplore:min",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM",
+   "image_id": "sha256:af4c01436230",
+   "dependent_fossils": 1,
+   "dependents": [
+    "go-explore-uber-2022"
+   ],
+   "dockerfile": "techne/fossils/specimens/go-explore-uber-2022/environment/go-explore-min.Dockerfile",
+   "base_image": "python:3.7-slim",
+   "base_pinned_by_digest": false,
+   "apt_install": true,
+   "apt_version_pinned": false,
+   "source_commits_pinned": [],
+   "floating_inputs": [
+    "base image 'python:3.7-slim' is a MUTABLE TAG, not a digest",
+    "apt-get install with no version pins resolves against a live index"
+   ],
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "why": "base image 'python:3.7-slim' is a MUTABLE TAG, not a digest; apt-get install with no version pins resolves against a live index"
+  },
+  {
+   "image": "prometheus-fossil-simh:bookworm",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM",
+   "image_id": "sha256:fd57c207dbd2",
+   "dependent_fossils": 1,
+   "dependents": [
+    "bsd-4.3-distribution-tape-1986"
+   ],
+   "dockerfile": "techne/fossils/environment/fossil-simh-toolchain.Dockerfile",
+   "base_image": "debian:bookworm-slim",
+   "base_pinned_by_digest": false,
+   "apt_install": true,
+   "apt_version_pinned": false,
+   "source_commits_pinned": [
+    "a1f57fa3738ed31148d31126ba1a7278ff845c6d"
+   ],
+   "floating_inputs": [
+    "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest",
+    "apt-get install with no version pins resolves against a live index"
+   ],
+   "classification": "REBUILDABLE_NOT_BIT_EXACT",
+   "why": "base image 'debian:bookworm-slim' is a MUTABLE TAG, not a digest; apt-get install with no version pins resolves against a live index"
+  }
+ ]
+}

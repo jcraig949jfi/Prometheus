@@ -1,0 +1,42 @@
+{
+  "runner": "native",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile FFTPACK + its test.f driver",
+      "cmd": "gfortran -std=legacy -w -O1 -o $BODY/fftpack_test.exe test.f $(ls *.f | grep -v '^test.f$') 2>&1 | grep -i 'error:' ; test -x $BODY/fftpack_test.exe"
+    }
+  ],
+  "runs": [
+    {
+      "name": "the shipped FFTPACK self-test",
+      "cmd": "$BODY/fftpack_test.exe 2>&1 | tail -30",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(error|test|rfft|cfft|[0-9]\\.[0-9])"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "the FFTPACK test.f driver runs to completion (no oracle file in the vault)",
+      "cmd": "$BODY/fftpack_test.exe 2>&1 | tail -3; echo FFTPACKDONE",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "FFTPACKDONE"
+        ]
+      }
+    }
+  ],
+  "test_kind": "UPSTREAM",
+  "test_classification_override": "UPSTREAM_DRIVERS_RUN_NO_ORACLE",
+  "classification_if_ok": "RUNNABLE_NATIVE",
+  "notes": "FFTPACK ships test.f, which exercises the forward/inverse transforms and prints its own error norms; there is no separate reference-output file in the vault to grade against, so the class is DRIVERS_RUN_NO_ORACLE (the driver ran and reported; a human oracle would read its error norms)."
+}

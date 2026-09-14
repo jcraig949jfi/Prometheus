@@ -1,0 +1,102 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "tinyscheme-1.42",
+  "receipt_id": "run-tinyscheme-1.42-20260912T202727Z",
+  "written_utc": "20260912T202727Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree/tinyscheme-1.42",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "smoke.scm": "24128103923081656dff01d1fece211450cca49e109f1d8b5fce920b0943670d"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "134ca51590fd79bbcc7549318aa450540f39980f5b7bb22af4cff199f69921ce",
+  "recipe_sha256": "42866d790eff8590bd7c3ef9cc90f8aa175208caa219979803ee8289c8e562bd",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 7.09,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -i -E ' error' ; test -x ./scheme",
+      "exit": 0,
+      "seconds": 1.27,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "tail recursion 100000 deep, call/cc, closure",
+      "cmd": "./scheme $HARNESS/smoke.scm",
+      "exit": 0,
+      "seconds": 0.26,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "100000\n42\n3\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "dynload.o",
+      "sha256": "7c901a30931ce7e404e6d378874f413554be7864fae657f0ae746a6209985347",
+      "bytes": 23464
+    },
+    {
+      "path": "libtinyscheme.a",
+      "sha256": "0ed14cba5356e5d80692aaa5757f7d7947e756474cd35031ee2593777a25a961",
+      "bytes": 351386
+    },
+    {
+      "path": "libtinyscheme.so",
+      "sha256": "bc5bbc347ecd6532a799b61e1d206cc2aefdad11e1b76151286994e79ee21374",
+      "bytes": 223032
+    },
+    {
+      "path": "scheme",
+      "sha256": "626792d4181cd66a84531331807a634321fedd9e871ed7ebf1d15a92028746b4",
+      "bytes": 214456
+    },
+    {
+      "path": "scheme.o",
+      "sha256": "3f3e4d40272c4d8a1ec6199951fe5ee69824cfd8440e61446f2d80602e10cc5c",
+      "bytes": 326648
+    }
+  ],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "134ca51590fd79bbcc7549318aa450540f39980f5b7bb22af4cff199f69921ce",
+  "body_preserved": true
+}

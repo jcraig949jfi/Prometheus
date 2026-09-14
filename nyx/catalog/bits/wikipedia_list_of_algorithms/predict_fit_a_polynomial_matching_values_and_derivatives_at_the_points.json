@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.fit_a_polynomial_matching_values_and_derivatives_at_the_points",
+  "name": "fit a polynomial matching both values and derivatives at the points",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "raise the degree so that at each sample the polynomial matches not only the value but also the first few derivatives; each matched derivative is one more linear condition on the coefficients",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Hermite interpolation' in section Computational mathematics / Numerical algorithms / Interpolation and extrapolation: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Birkhoff interpolation': an extension of polynomial interpolation",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "FUNCTION",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "derivative values at the samples"
+  ],
+  "fails_when": [
+    "needs derivatives that measured data rarely provides"
+  ],
+  "instances": [
+    "Hermite interpolation",
+    "Birkhoff interpolation"
+  ],
+  "related": [
+    {
+      "rel": "GENERALIZES",
+      "id": "bit.predict.fit_the_unique_polynomial_through_all_the_points"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

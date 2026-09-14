@@ -1,0 +1,137 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "willemt-raft",
+  "canonical_name": "willemt/raft -- a C implementation of the Raft consensus algorithm",
+  "aliases": [
+    "raft",
+    "willemt-raft"
+  ],
+  "lineage": "Raft (2014, Ongaro & Ousterhout): understandable distributed consensus -- leader election, log replication, and safety across crashing/partitioning nodes; willemt/raft is a widely-used embeddable C library of the core state machine",
+  "domain": [
+    "distributed-systems",
+    "consensus",
+    "leader-election",
+    "replication",
+    "recovery",
+    "fault-tolerance"
+  ],
+  "era": "2014-",
+  "version": "github.com/willemt/raft master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/willemt/raft",
+        "commit": "e428eeb921a014192d1d703dd317f3f29f5916c5",
+        "commit_resolved": "e428eeb921a014192d1d703dd317f3f29f5916c5",
+        "commit_date": "2021-01-27T14:21:07+13:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/willemt/raft"
+  },
+  "hashes": {
+    "tree_sha256": "4a8b3aca72e1b778176c868e69979071ab0eb33984b00dbbb4b12322616b7603",
+    "n_files": 28,
+    "bytes": 338214,
+    "artifacts": [
+      {
+        "filename": "https://github.com/willemt/raft",
+        "sha256": null,
+        "commit": "e428eeb921a014192d1d703dd317f3f29f5916c5"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\willemt-raft",
+    "hash_list": "techne/fossils/specimens/willemt-raft/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "status": "permissive",
+    "evidence": "LICENSE"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make tests",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [
+    "a C compiler; the repo bundles its test deps"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "the raft state machine (raft_periodic, raft_recv_appendentries, raft_recv_requestvote); make tests"
+  ],
+  "example": {
+    "command": "make tests",
+    "input": "the unit + fuzz tests of election and log replication",
+    "output": "test pass/fail counts"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-c:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Ongaro & Ousterhout, In Search of an Understandable Consensus Algorithm (Raft), USENIX ATC 2014"
+  ],
+  "human_capability_summary": {
+    "built_to": "keep a replicated log consistent across a cluster of machines that crash, restart, and get partitioned -- by electing a leader and replicating entries only when a majority acknowledges",
+    "pressure": "partial failure: nodes die, messages are lost or delayed, the network splits; the system must never present two leaders' conflicting histories as committed",
+    "success_means": "a single consistent committed log despite up to (N-1)/2 failures; safety never violated, liveness restored when a majority reconnects"
+  },
+  "known_human_problem_solved": "fault-tolerant distributed consensus",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "partial failure, message loss/delay, network partition, competing would-be leaders",
+  "human_failure_condition": "split-brain: two leaders commit conflicting entries; the replicated state diverges and data is lost or corrupted",
+  "behavioral_entry_point": "in the tests, drop/delay AppendEntries or RequestVote messages, or kill the leader, and watch election + log reconciliation",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "algorithm_from",
+      "to": "Ongaro & Ousterhout 2014",
+      "note": "Raft; itself a redesign of Paxos for understandability"
+    }
+  ],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163240Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163503Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163644Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\willemt-raft ; tracked techne/fossils/specimens/willemt-raft",
+    "where_it_came_from": "https://github.com/willemt/raft ; ORIGINAL_AUTHORITATIVE_RELEASE @ e428eeb921a014192d1d703dd317f3f29f5916c5",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run willemt-raft",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163644Z.json",
+    "what_humans_used_it_for": "keep a replicated log consistent across a cluster of machines that crash, restart, and get partitioned -- by electing a leader and replicating entries only when a majority acknowledges"
+  },
+  "seat": "Techne"
+}

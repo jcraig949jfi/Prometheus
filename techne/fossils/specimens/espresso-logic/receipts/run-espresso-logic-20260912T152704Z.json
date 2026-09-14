@@ -1,0 +1,303 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "espresso-logic",
+  "receipt_id": "run-espresso-logic-20260912T152704Z",
+  "written_utc": "20260912T152704Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/espresso-src",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "bce50d18d137252eebd85115f9d9e045b2155a4ad26c919b35a447939ca54a63",
+  "recipe_sha256": "80d526ee457e3b0efa36cf44669f31018ac328e6b044fc1b4bcefbfc8cc4c92c",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -viE 'warning' | tail -3; test -x ./espresso",
+      "exit": 1,
+      "seconds": 4.07,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [
+    {
+      "path": "black_white.o",
+      "sha256": "2b1d5326a578af13b8361411209ee22bdf671fe36fa1e4e283f3ceb2b73b6ca7",
+      "bytes": 14632
+    },
+    {
+      "path": "canonical.o",
+      "sha256": "9e2fd9968c37ac50e6fe3e86a703b98af354228cc230e3dd5a3072efdbc08a20",
+      "bytes": 2880
+    },
+    {
+      "path": "cofactor.o",
+      "sha256": "b9ecda9f556c8a7b385abc5c7ba8f94529b0d91e671d6e19a727014e26eef01d",
+      "bytes": 9880
+    },
+    {
+      "path": "cols.o",
+      "sha256": "8f958d6831cc7920644c06a098ad074d5c607c6d354caf94705721e3b6dad638",
+      "bytes": 4368
+    },
+    {
+      "path": "compl.o",
+      "sha256": "ade0cc0c28896bbad158687b7e8d7a9991c58e8a746c7f056f01c7f35e17cc75",
+      "bytes": 20584
+    },
+    {
+      "path": "contain.o",
+      "sha256": "032a7ec560079dffa0773f1ab95c0d44a43ca6ea8c514f8464cd5bceea84a9b9",
+      "bytes": 8480
+    },
+    {
+      "path": "cpu_time.o",
+      "sha256": "72bf53524ed7c3e39daaf8ef9c99a64911ca993f95bf8cbb8018b2c0ddd5b4a7",
+      "bytes": 1336
+    },
+    {
+      "path": "cubestr.o",
+      "sha256": "e6b70fa330f5c4cd79f4211e1bb332f775cff0ec95f8ad2502a4dc84bb05a604",
+      "bytes": 13176
+    },
+    {
+      "path": "cvrin.o",
+      "sha256": "1800670349195ef6345d8033a8baf055a2cc634203d09c53916f195679f7bf6c",
+      "bytes": 31296
+    },
+    {
+      "path": "cvrm.o",
+      "sha256": "0f40b07f85742a39b7050eb77bbab1f3e2896639331abbd3ae3ae328655eb456",
+      "bytes": 15248
+    },
+    {
+      "path": "cvrmisc.o",
+      "sha256": "b36023bc42d57cf9a38d9650aa3dcb22801573521654355c4ca87336efae68ce",
+      "bytes": 5552
+    },
+    {
+      "path": "cvrout.o",
+      "sha256": "7b33697e1ca7b8865fd519c18e2c7a96ec8916a51a008530daed6f2e52ec8fd3",
+      "bytes": 20856
+    },
+    {
+      "path": "dominate.o",
+      "sha256": "5f3a5b61856bcb8e65a8db6c78834ec96490279b5537459802e30532c6b8f751",
+      "bytes": 2376
+    },
+    {
+      "path": "equiv.o",
+      "sha256": "a6d2f333401f079533124ff818b1110818f3db11e2189ff9e966ed071ac7b68e",
+      "bytes": 4768
+    },
+    {
+      "path": "espresso.o",
+      "sha256": "85196e9305e6a2b92ce107c3d270cd51bdb6f444fb5415666a2a6400528edaf0",
+      "bytes": 5184
+    },
+    {
+      "path": "essen.o",
+      "sha256": "ffa323834b58f2c6df207fb7ec5377a97343cb661fef4cc97390b38b1d8b29bf",
+      "bytes": 4864
+    },
+    {
+      "path": "essentiality.o",
+      "sha256": "6007622124ab12738e621325216a406e87b332719dadfbc7047833720b7eff5b",
+      "bytes": 11120
+    },
+    {
+      "path": "exact.o",
+      "sha256": "b601a9294808556b744432d12b1ca690dfa185f14f2a47b6c27a0ddacce7acd6",
+      "bytes": 7584
+    },
+    {
+      "path": "expand.o",
+      "sha256": "2ec5b20d3b629887278300ded319f67a753d01fe98aba2d65ba6e3fb59213aa2",
+      "bytes": 17328
+    },
+    {
+      "path": "gasp.o",
+      "sha256": "1b2516e7881e91d025044168576ea58fd069aa372b5b512c0ac168b56a5e41a3",
+      "bytes": 7528
+    },
+    {
+      "path": "gimpel.o",
+      "sha256": "3685ef6f1c9dd5c2607c4499169623747c6a8461d8d0f25f40d79db7a66fcb82",
+      "bytes": 2696
+    },
+    {
+      "path": "globals.o",
+      "sha256": "788ddac4c3727f6e460d516bf0ca44b2cdcdef0b92e236f861e71941a03f415d",
+      "bytes": 4000
+    },
+    {
+      "path": "hack.o",
+      "sha256": "44ed0cc6784b0713c42c9c833ec8dae2e1c1c3e67b9e1f3723e49d815360326f",
+      "bytes": 22128
+    },
+    {
+      "path": "indep.o",
+      "sha256": "67f855498543fe6ac24ac74330dca953bfc03dd4b9689461b6782fe284718c1c",
+      "bytes": 2688
+    },
+    {
+      "path": "irred.o",
+      "sha256": "7cc135e5eb98f30c36856db699f1695b59d87cb8084f06660d670debadeef0fb",
+      "bytes": 14048
+    },
+    {
+      "path": "main.o",
+      "sha256": "d4bd671f11e2bac0118c5dcf9fd1bfaabd3112f7833fe71196f9d3b8910b5cb9",
+      "bytes": 36416
+    },
+    {
+      "path": "map.o",
+      "sha256": "d445c81fdefa57a3e3f1e10ab33df7d4b0165bd79096077f29dbaf2652bbad58",
+      "bytes": 4856
+    },
+    {
+      "path": "matrix.o",
+      "sha256": "ed8ecf1eda1b93dc838847091260c0a015f0401516eb407c8b259b785eafd6b7",
+      "bytes": 11184
+    },
+    {
+      "path": "mincov.o",
+      "sha256": "2ee7f3f03d1810e29d625fd4e0bfe5f0a3bfe6e6b7ac2531c7e45ace97f5e287",
+      "bytes": 9048
+    },
+    {
+      "path": "opo.o",
+      "sha256": "85b06ca4f90a9651be4aa77b9c20f4ce0a06a49529c4c44f1affe9f8d42aa228",
+      "bytes": 17976
+    },
+    {
+      "path": "pair.o",
+      "sha256": "6cbfa2e5aad026422344c7e09d0f7068dca9a48b6f2f52f36ad7513b8921e1bc",
+      "bytes": 22008
+    },
+    {
+      "path": "part.o",
+      "sha256": "1fe824f86935f063ec9402cd0fa8e3ec67ee5c2a4bba4d31ca07892a7ff4eecd",
+      "bytes": 2384
+    },
+    {
+      "path": "primes.o",
+      "sha256": "5b2a0dd73136bbb12ce361025b9e12e65c40058ce48faf9d0b51858188e8c8fd",
+      "bytes": 6648
+    },
+    {
+      "path": "prtime.o",
+      "sha256": "86ff976ea0b58cc2ebb356ff73a4cc309cbe617d0e89be1c0013efca949db45a",
+      "bytes": 1656
+    },
+    {
+      "path": "reduce.o",
+      "sha256": "e6a1137c51d092d685f6497f2624b59783cf08368096ee6c94e575ff9df9a1da",
+      "bytes": 9536
+    },
+    {
+      "path": "rows.o",
+      "sha256": "048f666fc1f4f962c1709b22bdafb041bb032d2c746f7ab3c35f4b920e3f571f",
+      "bytes": 4400
+    },
+    {
+      "path": "set.o",
+      "sha256": "c8c015543538f1a0dfafca6c5441f8766e546f8ca772a84f98c6d69adf0bf0a7",
+      "bytes": 17392
+    },
+    {
+      "path": "setc.o",
+      "sha256": "e7d20f0af6cc57c23097c3a52b88e82c04aa2b1d8d179831c012c7079d2dceff",
+      "bytes": 9336
+    },
+    {
+      "path": "sharp.o",
+      "sha256": "3f968fac163aee514c583b95364e9f300eaf8fd763eae74daa68c4e05e83e19d",
+      "bytes": 8560
+    },
+    {
+      "path": "sigma.o",
+      "sha256": "6e68c23e2310846f72961537fcab86027e15eb793b16f305b8ff0eb14de0d80b",
+      "bytes": 3424
+    },
+    {
+      "path": "signature.o",
+      "sha256": "1d2e63e78998240df6d9bf73859cc756a69c04b74cafd163abf5c1bdef72855d",
+      "bytes": 6296
+    },
+    {
+      "path": "signature_exact.o",
+      "sha256": "6a794bd71ddf0dccd0a049df08b6391ccbfe1d79e95c7d3cab7ab207d29789ac",
+      "bytes": 2824
+    },
+    {
+      "path": "sminterf.o",
+      "sha256": "e7a2668b5e5d86b735c4e73a6890b717dc4c54719e95557e033b0a3cfcdffb8d",
+      "bytes": 2040
+    },
+    {
+      "path": "solution.o",
+      "sha256": "1683bdb72b84b1eff9156e88c9f1b455cb88310487969b53a8d808185309c8bf",
+      "bytes": 2888
+    },
+    {
+      "path": "sparse.o",
+      "sha256": "f34c9ab6979e9147a1257e763643276b245fbbe7d09ba5fbc074739af072d576",
+      "bytes": 4264
+    },
+    {
+      "path": "strdup.o",
+      "sha256": "a3d390d31cc8cc862140f7730046de3c2a680a98aecdfecd468511aadcb06c29",
+      "bytes": 1440
+    },
+    {
+      "path": "unate.o",
+      "sha256": "19a9170a4bc8c12e7fe521ea8e49db658bcd2ff764736f3450a1c4e487cc5033",
+      "bytes": 10648
+    },
+    {
+      "path": "util_signature.o",
+      "sha256": "d67ddb0f30ec588b259f6b46c4850674bf0a0e0b90c20d6dd3fa4aeb7e59a474",
+      "bytes": 4656
+    },
+    {
+      "path": "verify.o",
+      "sha256": "5e55d964153e99b1f6f179cc7b5d2bcfad2a1685334ca5e8074b9e5ab0da956d",
+      "bytes": 6528
+    }
+  ],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "NO_TESTS",
+  "ok": false
+}

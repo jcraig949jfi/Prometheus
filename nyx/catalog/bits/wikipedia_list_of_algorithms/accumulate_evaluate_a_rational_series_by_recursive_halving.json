@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.accumulate.evaluate_a_rational_series_by_recursive_halving",
+  "name": "evaluate a rational series by recursively halving the term range",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "split the range of terms in half, compute for each half an exact triple (product of denominators, product of numerators, partial sum numerator) recursively, and combine the two triples with a few big multiplications; one division at the end",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Binary splitting' in section Computational mathematics / Numerical algorithms / Elementary and special functions: a divide and conquer technique which speeds up the numerical evaluation of many types of series with rational terms",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Chudnovsky algorithm': a fast method for calculating the digits of π",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ACCUMULATE",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "rational terms",
+    "fast big-integer multiplication"
+  ],
+  "fails_when": [
+    "irrational or non-hypergeometric terms"
+  ],
+  "instances": [
+    "Binary splitting",
+    "Chudnovsky algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

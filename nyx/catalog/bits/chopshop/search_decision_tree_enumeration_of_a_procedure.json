@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.decision_tree_enumeration_of_a_procedure",
+  "name": "pass-step enumeration by choice tree",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "record a nondeterministic procedure's decisions in a tree so each decision path runs once, exhausted paths are pruned, and the procedure resumes from its last path or jumps to a random unexplored one",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "nyx/specimens/hypothesis_shrinker/organs/pass_step_enumeration.cut1.json",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "COMPLETE",
+  "cost": "LINEAR",
+  "requires": [
+    "the procedure's decisions exposed through a chooser interface"
+  ],
+  "fails_when": [
+    "the tree resets whenever the surrounding target changes"
+  ],
+  "instances": [
+    "hypothesis shrinking.choicetree"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/hypothesis_shrinker/organs/pass_step_enumeration.cut1.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it",
+  "strategy": "BACKTRACKING",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "LIFO"
+}

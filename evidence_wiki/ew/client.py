@@ -16,6 +16,28 @@ CFG = json.loads((Path(__file__).resolve().parent.parent / "config.json")
                  .read_text(encoding="utf-8"))
 
 
+def _token_for(agent):
+    """Bearer resolution, most specific first:
+      1. EW_AUTH_TOKEN (environment)
+      2. an agent token issued out of band (KAIROS-02): the file named by
+         EW_AGENT_TOKENS, else ~/.prometheus/ew_agent_tokens.json, a JSON
+         object {agent: token}; the file is outside every repository
+      3. the committed shared legacy token (read+write, unattributed)
+    A token is never logged or printed by this module."""
+    env = os.environ.get("EW_AUTH_TOKEN")
+    if env:
+        return env
+    path = Path(os.environ.get("EW_AGENT_TOKENS")
+                or Path.home() / ".prometheus" / "ew_agent_tokens.json")
+    try:
+        tokens = json.loads(path.read_text(encoding="utf-8"))
+        if tokens.get(agent):
+            return tokens[agent]
+    except (OSError, ValueError):
+        pass
+    return CFG["auth_token"]
+
+
 class EvidenceWiki:
     def __init__(self, base=None, machine=None, agent="unnamed-agent"):
         self.base = (base or os.environ.get("EW_SERVICE_URL")
@@ -25,7 +47,7 @@ class EvidenceWiki:
         self.agent = agent
         self.s = requests.Session()
         self.s.headers.update({
-            "Authorization": f"Bearer {CFG['auth_token']}",
+            "Authorization": f"Bearer {_token_for(agent)}",
             "X-Prometheus-Machine": self.machine,
             "X-Prometheus-Agent": self.agent,
         })

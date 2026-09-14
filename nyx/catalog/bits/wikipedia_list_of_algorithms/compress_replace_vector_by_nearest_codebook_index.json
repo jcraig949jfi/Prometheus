@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.replace_vector_by_nearest_codebook_index",
+  "name": "replace a vector by the index of its nearest codebook entry",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "hold a codebook of representative vectors, replace each input vector by the index of its nearest entry, and let the decoder look the entry up; the codebook is learned from data",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Vector quantization' in section Information theory and signal processing / Coding theory / Lossy compression algorithms: technique often used in lossy data compression",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPRESS",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "PRECOMPUTED_TABLE",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "a codebook (learned; DATA)",
+    "a distance"
+  ],
+  "fails_when": [
+    "codebook size versus distortion is the whole trade"
+  ],
+  "instances": [
+    "Vector quantization"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

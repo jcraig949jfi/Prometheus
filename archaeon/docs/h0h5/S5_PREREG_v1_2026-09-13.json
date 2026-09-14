@@ -1,0 +1,132 @@
+{
+ "schema": "archaeon.fossil_metabolism_s5.prereg.v1",
+ "status": "PREREGISTERED_BEFORE_THE_BATCH",
+ "operator_order": {
+  "file": "roles/Archaeon/prompts/2026-09-12_seasons/S5_ORDER.md",
+  "sha256": "5c6c427972a307cffc1006cc6229094d3bed52d06ee8279c29a33629cb2ee14a"
+ },
+ "instrument_repair": {
+  "commit": "bcd7a40cf",
+  "what": "deterministic interruptible WORK budget on every PEW-consuming producer; BUDGET_EXHAUSTED outcome with provenance; M's wall-clock fallback removed; tests in archaeon/tests/test_work_budget.py"
+ },
+ "question": "Can the STATE of the evidence (target-free) tell us HOW fossils should be consumed: is there a pre-target coordinate that predicts where the one-step producer G is myopic against a deeper policy, and does routing on it recover the deeper policy's advantage?",
+ "loops": "LOOP 2 proposes (producers receive fossils only); LOOP 4 (this harness) holds the target, answers exact scores, and enumerates the census; LOOP 3 fixed this file; LOOP 1 never steered. The hidden target never crosses into world construction, producer selection or routing: worlds are STATES, targets are enumerated from the state afterwards.",
+ "myopia_definition": {
+  "decision_state": "for an evidence state s and a producer's chosen probe g: delta(s, g) = Q*(s, g) - V*(s), where V*(s) is the exact minimum expected number of further probes to identify the target (adaptive DP over reachable feasible subsets, every probe in {0,1}^L, uniform prior over the feasible set) and Q*(s, g) the same quantity when g is probed first and the continuation is optimal. s is MYOPIC for g iff delta > 0 (tolerance 1e-9). Target-free.",
+  "world": "for a state s with feasible census T(s): E_A = mean over t in T(s) of the number of probes arm A needs to identify t (censored at B+1). The deeper policy's advantage is (E_G - E_O)/E_G.",
+  "derivation": "from first principles and exact toy computation (scratch s5_explore/s5_state_detail/s5_effect/s5_opt/s5_trace, journal 2026-09-12 S5 section) BEFORE any producer batch: strict two-step count myopia exists (minimal case L 8, two count-known blocks 4/4 with 1 and 2 ones) but is tiny and the two-step count policy is itself myopic at horizon 3; the dominant full-horizon mechanism is that the one-step objective ER = sum n_d^2 / N is a collision statistic that is INDIFFERENT between partitions whose identification futures differ (e.g. {3,3} vs {1,4,1} at N 6, both ER 3.0), and the lexicographic tie-break then picks the entropy-poorer member."
+ },
+ "coordinates": {
+  "primary": {
+   "name": "kappa_H",
+   "definition": "at decision state s with the producer's chosen probe g: kappa_H = 1 iff there exists a probe q in {0,1}^L with ER(q) <= ER(g) and H(q) > H(g) (outcome entropy under the uniform prior), i.e. g is dominated in the (count, entropy) order. Computed from the fossils and the probe alphabet only (archaeon/docs/h0h5/S5_RUNNER_2026-09-13.py::coordinates_at); cheap: one pass over the one-step partitions the producer already computes.",
+   "prediction": "kappa_H = 1 predicts delta(s, g) > 0 for G's own choice; kappa_H = 0 predicts delta = 0. Routing O only where kappa_H fires (arm RH) should recover a material part of O's advantage over G at a minority of O calls."
+  },
+  "secondary_reported": {
+   "kappa_tie": "the exact one-step ER-optimal class contains >= 2 distinct partition multisets (state-only)",
+   "kappa_proxy": "exactly two unresolved blocks, both of size >= 3 (the product structure where strict two-step myopia was first found)",
+   "pool_suboptimal": "G's pool-restricted choice has ER above the exact one-step minimum",
+   "root_coordinates": "entropy_disagreement, entropy_deficit_bits, two_block_proxy, two_step_gap (archaeon/producer/s5_coordinates.py) recorded per world at the root"
+  },
+  "leakage_audit": "no coordinate takes a target, an outcome, a winner or a future score; signatures asserted in archaeon/tests/test_s5_producers.py; the runner computes coordinates from (fossils, chosen probe) before the score is revealed and the decision-state rows carry the snapshot id of the evidence they were computed from. Amendment v1: seed_inputs no longer contain target_index (see amendment_v1)."
+ },
+ "worlds": {
+  "L": [
+   8,
+   9
+  ],
+  "families": {
+   "shell": "one fossil 0^L with m in 1..L-1 mismatches",
+   "prod2": "fossils 0^L and 1^a 0^(L-a) with mismatch counts giving block counts uA in 0..a, uB in 0..L-a (every parameter combination)"
+  },
+  "dedupe": "states with identical feasible sets are one state",
+  "min_feasible_targets": 3,
+  "max_feasible_targets": {
+   "8": 40,
+   "9": 30
+  },
+  "eligible_states": {
+   "8": 119,
+   "9": 114
+  },
+  "census": "every feasible target of every state is run (1828 targets at L 8, 1458 at L 9); expectations are exact under the uniform prior; no target seeds exist",
+  "held_out": "L 9 was never examined with any producer or exact policy before this file; L 8 is the derivation set: four reference states were examined with the real producers (counterexample 4/4 blocks 1,2 ones; shell m 2; shell m 2 inside 7; prod 2,2) and two of them traced; the exact greedy-lex vs optimum screen over L 8 states was read (39 of the first 80 states >= 2 %, mean 3.4 %, max 25 %) to set the bar; an instrument smoke run (--quick: the first 6 L 8 states -- shells m 1,2,6,7 and prod2 a1 b7 uB 1,2 -- 100 targets, all arms) was executed and read before this commit to check the runner end to end; its rows are discarded and the same states are rerun in the batch; no rule or bar was changed after seeing it",
+  "selection": "no state is chosen or dropped because of any producer's result"
+ },
+ "arms": {
+  "order": [
+   "U",
+   "G",
+   "GH",
+   "W",
+   "M",
+   "O",
+   "RH"
+  ],
+  "U": "S4 unchanged, PEW_BLIND, seeded by seed_inputs (lane, L, state_id, arm, step) -- amendment v1",
+  "G": "S4 unchanged (pool, objective, lexicographic tie-break)",
+  "W": "S4 unchanged (exhaustive one-step optimum at L <= 12, lexicographic tie-break)",
+  "M": "S4 unchanged except the phase-0 budget contract (no wall-clock fallback)",
+  "GH": "NEW, minimal cheap consumer of the mechanism: G's pool and objective, ties on the exact ER numerator broken by larger outcome entropy, then lexicographic (archaeon/producer/s5_producers.py)",
+  "O": "NEW, deeper reference: exact full-horizon identification policy (DP), memoised across calls per declared semantics, work-budgeted",
+  "RH": "NEW, routed: G's proposal unless kappa_H fires for it, then O's proposal (O called only there)",
+  "evidence_isolation": "each arm holds its own fossil list per target; nothing returned to one arm is visible to another"
+ },
+ "budget": {
+  "probes_per_arm": 10,
+  "censoring": "identified_at = B + 1 when not identified within B"
+ },
+ "compute_bounds": {
+  "O_max_units": 50000000,
+  "O_max_targets": 64,
+  "G_W_M_GH_max_units": 2000000,
+  "note": "O_max_targets exceeds max_feasible_targets so SCOPE_EXCEEDED cannot trip by construction; any BUDGET_EXHAUSTED on O is an instrument failure by the rule"
+ },
+ "decision_state_audit": {
+  "arms": [
+   "G"
+  ],
+  "max_depth": 6,
+  "what": "for every decision state G visits (depth <= 6), record V*, Q*(s, G's probe), delta, myopic_exact and the coordinates; precision/recall of each coordinate for myopic_exact"
+ },
+ "primary_metric": {
+  "name": "exact expected probes to identification per state",
+  "pairing": "per target within a state (same target, same initial state)",
+  "separation_bar_relative": 0.02,
+  "separated_at_bar": "rel advantage over G >= 0.02 AND the arm wins more targets than G within the state"
+ },
+ "secondary_metrics": {
+  "nAUC_first_probes": 3,
+  "list": [
+   "nAUC_0 over the first 3 probes normalised by log2 N",
+   "per-step log2|T|, gain, fixed bits, task score, distance/entropy/ER of the probe, redundancy flag, compute seconds, work units, budget/scope outcomes, tie-class size, snapshot id, producer version, route flags",
+   "O-call fraction of RH",
+   "compute totals per arm"
+  ]
+ },
+ "verdict_rule": {
+  "separation_bar_relative": 0.02,
+  "min_separated_state_fraction": 0.3333,
+  "kappa_min_precision": 0.5,
+  "kappa_min_recall": 0.5,
+  "routed_max_O_call_fraction": 0.5,
+  "INSTRUMENT_FAILURE": "O returns BUDGET_EXHAUSTED or SCOPE_EXCEEDED on any proposal; or the exact optimum O is worse than G at the bar in any state; or blind U beats G at the bar in any state",
+  "NO_SEPARATION": "O is separated from G at the bar in fewer than 1/3 of states AND O's mean relative advantage over G is below 0.02: G is not materially myopic even against the exact optimum on worlds built to expose myopia",
+  "PLURALITY_SUPPORTED": "O separates (>= 1/3 of states at the bar, or mean relative advantage >= 0.02) AND kappa_H routes: precision >= 0.5 and recall >= 0.5 on G's decision states AND RH is separated from G at the bar in >= 1/3 of states with O called on <= 1/2 of its proposals",
+  "DIFFERENCE_WITHOUT_ROUTABILITY": "O separates but kappa_H does not route under the conditions above",
+  "note": "GH, W, M are reported against G with the same bar; they do not enter the verdict. Sub-bar drift routes nothing. The verdict is computed by S5_RUNNER::evaluate exactly as written here; L 8 and L 9 are pooled for the verdict and reported separately."
+ },
+ "stopping_rule": "every eligible state once, every target once, no reruns, no seed or state selection after the fact",
+ "assumptions": [
+  "uniform prior over the feasible set for every expectation (named, as in S3/S4)",
+  "exact scores",
+  "producers frozen at the PRODUCER_VERSION recorded on every proposal"
+ ],
+ "runner": "archaeon/docs/h0h5/S5_RUNNER_2026-09-13.py --prereg S5_PREREG_v1_2026-09-13.json --lengths 8|9 --tag RUN2_L8|RUN2_L9",
+ "amendment_v1": {
+  "why": "RUN 1 (prereg v0, commit d952f9c56; rows S5_RESULTS_RUN1_L8_INSTRUMENT_FAILURE_2026-09-13.json) returned INSTRUMENT_FAILURE under its own frozen rule: the exact optimum O was worse than G at the bar in 20 of 119 L 8 states. Cause, verified in the rows: seed_inputs carried target_index, so G (and GH, W's random members, U) received a DIFFERENT seeded pool per target of the same state; the census then averaged one policy per target instead of one policy per state, and that pairing luck exceeds 2 percent in small-N states in both directions (e.g. N 6: G 2.500 vs O 2.667). The v0 leakage note that target_index is a census position, not target content, was wrong in effect: within a state the index is a deterministic function of the target. Nothing else changes.",
+  "change": "seed_inputs = (lane, L, state_id, arm, step): one deterministic policy per arm per state, identical across the census; RH's G call uses the G arm's seed so the pairing is exact. Same states, same arms, same bars, same rule.",
+  "run1_verdict_stands": "INSTRUMENT_FAILURE is the verdict of run 1 and is reported as such; run 2 is a new preregistered run under this amendment, not a rerun for a better result. Run 1's L 9 batch was stopped unfinished (S5_BATCH_LOG_RUN1_L9_STOPPED_2026-09-13.txt).",
+  "run1_readings_recorded_not_used": "O vs G at L 8 under the defect: 51/119 separated, mean rel 2.4 percent; kappa_H on 5706 decision states: precision 0.36 vs base rate 0.18, recall 0.15; kappa_tie 0.46 / 0.27; pool_suboptimal 0.65 / 0.06. These are contaminated by the seeding and enter no verdict."
+ }
+}

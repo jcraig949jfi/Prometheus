@@ -1,5 +1,39 @@
 # Coeus backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
+Currency: 2026-09-11. **FROZEN** at 11 items on the day the seat parked.
+
+ANNOTATION, 2026-09-11 (operator ruling PARK): COEUS-XL-01 is ANSWERED --
+PARK. COEUS-01 through COEUS-05 were either done differently or are
+CLOSED by the park; the disposition of every row is marked below. No
+filler was added to reach the schema's 20-item floor: the ruling forbade
+manufacturing work to keep the seat alive, and a floor is not a reason to
+invent items. This file is not rewritten again unless the reactivation
+condition in RESPONSIBILITIES.md section 3A is met.
+
+    COEUS-XL-01  ANSWERED 2026-09-11: PARK.
+    COEUS-XL-02  OPEN and EXTERNAL. Kairos nominated, Mnemosyne rules,
+                 Coeus disqualified. Packet delivered.
+    COEUS-01/02  CLOSED-NOT-DONE. Annotating agents/coeus/README.md and
+                 manifest.yaml in place was the plan while the seat
+                 expected to continue. The park makes a superseding
+                 document the better artifact: FINDINGS_2026-09-11.md F1
+                 records all twelve contradictions with the artifact
+                 values beside them. Editing a dead seat's README to point
+                 at its own autopsy is churn; the autopsy is findable.
+    COEUS-03     DONE, and larger than specified: science/trace_defects.py
+                 plus science/ledgers/defect_trace_2026-09-11.json.
+    COEUS-04     DONE: prompts/2026-09-11_park_routing/03_TO_Hephaestus...
+    COEUS-05     DONE: prompts/2026-09-11_park_routing/02_TO_Mnemosyne...
+    COEUS-06/07  SUPERSEDED by residue/OUTCOME_VARIABLE_HYGIENE.md, which
+                 states the invariant once instead of designing a fixed
+                 Coeus around it. The ruling forbade the second thing.
+    COEUS-08/09  NOT DONE and left open as named gaps, not as work: the
+                 distinct-tool denominator census and the enrichment
+                 directive census by null-position. Both are cheap; both
+                 need a seat that is running.
+
+The original text follows, unedited.
+
 Currency: 2026-09-11. PROVISIONAL and BELOW THE SCHEMA FLOOR. The schema
 requires 20 to 60 items; this file holds 11. The archaeology
 (ARCHAEOLOGY_2026-09-11.md) left zero executable science items: the seat's

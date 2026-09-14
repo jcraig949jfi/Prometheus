@@ -1,0 +1,73 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "simple-kalman-denyssene",
+  "receipt_id": "run-simple-kalman-denyssene-20260912T162714Z",
+  "written_utc": "20260912T162714Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/src",
+  "harness_sha256": {
+    "Arduino.h": "a9416d16ced295f87d695d7853dd64be955ee5eda4ff7a0060d7b9c3d8d68697",
+    "drv.cpp": "ccac1ea20af3e46e3a49ecd95fff555251d797e954c175976542fa08f5d2e7e1"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "91e2463153d7bb5b132c18077bb4ee9c5b4207a43bb3a60245958ac071f083d6",
+  "recipe_sha256": "62ed6d563cb56bdf7f06cd586407f4638ccc4eeb5e1600ffa9b12268f83d648b",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile filter + harness",
+      "cmd": "g++ -O2 -I. -I$HARNESS -o $BODY/kf $HARNESS/drv.cpp SimpleKalmanFilter.cpp 2>&1 | grep -i 'error:'; test -x $BODY/kf",
+      "exit": 0,
+      "seconds": 1.14,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "filter noisy measurements of a hidden constant",
+      "cmd": "$BODY/kf",
+      "exit": 0,
+      "seconds": 0.75,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "rms_raw=1.7770 rms_filtered=0.2044 ratio=0.115\nKALMAN_OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

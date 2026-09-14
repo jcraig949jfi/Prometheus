@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.emit_digits_of_a_constant_from_a_bounded_carry_state",
+  "name": "emit digits of a constant one at a time from a bounded carry state",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "represent the constant as a series in a mixed-radix form, keep only the current remainders of each term, and at each step multiply through by the output base and carry to release the next digit; earlier digits are never stored or reused",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Spigot algorithm' in section Computational mathematics / Numerical algorithms / Elementary and special functions: a way to compute the value of a mathematical constant without knowing preceding digits",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bailey–Borwein–Plouffe formula': (BBP formula) a spigot algorithm for the computation of the nth binary digit of π",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "STREAM",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "STREAMING",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a series with rational terms for the constant"
+  ],
+  "fails_when": [
+    "quadratic in the digit count for the classic form"
+  ],
+  "instances": [
+    "Spigot algorithm",
+    "Bailey–Borwein–Plouffe formula"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

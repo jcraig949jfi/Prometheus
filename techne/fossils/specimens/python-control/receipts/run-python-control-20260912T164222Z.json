@@ -1,0 +1,60 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "python-control",
+  "receipt_id": "run-python-control-20260912T164222Z",
+  "written_utc": "20260912T164222Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.py": "2fa52ba49c0cf6aa3f5e79d2bcd5be4fbac7f4400caeff3281dd9ab80c1518ca"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "63a1737525ab96f4f176896cd3ae3a1115aa92d6c75de1db62cfb3fdd725a723",
+  "recipe_sha256": "1f316020b3db491b58d35cd23e3c5a40717b619347000187306ca858a4e61dc3",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.87,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "design an LQR and drive a double integrator to the origin",
+      "cmd": "pip install -q numpy scipy . >/dev/null 2>&1 && python $HARNESS/drv.py",
+      "exit": 1,
+      "seconds": 3.77,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0",
+        "stdout lacks 'LQR_STABILIZED'"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

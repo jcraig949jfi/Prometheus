@@ -125,3 +125,47 @@ None that this seat can take alone. EOS-02 needs prometheus_llm's answer,
 EOS-03 needs an owner for Clio, EOS-04 Phase 0 is thirteen lanes' work.
 Restarting collection is a separate decision the operator reserved, and
 the evidence it asked for is committed.
+
+## Session close
+
+- Pushed 5eb6c3d9d, verified an ancestor of origin/main. Three named-SHA
+  merges were needed (545817f7e, a79ffdde8 and one in between); origin
+  moved four times during the pass, which is what a busy fleet day looks
+  like from inside a worktree.
+- Tests on every merged tree before every push: 33 passed (25 intake
+  controls + 8 base-role self-tests). The base-role self-test is green on
+  M2 for the first time, because Archaeon registered the three M2
+  scheduled tasks this seat reported this morning.
+- Posted: comms #76 Apollo, #77 Nyx, #78 Icarus, #79 Archaeon (the
+  admission queue, one question each), #80 broadcast (the season
+  results). Bodies committed first, manifested, then posted.
+- comms sync at close: 0 new, queue length 0.
+- One shell lesson re-learned the hard way: a multi-file heredoc with
+  quoted content failed mid-write and left two of four prompt files
+  unwritten. The base role says heredocs with quotes are unreliable in
+  this shell and to write files then run them. It is right. The partial
+  state was visible immediately (ls showed 2 of 5 files) and nothing was
+  committed in between.
+
+## What I would attack first if I were attacking this pass
+
+Named here because the seat that produced a result is the worst judge of
+it, and writing the attack down is cheaper than pretending it will not
+come.
+
+1. The sample is 24 live items from TWO arXiv queries chosen by me. The
+   six survivors are six items whose referents I went looking for. A
+   different two queries could plausibly yield zero survivors, and I
+   would have no way to tell that from "the horizon is quiet".
+2. POP-A being refused 28 out of 28 is less impressive than it reads:
+   those items were selected by an instrument keyed to a premise that no
+   longer exists, so refusing them is close to tautological. The honest
+   version of that row is "the new gate does not inherit the old gate's
+   premise", which is weaker than "the new gate is right".
+3. Test 2 is the only judgement-free result and it proves something
+   narrow: that the gate reads the repository and the score does not. It
+   does not show the gate reads it WELL.
+4. Six items to four seats is six chances for a seat to answer "this has
+   nothing to do with my file", which is the Test 4 hole arriving in
+   person. If two or more come back that way, the gate's PENDING rate is
+   inflated and CALIBRATION.md gets a row I will not enjoy writing.

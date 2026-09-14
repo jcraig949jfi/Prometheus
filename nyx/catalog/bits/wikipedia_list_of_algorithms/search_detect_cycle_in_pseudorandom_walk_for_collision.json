@@ -1,0 +1,46 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.detect_cycle_in_pseudorandom_walk_for_collision",
+  "name": "detect a cycle in a pseudorandom walk to find a collision",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "iterate a pseudorandom map on residues so that two trajectories (or a slow and a fast pointer) eventually collide modulo an unknown factor; the greatest common divisor of their difference with the modulus exposes the factor (or, in a group, the collision exposes the exponent)",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Pollard's rho algorithm' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Pollard's rho algorithm for logarithms': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "NONE",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a map that behaves randomly modulo the factor",
+    "a cycle-finding rule (tortoise and hare)"
+  ],
+  "fails_when": [
+    "expected cost is the square root of the smallest factor; may fail for a given map"
+  ],
+  "instances": [
+    "Pollard's rho algorithm",
+    "Pollard's rho algorithm for logarithms"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

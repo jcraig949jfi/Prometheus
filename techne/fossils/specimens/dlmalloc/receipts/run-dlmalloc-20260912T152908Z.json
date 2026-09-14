@@ -1,0 +1,72 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "dlmalloc",
+  "receipt_id": "run-dlmalloc-20260912T152908Z",
+  "written_utc": "20260912T152908Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "harness_sha256": {
+    "drv.c": "c1bff6b5d474e5cca5b9502815af4219b5f26f5d210d11f3bd0913b075eaf004"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "957081e882ffec000899ea57dbb7f7cada0c5457aa959497d18bfc819b344c4d",
+  "recipe_sha256": "2ba9c095e1366b0733abb99ea591d067da625e95bceb1853d7f150bf70e74033",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 6.31,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile driver + malloc.c",
+      "cmd": "gcc -O2 -w -DUSE_DL_PREFIX=1 -o $BODY/drv $HARNESS/drv.c malloc.c 2>&1 | grep -i 'error:' ; test -x $BODY/drv",
+      "exit": 0,
+      "seconds": 1.18,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "2000-block alloc/write/free/realloc stress",
+      "cmd": "$BODY/drv",
+      "exit": 0,
+      "seconds": 0.66,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "DLMALLOC_OK 2000 blocks, no clobber\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

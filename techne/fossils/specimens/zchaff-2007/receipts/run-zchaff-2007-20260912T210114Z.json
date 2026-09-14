@@ -1,0 +1,64 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "zchaff-2007",
+  "receipt_id": "run-zchaff-2007-20260912T210114Z",
+  "written_utc": "20260912T210114Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/zchaff64",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "sat.cnf": "f3eff25183d4a35bc87d8fa78c1e06b41d14a8b3bc80237a7eb165b41a8014d9",
+    "unsat.cnf": "b053174e857acd404f0dd06bec5d81149e7bb87080e8d3219b466f280f037e22"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "3e95242e880b29d8ab9201f6a74451710f5d9819a5bb44e7c1f2be5911e06cdf",
+  "recipe_sha256": "007d6905ce2595d4156dc2efadecbf454a9b814f6dcacac32c254649ae4b1e2c",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make (2007 C++)",
+      "cmd": "make -s 2>&1 | grep -iE '\\berror' | head -5; test -x ./zchaff && echo built",
+      "exit": 1,
+      "seconds": 1.26,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "sat_solver.cpp:101:21: error: \u00e2\u20ac\u02dcstrlen\u00e2\u20ac\u2122 was not declared in this scope\nmake: *** [Makefile:63: sat_solver.o] Error 1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "3e95242e880b29d8ab9201f6a74451710f5d9819a5bb44e7c1f2be5911e06cdf",
+  "body_preserved": true
+}

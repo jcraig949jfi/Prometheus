@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.verify.count_the_edge_crossings_of_a_ray_from_the_point_and_read_the_parity",
+  "name": "count the edge crossings of a ray from the point and read the parity",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "shoot a ray from the point in any fixed direction and count how many polygon edges it crosses; an odd count means inside, even means outside; the winding-number variant sums signed crossings instead",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Point in polygon algorithms' in section Computational mathematics / Geometry: tests whether a given point lies within a given polygon",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "VERIFY",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "BOOLEAN",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a segment-ray intersection test"
+  ],
+  "fails_when": [
+    "a ray through a vertex needs a tie rule"
+  ],
+  "instances": [
+    "Point in polygon algorithms"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

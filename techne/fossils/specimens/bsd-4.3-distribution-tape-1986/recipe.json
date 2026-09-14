@@ -1,0 +1,38 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-simh:bookworm",
+  "workdir": "build",
+  "probe": [
+    {
+      "name": "simh",
+      "cmd": "cat /usr/local/share/simh-commit.txt; printf 'show version\nexit\n' > /tmp/v.ini; vax780 /tmp/v.ini 2>&1 | head -2"
+    }
+  ],
+  "build": [
+    {
+      "name": "assemble the .tap from the tape files (stand 512B records; miniroot/rootdump/usr.tar 10240) and gunzip the miniroot as a raw disk",
+      "cmd": "python3 $HARNESS/simh_mktape.py 43bsd.tap $BODY/upstream/stand.gz:512 $BODY/upstream/miniroot.gz:10240 $BODY/upstream/rootdump.gz:10240 $BODY/upstream/usr.tar.gz:10240 && gunzip -c $BODY/upstream/miniroot.gz > miniroot.raw && echo built",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "boot the 4.3BSD GENERIC kernel (6 Jun 1986) on an emulated VAX-11/780 from the miniroot, then restore the root filesystem from tape with the release's own xtr -- the fossil kernel (containing bsd-tcp-4.3-reno's ancestor TCP) actually EXECUTES",
+      "cmd": "rm -f rq.dsk; expect $HARNESS/bsd43_install_stage1.exp miniroot.raw rq.dsk 43bsd.tap $HARNESS/boot42 > stage1.log 2>&1; grep -a -E 'STAGE1|4.3 BSD UNIX #1|Root filesystem extracted' stage1.log",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "4.3 BSD UNIX #1",
+          "STAGE1: miniroot single-user shell",
+          "Root filesystem extracted"
+        ]
+      },
+      "timeout": 2400
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_EMULATED",
+  "notes": "TECHNE-69: the fossil 4.3BSD kernel BOOTS and runs single-user on open-simh vax780 (built from source a1f57fa37; Debian's 3.8.1 cannot boot the 780 from tape). The console loads the 4.2 `boot` (boot42, sha256 a7bacc51) at 0 with R10=9/R11=0 and runs from 2; the miniroot is a raw RA81; xtr restores 317 root files. BOUNDARY (honest): the full multi-user install (newfs + tar-extract of /usr from tape file 4) exceeds the practical emulated-tape time budget -- stage 2 reached `mt fsf 3` after ~1 h of emulated VAX time and was cut. So the TCP netstat-under-loopback experiment (stage 3, bsd43_tcp_experiment.exp, preserved in the harness) is NOT reached in-budget; it needs a faster host or a pre-built multi-user disk image (TECHNE-69b). The 4.2 and Reno tapes use the identical procedure and are preserved+hashed but were not individually booted this pass. What is proven: the 1986 BSD kernel executes on the emulated VAX. Follows gunkies.org (Neozeed)."
+}

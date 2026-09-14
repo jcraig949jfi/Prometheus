@@ -1,0 +1,60 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "minisat-2.2.0",
+  "receipt_id": "run-minisat-2.2.0-20260912T124933Z",
+  "written_utc": "20260912T124933Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree/minisat",
+  "harness_sha256": {
+    "sat.cnf": "f3eff25183d4a35bc87d8fa78c1e06b41d14a8b3bc80237a7eb165b41a8014d9",
+    "unsat.cnf": "b053174e857acd404f0dd06bec5d81149e7bb87080e8d3219b466f280f037e22"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "0a7fe1e69d3f84d222785eabf7e5cb0161463cc9b122b57008b5b9bf3f6adaa5",
+  "recipe_sha256": "6cdfce8f405840c596da6b93bd989dbafe2b9e93d3799cd2658528ba65cce1bb",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make core release",
+      "cmd": "cd core && MROOT=$(cd .. && pwd) make -s r 2>&1 | grep -v -i warning | tail -3; test -x ./minisat_release",
+      "exit": 1,
+      "seconds": 0.4,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "   50 |     friend Lit mkLit(Var var, bool sign = false);\n      |                ^~~~~\nmake: *** [/mnt/f/Prometheus/vault/fossils/minisat-2.2.0/upstream/tree/minisat/mtl/template.mk:72: /mnt/f/Prometheus/vault/fossils/minisat-2.2.0/upstream/tree/minisat/core/Main.or] Error 1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

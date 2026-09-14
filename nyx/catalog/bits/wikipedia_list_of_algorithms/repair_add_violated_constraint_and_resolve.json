@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.add_violated_constraint_and_resolve",
+  "name": "add the violated constraint and re-solve",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "solve a relaxed problem, find a constraint of the true problem that the relaxed solution violates, add it, and re-solve, repeating until the relaxed solution is feasible",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cutting-plane method' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "MATRIX",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "MONOTONE",
+  "strategy": "INCREMENTAL",
+  "iteration": "NONE",
+  "cost": "UNKNOWN",
+  "requires": [
+    "a separation oracle for the true constraints"
+  ],
+  "fails_when": [
+    "many cuts, slow convergence"
+  ],
+  "instances": [
+    "Cutting-plane method"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

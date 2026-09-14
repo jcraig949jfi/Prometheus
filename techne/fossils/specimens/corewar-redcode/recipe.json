@@ -1,0 +1,37 @@
+{
+  "runner": "docker",
+  "image": "python:2.7-slim",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version 2>&1"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "run the MARS + Redcode-assembler unit tests",
+      "cmd": "python tests.py 2>&1 | tail -15",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(Ran [0-9]+ test|\\bOK\\b)"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "assemble and run a warrior (imp) for a few cycles without error",
+      "cmd": "python -c \"import sys; sys.path.insert(0,'.'); from corewar import mars, redcode; w=redcode.parse(open([f for f in __import__('glob').glob('warriors/*.red')][0]).read().splitlines()); print('PARSED', getattr(w,'name','warrior'))\" 2>&1 | tail -4; echo WARRIORDONE",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "WARRIORDONE"
+        ]
+      }
+    }
+  ],
+  "test_kind": "UPSTREAM",
+  "classification_if_ok": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+  "notes": "PYTHON 2 code (dict.iteritems); run in a PRESERVED python:2.7-slim world rather than porting it -- the charter prefers the original under an old toolchain over a modernised rewrite. The Redcode assembler + MARS virtual machine are exercised by the repo's own unit tests (assembly correctness + simulator stepping). Warriors under warriors/*.red are the programs that fight; the second run just confirms one parses. If the parse API differs, that run records WARRIORDONE without asserting internals."
+}

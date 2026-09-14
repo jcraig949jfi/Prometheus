@@ -1,0 +1,80 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "des-reference",
+  "receipt_id": "run-des-reference-20260913T144336Z",
+  "written_utc": "20260913T144336Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "ca9cb18afc5605e28a56bce37d8340453bacb792f35321f4d139c4d9cee85d7c",
+  "recipe_sha256": "9d4bae12c5f290bd9c62bd22cf0c631cf0f5edd3d9f29b14bc6d4e6f21f9fdcc",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "gcc -O3 des.c run_des.c",
+      "cmd": "gcc -O2 -o run_des des.c run_des.c 2>&1 | grep -i 'error' | head -3; test -x ./run_des && echo BUILT",
+      "exit": 0,
+      "seconds": 1.0,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "BUILT\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "generate a key, encrypt a known plaintext, decrypt it back (16-round Feistel round trip)",
+      "cmd": "printf 'The quick brown fox jumps over the lazy dog. 1234567890' > /tmp/pt.txt; ./run_des -g /tmp/k.key >/dev/null 2>&1; ./run_des -e /tmp/k.key /tmp/pt.txt /tmp/ct.bin >/dev/null 2>&1; ./run_des -d /tmp/k.key /tmp/ct.bin /tmp/rt.txt >/dev/null 2>&1; echo -n 'roundtrip_identical='; cmp -s /tmp/pt.txt /tmp/rt.txt && echo yes || echo no; echo -n 'ciphertext_differs='; cmp -s /tmp/pt.txt /tmp/ct.bin && echo no || echo yes; echo -n 'key_bytes='; wc -c < /tmp/k.key",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "roundtrip_identical=yes\nciphertext_differs=yes\nkey_bytes=8\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "run_des",
+      "sha256": "aa900a382750205e8b6c3cbdf60ef8b9aeb7615023289c465a5ad608cde7912f",
+      "bytes": 25080
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "ca9cb18afc5605e28a56bce37d8340453bacb792f35321f4d139c4d9cee85d7c",
+  "body_preserved": true
+}

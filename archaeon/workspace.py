@@ -41,14 +41,32 @@ def is_main_worktree(path: Optional[Path] = None) -> bool:
     return Path(cwd, gd).resolve() == Path(cwd, cd).resolve()
 
 
+_REPO_ID: Dict[str, str] = {}
+
+
+def repo_id(path: Optional[Path] = None) -> str:
+    """The repository's identity: its root-commit SHA(s), sorted and joined
+    by '+' when the history has several roots. Hermes HERMES-32 (#118,
+    283687393): this one field turns "same-named repository, different
+    history" from an UNSIGNABLE failure into an EXACT one, and the worktree
+    role does no work for that specimen. Cached per process per git-common-
+    dir since it cannot change while a process keeps its checkout."""
+    cwd = path or REPO
+    key = _git("rev-parse", "--path-format=absolute", "--git-common-dir", cwd=cwd)   # relative ".git" would collide across repos
+    if key not in _REPO_ID:
+        roots = _git("rev-list", "--max-parents=0", "HEAD", cwd=cwd).split()
+        _REPO_ID[key] = "+".join(sorted(roots))
+    return _REPO_ID[key]
+
+
 def receipt(path: Optional[Path] = None) -> Dict[str, Any]:
-    """base_sha, branch, worktree_path, dirty -- what every receipt carries."""
+    """base_sha, branch, worktree_path, dirty, repo_id -- what every receipt carries."""
     cwd = path or REPO
     sha = _git("rev-parse", "HEAD", cwd=cwd)
     branch = _git("rev-parse", "--abbrev-ref", "HEAD", cwd=cwd)
     dirty = bool(_git("status", "--porcelain", "--untracked-files=no", cwd=cwd))
     return {"base_sha": sha, "branch": branch, "worktree_path": str(Path(cwd).resolve()),
-            "dirty": dirty, "main_worktree": is_main_worktree(cwd),
+            "dirty": dirty, "main_worktree": is_main_worktree(cwd), "repo_id": repo_id(cwd),
             "allow_canonical_override": os.environ.get("ARCHAEON_ALLOW_CANONICAL") == "1"}
 
 

@@ -1,0 +1,1493 @@
+{
+ "schema": "archaeon.fossil_metabolism_s1.prereg.v0",
+ "at": "2026-09-12T16:55:19.025100+00:00",
+ "status": "PREREGISTERED_NO_ROWS_EMITTED",
+ "question": "Does consulting the current fossil record change proposal quality relative to the existing non-fossil / uniform policy?",
+ "hypothesis": "H1: on a bitstring landscape already observed, a proposal that USES the fossil (the best previous candidate's bits, one bit flipped) scores higher than a proposal drawn by the existing uniform policy on the same landscape.",
+ "null": "H0: paired score difference d = score_F - score_C has median 0 (the fossil carries nothing the uniform draw does not).",
+ "arms": {
+  "F": "FOSSIL-DIRECTED: bits = the landscape's best fossil candidate with exactly one bit flipped at a position derived from sha256('S1-flip:'+pair_id) mod length; the fossil's bits and score are read from the SFE observation/experiment by id.",
+  "C": "CONTROL / EXISTING UNIFORM POLICY: bits drawn by templates.draw_params(bitstring.resample_region.v0, seed=derive_seed(lane,'2026-09-12',template,'S1-C:'+pair_id), region=(seed_root,length)) -- the existing uniform-within-landscape draw; the fossil's bits are not consulted."
+ },
+ "matching": "same landscape (seed_root,length), same kind evaluate_bitstring, same spec_version 2, same single observation, same consumer and engine, same human path, same day; one F and one C per landscape; F and C submitted as separate singleton candidate sets under one campaign_set 'cs-fossil-s1' with family_id 'fam-s1-<pair_id>' and arm_id F|C.",
+ "population": "the 25 directable landscapes in corpus corpus:a4e1cac9192a5ba0396a9b70 (window created_seq 20374..129400), restricted to score_prev >= 0.5625 (13), deduplicated by (seed_root,length) keeping the best fossil (12). The cut is preregistered because the predicted effect for a landscape scales with (score_prev - 0.5); landscapes at 0.5 cannot separate the arms at this budget (predicted E[d] ~ 0).",
+ "n_pairs": 12,
+ "budget": {
+  "rows": 24,
+  "path": "human (no autonomous quota)",
+  "per_row": "one evaluate_bitstring observation, ~6-15 s on the live consumer",
+  "submits": 24
+ },
+ "primary_metric": "score from the task result (result.repeats[0].result.score, fraction of bits matching the hidden target) -- an existing objective quantity; paired difference d = score_F - score_C per landscape",
+ "randomization": "fixed in advance: F flip position and C bits are pure functions of pair_id (sha256) and the lane/day seed; nothing is chosen after seeing any outcome",
+ "predicted_under_H1": "E[score_C] = 0.5 for every landscape; E[score_F] = s_prev + (1 - 2 s_prev)/L; F's realised score is EXACTLY s_prev +/- 1/L. So the direction is predictable by arithmetic and this competition is a FLOOR test: if the pipeline carries the fossil's information faithfully, F must win; a failure to win indicts representation/attribution/plumbing, not the arithmetic.",
+ "stopping_rule": "emit all 2n rows in one sitting, then stop; no adaptation; read out only when every row is completed or failed (or after 60 min, whichever first: rows still open are treated as failed)",
+ "exclusions": "a pair with a failed row on either arm is excluded (recorded); a pair where F and C bits coincide is recorded as NO_DIRECTIONAL_TEST and excluded (none at preregistration: same_bits_F_C false for all)",
+ "tie_handling": "d = 0 excluded from the sign test; n_eff = pairs with d != 0",
+ "decision_rule": {
+  "test": "exact one-sided sign test on d over n_eff pairs, alpha 0.05",
+  "critical_wins_for_n": {
+   "4": 5,
+   "5": 5,
+   "6": 6,
+   "7": 7,
+   "8": 7,
+   "9": 8,
+   "10": 9,
+   "11": 9,
+   "12": 10
+  },
+  "FOSSIL_DIRECTIONAL_SIGNAL": "wins >= critical(n_eff) and mean d > 0",
+  "FOSSIL_DIRECTION_HARMFUL": "losses >= critical(n_eff) and mean d < 0",
+  "NO_DETECTABLE_ADVANTAGE": "neither, with n_eff >= 8",
+  "INDETERMINATE": "n_eff < 8",
+  "REPRESENTATION_INSUFFICIENT": "any F row whose engine-held spec bits != preregistered F bits, or whose PEW producer block cannot be joined to this preregistration by request_key -- checked before the sign test; if it happens the verdict is REPRESENTATION_INSUFFICIENT regardless of scores"
+ },
+ "secondary_readout": "realised score_F vs the arithmetic prediction (s_prev +/- 1/L): every F row must land on one of the two predicted values; any other value is a plumbing failure",
+ "identity_carried_on_every_row": [
+  "campaign_set cs-fossil-s1",
+  "family_id fam-s1-<pair_id>",
+  "arm_id F|C",
+  "request_key rk-<pair_id>-F|C",
+  "policy_version fossil_s1.F.v0 | fossil_s1.C.v0",
+  "corpus_hash + window created_seq bounds",
+  "source fossil world_id/obs_id/exp_id (F rows; C rows carry the same landscape ids for matching)",
+  "matched_control request_key on F, matched_treatment request_key on C",
+  "this file's path and commit"
+ ],
+ "pairs": [
+  {
+   "pair_id": "s1-077e98645638",
+   "landscape": {
+    "seed_root": 103485,
+    "length": 32
+   },
+   "source_fossil": {
+    "world_id": "wld_077e9864563840117a59c0db",
+    "obs_id": "obs_c8dcaeb4ebad940a75859d56",
+    "exp_id": "exp_032d873e907bc4a09429347a",
+    "created_seq": 35309,
+    "pew": "ENC-archaeon-06971d2afa9d50eb",
+    "bits_prev": "11111010010100100010111111111011",
+    "score_prev": 0.5625
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-077e98645638-F",
+    "bits": "11111010010000100010111111111011",
+    "flip_position": 11,
+    "params": {
+     "length": 32,
+     "seed_root": 103485,
+     "bits": "11111010010000100010111111111011"
+    },
+    "spec_hash": "sha256:4ddd10133e3cc7fca76fb07db0f5d0404f82db602d0e4d0ad502a99690300a60",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 103485
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-103485 length-32 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "32 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "11111010010000100010111111111011",
+       "length": 32
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-56041e6c97cbbc9f",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.59375,
+     0.53125
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-077e98645638-C",
+    "bits": "00011111110000010001100100100100",
+    "seed": 1776288426349210343,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-077e98645638",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 32,
+     "seed_root": 103485,
+     "bits": "00011111110000010001100100100100"
+    },
+    "spec_hash": "sha256:64459888c7fb8c5d17d41ccddbe4f7474b5cc292b132c95ea06b118e30400487",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 103485
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-103485 length-32 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "32 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "00011111110000010001100100100100",
+       "length": 32
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-9382533bc215e083",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.55859375,
+    "E_C": 0.5,
+    "E_d": 0.05859375,
+    "sd_C": 0.08838834764831845
+   }
+  },
+  {
+   "pair_id": "s1-0925a93fb0c4",
+   "landscape": {
+    "seed_root": 255307,
+    "length": 16
+   },
+   "source_fossil": {
+    "world_id": "wld_0925a93fb0c4dde28dc6dbef",
+    "obs_id": "obs_24e0cac2498d33919fb6de13",
+    "exp_id": "exp_21c7a74ab59974b0a0ab056e",
+    "created_seq": 35703,
+    "pew": "ENC-archaeon-5a85f4913f39067b",
+    "bits_prev": "1110101110100001",
+    "score_prev": 0.625
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-0925a93fb0c4-F",
+    "bits": "1111101110100001",
+    "flip_position": 3,
+    "params": {
+     "length": 16,
+     "seed_root": 255307,
+     "bits": "1111101110100001"
+    },
+    "spec_hash": "sha256:e505dcec88844a98756655f45ea2d8abe8c3e2b1ad7d3d2b4a0d13b79cf64129",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 255307
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-255307 length-16 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "16 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "1111101110100001",
+       "length": 16
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-d81a8ba8a7362c2d",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.6875,
+     0.5625
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-0925a93fb0c4-C",
+    "bits": "0100110111010011",
+    "seed": 15995150933735238659,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-0925a93fb0c4",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 16,
+     "seed_root": 255307,
+     "bits": "0100110111010011"
+    },
+    "spec_hash": "sha256:6207262b0d665aa1e4ee666bdc9ae2e5f27a693e3a880903249bc5772c1efe6f",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 255307
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-255307 length-16 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "16 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "0100110111010011",
+       "length": 16
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-ac3ab654b2e16d30",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.609375,
+    "E_C": 0.5,
+    "E_d": 0.109375,
+    "sd_C": 0.125
+   }
+  },
+  {
+   "pair_id": "s1-2bf078e25cad",
+   "landscape": {
+    "seed_root": 504263,
+    "length": 32
+   },
+   "source_fossil": {
+    "world_id": "wld_2bf078e25cad4054eafd0c49",
+    "obs_id": "obs_fe401230370a9afae9b77cd8",
+    "exp_id": "exp_d5adb2f66b1df88dceb060b9",
+    "created_seq": 35604,
+    "pew": "ENC-archaeon-f913852d6e51fe9d",
+    "bits_prev": "10101100111100110001100000011010",
+    "score_prev": 0.5625
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-2bf078e25cad-F",
+    "bits": "10101100110100110001100000011010",
+    "flip_position": 10,
+    "params": {
+     "length": 32,
+     "seed_root": 504263,
+     "bits": "10101100110100110001100000011010"
+    },
+    "spec_hash": "sha256:87ea90d4e2f460af17c830cce05d1649b2360b9085bdc17bb323ef00f6c77b0b",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 504263
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-504263 length-32 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "32 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "10101100110100110001100000011010",
+       "length": 32
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-87349c881fbca957",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.59375,
+     0.53125
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-2bf078e25cad-C",
+    "bits": "01000110001110110100111111001101",
+    "seed": 10981149146728670396,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-2bf078e25cad",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 32,
+     "seed_root": 504263,
+     "bits": "01000110001110110100111111001101"
+    },
+    "spec_hash": "sha256:d0cb323327a3a90765bcc56865aa3b6432cc9489e13a2edeb477828e4bee4974",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 504263
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-504263 length-32 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "32 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "01000110001110110100111111001101",
+       "length": 32
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-629d2d3d52ed61ce",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.55859375,
+    "E_C": 0.5,
+    "E_d": 0.05859375,
+    "sd_C": 0.08838834764831845
+   }
+  },
+  {
+   "pair_id": "s1-2ec826044b1a",
+   "landscape": {
+    "seed_root": 392707,
+    "length": 16
+   },
+   "source_fossil": {
+    "world_id": "wld_2ec826044b1ad42eaec2f7aa",
+    "obs_id": "obs_ebd97a9026621e932d0bbcca",
+    "exp_id": "exp_12f2aafb977045eaedc6d9e5",
+    "created_seq": 128392,
+    "pew": "ENC-archaeon-3c9a413ca20e964c",
+    "bits_prev": "0100000010110001",
+    "score_prev": 0.75
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-2ec826044b1a-F",
+    "bits": "0100001010110001",
+    "flip_position": 6,
+    "params": {
+     "length": 16,
+     "seed_root": 392707,
+     "bits": "0100001010110001"
+    },
+    "spec_hash": "sha256:9798ece1ed1e863d31f6c95b00e19b008ee642a2d658967be58a8c6fb8f75cd9",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 392707
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-392707 length-16 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "16 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "0100001010110001",
+       "length": 16
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-e3e4b1fb0ba2db44",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.8125,
+     0.6875
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-2ec826044b1a-C",
+    "bits": "1110101110111111",
+    "seed": 3176648785550284222,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-2ec826044b1a",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 16,
+     "seed_root": 392707,
+     "bits": "1110101110111111"
+    },
+    "spec_hash": "sha256:a655168ca26402d9bb17ec1e676ed64557ca8ea737ed634c29d4faba0069c4a5",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 392707
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-392707 length-16 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "16 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "1110101110111111",
+       "length": 16
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-de4b070717cbffa4",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.71875,
+    "E_C": 0.5,
+    "E_d": 0.21875,
+    "sd_C": 0.125
+   }
+  },
+  {
+   "pair_id": "s1-3022a1177d73",
+   "landscape": {
+    "seed_root": 881203,
+    "length": 16
+   },
+   "source_fossil": {
+    "world_id": "wld_3022a1177d73831f11c721dd",
+    "obs_id": "obs_2be2f70a1adc3d3fe0a2101e",
+    "exp_id": "exp_aa06e7c785a697fc5897c054",
+    "created_seq": 35716,
+    "pew": "ENC-archaeon-75c3e530f447aac0",
+    "bits_prev": "0101101111010011",
+    "score_prev": 0.6875
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-3022a1177d73-F",
+    "bits": "0101100111010011",
+    "flip_position": 6,
+    "params": {
+     "length": 16,
+     "seed_root": 881203,
+     "bits": "0101100111010011"
+    },
+    "spec_hash": "sha256:b644414753bb608304021abb53ad55b37c806d375cde6e07657e80d390538d4b",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 881203
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-881203 length-16 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "16 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "0101100111010011",
+       "length": 16
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-07f8b72e4b578ef7",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.75,
+     0.625
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-3022a1177d73-C",
+    "bits": "1101011000001001",
+    "seed": 7503550843703966491,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-3022a1177d73",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 16,
+     "seed_root": 881203,
+     "bits": "1101011000001001"
+    },
+    "spec_hash": "sha256:ddc2a158fcf1186d7e170c5d0c157ac959c9751394109db164010d8a70fe695a",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 881203
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-881203 length-16 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "16 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "1101011000001001",
+       "length": 16
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-7a80ecef0286d6b4",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.6640625,
+    "E_C": 0.5,
+    "E_d": 0.1640625,
+    "sd_C": 0.125
+   }
+  },
+  {
+   "pair_id": "s1-5d4755b13960",
+   "landscape": {
+    "seed_root": 550655,
+    "length": 24
+   },
+   "source_fossil": {
+    "world_id": "wld_5d4755b139609c472c8fb1f7",
+    "obs_id": "obs_9316f1e44ff4938a62779782",
+    "exp_id": "exp_280e9608e04cbb247d8ba3e7",
+    "created_seq": 129348,
+    "pew": "ENC-archaeon-3a9ddc7067c0775a",
+    "bits_prev": "011110111110110011110001",
+    "score_prev": 0.5833333333333334
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-5d4755b13960-F",
+    "bits": "011110111110110011010001",
+    "flip_position": 18,
+    "params": {
+     "length": 24,
+     "seed_root": 550655,
+     "bits": "011110111110110011010001"
+    },
+    "spec_hash": "sha256:7902de4060cd48ab70d147c77ee67d2c163824bd76b93e1b7df1213b753a294f",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 550655
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-550655 length-24 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "24 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "011110111110110011010001",
+       "length": 24
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-8d90bc81f673c084",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.625,
+     0.5416666666666667
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-5d4755b13960-C",
+    "bits": "110101111101011001110100",
+    "seed": 14631862223110700014,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-5d4755b13960",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 24,
+     "seed_root": 550655,
+     "bits": "110101111101011001110100"
+    },
+    "spec_hash": "sha256:a7900c6d7a60ff444953803fcd4b144726b2190f8f57960bef5f18c9b7110685",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 550655
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-550655 length-24 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "24 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "110101111101011001110100",
+       "length": 24
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-8583350f64736b89",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.576388888888889,
+    "E_C": 0.5,
+    "E_d": 0.07638888888888895,
+    "sd_C": 0.10206207261596575
+   }
+  },
+  {
+   "pair_id": "s1-8a73fde58b05",
+   "landscape": {
+    "seed_root": 424242,
+    "length": 24
+   },
+   "source_fossil": {
+    "world_id": "wld_8a73fde58b05914c8db35ff4",
+    "obs_id": "obs_fbd9d40ee2ae6a1b07d7c87b",
+    "exp_id": "exp_a76deb678c425d4b5767ef0c",
+    "created_seq": 34749,
+    "pew": "enc_viv_bringup_849a5b7710721bfa",
+    "bits_prev": "000000000000000000000000",
+    "score_prev": 0.625
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-8a73fde58b05-F",
+    "bits": "000100000000000000000000",
+    "flip_position": 3,
+    "params": {
+     "length": 24,
+     "seed_root": 424242,
+     "bits": "000100000000000000000000"
+    },
+    "spec_hash": "sha256:a70ec13cbd15c07dd0f186bf7d7353c385d3539bf51224a37bb6155faf965283",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 424242
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-424242 length-24 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "24 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "000100000000000000000000",
+       "length": 24
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-8c381bbbf668d17c",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.6666666666666666,
+     0.5833333333333334
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-8a73fde58b05-C",
+    "bits": "110110000101110011111100",
+    "seed": 15063666031188589190,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-8a73fde58b05",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 24,
+     "seed_root": 424242,
+     "bits": "110110000101110011111100"
+    },
+    "spec_hash": "sha256:9067697d13a9b692fe35ae8fe9d8f4c36555bca94e422061ced5cd0ab017d840",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 424242
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-424242 length-24 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "24 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "110110000101110011111100",
+       "length": 24
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-4ce7078f13bd189b",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.6145833333333334,
+    "E_C": 0.5,
+    "E_d": 0.11458333333333337,
+    "sd_C": 0.10206207261596575
+   }
+  },
+  {
+   "pair_id": "s1-8e73e722b2b2",
+   "landscape": {
+    "seed_root": 926994,
+    "length": 24
+   },
+   "source_fossil": {
+    "world_id": "wld_8e73e722b2b2d883d917b5c0",
+    "obs_id": "obs_d57501bd03d010e1c7c12797",
+    "exp_id": "exp_4a36b0ad58fbc0e1de90a6d5",
+    "created_seq": 35690,
+    "pew": "ENC-archaeon-f84f653c25247083",
+    "bits_prev": "000111101010100111011110",
+    "score_prev": 0.75
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-8e73e722b2b2-F",
+    "bits": "000111101010101111011110",
+    "flip_position": 14,
+    "params": {
+     "length": 24,
+     "seed_root": 926994,
+     "bits": "000111101010101111011110"
+    },
+    "spec_hash": "sha256:0a7e127da0d2aa0e95944e5af793fbb21c8573a462f023a82eab209632d4837d",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 926994
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-926994 length-24 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "24 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "000111101010101111011110",
+       "length": 24
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-fd4da633d88425ed",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.7916666666666666,
+     0.7083333333333334
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-8e73e722b2b2-C",
+    "bits": "101111110001001010100101",
+    "seed": 4594025571620158217,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-8e73e722b2b2",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 24,
+     "seed_root": 926994,
+     "bits": "101111110001001010100101"
+    },
+    "spec_hash": "sha256:a278a77281389712fdfb44727790b8674f3efa8f380259ce782a31a98e68b58d",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 926994
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-926994 length-24 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "24 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "101111110001001010100101",
+       "length": 24
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-2849efafeab34319",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.7291666666666666,
+    "E_C": 0.5,
+    "E_d": 0.22916666666666663,
+    "sd_C": 0.10206207261596575
+   }
+  },
+  {
+   "pair_id": "s1-c3b29870d70a",
+   "landscape": {
+    "seed_root": 518743,
+    "length": 16
+   },
+   "source_fossil": {
+    "world_id": "wld_c3b29870d70acc7519d8bb88",
+    "obs_id": "obs_3f3a3d90d274b969e4d83367",
+    "exp_id": "exp_b00d86f76ca56aca68d24c5e",
+    "created_seq": 35578,
+    "pew": "ENC-archaeon-eb58d1c1bf4ee50a",
+    "bits_prev": "1110100000101000",
+    "score_prev": 0.625
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-c3b29870d70a-F",
+    "bits": "1110100000100000",
+    "flip_position": 12,
+    "params": {
+     "length": 16,
+     "seed_root": 518743,
+     "bits": "1110100000100000"
+    },
+    "spec_hash": "sha256:42890bae3c27e0498fad1825a640b1037cc850fca66fcd6c6856a846604387ce",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 518743
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-518743 length-16 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "16 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "1110100000100000",
+       "length": 16
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-2a28281adcaed2d9",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.6875,
+     0.5625
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-c3b29870d70a-C",
+    "bits": "1101001100000010",
+    "seed": 78390736756405737,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-c3b29870d70a",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 16,
+     "seed_root": 518743,
+     "bits": "1101001100000010"
+    },
+    "spec_hash": "sha256:80a5f769031032f5146424c4406ffa122f3f3f99382a25eca2c2b32d982b47ec",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 518743
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-518743 length-16 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "16 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "1101001100000010",
+       "length": 16
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-55d580d05b9bc8a5",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.609375,
+    "E_C": 0.5,
+    "E_d": 0.109375,
+    "sd_C": 0.125
+   }
+  },
+  {
+   "pair_id": "s1-f723f9e3d632",
+   "landscape": {
+    "seed_root": 445930,
+    "length": 32
+   },
+   "source_fossil": {
+    "world_id": "wld_f723f9e3d63221a4d7d858d9",
+    "obs_id": "obs_4952aa219ddaae4dc7b70500",
+    "exp_id": "exp_86174e4089968bdc55d242a1",
+    "created_seq": 35565,
+    "pew": "ENC-archaeon-4d1a483eecaddb0c",
+    "bits_prev": "10010110000100110100111001000111",
+    "score_prev": 0.5625
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-f723f9e3d632-F",
+    "bits": "10010110000100110110111001000111",
+    "flip_position": 18,
+    "params": {
+     "length": 32,
+     "seed_root": 445930,
+     "bits": "10010110000100110110111001000111"
+    },
+    "spec_hash": "sha256:7409572b1339df2e8821f11e12ca059f2edb258530e95c7d3db7e95635ff8f56",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 445930
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-445930 length-32 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "32 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "10010110000100110110111001000111",
+       "length": 32
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-0f103c3fa478d676",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.59375,
+     0.53125
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-f723f9e3d632-C",
+    "bits": "00001100000110011110000100001011",
+    "seed": 12767470027718852528,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-f723f9e3d632",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 32,
+     "seed_root": 445930,
+     "bits": "00001100000110011110000100001011"
+    },
+    "spec_hash": "sha256:4f8617fd908843b0ccf6218d19a98712aea4792b52d29bc600f989a50b43a354",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 445930
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-445930 length-32 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "32 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "00001100000110011110000100001011",
+       "length": 32
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-4d7d5693df0cd62e",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.55859375,
+    "E_C": 0.5,
+    "E_d": 0.05859375,
+    "sd_C": 0.08838834764831845
+   }
+  },
+  {
+   "pair_id": "s1-f89308ab64c2",
+   "landscape": {
+    "seed_root": 233204,
+    "length": 32
+   },
+   "source_fossil": {
+    "world_id": "wld_f89308ab64c2e629bfe7415f",
+    "obs_id": "obs_a9440b0bdafa1ec3bc441615",
+    "exp_id": "exp_75733ecfd05887acce103c95",
+    "created_seq": 35591,
+    "pew": "ENC-archaeon-22a798d5d3e155de",
+    "bits_prev": "00110011100100001110011000111110",
+    "score_prev": 0.5625
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-f89308ab64c2-F",
+    "bits": "00110011100100000110011000111110",
+    "flip_position": 16,
+    "params": {
+     "length": 32,
+     "seed_root": 233204,
+     "bits": "00110011100100000110011000111110"
+    },
+    "spec_hash": "sha256:d1523de67dde15d147e5bdf651f99299e473f04f232215b0448e1045c3f9d46f",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 233204
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-233204 length-32 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "32 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "00110011100100000110011000111110",
+       "length": 32
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-b3be191de7ac77c0",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.59375,
+     0.53125
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-f89308ab64c2-C",
+    "bits": "10000000010101000110111011011110",
+    "seed": 9167741464910096637,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-f89308ab64c2",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 32,
+     "seed_root": 233204,
+     "bits": "10000000010101000110111011011110"
+    },
+    "spec_hash": "sha256:4e4f09e972d36c4d538268c7f424bc8dab9c5096b051a61d105fe227c966307f",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 233204
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-233204 length-32 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "32 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "10000000010101000110111011011110",
+       "length": 32
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-bb2ab62f548413d0",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.55859375,
+    "E_C": 0.5,
+    "E_d": 0.05859375,
+    "sd_C": 0.08838834764831845
+   }
+  },
+  {
+   "pair_id": "s1-fadefe18a56b",
+   "landscape": {
+    "seed_root": 864844,
+    "length": 16
+   },
+   "source_fossil": {
+    "world_id": "wld_fadefe18a56bca922c8bfb7e",
+    "obs_id": "obs_7efb6a657c29212b52a084cf",
+    "exp_id": "exp_176ff548e06ddf24a217a9fc",
+    "created_seq": 35552,
+    "pew": "ENC-archaeon-bfcb77acf3d76214",
+    "bits_prev": "1011011010010101",
+    "score_prev": 0.6875
+   },
+   "F": {
+    "arm_id": "F",
+    "request_key": "rk-s1-fadefe18a56b-F",
+    "bits": "1011011011010101",
+    "flip_position": 9,
+    "params": {
+     "length": 16,
+     "seed_root": 864844,
+     "bits": "1011011011010101"
+    },
+    "spec_hash": "sha256:5596c693608e0a6ab53556361b5503e78d0bf337a97cc9016b50a16d4f977bb3",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 864844
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-864844 length-16 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "16 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "1011011011010101",
+       "length": 16
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-d8b17de599d7dc58",
+      "players": []
+     }
+    },
+    "predicted_score_set": [
+     0.75,
+     0.625
+    ]
+   },
+   "C": {
+    "arm_id": "C",
+    "request_key": "rk-s1-fadefe18a56b-C",
+    "bits": "1100001110101100",
+    "seed": 16664137684531478633,
+    "seed_inputs": {
+     "lane": "prod",
+     "day": "2026-09-12",
+     "nonce": "S1-C:s1-fadefe18a56b",
+     "template_id": "bitstring.resample_region.v0"
+    },
+    "params": {
+     "length": 16,
+     "seed_root": 864844,
+     "bits": "1100001110101100"
+    },
+    "spec_hash": "sha256:c26f832c785072ff209fa8cd72f15c7e3c73ced7c8ef697ccf0ac662f3ecc55a",
+    "spec": {
+     "spec_version": 2,
+     "world": {
+      "seed_root": 864844
+     },
+     "hypothesis": "the supplied candidate does not solve the seed-864844 length-16 onemax landscape",
+     "prediction": {
+      "solved": false,
+      "basis": "16 independent bit positions; the target is derived from the seed and the length"
+     },
+     "work": {
+      "kind": "evaluate_bitstring",
+      "payload": {
+       "bits": "1100001110101100",
+       "length": 16
+      }
+     },
+     "outcome_rule": {
+      "field": "solved",
+      "op": "==",
+      "value": false,
+      "if_true": "SURVIVED",
+      "if_false": "FALSIFIED",
+      "if_indeterminate": "INCONCLUSIVE"
+     },
+     "pew": {
+      "required": true,
+      "encounter_id": "ENC-archaeon-2d03588f79e6fbc3",
+      "players": []
+     }
+    }
+   },
+   "same_bits_F_C": false,
+   "predicted": {
+    "E_F": 0.6640625,
+    "E_C": 0.5,
+    "E_d": 0.1640625,
+    "sd_C": 0.125
+   }
+  }
+ ],
+ "assumptions": [
+  "scores are deterministic given bits and landscape (BIT_DETERMINISTIC), so one observation per arm is exact",
+  "the consumer is Vivarium's live consumer at 2f84603e5 on the D: ledger",
+  "the existing uniform policy's draw is templates.draw_params with a region, i.e. exactly what the region-directed template would do; the F rule (flip one bit of the best fossil) is not an admitted policy and is executed by hand under human rows"
+ ]
+}

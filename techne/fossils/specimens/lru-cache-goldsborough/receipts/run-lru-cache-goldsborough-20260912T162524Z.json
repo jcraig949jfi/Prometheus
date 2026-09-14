@@ -1,0 +1,59 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "lru-cache-goldsborough",
+  "receipt_id": "run-lru-cache-goldsborough-20260912T162524Z",
+  "written_utc": "20260912T162524Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.cpp": "bdbe9488fd2beb91f2b9c725200ec725201afc0aad3c29753195f59eedd918b7"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "6b9266080ddb9edd0c18061143ab3b8cbc8bd481a45390fcf5adb082bf3209b8",
+  "recipe_sha256": "4a30ebf90356b40d1372d6ee390807362ff4d05fcf019d4a8881275029c1a4df",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 0.76,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile driver against the header",
+      "cmd": "INC=$(dirname $(find $BODY/upstream/tree -name 'LRUCache.hpp' | head -1)); g++ -O2 -std=c++14 -I$INC/.. -I$(dirname $INC) -o $BODY/lru $HARNESS/drv.cpp 2>&1 | grep -i 'error:' | head -3; test -x $BODY/lru",
+      "exit": 1,
+      "seconds": 0.85,
+      "ok": false,
+      "why_not": [
+        "exit 1 != expected 0"
+      ],
+      "stdout": {
+        "text": "/w/harness/drv.cpp:4:10: fatal error: lrucache/LRUCache.hpp: No such file or directory\n"
+      },
+      "stderr": {
+        "text": "dirname: missing operand\nTry 'dirname --help' for more information.\ndirname: missing operand\nTry 'dirname --help' for more information.\n"
+      }
+    }
+  ],
+  "runs": [],
+  "tests": [],
+  "produced": [],
+  "classification": "BROKEN_UPSTREAM",
+  "test_classification": "NO_TESTS",
+  "ok": false
+}

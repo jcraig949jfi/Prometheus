@@ -1,0 +1,67 @@
+#!/usr/bin/expect -f
+# Batch 06 / TECHNE-69, 4.3BSD stage 2: boot the restored root from rq0, build /usr from tape
+# file 4, write fstab, format the home slice, and leave a bootable multi-user disk.
+# usage: bsd43_install_stage2.exp <disk> <tap> <boot42>
+# Follows gunkies.org/wiki/Installing_4.3_BSD_on_SIMH (Neozeed); the tape here holds only
+# stand, miniroot, rootdump, usr.tar (FORMAT order 1-4), so /usr is `mt fsf 3` and there is no
+# srcsys.tar step.
+set timeout 120
+lassign $argv dsk tap boot42
+log_user 1
+# SIMH is configured from a generated .ini whose last line is `run 2`, so expect only ever
+# talks to the guest console (interactive sim> handshakes raced with the libedit prompt).
+set ini [open "simh_run.ini" w]
+puts $ini "set cpu 8M"
+puts $ini "set rq0 ra81"
+puts $ini "attach -q rq0 $dsk"
+puts $ini "set rq1 dis"
+puts $ini "set rq2 dis"
+puts $ini "set rq3 dis"
+puts $ini "set rp dis"
+puts $ini "set lpt dis"
+puts $ini "set rl dis"
+puts $ini "set tq dis"
+puts $ini "set tu dis"
+puts $ini "attach -q ts0 $tap"
+puts $ini "set tti 7b"
+puts $ini "set tto 7b"
+puts $ini "load -o $boot42 0"
+puts $ini "d r10 9"
+puts $ini "d r11 0"
+puts $ini "run 2"
+close $ini
+spawn vax780 simh_run.ini
+expect { -re "Boot\[\r\n\]+: " { send "ra(0,0)vmunix\r" } timeout { puts "\nSTAGE2: no Boot prompt"; exit 2 } }
+set timeout 300
+expect { -re "# $" { puts "\nSTAGE2: single-user shell on the restored root" } timeout { puts "\nSTAGE2: no shell"; exit 3 } }
+proc sh {cmd {t 300}} {
+    global timeout
+    set timeout $t
+    send "$cmd\r"
+    expect { -re "# $" {} timeout { puts "\nSTAGE2: timeout on: $cmd"; exit 6 } }
+}
+sh "disk=ra"
+sh "name=ra0h;type=ra81"
+sh "cd /dev"
+sh "sh ./MAKEDEV ts0;sync"
+sh "cd /"
+sh "newfs \$name \$type" 900
+sh "mount /dev/\$name /usr"
+sh "cd /usr"
+sh "mt rew" 300
+sh "mt fsf 3" 600
+sh "tar xpbf 20 /dev/rmt12" 3000
+puts "\nSTAGE2: usr.tar extracted"
+sh "cd /"
+sh "chmod 755 / /usr"
+sh "umount /dev/\$name"
+sh "fsck /dev/r\$name" 900
+sh "cd /etc"
+sh "cp fstab.ra81 fstab"
+sh "newfs ra0g ra81" 900
+sh "sync"
+sh "sync"
+send "\005"
+expect "sim>" { send "exit\r" }
+expect eof
+puts "\nSTAGE2: done"

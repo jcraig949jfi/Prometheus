@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.step_to_the_zero_of_the_local_second_order_rational_model",
+  "name": "step to the zero of the local second-order rational model",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "use the value, first and second derivative at the current point to fit a hyperbola (a rational function of degree one over one) tangent to the function, and jump to its zero; the error cubes each step near a simple root",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Halley's method' in section Computational mathematics / Numerical algorithms / Root finding: uses first and second derivatives",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "GREEDY",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "first and second derivatives"
+  ],
+  "fails_when": [
+    "the second derivative is often unavailable or expensive"
+  ],
+  "instances": [
+    "Halley's method"
+  ],
+  "related": [
+    {
+      "rel": "GENERALIZES",
+      "id": "bit.search.step_to_the_zero_of_the_local_linearisation"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

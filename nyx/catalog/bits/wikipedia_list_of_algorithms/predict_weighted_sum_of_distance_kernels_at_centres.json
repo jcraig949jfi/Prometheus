@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.weighted_sum_of_distance_kernels_at_centres",
+  "name": "weighted sum of distance kernels centred on prototypes",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "place centres in the input space, compute for a query a kernel of its distance to each centre, and output a learned weighted sum of those kernel values",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Radial basis function network' in section Computer science / Machine learning and statistical classification: an artificial neural network that uses radial basis functions as activation functions",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "DIRECT",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "centres and kernel widths (policy or learned)"
+  ],
+  "fails_when": [
+    "curse of dimensionality in centre placement"
+  ],
+  "instances": [
+    "Radial basis function network"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

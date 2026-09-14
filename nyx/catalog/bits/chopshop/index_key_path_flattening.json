@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.index.key_path_flattening",
+  "name": "key-path flattening with wildcards",
+  "lineage": [
+    "theorem proving",
+    "memory and retrieval"
+  ],
+  "mechanism": "flatten a structured term to a path of keys in which positions declared irrelevant become wildcards, so that retrieval by path finds every stored pattern that could match the term",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "nyx/specimens/lean_simp/organs/retrieval_key_abstraction.cut2.json",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "REMEMBER",
+  "in_geometry": "TREE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "CALLBACK",
+  "guarantee": "DETERMINISTIC",
+  "cost": "LINEAR",
+  "requires": [
+    "a per-position relevance predicate (policy)",
+    "a trie or equivalent keyed store"
+  ],
+  "fails_when": [
+    "a pattern whose root reduces to a wildcard matches everything",
+    "index-time and lookup-time reduction settings must agree or matches are silently lost"
+  ],
+  "instances": [
+    "Lean 4 DiscrTree.mkPath"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/lean_simp/organs/retrieval_key_abstraction.cut2.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it",
+  "strategy": "PRECOMPUTED_TABLE",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

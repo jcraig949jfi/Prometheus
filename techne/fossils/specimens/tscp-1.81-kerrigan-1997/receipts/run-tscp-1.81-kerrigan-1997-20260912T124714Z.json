@@ -1,0 +1,93 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "tscp-1.81-kerrigan-1997",
+  "receipt_id": "run-tscp-1.81-kerrigan-1997-20260912T124714Z",
+  "written_utc": "20260912T124714Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree/tscp181",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "3f85294cf11763e5e0a43e9c4c38b4e2db151142bce1295f931d744ba7010ec4",
+  "recipe_sha256": "6ada20bbf9e3d80824f601924af02547479450d7ffcf4a5f062beee743814f14",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile",
+      "cmd": "gcc -O2 -o tscp *.c 2>&1 | grep -i error; test -x ./tscp",
+      "exit": 0,
+      "seconds": 0.58,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "depth-4 search from the start position",
+      "cmd": "printf 'sd 4\\ngo\\nquit\\n' | ./tscp | tail -25",
+      "exit": 0,
+      "seconds": 0.09,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)computer.?s move|ply|nodes/"
+      ],
+      "stdout": {
+        "text": "\nTom Kerrigan's Simple Chess Program (TSCP)\nversion 1.81, 2/5/03\nCopyright 1997 Tom Kerrigan\n\n\"help\" displays a list of commands.\n\ntscp> tscp> Illegal move.\ntscp> Illegal move.\ntscp> "
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "same input, same move (deterministic search)",
+      "cmd": "a=$(printf 'sd 4\\ngo\\nquit\\n' | ./tscp | grep -i \"move\" | tail -1); b=$(printf 'sd 4\\ngo\\nquit\\n' | ./tscp | grep -i \"move\" | tail -1); echo \"$a | $b\"; test \"$a\" = \"$b\" && echo DETERMINISTIC",
+      "exit": 0,
+      "seconds": 0.09,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "tscp> Illegal move. | tscp> Illegal move.\nDETERMINISTIC\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "tscp",
+      "sha256": "2201da93a46ccb8ee499d783e36940e96ce74403845763ea8973254e39297988",
+      "bytes": 44368
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

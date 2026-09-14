@@ -1,0 +1,73 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "quadpack-netlib",
+  "receipt_id": "run-quadpack-netlib-20260912T152641Z",
+  "written_utc": "20260912T152641Z",
+  "runner": "native",
+  "image": null,
+  "workdir": "upstream",
+  "harness_sha256": {
+    "drv.f": "0a2acab3edeb45fe8b6ecc85b119a846869c0de3a4238f7778dcccdb2d9264b6",
+    "xerror_stub.f": "2bcb28a46c0f89bf804d5964895e22c6839be52652db85967039820235ac99c0"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "36fcd9b89b93a2c342cca1cd2e6b1d5e645164eaa47b898e2bd84217e6aaec7e",
+  "recipe_sha256": "ff54fee2329a1d14a60b0290907cee04b68c05f3b598eb5ffe8ab188ea97ed12",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1",
+      "exit": 0,
+      "seconds": 0.22,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Fortran (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r4) 15.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile QUADPACK + a Techne driver on dqags (adaptive integration)",
+      "cmd": "gfortran -std=legacy -w -O1 -o $BODY/quadpack_test.exe $HARNESS/drv.f $HARNESS/xerror_stub.f *.f 2>&1 | grep -i 'error:'; test -x $BODY/quadpack_test.exe",
+      "exit": 0,
+      "seconds": 4.44,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "integrate a known integral to a declared tolerance",
+      "cmd": "$BODY/quadpack_test.exe 2>&1 | tail -10",
+      "exit": 0,
+      "seconds": 0.56,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": " QUADPACK_OK result=   9.0000000000000018       abserr=   9.9920072216264114E-014\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

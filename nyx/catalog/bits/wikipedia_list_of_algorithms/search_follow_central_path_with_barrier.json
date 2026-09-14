@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.follow_central_path_with_barrier",
+  "name": "follow the central path with a barrier",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "add to the objective a barrier term that grows without bound at the constraint boundary, minimise the sum from inside the feasible region, and shrink the barrier weight in steps, following the path of minimisers to the constrained optimum",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Interior point method' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Karmarkar's algorithm': The first reasonably efficient algorithm that solves the linear programming problem in polynomial time.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a strictly feasible start",
+    "a barrier and a weight schedule (policy)"
+  ],
+  "fails_when": [
+    "each step is a full linear solve"
+  ],
+  "instances": [
+    "Interior point method",
+    "Karmarkar's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

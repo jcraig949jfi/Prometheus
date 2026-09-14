@@ -1,0 +1,113 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "graphplan-blum-furst-1995",
+  "receipt_id": "run-graphplan-blum-furst-1995-20260912T125108Z",
+  "written_utc": "20260912T125108Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree/Source",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "b0abf2bffcad7f5f05713bd91698153593b94b27bce9948f88e3ae41cb47aab2",
+  "recipe_sha256": "14aded9af409c2f2641d5036de0d6892d64b9aa4d87fe6bc7bfe3d6559b39944",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s graphplan 2>&1 | grep -i -E 'error' ; test -x ./graphplan",
+      "exit": 0,
+      "seconds": 0.68,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "rocket domain, facts2",
+      "cmd": "printf 'n\\n' | ./graphplan -o $BODY/upstream/domains/rocket_ops -f $BODY/upstream/domains/rocket_facts2 -t 20 2>&1 | tail -40",
+      "exit": 0,
+      "seconds": 0.09,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(plan|steps|time)/"
+      ],
+      "stdout": {
+        "text": "cant load operator file\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "dummy.o",
+      "sha256": "0e7cf8d4fe45a9f0f08b2c377dfc37dfa8b743613b67f1471b4f1d107aa7118f",
+      "bytes": 7376
+    },
+    {
+      "path": "graphplan",
+      "sha256": "836542e50e5bc08699c59c11d62091030407e1e03da13817e2e099654a93bfe2",
+      "bytes": 121544
+    },
+    {
+      "path": "graphplan.o",
+      "sha256": "7dc8c37cc2f2495190c1c8f588c9bb92cf17c07661c9bbdd43c28b278339f226",
+      "bytes": 67360
+    },
+    {
+      "path": "hash.o",
+      "sha256": "d91aa4ee0ff4fe064d49a2d817fb5281d1f60b75ab0988af98532895b92a1aed",
+      "bytes": 10120
+    },
+    {
+      "path": "lex.yy.o",
+      "sha256": "e9be492a5c0ea838acac4a38da07834ce502389c8a213e4ff5276b2c2ebd47bb",
+      "bytes": 29424
+    },
+    {
+      "path": "planner.o",
+      "sha256": "01e7c306cae750e1ab042fe462239d7a8d9b1b22961c214d83bc69a963793119",
+      "bytes": 42688
+    },
+    {
+      "path": "utilities.o",
+      "sha256": "a23183797ff9bd26b06ddefa8604c162cd151073c9791e67807b37925a8f057e",
+      "bytes": 36936
+    },
+    {
+      "path": "y.tab.o",
+      "sha256": "fe0e3be9b8772d12da855148f0adc46783011bd6bf32e16f0124d2edf48556d2",
+      "bytes": 17592
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

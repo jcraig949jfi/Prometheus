@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.shortest_recurrence_generating_sequence",
+  "name": "shortest linear recurrence that generates a sequence",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "process the sequence term by term, keeping the shortest linear recurrence consistent so far and, on a discrepancy, correcting it with a scaled copy of an earlier recurrence so the length grows only when forced",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Berlekamp–Massey algorithm' in section Information theory and signal processing / Coding theory / Error detection and correction: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "field arithmetic"
+  ],
+  "fails_when": [
+    "a sequence with no short recurrence yields a recurrence as long as itself"
+  ],
+  "instances": [
+    "Berlekamp–Massey algorithm"
+  ],
+  "related": [
+    {
+      "rel": "COMPOSES_WITH",
+      "id": "bit.correct.locate_errors_by_solving_syndrome_equations"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

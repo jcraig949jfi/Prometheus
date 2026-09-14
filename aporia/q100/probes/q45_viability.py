@@ -13,8 +13,10 @@ This probe asks whether that class is big enough to be a testbed. If removing a 
 almost nothing, there is no representation-failure population and Q045 is untestable here.
 """
 import sys, os
-sys.path.insert(0, r"F:\Prometheus\aporia\lot")
-os.chdir(r"F:\Prometheus")
+_REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+# ELEN-P177 axis e (2026-09-11): repo root resolved from __file__; a drive letter was here.
+sys.path.insert(0, os.path.join(_REPO, "aporia", "lot"))
+os.chdir(_REPO)
 import world3 as W
 
 K = 5                      # enumeration depth (5 keeps leave-one-out cheap)

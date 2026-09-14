@@ -98,7 +98,11 @@ def _max_pair_gap(labels, values):
     The first version divided by the sd of ALL episodes, which includes the between-class
     variance the statistic is trying to detect. That makes the reading self-limiting: for five
     classes the value cannot exceed sqrt(8) = 2.8284 no matter how enormous the class effect
-    is, and the preregistered bar sat at 2.49 -- inside 12 percent of a hard ceiling. A world
+    is, and the preregistered bar sat at 2.49 -- inside 12 percent of a hard ceiling.
+    [CORRECTED 2026-09-11, ELEN-P176 axis a: sqrt(8) is the ceiling of the EVENLY-SPACED
+    configuration the sweep used (means 4,5,6,7,8). The ceiling over ALL inputs for k = 5
+    equal-n classes is sqrt(2k) = sqrt(10) = 3.1623, reached at means [0,1,1,1,2]; the bar
+    2.49 sat within 21 percent of the true ceiling, not 12. The conclusion is unchanged.] A world
     with class means at sizes 4,5,6,7,8 read 2.191 and was declared MATCHED.
 
     That is the GATE MUST BE SHOWN REACHABLE failure, in my own instrument, one pass after the

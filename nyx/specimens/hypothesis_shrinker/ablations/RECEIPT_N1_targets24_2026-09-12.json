@@ -1,0 +1,2155 @@
+{
+  "date": "2026-09-12T03:26Z",
+  "n_rows_with_ground_truth": 45,
+  "targets": [
+    {
+      "target": 0,
+      "found": "c0",
+      "size_key": [
+        1,
+        1,
+        "c0"
+      ],
+      "ground_truth": "c0",
+      "gt_size": 1,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {},
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 3,
+      "found": "(and x0 x1)",
+      "size_key": [
+        3,
+        2,
+        "(and x0 x1)"
+      ],
+      "ground_truth": "(and x0 x1)",
+      "gt_size": 3,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          13,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          5,
+          0
+        ],
+        "try_trivial_spans": [
+          4,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          3,
+          0
+        ],
+        "lower_integers_together": [
+          2,
+          0
+        ],
+        "node_program_XX": [
+          1,
+          0
+        ],
+        "node_program_X": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 5,
+      "found": "(not (not (and x0 x2)))",
+      "size_key": [
+        5,
+        4,
+        "(not (not (and x0 x2)))"
+      ],
+      "ground_truth": "(and x0 x2)",
+      "gt_size": 3,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          27,
+          0
+        ],
+        "try_trivial_spans": [
+          4,
+          0
+        ],
+        "node_program_X": [
+          3,
+          0
+        ],
+        "lower_integers_together": [
+          3,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 2
+    },
+    {
+      "target": 7,
+      "found": "(not (not (or (and x0 x1) (and x0 x2))))",
+      "size_key": [
+        9,
+        5,
+        "(not (not (or (and x0 x1) (and x0 x2))))"
+      ],
+      "ground_truth": "(and (or x1 x2) x0)",
+      "gt_size": 5,
+      "excess_nodes": 4,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          2,
+          2
+        ],
+        "minimize_individual_choices": [
+          48,
+          0
+        ],
+        "try_trivial_spans": [
+          16,
+          0
+        ],
+        "lower_integers_together": [
+          15,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          14,
+          0
+        ],
+        "node_program_X": [
+          8,
+          0
+        ],
+        "node_program_XX": [
+          7,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          5,
+          0
+        ],
+        "node_program_XXX": [
+          4,
+          0
+        ],
+        "node_program_XXXX": [
+          3,
+          0
+        ],
+        "node_program_XXXXX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 4
+    },
+    {
+      "target": 10,
+      "found": "(not (not (xor x2 (or x0 x2))))",
+      "size_key": [
+        7,
+        5,
+        "(not (not (xor x2 (or x0 x2))))"
+      ],
+      "ground_truth": "(and (not x2) x0)",
+      "gt_size": 4,
+      "excess_nodes": 3,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          2,
+          2
+        ],
+        "minimize_individual_choices": [
+          43,
+          0
+        ],
+        "try_trivial_spans": [
+          10,
+          0
+        ],
+        "node_program_X": [
+          10,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          9,
+          0
+        ],
+        "node_program_XX": [
+          7,
+          0
+        ],
+        "lower_integers_together": [
+          7,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          6,
+          0
+        ],
+        "node_program_XXXX": [
+          3,
+          0
+        ],
+        "node_program_XXX": [
+          3,
+          0
+        ],
+        "node_program_XXXXX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 3
+    },
+    {
+      "target": 12,
+      "found": "(and x0 (not x1))",
+      "size_key": [
+        4,
+        3,
+        "(and x0 (not x1))"
+      ],
+      "ground_truth": "(and (not x1) x0)",
+      "gt_size": 4,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          63,
+          2
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "try_trivial_spans": [
+          8,
+          0
+        ],
+        "node_program_X": [
+          8,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          7,
+          0
+        ],
+        "lower_integers_together": [
+          5,
+          0
+        ],
+        "node_program_XX": [
+          4,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 15,
+      "found": "x0",
+      "size_key": [
+        1,
+        1,
+        "x0"
+      ],
+      "ground_truth": "x0",
+      "gt_size": 1,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "try_trivial_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          4,
+          0
+        ],
+        "node_program_X": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 17,
+      "found": "(not (not (and x1 x2)))",
+      "size_key": [
+        5,
+        4,
+        "(not (not (and x1 x2)))"
+      ],
+      "ground_truth": "(and x1 x2)",
+      "gt_size": 3,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          26,
+          0
+        ],
+        "try_trivial_spans": [
+          4,
+          0
+        ],
+        "lower_integers_together": [
+          3,
+          0
+        ],
+        "node_program_X": [
+          2,
+          0
+        ],
+        "node_program_XX": [
+          1,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 2
+    },
+    {
+      "target": 18,
+      "found": "(not (or (not x1) (not (xor x0 x2))))",
+      "size_key": [
+        8,
+        5,
+        "(not (or (not x1) (not (xor x0 x2))))"
+      ],
+      "ground_truth": "(and (xor x0 x2) x1)",
+      "gt_size": 5,
+      "excess_nodes": 3,
+      "passes_calls_shrinks": {
+        "redistribute_numeric_pairs": [
+          29,
+          1
+        ],
+        "node_program_X": [
+          15,
+          1
+        ],
+        "reorder_spans": [
+          2,
+          2
+        ],
+        "minimize_individual_choices": [
+          101,
+          0
+        ],
+        "lower_integers_together": [
+          26,
+          0
+        ],
+        "try_trivial_spans": [
+          22,
+          0
+        ],
+        "node_program_XX": [
+          12,
+          0
+        ],
+        "node_program_XXX": [
+          8,
+          0
+        ],
+        "node_program_XXXX": [
+          6,
+          0
+        ],
+        "node_program_XXXXX": [
+          3,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 3
+    },
+    {
+      "target": 19,
+      "found": "(xor (not x1) (or (not x1) (or x0 x2)))",
+      "size_key": [
+        9,
+        4,
+        "(xor (not x1) (or (not x1) (or x0 x2)))"
+      ],
+      "ground_truth": "(and (or x0 x2) x1)",
+      "gt_size": 5,
+      "excess_nodes": 4,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          250,
+          1
+        ],
+        "node_program_X": [
+          24,
+          1
+        ],
+        "reorder_spans": [
+          3,
+          3
+        ],
+        "redistribute_numeric_pairs": [
+          42,
+          0
+        ],
+        "lower_integers_together": [
+          40,
+          0
+        ],
+        "try_trivial_spans": [
+          32,
+          0
+        ],
+        "node_program_XX": [
+          20,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          17,
+          0
+        ],
+        "node_program_XXXXX": [
+          14,
+          0
+        ],
+        "node_program_XXXX": [
+          12,
+          0
+        ],
+        "node_program_XXX": [
+          12,
+          0
+        ],
+        "pass_to_descendant": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 2,
+      "techne_excess": 4
+    },
+    {
+      "target": 21,
+      "found": "(and x2 (or x0 x1))",
+      "size_key": [
+        5,
+        3,
+        "(and x2 (or x0 x1))"
+      ],
+      "ground_truth": "(and (or x0 x1) x2)",
+      "gt_size": 5,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          89,
+          2
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_duplicated_choices": [
+          13,
+          0
+        ],
+        "try_trivial_spans": [
+          11,
+          0
+        ],
+        "node_program_X": [
+          9,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          9,
+          0
+        ],
+        "lower_integers_together": [
+          8,
+          0
+        ],
+        "node_program_XX": [
+          5,
+          0
+        ],
+        "node_program_XXX": [
+          3,
+          0
+        ],
+        "node_program_XXXX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 34,
+      "found": "(not (or (not x1) (and c1 x2)))",
+      "size_key": [
+        7,
+        4,
+        "(not (or (not x1) (and c1 x2)))"
+      ],
+      "ground_truth": "(and (not x2) x1)",
+      "gt_size": 4,
+      "excess_nodes": 3,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          117,
+          1
+        ],
+        "node_program_X": [
+          16,
+          1
+        ],
+        "reorder_spans": [
+          3,
+          3
+        ],
+        "lower_integers_together": [
+          37,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          32,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          22,
+          0
+        ],
+        "try_trivial_spans": [
+          12,
+          0
+        ],
+        "node_program_XX": [
+          11,
+          0
+        ],
+        "node_program_XXXX": [
+          4,
+          0
+        ],
+        "node_program_XXX": [
+          3,
+          0
+        ],
+        "node_program_XXXXX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 1
+    },
+    {
+      "target": 48,
+      "found": "(not (or x0 (not x1)))",
+      "size_key": [
+        5,
+        4,
+        "(not (or x0 (not x1)))"
+      ],
+      "ground_truth": "(and (not x0) x1)",
+      "gt_size": 4,
+      "excess_nodes": 1,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          63,
+          2
+        ],
+        "reorder_spans": [
+          2,
+          2
+        ],
+        "redistribute_numeric_pairs": [
+          16,
+          0
+        ],
+        "try_trivial_spans": [
+          15,
+          0
+        ],
+        "lower_integers_together": [
+          9,
+          0
+        ],
+        "node_program_X": [
+          6,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          5,
+          0
+        ],
+        "node_program_XX": [
+          3,
+          0
+        ],
+        "node_program_XXXX": [
+          2,
+          0
+        ],
+        "node_program_XXX": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 1
+    },
+    {
+      "target": 51,
+      "found": "(and c1 x1)",
+      "size_key": [
+        3,
+        2,
+        "(and c1 x1)"
+      ],
+      "ground_truth": "x1",
+      "gt_size": 1,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          12,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          3,
+          0
+        ],
+        "lower_integers_together": [
+          3,
+          0
+        ],
+        "node_program_X": [
+          2,
+          0
+        ],
+        "try_trivial_spans": [
+          1,
+          0
+        ],
+        "node_program_XX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 2
+    },
+    {
+      "target": 60,
+      "found": "(not (xor x0 (not x1)))",
+      "size_key": [
+        5,
+        4,
+        "(not (xor x0 (not x1)))"
+      ],
+      "ground_truth": "(xor x0 x1)",
+      "gt_size": 3,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "node_program_X": [
+          9,
+          1
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          28,
+          0
+        ],
+        "try_trivial_spans": [
+          9,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          7,
+          0
+        ],
+        "node_program_XX": [
+          5,
+          0
+        ],
+        "lower_integers_together": [
+          5,
+          0
+        ],
+        "node_program_XXX": [
+          3,
+          0
+        ],
+        "node_program_XXXX": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 2
+    },
+    {
+      "target": 63,
+      "found": "(or x0 x1)",
+      "size_key": [
+        3,
+        2,
+        "(or x0 x1)"
+      ],
+      "ground_truth": "(or x0 x1)",
+      "gt_size": 3,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          25,
+          0
+        ],
+        "node_program_X": [
+          8,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          6,
+          0
+        ],
+        "try_trivial_spans": [
+          4,
+          0
+        ],
+        "node_program_XX": [
+          3,
+          0
+        ],
+        "node_program_XXX": [
+          2,
+          0
+        ],
+        "lower_integers_together": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 68,
+      "found": "(not (or x1 (not x2)))",
+      "size_key": [
+        5,
+        4,
+        "(not (or x1 (not x2)))"
+      ],
+      "ground_truth": "(and (not x1) x2)",
+      "gt_size": 4,
+      "excess_nodes": 1,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          32,
+          0
+        ],
+        "node_program_X": [
+          8,
+          0
+        ],
+        "lower_integers_together": [
+          5,
+          0
+        ],
+        "node_program_XX": [
+          4,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          4,
+          0
+        ],
+        "try_trivial_spans": [
+          3,
+          0
+        ],
+        "node_program_XXX": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 1
+    },
+    {
+      "target": 80,
+      "found": "(not (or x0 (not x2)))",
+      "size_key": [
+        5,
+        4,
+        "(not (or x0 (not x2)))"
+      ],
+      "ground_truth": "(and (not x0) x2)",
+      "gt_size": 4,
+      "excess_nodes": 1,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          77,
+          1
+        ],
+        "node_program_X": [
+          17,
+          1
+        ],
+        "redistribute_numeric_pairs": [
+          14,
+          1
+        ],
+        "node_program_XXX": [
+          10,
+          1
+        ],
+        "try_trivial_spans": [
+          14,
+          0
+        ],
+        "lower_integers_together": [
+          10,
+          0
+        ],
+        "node_program_XX": [
+          8,
+          0
+        ],
+        "node_program_XXXXX": [
+          7,
+          0
+        ],
+        "node_program_XXXX": [
+          6,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 1
+    },
+    {
+      "target": 85,
+      "found": "x2",
+      "size_key": [
+        1,
+        1,
+        "x2"
+      ],
+      "ground_truth": "x2",
+      "gt_size": 1,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "try_trivial_spans": [
+          8,
+          4
+        ],
+        "minimize_individual_choices": [
+          8,
+          0
+        ],
+        "node_program_X": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 87,
+      "found": "(and (or x0 x2) (or x1 x2))",
+      "size_key": [
+        7,
+        3,
+        "(and (or x0 x2) (or x1 x2))"
+      ],
+      "ground_truth": "(or (and x0 x1) x2)",
+      "gt_size": 5,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          3,
+          3
+        ],
+        "minimize_individual_choices": [
+          57,
+          0
+        ],
+        "try_trivial_spans": [
+          16,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          16,
+          0
+        ],
+        "lower_integers_together": [
+          14,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          11,
+          0
+        ],
+        "node_program_X": [
+          8,
+          0
+        ],
+        "node_program_XX": [
+          6,
+          0
+        ],
+        "node_program_XXXX": [
+          3,
+          0
+        ],
+        "node_program_XXX": [
+          2,
+          0
+        ],
+        "node_program_XXXXX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 2
+    },
+    {
+      "target": 90,
+      "found": "(not (not (xor x0 x2)))",
+      "size_key": [
+        5,
+        4,
+        "(not (not (xor x0 x2)))"
+      ],
+      "ground_truth": "(xor x0 x2)",
+      "gt_size": 3,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          27,
+          0
+        ],
+        "try_trivial_spans": [
+          4,
+          0
+        ],
+        "node_program_X": [
+          3,
+          0
+        ],
+        "lower_integers_together": [
+          3,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 2
+    },
+    {
+      "target": 95,
+      "found": "(not (not (or x0 x2)))",
+      "size_key": [
+        5,
+        4,
+        "(not (not (or x0 x2)))"
+      ],
+      "ground_truth": "(or x0 x2)",
+      "gt_size": 3,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          23,
+          0
+        ],
+        "try_trivial_spans": [
+          3,
+          0
+        ],
+        "node_program_X": [
+          2,
+          0
+        ],
+        "lower_integers_together": [
+          2,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 2
+    },
+    {
+      "target": 102,
+      "found": "(xor x1 x2)",
+      "size_key": [
+        3,
+        2,
+        "(xor x1 x2)"
+      ],
+      "ground_truth": "(xor x1 x2)",
+      "gt_size": 3,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          29,
+          0
+        ],
+        "node_program_X": [
+          8,
+          0
+        ],
+        "try_trivial_spans": [
+          4,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          4,
+          0
+        ],
+        "node_program_XXX": [
+          2,
+          0
+        ],
+        "node_program_XX": [
+          2,
+          0
+        ],
+        "lower_integers_together": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 105,
+      "found": "(xor x0 (xor x1 x2))",
+      "size_key": [
+        5,
+        3,
+        "(xor x0 (xor x1 x2))"
+      ],
+      "ground_truth": "(xor (xor x0 x1) x2)",
+      "gt_size": 5,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "try_trivial_spans": [
+          27,
+          1
+        ],
+        "node_program_XXX": [
+          9,
+          1
+        ],
+        "redistribute_numeric_pairs": [
+          7,
+          1
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          80,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          17,
+          0
+        ],
+        "node_program_X": [
+          7,
+          0
+        ],
+        "lower_integers_together": [
+          7,
+          0
+        ],
+        "node_program_XXXX": [
+          5,
+          0
+        ],
+        "node_program_XX": [
+          5,
+          0
+        ],
+        "node_program_XXXXX": [
+          4,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 119,
+      "found": "(not (not (or x1 x2)))",
+      "size_key": [
+        5,
+        4,
+        "(not (not (or x1 x2)))"
+      ],
+      "ground_truth": "(or x1 x2)",
+      "gt_size": 3,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          29,
+          0
+        ],
+        "try_trivial_spans": [
+          4,
+          0
+        ],
+        "node_program_X": [
+          3,
+          0
+        ],
+        "lower_integers_together": [
+          3,
+          0
+        ],
+        "node_program_XX": [
+          1,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 2
+    },
+    {
+      "target": 123,
+      "found": "(not (and (not x1) (not (xor x0 x2))))",
+      "size_key": [
+        8,
+        5,
+        "(not (and (not x1) (not (xor x0 x2))))"
+      ],
+      "ground_truth": "(or (xor x0 x2) x1)",
+      "gt_size": 5,
+      "excess_nodes": 3,
+      "passes_calls_shrinks": {
+        "node_program_X": [
+          16,
+          1
+        ],
+        "reorder_spans": [
+          2,
+          2
+        ],
+        "minimize_individual_choices": [
+          102,
+          0
+        ],
+        "lower_integers_together": [
+          26,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          22,
+          0
+        ],
+        "try_trivial_spans": [
+          13,
+          0
+        ],
+        "node_program_XX": [
+          11,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          9,
+          0
+        ],
+        "node_program_XXX": [
+          8,
+          0
+        ],
+        "node_program_XXXX": [
+          2,
+          0
+        ],
+        "node_program_XXXXX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 3
+    },
+    {
+      "target": 136,
+      "found": "(and (not x1) (not x2))",
+      "size_key": [
+        5,
+        3,
+        "(and (not x1) (not x2))"
+      ],
+      "ground_truth": "(not (or x1 x2))",
+      "gt_size": 4,
+      "excess_nodes": 1,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          187,
+          4
+        ],
+        "redistribute_numeric_pairs": [
+          17,
+          1
+        ],
+        "node_program_X": [
+          13,
+          1
+        ],
+        "lower_integers_together": [
+          27,
+          0
+        ],
+        "try_trivial_spans": [
+          14,
+          0
+        ],
+        "node_program_XX": [
+          9,
+          0
+        ],
+        "node_program_XXX": [
+          6,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          6,
+          0
+        ],
+        "node_program_XXXX": [
+          3,
+          0
+        ],
+        "node_program_XXXXX": [
+          1,
+          0
+        ],
+        "pass_to_descendant": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 1,
+      "techne_excess": 1
+    },
+    {
+      "target": 153,
+      "found": "(not (and c1 (xor x1 x2)))",
+      "size_key": [
+        6,
+        4,
+        "(not (and c1 (xor x1 x2)))"
+      ],
+      "ground_truth": "(not (xor x1 x2))",
+      "gt_size": 4,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "try_trivial_spans": [
+          13,
+          1
+        ],
+        "redistribute_numeric_pairs": [
+          7,
+          1
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          74,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          17,
+          0
+        ],
+        "node_program_X": [
+          7,
+          0
+        ],
+        "lower_integers_together": [
+          7,
+          0
+        ],
+        "node_program_XX": [
+          4,
+          0
+        ],
+        "node_program_XXX": [
+          3,
+          0
+        ],
+        "node_program_XXXX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 2
+    },
+    {
+      "target": 160,
+      "found": "(and (not x0) (not x2))",
+      "size_key": [
+        5,
+        3,
+        "(and (not x0) (not x2))"
+      ],
+      "ground_truth": "(not (or x0 x2))",
+      "gt_size": 4,
+      "excess_nodes": 1,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          85,
+          1
+        ],
+        "node_program_X": [
+          11,
+          1
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "lower_integers_together": [
+          19,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          15,
+          0
+        ],
+        "try_trivial_spans": [
+          14,
+          0
+        ],
+        "node_program_XX": [
+          9,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          8,
+          0
+        ],
+        "node_program_XXX": [
+          5,
+          0
+        ],
+        "node_program_XXXX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 165,
+      "found": "(not (xor x0 x2))",
+      "size_key": [
+        4,
+        3,
+        "(not (xor x0 x2))"
+      ],
+      "ground_truth": "(not (xor x0 x2))",
+      "gt_size": 4,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          25,
+          0
+        ],
+        "node_program_X": [
+          3,
+          0
+        ],
+        "lower_integers_together": [
+          3,
+          0
+        ],
+        "try_trivial_spans": [
+          2,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 170,
+      "found": "(not x2)",
+      "size_key": [
+        2,
+        2,
+        "(not x2)"
+      ],
+      "ground_truth": "(not x2)",
+      "gt_size": 2,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          10,
+          0
+        ],
+        "node_program_X": [
+          1,
+          0
+        ],
+        "lower_integers_together": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 175,
+      "found": "(or x0 (not x2))",
+      "size_key": [
+        4,
+        3,
+        "(or x0 (not x2))"
+      ],
+      "ground_truth": "(or (not x2) x0)",
+      "gt_size": 4,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          58,
+          2
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "try_trivial_spans": [
+          7,
+          0
+        ],
+        "node_program_X": [
+          7,
+          0
+        ],
+        "lower_integers_together": [
+          5,
+          0
+        ],
+        "node_program_XX": [
+          4,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          4,
+          0
+        ],
+        "node_program_XXX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 187,
+      "found": "(not (and x2 (not x1)))",
+      "size_key": [
+        5,
+        4,
+        "(not (and x2 (not x1)))"
+      ],
+      "ground_truth": "(or (not x2) x1)",
+      "gt_size": 4,
+      "excess_nodes": 1,
+      "passes_calls_shrinks": {
+        "node_program_XX": [
+          5,
+          1
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          31,
+          0
+        ],
+        "try_trivial_spans": [
+          11,
+          0
+        ],
+        "node_program_X": [
+          6,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          6,
+          0
+        ],
+        "lower_integers_together": [
+          5,
+          0
+        ],
+        "node_program_XXX": [
+          4,
+          0
+        ],
+        "node_program_XXXX": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 1
+    },
+    {
+      "target": 192,
+      "found": "(not (or x0 (and c1 x1)))",
+      "size_key": [
+        6,
+        4,
+        "(not (or x0 (and c1 x1)))"
+      ],
+      "ground_truth": "(not (or x0 x1))",
+      "gt_size": 4,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "redistribute_numeric_pairs": [
+          14,
+          1
+        ],
+        "node_program_X": [
+          9,
+          1
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          60,
+          0
+        ],
+        "try_trivial_spans": [
+          11,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          9,
+          0
+        ],
+        "lower_integers_together": [
+          7,
+          0
+        ],
+        "node_program_XX": [
+          6,
+          0
+        ],
+        "node_program_XXX": [
+          5,
+          0
+        ],
+        "node_program_XXXX": [
+          4,
+          0
+        ],
+        "node_program_XXXXX": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 195,
+      "found": "(not (xor x0 x1))",
+      "size_key": [
+        4,
+        3,
+        "(not (xor x0 x1))"
+      ],
+      "ground_truth": "(not (xor x0 x1))",
+      "gt_size": 4,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "minimize_individual_choices": [
+          23,
+          0
+        ],
+        "try_trivial_spans": [
+          4,
+          0
+        ],
+        "node_program_X": [
+          3,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          3,
+          0
+        ],
+        "lower_integers_together": [
+          3,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 204,
+      "found": "(not x1)",
+      "size_key": [
+        2,
+        2,
+        "(not x1)"
+      ],
+      "ground_truth": "(not x1)",
+      "gt_size": 2,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          18,
+          1
+        ],
+        "try_trivial_spans": [
+          2,
+          0
+        ],
+        "node_program_X": [
+          1,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          0
+        ],
+        "lower_integers_together": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 207,
+      "found": "(not (and x1 (not x0)))",
+      "size_key": [
+        5,
+        4,
+        "(not (and x1 (not x0)))"
+      ],
+      "ground_truth": "(or (not x1) x0)",
+      "gt_size": 4,
+      "excess_nodes": 1,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          43,
+          2
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "node_program_X": [
+          9,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          7,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          7,
+          0
+        ],
+        "try_trivial_spans": [
+          5,
+          0
+        ],
+        "lower_integers_together": [
+          5,
+          0
+        ],
+        "node_program_XX": [
+          4,
+          0
+        ],
+        "node_program_XXX": [
+          3,
+          0
+        ],
+        "node_program_XXXX": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 1
+    },
+    {
+      "target": 221,
+      "found": "(or x2 (not x1))",
+      "size_key": [
+        4,
+        3,
+        "(or x2 (not x1))"
+      ],
+      "ground_truth": "(or (not x1) x2)",
+      "gt_size": 4,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          164,
+          3
+        ],
+        "redistribute_numeric_pairs": [
+          16,
+          1
+        ],
+        "node_program_X": [
+          13,
+          1
+        ],
+        "reorder_spans": [
+          1,
+          1
+        ],
+        "lower_integers_together": [
+          17,
+          0
+        ],
+        "try_trivial_spans": [
+          10,
+          0
+        ],
+        "node_program_XX": [
+          8,
+          0
+        ],
+        "node_program_XXX": [
+          5,
+          0
+        ],
+        "node_program_XXXX": [
+          4,
+          0
+        ],
+        "node_program_XXXXX": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 238,
+      "found": "(not (not (not (and x1 x2))))",
+      "size_key": [
+        6,
+        5,
+        "(not (not (not (and x1 x2))))"
+      ],
+      "ground_truth": "(not (and x1 x2))",
+      "gt_size": 4,
+      "excess_nodes": 2,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          26,
+          0
+        ],
+        "try_trivial_spans": [
+          4,
+          0
+        ],
+        "lower_integers_together": [
+          3,
+          0
+        ],
+        "node_program_X": [
+          2,
+          0
+        ],
+        "node_program_XX": [
+          1,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 2
+    },
+    {
+      "target": 240,
+      "found": "(not x0)",
+      "size_key": [
+        2,
+        2,
+        "(not x0)"
+      ],
+      "ground_truth": "(not x0)",
+      "gt_size": 2,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "node_program_X": [
+          4,
+          2
+        ],
+        "minimize_individual_choices": [
+          8,
+          0
+        ],
+        "node_program_XX": [
+          4,
+          0
+        ],
+        "try_trivial_spans": [
+          3,
+          0
+        ],
+        "node_program_XXX": [
+          3,
+          0
+        ],
+        "node_program_XXXXX": [
+          1,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 243,
+      "found": "(xor c1 (and (not x1) (and c1 x0)))",
+      "size_key": [
+        8,
+        4,
+        "(xor c1 (and (not x1) (and c1 x0)))"
+      ],
+      "ground_truth": "(or (not x0) x1)",
+      "gt_size": 4,
+      "excess_nodes": 4,
+      "passes_calls_shrinks": {
+        "reorder_spans": [
+          3,
+          3
+        ],
+        "minimize_individual_choices": [
+          48,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          22,
+          0
+        ],
+        "try_trivial_spans": [
+          20,
+          0
+        ],
+        "lower_integers_together": [
+          16,
+          0
+        ],
+        "node_program_X": [
+          13,
+          0
+        ],
+        "node_program_XX": [
+          10,
+          0
+        ],
+        "node_program_XXXX": [
+          8,
+          0
+        ],
+        "node_program_XXX": [
+          8,
+          0
+        ],
+        "minimize_duplicated_choices": [
+          8,
+          0
+        ],
+        "node_program_XXXXX": [
+          6,
+          0
+        ],
+        "pass_to_descendant": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 2,
+      "techne_excess": 4
+    },
+    {
+      "target": 245,
+      "found": "(not (and (not x2) (and c1 x0)))",
+      "size_key": [
+        7,
+        4,
+        "(not (and (not x2) (and c1 x0)))"
+      ],
+      "ground_truth": "(or (not x0) x2)",
+      "gt_size": 4,
+      "excess_nodes": 3,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          110,
+          2
+        ],
+        "redistribute_numeric_pairs": [
+          13,
+          1
+        ],
+        "node_program_X": [
+          9,
+          1
+        ],
+        "reorder_spans": [
+          2,
+          2
+        ],
+        "minimize_duplicated_choices": [
+          15,
+          0
+        ],
+        "try_trivial_spans": [
+          14,
+          0
+        ],
+        "lower_integers_together": [
+          11,
+          0
+        ],
+        "node_program_XX": [
+          6,
+          0
+        ],
+        "node_program_XXXX": [
+          3,
+          0
+        ],
+        "node_program_XXX": [
+          3,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 1
+    },
+    {
+      "target": 250,
+      "found": "(not (and x0 x2))",
+      "size_key": [
+        4,
+        3,
+        "(not (and x0 x2))"
+      ],
+      "ground_truth": "(not (and x0 x2))",
+      "gt_size": 4,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          22,
+          0
+        ],
+        "try_trivial_spans": [
+          4,
+          0
+        ],
+        "lower_integers_together": [
+          3,
+          0
+        ],
+        "node_program_X": [
+          2,
+          0
+        ],
+        "node_program_XX": [
+          1,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 252,
+      "found": "(not (and x0 x1))",
+      "size_key": [
+        4,
+        3,
+        "(not (and x0 x1))"
+      ],
+      "ground_truth": "(not (and x0 x1))",
+      "gt_size": 4,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          39,
+          1
+        ],
+        "try_trivial_spans": [
+          3,
+          0
+        ],
+        "redistribute_numeric_pairs": [
+          3,
+          0
+        ],
+        "lower_integers_together": [
+          3,
+          0
+        ],
+        "node_program_X": [
+          2,
+          0
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    },
+    {
+      "target": 255,
+      "found": "c1",
+      "size_key": [
+        1,
+        1,
+        "c1"
+      ],
+      "ground_truth": "c1",
+      "gt_size": 1,
+      "excess_nodes": 0,
+      "passes_calls_shrinks": {
+        "minimize_individual_choices": [
+          7,
+          1
+        ],
+        "redistribute_numeric_pairs": [
+          1,
+          1
+        ]
+      },
+      "pass_to_descendant_calls": 0,
+      "techne_excess": 0
+    }
+  ],
+  "summary": {
+    "scored": 45,
+    "not_minimal_here": 26,
+    "not_minimal_with_pass_to_descendant_zero_calls": 23,
+    "not_minimal_with_pass_to_descendant_some_calls": 3,
+    "minimal_here": 19,
+    "pass_to_descendant_zero_calls_over_all_scored": 42,
+    "agreement_with_techne_excess": 41,
+    "passes_that_shrank_anything_counts": {
+      "reorder_spans": 29,
+      "minimize_individual_choices": 15,
+      "try_trivial_spans": 4,
+      "redistribute_numeric_pairs": 9,
+      "node_program_X": 12,
+      "node_program_XXX": 2,
+      "node_program_XX": 1
+    }
+  }
+}

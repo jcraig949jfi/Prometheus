@@ -1,0 +1,262 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "spin-6.5.2-holzmann",
+  "receipt_id": "run-spin-6.5.2-holzmann-20260912T125057Z",
+  "written_utc": "20260912T125057Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/Spin-version-6.5.2/Src",
+  "harness_sha256": {
+    "mutex.pml": "f44bd25736fdff19a3b6a1bef544e8b2d0d4a1320fb543c081a7820ca04ad404"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "30afd80d875d786f950a59d0ccbac8b19eebc1e2c5c4138f678fc3139cd15de5",
+  "recipe_sha256": "35eebd97589e892c65f7d4f4ac77fd6d74e16d616da26178f7f251cdae0a5f64",
+  "patches": [],
+  "probe": [
+    {
+      "name": "toolchain",
+      "cmd": "gcc --version | head -1; bison --version | head -1",
+      "exit": 0,
+      "seconds": 0.94,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\nbison (GNU Bison) 3.8.2\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make spin",
+      "cmd": "make -s 2>&1 | grep -v -i warning | tail -3; test -x ./spin",
+      "exit": 0,
+      "seconds": 5.75,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "main.c:1080:25: note: \u00e2\u20ac\u02dcsprintf\u00e2\u20ac\u2122 output between 5 and 516 bytes into a destination of size 512\n 1080 |                         sprintf(out2, \"%s.nvr\", argv[1]);\n      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "spin version",
+      "cmd": "./spin -V",
+      "exit": 0,
+      "seconds": 0.87,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Spin Version 6.5.2 -- 6 December 2019\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "exhaustive verification of Peterson mutex",
+      "cmd": "mkdir -p $BODY/build && cd $BODY/build && $BODY/upstream/tree/Spin-version-6.5.2/Src/spin -a $HARNESS/mutex.pml && gcc -O2 -DSAFETY -o pan pan.c && ./pan",
+      "exit": 0,
+      "seconds": 1.56,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n(Spin Version 6.5.2 -- 6 December 2019)\n\t+ Partial Order Reduction\n\nFull statespace search for:\n\tnever claim         \t- (none specified)\n\tassertion violations\t+\n\tcycle checks       \t- (disabled by -DSAFETY)\n\tinvalid end states\t+\n\nState-vector 28 byte, depth reached 23, errors: 0\n       38 states, stored\n       27 states, matched\n       65 transitions (= stored+matched)\n        0 atomic steps\nhash conflicts:         0 (resolved)\n\nStats on memory usage (in Megabytes):\n    0.002\tequivalent memory usage for states (stored*(State-vector + overhead))\n    0.292\tactual memory usage for states\n  128.000\tmemory used for hash table (-w24)\n    0.534\tmemory used for DFS stack (-m10000)\n  128.730\ttotal actual memory usage\n\n\nunreached in proctype P\n\t/w/harness/mutex.pml:13, state 9, \"-end-\"\n\t(1 of 9 states)\n\npan: elapsed time 0 seconds\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "a planted violation IS found (assert ncrit == 2 must fail)",
+      "cmd": "mkdir -p $BODY/build/bad && cd $BODY/build/bad && sed 's/ncrit == 1/ncrit == 2/' $HARNESS/mutex.pml > bad.pml && $BODY/upstream/tree/Spin-version-6.5.2/Src/spin -a bad.pml && gcc -O2 -DSAFETY -o pan pan.c && ./pan; true",
+      "exit": 0,
+      "seconds": 1.54,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "pan:1: assertion violated (ncrit==2) (at depth 4)\npan: wrote bad.pml.trail\n\n(Spin Version 6.5.2 -- 6 December 2019)\nWarning: Search not completed\n\t+ Partial Order Reduction\n\nFull statespace search for:\n\tnever claim         \t- (none specified)\n\tassertion violations\t+\n\tcycle checks       \t- (disabled by -DSAFETY)\n\tinvalid end states\t+\n\nState-vector 28 byte, depth reached 4, errors: 1\n        5 states, stored\n        0 states, matched\n        5 transitions (= stored+matched)\n        0 atomic steps\nhash conflicts:         0 (resolved)\n\nStats on memory usage (in Megabytes):\n    0.000\tequivalent memory usage for states (stored*(State-vector + overhead))\n    0.292\tactual memory usage for states\n  128.000\tmemory used for hash table (-w24)\n    0.534\tmemory used for DFS stack (-m10000)\n  128.730\ttotal actual memory usage\n\n\n\npan: elapsed time 0 seconds\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "dstep.o",
+      "sha256": "db6a449d5b3ff044fd65d92f73a48dfa3ad9309a57b12e76de4d6ec7f52f1e7c",
+      "bytes": 17728
+    },
+    {
+      "path": "flow.o",
+      "sha256": "f7af3cec32b4f9169b4f168abdad90c99a83c54a34a89fc3945a856ea99ca914",
+      "bytes": 32488
+    },
+    {
+      "path": "guided.o",
+      "sha256": "bb9b6412cc13146f8c7cd2806cf4b0312d43a63f4411fb2fda97c3a79925fb32",
+      "bytes": 16712
+    },
+    {
+      "path": "main.o",
+      "sha256": "ad12e585a001120b6bbb7619f9d9df91a8de438cdc116367a3dd819696cb737e",
+      "bytes": 87384
+    },
+    {
+      "path": "mesg.o",
+      "sha256": "943b2d51cd46bdbe56e52653858011777de22ba2012b0f3f70aaa423f4a7ee49",
+      "bytes": 29592
+    },
+    {
+      "path": "msc_tcl.o",
+      "sha256": "cf91774bc8be09ddf59213c0283dbfc0affd5f7a079dbcbe81d880f6feb34d7e",
+      "bytes": 18336
+    },
+    {
+      "path": "pangen1.o",
+      "sha256": "ba419b9a26573382111d09ac0d2930b4f798047a4c3a7e2b7d44f55fe18accf1",
+      "bytes": 754608
+    },
+    {
+      "path": "pangen2.o",
+      "sha256": "b9e9b4bc8ae96db3d9c5985fef5428d52d7f5951228ea564a67b185797e84ea7",
+      "bytes": 443936
+    },
+    {
+      "path": "pangen3.o",
+      "sha256": "ed0a26c4d0298502b0fc028829fe373ac56cd2d17e82e3307acfa9c8556831b7",
+      "bytes": 28024
+    },
+    {
+      "path": "pangen4.o",
+      "sha256": "bec12d4ffb5ccd5e5a9897e56097ffa0ded141a693f47372a5fc69ff0352067d",
+      "bytes": 17176
+    },
+    {
+      "path": "pangen5.o",
+      "sha256": "db02df1d27b0c9893a489e36feeb150b5924137ca1379d393f9cebb982ec01a3",
+      "bytes": 19688
+    },
+    {
+      "path": "pangen6.o",
+      "sha256": "a293d9aa7d7049304d01b1dc276de50bf6e70452aafe6aa8c8837335351bd216",
+      "bytes": 43928
+    },
+    {
+      "path": "pangen7.o",
+      "sha256": "0a174791ffe849fd84db90e0215a4d9258804b2502c2c8d86332457598aa72df",
+      "bytes": 26864
+    },
+    {
+      "path": "reprosrc.o",
+      "sha256": "3721c8e627e5ceece284f5dbac9ca6542552f5f8f556006cc2cfd5216922161b",
+      "bytes": 24040
+    },
+    {
+      "path": "run.o",
+      "sha256": "930255cfa090d48e7162d5955a5c99d38cf4a91a5d7597242cc60d84bd70c163",
+      "bytes": 28752
+    },
+    {
+      "path": "sched.o",
+      "sha256": "d8f4612e2eb21f68c96ca9468966e028fdac8e8eed5c684b2356f06b07323886",
+      "bytes": 40560
+    },
+    {
+      "path": "spin",
+      "sha256": "17f75d4a66d062113e9a2d67f27ad567613ca6617ff145e82a060e667d3deab7",
+      "bytes": 1320144
+    },
+    {
+      "path": "spin.o",
+      "sha256": "395bec243c78ef17cf6f09e0cb84cdf0040da45f0ab138c4392ae9b278aa7f4f",
+      "bytes": 55792
+    },
+    {
+      "path": "spinlex.o",
+      "sha256": "8759328a30f51e99a538641806b8a90a8aa9137892da9c1920712a10bae9a67c",
+      "bytes": 70088
+    },
+    {
+      "path": "structs.o",
+      "sha256": "03ec136be37cca5ef2afd01882621880af31be13fdd55193200345980b01edcb",
+      "bytes": 19736
+    },
+    {
+      "path": "sym.o",
+      "sha256": "84b2e79d380c267efcf50df64e11c5c84631c2cc969c0b4eacffce58a63aed6a",
+      "bytes": 22920
+    },
+    {
+      "path": "tl_buchi.o",
+      "sha256": "68ea4d071c46da613140e1494859508e3bab8f209156225c6d69887b3671d6b5",
+      "bytes": 17008
+    },
+    {
+      "path": "tl_cache.o",
+      "sha256": "44238a5f1067fa65f500e1b96c4b62670b0b8c7df643702c10940fcd250481ca",
+      "bytes": 8736
+    },
+    {
+      "path": "tl_lex.o",
+      "sha256": "036509d2419c38c4249edae04ef169c73ffd003a7489b5dc92a6eedfcdeb28b7",
+      "bytes": 10112
+    },
+    {
+      "path": "tl_main.o",
+      "sha256": "ea2d332d74c030629658517c7c71c6067f8440b447b1f396dab5edaec2ad969e",
+      "bytes": 12504
+    },
+    {
+      "path": "tl_mem.o",
+      "sha256": "2f98f359b6868f35e781a503dea5b8690c20df05acc9a036487b772ab28ef0c7",
+      "bytes": 3632
+    },
+    {
+      "path": "tl_parse.o",
+      "sha256": "8a8330a6cfac2732eb5cfc56d4a426b84c648571d33d08e8425aadfd1c7ac5c5",
+      "bytes": 8512
+    },
+    {
+      "path": "tl_rewrt.o",
+      "sha256": "2765ba930962e14e8a5eda52618328b76468c8bfe3f43b6aad9a6ce43db89c19",
+      "bytes": 8144
+    },
+    {
+      "path": "tl_trans.o",
+      "sha256": "14b9910c0bd1e95abf7644dd554c674faee872af3c319012c6ed9f68beccf8f3",
+      "bytes": 25624
+    },
+    {
+      "path": "vars.o",
+      "sha256": "6d619ff352775fa6baa36c99c1cc0b25a69777bdb97b177b1b8b6298941be3f4",
+      "bytes": 16800
+    },
+    {
+      "path": "y.output",
+      "sha256": "cdb5fca5450933beea595ceefd195b77cbed8b140254f7a7c17957dd7a8d3df9",
+      "bytes": 263377
+    },
+    {
+      "path": "y.tab.h",
+      "sha256": "31d0659d2a65b3fd59fccc14a94cfdde5d6e35f6ca2cbd40f86685553c042900",
+      "bytes": 8759
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

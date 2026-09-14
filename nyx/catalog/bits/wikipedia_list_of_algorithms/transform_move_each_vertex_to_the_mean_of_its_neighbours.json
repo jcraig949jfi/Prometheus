@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.move_each_vertex_to_the_mean_of_its_neighbours",
+  "name": "move each vertex toward the mean of its neighbours",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "biological and artificial dynamical systems"
+  ],
+  "mechanism": "for every vertex compute the average position of its connected neighbours and move it there (or part of the way); repeat a few rounds; the mesh loses noise and small features shrink",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Laplacian smoothing' in section Computational mathematics / Geometry: an algorithm to smooth a polygonal mesh",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "GRAPH",
+  "out_geometry": "GRAPH",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "PARALLEL_ROUNDS",
+  "cost": "LINEAR",
+  "requires": [
+    "a connectivity graph over positions"
+  ],
+  "fails_when": [
+    "shrinkage; boundary vertices need fixing"
+  ],
+  "instances": [
+    "Laplacian smoothing"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.search.update_each_variable_in_turn_from_the_latest_values_of_the_others"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

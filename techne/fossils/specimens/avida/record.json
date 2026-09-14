@@ -1,0 +1,171 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "avida",
+  "canonical_name": "Avida -- a digital-evolution research platform (Devosoft / Ofria lab)",
+  "aliases": [
+    "avida"
+  ],
+  "lineage": "Avida (1993-, Adami/Ofria/Brown, later Devosoft): a platform of self-replicating computer programs (digital organisms) that mutate, compete for CPU time, and evolve to perform logic tasks for rewards; the workhorse of experimental digital evolution",
+  "domain": [
+    "artificial-life",
+    "digital-evolution",
+    "self-replication",
+    "genetic-programming",
+    "unconventional-computation"
+  ],
+  "era": "1993-",
+  "version": "github.com/devosoft/avida master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/devosoft/avida",
+        "commit": "47f13dadb547fcf10f620ace60247f38b30b8b16",
+        "commit_resolved": "47f13dadb547fcf10f620ace60247f38b30b8b16",
+        "submodules": "required",
+        "commit_date": "2025-01-27T12:53:22-05:00",
+        "submodules_pinned": [
+          {
+            "path": "documentation",
+            "url": "https://github.com/devosoft/avida.wiki.git",
+            "commit": "550bd084a53d5f6b6bd3e80cd3310d5e75c924ee"
+          },
+          {
+            "path": "libs/apto",
+            "url": "https://github.com/dmbryson/apto.git",
+            "commit": "02e18980071d237f1ea4641f3f35cae469e2ed38"
+          },
+          {
+            "path": "libs/backward-cpp",
+            "url": "https://github.com/bombela/backward-cpp.git",
+            "commit": "dc8b8c76822dcbc8918f032171050ad90e11eb7f"
+          }
+        ]
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/devosoft/avida"
+  },
+  "hashes": {
+    "tree_sha256": "0a18674a17e76f6111a1eedac9efb3ed18c84b4e23f12477d65e835170425e0d",
+    "n_files": 2868,
+    "bytes": 144442411,
+    "artifacts": [
+      {
+        "filename": "https://github.com/devosoft/avida",
+        "sha256": null,
+        "commit": "47f13dadb547fcf10f620ace60247f38b30b8b16"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\avida",
+    "hash_list": "techne/fossils/specimens/avida/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "GPL-3.0 / Apache-2.0 (mixed; see COPYING)",
+    "status": "see COPYING",
+    "evidence": "repo"
+  },
+  "acquisition_date": "2026-09-13",
+  "language": [
+    "C++"
+  ],
+  "build_system": "cmake (heavy)",
+  "compiler_or_interpreter": "g++ + cmake (NOT built this pass)",
+  "dependencies": [
+    "cmake",
+    "a C++ toolchain"
+  ],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "avida (runs a population from a config + ancestor genome)"
+  ],
+  "example": {
+    "command": "avida -c avida.cfg (evolve a population from the default ancestor)",
+    "input": "config + ancestral genome",
+    "output": "population statistics over generations; evolved genomes"
+  },
+  "environment": {
+    "runner": "none this pass -- SOURCE pinned; heavy cmake build deferred (RUNNABLE candidate later)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Ofria & Wilke, Avida: A software platform for research in computational evolutionary biology, Artificial Life 2004",
+    "Lenski et al., The evolutionary origin of complex features, Nature 2003"
+  ],
+  "human_capability_summary": {
+    "built_to": "let self-replicating programs (digital organisms) mutate and compete for CPU cycles and memory, rewarding those that evolve to compute logic functions -- an instrumented Petri dish for open-ended evolution",
+    "pressure": "finite CPU and space; an organism must copy its own genome faster and more accurately than rivals while the reward landscape selects for new computation",
+    "success_means": "in its domain, evolving populations that acquire new functions from mutation and selection; the published Avida experiments reproduce"
+  },
+  "known_human_problem_solved": "controlled experiments in the evolution of computation",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/avida/receipts/run-avida-20260913T141120Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\avida ; tracked techne/fossils/specimens/avida/",
+    "where_it_came_from": "{'repo': 'github.com/devosoft/avida'} ; ORIGINAL_AUTHORITATIVE_RELEASE ; GPL-3.0 / Apache-2.0 (mixed; see COPYING)",
+    "how_to_run_it": "SOURCE/BLOCKED this pass; see record.environment",
+    "how_we_know_it_runs": "NOT_ATTEMPTED / NOT_ATTEMPTED ; receipt none (pinned+hashed)",
+    "what_humans_used_it_for": "let self-replicating programs (digital organisms) mutate and compete for CPU cycles and memory, rewarding those that evolve to compute logic functions -- an instrumented Petri dish for open-ended evolution"
+  },
+  "seat": "Techne",
+  "preservation": {
+    "status": "FULLY_PINNED_EXTERNALS",
+    "body_status": "FULLY_PINNED_EXTERNALS",
+    "recipe_status": "NO_NETWORK_FETCH_DETECTED",
+    "submodules": [
+      {
+        "path": "documentation",
+        "url": "https://github.com/devosoft/avida.wiki.git",
+        "pinned_commit": "550bd084a53d5f6b6bd3e80cd3310d5e75c924ee",
+        "present": true,
+        "checked_out_commit": "550bd084a53d5f6b6bd3e80cd3310d5e75c924ee",
+        "n_files": 129
+      },
+      {
+        "path": "libs/apto",
+        "url": "https://github.com/dmbryson/apto.git",
+        "pinned_commit": "02e18980071d237f1ea4641f3f35cae469e2ed38",
+        "present": true,
+        "checked_out_commit": "02e18980071d237f1ea4641f3f35cae469e2ed38",
+        "n_files": 164
+      },
+      {
+        "path": "libs/backward-cpp",
+        "url": "https://github.com/bombela/backward-cpp.git",
+        "pinned_commit": "dc8b8c76822dcbc8918f032171050ad90e11eb7f",
+        "present": true,
+        "checked_out_commit": "dc8b8c76822dcbc8918f032171050ad90e11eb7f",
+        "n_files": 24
+      }
+    ],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-13T14:04:17Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

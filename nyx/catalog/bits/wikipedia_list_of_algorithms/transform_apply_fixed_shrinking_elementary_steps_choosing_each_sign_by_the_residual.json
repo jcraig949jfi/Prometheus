@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.apply_fixed_shrinking_elementary_steps_choosing_each_sign_by_the_residual",
+  "name": "apply a fixed sequence of shrinking elementary steps, choosing each sign by the residual",
+  "lineage": [
+    "numerical methods",
+    "computer arithmetic",
+    "controllers"
+  ],
+  "mechanism": "a table holds the angle (or log) of each elementary factor whose tangent (or ratio) is a power of two; step through the table, at each entry rotating or scaling in whichever direction reduces the remaining target, using only shifts and adds; the accumulated direction bits and the residual give the function value",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'CORDIC' in section Computational mathematics / Numerical algorithms / Elementary and special functions: computes hyperbolic and trigonometric functions using a table of arctangents",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'BKM algorithm': computes elementary functions using a table of logarithms",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "PRECOMPUTED_TABLE",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a table of elementary angles or logs (data)",
+    "shift and add only"
+  ],
+  "fails_when": [
+    "one bit of precision per step; a final scale constant"
+  ],
+  "instances": [
+    "CORDIC",
+    "BKM algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

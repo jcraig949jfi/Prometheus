@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.compare_every_pair_across_two_collections",
+  "name": "compare every pair across two collections",
+  "lineage": [
+    "memory and retrieval"
+  ],
+  "mechanism": "for each element of one collection scan the other and emit the pairs that satisfy the condition; reading one side in blocks reduces passes over the other",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Nested loop join' in section Database algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Block nested loop': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "any join condition"
+  ],
+  "fails_when": [
+    "quadratic"
+  ],
+  "instances": [
+    "Nested loop join",
+    "Block nested loop"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

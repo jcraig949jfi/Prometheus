@@ -1,9 +1,12 @@
 """A6 acceptance: the thirteen rows of 2026-09-11, reproduced.
 
-WRITTEN BEFORE THE IMPLEMENTATION, on the operator's instruction. Half of it
-passes today and is live evidence that the gap is real; the other half is marked
-`xfail(strict=True)` and is the acceptance criterion. When A6 lands, those flip
-to passing and the strictness turns them into regressions if they ever stop.
+WRITTEN BEFORE THE IMPLEMENTATION, on the operator's instruction (2026-09-11).
+Half of it passed then as live evidence that the gap was real; the other half
+was `xfail(strict=True)` as the acceptance criterion. A6 LANDED 2026-09-12
+(sfe/attestation.py, wired in the api middleware): the markers are gone and
+the same assertions are now regressions. The wiring and the epistemic rule
+(UNKNOWN stays UNKNOWN until independently reconciled) are covered in
+tests/test_sfe_a6_wiring_and_health.py.
 
 THE FAILURE THIS ENCODES. On 2026-09-11 a seventeen-minute engine stall cost 13
 rows of `cs-h5-1` arm `map`, rules 143-155. Two systems each saw part of it and
@@ -121,17 +124,20 @@ def test_a_lock_timeout_writes_NOTHING_to_the_ledger(tmp_path):
         "the refusal wrote something -- if it ever does, A6 is already closed")
 
 
-def test_the_engine_has_no_channel_that_survives_a_failed_lock(eng):
-    """The constraint that shapes the design: every durable record the engine
-    keeps today goes through `store.write()`, which is the thing that failed.
-    Any 'record the incident' that uses the ledger is circular."""
+def test_the_engine_has_exactly_one_channel_that_survives_a_failed_lock(eng):
+    """The constraint that shaped the design: every durable record the engine
+    kept went through `store.write()`, the thing that failed. Until A6 landed
+    this test asserted NO non-SQLite sink existed in sfe/. A6 IS that sink,
+    and it must be the only one -- a second one would be a second place for
+    the truth to live.
+
+    (Flipped 2026-09-12 when sfe/attestation.py landed; the old assertion is
+    kept as the complement: every other module is still ledger-only.)"""
     src = open(os.path.join(os.path.dirname(os.path.dirname(
         os.path.abspath(__file__))), "sfe", "runtime.py"),
         encoding="utf-8").read()
-    # every durable append in the engine is an events.append inside a write()
     assert "events.append" in src
     assert "with self.store.write()" in src
-    # and there is no non-SQLite durable sink anywhere in sfe/
     sfe_dir = os.path.join(os.path.dirname(os.path.dirname(
         os.path.abspath(__file__))), "sfe")
     sinks = []
@@ -139,9 +145,8 @@ def test_the_engine_has_no_channel_that_survives_a_failed_lock(eng):
         body = open(os.path.join(sfe_dir, n), encoding="utf-8").read()
         if "open(" in body and "blobs" not in body and n != "store.py":
             sinks.append(n)
-    assert not sinks, (
-        "a non-ledger durable sink appeared in %s -- A6 may have a home "
-        "already" % sinks)
+    assert sinks == ["attestation.py"], (
+        "the only non-ledger durable sink must be the A6 journal: %s" % sinks)
 
 
 def test_a_committed_effect_is_indistinguishable_from_an_abandoned_one(eng):
@@ -168,10 +173,8 @@ def test_a_committed_effect_is_indistinguishable_from_an_abandoned_one(eng):
 
 
 # ===========================================================================
-# ACCEPTANCE. These are what A6 must make true. xfail(strict) until it lands.
+# ACCEPTANCE. What A6 made true on 2026-09-12; regressions from here.
 # ===========================================================================
-@pytest.mark.xfail(strict=True, reason="A6 not implemented: no attestation "
-                                       "channel exists yet")
 @pytest.mark.parametrize("rule,shape,effect", THE_THIRTEEN)
 def test_A6_every_one_of_the_thirteen_is_attestable(rule, shape, effect,
                                                     tmp_path):
@@ -203,7 +206,6 @@ def test_A6_every_one_of_the_thirteen_is_attestable(rule, shape, effect,
     assert verdict["state"] in ("CONFIRMED_EFFECT", "CONFIRMED_NO_EFFECT")
 
 
-@pytest.mark.xfail(strict=True, reason="A6 not implemented")
 def test_A6_a_timeout_never_reports_the_write_as_failed(tmp_path):
     """RULE 146, the canonical case. The client timed out ON the commit and the
     commit had landed. An attestation that reported 'failed' because the caller
@@ -225,7 +227,6 @@ def test_A6_a_timeout_never_reports_the_write_as_failed(tmp_path):
         "a timeout must never be reported as a failed write"
 
 
-@pytest.mark.xfail(strict=True, reason="A6 not implemented")
 def test_A6_the_channel_fails_OPEN(tmp_path):
     """If the incident channel cannot be written, the request must still be
     served. An attestation mechanism that can take the engine down has made

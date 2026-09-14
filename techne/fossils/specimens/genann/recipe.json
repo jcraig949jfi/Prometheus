@@ -1,0 +1,46 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make (examples + test)",
+      "cmd": "make -s 2>&1 | grep -viE 'warning' | tail -3; test -x ./example1 || ls example1"
+    }
+  ],
+  "runs": [
+    {
+      "name": "train a net by backprop to learn XOR",
+      "cmd": "./example1 2>&1 | tail -12",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(0\\.9|1\\.0|0\\.0|0\\.1|xor|output)"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "genann's own unit test",
+      "cmd": "make -s check 2>&1 | tail -6; echo GENANNTEST",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "GENANNTEST"
+        ],
+        "stdout_not_contains": [
+          "FAIL",
+          "failed"
+        ]
+      }
+    }
+  ],
+  "test_kind": "UPSTREAM",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "example1 trains a 2-2-1 net by backprop to learn XOR; check runs genann's minctest suite. behavioral_entry_point: change the learning rate / hidden size / corrupt labels."
+}

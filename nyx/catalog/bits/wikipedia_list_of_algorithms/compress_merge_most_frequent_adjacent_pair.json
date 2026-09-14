@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.merge_most_frequent_adjacent_pair",
+  "name": "merge the most frequent adjacent pair into a new symbol",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "count adjacent symbol pairs, replace every occurrence of the most frequent pair by a new symbol, record the merge, and repeat until no pair repeats or a vocabulary size is reached",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Byte pair encoding (BPE)' in section Information theory and signal processing / Coding theory / Lossless compression algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'SEQUITUR algorithm': lossless compression by incremental grammar inference on a string",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPRESS",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a symbol alphabet that can grow"
+  ],
+  "fails_when": [
+    "greedy merges are not optimal",
+    "the merge table must ship with the data"
+  ],
+  "instances": [
+    "Byte pair encoding (BPE)",
+    "SEQUITUR algorithm"
+  ],
+  "related": [
+    {
+      "rel": "CONTRASTS_WITH",
+      "id": "bit.compress.repeated_subexpression_abstraction"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

@@ -1,0 +1,29 @@
+{
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version"
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "store patterns, recall from a corrupted cue (attractor dynamics)",
+      "cmd": "pip install -q numpy matplotlib tqdm >/dev/null 2>&1 && MPLBACKEND=Agg PYTHONPATH=. python $HARNESS/drv.py 2>&1 | grep -v '^Start to'",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "HOPFIELD_OK"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Runs the repo's own HopfieldNetwork.train_weights + predict (matplotlib/tqdm installed headless only to satisfy its module imports; no plotting called). Oracle: a 3-bit-corrupted cue over 25 neurons with 2 stored patterns must converge back to the stored pattern (associative recall / error correction). behavioral_entry_point: raise corruption or store > ~0.14N patterns to force spurious attractors."
+}

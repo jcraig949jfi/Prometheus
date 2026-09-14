@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.solve_within_the_span_of_successive_matrix_powers_of_a_vector",
+  "name": "solve within the span of successive matrix powers of a vector",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "build the subspace spanned by a vector, the matrix times it, the matrix squared times it, and so on, using only matrix-vector products; project the problem onto that growing subspace and solve the small projected problem, whose solution converges to the true one long before the subspace fills the space",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Krylov methods (for large sparse matrix problems; third most-important numerical method class of the 20th century as ran' in section Computational mathematics / Numerical algorithms / Linear algebra: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Arnoldi iteration': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lanczos iteration': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "MATRIX",
+  "out_geometry": "TENSOR",
+  "order_req": "NONE",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a matrix-vector product only (matrix need not be stored)"
+  ],
+  "fails_when": [
+    "the raw powers become nearly parallel; an orthogonalisation step is needed in practice"
+  ],
+  "instances": [
+    "Krylov methods (for large sparse matrix problems; third most-important numerical method class of the 20th century as ran",
+    "Arnoldi iteration",
+    "Lanczos iteration"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

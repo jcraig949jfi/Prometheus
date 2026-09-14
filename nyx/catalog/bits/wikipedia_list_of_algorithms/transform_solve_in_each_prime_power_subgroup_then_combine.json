@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.solve_in_each_prime_power_subgroup_then_combine",
+  "name": "solve in each prime-power subgroup, then combine",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "factor the group order, project the problem into each prime-power subgroup where it is small, solve it there, and combine the partial answers by the Chinese remainder construction",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Pohlig–Hellman algorithm' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a group of known, smooth order"
+  ],
+  "fails_when": [
+    "a large prime factor in the order leaves a hard subproblem"
+  ],
+  "instances": [
+    "Pohlig–Hellman algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

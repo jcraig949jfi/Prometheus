@@ -1,0 +1,119 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "glibc-rwlock-writer-starvation-2.36",
+  "receipt_id": "run-glibc-rwlock-writer-starvation-2.36-20260913T054149Z",
+  "written_utc": "20260913T054149Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "starve.c": "ff0cf59e3c8db3ed7649445952d26eb99c3e38c25467bf9c9cf9977d913ecc7d"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "f9659af1515526b55f6fba4735cc6c3b9a48d979b36aebe55c8c1ef003a80d96",
+  "recipe_sha256": "83692973c6fbf214985b0ae678e16f0a0c98c0de4693c96d86cd9205e1da7ba3",
+  "patches": [],
+  "probe": [
+    {
+      "name": "glibc",
+      "cmd": "ldd --version | head -1; gcc --version | head -1; nproc",
+      "exit": 0,
+      "seconds": 0.77,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "ldd (Debian GLIBC 2.36-9+deb12u14) 2.36\ngcc (Debian 12.2.0-14+deb12u1) 12.2.0\n16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile Techne's harness against the system glibc 2.36 (the preserved source is the same version, to read)",
+      "cmd": "gcc -O2 -pthread -o $BODY/build/starve $HARNESS/starve.c && echo built; grep -c 'PREFER_READER' pthread_rwlock_common.c",
+      "exit": 0,
+      "seconds": 1.04,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n4\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "STARVATION: default kind PREFER_READER_NP, 8 readers re-acquiring for 3 s, 1 writer",
+      "cmd": "$BODY/build/starve reader 3 8",
+      "exit": 0,
+      "seconds": 3.87,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "kind=PREFER_READER readers=8 seconds=3.0 reader_acquisitions=21105929 writer_acquisitions=1 writer_per_second=0.3\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "the opt-in kind PREFER_WRITER_NONRECURSIVE_NP under the same pressure",
+      "cmd": "$BODY/build/starve writer 3 8",
+      "exit": 0,
+      "seconds": 3.97,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "kind=PREFER_WRITER_NONRECURSIVE readers=8 seconds=3.0 reader_acquisitions=2570073 writer_acquisitions=5242192 writer_per_second=1747254.3\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "both kinds side by side (the pressure response, not a verdict)",
+      "cmd": "$BODY/build/starve reader 3 8 | tail -1; $BODY/build/starve writer 3 8 | tail -1",
+      "exit": 0,
+      "seconds": 6.88,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "kind=PREFER_READER readers=8 seconds=3.0 reader_acquisitions=20612656 writer_acquisitions=1 writer_per_second=0.3\nkind=PREFER_WRITER_NONRECURSIVE readers=8 seconds=3.0 reader_acquisitions=2272312 writer_acquisitions=4950536 writer_per_second=1649946.7\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: under reader preference the writer acquires FEWER times than under writer preference (the documented direction)",
+      "cmd": "a=$($BODY/build/starve reader 3 8 | grep -o 'writer_acquisitions=[0-9]*' | cut -d= -f2); b=$($BODY/build/starve writer 3 8 | grep -o 'writer_acquisitions=[0-9]*' | cut -d= -f2); echo reader_pref=$a writer_pref=$b; test $a -lt $b",
+      "exit": 0,
+      "seconds": 6.89,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "reader_pref=1 writer_pref=4930959\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "f9659af1515526b55f6fba4735cc6c3b9a48d979b36aebe55c8c1ef003a80d96",
+  "body_preserved": true
+}

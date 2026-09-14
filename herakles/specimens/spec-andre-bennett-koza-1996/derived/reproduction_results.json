@@ -1,0 +1,180 @@
+{
+ "protocol": "herakles/specimens/spec-andre-bennett-koza-1996/PROTOCOL.md",
+ "workspace": {
+  "base_sha": "7901a1e03a4508d04b9c29337dd4c95c2064c387",
+  "branch": "herakles/comms-queue-2026-09-11",
+  "worktree_path": "F:\\Prometheus-worktrees\\herakles-comms-queue",
+  "dirty": false,
+  "main_worktree": false,
+  "allow_canonical_override": false
+ },
+ "z": 2.498,
+ "primary": [
+  {
+   "rule": "gkl",
+   "n_cells": 149,
+   "n_ics": 10000,
+   "steps": 600,
+   "seed": 20262911,
+   "published": 0.816,
+   "published_cases": 1000000.0,
+   "measured": 0.8145,
+   "n_correct": 8145,
+   "se": 0.003887026498494704,
+   "diff": -0.0014999999999999458,
+   "band_half_width": 0.009709792193239771,
+   "abs_diff_in_se": 0.38589909293925273,
+   "correct_mask_digest": "sha256:2d87f9a4efd67f3d7c5c27938246d69e",
+   "decision": "REPRODUCED"
+  },
+  {
+   "rule": "davis1995",
+   "n_cells": 149,
+   "n_ics": 10000,
+   "steps": 600,
+   "seed": 20262912,
+   "published": 0.818,
+   "published_cases": 1000000.0,
+   "measured": 0.8205,
+   "n_correct": 8205,
+   "se": 0.0038377043919510007,
+   "diff": 0.0025000000000000577,
+   "band_half_width": 0.009586585571093601,
+   "abs_diff_in_se": 0.6514311016876199,
+   "correct_mask_digest": "sha256:6edb5813be7f79c935c0cfacb044b3ec",
+   "decision": "REPRODUCED"
+  },
+  {
+   "rule": "das1995",
+   "n_cells": 149,
+   "n_ics": 10000,
+   "steps": 600,
+   "seed": 20262913,
+   "published": 0.82178,
+   "published_cases": 10000000.0,
+   "measured": 0.8235,
+   "n_correct": 8235,
+   "se": 0.003812449999672127,
+   "diff": 0.0017200000000000548,
+   "band_half_width": 0.009523500099180975,
+   "abs_diff_in_se": 0.4511534577890794,
+   "correct_mask_digest": "sha256:b8a2220eff9e835da85b0260cfd98935",
+   "decision": "REPRODUCED"
+  },
+  {
+   "rule": "abk_gp",
+   "n_cells": 149,
+   "n_ics": 10000,
+   "steps": 600,
+   "seed": 20262914,
+   "published": 0.82326,
+   "published_cases": 10000000.0,
+   "measured": 0.8243,
+   "n_correct": 8243,
+   "se": 0.0038056472511256213,
+   "diff": 0.001040000000000041,
+   "band_half_width": 0.009506506833311803,
+   "abs_diff_in_se": 0.27327808684644467,
+   "correct_mask_digest": "sha256:bb1f4978ec6cf960876310d5a754f6f8",
+   "decision": "REPRODUCED"
+  }
+ ],
+ "sensitivity": [
+  {
+   "rule": "gkl",
+   "n_cells": 149,
+   "n_ics": 10000,
+   "steps": 298,
+   "seed": 20262911,
+   "published": 0.816,
+   "published_cases": 1000000.0,
+   "measured": 0.8144,
+   "n_correct": 8144,
+   "se": 0.0038878353874617685,
+   "diff": -0.0015999999999999348,
+   "band_half_width": 0.009711812797879499,
+   "abs_diff_in_se": 0.41154005778123204,
+   "correct_mask_digest": "sha256:3c513693cee5e5df27e3d061ef01a76d",
+   "delta_vs_600": -9.999999999998899e-05,
+   "within_0_01": true
+  },
+  {
+   "rule": "davis1995",
+   "n_cells": 149,
+   "n_ics": 10000,
+   "steps": 298,
+   "seed": 20262912,
+   "published": 0.818,
+   "published_cases": 1000000.0,
+   "measured": 0.8205,
+   "n_correct": 8205,
+   "se": 0.0038377043919510007,
+   "diff": 0.0025000000000000577,
+   "band_half_width": 0.009586585571093601,
+   "abs_diff_in_se": 0.6514311016876199,
+   "correct_mask_digest": "sha256:6edb5813be7f79c935c0cfacb044b3ec",
+   "delta_vs_600": 0.0,
+   "within_0_01": true
+  },
+  {
+   "rule": "das1995",
+   "n_cells": 149,
+   "n_ics": 10000,
+   "steps": 298,
+   "seed": 20262913,
+   "published": 0.82178,
+   "published_cases": 10000000.0,
+   "measured": 0.8235,
+   "n_correct": 8235,
+   "se": 0.003812449999672127,
+   "diff": 0.0017200000000000548,
+   "band_half_width": 0.009523500099180975,
+   "abs_diff_in_se": 0.4511534577890794,
+   "correct_mask_digest": "sha256:b8a2220eff9e835da85b0260cfd98935",
+   "delta_vs_600": 0.0,
+   "within_0_01": true
+  },
+  {
+   "rule": "abk_gp",
+   "n_cells": 149,
+   "n_ics": 10000,
+   "steps": 298,
+   "seed": 20262914,
+   "published": 0.82326,
+   "published_cases": 10000000.0,
+   "measured": 0.8243,
+   "n_correct": 8243,
+   "se": 0.0038056472511256213,
+   "diff": 0.001040000000000041,
+   "band_half_width": 0.009506506833311803,
+   "abs_diff_in_se": 0.27327808684644467,
+   "correct_mask_digest": "sha256:bb1f4978ec6cf960876310d5a754f6f8",
+   "delta_vs_600": 0.0,
+   "within_0_01": true
+  }
+ ],
+ "R1": {
+  "reproduced": 4,
+  "of": 4,
+  "holds": true
+ },
+ "R2": {
+  "note": "ranking not tested by preregistration; gaps below 1 SE",
+  "observed_order_600": [
+   "abk_gp",
+   "das1995",
+   "davis1995",
+   "gkl"
+  ]
+ },
+ "R3": {
+  "holds": true,
+  "deltas": {
+   "gkl": -9.999999999998899e-05,
+   "davis1995": 0.0,
+   "das1995": 0.0,
+   "abk_gp": 0.0
+  }
+ },
+ "elapsed_s": 82.7
+}

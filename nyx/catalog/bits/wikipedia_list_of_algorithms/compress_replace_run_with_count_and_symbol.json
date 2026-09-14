@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.replace_run_with_count_and_symbol",
+  "name": "replace a run with its count and symbol",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "scan the input and replace each maximal run of identical symbols by the symbol and the run length",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Run-length encoding' in section Information theory and signal processing / Coding theory / Lossless compression algorithms: lossless data compression taking advantage of strings of repeated characters",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPRESS",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "runs longer than the count costs"
+  ],
+  "fails_when": [
+    "expands data without runs"
+  ],
+  "instances": [
+    "Run-length encoding"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.meet_in_the_middle",
+  "name": "meet in the middle",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "grow one frontier from the start and one from the goal and stop when they touch, so each side explores roughly the square root of the one-sided space",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bidirectional search' in section Combinatorial algorithms / Graph algorithms / Graph search: find the shortest path from an initial vertex to a goal vertex in a directed graph",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "GRAPH",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "DIVIDE_CONQUER",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "reversible edges or a backward model"
+  ],
+  "fails_when": [
+    "the meeting test must be careful about optimality"
+  ],
+  "instances": [
+    "Bidirectional search"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "FIFO",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

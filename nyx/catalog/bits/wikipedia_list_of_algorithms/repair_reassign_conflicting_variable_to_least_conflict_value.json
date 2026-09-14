@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.reassign_conflicting_variable_to_least_conflict_value",
+  "name": "reassign a conflicting variable to its least-conflicting value",
+  "lineage": [
+    "constraint solving"
+  ],
+  "mechanism": "start from a complete assignment, pick a variable that violates a constraint, give it the value that violates the fewest constraints, and repeat until no violations remain or a step budget is spent",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Min conflicts algorithm general algorithms for the constraint satisfaction' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "MAP",
+  "out_geometry": "MAP",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "GREEDY",
+  "iteration": "RANDOM",
+  "cost": "LINEAR",
+  "requires": [
+    "a conflict count per value"
+  ],
+  "fails_when": [
+    "plateaus and cycles; no completeness"
+  ],
+  "instances": [
+    "Min conflicts algorithm general algorithms for the constraint satisfaction"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

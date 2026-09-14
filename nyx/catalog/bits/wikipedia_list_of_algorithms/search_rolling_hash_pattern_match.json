@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.rolling_hash_pattern_match",
+  "name": "rolling-hash pattern match",
+  "lineage": [
+    "search",
+    "symbolic reasoning"
+  ],
+  "mechanism": "hash every window of the text with a hash that updates in constant time as the window slides, compare hashes to the pattern hashes, and verify only on hash equality",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Rabin–Karp string search algorithm' in section Combinatorial algorithms / Sequence algorithms / Substrings: searches multiple patterns efficiently",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "STRING",
+  "out_geometry": "SET",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "cost": "LINEAR",
+  "requires": [
+    "a rolling hash"
+  ],
+  "fails_when": [
+    "hash collisions force verification; adversarial inputs collide"
+  ],
+  "instances": [
+    "Rabin–Karp string search algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "STREAMING",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

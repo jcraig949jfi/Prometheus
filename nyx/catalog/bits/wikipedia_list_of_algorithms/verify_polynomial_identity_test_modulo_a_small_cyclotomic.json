@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.verify.polynomial_identity_test_modulo_a_small_cyclotomic",
+  "name": "deterministic primality by a polynomial identity modulo a small cyclotomic",
+  "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+  ],
+  "mechanism": "check that the target has no small factors and is not a perfect power, then verify for a few small bases that (x + a) to the target equals x to the target plus a, working modulo the target and modulo a small polynomial, which holds exactly when the target is prime",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'AKS primality test' in section Computational mathematics / Number theoretic algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "VERIFY",
+  "in_geometry": "SCALAR",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "polynomial arithmetic modulo two moduli"
+  ],
+  "fails_when": [
+    "polynomial but slow; not used in practice"
+  ],
+  "instances": [
+    "AKS primality test"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+}

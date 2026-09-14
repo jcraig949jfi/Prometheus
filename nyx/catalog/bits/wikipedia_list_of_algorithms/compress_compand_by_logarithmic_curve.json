@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.compand_by_logarithmic_curve",
+  "name": "compand by a logarithmic curve",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "pass a signal through a logarithm-like curve before uniform quantisation so small amplitudes get fine steps and large ones coarse steps, and invert the curve on playback",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Mu-law algorithm' in section Information theory and signal processing / Coding theory / Lossy compression algorithms: standard analog signal compression or companding algorithm",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'A-law algorithm': standard companding algorithm",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPRESS",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a curve shared by both sides (policy)"
+  ],
+  "fails_when": [
+    "lossy by design"
+  ],
+  "instances": [
+    "Mu-law algorithm",
+    "A-law algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

@@ -123,6 +123,18 @@ Four properties, each tested:
 - **Affordable.** Registering twenty candidates consumes **one** of the six
   daily slots, not twenty. Only the selected row gets a `cadence_day_ordinal`.
   Priced any other way, the class-B → class-A conversion would never be used.
+- **CORRECTION 2026-09-11 (Vivarium #181 item 4): a set is ONE submit call.**
+  Every campaign issued before 2026-09-11 evening (cs-c3-*, cs-h1h0-*, cs-h5-1,
+  cs-h5-1-r1) reused one `candidate_set_id` across N submit calls, each a set
+  of one, to carry the CAMPAIGN grouping. The consumer, reading the contract
+  as written, bound every such row in SFE as one-chosen-over-(N-1) although
+  every member executed. That was a misuse on Archaeon's side, not a consumer
+  defect. Now: `vivqueue.submit` REFUSES a `candidate_set_id` that already has
+  rows (`CandidateSetReused`); a campaign whose members all execute passes no
+  candidate_set_id and carries its grouping in
+  `source_evidence.campaign_set`; readers match both shapes
+  (`vivqueue.campaign_rows_filter`). The historical rows keep their
+  misbinding as history; readouts never used it.
 
 `registered_at` and `last_registered_at` are both exposed: a set written across
 a wide span was not registered atomically, and its "before selection" claim is

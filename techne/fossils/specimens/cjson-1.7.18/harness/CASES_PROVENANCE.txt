@@ -1,0 +1,4 @@
+cases/*.json: 200 files, 92632 bytes, produced by radamsa v0.6 (specimen radamsa-0.6) with
+  bin/radamsa -n 200 -s 1 -o cases/%n.json seed.json
+seed.json sha256 1438abc8675362185b5b552b70c2ca9676e780057f4002f84d6ee33f9c37a984. Deterministic under -s 1 (verified in radamsa-0.6's receipt). These are the
+pressure half of the adversarial pair; cJSON is the response half.

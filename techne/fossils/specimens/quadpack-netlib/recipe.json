@@ -1,0 +1,33 @@
+{
+  "runner": "native",
+  "workdir": "upstream",
+  "probe": [
+    {
+      "name": "gfortran",
+      "cmd": "gfortran --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile QUADPACK + a Techne driver on dqags (adaptive integration)",
+      "cmd": "gfortran -std=legacy -w -O1 -o $BODY/quadpack_test.exe $HARNESS/drv.f $HARNESS/xerror_stub.f *.f 2>&1 | grep -i 'error:'; test -x $BODY/quadpack_test.exe"
+    }
+  ],
+  "runs": [
+    {
+      "name": "integrate a known integral to a declared tolerance",
+      "cmd": "$BODY/quadpack_test.exe 2>&1 | tail -10",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "QUADPACK_OK"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_NATIVE",
+  "notes": "Techne driver calls dqags on integral of x^2 over [0,3] = 9 (closed form) and checks |result-9|<1e-6 AND that the returned error estimate abserr is within the requested tolerance -- an oracle for the adaptive integrator."
+}

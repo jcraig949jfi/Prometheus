@@ -1,0 +1,161 @@
+{
+  "date": "2026-09-12T00:17Z",
+  "specimen": "roles\\Diomedes\\coordinate_census.py",
+  "blocks": [
+    {
+      "name": "S-1_selftest_as_shipped",
+      "predicted": "exit 0; first line 'SELF-TEST PASSED'",
+      "observed": {
+        "returncode": 0,
+        "first_line": "SELF-TEST PASSED â€” module reproduces committed answers",
+        "stderr_tail": ""
+      },
+      "error": null
+    },
+    {
+      "name": "C02-pos_planted_conditional_structure",
+      "predicted": "headroom well above 0.05; qualifies True (structure invisible to the marginal predictor)",
+      "observed": {
+        "n_states": 200,
+        "action_entropy_bits": 2.0,
+        "state_independent_ceiling": 0.5,
+        "oracle": 1.0,
+        "conditional_headroom": 0.5,
+        "qualifies": true
+      },
+      "error": null
+    },
+    {
+      "name": "C02-neg_action_only_labels",
+      "predicted": "headroom 0.0; qualifies False",
+      "observed": {
+        "state_independent_ceiling": 1.0,
+        "oracle": 1.0,
+        "conditional_headroom": 0.0,
+        "qualifies": false
+      },
+      "error": null
+    },
+    {
+      "name": "C02-ctx_parity_declared_as_context_absorbs_it",
+      "predicted": "with parity given as context the planted structure is absorbed: headroom ~0",
+      "observed": {
+        "state_independent_ceiling": 1.0,
+        "oracle": 1.0,
+        "conditional_headroom": 0.0,
+        "qualifies": false
+      },
+      "error": null
+    },
+    {
+      "name": "C02-dup_textbook_recomputation",
+      "predicted": "module value == Mann-Whitney marginal-baseline AUC gap to 1e-4 (the construction is a composition of textbook pieces)",
+      "observed": {
+        "textbook_baseline_auc": 0.5,
+        "textbook_headroom": 0.5,
+        "module_headroom": 0.5
+      },
+      "error": null
+    },
+    {
+      "name": "C07-dup_textbook_recomputation",
+      "predicted": "module == sum P(s)/|A(s)| computed by hand (0.8)",
+      "observed": {
+        "module": 0.8,
+        "textbook_bayes_uniform": 0.8,
+        "ambiguous_fraction": 0.4
+      },
+      "error": null
+    },
+    {
+      "name": "C07-neg_all_distinct",
+      "predicted": "ceiling 1.0 when every signature has one cause",
+      "observed": 1.0,
+      "error": null
+    },
+    {
+      "name": "C04_gate_reachable_is_a_range_check",
+      "predicted": "reachable iff lo <= gate <= hi",
+      "observed": [
+        false,
+        true
+      ],
+      "error": null
+    },
+    {
+      "name": "C05_gate_exceeds_error_is_2x_rule",
+      "predicted": "passes iff |point-gate| >= 2*err",
+      "observed": [
+        false,
+        true
+      ],
+      "error": null
+    },
+    {
+      "name": "C06_cluster_bootstrap_vs_textbook_shape",
+      "predicted": "CI contains the point; half-width shrinks with more clusters (textbook behaviour)",
+      "observed": {
+        "4": 0.0,
+        "16": 0.0,
+        "64": 0.0
+      },
+      "error": null
+    },
+    {
+      "name": "C06-probe_lcg_power_of_two_degeneracy",
+      "predicted": "half_width 0 and each resample a permutation exactly when n is a power of two; nonzero otherwise",
+      "observed": {
+        "4": {
+          "half_width": 0.0,
+          "distinct_in_first_resample": 4,
+          "distinct_in_second": 4,
+          "first_resample_is_a_permutation": true
+        },
+        "5": {
+          "half_width": 0.0963,
+          "distinct_in_first_resample": 4,
+          "distinct_in_second": 3,
+          "first_resample_is_a_permutation": false
+        },
+        "8": {
+          "half_width": 0.0,
+          "distinct_in_first_resample": 8,
+          "distinct_in_second": 8,
+          "first_resample_is_a_permutation": true
+        },
+        "16": {
+          "half_width": 0.0,
+          "distinct_in_first_resample": 16,
+          "distinct_in_second": 16,
+          "first_resample_is_a_permutation": true
+        },
+        "17": {
+          "half_width": 0.0546,
+          "distinct_in_first_resample": 11,
+          "distinct_in_second": 8,
+          "first_resample_is_a_permutation": false
+        },
+        "24": {
+          "half_width": 0.0391,
+          "distinct_in_first_resample": 16,
+          "distinct_in_second": 19,
+          "first_resample_is_a_permutation": false
+        },
+        "32": {
+          "half_width": 0.0,
+          "distinct_in_first_resample": 32,
+          "distinct_in_second": 32,
+          "first_resample_is_a_permutation": true
+        },
+        "100": {
+          "half_width": 0.0219,
+          "distinct_in_first_resample": 68,
+          "distinct_in_second": 68,
+          "first_resample_is_a_permutation": false
+        }
+      },
+      "error": null,
+      "date": "2026-09-12T00:18Z"
+    }
+  ]
+}

@@ -130,6 +130,24 @@ out" *after* their experiment was committed.
 wait, and derive one from the other rather than setting both to the same
 number. Blocks: nobody, silently corrupts everybody's error accounting.
 
+**2026-09-11 CODE_FIXED, client side only, no engine change.**
+`sfclient/client.py` now derives `DEFAULT_TIMEOUT_S = ENGINE_BUSY_TIMEOUT_S *
+DEADLINE_MARGIN` (30.0 x 1.5 = 45.0 s); `tests/test_sfe_client_deadline.py`
+reads the engine bound off `Store.__init__`'s signature and the overshoot off
+the profile, with a cheat control (the old 30 s is rejected). `sfe/*.py`
+untouched, so `engine_source_hash` is unchanged and nothing needs a deploy;
+a consumer picks it up by restarting on the SHA.
+
+**What this does NOT fix, measured on Vivarium's own rows
+(`viv.research_experiment_queue`, 28 failed today):** their consumer has run
+`SfeRunner(timeout=60.0)` since `8b940a165`, already above 33.11 s. Its rows
+died at exactly **60.0 s** ("read operation timed out") or at **33-53 s**
+(HTTP 500 = the engine's own busy wait expiring). So the engine HELD requests
+past 60 s without answering and without the busy handler firing -- the
+request was stuck somewhere other than `BEGIN IMMEDIATE`. That is the
+stall (C9 / H1), not the deadline ordering. Comms 29 asked for the timeout
+change; the change is landed and it is not the fix for those 13 rows.
+
 ### A2. A timed-out write is not safely retryable — `PARTIAL`
 `sfclient` sends `Idempotency-Key` on some routes, and `create_world` (and
 several others) take no `idem_key` at all. A caller that times out on a
@@ -411,6 +429,9 @@ scan; it exists for tests and for whoever runs the kill precondition.
 | D12 | Migration rehearsal is manual | `PARTIAL` | I rehearse against a `VACUUM INTO` copy by hand each time |
 | D13 | `SerendipityFoundry/SerendipityFoundryEngine/deploy/preflight_deploy.py` hardcodes M1 paths | `EXISTS` | fine for one host; wrong the day there are two |
 | D14 | No structured engine log | `EXISTS` | `sfengine.log` is uvicorn text; the deploy gate reads SQLite instead |
+| D15 | Derive client timeout from engine lock wait | `CODE_FIXED` 2026-09-11 | supersedes D6; `d96b15fda`, no deploy needed |
+| D-WD-1 | **M1 has no watchdog and no recorded last_success_at** | `NOTHING` | RUNNING_M1_VS_M2.md says it outright: a crashed M1 process stays dead until someone looks, and on 2026-09-11 the only alarm (Vivarium's conformance gate) was silent because the consumer was down. Build the M2 watchdog's 2026-09-11 form (state file + rule-10 bound of 3 ticks + park record) as `SFEngineM1Watchdog`, driving `Start-ScheduledTask SFEngine` rather than the launcher so the running instance stays the supervised one, and mind the orphan-on-port hazard (a held 8811 makes every relaunch fail, which is exactly what the bound parks). Rule 9: its input (the engine) is live now. Registry row to be added WITH bound and seat, never UNDECLARED |
+| D-WD-2 | M2 watchdog script CODE_FIXED, not deployed | `CODE_FIXED` 2026-09-11 | `deploy/sfengine_m2_watchdog.ps1` on main; copying it onto M2 needs a session on M2; the task registration is unchanged |
 
 ---
 

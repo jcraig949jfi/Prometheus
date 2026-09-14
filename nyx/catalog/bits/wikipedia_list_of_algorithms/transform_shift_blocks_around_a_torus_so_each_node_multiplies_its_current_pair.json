@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.shift_blocks_around_a_torus_so_each_node_multiplies_its_current_pair",
+  "name": "shift blocks around a torus so each node always multiplies a matching pair",
+  "lineage": [
+    "distributed systems",
+    "numerical methods"
+  ],
+  "mechanism": "lay both matrices out in blocks on a square grid of nodes, skew the rows of one and the columns of the other so that every node holds a pair whose product belongs to it, multiply and accumulate, then shift one matrix left and the other up by one node and repeat for as many rounds as the grid is wide",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Cannon's algorithm' in section Computational mathematics / Numerical algorithms / Linear algebra: a distributed algorithm for matrix multiplication especially suitable for computers laid out in an N × N mesh",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "MATRIX",
+  "out_geometry": "MATRIX",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "EXTERNAL",
+  "control": "SCHEDULED",
+  "guarantee": "EXACT",
+  "strategy": "DATA_INDEPENDENT",
+  "iteration": "PARALLEL_ROUNDS",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a square node grid with wrap-around neighbours",
+    "memory for one block of each operand per node"
+  ],
+  "fails_when": [
+    "non-square grids or non-divisible sizes"
+  ],
+  "instances": [
+    "Cannon's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

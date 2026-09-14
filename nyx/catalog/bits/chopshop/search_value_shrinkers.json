@@ -1,0 +1,64 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.value_shrinkers",
+  "name": "standalone value shrinkers",
+  "lineage": [
+    "search",
+    "optimization"
+  ],
+  "mechanism": "given a plain value and a Boolean property, repeatedly propose type-specific smaller values (zero, one, bit masks, shifts, subtractions; sorted regions; chunk deletions) under greedy acceptance until no move improves",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "nyx/specimens/hypothesis_shrinker/organs/standalone_value_shrinkers.cut2.json",
+      "grade": "T1-LOCAL"
+    },
+    {
+      "ref": "RECEIPT_N1 P-a1..a3 run with no engine",
+      "grade": "T1-LOCAL"
+    },
+    {
+      "ref": "comms 200: INTERFACE_INSUFFICIENT at tree-valued sites",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "SEARCH",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "LOCAL_OPTIMUM",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "flat sequence of orderable elements or a non-negative integer",
+    "a Boolean property"
+  ],
+  "fails_when": [
+    "move-set local minima",
+    "nested/tree values are not accepted (type A transfer failure)"
+  ],
+  "instances": [
+    "hypothesis shrinking.Integer/Ordering/Collection"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.order_gated_greedy_acceptance"
+    },
+    {
+      "rel": "REQUIRES",
+      "id": "bit.search.adaptive_step_search"
+    }
+  ],
+  "organ_record": "nyx/specimens/hypothesis_shrinker/organs/standalone_value_shrinkers.cut2.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it",
+  "strategy": "GREEDY",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

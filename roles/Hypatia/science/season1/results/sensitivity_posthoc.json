@@ -1,0 +1,61 @@
+{
+  "THIS_IS_NOT_THE_SEASON_VERDICT": true,
+  "preregistered_verdict": "INDETERMINATE",
+  "preregistered_positives_passed": "1/4",
+  "repair": "symmetric stopword stripping on the A-1 terminal exemption",
+  "controls_still_rejected": true,
+  "changed": [
+    "run1_POS-2_hypatia.jsonl",
+    "run1_POS-3_nephele.jsonl"
+  ],
+  "per_ladder": {
+    "run1_POS-1_atalanta.jsonl": {
+      "expect": "PASS",
+      "g5_before": "IND",
+      "g6_before": "pass",
+      "g5_after": "IND",
+      "g6_after": "pass",
+      "unsupported_after": []
+    },
+    "run1_POS-2_hypatia.jsonl": {
+      "expect": "PASS",
+      "g5_before": "FAIL",
+      "g6_before": "FAIL",
+      "g5_after": "pass",
+      "g6_after": "pass",
+      "unsupported_after": []
+    },
+    "run1_POS-3_nephele.jsonl": {
+      "expect": "PASS",
+      "g5_before": "IND",
+      "g6_before": "FAIL",
+      "g5_after": "IND",
+      "g6_after": "pass",
+      "unsupported_after": []
+    },
+    "run1_POS-4_iris.jsonl": {
+      "expect": "PASS",
+      "g5_before": "pass",
+      "g6_before": "pass",
+      "g5_after": "pass",
+      "g6_after": "pass",
+      "unsupported_after": []
+    },
+    "run1_NEG-1_iris_supplied_deadgating.jsonl": {
+      "expect": "REJECT",
+      "g5_before": "IND",
+      "g6_before": "FAIL",
+      "g5_after": "IND",
+      "g6_after": "FAIL",
+      "unsupported_after": []
+    },
+    "run1_CHEAT-1_atalanta_stripped.jsonl": {
+      "expect": "REJECT",
+      "g5_before": "IND",
+      "g6_before": "FAIL",
+      "g5_after": "IND",
+      "g6_after": "FAIL",
+      "unsupported_after": []
+    }
+  }
+}

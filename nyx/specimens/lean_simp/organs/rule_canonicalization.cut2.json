@@ -1,0 +1,52 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.lean_simp.rule_canonicalization.cut2",
+  "specimen": "lean_simp",
+  "name": "rule canonicalization: any proved proposition is coerced into a list of oriented equations before it can act",
+  "scale": "PRIMITIVE",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "Lean 4 simp, SimpTheorems.preprocess",
+    "sources": [
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/SimpTheorems.lean lines 288-359 (private partial def preprocess / go): forall-telescope; Eq kept (or flipped under inv); Iff -> Eq via propext; a != b -> (a = b) = False; not P -> P = False; P /\\ Q -> two rules; anything else -> P = True; Bool special cases at 322-326, 338-343",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/SimpTheorems.lean lines 275-286 checkBadRewrite / shouldPreprocess: a rule whose reduced lhs is a bare fvar equal to rhs is rejected as an 'Invalid simp theorem'",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/lean_simp/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Found in Lean 4 core, private function inside SimpTheorems.lean; ancestry to Lean 3 simp's preprocessing is T2 (not read) and is not claimed here.",
+    "mechanism": "A proof e of type T is destructured by the shape of T (after whnf): binders are telescoped and re-abstracted; an equation is kept; an iff is turned into an equation by propositional extensionality; a disequality and a negation are turned into equations to False; a conjunction is split into independent rules by projection; any remaining proposition P becomes the rule P = True. The output is always a list of (proof, lhs = rhs) pairs. Direction can be flipped for equations and iffs only; flipping a rule whose rhs is True/False is refused with an error (lines 314-317, 331-334, 353-355).",
+    "input": "an Expr proof and its type (a proposition of any of the shapes above), a flag inv, a flag isGlobal",
+    "output": "List (Expr x Expr): zero or more (proof, oriented Eq type) pairs; one Prop can yield several rules (conjunctions), exactly one for the other shapes",
+    "state": "none persistent. CUT-2 attack 'what state does it secretly depend on': the environment for whnf (a fact's shape is read AFTER whnf, so the reducibility setting at attribute time decides whether a definition unfolds to an Eq or stays OTHER) -- the same attribute-time-vs-use-time skew as F2, on the shape instead of the key.",
+    "assumptions": "the target logic has an Eq, a propositional extensionality, True/False constants, and a conjunction whose components are projections; that rewriting to True/False is a meaningful normal form for propositions; that a rule's binders can be telescoped by whnf",
+    "interface": "preprocess(proof: Expr, type: Expr, inv: Bool, isGlobal: Bool) -> [(proof: Expr, eqType: Expr)]; the consumer then computes keys and a SimpTheorem from each pair (mkSimpTheoremCore, 373-378)",
+    "fitness_value": "unknown -- claimed: one rewriter serves a heterogeneous fact store. Partial measurement: in a seeded 400-site text census of the 48,082 @[simp]-family sites at the mathlib pin, 135 (33.8%) have a non-equation conclusion (60 iff, 75 bare Prop/other; NEG and AND read as 0 by the regex, which is a census defect) -- see simp_shape_census_2026-09-11.json, method declared there, T3 as a shape estimate. The claim stands as: roughly a third of the store is unusable without this organ.",
+    "failure_landscape": "(a) it is lossless only one way: P = True loses that P was 'a fact' rather than 'a rewrite', and the rewrite engine will happily rewrite occurrences of P to True inside larger terms whether or not that is what the author intended; (b) conjunction splitting makes rule identity many-to-one (one Origin, several rules), which the erase machinery has to handle by Origin (SimpTheorems.eraseCore 540-551); (c) a bare-fvar rule x = t is refused at ingestion but x = y with both fvars is accepted and loops at application (perm handling is a separate organ); (d) it does nothing for disjunctions, existentials, or implications except via the outer P = True fallback.",
+    "ablation": "unknown -- designed (A9: preprocess := identity), not run. The census above gives the predicted loss: ~34% of tagged statements dropped. Running A9 needs a patched toolchain; the census does not.",
+    "decomposability": "Yes: (1) binder telescoping (PRIMITIVE, shared with all of Meta), (2) the shape-to-equation table (PRIMITIVE, the specimen-specific part), (3) the conjunction splitter. (2) is the only part with a claim to being simp's.",
+    "composability": "Any consumer with a store of proved propositions and an equation-only rewriter: it is the adapter between them. In Prometheus terms, any producer of typed facts (C3 certificates, H1 solutions with proofs) could feed a rewriter through it if that rewriter existed; none does yet (no Prometheus consumer named; Archaeon to say).",
+    "human_prior": "That True and False are the canonical forms of propositions and that rewriting toward them is 'simplification'; that the LEFT side as written by the author is the side to match (orientation is inherited from how the human wrote the lemma; see pressure orientation_is_a_choice). Also the refusal to flip rules to True/False encodes the prior that False = P is never a useful rewrite.",
+    "control": "Positive: a fixture of one lemma per shape (Eq, Iff, Ne, Not, And, bare Prop, forall-wrapped) must yield exactly the predicted list of oriented equations. Negative: an already-oriented Eq must pass through unchanged. Both are stated against the source; neither is executed (no Lean run in CUT-1).",
+    "cheat": "A store that is made to look homogeneous by DROPPING every non-Eq fact would pass any test that only counts successful rewrites. The cheat control is the ablation above: count rules out vs facts in; a canonicalizer that emits fewer rules than input facts (outside And-splitting) is cheating."
+  },
+  "alternative_cuts": [
+    "CUTS.md c17: the shape table is part of the rule-set DATA organisation, not a mechanism (Nyx disagrees at CUT-1; preserved)",
+    "CUT-2 attack: 'is this an organ or a table?' The shape table is six cases; the mechanism (destructure a proof by the shape of its type, re-express as Eq, telescope binders) is small and generic. Kept as ORGAN at PRIMITIVE scale because it has an ancestor-free contract and an independent behaviour (input facts, output rules, countable); a second Chopper may call it POLICY."
+  ],
+  "pressure_refs": [
+    "pressure.lean_simp.orientation_is_a_choice.cut1"
+  ],
+  "cut": "CUT-2",
+  "derived_from": "organs/rule_canonicalization.cut1.json (preserved; CUT-2 narrows, never replaces)"
+}

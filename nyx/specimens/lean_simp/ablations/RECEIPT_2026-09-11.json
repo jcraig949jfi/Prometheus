@@ -1,0 +1,34 @@
+{
+  "date": "2026-09-11T21:00Z",
+  "toolchain": "Lean (version 4.30.0, x86_64-w64-windows-gnu, commit d024af099ca4bf2c86f649261ebf59565dc8c622, Release)",
+  "file": "cut3_ablations.lean",
+  "file_sha256": "eb7e66b779617425595e44396553f8c4860e0bd008eb1c7b5894f8c65ee09c8b",
+  "exit_code": 0,
+  "stdout_stderr": "",
+  "meaning": "exit 0 = every #guard_msgs docstring matched the observed message and every positive control elaborated",
+  "blocks": {
+    "c06_positive_add_comm_terminates_and_orients": "PASS (elaborated)",
+    "D3_cheat_control_planted_loop_hits_budget": "FIRED: `simp` failed: maximum number of steps exceeded",
+    "c08_positive_chained_rules": "PASS",
+    "A3_singlePass_ablation": "AS PREDICTED: unsolved goals g 1 = h 1",
+    "A2_memoize_off": "AS PREDICTED: identical result",
+    "A1_index_off": "AS PREDICTED: identical result",
+    "c23_positive_decide_on": "PASS",
+    "c23_negative_decide_off_folders_erased": "DID NOT FIRE: goal still closes via hidden builtin eq_self + Nat-literal defeq in unification (probe_route.lean trace)",
+    "c23_negative_with_eq_self_erased": "FIRES: `simp` made no progress",
+    "c23_negative_nonreducible_def": "FIRES: `simp` made no progress (k + k = 4 with k a plain def)",
+    "c01_positive_bare_prop_and_iff_as_rules": "PASS",
+    "c07_positive_conditional_rule_depth_ge_1": "PASS",
+    "A6_maxDischargeDepth_0": "AS PREDICTED: `simp` made no progress"
+  },
+  "not_run": [
+    "A4 perm := false (needs a patched build)",
+    "A5 discharge := none (needs Meta harness)",
+    "A7 arith/ground",
+    "A8 descent off (source edit)",
+    "A9 preprocess := identity (patched build)",
+    "A10 simp_all frozen store (source edit)"
+  ],
+  "grade": "T1-LOCAL",
+  "compromise": "executed the pre-existing, Techne-unmanaged v4.30.0 toolchain read-only; nothing installed or built; core Lean only, no mathlib"
+}

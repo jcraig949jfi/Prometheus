@@ -1,0 +1,750 @@
+[
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Discrete logarithm:",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Integer factorization",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "prime factorization algorithm",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Multiplication algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Primality tests",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Modular square root",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Congruence of squares",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Chakravala method",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read (Shor additionally needs the quantum-period bit, not yet catalogued)"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Odlyzko&ndash;Schönhage algorithm",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read (Shor additionally needs the quantum-period bit, not yet catalogued)"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Shor's algorithm",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read (Shor additionally needs the quantum-period bit, not yet catalogued)"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Berlekamp's root finding algorithm",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read (Shor additionally needs the quantum-period bit, not yet catalogued)"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lenstra elliptic curve factorization",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read (Shor additionally needs the quantum-period bit, not yet catalogued)"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Index calculus algorithm",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read (Shor additionally needs the quantum-period bit, not yet catalogued)"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Booth's multiplication algorithm",
+  "decision": "DEFER",
+  "reason": "not characterised from the list line; needs a source read (Shor additionally needs the quantum-period bit, not yet catalogued)"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Euclidean algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.replace_pair_by_remainder_until_zero",
+   "name": "replace the larger by the remainder until zero",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "repeatedly replace the pair (a, b) by (b, a mod b) until the second is zero; the first is then the greatest common divisor, and carrying the quotient coefficients along expresses it as an integer combination of the inputs",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "division with remainder"
+   ],
+   "fails_when": [
+    "none for integers; polynomial variants need a field"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Extended Euclidean algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.replace_pair_by_remainder_until_zero"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Binary GCD algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.replace_pair_by_remainder_until_zero"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Baby-step giant-step",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.meet_in_the_middle_over_a_group",
+   "name": "meet in the middle over a group by a table of small steps",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "tabulate the first m powers of the generator, then step the target backward by multiples of m and look each value up in the table; a hit gives the exponent as a giant multiple plus a baby index, in about the square root of the group order steps",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "PRECOMPUTED_TABLE",
+   "iteration": "SWEEP",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a group operation and inverse",
+    "memory for the table"
+   ],
+   "fails_when": [
+    "memory equal to the square root of the order"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.search.meet_in_the_middle"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Pohlig–Hellman algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.solve_in_each_prime_power_subgroup_then_combine",
+   "name": "solve in each prime-power subgroup, then combine",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "factor the group order, project the problem into each prime-power subgroup where it is small, solve it there, and combine the partial answers by the Chinese remainder construction",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a group of known, smooth order"
+   ],
+   "fails_when": [
+    "a large prime factor in the order leaves a hard subproblem"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Pollard's rho algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.detect_cycle_in_pseudorandom_walk_for_collision",
+   "name": "detect a cycle in a pseudorandom walk to find a collision",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "iterate a pseudorandom map on residues so that two trajectories (or a slow and a fast pointer) eventually collide modulo an unknown factor; the greatest common divisor of their difference with the modulus exposes the factor (or, in a group, the collision exposes the exponent)",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "NONE",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a map that behaves randomly modulo the factor",
+    "a cycle-finding rule (tortoise and hare)"
+   ],
+   "fails_when": [
+    "expected cost is the square root of the smallest factor; may fail for a given map"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Pollard's rho algorithm for logarithms",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.detect_cycle_in_pseudorandom_walk_for_collision"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Pollard's p&nbsp;−&nbsp;1 algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.exploit_smooth_group_order_by_large_power",
+   "name": "exploit a smooth group order by raising to a highly composite power",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "raise a base to the product of all small prime powers; if some unknown factor has a group order dividing that product, the result is one modulo that factor, and the greatest common divisor of (result minus one) with the modulus reveals it",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a smoothness bound (policy)"
+   ],
+   "fails_when": [
+    "factors with a large prime in their group order are invisible"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Dixon's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.collect_smooth_relations_then_combine_to_a_square",
+   "name": "collect smooth relations, then combine them into a square",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "find many numbers whose squares modulo the target factor completely over a small prime base, record each exponent vector modulo two, find a linear dependency among the vectors to multiply a subset into a perfect square on both sides, and take a greatest common divisor to split the target",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "PRECOMPUTED_TABLE",
+   "iteration": "SWEEP",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a factor base (policy)",
+    "linear algebra over the two-element field"
+   ],
+   "fails_when": [
+    "relation collection dominates; sieving (quadratic sieve) and number fields (NFS) are the speedups"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Quadratic sieve",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.collect_smooth_relations_then_combine_to_a_square"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "General number field sieve",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.collect_smooth_relations_then_combine_to_a_square"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Special number field sieve",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.collect_smooth_relations_then_combine_to_a_square"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Fermat's factorization method",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.difference_of_squares_near_the_root",
+   "name": "search for a difference of squares near the square root",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "starting at the ceiling of the square root, test successive values a for whether a squared minus the target is a perfect square; when it is, the target factors as the product of the sum and difference",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "odd composite target"
+   ],
+   "fails_when": [
+    "slow unless the two factors are close"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Trial division",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.verify.divide_by_each_candidate_up_to_root",
+   "name": "divide by each candidate up to the square root",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "test divisibility of the target by each prime (or each integer) up to its square root; the first divisor found is a factor, and none found means prime",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "VERIFY",
+   "in_geometry": "SCALAR",
+   "out_geometry": "BOOLEAN",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "nothing beyond division"
+   ],
+   "fails_when": [
+    "exponential in the bit length"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lenstra–Lenstra–Lovász algorithm (also known as LLL algorithm)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.size_reduce_and_swap_lattice_basis_vectors",
+   "name": "size-reduce and swap lattice basis vectors until nearly orthogonal",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "walk along a lattice basis, subtracting integer multiples of earlier vectors from each vector to keep its projections small, and swap two adjacent vectors whenever the later one is much shorter than the earlier in the orthogonalised sense, repeating until no swap applies",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "MATRIX",
+   "out_geometry": "MATRIX",
+   "order_req": "TOTAL",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "exact or high-precision arithmetic",
+    "a swap threshold constant (policy)"
+   ],
+   "fails_when": [
+    "approximation factor exponential in dimension"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Tonelli–Shanks algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.modular_square_root_by_adjusting_with_a_nonresidue",
+   "name": "modular square root by correcting a guess with powers of a non-residue",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "write the prime minus one as an odd part times a power of two, form an initial guess from the odd part, and repeatedly fix the guess by multiplying with appropriate powers of a known non-residue until its square matches",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "iteration": "NONE",
+   "cost": "LOG",
+   "requires": [
+    "a quadratic non-residue (found by random trial)"
+   ],
+   "fails_when": [
+    "composite moduli need factoring first"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cipolla's algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.modular_square_root_by_adjusting_with_a_nonresidue"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Karatsuba algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.multiply_by_splitting_into_fewer_subproducts",
+   "name": "multiply by splitting into fewer sub-products",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "split each number into halves (or k parts), compute fewer than the naive number of sub-products by exploiting that the cross terms can be recovered from sums of products of sums, and recombine with shifts and additions, recursing on the sub-products",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "additions cheaper than multiplications"
+   ],
+   "fails_when": [
+    "constant factors make it lose below a size threshold"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Toom–Cook multiplication",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.multiply_by_splitting_into_fewer_subproducts"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Schönhage–Strassen algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.multiply_by_transform_pointwise_product_inverse",
+   "name": "multiply by transforming, multiplying pointwise, and transforming back",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "view the digit sequences as polynomials, evaluate both at roots of unity by a fast transform, multiply pointwise, transform back, and propagate carries, so the convolution costs near-linear time",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "a ring with suitable roots of unity",
+    "a fast transform"
+   ],
+   "fails_when": [
+    "only pays for very large operands"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.transform.decompose_signal_into_basis_coefficients"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Fermat primality test",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.verify.witness_test_by_modular_exponentiation",
+   "name": "probable-prime test by a modular-exponentiation witness",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "pick a random base and check an identity that every prime satisfies for that base (base to the modulus minus one is one; the strong form also inspects the sequence of successive square roots); a failure proves compositeness, a pass with many bases makes primality overwhelmingly likely",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "VERIFY",
+   "in_geometry": "SCALAR",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "LOG",
+   "requires": [
+    "modular exponentiation",
+    "the number of rounds (policy)"
+   ],
+   "fails_when": [
+    "the weak form is fooled by Carmichael numbers for every base; the strong form is not"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Miller&ndash;Rabin primality test",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.verify.witness_test_by_modular_exponentiation"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Lucas primality test",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.verify.witness_test_by_modular_exponentiation"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Baillie–PSW primality test",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.verify.witness_test_by_modular_exponentiation"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "AKS primality test",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.verify.polynomial_identity_test_modulo_a_small_cyclotomic",
+   "name": "deterministic primality by a polynomial identity modulo a small cyclotomic",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "check that the target has no small factors and is not a perfect power, then verify for a few small bases that (x + a) to the target equals x to the target plus a, working modulo the target and modulo a small polynomial, which holds exactly when the target is prime",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "VERIFY",
+   "in_geometry": "SCALAR",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "polynomial arithmetic modulo two moduli"
+   ],
+   "fails_when": [
+    "polynomial but slow; not used in practice"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Sieve of Eratosthenes",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.strike_multiples_of_each_survivor",
+   "name": "strike out the multiples of each surviving number",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning"
+   ],
+   "mechanism": "list the integers up to a bound and for each number not yet struck, strike every multiple of it beyond itself; the unstruck numbers are the primes",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "memory for the bound"
+   ],
+   "fails_when": [
+    "memory proportional to the bound (segmented variants fix)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch07 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Sieve of Atkin",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.partition.strike_multiples_of_each_survivor"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Sieve of Sundaram",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.partition.strike_multiples_of_each_survivor"
+ }
+]

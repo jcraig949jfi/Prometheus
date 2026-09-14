@@ -1,0 +1,121 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "espresso-logic",
+  "canonical_name": "Espresso -- two-level Boolean logic minimizer (UC Berkeley)",
+  "aliases": [
+    "espresso",
+    "espresso-logic",
+    "espresso-ii"
+  ],
+  "lineage": "Espresso (1980s, Brayton/Hachtel/McMullen/Sangiovanni-Vincentelli, UC Berkeley): heuristic two-level logic minimisation (EXPAND / REDUCE / IRREDUNDANT over cube covers); the tool that defined PLA minimisation and seeded logic synthesis",
+  "domain": [
+    "hardware",
+    "logic-minimization",
+    "boolean-network",
+    "combinational-logic",
+    "optimization"
+  ],
+  "era": "1980s (this a maintained rebuild)",
+  "version": "github.com/classabbyamp/espresso-logic master as of 2026-09-12 (a build-fixed mirror of the Berkeley source)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/classabbyamp/espresso-logic",
+        "commit": "85265139e9598852f9388d293658a1977a829a01",
+        "commit_resolved": "85265139e9598852f9388d293658a1977a829a01",
+        "commit_date": "2020-04-10T22:58:06-04:00"
+      }
+    ]
+  },
+  "source_type": "LATER_SAME_LINEAGE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/classabbyamp/espresso-logic",
+    "ancestry": "UC Berkeley Espresso-II"
+  },
+  "hashes": {
+    "tree_sha256": "aa352802ae1a0b732878fb8e1b5d7511736f77360c7e55fe95ac132582a40a20",
+    "n_files": 302,
+    "bytes": 4642751,
+    "artifacts": [
+      {
+        "filename": "https://github.com/classabbyamp/espresso-logic",
+        "sha256": null,
+        "commit": "85265139e9598852f9388d293658a1977a829a01"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\espresso-logic",
+    "hash_list": "techne/fossils/specimens/espresso-logic/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "custom BSD-like (Berkeley Espresso terms)",
+    "status": "permissive",
+    "evidence": "COPYING in repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "C"
+  ],
+  "build_system": "make (in espresso-src/)",
+  "compiler_or_interpreter": "gcc 12 (docker bookworm)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "entry_points": [
+    "espresso <pla-file> (Berkeley PLA format on stdin/argument)"
+  ],
+  "example": {
+    "command": "espresso two_bit_adder.pla",
+    "input": "a truth table in Berkeley PLA (.pla) format",
+    "output": "the minimised sum-of-products cover"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-hw:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Brayton et al., Logic Minimization Algorithms for VLSI Synthesis, Kluwer 1984"
+  ],
+  "human_capability_summary": {
+    "built_to": "minimise a two-level Boolean function (a truth table / PLA) to the fewest product terms, so the circuit that implements it is smaller and faster",
+    "pressure": "the exponential number of prime implicants; exact minimisation (Quine-McCluskey) is intractable, so Espresso is a heuristic that gets near-optimal covers fast",
+    "success_means": "a correct, much smaller SOP cover of the same Boolean function, in seconds on functions that defeat exact methods"
+  },
+  "known_human_problem_solved": "two-level Boolean minimisation for hardware synthesis",
+  "hardware_assumptions": "",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/espresso-logic/receipts/run-espresso-logic-20260912T152704Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/espresso-logic/receipts/run-espresso-logic-20260912T152917Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_CONTAINER",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\espresso-logic ; tracked techne/fossils/specimens/espresso-logic/",
+    "where_it_came_from": "{'repo': 'github.com/classabbyamp/espresso-logic', 'ancestry': 'UC Berkeley Espresso-II'} ; LATER_SAME_LINEAGE_RELEASE ; custom BSD-like (Berkeley Espresso terms)",
+    "how_to_run_it": "recipe.json (runner docker); python -m techne.fossils.harvest run espresso-logic",
+    "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/espresso-logic/receipts/run-espresso-logic-20260912T152917Z.json",
+    "what_humans_used_it_for": "minimise a two-level Boolean function (a truth table / PLA) to the fewest product terms, so the circuit that implements it is smaller and faster"
+  },
+  "seat": "Techne"
+}

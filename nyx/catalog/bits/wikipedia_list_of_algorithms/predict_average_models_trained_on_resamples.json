@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.average_models_trained_on_resamples",
+  "name": "average models trained on bootstrap resamples",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "draw many resamples of the training set with replacement, train one model on each, and combine their predictions by vote or average, reducing the variance of an unstable learner",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bootstrap aggregating (bagging)' in section Computer science / Machine learning and statistical classification: technique to improve stability and classification accuracy",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Random forest': classify using many decision trees",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SET",
+  "out_geometry": "FUNCTION",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "RANDOMIZED",
+  "iteration": "PARALLEL_ROUNDS",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "an unstable base learner"
+  ],
+  "fails_when": [
+    "no gain on stable learners; correlated models"
+  ],
+  "instances": [
+    "Bootstrap aggregating (bagging)",
+    "Random forest"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

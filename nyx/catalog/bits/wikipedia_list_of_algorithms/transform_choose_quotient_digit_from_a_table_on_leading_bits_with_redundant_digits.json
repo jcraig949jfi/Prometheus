@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.choose_quotient_digit_from_a_table_on_leading_bits_with_redundant_digits",
+  "name": "choose the quotient digit from a table on the leading bits, using a redundant digit set",
+  "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+  ],
+  "mechanism": "look at only a few leading bits of the partial remainder and divisor and read the next quotient digit from a small table; because the digit set is redundant (includes negatives) a slightly wrong choice is corrected by later digits rather than by a comparison",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'SRT division' in section Computational mathematics / Numerical algorithms / Elementary and special functions: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "PRECOMPUTED_TABLE",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a digit-selection table (data) and a redundant digit set"
+  ],
+  "fails_when": [
+    "a wrong table entry gives systematically wrong results (the 1994 processor bug)"
+  ],
+  "instances": [
+    "SRT division"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

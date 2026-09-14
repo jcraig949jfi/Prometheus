@@ -1,9 +1,23 @@
 # Eos STATUS
 
-Currency: 2026-09-11, second update (written after the first active
-pass). Plain language.
+Currency: 2026-09-11, third update (after Season II). Plain language.
 
-## Seat state: ACTIVE
+## Seat state: ACTIVE, and recommending its own machinery stay dark
+
+SEASON II RECOMMENDATION: KEEP_DARK. No collection. The seat's own
+preregistered consequence fired on itself: Nemesis crossed 200 of 200
+constructed wrong-referent claims, so the PENDING rate is inflated and
+collection does not restart. Details and the four conditions that would
+change it: roles/Eos/intake/SEASON_II_2026-09-11.md.
+
+Season II corrections to what this file said this morning:
+- the "51 refusals" were 7. 45 items were NEVER EXAMINED (Nemesis
+  NEMESIS-01b; the claim constructor, not the gate).
+- RESOURCE is no longer a terminal state; the gate settles nothing but
+  REFUSED. It had been settling RESOURCE on a forgeable string.
+- 1 of the 6 interruptions sent was a duplicate the program had already
+  metabolised.
+
 
 - EOS-01 was ruled ACTIVE by the operator on 2026-09-11 and the typing
   rule was adopted: every surfaced item terminates as ANCHOR, ACQUIRE,
@@ -120,6 +134,16 @@ pass). Plain language.
 
 ## Next executable action
 
-Await the operator on EOS-02 (registry residue), EOS-03 (Clio's owner)
-and the Phase 0 routing of EOS-04. Nothing restarts collection: that is
-a separate decision the operator reserved.
+EOS-04 Phase 0 is BLOCKED on a constitutional conflict, not on effort:
+keys.py is gitignored, so the resolver CLAUDE.md mandates -- and
+prometheus_llm, which imports it -- cannot be imported from ANY
+D-23-conformant worktree. Measured both ways. Reported to Archaeon.
+roles/Eos/EOS04_PHASE0_REPORT.md; the falsifier test is built and
+demonstrated (3 xfail markers holding undone work).
+
+EOS-02 is DONE: 15 rows and 4 local-model entries shrank to 7 SOURCES,
+1 measured and 6 UNVERIFIED. roles/Eos/sources/SOURCES.json.
+
+Waiting on: Kairos (the model-independent attacker), the 4 seats holding
+admission questions, Nemesis re-running the attack against the repaired
+gate, Necropolis on the Clio base rate.

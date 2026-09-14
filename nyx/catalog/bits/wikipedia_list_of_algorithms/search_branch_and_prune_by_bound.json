@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.branch_and_prune_by_bound",
+  "name": "branch and prune by a bound",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "split the feasible set into parts, compute for each part a bound on the best value it could contain, discard parts whose bound cannot beat the best complete solution found, and recurse into the rest",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Branch and bound' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Branch and cut': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "RECORD",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "BRANCH_AND_BOUND",
+  "iteration": "PRIORITY",
+  "cost": "EXPONENTIAL",
+  "requires": [
+    "a bounding function",
+    "a branching rule (policy)"
+  ],
+  "fails_when": [
+    "weak bounds prune nothing"
+  ],
+  "instances": [
+    "Branch and bound",
+    "Branch and cut"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

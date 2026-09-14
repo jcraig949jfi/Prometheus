@@ -1,0 +1,71 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.chain_a_compression_function_over_padded_blocks_from_a_fixed_start",
+  "name": "chain a compression function over padded blocks from a fixed start",
+  "lineage": [
+    "network protocols",
+    "error-correcting systems",
+    "databases"
+  ],
+  "mechanism": "pad the message to whole blocks with its length appended; start from a fixed state and, for each block, replace the state by a fixed one-way compression of (state, block); the final state is the digest, so a collision in the compression function is a collision in the whole",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'MD5' in section Computer science / Cryptography: Note that there is now a method of generating collisions for MD5",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'SHA-1': Note that there is now a method of generating collisions for SHA-1",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'SHA-2 (SHA-224, SHA-256, SHA-384, SHA-512)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'RIPEMD-160': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Tiger (TTH), usually used in Tiger tree hashes': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'WHIRLPOOL': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'BLAKE': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "STRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "DETERMINISTIC",
+  "strategy": "STREAMING",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a one-way compression function (data)"
+  ],
+  "fails_when": [
+    "length extension: anyone knowing the digest can continue the chain"
+  ],
+  "instances": [
+    "MD5",
+    "SHA-1",
+    "SHA-2 (SHA-224, SHA-256, SHA-384, SHA-512)",
+    "RIPEMD-160",
+    "Tiger (TTH), usually used in Tiger tree hashes",
+    "WHIRLPOOL",
+    "BLAKE"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

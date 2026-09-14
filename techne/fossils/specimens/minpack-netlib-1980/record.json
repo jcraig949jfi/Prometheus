@@ -1,0 +1,754 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "minpack-netlib-1980",
+  "canonical_name": "MINPACK-1 (double precision) -- More, Garbow, Hillstrom, Argonne",
+  "aliases": [
+    "minpack",
+    "MINPACK-1",
+    "lmder",
+    "hybrd"
+  ],
+  "lineage": "MINPACK (1980, Argonne National Laboratory): Levenberg-Marquardt least squares (LMDER/LMDIF/LMSTR) and Powell hybrid dogleg for nonlinear equations (HYBRD/HYBRJ), with CHKDER Jacobian checking; ancestor of scipy.optimize.leastsq/fsolve",
+  "domain": [
+    "nonlinear-least-squares",
+    "nonlinear-equations",
+    "optimization",
+    "scientific-computing"
+  ],
+  "era": "1980",
+  "version": "netlib.org/minpack as served 2026-09-12 (25 routine files + 23 ex/ test files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/readme",
+        "filename": "readme",
+        "extract": false,
+        "sha256": "40f44fb6c83158329c65a904673dc2cf2badc983415ddcfd16d5845f0e4f45e0",
+        "bytes": 773
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/disclaimer",
+        "filename": "disclaimer",
+        "extract": false,
+        "sha256": "f5b330efdad110cdd84d585ec61220b0650461fa599e36b13e1726c9346dcfb9",
+        "bytes": 2246
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/chkder.f",
+        "filename": "chkder.f",
+        "extract": false,
+        "sha256": "6a71d2df5e75a800b42386d1096d4a55c32cdcd1e930a8957bed845dc77e5ef1",
+        "bytes": 4892
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/dogleg.f",
+        "filename": "dogleg.f",
+        "extract": false,
+        "sha256": "5d29950bfbfa6415b4e07ce536b0388edd3ceb4d6b260b23eb11d9c3b6f135ba",
+        "bytes": 5303
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/dpmpar.f",
+        "filename": "dpmpar.f",
+        "extract": false,
+        "sha256": "5c56b40119ddb0d00f60730a2f6ad8ceaac70422172b51af8dbde3944b324e7e",
+        "bytes": 5790
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/enorm.f",
+        "filename": "enorm.f",
+        "extract": false,
+        "sha256": "c8ec66eeb809e5a1a8c896037597c73bd8966511a3b028fcc1f8be0e47310dd7",
+        "bytes": 3135
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/fdjac1.f",
+        "filename": "fdjac1.f",
+        "extract": false,
+        "sha256": "b87bc037c7b1f728d1ec6417bc228a7cdb7a37c85627e8730f6c40267ef53009",
+        "bytes": 4950
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/fdjac2.f",
+        "filename": "fdjac2.f",
+        "extract": false,
+        "sha256": "30ca8685efeab6f47bb40fb7c6f20f84d8467f39308bf10a54c9dac41c061391",
+        "bytes": 3340
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/hybrd.f",
+        "filename": "hybrd.f",
+        "extract": false,
+        "sha256": "dae9685deaf24a3625ab65fc25c896cf0416aee1e09c93be17204273a381f521",
+        "bytes": 14892
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/hybrd1.f",
+        "filename": "hybrd1.f",
+        "extract": false,
+        "sha256": "427ee1ab96f8583ccb661e76173758b8a98ae06af710bdce1acf8022ed27ac7b",
+        "bytes": 3924
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/hybrj.f",
+        "filename": "hybrj.f",
+        "extract": false,
+        "sha256": "f1f5994dba9b9e2a392bbc08ae1b1b74075dd0f8f6339531011fdedeb4654f96",
+        "bytes": 14077
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/hybrj1.f",
+        "filename": "hybrj1.f",
+        "extract": false,
+        "sha256": "8cdb1da05e2bc9c2356c966136bef0f452f8d8a74ff0ff8d44988ef9a46da5c6",
+        "bytes": 4328
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/lmder.f",
+        "filename": "lmder.f",
+        "extract": false,
+        "sha256": "bcb863d4e71751e9c2e8bc163f3606823b206d4ded525645704238694d4b2cca",
+        "bytes": 15443
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/lmder1.f",
+        "filename": "lmder1.f",
+        "extract": false,
+        "sha256": "bd9bec43c803c20ab523410cd55476833bec63c96b10088c0d87c2a7c1df6ec4",
+        "bytes": 5674
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/lmdif.f",
+        "filename": "lmdif.f",
+        "extract": false,
+        "sha256": "5e59e7d18e53bb588411f411d108851f8b3e24221c5983afe718dbf897874856",
+        "bytes": 15544
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/lmdif1.f",
+        "filename": "lmdif1.f",
+        "extract": false,
+        "sha256": "bc6fac1d9b45d0331587705b47c0bc403b485883bcd8c9af9b1a2a858f57c1f7",
+        "bytes": 4467
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/lmpar.f",
+        "filename": "lmpar.f",
+        "extract": false,
+        "sha256": "01495a05ec1c0ba4ec3ace1f8f5e0db0eb5a2b8cc38991213792083005d73b3a",
+        "bytes": 8243
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/lmstr.f",
+        "filename": "lmstr.f",
+        "extract": false,
+        "sha256": "d2a59ac39a1d5c1dc6ff69a3dcc317509df89ef7775ce53f30ca44e184e03503",
+        "bytes": 15890
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/lmstr1.f",
+        "filename": "lmstr1.f",
+        "extract": false,
+        "sha256": "1371ac7d94b943a647bc81bdf2df5826114c744a016a6ce78fe559c4205f1e61",
+        "bytes": 5593
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/qform.f",
+        "filename": "qform.f",
+        "extract": false,
+        "sha256": "2663c845eaefcbd398f13525f33e090b8dfe005fa4b4a3157caa8c06599f1bc5",
+        "bytes": 2494
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/qrfac.f",
+        "filename": "qrfac.f",
+        "extract": false,
+        "sha256": "8183b99d4550d2f20b1ffc7456d0afa756e9d0ac3d8976148628416632b3aa42",
+        "bytes": 5417
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/qrsolv.f",
+        "filename": "qrsolv.f",
+        "extract": false,
+        "sha256": "768eb92e2d4d257f81202b8de83d30e390ca92a0763e96b59175aee02bf45e7f",
+        "bytes": 6178
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/r1mpyq.f",
+        "filename": "r1mpyq.f",
+        "extract": false,
+        "sha256": "a8e8e5038e60823c273898b8c723f423bb9abbb5da377a73c33bce8f152b5b12",
+        "bytes": 2861
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/r1updt.f",
+        "filename": "r1updt.f",
+        "extract": false,
+        "sha256": "33924ea50382e1c74b7f8b0662bea19c7f6772468b5d07e3250384c7c18d1666",
+        "bytes": 5702
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/rwupdt.f",
+        "filename": "rwupdt.f",
+        "extract": false,
+        "sha256": "d5a5c0a934368be75905c0620898d6061970f4553f4045f8f19be25e492043c3",
+        "bytes": 3805
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file01",
+        "filename": "ex/file01",
+        "extract": false,
+        "sha256": "e355fc469bf081538542d46010542b573cbe48cd9061c151d4f349d2df8b7486",
+        "bytes": 4427
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file02",
+        "filename": "ex/file02",
+        "extract": false,
+        "sha256": "4422023091ad4026e93f9c19987f11b14f049e6dd09f2c1429ea878015f63feb",
+        "bytes": 154695
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file03",
+        "filename": "ex/file03",
+        "extract": false,
+        "sha256": "379a7a69e5c9270893c08b877a79c1cc1c3666d0674374c7ad82eda379e12acc",
+        "bytes": 166066
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file04",
+        "filename": "ex/file04",
+        "extract": false,
+        "sha256": "6e67616089962cb023db4922d4e57bcaa6a7a605df61637da011620ae4b5e649",
+        "bytes": 6491
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file05",
+        "filename": "ex/file05",
+        "extract": false,
+        "sha256": "6cd0ffa413e708e058be9f23a2b26ee14b8c19e354cb1a66755740953c61bfa4",
+        "bytes": 156151
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file06",
+        "filename": "ex/file06",
+        "extract": false,
+        "sha256": "659f7a584aaaf446bb708b322abd5cc077a6fde1a0d6a45e7be01a4e049e3fb1",
+        "bytes": 167359
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file07",
+        "filename": "ex/file07",
+        "extract": false,
+        "sha256": "4e6908e03505bacba04c4e332a2e59fbb28b33eb389d7134bfce30d110ab2dc5",
+        "bytes": 11128
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file08",
+        "filename": "ex/file08",
+        "extract": false,
+        "sha256": "c112072e63241fcbe5cfc9084584ccf6d6099b80aadce6a46a0eba425a833e02",
+        "bytes": 14225
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file09",
+        "filename": "ex/file09",
+        "extract": false,
+        "sha256": "2de7255b3228385d3e35ac4ecc48315b9959114f315d98b6980d795690789ff1",
+        "bytes": 22708
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file10",
+        "filename": "ex/file10",
+        "extract": false,
+        "sha256": "e637d44c3e07f7edc742e96acbde37a4b4b154d8cf9fd7a4690d0cd47012b862",
+        "bytes": 27653
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file11",
+        "filename": "ex/file11",
+        "extract": false,
+        "sha256": "bc353012f38c62a01acb09785b00988c534b191de9860fb1140be5b978aff8e5",
+        "bytes": 28092
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file12",
+        "filename": "ex/file12",
+        "extract": false,
+        "sha256": "ccbed333b3732a2e008072c31263b809c843847a5c99800b022b2ccbedbbba46",
+        "bytes": 18795
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file13",
+        "filename": "ex/file13",
+        "extract": false,
+        "sha256": "95e416af2007af4506d4d0ea32febbb1fc6c6d343644e1bbe51445f2eeddd431",
+        "bytes": 22669
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file14",
+        "filename": "ex/file14",
+        "extract": false,
+        "sha256": "eebf8fa2f192ed71151a81247fee5cbe16d093c8fc33d05f8434d28b30c61484",
+        "bytes": 11224
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file15",
+        "filename": "ex/file15",
+        "extract": false,
+        "sha256": "3ffaf4d8350ccacf114065ea942fec3baaad71f19d7c98a7d97ed12aa5ca27f0",
+        "bytes": 14439
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file16",
+        "filename": "ex/file16",
+        "extract": false,
+        "sha256": "1bfc2863f30dee826e2cc2b3f30ad6536cad05225f8149789c277de35e5ee5eb",
+        "bytes": 23034
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file17",
+        "filename": "ex/file17",
+        "extract": false,
+        "sha256": "d14d48a50c0028aaa2c12fd5e77974c10e5483e49702b966d638ecdab6d9eb92",
+        "bytes": 28051
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file18",
+        "filename": "ex/file18",
+        "extract": false,
+        "sha256": "cd28b7c34a8cbe04554c30addf04fdd01d8dbe5a3a8197164b0c8c746760a124",
+        "bytes": 28502
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file19",
+        "filename": "ex/file19",
+        "extract": false,
+        "sha256": "d52b1f90c3f9f4d7fb54e31eb2fed5bd8c19fc86a852f204a873ab52d4e80394",
+        "bytes": 19066
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file20",
+        "filename": "ex/file20",
+        "extract": false,
+        "sha256": "9642f3d2ad9d3553f2d05c94de0f2ef64fda5d2868c0482f4ae3a276cfcfaf59",
+        "bytes": 22981
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file21",
+        "filename": "ex/file21",
+        "extract": false,
+        "sha256": "b780f6c021b114f85f8a05ad741637bfdf1cc14a076cdb13046b66f982e02ff0",
+        "bytes": 368
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file22",
+        "filename": "ex/file22",
+        "extract": false,
+        "sha256": "4486706a38af157667b9c2523a4c037d904cb9f0dc4828d01b78183c978d0392",
+        "bytes": 609
+      },
+      {
+        "kind": "url",
+        "url": "https://www.netlib.org/minpack/ex/file23",
+        "filename": "ex/file23",
+        "extract": false,
+        "sha256": "c4fe6f700b881f3df3b0b0b1e71945e3cc31a7796bb1c2f94fd4a96afc7149cd",
+        "bytes": 165
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "netlib.org/minpack (Argonne's distribution)",
+    "files": 48
+  },
+  "hashes": {
+    "tree_sha256": "bb2a1c77c73713408975f150c1f146fc388767165fe7ea6876d975df5d689de1",
+    "n_files": 48,
+    "bytes": 1113859,
+    "artifacts": [
+      {
+        "filename": "readme",
+        "sha256": "40f44fb6c83158329c65a904673dc2cf2badc983415ddcfd16d5845f0e4f45e0",
+        "commit": null
+      },
+      {
+        "filename": "disclaimer",
+        "sha256": "f5b330efdad110cdd84d585ec61220b0650461fa599e36b13e1726c9346dcfb9",
+        "commit": null
+      },
+      {
+        "filename": "chkder.f",
+        "sha256": "6a71d2df5e75a800b42386d1096d4a55c32cdcd1e930a8957bed845dc77e5ef1",
+        "commit": null
+      },
+      {
+        "filename": "dogleg.f",
+        "sha256": "5d29950bfbfa6415b4e07ce536b0388edd3ceb4d6b260b23eb11d9c3b6f135ba",
+        "commit": null
+      },
+      {
+        "filename": "dpmpar.f",
+        "sha256": "5c56b40119ddb0d00f60730a2f6ad8ceaac70422172b51af8dbde3944b324e7e",
+        "commit": null
+      },
+      {
+        "filename": "enorm.f",
+        "sha256": "c8ec66eeb809e5a1a8c896037597c73bd8966511a3b028fcc1f8be0e47310dd7",
+        "commit": null
+      },
+      {
+        "filename": "fdjac1.f",
+        "sha256": "b87bc037c7b1f728d1ec6417bc228a7cdb7a37c85627e8730f6c40267ef53009",
+        "commit": null
+      },
+      {
+        "filename": "fdjac2.f",
+        "sha256": "30ca8685efeab6f47bb40fb7c6f20f84d8467f39308bf10a54c9dac41c061391",
+        "commit": null
+      },
+      {
+        "filename": "hybrd.f",
+        "sha256": "dae9685deaf24a3625ab65fc25c896cf0416aee1e09c93be17204273a381f521",
+        "commit": null
+      },
+      {
+        "filename": "hybrd1.f",
+        "sha256": "427ee1ab96f8583ccb661e76173758b8a98ae06af710bdce1acf8022ed27ac7b",
+        "commit": null
+      },
+      {
+        "filename": "hybrj.f",
+        "sha256": "f1f5994dba9b9e2a392bbc08ae1b1b74075dd0f8f6339531011fdedeb4654f96",
+        "commit": null
+      },
+      {
+        "filename": "hybrj1.f",
+        "sha256": "8cdb1da05e2bc9c2356c966136bef0f452f8d8a74ff0ff8d44988ef9a46da5c6",
+        "commit": null
+      },
+      {
+        "filename": "lmder.f",
+        "sha256": "bcb863d4e71751e9c2e8bc163f3606823b206d4ded525645704238694d4b2cca",
+        "commit": null
+      },
+      {
+        "filename": "lmder1.f",
+        "sha256": "bd9bec43c803c20ab523410cd55476833bec63c96b10088c0d87c2a7c1df6ec4",
+        "commit": null
+      },
+      {
+        "filename": "lmdif.f",
+        "sha256": "5e59e7d18e53bb588411f411d108851f8b3e24221c5983afe718dbf897874856",
+        "commit": null
+      },
+      {
+        "filename": "lmdif1.f",
+        "sha256": "bc6fac1d9b45d0331587705b47c0bc403b485883bcd8c9af9b1a2a858f57c1f7",
+        "commit": null
+      },
+      {
+        "filename": "lmpar.f",
+        "sha256": "01495a05ec1c0ba4ec3ace1f8f5e0db0eb5a2b8cc38991213792083005d73b3a",
+        "commit": null
+      },
+      {
+        "filename": "lmstr.f",
+        "sha256": "d2a59ac39a1d5c1dc6ff69a3dcc317509df89ef7775ce53f30ca44e184e03503",
+        "commit": null
+      },
+      {
+        "filename": "lmstr1.f",
+        "sha256": "1371ac7d94b943a647bc81bdf2df5826114c744a016a6ce78fe559c4205f1e61",
+        "commit": null
+      },
+      {
+        "filename": "qform.f",
+        "sha256": "2663c845eaefcbd398f13525f33e090b8dfe005fa4b4a3157caa8c06599f1bc5",
+        "commit": null
+      },
+      {
+        "filename": "qrfac.f",
+        "sha256": "8183b99d4550d2f20b1ffc7456d0afa756e9d0ac3d8976148628416632b3aa42",
+        "commit": null
+      },
+      {
+        "filename": "qrsolv.f",
+        "sha256": "768eb92e2d4d257f81202b8de83d30e390ca92a0763e96b59175aee02bf45e7f",
+        "commit": null
+      },
+      {
+        "filename": "r1mpyq.f",
+        "sha256": "a8e8e5038e60823c273898b8c723f423bb9abbb5da377a73c33bce8f152b5b12",
+        "commit": null
+      },
+      {
+        "filename": "r1updt.f",
+        "sha256": "33924ea50382e1c74b7f8b0662bea19c7f6772468b5d07e3250384c7c18d1666",
+        "commit": null
+      },
+      {
+        "filename": "rwupdt.f",
+        "sha256": "d5a5c0a934368be75905c0620898d6061970f4553f4045f8f19be25e492043c3",
+        "commit": null
+      },
+      {
+        "filename": "ex/file01",
+        "sha256": "e355fc469bf081538542d46010542b573cbe48cd9061c151d4f349d2df8b7486",
+        "commit": null
+      },
+      {
+        "filename": "ex/file02",
+        "sha256": "4422023091ad4026e93f9c19987f11b14f049e6dd09f2c1429ea878015f63feb",
+        "commit": null
+      },
+      {
+        "filename": "ex/file03",
+        "sha256": "379a7a69e5c9270893c08b877a79c1cc1c3666d0674374c7ad82eda379e12acc",
+        "commit": null
+      },
+      {
+        "filename": "ex/file04",
+        "sha256": "6e67616089962cb023db4922d4e57bcaa6a7a605df61637da011620ae4b5e649",
+        "commit": null
+      },
+      {
+        "filename": "ex/file05",
+        "sha256": "6cd0ffa413e708e058be9f23a2b26ee14b8c19e354cb1a66755740953c61bfa4",
+        "commit": null
+      },
+      {
+        "filename": "ex/file06",
+        "sha256": "659f7a584aaaf446bb708b322abd5cc077a6fde1a0d6a45e7be01a4e049e3fb1",
+        "commit": null
+      },
+      {
+        "filename": "ex/file07",
+        "sha256": "4e6908e03505bacba04c4e332a2e59fbb28b33eb389d7134bfce30d110ab2dc5",
+        "commit": null
+      },
+      {
+        "filename": "ex/file08",
+        "sha256": "c112072e63241fcbe5cfc9084584ccf6d6099b80aadce6a46a0eba425a833e02",
+        "commit": null
+      },
+      {
+        "filename": "ex/file09",
+        "sha256": "2de7255b3228385d3e35ac4ecc48315b9959114f315d98b6980d795690789ff1",
+        "commit": null
+      },
+      {
+        "filename": "ex/file10",
+        "sha256": "e637d44c3e07f7edc742e96acbde37a4b4b154d8cf9fd7a4690d0cd47012b862",
+        "commit": null
+      },
+      {
+        "filename": "ex/file11",
+        "sha256": "bc353012f38c62a01acb09785b00988c534b191de9860fb1140be5b978aff8e5",
+        "commit": null
+      },
+      {
+        "filename": "ex/file12",
+        "sha256": "ccbed333b3732a2e008072c31263b809c843847a5c99800b022b2ccbedbbba46",
+        "commit": null
+      },
+      {
+        "filename": "ex/file13",
+        "sha256": "95e416af2007af4506d4d0ea32febbb1fc6c6d343644e1bbe51445f2eeddd431",
+        "commit": null
+      },
+      {
+        "filename": "ex/file14",
+        "sha256": "eebf8fa2f192ed71151a81247fee5cbe16d093c8fc33d05f8434d28b30c61484",
+        "commit": null
+      },
+      {
+        "filename": "ex/file15",
+        "sha256": "3ffaf4d8350ccacf114065ea942fec3baaad71f19d7c98a7d97ed12aa5ca27f0",
+        "commit": null
+      },
+      {
+        "filename": "ex/file16",
+        "sha256": "1bfc2863f30dee826e2cc2b3f30ad6536cad05225f8149789c277de35e5ee5eb",
+        "commit": null
+      },
+      {
+        "filename": "ex/file17",
+        "sha256": "d14d48a50c0028aaa2c12fd5e77974c10e5483e49702b966d638ecdab6d9eb92",
+        "commit": null
+      },
+      {
+        "filename": "ex/file18",
+        "sha256": "cd28b7c34a8cbe04554c30addf04fdd01d8dbe5a3a8197164b0c8c746760a124",
+        "commit": null
+      },
+      {
+        "filename": "ex/file19",
+        "sha256": "d52b1f90c3f9f4d7fb54e31eb2fed5bd8c19fc86a852f204a873ab52d4e80394",
+        "commit": null
+      },
+      {
+        "filename": "ex/file20",
+        "sha256": "9642f3d2ad9d3553f2d05c94de0f2ef64fda5d2868c0482f4ae3a276cfcfaf59",
+        "commit": null
+      },
+      {
+        "filename": "ex/file21",
+        "sha256": "b780f6c021b114f85f8a05ad741637bfdf1cc14a076cdb13046b66f982e02ff0",
+        "commit": null
+      },
+      {
+        "filename": "ex/file22",
+        "sha256": "4486706a38af157667b9c2523a4c037d904cb9f0dc4828d01b78183c978d0392",
+        "commit": null
+      },
+      {
+        "filename": "ex/file23",
+        "sha256": "c4fe6f700b881f3df3b0b0b1e71945e3cc31a7796bb1c2f94fd4a96afc7149cd",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\minpack-netlib-1980",
+    "hash_list": "techne/fossils/specimens/minpack-netlib-1980/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdf": "",
+    "spdx": "Minpack Copyright Notice (1999) University of Chicago -- BSD-like, see disclaimer",
+    "status": "redistribution permitted with notice (netlib disclaimer)",
+    "evidence": "upstream file 'disclaimer'"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Fortran 77"
+  ],
+  "build_system": "none upstream; Techne recipe compiles the test drivers in ex/ against the routines",
+  "compiler_or_interpreter": "gfortran (WinLibs GCC 15.2, Windows native)",
+  "dependencies": [],
+  "run_classification": "RUNNABLE_NATIVE",
+  "test_classification": "UPSTREAM_DRIVERS_RUN_NO_ORACLE",
+  "entry_points": [
+    "ex/file09 (test driver: nonlinear equations, HYBRD/HYBRJ)",
+    "ex/file13 (CHKDER test)",
+    "ex/file17 (least squares, LMDER/LMDIF/LMSTR)",
+    "lmder1/lmdif1/hybrd1 (easy drivers)"
+  ],
+  "example": {
+    "command": "see recipe.json",
+    "input": "ex/ data files",
+    "output": "the drivers' problem-by-problem tables"
+  },
+  "environment": {
+    "runner": "native Windows, WinLibs gfortran 15.2"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "More, Garbow, Hillstrom, User Guide for MINPACK-1, ANL-80-74 (1980)",
+    "netlib.org/minpack/readme"
+  ],
+  "human_capability_summary": {
+    "built_to": "find x minimising sum of squares of m nonlinear functions, or solving n nonlinear equations, from a user function with or without an analytic Jacobian",
+    "pressure": "ill-conditioned Jacobians, expensive function evaluations, users who cannot write a correct derivative (hence CHKDER)",
+    "success_means": "convergence to a solution within the user's tolerances with a bounded number of function evaluations; the ANL-80-74 test set"
+  },
+  "known_human_problem_solved": "curve fitting and root finding for nonlinear models, robustly, in 1980 Fortran",
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124502Z.json",
+      "ok": false,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "UPSTREAM_TESTS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124530Z.json",
+      "ok": false,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "UPSTREAM_TESTS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124612Z.json",
+      "ok": false,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "UPSTREAM_TESTS_FAIL"
+    },
+    {
+      "receipt": "techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124631Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_NATIVE",
+      "test_classification": "UPSTREAM_DRIVERS_RUN_NO_ORACLE"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\minpack-netlib-1980 ; tracked techne/fossils/specimens/minpack-netlib-1980/",
+    "where_it_came_from": "{'archive': \"netlib.org/minpack (Argonne's distribution)\", 'files': 48} ; HISTORICAL_ARCHIVE_MIRROR ; Minpack Copyright Notice (1999) University of Chicago -- BSD-like, see disclaimer",
+    "how_to_run_it": "recipe.json (runner native); python -m techne.fossils.harvest run minpack-netlib-1980",
+    "how_we_know_it_runs": "RUNNABLE_NATIVE / UPSTREAM_DRIVERS_RUN_NO_ORACLE ; receipt techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124631Z.json",
+    "what_humans_used_it_for": "find x minimising sum of squares of m nonlinear functions, or solving n nonlinear equations, from a user function with or without an analytic Jacobian"
+  },
+  "seat": "Techne",
+  "observability": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "nonlinear-least-squares",
+    "nonlinear-equations",
+    "optimization",
+    "scientific-computing"
+  ],
+  "hardware_assumptions": ""
+}

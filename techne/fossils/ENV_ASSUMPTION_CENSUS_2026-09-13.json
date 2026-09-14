@@ -1,0 +1,918 @@
+{
+ "schema": "techne.fossil.env_assumption_census/1",
+ "written_utc": "2026-09-13T21:12:20Z",
+ "scanned_specimens": 117,
+ "specimens_with_any_pattern": 43,
+ "by_pattern": {
+  "TIME_32BIT": 16,
+  "ENDIANNESS": 15,
+  "INT_OVERFLOW_RELIANCE": 15,
+  "SIGNED_CHAR": 3,
+  "ALIGNMENT_CAST": 13,
+  "WORD_WIDTH_ASSUMPTION": 15,
+  "WORD_WIDTH_TYPEDEF": 14
+ },
+ "sharpest_candidates_word_width_typedef": [
+  "bdwgc-8.2.6",
+  "cjson-1.7.18",
+  "dmtcp-3.1.2",
+  "espresso-logic",
+  "femtolisp",
+  "glpk-5.0",
+  "gnu-prolog-1.5.0",
+  "md5-rfc1321",
+  "openssl-1.0.1f-heartbleed",
+  "pari-gp-2.17",
+  "tinycc",
+  "valgrind-helgrind-fixtures-3.19",
+  "xv6-riscv",
+  "zchaff-2007"
+ ],
+ "patterns": [
+  {
+   "name": "WORD_WIDTH_TYPEDEF",
+   "regex": "typedef\\s+(?:unsigned\\s+)?long(?:\\s+int)?\\s+\\w*(?:32|4|word)\\w*\\s*;",
+   "why": "a fixed width is asserted onto `long`, whose width is platform-dependent (the exact MD5 defect)"
+  },
+  {
+   "name": "WORD_WIDTH_ASSUMPTION",
+   "regex": "sizeof\\s*\\(\\s*(?:unsigned\\s+)?long\\s*\\)\\s*==\\s*4|assume.{0,20}32.bit|32-bit\\s+(?:long|word)",
+   "why": "code states or tests an assumption about a 32-bit word"
+  },
+  {
+   "name": "ENDIANNESS",
+   "regex": "\\b(BIG_ENDIAN|LITTLE_ENDIAN|BYTE_ORDER|__bswap|bswap_32|htonl|ntohl)\\b",
+   "why": "byte order is handled explicitly; correctness may depend on which branch is taken"
+  },
+  {
+   "name": "ALIGNMENT_CAST",
+   "regex": "\\(\\s*(?:unsigned\\s+)?(?:int|long|short)\\s*\\*\\s*\\)\\s*(?:\\(\\s*)?(?:buf|buffer|data|p|ptr|block)\\b",
+   "why": "a byte buffer is reinterpreted as a wider type; unaligned access is UB on some targets"
+  },
+  {
+   "name": "SIGNED_CHAR",
+   "regex": "\\bchar\\s+\\w+\\s*=\\s*-|\\bif\\s*\\(\\s*\\w+\\s*<\\s*0\\s*\\).{0,30}char",
+   "why": "plain `char` signedness differs between platforms (ARM vs x86)"
+  },
+  {
+   "name": "TIME_32BIT",
+   "regex": "\\b(?:unsigned\\s+)?long\\s+\\w*time\\w*\\s*[;,)]|\\btime_t\\b.{0,40}\\blong\\b",
+   "why": "time held in a platform-width integer; Y2038 / representation change"
+  },
+  {
+   "name": "INT_OVERFLOW_RELIANCE",
+   "regex": "-fwrapv|\\boverflow\\b.{0,30}\\bwrap|wraps?\\s+around",
+   "why": "behaviour depends on signed-overflow semantics, which are undefined in C"
+  }
+ ],
+ "note": "Presence of a pattern is NOT a defect. ENDIANNESS especially usually means the authors handled byte order deliberately. Only a two-world TEST can show correctness actually depends on the environment; this census only says where to look.",
+ "rows": [
+  {
+   "specimen_id": "arduino-pid",
+   "patterns": [
+    "TIME_32BIT"
+   ],
+   "detail": {
+    "TIME_32BIT": {
+     "files": 1,
+     "example_file": "tree/PID_v1.h",
+     "example": "at these values are.  with pointers we'll just know. \t\t\t   \tunsigned long lastTime; \tdouble outputSum, lastInput;  \tunsigned long SampleTime;"
+    }
+   }
+  },
+  {
+   "specimen_id": "avida",
+   "patterns": [
+    "ENDIANNESS",
+    "INT_OVERFLOW_RELIANCE",
+    "SIGNED_CHAR",
+    "TIME_32BIT"
+   ],
+   "detail": {
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 5,
+     "example_file": "tree/avida-core/source/core/InstructionSequence.cc",
+     "example": "Replace(begin, end - begin, g); \t} else { \t\t// replacement wraps around the end.  two different replacements to do now: [begin, siz"
+    },
+    "SIGNED_CHAR": {
+     "files": 1,
+     "example_file": "tree/avida-core/source/targets/avida-viewer/cViewInfo.cc",
+     "example": ";           break;         }         rank++;       }        if (pos < 0) genotype_chart[i] = Systematics::GroupPtr(NULL);       if (pos >= NUM_SYM"
+    },
+    "ENDIANNESS": {
+     "files": 1,
+     "example_file": "tree/libs/apto/include/apto/core/ListStorage.h",
+     "example": "unsigned int index;       struct { #if APTO_PLATFORM(LITTLE_ENDIAN)         unsigned int offset:6;         unsigned int num:26"
+    },
+    "TIME_32BIT": {
+     "files": 1,
+     "example_file": "tree/libs/tcmalloc-1.4/src/linux_syscall_support.h",
+     "example": "st_blksize;   long long          st_blocks;   long               st_atime_;   unsigned long      st_atime_nsec_;   long               s"
+    }
+   }
+  },
+  {
+   "specimen_id": "bdwgc-8.2.6",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "INT_OVERFLOW_RELIANCE",
+    "TIME_32BIT",
+    "WORD_WIDTH_ASSUMPTION",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "TIME_32BIT": {
+     "files": 4,
+     "example_file": "tree/bdwgc-8.2.6/alloc.c",
+     "example": "CLOCK_TYPE current_time;     static unsigned count = 0;     unsigned long time_diff, nsec_diff;      if ((*GC_default_stop_func)())       return"
+    },
+    "ALIGNMENT_CAST": {
+     "files": 2,
+     "example_file": "tree/bdwgc-8.2.6/dyn_load.c",
+     "example": "been excluded.       */         }       }     } # endif    *(int *)ptr = 1;     /* Signal that we were called */   return 0; }  /*"
+    },
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "tree/bdwgc-8.2.6/misc.c",
+     "example": "CLOCK       /* Note that the time is wrapped in ~49 days if sizeof(long)==4.  */       GC_printf(\"Time since GC init: %lu ms\\n\","
+    },
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 2,
+     "example_file": "tree/bdwgc-8.2.6/cord/cordbscs.c",
+     "example": "fine ABORT(msg) { fprintf(stderr, \"%s\\n\", msg); abort(); }  typedef unsigned long word;      struct Concatenation {         char null;         char"
+    },
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 2,
+     "example_file": "tree/bdwgc-8.2.6/include/gc.h",
+     "example": "nit is one millisecond.  */ /* Note that the returned value wraps around on overflow.               */ /* The function does not use"
+    }
+   }
+  },
+  {
+   "specimen_id": "biriscv-branch-predictor",
+   "patterns": [
+    "WORD_WIDTH_ASSUMPTION"
+   ],
+   "detail": {
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "tree/tb/tb_top/tb_axi4_mem.cpp",
+     "example": "--------------------------------------- // write32: Write a 32-bit word to memory //-----------------------------------------------"
+    }
+   }
+  },
+  {
+   "specimen_id": "bsd-tcp-4.2-1983",
+   "patterns": [
+    "ENDIANNESS"
+   ],
+   "detail": {
+    "ENDIANNESS": {
+     "files": 4,
+     "example_file": "tcp_debug.c",
+     "example": "ack; \t\tlen = ti->ti_len; \t\tif (act == TA_OUTPUT) { \t\t\tseq = ntohl(seq); \t\t\tack = ntohl(ack); \t\t\tlen = ntohs((u_short)len);"
+    }
+   }
+  },
+  {
+   "specimen_id": "bsd-tcp-4.3-reno-1990",
+   "patterns": [
+    "ENDIANNESS"
+   ],
+   "detail": {
+    "ENDIANNESS": {
+     "files": 4,
+     "example_file": "tcp.h",
+     "example": "mber */ \ttcp_seq\tth_ack;\t\t\t/* acknowledgement number */ #if BYTE_ORDER == LITTLE_ENDIAN  \tu_char\tth_x2:4,\t\t/* (unused) */ \t\tth_off"
+    }
+   }
+  },
+  {
+   "specimen_id": "bsd-tcp-4.3-tahoe-1988",
+   "patterns": [
+    "ENDIANNESS"
+   ],
+   "detail": {
+    "ENDIANNESS": {
+     "files": 5,
+     "example_file": "tcp.h",
+     "example": "mber */ \ttcp_seq\tth_ack;\t\t\t/* acknowledgement number */ #if BYTE_ORDER == LITTLE_ENDIAN  \tu_char\tth_x2:4,\t\t/* (unused) */ \t\tth_off"
+    }
+   }
+  },
+  {
+   "specimen_id": "buddy-bdd",
+   "patterns": [
+    "TIME_32BIT"
+   ],
+   "detail": {
+    "TIME_32BIT": {
+     "files": 1,
+     "example_file": "tree/buddy-2.4/src/bdd.h",
+     "example": "ef struct s_bddGbcStat {    int nodes;    int freenodes;    long time;    long sumtime;    int num; } bddGbcStat;  *} DESCR   {* T"
+    }
+   }
+  },
+  {
+   "specimen_id": "cjson-1.7.18",
+   "patterns": [
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 1,
+     "example_file": "tree/cJSON-1.7.18/tests/unity/src/unity_internals.h",
+     "example": "UNITY_UINT8;     typedef unsigned int    UNITY_UINT16;     typedef unsigned long   UNITY_UINT32;     typedef signed char     UNITY_INT8;     typedef signed"
+    }
+   }
+  },
+  {
+   "specimen_id": "clips-6.4.2-nasa",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "TIME_32BIT"
+   ],
+   "detail": {
+    "TIME_32BIT": {
+     "files": 6,
+     "example_file": "tree/clips_core_source_642/core/agenda.h",
+     "example": "ruct partialMatch *basis;    int salience;    unsigned long long timetag;    int randomID;    struct activation *prev;    struct acti"
+    },
+    "ALIGNMENT_CAST": {
+     "files": 2,
+     "example_file": "tree/clips_core_source_642/core/genrcbin.c",
+     "example": "ericBinaryData(theEnv)->TypeArray[obji] = DefclassPointer(* (unsigned long *) buf); #else    if ((* (long *) buf) > INSTANCE_TYPE_CODE)"
+    }
+   }
+  },
+  {
+   "specimen_id": "concurrencykit-0.7.2",
+   "patterns": [
+    "INT_OVERFLOW_RELIANCE"
+   ],
+   "detail": {
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 1,
+     "example_file": "tree/ck-0.7.2/src/ck_ht.c",
+     "example": "* Probe on a complete cache line first. Scan forward and wrap around to \t\t * the beginning of the cache line. Only when the comp"
+    }
+   }
+  },
+  {
+   "specimen_id": "dlmalloc",
+   "patterns": [
+    "INT_OVERFLOW_RELIANCE"
+   ],
+   "detail": {
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 1,
+     "example_file": "malloc.c",
+     "example": "bookkeeping may   be kept as longs, the reported values may wrap around zero and   thus be inaccurate. */ DLMALLOC_EXPORT struct ma"
+    }
+   }
+  },
+  {
+   "specimen_id": "dmtcp-3.1.2",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "ENDIANNESS",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "ALIGNMENT_CAST": {
+     "files": 1,
+     "example_file": "tree/dmtcp-3.1.2/test/pthread2.c",
+     "example": "rn 0; }  static void * threadMain(void *data) {   int id = *(int *)data;    if (id % 1000 == 0) {     printf(\"Worker: %d (%ld) aliv"
+    },
+    "ENDIANNESS": {
+     "files": 1,
+     "example_file": "tree/dmtcp-3.1.2/contrib/tun/tun-test.c",
+     "example": "local.sin_family = AF_INET;     local.sin_addr.s_addr = htonl(INADDR_ANY);     local.sin_port = htons(port);     if (bind"
+    },
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 1,
+     "example_file": "tree/dmtcp-3.1.2/src/plugin/pid/glibc_pthread.h",
+     "example": "uintptr_t seq;   void *data; };  typedef char libc_Bool; typedef unsigned long libc_Unwind_Word;  struct libc_Unwind_Exception  {   union __union   {     st"
+    }
+   }
+  },
+  {
+   "specimen_id": "eprover-2.6",
+   "patterns": [
+    "ENDIANNESS",
+    "TIME_32BIT"
+   ],
+   "detail": {
+    "TIME_32BIT": {
+     "files": 4,
+     "example_file": "tree/CONTROL/cco_batch_spec.c",
+     "example": "char* extra_options,                              long cpu_time,                              AxFilter_p ax_filter) {    EPC"
+    },
+    "ENDIANNESS": {
+     "files": 1,
+     "example_file": "tree/INOUT/cio_network.c",
+     "example": "0000\");    *((uint32_t*)DStrAddress(handle->content, 0)) =  htonl(len);    DStrAppendStr(handle->content, str);    handle->le"
+    }
+   }
+  },
+  {
+   "specimen_id": "espresso-logic",
+   "patterns": [
+    "TIME_32BIT",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "TIME_32BIT": {
+     "files": 6,
+     "example_file": "tree/espresso-src/cvrin.c",
+     "example": ", pPLA *PLA_return) {   pPLA PLA;   int i, second, third;   long time;   cost_t cost;    /* Allocate and initialize the PLA struct"
+    },
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 1,
+     "example_file": "tree/espresso-src/port.h",
+     "example": "nsi-C promises that these definitions should always work */ typedef long int32; typedef int int16; #endif /* vax */ #endif /* MACHDEP_INCLU"
+    }
+   }
+  },
+  {
+   "specimen_id": "femtolisp",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "ENDIANNESS",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "ENDIANNESS": {
+     "files": 5,
+     "example_file": "tree/flisp.c",
+     "example": "PUSH(s1);     curr_frame = SP;     return nargs; }  #if BYTE_ORDER == BIG_ENDIAN #define GET_INT32(a)"
+    },
+    "ALIGNMENT_CAST": {
+     "files": 1,
+     "example_file": "tree/print.c",
+     "example": "else if (car_(type) == enumsym) {             int n = *(int*)data;             value_t syms = car(cdr_(type));             as"
+    },
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 1,
+     "example_file": "tree/llt/dtypes.h",
+     "example": "rt u_int16_t; typedef unsigned int u_int32_t; #ifdef BITS64 typedef unsigned long u_int64_t; #else typedef unsigned long long u_int64_t; #endif #ifdef _"
+    }
+   }
+  },
+  {
+   "specimen_id": "glpk-5.0",
+   "patterns": [
+    "INT_OVERFLOW_RELIANCE",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 1,
+     "example_file": "tree/glpk-5.0/src/zlib/crc32.c",
+     "example": "4; #    else #      if (ULONG_MAX == 0xffffffffUL)          typedef unsigned long u4; #      else #        if (USHRT_MAX == 0xffffffffUL)"
+    },
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 1,
+     "example_file": "tree/glpk-5.0/src/zlib/inffast.c",
+     "example": "}                     else if (wnext < op) {      /* wrap around window */                         from += wsize + wnext - o"
+    }
+   }
+  },
+  {
+   "specimen_id": "gnu-apl-2.0",
+   "patterns": [
+    "ENDIANNESS",
+    "INT_OVERFLOW_RELIANCE"
+   ],
+   "detail": {
+    "ENDIANNESS": {
+     "files": 4,
+     "example_file": "tree/apl-2.0/src/main.cc",
+     "example": ";    local.sin_family = AF_INET;    local.sin_addr.s_addr = htonl(0x7F000001);   // localhost (127.0.0.1)    local.sin_port ="
+    },
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 1,
+     "example_file": "tree/apl-2.0/src/PrintBuffer.cc",
+     "example": "unk_len;             }        }     else          // no APL wrap around        {          chunk_lengths.push_back(total_width);"
+    }
+   }
+  },
+  {
+   "specimen_id": "gnu-prolog-1.5.0",
+   "patterns": [
+    "ENDIANNESS",
+    "INT_OVERFLOW_RELIANCE",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 2,
+     "example_file": "tree/gprolog-1.5.0/src/EnginePl/dl_malloc.c",
+     "example": "bookkeeping may   be kept as longs, the reported values may wrap around zero and   thus be inaccurate. */ DLMALLOC_EXPORT struct ma"
+    },
+    "ENDIANNESS": {
+     "files": 2,
+     "example_file": "tree/gprolog-1.5.0/src/EnginePl/gp_config.h",
+     "example": "ion */ #define HAVE_DECL_HTOLE32 1  /* Define if you have a bswap_32 function */ #define HAVE_DECL_BSWAP_32 1  /* Define inline"
+    },
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 4,
+     "example_file": "tree/gprolog-1.5.0/src/EnginePl/LINUX_SIGSEGV.c",
+     "example": "#include <signal.h> #include <stdio.h>  typedef long WamWord;   #if 0 void SIGSEGV_Handler(int sig) {   /* LINUX: recover"
+    }
+   }
+  },
+  {
+   "specimen_id": "gzip-1.2.4-1993",
+   "patterns": [
+    "TIME_32BIT"
+   ],
+   "detail": {
+    "TIME_32BIT": {
+     "files": 3,
+     "example_file": "tree/gzip-1.2.4/gzip.c",
+     "example": "*/ int part_nb;          /* number of parts in .gz file */ long time_stamp;      /* original time stamp (modification time) */ long ifi"
+    }
+   }
+  },
+  {
+   "specimen_id": "kissfft-131.1.0",
+   "patterns": [
+    "ALIGNMENT_CAST"
+   ],
+   "detail": {
+    "ALIGNMENT_CAST": {
+     "files": 1,
+     "example_file": "tree/kissfft-131.1.0/kiss_fftnd.c",
+     "example": "S_FFT_ALIGN_SIZE_UP(sizeof(void*) * ndims);      st->dims = (int*)ptr;     ptr += KISS_FFT_ALIGN_SIZE_UP(sizeof(int) * ndims);"
+    }
+   }
+  },
+  {
+   "specimen_id": "ldpc-codes-neal-2001",
+   "patterns": [
+    "WORD_WIDTH_ASSUMPTION"
+   ],
+   "detail": {
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "tree/mod2dense.h",
+     "example": "ow */  /* PACKING OF BITS INTO WORDS.  Bits are packed into 32-bit words, with    the low-order bit coming first. */  typedef uint3"
+    }
+   }
+  },
+  {
+   "specimen_id": "leveldb-1.23",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "INT_OVERFLOW_RELIANCE"
+   ],
+   "detail": {
+    "ALIGNMENT_CAST": {
+     "files": 1,
+     "example_file": "tree/leveldb-1.23/db/c_test.c",
+     "example": "const char* v, size_t vlen) {   int* state = (int*) ptr;   CheckCondition(*state < 2);   switch (*state) {     case"
+    },
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 1,
+     "example_file": "tree/leveldb-1.23/table/table_test.cc",
+     "example": "data.begin()) {               model_iter = data.end();  // Wrap around to invalid value             } else {               --model"
+    }
+   }
+  },
+  {
+   "specimen_id": "libfec-karn",
+   "patterns": [
+    "INT_OVERFLOW_RELIANCE",
+    "WORD_WIDTH_ASSUMPTION"
+   ],
+   "detail": {
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 2,
+     "example_file": "tree/decode_rs_ccsds.c",
+     "example": "/* This function wraps around the fixed 8-bit decoder, performing the  * basis transforma"
+    },
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "tree/sumsq_av.c",
+     "example": "sub-sums and carries */   s.c[15] = 64; /* Shift right two 32-bit words */   s1 = vec_sro(sums,s.cv);   s2 = vec_sro(carries,s.cv)"
+    }
+   }
+  },
+  {
+   "specimen_id": "lmdb-0.9.31",
+   "patterns": [
+    "ENDIANNESS",
+    "WORD_WIDTH_ASSUMPTION"
+   ],
+   "detail": {
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "tree/lmdb-LMDB_0.9.31/libraries/liblmdb/mdb.c",
+     "example": "st byte \t * order in case some accesses can be optimized to 32-bit word access. \t * \t * Leaf node flags describe node contents.  #F"
+    },
+    "ENDIANNESS": {
+     "files": 1,
+     "example_file": "tree/lmdb-LMDB_0.9.31/libraries/liblmdb/mdb.c",
+     "example": "t.h> #ifdef __GNUC__ # include <sys/param.h> #else # define LITTLE_ENDIAN\t1234 # define BIG_ENDIAN\t4321 # define BYTE_ORDER\tLITTLE_EN"
+    }
+   }
+  },
+  {
+   "specimen_id": "md5-rfc1321",
+   "patterns": [
+    "WORD_WIDTH_ASSUMPTION",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 1,
+     "example_file": "rfc1321.txt",
+     "example": "gned short int UINT2;  /* UINT4 defines a four byte word */ typedef unsigned long int UINT4;  /* PROTO_LIST is defined depending on how PROTOTYPES is de"
+    },
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "rfc1321.txt",
+     "example": "a sequence of    bytes can be interpreted as a sequence of 32-bit words, where each    consecutive group of four bytes is interpre"
+    }
+   }
+  },
+  {
+   "specimen_id": "openssl-1.0.1f-heartbleed",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "ENDIANNESS",
+    "INT_OVERFLOW_RELIANCE",
+    "SIGNED_CHAR",
+    "TIME_32BIT",
+    "WORD_WIDTH_ASSUMPTION",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "TIME_32BIT": {
+     "files": 9,
+     "example_file": "tree/openssl-1.0.1f/apps/apps.c",
+     "example": "ime\") == 0) \t\t{ \t\tif (!argn) \t\t\t*badarg = 1; \t\telse \t\t\t{ \t\t\tlong timestamp; \t\t\t/* interpret the -attime argument as seconds since \t\t\t *"
+    },
+    "ENDIANNESS": {
+     "files": 7,
+     "example_file": "tree/openssl-1.0.1f/apps/s_socket.c",
+     "example": "p[2]<< 8L)| \t\t((unsigned long)ip[3]); \tthem.sin_addr.s_addr=htonl(addr);  \tif (type == SOCK_STREAM) \t\ts=socket(AF_INET,SOCK_S"
+    },
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "tree/openssl-1.0.1f/crypto/cryptlib.c",
+     "example": "2cap_P[2]; unsigned long *OPENSSL_ia32cap_loc(void) {   if (sizeof(long)==4) \t/* \t * If 32-bit application pulls address of OPENSSL_ia3"
+    },
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 3,
+     "example_file": "tree/openssl-1.0.1f/doc/ssleay.txt",
+     "example": "reason 'reason'.  As errors get 'put' into the buffer, they wrap around and overwrite old errors if too many are written.  It is as"
+    },
+    "ALIGNMENT_CAST": {
+     "files": 10,
+     "example_file": "tree/openssl-1.0.1f/engines/e_sureware.c",
+     "example": "nsigned long *)m->d, \t\t\t\t\t\t p->top*sizeof(BN_ULONG), \t\t\t\t\t\t (unsigned long *)p->d, \t\t\t\t\t\t a->top*sizeof(BN_ULONG), \t\t\t\t\t\t (unsigned long *"
+    },
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 8,
+     "example_file": "tree/openssl-1.0.1f/crypto/aes/aes_locl.h",
+     "example": "((st) >>  8); (ct)[3] = (u8)(st); } #endif  #ifdef AES_LONG typedef unsigned long u32; #else typedef unsigned int u32; #endif typedef unsigned sho"
+    },
+    "SIGNED_CHAR": {
+     "files": 1,
+     "example_file": "tree/openssl-1.0.1f/crypto/x509/x509name.c",
+     "example": "s, \t\t\t\t\t\tlen, type, \t\t\t\t\tOBJ_obj2nid(ne->object)) ? 1 : 0; \tif (len < 0) len=strlen((const char *)bytes); \ti=ASN1_STRING_set(ne->value,bytes,len); \tif (!i)"
+    }
+   }
+  },
+  {
+   "specimen_id": "paip-lisp-norvig-1991",
+   "patterns": [
+    "INT_OVERFLOW_RELIANCE"
+   ],
+   "detail": {
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 1,
+     "example_file": "tree/PAIP.txt",
+     "example": "some implementations  provide another timing function that wraps around rather than increasing forever,  but which may have a highe"
+    }
+   }
+  },
+  {
+   "specimen_id": "pari-gp-2.17",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "INT_OVERFLOW_RELIANCE",
+    "TIME_32BIT",
+    "WORD_WIDTH_ASSUMPTION",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 2,
+     "example_file": "tree/pari-2.17.4/config/endian.c",
+     "example": "ef _WIN64 #define long long long #endif  int main() {   if (sizeof(long) == 4)   {     union {double d; unsigned long l[2];} x;     x.d ="
+    },
+    "TIME_32BIT": {
+     "files": 2,
+     "example_file": "tree/pari-2.17.4/examples/minigp.c",
+     "example": "p(env);   while(1)   {     GEN z;     pari_timer T, Tw;     long time, rtime;     const char *prompt = gp_format_prompt(GP_DATA->p"
+    },
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 1,
+     "example_file": "tree/pari-2.17.4/src/basemath/ifactor1.c",
+     "example": "o prime, bstp is incremented      * by snextpr each time we wrap around through residue class number 0      * (1 mod 210), but the"
+    },
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 2,
+     "example_file": "tree/pari-2.17.4/src/basemath/lll.c",
+     "example": "ny value less than expo(0.51) = -1 */  #ifdef LONG_IS_64BIT typedef long s64; #define addmuliu64_inplace addmuliu_inplace #define submuli"
+    },
+    "ALIGNMENT_CAST": {
+     "files": 1,
+     "example_file": "tree/pari-2.17.4/src/basemath/trans1.c",
+     "example": "} static GEN _oner(void *data /* prec */) { return real_1( *(long*) data); }  /* INTEGER POWERING (a^n for integer a != 0 and intege"
+    }
+   }
+  },
+  {
+   "specimen_id": "pforth",
+   "patterns": [
+    "WORD_WIDTH_ASSUMPTION"
+   ],
+   "detail": {
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "tree/csrc/pf_save.c",
+     "example": "ds in DictionaryInfoChunk from Native to BigEndian.  * This assumes they are all 32-bit integers.  */     int   i;     uint32_t *p = (uint32_t *) s"
+    }
+   }
+  },
+  {
+   "specimen_id": "picorv32",
+   "patterns": [
+    "TIME_32BIT"
+   ],
+   "detail": {
+    "TIME_32BIT": {
+     "files": 2,
+     "example_file": "tree/dhrystone/dhry_1.c",
+     "example": "/* Measurements should last at least 2 seconds */ #endif  long            Begin_Time,                 End_Time,                 User_Time; #ifdef"
+    }
+   }
+  },
+  {
+   "specimen_id": "souffle-2.4.1",
+   "patterns": [
+    "INT_OVERFLOW_RELIANCE"
+   ],
+   "detail": {
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 9,
+     "example_file": "tree/souffle-2.4.1/src/CMakeLists.txt",
+     "example": "C)   target_compile_options(libsouffle PUBLIC -Wall -Wextra -fwrapv) else ()   target_compile_options(libsouffle PUBLIC /W3 /WX"
+    }
+   }
+  },
+  {
+   "specimen_id": "spdylay",
+   "patterns": [
+    "ENDIANNESS",
+    "TIME_32BIT"
+   ],
+   "detail": {
+    "ENDIANNESS": {
+     "files": 4,
+     "example_file": "tree/lib/spdylay_buffer.c",
+     "example": "er_data(reader, (uint8_t*)&out, sizeof(uint32_t));   return ntohl(out); }  void spdylay_buffer_reader_data(spdylay_buffer_rea"
+    },
+    "TIME_32BIT": {
+     "files": 1,
+     "example_file": "tree/lib/includes/spdylay/spdylay.h",
+     "example": "mes,  * (e.g., asynchronous I/O, or reading data blocks for long time), it  * is achieved by returning :enum:`SPDYLAY_ERR_DEFERRED"
+    }
+   }
+  },
+  {
+   "specimen_id": "spin-6.5.2-holzmann",
+   "patterns": [
+    "WORD_WIDTH_ASSUMPTION"
+   ],
+   "detail": {
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "tree/Spin-version-6.5.2/Src/pangen1.h",
+     "example": "h;\", \t\"#ifdef BITSTATE\", \t\"\tif (WS == 4 && ssize > 34)\",\t/* 32-bit word size */ \t\"\t{\tssize = 34;\", \t\"\t\tfprintf(efd, \\\"warning: usin"
+    }
+   }
+  },
+  {
+   "specimen_id": "spin-pathfinder-priority-inversion-1997",
+   "patterns": [
+    "WORD_WIDTH_ASSUMPTION"
+   ],
+   "detail": {
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "tree/Spin-version-6.5.2/Src/pangen1.h",
+     "example": "h;\", \t\"#ifdef BITSTATE\", \t\"\tif (WS == 4 && ssize > 34)\",\t/* 32-bit word size */ \t\"\t{\tssize = 34;\", \t\"\t\tfprintf(efd, \\\"warning: usin"
+    }
+   }
+  },
+  {
+   "specimen_id": "swipl-9.2.9",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "ENDIANNESS",
+    "TIME_32BIT",
+    "WORD_WIDTH_ASSUMPTION"
+   ],
+   "detail": {
+    "ALIGNMENT_CAST": {
+     "files": 4,
+     "example_file": "tree/swipl-devel-9.2.9/src/pl-hash.c",
+     "example": ";      while ( len >= 4 )     { unsigned int k;        d = *(unsigned int *)data;       t = (t >> sr) | (d << sl);        k = t;       MIX(h"
+    },
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 2,
+     "example_file": "tree/swipl-devel-9.2.9/src/pl-termhash.c",
+     "example": "stream will go in     */ /* this buffer to the high end of 32-bit words on BOTH big  */ /* and little endian systems"
+    },
+    "ENDIANNESS": {
+     "files": 1,
+     "example_file": "tree/swipl-devel-9.2.9/src/pl-termhash.c",
+     "example": "otr32(x,n)   (((x) >> n) | ((x) << (32 - n)))  #if !defined(bswap_32) #define bswap_32(x) ((rotr32((x), 24) & 0x00ff00ff) | (rot"
+    },
+    "TIME_32BIT": {
+     "files": 1,
+     "example_file": "tree/swipl-devel-9.2.9/src/os/pl-tai.c",
+     "example": "lse extern char *tzname[2]; #ifdef HAVE_VAR_TIMEZONE extern long timezone; #endif #endif  #define TAI_UTC_OFFSET LL(461168601842738791"
+    }
+   }
+  },
+  {
+   "specimen_id": "tinycc",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "ENDIANNESS",
+    "SIGNED_CHAR",
+    "TIME_32BIT",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "ALIGNMENT_CAST": {
+     "files": 1,
+     "example_file": "tree/c67-link.c",
+     "example": "l) {     switch(type) {         case R_C60_32:             *(int *)ptr += val;             break;         case R_C60LO16:"
+    },
+    "SIGNED_CHAR": {
+     "files": 1,
+     "example_file": "tree/tests/tests2/144_tls.c",
+     "example": "ls_struct_type tls_struct = { 50, 51, 52 }; __thread signed char tls_signed_char = -5; __thread unsigned char tls_unsigned_char = 250; __thread"
+    },
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 8,
+     "example_file": "tree/win32/include/time.h",
+     "example": "ndif  #ifndef _TIME32_T_DEFINED #define _TIME32_T_DEFINED   typedef long __time32_t; #endif  #ifndef _TIME64_T_DEFINED #define _TIME64_T_DEFINED"
+    },
+    "TIME_32BIT": {
+     "files": 6,
+     "example_file": "tree/win32/include/time.h",
+     "example": "fndef _TIME32_T_DEFINED #define _TIME32_T_DEFINED   typedef long __time32_t; #endif  #ifndef _TIME64_T_DEFINED #define _TIME64_T_DEFINED"
+    },
+    "ENDIANNESS": {
+     "files": 1,
+     "example_file": "tree/win32/include/winapi/winsock2.h",
+     "example": "r *optval,int *optlen);   WINSOCK_API_LINKAGE u_long WSAAPI htonl(u_long hostlong);   WINSOCK_API_LINKAGE u_short WSAAPI hton"
+    }
+   }
+  },
+  {
+   "specimen_id": "tinystm-marlier",
+   "patterns": [
+    "WORD_WIDTH_ASSUMPTION"
+   ],
+   "detail": {
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 2,
+     "example_file": "tree/src/wrappers.c",
+     "example": "OMPILE_TIME_ASSERT(sizeof(int) == 4);   COMPILE_TIME_ASSERT(sizeof(long) == 4 || sizeof(long) == 8);   COMPILE_TIME_ASSERT(sizeof(float)"
+    }
+   }
+  },
+  {
+   "specimen_id": "valgrind-helgrind-fixtures-3.19",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "ENDIANNESS",
+    "INT_OVERFLOW_RELIANCE",
+    "TIME_32BIT",
+    "WORD_WIDTH_ASSUMPTION",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "ENDIANNESS": {
+     "files": 13,
+     "example_file": "tree/valgrind-3.19.0/auxprogs/valgrind-di-server.c",
+     "example": "sin_family      = AF_INET;    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);    server_addr.sin_port        = htons(port);"
+    },
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 31,
+     "example_file": "tree/valgrind-3.19.0/cachegrind/cg_merge.c",
+     "example": "<string.h> #include <ctype.h>  typedef  signed long   Word; typedef  unsigned long UWord; typedef  unsigned char Bool; #define True ((Bool)1) #define"
+    },
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 19,
+     "example_file": "tree/valgrind-3.19.0/coregrind/m_machine.c",
+     "example": "choose not to), so to be safe we directly emit the 32-bit            word corresponding to \"vor 0,0,0\".  This fixes a build"
+    },
+    "TIME_32BIT": {
+     "files": 28,
+     "example_file": "tree/valgrind-3.19.0/coregrind/m_mallocfree.c",
+     "example": ";     pn = pp = p_best;     // This loop bound was 20 for a long time, but experiments showed that    // reducing it to 10 gave th"
+    },
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 6,
+     "example_file": "tree/valgrind-3.19.0/dhat/dh_main.c",
+     "example": "ppi->histo[..]          // Right now, at least don't let it overflow/wrap around          if (ppi->histo[i] <= 0xFFFE0000)"
+    },
+    "ALIGNMENT_CAST": {
+     "files": 4,
+     "example_file": "tree/valgrind-3.19.0/perf/tinycc.c",
+     "example": "ead_stream, *can_read_stream = &ml;             macro_ptr = (int *)ptr;             tok = t;             ret = macro_subst_tok(tok"
+    }
+   }
+  },
+  {
+   "specimen_id": "whitakers-words-ada",
+   "patterns": [
+    "TIME_32BIT"
+   ],
+   "detail": {
+    "TIME_32BIT": {
+     "files": 1,
+     "example_file": "tree/test/10_aeneid/expected.txt",
+     "example": "DV   [XXXBL]   long ago/before/since; a long time ago; this long time; immediately, at once;  sauci.a              ADJ    1 1 NOM"
+    }
+   }
+  },
+  {
+   "specimen_id": "xv6-riscv",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 1,
+     "example_file": "tree/kernel/types.h",
+     "example": "typedef unsigned short uint16; typedef unsigned int uint32; typedef unsigned long uint64;  typedef uint64 pde_t;"
+    },
+    "ALIGNMENT_CAST": {
+     "files": 1,
+     "example_file": "tree/user/usertests.c",
+     "example": ");     exit(1);   }    for (i = 0; i < MAXFILE; i++) {     ((int *)buf)[0] = i;     if (write(fd, buf, BSIZE) != BSIZE) {       pr"
+    }
+   }
+  },
+  {
+   "specimen_id": "zchaff-2007",
+   "patterns": [
+    "WORD_WIDTH_TYPEDEF"
+   ],
+   "detail": {
+    "WORD_WIDTH_TYPEDEF": {
+     "files": 2,
+     "example_file": "tree/zchaff64/SAT.h",
+     "example": "f long long long64;  // this is for 32 bit unix machines // typedef long long64;     // this is for Windows or 64 bit unix machines   #ifnde"
+    }
+   }
+  },
+  {
+   "specimen_id": "zlib-1.3.1",
+   "patterns": [
+    "ALIGNMENT_CAST",
+    "INT_OVERFLOW_RELIANCE",
+    "WORD_WIDTH_ASSUMPTION"
+   ],
+   "detail": {
+    "WORD_WIDTH_ASSUMPTION": {
+     "files": 1,
+     "example_file": "tree/zlib-1.3.1/crc32.c",
+     "example": "};\\n\");              /* compute braid tables for this N and 32-bit word_t */             braid(ltl, big, n, 4);              /* wri"
+    },
+    "INT_OVERFLOW_RELIANCE": {
+     "files": 2,
+     "example_file": "tree/zlib-1.3.1/inffast.c",
+     "example": "}                     else if (wnext < op) {      /* wrap around window */                         from += wsize + wnext - o"
+    },
+    "ALIGNMENT_CAST": {
+     "files": 1,
+     "example_file": "tree/zlib-1.3.1/contrib/minizip/zip.c",
+     "example": "wHeader;    while(p < (pData + *dataLen))   {     header = *(short*)p;     dataSize = *(((short*)p)+1);      if( header == sHeade"
+    }
+   }
+  }
+ ]
+}

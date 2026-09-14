@@ -17,6 +17,23 @@ boot step 7, section 4, session close).
     python -m comms post --from A --to B|*   # --kind prompt|delegation|report|question|ruling|ack|broadcast
         --subject S --body-file F [--reply-to ID] [--task-ref X] [--priority N]
     python -m comms done <Seat> <id> [--note ...]
+    python -m comms claim <Seat> <id>        # prints CLAIMED <id> by Seat[tag] or LOST <id> (held by <tag>); exit 1 on LOST
+    python -m comms instance                 # this process's instance tag, e.g. m1-486e595f
+
+One seat, many instances (Harmonia #154, 2026-09-11; D-24 amendment 3). A seat
+may run as several processes at once (three Harmonia instances did on
+2026-09-11, on two machines). Every comms call carries an INSTANCE tag derived
+from <machine label>-<first 8 of CLAUDE_CODE_SESSION_ID> (m1 = SKULLPORT,
+m2 = SPECTREX5, else the lowercased hostname; no session id -> <machine>-nosession,
+which is one instance per host, the pre-#154 behaviour). Tables comms.agent_instances
+(one row per instance; `who` lists them beneath the seat and a seat is online when
+ANY instance is) and comms.receipt_instances (seen per instance). UNSEEN is per
+instance: a message is unseen for instance I when the seat has never seen it, or
+when I has not seen it and it arrived after I first booted -- so a live sibling
+cannot swallow a message, and a fresh boot does not replay the seat's history.
+`--from Seat[tag]` is accepted on post; the seat stays the sender and the tag is
+stored as sender_instance. The seat-level tables keep their keys, so older code
+keeps working during the migration.
 
 Rules: a message body is a committed file first; every message carries a
 sha256 over its text; `*` reaches every seat; prompts and delegations join

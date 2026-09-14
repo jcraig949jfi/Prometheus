@@ -1,0 +1,49 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.halve_the_bracket_keeping_the_half_with_the_sign_change",
+  "name": "halve the bracket, keeping the half with the sign change",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "given two points where the function has opposite signs, evaluate at the midpoint and keep whichever half still changes sign; the bracket halves every step, so the error is known exactly in advance",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bisection method' in section Computational mathematics / Numerical algorithms / Root finding: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "a continuous function and an initial sign change"
+  ],
+  "fails_when": [
+    "one bit per evaluation; cannot find roots without a sign change (even multiplicity)"
+  ],
+  "instances": [
+    "Bisection method"
+  ],
+  "related": [
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.search.halve_sorted_range"
+    },
+    {
+      "rel": "RECURRENCE_OF",
+      "id": "bit.search.unimodal_bracket"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

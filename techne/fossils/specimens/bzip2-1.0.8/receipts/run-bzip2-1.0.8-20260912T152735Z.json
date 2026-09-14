@@ -1,0 +1,153 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "bzip2-1.0.8",
+  "receipt_id": "run-bzip2-1.0.8-20260912T152735Z",
+  "written_utc": "20260912T152735Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/bzip2-1.0.8",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "70fe5728f37aa57560430df75cf8646bc87f0fd4f2a85b5b8d04f471fce955b4",
+  "recipe_sha256": "fcc253d7d481fef8ff4b049d2571352d0870bfd8a1653c05d749ad1c8b4d81f4",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s bzip2 2>&1 | grep -viE 'warning' | tail -3; test -x ./bzip2",
+      "exit": 0,
+      "seconds": 2.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "  544 |                  ) ) {\n      |                  ~\nranlib libbz2.a\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "make test (BWT round trip on sample files)",
+      "cmd": "make test 2>&1 | tail -15",
+      "exit": 0,
+      "seconds": 0.96,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)(ok|good|correct|comparing)/"
+      ],
+      "stdout": {
+        "text": "\n   make -n install                      or\n   make -n install PREFIX=/xxx/yyy      respectively.\n\nThe -n instructs make to show the commands it would execute, but\nnot actually execute them.\n\nInstructions for use are in the preformatted manual page, in the file\nbzip2.txt.  For more detailed documentation, read the full manual.  \nIt is available in Postscript form (manual.ps), PDF form (manual.pdf),\nand HTML form (manual.html).\n\nYou can also do \"bzip2 --help\" to see some helpful information. \n\"bzip2 -L\" displays the software license.\n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "blocksort.o",
+      "sha256": "dd25784657219654afbf6d8bc8300c19e230a6beefeba041a8006e7f4da1edf6",
+      "bytes": 56896
+    },
+    {
+      "path": "bzip2",
+      "sha256": "3b1ac9a73f4149376cdf45b2db728a1bf7f2ffb3c5aca8e775999a4ad590f195",
+      "bytes": 279048
+    },
+    {
+      "path": "bzip2.o",
+      "sha256": "a2e830af9e368357998dc17604210f97c0329c356247250cb3fd7b82ef2cef7d",
+      "bytes": 134104
+    },
+    {
+      "path": "bzlib.o",
+      "sha256": "0087d47d94b2aac4e9ce336fd366387727adb60820e3f0b63980102924493821",
+      "bytes": 90760
+    },
+    {
+      "path": "compress.o",
+      "sha256": "018287a6aea6828326bbb659939bb95064654b967b30c4e62aa70b796a9b7a5f",
+      "bytes": 73768
+    },
+    {
+      "path": "crctable.o",
+      "sha256": "32060927cf790132c2494f4392f69bb1038b0814e6477adaedd5a9cabd2a0d70",
+      "bytes": 3936
+    },
+    {
+      "path": "decompress.o",
+      "sha256": "a5ebdd9e0323c484ccf4410a802472fdc2bcc96ada4f1dd84f213cf1e0ce37c2",
+      "bytes": 61112
+    },
+    {
+      "path": "huffman.o",
+      "sha256": "535ce35fd40228d76d34f19232370e6805ed6cd71c825938207c28460afed4a5",
+      "bytes": 13448
+    },
+    {
+      "path": "libbz2.a",
+      "sha256": "c77f4c80f5b87fb35d18351a4a1463c384a1186b15960e1e1172277f202a3344",
+      "bytes": 306082
+    },
+    {
+      "path": "randtable.o",
+      "sha256": "7a8b76696ecb18673dbedefbe386b162732514a23ada61b96a924f9f564ecf29",
+      "bytes": 4952
+    },
+    {
+      "path": "sample1.rb2",
+      "sha256": "d4b442283e085497c528c0122c7ec64bf12aac422b3faff57b97de3378b7a7a4",
+      "bytes": 32348
+    },
+    {
+      "path": "sample1.tst",
+      "sha256": "af423164ec87f495f7d450fee9bdd418c12114cd305de2384fd20b91ba7994c2",
+      "bytes": 98696
+    },
+    {
+      "path": "sample2.rb2",
+      "sha256": "c74d44033766ea66171f51bd2ce6e3ad9ce4e0749e03ee4bee3074ab2a4b9c7f",
+      "bytes": 73732
+    },
+    {
+      "path": "sample2.tst",
+      "sha256": "316ad6713f2c05413e0b9eac132840d092674e7de4138251d3552f98671fcf9a",
+      "bytes": 212340
+    },
+    {
+      "path": "sample3.rb2",
+      "sha256": "fc60721da6329daa4bfe5ef3b32d2de0bebac626ce8522ae033dc3a9296c7779",
+      "bytes": 235
+    },
+    {
+      "path": "sample3.tst",
+      "sha256": "6be9c2bd214924b18db0d57b9a14d6f4eeb0b276cd3a980aed91521cca3199dd",
+      "bytes": 120244
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false
+}

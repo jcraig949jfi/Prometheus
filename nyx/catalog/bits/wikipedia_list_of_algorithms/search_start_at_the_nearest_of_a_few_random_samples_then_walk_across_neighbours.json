@@ -1,0 +1,42 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.start_at_the_nearest_of_a_few_random_samples_then_walk_across_neighbours",
+  "name": "start at the nearest of a few random samples, then walk across neighbours toward the target",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "draw a handful of random cells, take the one whose reference point is closest to the query, and then step from cell to adjacent cell in the direction of the query until the query falls inside the current cell; no index is built",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Jump-and-Walk algorithm' in section Computational mathematics / Geometry: an algorithm for point location in triangulations",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "GRAPH",
+  "out_geometry": "STATE_TOKEN",
+  "order_req": "NONE",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "RANDOMIZED",
+  "iteration": "RANDOM",
+  "cost": "LINEAR",
+  "requires": [
+    "adjacency between cells",
+    "a sample count (policy)"
+  ],
+  "fails_when": [
+    "non-convex regions can trap the walk"
+  ],
+  "instances": [
+    "Jump-and-Walk algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.hypothesis_shrinker.span_structured_passes.cut2",
+  "specimen": "hypothesis_shrinker",
+  "name": "span-structured passes -- at CUT-2 a COUPLED CLUSTER: the passes exist, but whether any of them can fire is decided by the LABEL structure the strategy combinators recorded; on the consumer's own strategy the one pass that could collapse the observed redundancy made zero calls",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "hypothesis Shrinker.try_trivial_spans / pass_to_descendant / reorder_spans / remove_discarded / node_program, over data.Span",
+    "sources": [
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/shrinker.py 1748-1770 (try_trivial_spans), 1030-1075 (pass_to_descendant), 1842-1875 (reorder_spans via Ordering keyed by sort_key), 1300-1330 (remove_discarded), 1345-1375 + 1900-1925 (node_program / run_node_program)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "hypothesis 6.165.10 (Techne lock; shrinker.py sha256 f364cbff...) hypothesis/internal/conjecture/data.py 169-260 (Span: label, parent, start, end, depth, discarded, choice_count, children -- produced by generation)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/hypothesis_shrinker/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Five defs in the pinned bytes, united at drawing by the foreign state they all consume; DISCOVERED. The spans themselves are produced by strategies during generation (data.py), outside the shrinker.",
+    "mechanism": "Each pass reads the span record of the current best and proposes a structurally meaningful edit: (a) replace all choices inside one span by their index-0 values, then re-read the span's new content; (b) replace a span by a descendant span with the same label (a recursive strategy's subtree for its parent); (c) reorder same-label children of a span into sort_key order using the Ordering shrinker; (d) delete every span marked discarded (rejection-sampled values) in one go; (e) delete n contiguous nodes adaptively. All go through c01's acceptance.",
+    "input": "the current best's nodes and its Spans (start/end/label/parent/discarded); a chooser (c04) for which span/which descendant",
+    "output": "candidate choice sequences proposed to acceptance",
+    "state": "none of its own; reads the span record; pass_to_descendant caches descendant lists per (label, i) at the current target",
+    "assumptions": "that spans align with semantic units of the generated value (they do by construction of the strategies); that same-label spans are interchangeable in type (a recursive strategy's subtrees); that a discarded span can be removed without changing the enclosing value (the strategy asserted this when it marked it)",
+    "interface": "pass(chooser) -> None, proposing via consider_new_nodes; requires a Spans record on the target",
+    "fitness_value": "MEASURED on the consumer's fixture (nyx/specimens/hypothesis_shrinker/ablations/RECEIPT_N1_2026-09-11.json P-b): target 7 shrank in 132 calls, 5 shrinks, 5 of 12 choices deleted; reorder_spans 2 calls / 2 shrinks; every other listed pass 0 shrinks; pass_to_descendant is ABSENT from the profile (0 calls, so not printed). Result '(not (not (or (and x0 x1) (and x0 x2))))' size 9 vs enumerated minimum '(and (or x1 x2) x0)' size 5 -- Techne's worst case reproduced exactly. On a plain st.recursive strategy (N-g) the nested Not collapsed to ('Not','x0'), so the pass works when labels align.",
+    "failure_landscape": "(a) CONFIRMED and located: dependence on generator-recorded spans is decisive -- the same pass fires on one recursive strategy and never on another whose alternatives are .map()/.filter() wrapped (label identity differs); (b) same-label requirement (as read); (c) O(spans^2); (d) reorder uses sort_key -- and reorder_spans was the ONLY pass that shrank the Proteus example (2/2), moving toward the encoding's order, not the consumer's.",
+    "ablation": "RUN (as observation, not intervention): the profile is the ablation -- the pass list with per-pass shrinks. A true ablation (remove pass_to_descendant) is not needed to show it contributed nothing here: it made no calls.",
+    "decomposability": "Each of the five is separately removable from the pass list; they share only the span reader. The reader (data.Span) is the coupling to the ecosystem.",
+    "composability": "Any organism whose generated values carry a structural record of what came from where. Proteus's programs have a tree structure that the choice sequence encodes only through the recursive strategy's spans -- so the transfer question is whether a Prometheus host records spans at all. None does.",
+    "human_prior": "That the generator's grouping is the right grouping for simplification; that a subtree of the same strategy is 'simpler' than its parent (true under shortlex by length, but it is the parent's label that licenses the move).",
+    "control": "Positive: a recursive one_of strategy generating a nested Not(Not(x)) must be reducible by pass_to_descendant to x when the predicate allows. Negative: with a flat strategy (no nested spans) pass_to_descendant never fires (chooser exhausts). Cheat: a pass that deletes a non-discarded span and 'succeeds' because the predicate is insensitive to it is not a structural insight; control: the same deletion must fail on a predicate that reads the span.",
+    "cheat": "Success attributed to structure when it came from node_program's blind deletion; control: run with node_program passes removed."
+  },
+  "alternative_cuts": [
+    "CUTS.md c10: the repair cluster and these passes are one 'engine-shape-aware' organ (cut C)",
+    "CUT-2: demoted to COUPLED_CLUSTER. The passes are machinery; their applicability is a property of (passes x strategy label structure), i.e. of the ecosystem. c19 (PERTURBED) records the label-alignment condition."
+  ],
+  "pressure_refs": [],
+  "cut": "CUT-2",
+  "derived_from": "organs/span_structured_passes.cut1.json (preserved)"
+}

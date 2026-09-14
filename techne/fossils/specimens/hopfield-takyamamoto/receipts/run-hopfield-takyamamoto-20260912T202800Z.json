@@ -1,0 +1,67 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "hopfield-takyamamoto",
+  "receipt_id": "run-hopfield-takyamamoto-20260912T202800Z",
+  "written_utc": "20260912T202800Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "drv.py": "209f7f66b81981eb0b92ac5a67022a7f81b53146a1b437fa0e331bb5873a1035"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "52d091ff7e6e6f5d96b7edd674bf6900a5c027323d1fe194e48f7373df11abc2",
+  "recipe_sha256": "607e1e0123dc5d2a1e6bf200150cbd89a7c5b3806bede2eea33d77dbbf5e68e0",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.89,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "store patterns, recall from a corrupted cue (attractor dynamics)",
+      "cmd": "pip install -q numpy matplotlib tqdm >/dev/null 2>&1 && MPLBACKEND=Agg PYTHONPATH=. python $HARNESS/drv.py 2>&1 | grep -v '^Start to'",
+      "exit": 0,
+      "seconds": 10.26,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n  0%|          | 0/2 [00:00<?, ?it/s]\n100%|\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6| 2/2 [00:00<00:00, 19784.45it/s]\n\n  0%|          | 0/1 [00:00<?, ?it/s]\n100%|\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6| 1/1 [00:00<00:00, 9754.20it/s]\nN=25 stored=2 corrupted=3 recovered=True\nHOPFIELD_OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "__pycache__/network.cpython-311.pyc",
+      "sha256": "95cad86af4fa2e8c7bf00143bcf293c2038b194869f64437860e92411f9f588b",
+      "bytes": 4901
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "52d091ff7e6e6f5d96b7edd674bf6900a5c027323d1fe194e48f7373df11abc2",
+  "body_preserved": true
+}

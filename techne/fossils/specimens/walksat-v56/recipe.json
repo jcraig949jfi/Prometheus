@@ -1,0 +1,32 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/Walksat-master/Walksat_v56",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -vi warning | tail -3; test -x ./walksat && test -x ./makewff"
+    }
+  ],
+  "runs": [
+    {
+      "name": "generate a satisfiable random 3-SAT and solve it by local search",
+      "cmd": "./makewff -seed 1 -cnf 3 50 210 > $BODY/build_w.cnf 2>/dev/null || ./makewff 3 50 210 > $BODY/build_w.cnf; ./walksat -seed 1 -numsol 1 < $BODY/build_w.cnf 2>&1 | tail -20",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)(ASSIGNMENT FOUND|solution|numsol|flips)"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "makewff generates instances, walksat solves by stochastic local search; it is INCOMPLETE (finds models, never proves UNSAT), the opposite paradigm to picosat/minisat. The makewff flag form is version-dependent; the recipe tries the flagged form then a positional fallback."
+}

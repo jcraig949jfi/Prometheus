@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.repair.prune_domains_until_arc_consistent",
+  "name": "prune domains until every arc is consistent",
+  "lineage": [
+    "constraint solving"
+  ],
+  "mechanism": "keep a queue of constraint arcs; for each, remove from one variable's domain every value that has no supporting value in the other variable's domain, and re-queue the arcs of any variable whose domain shrank, until no domain changes",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'AC-3 algorithm general algorithms for the constraint satisfaction' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "REPAIR",
+  "in_geometry": "GRAPH",
+  "out_geometry": "MAP",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "MONOTONE",
+  "strategy": "FIXPOINT_ITERATION",
+  "iteration": "FIFO",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "binary constraints",
+    "finite domains"
+  ],
+  "fails_when": [
+    "arc consistency is not a solution; empty domains detect failure only"
+  ],
+  "instances": [
+    "AC-3 algorithm general algorithms for the constraint satisfaction"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

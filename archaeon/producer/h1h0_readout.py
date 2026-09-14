@@ -27,10 +27,11 @@ COMPARE_FIELDS = ("status", "solved", "solution", "solution_size", "candidates_t
 
 def fetch(conn, sets: Sequence[str] = SETS) -> List[Dict[str, Any]]:
     cur = conn.cursor()
-    cur.execute("SELECT candidate_set_id, arm_id, source_evidence->>'task_id', request_key, status, "
+    cur.execute("SELECT COALESCE(candidate_set_id, source_evidence->>'campaign_set'), arm_id, source_evidence->>'task_id', request_key, status, "
                 "result_summary->'result'->'repeats'->0->'result', result_summary->'load_receipt'->>'allowance_mechanism', "
-                "left(error, 200), sfe_experiment_id, spec_hash FROM viv.research_experiment_queue WHERE candidate_set_id = ANY(%s) "
-                "ORDER BY source_evidence->>'task_id', arm_id, request_key", (list(sets),))
+                "left(error, 200), sfe_experiment_id, spec_hash FROM viv.research_experiment_queue "
+                "WHERE (candidate_set_id = ANY(%s) OR source_evidence->>'campaign_set' = ANY(%s)) "
+                "ORDER BY source_evidence->>'task_id', arm_id, request_key", (list(sets), list(sets)))
     out = []
     for cs, arm, task, rk, status, res, allow, err, exp, spec_hash in cur.fetchall():
         out.append({"set": cs, "arm": arm, "task_id": task, "request_key": rk, "status": status,

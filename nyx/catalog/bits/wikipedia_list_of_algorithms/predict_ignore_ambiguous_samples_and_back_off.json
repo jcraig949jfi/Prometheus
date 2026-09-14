@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.ignore_ambiguous_samples_and_back_off",
+  "name": "ignore ambiguous timing samples and back off the timer",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "do not update the round-trip estimate from acknowledgements of retransmitted messages (their timing is ambiguous), and double the timeout on each retransmission until a fresh unambiguous sample arrives",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Karn's algorithm' in section Networking: addresses the problem of getting accurate estimates of the round-trip time for messages when using TCP",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "STREAM",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "NONE",
+  "strategy": "ADAPTIVE_SWITCH",
+  "iteration": "NONE",
+  "cost": "CONSTANT",
+  "requires": [
+    "a retransmission marker"
+  ],
+  "fails_when": [
+    "a sustained loss burst inflates the timer for a while"
+  ],
+  "instances": [
+    "Karn's algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

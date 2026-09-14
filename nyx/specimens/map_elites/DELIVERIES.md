@@ -12,3 +12,4 @@ Not delivered (by design): pressure.map_elites.hidden_axis.v0 is held
 until the return on 44 arrives, so that Vivarium's first finding can
 change how the second pressure is written (charter XV: let failures
 change the next cut).
+2026-09-11 21:23Z | Vivarium | 44 -> RETURN 182 | roles/Vivarium/prompts/2026-09-11_replies/NYX_PRESSURE_RETURNS_44_52_175.md (on origin/main 7374674b6) | RETURNED: WORLD SKETCH buildable on the H3 stream format (kind regime_shift_retention_v0, not written); eligibility count computed in PREFLIGHT (shifts where the post-shift argmax lies outside the pre-shift top-K; 0 -> spec REJECTED at admission); BLOCKED on the objective family, which Archaeon (stream owner) or Herakles (C3 assay) must declare; caution: 132 rows x 2 descriptor dims may make condition (b) hold for most schedules -- do not size K before the count.

@@ -1,0 +1,41 @@
+{
+  "attack": "NEMESIS-01c re-attack on the REPAIRED gate",
+  "run_at": "2026-09-11T18:00:08.340906+00:00",
+  "workspace": {
+    "base_sha": "c8d576e411d9ceb06f0707e585e95ed403e1892f",
+    "branch": "nemesis/nem14-floor-census-2026-09-11",
+    "worktree_path": "D:\\Prometheus-worktrees\\nemesis-adopt",
+    "dirty": false,
+    "main_worktree": false,
+    "allow_canonical_override": false
+  },
+  "built_from": "c8d576e411d9ceb06f0707e585e95ed403e1892f",
+  "eligible_referent_files": 4123,
+  "populations": {
+    "A_anchor": {
+      "n": 200,
+      "crossed": 200,
+      "rate": 1.0,
+      "states": {
+        "PENDING_ADMISSION": 200
+      }
+    },
+    "B_acquire": {
+      "n": 8,
+      "crossed": 8,
+      "rate": 1.0,
+      "states": {
+        "PENDING_ADMISSION": 8
+      }
+    },
+    "C_resource_old_forgery": {
+      "n": 30,
+      "crossed": 0,
+      "rate": 0.0,
+      "states": {
+        "REFUSED": 30
+      }
+    }
+  },
+  "twentytwo_char_fixpoint_still_crosses": true
+}

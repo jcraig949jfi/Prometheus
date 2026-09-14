@@ -21,7 +21,11 @@ from agents._shared.external_tools.lean_runtime import (
 
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
-REPL_DIR = os.path.join(REPO_ROOT, "external_deps", "repl")
+# Techne 2026-09-11: the build is host-local and gitignored; resolve it for any worktree
+# (env PROMETHEUS_EXTERNAL_DEPS, then this tree, then the canonical checkout).
+from agents._shared.external_tools.locate import external_deps_root  # noqa: E402
+EXTERNAL_DEPS = external_deps_root()
+REPL_DIR = os.path.join(EXTERNAL_DEPS, "repl")
 REPL_BIN = os.path.join(REPL_DIR, ".lake", "build", "bin", "repl.exe")
 
 

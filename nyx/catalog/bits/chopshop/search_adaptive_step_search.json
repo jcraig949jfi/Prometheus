@@ -1,0 +1,49 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.adaptive_step_search",
+  "name": "adaptive step search",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "find the largest count for which a monotone predicate still holds by probing linearly for small counts, doubling upward until failure, then bisecting, so runs of successes cost logarithmic evaluations",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "nyx/specimens/hypothesis_shrinker/organs/adaptive_step_search.cut2.json",
+      "grade": "T1-LOCAL"
+    },
+    {
+      "ref": "RECEIPT_N1 P-a4 37 in 12 calls",
+      "grade": "T1-LOCAL"
+    }
+  ],
+  "grade": "T1-LOCAL",
+  "verb": "SEARCH",
+  "in_geometry": "PREDICATE",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "LOG",
+  "requires": [
+    "monotone predicate",
+    "predicate true at zero"
+  ],
+  "fails_when": [
+    "non-monotone predicates yield a local boundary"
+  ],
+  "instances": [
+    "hypothesis junkdrawer.find_integer"
+  ],
+  "related": [],
+  "organ_record": "nyx/specimens/hypothesis_shrinker/organs/adaptive_step_search.cut2.json",
+  "classified_by": "Nyx 2026-09-12 from the organ record; classification is T3 until a query test exercises it",
+  "strategy": "DIVIDE_CONQUER",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "NONE"
+}

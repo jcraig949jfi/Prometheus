@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.emit_nodes_without_pending_predecessors",
+  "name": "emit nodes with no pending predecessors",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "repeatedly emit a node whose predecessors have all been emitted, removing its outgoing edges, so the output respects every dependency; a cycle leaves nodes never emitted",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Topological sort' in section Combinatorial algorithms / Graph algorithms: finds linear order of nodes (e.g. jobs) based on their dependencies.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "DAG",
+  "out_geometry": "SEQUENCE",
+  "order_req": "PARTIAL",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "COMPLETE",
+  "cost": "LINEAR",
+  "requires": [
+    "an acyclic dependency graph"
+  ],
+  "fails_when": [
+    "cycles: some nodes are never emitted (detectable by count)",
+    "many valid orders; the tie-break is policy"
+  ],
+  "instances": [
+    "Topological sort"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "GREEDY",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "FIFO"
+}

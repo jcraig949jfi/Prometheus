@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.compute_the_fill_pattern_before_the_numeric_factorisation",
+  "name": "compute the fill pattern before the numeric factorisation",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "using only which entries are nonzero, simulate the factorisation on the graph to find every position that will become nonzero, allocate exactly that storage, and then run the numeric factorisation into the preallocated pattern with no dynamic growth",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Symbolic Cholesky decomposition' in section Computational mathematics / Numerical algorithms / Linear algebra: Efficient way of storing sparse matrix",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "GRAPH",
+  "out_geometry": "GRAPH",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a fixed elimination order"
+  ],
+  "fails_when": [
+    "pivoting for stability changes the pattern and invalidates it"
+  ],
+  "instances": [
+    "Symbolic Cholesky decomposition"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

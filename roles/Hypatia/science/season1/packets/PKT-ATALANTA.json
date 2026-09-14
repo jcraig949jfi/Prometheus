@@ -1,0 +1,79 @@
+{
+  "admissible": true,
+  "case_id": "Atalanta",
+  "evidence": [
+    {
+      "ascii_normalized": false,
+      "id": "EV1",
+      "locator": "agent_id=Atalanta field=design_choice",
+      "sha256": "16ffb79b36b75208df8540fb62d579d37c2c3fd145aa74a59e8dc22f349e271a",
+      "source_field_utf8_bytes": 150,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "launch the E-track primitive hunter gated on Apollo organism output, with a per-tick upstream check that emits an artifact when the upstream is absent"
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV2",
+      "locator": "agent_id=Atalanta field=boundary_localization",
+      "sha256": "0916bc6955613911be74b4cb7856daeb70167a779e6559a4bfa9e2fa495b014b",
+      "source_field_utf8_bytes": 270,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "the launch decision, not the agent: Atalanta ran correctly its entire life and 354 of 354 artifacts are upstream_not_found -- Apollo was shelved and the prey never existed."
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV3",
+      "locator": "agent_id=Atalanta field=boundary_localization",
+      "sha256": "64eed7017d90af54f0c2cdd39f9a908eab74192b5712f259b1a83426932d1d7d",
+      "source_field_utf8_bytes": 270,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "The agent is a perfectly functioning consumer of a dead producer (the Argos dual, one seat over)"
+    },
+    {
+      "ascii_normalized": false,
+      "id": "EV4",
+      "locator": "agent_id=Atalanta field=representation_hint",
+      "sha256": "822a151d3662f339e52ef4ee904b8e1bc794c582464d81faa80f3a8f752d9fbe",
+      "source_field_utf8_bytes": 214,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "an agent whose FIRST tick finds its upstream dead should park itself with a typed gate and stop, not run indefinitely emitting absence reports;"
+    },
+    {
+      "ascii_normalized": false,
+      "id": "EV5",
+      "locator": "agent_id=Atalanta field=representation_hint",
+      "sha256": "10c924de5f58986839bcb27d5cc817696d5da77ea830f4a9a0b32d4683edfa03",
+      "source_field_utf8_bytes": 214,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "upstream-liveness is a launch precondition, not a per-tick observation"
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV6",
+      "locator": "agent_id=Atalanta field=evidence",
+      "sha256": "e760b193b8628bbdc2457eacf81ff5f602baeea658e5c9f1c35abbbf453f82d3",
+      "source_field_utf8_bytes": 78,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "artifact census by query: Counter({'upstream_not_found': 354}) -- 100% of 354"
+    }
+  ],
+  "frozen_from": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+  "load_bearing_unit": "EV4",
+  "packet_id": "PKT-ATALANTA",
+  "source_row": {
+    "agent_id": "Atalanta",
+    "autopsied": "2026-08-20",
+    "by": "Aporia P47"
+  },
+  "splitter_version": "hypatia-freeze-1.0",
+  "terminal_leak": false,
+  "terminal_leak_units": [],
+  "terminal_ruling": {
+    "required_tokens": [
+      "dead",
+      "gating"
+    ],
+    "text": "DEAD-GATING (3d named cluster -- CONFIRMED in maximal form)"
+  },
+  "unit_count": 6
+}

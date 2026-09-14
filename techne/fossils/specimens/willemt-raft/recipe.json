@@ -1,0 +1,36 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "generate the CuTest AllTests driver, then compile the raft test suite",
+      "cmd": "cd tests && sh make-tests.sh 'test_*.c' > main_test.c && cd .. && gcc -O2 -w -Iinclude -Itests -I$HARNESS -o $BODY/traft src/raft_server.c src/raft_server_properties.c src/raft_log.c src/raft_node.c tests/main_test.c tests/test_log.c tests/test_node.c tests/test_scenario.c tests/test_server.c tests/test_snapshotting.c tests/mock_send_functions.c tests/CuTest.c $HARNESS/linked_list_queue.c 2>&1 | grep -i 'error:' | head; test -x $BODY/traft",
+      "timeout": 300
+    }
+  ],
+  "runs": [
+    {
+      "name": "Raft election + log-replication + snapshotting unit/scenario tests",
+      "cmd": "$BODY/traft > /tmp/raft.tap 2>&1; tail -2 /tmp/raft.tap; echo PASS=$(grep -c '^ok ' /tmp/raft.tap) NOTOK=$(grep -c 'not ok' /tmp/raft.tap)",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "NOTOK=0"
+        ],
+        "stdout_regex": "PASS=1[0-9][0-9]"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "UPSTREAM",
+  "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "The CuTest suite exercises leader election, log replication, and snapshotting via mock send functions (simulated peers). DEVIATIONS: CLinkedListQueue is vendored as a companion (network-sealed build); -Werror relaxed for modern gcc. No raft source changed."
+}

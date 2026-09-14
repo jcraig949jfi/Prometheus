@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.repeat_rounds_of_byte_substitution_positional_permutation_and_round_key_mixing",
+  "name": "repeat rounds of byte substitution, positional permutation and round-key mixing",
+  "lineage": [
+    "network protocols",
+    "error-correcting systems"
+  ],
+  "mechanism": "arrange the block as a small grid of bytes; each round replaces every byte through a fixed nonlinear table, moves bytes to new positions, mixes each column linearly, and XORs in a round key derived from the master key; a dozen rounds make every output bit depend nonlinearly on every input and key bit; decryption runs the inverse steps backward",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Advanced Encryption Standard (AES), winner of NIST competition, also known as Rijndael' in section Computer science / Cryptography: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "BITSTRING",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DATA_INDEPENDENT",
+  "iteration": "SWEEP",
+  "cost": "CONSTANT",
+  "requires": [
+    "a substitution table and a key schedule (data)"
+  ],
+  "fails_when": [
+    "table lookups leak through cache timing without constant-time implementation"
+  ],
+  "instances": [
+    "Advanced Encryption Standard (AES), winner of NIST competition, also known as Rijndael"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch11 (T2)"
+}

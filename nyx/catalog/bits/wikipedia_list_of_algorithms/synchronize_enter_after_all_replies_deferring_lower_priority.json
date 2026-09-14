@@ -1,0 +1,51 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.synchronize.enter_after_all_replies_deferring_lower_priority",
+  "name": "enter after all peers reply, deferring replies to lower-priority requests",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "to enter a critical section broadcast a timestamped request and wait for a reply from every peer; a peer replies at once unless it is inside or wants in with an earlier timestamp, in which case it defers its reply until it leaves",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Ricart–Agrawala Algorithm' in section Distributed systems algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lamport's Distributed Mutual Exclusion Algorithm': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SYNCHRONIZE",
+  "in_geometry": "STREAM",
+  "out_geometry": "BOOLEAN",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "REACTIVE",
+  "guarantee": "SOUND",
+  "strategy": "INCREMENTAL",
+  "iteration": "PRIORITY",
+  "cost": "LINEAR",
+  "requires": [
+    "logical timestamps",
+    "reliable messaging"
+  ],
+  "fails_when": [
+    "a crashed peer blocks everyone"
+  ],
+  "instances": [
+    "Ricart–Agrawala Algorithm",
+    "Lamport's Distributed Mutual Exclusion Algorithm"
+  ],
+  "related": [
+    {
+      "rel": "REQUIRES",
+      "id": "bit.order.timestamp_by_max_seen_plus_one"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

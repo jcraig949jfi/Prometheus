@@ -160,9 +160,12 @@ def issue(conn, rows: Optional[Sequence[Dict[str, Any]]] = None, config=None) ->
                                                       "selection_basis": "operator_directed_family",
                                                       "authority": "H5 alpha: the exhaustive 256-rule map at the fixture scope on the live "
                                                                    "consumer; every H5 quantity is producer-side arithmetic over it",
-                                                      "upstream_selection_history": "UNKNOWN"})
+                                                      "upstream_selection_history": "UNKNOWN",
+                                                      vq.CAMPAIGN_SET_KEY: csid})
+            # Every member executes: NOT a candidate set (Vivarium #181 item 4), so no
+            # candidate_set_id; the campaign grouping rides in source_evidence.campaign_set.
             res = vq.submit(conn, candidates=[cand], selected_index=0, source_reason="human",
-                            created_by="archaeon", config=config, candidate_set_id=csid)
+                            created_by="archaeon", config=config)
             ids.append(res["selected_experiment_id"])
     cost = C.CostEvent("generation", csid, m.resources([C.Resource("items", len(ids), "count", "count", "measured")]), output_refs=ids)
     return {"campaign": CAMPAIGN_ID, "candidate_set_id": csid, "experiment_ids": ids, "registered": len(ids),
@@ -177,7 +180,8 @@ def failed_transport_labels(conn, csid: str = "cs-h5-1") -> Dict[str, List[str]]
     the spec never ran or its result never came back) and everything else
     (a producer or engine-semantics error, never reissued blind)."""
     cur = conn.cursor()
-    cur.execute("select request_key, error from viv.research_experiment_queue where candidate_set_id=%s and status='failed'", (csid,))
+    from .. import vivqueue as vq
+    cur.execute("select request_key, error from viv.research_experiment_queue where " + vq.campaign_rows_filter() + " and status='failed'", (csid, csid))
     by_key = {r["request_key"]: r["label"] for r in plan()}
     out = {"transport": [], "other": [], "unknown_keys": []}
     for key, err in cur.fetchall():
@@ -225,11 +229,68 @@ def reissue(conn, labels: Sequence[str], suffix: str = "R1", config=None) -> Dic
                                                   "reissue_reason": "ENGINE_TRANSPORT / HTTP 500 failure on the first attempt; same spec, same hash",
                                                   "selection_basis": "operator_directed_family",
                                                   "authority": "re-attempt of a transport-failed row of the operator-issued H5-1 (F-19)",
-                                                  "upstream_selection_history": "UNKNOWN"})
+                                                  "upstream_selection_history": "UNKNOWN",
+                                                  vq.CAMPAIGN_SET_KEY: csid})
         res = vq.submit(conn, candidates=[cand], selected_index=0, source_reason="human",
-                        created_by="archaeon", config=config, candidate_set_id=csid)
+                        created_by="archaeon", config=config)
         ids.append(res["selected_experiment_id"])
     return {"campaign": CAMPAIGN_ID, "candidate_set_id": csid, "experiment_ids": ids, "labels": list(labels)}
+
+
+def completed_results(conn, sets: Sequence[str] = ("cs-h5-1", "cs-h5-1-r1")) -> Dict[str, Any]:
+    """The 256 live results, one per rule, from the completed rows of the
+    campaign and its reissues. When a rule has more than one completed row
+    (a first attempt AND a reissue both completed) the rows are checked for
+    the same spec_hash and the same behaviour_digest, and the EARLIEST
+    completed row is the one read; every rule records which attempt it came
+    from. Rows are matched in both shapes (candidate_set_id, or
+    source_evidence.campaign_set after 2026-09-11 evening)."""
+    from .. import vivqueue as vq
+    cur = conn.cursor()
+    cur.execute("SELECT request_key, spec_hash, source_evidence->>'rule', result_summary->'result'->'repeats'->0->'result', "
+                "finished_at, COALESCE(candidate_set_id, source_evidence->>'campaign_set') "
+                "FROM viv.research_experiment_queue WHERE (candidate_set_id = ANY(%s) OR source_evidence->>'campaign_set' = ANY(%s)) "
+                "AND status = 'completed' ORDER BY finished_at", (list(sets), list(sets)))
+    by_rule: Dict[int, List[Dict[str, Any]]] = {}
+    for rk, sh, rule, res, fin, cs in cur.fetchall():
+        by_rule.setdefault(int(rule), []).append({"request_key": rk, "spec_hash": sh, "result": res, "finished_at": str(fin), "set": cs})
+    results, attempts, conflicts = {}, {}, []
+    for rule, rows in sorted(by_rule.items()):
+        first = rows[0]
+        for other in rows[1:]:
+            if other["spec_hash"] != first["spec_hash"] or other["result"]["behaviour_digest"] != first["result"]["behaviour_digest"]:
+                conflicts.append({"rule": rule, "rows": [r["request_key"] for r in rows]})
+        results[rule] = first["result"]
+        attempts[rule] = {"read": first["request_key"], "also_completed": [r["request_key"] for r in rows[1:]], "set": first["set"]}
+    missing = sorted(set(range(256)) - set(results))
+    return {"results": results, "attempts": attempts, "missing_rules": missing, "conflicts": conflicts,
+            "n_completed_rows": sum(len(v) for v in by_rule.values())}
+
+
+def full_readout(conn, instruments: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """F-24 / ARCH-28: the 256-rule readout. Refuses to compute the H5
+    quantities on a partial map (wrong-population rule); reports the attempt
+    read per rule and the first attempts that stay failed on the record."""
+    import datetime as _dt
+    got = completed_results(conn)
+    out: Dict[str, Any] = {"schema": "archaeon.h5.readout.v1", "campaign": CAMPAIGN_ID, "sets_read": ["cs-h5-1", "cs-h5-1-r1"],
+                           "generated_at": _dt.datetime.now(_dt.timezone.utc).isoformat(), "scope": SCOPE,
+                           "n_completed_rows": got["n_completed_rows"], "missing_rules": got["missing_rules"],
+                           "conflicts": got["conflicts"], "attempts": {str(k): v for k, v in got["attempts"].items()}}
+    if got["missing_rules"] or got["conflicts"]:
+        out["status"] = "INCOMPLETE"
+        out["note"] = "H5 quantities NOT computed: a partial or inconsistent map is a different population from the 256-rule fixture"
+        return out
+    lm = live_class_map(got["results"])
+    out["status"] = "COMPLETE"
+    out["live_class_map"] = {k: v for k, v in lm.items() if k != "equivalence"}
+    out["equivalence"] = {str(k): v for k, v in sorted(lm["equivalence"].items())}
+    out["h5"] = h5_readout(lm["equivalence"], instruments=instruments)
+    from . import h5_reference as R
+    pub = R.load_class_map()["equivalence"]
+    out["published_map"] = {"n_classes": len(set(pub.values())), "agrees": lm["agrees_with_published"], "disagreements": lm["disagreements"]}
+    out["h5_on_published_map"] = h5_readout(pub) if not lm["agrees_with_published"] else "identical to h5 (maps agree)"
+    return out
 
 
 def main(argv=None) -> int:
@@ -239,7 +300,22 @@ def main(argv=None) -> int:
     ap.add_argument("--check", action="store_true"); ap.add_argument("--issue", action="store_true")
     ap.add_argument("--reissue-transport", action="store_true", help="re-issue the transport-failed rows of cs-h5-1 under suffix")
     ap.add_argument("--suffix", default="R1")
+    ap.add_argument("--readout", action="store_true", help="the 256-rule readout from the completed rows (F-24)")
+    ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
+    if a.readout:
+        from evidence_wiki.ew import db as ewdb
+        conn = ewdb.connect()
+        try:
+            r = full_readout(conn)
+        finally:
+            conn.close()
+        text = json.dumps(r, indent=1, default=str)
+        if a.out:
+            from pathlib import Path as _P
+            _P(a.out).write_text(text, encoding="utf-8")
+        print(text if not a.out else json.dumps({k: r[k] for k in ("status", "n_completed_rows", "missing_rules", "conflicts", "live_class_map", "published_map") if k in r}, indent=1, default=str))
+        return 0
     if a.reissue_transport:
         from evidence_wiki.ew import db as ewdb
         conn = ewdb.connect()

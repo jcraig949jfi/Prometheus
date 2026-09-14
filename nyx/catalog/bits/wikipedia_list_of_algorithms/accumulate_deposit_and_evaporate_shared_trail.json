@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.accumulate.deposit_and_evaporate_shared_trail",
+  "name": "deposit and evaporate a shared trail",
+  "lineage": [
+    "evolutionary computation",
+    "optimization"
+  ],
+  "mechanism": "many agents build solutions step by step choosing components with probability rising with a shared per-component trail value; good solutions deposit trail on their components and all trail evaporates each round, so the population's history biases future construction",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Ant colony optimization' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ACCUMULATE",
+  "in_geometry": "GRAPH",
+  "out_geometry": "MAP",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "strategy": "RANDOMIZED",
+  "iteration": "PARALLEL_ROUNDS",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a component graph",
+    "deposit and evaporation rates (policy)"
+  ],
+  "fails_when": [
+    "stagnation on one trail; rates decide everything"
+  ],
+  "instances": [
+    "Ant colony optimization"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

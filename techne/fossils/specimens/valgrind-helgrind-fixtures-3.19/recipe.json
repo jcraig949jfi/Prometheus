@@ -1,0 +1,65 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/valgrind-3.19.0/helgrind/tests",
+  "probe": [
+    {
+      "name": "valgrind (installed for the run; Debian's 3.19.0 matches the fixture version)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --version"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile five fixtures with pthreads, unmodified",
+      "cmd": "for t in tc01_simple_race tc05_simple_race tc09_bad_unlock tc13_laog1 tc19_shadowmem; do gcc -O0 -g -pthread -w -o $BODY/build/$t $t.c || echo FAIL $t; done; ls $BODY/build | tr '\\n' ' '"
+    }
+  ],
+  "runs": [
+    {
+      "name": "RACE: tc01_simple_race natively (completes, error invisible) then under helgrind (Possible data race reported at the planted line)",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; $BODY/build/tc01_simple_race; echo native_exit=$?; valgrind --tool=helgrind -q $BODY/build/tc01_simple_race 2>&1 | grep -E 'Possible data race|tc01_simple_race.c:|by thread|ERROR SUMMARY' | head -8; grep -c 'Possible data race' tc01_simple_race.stderr.exp",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "Possible data race",
+          "native_exit=0"
+        ]
+      },
+      "timeout": 600
+    },
+    {
+      "name": "LOCK ORDER (deadlock precursor): tc13_laog1 -- two threads take two locks in opposite orders; helgrind's lock-order graph reports the inversion",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --tool=helgrind -q $BODY/build/tc13_laog1 2>&1 | grep -E 'lock order|violated|acquired|ERROR SUMMARY' | head -8; grep -c 'lock order' tc13_laog1.stderr.exp",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)lock order"
+      },
+      "timeout": 600
+    },
+    {
+      "name": "BAD UNLOCK: tc09_bad_unlock -- unlocking a mutex the thread does not hold / an unlocked mutex",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --tool=helgrind -q $BODY/build/tc09_bad_unlock 2>&1 | grep -E 'unlock|not locked|ERROR SUMMARY' | head -6",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)unlock"
+      },
+      "timeout": 600
+    },
+    {
+      "name": "RACE (second fixture): tc05_simple_race",
+      "cmd": "apt-get -qq update >/dev/null && apt-get -qq install -y valgrind >/dev/null 2>&1; valgrind --tool=helgrind -q $BODY/build/tc05_simple_race 2>&1 | grep -E 'Possible data race|ERROR SUMMARY' | head -4",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "Possible data race"
+        ]
+      },
+      "timeout": 600
+    }
+  ],
+  "tests": [],
+  "test_kind": "UPSTREAM",
+  "test_classification_if_none": "UPSTREAM_TESTS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Oracle: each fixture's shipped .stderr.exp names the error class helgrind must report; the receipt records helgrind's actual report (addresses differ, classes must match). valgrind is apt-installed in the run container (recorded); the fixtures are the fossil, the detector is the instrument. The native run of tc01 shows the failure mode's signature: exit 0, nothing visible."
+}

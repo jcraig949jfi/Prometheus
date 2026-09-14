@@ -110,14 +110,21 @@ def build() -> dict:
     }
 
     rows = []
+    # Retired adapters (TECHNE-51, 2026-09-12) are listed with their status, never dropped:
+    # an inventory that forgets what it retired is the museum the ruling forbids.
+    import techne.lib.donors.retired.cvc5_adapter     # noqa: F401
+    import techne.lib.donors.retired.discopy_adapter  # noqa: F401
+    from techne.lib.donors.contract import RETIRED
     for name in sorted(D.registry):
         try:
-            ad = D.get(name)
+            ad = D.get(name, include_retired=True)
             man = ad.manifest()
             ident = man["identity"]
             status = "WRAPPED_AND_TESTED"
             if name == "cvc5" and smt and smt.get("VERDICT") == "REDUNDANT_AT_GEN0":
                 status = "REDUNDANT_AT_GEN0"
+            if name in RETIRED:
+                status = "ADAPTER_RETIRED_2026-09-12 (TECHNE-51; donor NOT retired): " + RETIRED[name]
         except Exception as e:                                        # noqa: BLE001
             rows.append({"donor": name, "status": "VETTED_NOT_INSTALLED",
                          "error": type(e).__name__ + ": " + str(e)})
@@ -182,6 +189,15 @@ def to_markdown(inv: dict) -> str:
     L = []
     A = L.append
     A("# Donor inventory -- Techne Gen-0")
+    A("")
+    A("> SUPERSEDED IN PART, 2026-09-12 (Techne, operator ruling TECHNE-51): this file is the "
+      "Gen-0 adapter view. The measured state of every donor is "
+      "techne/acquisition/DONOR_DISPOSITION_2026-09-11.json (techne/scripts/donor_disposition.py) "
+      "and the closeout roles/Techne/DONOR_FOUNDRY_CLOSEOUT_2026-09-12.md. The universal adapter "
+      "contract is no longer the required consumption route (0 importers outside techne/ in 11 "
+      "days); the discopy and cvc5 ADAPTERS are retired (techne/lib/donors/retired/RETIREMENT.md), "
+      "the donors are not. Usage exemplars implied here were never written and are not being "
+      "written now.")
     A("")
     A("Generated " + inv["generated"] + ". Machine-readable source: `techne/donor_inventory.json`.")
     A("")

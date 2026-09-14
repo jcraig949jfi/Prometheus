@@ -1,0 +1,90 @@
+{
+  "admissible": true,
+  "case_id": "Iris",
+  "evidence": [
+    {
+      "ascii_normalized": false,
+      "id": "EV1",
+      "locator": "agent_id=Iris field=design_choice",
+      "sha256": "dd0e82782ae430bc4e2ee3f3ff3f57a08b5a425739e5a57af6325506352bc4c9",
+      "source_field_utf8_bytes": 152,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "prose->symbol agreement detector (HarmoniaScorer pipeline) promoting candidates into the canonical symbol vocabulary under the >=2-agents-reference rule"
+    },
+    {
+      "ascii_normalized": false,
+      "id": "EV2",
+      "locator": "agent_id=Iris field=boundary_localization",
+      "sha256": "394e7b24e6ceae7c971ce25716e62b954bd961f6563f9d1440a8cedda4e03605",
+      "source_field_utf8_bytes": 306,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "nowhere evidenced: 54 symbol docs exist, 20 promoted to @v1 under a consumption-gated promotion rule (P42 salvage verified the vocabulary registry-mirrorable with zero phantom files);"
+    },
+    {
+      "ascii_normalized": false,
+      "id": "EV3",
+      "locator": "agent_id=Iris field=boundary_localization",
+      "sha256": "1f07d9e72025e0626173859ac4c458e75e61880c49345538b19be543af328dd5",
+      "source_field_utf8_bytes": 306,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "calibration fixtures (positive/negative/template-spans) show the instrument was calibrated by design. Death = the collapse"
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV4",
+      "locator": "agent_id=Iris field=representation_hint",
+      "sha256": "6f29afa025fcd50a06d3e0907a53fbbac595e638718750db35fc8d01461c46dc",
+      "source_field_utf8_bytes": 224,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "the >=2-agents-reference promotion rule is consumption-gating BUILT INTO the output path -- the single design pattern most of this ledger's failures lacked;"
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV5",
+      "locator": "agent_id=Iris field=representation_hint",
+      "sha256": "4addded45fa91bb78e71b8d4add48d4be62a5e4268854dd7248620356ec59fb5",
+      "source_field_utf8_bytes": 224,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "carry it forward as the default for any vocabulary-producing agent"
+    },
+    {
+      "ascii_normalized": false,
+      "id": "EV6",
+      "locator": "agent_id=Iris field=evidence",
+      "sha256": "1edc556e181f64f337f9d1e9c2a916ec301ef36ba8f779f496160b9f6e6c03ab",
+      "source_field_utf8_bytes": 133,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "P42 salvage: 20 promoted symbols, 0 missing files;"
+    },
+    {
+      "ascii_normalized": false,
+      "id": "EV7",
+      "locator": "agent_id=Iris field=evidence",
+      "sha256": "d64d5870583c990029eab7d33c903e2bb52bb8692563c02c38324ffcc6c97f7e",
+      "source_field_utf8_bytes": 133,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "artifacts dir holds calibration_positive/negative.json + known_template_spans.json"
+    }
+  ],
+  "frozen_from": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+  "load_bearing_unit": "EV4",
+  "packet_id": "PKT-IRIS",
+  "source_row": {
+    "agent_id": "Iris",
+    "autopsied": "2026-08-21",
+    "by": "Aporia P64"
+  },
+  "splitter_version": "hypatia-freeze-1.0",
+  "terminal_leak": false,
+  "terminal_leak_units": [],
+  "terminal_ruling": {
+    "required_tokens": [
+      "design",
+      "established",
+      "failure",
+      "no"
+    ],
+    "text": "NO-DESIGN-FAILURE-ESTABLISHED (third clean null)"
+  },
+  "unit_count": 7
+}

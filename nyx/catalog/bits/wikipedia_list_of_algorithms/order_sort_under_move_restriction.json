@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.order.sort_under_move_restriction",
+  "name": "sort under a restricted move",
+  "lineage": [
+    "search"
+  ],
+  "mechanism": "order a sequence using only one permitted operation (reversing a prefix), placing the largest unsorted element by at most two moves each round",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Pancake sorting' in section Combinatorial algorithms / Sequence algorithms / Sequence sorting: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "ORDER",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a total order",
+    "the restricted move"
+  ],
+  "fails_when": [
+    "minimal move count is hard in general; the greedy bound is 2n"
+  ],
+  "instances": [
+    "Pancake sorting"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "GREEDY",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.vote_of_nearest_stored_examples",
+  "name": "vote of the nearest stored examples",
+  "lineage": [
+    "optimization",
+    "memory and retrieval"
+  ],
+  "mechanism": "store all training examples; to predict, find the k stored examples closest to the query under a distance and return their majority label or average value",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'k-nearest neighbors (k-NN)' in section Computer science / Machine learning and statistical classification: a non-parametric method for classifying objects based on closest training examples in the feature space",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "RECORD",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "GLOBAL",
+  "control": "PURE",
+  "guarantee": "NONE",
+  "strategy": "DIRECT",
+  "iteration": "PRIORITY",
+  "cost": "LINEAR",
+  "requires": [
+    "a distance",
+    "k (policy)"
+  ],
+  "fails_when": [
+    "distance meaningless in high dimension; cost per query linear without an index"
+  ],
+  "instances": [
+    "k-nearest neighbors (k-NN)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

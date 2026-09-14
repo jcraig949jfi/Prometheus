@@ -1,0 +1,90 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.replace_repeat_with_back_reference",
+  "name": "replace a repeat with a back-reference",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "scan the input and, whenever the upcoming text has already appeared within a window or in a dictionary of earlier phrases, emit a reference (distance and length, or a phrase index) instead of the text, extending the dictionary as you go",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'LZ77 and LZ78' in section Information theory and signal processing / Coding theory / Lossless compression algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lempel–Ziv Jeff Bonwick (LZJB)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lempel–Ziv–Markov chain algorithm (LZMA)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lempel–Ziv–Oberhumer (LZO)': speed oriented",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lempel–Ziv Ross Williams (LZRW)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lempel–Ziv–Stac (LZS)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lempel–Ziv–Storer–Szymanski (LZSS)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Lempel–Ziv–Welch (LZW)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'LZWL': syllable-based variant",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'LZX': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Deflate': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPRESS",
+  "in_geometry": "STRING",
+  "out_geometry": "SEQUENCE",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "GREEDY",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a match finder over the window (a hash or suffix structure)"
+  ],
+  "fails_when": [
+    "greedy match choice is not optimal parsing",
+    "window size bounds what can be referenced"
+  ],
+  "instances": [
+    "LZ77 and LZ78",
+    "Lempel–Ziv Jeff Bonwick (LZJB)",
+    "Lempel–Ziv–Markov chain algorithm (LZMA)",
+    "Lempel–Ziv–Oberhumer (LZO)",
+    "Lempel–Ziv Ross Williams (LZRW)",
+    "Lempel–Ziv–Stac (LZS)",
+    "Lempel–Ziv–Storer–Szymanski (LZSS)",
+    "Lempel–Ziv–Welch (LZW)",
+    "LZWL",
+    "LZX",
+    "Deflate"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

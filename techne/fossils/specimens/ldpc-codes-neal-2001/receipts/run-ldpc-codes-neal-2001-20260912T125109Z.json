@@ -1,0 +1,288 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "ldpc-codes-neal-2001",
+  "receipt_id": "run-ldpc-codes-neal-2001-20260912T125109Z",
+  "written_utc": "20260912T125109Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "132aa1f564f37d4bfa10c1e1293b8f5b9f3f3551245545a089e645913dc2b168",
+  "recipe_sha256": "1c2b9c0790174ae30102f599af07539643881e40d3a517f9dd5c1088fd730cdb",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make",
+      "cmd": "make -s 2>&1 | grep -i -E '^.*error' ; test -x ./decode && test -x ./make-ldpc",
+      "exit": 0,
+      "seconds": 3.98,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "make-ldpc / encode / transmit / decode / verify pipeline on a small random code",
+      "cmd": "mkdir -p $BODY/build && cd $BODY/build && S=$BODY/upstream/tree && $S/make-ldpc ex.pchk 20 40 1 evenboth 3 && $S/make-gen ex.pchk ex.gen dense && $S/rand-src ex.src 1 20x10 && $S/encode ex.pchk ex.gen ex.src ex.enc && $S/transmit ex.enc ex.rec 1 bsc 0.05 && $S/decode ex.pchk ex.rec ex.dec bsc 0.05 prprp 100 && $S/verify ex.pchk ex.dec ex.gen ex.src",
+      "exit": 0,
+      "seconds": 0.14,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /(?i)block|decod|error/"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "Number of 1s per check in Inv(A) X B is 9.3\nEncoded 10 blocks, source block size 20, encoded block size 40\nTransmitted 400 bits\nDecoded 10 blocks, 8 valid.  Average 21.1 iterations, 4% bit changes\nBlock counts: tot 10, with chk errs 2, with src errs 2, both 2\nBit error rate (on message bits only): 1.500e-02\n"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "upstream test script",
+      "cmd": "make test 2>&1 | tail -15",
+      "exit": 0,
+      "seconds": 0.08,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "make: *** No rule to make target 'test'.  Stop.\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "alist-to-pchk",
+      "sha256": "e1c5e7f8e4b1d9dd6c77162ef3033ec8d8d869ced880cc2560e3ce9773e6b95b",
+      "bytes": 39888
+    },
+    {
+      "path": "alist-to-pchk.o",
+      "sha256": "25888dfa79b53d9501bd122321254f7ed817e14c4140e9768f55cefbb262c317",
+      "bytes": 6704
+    },
+    {
+      "path": "alloc.o",
+      "sha256": "f17e7d2d0123f2710eb74853b3d1758ae29910197d21b97d0cace8e38b56c81e",
+      "bytes": 1800
+    },
+    {
+      "path": "blockio.o",
+      "sha256": "02cc514c6698a53e860b22445561e4d22d5dcdbbfc9ffb3c85b4ebca92d182cb",
+      "bytes": 4384
+    },
+    {
+      "path": "channel.o",
+      "sha256": "848dfe07a4d879fd71832fddfaa6d038b9416485b4d34c74f122ce6312f2d7e0",
+      "bytes": 3672
+    },
+    {
+      "path": "check.o",
+      "sha256": "616ee87c45c176eac94371ab313f80c55073f7e54acfc13cfaf7bcb64a997cdd",
+      "bytes": 3488
+    },
+    {
+      "path": "dec.o",
+      "sha256": "56cbe81a975e4434c1bd889627e5a72bba247b3688d9e9fce4895dc566e62eba",
+      "bytes": 7688
+    },
+    {
+      "path": "decode",
+      "sha256": "ae3f97c97571762a2484342a16a10dc4d1d4bd65f6c0382d2d25172f6628f81d",
+      "bytes": 54640
+    },
+    {
+      "path": "decode.o",
+      "sha256": "365c78be229bba9e4fc538d41ddc9f8423848612ee6ded29cbc6bc252c73c898",
+      "bytes": 12408
+    },
+    {
+      "path": "distrib.o",
+      "sha256": "d8f150776183ee75b022cfddb38eb8346d7ad28a3df37da0892be1e704abe262",
+      "bytes": 3240
+    },
+    {
+      "path": "enc.o",
+      "sha256": "d7b062dae0a97bb909455b91df18876b08ecc51b85c2eb3bd5d3729ba03f2c76",
+      "bytes": 4312
+    },
+    {
+      "path": "encode",
+      "sha256": "6fac1c0e93d983c1d271ad9aa31ebcd303468a42fc05668b4ee3cf7f586f7795",
+      "bytes": 49424
+    },
+    {
+      "path": "encode.o",
+      "sha256": "7c90747aef0c3a878da9ff22375ce83b2aaf74019016a98d1eceacd249b04a01",
+      "bytes": 6376
+    },
+    {
+      "path": "extract",
+      "sha256": "a780b3944e270e2428076765f51a6c4c7f805a9a273ffe6635db2646aff99891",
+      "bytes": 44144
+    },
+    {
+      "path": "extract.o",
+      "sha256": "5eae263a271f87f043a50c70c97557db78b80c92289b7c02972688bef8a8cae7",
+      "bytes": 4144
+    },
+    {
+      "path": "intio.o",
+      "sha256": "42ef762b01fc63cb0cd7392a9b1498001ea1b370d13026e6a78509a29b48d90c",
+      "bytes": 1976
+    },
+    {
+      "path": "make-gen",
+      "sha256": "df63978ef65121f5a1233cf1f4fb0c380d6dde29cc8b1f3198109ad36acd014c",
+      "bytes": 44016
+    },
+    {
+      "path": "make-gen.o",
+      "sha256": "82785315e490a9e45e7fb33870e29c8d2d856eeeaeb509beaed3d324d7d64ae3",
+      "bytes": 13024
+    },
+    {
+      "path": "make-ldpc",
+      "sha256": "64a9f757df34bd74f0812d660a558996009e68e336ba0b2eed4380b6504172b2",
+      "bytes": 49440
+    },
+    {
+      "path": "make-ldpc.o",
+      "sha256": "6c8e9e393930a3aa96cd2df29737683a269f762a77c440dabb71cd53f6367093",
+      "bytes": 11456
+    },
+    {
+      "path": "make-pchk",
+      "sha256": "bfffd1bbe38beda25162f11ae038e89232a3abe6d85a9ea868419b3156dff28c",
+      "bytes": 39840
+    },
+    {
+      "path": "make-pchk.o",
+      "sha256": "3aeafcd58fdc249bfd3cceda64735e38aed7beaa9b83b40e9a187b0ddd25c649",
+      "bytes": 4192
+    },
+    {
+      "path": "mod2convert.o",
+      "sha256": "ff11d7d700479bc4c657bd7a45eeb5e045ea9cdf02cb57962d4e4b5d76bfef3c",
+      "bytes": 2680
+    },
+    {
+      "path": "mod2dense.o",
+      "sha256": "23e2818ba8344db05ba779e917a628622730127dc0cf8ae384f2025de9ad5b9f",
+      "bytes": 14480
+    },
+    {
+      "path": "mod2sparse.o",
+      "sha256": "15aeedcc9aecc75952b26a54a6d2f71c0200ac683a0a9b7d5f6ad8220d5e0377",
+      "bytes": 20456
+    },
+    {
+      "path": "open.o",
+      "sha256": "64f35b4cb3f7766dba1da2522de36c2d76c8e00a098203f07c6927aab294df91",
+      "bytes": 2128
+    },
+    {
+      "path": "pchk-to-alist",
+      "sha256": "1842b99eee3451cdf9a6e29cced4065efca753fd30fdec4ffc709b70535acf92",
+      "bytes": 39800
+    },
+    {
+      "path": "pchk-to-alist.o",
+      "sha256": "6c188951b9f44a4fcee9434db12d6db9f1ed90c687c66b2939da1329ff29aaf8",
+      "bytes": 5680
+    },
+    {
+      "path": "print-gen",
+      "sha256": "99c116cf314dd67b7c84dc197dd2abf541ff60bdd3bea7bd42538da8979932fc",
+      "bytes": 45072
+    },
+    {
+      "path": "print-gen.o",
+      "sha256": "012f96aa2b538fb187464cac205905806bca25580c3898c415ae87e69653b2dc",
+      "bytes": 6136
+    },
+    {
+      "path": "print-pchk",
+      "sha256": "0365efc660b60f555298e820375c63ec521c2ed4913843723e45c0360f56acda",
+      "bytes": 45032
+    },
+    {
+      "path": "print-pchk.o",
+      "sha256": "fe95a62cd2c8330b62191a3a009ee6a30b7044377fa894bc02a737aaa9b1fe7c",
+      "bytes": 4232
+    },
+    {
+      "path": "rand-src",
+      "sha256": "8e249200b1db77e2c98b59f280ebb9c6eedda981b1cc5ce03560b97273455843",
+      "bytes": 17728
+    },
+    {
+      "path": "rand-src.o",
+      "sha256": "7d9de6825a620d752e50713b0776ef50e8f93560b0569af4b46eca9fc4607dc9",
+      "bytes": 3696
+    },
+    {
+      "path": "rand.o",
+      "sha256": "ae7bde4956355b41c5cd740afd579f89844ef21168b0303d46faa3c1b875009c",
+      "bytes": 9544
+    },
+    {
+      "path": "rcode.o",
+      "sha256": "091548d6cb5296893e1ae6fc8f60e9a7c14e0335c3d6029fd4545aff5ade20ce",
+      "bytes": 6272
+    },
+    {
+      "path": "transmit",
+      "sha256": "de4d4c84283d7d656aa31712c9d53c8744bd3bfb1706c133b2dd9e86a893c60f",
+      "bytes": 22096
+    },
+    {
+      "path": "transmit.o",
+      "sha256": "5ee5bb6c50658ca55f017c08bf6181b4509a15964a613fe594aefc65bd771d32",
+      "bytes": 5760
+    },
+    {
+      "path": "verify",
+      "sha256": "fb3680e06863473c8e7408ee53655b4e300fa5a511f3f62718c6f62dd2ccd8d5",
+      "bytes": 44512
+    },
+    {
+      "path": "verify.o",
+      "sha256": "f8015a8c23e29ba98e0b00ed9daed401a0cb46c3d0877d64ec7e53aae3f729c8",
+      "bytes": 6984
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "ok": false
+}

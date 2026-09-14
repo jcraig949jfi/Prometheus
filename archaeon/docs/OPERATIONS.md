@@ -66,6 +66,23 @@ is the design working.
 
 Set `ARCHAEON_LANE` in the task's environment to use a lane other than `prod`.
 
+**The ledger path is per-host configuration, and a pinned worktree has none by
+default.** `archaeon/fossils.py` resolves the SFE ledger as `ARCHAEON_SFE_DB` ->
+`archaeon/config.local.json` `sfe_db` (gitignored) -> the in-repo
+`SerendipityFoundry/SerendipityFoundryEngine/var/engine.db`. A linked worktree
+(D-23) does not contain that in-repo file, so a freshly pinned tick worktree
+reads ZERO fossils and says so only inside the record (`fossils.window.error =
+"sfe db not found"`) while every other field, including conformance, reads
+green. Measured 2026-09-11: 51 of 51 tick records that day, corpus hash
+`e3b0c442...` (the hash of nothing). After pinning or advancing the tick
+worktree, write `archaeon/config.local.json` there with `sfe_db` pointing at
+the ledger the ENGINE process serves (`--db` in its command line; on M1 that is
+`<data root>/sfe/engine.db`, not the copy under the canonical checkout, which
+is stale), then run one `--dry-run` tick and read `fossils.rows` before
+trusting the eye. `archaeon/tests/test_workspace.py::
+test_the_configured_sfe_ledger_exists_on_this_host` fails in a checkout that
+has no ledger.
+
 ## Start (interactive): the loop
 
     python -m archaeon.producer.loop --interval 900
@@ -193,6 +210,7 @@ Vivarium never mints scientific identity.
 | proposal sits `queued` indefinitely | no consumer is running | report it; do NOT start one |
 | loop logs a cycle then backs off | consecutive errors; backoff 30s→600s | check the error, DB reachability |
 | `SpecInvalid` from the validator | Vivarium's spec contract changed | run the contract test; coordinate |
+| every record `fossils.rows: 0`, `window.error: sfe db not found`, corpus hash `e3b0c442...` | the checkout has no ledger (pinned worktree without `config.local.json`) or the path names a stale copy | write `sfe_db` in `archaeon/config.local.json` to the engine's `--db`; dry-run; read `fossils.rows` |
 
 Archaeon never retries a failed experiment. A failed row is terminal and
 visible; re-running it is a decision for an operator, not a producer.

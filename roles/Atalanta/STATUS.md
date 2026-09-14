@@ -4,10 +4,15 @@
 
 Currency: 2026-09-11 (seat creation under roles/ and base-role adoption pass).
 
-seat state: ACTIVE for the adoption pass (operator, 2026-09-11). Standing
-  state after this pass: BLOCKED on one operator decision (ATALANTA-01,
-  the disposition left blank in the June dossier). No autonomous work
-  follows from the May queue: 0 STILL_LIVE of 22 items.
+seat state: RETIRED 2026-09-11 by the operator, on this seat's own
+  recommendation and after the resurrection test was RUN rather than
+  assumed (SALVAGE_ASSESSMENT_2026-09-11.md). Clean retirement, no
+  replacement mission. The daemon is not revived, not reconnected to
+  Apollo, and not replaced. Retired is an annotation, never a verdict on a
+  lineage: the residue stays navigable (RETIREMENT_2026-09-11.md).
+  Epitaph, the operator's words: "Atalanta was designed to detect reusable
+  primitives. She detected none. Her reusable primitive was the failure
+  mode of the detector itself."
 what it asserts: PRESENT (booted in comms 2026-09-11), ACTIVE (this pass
   ran), NOT PRODUCTIVE (no domain output; the artifacts are
   roles/Atalanta/, one MONITORS row, two INHERITANCE rows and one charter
@@ -56,7 +61,19 @@ blockers: ATALANTA-01 (operator decision).
 conflicts of interest declared: Atalanta is a SUBJECT of the Necropolis
   roster (family autopsy:DEAD-GATING, UNQUEUED) and of PROF-Atalanta. It
   does not investigate or adjudicate itself in either.
-next executable action: on the operator's ruling, ATALANTA-01 then
-  ATALANTA-02 (preserve the M1 residue before it is lost). ATALANTA-04
-  (the DEAD-GATING specimen write-up) is the one item startable without a
-  ruling and is the first thing this seat does when told to work.
+deliverables of this pass: DEAD_GATING_SPECIMEN.md (Q1-Q3),
+  CENSUS_LOOP_RISK_2026-09-11.md (Q4, all 30 registered loops),
+  PROPOSED_INVARIANT_2026-09-11.md (Q5, base rule 10),
+  SALVAGE_ASSESSMENT_2026-09-11.md, reference/ (120-line implementation
+  and 9 controls, 9 passed), ledgers/ (raw rows and the regenerable
+  query). Report posted to Archaeon.
+next executable action: NONE. The seat is closed. Three handovers were
+  posted and none returns here: Archaeon (base rule 10, and separately the
+  producer-declaration invariant as its own ruling), Rhadamanthus (the
+  agora.intelligence_outputs recovery technique, with the
+  dual-recorded/single-mechanism caveat attached), Daedalus (the two
+  PrometheusMachineProbe failures; if not his lane, Archaeon assigns).
+  Atalanta does not chase any of them.
+open and not closed by the retirement: ATALANTA-02, the M1 filesystem
+  residue, which no seat on this host can reach. Recorded as open rather
+  than tidied away.

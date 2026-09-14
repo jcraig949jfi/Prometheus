@@ -1,0 +1,107 @@
+{
+ "scope": "scp_1be32ffbe7c9bf3b29ec8d85",
+ "grant": "gnt_1ecdeae69f800240e03221ed",
+ "grants_to_me": [
+  {
+   "grant_id": "gnt_1ecdeae69f800240e03221ed",
+   "scope_id": "scp_1be32ffbe7c9bf3b29ec8d85",
+   "grantee_client_id": "cli_1029e9255a074157a1b3ba1e",
+   "granted_by": "cli_5680df5896815e185078c9c6",
+   "note": "B1: read-only corpus for Archaeon parity check; vivarium-created campaign worlds (viv- prefix); owner Vivarium 2026-09-12",
+   "created_ts": 1789231944.6544864,
+   "revoked_ts": null,
+   "active": true
+  }
+ ],
+ "worlds_api": 592,
+ "worlds_ledger_scope": 592,
+ "worlds_sym_diff": [],
+ "obs_api": 992,
+ "obs_ledger_in_scope": 992,
+ "obs_api_minus_ledger": [],
+ "obs_ledger_minus_api": [],
+ "pages": 592,
+ "truncated_pages": 0,
+ "field_agreement_shared": true,
+ "out_of_scope_world_rows": 0,
+ "authority_probes": {
+  "POST add world to owner scope": "refused: EngineError HTTP 404: {'error': 'not_found', 'message': 'unknown read scope', 'scope_id': 'scp_1be32ffbe7c9bf3b29ec8d85'}",
+  "POST revoke the grant": "refused: EngineError HTTP 404: {'error': 'not_found', 'message': 'unknown grant', 'grant_id': 'gnt_1ecdeae69f800240e03221ed'}",
+  "GET owner route /v2/worlds": "ALLOWED: {\"worlds\": []}",
+  "GET a scope-world through the owner route /v2/worlds/{id}": "refused: EngineError HTTP 403: {'error': 'access_denied', 'message': 'world is not owned by this client', 'world_id': 'wld_004d8225364f37453e"
+ },
+ "tick_corpus_regions": 79,
+ "tick_regions_in_scope": 22,
+ "tick_rows_in_scope": 22,
+ "tick_rows_out_of_scope": 1007,
+ "out_of_scope_owners": {
+  "vivarium@m1": 1,
+  "harmonia-m2": 29,
+  "vivarium": 25,
+  "vivarium@skullport": 2
+ },
+ "sample_row": {
+  "obs_id": "obs_3fb74983a048ee9d956141e7",
+  "world_id": "wld_aa781bb38552abf406133d49",
+  "exp_id": "exp_b4de0453fe583f10cbdc8049",
+  "pred_id": "prd_bf6b2efb0a6b16c1206d4f47",
+  "content": {
+   "result": {
+    "bits": "0110000010101011",
+    "score": 0.5,
+    "solved": false,
+    "length": 16,
+    "executor": "evaluate_bitstring",
+    "reproducibility": "BIT_DETERMINISTIC"
+   },
+   "outcome_rule_provenance": {
+    "rule": {
+     "field": "solved",
+     "if_false": "FALSIFIED",
+     "if_indeterminate": "INCONCLUSIVE",
+     "if_true": "SURVIVED",
+     "op": "==",
+     "value": false
+    },
+    "branch": "if_true",
+    "observed": false,
+    "predicate_held": true
+   },
+   "repeat_index": 0,
+   "repeat_count": 1,
+   "repeat_seed": 738588,
+   "repeat_state_mode": "reset",
+   "repeat_seed_derivation": "legacy_v2_world_seed",
+   "executed_by": "vivarium",
+   "worker_id": "vivarium@repeat-proof"
+  },
+  "outcome": "SURVIVED",
+  "pred_prospective": 1,
+  "evidence_class": "ENGINE_WORK_RESULT",
+  "evidence_role": "ORIGINAL",
+  "work_id": "wrk_8260ffb6116e00213458a0a6",
+  "created_ts": 1788694239.6147287,
+  "created_seq": 35384
+ },
+ "census_sample": {
+  "worlds": 2,
+  "scopes": [
+   "scp_1be32ffbe7c9bf3b29ec8d85"
+  ],
+  "by_client": [
+   {
+    "client_id": "cli_5680df5896815e185078c9c6",
+    "observations": 5
+   }
+  ],
+  "by_evidence_class": [
+   {
+    "evidence_class": "ENGINE_WORK_RESULT",
+    "observations": 5
+   }
+  ],
+  "filtered_evidence_class": null,
+  "measurement": null,
+  "truncated": true
+ }
+}

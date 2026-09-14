@@ -1,0 +1,357 @@
+{
+ "schema": "archaeon.fossil_metabolism_s5.results.v0",
+ "preregistration": "S5_PREREG_v1_2026-09-13.json",
+ "producer_versions": {
+  "s4": "7a1c9062b4823ecd",
+  "s5": "0cecb2c141b40374"
+ },
+ "quick": false,
+ "world_level": {
+  "U": {
+   "states": 233,
+   "separated_states": 2,
+   "separated_frac": 0.008583690987124463,
+   "mean_rel_advantage": -0.463370183503896,
+   "worse_than_G_at_bar_states": 220,
+   "budget_exhausted": 0,
+   "scope_exceeded": 0,
+   "o_call_frac": 0.0,
+   "compute_s": 0.22664579925185535
+  },
+  "GH": {
+   "states": 233,
+   "separated_states": 48,
+   "separated_frac": 0.20600858369098712,
+   "mean_rel_advantage": 0.012933974994480341,
+   "worse_than_G_at_bar_states": 29,
+   "budget_exhausted": 0,
+   "scope_exceeded": 0,
+   "o_call_frac": 0.0,
+   "compute_s": 12.281802500991034
+  },
+  "W": {
+   "states": 233,
+   "separated_states": 1,
+   "separated_frac": 0.004291845493562232,
+   "mean_rel_advantage": -0.004724558208133408,
+   "worse_than_G_at_bar_states": 24,
+   "budget_exhausted": 0,
+   "scope_exceeded": 0,
+   "o_call_frac": 0.0,
+   "compute_s": 54.311187399958726
+  },
+  "M": {
+   "states": 233,
+   "separated_states": 8,
+   "separated_frac": 0.034334763948497854,
+   "mean_rel_advantage": -0.0020592685746101125,
+   "worse_than_G_at_bar_states": 21,
+   "budget_exhausted": 0,
+   "scope_exceeded": 0,
+   "o_call_frac": 0.0,
+   "compute_s": 119.23195279993524
+  },
+  "O": {
+   "states": 233,
+   "separated_states": 91,
+   "separated_frac": 0.3905579399141631,
+   "mean_rel_advantage": 0.027482349196140763,
+   "worse_than_G_at_bar_states": 0,
+   "budget_exhausted": 0,
+   "scope_exceeded": 0,
+   "o_call_frac": 1.0,
+   "compute_s": 51.33090430042648
+  },
+  "RH": {
+   "states": 233,
+   "separated_states": 39,
+   "separated_frac": 0.16738197424892703,
+   "mean_rel_advantage": 0.01581729530631672,
+   "worse_than_G_at_bar_states": 3,
+   "budget_exhausted": 0,
+   "scope_exceeded": 0,
+   "o_call_frac": 0.08697803285177122,
+   "compute_s": 16.374345298667322
+  }
+ },
+ "decision_state_audit": {
+  "n_decision_states": 10285,
+  "myopic_frac": 0.15294117647058825,
+  "kappa_H": {
+   "fires": 871,
+   "precision": 0.4052812858783008,
+   "recall": 0.22441195168467895,
+   "myopia_rate_when_off": 0.12959422137242405,
+   "mean_delta_when_on": 0.21814006888633752,
+   "mean_delta_when_off": 0.019226683662630112
+  },
+  "kappa_tie": {
+   "fires": 912,
+   "precision": 0.33881578947368424,
+   "recall": 0.19643992371265098,
+   "myopia_rate_when_off": 0.1348554358263096,
+   "mean_delta_when_on": 0.19627192982456138,
+   "mean_delta_when_off": 0.020484369998933095
+  },
+  "kappa_proxy": {
+   "fires": 1860,
+   "precision": 0.024193548387096774,
+   "recall": 0.028607755880483154,
+   "myopia_rate_when_off": 0.18136498516320476,
+   "mean_delta_when_on": 0.0016129032258064494,
+   "mean_delta_when_off": 0.04367952522255192
+  },
+  "pool_suboptimal": {
+   "fires": 157,
+   "precision": 0.5668789808917197,
+   "recall": 0.056579783852511126,
+   "myopia_rate_when_off": 0.14652448657187994,
+   "mean_delta_when_on": 0.08917197452229315,
+   "mean_delta_when_off": 0.03524881516587676
+  }
+ },
+ "instrument_failures": [
+  "blind U beats G at the bar in some state"
+ ],
+ "verdict": "INSTRUMENT_FAILURE",
+ "combined_from": [
+  "S5_RESULTS_RUN2_L8_2026-09-13.json",
+  "S5_RESULTS_RUN2_L9_2026-09-13.json"
+ ],
+ "per_L": {
+  "8": {
+   "schema": "archaeon.fossil_metabolism_s5.results.v0",
+   "preregistration": "S5_PREREG_v1_2026-09-13.json",
+   "producer_versions": {
+    "s4": "7a1c9062b4823ecd",
+    "s5": "0cecb2c141b40374"
+   },
+   "quick": false,
+   "world_level": {
+    "U": {
+     "states": 119,
+     "separated_states": 1,
+     "separated_frac": 0.008403361344537815,
+     "mean_rel_advantage": -0.48060507414987885,
+     "worse_than_G_at_bar_states": 115,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 0.0,
+     "compute_s": 0.131486599901109
+    },
+    "GH": {
+     "states": 119,
+     "separated_states": 20,
+     "separated_frac": 0.16806722689075632,
+     "mean_rel_advantage": 0.009402519412416004,
+     "worse_than_G_at_bar_states": 18,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 0.0,
+     "compute_s": 7.214590000527096
+    },
+    "W": {
+     "states": 119,
+     "separated_states": 1,
+     "separated_frac": 0.008403361344537815,
+     "mean_rel_advantage": -0.0037709955126896196,
+     "worse_than_G_at_bar_states": 10,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 0.0,
+     "compute_s": 24.885054100028356
+    },
+    "M": {
+     "states": 119,
+     "separated_states": 3,
+     "separated_frac": 0.025210084033613446,
+     "mean_rel_advantage": -0.0020247691629121673,
+     "worse_than_G_at_bar_states": 11,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 0.0,
+     "compute_s": 66.34627469981206
+    },
+    "O": {
+     "states": 119,
+     "separated_states": 48,
+     "separated_frac": 0.40336134453781514,
+     "mean_rel_advantage": 0.026698852582473828,
+     "worse_than_G_at_bar_states": 0,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 1.0,
+     "compute_s": 22.746146900215535
+    },
+    "RH": {
+     "states": 119,
+     "separated_states": 18,
+     "separated_frac": 0.15126050420168066,
+     "mean_rel_advantage": 0.013719414341737785,
+     "worse_than_G_at_bar_states": 3,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 0.09716312056737589,
+     "compute_s": 9.376304999605054
+    }
+   },
+   "decision_state_audit": {
+    "n_decision_states": 5706,
+    "myopic_frac": 0.15615141955835962,
+    "kappa_H": {
+     "fires": 540,
+     "precision": 0.21851851851851853,
+     "recall": 0.1324354657687991,
+     "myopia_rate_when_off": 0.14963221060782037,
+     "mean_delta_when_on": 0.1259259259259259,
+     "mean_delta_when_off": 0.02129307007355787
+    },
+    "kappa_tie": {
+     "fires": 600,
+     "precision": 0.235,
+     "recall": 0.15824915824915825,
+     "myopia_rate_when_off": 0.14688601645123384,
+     "mean_delta_when_on": 0.11166666666666664,
+     "mean_delta_when_off": 0.021739130434782598
+    },
+    "kappa_proxy": {
+     "fires": 1068,
+     "precision": 0.042134831460674156,
+     "recall": 0.050505050505050504,
+     "myopia_rate_when_off": 0.18240620957309184,
+     "mean_delta_when_on": 0.0028089887640449424,
+     "mean_delta_when_off": 0.037731780940060355
+    },
+    "pool_suboptimal": {
+     "fires": 48,
+     "precision": 0.4583333333333333,
+     "recall": 0.024691358024691357,
+     "myopia_rate_when_off": 0.15358784022622834,
+     "mean_delta_when_on": 0.08333333333333352,
+     "mean_delta_when_off": 0.03075291622481441
+    }
+   },
+   "instrument_failures": [
+    "blind U beats G at the bar in some state"
+   ],
+   "verdict": "INSTRUMENT_FAILURE"
+  },
+  "9": {
+   "schema": "archaeon.fossil_metabolism_s5.results.v0",
+   "preregistration": "S5_PREREG_v1_2026-09-13.json",
+   "producer_versions": {
+    "s4": "7a1c9062b4823ecd",
+    "s5": "0cecb2c141b40374"
+   },
+   "quick": false,
+   "world_level": {
+    "U": {
+     "states": 114,
+     "separated_states": 1,
+     "separated_frac": 0.008771929824561403,
+     "mean_rel_advantage": -0.44537937660151056,
+     "worse_than_G_at_bar_states": 105,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 0.0,
+     "compute_s": 0.09515919935074635
+    },
+    "GH": {
+     "states": 114,
+     "separated_states": 28,
+     "separated_frac": 0.24561403508771928,
+     "mean_rel_advantage": 0.016620318979266798,
+     "worse_than_G_at_bar_states": 11,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 0.0,
+     "compute_s": 5.067212500463938
+    },
+    "W": {
+     "states": 114,
+     "separated_states": 0,
+     "separated_frac": 0.0,
+     "mean_rel_advantage": -0.00571994382881596,
+     "worse_than_G_at_bar_states": 14,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 0.0,
+     "compute_s": 29.42613329993037
+    },
+    "M": {
+     "states": 114,
+     "separated_states": 5,
+     "separated_frac": 0.043859649122807015,
+     "mean_rel_advantage": -0.0020952811184000724,
+     "worse_than_G_at_bar_states": 10,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 0.0,
+     "compute_s": 52.88567810012319
+    },
+    "O": {
+     "states": 114,
+     "separated_states": 43,
+     "separated_frac": 0.37719298245614036,
+     "mean_rel_advantage": 0.028300209696372036,
+     "worse_than_G_at_bar_states": 0,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 1.0,
+     "compute_s": 28.584757400210947
+    },
+    "RH": {
+     "states": 114,
+     "separated_states": 21,
+     "separated_frac": 0.18421052631578946,
+     "mean_rel_advantage": 0.018007188593903503,
+     "worse_than_G_at_bar_states": 0,
+     "budget_exhausted": 0,
+     "scope_exceeded": 0,
+     "o_call_frac": 0.07411553963278102,
+     "compute_s": 6.998040299062268
+    }
+   },
+   "decision_state_audit": {
+    "n_decision_states": 4579,
+    "myopic_frac": 0.148940816772221,
+    "kappa_H": {
+     "fires": 331,
+     "precision": 0.7099697885196374,
+     "recall": 0.34457478005865105,
+     "myopia_rate_when_off": 0.10522598870056497,
+     "mean_delta_when_on": 0.3685800604229607,
+     "mean_delta_when_off": 0.016713747645951023
+    },
+    "kappa_tie": {
+     "fires": 312,
+     "precision": 0.5384615384615384,
+     "recall": 0.24633431085043989,
+     "myopia_rate_when_off": 0.1204593391141317,
+     "mean_delta_when_on": 0.3589743589743589,
+     "mean_delta_when_off": 0.01898289196156549
+    },
+    "kappa_proxy": {
+     "fires": 792,
+     "precision": 0.0,
+     "recall": 0.0,
+     "myopia_rate_when_off": 0.18008978082915236,
+     "mean_delta_when_on": -3.3643121958338078e-18,
+     "mean_delta_when_off": 0.050963823607076825
+    },
+    "pool_suboptimal": {
+     "fires": 109,
+     "precision": 0.6146788990825688,
+     "recall": 0.09824046920821114,
+     "myopia_rate_when_off": 0.13758389261744966,
+     "mean_delta_when_on": 0.09174311926605519,
+     "mean_delta_when_off": 0.04093959731543622
+    }
+   },
+   "instrument_failures": [
+    "blind U beats G at the bar in some state"
+   ],
+   "verdict": "INSTRUMENT_FAILURE"
+  }
+ }
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.search.shrink_bracket_by_golden_ratio",
+  "name": "shrink a bracket by the golden ratio",
+  "lineage": [
+    "optimization"
+  ],
+  "mechanism": "keep three points bracketing a unimodal optimum, place the next probe so that the two sub-intervals keep the golden ratio, and discard the outer part that cannot contain the optimum, reusing one probe per step",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Golden-section search' in section Computational mathematics / Optimization algorithms: an algorithm for finding the maximum of a real function",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SEARCH",
+  "in_geometry": "FUNCTION",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "LOG",
+  "requires": [
+    "unimodality"
+  ],
+  "fails_when": [
+    "multimodal functions bracket a local optimum"
+  ],
+  "instances": [
+    "Golden-section search"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.search.unimodal_bracket"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

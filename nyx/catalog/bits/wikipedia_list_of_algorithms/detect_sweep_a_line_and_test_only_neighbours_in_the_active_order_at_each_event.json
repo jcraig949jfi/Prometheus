@@ -1,0 +1,47 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.detect.sweep_a_line_and_test_only_neighbours_in_the_active_order_at_each_event",
+  "name": "sweep a line across the plane and test only neighbours in the active order at each event",
+  "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+  ],
+  "mechanism": "sort the segment endpoints as events; as a vertical line sweeps them, keep the segments it currently crosses in their vertical order; when a segment starts, ends, or two segments cross, only the segments that became adjacent in that order can newly intersect, so test just those and schedule any crossing found as a future event",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bentley–Ottmann algorithm' in section Computational mathematics / Geometry: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Shamos–Hoey algorithm': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "DETECT",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "iteration": "PRIORITY",
+  "cost": "LINEARITHMIC",
+  "requires": [
+    "an ordered set for the active segments",
+    "a priority queue of events"
+  ],
+  "fails_when": [
+    "degenerate inputs (shared endpoints, vertical segments) need special rules"
+  ],
+  "instances": [
+    "Bentley–Ottmann algorithm",
+    "Shamos–Hoey algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+}

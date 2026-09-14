@@ -1,0 +1,57 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "hopfield-takyamamoto",
+  "receipt_id": "run-hopfield-takyamamoto-20260912T164159Z",
+  "written_utc": "20260912T164159Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "harness_sha256": {
+    "drv.py": "c60cf2c8337e6dcf021d605aa1381ac5563b74bdc40300d244dd9c27a6d71c6a"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "52d091ff7e6e6f5d96b7edd674bf6900a5c027323d1fe194e48f7373df11abc2",
+  "recipe_sha256": "b302607191b26db225e798b1a07f711d38959f1fa554d4fbc242b911b90ee13a",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.97,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "store patterns, recall from a corrupted cue (attractor dynamics)",
+      "cmd": "pip install -q numpy matplotlib tqdm >/dev/null 2>&1 && MPLBACKEND=Agg PYTHONPATH=. python $HARNESS/drv.py 2>&1 | grep -v '^Start to'",
+      "exit": 0,
+      "seconds": 9.79,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n  0%|          | 0/2 [00:00<?, ?it/s]\n100%|\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6| 2/2 [00:00<00:00, 25343.23it/s]\n\n  0%|          | 0/1 [00:00<?, ?it/s]\n100%|\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6\u00e2\u2013\u02c6| 1/1 [00:00<00:00, 7710.12it/s]\nN=25 stored=2 corrupted=3 recovered=True\nHOPFIELD_OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

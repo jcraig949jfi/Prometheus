@@ -1,0 +1,52 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.generate.recombine_and_mutate_selected_parents",
+  "name": "recombine and mutate selected parents",
+  "lineage": [
+    "evolutionary computation",
+    "optimization"
+  ],
+  "mechanism": "select parents in proportion to fitness, produce children by exchanging segments of their encodings and randomly altering positions, and replace the population, so useful segments spread while variation continues",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Genetic algorithms' in section Computational mathematics / Optimization algorithms: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gene expression programming': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Memetic algorithm': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "GENERATE",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "LOOP_OWNER",
+  "guarantee": "NONE",
+  "strategy": "RANDOMIZED",
+  "iteration": "PARALLEL_ROUNDS",
+  "cost": "LINEAR",
+  "requires": [
+    "an encoding where segments carry meaning (a human prior)",
+    "selection, crossover and mutation rules (policy)"
+  ],
+  "fails_when": [
+    "disruptive crossover when the encoding does not localise meaning",
+    "loss of diversity"
+  ],
+  "instances": [
+    "Genetic algorithms",
+    "Gene expression programming",
+    "Memetic algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch03 (T2)"
+}

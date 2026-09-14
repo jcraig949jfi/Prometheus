@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.update_value_toward_reward_plus_discounted_best_next",
+  "name": "update a value toward reward plus discounted best next value",
+  "lineage": [
+    "reinforcement learning"
+  ],
+  "mechanism": "keep a table of values per state-action; after each step move the value of the taken pair a fraction toward the observed reward plus the discounted best value available at the next state (or the value of the next action actually taken, for the on-policy variant)",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Q-learning' in section Computer science / Machine learning and statistical classification: learns an action-value function that gives the expected utility of taking a given action in a given state and following a fixed policy thereafter",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'State–Action–Reward–State–Action (SARSA)': learn a Markov decision process policy",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Temporal difference learning': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "STREAM",
+  "out_geometry": "MAP",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "GLOBAL",
+  "control": "REACTIVE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "CONSTANT",
+  "requires": [
+    "a discount and a learning rate (policy)",
+    "enough visits to every pair"
+  ],
+  "fails_when": [
+    "tables do not scale; function approximation loses the guarantee"
+  ],
+  "instances": [
+    "Q-learning",
+    "State–Action–Reward–State–Action (SARSA)",
+    "Temporal difference learning"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch05 (T2)"
+}

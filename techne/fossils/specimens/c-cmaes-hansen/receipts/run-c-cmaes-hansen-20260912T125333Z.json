@@ -1,0 +1,85 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "c-cmaes-hansen",
+  "receipt_id": "run-c-cmaes-hansen-20260912T125333Z",
+  "written_utc": "20260912T125333Z",
+  "runner": "wsl",
+  "image": null,
+  "workdir": "upstream/tree",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "742bea2d0389ebc0e94809dedb98db597d9eb7bc465a7af0efdb0bc3c417ffe4",
+  "recipe_sha256": "d1de8f724664480f7212015c12f1ea4deee615709f1da71816eb8ac81dbe933b",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 5.23,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile example_short",
+      "cmd": "gcc -O2 -o $BODY/evo1 src/example_short.c src/cmaes.c -lm 2>&1 | grep -i error; test -x $BODY/evo1",
+      "exit": 0,
+      "seconds": 1.0,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "example_short: minimise the cigtab test function via CMA-ES",
+      "cmd": "mkdir -p $BODY/build && cd $BODY/build && cp -f $BODY/upstream/tree/cmaes_initials.par $BODY/upstream/tree/cmaes_signals.par . && $BODY/evo1 2>&1 | tail -16",
+      "exit": 0,
+      "seconds": 2.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "(6,13)-CMA-ES(mu_eff=4.0), Ver=\"3.20.00.beta\", dimension=22, diagonalIterations=0, randomSeed=1414052232 (Sat Sep 12 08:53:39 2026)\n Iter Fevals  Function Value         Sigma   MaxCoorDev MinCoorDev AxisRatio   MinDii   Time in eig\n    0      0 0.000000000000000e+00  3.00e-01  3.00e-01 3.00e-01  1.00e+00  1.00e+00\t0.0 0.0\n  221   2873 3.069769174897097e+01  1.64e-01  2.06e-01 6.12e-02  4.78e+00  3.74e-01\t0.1 0.0\n Iter Fevals  Function Value         Sigma   MaxCoorDev MinCoorDev AxisRatio   MinDii   Time in eig\n 1302  16926 6.628212099525649e-15  4.39e-08  1.21e-06 2.52e-10  4.82e+03  5.71e-03\t0.3 0.0\nStop:\nTolFun: function value differences 8.33e-13 < stopTolFun=1.00e-12\n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "the run terminates on a declared stopping criterion",
+      "cmd": "cd $BODY/build && $BODY/evo1 2>&1 | grep -i -E 'stop|fbestever|TolFun|MaxIter' | head -5; echo DONE",
+      "exit": 0,
+      "seconds": 2.99,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Stop:\nTolFun: function value differences 8.31e-13 < stopTolFun=1.00e-12\nDONE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_NATIVE",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true
+}

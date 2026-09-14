@@ -1,0 +1,349 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "do-mpc",
+  "receipt_id": "run-do-mpc-20260912T220202Z",
+  "written_utc": "20260912T220202Z",
+  "runner": "docker",
+  "image": "python:3.11-slim",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "mpc_regulate.py": "d122cb57e36bec4db800350db37ee34a1855f63e38c6a213a487c6f2da47220c"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "df82e517cdf342d17261d5adea8272c7e5cc27f4fdad4194906ed8bff71804b6",
+  "recipe_sha256": "85d0b163969ecf9de8a3e3704adf81ece8eef08bba46a328b47f821d38e26556",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.95,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "pip install the acquired source (+ pinned deps)",
+      "cmd": "pip install -q casadi scipy numpy matplotlib pandas . 2>&1 | grep -v -i 'notice\\|warning' | tail -2; python -c 'import sys; print(sys.version.split()[0])'",
+      "exit": 0,
+      "seconds": 24.2,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "\n3.11.16\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "mpc_regulate (Techne harness, oracle-backed; same-container install + run)",
+      "cmd": "pip install -q casadi scipy numpy matplotlib pandas . 2>&1 | grep -v -i 'notice\\|warning' | tail -2 >/dev/null; python $HARNESS/mpc_regulate.py",
+      "exit": 0,
+      "seconds": 26.84,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'RESULT OK'"
+      ],
+      "stdout": {
+        "text": "n_x=4 n_u=1 |x0|=3.576\n|x| per step: 3.48 2.94 2.84 3.07 2.84 2.62 2.85 2.83 2.41 2.38 2.64 2.41 2.07 2.15 2.22 1.82 1.48 1.76 1.68 1.26 1.41 0.97 1.13 1.26 1.09 0.90 0.91 0.96 0.75 0.63 0.59 0.54 0.39 0.31 0.31 0.29 0.24 0.20 0.19 0.17\nu  per step: +0.50 +0.50 +0.50 +0.50 -0.50 -0.50 -0.50 -0.50 -0.50 -0.50 -0.50 -0.50 -0.50 +0.50 +0.50 +0.50 +0.50 +0.19 -0.50 -0.50 -0.50 +0.50 +0.50 -0.50 -0.50 -0.00 +0.50 +0.50 +0.50 +0.50 -0.46 -0.50 -0.50 -0.24 +0.11 +0.25 +0.22 +0.09 -0.06 -0.15\nbefore kick (step 19): |x|/|x0| = 0.352 ; right after kick (step 20): 0.395 ; end (step 39): 0.049\nRESULT FAIL\n"
+      },
+      "stderr": {
+        "text": "/usr/local/lib/python3.11/site-packages/do_mpc/sysid/__init__.py:15: UserWarning: The ONNX feature is not available. Please install the full version of do-mpc to access this feature.\n  warnings.warn('The ONNX feature is not available. Please install the full version of do-mpc to access this feature.')\n/usr/local/lib/python3.11/site-packages/do_mpc/opcua/__init__.py:14: UserWarning: The opcua feature is not available. Please install the full version of do-mpc to access this feature.\n  warnings.warn('The opcua feature is not available. Please install the full version of do-mpc to access this feature.')\n/usr/local/lib/python3.11/site-packages/do_mpc/approximateMPC/__init__.py:13: UserWarning: The approximateMPC feature requires PyTorch, which is not installed by default. Please install the full version of do-mpc to use this feature: pip install do_mpc[full]\n  warnings.warn('The approximateMPC feature requires PyTorch, which is not installed by default. Please install the full version of do-mpc to use this feature: pip install do_mpc[full]')\n/usr/local/lib/python3.11/site-packages/casadi/casadi.py:913: FutureWarning: \ncasadi: a numpy function was called on a casadi value (issue #2959).\nThis used legacy casadi 3.7.2 behaviour, where the result type follows\nthe input:\n  - a numeric input (DM)       -> a plain numpy array\n  - a symbolic input (SX / MX) -> a casadi value, or an error if the\n                                  function has no casadi equivalent\n\nFor a shape-correct, type-preserving result, opt in to the\ncasadi-aware numpy support:\n\n    try:\n        ca.GlobalOptions.setNumpyMode(1)\n    except AttributeError:\n        pass\n\nOr use setNumpyMode(-1) to keep legacy behaviour silently.\nShown once; run python with -W always to see every occurrence.\n\n  _w.warn(_NUMPY_LEGACY_NOTICE, FutureWarning)\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "build/lib/do_mpc/__init__.py",
+      "sha256": "a5a3e4d549d78a6f263a8b6edb8bcca4a056320bb8b9b43137ba542784d7f7fc",
+      "bytes": 4269
+    },
+    {
+      "path": "build/lib/do_mpc/_casadi_compat.py",
+      "sha256": "012edf5ffe5da9dd0981ee174506c90879720c9de1b4da29944fb65ce52e66a9",
+      "bytes": 4015
+    },
+    {
+      "path": "build/lib/do_mpc/_version.py",
+      "sha256": "1560eda211d3e28769ae75ed6b18c2ac51cb51ba381608a77ec119a1ddaeaca1",
+      "bytes": 22
+    },
+    {
+      "path": "build/lib/do_mpc/approximateMPC/__init__.py",
+      "sha256": "96725ca95464f035e488aedb8826edf45ce0fdd8a07f8aad3a5ed502135bf1e0",
+      "bytes": 493
+    },
+    {
+      "path": "build/lib/do_mpc/approximateMPC/_ampc.py",
+      "sha256": "bb24bd065a5bcbd86ed3c8b189812498a50964e14325c08cc5e862e8302bd734",
+      "bytes": 14725
+    },
+    {
+      "path": "build/lib/do_mpc/approximateMPC/_ampc_sampler.py",
+      "sha256": "67afadfc8a2bf828bd9a2a14a45df69749d15d5eef49fb02a011494b01d9278b",
+      "bytes": 17114
+    },
+    {
+      "path": "build/lib/do_mpc/approximateMPC/_ampcsettings.py",
+      "sha256": "8d7106f09d06dd3f713dde3263bd665ce24be83e031bbdb4e7895279f973b9c0",
+      "bytes": 7604
+    },
+    {
+      "path": "build/lib/do_mpc/approximateMPC/_trainer.py",
+      "sha256": "52c75911ab7fd0b4310067b53c5df4d8466ab516e3b914bd5bd1fec5759c4cf6",
+      "bytes": 19228
+    },
+    {
+      "path": "build/lib/do_mpc/controller/__init__.py",
+      "sha256": "ed4efea6ffd82d7dc3cf1f9661e11b848658666a3d01bada37b1ea4d776cd3bb",
+      "bytes": 110
+    },
+    {
+      "path": "build/lib/do_mpc/controller/_controllersettings.py",
+      "sha256": "a5bed2599123e4a6a76903c88fc218c7a9a817c521caa080702faeac2fb63cf5",
+      "bytes": 7089
+    },
+    {
+      "path": "build/lib/do_mpc/controller/_lqr.py",
+      "sha256": "b0a42009cb2d8f5fde08ec534a4a3c6533b58ffe7c9ed45c63e165eaf4cc4787",
+      "bytes": 21032
+    },
+    {
+      "path": "build/lib/do_mpc/controller/_mpc.py",
+      "sha256": "23c2af161d55b6b7cbe12f7b95e7bc6eb8347b870cc9ebd9a6b21a04e167033a",
+      "bytes": 60995
+    },
+    {
+      "path": "build/lib/do_mpc/data.py",
+      "sha256": "da65c77470242c946680ac472c8463915dcccf33a9ccc1a8c8eca3ae83cfa5c3",
+      "bytes": 18239
+    },
+    {
+      "path": "build/lib/do_mpc/differentiator/__init__.py",
+      "sha256": "d511453e864df36d39da252e126266992be0e44db8ee85944e1aba61f9f2c225",
+      "bytes": 214
+    },
+    {
+      "path": "build/lib/do_mpc/differentiator/_nlpdifferentiator.py",
+      "sha256": "eb6d591e679cd6bd95864014d95c8439ef1e6c4d89a3e0ce83170de4d423c88b",
+      "bytes": 32876
+    },
+    {
+      "path": "build/lib/do_mpc/differentiator/helper.py",
+      "sha256": "d486ede61ba807f4df61cecbda8c91b66de683ee5d14e405cd32f93ed2ac1adb",
+      "bytes": 3240
+    },
+    {
+      "path": "build/lib/do_mpc/estimator/__init__.py",
+      "sha256": "814db0a3819dcd666492095932285783955cbd1dc9bd35e34db03dac83065422",
+      "bytes": 168
+    },
+    {
+      "path": "build/lib/do_mpc/estimator/_base.py",
+      "sha256": "edea3000ae731b0e55a7fa51abfd1cf19bcddb0a4640a8933064e258a5400849",
+      "bytes": 2527
+    },
+    {
+      "path": "build/lib/do_mpc/estimator/_ekf.py",
+      "sha256": "aa6b98b227924ff5a28d4aff796e30ebfb2e9c5202eaab944a4c24259caca598",
+      "bytes": 17576
+    },
+    {
+      "path": "build/lib/do_mpc/estimator/_estimatorsettings.py",
+      "sha256": "bd952067bb0e298ba8951f4ec3781ddd87d0373995f162f229a890fc4ee0f228",
+      "bytes": 6103
+    },
+    {
+      "path": "build/lib/do_mpc/estimator/_mhe.py",
+      "sha256": "6d0f845e8274ee878a21e67bb4c0ec76359c58b076e254e788c1ca8e8f267fea",
+      "bytes": 55005
+    },
+    {
+      "path": "build/lib/do_mpc/graphics.py",
+      "sha256": "504ecd063ca5007b2dc992736e73bde172697a957b66ba0699499efb1b983bd2",
+      "bytes": 21669
+    },
+    {
+      "path": "build/lib/do_mpc/model/__init__.py",
+      "sha256": "1d5be630348709eea88f2bb29b5975993c97e3681a8e5b8f05f7beb8aa7adb54",
+      "bytes": 272
+    },
+    {
+      "path": "build/lib/do_mpc/model/_dae2odeconversion.py",
+      "sha256": "4a3a55f577f702ef37b40826830fe96e41bb39895754ab35abe4bc6bc88dd9c0",
+      "bytes": 5479
+    },
+    {
+      "path": "build/lib/do_mpc/model/_iteratedvariables.py",
+      "sha256": "41401e2ff652380a2fed12d4201775557b5785fcf78a5db65c7cc4a10cd7a98d",
+      "bytes": 6885
+    },
+    {
+      "path": "build/lib/do_mpc/model/_linearize.py",
+      "sha256": "999b08f97e0f4c6d8b34255460199d1e59d6b3fb8a28fa978c6ef35d21ad435a",
+      "bytes": 4153
+    },
+    {
+      "path": "build/lib/do_mpc/model/_linearmodel.py",
+      "sha256": "29806fd1864cabef79e6d7f5253b09e60b17fe648f515a425675c2e230da3830",
+      "bytes": 15306
+    },
+    {
+      "path": "build/lib/do_mpc/model/_model.py",
+      "sha256": "1503ab1e3fc370b015332973939b51d5d14e644aab0f95d06fc013cfb9fe593a",
+      "bytes": 47588
+    },
+    {
+      "path": "build/lib/do_mpc/opcua/__init__.py",
+      "sha256": "113542539d32d210f8dde44fa10376406db1ad497830fd74f0a4631df0a84d81",
+      "bytes": 420
+    },
+    {
+      "path": "build/lib/do_mpc/opcua/_base.py",
+      "sha256": "9b95e3392a26d534ee4ad5e4c54c74cb72253136ae56a936807635fb621eff2f",
+      "bytes": 8357
+    },
+    {
+      "path": "build/lib/do_mpc/opcua/_client.py",
+      "sha256": "5cc275af0d4e02077845a489a8bf1bbfd4d76506b26dc0736b0e57775ab2dbee",
+      "bytes": 5274
+    },
+    {
+      "path": "build/lib/do_mpc/opcua/_helper.py",
+      "sha256": "2b46e5930c3ea3b357116060574e2e2abf0eb32517b16e444e90505502a341dc",
+      "bytes": 3640
+    },
+    {
+      "path": "build/lib/do_mpc/opcua/_server.py",
+      "sha256": "f2f823400178fb34df2a4d23a3cc2882a8a6dc7d5fcb7fa6a2af4bd52f2792fe",
+      "bytes": 5830
+    },
+    {
+      "path": "build/lib/do_mpc/optimizer.py",
+      "sha256": "3032f9ed2597bec1d534db0a3ac9ee0019deeb39a8f242d0037162199fcae216",
+      "bytes": 50457
+    },
+    {
+      "path": "build/lib/do_mpc/sampling/__init__.py",
+      "sha256": "0b55a42b98b56ebd0b8863bdb16d8b5b38c80546fc7918c1dd98d4b80fb95519",
+      "bytes": 841
+    },
+    {
+      "path": "build/lib/do_mpc/sampling/_datahandler.py",
+      "sha256": "cfba3207b50dcd6dabb11507fcc73a1d20fac74206fa0d5484ae28b26e8a8e73",
+      "bytes": 14004
+    },
+    {
+      "path": "build/lib/do_mpc/sampling/_sampler.py",
+      "sha256": "12230afb285ec8898df8588284f53302a6974a9d82da6a6e31ab7147309241d0",
+      "bytes": 9581
+    },
+    {
+      "path": "build/lib/do_mpc/sampling/_samplingplanner.py",
+      "sha256": "d6a72baf08d11ec6eed622ba620bf9b63f29b77c6510ecc267e0dd8a0545a018",
+      "bytes": 11291
+    },
+    {
+      "path": "build/lib/do_mpc/simulator.py",
+      "sha256": "6b5c51fbfbb59df388f499a3fb734c609584cfcaa99c019b73578b6fabc40592",
+      "bytes": 35857
+    },
+    {
+      "path": "build/lib/do_mpc/sysid/__init__.py",
+      "sha256": "7dce30afaa14a7a1be6c41644148e8e119f7f94559745e8505d64143552867fb",
+      "bytes": 406
+    },
+    {
+      "path": "build/lib/do_mpc/sysid/_onnxconversion.py",
+      "sha256": "baee7d1c9e10c04cb5e65d8b00af6caad22f9624728f3d0dc7f4c1598d1af549",
+      "bytes": 16382
+    },
+    {
+      "path": "build/lib/do_mpc/tools/__init__.py",
+      "sha256": "2be9f2081dfe1e71d46eb61d9f39a32a7b9a1d1e584a42b3922fdd9bf11e8fa9",
+      "bytes": 2298
+    },
+    {
+      "path": "build/lib/do_mpc/tools/_casstructure.py",
+      "sha256": "1e156f7951212397ec94d389d63fd3dca81416f373083aff626fcdd2714fd72f",
+      "bytes": 1047
+    },
+    {
+      "path": "build/lib/do_mpc/tools/_indexedproperty.py",
+      "sha256": "d35252c11d1913870683dd47559c230c34f7c4101d196bb501e9d9b8630db54c",
+      "bytes": 1593
+    },
+    {
+      "path": "build/lib/do_mpc/tools/_structure.py",
+      "sha256": "9bc557f55aaba5dae684e147921e4f9b7a8d7c1a66b7c0f7d1bd8b7d261cfac9",
+      "bytes": 6196
+    },
+    {
+      "path": "build/lib/do_mpc/tools/_timer.py",
+      "sha256": "afe51c18e86d4ed79db8d312ff2298c3816c0d0e71606eb7bc008c709de3fd8a",
+      "bytes": 1569
+    },
+    {
+      "path": "do_mpc.egg-info/dependency_links.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    {
+      "path": "do_mpc.egg-info/PKG-INFO",
+      "sha256": "a20dffd3c64a54a019bff2309eae71dbe2fb1507cb85b2a663f75ac2d1cd773c",
+      "bytes": 3481
+    },
+    {
+      "path": "do_mpc.egg-info/requires.txt",
+      "sha256": "50593231c239e8030e938a713c4a9db52885c9dac80e523e880cee48a959bfa5",
+      "bytes": 105
+    },
+    {
+      "path": "do_mpc.egg-info/SOURCES.txt",
+      "sha256": "4e120eeb0ba6a426ef513aae82549fb949c7ee19c53e0434e5e74269e30dfa98",
+      "bytes": 1482
+    },
+    {
+      "path": "do_mpc.egg-info/top_level.txt",
+      "sha256": "4adeb85e7dd90f64ad8a569ba4036921c0b5f3c0a166e32b5e362d5dcaf2fba9",
+      "bytes": 7
+    },
+    {
+      "path": "examples/oscillating_masses_discrete/__pycache__/template_model.cpython-311.pyc",
+      "sha256": "f5a1d8ecb4b4f982d60901e55aaded1e311f774b4b8460f17f9c896d6ff70c2d",
+      "bytes": 2047
+    },
+    {
+      "path": "examples/oscillating_masses_discrete/__pycache__/template_mpc.cpython-311.pyc",
+      "sha256": "52d67dedab08139908b0f210aa3d06800540ab7fefc24c460badf9d5d1d51ce7",
+      "bytes": 2056
+    },
+    {
+      "path": "examples/oscillating_masses_discrete/__pycache__/template_simulator.cpython-311.pyc",
+      "sha256": "002078747b058dd907f2768de2547e858ec8a3009da7739102d37bca7d7872f0",
+      "bytes": 1185
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "df82e517cdf342d17261d5adea8272c7e5cc27f4fdad4194906ed8bff71804b6",
+  "body_preserved": true
+}

@@ -272,11 +272,31 @@ def write_heartbeat(
     status_json: Optional[dict] = None,
     pid: Optional[int] = None,
     connected_at: Optional[datetime] = None,
+    last_work_attempt_at: Optional[datetime] = None,
+    last_work_success_at: Optional[datetime] = None,
+    health: Optional[str] = None,
 ) -> bool:
     """Write/upsert heartbeat row. Best-effort: logs and returns False on failure.
 
     Designed to be called from a daemon's existing heartbeat or _emit_status
     function. Pass status_json (the full STATUS.json dict) to mirror full state.
+
+    WORK STATE (added 2026-09-11, Pronoia, PRON-03). `status` reports whether
+    the PROCESS is alive; it says nothing about whether the process is doing
+    its job, and for 34 of 36 rows in this table on 2026-09-11 nothing else
+    did either. The three optional arguments below are the difference:
+
+        last_work_attempt_at   when a unit of work actually started
+        last_work_success_at   when one actually completed its work
+        health                 a value derived from those two and the clock,
+                               never a constant and never self-asserted
+                               (roles/Pronoia/science/productive_liveness.py)
+
+    Strictly additive and backward compatible: every existing caller omits
+    them, passes None, and keeps its previous behaviour exactly, because the
+    UPDATE branch COALESCEs each one against the stored value. A caller that
+    never supplies work state can therefore never ERASE work state, and a
+    caller that supplies it once does not have to supply it on every beat.
     """
     now = datetime.now(timezone.utc)
     try:
@@ -285,8 +305,9 @@ def write_heartbeat(
                 cur.execute("""
                     INSERT INTO agora.agent_heartbeats
                         (agent_name, machine, status, last_heartbeat, status_json,
-                         last_status_update, connected_at, pid, updated_at)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NOW())
+                         last_status_update, connected_at, pid, updated_at,
+                         last_work_attempt_at, last_work_success_at, health)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NOW(), %s, %s, %s)
                     ON CONFLICT (agent_name) DO UPDATE SET
                         machine = EXCLUDED.machine,
                         status = EXCLUDED.status,
@@ -295,12 +316,16 @@ def write_heartbeat(
                         last_status_update = COALESCE(EXCLUDED.last_status_update, agora.agent_heartbeats.last_status_update),
                         connected_at = COALESCE(EXCLUDED.connected_at, agora.agent_heartbeats.connected_at),
                         pid = COALESCE(EXCLUDED.pid, agora.agent_heartbeats.pid),
+                        last_work_attempt_at = COALESCE(EXCLUDED.last_work_attempt_at, agora.agent_heartbeats.last_work_attempt_at),
+                        last_work_success_at = COALESCE(EXCLUDED.last_work_success_at, agora.agent_heartbeats.last_work_success_at),
+                        health = COALESCE(EXCLUDED.health, agora.agent_heartbeats.health),
                         updated_at = NOW()
                 """, (
                     agent_name, machine, status, now,
                     json.dumps(status_json, default=str) if status_json else None,
                     now if status_json else None,
                     connected_at, pid,
+                    last_work_attempt_at, last_work_success_at, health,
                 ))
             conn.commit()
         return True

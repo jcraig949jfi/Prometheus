@@ -1,0 +1,1319 @@
+[
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Closest pair problem",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Collision detection algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Convex hull algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Line segment intersection",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Minimum bounding box algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Nearest neighbor search",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Nesting algorithm",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Point set registration algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Triangulation",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Polygon triangulation algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Delaunay triangulation",
+  "decision": "NOT_A_BIT",
+  "reason": "a structure defined by a criterion (empty circumcircle); the constructions are the bits (Bowyer-Watson, Fortune, refinement)"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Voronoi diagrams, geometric dual of Delaunay triangulation",
+  "decision": "NOT_A_BIT",
+  "reason": "a structure, not a mechanism; its constructions are catalogued separately"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Risch algorithm",
+  "decision": "DEFER",
+  "reason": "a decision procedure by recursion on a tower of field extensions; the list line names the problem only; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Quasitriangulation",
+  "decision": "DEFER",
+  "reason": "the list line is empty; needs a source read"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Chien search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.evaluate_at_every_field_element_by_multiplying_each_term_by_a_fixed_power",
+   "name": "evaluate at every field element by multiplying each term by a fixed power",
+   "lineage": [
+    "error-correcting systems",
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+   ],
+   "mechanism": "to find where a polynomial vanishes over a finite field, keep one register per coefficient; moving from one element to the next multiplies each register by a fixed power of the generator, so every evaluation costs one multiply per term and a sum, and a zero sum marks a root",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a finite field with a known generator"
+   ],
+   "fails_when": [
+    "linear in the field size; useless over large fields"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Schreier–Sims algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.remember.sift_elements_through_a_stabiliser_chain_adding_what_does_not_sift_to_identity",
+   "name": "sift elements through a stabiliser chain, adding whatever does not sift to the identity",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+   ],
+   "mechanism": "fix a sequence of points; at each level keep one representative for every place the level's point can be sent; to sift an element, at each level compose with the inverse of the representative that undoes its action on that point; an element that sifts to the identity is already generated, otherwise its residue is added as a new generator and the affected levels are re-closed",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REMEMBER",
+   "in_geometry": "SET",
+   "out_geometry": "TREE",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a permutation action",
+    "a base of points (policy)"
+   ],
+   "fails_when": [
+    "a poor base makes the chain long"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Todd–Coxeter algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.define_new_cosets_on_demand_and_merge_on_forced_coincidence",
+   "name": "define new cosets on demand and merge them whenever a relation forces a coincidence",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+   ],
+   "mechanism": "keep a table of how each generator moves each known coset; whenever tracing a relation needs an undefined entry, define a new coset; whenever tracing shows two coset names must be equal, merge them (and everything that follows from the merge); stop when every relation closes on every coset",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "SET",
+   "out_geometry": "MAP",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "INCREMENTAL",
+   "iteration": "FIFO",
+   "cost": "UNKNOWN",
+   "requires": [
+    "a finite index (otherwise it never stops)"
+   ],
+   "fails_when": [
+    "no bound on the intermediate table size; infinite index never terminates"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.remember.disjoint_set_union"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Buchberger's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.add_the_reduced_combination_of_each_pair_until_every_pair_reduces_to_zero",
+   "name": "add the reduced combination of each pair until every pair reduces to zero",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+   ],
+   "mechanism": "for every pair in the current set, form the combination that cancels their leading terms, reduce it by the whole set, and if anything remains add it as a new member; when every pair reduces to zero the set is closed and reduction by it decides membership",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "WELL_FOUNDED",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "TERMINATES",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "FIFO",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "a well-founded order on leading terms"
+   ],
+   "fails_when": [
+    "intermediate expression swell; doubly exponential worst case"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.repair.add_violated_constraint_and_resolve"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Faugère F4 algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.reduce_many_pair_combinations_at_once_by_row_reduction_of_a_shared_matrix",
+   "name": "reduce many pair combinations at once by row reduction of a shared matrix",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+   ],
+   "mechanism": "instead of reducing one pair combination at a time, select a whole batch of pairs of the same size, write them and everything needed to reduce them as rows of one matrix over the monomials, row-reduce once, and add every new leading term that appears",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "WELL_FOUNDED",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "TERMINATES",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "SORTED_GLOBAL",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "sparse linear algebra"
+   ],
+   "fails_when": [
+    "matrices can be huge; many rows reduce to zero (the F5 criterion avoids them)"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "SPECIALIZES",
+     "id": "bit.repair.add_the_reduced_combination_of_each_pair_until_every_pair_reduces_to_zero"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Knuth–Bendix completion algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.orient_equations_into_rules_and_add_the_normal_forms_of_critical_overlaps",
+   "name": "orient equations into rules and add the normal forms of critical overlaps as new rules",
+   "lineage": [
+    "theorem provers",
+    "symbolic reasoning"
+   ],
+   "mechanism": "turn each equation into a rewrite rule pointing downhill in a termination order; wherever two rules' left sides overlap, rewrite the overlap both ways to normal forms; if the results differ, orient that pair as a new rule; repeat until no overlap yields a new rule, when rewriting decides equality",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "WELL_FOUNDED",
+   "metric_req": "EQUALITY",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "NONE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "FIFO",
+   "cost": "UNKNOWN",
+   "requires": [
+    "a termination order that can orient every equation"
+   ],
+   "fails_when": [
+    "an unorientable equation halts the procedure; may run forever"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.repair.add_the_reduced_combination_of_each_pair_until_every_pair_reduces_to_zero"
+    },
+    {
+     "rel": "COMPOSES_WITH",
+     "id": "bit.rewrite.rule_canonicalization"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cantor–Zassenhaus algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.split_by_gcd_with_a_random_element_raised_to_half_the_group_order",
+   "name": "split by a gcd with a random element raised to half the group order",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers",
+    "error-correcting systems"
+   ],
+   "mechanism": "a product of equal-degree factors splits the residue ring into components; raise a random element to half the order of each component's multiplicative group, so it becomes plus or minus one in each component independently; the gcd of (result minus one) with the input collects exactly the components where it was plus one",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a squarefree input already separated by factor degree",
+    "an odd field size"
+   ],
+   "fails_when": [
+    "each trial splits with probability about one half; needs a separate handling in characteristic two"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.search.exploit_smooth_group_order_by_large_power"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gosper's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.solve_for_a_rational_certificate_that_telescopes_the_sum",
+   "name": "solve for a rational certificate that telescopes the sum",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+   ],
+   "mechanism": "write the term ratio as a quotient of polynomials in a normalised form, bound the degree of an unknown polynomial from that form, and solve the resulting linear system; a solution gives a closed form whose consecutive differences are the terms, and no solution proves that no such closed form exists",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "FUNCTION",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "strategy": "DIRECT",
+   "iteration": "NONE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a term ratio that is a rational function"
+   ],
+   "fails_when": [
+    "sums with no hypergeometric closed form return a proof of absence, not a value"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Polynomial long division",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.cancel_the_leading_term_with_a_multiple_of_a_divisor_repeatedly",
+   "name": "cancel the leading term with a multiple of a divisor, repeatedly",
+   "lineage": [
+    "automated mathematics",
+    "symbolic reasoning",
+    "theorem provers"
+   ],
+   "mechanism": "while some divisor's leading term divides the current leading term, subtract the matching multiple of that divisor and record it in the quotient; a leading term that no divisor divides is moved to the remainder; terms are taken in a fixed order so the process ends",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "FUNCTION",
+   "order_req": "WELL_FOUNDED",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a term order in which leading terms decrease"
+   ],
+   "fails_when": [
+    "with several divisors the remainder depends on their order unless the set is closed"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.transform.bring_down_a_digit_and_subtract_the_largest_fitting_multiple"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Multivariate division algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.transform.cancel_the_leading_term_with_a_multiple_of_a_divisor_repeatedly"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Pollard's kangaroo algorithm (also known as Pollard's lambda algorithm)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.run_a_tame_and_a_wild_walk_with_value_determined_jumps_until_they_meet",
+   "name": "run a tame walk from a known point and a wild walk from the target, with value-determined jumps, until they meet",
+   "lineage": [
+    "automated mathematics",
+    "network protocols"
+   ],
+   "mechanism": "each walk jumps by an amount chosen from the current value alone, so once two walks land on a common point they coincide forever; start one from a known exponent, record its distance travelled, start the other from the unknown, and when the wild walk hits a point the tame one recorded, the two distances give the unknown",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SCALAR",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "strategy": "RANDOMIZED",
+   "iteration": "NONE",
+   "cost": "EXPONENTIAL",
+   "requires": [
+    "the unknown known to lie in an interval",
+    "a jump function of the value alone"
+   ],
+   "fails_when": [
+    "the walks may miss; expected cost is the square root of the interval width"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "CONTRASTS_WITH",
+     "id": "bit.search.detect_cycle_in_pseudorandom_walk_for_collision"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Chan's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.bound.guess_the_output_size_and_square_the_guess_on_failure",
+   "name": "guess the output size, run an output-sensitive procedure against it, and square the guess on failure",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "run a procedure whose cost depends on an assumed output size (here: hull the input in groups of that size, then wrap over the group hulls for that many steps); if the output is not finished within the guess, square the guess and start over; the doubling-of-exponents makes the total cost proportional to the final successful run",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "BOUND",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "LOOP_OWNER",
+   "guarantee": "OPTIMAL",
+   "strategy": "ADAPTIVE_SWITCH",
+   "iteration": "NONE",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "an inner procedure whose cost is controlled by the guess"
+   ],
+   "fails_when": [
+    "the wasted runs are cheap only because the guess grows so fast"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.bound.raise_depth_limit_and_restart"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gift wrapping algorithm or Jarvis march",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.repeatedly_pick_the_point_making_the_smallest_turn_from_the_current_edge",
+   "name": "repeatedly pick the point that makes the smallest turn from the current edge",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "start at an extreme point; among all remaining points choose the one such that every other point lies to one side of the line from the current point to it (the smallest angular turn), step to it, and repeat until the start is reached",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "GREEDY",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "an orientation test on three points"
+   ],
+   "fails_when": [
+    "cost is points times hull size; slow when most points are on the hull"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Graham scan",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.sort_by_angle_then_pop_any_point_that_makes_a_non_left_turn",
+   "name": "sort by angle around a pivot, then pop any point that makes a non-left turn",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "sort the points by angle about the lowest point, walk them in that order pushing onto a stack, and whenever the top two stack points and the new point fail to turn left, pop the top; what remains on the stack is the hull in order",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "iteration": "LIFO",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "an orientation test",
+    "a sort"
+   ],
+   "fails_when": [
+    "collinear points need a tie rule"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Kirkpatrick–Seidel algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.find_the_bridge_across_the_median_then_recurse_on_each_side",
+   "name": "find the hull edge that bridges the median split, then recurse on each side",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "split the points by a vertical median line, find directly (by a prune-and-search over point pairs) the single hull edge that crosses the line, discard every point under that edge, and recurse on the two sides; the work is proportional to the input times the log of the output size",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "strategy": "DIVIDE_CONQUER",
+   "iteration": "NONE",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "linear-time median and a bridge-finding routine"
+   ],
+   "fails_when": [
+    "large constants; rarely faster in practice"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Quickhull",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.take_the_farthest_point_from_the_edge_discard_the_interior_and_recurse",
+   "name": "take the farthest point from the edge, discard the triangle's interior, and recurse on the two new edges",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "from a starting edge between two extreme points, find the point farthest from it; that point is on the hull; drop every point inside the triangle it forms, and recurse on the two edges from it; a random-like input gives linearithmic time",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SET",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "PARTITION_BY_VALUE",
+   "iteration": "NONE",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "a point-to-line distance"
+   ],
+   "fails_when": [
+    "quadratic when the points lie near a circle"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.order.partition_around_pivot"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cone algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.detect.mark_a_point_as_surface_if_some_cone_from_it_contains_no_other_point",
+   "name": "mark a point as surface if some cone from it contains no other point",
+   "lineage": [
+    "scientific software",
+    "biological and artificial dynamical systems"
+   ],
+   "mechanism": "for each point, test a set of cone directions of fixed opening angle; if any cone anchored at the point holds none of its neighbours, the point is on the surface; otherwise it is interior",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "DETECT",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a cone opening angle and neighbour radius (policy)"
+   ],
+   "fails_when": [
+    "concave pockets fool the test; parameter-dependent"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Euclidean distance transform",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.propagate_distances_along_each_axis_in_turn",
+   "name": "propagate distances along each axis in turn",
+   "lineage": [
+    "scientific software",
+    "computational geometry"
+   ],
+   "mechanism": "compute for every grid cell its distance to the nearest marked cell by handling one axis at a time: a pass along rows gives the nearest marked cell within each row, then a pass along columns combines those row results (as a lower envelope of parabolas) into true distances; each pass is linear",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "MATRIX",
+   "out_geometry": "MATRIX",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a separable distance (sum of per-axis terms)"
+   ],
+   "fails_when": [
+    "non-separable metrics"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Geometric hashing",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.store_every_point_in_the_frame_of_each_basis_pair_then_vote_at_query_time",
+   "name": "store every point in the frame of each basis pair, then vote at query time",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "scientific software"
+   ],
+   "mechanism": "offline, for every ordered pair of model points as a basis, express all other model points in that basis and store (quantised coordinates -> model, basis) in a table; online, pick a basis from the scene, express the scene points in it, look each up and vote; a model-basis pair with many votes is a match under the transformation",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SET",
+   "out_geometry": "RECORD",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "PRECOMPUTED_TABLE",
+   "iteration": "RANDOM",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a quantisation grid (policy)",
+    "a transformation group fixed by two points"
+   ],
+   "fails_when": [
+    "table size is cubic in model points; quantisation boundaries lose votes"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gilbert–Johnson–Keerthi distance algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.grow_a_simplex_toward_the_origin_using_support_points_of_the_difference_shape",
+   "name": "grow a simplex toward the origin using support points of the difference shape",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "controllers"
+   ],
+   "mechanism": "the two shapes intersect exactly when their pointwise difference contains the origin; keep a small simplex of difference points, find the point of the difference shape farthest in the direction from the simplex toward the origin (one support query per shape), add it, drop the vertex that no longer helps, and repeat until the origin is enclosed or no progress is possible (the closest distance)",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SET",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "INNER_PRODUCT",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "GREEDY",
+   "iteration": "NONE",
+   "cost": "LINEAR",
+   "requires": [
+    "a support function for each convex shape"
+   ],
+   "fails_when": [
+    "non-convex shapes must be decomposed; numerical stall near touching"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Jump-and-Walk algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.start_at_the_nearest_of_a_few_random_samples_then_walk_across_neighbours",
+   "name": "start at the nearest of a few random samples, then walk across neighbours toward the target",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "draw a handful of random cells, take the one whose reference point is closest to the query, and then step from cell to adjacent cell in the direction of the query until the query falls inside the current cell; no index is built",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "GRAPH",
+   "out_geometry": "STATE_TOKEN",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "RANDOMIZED",
+   "iteration": "RANDOM",
+   "cost": "LINEAR",
+   "requires": [
+    "adjacency between cells",
+    "a sample count (policy)"
+   ],
+   "fails_when": [
+    "non-convex regions can trap the walk"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Laplacian smoothing",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.move_each_vertex_to_the_mean_of_its_neighbours",
+   "name": "move each vertex toward the mean of its neighbours",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "biological and artificial dynamical systems"
+   ],
+   "mechanism": "for every vertex compute the average position of its connected neighbours and move it there (or part of the way); repeat a few rounds; the mesh loses noise and small features shrink",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "GRAPH",
+   "out_geometry": "GRAPH",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "PARALLEL_ROUNDS",
+   "cost": "LINEAR",
+   "requires": [
+    "a connectivity graph over positions"
+   ],
+   "fails_when": [
+    "shrinkage; boundary vertices need fixing"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.search.update_each_variable_in_turn_from_the_latest_values_of_the_others"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bentley–Ottmann algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.detect.sweep_a_line_and_test_only_neighbours_in_the_active_order_at_each_event",
+   "name": "sweep a line across the plane and test only neighbours in the active order at each event",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "sort the segment endpoints as events; as a vertical line sweeps them, keep the segments it currently crosses in their vertical order; when a segment starts, ends, or two segments cross, only the segments that became adjacent in that order can newly intersect, so test just those and schedule any crossing found as a future event",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "DETECT",
+   "in_geometry": "SET",
+   "out_geometry": "SET",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "iteration": "PRIORITY",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "an ordered set for the active segments",
+    "a priority queue of events"
+   ],
+   "fails_when": [
+    "degenerate inputs (shared endpoints, vertical segments) need special rules"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Shamos–Hoey algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.detect.sweep_a_line_and_test_only_neighbours_in_the_active_order_at_each_event"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Rotating calipers",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.rotate_parallel_support_lines_around_the_hull_advancing_the_smaller_angle",
+   "name": "rotate two parallel support lines around the hull, advancing whichever has the smaller angle to its next edge",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "rest two parallel lines on opposite vertices of a convex polygon; rotate both together, at each step turning by the smaller of the two angles needed to reach the next edge and advancing that vertex; every pair of opposite vertices is visited once, in one pass around the polygon",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a convex polygon in order"
+   ],
+   "fails_when": [
+    "parallel edges produce ties"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.search.sort_both_sides_then_advance_the_smaller_key"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Point in polygon algorithms",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.verify.count_the_edge_crossings_of_a_ray_from_the_point_and_read_the_parity",
+   "name": "count the edge crossings of a ray from the point and read the parity",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "shoot a ray from the point in any fixed direction and count how many polygon edges it crosses; an odd count means inside, even means outside; the winding-number variant sums signed crossings instead",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "VERIFY",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "BOOLEAN",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "a segment-ray intersection test"
+   ],
+   "fails_when": [
+    "a ray through a vertex needs a tie rule"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Shoelace algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.accumulate.sum_the_signed_cross_products_of_consecutive_vertices",
+   "name": "sum the signed cross products of consecutive vertices",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "walk the vertices in order, add each x times the next y and subtract each y times the next x, wrapping at the end; half the absolute total is the area and its sign gives the orientation",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ACCUMULATE",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "DIRECT",
+   "iteration": "SWEEP",
+   "cost": "LINEAR",
+   "requires": [
+    "vertices in boundary order"
+   ],
+   "fails_when": [
+    "self-intersecting polygons give signed cancellation"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Ruppert's algorithm (also known as Delaunay refinement)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.insert_the_circumcentre_of_each_bad_triangle_until_all_meet_the_bound",
+   "name": "insert the circumcentre of each bad triangle until all meet the quality bound",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "scientific software"
+   ],
+   "mechanism": "while any triangle has an angle below the bound, insert its circumcentre as a new vertex and re-triangulate locally; if the new point would land too close to an input segment, split that segment at its midpoint instead; termination follows because inserted points are never closer than the local feature size allows",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "GRAPH",
+   "out_geometry": "GRAPH",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "TERMINATES",
+   "strategy": "FIXPOINT_ITERATION",
+   "iteration": "PRIORITY",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "an input with no very small angles between segments",
+    "a quality bound (policy)"
+   ],
+   "fails_when": [
+    "small input angles can prevent termination"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Chew's second algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.repair.insert_the_circumcentre_of_each_bad_triangle_until_all_meet_the_bound"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bowyer–Watson algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.repair.delete_the_triangles_whose_circumcircle_contains_the_new_point_and_refill_the_hole",
+   "name": "delete the triangles whose circumcircle contains the new point and refill the hole from it",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "scientific software"
+   ],
+   "mechanism": "start with a super-triangle; insert points one at a time: remove every triangle whose circumscribed circle contains the new point (they form a connected hole), and connect the new point to every edge of the hole boundary; the empty-circle property is restored after each insertion",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REPAIR",
+   "in_geometry": "SET",
+   "out_geometry": "GRAPH",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "GLOBAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "iteration": "SWEEP",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "an in-circle test",
+    "a locating step for the containing triangle"
+   ],
+   "fails_when": [
+    "four co-circular points are ambiguous; worst case quadratic"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Fortune's Algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.sweep_a_line_maintaining_a_front_of_parabolic_arcs_with_site_and_circle_events",
+   "name": "sweep a line while maintaining a front of parabolic arcs, handling site and circle events",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software"
+   ],
+   "mechanism": "as a line sweeps across the sites, maintain the curve of points equidistant from the line and the nearest site behind it (a chain of parabolic arcs); a new site splits an arc, and three consecutive arcs whose sites are co-circular predict a vertex where the middle arc vanishes; processing these two event types in order builds all cell boundaries",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "SET",
+   "out_geometry": "GRAPH",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "strategy": "INCREMENTAL",
+   "iteration": "PRIORITY",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "an ordered structure for the arc front",
+    "a priority queue of events"
+   ],
+   "fails_when": [
+    "numerical fragility in the circle events"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.detect.sweep_a_line_and_test_only_neighbours_in_the_active_order_at_each_event"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Marching triangles",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.grow_a_surface_from_a_front_edge_adding_one_triangle_at_a_time",
+   "name": "grow a surface from a front edge, adding one triangle at a time",
+   "lineage": [
+    "computational geometry",
+    "games",
+    "scientific software",
+    "scientific software"
+   ],
+   "mechanism": "start from a seed triangle; keep the boundary edges as a front; for each front edge choose the nearby point that forms the best-shaped triangle satisfying a local empty-sphere test, add it, and update the front; stop when the front is empty",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "SET",
+   "out_geometry": "GRAPH",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "strategy": "GREEDY",
+   "iteration": "FIFO",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "a point cloud dense relative to surface curvature",
+    "a neighbour query"
+   ],
+   "fails_when": [
+    "holes where sampling is sparse; fronts can collide"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "RECURRENCE_OF",
+     "id": "bit.select.grow_tree_by_cheapest_crossing_edge"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch10 (T2)"
+  }
+ }
+]

@@ -1,0 +1,45 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/gzip-1.2.4",
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "1993 configure + make with modern-compiler accommodations (-fcommon -std=gnu89 -w; no source change)",
+      "cmd": "./configure >/dev/null 2>&1; make -s CFLAGS='-O1 -fcommon -std=gnu89 -w' 2>&1 | grep -iE '\\berror' | head -5; test -x ./gzip && echo built",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "round trip the same 200 KB sample used for compact; report the ratio",
+      "cmd": "awk 'BEGIN{for(i=0;i<4000;i++) printf(\"the quick brown fox %d jumps over the lazy dog %d\\n\", i, i*7)}' > $BODY/build/sample && ./gzip -c -9 $BODY/build/sample > $BODY/build/s.gz && ls -l $BODY/build/s.gz | awk '{print \"gzip -9 bytes:\", $5}' && ./gzip -dc $BODY/build/s.gz | cmp - $BODY/build/sample && echo ROUNDTRIP OK",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "ROUNDTRIP OK"
+        ]
+      }
+    },
+    {
+      "name": "version banner",
+      "cmd": "./gzip -V 2>&1 | head -2",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "1.2.4"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_CONTAINER",
+  "notes": "Same sample as compact-4.2bsd-1983 so the two ratios are comparable."
+}

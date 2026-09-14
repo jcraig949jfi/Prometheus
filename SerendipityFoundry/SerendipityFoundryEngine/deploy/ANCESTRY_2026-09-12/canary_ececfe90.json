@@ -1,0 +1,70 @@
+{
+ "edges": [
+  {
+   "edge": "returned_fossil",
+   "encounter_id": "ENC-archaeon-4f6625f91b2e304b",
+   "obs_id": "obs_52ac5c2564a0deaf0d3ed303",
+   "queue_experiment_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+   "run_id": "exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+   "sfe_entry_hash": "sha256:6100e0201ec9ad745c4311a36ef18001ca31fc135bceb1bdaacac132ebb0617d",
+   "sfe_event_seq": 129400,
+   "sfe_world_id": "wld_13b3caf41573e37f015bf9ff"
+  },
+  {
+   "edge": "sfe",
+   "entry_hash_verified": true,
+   "evidence_class": "ENGINE_WORK_RESULT",
+   "exp_id": "exp_8d968652a8a6b0c9885ec716",
+   "obs_id": "obs_52ac5c2564a0deaf0d3ed303",
+   "outcome": "SURVIVED",
+   "spec_hash": "sha256:3caf3b11e0229257cd5f626bdb0afd9425c815896da7a8f2675bf497ef2e2174",
+   "work_id": "wrk_0741fa4c800b927bb1322dd0",
+   "world_id": "wld_13b3caf41573e37f015bf9ff"
+  },
+  {
+   "arm_id": "resample_best",
+   "candidate_set_id": "cs-40a8239f45904b56",
+   "created_by": "archaeon",
+   "edge": "queue_row",
+   "experiment_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+   "family_id": "fam-canary-2026-09-12",
+   "request_key": "rk-canary-2026-09-12-1",
+   "source_reason": "human",
+   "spec_hash_verified": true
+  },
+  {
+   "chosen_region": "wld_8e73e722b2b2d883d917b5c0",
+   "corpus_hash": "corpus:9ff9b911920024b5f16349bb",
+   "corpus_rows": 1029,
+   "corpus_table": "archaeon/docs/h0h5/_directable_landscapes_2026-09-12.json",
+   "edge": "selection_decision",
+   "mode": "human",
+   "policy": "canary.region_directed_by_hand.v0",
+   "preregistration": "archaeon/docs/h0h5/CANARY_PREREG_2026-09-12.json (commit 35a41ce62)",
+   "schema": "archaeon.canary.v0",
+   "selection_rule": "among directable regions (seed_root AND length recoverable from the ledger), the HIGHEST metric; tie -> earliest created_ts",
+   "template_content_hash": null
+  },
+  {
+   "commit": "35a41ce62",
+   "edge": "source_fossil",
+   "exp_id": "exp_4a36b0ad58fbc0e1de90a6d5",
+   "metric": 0.75,
+   "obs_id": "obs_d57501bd03d010e1c7c12797",
+   "pew": "ENC-archaeon-f84f653c25247083",
+   "region": "wld_8e73e722b2b2d883d917b5c0",
+   "rule_reproduced": true,
+   "table": "archaeon/docs/h0h5/_directable_landscapes_2026-09-12.json"
+  },
+  {
+   "edge": "source_region",
+   "source_pew": "ENC-archaeon-f84f653c25247083",
+   "source_run_id": "exp_4a36b0ad58fbc0e1de90a6d5:wrk_13b05b568357cc6aae7083c6",
+   "world_id": "wld_8e73e722b2b2d883d917b5c0"
+  }
+ ],
+ "returned_fossil": "ENC-archaeon-4f6625f91b2e304b",
+ "schema": "fossil_ancestry.v1",
+ "verdict": "ANCESTRY_COMPLETE",
+ "why": "returned fossil ENC-archaeon-4f6625f91b2e304b <- SFE exp_8d968652a8a6b0c9885ec716 <- queue row ececfe90-3e20-4dfe-b271-6a9d45d9abb2 <- decision canary.region_directed_by_hand.v0 over archaeon/docs/h0h5/_directable_landscapes_2026-09-12.json@35a41ce62 <- source fossil ENC-archaeon-f84f653c25247083 (obs_d57501bd03d010e1c7c12797) in region wld_8e73e722b2b2d883d917b5c0"
+}

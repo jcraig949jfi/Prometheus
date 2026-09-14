@@ -1,0 +1,162 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "picosat-965",
+  "receipt_id": "run-picosat-965-20260912T175221Z",
+  "written_utc": "20260912T175221Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream/tree/picosat-965",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "sat.cnf": "78eb4106ec803893d993aa6c05099e6e70bfb6b72ac270fada94c3e98a4b31f9",
+    "unsat.cnf": "b95043fb0685b6fa198e9518555f8334a307dbe7f0039fdbfa33373a3b91e7c5"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "e68ea1cb95417c291146d86d447b20a8a3b271c3b89b13e1648f38a4ff58cd94",
+  "recipe_sha256": "7baf3cf405a2f2c49365fbf5f2430abd674ae5bcbad05962e8e1d4b8350b9238",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 0.89,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "configure+make",
+      "cmd": "./configure.sh >/dev/null && make -s 2>&1 | tail -2; test -x ./picosat",
+      "exit": 0,
+      "seconds": 3.2,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "make: Warning: File 'makefile' has modification time 0.033 s in the future\nmake: warning:  Clock skew detected.  Your build may be incomplete.\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "satisfiable CNF (exit 10)",
+      "cmd": "./picosat $HARNESS/sat.cnf; exit $?",
+      "exit": 10,
+      "seconds": 0.68,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "s SATISFIABLE\nv 1 2 0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "unsatisfiable CNF (exit 20)",
+      "cmd": "./picosat $HARNESS/unsat.cnf; exit $?",
+      "exit": 20,
+      "seconds": 0.71,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "s UNSATISFIABLE\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "app.o",
+      "sha256": "c8c3f81fcee0419411967ee3eddf505143b228182080adaa4dd5c6b0a31ce9e6",
+      "bytes": 38488
+    },
+    {
+      "path": "config.h",
+      "sha256": "25bedf442451c52f2d863738450d6d6504aab53b2c56f388b29377ffc2833b0f",
+      "bytes": 107
+    },
+    {
+      "path": "libpicosat.a",
+      "sha256": "db61edc121478b2874754614622834e3b8e111b69f092fd68ec2f7a731e2e0f2",
+      "bytes": 111332
+    },
+    {
+      "path": "main.o",
+      "sha256": "9b0a8569e1b3fcab70c359460af6280b22866222a4b1e9547c30376501f64fbb",
+      "bytes": 1288
+    },
+    {
+      "path": "makefile",
+      "sha256": "7a4f3e1baae8305c841e79a55514791c37476506e285dae80bb6655157e0d784",
+      "bytes": 1368
+    },
+    {
+      "path": "picogcnf",
+      "sha256": "425fedc75cb55ec43e59f3c93972a859b25ab200e09e85cb66a63d688e9cf54c",
+      "bytes": 104264
+    },
+    {
+      "path": "picogcnf.o",
+      "sha256": "21465043124e5875f81dfcd924e9966a827e97c6b5aa5494c6eff8b041cbecca",
+      "bytes": 8696
+    },
+    {
+      "path": "picomcs",
+      "sha256": "8c614c4de64370ed6ca9b453edf4cf2ed00c169c963d0d54dab5a9268dc5fe49",
+      "bytes": 105048
+    },
+    {
+      "path": "picomcs.o",
+      "sha256": "5295350ba888155d224f6b52b975b436bfe4ea8fe3f72680079537db524e067b",
+      "bytes": 15552
+    },
+    {
+      "path": "picomus",
+      "sha256": "d54ca436c214cc05e44ce37d4de12d4995a8066fd520bfd8409619cbbf9bc2f4",
+      "bytes": 109088
+    },
+    {
+      "path": "picomus.o",
+      "sha256": "eb9898c6ae09bd60f40fa209b9f17e39d4ad654e4b91a3e1986ab0348a180eb8",
+      "bytes": 21528
+    },
+    {
+      "path": "picosat",
+      "sha256": "2715a6c0ee99f8c29a8dc617909d623636b96cdd4f8de30828ca347d325940ac",
+      "bytes": 117880
+    },
+    {
+      "path": "picosat.o",
+      "sha256": "b1cee2671f1f2ebf0f463f35cfde066d1785e434bacadddd550f106382b5f51d",
+      "bytes": 107760
+    },
+    {
+      "path": "version.o",
+      "sha256": "420f2af12354e5da203a57cc8c305d24ea216a31246dd5baeae0e6cd7129ec47",
+      "bytes": 1568
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "e68ea1cb95417c291146d86d447b20a8a3b271c3b89b13e1648f38a4ff58cd94",
+  "body_preserved": true
+}

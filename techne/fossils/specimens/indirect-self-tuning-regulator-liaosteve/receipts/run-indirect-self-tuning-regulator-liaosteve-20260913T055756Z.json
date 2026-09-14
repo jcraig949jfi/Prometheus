@@ -1,0 +1,94 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "indirect-self-tuning-regulator-liaosteve",
+  "receipt_id": "run-indirect-self-tuning-regulator-liaosteve-20260913T055756Z",
+  "written_utc": "20260913T055756Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-octave:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "axis.m": "95dd54398d3b8d2ca52dbe6b626d7bbfe2855074c3f44406e93693fdf531d353",
+    "clc.m": "ef78fe6dcdc2671533fbb34dac2d79cf8d658b3d7760a83263f2527aeb4e3211",
+    "close.m": "6b23cc75f4435f893d6e34a734603a210c12d512de48cdbd637ca818d0089d37",
+    "drawnow.m": "4b91014109143d1d7db6777433ab31a7d1c7437073c68a8da098caecc9aebcae",
+    "figure.m": "5a7e73bf88d8173407264a832f3bca6702c60d6157665f286b1e03ec7d925744",
+    "grid.m": "0acecd73b20d603f04326f96a3567d14e89aecd65ae2a919c2b063354410b61a",
+    "hold.m": "86d3a99eeb66a14a5bce85b1420cb730917f2b298e3eb110f5a026331f3deb4d",
+    "legend.m": "4fea3bc1e9f30c06f6df2fbfdc2d461409046f6a451629d96496f13c1804b240",
+    "plot.m": "b07a950531e32f8156c07121250e6d557fa3ec9ccc9c0252922d795b6863ff48",
+    "stairs.m": "802ba1e3168187f36ff47edd1f00692f99e7fc4af93cee2117d81f3e876e399a",
+    "subplot.m": "34b6b7c46fd549f7d93f94d4348606b7f6a34abae7f84beb158cd8dd0c78f950",
+    "text.m": "ae78a6c8e6401986fa3e5cd8dd0ab158c93e7f2ce6083ff01cbcbe8bd83116f6",
+    "title.m": "e56fc8dcc18ebd6fde75e6a8d277d667656fa06a9138b15457dbfd278018c411",
+    "xlabel.m": "d96620626613e5897e41da51837af73134c15631737448f5037556d064c69548",
+    "xlim.m": "6aafcb313f4b2737572f4a30a6530d8054c38fc7e10e582872f34066340aff44",
+    "ylabel.m": "7715f62efeca47fae052143bdc48611fc51743332d734c620415e122e7ab781f",
+    "ylim.m": "7c79a0e845834326b2fcadd78f51d96e4b44d7fa52f276c64b20182993cfd44b"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "feea2a02de061ec6b9c5356ee5fa9c627eb3de2f62dd2ca2b85e752d6e592c57",
+  "recipe_sha256": "706c2596d11082a97bafd74ae511df3c88f0e2b303694e03d2d37901b5b3a320",
+  "patches": [],
+  "probe": [
+    {
+      "name": "octave",
+      "cmd": "octave --version | head -1",
+      "exit": 0,
+      "seconds": 0.81,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "GNU Octave, version 7.3.0\n"
+      },
+      "stderr": {
+        "text": "octave: X11 DISPLAY environment variable not set\noctave: disabling GUI features\n"
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "run main_code.m (RLS with forgetting + pole placement, 200 samples); print the final plant estimate beside the true plant the script draws as reference lines",
+      "cmd": "octave --no-gui --no-window-system -p $HARNESS --eval \"source('main_code.m'); th = theta(:,end); printf('theta_final a1=%.4f a2=%.4f b0=%.4f b1=%.4f\\n', th); printf('true        a1=-1.6065 a2=0.6065 b0=0.1065 b1=0.0902\\n'); printf('max_abs_err=%.4f\\n', max(abs(th - [-1.6065;0.6065;0.1065;0.0902]))); printf('controller R,S,T at the end: r1=%.4f s0=%.4f s1=%.4f t0=%.4f\\n', r1, s0, s1, t0); printf('theta at k=10: %.4f %.4f %.4f %.4f\\n', theta(:,20));\" 2>&1 | tail -8",
+      "exit": 0,
+      "seconds": 0.89,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "warning: function /w/harness/clc.m shadows a built-in function\nwarning: function /w/harness/drawnow.m shadows a built-in function\ntheta_final a1=-1.5068 a2=0.5210 b0=0.0198 b1=0.1490\ntrue        a1=-1.6065 a2=0.6065 b0=0.1065 b1=0.0902\nmax_abs_err=0.0997\ncontroller R,S,T at the end: r1=0.1567 s0=1.4943 s1=-0.5480 t0=1.0436\ntheta at k=10: -1.6129 0.6390 0.0861 0.0875\nerror: ignoring const execution_exception& while preparing to exit\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "oracle: by sample 20 (t=10 s) the estimate is within 0.05 of the true plant on every parameter (adaptation happened); the end-of-run error is RECORDED, not asserted -- with lambda=0.8 and a square-wave reference the estimate drifts once excitation fades (the known STR hazard, visible here)",
+      "cmd": "octave --no-gui --no-window-system -p $HARNESS --eval \"source('main_code.m'); tr=[-1.6065;0.6065;0.1065;0.0902]; printf('err_at_sample20=%.4f err_at_end=%.4f\\n', max(abs(theta(:,20)-tr)), max(abs(theta(:,end)-tr)));\" 2>&1 | grep err_at | tee /dev/stderr | awk '{split($1,a,\"=\"); exit (a[2] < 0.05) ? 0 : 1}'",
+      "exit": 0,
+      "seconds": 0.9,
+      "ok": false,
+      "why_not": [
+        "stdout does not match /err_at_sample20=0\\.0[0-4]/"
+      ],
+      "stdout": {
+        "text": ""
+      },
+      "stderr": {
+        "text": "err_at_sample20=0.0325 err_at_end=0.0997\n"
+      }
+    }
+  ],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_FAIL",
+  "ok": false,
+  "tree_sha256_after": "feea2a02de061ec6b9c5356ee5fa9c627eb3de2f62dd2ca2b85e752d6e592c57",
+  "body_preserved": true
+}

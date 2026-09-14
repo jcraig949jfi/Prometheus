@@ -89,6 +89,16 @@ def plan_refs(row, cs):
     world_id = (rs.get("pew") or {}).get("world_anchor", {}).get("body", {}) \
         .get("world_id") or anchor.get("world_id")
     authority = ((row.get("source_evidence") or {}).get("authority") or "").lower()
+    status = row.get("status")
+    # Axes by terminal state (--all-statuses, 2026-09-11). A failed row was
+    # attempted and failed; a cancelled row was never run. Neither is
+    # "runnable" evidence of connection: that word is reserved for a row
+    # the engine observed to completion. Nothing here adjudicates outcome.
+    axes = {
+        "completed": ("runnable", "inconclusive", "benchmark-attempted"),
+        "failed": ("conceptual", "not-run", "failed"),
+        "cancelled": ("conceptual", "not-run", "blocked"),
+    }.get(status, ("conceptual", "not-run", "blocked"))
 
     common = {
         "encounter_id": enc_id,
@@ -102,9 +112,9 @@ def plan_refs(row, cs):
         "candidate_set_id": cs,
         "producer_experiment_id": row.get("experiment_id"),
         "software_stage": "alpha" if "alpha" in authority else None,
-        "connection_evidence": "runnable",
-        "scientific_outcome": "inconclusive",
-        "reproduction_state": "benchmark-attempted",
+        "connection_evidence": axes[0],
+        "scientific_outcome": axes[1],
+        "reproduction_state": axes[2],
         "namespace": "prod",
         "recorded_in_sfe": True,
         "terminal_state": row.get("status"),
@@ -141,6 +151,15 @@ def plan_refs(row, cs):
 
     locs = row.get("artifact_locators") or {}
     for name, loc in (locs.items() if isinstance(locs, dict) else []):
+        if isinstance(name, str) and name.startswith(SHA) and isinstance(loc, dict)                 and "artifact_id" not in loc:
+            # Phase-2 shape (cs-h1h0-1-p2b, 2026-09-11): the locator is KEYED
+            # by the artifact's content address and carries source_world /
+            # source_artifact. A content address is the engine's identity for
+            # an artifact blob, so it is both source id and digest here.
+            add("ARTIFACT", "ARTIFACT", name, name,
+                selector=f"source_world:{loc.get('source_world')};"
+                         f"source_artifact:{loc.get('source_artifact')}")
+            continue
         dg = loc.get("digest") if isinstance(loc, dict) else None
         add("ARTIFACT", "ARTIFACT",
             (loc or {}).get("artifact_id") if isinstance(loc, dict) else str(loc),
@@ -161,6 +180,10 @@ def main():
     ap.add_argument("--namespace", default="prod")
     ap.add_argument("--receipt", default=None)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--all-statuses", action="store_true",
+                    help="index failed and cancelled rows too; a row without "
+                         "engine digests reports every reference UNRESOLVED "
+                         "rather than inventing one")
     a = ap.parse_args()
 
     cfg = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
@@ -175,15 +198,21 @@ def main():
 
     started = time.time()
     counts = {"rows_total": len(rows), "rows_completed": 0, "rows_skipped": 0,
+              "rows_by_status": {}, "rows_indexed_non_completed": 0,
               "refs_inserted": 0, "refs_duplicate_identical": 0,
               "refs_conflict": 0, "refs_rejected": 0}
     by_kind, unresolved_rows, errors = {}, [], []
 
     for row in rows:
-        if row.get("status") != "completed":
+        st = row.get("status")
+        counts["rows_by_status"][st] = counts["rows_by_status"].get(st, 0) + 1
+        if st != "completed" and not a.all_statuses:
             counts["rows_skipped"] += 1
             continue
-        counts["rows_completed"] += 1
+        if st == "completed":
+            counts["rows_completed"] += 1
+        else:
+            counts["rows_indexed_non_completed"] += 1
         payloads, unresolved = plan_refs(row, a.candidate_set)
         if unresolved:
             unresolved_rows.append({"experiment_id": row["experiment_id"],
@@ -217,7 +246,11 @@ def main():
         "indexed_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "namespace": a.namespace,
         "command": (f"python ops/index_candidate_sets.py --candidate-set "
-                    f"{a.candidate_set} --namespace {a.namespace}"),
+                    f"{a.candidate_set} --namespace {a.namespace}"
+                    + (" --all-statuses" if a.all_statuses else "")),
+        "all_statuses": a.all_statuses,
+        "workspace": {k: WORKSPACE[k] for k in ("base_sha", "branch",
+                                                  "worktree_path", "dirty")},
         "counts": counts,
         "refs_by_kind": by_kind,
         "artifacts_present": by_kind.get("ARTIFACT", 0),

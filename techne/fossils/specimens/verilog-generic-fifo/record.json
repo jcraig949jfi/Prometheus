@@ -1,0 +1,125 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "verilog-generic-fifo",
+  "canonical_name": "Generic synchronous/async FIFO (Verilog, freecores)",
+  "aliases": [
+    "generic_fifos",
+    "fifo"
+  ],
+  "lineage": "A FIFO with full/empty flags and (in the async case) gray-coded pointers is the standard backpressure/flow-control element between two clock or rate domains -- it holds state and asserts 'full' to stall a fast producer",
+  "domain": [
+    "hardware",
+    "fifo",
+    "backpressure",
+    "flow-control",
+    "sequential-logic",
+    "verilog"
+  ],
+  "era": "classic (this Verilog impl)",
+  "version": "github.com/freecores/generic_fifos master as of 2026-09-12 (commit in hashes)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/freecores/generic_fifos",
+        "commit": "9d38c603aafd8f912ac3ae73a314d33987cd5c90",
+        "commit_resolved": "9d38c603aafd8f912ac3ae73a314d33987cd5c90",
+        "commit_date": "2004-01-13T09:11:55Z"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/freecores/generic_fifos (OpenCores)"
+  },
+  "hashes": {
+    "tree_sha256": "71549df2068e4712d08e36abdace415f88bad4cafed1651f5ba217e69dc284a4",
+    "n_files": 11,
+    "bytes": 67458,
+    "artifacts": [
+      {
+        "filename": "https://github.com/freecores/generic_fifos",
+        "sha256": null,
+        "commit": "9d38c603aafd8f912ac3ae73a314d33987cd5c90"
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\verilog-generic-fifo",
+    "hash_list": "techne/fossils/specimens/verilog-generic-fifo/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "see repo (OpenCores)",
+    "status": "read before redistribution",
+    "evidence": "repo"
+  },
+  "acquisition_date": "2026-09-12",
+  "language": [
+    "Verilog"
+  ],
+  "build_system": "iverilog + a Techne testbench exercising fill/drain and the full/empty flags",
+  "compiler_or_interpreter": "Icarus Verilog (docker prometheus-fossil-hw)",
+  "dependencies": [
+    "iverilog"
+  ],
+  "run_classification": "RUNNABLE_EMULATED",
+  "test_classification": "UPSTREAM_TESTS_PASS",
+  "entry_points": [
+    "the FIFO module: push/pop with full/empty/level outputs"
+  ],
+  "example": {
+    "command": "Techne testbench: push until 'full' asserts (backpressure), pop until 'empty', check no overflow/underflow and correct FIFO order",
+    "input": "push/pop sequences",
+    "output": "the full/empty flag timeline; in-order data out"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "prometheus-fossil-hw:bookworm"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Cummings, Simulation and Synthesis Techniques for Asynchronous FIFO Design"
+  ],
+  "human_capability_summary": {
+    "built_to": "buffer data between a producer and consumer running at different rates, asserting 'full' to stall the producer and 'empty' to stall the consumer -- flow control in hardware",
+    "pressure": "a producer and consumer with mismatched, bursty rates; without backpressure a fast producer overruns and data is lost",
+    "success_means": "no overflow or underflow, in-order delivery, correct flags across the rate mismatch"
+  },
+  "known_human_problem_solved": "rate-decoupling and backpressure between hardware blocks",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "rate mismatch and burstiness between producer and consumer; bounded buffer depth",
+  "human_failure_condition": "overflow (fast producer, ignored 'full') drops data; underflow (consumer reads 'empty') reads garbage -- silent corruption downstream",
+  "behavioral_entry_point": "push faster than you pop until 'full' asserts, then confirm the producer is stalled and no data is lost; the flags are the observable decisions",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [],
+  "versions_preserved": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/verilog-generic-fifo/receipts/run-verilog-generic-fifo-20260912T162146Z.json",
+      "ok": false,
+      "classification": "BROKEN_UPSTREAM",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/verilog-generic-fifo/receipts/run-verilog-generic-fifo-20260912T162254Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_EMULATED",
+      "test_classification": "UPSTREAM_TESTS_PASS"
+    }
+  ],
+  "nyx_handoff": {
+    "here_is_the_machine": "",
+    "where_it_came_from": "",
+    "how_to_run_it": "",
+    "how_we_know_it_runs": "",
+    "what_humans_used_it_for": ""
+  },
+  "seat": "Techne"
+}

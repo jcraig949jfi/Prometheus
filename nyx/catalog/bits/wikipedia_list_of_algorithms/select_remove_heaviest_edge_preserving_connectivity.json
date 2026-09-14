@@ -1,0 +1,43 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.remove_heaviest_edge_preserving_connectivity",
+  "name": "remove the heaviest edge that keeps the graph connected",
+  "lineage": [
+    "search",
+    "planning"
+  ],
+  "mechanism": "consider edges in decreasing weight and delete each one whose removal leaves the graph connected",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Reverse-delete algorithm' in section Combinatorial algorithms / Graph algorithms / Routing for graphs: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "GRAPH",
+  "out_geometry": "TREE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a connectivity test per deletion"
+  ],
+  "fails_when": [
+    "each connectivity test is a traversal; slow"
+  ],
+  "instances": [
+    "Reverse-delete algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch02 (T2)",
+  "iteration": "REMOVAL",
+  "classification_log": [
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ]
+}

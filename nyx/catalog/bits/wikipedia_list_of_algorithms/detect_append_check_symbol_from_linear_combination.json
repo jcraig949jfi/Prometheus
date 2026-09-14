@@ -1,0 +1,55 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.detect.append_check_symbol_from_linear_combination",
+  "name": "append a check symbol computed from the data",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "compute a small value from the data by a fixed linear combination or modular sum and append it; the receiver recomputes and any mismatch reveals corruption, with the combination chosen so the most likely error patterns cannot leave it unchanged",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Parity' in section Information theory and signal processing / Coding theory / Error detection and correction: simple/fast error detection technique",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Longitudinal redundancy check (LRC)': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Fletcher's checksum': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Adler-32': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "DETECT",
+  "in_geometry": "BITSTRING",
+  "out_geometry": "BOOLEAN",
+  "order_req": "NONE",
+  "metric_req": "EQUALITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "PROBABILISTIC_BOUND",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a combination rule shared by both sides (policy)"
+  ],
+  "fails_when": [
+    "error patterns in the combination's kernel pass undetected",
+    "no correction, only detection"
+  ],
+  "instances": [
+    "Parity",
+    "Longitudinal redundancy check (LRC)",
+    "Fletcher's checksum",
+    "Adler-32"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

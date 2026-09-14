@@ -1,0 +1,115 @@
+{
+  "admissible": true,
+  "case_id": "Hypatia",
+  "evidence": [
+    {
+      "ascii_normalized": false,
+      "id": "EV1",
+      "locator": "agent_id=Hypatia field=design_choice",
+      "sha256": "4aba161e1d3de21c9b0d5ab5eb6bd56c2b71f888edfe4a918ae3427260cb6974",
+      "source_field_utf8_bytes": 132,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "D-track curator on a 24h work cooldown, ticking far more often, with an anti_silence mechanism emitting an artifact per skipped tick"
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV2",
+      "locator": "agent_id=Hypatia field=boundary_localization",
+      "sha256": "6a18dd63e12ceffd3986e47a5af8ca115ed87561090e82eb02b1e5e18f60e27d",
+      "source_field_utf8_bytes": 381,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "channel confusion, by design not accident: 169 of 177 artifacts are cooldown-tick nulls carrying tick_at/reason/next_pick_at/anti_silence_counter -- heartbeat data with an artifact filename."
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV3",
+      "locator": "agent_id=Hypatia field=boundary_localization",
+      "sha256": "b72f8928605b1f52afacb892659c8fdc2e26501ae3ffdd495d006cf3a165b0f9",
+      "source_field_utf8_bytes": 381,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "The proper channel (agora heartbeat table with status_json) EXISTED and Hypatia used it too;"
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV4",
+      "locator": "agent_id=Hypatia field=boundary_localization",
+      "sha256": "a0cc58881200d37f6e30fe349daea2858462b3d39da04b321a711fc3c21960cc",
+      "source_field_utf8_bytes": 381,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "the artifact-stream copy is pure noise, and real work was 4 dispatches ever (42:1 noise-to-work)"
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV5",
+      "locator": "agent_id=Hypatia field=representation_hint",
+      "sha256": "488d863ef5c73f014c03d5da4efa9cf4928b3cba020e0409fc7983759fd5e451",
+      "source_field_utf8_bytes": 233,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "liveness goes to the heartbeat channel ONLY;"
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV6",
+      "locator": "agent_id=Hypatia field=representation_hint",
+      "sha256": "713485e0fd7e4994260c5893b818d323951fdccc692f5568b8462e1d3bc8f86f",
+      "source_field_utf8_bytes": 233,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "the artifact stream is for work products;"
+    },
+    {
+      "ascii_normalized": true,
+      "id": "EV7",
+      "locator": "agent_id=Hypatia field=representation_hint",
+      "sha256": "38cf1c56bd8bfc59c3d9ad5720955d955a915ca29631816f5eb01c96696cbecd",
+      "source_field_utf8_bytes": 233,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "an anti-silence requirement is a symptom that the heartbeat channel was not trusted -- fix the trust (Alethelia-class monitoring), not the stream"
+    },
+    {
+      "ascii_normalized": false,
+      "id": "EV8",
+      "locator": "agent_id=Hypatia field=evidence",
+      "sha256": "0e376b2eaf47536d5990d9c029e348e0a160f2ebbb42aee818ab9bd52db442e8",
+      "source_field_utf8_bytes": 158,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "artifact census: 169 null_* + 4 dispatch_* + misc;"
+    },
+    {
+      "ascii_normalized": false,
+      "id": "EV9",
+      "locator": "agent_id=Hypatia field=evidence",
+      "sha256": "478912e4d7db0f761e4e0b878e199a88edcbae49932219136c545cd76bff18bb",
+      "source_field_utf8_bytes": 158,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "sampled null quoted (within_24h_cooldown, anti_silence_counter 1);"
+    },
+    {
+      "ascii_normalized": false,
+      "id": "EV10",
+      "locator": "agent_id=Hypatia field=evidence",
+      "sha256": "8a0e7f91b62a8bf2649e095056499adcf23247d6cc08f651619d0e567155b94b",
+      "source_field_utf8_bytes": 158,
+      "source_path": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+      "text": "roster confirms heartbeat wiring existed"
+    }
+  ],
+  "frozen_from": "engine/ledger/AGENT_AUTOPSIES.jsonl",
+  "load_bearing_unit": "EV2",
+  "packet_id": "PKT-HYPATIA",
+  "source_row": {
+    "agent_id": "Hypatia",
+    "autopsied": "2026-08-21",
+    "by": "Aporia P63"
+  },
+  "splitter_version": "hypatia-freeze-1.0",
+  "terminal_leak": false,
+  "terminal_leak_units": [],
+  "terminal_ruling": {
+    "required_tokens": [
+      "artifact",
+      "liveness"
+    ],
+    "text": "LIVENESS-AS-ARTIFACT (NEW class -- liveness signaling written into the work-artifact stream)"
+  },
+  "unit_count": 10
+}

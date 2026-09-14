@@ -1,0 +1,64 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "SPECIMEN",
+  "id": "specimen.go_explore",
+  "name": "Go-Explore (uber-research/go-explore, robustified variant, exploration phase) at 702fb9c7a",
+  "lineage": [
+    "reinforcement learning",
+    "search"
+  ],
+  "status": "OPEN",
+  "opened": "2026-09-12",
+  "famous_names": [
+    "Go-Explore",
+    "Go Explore",
+    "goexplore",
+    "first return then explore",
+    "return then explore",
+    "deterministic reset",
+    "restore state",
+    "cell",
+    "cells",
+    "archive",
+    "downscale",
+    "downscaled",
+    "domain knowledge",
+    "robustification",
+    "Montezuma",
+    "Pitfall",
+    "Atari",
+    "trajectory",
+    "trajectories",
+    "selection weight",
+    "exploration phase"
+  ],
+  "chosen_because": "N3 by operator ruling 2026-09-12 (reopen condition B satisfied by Archaeon #200). Preserved motivation: Archaeon's H3 trajectory archive is the candidate consumer; deterministic reset is the suspected human prior. New question: does Nyx extract organs whose INTERFACE GEOMETRY is separable from the ancestor (transfer-interface side ledger before CUT-1).",
+  "provenance": {
+    "sources": [
+      {
+        "ref": "github.com/uber-research/go-explore commit 702fb9c7a9aeecf2872d07ced236c730d5536a8f (2022-01-10 'clarify readme'; HEAD of default branch per api.github.com at 2026-09-12 04:0xZ) -- identifier resolved by the GitHub API",
+        "grade": "T1-SOURCE"
+      },
+      {
+        "ref": "source fetched READ-ONLY at the pin into the session scratchpad (raw.githubusercontent.com); sha256 prefixes: goexplore.py 78b0b938e6fdc462 (1124 lines); randselectors.py dbeeaeeb353130e1 (366 lines); explorers.py 3c57e27c5100c966 (129 lines); basics.py 84a8f4c669025e49 (87 lines); generic_atari_env.py ae5945ba4de01a53 (127 lines); montezuma_env.py 550f6063101ceb93 (445 lines); main.py f8b5cd894f7b777d (717 lines); nothing installed, nothing executed",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Techne acquisition request posted 2026-09-12 (roles/Nyx/prompts/2026-09-12_techne_request_go_explore/); no receipt exists at opening",
+        "grade": "unknown"
+      },
+      {
+        "ref": "README.md at the pin: two variants (robustified: deterministic exploration then robustification; policy_based); robustified/README.md: exploration-phase deps matplotlib, loky, gym, opencv; ALE not part of Go-Explore",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "papers arXiv:1901.10995 and arXiv:2004.12919 -- NOT read; any content claim is T2 and marked",
+        "grade": "unknown"
+      },
+      {
+        "ref": "nyx/specimens/go_explore/PREREG_CUT1.md (written before any body was read)",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  }
+}

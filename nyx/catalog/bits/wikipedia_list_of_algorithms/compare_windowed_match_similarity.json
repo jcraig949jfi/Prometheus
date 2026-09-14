@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compare.windowed_match_similarity",
+  "name": "windowed match similarity",
+  "lineage": [
+    "search",
+    "symbolic reasoning"
+  ],
+  "mechanism": "count characters that match within a window proportional to the shorter length, count transpositions among the matches, combine into a similarity, and boost when the prefixes agree",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Jaro–Winkler distance' in section Combinatorial algorithms / Sequence algorithms / Approximate sequence matching: is a measure of similarity between two strings",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPARE",
+  "in_geometry": "STRING",
+  "out_geometry": "SCALAR",
+  "order_req": "NONE",
+  "metric_req": "SIMILARITY",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a window size rule and a prefix bonus (policy)"
+  ],
+  "fails_when": [
+    "not a metric (no triangle inequality)",
+    "tuned for short names"
+  ],
+  "instances": [
+    "Jaro–Winkler distance"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)",
+  "strategy": "DIRECT",
+  "classification_log": [
+    "2026-09-12 v0.2 strategy backfilled by Nyx from the mechanism sentence",
+    "2026-09-12 v0.4 iteration backfilled by Nyx from the mechanism sentence"
+  ],
+  "iteration": "SWEEP"
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "nyx.chop/0",
+  "record_kind": "ORGAN",
+  "id": "organ.lean_simp.traversal_fixpoint_with_memo.cut1",
+  "specimen": "lean_simp",
+  "name": "pre/post traversal to a fixpoint with a memo table: visit a term, try rules before descending, descend structurally, try rules after, repeat on change, remember results per subterm",
+  "scale": "MECHANISM",
+  "cost_class": "CPU_SCALE",
+  "provenance": {
+    "ancestor": "Lean 4 simp, Main.simpLoop / cacheResult / simpStep / reduce",
+    "sources": [
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/Main.lean lines 677-713 simpLoop (memo lookup; step counter and maxSteps; pre; reduceStep; simpStep descent; post; re-loop unless singlePass or unchanged; cacheResult at every exit), 672-675 cacheResult (only if cfg.memoize and r.cache), 657-670 simpStep (dispatch on Expr constructor), 213-256 reduceStep/reduce (the config-gated built-in reductions between pre and descent)",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "Lean v4.30.0 d024af099 src/lean/Lean/Meta/Tactic/Simp/Types.lean lines 245-251 State: cache, congrCache, dsimpCache, usedTheorems, numSteps, diag; 313-334 Step: done / visit / continue -- the protocol by which a pre or post procedure tells the loop whether to descend, re-visit, or stop",
+        "grade": "T1-LOCAL"
+      },
+      {
+        "ref": "nyx/specimens/lean_simp/PROVENANCE.md",
+        "grade": "T1-LOCAL"
+      }
+    ]
+  },
+  "questions": {
+    "ancestry": "Lean 4 simp Main.lean. The pre/post + fixpoint shape is standard in rewriting engines (T2). Coincides with def simpLoop.",
+    "mechanism": "For a term e: if memoized, return. Count a step; fail past maxSteps. Run pre; a .done result stops; a .visit result is re-simplified; .continue proceeds: apply built-in reductions (beta, proj, iota, zeta, unfold, literal folding, each config-gated) -- if anything changed, restart on the new term; otherwise descend by constructor (application via congruence, lambda, forall, let, projection, ...), then run post; then unless singlePass or nothing changed, loop on the result. Every exit memoizes e -> result if the result allowed caching. Proof terms are chained by Eq.trans at each stage.",
+    "input": "an Expr; the Context (config, rule store, congruence store) and Methods (pre, post, discharge) are ambient",
+    "output": "Result: the new Expr and an optional proof of e = e' (none means refl)",
+    "state": "State.cache (Expr -> Result), numSteps; and the cache's validity depends on things not in the key: the parent term (Context.parent?, Types.lean 76-107, with the instruction that a procedure reading it must set Result.cache := false), the local context index watermark (lctxInitIndices), and the discharger's good behaviour. The memo is correct only under a contract the loop cannot check.",
+    "assumptions": "that rewriting is confluent enough that pre-then-post-then-loop reaches a useful normal form regardless of subterm visitation order; that identical subterms have identical simplifications (the memo assumption, false when a procedure looks at the parent); that a step cap is an acceptable termination guarantee",
+    "interface": "simp(e) -> Result inside SimpM; the loop is parameterised by Methods{pre, post} each of type Expr -> SimpM Step; the Step protocol {done, visit, continue} is the whole contract between the loop and whatever it calls",
+    "fitness_value": "The loop is what turns a set of one-step rules into a normaliser; the memo is what makes repeated subterms cheap. Without the fixpoint a rule whose rhs enables another rule never gets the second; without the memo shared subterms are re-simplified. Claimed; step counts are instrumented (numSteps, Diagnostics) but not measured here.",
+    "failure_landscape": "(a) memo staleness: a result cached under one parent reused under another when a procedure forgot Result.cache := false (the source documents this exact bug with +arith, Types.lean 84-103); (b) maxSteps exhaustion is an error, not a partial result; (c) the pre/post split is a fixed policy -- a rule that must apply before descent but is registered as post never fires early; (d) singlePass changes semantics, not just cost; (e) proof-term size grows with the number of steps (Eq.trans chains), which matters for kernel checking downstream.",
+    "ablation": "Two switches the specimen already exposes: Simp.Config.memoize := false (drop the memo: same results, more work -- the prediction that must hold, and a failing case would expose a memo-dependence bug) and singlePass := true (no re-loop: fewer rewrites). Neither run in CUT-1. A third, not exposed: swap pre and post orders.",
+    "decomposability": "Into (1) the visitation order + Step protocol (the traversal proper), (2) the memo with its validity contract (c14), (3) the built-in reduction step (c10), (4) the proof-chaining (Eq.trans/congr assembly, shared with c09). At CUT-1 the record covers (1); (2)-(4) are separate ledger candidates.",
+    "composability": "Any Prometheus organism that applies local rules to a tree (Proteus boolean program rewriting is the nearest shape) could host the pre/post fixpoint; the memo transfers only with its contract. No live consumer today.",
+    "human_prior": "That inside-out (post) rewriting after outside-in (pre) is the right default order; that terminating by a step budget is acceptable engineering; that the user should see an error rather than a partial normal form when the budget is exhausted.",
+    "control": "Positive: with rules {f x = g x, g x = h x} the term f a becomes h a (fixpoint fires the second rule). Negative: with memoize := false the result is identical. Cheat control: a traversal that returns its input unchanged passes 'no wrong rewrite'; the control must require the positive rewrite to happen.",
+    "cheat": "Reporting 'no progress' (failIfUnchanged) instead of exhausting maxSteps hides non-termination as a clean failure; the control plants a two-rule loop and requires the step counter to reach the cap, not a silent no-op."
+  },
+  "alternative_cuts": [
+    "CUTS.md c14: memo validity as a separate COUPLED_CLUSTER; CUTS.md c10: the reduction step as either simp's or the kernel's"
+  ],
+  "pressure_refs": [
+    "pressure.lean_simp.growing_store_must_terminate.cut1"
+  ]
+}

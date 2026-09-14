@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.subtract_the_projections_onto_the_previous_vectors_then_normalise",
+  "name": "subtract the projections onto the previous vectors, then normalise",
+  "lineage": [
+    "numerical methods",
+    "scientific software",
+    "optimizers"
+  ],
+  "mechanism": "take the vectors in order; from each, subtract its projection onto every vector already processed so that what remains is perpendicular to all of them, then scale it to unit length; the spans are preserved at every prefix",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Gram–Schmidt process' in section Computational mathematics / Numerical algorithms / Linear algebra: orthogonalizes a set of vectors",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SET",
+  "out_geometry": "SET",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "INCREMENTAL",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "an inner product"
+  ],
+  "fails_when": [
+    "orthogonality is lost in floating point unless the subtraction is done one vector at a time (the modified form)"
+  ],
+  "instances": [
+    "Gram–Schmidt process"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

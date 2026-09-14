@@ -1,0 +1,117 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "minisat-2.2.0",
+  "receipt_id": "run-minisat-2.2.0-20260912T125022Z",
+  "written_utc": "20260912T125022Z",
+  "runner": "docker",
+  "image": "gcc:4.9",
+  "workdir": "upstream/tree/minisat",
+  "harness_sha256": {
+    "sat.cnf": "f3eff25183d4a35bc87d8fa78c1e06b41d14a8b3bc80237a7eb165b41a8014d9",
+    "unsat.cnf": "b053174e857acd404f0dd06bec5d81149e7bb87080e8d3219b466f280f037e22"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "0a7fe1e69d3f84d222785eabf7e5cb0161463cc9b122b57008b5b9bf3f6adaa5",
+  "recipe_sha256": "e46b8fce2a5732a971be51e899bb138ed4a9fe495bb9bc6d7f52954a2af0c5a1",
+  "patches": [],
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1",
+      "exit": 0,
+      "seconds": 1.07,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "g++ (GCC) 4.9.4\n"
+      },
+      "stderr": {
+        "text": "stdin: is not a tty\n"
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "make core release",
+      "cmd": "cd core && MROOT=$(cd .. && pwd) make -s r 2>&1 | grep -v -i warning | tail -3; test -x ./minisat_release",
+      "exit": 0,
+      "seconds": 2.09,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Compiling: utils/System.or\nCompiling: utils/Options.or\nLinking: minisat_release ( core/Solver.or core/Main.or utils/System.or utils/Options.or )\n"
+      },
+      "stderr": {
+        "text": "stdin: is not a tty\n"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "satisfiable CNF",
+      "cmd": "core/minisat_release $HARNESS/sat.cnf $BODY/harness/sat.out; cat $BODY/harness/sat.out",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": false,
+      "why_not": [
+        "exit 0 != expected 10"
+      ],
+      "stdout": {
+        "text": "WARNING: for repeatability, setting FPU to use double precision\n============================[ Problem Statistics ]=============================\n|                                                                             |\n|  Number of variables:             2                                         |\n|  Number of clauses:               3                                         |\n|  Parse time:                   0.00 s                                       |\n|                                                                             |\n============================[ Search Statistics ]==============================\n| Conflicts |          ORIGINAL         |          LEARNT          | Progress |\n|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |\n===============================================================================\n===============================================================================\nrestarts              : 1\nconflicts             : 1              (613 /sec)\ndecisions             : 2              (0.00 % random) (1225 /sec)\npropagations          : 3              (1838 /sec)\nconflict literals     : 1              (0.00 % deleted)\nMemory used           : 19.00 MB\nCPU time              : 0.001632 s\n\nSATISFIABLE\nSAT\n1 2 0\n"
+      },
+      "stderr": {
+        "text": "stdin: is not a tty\n"
+      }
+    },
+    {
+      "name": "unsatisfiable CNF",
+      "cmd": "core/minisat_release $HARNESS/unsat.cnf $BODY/harness/unsat.out; cat $BODY/harness/unsat.out",
+      "exit": 0,
+      "seconds": 0.83,
+      "ok": false,
+      "why_not": [
+        "exit 0 != expected 20"
+      ],
+      "stdout": {
+        "text": "WARNING: for repeatability, setting FPU to use double precision\n============================[ Problem Statistics ]=============================\n|                                                                             |\n|  Number of variables:             2                                         |\n|  Number of clauses:               4                                         |\n|  Parse time:                   0.00 s                                       |\n|                                                                             |\n============================[ Search Statistics ]==============================\n| Conflicts |          ORIGINAL         |          LEARNT          | Progress |\n|           |    Vars  Clauses Literals |    Limit  Clauses Lit/Cl |          |\n===============================================================================\n===============================================================================\nrestarts              : 1\nconflicts             : 2              (1340 /sec)\ndecisions             : 1              (0.00 % random) (670 /sec)\npropagations          : 2              (1340 /sec)\nconflict literals     : 1              (0.00 % deleted)\nMemory used           : 19.00 MB\nCPU time              : 0.001492 s\n\nUNSATISFIABLE\nUNSAT\n"
+      },
+      "stderr": {
+        "text": "stdin: is not a tty\n"
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "core/Main.or",
+      "sha256": "76f979becf7d87835c15681f7aeb78bc27b3f42fbca326f602870a1e86d54aa1",
+      "bytes": 128224
+    },
+    {
+      "path": "core/minisat_release",
+      "sha256": "9117a93e92d137ef7dd99db7862bd7c29f5c2e56033fe2ea4b9636efe1e39834",
+      "bytes": 417528
+    },
+    {
+      "path": "core/Solver.or",
+      "sha256": "57d7e42c965b1a06ab0c473865dee9a9a1f8e466d6fddcc647827926afa5acf1",
+      "bytes": 813352
+    },
+    {
+      "path": "utils/Options.or",
+      "sha256": "411458d91b2b0cd34532e42bdcb8cdf602490184ca1b12b6cf7412dc9ca0ae93",
+      "bytes": 53472
+    },
+    {
+      "path": "utils/System.or",
+      "sha256": "ed32bd2b2742d8b03d6732f9cb5735fcbd0b96dc4b9126b7fc57d1317755a136",
+      "bytes": 12104
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

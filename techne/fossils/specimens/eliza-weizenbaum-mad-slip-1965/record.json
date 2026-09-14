@@ -1,0 +1,199 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "eliza-weizenbaum-mad-slip-1965",
+  "canonical_name": "ELIZA (1965) -- Joseph Weizenbaum's ORIGINAL MAD-SLIP implementation for CTSS on the IBM 7094",
+  "aliases": [
+    "ELIZA original",
+    "MAD-SLIP ELIZA",
+    "DOCTOR"
+  ],
+  "lineage": "The actual program behind the 1966 CACM paper, lost for over fifty years and located by Jeff Shrager in the MIT archives in 2021 in a folder labelled COMPUTER CONVERSATIONS (1965). Written in MAD (Michigan Algorithm Decoder) using Weizenbaum's own SLIP list-processing library, running under CTSS on the IBM 7094. This is the ANCESTOR of the vault's eliza-anthay-1966, which is a modern faithful reconstruction of the same program -- so the vault now holds the original and a reconstruction of it, which can be compared.",
+  "domain": [
+    "conversational-ai",
+    "natural-language",
+    "pattern-matching",
+    "early-ai",
+    "list-processing",
+    "pre1970"
+  ],
+  "era": "1965 (body: the archival listing, folder-dated 1965; the CACM paper is 1966)",
+  "version": "MAD-SLIP transcription + the CACM script, as released CC0 via elizagen.org",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1965_Weizenbaum_MAD-SLIP/MAD-SLIP_transcription.txt",
+        "filename": "MAD-SLIP_transcription.txt",
+        "extract": false,
+        "sha256": "dd4b3a6db52c83f7da93ad04ac937352836f4a888a21344c69a214edad887389"
+      },
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1965_Weizenbaum_MAD-SLIP/MAD-SLIP_translation.txt",
+        "filename": "MAD-SLIP_translation.txt",
+        "extract": false,
+        "sha256": "bf24f16a001190f965d4a28190001c4aea98fbf596b8b7ce846cbfeecf5d80e9"
+      },
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1965_Weizenbaum_MAD-SLIP/1966_01_CACM_article_Eliza_script.txt",
+        "filename": "CACM_1966_eliza_script.txt",
+        "extract": false,
+        "sha256": "2c6548897ffecda72a9a1856cce8d1b94584c8ca7eb3b0ff34f60029d587a6b6"
+      },
+      {
+        "kind": "url",
+        "url": "https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1965_Weizenbaum_MAD-SLIP/ELIZA_transcription_annotated_20220216.txt",
+        "filename": "ELIZA_transcription_annotated.txt",
+        "extract": false,
+        "sha256": "a4929226e01fc11a3b63899c08b3f743daad691e1a4207c7c0985813e1cd7c5f"
+      }
+    ]
+  },
+  "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+  "source_identity": {
+    "archive": "elizagen.org (Jeff Shrager), 1965_Weizenbaum_MAD-SLIP",
+    "note": "verbatim transcription of the archival listing; the photographic scan of the original pages is published alongside it and is the primary evidence"
+  },
+  "hashes": {
+    "tree_sha256": "20266056630b3650e28df5e1a24c583a6b1a0cf9b935f37788b9746cd23c5853",
+    "n_files": 4,
+    "bytes": 123260,
+    "artifacts": [
+      {
+        "filename": "MAD-SLIP_transcription.txt",
+        "sha256": "dd4b3a6db52c83f7da93ad04ac937352836f4a888a21344c69a214edad887389",
+        "commit": null
+      },
+      {
+        "filename": "MAD-SLIP_translation.txt",
+        "sha256": "bf24f16a001190f965d4a28190001c4aea98fbf596b8b7ce846cbfeecf5d80e9",
+        "commit": null
+      },
+      {
+        "filename": "CACM_1966_eliza_script.txt",
+        "sha256": "2c6548897ffecda72a9a1856cce8d1b94584c8ca7eb3b0ff34f60029d587a6b6",
+        "commit": null
+      },
+      {
+        "filename": "ELIZA_transcription_annotated.txt",
+        "sha256": "a4929226e01fc11a3b63899c08b3f743daad691e1a4207c7c0985813e1cd7c5f",
+        "commit": null
+      }
+    ],
+    "body_location": "F:\\Prometheus\\vault\\fossils\\eliza-weizenbaum-mad-slip-1965",
+    "hash_list": "techne/fossils/specimens/eliza-weizenbaum-mad-slip-1965/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "CC0-1.0",
+    "status": "public-domain dedication",
+    "evidence": "ORIGINAL_ELIZA_IN_MAD_SLIP_CC0_For_Resease in the elizagen repository"
+  },
+  "acquisition_date": "2026-09-14",
+  "language": [
+    "MAD (Michigan Algorithm Decoder)",
+    "SLIP"
+  ],
+  "build_system": "MAD compiler under CTSS",
+  "compiler_or_interpreter": "none preserved in-vault; requires MAD + SLIP on CTSS",
+  "dependencies": [
+    "CTSS on an IBM 7094",
+    "the SLIP list-processing library",
+    "a MAD compiler"
+  ],
+  "run_classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "entry_points": [
+    "the ELIZA driver reads a script (the DOCTOR script) and then user lines from the console"
+  ],
+  "example": {
+    "command": "run under CTSS with the DOCTOR script loaded",
+    "input": "a typed English sentence",
+    "output": "a transformed reply built by decomposition/reassembly rules"
+  },
+  "environment": {
+    "machine": "IBM 7094",
+    "word_size": "36-bit",
+    "number_representation": "one's complement",
+    "character_set": "BCD (6-bit)",
+    "os": "CTSS",
+    "compiler": "MAD + SLIP",
+    "storage": "tape and disk under CTSS",
+    "input_format": "console typewriter",
+    "runner": "none yet"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Weizenbaum, ELIZA, CACM 9(1) 1966",
+    "Weizenbaum, Symmetric List Processor (SLIP), CACM 1963",
+    "Shrager et al., ELIZA Reinterpreted (the archival recovery)"
+  ],
+  "human_capability_summary": {
+    "built_to": "study man-machine conversation by transforming the user's own sentences through a replaceable script of keyword rules",
+    "pressure": "a 36-bit batch/timesharing machine with a 6-bit character set, no string type, and list structure that had to be built by hand in SLIP",
+    "success_means": "the scripted transformation produces the documented dialogue; the SCRIPT, not the program, carries the personality"
+  },
+  "known_human_problem_solved": "scripted natural-language dialogue",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "no native string handling; list processing hand-built; a 6-bit character set; CTSS time limits",
+  "human_failure_condition": "a turn matching no keyword falls through to a canned deflection; the illusion is only as wide as the script",
+  "behavioral_entry_point": "compare the original MAD rule set against the reconstruction's behaviour on the CACM dialogue",
+  "observability": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+  },
+  "lineage_relations": [
+    {
+      "relation": "historical_version_of",
+      "to": "eliza-anthay-1966",
+      "note": "the vault's eliza-anthay-1966 is a modern FAITHFUL reconstruction of THIS body; original and reconstruction are now both held"
+    },
+    {
+      "relation": "shares_ancestor_with",
+      "to": "cosell-eliza-bbn-lisp-1969",
+      "note": "independent reimplementation in a different language and world"
+    }
+  ],
+  "acquisition_tags": [
+    "batch12",
+    "pre1970",
+    "original_body",
+    "early_ai",
+    "extinct_world",
+    "ancestor_of_vault_fossil"
+  ],
+  "historical_disposition": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "cosell-eliza-bbn-lisp-1969",
+    "evidence": [
+      {
+        "kind": "archived_technical_discussion",
+        "ref": "elizagen.org recovery record (Shrager, 2021)",
+        "says": "The original ELIZA source was missing for decades and was located in the MIT archives in 2021; it had not been runnable in its own environment in the interim."
+      },
+      {
+        "kind": "original_paper",
+        "ref": "Weizenbaum, CACM 9(1), 1966",
+        "says": "Describes ELIZA as running under CTSS on the IBM 7094 and written in MAD-SLIP."
+      }
+    ],
+    "audit_note": "HISTORICAL_ONLY is a statement about the WORLD (CTSS/7094/MAD/SLIP are all gone), not a claim that ELIZA was defeated. No supersession evidence is asserted."
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\eliza-weizenbaum-mad-slip-1965 ; tracked techne/fossils/specimens/eliza-weizenbaum-mad-slip-1965",
+    "where_it_came_from": "https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1965_Weizenbaum_MAD-SLIP/MAD-SLIP_transcription.txt ; HISTORICAL_ARCHIVE_MIRROR",
+    "how_to_run_it": "SOURCE_ONLY (BODY_RECOVERED_WORLD_NAMED): the MAD-SLIP listing is preserved. Running it needs CTSS on an IBM 7094 plus a MAD compiler and the SLIP library -- a world that no longer exists in ordinary use. The vault holds eliza-anthay-1966, a modern faithful reconstruction OF THIS BODY, which IS runnable; the original and the reconstruction are deliberately kept as separate specimens.",
+    "how_we_know_it_runs": "not executed; body tree_sha256 20266056630b3650 pinned in UPSTREAM_HASHES.txt",
+    "what_humans_used_it_for": "study man-machine conversation by transforming the user's own sentences through a replaceable script of keyword rules"
+  },
+  "seat": "Techne"
+}

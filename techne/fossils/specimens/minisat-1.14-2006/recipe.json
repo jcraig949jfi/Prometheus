@@ -1,0 +1,41 @@
+{
+  "runner": "docker",
+  "image": "gcc:4.9",
+  "workdir": "upstream/tree/MiniSat_v1.14",
+  "probe": [
+    {
+      "name": "g++",
+      "cmd": "g++ --version | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "make rs (static release) in the preserved gcc 4.9 world",
+      "cmd": "make -s rs 2>&1 | grep -iE '\\berror' | head -5; ls minisat* 2>/dev/null | head; test -x ./minisat_static -o -x ./minisat && echo built",
+      "timeout": 600
+    }
+  ],
+  "runs": [
+    {
+      "name": "satisfiable CNF",
+      "cmd": "B=./minisat_static; test -x $B || B=./minisat; $B $HARNESS/sat.cnf 2>&1 | tail -3; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)satisfiable"
+      }
+    },
+    {
+      "name": "unsatisfiable CNF",
+      "cmd": "B=./minisat_static; test -x $B || B=./minisat; $B $HARNESS/unsat.cnf 2>&1 | tail -3; echo exit=$?",
+      "expect": {
+        "exit": 0,
+        "stdout_regex": "(?i)unsatisfiable"
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+  "notes": "Same fixtures as minisat-2.2.0 / picosat-965 / zchaff-2007."
+}

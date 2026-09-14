@@ -1,0 +1,37 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-hw:bookworm",
+  "workdir": "upstream/tree",
+  "probe": [
+    {
+      "name": "iverilog",
+      "cmd": "iverilog -V 2>&1 | head -1"
+    }
+  ],
+  "build": [
+    {
+      "name": "compile Techne SC testbench + FIFO rtl + Techne dpram primitive",
+      "cmd": "iverilog -Irtl/verilog -o $BODY/fifo.vvp $HARNESS/tb_sc.v rtl/verilog/generic_fifo_sc_a.v $HARNESS/generic_dpram.v 2>&1 | grep -viE 'warning' | tail -6; test -f $BODY/fifo.vvp"
+    }
+  ],
+  "runs": [
+    {
+      "name": "fill the FIFO to full (backpressure), drain it, check FIFO order + empty/full flags",
+      "cmd": "vvp -N $BODY/fifo.vvp 2>&1 | tail -20",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "SC_FIFO_DONE_OK"
+        ],
+        "stdout_not_contains": [
+          "ERROR"
+        ]
+      }
+    }
+  ],
+  "tests": [],
+  "test_kind": "TECHNE",
+  "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
+  "classification_if_ok": "RUNNABLE_EMULATED",
+  "notes": "Oracle: 8 written words come back in FIFO order; full asserts at capacity (backpressure), empty asserts after drain. DEVIATIONS: (1) generic_dpram supplied as a Techne behavioral memory primitive; (2) the upstream dual-clock sweep-bench does not terminate under iverilog, so Techne supplies a bounded SC testbench. FIFO RTL unmodified. behavioral_entry_point: change #(DW,AW) or interleave read/write."
+}

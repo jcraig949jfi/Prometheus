@@ -1,0 +1,69 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "go-explore-uber-2022",
+  "receipt_id": "run-go-explore-uber-2022-20260912T125406Z",
+  "written_utc": "20260912T125406Z",
+  "runner": "native",
+  "image": null,
+  "workdir": "upstream/tree/robustified",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "67bfdebe5f01b0bf3b3df32e6b72e98476fbcc578f55b90b9c999ece28fba6c0",
+  "recipe_sha256": "e6ef7644ee833651b77dcf0bb15f3168ab396151a6d7e24d0c59898bef941967",
+  "patches": [],
+  "probe": [
+    {
+      "name": "python",
+      "cmd": "python --version",
+      "exit": 0,
+      "seconds": 0.21,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Python 3.12.10\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "SOURCE-AT-PINNED-REVISION: the exploration modules parse (no execution, no env)",
+      "cmd": "python -c \"import ast,pathlib; fs=sorted(pathlib.Path('goexplore_py').glob('*.py')); [ast.parse(f.read_text(encoding='utf-8')) for f in fs]; print(len(fs),'goexplore_py files parse')\"",
+      "exit": 0,
+      "seconds": 0.28,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "15 goexplore_py files parse\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "the blocking dependency is named: importing the package fails on a missing dep, not a syntax error",
+      "cmd": "python -c \"import goexplore_py.randselectors\" 2>&1; echo \"exit=$?\"",
+      "exit": 0,
+      "seconds": 0.63,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022\\upstream\\tree\\robustified\\goexplore_py\\randselectors.py\", line 12, in <module>\n    from .import_ai import *\n  File \"F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022\\upstream\\tree\\robustified\\goexplore_py\\import_ai.py\", line 27, in <module>\n    from .basics import *\n  File \"F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022\\upstream\\tree\\robustified\\goexplore_py\\basics.py\", line 24, in <module>\n    import loky\nModuleNotFoundError: No module named 'loky'\nexit=1\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "SOURCE_ONLY",
+  "test_classification": "NO_TESTS",
+  "ok": true
+}

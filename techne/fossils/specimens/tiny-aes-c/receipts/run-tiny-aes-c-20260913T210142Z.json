@@ -1,0 +1,80 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "tiny-aes-c",
+  "receipt_id": "run-tiny-aes-c-20260913T210142Z",
+  "written_utc": "20260913T210142Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "ceac46bb10ea8f2bbab812bc39f49a65effb6fc3f0714a225015eeeeb32e05d0",
+  "recipe_sha256": "ffa90508590f66e5fc2974778e16dc61c14b75078e1409bc00bfc30f1cc9f13d",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 8.02,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "gcc aes.c test.c",
+      "cmd": "gcc -O2 -o aes_test aes.c test.c 2>&1 | grep -i 'error' | head -3; test -x ./aes_test && echo BUILT",
+      "exit": 0,
+      "seconds": 1.31,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "BUILT\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "the shipped NIST SP 800-38A known-answer vectors (ECB/CBC/CTR, AES-128/192/256)",
+      "cmd": "./aes_test 2>&1 | tail -20",
+      "exit": 0,
+      "seconds": 0.93,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "CTR decrypt: SUCCESS!\nECB decrypt: SUCCESS!\nECB encrypt: SUCCESS!\nECB encrypt verbose:\n\nplain text:\n6bc1bee22e409f96e93d7e117393172a\nae2d8a571e03ac9c9eb76fac45af8e51\n30c81c46a35ce411e5fbc1191a0a52ef\nf69f2445df4f9b17ad2b417be66c3710\n\nkey:\n2b7e151628aed2a6abf7158809cf4f3c\n\nciphertext:\n3ad77bb40d7a3660a89ecaf32466ef97\nf5d3d58503b9699de785895a96fdbaaf\n43b1cd7f598ece23881b00e3ed030688\n7b0c785e27e8ad3f8223207104725dd4\n\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "aes_test",
+      "sha256": "e1f2ab771652aec4e43215481f2b205d1309f21f24f6050127d6192f64ba9b73",
+      "bytes": 20872
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "ceac46bb10ea8f2bbab812bc39f49a65effb6fc3f0714a225015eeeeb32e05d0",
+  "body_preserved": true
+}

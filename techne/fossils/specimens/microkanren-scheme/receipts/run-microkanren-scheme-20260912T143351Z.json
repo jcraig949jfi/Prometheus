@@ -1,0 +1,60 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "microkanren-scheme",
+  "receipt_id": "run-microkanren-scheme-20260912T143351Z",
+  "written_utc": "20260912T143351Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-lang:bookworm",
+  "workdir": "upstream",
+  "harness_sha256": {
+    "harness.scm": "d836f4c0a559939f3bc0ef71480be002fffc789d2376ce9204370fa5407c7170"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "64938449ab18672f65a6f1d9bb10c4547d2a90b4f525ce99b21a6eaafc1627de",
+  "recipe_sha256": "8c46e75e6369a468a677138c7776e05bfd0b8d73ab1b1be193c8d9ab49d3af90",
+  "patches": [],
+  "probe": [
+    {
+      "name": "guile",
+      "cmd": "guile --version | head -1",
+      "exit": 0,
+      "seconds": 0.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "guile (GNU Guile) 3.0.8\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [],
+  "runs": [
+    {
+      "name": "unification + interleaving search on a tiny relation",
+      "cmd": "guile --no-auto-compile -l microKanren.scm -l $HARNESS/harness.scm -c '(exit 0)' 2>&1 | tail -6",
+      "exit": 0,
+      "seconds": 0.74,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'MICROKANREN_OK'",
+        "stdout lacks 'disj-answers: 2'"
+      ],
+      "stdout": {
+        "text": "   142:16  1 (compile-top-call #<directory (guile-user) 754661682c80> \u00e2\u20ac\u00a6)\nIn unknown file:\n           0 (%resolve-variable (7 . assp) #<directory (guile-user) \u00e2\u20ac\u00a6>)\n\nERROR: In procedure %resolve-variable:\nUnbound variable: assp\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false
+}

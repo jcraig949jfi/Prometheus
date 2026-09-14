@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.forward_backward_posteriors_on_a_trellis",
+  "name": "forward-backward posteriors on a trellis",
+  "lineage": [
+    "symbolic reasoning"
+  ],
+  "mechanism": "run one pass forward and one backward over a state trellis accumulating the probability of reaching each state from each end, then combine them per transition to get the posterior probability of every symbol given the whole received sequence",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'BCJR algorithm' in section Information theory and signal processing / Coding theory / Error detection and correction: decoding of error correcting codes defined on trellises (principally convolutional codes)",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "DISTRIBUTION",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DYNAMIC_PROGRAMMING",
+  "iteration": "SWEEP",
+  "cost": "LINEAR",
+  "requires": [
+    "a trellis (state machine) description",
+    "channel likelihoods"
+  ],
+  "fails_when": [
+    "numerical underflow without log-domain arithmetic",
+    "state count multiplies the cost"
+  ],
+  "instances": [
+    "BCJR algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}

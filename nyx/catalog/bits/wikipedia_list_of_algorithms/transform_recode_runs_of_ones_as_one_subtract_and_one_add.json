@@ -1,0 +1,40 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.transform.recode_runs_of_ones_as_one_subtract_and_one_add",
+  "name": "recode runs of ones in the multiplier as one subtract and one add",
+  "lineage": [
+    "numerical methods",
+    "computer arithmetic"
+  ],
+  "mechanism": "scan adjacent pairs of multiplier bits; a run of ones contributes a subtraction of the multiplicand at its start and an addition at its end instead of one addition per bit, and the same rule handles negative two's-complement multipliers without a sign case",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Booth's multiplication algorithm' in section Computational mathematics / Numerical algorithms / Elementary and special functions: a multiplication algorithm that multiplies two signed binary numbers in two's complement notation",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "TRANSFORM",
+  "in_geometry": "SCALAR",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "EXACT",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "two's-complement operands"
+  ],
+  "fails_when": [
+    "alternating bit patterns are the worst case (no runs)"
+  ],
+  "instances": [
+    "Booth's multiplication algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch08 (T2)"
+}

@@ -1,0 +1,98 @@
+{
+ "method": "ids only; each edge is one exact join; no names, no timestamps",
+ "E6 PEW fossil -> queue ids (producer.queue.*)": {
+  "experiment_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+  "request_key": "rk-canary-2026-09-12-1",
+  "candidate_set_id": "cs-40a8239f45904b56",
+  "sfe_world_id": "wld_13b3caf41573e37f015bf9ff",
+  "run_key": "exp_8d968652a8a6b0c9885ec716:wrk_0741fa4c800b927bb1322dd0",
+  "sfe_event_seq": 129400
+ },
+ "E7 queue row -> selection decision (source_evidence)": {
+  "experiment_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+  "request_key": "rk-canary-2026-09-12-1",
+  "candidate_set_id": "cs-40a8239f45904b56",
+  "spec_hash": "sha256:3caf3b11e0229257cd5f626bdb0afd9425c815896da7a8f2675bf497ef2e2174",
+  "sfe_experiment_id": "exp_8d968652a8a6b0c9885ec716",
+  "chosen_region": "wld_8e73e722b2b2d883d917b5c0",
+  "region_ctx": {
+   "length": 24,
+   "world_id": "wld_8e73e722b2b2d883d917b5c0",
+   "seed_root": 926994
+  },
+  "corpus_hash": "corpus:9ff9b911920024b5f16349bb",
+  "preregistration": "archaeon/docs/h0h5/CANARY_PREREG_2026-09-12.json (commit 35a41ce62)",
+  "selection_basis": "region_directed_by_hand",
+  "selection_rule": "among directable regions (seed_root AND length recoverable from the ledger), the HIGHEST metric; tie -> earliest created_ts"
+ },
+ "E1 decision -> source fossil (chosen_region = SFE world id; its observation/experiment by id)": {
+  "rows": [
+   {
+    "obs_id": "obs_d57501bd03d010e1c7c12797",
+    "exp_id": "exp_4a36b0ad58fbc0e1de90a6d5",
+    "world_id": "wld_8e73e722b2b2d883d917b5c0",
+    "created_seq": 35690,
+    "seed_root": 926994
+   }
+  ],
+  "source_length_on_experiment": 24,
+  "region_ctx_agrees": true
+ },
+ "E3 queue row -> Vivarium execution events": [
+  [
+   "claimed",
+   "vivarium@m1"
+  ],
+  [
+   "running",
+   "vivarium@m1"
+  ],
+  [
+   "selection_bound",
+   "vivarium@m1"
+  ],
+  [
+   "pew_written",
+   "vivarium@m1"
+  ],
+  [
+   "completed",
+   "vivarium@m1"
+  ]
+ ],
+ "E4 queue -> SFE experiment (by sfe_experiment_id; independently by spec_hash)": {
+  "by_id": [
+   "exp_8d968652a8a6b0c9885ec716",
+   "wld_13b3caf41573e37f015bf9ff",
+   "sha256:3caf3b11e0229257cd5f626bdb0afd9425c815896da7a8f2675bf497ef2e2174",
+   "wrk_0741fa4c800b927bb1322dd0"
+  ],
+  "by_spec_hash": [
+   "exp_8d968652a8a6b0c9885ec716"
+  ],
+  "agree": true
+ },
+ "E4b SFE experiment -> observations": [
+  [
+   "obs_52ac5c2564a0deaf0d3ed303",
+   "exp_8d968652a8a6b0c9885ec716",
+   "wld_13b3caf41573e37f015bf9ff",
+   129400,
+   "wrk_0741fa4c800b927bb1322dd0"
+  ]
+ ],
+ "E5 SFE -> queue WITHOUT PEW (selection family manifest)": {
+  "family_id": "fam_0c130ce17314326b264a8db5",
+  "manifest.candidate_set_id": "cs-40a8239f45904b56",
+  "manifest.queue_experiment_id": "ececfe90-3e20-4dfe-b271-6a9d45d9abb2",
+  "equals_queue_row": true
+ },
+ "E6b PEW -> SFE (run_key = exp_id:work_id; sfe_world_id; event seq = observation seq)": {
+  "exp_match": true,
+  "work_match": true,
+  "world_match": true,
+  "seq_match": true
+ },
+ "LOOP_CLOSED": true,
+ "GAP_NOTE": "source_evidence.corpus.corpus_hash is a digest over a MOVING window (last 2,000 observations by created_seq), not a reconstructible set: the corpus 'version' can be re-derived only if the window bound (max created_seq at read time) is recorded; it is not. The SOURCE fossil is nonetheless exact by world/obs/exp id. This is an Archaeon field (source_evidence), not an SFE one."
+}

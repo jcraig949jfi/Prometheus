@@ -15,5 +15,19 @@
     "M4": "ew-m4-2e6f84a9c3d1"
   },
   "derived_dir": "derived",
-  "note": "V0 auth = single shared bearer token on trusted LAN + mandatory machine/agent headers; TLS and per-machine tokens are the documented V1 upgrade. DB is never exposed to the LAN; only the service port is."
+  "note": "V0 auth = single shared bearer token on trusted LAN + mandatory machine/agent headers; TLS and per-machine tokens are the documented V1 upgrade. DB is never exposed to the LAN; only the service port is.",
+  "agent_identities": {
+    "Kairos": {
+      "scopes": [
+        "read"
+      ],
+      "token_sha256": "6c233d1d9c82544ea6c23c874e243e0d72dd07b38bd951cc1a436e26ddd06449",
+      "issued": "2026-09-11",
+      "issued_by": "Mnemosyne",
+      "tracker": "R-4",
+      "host_of_issue": "M1",
+      "note": "KAIROS-02 (comms #33). Read-only. The token value lives outside the repository on the issuing host; only its sha256 is committed."
+    }
+  },
+  "note_correction_2026-09-11": "The sentence 'DB is never exposed to the LAN' in `note` is FALSE as written and is kept only as the original text. Measured 2026-09-04 (Mnemosyne, closure packet s3 iv) and again 2026-09-11 from M2 by Coeus (comms #82): Postgres 5432 on M1 accepts connections from LAN peers with the committed credentials, bypassing ew.write_log attribution. Open item B2 in roles/Mnemosyne/todo_20260904.md (operator: scope inbound 5432 to named peers, or close it after re-pointing M2). Per-agent scoped tokens (agent_identities) added 2026-09-11; per-machine tokens are live; TLS is still not."
 }

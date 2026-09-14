@@ -1,0 +1,45 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.predict.clamp_the_knot_slopes_so_every_piece_stays_monotone",
+  "name": "clamp the slopes at the knots so every piece stays monotone",
+  "lineage": [
+    "numerical methods",
+    "scientific software"
+  ],
+  "mechanism": "estimate a slope at each knot from its neighbours, then limit each slope (to zero at local extremes, and to a bound from the adjacent secants elsewhere) so that no cubic piece can overshoot between two increasing or two decreasing samples",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Monotone cubic interpolation' in section Computational mathematics / Numerical algorithms / Interpolation and extrapolation: a variant of cubic interpolation that preserves monotonicity of the data set being interpolated.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "PREDICT",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "FUNCTION",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "NONE",
+  "control": "PURE",
+  "guarantee": "MONOTONE",
+  "strategy": "DIVIDE_CONQUER",
+  "iteration": "NONE",
+  "cost": "LINEAR",
+  "requires": [
+    "ordered knots"
+  ],
+  "fails_when": [
+    "loses one order of accuracy where slopes are clamped"
+  ],
+  "instances": [
+    "Monotone cubic interpolation"
+  ],
+  "related": [
+    {
+      "rel": "SPECIALIZES",
+      "id": "bit.predict.join_low_degree_pieces_with_matching_derivatives_at_the_knots"
+    }
+  ],
+  "classified_by": "Nyx 2026-09-12 batch09 (T2)"
+}

@@ -1,0 +1,1628 @@
+[
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Phonetic algorithms",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "String metrics",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Sorted lists",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Exchange sorts",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Humorous or ineffective",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hybrid",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Insertion sorts",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Merge sorts",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Non-comparison sorts",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Selection sorts",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Other",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Unknown class",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Matching wildcards",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Substring search",
+  "decision": "NOT_A_BIT",
+  "reason": "a section header or category, not a mechanism"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Selection algorithm",
+  "decision": "NOT_A_BIT",
+  "reason": "a problem statement (find the kth item); its mechanisms are the selection bits"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Spaghetti sort",
+  "decision": "NOT_A_BIT",
+  "reason": "a physical/analog joke; no computational mechanism to catalogue"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Slowsort",
+  "decision": "NOT_A_BIT",
+  "reason": "deliberately pessimal recursion; no mechanism beyond recursion (appears twice in the list)"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Stooge sort",
+  "decision": "NOT_A_BIT",
+  "reason": "deliberately pessimal recursion; no mechanism beyond recursion"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Soundex",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.partition.phonetic_key",
+   "name": "phonetic key",
+   "lineage": [
+    "search",
+    "symbolic reasoning"
+   ],
+   "mechanism": "map a word to a short canonical code by keeping its first letter and replacing the rest with classes of similar-sounding consonants while dropping vowels and repeats, so words that sound alike collide on the same code",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "PARTITION",
+   "in_geometry": "STRING",
+   "out_geometry": "STRING",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "DETERMINISTIC",
+   "cost": "LINEAR",
+   "requires": [
+    "a table from letters to sound classes (policy, language-specific)"
+   ],
+   "fails_when": [
+    "language-specific tables misclassify other languages",
+    "collisions are the point and also the failure: unrelated words share a code"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Daitch–Mokotoff Soundex",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.partition.phonetic_key"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Double Metaphone",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.partition.phonetic_key"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Match rating approach",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.partition.phonetic_key"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Metaphone",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.partition.phonetic_key"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "NYSIIS",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.partition.phonetic_key"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Levenshtein edit distance",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.compare.alignment_by_dynamic_programming",
+   "name": "pairwise alignment by dynamic programming",
+   "lineage": [
+    "search",
+    "symbolic reasoning"
+   ],
+   "mechanism": "fill a table over prefix pairs of two sequences where each cell holds the best cost of aligning those prefixes from its three neighbours (match or substitute, insert, delete), then read the corner or trace back the path",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "COMPARE",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "DISTANCE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a cost for substitution, insertion, deletion (policy)",
+    "two sequences over a common alphabet"
+   ],
+   "fails_when": [
+    "quadratic space and time in sequence length",
+    "the cost table is a human prior; changing it changes every distance"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Damerau–Levenshtein distance",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.compare.alignment_by_dynamic_programming"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Needleman–Wunsch algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.compare.alignment_by_dynamic_programming"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Smith–Waterman algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.compare.alignment_by_dynamic_programming"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hirschberg's algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.compare.alignment_by_dynamic_programming"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Dynamic time warping",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.compare.alignment_by_dynamic_programming"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Longest common subsequence problem",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.compare.alignment_by_dynamic_programming"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Shortest common supersequence problem",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.compare.alignment_by_dynamic_programming"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Longest common substring problem",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.compare.alignment_by_dynamic_programming"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Hamming distance",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.compare.positionwise_mismatch_count",
+   "name": "positionwise mismatch count",
+   "lineage": [
+    "search",
+    "symbolic reasoning"
+   ],
+   "mechanism": "compare two equal-length sequences position by position and count the positions where they differ",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "COMPARE",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEAR",
+   "requires": [
+    "equal lengths"
+   ],
+   "fails_when": [
+    "insertions shift every later position and inflate the count"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Jaro–Winkler distance",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.compare.windowed_match_similarity",
+   "name": "windowed match similarity",
+   "lineage": [
+    "search",
+    "symbolic reasoning"
+   ],
+   "mechanism": "count characters that match within a window proportional to the shorter length, count transpositions among the matches, combine into a similarity, and boost when the prefixes agree",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "COMPARE",
+   "in_geometry": "STRING",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "SIMILARITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "APPROXIMATE",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a window size rule and a prefix bonus (policy)"
+   ],
+   "fails_when": [
+    "not a metric (no triangle inequality)",
+    "tuned for short names"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Dice's coefficient (also known as the Dice coefficient)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.compare.set_overlap_ratio",
+   "name": "set overlap ratio",
+   "lineage": [
+    "search",
+    "symbolic reasoning"
+   ],
+   "mechanism": "measure similarity of two sets as the size of their intersection scaled by their sizes",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "COMPARE",
+   "in_geometry": "SET",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "SIMILARITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEAR",
+   "requires": [
+    "a way to form the two sets (e.g. n-grams: policy)"
+   ],
+   "fails_when": [
+    "ignores order entirely",
+    "small sets give coarse values"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Trigram search",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.compare.set_overlap_ratio"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bitap algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.bit_parallel_pattern_match",
+   "name": "bit-parallel pattern match",
+   "lineage": [
+    "search",
+    "symbolic reasoning"
+   ],
+   "mechanism": "keep the set of pattern positions currently matched as a bit vector and update it for each text character with shifts and masks precomputed per character, so a match is detected when a designated bit becomes set; approximate variants keep one vector per allowed error",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "STRING",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEAR",
+   "requires": [
+    "pattern length within the machine word (or multi-word emulation)"
+   ],
+   "fails_when": [
+    "patterns longer than a word lose the constant factor"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Quickselect",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.select.kth_by_partition",
+   "name": "kth element by partitioning",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "partition the sequence around a pivot into smaller and larger parts, then recurse only into the part that must contain the kth element until the pivot lands at position k",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SELECT",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEAR",
+   "requires": [
+    "a total order",
+    "a pivot rule (policy)"
+   ],
+   "fails_when": [
+    "adversarial pivots degrade to quadratic"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Introselect",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.bound.strategy_switch_on_depth",
+   "name": "strategy switch on depth exhaustion",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "run a fast strategy while tracking its recursion depth or effort, and when a budget derived from the input size is exceeded switch to a slower strategy with a guaranteed bound",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "BOUND",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "FUNCTION",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "LOOP_OWNER",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "cost": "CONSTANT",
+   "requires": [
+    "two strategies for the same task",
+    "a depth or effort budget (policy)"
+   ],
+   "fails_when": [
+    "the budget constant is a human prior; too tight wastes the fast path, too loose gives the worst case"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Introsort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.bound.strategy_switch_on_depth"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Linear search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.scan_until_match",
+   "name": "scan until match",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "examine elements one after another in order and stop at the first that satisfies the test",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "cost": "LINEAR",
+   "requires": [
+    "a membership test"
+   ],
+   "fails_when": [
+    "cost linear in position of the target"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Binary search algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.halve_sorted_range",
+   "name": "halve a sorted range",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "on a sorted sequence compare the target to the middle element and discard the half that cannot contain it, repeating until the range is empty or the element is found",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LOG",
+   "requires": [
+    "a sorted sequence under a total order",
+    "random access"
+   ],
+   "fails_when": [
+    "unsorted input gives silent wrong answers",
+    "poor cache locality on large arrays (layout variants exist)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Eytzinger binary search",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.halve_sorted_range"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Fibonacci search technique",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.halve_sorted_range"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Uniform binary search",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.halve_sorted_range"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Predictive search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.interpolate_position",
+   "name": "interpolate the probe position",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "estimate where the target lies in a sorted range from the target's value relative to the range's end values, probe there, and shrink the range around the miss",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LOG",
+   "requires": [
+    "numeric keys roughly uniformly distributed"
+   ],
+   "fails_when": [
+    "skewed distributions degrade to linear"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Jump search (or block search)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.block_then_scan",
+   "name": "jump by blocks then scan",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "probe a sorted sequence at fixed strides until the target is passed, then scan linearly within the last block",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "sorted sequence",
+    "a stride (policy; square root of length is the usual)"
+   ],
+   "fails_when": [
+    "worse than halving; useful only when backward moves are expensive"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Ternary search",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.unimodal_bracket",
+   "name": "bracket a unimodal optimum",
+   "lineage": [
+    "optimization",
+    "search"
+   ],
+   "mechanism": "evaluate a unimodal function at two interior points of an interval, discard the outer third that cannot contain the optimum, and repeat until the interval is small",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "FUNCTION",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "DISTANCE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LOG",
+   "requires": [
+    "unimodality on the interval"
+   ],
+   "fails_when": [
+    "multimodal functions bracket a local optimum silently"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Simple merge algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.merge_sorted_runs",
+   "name": "merge sorted runs",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "consume several already-ordered sequences by repeatedly taking the smallest head among them, producing one ordered sequence",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "inputs already ordered",
+    "a total order"
+   ],
+   "fails_when": [
+    "unordered inputs give unordered output silently"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "k-way merge algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.merge_sorted_runs"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Union (merge, with elements on the output not repeated)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.merge_sorted_runs"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Merge sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.merge_sorted_runs"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Timsort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.merge_sorted_runs"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Strand sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.merge_sorted_runs"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Fisher–Yates shuffle (also known as the Knuth shuffle)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.sample.uniform_permutation_by_swaps",
+   "name": "uniform permutation by swaps",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "walk the sequence from the end, swapping each position with a uniformly random position at or before it, so every permutation is equally likely in one pass",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SAMPLE",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEAR",
+   "requires": [
+    "a uniform random integer source"
+   ],
+   "fails_when": [
+    "a biased or naive swap range makes some permutations more likely"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bogosort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.sample.uniform_permutation_by_swaps"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Heap's permutation generation algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.generate.next_permutation_by_transposition",
+   "name": "next permutation by one transposition",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "enumerate all permutations so that each is produced from the previous by swapping exactly two elements, using a small amount of state to decide which pair",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "GENERATE",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "STREAM",
+   "order_req": "NONE",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "cost": "CONSTANT",
+   "requires": [
+    "mutable sequence"
+   ],
+   "fails_when": [
+    "factorial total output"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Steinhaus–Johnson–Trotter algorithm (also known as the Johnson–Trotter algorithm)",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.generate.next_permutation_by_transposition"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Schensted algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.transform.row_insertion_with_bumping",
+   "name": "row insertion with bumping",
+   "lineage": [
+    "symbolic reasoning"
+   ],
+   "mechanism": "insert each element of a sequence into the first row of a growing tableau, bumping the smallest larger entry down to the next row and repeating, recording where growth happened in a second tableau, giving a bijection from permutations to pairs of tableaux",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "TRANSFORM",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "RECORD",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a total order"
+   ],
+   "fails_when": [
+    "ties need a convention"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bubble sort",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.swap_adjacent_until_ordered",
+   "name": "swap out-of-order neighbours until none remain",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "repeatedly pass over the sequence swapping adjacent (or gapped) pairs that are out of order until a pass makes no swap",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a total order"
+   ],
+   "fails_when": [
+    "quadratic; each pass moves an element at most one step (gap variants fix this)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cocktail shaker sort or bidirectional bubble sort, a bubble sort traversing the list alternately from front to back and ",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.swap_adjacent_until_ordered"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Comb sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.swap_adjacent_until_ordered"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Gnome sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.swap_adjacent_until_ordered"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Odd–even sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.swap_adjacent_until_ordered"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Quicksort",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.partition_around_pivot",
+   "name": "partition around a pivot and recurse",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "choose a pivot, rearrange the sequence so everything smaller precedes everything larger, then sort the two sides independently",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "a total order",
+    "a pivot rule (policy)"
+   ],
+   "fails_when": [
+    "bad pivots give quadratic time",
+    "not stable"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "GENERALIZES",
+     "id": "bit.select.kth_by_partition"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Samplesort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.partition_around_pivot"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Insertion sort",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.insert_into_sorted_prefix",
+   "name": "insert each element into the sorted prefix",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "grow an ordered prefix one element at a time by finding where the next element belongs among the ordered ones and shifting to make room",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a total order"
+   ],
+   "fails_when": [
+    "quadratic shifts on far-from-sorted input (gap sequences and gaps in storage are the repairs)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Shell sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.insert_into_sorted_prefix"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Library sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.insert_into_sorted_prefix"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Tree sort (binary tree sort)",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.build_search_structure_then_traverse",
+   "name": "build a search structure then traverse it in order",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "insert every element into a structure that keeps order (a search tree or trie), then read the structure out in order",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "an ordered container with insertion"
+   ],
+   "fails_when": [
+    "degenerate trees on sorted input unless balanced"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Burstsort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.build_search_structure_then_traverse"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Patience sorting",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.piles_then_merge",
+   "name": "deal into ordered piles then merge",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "deal elements onto the leftmost pile whose top is not smaller (found by halving over pile tops), creating a new pile when none qualifies, then merge the piles; the pile count is the longest increasing subsequence length",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "a total order"
+   ],
+   "fails_when": [
+    "the merge step dominates on random input"
+   ],
+   "instances": [],
+   "related": [
+    {
+     "rel": "REQUIRES",
+     "id": "bit.search.halve_sorted_range"
+    },
+    {
+     "rel": "REQUIRES",
+     "id": "bit.order.merge_sorted_runs"
+    }
+   ],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Longest increasing subsequence problem",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.piles_then_merge"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Selection sort",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.extract_extreme_repeatedly",
+   "name": "repeatedly extract the extreme",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "repeatedly find the smallest remaining element and move it to the end of the output; a heap makes each extraction logarithmic",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a total order",
+    "optionally a priority structure"
+   ],
+   "fails_when": [
+    "quadratic without a priority structure",
+    "not stable"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Heapsort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.extract_extreme_repeatedly"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Smoothsort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.extract_extreme_repeatedly"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Cycle sort",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.place_by_rank_count",
+   "name": "place each element at its counted rank",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "for each element count how many are smaller to find its final position, write it there, and continue with the element displaced, so each element is written once",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a total order"
+   ],
+   "fails_when": [
+    "quadratic comparisons; optimal only in writes"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Counting sort",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.distribute_by_key_value",
+   "name": "distribute by key value",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "use the key itself (or a digit or bucket of it) as an address: count or bucket elements by key, then read the buckets out in key order, repeating per digit for long keys",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEAR",
+   "requires": [
+    "keys that map to a bounded integer range or fixed-width digits"
+   ],
+   "fails_when": [
+    "large key ranges cost memory",
+    "arbitrary comparison keys are not addressable"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bucket sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.distribute_by_key_value"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Pigeonhole sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.distribute_by_key_value"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Postman sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.distribute_by_key_value"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Radix sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.distribute_by_key_value"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Flashsort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.distribute_by_key_value"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bead sort",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.order.distribute_by_key_value"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Bitonic sorter",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.fixed_comparator_network",
+   "name": "fixed comparator network",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "apply a data-independent fixed sequence of compare-and-swap operations on pairs of positions whose pattern guarantees an ordered output for any input of that size",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEARITHMIC",
+   "requires": [
+    "fixed input size (padding otherwise)"
+   ],
+   "fails_when": [
+    "not adaptive to already-sorted input"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Pancake sorting",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.sort_under_move_restriction",
+   "name": "sort under a restricted move",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "order a sequence using only one permitted operation (reversing a prefix), placing the largest unsorted element by at most two moves each round",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SEQUENCE",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "NONE",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a total order",
+    "the restricted move"
+   ],
+   "fails_when": [
+    "minimal move count is hard in general; the greedy bound is 2n"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Topological sort",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.order.emit_nodes_without_pending_predecessors",
+   "name": "emit nodes with no pending predecessors",
+   "lineage": [
+    "planning",
+    "search"
+   ],
+   "mechanism": "repeatedly emit a node whose predecessors have all been emitted, removing its outgoing edges, so the output respects every dependency; a cycle leaves nodes never emitted",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ORDER",
+   "in_geometry": "DAG",
+   "out_geometry": "SEQUENCE",
+   "order_req": "PARTIAL",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "COMPLETE",
+   "cost": "LINEAR",
+   "requires": [
+    "an acyclic dependency graph"
+   ],
+   "fails_when": [
+    "cycles: some nodes are never emitted (detectable by count)",
+    "many valid orders; the tie-break is policy"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Kadane's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.accumulate.best_segment_ending_here",
+   "name": "best segment ending here",
+   "lineage": [
+    "search"
+   ],
+   "mechanism": "scan once keeping the best value of a segment that ends at the current position (extend or restart) and the best seen overall",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "ACCUMULATE",
+   "in_geometry": "SEQUENCE",
+   "out_geometry": "SCALAR",
+   "order_req": "TOTAL",
+   "metric_req": "NONE",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "OPTIMAL",
+   "cost": "LINEAR",
+   "requires": [
+    "an additive score"
+   ],
+   "fails_when": [
+    "all-negative inputs need a convention for the empty segment"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Ruzzo–Tompa algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.accumulate.best_segment_ending_here"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Knuth–Morris–Pratt algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.pattern_match_with_failure_links",
+   "name": "pattern match with failure links",
+   "lineage": [
+    "search",
+    "symbolic reasoning"
+   ],
+   "mechanism": "precompute for each pattern prefix the longest proper prefix that is also a suffix, so that after a mismatch the scan resumes at that prefix without re-reading text characters; a trie of many patterns gives one automaton for all",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "STRING",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEAR",
+   "requires": [
+    "a preprocessing pass over the pattern(s)"
+   ],
+   "fails_when": [
+    "preprocessing cost per pattern set change"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Aho–Corasick string matching algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.pattern_match_with_failure_links"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Boyer–Moore string-search algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.pattern_match_skip_by_last_occurrence",
+   "name": "pattern match skipping by last occurrence",
+   "lineage": [
+    "search",
+    "symbolic reasoning"
+   ],
+   "mechanism": "compare the pattern from its end, and on a mismatch shift the pattern forward by how far the mismatching text character is from its last occurrence in the pattern, skipping text without examining it",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "STRING",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEAR",
+   "requires": [
+    "a table of last occurrences per alphabet symbol"
+   ],
+   "fails_when": [
+    "small alphabets shrink the skips",
+    "worst case still linear-quadratic in some variants"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Boyer–Moore–Horspool algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.pattern_match_skip_by_last_occurrence"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Zhu–Takaoka string matching algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.pattern_match_skip_by_last_occurrence"
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Rabin–Karp string search algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.rolling_hash_pattern_match",
+   "name": "rolling-hash pattern match",
+   "lineage": [
+    "search",
+    "symbolic reasoning"
+   ],
+   "mechanism": "hash every window of the text with a hash that updates in constant time as the window slides, compare hashes to the pattern hashes, and verify only on hash equality",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "STRING",
+   "out_geometry": "SET",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "PROBABILISTIC_BOUND",
+   "cost": "LINEAR",
+   "requires": [
+    "a rolling hash"
+   ],
+   "fails_when": [
+    "hash collisions force verification; adversarial inputs collide"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Ukkonen's algorithm",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.remember.suffix_tree_online_construction",
+   "name": "online suffix tree construction",
+   "lineage": [
+    "memory and retrieval"
+   ],
+   "mechanism": "extend a compressed trie of all suffixes one character at a time, using suffix links and an active point so each extension costs amortised constant time",
+   "scale": "MECHANISM",
+   "sources": [],
+   "grade": "T2",
+   "verb": "REMEMBER",
+   "in_geometry": "STRING",
+   "out_geometry": "TREE",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "LINEAR",
+   "requires": [
+    "a terminal symbol",
+    "an alphabet"
+   ],
+   "fails_when": [
+    "memory-heavy; constant factors large"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Rich Salz' wildmat",
+  "decision": "BIT",
+  "bit": {
+   "schema": "nyx.bit/0",
+   "id": "bit.search.wildcard_match_by_backtracking",
+   "name": "wildcard match by backtracking",
+   "lineage": [
+    "search",
+    "symbolic reasoning"
+   ],
+   "mechanism": "match a pattern with single- and multi-character wildcards against a string by trying the shortest expansion of each multi-wildcard and backing up to try longer ones on failure",
+   "scale": "PRIMITIVE",
+   "sources": [],
+   "grade": "T2",
+   "verb": "SEARCH",
+   "in_geometry": "STRING",
+   "out_geometry": "BOOLEAN",
+   "order_req": "NONE",
+   "metric_req": "EQUALITY",
+   "state_req": "LOCAL",
+   "control": "PURE",
+   "guarantee": "EXACT",
+   "cost": "POLYNOMIAL",
+   "requires": [
+    "a wildcard grammar"
+   ],
+   "fails_when": [
+    "many multi-wildcards give exponential backtracking (the non-recursive variant bounds this)"
+   ],
+   "instances": [],
+   "related": [],
+   "classified_by": "Nyx 2026-09-12 batch01 (T2: description + knowledge; no source read)"
+  }
+ },
+ {
+  "source": "wikipedia_list_of_algorithms",
+  "entry": "Krauss matching wildcards algorithm",
+  "decision": "INSTANCE_OF",
+  "bit_id": "bit.search.wildcard_match_by_backtracking"
+ }
+]

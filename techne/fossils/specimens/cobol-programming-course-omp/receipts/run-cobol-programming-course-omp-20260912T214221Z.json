@@ -1,0 +1,102 @@
+{
+  "schema": "techne.fossil.run_receipt/1",
+  "specimen_id": "cobol-programming-course-omp",
+  "receipt_id": "run-cobol-programming-course-omp-20260912T214221Z",
+  "written_utc": "20260912T214221Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-legacy:bookworm",
+  "workdir": "upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "tree_sha256_before": "0a6956ecb5b2776117d325c6e64ed657fb38ca8fd29e2991ce27396f21c6eb40",
+  "recipe_sha256": "e8b67facf7d6b6f447509f402afe5999a98b4dd05ef200c54ad6da4d2fd26ce9",
+  "patches": [],
+  "probe": [
+    {
+      "name": "cobc",
+      "cmd": "cobc --version | head -1",
+      "exit": 0,
+      "seconds": 0.87,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "cobc (GnuCOBOL) 3.1.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "compile PAYROL00 (payroll arithmetic), SRCHBIN (SEARCH ALL over the account file) and CBL0014 (the course's deliberate S0C7 data exception) with GnuCOBOL; also record that CBL0001..CBL0012 are REFUSED (PROGRAM-ID without its terminating period: IBM Enterprise COBOL tolerates it, GnuCOBOL 3.1.2 does not, every -std tried)",
+      "cmd": "cobc -x -o $BODY/build/payrol00 PAYROL00.cobol 2>&1 | tail -2; cobc -x -o $BODY/build/srchbin SRCHBIN.cobol 2>&1 | tail -2; cobc -x -o $BODY/build/cbl0014 CBL0014.cobol 2>&1 | tail -2; cobc -x -std=ibm -o /tmp/c1 CBL0001.cobol 2>&1 | head -1; test -x $BODY/build/payrol00 && test -x $BODY/build/srchbin && test -x $BODY/build/cbl0014 && echo built",
+      "exit": 0,
+      "seconds": 1.36,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "CBL0001.cobol:10: error: syntax error, unexpected ENVIRONMENT, expecting COMMON or EXTERNAL or RECURSIVE or INITIAL\nbuilt\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "PAYROL00: hours x rate -> gross pay, PICTURE-edited output",
+      "cmd": "$BODY/build/payrol00; echo exit=$?",
+      "exit": 0,
+      "seconds": 0.82,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Name: Captain COBOL  \nLocation: San Jose, California\nReason: Learn to be a COBOL expert    \nHours Worked: 019\nHourly Rate: 023\nGross Pay: 00437\nLearn to be a COBOL expert     from Captain COBOL  \nexit=0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "SRCHBIN: load the 45-record EBCDIC/COMP-3 account file (DDNAME ACCTREC mapped through DD_ACCTREC) into a table and SEARCH ALL (binary search) for account 18011809",
+      "cmd": "cd ../data && DD_ACCTREC=data $BODY/build/srchbin 2>&1 | cat -v | tail -5; echo exit=$?",
+      "exit": 0,
+      "seconds": 0.85,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Not Found\nexit=0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "PATHOLOGY CBL0014: the course's deliberate S0C7 (data exception: arithmetic on an invalid packed-decimal field) -- what GnuCOBOL does with it is recorded, not judged",
+      "cmd": "$BODY/build/cbl0014 2>&1 | cat -v | head -6; echo exit=$?",
+      "exit": 0,
+      "seconds": 0.86,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "Triggering S0C7...\nResult: +041524\nexit=0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "0a6956ecb5b2776117d325c6e64ed657fb38ca8fd29e2991ce27396f21c6eb40",
+  "body_preserved": true
+}

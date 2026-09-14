@@ -1,0 +1,50 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.schedule.run_the_task_with_the_nearest_deadline",
+  "name": "run the task with the nearest deadline",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "at every decision point run the ready task whose deadline is soonest, preempting a running task when a nearer deadline arrives",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Earliest deadline first scheduling' in section Operating systems algorithms / Scheduling: ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Least slack time scheduling': ",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Rate-monotonic scheduling': ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SCHEDULE",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "NONE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "OPTIMAL",
+  "strategy": "GREEDY",
+  "iteration": "PRIORITY",
+  "cost": "LOG",
+  "requires": [
+    "known deadlines",
+    "preemption"
+  ],
+  "fails_when": [
+    "overload degrades badly (domino misses)"
+  ],
+  "instances": [
+    "Earliest deadline first scheduling",
+    "Least slack time scheduling",
+    "Rate-monotonic scheduling"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

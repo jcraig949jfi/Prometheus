@@ -1,0 +1,41 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.select.highest_id_that_answers_becomes_coordinator",
+  "name": "the highest identifier that answers becomes coordinator",
+  "lineage": [
+    "planning",
+    "search"
+  ],
+  "mechanism": "a node that suspects the coordinator failed sends an election to all higher identifiers; any that answer take over the election; a node that hears no higher answer within a timeout declares itself coordinator to all",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Bully algorithm' in section Distributed systems algorithms: ",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SELECT",
+  "in_geometry": "SET",
+  "out_geometry": "SCALAR",
+  "order_req": "TOTAL",
+  "metric_req": "EQUALITY",
+  "state_req": "GLOBAL",
+  "control": "REACTIVE",
+  "guarantee": "TERMINATES",
+  "strategy": "DIRECT",
+  "iteration": "PRIORITY",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "unique ordered identifiers",
+    "timeouts"
+  ],
+  "fails_when": [
+    "message storms; a slow high node is presumed dead"
+  ],
+  "instances": [
+    "Bully algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

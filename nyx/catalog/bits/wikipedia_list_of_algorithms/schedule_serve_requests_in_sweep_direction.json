@@ -1,0 +1,39 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.schedule.serve_requests_in_sweep_direction",
+  "name": "serve requests in the current sweep direction",
+  "lineage": [
+    "planning"
+  ],
+  "mechanism": "move the head in one direction serving every pending request on the way, reverse at the end (or at the last request), so seek distance is bounded and no request starves",
+  "scale": "PRIMITIVE",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Elevator algorithm' in section Operating systems algorithms / I/O scheduling / Disk scheduling: Disk scheduling algorithm that works like an elevator.",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "SCHEDULE",
+  "in_geometry": "SET",
+  "out_geometry": "SEQUENCE",
+  "order_req": "TOTAL",
+  "metric_req": "DISTANCE",
+  "state_req": "LOCAL",
+  "control": "REACTIVE",
+  "guarantee": "NONE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "LOG",
+  "requires": [
+    "a linear position axis"
+  ],
+  "fails_when": [
+    "middle positions get served twice as often as the ends"
+  ],
+  "instances": [
+    "Elevator algorithm"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch06 (T2)"
+}

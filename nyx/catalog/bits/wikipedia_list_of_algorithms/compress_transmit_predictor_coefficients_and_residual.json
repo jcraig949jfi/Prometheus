@@ -1,0 +1,44 @@
+{
+  "schema": "nyx.bit/0",
+  "id": "bit.compress.transmit_predictor_coefficients_and_residual",
+  "name": "transmit the predictor coefficients and the residual",
+  "lineage": [
+    "abstraction and compression"
+  ],
+  "mechanism": "fit a short linear predictor of each sample from its predecessors over a frame, transmit the coefficients and a coarse description of the prediction residual, and let the receiver run the predictor to reconstruct",
+  "scale": "MECHANISM",
+  "sources": [
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Linear predictive coding (LPC)' in section Information theory and signal processing / Coding theory / Lossy compression algorithms: lossy compression by representing the spectral envelope of a digital signal of speech in compressed form",
+      "grade": "T2"
+    },
+    {
+      "ref": "List of algorithms (revid 1373672109), entry 'Code-excited linear prediction (CELP)': low bit-rate speech compression",
+      "grade": "T2"
+    }
+  ],
+  "grade": "T2",
+  "verb": "COMPRESS",
+  "in_geometry": "SEQUENCE",
+  "out_geometry": "RECORD",
+  "order_req": "TOTAL",
+  "metric_req": "INNER_PRODUCT",
+  "state_req": "LOCAL",
+  "control": "PURE",
+  "guarantee": "APPROXIMATE",
+  "strategy": "DIRECT",
+  "iteration": "SWEEP",
+  "cost": "POLYNOMIAL",
+  "requires": [
+    "a frame length and predictor order (policy)"
+  ],
+  "fails_when": [
+    "non-stationary frames break the fit"
+  ],
+  "instances": [
+    "Linear predictive coding (LPC)",
+    "Code-excited linear prediction (CELP)"
+  ],
+  "related": [],
+  "classified_by": "Nyx 2026-09-12 batch04 (T2)"
+}
