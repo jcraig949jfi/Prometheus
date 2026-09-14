@@ -50,3 +50,32 @@ Rows: primordial/ledger/rows/G/G-M1-floors-w134.jsonl; 18 floor cells (status co
 in cells.jsonl. Not explained here: why the archives miss the abstain cell.
 Next: `qd_ledger check` reports raw and floor-normalized verdicts (BELOW_FLOOR / NO_HEADROOM); B's
 8 B cells re-judged.
+Pushed 3869d7442 (suite 142); anomaly 1789419655457-0 RESOLVED on the queue with this discriminator.
+
+## 2026-09-14 epoch 1, iteration 3 -- M1 check reads every verdict against the floor
+
+- primordial/ops/qd_ledger.py: `check` keeps the raw clause A verdict and adds `floor`:
+  {verdict, floor_held64, floor_kind, normalized}. `floor_of` takes the highest floor row
+  (floor=<kind>, status control) for the world x pressure. No new threshold: BELOW_FLOOR if
+  median - 0.5*IQR <= floor; NO_HEADROOM if every front baseline is <= floor; INELIGIBLE and
+  NO_BASELINE pass through; otherwise the raw verdict. normalized = (median - floor) /
+  (baseline - floor), None where the baseline is at or below the floor. Floor rows never enter
+  `top` or `pareto` (status control).
+- Tests: primordial/tests/test_qd_ledger_floor.py (6). Suite 148 passed.
+- Re-judgment of every non-baseline w1/w3/w4 train*_held64 cell in cells.jsonl (31 rows):
+  23 raw PASS, 5 raw FAIL, 3 INELIGIBLE (status cheat). Under the floor, all 28 record rows are
+  BELOW_FLOOR. B's 8 B cells (8 record rows) are all BELOW_FLOOR:
+
+| world | pressure | mechanism | median | raw | floor |
+|---|---|---|---|---|---|
+| w4 | train128 | int2 a2 | 97.19 | PASS | BELOW_FLOOR (107.75) |
+| w4 | train8 | int2 a2 | 91.80 | PASS | BELOW_FLOOR (107.75) |
+| w1 | train128 | int2 a2 | 58.59 | FAIL | BELOW_FLOOR (88.28) |
+| w1 | train8 | int2 a2 | 55.21 | PASS | BELOW_FLOOR (88.28) |
+| w3 | train128 | int2 a2 | 103.97 | PASS | BELOW_FLOOR (122.63) |
+| w3 | train128 | int3 a2 | 103.13 | PASS | BELOW_FLOOR (122.63) |
+| w3 | train8 | int2 a2 | 106.88 | PASS | BELOW_FLOOR (122.63) |
+| w3 | train8 | int3 a2 | 109.89 | PASS | BELOW_FLOOR (122.63) |
+
+- M1 still open: the "best 2-action brain" floor (the backlog's third floor kind). Abstain
+  already beats every learned cell, so it can only raise the floor; lower priority than M2.

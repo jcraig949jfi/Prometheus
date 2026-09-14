@@ -127,7 +127,40 @@ def pareto(rows, world, pressure=None):
     return front
 
 
+def floor_of(rows, world, pressure):
+    """M1: the highest trivial-policy floor row (floor=<kind>, status control) for (world, pressure), or None."""
+    fs = [r for r in rows if r.get("floor") and r["status"] == "control" and _match(r, world, pressure)
+          and r["fitness"].get("held64_median") is not None]
+    return max(fs, key=lambda r: r["fitness"]["held64_median"]) if fs else None
+
+
 def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True) -> dict:
+    """Clause A verdict (raw) plus the M1 floor reading: `floor` = the verdict read against the
+    trivial-policy floor. No new threshold: BELOW_FLOOR if median - 0.5*IQR <= floor; NO_HEADROOM if
+    every baseline on the front is <= floor (parity with it means nothing); else the raw verdict, with
+    normalized = (median - floor) / (baseline - floor) per front baseline."""
+    raw = _check_raw(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean)
+    f = floor_of(rows, world, pressure)
+    if f is None:
+        raw["floor"] = {"verdict": "NO_FLOOR"}
+        return raw
+    fv = f["fitness"]["held64_median"]
+    base = pareto([r for r in rows if r.get("baseline")], world, pressure)
+    norm = {b["mechanism"]: (round((median - fv) / (b["fitness"]["held64_median"] - fv), 4)
+                             if b["fitness"]["held64_median"] > fv else None) for b in base}
+    if raw["verdict"] in ("INELIGIBLE", "NO_BASELINE"):
+        v = raw["verdict"]
+    elif median - 0.5 * (iqr or 0.0) <= fv:
+        v = "BELOW_FLOOR"
+    elif base and all(b["fitness"]["held64_median"] <= fv for b in base):
+        v = "NO_HEADROOM"
+    else:
+        v = raw["verdict"]
+    raw["floor"] = {"verdict": v, "floor_held64": fv, "floor_kind": f["floor"], "normalized": norm}
+    return raw
+
+
+def _check_raw(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True) -> dict:
     """Clause A verdict of a candidate against the baseline Pareto front for (world, pressure)."""
     if not oracle_clean:
         return {"verdict": "INELIGIBLE", "why": "oracles not clean"}
