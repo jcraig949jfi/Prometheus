@@ -121,7 +121,27 @@ held. So E5's loss was not only budget. Untested candidates: r=3 TT over 36 hex
 digits is a poor function class for these obs (corruption + delay in w1), the
 8-entry codebook caps actions, or open loop simply suffices in fixed-seed worlds.
 B1t (lane B) explained E4b w5's fix_unaffordable misses from my saved elites:
-91/91 were unpaid writes landing after episode end. E4b = archive-level positive (QD coverage/qd_score vs the same
+91/91 were unpaid writes landing after episode end.
+
+## 2026-09-14 iteration 8 -- E6 held-out seeds, open vs closed loop (FAIL)
+
+Pre-check first (random genomes): w2 seed-independent, w5 other seeds all-zero,
+seed sets differ in difficulty, so compare conditions on the SAME held-out seeds
+and never as ratios; eligible w1/w3/w4 fixed before the run. Both conditions
+25,600 genomes on 8 train seeds, top-16 scored on 64 held-out seeds. Refuted,
+the other way round: closed-loop generalised WORSE in 3/3 eligible (held-out
+per seed 2.0 vs 45.9 in w1, 53.4 vs 90.3 in w3, 57.1 vs 87.3 in w4) although it
+matched or beat open loop on the train seeds in w3/w4. TT brains overfit the
+8 seeds more than fixed action sequences did. Leak control 3/3 (e.g. w1 237 vs
+161 on the leaked seeds); oracle clean 5/5, skip_lin 16/16.
+Eligibility miss: the random-genome pre-check called w2 seed-independent, but
+w2 elites score 162 on train vs 196 held-out -- elites reach seed-dependent
+states random genomes never do. A pre-check on random genomes can under-state
+seed dependence; next time pre-check on a short QD run's elites.
+
+Next / steal: closed-loop needs more training seeds or a regulariser before any
+generalisation claim; C3's representation ecology (dense/CP/Tucker/TT/bitset)
+is the natural next genome comparison. E4b = archive-level positive (QD coverage/qd_score vs the same
 number of random genomes inserted into an archive), closed-loop genomes (C's TT
 policy on obs), and B's numba form for eval. B's batched Encounter to replace the NK stub; C1's TT cores as
 the genome for E1; E2 branch points with a random-filler control; E3 with
