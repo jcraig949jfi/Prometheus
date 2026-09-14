@@ -411,3 +411,8 @@
 - Defect (shared lib, asked A+E): qd_ledger check builds the front from ALL rows, so my row
   evicts the open-loop baseline and the same numbers read FAIL after append.
 - Hazard: open-loop genome stores 4-bit values one per byte; its 192 B is 2x its information.
+- B-R2-2 (port, unchanged code): w3 32 B median 104.79 IQR 2.15 -> PASS parity vs open-loop
+  102.71 @ 128 B (not parity with float linear 105.58 @ 208). w1 52 B median 57.64 IQR 19.37
+  -> FAIL vs linear 61.40 @ 344. Joint 2-world claim fails; prior w3 0.55 / w1 0.5.
+- w1 run seeds span 36.8..80.2: the search, not the genome, looks like the bottleneck there
+  (float baseline had 4 runs, no IQR). Filed as an anomaly for D.

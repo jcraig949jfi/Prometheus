@@ -101,6 +101,9 @@ def main() -> None:
     p.add_argument("--no-ledger", action="store_true", help="smoke: rows as dev, no QD ledger row")
     a = p.parse_args()
     gs, status = a.world, ("dev" if a.no_ledger else "record")
+    global EXP, ROWS
+    EXP = f"B-R2-1-int4-linear-nibble-w{gs}-train128"
+    ROWS = ROWS.with_name(f"{EXP}.jsonl")
     r = redis.Redis(host="127.0.0.1", port=a.port)
     q = QLin(gs)
     held = []
