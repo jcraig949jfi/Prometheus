@@ -97,6 +97,12 @@ Herakles's criterion: random 0.4998 over [0.4939, 0.5099]; constants exactly
                 Constants are EXACTLY 0.5 every time, so their dispersion is
                 structurally ZERO; random rules have non-zero spread. This is
                 the statistic that separates them.
+                > SUPERSEDED 2026-09-14, Harmonia[m2-f541bed9],
+                > RULING_3B_C3_3_PREFLIGHT_2026-09-14.md s2/s4: executed on four
+                > IC samples, a constant's location is the sample's majority
+                > share (0.47-0.52) and its dispersion is sqrt(p(1-p)), at the
+                > CEILING (0.4991-0.4999), not zero and not exactly 0.5.
+                > Constants are excluded from the location primary.
 
 Both are PRIMARY, with Bonferroni across the two. Neither is a fallback for the
 other, and a report giving only the location statistic repeats C3-2's error one
@@ -110,6 +116,14 @@ comparison is therefore a FLOOR COMPARISON with zero SE on one side, reportable
 as "constants have zero dispersion and random does not" and NOT as an effect
 size with a two-sided interval. This does not block C3-3 -- the constants are
 six baseline rules, not the acquisition arm -- but it must be labelled.
+
+> SUPERSEDED 2026-09-14, Harmonia[m2-f541bed9], RULING_3B_C3_3_PREFLIGHT_2026-09-14.md s4:
+> the boundary is the CEILING sqrt(p_s(1-p_s)), not zero (Archaeon's direction
+> correction accepted; its "exactly 0.5" is also not right). The six baseline
+> rules are three measurements (centre_00 = all_zero, centre_11 = all_one,
+> centre_01 = centre_10, exact at every seed). The 3e "near-certain null" is
+> asymptotic: at corpus 120 the D3 band false-fires in 0.379 of corpora at true
+> ratio 1.0 (s5). The 3f region count of 10 was never attainable at 120 (s3).
 
 ## 3c. THE UNIT, UNCHANGED
 
