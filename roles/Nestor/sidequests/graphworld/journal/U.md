@@ -93,3 +93,53 @@ capability (12, 0), arch list includes sm_120). Epoch 1 started 18:49.
 - MVP acceptance 1 and 2 met: linear then tt_digits captured as one graph per step (or a
   static multi-step graph), fitness and cells == E7 128/128 on worlds 4/1/3. Open: U5 VRAM
   budget table, U6 throughput vs B6 fused numba under the O5 lease.
+
+## 2026-09-14 iteration 5 -- U5 VRAM budget table, U6 throughput vs B6 (leased)
+
+- Harness primordial/nv/cudagraph/bench.py (361b262b6). Rollout gained snapshot/restore/
+  replay: the per-env host stream seeding is done once, like B6's constructor; the timed
+  unit is device copy of the initial state + T ticks + fitness/cells to host. Unleased dev
+  runs first showed the untimed-init asymmetry (graph K=1 == K=T wall, init-dominated) and
+  were used only to fix the harness; they are not evidence.
+- Predicates posted before the runs (1789427622959-0). Rows: primordial/ledger/rows/U/
+  U5-vram-budget.jsonl (20, d28098d51) and U6-throughput-vs-b6.jsonl (6, ceadaecaa); every
+  measured row has gpu_lease_lost False, lease holder U; host CPU 21-27% (other lanes), GPU
+  1-5% at start. World 4, T = 64, 8 train seeds, P = n_envs / 8.
+- U5 VRAM (peak torch allocation of one captured-graph rollout, MiB):
+
+      n_envs        4096   16384   65536   262144
+      linear        12.2    49.9   195.8    783.0
+      tt_digits     28.9   116.6   462.8   1851.0
+
+  identical for K = 1 and K = 64 in every cell. Budget (linear extrapolation from 65536 and
+  262144): linear 3132 B/env, ~5.49M envs in 16 GiB (~5.00M in the free memory);
+  tt_digits 7404 B/env, ~2.32M (~2.08M). Measured up to 262144 envs only.
+- U6 median wall of 5 rollouts (s); B6 numba at 1 thread (the lane budget):
+
+      family     n_envs  eager    graph_k1  graph_kT  b6_numba  graph_k1 vs b6
+      linear       1024  0.208    0.0163    0.0163    0.0027    0.17x
+      linear       8192  0.316    0.0186    0.0189    0.0218    1.17x
+      linear      65536  0.168    0.0717    0.0720    0.1705    2.38x
+      tt_digits    1024  0.902    0.0488    0.0500    0.0087    0.18x
+      tt_digits    8192  0.533    0.0559    0.0565    0.0731    1.31x
+      tt_digits   65536  0.522    0.1596    0.1585    0.5901    3.70x
+
+  every path exact vs B6 and eager in all 6 cells (including the timed restore path).
+- Predicate scoring: U5-P1 (tt_digits >= 1M envs in 16 GiB, prior 0.7) PASS, 2.32M
+  (extrapolated). U5-P2 (K=T peak <= 1.10 x K=1, prior 0.8) PASS, 1.00 -- but the byte-equal
+  peaks say the peak is state + snapshot copy, so this does not show long graphs are free
+  in general. U6-P1 (exact 6/6, prior 0.95) PASS. U6-P2 (graph_k1 >= B6 at 65536, prior
+  0.8) PASS, 2.38x / 3.70x, AGAINST B6 HELD TO 1 THREAD. U6-P3 (eager/graph_k1 >= 5 in all
+  cells, prior 0.9) FAIL 4/6: 12.7x, 17.0x, 2.34x (linear 65536), 18.5x, 9.5x, 3.27x
+  (tt_digits 65536) -- at large batch eager's per-kernel launch cost is amortized.
+- Reading: the graph path is flat in n_envs up to ~8k (launch-bound, ~0.25-0.8 ms/tick)
+  and loses to single-core B6 below ~4k envs. B6 stops envs at their done tick; the torch
+  paths step every env for T ticks.
+- U6b WITHDRAWN, not run: predicate 1789427870219-0 (graph_k1 >= B6 at 8 numba threads,
+  65536 envs, prior 0.35) with burst 1789427870515-0. The run waited on the GPU lease held
+  by T (N4 timing, until ~19:30) and was killed at the 280 s timeout with no rows. The burst
+  window then expired. No result either way; the 1-thread comparison above is the only
+  B6 speed evidence. Carry-forward: rerun U6b under a fresh burst when the lease is free.
+- N5 MVP package: all four acceptance items met (graph capture linear then tt_digits;
+  fitness and cells == E7 128/128; VRAM budget table; throughput vs B6 under the lease).
+  Tests in lane U: 28 (U1 8, U2 7, U3 5, U4 5, U5 3).
