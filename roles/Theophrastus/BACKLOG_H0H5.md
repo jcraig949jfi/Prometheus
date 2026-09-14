@@ -1,6 +1,6 @@
 # Theophrastus backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
-Currency: 2026-09-13.
+Currency: 2026-09-14. THEO-01/02 partly absorbed by round 2 (prior-evidence classes and per-IC dissection); rows below updated.
 
 | id | item | proof of done | blocker | size |
 |---|---|---|---|---|
@@ -14,3 +14,7 @@ Currency: 2026-09-13.
 | THEO-08 | Rule-10 bound + accountable seat + MONITORS.md row before any unattended crawl | row in roles/base-role/MONITORS.md | operator decision on accountable seat (recommend Archaeon, as for Vivarium) | XS/XL |
 | THEO-09 | Counterfactual-attack mode with its own budget line and productivity signal | a run in mode=counterfactual revisiting dead.jsonl cells with a receipt | THEO-08 | S |
 | THEO-10 | Nyx catalogue as a mechanism source (268 bits, name-blind gate) -- which entries are executable in an existing kind | recon note listing executable Nyx entries per kind | Nyx's catalogue format | M |
+| THEO-11 | exp table-level ablation scan (128 entries) at W599 to localise the one-class collapse | curves per child rule; SPEC-002 NECESSITY field filled | THEO-REQ-005 | M |
+| THEO-12 | Boundary localisation for maj / exp at 10x resolution with exact-count ICs | CAND-003 promoted or killed | THEO-REQ-006 | S |
+| THEO-13 | Kind transport of SPEC-001: a second kind with a scalar sufficient statistic (cegis_boolean_v1? truth-table Hamming margin) | per-IC curve on a non-CA kind | design only | M |
+| THEO-14 | Standing one-class-collapse detector offered to Vivarium/Archaeon as a post-hoc check on every ca_density_v0 fossil | INBOX + script path | THEO-REQ-004 (bitmask) | S |

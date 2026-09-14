@@ -1,22 +1,19 @@
 # Theophrastus -- STATUS
 
-Currency: 2026-09-13 (founding pass closed). State: ACTIVE (PRESENT: comms
-boot 2026-09-13; ACTIVE: this pass; PRODUCTIVE: 46 rows, 23 signals, 5 dead
-cells, 3 REQs; VALID: preregistered rule, 19 self-control tests green,
-replay n=3 identical).
+Currency: 2026-09-14 (round 2 closed). State: ACTIVE (PRESENT: comms boot
+2026-09-14; PRODUCTIVE: 21 rows, 3 specimens/candidates, 3 REQs, 1 defect
+report; VALID: plan and predictions frozen before data, 2 cheats caught,
+59/59 fossils re-derived bit-exactly).
 
-Founding loop: REAL. 46 executions on live SFE eng_8a37a5d3 (build
-sha256:5380cb90...), 46 PEW encounters in namespace `theophrastus`, 41/41
-declared contrasts eligible on both passes. Signals emitted: 23 (14 are
-positive controls predicted by the record; 9 NEW_TO_RECORD, all under the
-uniform-over-density pressure at N=599). Zero instrument blocks.
+Round 2 verdict: MECHANISM_SPECIMEN_HARVESTED (THEO-SPEC-001
+MARGIN_RESPONSE), MECHANISM_BOUNDED (THEO-SPEC-002 ONE_CLASS_COLLAPSE,
+exp), MECHANISM_CANDIDATE (THEO-CAND-003), founding interaction claim
+retired as ECOLOGICAL_CORRELATION_ONLY. Specimens:
+roles/Theophrastus/specimens/SPECIMENS_ROUND2_2026-09-14.md.
 
-Open blocks (on whom):
-- THEO-REQ-001 Mnemosyne: `ecology` selector on PEW fossil encounters.
-- THEO-REQ-002 Vivarium: per-parameter axis annotation on kind contracts.
-- THEO-REQ-003 Proteus (cc Herakles, Nyx): composition operation for
-  same-kind CA mechanisms.
-- PREREG s8 cross-consumer probe waits on Vivarium's daemon being alive.
+Open on others: THEO-REQ-001 (Mnemosyne), -002 (Vivarium), -003
+(Proteus), -004 (Vivarium/Herakles: witness-bound defect + per-IC mask),
+-005 (Herakles: table-level intervention), -006 (Herakles: exact-count
+ICs); Herakles player-id question (#242). No replies received yet.
 
-Standing loops owned: none registered (the crawler runs by hand; a rule-10
-bound and accountable seat are required before it may run unattended).
+Standing loops owned: none.
