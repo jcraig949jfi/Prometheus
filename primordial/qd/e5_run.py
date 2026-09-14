@@ -168,7 +168,10 @@ def main() -> None:
     p.add_argument("--worlds", default="1,2,3,4,5"); p.add_argument("--gens", type=int, default=60)
     p.add_argument("--batch", type=int, default=128); p.add_argument("--port", type=int, default=6394)
     p.add_argument("--tag", default="full")
+    p.add_argument("--exp", default=EXP, help="exp_id; rows go to ledger/rows/E/<exp>.jsonl")
     a = p.parse_args()
+    global ROWS
+    ROWS = E4.ROWS.with_name(f"{a.exp}.jsonl")
     HOT.mkdir(parents=True, exist_ok=True)
     r = redis.Redis(port=a.port)
     e4b = [json.loads(l) for l in open(E4.ROWS.with_name("E4b-qd-encounter-archive-positive.jsonl"))]
@@ -192,7 +195,7 @@ def main() -> None:
         pick = np.random.Generator(np.random.PCG64(5)).choice(len(cs), size=min(N_ORACLE, len(cs)), replace=False)
         elites = bs.unpack(np.frombuffer(b"".join(el[cs[i]][1] for i in sorted(pick)), np.uint8).reshape(-1, bs.glen))
         np.save(HOT / f"{a.tag}_w{gs}_elites.npy", bs.pack(elites))
-        row = {"exp_id": EXP, "tag": a.tag, "gen_seed": gs, "world_id": bs.wid, "T": bs.T, "S": bs.S, "W": bs.W,
+        row = {"exp_id": a.exp, "tag": a.tag, "gen_seed": gs, "world_id": bs.wid, "T": bs.T, "S": bs.S, "W": bs.W,
                "obs_dim": bs.D, "d": bs.d, "r": R, "A": A, "genome_bytes": bs.glen, "gens": a.gens, "batch": a.batch,
                "genomes_evaluated": a.gens * a.batch, "qd_best": int(best), "qd_cells": len(el),
                "qd_score": int(sum(v[0] for v in el.values())), "open_loop_best_e4b_median": open_best,
