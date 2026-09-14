@@ -1,0 +1,115 @@
+{
+  "episode": "E1_GREEDY_LORA",
+  "decision": "Ergon has the v1 result in hand and must choose the next experiment. Historically it chose an entity-disjoint (object-level) re-test, targeting value memorization.",
+  "cutoff": "2026-06-03",
+  "claim": "GENUINE_REASONING",
+  "explanations": {
+    "GENUINE_REASONING": "the adapter learned to evaluate mathematical relations and generalize",
+    "FORMAT_FOLLOWING": "the adapter learned to emit a parseable True/False verdict; the base model could not",
+    "BASE_RATE_PRIORS": "the adapter learned which relation types usually hold, with no object or value knowledge",
+    "VALUE_MEMORIZATION": "the adapter memorized invariant values of objects seen in training",
+    "FORMAT_ONLY_COMPLETE": "format-following accounts for the ENTIRE result; there is no non-format content signal at all"
+  },
+  "baseline_experiment_cost": "HOURS",
+  "evidence": [
+    {
+      "id": "E1.raw_delta",
+      "supports": "GENUINE_REASONING",
+      "availability": "INTERNAL",
+      "source": "roles/Ergon/GREEDY_LORA_RESULT_2026-06-03.md, headline table",
+      "upstream": [
+        "ADAPTER_V1",
+        "GOLD_EVAL_V1",
+        "FORMAT_GAIN"
+      ],
+      "rules_out": [],
+      "justification": "base 0.228 -> trained 0.907 on the same eval. A raw delta is consistent with every explanation on the list; it eliminates none of them."
+    },
+    {
+      "id": "E1.shuffle_control",
+      "supports": "GENUINE_REASONING",
+      "availability": "INTERNAL",
+      "source": "roles/Ergon/GREEDY_LORA_RESULT_2026-06-03.md, shuffled-label row",
+      "upstream": [
+        "ADAPTER_V1",
+        "GOLD_EVAL_V1",
+        "FORMAT_GAIN"
+      ],
+      "rules_out": [
+        "FORMAT_ONLY_COMPLETE"
+      ],
+      "justification": "shuffled-label adapter reaches 0.681 with no content signal; real reaches 0.907. That gap kills FORMAT_ONLY_COMPLETE and nothing else on this list. It does NOT bound how large the format share is, and it leaves relation base rates untouched: shuffling labels destroys the relation-to-label mapping for the control too, so the control cannot learn base rates either and its score is no evidence about whether the real adapter did."
+    },
+    {
+      "id": "E1.ood_countermath",
+      "supports": "GENUINE_REASONING",
+      "availability": "INTERNAL",
+      "source": "roles/Ergon/GREEDY_LORA_RESULT_2026-06-03.md, CounterMath probe",
+      "upstream": [
+        "ADAPTER_V1",
+        "FORMAT_GAIN"
+      ],
+      "rules_out": [],
+      "justification": "unparsed 50/120 -> 0/120 and a shift toward False. The record states plainly that this cached copy has NO GOLD LABELS, so no accuracy is claimed. A False-lean on a corpus built around false statements is equally predicted by a learned prior. Eliminates nothing."
+    },
+    {
+      "id": "E1.per_source_scores",
+      "supports": "GENUINE_REASONING",
+      "availability": "INTERNAL",
+      "source": "roles/Ergon/GREEDY_LORA_RESULT_2026-06-03.md, per-source line",
+      "upstream": [
+        "ADAPTER_V1",
+        "GOLD_EVAL_V1",
+        "FORMAT_GAIN"
+      ],
+      "rules_out": [],
+      "justification": "hephaestus 1.00, pollux 1.00, theseus 0.86 on the same eval pass as the headline. Same adapter, same eval, same format gain; a per-source breakdown of one measurement is not a second measurement."
+    }
+  ],
+  "discriminators": [
+    {
+      "id": "RELATION_BASE_RATE_ORACLE",
+      "available_at_cutoff": true,
+      "cost": "MINUTES",
+      "outcome_branches": [
+        [
+          "BASE_RATE_PRIORS"
+        ],
+        [
+          "GENUINE_REASONING",
+          "VALUE_MEMORIZATION"
+        ]
+      ],
+      "note": "Compute, per relation type, the majority label over the training corpus; predict it on the eval set with no object and no value knowledge. Requires no GPU, no training, no new data -- the corpus is already built. If the adapter does not clear this floor by a wide margin, the bulk of the headline is background base rates."
+    },
+    {
+      "id": "ENTITY_DISJOINT_SPLIT",
+      "available_at_cutoff": true,
+      "cost": "HOURS",
+      "outcome_branches": [
+        [
+          "VALUE_MEMORIZATION"
+        ],
+        [
+          "GENUINE_REASONING",
+          "BASE_RATE_PRIORS"
+        ]
+      ],
+      "note": "Rebuild the corpus so no object in eval appears in training, retrain, re-evaluate. This is what Ergon actually ran. It discriminates memorization but leaves base rates entirely untouched."
+    },
+    {
+      "id": "SCORE_COUNTERMATH_WITH_GOLD_LABELS",
+      "available_at_cutoff": false,
+      "cost": "DAYS",
+      "outcome_branches": [
+        [
+          "GENUINE_REASONING"
+        ],
+        [
+          "GENUINE_REASONING"
+        ]
+      ],
+      "note": "Named in the record's own next-steps. Requires obtaining gold labels that the cached copy lacks, so it is not available at the cutoff; both branches are identical here because without labels the probe cannot eliminate anything."
+    }
+  ]
+}
