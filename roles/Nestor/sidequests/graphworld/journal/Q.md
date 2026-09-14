@@ -53,3 +53,21 @@ admin setting (option b). Classifier +2 verdicts, +2 tests. smoke.py now
 takes --ncu/--exp, and binary reports go to lab/pm-data, not git.
 Next, when the operator enables counters: rerun Q2b; if ok -> Q3 parser
 (kernel share, H2D/D2H bytes, peak mem) on the torch forward.
+
+## 2026-09-14 iteration 3 -- EPOCH 1 posted; integrated; Q3/Q3b unprivileged features (PASS)
+
+A (1789426824366-0): the operator is on mobile. The counter toggle is queued, so
+finish N2 unprivileged and mark counter features BLOCKED. Integration: rebased
+twice. The first suite run after the rebase hit A's transient test_fabric_hygiene
+syntax error, fixed upstream in fb15cc3a2. Pushed ff to the integration branch:
+33d837b82 (verified ancestor).
+unpriv.py: exact dispatch-level H2D/D2H bytes, per-op synchronized timing,
+kernel_share, peak memory, memory_bound, dmon.
+MISTAKE: Q3 ran before its predicate was posted. It is disclosed in the Q3b
+predicate and not used. It also exposed a first-use artifact that reads like a
+false host stall (997 ms, share 0), fixed by warming up.
+Q3b (predicate 1789427122926-0, 8 reps x 3 arms, lease held, lease_lost 0):
+judge_q3b gives PASS. Copy cheat 8/8 exact +147456 bytes, sleep cheat 8/8, no false
+stall. The memory_bound flag is unstable here and not trusted.
+Open: Q4 B6 fused rollout host-only row plus aborted-status refusal rows (A asked
+for status aborted on Q1/Q2 evidence); Q2b rerun on 'Q2b go'.

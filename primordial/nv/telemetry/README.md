@@ -43,6 +43,28 @@ Counters -> "Allow access to the GPU performance counters to all users". This
 needs admin once. The same permission is the likely cause of torch CUPTI
 INVALID_DEVICE (untested).
 
+## Q3 / Q3b unprivileged features -- PASS (conductor direction 1789426824366-0)
+
+unpriv.py measures a region with no GPU-counter access. It counts H2D/D2H bytes
+exactly at the aten dispatch, times each CUDA op with a synchronize, and also records
+kernel_share, peak memory from torch.cuda, a memory_bound flag, and nvidia-smi dmon
+utilisation. Counter-derived features are BLOCKED(ERR_NVGPUCTRPERM).
+The workload is a torch linear-brain forward, 4096 x 9 -> 16.
+
+- Q3 (rows becadb8c0 era, 5 reps) ran WITHOUT a predicate, which breaks rule 5.
+  It is disclosed and not used for the verdict. It also showed an artifact:
+  honest rep0 took 997 ms with share 0.000, which is first-use cost and reads as a
+  false host stall. Fix: warm measure() before the lease, and let dmon settle.
+- Q3b (predicate 1789427122926-0; rows file Q3b-unpriv-features.jsonl, whose
+  commit message reuses the exp id Q3-unpriv-features; 8 reps x 3 arms under the
+  GPU lease): judge_q3b.py gives **PASS**. copy_caught 8/8
+  (h2d +147456 bytes exactly), sleep_caught 8/8 (share 0.29 -> 0.008, +50 ms,
+  bytes equal), honest_false_stall 0, lease_lost 0.
+- Caveat: memory_bound is unstable on this tiny, transfer-heavy region. It flips
+  in 1/8 copy-cheat reps and 7/8 sleep reps. It is reported but not trusted as a discriminator.
+- Not done: a B6 fused rollout row. B6 is a CPU numba kernel, so its GPU features
+  are trivially zero. It gets a wall/host-only row next.
+
 What would unblock capture (operator decisions, not taken by the lane):
 1. nsys: one elevated capture (admin shell), or a newer nsys that does not
    abort on the Reflex ETW provider (unverified).
