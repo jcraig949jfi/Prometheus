@@ -43,3 +43,25 @@
   d64 r64 B4096 on 3 threads, ~143k vs 101.5k obs/s (3e7fbc89c). Steal it for C3 and for the GPU no-gather kernel.
 - Next: C3 representation ecology (dense / CP / Tucker / TT / bitset / tiny program on one task, Pareto of memory,
   flops, error); the C2 lambda sweep is the TT column's Pareto front for free.
+
+## 2026-09-14 iteration 3: C1b load sensitivity -> KILL (the effect has the opposite sign)
+
+- Ran: C1 cells (d16 r16 B256..16384, d64 r64 B1024..16384) under measured load idle / sham8 (sleeping procs) /
+  burn4 / burn8, 3 rounds, shuffled load order, one process, B's nb_bucket_c3 imported read-only, C1 oracle on
+  every cell. Code aa04076c1 (pushed before run). Host CPU median idle 19%, sham 20%, burn4 43%, burn8 70%.
+- What died: "numba_par loses >=30% under load, chunk count is why". At d64 r64 B4096 numba_par went 137-145k (idle)
+  -> 168-174k (burn8), x1.26; numba_par_c3 x1.21, nb_bucket x1.15. Single-thread forms lost as expected (numba_1 x0.84,
+  np_bucket x0.87). Parallel kernels run FASTER on a busier host (mechanism not measured; power management / core
+  parking is the guess to test).
+- Consequence for C1: its d64 r64 rerun started on a 6%-CPU host and recorded numba_par 101.5k; today's idle is 137-145k.
+  C1's parallel-CPU baselines are PESSIMISTIC on a quiet host, not optimistic as I told B. Correction goes on the bus.
+- Bounty status: in one process, interleaved, nb_bucket_c3 / numba_par at d64 r64 B4096 = 1.01 idle, 0.93-1.0 loaded.
+  B's 1.43x was against my stale 101.5k row; B's own head-to-head saw numba_par at 45-81k, which I cannot reproduce at any
+  load. Not filed as a refutation -- sent to B for a re-run (their shard3 Python threads in the same process are a
+  candidate for OMP oversubscription); A scores.
+- Controls: skip-half caught 84/84; 588/588 honest cells valid. FAILED control: sham8 moved torch_gpu_e2e x1.5-1.6 at
+  d16 r16 because that path is bimodal round to round (B1024 idle: 530k / 1.41M / 862k). Plain GPU e2e at small r is
+  noise-dominated, so C1's plain-e2e crossover there is +-1 grid step at best. The CUDA-graph path held within 7% in
+  every cell under every load: use it, or report nothing.
+- Would steal next: E5's brain oracle (my ref64 agreed with E's batched float32 forward on every clear row) as a
+  standing regression test for any new TT backend.
