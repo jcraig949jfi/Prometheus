@@ -250,6 +250,15 @@ class Numba1(NumbaPar):
     parallel = False
 
 
+class NumbaParC3(NumbaPar):
+    """numba_par with 3 sample chunks instead of threads*8 (C1b: is load sensitivity chunk count?)."""
+    name = "numba_par_c3"
+
+    def __init__(self, p):
+        super().__init__(p)
+        self.nchunks = 3
+
+
 class _Torch(Backend):
     def __init__(self, p, device):
         super().__init__(p)
