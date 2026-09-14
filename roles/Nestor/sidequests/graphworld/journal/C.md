@@ -359,3 +359,14 @@
 - My guess (metering selects inert op2) was refuted by a seeded replay -- which did NOT reproduce the run (rs0 88.27 vs
   90.51). Parent sampling is Redis ZRANDMEMBER, unseeded: no C-R2 GA run replays from its seed. Evidence to D (ANOM
   1789417965533-0). Lesson: save elites to HOT in every harness (r2_08 did not), so an oracle miss stays diagnosable.
+- Epoch 2 closed 21:15Z: round totals 8 draws, 6 run, 2 aborted; 1 PASS, 4 FAIL, 1 INDETERMINATE; 111 rows, 6 receipts.
+
+## 2026-09-14 round 2 iteration 7: C-R2-09 drawn cell linear/nk_stub/held_out_seeds/graphblas -> PASS
+
+- Draw seed 12496832502412519493. Defined: a seed = an NK landscape (8 train, 64 held-out); linear policy bit_j =
+  [w . locus-j contribution row + b > 0] (132 B) vs a fixed bitset (8 B); fitness in GraphBLAS (mxm + ewise).
+  First C harness on E's seeded sampler (replays) with elites saved. Harness 6d8c29ed0, prior 0.7.
+- Rule fixed before the predicate: the K=3 cheat bar counts only non-all-zero rows (all-zero rows cannot differ;
+  raw share on random linear genomes 0.863, every unchanged row was all-zero). Eligibility counted before freezing.
+- Result: held-out 2.166M vs bitset 2.085M (bar 2.092M) -> PASS, 8/8 separated. Linear +3.4% over random bits;
+  bitset = random (memorisation does not transfer). Oracles: 307,200 offers/arm exact, cheat caught.
