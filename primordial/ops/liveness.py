@@ -5,9 +5,16 @@ A lane is judged from three sources that need no cooperation from the LLM:
   transcript ~/.claude/projects/*/<session_id>.jsonl last write (activity)
   heartbeat  pm:alive:<L> on the bus (refreshed by every bus call)
 
-States: DEAD (exit logged or pid gone), STALE (pid alive, transcript quiet for
-more than --stale-min, and no live heartbeat), OK, NOT_LAUNCHED.
-On a change into DEAD or STALE the monitor posts `missing` on the bus once.
+  activity   (X, round 3) CPU gained by the session's process tree between two
+             samples (e.g. a background python run), or a live F7 worker
+             state pm:worker:<L>
+
+States: DEAD (exit logged or pid gone); OK (transcript fresh OR heartbeat
+live); BUSY (both quiet, but the tree is doing work); STALE (pid alive, both
+quiet, no activity); NOT_LAUNCHED. On a change into DEAD or STALE the monitor
+posts `missing` on the bus once; BUSY never posts. (Round 2: E was flagged
+STALE at 16:53 during a background run -- transcript 618 s quiet, heartbeat
+lapsed while it waited, and nothing looked at the run itself.)
 
     python -m primordial.ops.liveness                     # one table
     python -m primordial.ops.liveness --watch 60 --post --export-every-min 10
@@ -75,14 +82,33 @@ def pid_alive(pid: int) -> bool:
         return False
 
 
-def status(stale_s: float = 600, r=None) -> dict:
+def tree_cpu(pid: int) -> dict:
+    """{descendant pid: cumulative CPU seconds} under pid (the session itself excluded)."""
+    import psutil
+    try:
+        kids = psutil.Process(pid).children(recursive=True)
+    except psutil.Error:
+        return {}
+    out = {}
+    for q in kids:
+        try:
+            t = q.cpu_times()
+            out[q.pid] = t.user + t.system
+        except psutil.Error:
+            pass
+    return out
+
+
+def status(stale_s: float = 600, r=None, sample_s: float = 1.0, min_cpu_s: float = 0.05,
+           snap=tree_cpu, sleep=time.sleep) -> dict:
     from primordial.bus import bus
     try:
-        beats = bus.alive(r=r or bus.conn())
+        r = r or bus.conn()
+        beats = bus.alive(r=r)
     except Exception:
         beats = {}
     now = time.time()
-    table = {}
+    table, quiet = {}, {}
     for lane, L in launches().items():
         age = transcript_age(L.get("session_id"))
         hb = beats.get(lane)
@@ -90,12 +116,26 @@ def status(stale_s: float = 600, r=None) -> dict:
         if not live_pid:
             state = "DEAD"
         elif (age is None or age > stale_s) and not hb:
-            state = "STALE"
+            state = "STALE"                              # provisional: activity is checked below
+            quiet[lane] = int(L["pid"])
         else:
             state = "OK"
         table[lane] = dict(state=state, pid=L["pid"], session_id=L.get("session_id"),
                            up_s=round(now - _ts(L["start"])), transcript_age_s=None if age is None else round(age),
                            heartbeat_tag=(hb or {}).get("tag"), exit_code=L.get("exit_code"))
+    if quiet:
+        before = {lane: snap(pid) for lane, pid in quiet.items()}
+        sleep(sample_s)
+        for lane, pid in quiet.items():
+            after = snap(pid)
+            gained = sum(max(0.0, c - before[lane].get(k, 0.0)) for k, c in after.items())
+            try:
+                worker = bool(r.exists(f"pm:worker:{lane}"))
+            except Exception:
+                worker = False
+            if gained >= min_cpu_s or worker:
+                table[lane]["state"] = "BUSY"
+            table[lane].update(tree_cpu_gained_s=round(gained, 3), worker_live=worker)
     for lane in LANES:
         table.setdefault(lane, {"state": "NOT_LAUNCHED"})
     return table

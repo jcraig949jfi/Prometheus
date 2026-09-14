@@ -62,3 +62,20 @@ def sleep_rows(ctx, s: float = 0.3):
     ctx.emit({"status": "dev", "kind": "sleep_rows", "at": "start"})
     time.sleep(s)
     ctx.emit({"status": "dev", "kind": "sleep_rows", "at": "end"})
+
+
+def walk(ctx, steps: int = 60, seed: int = 7, step_s: float = 0.02):
+    """A deterministic random walk that checkpoints at a step boundary when asked (F9)."""
+    st = ctx.load_checkpoint() or {"i": 0, "acc": 0, "rng": np.random.default_rng(seed).bit_generator.state}
+    rng = np.random.default_rng()
+    rng.bit_generator.state = st["rng"]
+    while st["i"] < steps:
+        if ctx.should_pause():
+            st["rng"] = rng.bit_generator.state
+            ctx.pause(st)
+        x = int(rng.integers(0, 1000))
+        st["acc"] += x
+        ctx.emit({"status": "record", "kind": "walk", "i": st["i"], "x": x, "acc": st["acc"],
+                  "segment": ctx.segment})
+        st["i"] += 1
+        time.sleep(step_s)

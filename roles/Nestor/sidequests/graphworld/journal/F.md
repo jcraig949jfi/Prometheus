@@ -141,3 +141,28 @@ Threads: 3 (conductor contract 1789425755152-0 overrides the boot prompt's 5).
 - My F7/O5 move to db 13 collided with U's per-lane db (13); A's live_url()
   supersedes it, and F14 uses live_url().
 - Suite on the integration tip, PM_LANE=F: 115 passed, 1 skipped.
+
+## 2026-09-14 iteration 7 -- F9 checkpointed long jobs (DONE) + X liveness BUSY (DONE)
+
+- F9, worker.py: ctx.should_pause() reads the epoch stop flag. ctx.pause(state)
+  pickles the state atomically to <ckpt_dir>/<lane>/<job_key>.pkl and ends
+  the segment `paused`. The supervisor requeues the job as the next segment
+  (same job_key, segment + 1, cpu_prior += this segment's CPU), so
+  ttl_cpu_s bounds the whole job, and ctx.load_checkpoint() resumes it.
+  A finished job deletes its checkpoint. Done and end rows carry job_key,
+  segment and cpu_prior, so F13 can charge the whole job to its cohort.
+- Test (acceptance): a deterministic RNG walk (60 steps, seed 11). It ran
+  once uninterrupted, then again across 3 epochs, with EpochController
+  boundaries at 15 and 35 rows while it was running. Done statuses were
+  paused, paused, ok (segments 0,1,2); the rows carry segments {0,1,2} and
+  are EXACTLY the uninterrupted rows (ts/job_id/exp_id/segment excluded);
+  the checkpoint is removed at the end. A second test: a segment with
+  cpu_prior 0.9 and ttl 1.0 times out after < 0.1 CPU-s of its own.
+- X, ops/liveness.py: E was flagged STALE at 16:53 during a background run
+  (transcript quiet 618 s; heartbeat lapsed while it waited; nothing looked
+  at the run itself). A lane with a quiet transcript and no heartbeat is
+  now sampled once more: CPU gained by its session's process tree over
+  sample_s (psutil) or a live F7 worker state makes it BUSY, not STALE.
+  BUSY never posts `missing`. All quiet lanes share one sample window.
+- Tests: test_f9_checkpoint.py (2), test_x_liveness.py (3, all sources
+  faked). Suite 133 passed, 1 skipped.
