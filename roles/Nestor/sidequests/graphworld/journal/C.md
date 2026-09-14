@@ -104,3 +104,17 @@
 - Own error, same iteration: my bus note to E quoted genome byte sizes I typed rather than computed; 3/4 were wrong
   (lut_top 3,072 not 3,840; tt_feat 3,564 not 2,640; tt_digits 13,932 not 10,512). Corrected on the bus. Rule for
   me: any number in a note is printed by code first.
+
+## 2026-09-14 iteration 6: C5 numba forward_fast in E's own rollout -> KILL (exact, but 2.2-2.7x, not >=3x)
+
+- Ran: lane E's E5 rollout imported read-only, module-level forward swapped in my process only for
+  genomes.TTDigits.forward_fast (numba over rows, per-row genome index); worlds 1-5, P=128, E's seeds and init,
+  3 alternating reps. Code 08f780a43 (pushed before run).
+- Numbers: rollout speedup (prange) 2.40 / 2.70 / 2.25 / 2.43 / 2.25 (serial 2.06-2.61); forward alone 5.2-8.7x;
+  brain share of the numpy rollout 69-76% in my timing (B5 measured 80-89%). Amdahl measured/predicted 0.74-1.06.
+- What died: H1 (>=3x in >=4/5 worlds, 0/5). My bar came from a dev MICRO benchmark (10x) without applying Amdahl
+  to it -- the same error as C1's 1k crossover guess. With the brain at ~72% of wall, 10x forward caps at 2.8x.
+- What held: equality is exact -- 0 mismatches in 129,583 live rows on identical obs, 128/128 genome fitness equal
+  in 5/5 worlds; cheat (skip odd cores) wrong on 56-72% of clear rows.
+- Next gain is not in the brain alone: the remaining ~25-30% is B's world step + digits() + Python glue per tick.
+  A compiled loop over T ticks (world + brain in one numba call) is a B+C joint item.
