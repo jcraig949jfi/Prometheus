@@ -88,3 +88,12 @@ Lessons: (1) I ran Q3 before its predicate. Posting the claim is now the first
 tool call of each item. (2) A first-use cost inside a timed region reads as a
 false host stall. Warm the meter first. (3) Rebasing right before a busy
 integration push raced twice. Re-fetch and push immediately after the suite.
+
+## 2026-09-14 19:33 -- Q2c after the operator's registry change (INDETERMINATE)
+
+The Control Panel has no "Enable Developer Settings" on this driver (the setting moved to the
+NVIDIA App). The operator set RmProfilingAdminOnly=0 from an admin shell in both NVTweak keys
+(verified). Predicate 1789428782661-0. Last boot 2026-09-11 13:33, so there has been no reboot.
+ncu 2025.2.1 is still perm_gpu_counters and CUPTI is still invalid_device. Per the predicate
+that is INDETERMINATE (driver not reloaded). Rows Q2c-ncu-after-regkey. Next: reboot
+(A schedules it, since it stops the swarm) -> Q2d, the same probe.
