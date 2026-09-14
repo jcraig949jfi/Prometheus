@@ -17,6 +17,8 @@ court state (2026-09-14 charter, prompts/2026-09-14_court/):
   coroner descendant (RQ-1, RQ-14/15).  RQ-1..19 to Techne and others.
   HITL owed: H-A..H-D (RECEIPT item 15).  Next case only when charged
   (RHAD-49); no graveyard-wide campaign.
+  RESUME POINT: journal/2026-09-14.md bottom section; tree clean at 641174d72;
+  in-lane work without a ruling = RHAD-45, RHAD-48 only.
 
 
 harvest state (2026-09-11 harvest charter, prompts/2026-09-11_harvest/):
