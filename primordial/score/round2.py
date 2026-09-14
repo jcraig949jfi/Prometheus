@@ -284,6 +284,32 @@ def resolve(export=EXPORT, root=ROOT) -> dict:
     }
 
 
+BOARD = "pm:board:prior_vs_reality"
+BOARD_METRICS = ("n_decided", "mean_prior", "hit_rate", "brier", "over_confidence")
+
+
+def publish_board(out: dict, r=None) -> int:
+    """S3: the prior-vs-reality view on the live board. One zset, members "<cohort>|<domain>|<metric>"
+    (ALL|all for the whole round, <cohort>|all per cohort). Replaced atomically; display only:
+    nothing scores, allocates or selects from it. -> members written."""
+    from primordial.bus import bus
+    r = r or bus.conn()
+    members = {}
+    for name, rows in out["calibration"].items():
+        for row in rows:
+            cohort = row.get("cohort") or "ALL"
+            domain = (row.get("domain") or "none") if name == "cohort_domain" else "all"
+            for m in BOARD_METRICS:
+                if m in row:
+                    members[f"{cohort}|{domain}|{m}"] = float(row[m])
+    p = r.pipeline(transaction=True)
+    p.delete(BOARD)
+    if members:
+        p.zadd(BOARD, members)
+    p.execute()
+    return len(members)
+
+
 def _fmt(row: dict, keys) -> str:
     head = " ".join(f"{str(row.get(k)):10s}" for k in keys)
     if "mean_prior" not in row:
@@ -297,8 +323,11 @@ def main(argv=None) -> int:
     ap.add_argument("--export", default=str(EXPORT))
     ap.add_argument("--write", action="store_true", help=f"commit rows to {OUT.relative_to(ROOT).as_posix()}")
     ap.add_argument("--units", action="store_true", help="print every resolved unit")
+    ap.add_argument("--board", action="store_true", help=f"publish the calibration view to {BOARD} (S3)")
     a = ap.parse_args(argv)
     out = resolve(a.export)
+    if a.board:
+        print(f"board {BOARD}: {publish_board(out)} members")
     print("coverage", json.dumps(out["coverage"]))
     if a.units:
         for r in out["resolutions"]:

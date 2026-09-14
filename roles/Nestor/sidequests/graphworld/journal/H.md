@@ -97,3 +97,20 @@ budget 1789425755152-0).
   report-only post-hoc graft-minus-cheat numbers.
 - Reading for round 5: one displacement survives (the w2 linear genome grafted into w4).
   That result has not been re-run on new seeds, so it is not yet a primitive.
+- Pushed c8a96d0cd; G confirmed no pending qd_ledger edits (1789427554676-0).
+
+## 2026-09-14 epoch 2, iteration 5: S2 anomaly triage + S3 prior-vs-reality board
+
+- S2 code: primordial/score/anomaly_triage.py. Epochs are 30 min from the first cohort hello
+  (B 1789417224) to the last cohort message. Per epoch end: open = filed before the end, with
+  the latest event not RESOLVED/REFUTED (INDETERMINATE stays open); resolved = closing events
+  in the window; RAISE_D when open > 2x resolved. Triage order: children (ANOM-<id> in
+  `source` only; prose is never read), then age, then id. A firing rule yields a
+  proposal moving 0.05 of the split from B to D; the operator owns the split.
+- Round 2 replay: epoch 1 open 14 resolved 3; epoch 2 open 14 resolved 1; epoch 3 open 14
+  resolved 0. RAISE_D in all 3 epochs; proposal B .35 C .25 D .25 E .15. The backlog is
+  mostly A's 10 seeded round 1 anomalies, which nobody resolved, so they lead on age.
+- S3 code: round2.publish_board publishes F10 calibration to pm:board:prior_vs_reality
+  (zset members <cohort>|<domain>|<metric>, replaced atomically), readable via
+  `bus board prior_vs_reality` and exported by ops/bus_export. It is display only.
+  CLI: python -m primordial.score.round2 --board.
