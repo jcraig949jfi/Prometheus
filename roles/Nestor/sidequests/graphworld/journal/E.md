@@ -23,6 +23,24 @@ racy4 detected 10/10 (7-46 cells lost), lua4 0/10. Lesson: an end-state
 check on a converging search is only a detector early; E2 must use
 event-level lineage, not the final archive.
 
+## 2026-09-14 iteration 2 -- E2 branch points (INDETERMINATE)
+
+Lineage from Lua-XADDed win events (one call does the win and the event).
+300x1024, 3 reps, k=50: honest 140/141/162 branch points, ~0.33-0.43M per
+CPU-h (CPU ~1.4 s/run worker+Redis, stub world). Filler cheat 0/0/0, but that
+kill is BY CONSTRUCTION (its false parent edges fail hamming<=8), so it proves
+the descent check reads edges, not that BPs mean anything. The real control
+was the null world: transfer 60.5% on the 25%-redrawn world vs 6.7% on a fully
+redrawn one; the posted bar was <=5%, so the transfer half is INDETERMINATE
+as written. Likely cause (untested): z is taken against random genomes of
+popcount ~32 while elites live in popcount-extreme cells; next = per-cell
+random baseline. Null-world transfer by rep: k=10 5.4/5.0/2.5%, k=50
+5.0/8.7/6.6%, k=100 1.0/3.6/12.4% -> 3 reps cannot pin a 5% bar; the rule was
+set without an attainable-range check.
+Analysis refactor (descendant DFS) proven equal to the ancestor-tuple version
+on one recorded stream before the full run (a re-run could not prove it:
+ZRANDMEMBER sampling is unseeded).
+
 Next / steal: B's batched Encounter to replace the NK stub; C1's TT cores as
 the genome for E1; E2 branch points with a random-filler control; E3 with
 repeated restarts per load gene (n>=5) to beat the 4.6% A/A floor.
