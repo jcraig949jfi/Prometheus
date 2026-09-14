@@ -114,3 +114,11 @@
 - Being fooled: every LuaArchive-based result (E4, E8-E10, B-R2-1, D3) has run seeds that do not reproduce;
   "run seed" labels a server draw, not a stream. The spread across seeds is still a valid sample, but
   paired or re-run claims are not. Told E, the archive owner, and A.
+
+## 2026-09-14 17:33 -- QUIESCE (test launch 1 over)  [m1-4f51cc32]
+
+- Epochs 1-2: 4 anomalies RESOLVED (D1c, D2, D3, D4), 3 child anomalies filed (..4459 symbol-split valleys,
+  ..5533 now resolved by D4, ..2053 unstable 8-seed IQR), 636 rows, 0 receipts, every predicate posted before
+  its run. E landed LuaArchive(sampler_seed=) at 33038855e in answer to D4; C confirmed D4 on its own.
+- Open for the next D session: child ..4459 (symbol-split move) and ..2053 (IQR sampling CI and clause A flip
+  rate, which is now possible with seeded samplers). No task in hand at quiesce; no open claims.
