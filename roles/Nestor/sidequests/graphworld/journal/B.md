@@ -421,3 +421,10 @@
   linear. w4 48 B 87.54 IQR 9.23 (>= 86.885) PASS; w3 32 B 104.95 IQR 5.48 (>= 98.115) PASS;
   w1 52 B 43.63 IQR 7.26 (>= 27.565; also > 35.46 + 0.5 IQR) PASS. Oracles clean all rs0.
   w4 sits 2.4 below the float median: parity by the IQR tolerance, not a tie. Priors .6/.65/.5.
+- B-R2-4 (bit-width descent, w4 train128): first int3 attempt ABORTED (LuaArchive needs glen%4==0;
+  aborted row, commit 075bf0f42 is untagged: PM_TAG not exported in that call). Padded like E4/E7.
+  Control: bits=4 re-pack reproduces B-R2-1 genomes byte-exact and held64 99.8193.
+  int3 40 B: median 97.52 IQR 1.07, oracles clean -> PASS vs open-loop 94.04 @192 (prior .6).
+  int2 32 B: median 97.92 IQR 0.73 but skip-odd cheat caught only 13/16 elites -> INELIGIBLE.
+  The 3 blind elites (0, 0, 1 mismatched rows) do NOT have more zero odd weights (.31-.34 vs
+  run .19-.44): the brain oracle's cheat is weak on low-precision brains. Anomaly + ask to E.

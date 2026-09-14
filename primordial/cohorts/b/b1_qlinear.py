@@ -44,15 +44,21 @@ LO, HI = -8, 7
 class QLin:
     """int4 linear params + nibble codebook; decodes to E7.G7(gs, 'linear')'s (params, codebook)."""
 
-    def __init__(self, gen_seed: int):
+    def __init__(self, gen_seed: int, bits: int = 4):
         self.g7 = E7.G7(gen_seed, "linear")
         self.D, self.A, self.W = self.g7.D, E7.A, self.g7.W
         self.nw, self.nb, self.nc = self.D * self.A, self.A, self.A * self.W
-        self.nnib = self.nw + self.nb + self.nc
-        self.glen = (self.nnib + 1) // 2
+        self.bits = bits
+        self.lo, self.hi = -(1 << (bits - 1)), (1 << (bits - 1)) - 1
+        self.nq = self.nw + self.nb
+        self.nbits = self.nq * bits + self.nc * 4
+        # padded to a multiple of 4 like E4/E7 glen (LuaArchive tie-break reads 4-byte words); bits=4 unchanged
+        self.glen = ((self.nbits + 7) // 8 + 3) // 4 * 4
+        # bits=4 reproduces B-R2-1/2/3 exactly: init scale 3, mutation step 1.5
+        self.s0, self.s1 = 3.0 * (1 << (bits - 1)) / 8, max(0.6, 1.5 * (1 << (bits - 1)) / 8)
 
     def init(self, rng, P):
-        Q = np.clip(np.rint(3.0 * rng.standard_normal((P, self.nw + self.nb))), LO, HI).astype(np.int8)
+        Q = np.clip(np.rint(self.s0 * rng.standard_normal((P, self.nq))), self.lo, self.hi).astype(np.int8)
         C = rng.integers(0, 16, size=(P, self.A, self.W), dtype=np.uint8)
         C[:, 0] = 0
         return Q, C
@@ -60,25 +66,31 @@ class QLin:
     def mutate(self, rng, g, rate: float = 0.05):
         Q, C = g
         m = rng.random(Q.shape) < rate
-        Q = np.clip(Q + m * np.rint(1.5 * rng.standard_normal(Q.shape)), LO, HI).astype(np.int8)
+        Q = np.clip(Q + m * np.rint(self.s1 * rng.standard_normal(Q.shape)), self.lo, self.hi).astype(np.int8)
         cm = rng.random(C.shape) < 1.0 / (self.A * self.W)
         C = np.where(cm, rng.integers(0, 16, C.shape, dtype=np.uint8), C)
         C[:, 0] = 0
         return Q, C
 
     def pack(self, g) -> np.ndarray:
+        """Little-endian bitstream: nq codes of `bits` bits (offset by -lo), then nc 4-bit codebook values."""
         Q, C = g
         P = len(Q)
-        nib = np.zeros((P, 2 * self.glen), np.uint8)
-        nib[:, :self.nw + self.nb] = (Q.astype(np.int16) - LO).astype(np.uint8)
-        nib[:, self.nw + self.nb:self.nnib] = C.reshape(P, -1)
-        return (nib[:, 0::2] | (nib[:, 1::2] << 4)).astype(np.uint8)
+        sh = np.arange(self.bits, dtype=np.uint8)
+        qb = (((Q.astype(np.int16) - self.lo).astype(np.uint8)[:, :, None] >> sh) & 1).reshape(P, -1)
+        cb = ((C.reshape(P, -1)[:, :, None] >> np.arange(4, dtype=np.uint8)) & 1).reshape(P, -1)
+        bitsarr = np.zeros((P, self.glen * 8), np.uint8)
+        bitsarr[:, :self.nbits] = np.concatenate([qb, cb], 1)
+        return np.packbits(bitsarr, axis=1, bitorder="little")
 
     def unpack(self, B: np.ndarray):
-        nib = np.empty((len(B), 2 * self.glen), np.uint8)
-        nib[:, 0::2], nib[:, 1::2] = B & 15, B >> 4
-        Q = (nib[:, :self.nw + self.nb].astype(np.int16) + LO).astype(np.int8)
-        C = nib[:, self.nw + self.nb:self.nnib].reshape(-1, self.A, self.W).copy()
+        P = len(B)
+        bt = np.unpackbits(np.ascontiguousarray(B, np.uint8), axis=1, bitorder="little")
+        nqb = self.nq * self.bits
+        qv = (bt[:, :nqb].reshape(P, self.nq, self.bits) << np.arange(self.bits, dtype=np.uint8)).sum(-1)
+        Q = (qv.astype(np.int16) + self.lo).astype(np.int8)
+        cv = (bt[:, nqb:self.nbits].reshape(P, self.nc, 4) << np.arange(4, dtype=np.uint8)).sum(-1)
+        C = cv.astype(np.uint8).reshape(P, self.A, self.W).copy()
         return Q, C
 
     def decode(self, g):
@@ -101,6 +113,7 @@ def main() -> None:
     p.add_argument("--pressure", choices=("train128", "train8"), default="train128")
     p.add_argument("--port", type=int, default=6391); p.add_argument("--tag", default="full")
     p.add_argument("--no-ledger", action="store_true", help="smoke: rows as dev, no QD ledger row")
+    p.add_argument("--bits", type=int, default=4, choices=(2, 3, 4), help="weight code width (codebook stays 4)")
     a = p.parse_args()
     gs, status = a.world, ("dev" if a.no_ledger else "record")
     global EXP, ROWS, TRAIN
@@ -108,16 +121,17 @@ def main() -> None:
     TRAIN = E8.seeds_n(128) if a.pressure == "train128" else E7.TRAIN
     a.gens = a.gens or (800 if a.pressure == "train128" else 200)
     pname = f"{a.pressure}_held64"
-    EXP = f"B-R2-1-int4-linear-nibble-w{gs}-{a.pressure}"
+    EXP = (f"B-R2-1-int4-linear-nibble-w{gs}-{a.pressure}" if a.bits == 4
+           else f"B-R2-4-int{a.bits}-linear-nibble-w{gs}-{a.pressure}")
     ROWS = ROWS.with_name(f"{EXP}.jsonl")
     r = redis.Redis(host="127.0.0.1", port=a.port)
-    q = QLin(gs)
+    q = QLin(gs, a.bits)
     held = []
     oracle_clean = None
     with RowWriter(ROWS, EXP, commit_every_s=120) as rw:
         for rs in E9.parse_seeds(a.run_seeds):
             t0 = time.perf_counter()
-            arch = LuaArchive(r, f"b-r2-1-{gs}-{rs}-{a.tag}", q.glen)
+            arch = LuaArchive(r, f"b-r2-1-{gs}-{rs}-{a.tag}-b{a.bits}", q.glen)
             arch.clear()
             rng = np.random.Generator(np.random.PCG64([2101, rs, gs]))
             fr = FusedRollout(q.g7.spec, a.batch, TRAIN, family="linear")
@@ -157,9 +171,9 @@ def main() -> None:
     med = float(np.median(held))
     iqr = float(np.percentile(held, 75) - np.percentile(held, 25))
     verdict = QL.check(QL.load(), f"w{gs}", pname, med, iqr, q.glen, len(held), bool(oracle_clean))
-    cell = {"cell": {"representation": "linear_int4_nibble", "world": f"w{gs}", "pressure": pname,
+    cell = {"cell": {"representation": f"linear_int{q.bits}_nibble", "world": f"w{gs}", "pressure": pname,
                      "substrate": "numba_fused", "channel": "none"},
-            "mechanism": "closed_loop_linear_int4_nibble_codebook",
+            "mechanism": f"closed_loop_linear_int{q.bits}_nibble_codebook",
             "fitness": {"held64_median": round(med, 4), "iqr": round(iqr, 4), "n_runs": len(held),
                         "held64_by_run_seed": held},
             "footprint": {"genome_bytes": q.glen, "params": q.nw + q.nb},
