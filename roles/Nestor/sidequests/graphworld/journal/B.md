@@ -54,3 +54,21 @@
   only; landing ticks not checked.
 - Courtesy debt: C marked 13 of its cells INDETERMINATE because they ran during
   my announced 16-process producer burst. Next burst: ask on the bus first.
+
+## 2026-09-14 iteration 3 -- B2 GraphWorld toy  [m1-5b2d34d4]
+
+- Ran: torus lattice, predators/prey/food. State = boolean relations (AT, ADJ+I,
+  move permutations). Rules EAT, PREY, MOVE-with-flee as python-graphblas
+  mxm/ewise/masks and as FalkorDB Cypher (4 queries + 1 read per tick).
+  Authority = a plain-Python reference; trajectory sha256 per tick.
+- Numbers: gb 50/50 and cy 50/50 hash-equal. Cheat no_flee caught 20/20 where a
+  prey was ever threatened, 0 false alarms in the other 30, for both forms.
+  Speed (entity-ticks/s): ref flat 1.4-1.7M, sagging to 0.87M at 524k entities.
+  gb 1.5k at 32 entities (setup-dominated) up to ~1M; gb first beats ref only at
+  524,288 entities (1.03M vs 0.87M, 1.18x). cy 3k-8k: slowest at 128 and 512
+  entities, but NOT at 32, where cy (2.9k) beat setup-dominated gb (1.5k).
+- What died: "gb slower than ref below ~10k entities". The crossover is between
+  131k and 524k entities and it is thin. Python-level graph algebra with
+  per-tick to_coo round trips does not pay at toy scale.
+- Steal next: the B3 op census should count exactly those to_coo/from_coo
+  round trips. They are the likely cost, not the semiring kernels.
