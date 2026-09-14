@@ -223,6 +223,20 @@ Joint reading with E8: a 192-320 byte linear brain is the best closed-loop
 genome here, and closed loop is competitive with open loop once trained on
 enough seeds.
 
+## 2026-09-14 iteration 15 -- E10 linear closed loop vs open loop at 128 seeds (PASS 2/3; last run of the session)
+
+Linear brain (lane C C4 + E codebook) on lane B's B6b fused rollout vs open-loop
+E4b QD, both trained on 128 seeds, 102,400 genomes each, 4 run seeds, w4/w1/w3,
+top-16 on E6's 64 held-out seeds; oracles clean on run seed 0 (world 0/16,
+skip_lin 16/16; brain 0 mismatched rows, cheat 15-16/16). Closed > open by
+one-sided Mann-Whitney U: w4 p=0.014 (98.8 vs 94.0, all 4 closed above all 4
+open), w3 p=0.029 (105.6 vs 102.7), w1 p=0.44 (61.4 vs 60.5; one linear run 47.7).
+2/3 -> PASS. Prediction (w4 + w1, not w3) wrong both ways. At Bonferroni 0.0167
+only w4 holds. Combined with E8/E9: trained on enough seeds, a 192-320 byte linear
+closed-loop brain beats fixed action sequences on unseen seeds in 2 of 3 worlds
+and never loses clearly.
+Loop stopped by the operator after this run.
+
 Next / steal: closed-loop needs more training seeds or a regulariser before any
 generalisation claim; C3's representation ecology (dense/CP/Tucker/TT/bitset)
 is the natural next genome comparison. E4b = archive-level positive (QD coverage/qd_score vs the same
