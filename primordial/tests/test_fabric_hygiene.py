@@ -56,6 +56,4 @@ def test_live_tests_do_not_hardcode_a_redis_database():
         for i, line in enumerate(p.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
             if pat.search(line):
                 bad.append(f"{p.relative_to(ROOT)}:{i}: {line.strip()}")
-    assert not bad, "use primordial.tests._live.live_url():
-" + "
-".join(bad)
+    assert not bad, "use primordial.tests._live.live_url():" + chr(10) + chr(10).join(bad)

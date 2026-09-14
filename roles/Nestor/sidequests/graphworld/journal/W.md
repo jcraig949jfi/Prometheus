@@ -88,7 +88,8 @@ Verdict vs predicate 1789426347225-0:
 - H1 (warp_cuda beats numba at some n <= 4096 in >= 4/5 worlds): PASS, 4/4 eligible
   worlds (w2 INDETERMINATE there, not counted).
 - H2 (warp_cpu within 2x of numba at n >= 1024 in >= 4/5): PASS 5/5; warp_cpu is
-  0.72-1.36x numba, ahead at n <= 1024-4096, behind at large n.
+  0.72-1.34x numba on VALID cells at n >= 1024 (1.36x at w2 n=4096 is INDETERMINATE),
+  ahead at n <= 1024-4096, behind at large n.
 
 Qualifications that bound these numbers:
 - numba runs at 1 thread (W's budget). B6 ran numba at 3 threads, so this is NOT
@@ -105,6 +106,38 @@ Qualifications that bound these numbers:
 Package status: both MVP items have rows. Open: the brief says "reuse the E4/E7
 world oracle" -- W1 used B1's random-action episodes. W3 = replay brain-recorded
 actions (E7 rollout log) through the Warp kernel vs wforge, honest + skip_lin.
+
+Receipt filed: bus 1789426961011-0 (W2-warp-numba-crossover, PASS, git cbcd1c0ba,
+primordial/nv/warp/receipt_w2.py; mirrored to primordial/ledger/W.jsonl).
+
+## 2026-09-14 epoch 2, iteration 4 -- W3 lane E's world oracle on the Warp kernel (PASS)
+
+primordial/nv/warp/replay.py: actions recorded by lane E's OWN rollouts (read-only):
+E7.rollout of G7 genomes (linear, tt_digits) on E6's HELD8 seeds, E4.init_genomes
+open-loop tensors on E4.SEEDS, and the all-zero abstain tensor (the floor policy from
+A's 1789426590314-0). Replayed open-loop through the Warp kernel; per episode the
+Warp trace hash and clipped final charge must equal E4.wforge_replay AND the trace
+hash of E's own NpEncounter. Worlds 4, 1, 3 x 4 sources x 16 genomes x 8 seeds.
+
+    run                 genomes failing   ep hash != wforge   ep charge != wforge   hash != E world
+    warp cpu            0/192             0/1536              0/1536                0/1536
+    warp cuda:0         0/192             0/1536              0/1536                0/1536
+    warp cuda skip_lin  192/192           1536/1536           118/1536              1536/1536
+
+skip_lin left final charge equal to wforge in EVERY episode of worlds 4 and 1 (all
+four sources) and in all but 2-96 of 128 per source in world 3: under brain-recorded
+actions the charge check is nearly blind and only the trace hash catches the cheat
+(stronger than W1's 27/480). The abstain floor runs long episodes (64/64, 103/128,
+64/64 mean ticks) where random and brain actions die at ~14-30 ticks: that length
+regime is now covered. Rows primordial/ledger/rows/W/W3-warp-replay-e-oracle-*.jsonl.
+Tests: primordial/nv/warp/tests 21 passed.
+
+Package N3 status: GREEN on the brief's two MVP items -- (1) the B world step as a
+Warp kernel on CPU and CUDA, trace-hash-exact vs wforge on sampled episodes including
+E4/E7's recorded actions, skip_lin caught (W1, W3); (2) crossover table n_envs 1..65536,
+Warp CPU / Warp CUDA / numba, under the GPU lease (W2, receipt PASS). Stopping per s0.8.
+Carry-forward for round 6 (not done): numba at the B6 thread count; the brain on
+the GPU so actions need no H2D; the 16384 -> 65536 cuda throughput drop.
 
 Bus 1789426590314-0 (A: abstain-only floor beats every clause A baseline) does not
 touch N3: W measures world-kernel exactness and throughput on B1 random-action

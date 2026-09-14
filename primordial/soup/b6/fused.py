@@ -25,6 +25,7 @@ from numba import njit, prange
 
 from primordial.brain.genomes import linear_act_row, tt_digits_act_row, tt_feat_act_row   # lane C, read-only
 from primordial.soup.b1.common import M, init_regs, stream_state
+from primordial.fabric import worldcache
 
 C64 = np.uint64(0x2545F4914F6CDD1D)
 GRID = 33                                                        # lane E's descriptor grid (E4.GRID)
@@ -202,11 +203,13 @@ class FusedRollout:
         self.seeds_env = np.tile(np.asarray(seeds, np.int64), P)
         n = P * self.k
         self.n = n
-        self.regs0 = np.ascontiguousarray(init_regs(m, bs.wid, self.seeds_env), np.int64)
+        # F8: per-(world, seed) tables from the fabric cache, computed once per unique seed and tiled
+        # over the P genome copies (bytes-equal to the per-env computation; test_f8_worldcache)
+        regs, stoch, corr = worldcache.tables(m, bs.wid, np.asarray(seeds, np.int64))
+        self.regs0 = np.ascontiguousarray(np.tile(regs, (P, 1)))
         self.charge0 = np.full((n, m.n_slots), m.start_charge, dtype=np.int64)
-        self.st_stoch0 = np.array([stream_state("stoch", bs.wid, int(s)) for s in self.seeds_env], dtype=np.uint64)
-        self.st_corr0 = np.array([[stream_state("corrupt", bs.wid, int(s), i) for i in range(m.n_slots)]
-                                  for s in self.seeds_env], dtype=np.uint64).reshape(n, m.n_slots)
+        self.st_stoch0 = np.ascontiguousarray(np.tile(stoch, P))
+        self.st_corr0 = np.ascontiguousarray(np.tile(corr, (P, 1)))
         self.genome_of_env = np.repeat(np.arange(P, dtype=np.int64), self.k)
         self.lin = np.array(m.lin_ops, dtype=np.int64).reshape(-1, 6)
         self.tgts = np.array(m.act_targets, dtype=np.int64)

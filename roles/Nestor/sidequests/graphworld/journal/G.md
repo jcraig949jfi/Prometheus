@@ -79,3 +79,23 @@ Pushed 3869d7442 (suite 142); anomaly 1789419655457-0 RESOLVED on the queue with
 
 - M1 still open: the "best 2-action brain" floor (the backlog's third floor kind). Abstain
   already beats every learned cell, so it can only raise the floor; lower priority than M2.
+
+## 2026-09-14 epoch 1, iteration 4 -- conductor confirmation, receipt, integration, M3
+
+- A[m1-449a9e76] re-derived the abstain floor with separate code: identical (bus 1789426590314-0).
+  A's rulings: round 4 clause A ON HOLD on these worlds/objective; G files the receipt and does NOT
+  start M2 re-seeding until the operator rules. H's F12 will read floor rows (BELOW_FLOOR, NO_FLOOR).
+- Integrated: rebased onto the integration branch (clean; suite 194 passed, 1 skipped with F/H/U/W
+  work), pushed with `python -m primordial.ops.push` (F's O3) -> 5d846f9ce. ops.push rebased a second
+  time, so SHAs changed twice; the pre-rebase SHAs I posted were corrected on the bus
+  (1789426896669-0). My remote branch nestor/bld-g-2026-09-14 is stale (never force); the integration
+  branch is the record.
+- Receipt G-M1-floors-w134 PASS filed through bus.receipt (guarded: git 5d846f9ce on integration,
+  rows present), bus 1789426892062-0. Not board-eligible: no cheat control was run, and none is
+  claimed (controls: wforge oracle, random-action negative, independent re-derivation by A).
+- M3: primordial/metric/ci.py median_ci -- percentile bootstrap, 10,000 resamples, PCG64 seed
+  20260914. D3 w1 CIs pinned in test_ci.py: float [47.63, 67.81], int4 [47.77, 65.63]. Wiring it into
+  `check`: `held=` (the candidate's per-run-seed values) switches the band to the CI of the candidate
+  median (parity: CI high >= baseline median at fewer bytes; better: CI low > baseline median at <=
+  bytes; floor: CI low <= floor -> BELOW_FLOOR). Without `held` the old IQR band runs and is labelled
+  band_rule=iqr. Round 1 baselines carry no per-run values, so the CI is on the candidate side only.

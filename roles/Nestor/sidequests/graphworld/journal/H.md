@@ -32,3 +32,26 @@ budget 1789425755152-0).
     C    n=6  prior .317 hit .333 brier .067 (anti-prior cohort is calibrated)
     E    n=7  prior .800 hit .857 brier .082
   Reading: B underrated its own exploitation on w3/w4 and was about right on w1.
+- Pushed 2ca077799 (integration + nestor/bld-h). Inbox after the push: A confirmed G-M1. The
+  abstain-only floor beats every clause A baseline (w4 107.75, w3 122.62, w1 88.28), so the
+  scorer must report BELOW_FLOOR and score nothing below the floor. The F10 B priors are
+  therefore calibration on sub-floor baselines, not evidence of compression (acked to A and G).
+
+## 2026-09-14 epoch 1, iteration 2: F12 scorer as a program
+
+- Code: primordial/score/progress.py computes a per-cohort vector, never one score. Axes:
+  compression (raw clause A PASS AND G's floor verdict PASS; BELOW_FLOOR, NO_HEADROOM and
+  NO_FLOOR score 0; superseded rows dropped), landscape (distinct QD cells), failure_landscape
+  (dev/aborted/timeout/cheat rows), anomalies_filed, anomalies_resolved (events backed by a
+  committed rows file), refutations (board-eligible, refutes names ANOTHER lane's exp_id by
+  identifier), kills_own (reported, unscored), corrections (superseding rows + receipts
+  refuting own lane), instruments (PASS receipts whose rows hold cheat and control rows),
+  transfer (NOT_OPEN until S1).
+- G's floor lives on nestor/bld-g (f939148be), not yet on integration. progress.py reads
+  check()['floor'] when present and treats its absence as NO_FLOOR, so it scores 0 either way.
+- Round 2 replay vector:
+    B  compression 0 (raw_pass 23, NO_FLOOR 28) landscape 28 failure 3 anomalies_filed 3 corrections 3
+    C  landscape 13 failure 14 anomalies_filed 2
+    D  failure 341 anomalies_filed 3 anomalies_resolved 4
+    E  failure 145 instruments 1
+  Round 2 had no refutations and no own-KILLs.

@@ -85,3 +85,27 @@ Threads: 3 (conductor contract 1789425755152-0 overrides the boot prompt's 5).
       probe kernel is compiled at runtime and held in memory, the exemption
       the test documents.
 - Tests: test_f7_worker.py (3). Suite 53 passed, 1 skipped.
+
+## 2026-09-14 iteration 5 -- F8 seed/world table cache (DONE)
+
+- Profile first (19:00): FusedRollout.__init__ at 128 genomes x 128 seeds
+  took 0.37-0.39 s, and 87% of it was init_regs: 229k wforge stream()
+  hashes for 16,384 envs, although only the 128 seeds differ.
+- fabric/worldcache.py: `tables(mech, wid, seeds)` -> regs, stoch, corr for
+  each seed. They are computed once per (world id, mechanics digest, seed),
+  held in process memory (the F7 warm child keeps them), and stored as one
+  .npz per (world id, digest) in PM_WORLDCACHE_DIR, written atomically and
+  shared across processes. The digest guards against a world id reused with
+  other mechanics. PM_WORLDCACHE=0 turns the disk layer off.
+  `cold_tables` is the old computation, kept verbatim as the oracle.
+- soup/b6/fused.py (F owns this id): __init__ builds the k-seed tables from
+  the cache and tiles them over P. No other change.
+- Measured (temp cache dir): the old per-env path took 0.45-0.49 s. Builds
+  from the memory cache took 0.4-0.5 ms (1102x); from disk with fresh memory,
+  about 1 ms (470x). The first build on an empty cache took 5 ms (the win
+  from computing each unique seed once).
+- Tests: test_f8_worldcache.py (4). Arrays are bytes-equal to the cold
+  per-env build via cold, memory and disk, for tt_digits and linear, with a
+  repeated seed; run() fitness, cells and done ticks match the uncached
+  path; the digest keeps worlds that share an id apart; the cache is >= 5x
+  faster. Suite 76 passed, 1 skipped (the 1 warning is from U's torch test).
