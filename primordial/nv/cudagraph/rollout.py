@@ -1,15 +1,14 @@
-"""U2: lane E7's closed-loop rollout on device -- brain forward, codebook decode, descriptor
+"""U2/U4: lane E7's closed-loop rollout on device -- brain forward, codebook decode, descriptor
 counters and the U1 world step -- judged against E7.rollout (primordial/qd/e7_run.py, read-only).
 
-Family `linear` first. Exactness is by construction, not by tolerance: E7 takes argmax of
-np.einsum("nd,nda->na", xs, W) + b in float32, and non-optimized einsum accumulates the
-products in feature order from zero, then adds b. The torch forward does the same sequence of
-float32 ops (no fused multiply-add), so logits are bitwise equal, not merely argmax-equal.
+Families: linear (U2) and tt_digits (U4), from brains.py, whose float32 logits are bitwise
+equal to E7's numpy forward, so argmax, actions, fitness and cells are exact by construction.
 
-tick() is the per-step body: fixed shapes, in-place state, no host sync -- the unit a CUDA
-graph captures next (U3). Counters are int64 (E7's float64 sums of integers are exact).
+tick() is the per-step body: fixed shapes, in-place state, no host sync -- the unit graph.py
+captures. state() lists every tensor it reads or writes. Counters are int64 (E7's float64
+sums of integers are exact).
 
-usage: python -m primordial.nv.cudagraph.rollout --worlds 4 --genomes 128 --device cuda
+usage: python -m primordial.nv.cudagraph.rollout --worlds 4,1,3 --fams linear,tt_digits --device cuda
 """
 from __future__ import annotations
 
@@ -20,50 +19,41 @@ import sys
 import numpy as np
 import torch
 
+from .brains import BRAINS, linear_logits  # noqa: F401  (linear_logits re-exported for U2's test)
 from .world import TorchWorld
 
 GRID = 33                                    # lane E's descriptor grid (E4.GRID)
-FAMILIES = ("linear",)
-
-
-def linear_logits(obs: torch.Tensor, W: torch.Tensor, b: torch.Tensor, feat_on: torch.Tensor | None):
-    """obs int64 [n,S,D]; W float32 [n,D,A]; b [n,A] -> float32 [n,S,A], bitwise == E7's numpy."""
-    xs = obs.to(torch.float32) / 65535.0 - 0.5
-    if feat_on is not None:
-        xs = torch.where(feat_on, xs, 0.0)
-    s = torch.zeros(obs.shape[:2] + (W.shape[2],), dtype=torch.float32, device=obs.device)
-    for d in range(W.shape[1]):
-        s = s + xs[:, :, d, None] * W[:, None, d, :]
-    return s + b[:, None, :]
+FAMILIES = tuple(BRAINS)
 
 
 class TorchRollout:
-    """g7: lane E's G7 (spec.mech, spec.wid, W, fam). One world, P genomes x k seeds."""
+    """g7: lane E's G7 (spec.mech, spec.wid, W, T, fam). One world, P genomes x k seeds."""
 
     def __init__(self, g7, device="cuda", world_cheat: str = ""):
-        if g7.fam.name not in FAMILIES:
+        if g7.fam.name not in BRAINS:
             raise ValueError(f"family must be one of {FAMILIES}")
         self.g7, self.device = g7, torch.device(device)
         self.world = TorchWorld(g7.spec.mech, g7.spec.wid, device=device, cheat=world_cheat)
 
     def load(self, g, seeds, cheat: bool = False) -> None:
-        (W, b), C = g
+        params, C = g
         dev, P, k = self.device, len(C), len(seeds)
         self.P, self.k = P, k
         self.obs = self.world.reset(np.tile(np.asarray(seeds, np.int64), P))
         genv = torch.arange(P, device=dev).repeat_interleave(k)
-        self.W = torch.from_numpy(np.ascontiguousarray(W, np.float32)).to(dev)[genv]
-        self.b = torch.from_numpy(np.ascontiguousarray(b, np.float32)).to(dev)[genv]
+        self.brain = BRAINS[self.g7.fam.name](params, genv, cheat)
         self.C = torch.from_numpy(np.ascontiguousarray(C, np.int64)).to(dev)[genv]     # [n,A,Wd]
-        D = self.W.shape[1]
-        self.feat_on = (torch.arange(D, device=dev) % 2 == 0) if cheat else None       # E7 cheat: xs[:, 1::2] = 0
         n = P * k
         self.abst, self.mag, self.cnt = (torch.zeros(n, dtype=torch.int64, device=dev) for _ in range(3))
 
+    def state(self) -> list[torch.Tensor]:
+        w = self.world
+        return [w.regs, w.charge, w.alive, w.done, w.done_tick, w.tick, w.pend, w.hist, w.st_stoch, w.st_corr,
+                self.obs, self.C, self.abst, self.mag, self.cnt] + self.brain.tensors()
+
     def tick(self) -> None:
         w = self.world
-        logits = linear_logits(self.obs, self.W, self.b, self.feat_on)
-        idx = logits.argmax(-1)                                                          # [n,S], first max
+        idx = self.brain.logits(self.obs).argmax(-1)                                     # [n,S], first max
         a = torch.gather(self.C, 1, idx[:, :, None].expand(-1, -1, self.C.shape[2]))    # [n,S,Wd]
         live = w.alive & ~w.done[:, None]
         x = torch.remainder(a, 8).sum(-1)
@@ -113,6 +103,7 @@ def main(argv=None):
     from primordial.qd import e6_run as E6
     ap = argparse.ArgumentParser()
     ap.add_argument("--worlds", default="4,1,3")
+    ap.add_argument("--fams", default="linear")
     ap.add_argument("--genomes", type=int, default=128)
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--out", default="")
@@ -120,10 +111,11 @@ def main(argv=None):
     torch.set_num_threads(1)
     rows = []
     for gs in (int(x) for x in a.worlds.split(",")):
-        for name, seeds in (("train", E6.TRAIN), ("held64", E6.HELD64)):
-            r = {"seed_set": name, **compare(gs, a.genomes, seeds, a.device)}
-            rows.append(r)
-            print(json.dumps(r), flush=True)
+        for fam in a.fams.split(","):
+            for name, seeds in (("train", E6.TRAIN), ("held64", E6.HELD64)):
+                r = {"seed_set": name, **compare(gs, a.genomes, seeds, a.device, fam)}
+                rows.append(r)
+                print(json.dumps(r), flush=True)
     if a.out:
         with open(a.out, "w", encoding="utf-8", newline="\n") as fh:
             for r in rows:

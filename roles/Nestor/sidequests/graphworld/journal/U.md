@@ -70,3 +70,26 @@ capability (12, 0), arch list includes sm_120). Epoch 1 started 18:49.
   1 skipped (O1 live schtasks).
 - Still open for the MVP: tt_digits in the graph; VRAM budget table (envs x T in 16 GB);
   throughput vs B6 fused numba under the O5 lease.
+- Pushed as dff53e8cf on integration. The conductor's 660ab7f38 broke collection of
+  test_fabric_hygiene.py; the integrated tree ran 88 passed with that file ignored, then
+  the fix fb15cc3a2 landed and the full suite runs again with PM_LANE=U (own test db 13).
+
+## 2026-09-14 iteration 4 -- U4 tt_digits brain on device, eager and captured (DONE)
+
+- primordial/nv/cudagraph/brains.py: LinearBrain, TTDigitsBrain. Each repeats the float32
+  op sequence of E7's numpy forward (einsum sums from zero in index order; tt: digits of
+  obs & 0xFFFF MSB first, per core v = sum_r v_r G[c, digit][r], v /= max(max|v|, 1e-30),
+  logits = sum_r v_r Wo[r]; the cheat skips odd cores), so logits are bitwise equal. G is
+  indexed per env by genome id, not replicated per env.
+- rollout.py and graph.py are family-generic: TorchRollout.state() lists every captured
+  tensor, including the brain's; GraphRollout copies a fresh load through it.
+- E7 comparison (CLI, cuda, 128 genomes): tt_digits, worlds 4, 1, 3 x {train, held64}:
+  fitness 128/128 and cells 128/128 in all six. Rows:
+  C:/Users/jcrai/lab/pm-data/u1/u4_compare_cuda.jsonl.
+- Tests: test_u4_tt_digits.py (5): logits bitwise == numpy cpu/cuda (honest and cheat,
+  negative obs); rollout == E7 128/128 cpu/cuda; CUDA graph (K=1) == E7 128/128, all state
+  bitwise == eager, cheat graph == E7's cheat rollout and moves >= 64. U2/U3 still pass.
+  Suite in gw-venv (PM_LANE=U): 114 passed, 1 skipped (O1 live schtasks).
+- MVP acceptance 1 and 2 met: linear then tt_digits captured as one graph per step (or a
+  static multi-step graph), fitness and cells == E7 128/128 on worlds 4/1/3. Open: U5 VRAM
+  budget table, U6 throughput vs B6 fused numba under the O5 lease.
