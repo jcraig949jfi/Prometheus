@@ -1,0 +1,56 @@
+{
+ "schema": "necropolis.workshop.freeze/1",
+ "frozen_at": "2026-09-13",
+ "reported_in": "roles/Rhadamanthus/prompts/2026-09-11_harvest/RECEIPT.md",
+ "reported_commit": "0fc36d3ba",
+ "tag": "necropolis-workshop-harvest-2026-09-13",
+ "files": {
+  "TOOLS.jsonl": {
+   "sha256_lf": "ff01a909c7bc7339f94c345a0c6ccfe228ead3868d9b58288c5ba5d897f81a98",
+   "bytes": 198028
+  },
+  "tests/controls_result.json": {
+   "sha256_lf": "86beeedc9c350774ba1f2045da79470651bbf28dc205bc611493962cec4879bf",
+   "bytes": 84477
+  },
+  "coroner_plans/CR-001_pollux_frank004.json": {
+   "sha256_lf": "86e949f26f2f6e9f2053cc7dece15bc5a76199c3d6047b791374907099f454f1",
+   "bytes": 11640
+  },
+  "CORONER_RUN.md": {
+   "sha256_lf": "282a769ef2eaae7b6f01b846823f6d1192ea80c23da867abde4914044087bf73",
+   "bytes": 4760
+  },
+  "FRANKENSTEIN_XREF.json": {
+   "sha256_lf": "27bd349ddf7c90c6b7227d290d2cb3bd0517d129237677e3b7e48306d29298fa",
+   "bytes": 28756
+  },
+  "CANDIDATE_INDEX.jsonl": {
+   "sha256_lf": "08ac2fb9693668536d73aa023f0a8a32210b4898e30d4537cc26c5f891431eaa",
+   "bytes": 448227
+  }
+ },
+ "status_counts": {
+  "UNTRUSTED": 2,
+  "READY": 38,
+  "READY_WITH_CAVEAT": 7,
+  "NEEDS_VALIDATION": 31,
+  "NEEDS_DEPENDENCY": 9,
+  "NEEDS_ADAPTER": 2,
+  "BROKEN": 1,
+  "HISTORICAL_ONLY": 3
+ },
+ "rows": 93,
+ "controls": {
+  "git_head": "2d97a6c66550aa29aa744b3e76a86844a132fd0a",
+  "counts": {
+   "PASS": 174,
+   "FAIL": 8,
+   "INFO": 9,
+   "ERROR": 3
+  },
+  "cases": 194
+ },
+ "reader": "validate_workshop.py recomputes these hashes on every run and prints FREEZE MATCH / FREEZE DRIFT per file; drift is expected once the registry is regenerated and is a note, not an error",
+ "rule": "the reported state is this record, not the working tree; a later regeneration does not rewrite it (R-CR-2 spirit: descendants cite parents)"
+}

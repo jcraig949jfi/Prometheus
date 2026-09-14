@@ -255,6 +255,26 @@ if tools and _git_ok is not False:
     if len(errors) == before: errors.append("[SELFTEST] fabricated-commit: validator ACCEPTED a fake source_commit")
     else: del errors[before:]; notes.append("selftest fabricated-commit: rejected as required")
 
+
+# ---------------------------------------------------------------- freeze records (reader)
+# A freeze record is the reported state at a named commit.  The reader recomputes
+# every listed hash and reports MATCH / DRIFT per file.  Drift is a note (the
+# registry is regenerated), a malformed or unreadable freeze record is an error.
+import hashlib
+for fz in sorted(glob.glob(here("FREEZE_*.json"))):
+    try:
+        rec = json.load(open(fz, encoding="utf-8"))
+        files = rec["files"]; assert isinstance(files, dict) and files
+    except Exception as e:  # noqa: BLE001
+        err("FREEZE", f"{os.path.basename(fz)} unreadable or without files: {e}"); continue
+    for rel, want in files.items():
+        fp = here(rel)
+        if not os.path.exists(fp):
+            err("FREEZE", f"{os.path.basename(fz)} lists {rel} which no longer exists"); continue
+        b = open(fp, "rb").read().replace(b"\r\n", b"\n")
+        got = hashlib.sha256(b).hexdigest()
+        notes.append(f"freeze {rec.get('frozen_at')} {rel}: " + ("MATCH" if got == want["sha256_lf"] else f"DRIFT (reported {want['sha256_lf'][:10]}, now {got[:10]})"))
+
 # ---------------------------------------------------------------- report
 for n in notes: print("  note:", n)
 if errors:
