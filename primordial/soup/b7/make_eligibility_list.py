@@ -49,6 +49,20 @@ def main():
            "source_rows": ["primordial/ledger/rows/B/B7b-reachable-eligibility.jsonl",
                            "primordial/ledger/rows/B/B7b-identifiability-posthoc.jsonl"],
            "caveat": "B7b's H2 died (4/24 excluded targets exact but unidentifiable by odd differences); a lookup, not a verdict",
+           "field_semantics": {
+               "regime_changes_form": ("compares the register's FULL composed form (A[r] A row + constant) between regimes, "
+                                       "over all states. It can be true while the function a single-source learner sees on "
+                                       "reachable states is identical in both regimes (lane C found 20 such columns, e.g. "
+                                       "y = 1*x + 0 before and after the flip), so true does NOT guarantee a detectable flip."),
+               "fit": ("(source_fixed_column, a, c) is the FIRST exact single-source representation found in input order. "
+                       "Several equivalent representations can exist (e.g. a register predicting its own next value); "
+                       "differing (a, c) across regimes for this representation does NOT mean the function changes. Compare "
+                       "functions, not representations: lane C's C7e admitted 5 columns with regime_changes_form=false "
+                       "because their listed (a, c) differed, and all 57 of their switches were missed."),
+               "post_hoc_c7e": ("regime_changes_form=true AND a differing listed fit detected 73/73 switches in C7e (post hoc, "
+                                "13 targets in 9 worlds; not a validated rule)"),
+           },
+           "count_note": "exact+identifiable+regime_changes_form = 33 (a B7b bus note mislabeled 43, which is exact+regime_changes_form)",
            "worlds": worlds}
     OUT.write_text(json.dumps(doc, indent=1, sort_keys=True) + "\n", encoding="ascii", newline="\n")
     n = sum(len(v["register_columns"]) for v in worlds.values())

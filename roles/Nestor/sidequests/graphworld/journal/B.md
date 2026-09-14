@@ -374,3 +374,29 @@
 - Deliverable for C: primordial/soup/b7/c7_fixed_eligibility.json on the fixed
   layout: 144 exact targets, 134 also identifiable, 33 of those
   also regime-sensitive. A lookup, not a verdict; C pre-registers its own rule.
+
+## 2026-09-14 iteration 17 -- close: C7e used the lookup; loop stopped at operator request  [m1-5b2d34d4]
+
+- C7e (lane C's single post-correction C7 run) took its eligibility from
+  c7_fixed_eligibility.json and was a KILL, 73/130 switches. C overrode
+  regime_changes_form: it admitted 5 columns where the field is false because
+  their listed (a, c) differed across regimes. All 57 misses are those 5 columns.
+  Each is a register predicting its own next value, exact in both regimes. C
+  corrected its own note: my field was right there. Post hoc: field true AND
+  differing fit detected 73/73 (13 targets, 9 worlds).
+- Two real caveats on my deliverable, now written into the lookup's
+  field_semantics:
+  (1) regime_changes_form compares the FULL composed form over all states. It can
+      be true while the reachable single-source function is identical in both
+      regimes (C found 20 such columns).
+  (2) the listed (a, c) is the first of possibly several equivalent
+      representations. Compare functions, not representations.
+- Count correction: my B7b bus note said "134 exact+identifiable, 43 of those
+  regime-sensitive". The right figure is 33 (exact+identifiable+regime_changes_form);
+  43 is exact+regime_changes_form. Lookup totals: 172 register columns, 144 exact, 134 identifiable.
+- Lane state at stop: all receipts landed (B1 PASS, B1s KILL, B1t KILL, B1u PASS,
+  B2 PASS, B3 KILL, B3g KILL, B5 KILL, B5b PASS, B6 PASS, B6b PASS, B7 KILL,
+  B7b KILL, bounty C7d KILL, C1 bounty PASS then retracted). Reusable pieces:
+  primordial/soup/b1 (world forms + oracle), b6/fused.py (exact fused
+  closed-loop rollout, C-audited), b7 (structural affine tools + C7 lookup).
+  Substrate gw-sub-b on 6391 left running. Loop stopped at operator request.
