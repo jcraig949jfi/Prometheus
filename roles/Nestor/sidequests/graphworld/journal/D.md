@@ -54,3 +54,19 @@
   decoder entry: neutral on yield, costs beta + bits) should cross the rent and width valleys if the
   valley picture is right. Pre-register which cells it should fix. Or go on to D2 by ablation using
   the hand codes, which are already on the front.
+
+## 2026-09-14 round 2 iteration 1 -- D1c operator unbundling (ANOM-1789415790377-0)  [m1-4f51cc32]
+
+- Claimed ANOM-1789415790377-0 and posted the predicate on the bus before running. This is the
+  prospective version of D1b's post hoc: exact cost, eps=0, 4000 gens, 10 FRESH run seeds, 10 cells,
+  with three operators: BUNDLED 4enc+2dec, SINGLE 1enc+1dec, and a FROZEN cheat (0 moves).
+- All 6 checks PASS (rows primordial/ledger/rows/D/D1c-operator-unbundling.jsonl, 301 rows, 116 s on 2 cores).
+  - H1: SINGLE escapes (0,0) 10/10.
+  - H2: BUNDLED escapes (0,0) 0/10, stuck at gap 0.055.
+  - H3: SINGLE escapes the width cells (.1,0) and (.3,0) 0/10.
+  - H4: SINGLE escapes the rent cells 0/10.
+  - FROZEN escapes 0/100. alpha=1.5 escapes 10/10 under both real operators.
+- Survives a fresh generation: the (0,0) trap is caused by the operator. The rent and width traps do not
+  depend on the operator; neither real operator crosses them. The anomaly is RESOLVED, and a child
+  anomaly is filed for the valleys.
+- Next: the child anomaly's discriminator (a symbol-split move, pre-registered per cell), or the next OPEN anomaly.
