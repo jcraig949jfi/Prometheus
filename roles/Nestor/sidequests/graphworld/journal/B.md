@@ -171,3 +171,29 @@
   delayed write lands after the trace ends; (ii) a write lands and a lin_op
   overwrites its target the same tick. Both are structural blind spots of a
   per-tick state hash, not noise.
+
+## 2026-09-14 iteration 8 -- B3g: the unaccounted graphblas time, and a correction to B2  [m1-5b2d34d4]
+
+- Ran: cProfile tottime groups over run_gb (L=64, 256), then an UNPROFILED split:
+  run_gb with ticks=0 (setup only) vs ticks=16, the Python reference timed
+  back to back. The reference's own ticks=0 share is the negative control for
+  the subtraction.
+- Profile at 8192 entities: ~51% is plain Python in graphworld.py, mostly
+  step_cell called 262,144 times to build the static move matrices. The
+  per-tick trajectory string is another chunk. SuiteSparse kernels are ~21%.
+  cProfile inflates tiny calls, so the unprofiled split is the number to trust.
+- Unprofiled split (entity-ticks/s):
+        512 entities: setup 13%, gb ticks-only 0.37M, gb with setup 0.32M, ref 1.75M (ref setup 1.4%)
+       2048 entities: setup 29%, gb ticks-only 1.05M, gb with setup 0.75M, ref 1.59M (ref setup 1.2%)
+       8192 entities: setup 40%, gb ticks-only 1.82M, gb with setup 1.10M, ref 1.58M (ref setup 1.2%)
+      32768 entities: setup 38%, gb ticks-only 1.47M, gb with setup 0.91M, ref 1.11M (ref setup 1.8%)
+     131072 entities: setup 38%, gb ticks-only 1.30M, gb with setup 0.80M, ref 1.00M (ref setup 1.6%)
+- What died: MY OWN B2 speed conclusion ("graphblas beats the reference only at
+  524,288 entities"). That measured setup + 16 ticks. Per tick, graphblas
+  overtakes the reference between 2,048 and 8,192 entities (1.15x at 8,192, 1.32x at 32,768). B2's caveat said setup only
+  affects small worlds; it is 38%-40% at every size >= 8,192. The
+  reference's own setup share is at most 1.75%, so the subtraction holds.
+  B2's hash-equality result is unaffected. Filed as a KILL refuting B2's crossover.
+- Also this iteration: a pinning test for the nb_bucket API that C imports caught
+  a real bug. NbBucket.__init__ overwrote the instance name, so the skip-half
+  cheat reported itself as nb_bucket_c3. Fixed; 13/13 tests pass.

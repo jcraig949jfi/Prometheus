@@ -82,12 +82,14 @@ def _nb_bucket(dig, alpha, G, W, out, nchunks, stride):
 
 
 class NbBucket(tt.Backend):
+    # name comes from the class (set by nb_bucket_class); an instance must not overwrite it,
+    # or the skip-half cheat would report itself as an honest nb_bucket_c<N> (caught by test_c1_cpu)
+    name = "nb_bucket_c3"
     nchunks = 3
     stride = 1
 
     def __init__(self, p):
         super().__init__(p)
-        self.name = f"nb_bucket_c{self.nchunks}"
         self.logits(np.zeros((max(1, self.nchunks), p.obs_dim), np.uint16))   # compile outside timing
 
     def logits(self, obs):
