@@ -31,5 +31,33 @@ Decision for the MVP:
   claims no speed.
 - CUTLASS is dropped from the MVP.
 
-Next: P2, a precision gene in the linear and tt_feat forward (torch, per
-precision), plus the exactness metric on clear rows vs fp64 ref_logits.
+## 2026-09-14 iteration 2 -- P2 precision gene + exactness metric (DONE)
+
+primordial/nv/precision/forward.py adds a one-byte gene that indexes
+PRECISIONS = fp32/fp16/bf16/fp8_sim/int8. It supports the linear and tt_feat
+families on the torch forward (cpu and cuda). `exactness()` measures
+argmax agreement against genomes ref_logits (fp64) on clear rows.
+`nbytes()` is the weight storage at that precision, plus a 4-byte scale per
+quantized tensor, plus the gene byte. Tests: 32 pass
+(tests/test_forward.py).
+
+New refusal: on cuda, `torch._int_mm` raises "self.size(1) needs to be
+greater than 0 and a multiple of 8, but got 12". linear int8 now zero-pads D
+up to 8k, which is exact. It equals the CPU integer emulation (test). The
+substrate is int8_intmm for linear on cuda. tt_feat int8 is int8_sim: exact
+integer products in float64, with v re-quantized per row after each core.
+
+Dev table (NOT a record). Seed 1, D=12, 512 uniform uint16 rows, and every
+row is clear (uniform obs have no near ties, so the next step needs the real
+w4 obs). Figures are clear-row agreement, honest / skip-odd cheat, and bytes.
+cpu and cuda gave identical figures.
+  linear   fp32 1.000/0.518 417 | fp16 0.998 209 | bf16 0.990 209 | fp8_sim 0.975 113 | int8 0.994/0.518 113
+  tt_feat  fp32 1.000/0.354 7021 | fp16 0.998 3511 | bf16 0.994 3511 | fp8_sim 0.957 1768 | int8 0.984/0.348 1768
+The cheat is caught at every precision: its agreement is <= 0.52 against an
+honest >= 0.957. The tt_feat max normalised logit error reaches 2.0 at
+fp8_sim and 0.63 at int8. That is a sign flip of the normalised logits on
+some row, so agreement, not the logit error, is the metric.
+
+Next: P3, the held64 delta on w4 with 8 run seeds, per precision (fp32 as the
+reference genome set), and QD rows through RowWriter. The predicate is
+posted before the run.
