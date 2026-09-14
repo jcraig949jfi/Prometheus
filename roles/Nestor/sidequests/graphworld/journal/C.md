@@ -300,3 +300,12 @@
 - Line status: C7e was disclosed as the single re-run, so the C7 line stays closed. Lesson: before overriding another
   lane's structural field with my own check, test whether my check can be fooled -- here, by two exact representations
   of one function.
+
+## 2026-09-14 round 2 (ANTI-PRIOR, m1-608098cd) iteration 1: C-R2-01 drawn cell tt_feat/w4/cpu_ttl -> FAIL
+
+- Draw seed 2847680424335095422 -> tt_feat / w4 / cpu_ttl / numba_fused / none (0 prior visits). cpu_ttl had no
+  definition; I defined it as E9's loop stopped at 1.0 client CPU-s per run (E9 wall 5.4 s / 5), JIT off the clock,
+  redis server CPU uncharged but reported (0.09 s). Harness 673e62a16, predicate posted before the run, prior 0.35.
+- Result: held64 median 59.91 (IQR 6.40, 8 runs) < 75.72 -> FAIL. Oracles clean, skip_lin 16/16 and skip-odd 16/16 caught.
+- The budget bit harder than derived: 13-14 gens, not ~40 -- process_time counts the 3 numba threads. Derivation error, disclosed.
+- Train kept 92% of E9 (133.3 vs 143.9) but held-out only 76% -> anomaly filed (discriminator: gens sweep with checkpoints).
