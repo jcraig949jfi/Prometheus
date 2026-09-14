@@ -193,3 +193,20 @@
   foregone KILL.
 - Next: C7b feasibility -- where is next obs an exact affine-mod-2^16 function of current obs, and is it flip-sensitive?
   A structure-matched plastic learner is the representation C3 says should work.
+
+## 2026-09-14 iteration 11b: C7b structure-matched plasticity in B's world -> FAIL (H1 held, but partly vacuous)
+
+- Feasibility: B sent 8 predicates for when next obs = f(current obs); my trace matched them. CORRECTION posted: my
+  empirical 'identical current obs, different next obs: 0' check was vacuous (16-bit states never collide at 256 envs).
+- Learner: PlasticAffine fits y_j = a*x_s + c mod 2^16 by odd-difference pair votes, refits at support < 0.5 (tests:
+  inv_odd exact on all odd residues; exact (s,a,c) recovery clean and at 30% corrupted targets). Code c737a4b7b.
+- Record (seeds 80000.., 512 envs, zero actions, 18 regime worlds): 29 eligible targets in 17 worlds. PlasticAffine
+  surprised within 2 ticks of 251/251 switches; digit TT detected 3; leak probe CLEAN/LEAK on all 29.
+  Posted rule -> FAIL: H2 (TT 3 detections), H3 (support None on non-fitting corrupted targets), H4 (null world up to
+  254 surprises).
+- Why: eligibility asked only for flip sensitivity. 7 targets need >=2 registers, so the single-source model never fits:
+  they surprise every tick even with no regime flips, which also makes their H1 'detections' vacuous. The same
+  representation-mismatch lesson as C3b and C7, now inside my own eligibility rule.
+- Post hoc (chosen after seeing rows, NOT the verdict): on the 22 targets / 14 worlds where the model fits within a
+  regime (null surprises <= 2): 168/168 switches detected, digit TT 0, and corrupted in-regime support within 0.0025 of
+  (1 - 1/rate)^2 in all 5 corrupted cases. Worth a re-registered C7c with fit-based eligibility on fresh seeds.
