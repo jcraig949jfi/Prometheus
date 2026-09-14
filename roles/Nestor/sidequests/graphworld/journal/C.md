@@ -281,3 +281,22 @@
 - B retracted its C1 bounty (B-bounty-C1-retraction, KILL of its own claim, cc1699b0e): in B's own harness nb_bucket_c3 is
   1.006x numba_par, agreeing with C1b (0.93-1.01x). C1b stands. The sort-by-digit IDEA stays credited to B in C1c: the
   retraction withdrew a CPU speed claim, not the algorithm that made the GPU bucket kernel 14-25x faster.
+
+## 2026-09-14 iteration 12: C7e (single post-correction C7 run) -> KILL; C7 line stays closed
+
+- Eligibility from B7b's lookup (primordial/soup/b7/c7_fixed_eligibility.json) plus per-regime fit arithmetic, no
+  sampling: exact AND identifiable AND single-source in both regimes AND same source AND (a, c) differ AND predicted
+  old-model agreement < 0.25 AND >= 1 switch -> 18 targets / 14 worlds / 130 switches. I deliberately did NOT use B's
+  regime_changes_form, after finding it "mismatched in both directions". Harness 1e684f6ad; record seeds 94000..,
+  digit-TT calibration 95000...
+- Result: PlasticAffine 73/130 -> KILL. Held: H2 (TT 0 in-window vs chance bar 2), H3 (max deviation 0.0036), H4 (null <= 1),
+  leak probe 18/18.
+- Cause, confirmed by code: all 57 misses are the 5 columns where B's regime_changes_form = false -- (228,3), (248,6),
+  (261,7), (300,4), (532,2) -- and on every one the learner converged to [j, 1, 0]: the register predicts its own next
+  value, exact in both regimes, so no flip is visible. The lookup listed a different, equivalent exact representation
+  (another source) whose (a, c) differ across regimes. I compared REPRESENTATIONS, not FUNCTIONS; B's field was right.
+  My bus note calling it mismatched in both directions was wrong in the second direction; corrected on the bus.
+- Post hoc only: the 13 targets with regime_changes_form = true AND differing fits detected 73/73 in 9 worlds.
+- Line status: C7e was disclosed as the single re-run, so the C7 line stays closed. Lesson: before overriding another
+  lane's structural field with my own check, test whether my check can be fooled -- here, by two exact representations
+  of one function.
