@@ -1,0 +1,83 @@
+{
+  "episode": "E5_EREBOS_COMPOSITION",
+  "decision": "Late May 2026, after Sprint-1 passes 10/10: whether to continue building out the 25-archetype generator host on the strength of that pass. The program continued, and the Layer-2 claims were killed on real data at Phase 3.K (2026-06-03); Erebos was paused 2026-06-15.",
+  "cutoff": "2026-05-27",
+  "claim": "EREBOS_COMPOSES_REAL_STRUCTURE",
+  "explanations": {
+    "EREBOS_COMPOSES_REAL_STRUCTURE": "the composer generates candidate claims that correspond to real structure in the substrate",
+    "INFRASTRUCTURE_ONLY": "the code is correct and well-tested; correctness of the machinery says nothing about whether its output is true of the world",
+    "SYNTHETIC_FIXTURE_CIRCULARITY": "the passing fixtures were authored alongside the generators, so the pass measures agreement between a program and its own test data",
+    "NO_LIVE_CONSUMER": "nothing downstream validates a composed claim, so no composed claim has been tested against anything"
+  },
+  "baseline_experiment_cost": "WEEKS",
+  "evidence": [
+    {
+      "id": "E5.sprint1_10_of_10",
+      "supports": "EREBOS_COMPOSES_REAL_STRUCTURE",
+      "availability": "COMMIT",
+      "source": "Sprint-1 result, recorded in pivot/COMPONENT_DOSSIERS_2026-06-24.md as 'Sprint-1 passed 10/10'",
+      "upstream": ["SYNTHETIC_FIXTURE", "GENERATOR_ARCHITECTURE"],
+      "rules_out": [],
+      "justification": "Ten of ten on Sprint-1. The same record states the pass was 'correctly reframed as synthetic instrument-calibration (circular)'. At this cutoff the fixtures are synthetic and were authored with the generators."
+    },
+    {
+      "id": "E5.621_tests",
+      "supports": "EREBOS_COMPOSES_REAL_STRUCTURE",
+      "availability": "COMMIT",
+      "source": "same, 'disciplined honestly through Phase 0 (9 anti-pattern primitives, 621 tests)'",
+      "upstream": ["SYNTHETIC_FIXTURE", "GENERATOR_ARCHITECTURE"],
+      "rules_out": [],
+      "justification": "A large passing test suite is a statement about the code, not about the substrate. It shares its ancestry with the Sprint-1 pass: the same architecture exercised by the same authored fixtures."
+    },
+    {
+      "id": "E5.25_archetypes_designed",
+      "supports": "EREBOS_COMPOSES_REAL_STRUCTURE",
+      "availability": "COMMIT",
+      "source": "aporia/docs/erebos_v2_designs/ and the 25-archetype spec, committed 705bb61fa 2026-05-27",
+      "upstream": ["GENERATOR_ARCHITECTURE"],
+      "rules_out": [],
+      "justification": "Twenty-plus generator designs, each with a design audit. Breadth of design is production, not evidence; no archetype has yet emitted a claim that anything checked."
+    },
+    {
+      "id": "E5.four_model_convergence",
+      "supports": "EREBOS_COMPOSES_REAL_STRUCTURE",
+      "availability": "COMMIT",
+      "source": "same, 'Per 4/4 frontier-model convergence (2026-05-25), the conspicuously missing layer was GENERATIVE'",
+      "upstream": ["FRONTIER_MODEL_PANEL", "GENERATOR_ARCHITECTURE"],
+      "rules_out": [],
+      "justification": "Four frontier models agreeing that a generative layer was missing. Four models given the same brief and trained on overlapping corpora are not four independent observers; model agreement is not evidentiary independence. It is one reason with four names."
+    }
+  ],
+  "discriminators": [
+    {
+      "id": "PERMUTATION_NULL_ON_REAL_LEDGER",
+      "available_at_cutoff": true,
+      "cost": "HOURS",
+      "outcome_branches": [
+        ["EREBOS_COMPOSES_REAL_STRUCTURE"],
+        ["INFRASTRUCTURE_ONLY", "SYNTHETIC_FIXTURE_CIRCULARITY"]
+      ],
+      "note": "Take the strongest composed claim, run it against real (grown, non-synthetic) ledger rows, and compare its lift to a permutation null over several seeds. This is exactly what Phase 3.K did on 2026-06-03 and the answer was p=0.105 with a 7-seed mean of 0.102, with the triplet motif falsified below null. Running it on one archetype before building twenty-five costs hours against the weeks that went into the remaining generators."
+    },
+    {
+      "id": "SHIP_ONE_CONSUMER_END_TO_END",
+      "available_at_cutoff": true,
+      "cost": "DAYS",
+      "outcome_branches": [
+        ["NO_LIVE_CONSUMER"],
+        ["EREBOS_COMPOSES_REAL_STRUCTURE", "INFRASTRUCTURE_ONLY"]
+      ],
+      "note": "Ship the composition-aware loader so a single composed claim reaches the battery and is validated. The record states this never shipped and claims short-circuited as *_pending, so the generative output had no live downstream for its whole life."
+    },
+    {
+      "id": "BUILD_REMAINING_ARCHETYPES",
+      "available_at_cutoff": true,
+      "cost": "WEEKS",
+      "outcome_branches": [
+        ["EREBOS_COMPOSES_REAL_STRUCTURE"],
+        ["EREBOS_COMPOSES_REAL_STRUCTURE"]
+      ],
+      "note": "Continue to the full 25-archetype host. This is what was done. Both branches are identical: more generators of untested claims produce more untested claims, so no outcome of this work eliminates any explanation on the list."
+    }
+  ]
+}

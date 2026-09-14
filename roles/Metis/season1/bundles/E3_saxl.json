@@ -1,0 +1,79 @@
+{
+  "episode": "E3_SAXL",
+  "decision": "2026-05-11: the anti-anchor registry is seeded and AA-004 is written in the form 'Saxl's conjecture was solved unconditionally by Lee 2025 / Sellke'. Other seats read this registry as authority. The decision is to promote that row as a verified anti-anchor.",
+  "cutoff": "2026-05-11",
+  "claim": "SAXL_IS_SOLVED",
+  "explanations": {
+    "SAXL_IS_SOLVED": "the Saxl conjecture proper (tensor square of the staircase) has been proved",
+    "PROOF_WITHDRAWN": "the claimed proof was retracted by its own author and the conjecture is open",
+    "ANALOGUE_CONFLATED": "a proved analogue for a different object (the tensor CUBE, or unipotent characters of a Lie-type group) has been read as the conjecture proper"
+  },
+  "baseline_experiment_cost": "DAYS",
+  "evidence": [
+    {
+      "id": "E3.registry_row",
+      "supports": "SAXL_IS_SOLVED",
+      "availability": "COMMIT",
+      "source": "techne/registry/anti_anchors.jsonl AA-004, first committed 4c6131fe9 2026-05-11",
+      "upstream": ["LLM_RECALL_OF_PREPRINT"],
+      "rules_out": [],
+      "justification": "The row asserts the solved form. Its own later correction records the origin: 'INVERTED from prior 2026-05-10 entry which incorrectly claimed Saxl was solved.' No primary source is cited in the original row; the assertion rests on model recall of an abstract.",
+      "contrary_available_at": "2025-12-20",
+      "contrary_incorporated": false
+    },
+    {
+      "id": "E3.cube_result",
+      "supports": "SAXL_IS_SOLVED",
+      "availability": "EXTERNAL",
+      "source": "Harman-Ryba, 'A Tensor-Cube Version of the Saxl Conjecture', arXiv:2206.13769 (2022)",
+      "upstream": ["LLM_RECALL_OF_PREPRINT", "SAXL_LITERATURE"],
+      "rules_out": [],
+      "justification": "A genuine published theorem: every irreducible representation of S_N appears in the tensor CUBE. It is about the cube, not the square. Read as corroboration of 'solved' it eliminates nothing about the conjecture proper, and it is a second expression of the same underlying literature recall.",
+      "contrary_available_at": "2025-12-20",
+      "contrary_incorporated": false
+    },
+    {
+      "id": "E3.fourth_power_result",
+      "supports": "SAXL_IS_SOLVED",
+      "availability": "EXTERNAL",
+      "source": "Luo-Sellke, J. Algebraic Combin. 2017 (arXiv:1511.02387), fourth-power relaxation",
+      "upstream": ["LLM_RECALL_OF_PREPRINT", "SAXL_LITERATURE"],
+      "rules_out": [],
+      "justification": "Proves only the FOURTH-POWER relaxation. Same shape as the cube result: a weaker statement about a different object, entering the bundle as though it reinforced the strong claim.",
+      "contrary_available_at": "2025-12-20",
+      "contrary_incorporated": false
+    }
+  ],
+  "discriminators": [
+    {
+      "id": "FETCH_ARXIV_ABSTRACT_PAGE",
+      "available_at_cutoff": true,
+      "cost": "MINUTES",
+      "outcome_branches": [
+        ["SAXL_IS_SOLVED"],
+        ["PROOF_WITHDRAWN", "ANALOGUE_CONFLATED"]
+      ],
+      "note": "Open the abs page for the cited preprint arXiv:2512.15035 and read its status line. The withdrawal was posted 2025-12-20, three days after v1, with the author's verbatim comment 'The claim of a complete proof is not justified in its current form.' One HTTP request against a public page that had already carried the notice for five months at this cutoff."
+    },
+    {
+      "id": "CHECK_OBJECT_MATCHES_CLAIM",
+      "available_at_cutoff": true,
+      "cost": "MINUTES",
+      "outcome_branches": [
+        ["ANALOGUE_CONFLATED"],
+        ["SAXL_IS_SOLVED", "PROOF_WITHDRAWN"]
+      ],
+      "note": "Read each supporting citation's own statement of what it proves and compare the OBJECT (square vs cube vs fourth power vs unipotent characters) against the object in the claim. Requires no external fetch: the discrepancy is on the face of the cited titles."
+    },
+    {
+      "id": "COMMISSION_DEEP_RESEARCH_SURVEY",
+      "available_at_cutoff": true,
+      "cost": "DAYS",
+      "outcome_branches": [
+        ["PROOF_WITHDRAWN", "ANALOGUE_CONFLATED"],
+        ["SAXL_IS_SOLVED"]
+      ],
+      "note": "Commission a full literature survey of the conjecture's status. This is what eventually happened: Wave 1 deep research inverted the row on 2026-08-20, about three months later."
+    }
+  ]
+}
