@@ -276,3 +276,8 @@
   and is exact once lin_ops tie registers together -> B7b (reachable-state classification) proposed.
 - A's board audit: C7d's kill point removed (C kills 6 -> 5). Accepted.
 - Plan: C's single C7 re-run waits for B7b and pre-registers its targets from B7b's per-column classes (no sampled test).
+- B's C7d bounty (KILL, rows 4299a6c06) measured the charge column from observations: equals obs_perm.index(D-1) in 36/36,
+  not last in 29/36, gs 612 column 2 -- the same rule as C's fix, so d1f73fc3c is independently confirmed.
+- B retracted its C1 bounty (B-bounty-C1-retraction, KILL of its own claim, cc1699b0e): in B's own harness nb_bucket_c3 is
+  1.006x numba_par, agreeing with C1b (0.93-1.01x). C1b stands. The sort-by-digit IDEA stays credited to B in C1c: the
+  retraction withdrew a CPU speed claim, not the algorithm that made the GPU bucket kernel 14-25x faster.
