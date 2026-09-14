@@ -109,3 +109,35 @@ Threads: 3 (conductor contract 1789425755152-0 overrides the boot prompt's 5).
   repeated seed; run() fitness, cells and done ticks match the uncached
   path; the digest keeps worlds that share an id apart; the cache is >= 5x
   faster. Suite 76 passed, 1 skipped (the 1 warning is from U's torch test).
+
+## 2026-09-14 EPOCH 1 posted 19:07: done=[O3,O5,O1,F7,F8] tests=76 open=[F14,F9,F15,X]
+
+## 2026-09-14 iteration 6 -- F14 epoch controller (DONE) + O5 tests load-stable
+
+- ops/epoch.py `EpochController(lanes, epoch_s=1800)`. At T + n x epoch_s it
+  posts EPOCH n (to ALL) and sets pm:jobs:<L>:stop. It waits until every live
+  worker reports `stopped` (stragglers are recorded after drain_timeout_s),
+  exports the bus into <out>/epoch_<n>/, and writes <out>/EPOCH_<n>.json.
+  It commits that directory, clears the flags, and sets pm:epoch:state
+  running n+1. Every step is logged to <out>/epoch_log.jsonl.
+  CLI: `python -m primordial.ops.epoch run --lanes B,C,D,E [--epoch-min 30]`
+  or `boundary N --lanes ...`.
+- worker.py: no job is taken while the stop flag exists. State goes to
+  pm:worker:<L> {idle|busy|stopped} with a 30 s TTL. A job received before
+  the flag runs to completion before `stopped`. Done records carry
+  started/ended. serve() gains deadline_s and exit_requested.
+- Test (acceptance): 2 simulated epochs of 4 s with 2 real workers and a
+  submitter feeding 0.25 s jobs. Checked: event order start + 2 x (post,
+  stop_set, drained, exported, committed, resumed); no stragglers; no job
+  interval overlaps [drained, resumed]; each worker ran jobs in all 3
+  windows; EPOCH-1/EPOCH-2 commits present; log file == events; flags
+  cleared. First version took 61 s because workers waited for their
+  deadline; exit_requested brings it to 11 s.
+- O5 tests: A, P and W reported renew/expiry flakes under 8-builder load.
+  Most were the shared-db flush (A fixed it: per-lane test dbs 660ab7f38 +
+  fb15cc3a2). The fixed sleeps are gone too: the TTL-expiry test polls up to
+  5 s, and the renew test uses ttl 1.5 s and polls for 2 renewals with the
+  same token.
+- My F7/O5 move to db 13 collided with U's per-lane db (13); A's live_url()
+  supersedes it, and F14 uses live_url().
+- Suite on the integration tip, PM_LANE=F: 115 passed, 1 skipped.

@@ -56,3 +56,9 @@ def emit_n(ctx, n: int = 3):
 def fail(ctx):
     ctx.emit({"status": "dev", "kind": "fail", "i": 0})
     raise RuntimeError("deliberate")
+
+
+def sleep_rows(ctx, s: float = 0.3):
+    ctx.emit({"status": "dev", "kind": "sleep_rows", "at": "start"})
+    time.sleep(s)
+    ctx.emit({"status": "dev", "kind": "sleep_rows", "at": "end"})

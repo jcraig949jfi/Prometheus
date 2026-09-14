@@ -18,6 +18,10 @@ status=timeout row, commits the file, and spawns a fresh child for the next
 job. Rows are committed by the supervisor's RowWriter, so a job cannot lose
 its rows by dying. Each job's outcome goes to pm:jobs:<L>:done.
 
+F14: while pm:jobs:<L>:stop exists the worker takes no job and reports
+`stopped` in pm:worker:<L>; a job received before it saw the flag runs to
+completion first, so no job spans an epoch's export and commit.
+
     python -m primordial.fabric.worker serve --lane F
     python -m primordial.fabric.worker submit F primordial.fabric.selftest_jobs:jit_probe \\
         --exp F7-probe --rows primordial/ledger/rows/F/F7-probe.jsonl --ttl-cpu-s 60 --kwargs '{}'
@@ -38,6 +42,9 @@ import uuid
 from primordial.fabric.rows import RowWriter
 
 JOBS, ROWS, DONE = "pm:jobs:{}", "pm:rows:{}", "pm:jobs:{}:done"
+STOP = "pm:jobs:{}:stop"            # F14: set by the epoch controller; the worker takes no job while it exists
+WSTATE = "pm:worker:{}"             # hash {state: idle|busy|stopped, job_id, ts}, TTL WSTATE_TTL
+WSTATE_TTL = 30
 
 
 def _redis(url):
@@ -98,6 +105,7 @@ class Worker:
         self.poll_s, self.log = poll_s, log
         self.child = self.pipe = None
         self.children_spawned = 0
+        self.exit_requested = False             # set from another thread: serve() returns after the current job
         self.rows_cursor = "$"
         self.group = f"worker-{lane}"
         try:
@@ -163,7 +171,7 @@ class Worker:
         self.rows_cursor = last[0][0] if last else "0"
         w = RowWriter(rows_path, job["exp_id"], commit_every_s=60, repo=self.repo)
         cpu0 = self._child_cpu()
-        t0 = time.perf_counter()
+        t0, started = time.perf_counter(), time.time()
         self.pipe.send(job)
         result, status = None, "ok"
         n = 0
@@ -196,7 +204,8 @@ class Worker:
         w.close(note=f"(job {job['job_id']} {status})")
         sha = self._head()
         out = {"job_id": job["job_id"], "status": status, "rows": n, "cpu_s": cpu_s, "wall_s": round(wall_s, 3),
-               "child_wall_s": result.get("wall_s"), "sha": sha, "rows_path": str(rows_path)}
+               "child_wall_s": result.get("wall_s"), "sha": sha, "rows_path": str(rows_path),
+               "started": round(started, 3), "ended": round(time.time(), 3)}
         self.r.xadd(DONE.format(self.lane), {"json": json.dumps(out, sort_keys=True)})
         self.log(f"job {job['job_id']} {job['fn']} -> {status} rows={n} cpu={cpu_s} wall={wall_s:.2f}s")
         return out
@@ -207,11 +216,25 @@ class Worker:
                            text=True)
         return q.stdout.strip()
 
-    def serve(self, max_jobs: int | None = None, block_ms: int = 5000, idle_exit_s: float | None = None) -> list:
+    def _state(self, state: str, job_id: str = "") -> None:
+        k = WSTATE.format(self.lane)
+        self.r.hset(k, mapping={"state": state, "job_id": job_id, "ts": f"{time.time():.3f}"})
+        self.r.expire(k, WSTATE_TTL)
+
+    def serve(self, max_jobs: int | None = None, block_ms: int = 5000, idle_exit_s: float | None = None,
+              deadline_s: float | None = None) -> list:
         consumer = os.environ.get("PM_TAG", "worker")
         done, idle0 = [], time.monotonic()
+        end = None if deadline_s is None else time.monotonic() + deadline_s
         try:
-            while max_jobs is None or len(done) < max_jobs:
+            while ((max_jobs is None or len(done) < max_jobs) and (end is None or time.monotonic() < end)
+                   and not self.exit_requested):
+                if self.r.exists(STOP.format(self.lane)):
+                    self._state("stopped")
+                    time.sleep(min(block_ms / 1000, 0.1))
+                    idle0 = time.monotonic()
+                    continue
+                self._state("idle")
                 got = self.r.xreadgroup(self.group, consumer, {JOBS.format(self.lane): ">"}, count=1,
                                         block=block_ms)
                 msgs = [m for _, ms in (got or []) for m in ms]
@@ -220,6 +243,7 @@ class Worker:
                         break
                     continue
                 mid, job = msgs[0]
+                self._state("busy", job["job_id"])
                 done.append(self.run_job(job))
                 self.r.xack(JOBS.format(self.lane), self.group, mid)
                 idle0 = time.monotonic()
@@ -228,6 +252,7 @@ class Worker:
         return done
 
     def stop(self) -> None:
+        self.r.delete(WSTATE.format(self.lane))
         if self.child is not None and self.child.is_alive():
             try:
                 self.pipe.send(None)
