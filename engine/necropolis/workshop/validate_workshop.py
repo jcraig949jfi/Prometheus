@@ -392,6 +392,72 @@ for fz in sorted(glob.glob(here("FREEZE_*.json"))):
         got = hashlib.sha256(b).hexdigest()
         notes.append(f"freeze {rec.get('frozen_at')} {rel}: " + ("MATCH" if got == want["sha256_lf"] else f"DRIFT (reported {want['sha256_lf'][:10]}, now {got[:10]})"))
 
+# ---------------------------------------------------------------- forensic map (FORENSIC_QUESTIONS.json)
+# The map may cite a row as an answerer only if the registry's ladder admits it; a
+# candidate must be a row the ladder blocks; every id must exist; the verdict must
+# follow the scope rule (GENERAL -> ANSWERABLE; named restriction -> at most
+# ANSWERABLE_RESTRICTED; PARTIAL scope or no DIRECT row -> PARTIAL; none -> EMPTY).
+FMAP = here("FORENSIC_QUESTIONS.json")
+def forensic_map_checks(fm, where):
+    by_id = {t["tool_id"]: t for t in tools}
+    for q in fm.get("questions", []):
+        w = f"{where}:{q.get('id')}"
+        adm = q.get("admissible_instruments", []); cand = q.get("candidates_if_validated", [])
+        for x in adm:
+            r = by_id.get(x.get("tool_id"))
+            if r is None: err(w, f"answerer {x.get('tool_id')} is not in the registry"); continue
+            if not r["admissibility"]["admissible"]:
+                err(w, f"answerer {x['tool_id']} is NOT admissible in the registry (blocked_by={r['admissibility']['blocked_by']}); the map cannot promote a tool")
+            if x.get("admissible_as") != r["admissibility"]["admissible_as"]:
+                err(w, f"answerer {x['tool_id']} admissible_as {x.get('admissible_as')} != registry {r['admissibility']['admissible_as']}")
+            if r["admissibility"]["admissible_as"] == "EVIDENCE_WITH_CAVEAT" and not x.get("caveat"):
+                err(w, f"answerer {x['tool_id']} is EVIDENCE_WITH_CAVEAT but the map drops the caveat")
+        for x in cand:
+            r = by_id.get(x.get("tool_id"))
+            if r is None: err(w, f"candidate {x.get('tool_id')} is not in the registry"); continue
+            if r["admissibility"]["admissible"]:
+                err(w, f"candidate {x['tool_id']} is admissible in the registry; it belongs under answerers or the mapping is stale")
+        direct = [x for x in adm if x.get("role") == "DIRECT"]
+        sc = str(q.get("scope", ""))
+        if not adm: want = "EMPTY"
+        elif not direct or sc.startswith("PARTIAL"): want = "PARTIAL"
+        elif sc == "GENERAL": want = "ANSWERABLE"
+        else: want = "ANSWERABLE_RESTRICTED"
+        if q.get("verdict") != want:
+            err(w, f"verdict {q.get('verdict')} but scope/rows imply {want}")
+        if sc.startswith("PARTIAL") and direct:
+            err(w, "scope declared PARTIAL yet a DIRECT answerer is listed")
+if os.path.exists(FMAP):
+    try:
+        fmap = json.load(open(FMAP, encoding="utf-8"))
+    except Exception as e:  # noqa: BLE001
+        fmap = None; err("FORENSIC_MAP", f"unreadable: {e}")
+    if fmap:
+        forensic_map_checks(fmap, "FORENSIC_MAP")
+        notes.append(f"forensic map: {len(fmap.get('questions', []))} questions, verdicts {fmap.get('summary', {}).get('verdicts')}")
+        import copy as _copy
+        def _expect_fmap_reject(label, mutate):
+            bad = _copy.deepcopy(fmap); mutate(bad); before = len(errors)
+            forensic_map_checks(bad, f"SELFTEST:{label}")
+            if len(errors) == before: err("SELFTEST", f"{label}: forensic map check FAILED to reject")
+            else: del errors[before:]; notes.append(f"selftest {label}: rejected as required")
+        def _m_promote(b):  # cite an UNTRUSTED row as an answerer
+            b["questions"][0]["admissible_instruments"].append({"tool_id": "NT-001", "role": "DIRECT", "admissible_as": "EVIDENCE"})
+        def _m_verdict_up(b):  # PARTIAL question relabelled ANSWERABLE
+            q = next(q for q in b["questions"] if q["verdict"] == "PARTIAL"); q["verdict"] = "ANSWERABLE"
+        def _m_scope_up(b):  # restricted scope relabelled GENERAL keeps verdict -> mismatch
+            q = next(q for q in b["questions"] if q["verdict"] == "ANSWERABLE_RESTRICTED"); q["scope"] = "GENERAL"
+        def _m_drop_caveat(b):
+            for q in b["questions"]:
+                for x in q["admissible_instruments"]:
+                    if x.get("admissible_as") == "EVIDENCE_WITH_CAVEAT": x.pop("caveat", None); return
+        _expect_fmap_reject("fmap-untrusted-answerer", _m_promote)
+        _expect_fmap_reject("fmap-verdict-inflated", _m_verdict_up)
+        _expect_fmap_reject("fmap-scope-inflated", _m_scope_up)
+        _expect_fmap_reject("fmap-caveat-dropped", _m_drop_caveat)
+else:
+    notes.append("forensic map: absent")
+
 # ---------------------------------------------------------------- report
 for n in notes: print("  note:", n)
 if errors:
