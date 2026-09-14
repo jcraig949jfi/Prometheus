@@ -41,6 +41,20 @@ Analysis refactor (descendant DFS) proven equal to the ancestor-tuple version
 on one recorded stream before the full run (a re-run could not prove it:
 ZRANDMEMBER sampling is unseeded).
 
+## 2026-09-14 iteration 3 -- E2b branch points vs a 20-world null (PASS)
+
+Pre-check first (5 reps): a per-cell (popcount-matched) baseline moved the
+single-null transfer only 5.3-7.0% -> 4.6-6.2%, so my E2 explanation was mostly
+wrong; one null table is one draw for clustered lineages. Bar re-posted
+against 20 null worlds. Full run (rows ab025ba26, receipt filed AFTER the push
+this time): honest 182/164/201 BPs, transfer 70-81% vs null max 3.4-8.0%, 3/3.
+New non-trivial cheat FAKEFIT (real descent, fitness shuffled per batch): 541-570
+survivors but transfer 2.5/6.5/3.0%; it beat the null max ONCE (rep 1, 6.5% vs
+4.7%). The rule allowed 1/3 so PASS stands, but the transfer half is thin at a
+single max-of-20: next time compare against a per-condition null quantile with
+more worlds, or require the honest margin as a ratio. Filler 0 edges, 0 BPs.
+Board: ~0.5M excess BPs per CPU-h on the stub world (clock is ~15.6 ms coarse).
+
 Next / steal: B's batched Encounter to replace the NK stub; C1's TT cores as
 the genome for E1; E2 branch points with a random-filler control; E3 with
 repeated restarts per load gene (n>=5) to beat the 4.6% A/A floor.
