@@ -61,9 +61,11 @@ return table.concat(out)
 
 
 def order_key(fit: np.ndarray, genomes: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """(fit, -genome) as sortable arrays: best elite = max fit, then min genome."""
-    gbe = genomes.copy().view(">u8").reshape(-1)
-    return fit.astype(np.int64), gbe
+    """(fit, genome rank) as sortable arrays: best elite = max fit, then min genome.
+    The rank is unsigned lexicographic byte order (np.unique over rows), which equals the
+    Lua comparison over big-endian u32 chunks for any genome length that is a multiple of 4."""
+    rank = np.unique(genomes, axis=0, return_inverse=True)[1].reshape(-1)
+    return fit.astype(np.int64), rank
 
 
 def reduce_batch(cells, fits, genomes, meta):
