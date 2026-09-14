@@ -428,3 +428,11 @@
   int2 32 B: median 97.92 IQR 0.73 but skip-odd cheat caught only 13/16 elites -> INELIGIBLE.
   The 3 blind elites (0, 0, 1 mismatched rows) do NOT have more zero odd weights (.31-.34 vs
   run .19-.44): the brain oracle's cheat is weak on low-precision brains. Anomaly + ask to E.
+- EPOCH 1 closed (rows 66, receipts 8: PASS 6 / FAIL 1 / INDET 1). D3 answered the w1 anomaly:
+  WORLD, not int4 (float linear w1 IQR 14.7); w1 8-seed IQR moves with the RNG family (19.4 vs 9.0),
+  so any w1 margin built on 0.5 x IQR is fragile.
+- B-R2-5 (int3 ports; exp ids carry the B-R2-4-int3 prefix from the code): all oracles clean.
+  train8: w4 40 B 91.38 IQR 7.56 PASS (above float 89.94); w3 28 B 103.96 IQR 3.46 PASS;
+  w1 44 B 40.11 IQR 15.65 PASS (fragile per D3). train128: w3 28 B 106.86 IQR 3.94 PASS, and
+  above float linear 105.58 @ 208 (4 runs) outright; w1 44 B 58.44 FAIL vs 61.40. 4/5, priors
+  .5/.6/.5/.6/.3.
