@@ -245,3 +245,21 @@
 - Held: "world + act + books >= 50% in >= 4/5" (4/5; glue 47%-62%). PASS.
   By the posted rule, B builds the fused closed-loop kernel (B6). Cross-run
   speeds vs B5 are indicative only, not a controlled ratio.
+
+## 2026-09-14 iteration 11 -- B6: the fused closed-loop rollout  [m1-5b2d34d4]
+
+- Built because B5b met its posted rule. One numba call per rollout: prange over
+  envs; every tick does observe (B semantics), then brain (lane C's njit row
+  kernel tt_digits_act_row, imported read-only), then E's codebook and
+  descriptor counters, then the B world step. Envs stop at done. Nothing in
+  primordial/brain or primordial/qd was edited.
+- Numbers (P=128, seeds 9100..9107, 5 alternating reps; speed vs the B5b fast path):
+    w1: 24.0x (fast 67.2 ms -> fused 2.8 ms), exact fit/cells True/True, world 16/16, brain 0/198 mism; cheats skip_lin 16/16, skip-odd 75%
+    w2: 6.6x (fast 48.1 ms -> fused 7.3 ms), exact fit/cells True/True, world 16/16, brain 0/664 mism; cheats skip_lin 16/16, skip-odd 71%
+    w3: 15.0x (fast 33.1 ms -> fused 2.2 ms), exact fit/cells True/True, world 16/16, brain 0/221 mism; cheats skip_lin 16/16, skip-odd 54%
+    w4: 10.3x (fast 49.4 ms -> fused 4.8 ms), exact fit/cells True/True, world 16/16, brain 0/443 mism; cheats skip_lin 16/16, skip-odd 67%
+    w5: 20.1x (fast 87.1 ms -> fused 4.3 ms), exact fit/cells True/True, world 16/16, brain 0/988 mism; cheats skip_lin 16/16, skip-odd 57%
+- Speed 6.6x-24.0x. Exact against E's own numpy rollout in every world: True.
+- Detail worth keeping: E5 casts obs to uint16 before taking digits, and a dead
+  slot's charge bucket can be negative. The fused kernel masks each value to its
+  low 16 bits before the brain; without that the digits differ.
