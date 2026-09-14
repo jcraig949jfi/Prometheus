@@ -10,7 +10,8 @@ direct registry write.
 
 ## Status counts
 
-- candidate: 6
+- candidate: 5
+- killed: 1
 - killed-in-AC01, candidate-elsewhere: 1
 - parked: 1
 - specimen: 2
@@ -20,7 +21,7 @@ direct registry write.
 ID       Name                                        Status
 -------  ------------------------------------------  -----------------------------
 NUR-001  QUOTIENT_CANONICALIZE                      specimen
-NUR-002  COMPILE_REPEATED_TRAJECTORY                candidate
+NUR-002  COMPILE_REPEATED_TRAJECTORY                killed
 NUR-003  SAME_SCORE_DISJOINT_FAILURES_PROBE         killed-in-AC01, candidate-elsewhere
 NUR-004  QUOTIENT_BY_PAIR_BEFORE_FITTING            specimen
 NUR-005  MINIMUM_SUFFICIENT_INSTRUMENT              candidate
@@ -58,6 +59,7 @@ Origin: {"experiment": "AC-01D-v2", "receipt": "alien_circuitry/AC01D_V2_RECEIPT
 - OBSERVED (independent lineage, whitepapers/orbit_canonicalization.md, exploratory/tensor_decomp_qd/META_REPORT_DIRECTION_2.md): a gauge-invariant canonicaliser for tensor decompositions was built, validated 50/50, and removed a scaling barrier, yet the QD search bottleneck was unchanged -- 'mutation geometry is the proven bottleneck, not canonicalization'. The organism can be exactly correct and consequentially inert when the search cost lives in the move set, not in the state multiplicity.
 - OBSERVED: additivity fails inside the quotient: linear/additive summaries of collapse depth and orbit coordinates reach only R^2 0.52-0.57 on D; the full joint table is required. Quotienting exposed the coordinate system; it did not make the function simple.
 - OBSERVED (v1 dissection, withdrawn): a plausible-looking symmetry (value relabelling fixing {0,1} setwise) was tested before being verified as a symmetry; it was not one. Verification of the transformation must precede its use.
+- OBSERVED (CRUCIBLE-B harness root cause, 2026-09-14): kernel-aware search cost C_K roughly doubles under an arbitrary change of tie-break order (88.6 vs 170 transitions, HELD_BOTH DFS). HC_D denominators in AC-01D carry this sensitivity: oracle-level results (orbit table ~0.998) are insensitive; mid-range results (C5 0.91, CP 0.55, C6 0.54) carry an unmeasured denominator sensitivity
 
 **relation to existing.**
 - whitepapers/orbit_canonicalization.md (2026-04): same transformation, independent lineage, different verdict (inert for its search); this is the organism's first recorded recurrence
@@ -82,17 +84,17 @@ Origin: {"experiment": "AC-01D-v2", "receipt": "alien_circuitry/AC01D_V2_RECEIPT
 
 **new evidence.** CRUCIBLE-C (2026-09-13) is a SECOND POSITIVE ECOLOGY: quotienting Diomedes counterexample-hunt states by invariant pair reduces exact cost-to-first-break 2.69 -> 2.22 (HC 0.28) beyond a random-class permutation null and a matched-N control, with the class observable at decision time. Tally: T_7 (exact combinatorial, HC 0.998) POSITIVE; Diomedes (noisy statistical, HC 0.28) POSITIVE; tensor-QD (gauge quotient) INERT.
 
-**verdict.** recurrence evidence strengthened: two positive ecologies with different failure geometry (exact vs statistical), one inert. NOT promoted to primitive-candidate: the ruling requires evidence, not doctrine, and the inert case stands.
+**verdict.** recurrence evidence strengthened: two positive ecologies with different failure geometry (exact vs statistical), one inert. NOT promoted to primitive-candidate: the ruling requires evidence, not doctrine, and the inert case stands. CRUCIBLE-B does not bear on NUR-001 directly.
 
-**supersedes.** NUR-001 @ 86a429e
+**supersedes.** NUR-001 @ 8157e9e
 
-**recorded.** 2026-09-13 after CRUCIBLE-C; appended, prior rows retained
+**recorded.** 2026-09-14 after CRUCIBLE-B; appended, prior rows retained
 
 Provenance: {"observed_by": "AC-01 seat, 2026-09-12/13", "operator_rulings": "AC-01D-v2 ruling 'orbit/collapse coordinate test'", "evidence_levels": "all numbers OBSERVED in committed JSON; the mechanism statement is INFERRED from one ecology plus one independent inert recurrence; generality is UNTESTED"}
 
 ## NUR-002 COMPILE_REPEATED_TRAJECTORY
 
-Status: candidate
+Status: killed
 
 Origin: {"experiment": "incubation v1-v3 (learned operators)", "artifacts": ["incubation/v2/README.md", "incubation/v3/README.md", "incubation/docs/LESSONS.md", "incubation/v2/ledger/o0001.json"]}
 
@@ -112,6 +114,10 @@ Origin: {"experiment": "incubation v1-v3 (learned operators)", "artifacts": ["in
 
 **failure geometry.**
 - OBSERVED (incubation/docs/LESSONS.md 11-12): two operator variants tie exactly in clean worlds (capture 1.000) but split 33x vs ~2x harm under a trap; one-seed smoke passed all 20 gates and was contradicted at 5 seeds
+- OBSERVED (run 1, preserved 9b0a963): the preregistered random-macro control was infeasible (6 mined length-2 macros, 3 non-mined exist); runner hung 11 h in rejection sampling
+- OBSERVED: the frozen no-prefix/suffix mining rule excludes every frequent length-3/4 subsequence once its length-2 prefix is chosen, so 'compiled trajectories' collapsed to 2-step moves; the test therefore covers short macros only
+- OBSERVED (harness defect, results/ac01d/nursery/crucible_b2_harness_rootcause.json): the macro harness counted duplicate successors and broke rank ties by generator index; with no macros it costs 196 vs frozen 88.6 transitions; root cause reproduced exactly; absolute HC_D values are not a macro effect size; the relative verdict is harness-internal and stands
+- INFERRED: macros enlarge branching (3 -> up to 9 actions) and are ordered only after generators at equal rank key, so the searcher explores them without any consequence signal; in T_7 the move-set lever fails without a guide
 
 **relation to existing.**
 - NUR-001 (orthogonal lever: move set vs state multiplicity)
@@ -123,15 +129,23 @@ Origin: {"experiment": "incubation v1-v3 (learned operators)", "artifacts": ["in
 
 **expected cost.** minutes (T_7 traces already exist for 1,500 held problems)
 
-**promotion condition.** HC_D gain over kernel-aware search with compiled macros exceeds the random-macro control by more than the bootstrap CI, in a world where NUR-001 was NOT applied
+**promotion condition.** N/A (killed in T_7). Not killed elsewhere: incubation's 87x-1,250x instance stands in its own world.
 
 **kill condition.** no recurring subsequence exceeds the random-macro control; or gains vanish when the macro is length-matched
 
 **descendant if positive.** composition test: quotient (NUR-001) + compiled macros on the same world -- super-additive or redundant?
 
-**descendant if negative.** record that in T_7 the shortest-path structure has no reusable subsequence beyond the generators (a statement about the Cayley graph, worth having)
+**descendant if negative.** recorded: in T_7, frequency-mined 2-step macros are not privileged over arbitrary 2-step macros, and move-set augmentation without a guide increases search; any revival must be a separately named organism (e.g. state-conditional macros, or macros composed with a quotient guide) with its own prereg
 
 **orthogonality.** changes the move set; NUR-001 changes the state set
+
+**new evidence.** CRUCIBLE-B 2026-09-14 (OBSERVED; prereg d3b9533 + addendum 8851f05; results/ac01d/families/CRUCIBLE_B2_macros_exact_control.json): FIT-only mining of 2,000 T_7 oracle paths yields six length-2 macros (1,0)(0,2)(0,1)(0,0)(2,1)(2,0). Against the exact distribution over all 84 six-sets of length-2 macros, the mined set does not beat the mean of the other 83 on HELD_TARGETS or HELD_BOTH under DFS (worst of 84) or GBFS (rank 39); no macro set of the 84 has positive HC_D; inside one harness every set costs more transitions than no macros (HELD_BOTH: none 196/189, mined 1,028/681 DFS/GBFS). VERDICT B-KILL.
+
+**verdict.** B-KILL in T_7: repeated oracle subsequences added as extra actions are no better than arbitrary equally privileged macros, and move-set augmentation of this form increases search.
+
+**supersedes.** NUR-002 @ 86a429e
+
+**recorded.** 2026-09-14 after CRUCIBLE-B; appended, prior rows retained
 
 Provenance: {"evidence_levels": "incubation numbers OBSERVED; T_7 applicability UNTESTED"}
 
