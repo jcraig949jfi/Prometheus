@@ -268,3 +268,11 @@
   solo repair.
 - Lesson (real this time): I wrote a feature convention from memory of the observation layout instead of reading
   observe_all, and three receipts inherited it. Read the producer of an array before slicing it.
+- Landed: fix + correction rows d1f73fc3c; correction receipt ledger fe8616884 (INDETERMINATE, credits B).
+- B7 (B, KILL, cb5ad54f5; refutes C7d's CAUSE ATTRIBUTION only): H1 charge not last 29/36 CONFIRMED; H3 gs 612 j2 = charge
+  CONFIRMED; H4 all 24 excluded targets non-exact CONFIRMED; H2 WRONG -- 13/28 targets my learner fit fully are not exact
+  single-source-in-inputs under B's all-states model. Controls: composed forms exact 36/36, reverse-order cheat fails 32/36.
+  B's post-hoc reading: all 13 have 1 null surprise and support ~1 - 1/T, i.e. the fit fails only on the first transition
+  and is exact once lin_ops tie registers together -> B7b (reachable-state classification) proposed.
+- A's board audit: C7d's kill point removed (C kills 6 -> 5). Accepted.
+- Plan: C's single C7 re-run waits for B7b and pre-registers its targets from B7b's per-column classes (no sampled test).
