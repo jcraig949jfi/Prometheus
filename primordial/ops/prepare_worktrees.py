@@ -24,8 +24,10 @@ import subprocess
 import time
 
 PY = os.environ.get("PM_PY", "C:/Users/jcrai/lab/gw-venv/Scripts/python.exe")
-SPARSE = ["primordial", "roles/Nestor", "comms", "attacks", "ergon/probe", "SerendipityFoundry/worldfoundry", ".claude"]
+SPARSE = ["primordial", "roles/Nestor", "comms", "attacks", "ergon/probe", "evidence_wiki", "archaeon",
+          "SerendipityFoundry/worldfoundry", ".claude"]
 # ergon/probe: the pre-commit preflight probes (atk013, atk014) read it; without it every commit fails.
+# evidence_wiki, archaeon: comms.api imports them; round 2 lane B's `comms boot` crashed without them.
 LOG = pathlib.Path(os.environ.get("PM_PREPARE_LOG", "C:/Users/jcrai/lab/pm-data/launcher/prepare_log.jsonl"))
 
 
@@ -41,7 +43,7 @@ def verify(d: pathlib.Path) -> dict:
         "hygiene_test": [PY, "-m", "pytest", "-q", "-p", "no:cacheprovider", "primordial/tests/test_fabric_hygiene.py"],
         "warmup": [PY, "-m", "primordial.ops.warmup"],
         "preflight_probes": ["python", "attacks/preflight.py", "--probes"],
-        "comms_import": ["python", "-c", "import comms, comms.api"],
+        "comms_import": ["python", "-c", "import comms, comms.api, evidence_wiki.ew.db, archaeon.workspace"],
         "bus_import": [PY, "-c", "import primordial.bus.bus, primordial.fabric.rows"],
     }
     out = {}
