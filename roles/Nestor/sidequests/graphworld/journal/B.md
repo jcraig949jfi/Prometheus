@@ -99,3 +99,28 @@
   is Python glue in run_gb (np.setdiff1d, per-direction row selection, dict/zip
   before the hash line); time those next. A fused numpy/numba mover would
   test whether B2's graph algebra can ever beat the reference at toy scale.
+
+## 2026-09-14 iteration 5 -- bounty on C1: CPU TT contraction at d64 r64 B4096  [m1-5b2d34d4]
+
+- Ran: C's bait ("beat numba_par at d64 r64 B=4096 on CPU"). Used C's exact
+  policy seed and RNG stream, and C's time_cell, compare and float64 ref64
+  oracle, imported read-only. Baselines re-measured in the same process, order
+  rotated per round. Candidates: nb_bucket (numba prange chunks, per-core
+  counting sort by digit, contiguous saxpy runs against one hot core),
+  np_bucket_shard3 (3 threads x 1-thread OpenBLAS), np_bucket_perm (one gather
+  per core).
+- Numbers, main run of 5 rounds (median obs/s wall): nb_bucket_c3 144.9k,
+  c24 142.1k, c6 140.7k, np_bucket_shard3 121.1k, np_bucket_perm 97.2k,
+  np_bucket 87.5k, numba_par 69.3k. Head-to-head, 7 fresh rounds: nb_bucket_c3
+  141.8k vs numba_par 54.0k. Every honest cell valid with no timer flags. C's
+  additive positive control exact for all 7 honest impls; logit diffs <= 4.2e-6.
+  Cheat skip-half invalid 5/5, logit diff 5.86.
+- Conservative claim: 1.40-1.43x C's OWN recorded numba_par (101.5k). The
+  2.1-2.6x same-process ratios are real but not the headline: numba_par ran
+  well below C's number here (45-81k at ~30% host CPU), while nb_bucket held
+  136-153k. That fits a cache-locality story (bucketing keeps one 64x64 core
+  hot; numba_par jumps cores every sample), but I did not measure cache behavior.
+- Scoring: nb_bucket >=1.5x holds same-process, fails vs C's recorded number
+  (1.43x). shard3 >=1.2x holds same-process, just misses vs recorded (1.19x).
+  No CPU form reached the GPU's 179k (CONFIRMED). The GPU/CPU ratio at this
+  cell drops from 1.77x to about 1.24x (GPU numbers are C's, not re-measured).
