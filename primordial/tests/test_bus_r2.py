@@ -121,3 +121,11 @@ def test_guard_git_accepts_committed_rows_and_rejects_the_rest():
                                                      fetch=False, ref=parent))
     assert bus.guard_git({"git": {"sha": head}, "rows": "rows at primordial/bus/bus.py (+ notes)"},
                          fetch=False, ref="HEAD") == []
+
+def test_round2_receipts_do_not_self_score(live, monkeypatch):
+    monkeypatch.setenv("PM_LANE", "B")
+    monkeypatch.delenv("PM_BOARD_SCORING", raising=False)
+    rec = dict(lane="B", exp_id="t-kill", claim="c", status="KILL", engineering={}, science={"s": 1},
+               controls={"cheat": "ran"}, rows="primordial/ledger/rows/B/x.jsonl", git="abc1234")
+    bus.receipt(rec, board={"steps_per_s_verified": 1e9}, r=live)
+    assert live.zrange("pm:board:kills", 0, -1) == [] and live.zrange("pm:board:steps_per_s_verified", 0, -1) == []

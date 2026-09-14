@@ -229,8 +229,8 @@ def host_load(r=None) -> dict:
 
 
 def receipt(rec: dict, board: dict | None = None, r=None) -> str:
-    """Guard, validate, mirror to the committed ledger (flush), publish, and score.
-    board: {metric: score} applied ONLY if the receipt is board-eligible."""
+    """Guard, validate, mirror to the committed ledger (flush), publish.
+    board: {metric: score} is applied only with PM_BOARD_SCORING=1 and a board-eligible receipt."""
     rec = validate_receipt(dict(rec))
     lane, tag = me()
     if rec["lane"] != lane:
@@ -252,11 +252,12 @@ def receipt(rec: dict, board: dict | None = None, r=None) -> str:
         fh.flush()
     mid = r.xadd(RESULTS, {"json": json.dumps(rec, sort_keys=True)})
     eligible = board_eligible(rec)
-    if board and eligible:
-        for metric, score in board.items():
-            r.zincrby(f"pm:board:{metric}", float(score), f"{lane}:{rec['exp_id']}")
-    if rec["status"] == "KILL" and eligible:
-        r.zincrby("pm:board:kills", 1.0, lane)
+    if os.environ.get("PM_BOARD_SCORING") == "1":      # round 1 behaviour; OFF in round 2 (SWARM_R2 s0):
+        if board and eligible:                         # no session scores its own receipt; a scorer
+            for metric, score in board.items():        # program over rows replaces boards (backlog F12)
+                r.zincrby(f"pm:board:{metric}", float(score), f"{lane}:{rec['exp_id']}")
+        if rec["status"] == "KILL" and eligible:
+            r.zincrby("pm:board:kills", 1.0, lane)
     post("kill" if rec["status"] == "KILL" else "result",
          f"{rec['exp_id']} {rec['status']}{'' if eligible else ' (not board-eligible)'}",
          body=rec["claim"], ref=str(rec["rows"]), r=r)

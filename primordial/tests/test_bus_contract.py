@@ -48,6 +48,7 @@ def live(monkeypatch):
     from primordial.bus import bus
     monkeypatch.setattr(bus, "URL", url)
     monkeypatch.setenv("PM_RECEIPT_GUARD", "0")   # fake git sha in GOOD; the guard has its own tests
+    monkeypatch.setenv("PM_BOARD_SCORING", "1")   # these tests pin the round 1 scoring rules
     monkeypatch.setattr(bus, "LEDGER_DIR", __import__("pathlib").Path(os.environ.get("TMP", "/tmp")) / "pm_ledger_test")
     yield bus, r
     r.flushdb()
