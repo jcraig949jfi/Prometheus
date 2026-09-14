@@ -297,3 +297,10 @@ out as B's mechanism (blind elites' odd zero-weight fraction .31-.34, inside the
 Docstring and test comment fixed; the tool measures cheat power and makes no claim about why.
 Liveness flagged E STALE once at ~17:03 (transcript age 618 s during a background run): beat every
 <10 min while waiting.
+
+## 2026-09-14 r2 QUIESCE -- test launch 1 over (EPOCH 3 final)
+
+Conductor QUIESCE at 17:33. No task in hand; nothing new started. EPOCH 3 (final): rows=0 receipts=0,
+open_claims=none. Round 2 totals for E: 3 receipts (E-T1 FAIL, E-T2 PASS, E-T1b PASS), 372 rows, plus
+3 asks landed (B ledger fix, D seeded sampler, B cheat-power oracle). Carry forward: clause B reads
+graft vs both cheats; E-T2 has no fused kernel; round 1 LuaArchive runs are not seed-replayable. Loop stopped.
