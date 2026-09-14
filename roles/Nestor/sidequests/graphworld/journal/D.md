@@ -70,3 +70,19 @@
   depend on the operator; neither real operator crosses them. The anomaly is RESOLVED, and a child
   anomaly is filed for the valleys.
 - Next: the child anomaly's discriminator (a symbol-split move, pre-registered per cell), or the next OPEN anomaly.
+
+## 2026-09-14 round 2 iteration 2 -- D2 fitness-gate blindness (ANOM-1789415790381-0)  [m1-4f51cc32]
+
+- Claim: a one-semantic cheat leaves fitness exactly invariant when the state it corrupts cannot reach
+  yield_reg. Tested on 40 worlds (E4 used 5), 65 genomes x E4's 8 seeds, 4 cheats vs honest, predicate
+  posted first. Rows primordial/ledger/rows/D/D2-fitness-gate-blindness.jsonl, 4.3 s.
+- Held: the H1 theorem direction (yield_reg not a lin dst -> gate passes, 27/27 worlds); H2 (E4 worlds
+  1,2,4 not dst, 3,5 dst); H3 (w1 skip_lin fitness identical on every genome, so E4's cheat best
+  1818 > 1287 there was search noise, not an easier world); H5 (untriggered envs never change charge);
+  controls (honest repeat 0, trace hash never blind, label-shuffle null max 31 < 37).
+- Died: H1 as registered (37/40). Worlds 14 and 27 pass with yield_reg a lin dst because the yield window
+  (2048/65536) never fires; world 24 passes because the 0-clip absorbs 36 differing envs. H4 (29/40):
+  POST HOC the registers that are not lin dsts stay fixed in 29/29 charge-invariant worlds and 0/11 others,
+  because liveness couples charge back into action writes.
+- Gate pass rates over 40 worlds: skip_lin 30, no_regime_flip 39, stoch_swap 25, fix_unaffordable 32.
+  The fitness gate is not an oracle. RESOLVED; child anomaly: E4's QD is nondeterministic at a fixed seed.
