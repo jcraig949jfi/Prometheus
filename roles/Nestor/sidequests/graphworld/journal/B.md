@@ -30,3 +30,18 @@
   cc022989d). Receipt filed as PASS. SHA CORRECTION: the receipt's git field says
   26063a5b1, the pre-rebase id of e32f10f29 (rebase over E's commits rewrote it).
   Next time, file the receipt AFTER the rebase.
+
+## 2026-09-14 iteration 2 -- B1s oracle sensitivity floor  [m1-5b2d34d4]
+
+- Ran: three ONE-semantic cheats in the numpy form over 60 worlds x 16 seeds
+  (abstain_p 0.3). Each episode is tagged "exercised" if the honest run touched
+  the semantic while the episode was live.
+- Numbers: stoch_swap 341/341 detected; no_regime_flip 130/130; fix_unaffordable
+  605/759 = 79.7%. 0 false alarms in all three; honest form 0/960 mismatches.
+  The honest numpy oracle still passes 320/320 after adding the cheat hooks.
+- What died: my ">=95% floor" prediction (KILL). I did predict fix_unaffordable
+  would be the weakest. An unpaid write can be absorbed with no trace change.
+- Consequence for B1: 320/320 equality covers exercised AND visible behaviour
+  only. A form wrong on one quiet semantic passes ~1 in 5 sampled episodes.
+- Steal next: E's saturation lesson held in a new shape. Diagnose the 154
+  absorbed episodes, then B2 GraphWorld toy.

@@ -42,7 +42,9 @@ class NpEncounter:
         self.done = np.zeros(n, dtype=bool)
         self.done_tick = np.full(n, -1, dtype=np.int64)
         self.tick = 0
-        self.pend = np.zeros((m.delay + 1, n, m.n_regs), dtype=np.int64)
+        self.unpaid = np.zeros(n, dtype=np.int64)
+        self.kicks = np.zeros(n, dtype=np.int64)
+        self.pend =np.zeros((m.delay + 1, n, m.n_regs), dtype=np.int64)
         self.hist = np.zeros((8, n, m.n_regs), dtype=np.int64)
         w = self.world_id
         self.st_stoch = np.array([stream_state("stoch", w, int(s)) for s in seeds], dtype=np.uint64)
@@ -89,9 +91,13 @@ class NpEncounter:
         # phase 1: intake
         x = actions.astype(np.int64) % 8                       # [n,S,W]
         cost = x.sum(-1) * m.act_cost
-        self.charge -= np.where(live & (cost <= self.charge), cost, 0)
+        afford = cost <= self.charge
+        self.unpaid += (live & ~afford & (cost > 0)).any(1) & ~self.done   # exercise counter, in-episode only
+        self.charge -= np.where(live & afford, cost, 0)
         slot = self.pend[(t + m.delay) % (m.delay + 1)]
         xw = x * live[:, :, None]
+        if self.cheat == "fix_unaffordable":        # one-semantic cheat: unpaid writes dropped
+            xw = xw * afford[:, :, None]
         for i, tgt in enumerate(self.act_targets):
             slot[:, tgt] += xw[:, :, i].sum(1) * 251
         # phase 2: world transition
@@ -101,7 +107,8 @@ class NpEncounter:
         self.pend[land] = 0
         regs = self.regs
         if self.cheat != "skip_lin":
-            flip = bool(m.regime_period) and (t // m.regime_period) % 2 == 1
+            flip = bool(m.regime_period) and (t // m.regime_period) % 2 == 1 \
+                and self.cheat != "no_regime_flip"
             for dst, a, s1, b, s2, c in self.lin:
                 aa = (M - a) % M if flip else a
                 regs[:, dst] = (aa * regs[:, s1] + b * regs[:, s2] + c) % M
@@ -112,10 +119,12 @@ class NpEncounter:
                 st2, o2 = xs_next(st)
                 st3, o3 = xs_next(st2)
                 idx = np.nonzero(hit)[0]
+                self.kicks += hit & ~self.done
                 # wforge: `regs[below(n_regs)] = below(M)` evaluates the RHS first,
                 # so draw 2 is the VALUE and draw 3 the INDEX
-                regs[idx, (o3[idx] % np.uint64(m.n_regs)).astype(np.int64)] = \
-                    (o2[idx] % np.uint64(M)).astype(np.int64)
+                vd, xd = (o3, o2) if self.cheat == "stoch_swap" else (o2, o3)
+                regs[idx, (xd[idx] % np.uint64(m.n_regs)).astype(np.int64)] = \
+                    (vd[idx] % np.uint64(M)).astype(np.int64)
                 st = np.where(hit, st3, st)
             self.st_stoch = st
         # phase 3: economy
