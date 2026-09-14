@@ -10,6 +10,9 @@
   post KIND SUBJECT [BODY] [--to L,L|ALL] [--ref REF]
   claim EXP_ID                   first claim wins (exit 1 if taken)
   burst SECONDS NOTE             announce a CPU burst (visible to host_load until it expires)
+  lease show                     the GPU lease holder (O5), or "free"
+  lease take SECONDS PURPOSE [--wait S]   take it; prints the record JSON (exit 1 if busy)
+  lease release RECORD_JSON      release a lease taken with `lease take`
   board [METRIC]                 list boards, or standings for one metric
   results [N]                    last N receipts (one line each)
   anomaly add SUBJECT OBSERVATION [--expected X] [--surprise X] [--discriminator X] [--source X]
@@ -51,6 +54,11 @@ def main(argv: list[str]) -> int:
     p.add_argument("--to", default=""); p.add_argument("--ref", default="")
     c = sub.add_parser("claim"); c.add_argument("exp_id")
     bu = sub.add_parser("burst"); bu.add_argument("seconds", type=int); bu.add_argument("note")
+    le = sub.add_parser("lease"); lsub = le.add_subparsers(dest="lcmd")
+    lsub.add_parser("show")
+    lt = lsub.add_parser("take"); lt.add_argument("seconds", type=float); lt.add_argument("purpose")
+    lt.add_argument("--wait", type=float, default=0)
+    lr = lsub.add_parser("release"); lr.add_argument("record")
     bo = sub.add_parser("board"); bo.add_argument("metric", nargs="?")
     rs = sub.add_parser("results"); rs.add_argument("n", nargs="?", type=int, default=20)
     an = sub.add_parser("anomaly"); asub = an.add_subparsers(dest="acmd")
@@ -100,6 +108,20 @@ def main(argv: list[str]) -> int:
     elif a.cmd == "burst":
         bus.burst(a.seconds, a.note, r=r)
         print("ok")
+    elif a.cmd == "lease":
+        if a.lcmd == "take":
+            try:
+                print(json.dumps(bus.lease_acquire(a.purpose, a.seconds, a.wait, r=r), sort_keys=True))
+            except bus.LeaseBusy as e:
+                print(e)
+                return 1
+        elif a.lcmd == "release":
+            ok = bus.lease_release(json.loads(a.record), r=r)
+            print("released" if ok else "not held (expired or taken over)")
+            return 0 if ok else 1
+        else:
+            h = bus.lease_holder(r=r)
+            print(json.dumps(h, sort_keys=True) if h else "free")
     elif a.cmd == "board":
         if not a.metric:
             for k in sorted(r.scan_iter("pm:board:*")):

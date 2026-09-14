@@ -7,6 +7,7 @@
   pm:tags             hash    lane -> registered instance tag (set by `hello`)
   pm:alive:<L>        hash    heartbeat {tag, ts, status}, TTL PM_ALIVE_TTL (180 s)
   pm:burst:<L>        string  announced CPU burst, TTL = its duration
+  pm:gpu:lease        string  the one GPU lease {holder, lane, tag, since, until, purpose, token} (O5)
   pm:anomalies        stream  ANOMALY queue (round 2 cohort D reads only this)
   pm:anomaly_status   hash    anomaly id -> OPEN / RESOLVED / REFUTED / INDETERMINATE
   pm:anomaly_events   stream  status changes with notes
@@ -35,7 +36,10 @@ import pathlib
 import re
 import shutil
 import subprocess
+import threading
 import time
+import uuid
+from contextlib import contextmanager
 
 import redis
 
@@ -174,6 +178,110 @@ def burst(seconds: int, note: str, r=None) -> None:
     post("note", f"BURST {int(seconds)}s", note, r=r)
 
 
+# ------------------------------------------------------------------ GPU lease (O5)
+# One RTX 5060 Ti is shared by the swarm: a speed/throughput number counts only if
+# taken inside gpu_lease(). The key carries a Redis TTL AND an `until`; a lease whose
+# `until` has passed is taken over even if the key lingers. Release and renew are
+# compare-and-set on the stored record, so a taken-over holder cannot touch its successor.
+
+GPU_LEASE = "pm:gpu:lease"
+_CAS_DEL = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) end return 0"
+_CAS_SET = ("if redis.call('get', KEYS[1]) == ARGV[1] then "
+            "return redis.call('set', KEYS[1], ARGV[2], 'PX', ARGV[3]) end return nil")
+_LEASE_FIELDS = ("holder", "lane", "tag", "purpose", "since", "until", "token")
+
+
+class LeaseBusy(RuntimeError):
+    pass
+
+
+def _lease_val(rec: dict) -> str:
+    return json.dumps({k: rec[k] for k in _LEASE_FIELDS}, sort_keys=True)
+
+
+def lease_holder(r=None) -> dict | None:
+    """The current live lease, or None (an expired `until` counts as free)."""
+    r = r or conn()
+    raw = r.get(GPU_LEASE)
+    if not raw:
+        return None
+    d = json.loads(raw)
+    return d if float(d.get("until", 0)) > time.time() else None
+
+
+def lease_acquire(purpose: str, ttl_s: float = 600, wait_s: float = 0, poll_s: float = 1.0, r=None) -> dict:
+    """Take the GPU lease or raise LeaseBusy after wait_s. -> the lease record."""
+    lane, tag = me()
+    r = r or conn()
+    deadline = time.monotonic() + wait_s
+    px = max(1, int(ttl_s * 1000))
+    while True:
+        now = time.time()
+        rec = {"holder": f"{lane}[{tag}]", "lane": lane, "tag": tag, "purpose": purpose[:200],
+               "since": round(now, 3), "until": round(now + ttl_s, 3), "token": uuid.uuid4().hex}
+        if r.set(GPU_LEASE, _lease_val(rec), nx=True, px=px):
+            break
+        raw = r.get(GPU_LEASE)
+        if raw and float(json.loads(raw).get("until", 0)) <= now:
+            if r.eval(_CAS_SET, 1, GPU_LEASE, raw, _lease_val(rec), px):   # take over an expired lease
+                rec["took_over"] = json.loads(raw).get("holder")
+                break
+            continue
+        if time.monotonic() >= deadline:
+            held = json.loads(raw) if raw else {}
+            raise LeaseBusy(f"GPU lease held by {held.get('holder')} for {held.get('purpose')!r} "
+                            f"until {held.get('until')}")
+        time.sleep(poll_s)
+    note = purpose + (f" (took over {rec['took_over']})" if rec.get("took_over") else "")
+    post("note", f"GPU LEASE taken {ttl_s:g}s", note, r=r)
+    return rec
+
+
+def lease_renew(rec: dict, ttl_s: float = 600, r=None) -> bool:
+    r = r or conn()
+    new = dict(rec, until=round(time.time() + ttl_s, 3))
+    if r.eval(_CAS_SET, 1, GPU_LEASE, _lease_val(rec), _lease_val(new), max(1, int(ttl_s * 1000))):
+        rec["until"] = new["until"]
+        return True
+    return False
+
+
+def lease_release(rec: dict, r=None) -> bool:
+    r = r or conn()
+    return bool(r.eval(_CAS_DEL, 1, GPU_LEASE, _lease_val(rec)))
+
+
+@contextmanager
+def gpu_lease(purpose: str, ttl_s: float = 600, wait_s: float = 0, renew: bool = True, r=None):
+    """Hold the GPU lease around a timing measurement. Renewed every ttl_s/3 while held;
+    the yielded record's `lost` flag is set if a renewal failed (the number is then
+    INDETERMINATE for speed)."""
+    r = r or conn()
+    rec = lease_acquire(purpose, ttl_s, wait_s, r=r)
+    rec["lost"] = False
+    stop = threading.Event()
+    lock = threading.Lock()
+
+    def _renew():
+        while not stop.wait(ttl_s / 3):
+            with lock:
+                if not lease_renew(rec, ttl_s, r=r):
+                    rec["lost"] = True
+                    return
+
+    th = threading.Thread(target=_renew, daemon=True) if renew else None
+    if th:
+        th.start()
+    try:
+        yield rec
+    finally:
+        stop.set()
+        if th:
+            th.join(timeout=5)
+        with lock:
+            lease_release(rec, r=r)
+
+
 # ------------------------------------------------------------------ receipts
 
 def guard_git(rec: dict, fetch: bool = True, ref: str | None = None, repo=REPO) -> list[str]:
@@ -223,6 +331,8 @@ def host_load(r=None) -> dict:
     try:
         r = r or conn()
         out["bursts"] = {k: json.loads(v) for k in r.scan_iter("pm:burst:*") if (v := r.get(k))}
+        held = lease_holder(r)
+        out["gpu_lease"] = None if held is None else {k: held[k] for k in ("holder", "purpose", "until")}
     except Exception:                                         # pragma: no cover
         pass
     return out
