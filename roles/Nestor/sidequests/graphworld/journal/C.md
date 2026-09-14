@@ -327,3 +327,12 @@
   E7b's RNG stream. Harness 6b515ef69, prior 0.05, expectation 3-4 gens.
 - Result: 5 gens, held64 median 38.96 (IQR 2.87) < 59.09 -> FAIL. Oracles clean, skip_lin and skip-odd 16/16.
 - Corroborates the C-R2-01 anomaly on a 2nd family and substrate: train 91% of full budget, held-out 63%. No new anomaly.
+
+## 2026-09-14 round 2 iteration 4: C-R2-04 drawn cell tt_feat/w3/cpu_ttl/torch_gpu -> FAIL
+
+- Draw seed 8325970016782937267. Built a CUDA tt_feat forward (C4 _TT.logits step for step) swapped into E7.rollout;
+  world stays numpy. Port check (no rows): argmax == numpy 10906/10906. GPU asked of B 20:41Z, no reply, idle; burst posted.
+- Attempt 1 (10b586e4a) crashed in a report-only helper before any score: aborted row 3ccfb8e5d, fix 9c9ccf276, disclosed.
+- Result: 11-13 gens, held64 median 63.77 (IQR 14.8) < 89.49 -> FAIL. Oracles clean, both cheats 16/16, GPU==numpy 1.0.
+- Train/seed 6.6-20.8 looked inverted vs held-out; checked, not a bug: numpy rescoring == GPU exactly, and E9's w3 train
+  is ~28 vs held ~91. It cuts AGAINST my C-R2-01 anomaly: in w3 train lost more (56%) than held-out (70%). Posted.
