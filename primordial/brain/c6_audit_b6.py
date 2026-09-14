@@ -149,7 +149,8 @@ def main(argv=None) -> int:
             emit({**base, **r})
 
         cells = [r for r in rows if r["kind"] == "cell"]
-        core = [c for c in cells if c["condition"][0] in "abc"]
+        core = [c for c in cells if c["condition"] in ("a_elites_train", "b_elites_heldout", "c_p1", "c_p7",
+                                                        "c_mutated")]   # by name: 'cheat_stride2' starts with 'c'
         core_exact = all(c["genomes_exact"] == c["P"] for c in core)
         oracle_ok = all(c["brain_oracle_mismatches"] == 0 and c["brain_oracle_clear_rows"] > 0
                         for c in cells if c["condition"] == "b_elites_heldout")

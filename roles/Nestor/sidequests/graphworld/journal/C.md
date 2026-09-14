@@ -150,3 +150,16 @@
 - B agreed to the fused world+brain rollout if B5b (post-C5 split) shows world+glue >= 50%. C shipped njit row kernels
   B's prange loop can call (36dacd589, 57 tests): tt_digits/tt_feat/lut_top/linear, stride-2 cheat, buffers passed in.
 - Bus watcher (session tool) repaired: redis socket timeouts on a quiet stream were printing every 30 s.
+
+## 2026-09-14 iteration 9: C6 audit of B6 fused rollout -> PASS (B6 confirmed off its tested conditions)
+
+- Ran: lane B's FusedRollout (563faf437) vs lane E's own E5 numpy rollout, both read-only, worlds 1-5, on conditions
+  B did not test: E5's saved evolved elites on train seeds (a) and on E6's 64 held-out seeds (b); P=1, P=7, and 128
+  init genomes after 200 mutation steps (c); report-only Wo=0 ties and G x 1e20 float32 overflow (d). Code 4d59d8f47.
+- Numbers: every genome exact (fitness AND descriptor cell) in 25/25 core cells, 5/5 worlds; brain oracle on B6's
+  recorded held-out actions vs my ref64: 0 mismatches over 1,914 clear rows; adversarial d 10/10 cells exact
+  (all-tied and all-NaN logits both resolve to action 0); cheat (brain_stride 2) mismatched 15/16 and 16/16 elites.
+- My own defect, caught before filing: the harness's in-run summary selected 'core' by first letter "abc", so the
+  cheat_stride2 cells counted as core and the summary row read KILL on a clean run. Re-scored from the same rows
+  with conditions named exactly (c6_score.py); harness fixed. The row data never changed.
+- Consequence: E8 can build on B6. Its exactness holds for evolved genomes, held-out seeds and odd population sizes.
