@@ -96,13 +96,19 @@ def score(q: QLin, raw, seeds) -> float:
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--world", type=int, default=4); p.add_argument("--run-seeds", default="0-7")
-    p.add_argument("--gens", type=int, default=800); p.add_argument("--batch", type=int, default=128)
+    p.add_argument("--gens", type=int, default=0, help="0 = the pressure's round 1 setup (E10 800, E9 200)")
+    p.add_argument("--batch", type=int, default=128)
+    p.add_argument("--pressure", choices=("train128", "train8"), default="train128")
     p.add_argument("--port", type=int, default=6391); p.add_argument("--tag", default="full")
     p.add_argument("--no-ledger", action="store_true", help="smoke: rows as dev, no QD ledger row")
     a = p.parse_args()
     gs, status = a.world, ("dev" if a.no_ledger else "record")
-    global EXP, ROWS
-    EXP = f"B-R2-1-int4-linear-nibble-w{gs}-train128"
+    global EXP, ROWS, TRAIN
+    # train128 = E10 closed condition (seeds 9100..9227, 800 gens); train8 = E9 (E6.TRAIN, 200 gens)
+    TRAIN = E8.seeds_n(128) if a.pressure == "train128" else E7.TRAIN
+    a.gens = a.gens or (800 if a.pressure == "train128" else 200)
+    pname = f"{a.pressure}_held64"
+    EXP = f"B-R2-1-int4-linear-nibble-w{gs}-{a.pressure}"
     ROWS = ROWS.with_name(f"{EXP}.jsonl")
     r = redis.Redis(host="127.0.0.1", port=a.port)
     q = QLin(gs)
@@ -150,8 +156,8 @@ def main() -> None:
         return
     med = float(np.median(held))
     iqr = float(np.percentile(held, 75) - np.percentile(held, 25))
-    verdict = QL.check(QL.load(), f"w{gs}", "train128_held64", med, iqr, q.glen, len(held), bool(oracle_clean))
-    cell = {"cell": {"representation": "linear_int4_nibble", "world": f"w{gs}", "pressure": "train128_held64",
+    verdict = QL.check(QL.load(), f"w{gs}", pname, med, iqr, q.glen, len(held), bool(oracle_clean))
+    cell = {"cell": {"representation": "linear_int4_nibble", "world": f"w{gs}", "pressure": pname,
                      "substrate": "numba_fused", "channel": "none"},
             "mechanism": "closed_loop_linear_int4_nibble_codebook",
             "fitness": {"held64_median": round(med, 4), "iqr": round(iqr, 4), "n_runs": len(held),

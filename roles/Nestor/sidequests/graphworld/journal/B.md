@@ -416,3 +416,8 @@
   -> FAIL vs linear 61.40 @ 344. Joint 2-world claim fails; prior w3 0.55 / w1 0.5.
 - w1 run seeds span 36.8..80.2: the search, not the genome, looks like the bottleneck there
   (float baseline had 4 runs, no IQR). Filed as an anomaly for D.
+- E fixed qd_ledger check (edb064317, front over baseline rows); my w4 repro now PASS stably.
+- B-R2-3 (train8_held64, E9 setup 200x128 on E6's 8 train seeds): int4 linear+nibble vs float
+  linear. w4 48 B 87.54 IQR 9.23 (>= 86.885) PASS; w3 32 B 104.95 IQR 5.48 (>= 98.115) PASS;
+  w1 52 B 43.63 IQR 7.26 (>= 27.565; also > 35.46 + 0.5 IQR) PASS. Oracles clean all rs0.
+  w4 sits 2.4 below the float median: parity by the IQR tolerance, not a tie. Priors .6/.65/.5.
