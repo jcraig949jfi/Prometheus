@@ -1,6 +1,6 @@
 {
  "schema": "techne.fossil.world_preservation/1",
- "written_utc": "2026-09-13T21:56:34Z",
+ "written_utc": "2026-09-14T00:06:23Z",
  "lattice": {
   "-1": "N_A",
   "0": "UNKNOWN",
@@ -8,25 +8,25 @@
   "2": "NAMED",
   "3": "PINNED"
  },
- "n": 117,
+ "n": 121,
  "distribution": {
   "BODY_PRESERVATION": {
-   "PINNED": 117
+   "PINNED": 121
   },
   "EXTERNAL_SOURCE_PRESERVATION": {
-   "PINNED": 117
+   "PINNED": 121
   },
   "BUILD_WORLD_PRESERVATION": {
    "PINNED": 67,
    "FLOATING": 15,
    "N_A": 13,
-   "UNKNOWN": 20,
+   "UNKNOWN": 24,
    "NAMED": 2
   },
   "RUN_WORLD_PRESERVATION": {
    "PINNED": 75,
    "FLOATING": 17,
-   "UNKNOWN": 20,
+   "UNKNOWN": 24,
    "NAMED": 5
   }
  },
@@ -755,6 +755,36 @@
    "overall": "PINNED"
   },
   {
+   "specimen_id": "cosell-eliza-bbn-lisp-1969",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
    "specimen_id": "des-reference",
    "axes": {
     "BODY_PRESERVATION": {
@@ -963,6 +993,36 @@
    "world_image": "prometheus-fossil-lang:bookworm",
    "world_is_single_host": true,
    "overall": "PINNED"
+  },
+  {
+   "specimen_id": "eliza-weizenbaum-mad-slip-1965",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
   },
   {
    "specimen_id": "emcee-3.1.6",
@@ -1895,6 +1955,36 @@
    "overall": "UNKNOWN"
   },
   {
+   "specimen_id": "lisp-1-5-ibm7090-1962",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
    "specimen_id": "lmdb-0.9.31",
    "axes": {
     "BODY_PRESERVATION": {
@@ -2766,6 +2856,36 @@
   },
   {
    "specimen_id": "souffle-2.4.1",
+   "axes": {
+    "BODY_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "tree hash matches the record"
+    },
+    "EXTERNAL_SOURCE_PRESERVATION": {
+     "level": 3,
+     "state": "PINNED",
+     "why": "every artifact names an exact sha256/commit"
+    },
+    "BUILD_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the build world"
+    },
+    "RUN_WORLD_PRESERVATION": {
+     "level": 0,
+     "state": "UNKNOWN",
+     "why": "no recipe at all: nothing can be established about the runs world"
+    }
+   },
+   "min_level": 0,
+   "world_reproducible": false,
+   "world_image": "",
+   "world_is_single_host": false,
+   "overall": "UNKNOWN"
+  },
+  {
+   "specimen_id": "spacewar-pdp1-1962",
    "axes": {
     "BODY_PRESERVATION": {
      "level": 3,
