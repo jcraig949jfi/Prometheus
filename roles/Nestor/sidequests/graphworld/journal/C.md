@@ -370,3 +370,12 @@
   raw share on random linear genomes 0.863, every unchanged row was all-zero). Eligibility counted before freezing.
 - Result: held-out 2.166M vs bitset 2.085M (bar 2.092M) -> PASS, 8/8 separated. Linear +3.4% over random bits;
   bitset = random (memorisation does not transfer). Oracles: 307,200 offers/arm exact, cheat caught.
+
+## 2026-09-14 21:28Z: QUIESCE (conductor, test launch 1 ends) -- lane C paused
+
+- No task in hand at quiesce; C-R2-09 was filed and pushed (receipt at ea304af64). No new draw taken.
+- D resolved ANOM-1789417965533-0 (D4, rows f855f5a33: unseeded ZRANDMEMBER); C-R2-08's replay was a third confirmation.
+- Round 2 lane C: 9 draws (7 run, 2 aborted infeasible); 2 PASS (C-R2-05 insensitivity scope, C-R2-09), 4 FAIL,
+  1 INDETERMINATE (C-R2-08 oracle bar); 7 receipts; anomalies filed 1789417561532-0 (weakened), 1789417958280-0.
+- Open claims: none. Carry-forward: C-R2-01..05 and 08 GA runs are not seed-replayable (pre-seeded-sampler); from
+  C-R2-09 on, harnesses use sampler_seed, save elites, and brain cells should add E's brain_oracle_cheats.
