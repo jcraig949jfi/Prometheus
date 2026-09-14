@@ -18,7 +18,9 @@
 
 .EXAMPLE
   # Self-test of the logging (no Claude):
-  powershell -ExecutionPolicy Bypass -File primordial\ops\launch_lane.ps1 -Lane B -Worktree . -Exe cmd.exe -ExeArgs '/c','exit 3'
+  powershell -ExecutionPolicy Bypass -File primordial\ops\launch_lane.ps1 -Lane B -Worktree . -Exe cmd.exe -ExeArgs "/c exit 3"
+  # (under -File an array like '/c','exit 3' binds as ONE literal string; pass one string)
+  # Through a scheduled task, with disable-after-run: python -m primordial.ops.schtask_launch selftest
 #>
 param(
     [Parameter(Mandatory = $true)][ValidateSet('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'P', 'Q', 'W', 'T', 'U')][string]$Lane,

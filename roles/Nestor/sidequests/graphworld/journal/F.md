@@ -38,3 +38,23 @@ Threads: 3 (conductor contract 1789425755152-0 overrides the boot prompt's 5).
   gets it after release; expired lease taken over, old record cannot
   release/renew; Redis TTL expiry frees it; context manager renews past 2
   TTLs; host_load records holder; CLI round trip. Suite 43 passed.
+
+## 2026-09-14 iteration 3 -- O1 scheduled-task launcher (DONE)
+
+- ops/schtask_launch.py: `launch L --worktree W [--prompt-dir D]` writes
+  the .cmd with Python (CRLF, ASCII, quoted paths), then schtasks
+  /Create ONCE /IT -> /Run -> /Change /DISABLE (always, even after a failed
+  run) -> verify from the task XML (<Settings><Enabled>, locale-free).
+  Still enabled -> exit 5. `audit` lists PM_* tasks still enabled.
+- `selftest`: the real schtasks path with a dummy cmd.exe /c exit 5 and a
+  private launch log; requires start logged, exit_code 5, task disabled,
+  then deletes the task.
+- Live self-test 18:51 FAILED exit_code_5 (got 1): under `powershell -File`
+  an array argument '/c','exit 5' binds as ONE literal string. The dummy
+  args are now one string ("/c exit 5"; launch_lane.ps1 joins them anyway),
+  and launch_lane.ps1's own self-test example carried the same bug (fixed).
+- Live self-test 18:52 PASS (launched, start logged, exit 5, disabled,
+  deleted). audit: no enabled PM_* tasks (the conductor's PM_bld_* are
+  disabled).
+- Tests: test_o1_schtask_launch.py (7 with schtasks faked + 1 live behind
+  PM_LIVE_SCHTASKS=1). Suite 50 passed, 1 skipped.
