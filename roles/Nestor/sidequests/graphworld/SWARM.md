@@ -72,14 +72,18 @@ B's batched world lands; C trains on a stub world; D runs a 2-slot toy).
 ## 3. Lanes (owner directory; nobody edits another lane's directory)
 
 A  CONDUCTOR + FABRIC      primordial/core, primordial/bus, primordial/fabric,
-   (Nestor-A, this session) roles/Nestor/sidequests/graphworld/*
+   (Nestor-A[m1-449a9e76] since 11:39; predecessor m1-918ab2b0 stopped 07:29,
+    see POSTMORTEM_2026-09-14_A_D.md) roles/Nestor/sidequests/graphworld/*
+   A0 LIVENESS (added): every lane has a bus hello; audit board scores.
    A1 bus, contract, board, boot kit ........ DONE at v0 (tests in commit)
    A2 FalkorDB from source, reproducible artifact + untouched baseline with
-      their bench harness (Track J) .......... build running
+      their bench harness (Track J) .......... BUILT 07:29; smoke PASS (loads, Cypher
+      answers); see primordial/fabric/A2_BUILD.md; untouched baseline bench NOT run
    A3 stream ledger: world -> XADD -> batched durable writer -> SQLite;
       1/100/10k events, N producers, slow writer, kill -9 producer / writer
       / redis, restart, duplicates, ordering; count lost/dup exactly (Track B).
-      Done = kill matrix rows + packet for Daedalus.
+      Done = kill matrix rows + packet for Daedalus. Quick rows committed
+      (93153bfcd); full run 11:39 by m1-449a9e76.
    A4 CHIMERA-0 integration harness.
 
 B  SOUP (worlds, physics kernels, compilation)        primordial/soup
