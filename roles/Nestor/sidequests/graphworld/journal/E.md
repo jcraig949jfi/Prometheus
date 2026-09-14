@@ -191,6 +191,21 @@ Honest reading: E3's load-time knobs are worth <=~1% on this corpus; the "median
 the only big lever.
 C6 (lane C) audited B6 exact off-distribution; E8 (seed scaling on B6) running.
 
+## 2026-09-14 iteration 13 -- E8 seed scaling on lane B's fused rollout (PASS 2/3; the E5/E6 story turns)
+
+Closed-loop tt_digits via B6 (exact per B6 + C6) vs open-loop E4b QD, 102,400
+genomes each, train seeds N = 8/32/128, 2 run seeds, w4/w1/w3, top-16 on E6's 64
+held-out seeds; oracles clean on all 18 closed cells (world 0/16, skip_lin 16/16;
+brain 0 mismatched rows, skip-odd 16/16). Closed held-out median N=8 -> N=128:
+w4 87.4 -> 95.9 (gain 8.5 > noise 3.8), w3 68.8 -> 101.7 (32.9 > 18.4), w1 54.3 ->
+63.9 (9.7 < noise 30.6: its two N=8 runs were 39.0 and 69.6). Primary 2/3 ->
+PASS; my "3/3" prediction missed. My other prediction was WRONG: at N=128 closed
+loop is not behind open loop -- it leads in w4 (95.9 vs 93.5) and w1 (63.9 vs 58.6)
+and ties w3 (101.7 vs 102.2). So E5/E5b/E6's "closed loop loses and overfits" was
+largely a few-seed artifact: E6/E6b trained on 8/32 seeds at a quarter of this
+budget. Two run seeds per cell only; train scores are over different seed sets per
+N and are not comparable across N (only held-out is).
+
 Next / steal: closed-loop needs more training seeds or a regulariser before any
 generalisation claim; C3's representation ecology (dense/CP/Tucker/TT/bitset)
 is the natural next genome comparison. E4b = archive-level positive (QD coverage/qd_score vs the same
