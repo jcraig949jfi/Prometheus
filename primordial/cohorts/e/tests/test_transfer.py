@@ -90,6 +90,10 @@ def test_run_pair_smoke_integrity_and_abort():
     assert len(by[("graft", 0)]["held_curve"]) == len(T.checkpoints(3))
     assert {r["status"] for r in w.rows} == {"record", "cheat", "control"}
     assert "held_auc_p" in s["graft"] and "gens_to" in s["scratch"]
+    for c in ("graft", "self_graft"):
+        assert s[c]["vs_cheats_held_auc_p_max"] == max(s[c]["vs_rand_graft_held_auc_p"], s[c]["vs_shuffle_graft_held_auc_p"])
+    by_c = lambda c: np.array([by[(c, rs)]["held_auc"] for rs in (0, 1)])
+    assert np.isclose(s["graft"]["vs_rand_graft_held_auc_diff_mean"], (by_c("graft") - by_c("rand_graft")).mean())
     w2 = _W()
     assert "aborted" in T.run_pair(1, 4, "linear", [0], 3, 24, 2, "test", w2, oracles=False)
     assert w2.rows[0]["status"] == "aborted"

@@ -289,6 +289,15 @@ def run_pair(donor: int, recipient: int, family: str, run_seeds, gens: int, batc
                 d = col(c, k) - col("scratch", k)
                 summ[c][f"{k}_diff_mean"] = float(d.mean())
                 summ[c][f"{k}_p"] = signflip_p(d)
+    # E-T1 lesson: graft minus scratch false-alarmed through a distribution-equal cheat (w3, n=8).
+    # A transfer is read against the cheats, paired per run seed: graft - rand_graft, graft - shuffle_graft.
+    for c in ("graft", "self_graft"):
+        for cheat in ("rand_graft", "shuffle_graft"):
+            d = col(c, "held_auc") - col(cheat, "held_auc")
+            summ[c][f"vs_{cheat}_held_auc_diff_mean"] = float(d.mean())
+            summ[c][f"vs_{cheat}_held_auc_p"] = signflip_p(d)
+        summ[c]["vs_cheats_held_auc_p_max"] = max(summ[c]["vs_rand_graft_held_auc_p"],
+                                                 summ[c]["vs_shuffle_graft_held_auc_p"])
     writer.write(summ)
     return summ
 
