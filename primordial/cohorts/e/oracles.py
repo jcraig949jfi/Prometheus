@@ -90,3 +90,22 @@ def brain_oracle_cheats(g7, g, seeds, seed: int = 0, rows_per_elite: int = ROWS_
             out[name]["mismatched_rows"] += mm
             out[name]["elites_caught"] += bool(mm)
     return out
+
+
+# C1 (round 3, builder G): the powered cheats are THE brain oracle for a verdict; skip-odd is retired.
+POWERED_RULE = "honest 0 mismatched; shift_action caught on every elite; ablate_top caught on >= 14/16 of elites " \
+               "(input-invariant elites never count as caught)"
+
+
+def brain_verdict(g7, g, seeds, cheat: str = "powered", seed: int = 0, rows_per_elite: int = ROWS_PER_ELITE) -> dict:
+    """The brain oracle a harness may use for a verdict. Any cheat other than 'powered' raises: E7's
+    skip-odd forward is near-invariant for some brains (B: 13/16 int2 elites), so it cannot back a PASS."""
+    if cheat != "powered":
+        raise ValueError(f"brain oracle cheat {cheat!r} cannot back a verdict (C1: skip-odd is retired; "
+                         f"use cheat='powered', {POWERED_RULE})")
+    out = brain_oracle_cheats(g7, g, seeds, seed=seed, rows_per_elite=rows_per_elite)
+    P = out["elites"]
+    need = -(-14 * P // 16)
+    clean = (out["honest"]["mismatched_rows"] == 0 and out["shift_action"]["elites_caught"] == P
+             and out["ablate_top"]["elites_caught"] >= need)
+    return {"clean": bool(clean), "rule": POWERED_RULE, "ablate_top_needed": need, "cheats": out}
