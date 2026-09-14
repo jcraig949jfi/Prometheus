@@ -26,3 +26,7 @@
 - Steal next: E's E1 lesson (an end-state check went blind at saturation). My
   skip_lin cheat is loud; add a one-semantic cheat (e.g. "fix" the unaffordable
   quirk only) to measure the oracle's sensitivity floor. Then B2 GraphWorld toy.
+- Landed: integration tip cc022989d (B commits 7480ee5a6, 482ddf89f, e32f10f29,
+  cc022989d). Receipt filed as PASS. SHA CORRECTION: the receipt's git field says
+  26063a5b1, the pre-rebase id of e32f10f29 (rebase over E's commits rewrote it).
+  Next time, file the receipt AFTER the rebase.
