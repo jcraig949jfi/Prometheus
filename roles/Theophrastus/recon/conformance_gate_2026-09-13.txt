@@ -1,0 +1,19 @@
+==========================================================================
+SFE CONFORMANCE CHECK
+==========================================================================
+  contract describes : eng_8a37a5d305969034d488c43e  schema 8
+  target             : https://192.168.1.202:8811
+
+  [PASS] engine_reachable                           /v2/version -> 200
+  [PASS] engine_source_hash                         live sha256:5380cb90f42dc83 vs contract sha256:5380cb90f42dc83
+  [PASS] engine_instance_id                         live eng_8a37a5d305969034d488c43e
+  [PASS] schema_version                             live 8 vs contract 8
+  [PASS] science_profile                            live warn vs contract warn
+  [PASS] session_enforcement                        live advisory vs contract advisory
+  [PASS] no_route_removed                           0 removed
+  [PASS] route_set_complete                         67 live, 67 in contract; 0 added
+  [PASS] session_scoping_sample                     29 GET routes probed; all match
+
+==========================================================================
+CONFORMANT -- safe to proceed
+exit=0
