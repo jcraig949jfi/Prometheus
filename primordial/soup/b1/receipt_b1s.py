@@ -47,8 +47,8 @@ def main(argv=None):
         },
         "controls": {
             "cheat": "three one-semantic cheats run; honest numpy form mismatches %d/960 (must be 0)" % honest,
-            "negative": "detections on episodes where the semantic was NOT exercised: %s" %
-                        {c: per[c]["false_alarms"] for c in CHEATS},
+            "negative": "detections on episodes where the semantic was NOT exercised: " +
+                        json.dumps({c: per[c]["false_alarms"] for c in CHEATS}),
         },
         "rows": "primordial/ledger/rows/B/B1s-sensitivity.jsonl",
         "git": a.git,
