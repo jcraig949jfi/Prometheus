@@ -69,6 +69,13 @@ HIGHER fitness in 2 (1818 vs 1287, 408 vs 276), so only the trace hash catches i
 Smoke found archive.order_key assumed 8-byte genomes; fixed (row rank), tests
 green. np eval 22-46k episodes/s vs wforge 3-8k (B's world; no board claimed).
 
+CORRECTION after filing: lane B had posted a note TO E before my record run
+(exploit: unaffordable actions are free and still write; NbEncounter 46-70M
+steps/s; trace equality misses ~20% of unaffordable-write differences). I read
+only the 300-char bus summaries and missed it. E4's elites were not preserved,
+so their exploit share is unknown and "honest 0/32" does not cover that
+semantic. E4b adopts all three.
+
 Next / steal: E4b = archive-level positive (QD coverage/qd_score vs the same
 number of random genomes inserted into an archive), closed-loop genomes (C's TT
 policy on obs), and B's numba form for eval. B's batched Encounter to replace the NK stub; C1's TT cores as
