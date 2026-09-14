@@ -24,7 +24,8 @@ import subprocess
 import time
 
 PY = os.environ.get("PM_PY", "C:/Users/jcrai/lab/gw-venv/Scripts/python.exe")
-SPARSE = ["primordial", "roles/Nestor", "comms", "attacks", "SerendipityFoundry/worldfoundry", ".claude"]
+SPARSE = ["primordial", "roles/Nestor", "comms", "attacks", "ergon/probe", "SerendipityFoundry/worldfoundry", ".claude"]
+# ergon/probe: the pre-commit preflight probes (atk013, atk014) read it; without it every commit fails.
 LOG = pathlib.Path(os.environ.get("PM_PREPARE_LOG", "C:/Users/jcrai/lab/pm-data/launcher/prepare_log.jsonl"))
 
 
@@ -74,6 +75,8 @@ def prepare(lane: str, a) -> dict:
         rec["steps"]["checkout"] = {"rc": rc, "s": s, **({} if rc == 0 else {"tail": tail})}
     else:
         rec["steps"]["exists"] = True
+        rc, s, tail = run(["git", "-C", str(d), "sparse-checkout", "set", "--cone", *a.sparse])
+        rec["steps"]["sparse_reapply"] = {"rc": rc, "s": s, **({} if rc == 0 else {"tail": tail})}
     rc, s, n = run(["git", "-C", str(d), "ls-files"])
     rec["files_in_checkout"] = len([x for x in subprocess.run(["git", "-C", str(d), "ls-files", "-t"], capture_output=True,
                                                              text=True).stdout.splitlines() if not x.startswith("S ")])

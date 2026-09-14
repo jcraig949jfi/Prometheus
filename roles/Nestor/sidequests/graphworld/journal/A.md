@@ -34,3 +34,9 @@
 - cache=True on static njit kernels (B6 fused/probes, C row kernels); fused first call in a fresh process 6.21 s -> 0.32 s, fitness 517,984 unchanged.
 - primordial/ops/warmup.py (0.55 s warm); tests/test_fabric_hygiene.py guards both. Dual-flag runtime kernels left uncached (cache collision risk).
 - ROUND2_PREP_BACKLOG_2026-09-14.md: Phase 1 gate F1-F6, then F7-F15; open decisions D1-D4.
+
+## 2026-09-14 ~16:05 -- round 2 gate F1-F6 and cohort layer (operator decisions 07)
+- F1-F5 landed at 2d3122a5c: launcher log, liveness + reaper, heartbeat, bus to/inbox/tail/tag guard/burst/ANOMALY queue, receipt guard + host_load, RowWriter.
+- F6: prepare_worktrees built nestor-r2-b sparse (588 files, checkout 0.3 s, warmup 6.8 s cold); the first verify caught the pre-commit probes needing ergon/probe (added).
+- QD ledger seeded (21 round 1 baseline cells); 10 round 1 anomalies seeded OPEN on the live bus; draw_cell for the anti-prior cohort.
+- SWARM_R2.md (cohorts, clause A binding, rules) and BOOT_R2.md (operator launch order + 4 paste blocks). Suite 112 passed.

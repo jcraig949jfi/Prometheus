@@ -1,0 +1,190 @@
+"""The cross-domain QD ledger (round 2): one row per evaluated mechanism cell.
+
+File: primordial/ledger/qd/cells.jsonl (append-only; written through
+RowWriter so rows commit on write). Row schema:
+
+  cell        {representation, world, pressure, substrate, channel}   descriptor
+  mechanism   short machine name of what was evaluated
+  fitness     {held64_median, iqr, n_runs, ...}   higher is better
+  footprint   {genome_bytes, params?}             smaller is better (contract clause A)
+  oracle      which oracles ran and their outcome ("clean" or the failure)
+  baseline    true for round 1 seed rows
+  source      exp_id and commit of the receipt/rows that produced the numbers
+  cohort      B / C / D / E / round1
+  status      record / dev / aborted / timeout / cheat / control
+
+Contract clause A (Minimum Viable Abstraction), round 2 binding
+(roles/Nestor/sidequests/graphworld/SWARM_R2.md s2): on the same world and
+pressure, with oracles clean and >= 8 run seeds, a candidate PASSES if
+  parity:  median >= best_baseline_median - 0.5 * that baseline's IQR
+  and      genome_bytes < that baseline's genome_bytes,
+or if median > best_baseline_median + 0.5 * IQR at genome_bytes <= its bytes.
+`check` applies that rule against the current Pareto front.
+
+    python -m primordial.ops.qd_ledger seed-round1        # once; computes bytes from code
+    python -m primordial.ops.qd_ledger top [--world w4] [--pressure P] [--n 10]
+    python -m primordial.ops.qd_ledger pareto --world w4 [--pressure P]
+    python -m primordial.ops.qd_ledger check --world w4 --pressure P --median M --iqr Q --bytes B --runs N
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+CELLS = ROOT / "primordial" / "ledger" / "qd" / "cells.jsonl"
+E_LEDGER = ROOT / "primordial" / "ledger" / "E.jsonl"
+
+
+def load(path=CELLS) -> list[dict]:
+    p = pathlib.Path(path)
+    if not p.exists():
+        return []
+    return [json.loads(x) for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
+
+
+def _receipts() -> dict:
+    out = {}
+    for line in E_LEDGER.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            d = json.loads(line)
+            for k in ("science", "engineering"):
+                if isinstance(d.get(k), str):
+                    d[k] = json.loads(d[k])
+            out[d["exp_id"]] = d
+    return out
+
+
+def seed_rows() -> list[dict]:
+    """Round 1 MAP-Elites baseline cells, numbers read from the committed E receipts,
+    genome bytes computed from the genome code (never quoted)."""
+    from primordial.qd import e4_run as E4
+    from primordial.qd import e7_run as E7
+
+    rc = _receipts()
+    rows = []
+    worlds = ("1", "3", "4")
+
+    def glen(gs, fam):
+        return E7.G7(int(gs), fam).glen
+
+    def row(world, rep, pressure, substrate, mech, fitness, nbytes, src, oracle):
+        return {"cell": {"representation": rep, "world": f"w{world}", "pressure": pressure,
+                         "substrate": substrate, "channel": "none"},
+                "mechanism": mech, "fitness": fitness, "footprint": {"genome_bytes": int(nbytes)},
+                "oracle": oracle, "baseline": True, "cohort": "round1", "status": "record",
+                "source": {"exp_id": src, "git": rc[src].get("git"), "rows": rc[src].get("rows")}}
+
+    e9 = rc["E9-family-ranking-fused-8-seeds"]["science"]
+    for w in worlds:
+        for fam in ("linear", "tt_feat", "tt_digits"):
+            rows.append(row(w, fam, "train8_held64", "numba_fused", f"closed_loop_{fam}_codebook",
+                            {"held64_median": e9["median"][w][fam], "iqr": e9["iqr"][w][fam],
+                             "n_runs": len(e9["held64_by_run_seed"][w][fam])},
+                            glen(w, fam), "E9-family-ranking-fused-8-seeds",
+                            "wforge trace hash + brain ref logits clean (E9)"))
+    e7b = rc["E7b-c4-families-repeat-seeds"]["science"]
+    for w in worlds:
+        runs = sorted(e7b["held64_runs_sorted"][w]["lut_top"])
+        rows.append(row(w, "lut_top", "train8_held64", "numpy", "closed_loop_lut_top_codebook",
+                        {"held64_median": runs[len(runs) // 2], "iqr": None, "n_runs": len(runs)},
+                        glen(w, "lut_top"), "E7b-c4-families-repeat-seeds", "clean (E7b)"))
+    e10 = rc["E10-linear-closed-vs-open-128-seeds"]["science"]["primary"]
+    for w in worlds:
+        p = e10[w]
+        rows.append(row(w, "linear", "train128_held64", "numba_fused", "closed_loop_linear_codebook",
+                        {"held64_median": p["closed_median"], "iqr": None, "n_runs": len(p["closed_linear"])},
+                        glen(w, "linear"), "E10-linear-closed-vs-open-128-seeds", "clean (E10)"))
+        rows.append(row(w, "open_loop_actions", "train128_held64", "numba", "open_loop_action_tensor",
+                        {"held64_median": p["open_median"], "iqr": None, "n_runs": len(p["open"])},
+                        E4.Spec(int(w)).glen, "E10-linear-closed-vs-open-128-seeds", "clean (E10)"))
+    e8 = rc["E8-fused-closed-loop-seed-scaling"]["science"]["closed_held64_median"]
+    for w in worlds:
+        rows.append(row(w, "tt_digits", "train128_held64", "numba_fused", "closed_loop_tt_digits_codebook",
+                        {"held64_median": e8[w]["128"], "iqr": None, "n_runs": 2},
+                        glen(w, "tt_digits"), "E8-fused-closed-loop-seed-scaling", "clean (E8)"))
+    return rows
+
+
+def _match(r, world=None, pressure=None):
+    return (world is None or r["cell"]["world"] == world) and (pressure is None or r["cell"]["pressure"] == pressure)
+
+
+def top(rows, world=None, pressure=None, n=10):
+    xs = [r for r in rows if _match(r, world, pressure) and r["status"] == "record"
+          and r["fitness"].get("held64_median") is not None]
+    return sorted(xs, key=lambda r: -r["fitness"]["held64_median"])[:n]
+
+
+def pareto(rows, world, pressure=None):
+    """Non-dominated on (held64_median high, genome_bytes low)."""
+    xs = top(rows, world, pressure, n=10**9)
+    front = []
+    for r in sorted(xs, key=lambda r: (r["footprint"]["genome_bytes"], -r["fitness"]["held64_median"])):
+        if not front or r["fitness"]["held64_median"] > front[-1]["fitness"]["held64_median"]:
+            front.append(r)
+    return front
+
+
+def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True) -> dict:
+    """Clause A verdict of a candidate against the baseline Pareto front for (world, pressure)."""
+    if not oracle_clean:
+        return {"verdict": "INELIGIBLE", "why": "oracles not clean"}
+    if runs < 8:
+        return {"verdict": "INELIGIBLE", "why": f"{runs} run seeds < 8"}
+    base = [r for r in pareto(rows, world, pressure) if r.get("baseline")]
+    if not base:
+        return {"verdict": "NO_BASELINE", "why": f"no baseline cell for {world} {pressure}"}
+    for b in base:
+        bm, bi, bb = b["fitness"]["held64_median"], b["fitness"].get("iqr") or 0.0, b["footprint"]["genome_bytes"]
+        if median >= bm - 0.5 * bi and nbytes < bb:
+            return {"verdict": "PASS", "rule": "parity at fewer bytes", "vs": b["mechanism"], "vs_median": bm,
+                    "vs_bytes": bb}
+        if median > bm + 0.5 * bi and nbytes <= bb:
+            return {"verdict": "PASS", "rule": "better at <= bytes", "vs": b["mechanism"], "vs_median": bm,
+                    "vs_bytes": bb}
+    return {"verdict": "FAIL", "front": [(b["mechanism"], b["fitness"]["held64_median"],
+                                          b["footprint"]["genome_bytes"]) for b in base]}
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser()
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    sub.add_parser("seed-round1")
+    t = sub.add_parser("top"); t.add_argument("--world"); t.add_argument("--pressure"); t.add_argument("--n", type=int, default=10)
+    p = sub.add_parser("pareto"); p.add_argument("--world", required=True); p.add_argument("--pressure")
+    c = sub.add_parser("check")
+    for k in ("world", "pressure"):
+        c.add_argument(f"--{k}", required=True)
+    for k in ("median", "iqr", "bytes"):
+        c.add_argument(f"--{k}", type=float, required=True)
+    c.add_argument("--runs", type=int, required=True)
+    a = ap.parse_args(argv)
+    if a.cmd == "seed-round1":
+        if any(r.get("baseline") for r in load()):
+            print("round 1 baseline already seeded")
+            return 0
+        from primordial.fabric.rows import RowWriter
+        with RowWriter(CELLS, "QD-ledger-round1-baseline", commit_every_s=10**9) as w:
+            for r in seed_rows():
+                w.write(r)
+        print(f"seeded {len(load())} rows into {CELLS.relative_to(ROOT).as_posix()}")
+        return 0
+    rows = load()
+    if a.cmd == "top":
+        for r in top(rows, a.world, a.pressure, a.n):
+            c_ = r["cell"]
+            print(f"{c_['world']} {c_['pressure']:16s} {c_['representation']:18s} median {r['fitness']['held64_median']:8.2f} "
+                  f"bytes {r['footprint']['genome_bytes']:6d} runs {r['fitness'].get('n_runs')} [{r['source']['exp_id']}]")
+    elif a.cmd == "pareto":
+        for r in pareto(rows, a.world, a.pressure):
+            print(f"{r['cell']['pressure']:16s} {r['mechanism']:32s} median {r['fitness']['held64_median']:8.2f} "
+                  f"bytes {r['footprint']['genome_bytes']:6d}")
+    elif a.cmd == "check":
+        print(json.dumps(check(rows, a.world, a.pressure, a.median, a.iqr, int(a.bytes), a.runs), indent=1))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
