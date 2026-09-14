@@ -1,0 +1,54 @@
+{
+  "episode": "E1b_GREEDY_LORA_AFTER_DISCRIMINATORS  (POSITIVE CONTROL)",
+  "decision": "2026-06-04, the day after v1. The entity-disjoint re-test and the relation base-rate oracle have both been run. The question is whether the NARROW claim -- that some genuine relational reasoning is present, on the order of a tenth -- may now be believed, or whether the mechanism vetoes this too.",
+  "cutoff": "2026-06-04",
+  "claim": "NARROW_RELATIONAL_REASONING_PRESENT",
+  "explanations": {
+    "NARROW_RELATIONAL_REASONING_PRESENT": "on never-seen objects with values supplied, the adapter evaluates the relation correctly at a rate not explained by format, priors or memorization",
+    "BASE_RATE_PRIORS": "the result is explained by knowing which relation types usually hold, with no object or value knowledge",
+    "VALUE_MEMORIZATION": "the result is explained by recalling invariant values of objects seen in training",
+    "FORMAT_FOLLOWING": "the result is explained by learning to emit a parseable verdict where the base model could not"
+  },
+  "baseline_experiment_cost": "HOURS",
+  "evidence": [
+    {
+      "id": "E1b.base_rate_oracle",
+      "supports": "NARROW_RELATIONAL_REASONING_PRESENT",
+      "availability": "INTERNAL",
+      "source": "roles/Ergon/GREEDY_LORA_RESULT_2026-06-03.md addendum 2026-06-04, 'relation base-rate oracle (no values, no objects) 0.669'",
+      "upstream": ["BASE_RATE_ORACLE", "GOLD_EVAL_E_SHOWN"],
+      "rules_out": ["BASE_RATE_PRIORS"],
+      "justification": "A predictor with zero object and zero value knowledge reaches 0.669. E-shown reaches 0.841 on entity-disjoint objects. The floor is measured rather than assumed, and the gap above it is what priors cannot supply. This is an instrument built specifically to be able to eliminate this explanation, and it is not downstream of the adapter."
+    },
+    {
+      "id": "E1b.entity_disjoint_shown",
+      "supports": "NARROW_RELATIONAL_REASONING_PRESENT",
+      "availability": "INTERNAL",
+      "source": "same addendum, 'E-shown -- entity-disjoint, values GIVEN: base 0.119, trained 0.841, what it isolates: reasoning from data, memorization impossible'",
+      "upstream": ["ADAPTER_E_SHOWN", "GOLD_EVAL_E_SHOWN"],
+      "rules_out": ["VALUE_MEMORIZATION"],
+      "justification": "No knot or elliptic curve appearing in eval was ever in training, so recall of a memorized value is impossible by construction rather than by inference. 0.841 balanced across true and false."
+    },
+    {
+      "id": "E1b.parse_fail_zero_both_arms",
+      "supports": "NARROW_RELATIONAL_REASONING_PRESENT",
+      "availability": "INTERNAL",
+      "source": "same addendum, 'All trained numbers are balanced across true/false (~0.72-0.85 each side) and 0% parse-fail'",
+      "upstream": ["FORMAT_MEASUREMENT"],
+      "rules_out": ["FORMAT_FOLLOWING"],
+      "justification": "Parse failure is 0% in the trained arm, and the comparison that carries the claim is trained-against-ORACLE, not trained-against-base. Both sides of that comparison emit parseable verdicts, so the format gain cannot account for the difference between them. Format is measured separately and held fixed rather than left as a live alternative."
+    }
+  ],
+  "discriminators": [
+    {
+      "id": "MULTI_STEP_CLAIMS_WHERE_PRIORS_CANNOT_SUBSTITUTE",
+      "available_at_cutoff": true,
+      "cost": "DAYS",
+      "outcome_branches": [
+        ["NARROW_RELATIONAL_REASONING_PRESENT"],
+        ["BASE_RATE_PRIORS"]
+      ],
+      "note": "The record's own next step: add multi-step claims and balance labels within each relation type so the base-rate shortcut is unavailable by construction. Named here to show the mechanism still has somewhere to go even when it permits composition; it is correctly NOT selected, being dearer than the baseline."
+    }
+  ]
+}
