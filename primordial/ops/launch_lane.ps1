@@ -21,13 +21,14 @@
   powershell -ExecutionPolicy Bypass -File primordial\ops\launch_lane.ps1 -Lane B -Worktree . -Exe cmd.exe -ExeArgs '/c','exit 3'
 #>
 param(
-    [Parameter(Mandatory = $true)][ValidateSet('A', 'B', 'C', 'D', 'E')][string]$Lane,
+    [Parameter(Mandatory = $true)][ValidateSet('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'P', 'Q', 'W', 'T', 'U')][string]$Lane,
     [Parameter(Mandatory = $true)][string]$Worktree,
     [string]$Name = "",
     [string]$Exe = "$env:USERPROFILE\.local\bin\claude.exe",
     [string[]]$ExeArgs = @('--dangerously-skip-permissions', '--remote-control'),
     [string]$LogDir = "C:\Users\jcrai\lab\pm-data\launcher",
-    [switch]$BootPrompt   # start the session on roles/Nestor/sidequests/graphworld/prompts_r2/<Lane>.md
+    [switch]$BootPrompt,  # start the session on roles/Nestor/sidequests/graphworld/<PromptDir>/<Lane>.md
+    [string]$PromptDir = "prompts_r2"
 )
 $ErrorActionPreference = 'Stop'
 if (-not $Name) { $Name = "Nestor $Lane r2" }
@@ -48,7 +49,7 @@ $env:OPENBLAS_NUM_THREADS = '3'
 $parts = @()
 if ($BootPrompt -and $Exe -like '*claude*') {
     # quote-free first prompt: the cohort's full paste block lives in the worktree (no multi-line quoting)
-    $parts += ('"Read roles/Nestor/sidequests/graphworld/prompts_r2/' + $Lane + '.md in this worktree and follow it exactly."')
+    $parts += ('"Read roles/Nestor/sidequests/graphworld/' + $PromptDir + '/' + $Lane + '.md in this worktree and follow it exactly."')
 }
 $parts += @($ExeArgs)
 if ($Exe -like '*claude*') { $parts += ('"' + $Name + '"') }

@@ -27,7 +27,7 @@ import time
 
 LOG = pathlib.Path(os.environ.get("PM_LAUNCH_LOG", "C:/Users/jcrai/lab/pm-data/launcher/launch_log.jsonl"))
 PROJECTS = pathlib.Path(os.environ.get("CLAUDE_PROJECTS", str(pathlib.Path.home() / ".claude" / "projects")))
-LANES = ("A", "B", "C", "D", "E")
+from primordial.core.contract import LANES  # noqa: E402  (cohorts + builders)
 
 
 def _ts(s: str) -> float:
