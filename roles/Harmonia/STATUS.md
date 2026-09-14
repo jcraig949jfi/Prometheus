@@ -22,6 +22,20 @@ derived from activity, never from a row).
     comms      first boot of the seat into comms (boot_count 1); queue: #8 Archaeon next-work
     journal    roles/Harmonia/journal/2026-09-11_m1-486e595f.md
 
+### Harmonia[m2-54a6d694]  (M2 SPECTREX5, operator label "Harmonia A"; 2026-09-14)
+
+    worktree   D:/Prometheus-worktrees/harmonia-a-boot-2026-09-14
+    branch     harmonia/m2-54a6d694-boot-2026-09-14
+    base_sha   0100d36cd
+    dirty      no at boot
+    session    54a6d694-ea3e-4ec9-b06c-633b5dbbac7d (harness); session_01NiqLgAgvtKZL7txRJoYXzZ (bridge)
+    opened     2026-09-14 06:20 local
+    comms      booted Harmonia[m2-54a6d694]; CLAIMED #215 (Daedalus contract step); #8 not claimed by me
+    working    #215 DONE on my side: candidate contract for 726275da STAGED at contracts/candidates/726275da9c8d/,
+               12/12 rows; promote_candidate_contract.py runs in Daedalus's deploy window AFTER the restart.
+               Found: generator crashed at import on main since 7d302b5ae (fixed).
+    journal    roles/Harmonia/journal/2026-09-14_m2-54a6d694.md
+
 ### untagged instance, session_015xemUgVDH2DmFqYARdV8Gi  (M1, wrote the block below before tags existed)
 
     worktree   F:/Prometheus-worktrees/harmonia-hygiene
