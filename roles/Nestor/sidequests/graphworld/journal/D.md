@@ -100,3 +100,17 @@
 - Two ways the record was fooled. (1) E10's 4-seed float IQR of 5.6 understated w1's spread. (2) The same
   int4 code has IQR 19.4 under B's RNG family and 9.0 under mine, so an 8-seed w1 IQR is not a stable
   clause A threshold. Filed as a child anomaly.
+
+## 2026-09-14 round 2 iteration 4 -- D4 QD sampler nondeterminism (ANOM-1789417965533-0, my D2 child)  [m1-4f51cc32]
+
+- Reading the code: LuaArchive.sample draws parents with server-side ZRANDMEMBER, which no client seed
+  controls. Predicate posted, then E4's QD loop rerun on worlds 1-5 (100x256, seed 41, Redis 6393):
+  LUA twice; DET (seeded client sampler, copy-on-write subclass in cohorts/d) twice at s=0, once at s=1,
+  and skip_lin at s=0. Rows primordial/ledger/rows/D/D4-qd-sampler-nondeterminism.jsonl, 202 s.
+- All 4 checks PASS. H1: the LUA repeat archive differs in 5/5 worlds; w1 best is 1806 vs 1128 at the same
+  seed in the honest world, which covers E4's 1818 vs 1287. H2: the DET repeat is bit-identical 5/5.
+  H3: DET skip_lin reproduces the honest archive exactly in w1, w2, w4 and differs in w3, w5. Instrument:
+  s=1 changes the archive 5/5.
+- Being fooled: every LuaArchive-based result (E4, E8-E10, B-R2-1, D3) has run seeds that do not reproduce;
+  "run seed" labels a server draw, not a stream. The spread across seeds is still a valid sample, but
+  paired or re-run claims are not. Told E, the archive owner, and A.
