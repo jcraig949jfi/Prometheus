@@ -40,3 +40,10 @@
 - F6: prepare_worktrees built nestor-r2-b sparse (588 files, checkout 0.3 s, warmup 6.8 s cold); the first verify caught the pre-commit probes needing ergon/probe (added).
 - QD ledger seeded (21 round 1 baseline cells); 10 round 1 anomalies seeded OPEN on the live bus; draw_cell for the anti-prior cohort.
 - SWARM_R2.md (cohorts, clause A binding, rules) and BOOT_R2.md (operator launch order + 4 paste blocks). Suite 112 passed.
+
+## 2026-09-14 16:19-17:36 -- round 2 test launch 1 (2 epochs), conductor record
+- Launch: operator on mobile; the Bash tool kills child processes, so wt.exe/Start-Process failed. One-shot /IT scheduled tasks worked (B 16:19, C 16:21, D 16:22, E 16:22), each task disabled after /Run. B's comms boot needed evidence_wiki (+archaeon); sparse set fixed before C-E.
+- 37 receipts in pm:results (B 27, C 7 incl. C-R2-09 at 17:26, E 3 + E-T1 refile); D resolved 4 anomalies (0 receipts, 636 rows) and filed 3 children; anomaly queue 18 (14 OPEN).
+- Liveness: 0 deaths; D and E flagged STALE once each while idle/paused.
+- Quiesce posted 17:26; all four paused 17:29-17:36 with nothing unpushed.
+- Carry-forward: w4 clause A near-degenerate (12 B abstain/fixed-action brain 97.2 vs 98.76); LuaArchive sampler unseeded (D4; E seeded sampler 33038855e); round 1 baselines need >=8 runs + IQR (B); my qd_ledger check front contamination fixed by E (edb064317).
