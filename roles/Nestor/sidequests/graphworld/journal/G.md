@@ -123,3 +123,37 @@ Pushed 3869d7442 (suite 142); anomaly 1789419655457-0 RESOLVED on the queue with
   mixed-length ties resolve to min(bytes) in 48 arrival orders and in one batched insert; fitness
   still wins first; lengths 0 and > max raise; an old LuaArchive archive reads identically through
   VarArchive, and continuing it with VarArchive equals serial_reference over all offers.
+- Pushed 370ced3cd (suite 232 passed, 1 skipped). EPOCH 1 posted (1789427350325-0).
+
+## 2026-09-14 epoch 2, iteration 6 -- receipt mirror; M1 third floor (2-action gate)
+
+- Found primordial/ledger/G.jsonl (bus.receipt's ledger mirror) untracked: the receipt was on the bus
+  but its committed line was not. Committed and pushed 8b6751cb7.
+- Gate floor = the backlog's "best 2-action brain": act with one fixed action iff obs[f] >= / < theta,
+  else abstain. It is exactly an A=2 linear genome with one nonzero weight (W[f,1] = +-65535,
+  b[1] = +-(32768 - theta)); test_gate.py checks the batched gate scorer against E7.rollout on that
+  genome, and against const_scores at the always/never extremes. Thresholds: 16 quantiles of feature f
+  under the abstain policy on TRAIN8. Search: screen every gate on TRAIN8, rescore the top 64 on the
+  pressure's TRAIN, score the best on HELD64 -- best-found, not exhaustive over train128.
+  Predicate 1789427594545-0 (prior: w4 gate held64 <= 112.75).
+- v1 (G-M1-gate-floor-w134) was uninformative, and I say so: threshold-0 gates are always-on or
+  never-on because obs are uint16. The D x 511 never-gates tied at the abstain train8 score and filled
+  the whole top-64 screen, so the train128 rescore saw only abstain-equivalents and every world
+  returned abstain. Amendment posted before the rerun (1789427850951-0); v1 rows stay committed.
+- v2 (thr 0 dropped; G-M1-gate-floor-w134-v2), 96 s:
+
+| world | best gate | train8 | train128 | held64 | abstain held64 | best baseline held64 |
+|---|---|---|---|---|---|---|
+| w4 | obs[6] < 58 -> [0,0,1] | 153.00 | 112.34 | 107.75 | 107.75 | 98.76 |
+| w1 | obs[1] < 1 -> [0,4,7] | 236.25 | 271.80 | 170.47 | 88.28 | 63.94 |
+| w3 | obs[1] < 1 -> [4,7] | 34.50 | 70.22 | 122.63 | 122.63 | 105.58 |
+
+- Aimed at the claim: each selected gate as an A=2 linear genome through numpy E7.rollout AND
+  FusedRollout gives identical held64 and train128 (w1 170.4688 / 271.7969); E7.world_oracle on HELD8
+  0 failing episodes (wforge trace hash + charge); brain oracle 0 mismatched of 256 clear rows.
+- Prior (w4 <= 112.75): TRUE. Report-only w1: a 4-byte gate that acts only when feature 1 reads 0
+  scores 170.47 on held64, 2.7x the best w1 baseline and 1.9x abstain. floor_of takes the highest
+  floor row, so `check` now reads w1 against 170.47.
+- Still best-found: the TRAIN8 screen is tied at the abstain score in every world (screen top =
+  abstain score), so the top 64 are an arbitrary slice of ties. A higher gate floor may exist; this
+  one is a lower bound on the 2-action floor.
