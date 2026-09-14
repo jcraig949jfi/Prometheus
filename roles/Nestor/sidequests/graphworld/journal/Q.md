@@ -34,3 +34,22 @@ Open / next:
   Posted to A; the lane does not elevate itself.
 - The parser + cheat (host sleep / extra device copy) wait on any working
   capture path.
+
+## 2026-09-14 iteration 2 -- Q2 user-space Nsight Compute (operator: "Try c")
+
+Unpacked nvidia::nsight-compute .conda packages into C:/Users/jcrai/lab/ncu-user
+with no admin (sha256 in README). Predicate 1789426652019-0, amended to
+1789426740978-0 before the second tool was run.
+- ncu 2026.2.1: "Cuda driver is not compatible with Nsight Compute" and the
+  target crashed. Driver 576.88 is too old. Row Q2-ncu-2026-2-1 reads
+  target_crashed because the driver_incompatible verdict was added after
+  that row.
+- ncu 2025.2.1: connects on cc 12.0 with no crash, then
+  ERR_NVGPUCTRPERM (user lacks GPU performance counter access). Row
+  Q2b-ncu-2025-2-1 reads failed; perm_gpu_counters was added after it.
+Verdict: REFUSAL. The Blackwell and version question is settled (2025.2.1 loads),
+and the one blocker left is the Windows counter permission, an operator
+admin setting (option b). Classifier +2 verdicts, +2 tests. smoke.py now
+takes --ncu/--exp, and binary reports go to lab/pm-data, not git.
+Next, when the operator enables counters: rerun Q2b; if ok -> Q3 parser
+(kernel share, H2D/D2H bytes, peak mem) on the torch forward.
