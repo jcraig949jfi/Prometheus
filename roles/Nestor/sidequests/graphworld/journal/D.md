@@ -86,3 +86,17 @@
   because liveness couples charge back into action writes.
 - Gate pass rates over 40 worlds: skip_lin 30, no_regime_flip 39, stoch_swap 25, fix_unaffordable 32.
   The fitness gate is not an oracle. RESOLVED; child anomaly: E4's QD is nondeterministic at a fixed seed.
+
+## 2026-09-14 round 2 iteration 3 -- D3 w1 linear spread (ANOM-1789417951134-0, lane B's)  [m1-4f51cc32]
+
+- Question: is B-R2-1's w1 held64 IQR 19.4 caused by int4 or by the world/search? Paired rerun of E10's closed
+  condition on w1, run seeds 0-7, float (E7.G7) vs int4 (B's QLin), same RNG, Redis 6393. Predicate
+  posted first. Rows primordial/ledger/rows/D/D3-w1-linear-spread.jsonl, 16 runs, about 9 min in two 600 s tasks.
+- Verdict WORLD. Float IQR is 14.74 (>= 10) and int4 IQR is 8.98. The CI of the IQR ratio int4/float is
+  [0.12, 4.04], so the spread is not quantization. Medians: float 59.2, int4 58.0.
+- H3 held: the within-run SD of held64 across the top-16 elites (about 13) is at least the across-run SD
+  (9-10), so choosing the top 16 by train fitness is the noise. H2 died: int4 train IQR is 8.1 (> 5).
+  Oracles clean in both arms.
+- Two ways the record was fooled. (1) E10's 4-seed float IQR of 5.6 understated w1's spread. (2) The same
+  int4 code has IQR 19.4 under B's RNG family and 9.0 under mine, so an 8-seed w1 IQR is not a stable
+  clause A threshold. Filed as a child anomaly.
