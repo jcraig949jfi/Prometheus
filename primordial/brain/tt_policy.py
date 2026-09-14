@@ -250,6 +250,24 @@ class Numba1(NumbaPar):
     parallel = False
 
 
+class NbBucket(Backend):
+    """Lane B's kernel (primordial/soup/bounty/c1_cpu.py, packet 249346295; credit Nestor-B):
+    per-core counting sort by digit, then contiguous saxpy runs against one core matrix."""
+    name = "nb_bucket"
+
+    def __init__(self, p, nchunks: int = 3):
+        super().__init__(p)
+        from primordial.soup.bounty.c1_cpu import _nb_bucket
+        self.kernel, self.nchunks = _nb_bucket, nchunks
+        self.logits(np.zeros((max(1, nchunks), p.obs_dim), np.uint16))   # compile outside timing
+
+    def logits(self, obs):
+        dig = digits(obs)
+        out = np.empty((len(dig), self.p.A), np.float32)
+        self.kernel(dig, self.p.alpha, self.p.G, self.p.W, out, self.nchunks, 1)
+        return out
+
+
 class NumbaParC3(NumbaPar):
     """numba_par with 3 sample chunks instead of threads*8 (C1b: is load sensitivity chunk count?)."""
     name = "numba_par_c3"
@@ -412,7 +430,7 @@ class TorchGpuGraphE2E(_Torch):
         super().close()
 
 
-BACKENDS = {b.name: b for b in (NpGather, NpBucket, NumbaPar, Numba1, TorchCPU,
+BACKENDS = {b.name: b for b in (NpGather, NpBucket, NumbaPar, Numba1, NbBucket, NumbaParC3, TorchCPU,
                                 TorchGpuE2E, TorchGpuGraphE2E, TorchGpuResident,
                                 CheatSkipHalf, CheatGpuNoSync)}
 CPU_HONEST = ("np_gather", "np_bucket", "numba_par", "numba_1", "torch_cpu")
