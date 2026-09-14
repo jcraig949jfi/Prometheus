@@ -71,7 +71,7 @@ class TorchRollout:
         self.mag.add_((x * live).sum(1))
         self.cnt.add_(live.sum(1))
         w.step(a)
-        self.obs = w.observe()
+        self.obs.copy_(w.observe())                  # in place: a captured graph owns this tensor
 
     def result(self):
         P, k, Wd = self.P, self.k, self.g7.W

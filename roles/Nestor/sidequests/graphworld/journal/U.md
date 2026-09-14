@@ -49,3 +49,24 @@ capability (12, 0), arch list includes sm_120). Epoch 1 started 18:49.
   misses some syncs; the capture in U3 is the real proof of no host sync.
 - Next: U3, capture tick() as a torch CUDA graph (static inputs, graph replay == eager
   bitwise, fitness/cells 128/128), then tt_digits.
+- Pushed as 7bd138fe7 on integration. Inbox: conductor confirmed the abstain-only floor
+  beats every clause A baseline (clause A on hold). U's acceptance is exactness vs E7 and
+  throughput, so it is unaffected; no U number is a science claim about brains.
+
+## 2026-09-14 iteration 3 -- U3 closed-loop tick captured as a CUDA graph (DONE)
+
+- primordial/nv/cudagraph/graph.py: GraphRollout(TorchRollout). Brain forward + action
+  decode + counters + world update captured as ONE torch.cuda.CUDAGraph per step
+  (ticks_per_graph=1) or a static multi-step graph (K ticks per replay; T % K leftover ticks
+  eager). 3 warmup ticks on a side stream, then capture; state restored afterwards by copying
+  a fresh eager load into the captured tensors. New genomes/seeds of the same shape are
+  copied in (no re-capture); a new shape or brain cheat re-captures.
+- rollout.py: tick() now writes obs in place (a captured graph owns that tensor).
+- Tests: test_u3_cuda_graph.py (5): K = 1, 7 and whole-horizon: fitness and cells == E7
+  128/128 AND all 17 state tensors bitwise == eager after the rollout; reload of new genomes
+  + a different seed set into the same graph object == E7 128/128 and differs from the
+  previous batch on >= 64 genomes (a stale replay would fail); brain cheat re-captures and
+  == E7's cheat rollout 128/128 while moving >= 64 vs honest. Suite in gw-venv: 84 passed,
+  1 skipped (O1 live schtasks).
+- Still open for the MVP: tt_digits in the graph; VRAM budget table (envs x T in 16 GB);
+  throughput vs B6 fused numba under the O5 lease.
