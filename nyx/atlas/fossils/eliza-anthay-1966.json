@@ -1,0 +1,167 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "eliza-anthay-1966",
+ "techne_record": "techne/fossils/specimens/eliza-anthay-1966/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "eliza-anthay-1966",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "ELIZA (1966) -- Weizenbaum's script-driven conversational program (DOCTOR script), Anthony Hay's faithful C++ reconstruction",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/anthay/ELIZA master as of 2026-09-13 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1966 (Weizenbaum ELIZA); this reconstruction 2021-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "conversational-ai",
+     "natural-language",
+     "pattern-matching",
+     "symbolic",
+     "early-ai",
+     "human-computer-interaction"
+    ],
+    "lineage": "ELIZA (Joseph Weizenbaum, MIT, 1966, CACM 9(1)): the first widely known natural-language conversation program. Not learning, not parsing -- a SCRIPT of decomposition/reassembly rules matched against keywords with a ranked agenda and memory. The DOCTOR script imitates a Rogerian therapist. A distinct execution model absent from the vault: keyword-triggered pattern transformation over text, no model of meaning. This body is Anthony Hay's C++ reconstruction built from the 1966 CACM paper and the recovered original script, reproducing the paper's canonical conversation exactly."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "scripted natural-language dialogue (the origin of the chatbot)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "hold a text conversation by transforming the user's own words back at them via scripted keyword rules -- to study man-machine communication and, unintentionally, how readily people attribute understanding",
+    "pressure": "no model of meaning; the illusion must be produced entirely by decomposition/reassembly rules, keyword ranking, and a memory of recent topics",
+    "success_means": "the scripted transformation reproduces the documented 1966 conversation; the program sustains a plausible exchange with no understanding"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "producing believable dialogue with pure surface pattern transformation, no semantics",
+    "failure_condition": "an input with no matching keyword falls through to a canned deflection ('PLEASE GO ON'); the illusion breaks when the script's rules do not cover the turn"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "ELIZA (Joseph Weizenbaum, MIT, 1966, CACM 9(1)): the first widely known natural-language conversation program. Not learning, not parsing -- a SCRIPT of decomposition/reassembly rules matched against keywords with a ranked agenda and memory. The DOCTOR script imitates a Rogerian therapist. A distinct execution model absent from the vault: keyword-triggered pattern transformation over text, no model of meaning. This body is Anthony Hay's C++ reconstruction built from the 1966 CACM paper and the recovered original script, reproducing the paper's canonical conversation exactly.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Weizenbaum 1966 (keyword decomposition/reassembly)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: gnu-apl-2.0"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "FAITHFUL_PORT",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "5859cac5b558e3f786be2adb2917cf208863dc2cd97165e02f5af1de10dd0f03"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "eliza-anthay-1966",
+   "relation": "algorithm_from",
+   "to": "Weizenbaum 1966 (keyword decomposition/reassembly)",
+   "note": "first conversational-AI fossil; a pre-1970 program recovered via a faithful reconstruction, not the original MAD-SLIP binary (which runs only under CTSS emulation)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eliza-anthay-1966",
+   "relation": "shares_ancestor_with",
+   "to": "gnu-apl-2.0",
+   "note": "both are interpreters of a small formal notation, but ELIZA transforms text by rules and APL evaluates array expressions -- Techne records the shared machinery domain, not equivalence",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

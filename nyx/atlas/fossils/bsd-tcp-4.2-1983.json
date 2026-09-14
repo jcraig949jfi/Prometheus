@@ -1,0 +1,179 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "bsd-tcp-4.2-1983",
+ "techne_record": "techne/fossils/specimens/bsd-tcp-4.2-1983/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "bsd-tcp-4.2-1983",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "4.2BSD TCP (1983) -- the pre-congestion-control TCP that collapsed the Internet in 1986",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "4.2BSD (released Aug 1983), sys/netinet/tcp_*.{c,h}; unix-history-repo tag BSD-4_2",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1983",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "networks",
+     "congestion-control",
+     "retransmission",
+     "contention",
+     "failure"
+    ],
+    "lineage": "TCP congestion-control lineage, the KNOWN-BAD ancestor: 4.2BSD's TCP (Bill Joy, Sam Leffler) had retransmission timers and windows but NO congestion window, NO slow start and a crude RTT estimate. In October 1986 the LBL-to-Berkeley path fell from 32 kbit/s to 40 bit/s -- congestion collapse -- which is the pressure that produced 4.3BSD-Tahoe's algorithms (Jacobson 1988). Preserved from the unix-history-repo (Spinellis) at tag BSD-4_2."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "reliable transport (without congestion control)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "deliver a reliable byte stream over an unreliable internet using windows and retransmission timers",
+    "pressure": "packet loss and delay from shared links; but the design did not yet read loss as a congestion signal",
+    "success_means": "data arrives in order; when the network is congested this version keeps retransmitting into it -- the human record marks that as its failure"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "bandwidth scarcity on shared links, packet loss, queueing delay",
+    "failure_condition": "congestion collapse: throughput falls by three orders of magnitude while every host keeps retransmitting"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C (BSD kernel)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "TCP congestion-control lineage, the KNOWN-BAD ancestor: 4.2BSD's TCP (Bill Joy, Sam Leffler) had retransmission timers and windows but NO congestion window, NO slow start and a crude RTT estimate. In October 1986 the LBL-to-Berkeley path fell from 32 kbit/s to 40 bit/s -- congestion collapse -- which is the pressure that produced 4.3BSD-Tahoe's algorithms (Jacobson 1988). Preserved from the unix-history-repo (Spinellis) at tag BSD-4_2.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: bsd-tcp-4.3-tahoe-1988"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: linux-tcp-congestion"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "FAILED",
+    "failure_reasons": [
+     "incorrect_assumptions",
+     "performance_collapse"
+    ],
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Jacobson & Karels, Congestion Avoidance and Control, SIGCOMM 1988",
+      "says": "In October 1986 the LBL-to-Berkeley path collapsed from 32 kbit/s to 40 bit/s; the paper attributes this to TCP lacking congestion control and introduces slow start and congestion avoidance as the fix."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "24b875969234412bc1f278b4617e072beb82324375188afa37eb28b06d372c68"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "runner": "none",
+     "note": "kernel code; preserved and hashed, not executed"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "bsd-tcp-4.2-1983",
+   "relation": "superseded",
+   "to": "bsd-tcp-4.3-tahoe-1988",
+   "note": "the redesign forced by the 1986 collapse",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983",
+   "relation": "shares_ancestor_with",
+   "to": "linux-tcp-congestion",
+   "note": "the same lineage four decades later (CUBIC, BBR)",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

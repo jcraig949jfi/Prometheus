@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "emcee-3.1.6",
+ "techne_record": "techne/fossils/specimens/emcee-3.1.6/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "emcee-3.1.6",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "emcee 3.1.6 -- the MCMC Hammer: affine-invariant ensemble sampler (Foreman-Mackey, Hogg, Lang, Goodman)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "v3.1.6 (2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2012-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "estimation",
+     "MCMC",
+     "Bayesian-inference",
+     "Monte-Carlo",
+     "astronomy"
+    ],
+    "lineage": "Markov chain Monte Carlo (Metropolis et al. 1953; Hastings 1970) via Goodman & Weare's affine-invariant ensemble 'stretch move' (2010), implemented for astronomy (2012) and used in thousands of papers. A compact, inspectable sampler: walkers, proposals, acceptance fractions, autocorrelation time."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "posterior sampling for parameter inference",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "draw samples from a posterior known only up to a constant, using an ensemble of walkers that adapts to the posterior's scale and orientation",
+    "pressure": "high-dimensional, correlated, expensive likelihoods; hand-tuned proposal scales that fail when the posterior is anisotropic",
+    "success_means": "sample moments match the target; autocorrelation time short relative to chain length"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "hidden parameters, expensive/black-box likelihood, anisotropic scales",
+    "failure_condition": "the chain never mixes: acceptance ~0 or ~1, autocorrelation time longer than the run, moments wrong"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Markov chain Monte Carlo (Metropolis et al. 1953; Hastings 1970) via Goodman & Weare's affine-invariant ensemble 'stretch move' (2010), implemented for astronomy (2012) and used in thousands of papers. A compact, inspectable sampler: walkers, proposals, acceptance fractions, autocorrelation time.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Goodman & Weare 2010; Metropolis et al. 1953"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "76553717948133319415caed8d583fac4b4d41d56515f1761b67d59a618eeb7f"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "python:3.11-slim"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "emcee-3.1.6",
+   "relation": "algorithm_from",
+   "to": "Goodman & Weare 2010; Metropolis et al. 1953",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

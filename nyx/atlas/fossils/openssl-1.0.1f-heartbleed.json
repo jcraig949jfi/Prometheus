@@ -1,0 +1,174 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "openssl-1.0.1f-heartbleed",
+ "techne_record": "techne/fossils/specimens/openssl-1.0.1f-heartbleed/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "openssl-1.0.1f-heartbleed",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "OpenSSL 1.0.1f -- the last release carrying Heartbleed (CVE-2014-0160)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "OpenSSL 1.0.1f source tarball (openssl.org archive)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2012-2014 (1.0.1 line); disclosed 2014-04-07; fixed in 1.0.1g",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "cryptography",
+     "tls",
+     "security",
+     "memory-safety",
+     "loser"
+    ],
+    "lineage": "OpenSSL's TLS heartbeat extension (RFC 6520) accepted a caller-supplied payload LENGTH and copied that many bytes back without checking it against the record actually received. 1.0.1 through 1.0.1f carry the defect; 1.0.1g fixes it with a bounds check. Preserved as the BEFORE-FAILURE body of a documented failure whose replacement is one released version away. Archival only: this fossil exists so the defect can be read in its original world, and the vault carries no exploit for it."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "TLS session liveness (heartbeat)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "keep a TLS session alive and discover path MTU without renegotiating, per RFC 6520",
+    "pressure": "long-lived TLS sessions over NAT/firewall timeouts needed a cheap liveness probe",
+    "success_means": "a heartbeat reply echoing the peer's payload"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "untrusted input crossing a trust boundary into a memory-unsafe language",
+    "failure_condition": "the responder trusted an attacker-supplied length field and echoed adjacent process memory -- disclosed as Heartbleed, fixed by bounds-checking in 1.0.1g"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "OpenSSL's TLS heartbeat extension (RFC 6520) accepted a caller-supplied payload LENGTH and copied that many bytes back without checking it against the record actually received. 1.0.1 through 1.0.1f carry the defect; 1.0.1g fixes it with a bounds check. Preserved as the BEFORE-FAILURE body of a documented failure whose replacement is one released version away. Archival only: this fossil exists so the defect can be read in its original world, and the vault carries no exploit for it.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "historical_version_of: OpenSSL 1.0.1g (the fix)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "FAILED",
+    "failure_reasons": [
+     "security_weakness",
+     "brittleness"
+    ],
+    "evidence": [
+     {
+      "kind": "release_notes",
+      "ref": "OpenSSL Security Advisory, 07 April 2014 (CVE-2014-0160)",
+      "says": "A missing bounds check in the TLS heartbeat extension allows disclosure of up to 64kB of process memory; affected versions are 1.0.1 through 1.0.1f, fixed in 1.0.1g."
+     },
+     {
+      "kind": "standards_history",
+      "ref": "RFC 6520, TLS Heartbeat Extension",
+      "says": "The heartbeat response must echo the payload of the request; the length handling is where the implementation failed."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "70f4afd6ad289df3408e7a3b4901bd9f1d1e4e402eaf2c6f475aafa03ade6d2b"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "runner": "none (archival source)"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "openssl-1.0.1f-heartbleed",
+   "relation": "historical_version_of",
+   "to": "OpenSSL 1.0.1g (the fix)",
+   "note": "before-failure body; the replacement is one release later",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

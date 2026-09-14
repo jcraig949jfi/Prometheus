@@ -1,0 +1,147 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "sqlite-3.49.1-amalgamation",
+ "techne_record": "techne/fossils/specimens/sqlite-3.49.1-amalgamation/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "sqlite-3.49.1-amalgamation",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "SQLite 3.49.1 amalgamation -- D. Richard Hipp",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "3.49.1 amalgamation (sqlite.org/2025/sqlite-amalgamation-3490100.zip)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2000 (3.49.1 released 2025)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "databases",
+     "query-planning",
+     "b-tree",
+     "transactions",
+     "storage-engine",
+     "virtual-machine"
+    ],
+    "lineage": "SQLite (2000-, Hipp): embedded transactional SQL database in one C file -- bytecode VM (VDBE), B-tree pager with rollback/WAL journaling, cost-based query planner, full ACID in-process"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "embedded ACID storage and SQL query execution",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "give any program a full relational database with transactions in a single file, no server, no configuration",
+    "pressure": "crash safety on power loss, tiny footprint, portability, and correctness under concurrent readers",
+    "success_means": "SQL executed correctly and durably; the project's own TH3/TCL test suites (not in the amalgamation) at 100% branch coverage"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "SQLite (2000-, Hipp): embedded transactional SQL database in one C file -- bytecode VM (VDBE), B-tree pager with rollback/WAL journaling, cost-based query planner, full ACID in-process",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "5028c95217712699af046f2ea520fc4173bf17191a0c45789191bcd69656a0eb"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_NATIVE",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "wsl"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

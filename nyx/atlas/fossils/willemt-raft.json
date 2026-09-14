@@ -1,0 +1,158 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "willemt-raft",
+ "techne_record": "techne/fossils/specimens/willemt-raft/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "willemt-raft",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "willemt/raft -- a C implementation of the Raft consensus algorithm",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/willemt/raft master as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2014-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "distributed-systems",
+     "consensus",
+     "leader-election",
+     "replication",
+     "recovery",
+     "fault-tolerance"
+    ],
+    "lineage": "Raft (2014, Ongaro & Ousterhout): understandable distributed consensus -- leader election, log replication, and safety across crashing/partitioning nodes; willemt/raft is a widely-used embeddable C library of the core state machine"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "fault-tolerant distributed consensus",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "keep a replicated log consistent across a cluster of machines that crash, restart, and get partitioned -- by electing a leader and replicating entries only when a majority acknowledges",
+    "pressure": "partial failure: nodes die, messages are lost or delayed, the network splits; the system must never present two leaders' conflicting histories as committed",
+    "success_means": "a single consistent committed log despite up to (N-1)/2 failures; safety never violated, liveness restored when a majority reconnects"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "partial failure, message loss/delay, network partition, competing would-be leaders",
+    "failure_condition": "split-brain: two leaders commit conflicting entries; the replicated state diverges and data is lost or corrupted"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Raft (2014, Ongaro & Ousterhout): understandable distributed consensus -- leader election, log replication, and safety across crashing/partitioning nodes; willemt/raft is a widely-used embeddable C library of the core state machine",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Ongaro & Ousterhout 2014"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "4a8b3aca72e1b778176c868e69979071ab0eb33984b00dbbb4b12322616b7603"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "willemt-raft",
+   "relation": "algorithm_from",
+   "to": "Ongaro & Ousterhout 2014",
+   "note": "Raft; itself a redesign of Paxos for understandability",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

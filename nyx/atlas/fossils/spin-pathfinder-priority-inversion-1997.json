@@ -1,0 +1,524 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "spin-pathfinder-priority-inversion-1997",
+ "techne_record": "techne/fossils/specimens/spin-pathfinder-priority-inversion-1997/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "spin-pathfinder-priority-inversion-1997",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Mars Pathfinder priority inversion (1997) as Holzmann's Promela model, checked with SPIN 6.5.2",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "Spin version-6.5.2 tarball, Examples/pathfinder.pml (same artifact as spin-6.5.2-holzmann)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1997 (event); model in SPIN distributions since the 2000s",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "concurrency",
+     "scheduling",
+     "priority-inversion",
+     "deadlock",
+     "failure",
+     "model-checking"
+    ],
+    "lineage": "A REAL historical failure: the Mars Pathfinder lander (1997) suffered repeated system resets because a low-priority meteorological task held a mutex needed by the high-priority bus-management task while a medium-priority task starved it -- classic priority inversion under VxWorks, fixed by enabling priority inheritance. Holzmann's Promela model (Examples/pathfinder.pml in the SPIN distribution) reproduces the invalid end state (deadlock) and the fix. The failing model is preserved AS FAILING; SPIN is the instrument."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "real-time mutual exclusion across priority levels",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "share a resource between tasks of different priority on a real-time scheduler without the high-priority task being blocked indefinitely",
+    "pressure": "hard deadlines (the watchdog resets the system), a shared bus with a mutex, three priority levels competing for the CPU",
+    "success_means": "the high-priority task always gets the mutex within its deadline; the human record: without priority inheritance it did not, and the spacecraft reset"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "hard timing bounds, resource contention across priorities, a watchdog that treats delay as failure",
+    "failure_condition": "priority inversion: the medium task runs, the low task holds the lock, the high task misses its deadline; the watchdog resets the lander"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Promela",
+    "C (SPIN)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "A REAL historical failure: the Mars Pathfinder lander (1997) suffered repeated system resets because a low-priority meteorological task held a mutex needed by the high-priority bus-management task while a medium-priority task starved it -- classic priority inversion under VxWorks, fixed by enabling priority inheritance. Holzmann's Promela model (Examples/pathfinder.pml in the SPIN distribution) reproduces the invalid end state (deadlock) and the fix. The failing model is preserved AS FAILING; SPIN is the instrument.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "derived_from: spin-6.5.2-holzmann",
+    "algorithm_from: Sha, Rajkumar, Lehoczky 1990 (the fix: priority inheritance)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "FAILED",
+    "failure_reasons": [
+     "concurrency_failure"
+    ],
+    "evidence": [
+     {
+      "kind": "retrospective",
+      "ref": "Glenn E. Reeves (JPL), What Really Happened on Mars Rover Pathfinder, 1997",
+      "says": "Repeated spacecraft resets were caused by priority inversion: a low-priority task held a mutex needed by a high-priority task while a medium-priority task ran; the fix was to enable priority inheritance on that mutex."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "30afd80d875d786f950a59d0ccbac8b19eebc1e2c5c4138f678fc3139cd15de5"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/spin-pathfinder-priority-inversion-1997/upstream/tree/Spin-version-6.5.2/Examples/pathfinder.pml"
+   },
+   {
+    "grade": "EXECUTED",
+    "ref": "nyx/atlas/fingerprints/spin-pathfinder-priority-inversion-1997/ablate_rule_vs_mutex.json baseline: errors 1 at depth 4 (Nyx run, matches Techne)"
+   },
+   {
+    "grade": "INTERVENED",
+    "ref": "nyx/atlas/fingerprints/spin-pathfinder-priority-inversion-1997/ablate_rule_vs_mutex.json A1-A4 + control"
+   }
+  ],
+  "inspected_files": [
+   "Examples/pathfinder.pml (all 47 lines)",
+   "recipe.json",
+   "run/20260912T211155Z/runs-*.stdout.txt"
+  ],
+  "date": "2026-09-14T00:06Z",
+  "note": "two processes, three shared variables, one guard clause: the whole body is smaller than this note"
+ },
+ "organs": [
+  {
+   "organ_id": "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
+   "fossil_ancestry": "spin-pathfinder-priority-inversion-1997",
+   "human_name": "`provided (h_state == idle)` -- the scheduling rule",
+   "human_interpretation": "the low-priority task may run only while the high-priority task is idle (strict priority preemption)",
+   "mechanism": "every transition of one process is guarded by a predicate over ANOTHER process's state variable; the guarded process is ineligible to take any step -- including the step that would release a resource -- whenever the predicate is false",
+   "input": "the other process's state variable",
+   "output": "eligibility of every step of the guarded process",
+   "state": "none of its own (reads h_state)",
+   "update": "re-evaluated before every step",
+   "assumptions": [
+    "the high process's 'waiting' state is NOT idle -- a waiting high task keeps the low task frozen"
+   ],
+   "interface": "a Promela `provided` clause; in a real RTOS, the scheduler's ready-queue policy",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spin-pathfinder-priority-inversion-1997::binary_mutex_test_and_set"
+   ],
+   "fitness_value_in_ancestor": "encodes the lander's fixed-priority scheduler in one clause",
+   "failure_landscape": "with a resource held by the frozen process: deadlock (measured)",
+   "ablation": "REMOVE (A1): errors 1 -> 0. REVERSE (A3): 0. WEAKEN so that waiting counts as yielding (A4): 0. The deadlock needs this rule AND needs 'waiting' to count as not-idle.",
+   "decomposability": "atomic (one predicate)",
+   "composability": "any process-eligibility guard",
+   "human_prior": "named 'scheduling rule' by the model's own comment",
+   "control": "CONTROL_rename_constants: identical model, renamed constants -> errors 1 (the verifier is not keying on names)",
+   "cheat": "none identified: exhaustive search over 12 states",
+   "observability": "pan reports depth and errors; trail replays the schedule",
+   "intervention_readiness": "YES -- one-line edits, 1.5 s per verification",
+   "evidence": {
+    "grade": "INTERVENED",
+    "ref": "nyx/atlas/fingerprints/spin-pathfinder-priority-inversion-1997/ablate_rule_vs_mutex.json"
+   },
+   "confidence": "HIGH (exhaustive verification, 6 variants, control preserved)",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "pathfinder.pml:38 `provided (h_state == idle)`",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "spin-pathfinder-priority-inversion-1997::binary_mutex_test_and_set",
+   "fossil_ancestry": "spin-pathfinder-priority-inversion-1997",
+   "human_name": "`atomic { mutex == free -> mutex = busy }`",
+   "human_interpretation": "a lock: wait until free, then take it, in one indivisible step",
+   "mechanism": "a guard on a shared variable and the assignment that falsifies the guard are fused into one atomic step, so two processes cannot both pass; release is a plain assignment back",
+   "input": "the shared variable",
+   "output": "the process proceeds or blocks",
+   "state": "one three-valued shared variable (free/busy)",
+   "update": "atomic guard+set; plain reset",
+   "assumptions": [
+    "atomicity of the two-statement block (Promela `atomic`)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule"
+   ],
+   "fitness_value_in_ancestor": "protects the shared data buffer between producer and consumer",
+   "failure_landscape": "held by a process that cannot run: everyone else waiting on it is stuck (measured with the rule present)",
+   "ablation": "REMOVE the guard (A2, `skip`): errors 1 -> 0 -- the deadlock also needs the lock; mutual exclusion is lost (not measured)",
+   "decomposability": "atomic",
+   "composability": "any shared-variable lock",
+   "human_prior": "'mutex' is the model's own variable name",
+   "control": "see rule organ",
+   "cheat": "none identified",
+   "observability": "mutex variable is `show`n in the trail",
+   "intervention_readiness": "YES",
+   "evidence": {
+    "grade": "INTERVENED",
+    "ref": "nyx/atlas/fingerprints/spin-pathfinder-priority-inversion-1997/ablate_rule_vs_mutex.json"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "pathfinder.pml:28,41 the two atomic blocks",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "priority-inheritance option (the model's own switch)",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "record.behavioral_entry_point says 'toggle the priority-inheritance option in pathfinder.pml'; the file contains no such option, no #ifdef, no second mode; Techne's own recipe toggles nothing and verifies the model as-is",
+   "note": "TECHNE FEEDBACK: the record names a switch the body does not have. The fix humans applied on Mars (enable priority inheritance on the mutex) is NOT in this fossil; a repaired model would be a separate specimen",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spin-pathfinder-priority-inversion-1997"
+  },
+  {
+   "candidate": "the medium-priority task of the Pathfinder story",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the human account needs three tasks (low holds, medium preempts, high starves); the model has TWO processes and deadlocks anyway, because `provided (h_state == idle)` freezes low whenever high is merely waiting. A4 shows the deadlock vanishes when waiting counts as idle.",
+   "note": "the model's rule over-approximates: it stands in for the medium task by treating a blocked high task as if it still occupied the CPU. Famous-name vs body divergence, recorded as a surprise",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spin-pathfinder-priority-inversion-1997"
+  },
+  {
+   "candidate": "the SPIN verifier (state-space search, partial-order reduction, trail replay)",
+   "reason": "OTHER",
+   "evidence": "present in the same tarball and built by the recipe, but it is the INSTRUMENT that observes the model, not machinery of the specimen; it is the fossil spin-6.5.2-holzmann",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spin-pathfinder-priority-inversion-1997"
+  },
+  {
+   "candidate": "h_state / l_state variables",
+   "reason": "STATE_OBSERVATIONALLY_IRRELEVANT",
+   "evidence": "l_state is written and never read by any guard; h_state is read only by the rule organ. l_state is display state for the trail (`show`), not machinery",
+   "note": "half of the model's declared state does not participate in any transition",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spin-pathfinder-priority-inversion-1997"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "spin-pathfinder-priority-inversion-1997::P.hard_deadline_with_shared_resource_across_priorities",
+   "source_fossil": "spin-pathfinder-priority-inversion-1997",
+   "source_evidence": "model comment lines 1-16 + record.human_failure_condition",
+   "condition": "tasks of different urgency share one resource that must be held exclusively; the urgent task must complete within a bound; a watchdog treats lateness as failure",
+   "resource_or_constraint": "one exclusive resource + CPU time ordered by priority",
+   "failure_condition": "the urgent task waits on the resource while its holder is not permitted to run",
+   "world_punishes": "a missed deadline (the lander reset itself repeatedly)",
+   "world_rewards": "the urgent task getting the resource within its bound, regardless of who holds it",
+   "observable_consequence": "a schedule with no enabled step (pan: invalid end state at depth 4)",
+   "vacuity_condition": "a single priority level, or no shared resource",
+   "trivial_shortcuts": "give everything the same priority (loses the timing guarantee the priorities exist for)",
+   "cheat_control": "the CONTROL variant (renamed constants) still deadlocks; A1-A4 each remove the deadlock by removing a real precondition",
+   "cost_class": "12 reachable states; the failure is structural, not statistical",
+   "purpose_separated_from_pressure": "PURPOSE: a spacecraft computer that shares a bus-data structure between a fast task and a slow task",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
+   "to": "spin-pathfinder-priority-inversion-1997::binary_mutex_test_and_set",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "the rule decides whether the process holding the lock may reach its release step",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spin-pathfinder-priority-inversion-1997::binary_mutex_test_and_set",
+   "to": "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "blocking on the lock puts high into 'waiting', which the rule reads as not-idle: the cycle that is the deadlock",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "in the lander the rule is the RTOS scheduler; here it is a clause",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "spin-pathfinder-priority-inversion-1997",
+   "relation": "derived_from",
+   "to": "spin-6.5.2-holzmann",
+   "note": "the same tarball; this specimen is the failing model, that one is the checker",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "spin-pathfinder-priority-inversion-1997",
+   "relation": "algorithm_from",
+   "to": "Sha, Rajkumar, Lehoczky 1990 (the fix: priority inheritance)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "the emergent deadlock is fully accounted for by the two organs and their two composition edges: removing either organ, or breaking the feeds edge (A4), removes it",
+   "NOT explained by this fossil: what humans did to fix it (priority inheritance) -- absent from the body"
+  ],
+  "note": "a 2-organ fossil whose interesting object is a composition edge, not an organ",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

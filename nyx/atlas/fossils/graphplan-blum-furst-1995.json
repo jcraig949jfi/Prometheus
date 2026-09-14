@@ -1,0 +1,146 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "graphplan-blum-furst-1995",
+ "techne_record": "techne/fossils/specimens/graphplan-blum-furst-1995/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "graphplan-blum-furst-1995",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Graphplan -- Avrim Blum and Merrick Furst (CMU), C implementation",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "CMU AFS distribution as served 2026-09-12 (Source.tar.gz + domain files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1995",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "planning",
+     "search",
+     "symbolic-ai",
+     "strips"
+    ],
+    "lineage": "Graphplan (1995, CMU): STRIPS planning by building a layered planning graph with mutual-exclusion relations and extracting a plan by backward search; the redesign that made classical planning fast"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "classical STRIPS planning via planning graphs",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "find a parallel plan (sequence of action sets) from an initial state to a goal in STRIPS domains",
+    "pressure": "exponential blow-up of plan-space and state-space planners on modest problems (rocket, logistics, blocks)",
+    "success_means": "a valid plan with minimal number of time steps, found orders of magnitude faster than 1994 planners"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "lex/yacc (generated lex.yy.c, y.tab.c shipped)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Graphplan (1995, CMU): STRIPS planning by building a layered planning graph with mutual-exclusion relations and extracting a plan by backward search; the redesign that made classical planning fast",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "b0abf2bffcad7f5f05713bd91698153593b94b27bce9948f88e3ae41cb47aab2"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_NATIVE",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "wsl"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

@@ -1,0 +1,147 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "cobol-programming-course-omp",
+ "techne_record": "techne/fossils/specimens/cobol-programming-course-omp/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "cobol-programming-course-omp",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "COBOL Programming Course (Open Mainframe Project / IBM, 2020-): CBL0001..CBL0014, PAYROL00 -- real mainframe COBOL with EBCDIC packed-decimal data, run under GnuCOBOL 3",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/openmainframeproject/cobol-programming-course master as of 2026-09-12 (commit in hashes); Course #2 Labs/cbl + Labs/data",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1959- (COBOL); 2020- (course)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "cobol",
+     "business-computing",
+     "batch-processing",
+     "legacy-culture",
+     "record-io"
+    ],
+    "lineage": "The business-computing culture as it still runs: fixed-format COBOL (IDENTIFICATION/ENVIRONMENT/DATA/PROCEDURE divisions, PICTURE clauses, COMP-3 packed decimal, FD/SELECT/ASSIGN to JCL DDNAMEs), reading a 170-byte fixed-record EBCDIC account file and writing a formatted report. Written for z/OS; here compiled by GnuCOBOL 3.1.2 with DDNAME-to-file mapping through the environment. Chosen after the NIST COBOL-85 validation suite (newcob.val) proved UNAVAILABLE at its origin (see the batch report: ORIGIN_UNAVAILABLE)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "batch business record processing",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "process fixed-format business records -- accounts, balances, limits, payroll -- in batch and print formatted reports, exactly as mainframe shops have since the 1960s",
+    "pressure": "decades-old data formats (EBCDIC, packed decimal) that must keep working; auditability of money arithmetic (decimal, not float)",
+    "success_means": "every record read, every amount formatted exactly (PICTURE editing), totals correct to the cent"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "format longevity, exact decimal arithmetic, regulatory auditability",
+    "failure_condition": "a truncated or mis-edited amount in a financial report"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "COBOL (IBM Enterprise COBOL dialect, fixed format)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The business-computing culture as it still runs: fixed-format COBOL (IDENTIFICATION/ENVIRONMENT/DATA/PROCEDURE divisions, PICTURE clauses, COMP-3 packed decimal, FD/SELECT/ASSIGN to JCL DDNAMEs), reading a 170-byte fixed-record EBCDIC account file and writing a formatted report. Written for z/OS; here compiled by GnuCOBOL 3.1.2 with DDNAME-to-file mapping through the environment. Chosen after the NIST COBOL-85 validation suite (newcob.val) proved UNAVAILABLE at its origin (see the batch report: ORIGIN_UNAVAILABLE).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "0a6956ecb5b2776117d325c6e64ed657fb38ca8fd29e2991ce27396f21c6eb40"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-legacy:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

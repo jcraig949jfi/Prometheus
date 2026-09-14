@@ -1,0 +1,166 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "libdai-mooij",
+ "techne_record": "techne/fossils/specimens/libdai-mooij/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "libdai-mooij",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "libDAI (0.3 line, 2012 mirror) -- a C++ library of approximate inference on factor graphs: (loopy) belief propagation, junction tree, mean field, TreeEP, Gibbs, and more (Joris Mooij)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/dbtsai/libDAI master (a 2012 mirror of the libdai.org 0.3 line; exact version from ChangeLog in the tree; commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2006-2015 (0.3.2 = 2015)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "inference",
+     "belief-propagation",
+     "factor-graphs",
+     "graphical-models",
+     "approximate-inference"
+    ],
+    "lineage": "Pearl's belief propagation (1982/1988) and its loopy generalisation, exact junction-tree inference, and a dozen approximate methods, in one reference library (JMLR MLOSS 2010) with the standard examples (sprinkler network) and unit tests. The canonical open BELIEF-PROPAGATION implementation; the vault's ldpc-codes does BP only for decoding."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "probabilistic inference on graphical models",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "compute marginals and MAP states on graphical models by passing messages along factor-graph edges, exactly on trees and approximately on loopy graphs",
+    "pressure": "exact inference is exponential on loopy graphs; loopy BP may not converge",
+    "success_means": "on a tree, BP marginals equal the exact ones; on loopy graphs, convergence and accuracy are reported"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "combinatorial state spaces, loops",
+    "failure_condition": "loopy BP oscillates or converges to wrong marginals"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Pearl's belief propagation (1982/1988) and its loopy generalisation, exact junction-tree inference, and a dozen approximate methods, in one reference library (JMLR MLOSS 2010) with the standard examples (sprinkler network) and unit tests. The canonical open BELIEF-PROPAGATION implementation; the vault's ldpc-codes does BP only for decoding.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Pearl 1982/1988"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: ldpc-codes-neal-2001"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "fd4b4581b1f3a3ed9ee757fc0e18e03c1a6280b0d51af2971335c249a40e1b96"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "libdai-mooij",
+   "relation": "algorithm_from",
+   "to": "Pearl 1982/1988",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libdai-mooij",
+   "relation": "shares_ancestor_with",
+   "to": "ldpc-codes-neal-2001",
+   "note": "BP as a decoder vs BP as a general inference engine",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

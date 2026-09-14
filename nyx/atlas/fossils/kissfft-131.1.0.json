@@ -1,0 +1,156 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "kissfft-131.1.0",
+ "techne_record": "techne/fossils/specimens/kissfft-131.1.0/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "kissfft-131.1.0",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "KISS FFT 131.1.0 -- Mark Borgerding",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "131.1.0 git tag, github.com/mborgerding/kissfft",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2003 (131.1.0 rel. 2021)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "scientific-computing",
+     "signal-processing",
+     "fft",
+     "numerical"
+    ],
+    "lineage": "KISS FFT (2003-, Borgerding): a mixed-radix Cooley-Tukey FFT small enough to read in one sitting; the 'keep it simple' counterpoint to FFTW's code generation"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "the fast Fourier transform, minimally",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "compute the discrete Fourier transform (and inverse) for arbitrary sizes via mixed-radix Cooley-Tukey, in minimal readable C",
+    "pressure": "the O(N^2) cost of the naive DFT; the demand for a small dependency-free FFT where FFTW is overkill",
+    "success_means": "forward-then-inverse reconstructs the input within floating-point tolerance; agreement with a reference DFT"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "KISS FFT (2003-, Borgerding): a mixed-radix Cooley-Tukey FFT small enough to read in one sitting; the 'keep it simple' counterpoint to FFTW's code generation",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Cooley & Tukey 1965"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "6c7e606fdfe451894b91e4f2f4d7e910aae6988ea1c1396a74a133b414214338"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "kissfft-131.1.0",
+   "relation": "algorithm_from",
+   "to": "Cooley & Tukey 1965",
+   "note": "mixed-radix FFT",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

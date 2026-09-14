@@ -1,0 +1,158 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "erfa-2.0.1",
+ "techne_record": "techne/fossils/specimens/erfa-2.0.1/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "erfa-2.0.1",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "ERFA 2.0.1 -- Essential Routines for Fundamental Astronomy (the liberally-licensed derivative of IAU SOFA)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "v2.0.1 (2024), from the GitHub release tarball (autotools-generated)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2000- (SOFA); 2013- (ERFA)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "astronomy",
+     "astrometry",
+     "precision",
+     "time-scales",
+     "reference-frames",
+     "scientific-extreme"
+    ],
+    "lineage": "The IAU Standards Of Fundamental Astronomy library (Wallace et al., 2000-): precession-nutation (IAU 2006/2000A), Earth rotation, time scales (TAI/TT/UT1/TDB), star-independent astrometry, ephemerides -- relicensed as ERFA (2013) so astropy could ship it. Precision-heavy by construction: the test program t_erfa_c checks every routine against reference values to ~1e-12."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "fundamental astronomy computations to standards precision",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "transform positions and times between celestial reference frames to microarcsecond and nanosecond consistency",
+    "pressure": "telescope pointing and ephemeris demands where 1e-9 relative error is visible; standards that change (IAU 2000/2006) and must remain reproducible",
+    "success_means": "every routine reproduces the IAU reference values to its stated tolerance"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "extreme precision requirements, evolving standards, long time baselines",
+    "failure_condition": "a nutation or time-scale term off by 1e-9 misplaces a star by milliarcseconds in a survey catalogue"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The IAU Standards Of Fundamental Astronomy library (Wallace et al., 2000-): precession-nutation (IAU 2006/2000A), Earth rotation, time scales (TAI/TT/UT1/TDB), star-independent astrometry, ephemerides -- relicensed as ERFA (2013) so astropy could ship it. Precision-heavy by construction: the test program t_erfa_c checks every routine against reference values to ~1e-12.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "derived_from: IAU SOFA (Wallace et al.)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "18f011416105d6315dd709d19a22e46265109fc93bedcdfe7756280c2b8334e7"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "erfa-2.0.1",
+   "relation": "derived_from",
+   "to": "IAU SOFA (Wallace et al.)",
+   "note": "relicensed derivative",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

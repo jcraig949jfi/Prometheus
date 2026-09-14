@@ -1,0 +1,166 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "hashicorp-memberlist-0.5.4",
+ "techne_record": "techne/fossils/specimens/hashicorp-memberlist-0.5.4/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "hashicorp-memberlist-0.5.4",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "hashicorp/memberlist 0.5.4 -- SWIM-style gossip membership and failure detection (the machinery under Consul, Nomad, Serf)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "v0.5.4 (2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2002 (SWIM); 2013- (memberlist)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "distributed-systems",
+     "failure-detector",
+     "gossip",
+     "membership",
+     "heartbeat-timeout"
+    ],
+    "lineage": "Das, Gupta, Motivala's SWIM (2002): scalable weakly-consistent membership by randomized probing (ping, ping-req through k peers, suspect, dead) with gossip dissemination -- the asynchronous, timeout-based failure detector that Serf (2013), Consul and Nomad run on. Lifeguard extensions (2018). Distinct assumptions from Raft: no leader, no log, eventual membership agreement, suspicion timeouts instead of quorum."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "scalable failure detection and membership",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "let every node in a cluster learn who is alive and who has died, without a coordinator, tolerating message loss and slow nodes",
+    "pressure": "asynchronous network: lost probes, slow peers, partitions; false positives cost as much as misses",
+    "success_means": "a dead node is declared dead within the suspicion timeout; a slow-but-alive node is refuted via indirect probes"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "message loss, asynchrony, scale",
+    "failure_condition": "a partition splits membership; a live node is wrongly declared dead and evicted"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Go"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Das, Gupta, Motivala's SWIM (2002): scalable weakly-consistent membership by randomized probing (ping, ping-req through k peers, suspect, dead) with gossip dissemination -- the asynchronous, timeout-based failure detector that Serf (2013), Consul and Nomad run on. Lifeguard extensions (2018). Distinct assumptions from Raft: no leader, no log, eventual membership agreement, suspicion timeouts instead of quorum.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Das, Gupta, Motivala 2002 (SWIM)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: willemt-raft"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "8295c85b810a8f15ebf9729c85b19d4b7ad02b91de6c731cdca5284c78e3d4a6"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "golang:1.22-bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "hashicorp-memberlist-0.5.4",
+   "relation": "algorithm_from",
+   "to": "Das, Gupta, Motivala 2002 (SWIM)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4",
+   "relation": "shares_ancestor_with",
+   "to": "willemt-raft",
+   "note": "two answers to 'who is alive': gossip suspicion vs leader heartbeats",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

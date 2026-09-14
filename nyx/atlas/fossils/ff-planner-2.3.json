@@ -1,0 +1,168 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "ff-planner-2.3",
+ "techne_record": "techne/fossils/specimens/ff-planner-2.3/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "ff-planner-2.3",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "FF (Fast-Forward) planner v2.3 -- Joerg Hoffmann",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "FF-v2.3 from the author's Saarland page",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2000 (v2.3)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "planning",
+     "search",
+     "heuristic-search",
+     "strips",
+     "symbolic-ai"
+    ],
+    "lineage": "FF (2000, Hoffmann & Nebel): forward heuristic-search STRIPS/ADL planner -- the relaxed-plan (ignore-delete-lists) heuristic guiding enforced hill-climbing, then best-first; won AIPS-2000 and reset classical planning after Graphplan"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "classical planning by relaxed-plan heuristic forward search",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "find a plan from initial state to goal in STRIPS/ADL by heuristic forward search, using the relaxed (delete-free) plan length as the guiding heuristic",
+    "pressure": "the huge branching of forward search; the relaxed-plan heuristic makes it tractable where blind or Graphplan-style search stalls",
+    "success_means": "a valid plan found fast on the AIPS/IPC benchmark domains (gripper, logistics, blocksworld)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "flex",
+    "bison"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "FF (2000, Hoffmann & Nebel): forward heuristic-search STRIPS/ADL planner -- the relaxed-plan (ignore-delete-lists) heuristic guiding enforced hill-climbing, then best-first; won AIPS-2000 and reset classical planning after Graphplan",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Hoffmann & Nebel, JAIR 2001"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: graphplan-blum-furst-1995"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "a771bb5de2d01b712da6b7497fde0f42c25fd2d949d34209698ef1be083c70e0"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "ff-planner-2.3",
+   "relation": "shares_ancestor_with",
+   "to": "graphplan-blum-furst-1995",
+   "note": "both STRIPS planners; FF is forward heuristic search, Graphplan is planning-graph",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "ff-planner-2.3",
+   "relation": "algorithm_from",
+   "to": "Hoffmann & Nebel, JAIR 2001",
+   "note": "relaxed-plan (ignore-delete-lists) heuristic + enforced hill-climbing",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

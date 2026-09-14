@@ -1,0 +1,145 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "minpack-netlib-1980",
+ "techne_record": "techne/fossils/specimens/minpack-netlib-1980/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "minpack-netlib-1980",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "MINPACK-1 (double precision) -- More, Garbow, Hillstrom, Argonne",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "netlib.org/minpack as served 2026-09-12 (25 routine files + 23 ex/ test files)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1980",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "nonlinear-least-squares",
+     "nonlinear-equations",
+     "optimization",
+     "scientific-computing"
+    ],
+    "lineage": "MINPACK (1980, Argonne National Laboratory): Levenberg-Marquardt least squares (LMDER/LMDIF/LMSTR) and Powell hybrid dogleg for nonlinear equations (HYBRD/HYBRJ), with CHKDER Jacobian checking; ancestor of scipy.optimize.leastsq/fsolve"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "curve fitting and root finding for nonlinear models, robustly, in 1980 Fortran",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "find x minimising sum of squares of m nonlinear functions, or solving n nonlinear equations, from a user function with or without an analytic Jacobian",
+    "pressure": "ill-conditioned Jacobians, expensive function evaluations, users who cannot write a correct derivative (hence CHKDER)",
+    "success_means": "convergence to a solution within the user's tolerances with a bounded number of function evaluations; the ANL-80-74 test set"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Fortran 77"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "MINPACK (1980, Argonne National Laboratory): Levenberg-Marquardt least squares (LMDER/LMDIF/LMSTR) and Powell hybrid dogleg for nonlinear equations (HYBRD/HYBRJ), with CHKDER Jacobian checking; ancestor of scipy.optimize.leastsq/fsolve",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "bb2a1c77c73713408975f150c1f146fc388767165fe7ea6876d975df5d689de1"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_NATIVE",
+    "test": "UPSTREAM_DRIVERS_RUN_NO_ORACLE",
+    "environment": {
+     "runner": "native Windows, WinLibs gfortran 15.2"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_DRIVERS_RUN_NO_ORACLE"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

@@ -1,0 +1,178 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "libcorrect-quiet",
+ "techne_record": "techne/fossils/specimens/libcorrect-quiet/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "libcorrect-quiet",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "libcorrect -- convolutional (Viterbi) and Reed-Solomon forward error correction in C (Brian Armstrong, Quiet Modem Project)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/quiet/libcorrect master as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2016-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "error-correction",
+     "coding",
+     "adversarial",
+     "noise",
+     "communications"
+    ],
+    "lineage": "A portable SUCCESSOR/RIVAL to Phil Karn's libfec (in the vault as libfec-karn, BLOCKED by its 32-bit x86 assembly): the same two code families -- convolutional codes decoded by Viterbi, and Reed-Solomon over GF(2^8) -- reimplemented in plain C with SSE optional, plus a libfec-compatible shim. Its tests are the ADVERSARIAL PAIR: a noise/erasure injector corrupts codewords, the decoders must recover them. Deepens the ECC lineage: Rockliff RS (1991) -> Karn libfec (1990s-2000s) -> libcorrect (2016-)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "reliable communication over noisy channels",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "carry data across a channel that flips or erases symbols, and recover the message exactly",
+    "pressure": "noise, erasures, burst errors; portability pressure that killed the assembly-bound predecessor",
+    "success_means": "every codeword corrupted within the design bound decodes to the original message; beyond the bound, failure is detected or reported"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "channel noise, symbol erasure, CPU/platform diversity",
+    "failure_condition": "miscorrection: the decoder returns the wrong message with confidence"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "A portable SUCCESSOR/RIVAL to Phil Karn's libfec (in the vault as libfec-karn, BLOCKED by its 32-bit x86 assembly): the same two code families -- convolutional codes decoded by Viterbi, and Reed-Solomon over GF(2^8) -- reimplemented in plain C with SSE optional, plus a libfec-compatible shim. Its tests are the ADVERSARIAL PAIR: a noise/erasure injector corrupts codewords, the decoders must recover them. Deepens the ECC lineage: Rockliff RS (1991) -> Karn libfec (1990s-2000s) -> libcorrect (2016-).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "reimplementation_of: libfec-karn"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: reed-solomon-rockliff-1991",
+    "shares_ancestor_with: viterbi-hmm-xukmin"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "evidence": []
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "ddaf51af3e29f03b9c818f1d519d698125c96e6c96a580af8f7d8bde75ac5e3d"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "libcorrect-quiet",
+   "relation": "reimplementation_of",
+   "to": "libfec-karn",
+   "note": "portable C replacement for Karn's libfec; libfec-compatible shim",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libcorrect-quiet",
+   "relation": "shares_ancestor_with",
+   "to": "reed-solomon-rockliff-1991",
+   "note": "Reed-Solomon over GF(2^8)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libcorrect-quiet",
+   "relation": "shares_ancestor_with",
+   "to": "viterbi-hmm-xukmin",
+   "note": "the Viterbi algorithm: decoding codes vs decoding HMM states",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

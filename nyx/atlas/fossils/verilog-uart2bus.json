@@ -1,0 +1,148 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "verilog-uart2bus",
+ "techne_record": "techne/fossils/specimens/verilog-uart2bus/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "verilog-uart2bus",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "UART-to-bus protocol controller (Verilog, freecores)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/freecores/uart2bus master as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "classic (this Verilog impl)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "hardware",
+     "protocol-controller",
+     "finite-state-machine",
+     "serial",
+     "synchronization",
+     "verilog"
+    ],
+    "lineage": "A UART receiver/transmitter with a bus-interface FSM: it synchronises to an asynchronous serial line (start-bit detection, mid-bit sampling, framing), a protocol state machine coping with timing and framing errors -- classic sequential control under timing pressure"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "clock-domain-crossing serial reception and bus control",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "receive asynchronous serial data with no shared clock -- detect the start bit, sample each bit at mid-period, check framing -- and turn decoded bytes into bus read/write commands",
+    "pressure": "no shared clock between sender and receiver, clock drift, and line noise that corrupts bit timing and framing",
+    "success_means": "correctly decoded bytes across clock drift, with framing errors flagged rather than silently mis-decoded"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "no shared clock, clock drift, line noise, tight bit-timing",
+    "failure_condition": "mis-sampling a bit (drift/noise) silently corrupts the byte, or a missed start bit desynchronises the whole stream"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Verilog"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "SYNCHRONOUS_DIGITAL_LOGIC (derived from language=Verilog)",
+   "basis": "NYX_DERIVED"
+  },
+  "ANCESTRY": {
+   "value": "A UART receiver/transmitter with a bus-interface FSM: it synchronises to an asynchronous serial line (start-bit detection, mid-bit sampling, framing), a protocol state machine coping with timing and framing errors -- classic sequential control under timing pressure",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "3b41bf158603334d2b93d267637134759522d8c508cef6f700452585dc34da7a"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_EMULATED",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-hw:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

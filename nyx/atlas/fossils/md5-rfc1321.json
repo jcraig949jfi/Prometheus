@@ -1,0 +1,176 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "md5-rfc1321",
+ "techne_record": "techne/fossils/specimens/md5-rfc1321/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "md5-rfc1321",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "MD5 (RFC 1321 reference implementation) -- a hash function whose collision resistance was broken",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "RFC 1321 text including the reference implementation (appendix)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1992 (RFC 1321); collisions demonstrated 2004-2005; deprecated by RFC 6151 (2011)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "cryptography",
+     "hash-function",
+     "merkle-damgard",
+     "security",
+     "loser"
+    ],
+    "lineage": "MD5 (Rivest, 1992, RFC 1321) was the default cryptographic hash for a decade: 128-bit digest, Merkle-Damgard over a 512-bit block compression function. Wang et al. published practical collisions in 2004-2005, and RFC 6151 records that MD5 is no longer acceptable where collision resistance is required. The fossil is the RFC's own reference C code -- the standard and its implementation in one artifact."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "message fingerprinting / integrity checking",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "produce a short fixed-length fingerprint of a message that is infeasible to forge or collide",
+    "pressure": "fingerprints had to be cheap enough to hash whole files while resisting an adversary searching for two messages with one digest",
+    "success_means": "matching the RFC's published digests, and no feasible way to find two messages sharing one"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "an adversary free to choose both messages (collision), with growing compute and improving differential cryptanalysis",
+    "failure_condition": "collision resistance fell -- Wang et al. produced colliding pairs; MD5 is now unsuitable for signatures or certificates while remaining a correct checksum"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "RFC text"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "MD5 (Rivest, 1992, RFC 1321) was the default cryptographic hash for a decade: 128-bit digest, Merkle-Damgard over a 512-bit block compression function. Wang et al. published practical collisions in 2004-2005, and RFC 6151 records that MD5 is no longer acceptable where collision resistance is required. The fossil is the RFC's own reference C code -- the standard and its implementation in one artifact.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: the SHA-2 family"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "security_weakness",
+     "incorrect_assumptions"
+    ],
+    "evidence": [
+     {
+      "kind": "standards_history",
+      "ref": "RFC 6151 (2011), Updated Security Considerations for MD5 and HMAC-MD5",
+      "says": "MD5 is no longer acceptable where collision resistance is required, and new protocol designs should not use it."
+     },
+     {
+      "kind": "original_paper",
+      "ref": "Wang & Yu, How to Break MD5 and Other Hash Functions, EUROCRYPT 2005",
+      "says": "Practical collisions for MD5 can be constructed, breaking its collision resistance."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "2a63ad17b696314834ac04c79153ef9cd7c93ba4c0a62d32d43ee5e136d184ae"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "md5-rfc1321",
+   "relation": "superseded",
+   "to": "the SHA-2 family",
+   "note": "deployment moved to SHA-256 after the collision results",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

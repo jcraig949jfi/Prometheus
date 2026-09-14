@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "concurrencykit-0.7.2",
+ "techne_record": "techne/fossils/specimens/concurrencykit-0.7.2/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "concurrencykit-0.7.2",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Concurrency Kit 0.7.2 -- lock-free data structures, spinlocks with backoff, hazard pointers (Samy Al Bahra)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "0.7.2 (2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2011-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "concurrency",
+     "lock-free",
+     "backoff",
+     "contention",
+     "memory-reclamation"
+    ],
+    "lineage": "A C library of the classic concurrent-memory-model machinery: ck_spinlock (ticket, MCS, CLH, anderson, hclh; with ck_backoff exponential backoff), ck_ring/ck_fifo/ck_stack lock-free structures, ck_hp hazard pointers and ck_epoch safe memory reclamation (2011-). Reference rivals: liblfds, Boost.Lockfree."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "scalable synchronization on multicore machines",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "let many threads share structures without a global lock, and make contending threads back off instead of hammering a cache line",
+    "pressure": "cache-line contention, memory reordering, reclamation while readers are live",
+    "success_means": "linearizable operations under contention; no lost updates; freed memory never dereferenced"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "resource contention (cache lines, locks), memory-model weakness, reclamation hazards",
+    "failure_condition": "lost updates, torn reads, use-after-free, or a convoy of spinning threads starving the holder"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "A C library of the classic concurrent-memory-model machinery: ck_spinlock (ticket, MCS, CLH, anderson, hclh; with ck_backoff exponential backoff), ck_ring/ck_fifo/ck_stack lock-free structures, ck_hp hazard pointers and ck_epoch safe memory reclamation (2011-). Reference rivals: liblfds, Boost.Lockfree.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Mellor-Crummey & Scott 1991 (MCS lock); Michael 2004 (hazard pointers); Fraser 2004 (epoch reclamation)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "594921ff1c45e0f8e122f1c0e0fc0b7a963f70f59c9524b491842e1db027de52"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "concurrencykit-0.7.2",
+   "relation": "algorithm_from",
+   "to": "Mellor-Crummey & Scott 1991 (MCS lock); Michael 2004 (hazard pointers); Fraser 2004 (epoch reclamation)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

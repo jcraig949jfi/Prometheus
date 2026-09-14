@@ -1,0 +1,159 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "valgrind-helgrind-fixtures-3.19",
+ "techne_record": "techne/fossils/specimens/valgrind-helgrind-fixtures-3.19/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "valgrind-helgrind-fixtures-3.19",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Valgrind 3.19.0 helgrind regression fixtures: tc01_simple_race, tc05_simple_race, tc09_bad_unlock, tc13_laog1 (lock-order inversion), tc19_shadowmem -- real pthread programs with their expected detector output",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "valgrind-3.19.0.tar.bz2 (sourceware), helgrind/tests/",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2007- (fixtures; 3.19.0 = 2022)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "concurrency",
+     "race",
+     "deadlock",
+     "lock-order",
+     "failure",
+     "regression-fixture",
+     "pthreads"
+    ],
+    "lineage": "Valgrind's thread-error detector Helgrind (Nethercote/Seward, 2007-) ships regression programs that each commit a specific concurrency error -- unsynchronised access (a RACE), unlocking a lock the thread does not hold, acquiring locks in inconsistent order (the classic DEADLOCK precursor, reported via the lock-order acquisition graph) -- together with the .stderr.exp files the detector must reproduce. Preserved as the failing programs plus the expected traces; run under the detector."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "detection of data races and lock-order deadlocks in pthread programs",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "make each class of thread error reproducible so the detector's report for it never regresses",
+    "pressure": "races and lock-order bugs are timing-dependent and invisible in normal runs; a detector must find them from one execution",
+    "success_means": "helgrind reports the planted error in the planted place, matching the expected trace"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "nondeterministic scheduling, shared memory without discipline",
+    "failure_condition": "silent corruption (race) or an eventual deadlock (lock order) in production, not in test"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C (pthreads)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Valgrind's thread-error detector Helgrind (Nethercote/Seward, 2007-) ships regression programs that each commit a specific concurrency error -- unsynchronised access (a RACE), unlocking a lock the thread does not hold, acquiring locks in inconsistent order (the classic DEADLOCK precursor, reported via the lock-order acquisition graph) -- together with the .stderr.exp files the detector must reproduce. Preserved as the failing programs plus the expected traces; run under the detector.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: go-runtime-deadlock-fixtures-1.22"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "7b0af7d84bd262752ab521f125dfc6f3310488b08e69c8eda0f1c3cfb2b95c4d"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "valgrind-helgrind-fixtures-3.19",
+   "relation": "shares_ancestor_with",
+   "to": "go-runtime-deadlock-fixtures-1.22",
+   "note": "two runtimes' regression corpora for concurrency failure",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

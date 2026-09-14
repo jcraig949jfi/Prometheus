@@ -1,0 +1,156 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "reed-solomon-rockliff-1991",
+ "techne_record": "techne/fossils/specimens/reed-solomon-rockliff-1991/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "reed-solomon-rockliff-1991",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Reed-Solomon encoder/decoder -- Simon Rockliff (1989/1991)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "eccpage.com/rs.c as served 2026-09-12 (single file, self-dated 26 June 1991)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1989-1991",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "error-correcting-codes",
+     "coding-theory",
+     "galois-field",
+     "algebraic-codes"
+    ],
+    "lineage": "Rockliff RS (1989-1991, University of Adelaide): a textbook Reed-Solomon coder over GF(2^m) -- generate the field, build the generator polynomial, systematic encode, and Berlekamp-Massey + Forney erasure/error decode; the widely-copied reference on eccpage.com"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "algebraic block error correction (Reed-Solomon)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "encode data with Reed-Solomon redundancy and recover it after a bounded number of symbol errors and erasures, over a Galois field",
+    "pressure": "burst errors on storage and transmission channels (CDs, DVB, deep space) where up to t symbol errors must be corrected exactly",
+    "success_means": "the decoded message equals the original whenever the error count is within the code's correction bound t"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C (K&R)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Rockliff RS (1989-1991, University of Adelaide): a textbook Reed-Solomon coder over GF(2^m) -- generate the field, build the generator polynomial, systematic encode, and Berlekamp-Massey + Forney erasure/error decode; the widely-copied reference on eccpage.com",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: ldpc-codes-neal-2001"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "5a38a755ff062098c8a9730f2a3bb3e3baa434fc874d2643bd8eea5851f54744"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "reed-solomon-rockliff-1991",
+   "relation": "shares_ancestor_with",
+   "to": "ldpc-codes-neal-2001",
+   "note": "both error-correcting codes; algebraic block code vs sparse-graph code",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

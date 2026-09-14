@@ -1,0 +1,148 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "filterpy-labbe",
+ "techne_record": "techne/fossils/specimens/filterpy-labbe/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "filterpy-labbe",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "FilterPy -- Bayesian filtering library (Roger Labbe)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/rlabbe/filterpy master as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2014-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "estimation",
+     "particle-filter",
+     "kalman-filter",
+     "unscented-kalman",
+     "bayesian-inference",
+     "state-estimation"
+    ],
+    "lineage": "FilterPy (2014-, Labbe): reference implementations of the Kalman family (KF/EKF/UKF), particle filters, and other Bayesian filters, written for clarity alongside the book 'Kalman and Bayesian Filters in Python'; carries example systems (a noisy nonlinear plant) AND the estimators that recover their hidden state"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "Bayesian state estimation across the filter family",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "estimate the hidden state of a dynamical system from noisy measurements across the whole Bayesian-filter family -- linear (KF), nonlinear (EKF/UKF), and non-Gaussian (particle filter)",
+    "pressure": "nonlinearity and non-Gaussian noise where the plain Kalman filter fails; hidden state that must be tracked through a noisy, possibly multimodal posterior",
+    "success_means": "a state estimate that tracks truth with low error and calibrated uncertainty, even when the system is nonlinear or the posterior is multimodal"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "noisy observation, nonlinear dynamics, non-Gaussian / multimodal uncertainty, hidden state",
+    "failure_condition": "a diverged filter (EKF linearisation error) or a degenerate particle set (all weight on one particle) loses the track entirely"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "FilterPy (2014-, Labbe): reference implementations of the Kalman family (KF/EKF/UKF), particle filters, and other Bayesian filters, written for clarity alongside the book 'Kalman and Bayesian Filters in Python'; carries example systems (a noisy nonlinear plant) AND the estimators that recover their hidden state",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "c7592f02163aef1d42504b50a30e88f0d1346f47660cd5739be87ee5d53f832d"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "python:3.11-slim"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}
