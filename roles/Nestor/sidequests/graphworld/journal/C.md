@@ -228,3 +228,21 @@
   come from that learner's chance event rate over the window ticks, not from 'it cannot learn, so it will never fire'.
 - What stands: in 24 B worlds, a 5-byte affine mod 2^16 plastic learner detects every regime switch on held-out seeds and
   its noisy-world accuracy matches arithmetic; C2's digit TT cannot model the dynamics at all.
+- Landed: rows 79755f50b, receipt ledger 57c9944c7 (FAIL).
+
+## 2026-09-14 iteration 11d: C7d chance-grounded contrast -> KILL on one target; C7 line CLOSED
+
+- Ran: C7c's protocol on new seeds (eligibility 93000.., record 92000..), 36 worlds, with H2 re-derived before scoring
+  from the digit TT's chance rate. AMENDMENT posted before any record row: the smoke run showed 0 eligibility surprises
+  -> bar 0 again, so the rate uses the one-sided 95% Poisson upper bound of the count. Code e03edcc2b.
+- H2 fixed: eligibility seeds gave 8 TT out-of-window surprises in 3,992 ticks -> upper bound 14.4 -> Poisson mean 1.74 over
+  482 record window ticks -> bar 5; the TT scored 1. Leak probe CLEAN/LEAK on 35/35.
+- KILL: gs 612 target 2 (corrupt 16) was admitted this time (<=2 null surprises on 93000..; C7c's eligibility seeds had
+  EXCLUDED it at 4) and on record seeds detected 0/3 switches with support 0.811 vs 0.879 expected and 4 null surprises.
+  A partial fit: support stays far above 0.5 through a flip, so the miss is SILENT. The other 34 targets: 238/238.
+- Post hoc only: an exact-fit criterion (support within 0.05 of (1-1/rate)^2) would have excluded exactly that target.
+- CLOSING THE LINE. C7b -> C7c -> C7d each repaired the previous failure on fresh seeds with pre-posted rules; a C7e tuned
+  to this failure would be forking paths at the protocol level. What stands: the structure-matched plastic learner tracks
+  regimes exactly wherever it genuinely fits (238/238 in C7c and in C7d); what does NOT stand: a pre-registered
+  eligibility rule that selects the genuinely fitting targets from sample data. A support-based fit test over several
+  eligibility seed sets is the open item, for this lane later or another lane.
