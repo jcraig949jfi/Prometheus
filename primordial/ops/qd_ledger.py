@@ -134,12 +134,14 @@ def floor_of(rows, world, pressure):
     return max(fs, key=lambda r: r["fitness"]["held64_median"]) if fs else None
 
 
-def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True) -> dict:
+def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, held=None) -> dict:
     """Clause A verdict (raw) plus the M1 floor reading: `floor` = the verdict read against the
-    trivial-policy floor. No new threshold: BELOW_FLOOR if median - 0.5*IQR <= floor; NO_HEADROOM if
-    every baseline on the front is <= floor (parity with it means nothing); else the raw verdict, with
-    normalized = (median - floor) / (baseline - floor) per front baseline."""
-    raw = _check_raw(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean)
+    trivial-policy floor. No new threshold: BELOW_FLOOR if the candidate's lower bound <= floor;
+    NO_HEADROOM if every baseline on the front is <= floor (parity with it means nothing); else the raw
+    verdict, with normalized = (median - floor) / (baseline - floor) per front baseline.
+    M3: pass `held` (the candidate's per-run-seed held64 values) and the band is the bootstrap 95% CI of
+    the median (primordial.metric.ci) instead of +-0.5 IQR; the verdict names which band it used."""
+    raw = _check_raw(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean, held)
     f = floor_of(rows, world, pressure)
     if f is None:
         raw["floor"] = {"verdict": "NO_FLOOR"}
@@ -148,9 +150,10 @@ def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True) -
     base = pareto([r for r in rows if r.get("baseline")], world, pressure)
     norm = {b["mechanism"]: (round((median - fv) / (b["fitness"]["held64_median"] - fv), 4)
                              if b["fitness"]["held64_median"] > fv else None) for b in base}
+    lo = raw["band"][0] if "band" in raw else median - 0.5 * (iqr or 0.0)
     if raw["verdict"] in ("INELIGIBLE", "NO_BASELINE"):
         v = raw["verdict"]
-    elif median - 0.5 * (iqr or 0.0) <= fv:
+    elif lo <= fv:
         v = "BELOW_FLOOR"
     elif base and all(b["fitness"]["held64_median"] <= fv for b in base):
         v = "NO_HEADROOM"
@@ -160,7 +163,7 @@ def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True) -
     return raw
 
 
-def _check_raw(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True) -> dict:
+def _check_raw(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, held=None) -> dict:
     """Clause A verdict of a candidate against the baseline Pareto front for (world, pressure)."""
     if not oracle_clean:
         return {"verdict": "INELIGIBLE", "why": "oracles not clean"}
@@ -171,16 +174,24 @@ def _check_raw(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=Tr
     base = pareto([r for r in rows if r.get("baseline")], world, pressure)
     if not base:
         return {"verdict": "NO_BASELINE", "why": f"no baseline cell for {world} {pressure}"}
+    if held is not None:
+        from primordial.metric.ci import median_ci
+        band = list(median_ci(held))
+        ext = {"band_rule": "bootstrap_ci95", "band": band}
+    else:
+        ext = {"band_rule": "iqr"}
     for b in base:
         bm, bi, bb = b["fitness"]["held64_median"], b["fitness"].get("iqr") or 0.0, b["footprint"]["genome_bytes"]
-        if median >= bm - 0.5 * bi and nbytes < bb:
+        parity = band[1] >= bm if held is not None else median >= bm - 0.5 * bi
+        better = band[0] > bm if held is not None else median > bm + 0.5 * bi
+        if parity and nbytes < bb:
             return {"verdict": "PASS", "rule": "parity at fewer bytes", "vs": b["mechanism"], "vs_median": bm,
-                    "vs_bytes": bb}
-        if median > bm + 0.5 * bi and nbytes <= bb:
+                    "vs_bytes": bb, **ext}
+        if better and nbytes <= bb:
             return {"verdict": "PASS", "rule": "better at <= bytes", "vs": b["mechanism"], "vs_median": bm,
-                    "vs_bytes": bb}
+                    "vs_bytes": bb, **ext}
     return {"verdict": "FAIL", "front": [(b["mechanism"], b["fitness"]["held64_median"],
-                                          b["footprint"]["genome_bytes"]) for b in base]}
+                                          b["footprint"]["genome_bytes"]) for b in base], **ext}
 
 
 def main(argv=None) -> int:
@@ -195,6 +206,7 @@ def main(argv=None) -> int:
     for k in ("median", "iqr", "bytes"):
         c.add_argument(f"--{k}", type=float, required=True)
     c.add_argument("--runs", type=int, required=True)
+    c.add_argument("--held", help="comma-separated per-run-seed held64 values -> bootstrap CI band (M3)")
     a = ap.parse_args(argv)
     if a.cmd == "seed-round1":
         if any(r.get("baseline") for r in load()):
@@ -217,7 +229,8 @@ def main(argv=None) -> int:
             print(f"{r['cell']['pressure']:16s} {r['mechanism']:32s} median {r['fitness']['held64_median']:8.2f} "
                   f"bytes {r['footprint']['genome_bytes']:6d}")
     elif a.cmd == "check":
-        print(json.dumps(check(rows, a.world, a.pressure, a.median, a.iqr, int(a.bytes), a.runs), indent=1))
+        held = [float(x) for x in a.held.split(",")] if a.held else None
+        print(json.dumps(check(rows, a.world, a.pressure, a.median, a.iqr, int(a.bytes), a.runs, held=held), indent=1))
     return 0
 
 
