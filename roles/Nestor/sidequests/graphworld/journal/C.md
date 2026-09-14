@@ -210,3 +210,21 @@
 - Post hoc (chosen after seeing rows, NOT the verdict): on the 22 targets / 14 worlds where the model fits within a
   regime (null surprises <= 2): 168/168 switches detected, digit TT 0, and corrupted in-regime support within 0.0025 of
   (1 - 1/rate)^2 in all 5 corrupted cases. Worth a re-registered C7c with fit-based eligibility on fresh seeds.
+- Landed: rows 02f4fa5fa, receipt ledger 9c42e3ea5 (FAIL, not board-eligible).
+
+## 2026-09-14 iteration 11c: C7c fit-based eligibility on held-out seeds -> FAIL (one bar: H2, and it was my bar)
+
+- Ran: 36 regime worlds (every stoch-free, obs-delay-free one from my scans up to gs 800); eligibility on seeds 91000..
+  (never scored): >=1 switch, flip-sensitive, AND PlasticAffine fits the no_regime_flip world (<=2 surprises). Record on
+  seeds 90000.., 512 envs. Code 50337549b.
+- Eligibility worked: 34 targets in 24 worlds admitted; the non-fitting targets that broke C7b were excluded on the
+  eligibility seeds (gs 255 at 254 null surprises, 60 at 62, 115 at 30, 71, 380, 428, 612, 730).
+- Held: H1 238/238 switches detected; H3 15/15 corrupted targets within 0.05 of (1 - 1/rate)^2 (max deviation 0.028);
+  H4 null surprises max 1; leak probe CLEAN/LEAK on 34/34.
+- Died: H2 -- the digit TT scored 2 'detections' (gs 440 j2, gs 494 j0). Diagnosis (post hoc, verdict unchanged): the TT
+  surprised 7 times in 3,936 out-of-window ticks, so chance alone predicts 0.85 hits in the 476 window ticks; P(>=2) is
+  ordinary (see summary). The TT is not detecting switches; my 'exactly 0' bar ignored its chance surprise rate.
+- Fourth bar fixed without the arithmetic (C1, C5, C3b, C7c). Rule tightened: a zero-event bar on a CONTRAST learner must
+  come from that learner's chance event rate over the window ticks, not from 'it cannot learn, so it will never fire'.
+- What stands: in 24 B worlds, a 5-byte affine mod 2^16 plastic learner detects every regime switch on held-out seeds and
+  its noisy-world accuracy matches arithmetic; C2's digit TT cannot model the dynamics at all.
