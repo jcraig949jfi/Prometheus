@@ -178,6 +178,19 @@ than second and is the only family that holds up in w1 (obs corruption + delay).
 What doesn't: any claim that linear is separated from tt_feat/tt_digits.
 B6 (lane B) fused closed-loop rollout passed meanwhile; next E work adopts it.
 
+## 2026-09-14 iteration 12 -- E3b FalkorDB load genes, repeated (PASS, prediction missed)
+
+While waiting on B6/C6: 6 genes x 5 round-robin restarts (30 containers), E3's
+reference queries. Null held (default_b median 83.84 not < default_a min 83.13);
+gate killed both cheat rewrites and held on 30/30 restarts. My "0 winners"
+prediction missed on the letter of the rule: omp1 median 82.72 < 83.13. That is
+a 0.5% margin with omp1's own restarts spanning 81.55-85.26, overlapping
+default_a's 83.13-84.67; every gene's median is within 2% of default_a's min.
+Honest reading: E3's load-time knobs are worth <=~1% on this corpus; the "median
+< min" rule is loose enough that a 0.5% shift passes it. E3 stays: rewrites are
+the only big lever.
+C6 (lane C) audited B6 exact off-distribution; E8 (seed scaling on B6) running.
+
 Next / steal: closed-loop needs more training seeds or a regulariser before any
 generalisation claim; C3's representation ecology (dense/CP/Tucker/TT/bitset)
 is the natural next genome comparison. E4b = archive-level positive (QD coverage/qd_score vs the same
