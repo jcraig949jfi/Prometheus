@@ -45,3 +45,12 @@
   only. A form wrong on one quiet semantic passes ~1 in 5 sampled episodes.
 - Steal next: E's saturation lesson held in a new shape. Diagnose the 154
   absorbed episodes, then B2 GraphWorld toy.
+- Diagnosis (diagnose_absorbed.py, same seeds as the sweep): of 759 exercised
+  episodes, 603 diverged and stayed diverged, 2 diverged then reconverged
+  (still caught, since the hash covers every tick; 603+2 = 605 matches the sweep),
+  154 NEVER diverged at a live tick. Of the 154: 137 have delay > 0 and 63 have
+  every act target overwritten by a lin_op dst. This is consistent with unpaid
+  writes queued by a dying slot landing after the episode ends. Correlation
+  only; landing ticks not checked.
+- Courtesy debt: C marked 13 of its cells INDETERMINATE because they ran during
+  my announced 16-process producer burst. Next burst: ask on the bus first.
