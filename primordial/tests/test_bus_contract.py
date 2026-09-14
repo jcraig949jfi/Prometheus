@@ -47,6 +47,7 @@ def live(monkeypatch):
     r.flushdb()
     from primordial.bus import bus
     monkeypatch.setattr(bus, "URL", url)
+    monkeypatch.setenv("PM_RECEIPT_GUARD", "0")   # fake git sha in GOOD; the guard has its own tests
     monkeypatch.setattr(bus, "LEDGER_DIR", __import__("pathlib").Path(os.environ.get("TMP", "/tmp")) / "pm_ledger_test")
     yield bus, r
     r.flushdb()
