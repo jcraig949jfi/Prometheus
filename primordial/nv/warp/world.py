@@ -141,11 +141,13 @@ class WpEncounter:
         rec_slot[rec] = np.arange(len(rec))
         T, nr = m.horizon, max(1, len(rec))
         arr = lambda x, dt: wp.array(np.ascontiguousarray(x), dtype=dt, device=dev)
-        self.reg = arr(init_regs(m, self.world_id, seeds), wp.int64)
+        self._reg0 = np.ascontiguousarray(init_regs(m, self.world_id, seeds), np.int64)
+        self._st0 = np.array([stream_state("stoch", self.world_id, int(s)) for s in seeds], np.uint64)
+        self.reg = arr(self._reg0, wp.int64)
         self.charge = arr(np.full((n, m.n_slots), m.start_charge, np.int64), wp.int64)
         self.alive = arr(np.ones((n, m.n_slots), np.int32), wp.int32)
         self.pend = wp.zeros((n, m.delay + 1, m.n_regs), dtype=wp.int64, device=dev)
-        self.st = arr(np.array([stream_state("stoch", self.world_id, int(s)) for s in seeds], np.uint64), wp.uint64)
+        self.st = arr(self._st0, wp.uint64)
         self.done_tick = wp.zeros(n, dtype=wp.int64, device=dev)
         self.rec_slot = arr(rec_slot, wp.int64)
         self.lin = arr(np.array(m.lin_ops, np.int64).reshape(-1, 6), wp.int64)
@@ -155,6 +157,16 @@ class WpEncounter:
         self.log_charge = wp.zeros((Tl, nr, m.n_slots), dtype=wp.int64, device=dev)
         self.log_alive = wp.zeros((Tl, nr, m.n_slots), dtype=wp.int32, device=dev)
         self.acts = None
+
+    def reset(self):
+        """Back to tick 0 from the host initial state kept by prepare (no stream re-seeding)."""
+        self.reg.assign(self._reg0)
+        self.charge.fill_(self.m.start_charge)
+        self.alive.fill_(1)
+        self.pend.zero_()
+        self.st.assign(self._st0)
+        self.done_tick.zero_()
+        wp.synchronize_device(self.device)
 
     def load_actions(self, acts: np.ndarray):
         """acts int32 [T, n_envs, n_slots, act_width], values >= 0; copied to the device once."""
