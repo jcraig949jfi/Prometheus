@@ -1,0 +1,190 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "eliza-weizenbaum-mad-slip-1965",
+ "techne_record": "techne/fossils/specimens/eliza-weizenbaum-mad-slip-1965/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "eliza-weizenbaum-mad-slip-1965",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "ELIZA (1965) -- Joseph Weizenbaum's ORIGINAL MAD-SLIP implementation for CTSS on the IBM 7094",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "MAD-SLIP transcription + the CACM script, as released CC0 via elizagen.org",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1965 (body: the archival listing, folder-dated 1965; the CACM paper is 1966)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "conversational-ai",
+     "natural-language",
+     "pattern-matching",
+     "early-ai",
+     "list-processing",
+     "pre1970"
+    ],
+    "lineage": "The actual program behind the 1966 CACM paper, lost for over fifty years and located by Jeff Shrager in the MIT archives in 2021 in a folder labelled COMPUTER CONVERSATIONS (1965). Written in MAD (Michigan Algorithm Decoder) using Weizenbaum's own SLIP list-processing library, running under CTSS on the IBM 7094. This is the ANCESTOR of the vault's eliza-anthay-1966, which is a modern faithful reconstruction of the same program -- so the vault now holds the original and a reconstruction of it, which can be compared."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "scripted natural-language dialogue",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "study man-machine conversation by transforming the user's own sentences through a replaceable script of keyword rules",
+    "pressure": "a 36-bit batch/timesharing machine with a 6-bit character set, no string type, and list structure that had to be built by hand in SLIP",
+    "success_means": "the scripted transformation produces the documented dialogue; the SCRIPT, not the program, carries the personality"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "no native string handling; list processing hand-built; a 6-bit character set; CTSS time limits",
+    "failure_condition": "a turn matching no keyword falls through to a canned deflection; the illusion is only as wide as the script"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "MAD (Michigan Algorithm Decoder)",
+    "SLIP"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The actual program behind the 1966 CACM paper, lost for over fifty years and located by Jeff Shrager in the MIT archives in 2021 in a folder labelled COMPUTER CONVERSATIONS (1965). Written in MAD (Michigan Algorithm Decoder) using Weizenbaum's own SLIP list-processing library, running under CTSS on the IBM 7094. This is the ANCESTOR of the vault's eliza-anthay-1966, which is a modern faithful reconstruction of the same program -- so the vault now holds the original and a reconstruction of it, which can be compared.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "historical_version_of: eliza-anthay-1966"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: cosell-eliza-bbn-lisp-1969"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "evidence": [
+     {
+      "kind": "archived_technical_discussion",
+      "ref": "elizagen.org recovery record (Shrager, 2021)",
+      "says": "The original ELIZA source was missing for decades and was located in the MIT archives in 2021; it had not been runnable in its own environment in the interim."
+     },
+     {
+      "kind": "original_paper",
+      "ref": "Weizenbaum, CACM 9(1), 1966",
+      "says": "Describes ELIZA as running under CTSS on the IBM 7094 and written in MAD-SLIP."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "20266056630b3650e28df5e1a24c583a6b1a0cf9b935f37788b9746cd23c5853"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "machine": "IBM 7094",
+     "word_size": "36-bit",
+     "number_representation": "one's complement",
+     "character_set": "BCD (6-bit)",
+     "os": "CTSS",
+     "compiler": "MAD + SLIP",
+     "storage": "tape and disk under CTSS",
+     "input_format": "console typewriter",
+     "runner": "none yet"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965",
+   "relation": "historical_version_of",
+   "to": "eliza-anthay-1966",
+   "note": "the vault's eliza-anthay-1966 is a modern FAITHFUL reconstruction of THIS body; original and reconstruction are now both held",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965",
+   "relation": "shares_ancestor_with",
+   "to": "cosell-eliza-bbn-lisp-1969",
+   "note": "independent reimplementation in a different language and world",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

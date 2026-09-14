@@ -38,8 +38,14 @@ TRI = ("YES", "NO", "UNKNOWN", "N/A")
 COMPOSITION_LABELS = ("feeds", "gates", "retries", "selects", "updates", "stores", "forgets", "predicts", "verifies",
                       "schedules", "restores", "transforms", "competes", "suppresses", "triggers")
 # ancestry relations mirror Techne's record vocabulary so the two graphs never share a label space by accident
-ANCESTRY_RELATIONS = ("algorithm_from", "derived_from", "shares_ancestor_with", "historical_version_of", "superseded",
-                      "port_of", "rewrote", "reimplementation_of", "predecessor_of", "successor_of", "rival_of")
+# Techne owns the provenance vocabulary: import it, never copy it (a hand copy drifted on 2026-09-14 when
+# spacewar-pdp1-1962 arrived with inspired_by). Nyx adds only the three relations Techne does not publish.
+try:
+    from techne.fossils.record import LINEAGE_RELATIONS as _TECHNE_RELATIONS
+except Exception:  # validator must still run in a checkout without techne/
+    _TECHNE_RELATIONS = ("forked_from", "derived_from", "rewrote", "superseded", "inspired_by", "port_of",
+                         "reimplementation_of", "historical_version_of", "algorithm_from", "shares_ancestor_with")
+ANCESTRY_RELATIONS = tuple(_TECHNE_RELATIONS) + ("predecessor_of", "successor_of", "rival_of")
 
 REJECTION_REASONS = ("DISAPPEARS_UNDER_ABLATION", "INHERITED_FROM_RUNTIME_OR_LIBRARY", "DUPLICATES_A_CONTROL",
                      "EFFECT_FROM_ENVIRONMENT", "STATE_OBSERVATIONALLY_IRRELEVANT", "CANNOT_BE_ISOLATED",
