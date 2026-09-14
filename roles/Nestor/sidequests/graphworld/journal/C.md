@@ -318,3 +318,12 @@
 - Result: best net 2.655M vs bitset 3.026M, 8/8 lower -> FAIL. Oracles clean (0/38400 offers, all elites); cheats caught.
 - Not predicted: program coverage 0.943 vs 0.774 fully separated, QD +4.4%; best programs keep 7.5/8 instructions
   under rent. Anomaly filed. Likely popcount-descriptor shortcut via fill/clear ops -- unverified, that is D's to split.
+- Integration: cells.jsonl conflicted with B's concurrent append; `rebase | tail && push` pushed a mid-rebase HEAD
+  (tail masked the exit code). Harmless, resolved by union (27 rows parse), A told. Check rebase status before push.
+
+## 2026-09-14 round 2 iteration 3: C-R2-03 drawn cell tt_digits/w4/cpu_ttl/numpy -> FAIL
+
+- Draw seed 13374394572435975906. Kept C-R2-01's cpu_ttl definition unchanged (1.0 client CPU-s); E7's numpy rollout,
+  E7b's RNG stream. Harness 6b515ef69, prior 0.05, expectation 3-4 gens.
+- Result: 5 gens, held64 median 38.96 (IQR 2.87) < 59.09 -> FAIL. Oracles clean, skip_lin and skip-odd 16/16.
+- Corroborates the C-R2-01 anomaly on a 2nd family and substrate: train 91% of full budget, held-out 63%. No new anomaly.
