@@ -56,8 +56,8 @@ seldom has a second experiment queued behind the first.
 
 - 18 call sites use `redis.Redis(port=...)` with the default host,
   including every lane E run script and the lane D/E test fixtures. On
-  this host "localhost" costs 10 s per connection (IPv6 first, then
-  fallback). The same fixtures make up 30 s of the 40 s full test suite
+  this host "localhost" costs 10 s per connection (cause NOT verified;
+  likely an IPv6 ::1 attempt timing out before 127.0.0.1). The same fixtures make up 30 s of the 40 s full test suite
   (six 5 s setups); lane E ran pytest 36 times (18.4 min).
 - `_fused` (B6) and the C4 row kernels / C5 forward_fast are njit WITHOUT
   cache=True. Of the 7 njit decorators, 3 are cached (nb_world). Every
