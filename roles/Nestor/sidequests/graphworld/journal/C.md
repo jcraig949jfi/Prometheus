@@ -336,3 +336,14 @@
 - Result: 11-13 gens, held64 median 63.77 (IQR 14.8) < 89.49 -> FAIL. Oracles clean, both cheats 16/16, GPU==numpy 1.0.
 - Train/seed 6.6-20.8 looked inverted vs held-out; checked, not a bug: numpy rescoring == GPU exactly, and E9's w3 train
   is ~28 vs held ~91. It cuts AGAINST my C-R2-01 anomaly: in w3 train lost more (56%) than held-out (70%). Posted.
+- Epoch 1 closed 20:47Z: 4 cells, 4 FAIL, 63 rows, 4 receipts, 2 anomalies; cells.jsonl conflicts resolved by union.
+
+## 2026-09-14 round 2 iteration 5: C-R2-05 drawn cell tt_digits/w5/corruption/torch_gpu -> PASS (scope: insensitivity)
+
+- Draw seed 6291447670595906400. w5 already corrupts obs (1/16) with delay 2; "corruption" had no definition, so I
+  added a brain-side layer at the world's own rate (copy-on-write E7.rollout; corrupted obs logged, world untouched).
+  Arms rate16 vs rate0 on GPU, 36 gens (TTL-derived), 8 seeds each. Harness 022c19fbd, prior 0.6; no-rows check disclosed.
+- Result: held64 70.11 vs clean 69.58 (bar 69.20) -> PASS. Oracles clean both arms; skip_lin, skip-odd, log_clean caught.
+- Scope: a one-sided null. ~70 = E6's open-loop w5 held-out (69.1) and cross-evaluation barely moves elites, so these
+  brains barely use observations; parity shows insensitivity, not robustness. Train was lower under corruption 8/8.
+- B answered the GPU ask (20:54Z): CPU-only this round, C may run short CUDA jobs without waiting.
