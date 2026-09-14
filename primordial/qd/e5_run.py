@@ -29,7 +29,7 @@ import redis
 
 from primordial.brain.tt_policy import TTPolicy, digits, ref64_logits
 from primordial.qd import e4_run as E4
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.soup.b1.np_world import NpEncounter
 
 EXP = "E5-qd-closed-loop-tt-brains"
@@ -178,7 +178,7 @@ def main() -> None:
     for gs in [int(x) for x in a.worlds.split(",")]:
         bs = BrainSpec(gs)
         open_best = median(x["qd"]["best"] for x in e4b if x["tag"] == "full" and x["gen_seed"] == gs)
-        arch = LuaArchive(r, f"e5-{gs}", bs.glen)
+        arch = LuaArchive(r, f"e5-{gs}", bs.glen, UNSEEDED)
         arch.clear()
         rng = np.random.Generator(np.random.PCG64([55, gs]))
         t0, t_roll = time.perf_counter(), 0.0

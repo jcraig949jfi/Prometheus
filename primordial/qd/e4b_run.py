@@ -23,7 +23,7 @@ import numpy as np
 import redis
 
 from primordial.qd import e4_run as E4
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.soup.b1.nb_world import NbEncounter
 from primordial.soup.b1.np_world import NpEncounter
 
@@ -55,7 +55,7 @@ def unpaid(spec: E4.Spec, G: np.ndarray) -> np.ndarray:
 
 
 def qd(spec, r, run, evalf, cheat, gens, batch, seed):
-    arch = LuaArchive(r, run, spec.glen)
+    arch = LuaArchive(r, run, spec.glen, UNSEEDED)
     arch.clear()
     rng = np.random.Generator(np.random.PCG64([seed, spec.gen_seed]))
     t_eval, t0 = 0.0, time.perf_counter()
@@ -73,7 +73,7 @@ def qd(spec, r, run, evalf, cheat, gens, batch, seed):
 
 
 def random_archive(spec, r, run, gens, batch, seed):
-    arch = LuaArchive(r, run, spec.glen)
+    arch = LuaArchive(r, run, spec.glen, UNSEEDED)
     arch.clear()
     rng = np.random.Generator(np.random.PCG64([seed + 1, spec.gen_seed]))
     for _ in range(gens):

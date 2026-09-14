@@ -30,7 +30,7 @@ from primordial.brain import genomes as gm
 from primordial.fabric.rows import RowWriter
 from primordial.ops import qd_ledger
 from primordial.qd import e7_run as E7
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 
 EXP = "C-R2-03-tt-digits-w4-cpu-ttl-numpy"
 ROOT = pathlib.Path(__file__).resolve().parents[3]
@@ -65,7 +65,7 @@ def main() -> None:
         for rs in range(lo, hi + 1):
             t0 = time.perf_counter()
             g7 = E7.G7(GS, FAM)
-            arch = LuaArchive(r, f"c-r2-03-{rs}", g7.glen)
+            arch = LuaArchive(r, f"c-r2-03-{rs}", g7.glen, UNSEEDED)
             arch.clear()
             rng = np.random.Generator(np.random.PCG64([710, rs, GS, list(gm.FAMILIES).index(FAM)]))  # E7b's stream
             E7.rollout(g7, g7.init(np.random.Generator(np.random.PCG64(12345)), BATCH), E7.TRAIN)  # warm-up, off the clock

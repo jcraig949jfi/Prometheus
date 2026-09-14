@@ -44,7 +44,7 @@ from primordial.fabric.rows import RowWriter
 from primordial.ops import qd_ledger
 from primordial.qd import e4_run as E4
 from primordial.qd import e7_run as E7
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.soup.b1.np_world import NpEncounter
 
 EXP = "C-R2-08-small-program-w4-decoder-rent-metered"
@@ -227,7 +227,7 @@ def main() -> None:
         for rs in range(lo, hi + 1):
             for ai, (arm, metered, rent, cell) in enumerate(arms):
                 t0 = time.perf_counter()
-                arch = LuaArchive(r, f"c-r2-08-{arm}-{rs}", pg.glen)
+                arch = LuaArchive(r, f"c-r2-08-{arm}-{rs}", pg.glen, UNSEEDED)
                 arch.clear()
                 rng = np.random.Generator(np.random.PCG64([4200, rs, ai]))
                 for _ in range(a.gens):

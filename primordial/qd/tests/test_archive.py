@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 import redis
 
-from primordial.qd.archive import LuaArchive, RacyArchive, serial_reference
+from primordial.qd.archive import UNSEEDED as A_UNSEEDED, LuaArchive, RacyArchive, serial_reference
 from primordial.qd.stubworld import GLEN, NKWorld, mutate, random_genomes
 
 
@@ -26,7 +26,7 @@ def _offers(seed, n):
 
 @pytest.mark.parametrize("cls", [LuaArchive, RacyArchive])
 def test_serial_insert_equals_reference(r, cls):
-    a = cls(r, "test-ser", GLEN)
+    a = cls(r, "test-ser", GLEN, sampler_seed=1)
     a.clear()
     c, f, g, m = _offers(1, 5000)
     for i in range(0, 5000, 700):  # uneven batches
@@ -37,7 +37,7 @@ def test_serial_insert_equals_reference(r, cls):
 
 
 def test_tie_break_is_smaller_genome_regardless_of_order(r):
-    a = LuaArchive(r, "test-tie", GLEN)
+    a = LuaArchive(r, "test-tie", GLEN, sampler_seed=1)
     hi = np.array([[0x80, 0, 0, 0, 0, 0, 0, 1]], np.uint8)  # u32 chunk > 2^31: signedness trap
     lo = np.array([[0x7F, 0xFF, 0, 0, 0, 0, 0, 0]], np.uint8)
     for order in ([hi, lo], [lo, hi]):
@@ -76,7 +76,7 @@ def test_seeded_sample_empty_archive(r):
 
 
 def test_sample_returns_archive_genomes(r):
-    a = LuaArchive(r, "test-smp", GLEN)
+    a = LuaArchive(r, "test-smp", GLEN, sampler_seed=A_UNSEEDED)
     a.clear()
     c, f, g, m = _offers(2, 300)
     a.insert(c, f, g, m)

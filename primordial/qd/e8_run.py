@@ -26,7 +26,7 @@ from primordial.qd import e4_run as E4
 from primordial.qd import e4b_run as E4B
 from primordial.qd import e5_run as E5
 from primordial.qd import e6_run as E6
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.soup.b6.fused import FusedRollout
 
 EXP = "E8-fused-closed-loop-seed-scaling"
@@ -47,7 +47,7 @@ def top_raw(arch: LuaArchive, n: int = TOP) -> np.ndarray:
 
 
 def closed_condition(bs, r, run, seeds, gens, batch, rs):
-    arch = LuaArchive(r, run, bs.glen)
+    arch = LuaArchive(r, run, bs.glen, UNSEEDED)
     arch.clear()
     rng = np.random.Generator(np.random.PCG64([880, rs, bs.gen_seed, len(seeds)]))
     fr = FusedRollout(bs, batch, seeds)

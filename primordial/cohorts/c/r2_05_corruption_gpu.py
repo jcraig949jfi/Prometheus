@@ -37,7 +37,7 @@ from primordial.fabric.rows import RowWriter
 from primordial.ops import qd_ledger
 from primordial.qd import e4_run as E4
 from primordial.qd import e7_run as E7
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.soup.b1.np_world import M, NpEncounter
 
 EXP = "C-R2-05-tt-digits-w5-corruption-torch-gpu"
@@ -164,7 +164,7 @@ def main() -> None:
                 t0 = time.perf_counter()
                 g7 = E7.G7(GS, FAM)
                 g7.fam = torch_family(gm.FAMILIES[FAM])(g7.fam.D, g7.fam.A)
-                arch = LuaArchive(r, f"c-r2-05-{rate}-{rs}", g7.glen)
+                arch = LuaArchive(r, f"c-r2-05-{rate}-{rs}", g7.glen, UNSEEDED)
                 arch.clear()
                 rng = np.random.Generator(np.random.PCG64([990, rs, GS, list(gm.FAMILIES).index(FAM)]))
                 c0 = time.process_time()
