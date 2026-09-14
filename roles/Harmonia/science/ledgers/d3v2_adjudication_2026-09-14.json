@@ -1,0 +1,302 @@
+{
+ "schema": "harmonia.d3v2_adjudication.v1",
+ "instance": "m2-f541bed9",
+ "ledger": "roles/Harmonia/science/ledgers/d3v2_calibration_2026-09-14.json",
+ "ledger_receipt": {
+  "base_sha": "916e2ff24458131d93c160fff97625bf75203cce",
+  "branch": "harmonia/m2-f541bed9-boot-2026-09-14",
+  "worktree_path": "D:\\Prometheus-worktrees\\harmonia-m2-f541bed9-boot",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "allow_canonical_override": false
+ },
+ "harness_controls": {
+  "CHEAT_ALWAYS": {
+   "all_region_rate": 1.0,
+   "want": 1.0,
+   "pass": true
+  },
+  "CHEAT_NEVER": {
+   "all_region_rate": 0.0,
+   "want": 0.0,
+   "pass": true
+  },
+  "POSITIVE_v1_LIVE_POS_HI": {
+   "target_rate": 0.98,
+   "pass": true
+  }
+ },
+ "receipt": {
+  "base_sha": "916e2ff24458131d93c160fff97625bf75203cce",
+  "branch": "harmonia/m2-f541bed9-boot-2026-09-14",
+  "worktree_path": "D:\\Prometheus-worktrees\\harmonia-m2-f541bed9-boot",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "allow_canonical_override": false
+ },
+ "se_diff_form": "independent binomial (conservative; declared)",
+ "by_geometry": {
+  "FLOOR": {
+   "rules": [
+    {
+     "rule": "A1 v2 N0 all <= v1 N0 all + 2SE",
+     "lhs": 0.1125,
+     "rhs": 0.08979166666666667,
+     "diff": 0.02270833333333333,
+     "two_se_diff": 0.012300842561382022,
+     "detail": "",
+     "verdict": "FAIL"
+    },
+    {
+     "rule": "A2 v2 N2h(|r|=0.577) w03 <= v2 N0 w03 + 2SE",
+     "lhs": 0.10333333333333333,
+     "rhs": 0.11666666666666667,
+     "diff": -0.013333333333333336,
+     "two_se_diff": 0.03612119517320462,
+     "detail": "",
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A2 v2 N2h(|r|=0.816) w03 <= v2 N0 w03 + 2SE",
+     "lhs": 0.10333333333333333,
+     "rhs": 0.11666666666666667,
+     "diff": -0.013333333333333336,
+     "two_se_diff": 0.03612119517320462,
+     "detail": "",
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A3 v2 N1 all <= v2 N0 all + 2SE",
+     "lhs": 0.1125,
+     "rhs": 0.1125,
+     "diff": 0.0,
+     "two_se_diff": 0.012899854650343934,
+     "detail": "",
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A4 POS-HI untrended: v2 w03 >= v1 w03 - 0.10",
+     "lhs": 0.8033333333333333,
+     "rhs": 0.8416666666666667,
+     "diff": -0.03833333333333333,
+     "two_se_diff": 0.04406455701791617,
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A4 POS-LO untrended: v2 w03 >= v1 w03 - 0.10",
+     "lhs": 0.895,
+     "rhs": 0.92,
+     "diff": -0.025000000000000022,
+     "two_se_diff": 0.03342404324235275,
+     "verdict": "PASS"
+    }
+   ],
+   "admission": "REFUSED",
+   "exact_refs_target_N0": {
+    "F(n_r-1, sum(n_o-1))": 0.08567221675416126,
+    "F(n_r-2, sum(n_o-2))": 0.11220775332952115,
+    "note": "references for the TARGET region against 4 neighbours of n_o each"
+   },
+   "N0_lower_higher": {
+    "v1": [
+     346,
+     85
+    ],
+    "v2": [
+     418,
+     122
+    ]
+   },
+   "not_all_eligible": {
+    "v1": 0,
+    "v2": 0
+   }
+  },
+  "LIVE": {
+   "rules": [
+    {
+     "rule": "A1 v2 N0 all <= v1 N0 all + 2SE",
+     "lhs": 0.00020833333333333335,
+     "rhs": 0.0004166666666666667,
+     "diff": -0.00020833333333333335,
+     "two_se_diff": 0.0007215625325818449,
+     "detail": "",
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A2 v2 N2h(|r|=0.577) w03 <= v2 N0 w03 + 2SE",
+     "lhs": 0.0,
+     "rhs": 0.0,
+     "diff": 0.0,
+     "two_se_diff": 0.0,
+     "detail": "",
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A2 v2 N2h(|r|=0.816) w03 <= v2 N0 w03 + 2SE",
+     "lhs": 0.0,
+     "rhs": 0.0,
+     "diff": 0.0,
+     "two_se_diff": 0.0,
+     "detail": "",
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A3 v2 N1 all <= v2 N0 all + 2SE",
+     "lhs": 0.0,
+     "rhs": 0.00020833333333333335,
+     "diff": -0.00020833333333333335,
+     "two_se_diff": 0.00041662326162809205,
+     "detail": "",
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A4 POS-HI untrended: v2 w03 >= v1 w03 - 0.10",
+     "lhs": 0.995,
+     "rhs": 0.995,
+     "diff": 0.0,
+     "two_se_diff": 0.008144527815247082,
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A4 POS-LO untrended: v2 w03 >= v1 w03 - 0.10",
+     "lhs": 0.995,
+     "rhs": 0.9966666666666667,
+     "diff": -0.0016666666666667052,
+     "two_se_diff": 0.007437393011991139,
+     "verdict": "PASS"
+    }
+   ],
+   "admission": "ADMITTED (synthetic)",
+   "exact_refs_target_N0": {
+    "F(n_r-1, sum(n_o-1))": 0.0001639886076421071,
+    "F(n_r-2, sum(n_o-2))": 0.00020159594144864013,
+    "note": "references for the TARGET region against 4 neighbours of n_o each"
+   },
+   "N0_lower_higher": {
+    "v1": [
+     2,
+     0
+    ],
+    "v2": [
+     1,
+     0
+    ]
+   },
+   "not_all_eligible": {
+    "v1": 0,
+    "v2": 0
+   }
+  },
+  "UNEQUAL": {
+   "rules": [
+    {
+     "rule": "A1 v2 N0 all <= v1 N0 all + 2SE",
+     "lhs": 0.011666666666666667,
+     "rhs": 0.006666666666666667,
+     "diff": 0.005,
+     "two_se_diff": 0.0038893848890042774,
+     "detail": "",
+     "verdict": "FAIL"
+    },
+    {
+     "rule": "A2 v2 N2h(|r|=0.577) w03 <= v2 N0 w03 + 2SE",
+     "lhs": 0.12833333333333333,
+     "rhs": 0.08833333333333333,
+     "diff": 0.039999999999999994,
+     "two_se_diff": 0.03581381897577567,
+     "detail": "",
+     "verdict": "FAIL"
+    },
+    {
+     "rule": "A2 v2 N2h(|r|=0.816) w03 <= v2 N0 w03 + 2SE",
+     "lhs": 0.115,
+     "rhs": 0.08833333333333333,
+     "diff": 0.026666666666666672,
+     "two_se_diff": 0.034862162445413084,
+     "detail": "",
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A3 v2 N1 all <= v2 N0 all + 2SE",
+     "lhs": 0.014583333333333334,
+     "rhs": 0.011666666666666667,
+     "diff": 0.0029166666666666664,
+     "two_se_diff": 0.004645895614928818,
+     "detail": "",
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A4 POS-HI untrended: v2 w03 >= v1 w03 - 0.10",
+     "lhs": 0.7416666666666667,
+     "rhs": 0.8333333333333334,
+     "diff": -0.09166666666666667,
+     "two_se_diff": 0.046938691297699606,
+     "verdict": "PASS"
+    },
+    {
+     "rule": "A4 POS-LO untrended: v2 w03 >= v1 w03 - 0.10",
+     "lhs": 0.9566666666666667,
+     "rhs": 0.94,
+     "diff": 0.01666666666666672,
+     "two_se_diff": 0.025541542051535783,
+     "verdict": "PASS"
+    }
+   ],
+   "admission": "REFUSED",
+   "exact_refs_target_N0": {
+    "F(n_r-1, sum(n_o-1))": 0.06776870996347395,
+    "F(n_r-2, sum(n_o-2))": 0.0899449317209493,
+    "note": "references for the TARGET region against 4 neighbours of n_o each"
+   },
+   "N0_lower_higher": {
+    "v1": [
+     31,
+     1
+    ],
+    "v2": [
+     56,
+     0
+    ]
+   },
+   "not_all_eligible": {
+    "v1": 0,
+    "v2": 0
+   }
+  }
+ },
+ "P_LIN": {
+  "FLOOR_v1": {
+   "variance_ratio": 0.1382735117270551,
+   "direction": "LOWER_DISPERSION",
+   "serial_r": 1.0,
+   "exchangeability": "EXCHANGEABILITY_VIOLATED",
+   "region_variance": 0.000600000000000001
+  },
+  "FLOOR_v2": {
+   "variance_ratio": 0.0,
+   "direction": "LOWER_DISPERSION",
+   "serial_r": 1.0,
+   "exchangeability": "EXCHANGEABILITY_VIOLATED",
+   "region_variance": 0.0
+  },
+  "LIVE_v1": null,
+  "LIVE_v2": {
+   "variance_ratio": 3.7894119343325922e-31,
+   "direction": "LOWER_DISPERSION",
+   "serial_r": 1.0,
+   "exchangeability": "EXCHANGEABILITY_VIOLATED",
+   "region_variance": 2.5434503392542545e-33
+  }
+ },
+ "P_LAB": {
+  "fired": true,
+  "detector_version": "d3.v2",
+  "label": "EXCHANGEABILITY_SUSPECT",
+  "serial_r_reported": 0.8014657013834029,
+  "serial_r_of_residuals": 5.070310743035731e-17,
+  "trend_inflation_reported": 2.7960082993947792
+ }
+}

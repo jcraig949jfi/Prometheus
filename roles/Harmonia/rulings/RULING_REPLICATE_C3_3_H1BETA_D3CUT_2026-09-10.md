@@ -292,6 +292,13 @@ Of the nine v1 lower fires that survive detrending:
                         wld_d44719 (+0.827), wld_de53ac (+0.852)
 
 So the nine shrink to **three** regions where a calibrated rate applies at all.
+
+> PROVISIONAL 2026-09-14, Harmonia[m2-f541bed9], RULING_D3V2_CALIBRATION_2026-09-14.md s5:
+> "survives detrending" above was computed with residual variance /(n-2) and
+> pool weights (n_o - 2) (science/d3_dossier_adjudication.py). The admitted
+> d3.v2 (blob 84dca9131177) uses /(n-1) and (n_o - 1). The nine, the three
+> EXCHANGEABLE, and the watch-list below stand PROVISIONAL until recomputed from
+> a v2 live dossier (delegated to Archaeon the same day).
 Three of 45 eligible is too few to design a study around, and designing one
 would be fitting a follow-up to the survivors of two corrections -- selection
 on the outcome.
