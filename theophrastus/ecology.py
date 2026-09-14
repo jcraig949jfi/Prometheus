@@ -111,3 +111,33 @@ def exact_null_stencil(seed_root: int = SEED_PRIMARY):
 def anchors(seed_root: int = SEED_REPLICATION):
     return [cell("GKL", "W149", "P_iid", "NONE", seed_root, "prereg:replication:anchor"),
             cell("exp", "W149", "P_iid", "NONE", seed_root, "prereg:replication:anchor")]
+
+
+# ----------------------------------------------------------------- ROUND 2
+# Added 2026-09-14 (ROUND2_DISSECTION_PLAN). Founding coordinates above are
+# untouched; these are NEW labels with their own content hashes.
+WORLDS["W999"] = World("W999", 999, 1998)
+WORLDS["W149s"] = World("W149s", 149, 149)     # halved horizon (Step C)
+WORLDS["W599s"] = World("W599s", 599, 599)
+
+
+def single_density(d: float) -> Pressure:
+    """P_d: one Bernoulli(d) block of 100 ICs, stable criterion."""
+    label = "P_d%s" % ("%.2f" % d).replace("0.", "")
+    if label not in PRESSURES:
+        PRESSURES[label] = Pressure(label, (float(d),), 100, "stable")
+    return PRESSURES[label]
+
+
+for _d in (0.20, 0.40, 0.48, 0.52, 0.60):
+    single_density(_d)
+
+# Step D transport mechanism: a genome NOT used to form H1-H7
+PREREG_HEX["particle1"] = "1000022441170231155f57dd734bffff"
+assert _g.rule_hex("particle1") == PREREG_HEX["particle1"]
+MECHANISMS["particle1"] = Mechanism("particle1", PREREG_HEX["particle1"],
+                                    PROVENANCE % ("particle1", _g.GENOMES["particle1"]["source"]))
+BRANCHES["ga_evolved_1993_95_r2"] = Branch(
+    "ga_evolved_1993_95", (PREREG_HEX["exp"], PREREG_HEX["par"], PREREG_HEX["particle1"]),
+    BRANCH_EVIDENCE, relation="sibling_of:hand_designed")
+BRANCH_OF["particle1"] = "ga_evolved_1993_95_r2"
