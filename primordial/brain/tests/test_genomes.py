@@ -61,6 +61,25 @@ def test_tt_digits_agrees_with_lane_c_policy_oracle():
     assert np.array_equal(fam.forward(g, obs, np.zeros(200, int))[ok], ref.argmax(1)[ok])
 
 
+@pytest.mark.parametrize("name", list(gm.FAMILIES))
+@pytest.mark.parametrize("parallel", [False, True])
+def test_forward_fast_matches_reference_and_cheat_is_caught(name, parallel):
+    fam = gm.FAMILIES[name](D=5, A=8)
+    g, obs, gidx = _batch(fam, n=400, seed=3)
+    got = fam.forward_fast(g, obs, gidx, parallel=parallel)
+    bad = fam.forward_fast(g, obs, gidx, cheat=True, parallel=parallel)
+    checked = mism_bad = 0
+    for p in range(len(g[0])):
+        rows = np.flatnonzero(gidx == p)
+        ref = fam.ref_logits(fam.one(g, p), obs[rows])
+        ok = gm.clear_rows(ref)
+        assert np.array_equal(got[rows][ok], ref.argmax(1)[ok])
+        checked += ok.sum()
+        mism_bad += int((bad[rows] != ref.argmax(1)).sum())
+    assert checked > 350
+    assert mism_bad > 30
+
+
 def test_sizes_are_ordered_smallest_first():
     D = 6
     sizes = [gm.FAMILIES[n](D).nbytes for n in ("linear", "lut_top", "tt_feat", "tt_digits")]

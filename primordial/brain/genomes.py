@@ -1,13 +1,15 @@
-"""Lane C (BRAIN) C4: brain genome families for lane E's population-batched QD.
+"""Lane C (BRAIN) C4/C5: brain genome families for lane E's population-batched QD.
 
 Interface matches primordial/qd/e5_run.py (lane E): a genome batch g is a tuple of
 float32 arrays with a leading population axis P; forward(g, obs[n,D], gidx[n]) returns
 the action index per row. The action codebook stays on E's side.
 
-Every family has TWO independent implementations:
-  forward     population-batched float32 (the hot path E runs)
-  ref_logits  one genome, one row at a time, float64, plain loops (the brain oracle)
-and pack/unpack to little-endian bytes, so a genome's charge is its byte length.
+Every family has independent implementations:
+  forward       population-batched numpy float32 (lane E's E5 style)
+  forward_fast  C5: numba kernel over rows, per-row genome index, chunked prange
+  ref_logits    one genome, one row at a time, float64, plain loops (the brain oracle)
+and pack/unpack to little-endian bytes, so a genome's charge is its byte length
+(always a multiple of 4: E's archive pads to 4).
 
 Families, smallest first (D = obs features, A = actions):
   linear     W [D,A], b [A]                        logits = (x/65535 - 0.5) W + b
@@ -21,6 +23,87 @@ import numpy as np
 
 from primordial.brain.tt_policy import digits
 
+try:
+    from numba import prange
+except ImportError:  # pragma: no cover
+    prange = range
+
+
+# ------------------------------------------------------------------ C5 numba kernels
+
+def _tt_rows(idx, gidx, al, G, Wo, out, nchunks, stride):
+    n, C = idx.shape
+    r = al.shape[1]
+    A = Wo.shape[2]
+    step = (n + nchunks - 1) // nchunks
+    for ch in prange(nchunks):
+        lo = ch * step
+        hi = min(n, lo + step)
+        v = np.empty(r, dtype=np.float32)
+        u = np.empty(r, dtype=np.float32)
+        for i in range(lo, hi):
+            p = gidx[i]
+            for a in range(r):
+                v[a] = al[p, a]
+            for c in range(0, C, stride):
+                x = idx[i, c]
+                m = np.float32(0.0)
+                for b in range(r):
+                    s = np.float32(0.0)
+                    for a in range(r):
+                        s += v[a] * G[p, c, x, a, b]
+                    u[b] = s
+                    if abs(s) > m:
+                        m = abs(s)
+                if m < np.float32(1e-30):
+                    m = np.float32(1e-30)
+                for b in range(r):
+                    v[b] = u[b] / m
+            best = 0
+            bv = -np.inf
+            for k in range(A):
+                s2 = 0.0
+                for b in range(r):
+                    s2 += v[b] * Wo[p, b, k]
+                if s2 > bv:
+                    bv = s2
+                    best = k
+            out[i] = best
+
+
+def _lut_rows(top, gidx, T, out, nchunks, stride):
+    n, D = top.shape
+    A = T.shape[3]
+    step = (n + nchunks - 1) // nchunks
+    for ch in prange(nchunks):
+        lo = ch * step
+        hi = min(n, lo + step)
+        for i in range(lo, hi):
+            p = gidx[i]
+            best = 0
+            bv = -np.inf
+            for k in range(A):
+                s = 0.0
+                for f in range(0, D, stride):
+                    s += T[p, f, top[i, f], k]
+                if s > bv:
+                    bv = s
+                    best = k
+            out[i] = best
+
+
+_KERNELS = {}
+
+
+def _kernel(fn, parallel: bool):
+    key = (fn.__name__, parallel)
+    if key not in _KERNELS:
+        import numba
+        _KERNELS[key] = numba.njit(parallel=parallel, nogil=True, boundscheck=False)(fn)
+    return _KERNELS[key]
+
+
+# ------------------------------------------------------------------ families
 
 class Family:
     name = ""
@@ -66,6 +149,9 @@ class Family:
     def forward(self, g, obs, gidx, cheat: bool = False) -> np.ndarray:
         return self.logits(g, obs, gidx, cheat).argmax(1)
 
+    def forward_fast(self, g, obs, gidx, cheat: bool = False, parallel: bool = False, nchunks: int = 0) -> np.ndarray:
+        return self.forward(g, obs, gidx, cheat)
+
     def one(self, g, p: int):
         return tuple(x[p] for x in g)
 
@@ -107,6 +193,14 @@ class LutTop(Family):
         feats = np.arange(0, self.D, 2 if cheat else 1)
         return T[gidx[:, None], feats[None, :], top[:, feats]].sum(1)
 
+    def forward_fast(self, g, obs, gidx, cheat=False, parallel=False, nchunks=0):
+        (T,) = g
+        top = np.ascontiguousarray((obs.astype(np.int64) >> 12) & 15)
+        out = np.empty(len(obs), np.int64)
+        _kernel(_lut_rows, parallel)(top, np.ascontiguousarray(gidx, np.int64), T, out,
+                                     nchunks or (24 if parallel else 1), 2 if cheat else 1)
+        return out
+
     def ref_logits(self, g1, obs):
         (T,) = g1
         out = np.zeros((len(obs), self.A))
@@ -146,6 +240,14 @@ class _TT(Family):
             v = np.einsum("nr,nrs->ns", v, G[gidx, c, idx[:, c]])
             v /= np.maximum(np.abs(v).max(1, keepdims=True), 1e-30)   # argmax is scale invariant
         return np.einsum("nr,nra->na", v, Wo[gidx])
+
+    def forward_fast(self, g, obs, gidx, cheat=False, parallel=False, nchunks=0):
+        al, G, Wo = g
+        idx = np.ascontiguousarray(self.index(obs), np.int64)
+        out = np.empty(len(obs), np.int64)
+        _kernel(_tt_rows, parallel)(idx, np.ascontiguousarray(gidx, np.int64), al, G, Wo, out,
+                                    nchunks or (24 if parallel else 1), 2 if cheat else 1)
+        return out
 
     def ref_logits(self, g1, obs):
         al, G, Wo = (x.astype(np.float64) for x in g1)
