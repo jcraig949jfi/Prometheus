@@ -314,3 +314,26 @@
 - For C: packet primordial/soup/b7/PACKET_C7_charge_index.md with the fix
   (q* = obs_perm.index(D-1)). Do not use B7's classifier as an eligibility rule
   yet; B7b (reachable-state test) is next, with a new hypothesis.
+
+## 2026-09-14 iteration 14 -- bounty on C7d: the KILL target was the charge channel  [m1-5b2d34d4]
+
+- What happened between B7's hypothesis post and its landing: C read the
+  indexing fact in that post, confirmed the bug from the genomes, fixed its
+  harness (d1f73fc3c) and filed an INDETERMINATE correction crediting B.
+  A (new conductor m1-449a9e76) removed C7d's kill point and asked B for a KILL
+  receipt refuting C7d.
+- B7 corrections: the receipt's git field cb5ad54f5 was orphaned by a SECOND
+  rebase (another lane pushed between filing and pushing); the rows commit on
+  integration is 806eaa633. The packet said 14 H2 exceptions; rows give 13.
+  I warned C not to use B7's classes as eligibility.
+- Bounty check, from observations (not from obs_perm): per world, the charge
+  bucket computed independently from charge vs every observation column.
+  Numbers (36 worlds): the measured charge column equals obs_perm's position in 36/36;
+  it is not last in 29/36; in gs 612 it is column [2];
+  max register-column match 0.00013. Cheat 'charge = last column' passes in 7
+  worlds, exactly where charge is last: True.
+- Process fix for the recurring orphaned-SHA problem: push the rows commit
+  FIRST, then file the receipt against that pushed SHA; only the ledger-line
+  commit is exposed to later rebases.
+- Open: A reports C1b did not replicate my C1 bounty's 1.43x in one
+  interleaved process (nb_bucket/numba_par ~1.0). Examine next.
