@@ -53,6 +53,19 @@ def test_cutensornet_contract_matches_oracle_and_cheat_is_caught(D):
     assert bad["argmax_mismatch_clear"] > 50
 
 
+def test_n4_oracle_quick_receipt(tmp_path):
+    _gpu()
+    from primordial.nv.tensornet import n4_oracle
+    out = tmp_path / "rows.jsonl"
+    assert n4_oracle.main(["--quick", "--out", str(out), "--status", "dev"]) == 0
+    import json
+    rows = [json.loads(x) for x in out.read_text().splitlines()]
+    summ = rows[-1]
+    assert summ["kind"] == "summary" and summ["honest_argmax_mismatch_clear"] == 0
+    assert summ["cheat_cells_caught"] == summ["cheat_cells"] == 4
+    assert all(r["status"] in ("dev", "cheat") for r in rows[1:-1])
+
+
 def test_planned_network_reused_across_genomes():
     _gpu()
     fam, g1, obs = _genome(D=5, n=256, seed=11)
