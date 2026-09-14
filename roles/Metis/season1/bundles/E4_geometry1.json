@@ -1,0 +1,91 @@
+{
+  "episode": "E4_GEOMETRY_1",
+  "decision": "2026-04-17: three rank estimators agree on a low latent rank for the specimen tensor, and the 'effective dimension <= 5 / 3D core' geometry is promoted into harmonia/memory/geometries.md as a structural claim about the manifold.",
+  "cutoff": "2026-04-17",
+  "claim": "LOW_LATENT_RANK_IS_STRUCTURAL",
+  "explanations": {
+    "LOW_LATENT_RANK_IS_STRUCTURAL": "the specimen manifold genuinely has a small effective dimension; findings are principal components of real structure",
+    "MISSINGNESS_ARTIFACT": "the rank estimate is produced by the non-random observation mask; most-tested cells are most-loaded, and density marginals alone generate the apparent low rank",
+    "METHOD_ASSUMPTION_VIOLATION": "SVT assumes continuous entries, missing-at-random and low-rank-plus-Gaussian structure; on a sparse ordinal matrix where 0 means unobserved the output is a diagnostic number, not a rank"
+  },
+  "baseline_experiment_cost": "WEEKS",
+  "evidence": [
+    {
+      "id": "E4.method_a_naive_svd",
+      "supports": "LOW_LATENT_RANK_IS_STRUCTURAL",
+      "availability": "COMMIT",
+      "source": "harmonia/memory/geometries.md (committed 5211d987b, 2026-04-17), 'Method A (naive SVD): rank ~ 12'",
+      "upstream": ["TENSOR_V1", "OBSERVATION_MASK", "ZERO_MEANS_UNOBSERVED"],
+      "rules_out": [],
+      "justification": "Rank ~12 on v1: 82 non-zero cells at 10.58% density. Consumes the matrix with 0 encoding 'not measured' and the same attention-driven mask."
+    },
+    {
+      "id": "E4.method_b_svt",
+      "supports": "LOW_LATENT_RANK_IS_STRUCTURAL",
+      "availability": "COMMIT",
+      "source": "same file, 'Method B (SVT completion): rank ~ 14-16'",
+      "upstream": ["TENSOR_V1", "OBSERVATION_MASK", "ZERO_MEANS_UNOBSERVED"],
+      "rules_out": [],
+      "justification": "A different estimator on the identical matrix and identical mask. Agreement with Method A is a property of the shared input, not a second observation of the manifold."
+    },
+    {
+      "id": "E4.method_c_agreement_matrix",
+      "supports": "LOW_LATENT_RANK_IS_STRUCTURAL",
+      "availability": "COMMIT",
+      "source": "same file, 'Method C (observed-only agreement matrix): rank ~ 15'",
+      "upstream": ["TENSOR_V1", "OBSERVATION_MASK", "ZERO_MEANS_UNOBSERVED"],
+      "rules_out": [],
+      "justification": "Restricting to observed cells does not escape the mask; it conditions on it. Three estimators, one matrix, one mask."
+    },
+    {
+      "id": "E4.variance_decomposition",
+      "supports": "LOW_LATENT_RANK_IS_STRUCTURAL",
+      "availability": "COMMIT",
+      "source": "same file, '3-dimensional core captures 48-74% of variance'",
+      "upstream": ["TENSOR_V1", "OBSERVATION_MASK", "ZERO_MEANS_UNOBSERVED", "AXIS_NARRATIVE"],
+      "rules_out": [],
+      "justification": "The arithmetic is real; the three axis labels (signal/noise, kill/survive, domain connectivity) are a post-hoc reading of the same decomposition of the same matrix."
+    },
+    {
+      "id": "E4.loading_density_coincidence",
+      "supports": "MISSINGNESS_ARTIFACT",
+      "availability": "COMMIT",
+      "source": "same file, 'the columns most loaded in the SVD (P020 conductor, P023 rank) are also the columns most densely tested'",
+      "upstream": ["OBSERVATION_MASK"],
+      "rules_out": [],
+      "justification": "Recorded in the same document that carries the claim, at the same cutoff. It supports the rival rather than the claim, and it is the single most informative item in the bundle: it names the confound on the page where the claim is made."
+    }
+  ],
+  "discriminators": [
+    {
+      "id": "PERMUTE_THE_MASK_ALONE",
+      "available_at_cutoff": true,
+      "cost": "MINUTES",
+      "outcome_branches": [
+        ["MISSINGNESS_ARTIFACT"],
+        ["LOW_LATENT_RANK_IS_STRUCTURAL", "METHOD_ASSUMPTION_VIOLATION"]
+      ],
+      "note": "Hold the rank statistic fixed; resample only the observation mask to preserve row and column densities, and recompute. If the statistic survives mask-only resampling the rank is about the matrix; if it does not, it is about who tested what. Needs no new data, no new instrument and no new theory -- the mask and the estimator are both already in hand. This is the test Harmonia built on 2026-04-29 as missingness_confound_v01, ten days after the retraction, which measured roughly 52 percent of the rank-flavoured signal attributable to density marginals alone."
+    },
+    {
+      "id": "SYNTHETIC_KNOWN_RANK_CONTROL",
+      "available_at_cutoff": true,
+      "cost": "HOURS",
+      "outcome_branches": [
+        ["METHOD_ASSUMPTION_VIOLATION"],
+        ["LOW_LATENT_RANK_IS_STRUCTURAL", "MISSINGNESS_ARTIFACT"]
+      ],
+      "note": "Generate a matrix of KNOWN rank, apply the same ordinal quantisation and the same observed mask, and run all three estimators. A positive control on the instrument: if they cannot recover a rank they were given, they are not measuring rank here."
+    },
+    {
+      "id": "ORDINAL_MNAR_MATRIX_FACTORIZATION",
+      "available_at_cutoff": true,
+      "cost": "WEEKS",
+      "outcome_branches": [
+        ["MISSINGNESS_ARTIFACT", "METHOD_ASSUMPTION_VIOLATION"],
+        ["LOW_LATENT_RANK_IS_STRUCTURAL"]
+      ],
+      "note": "The methodologically correct replacement named by the retraction itself: ordinal or logistic matrix factorization with explicit MNAR modelling. Multi-tick infrastructure; the proposal document calls substantive replacement out of reach and scopes a falsifier instead."
+    }
+  ]
+}
