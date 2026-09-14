@@ -124,3 +124,27 @@
   (1.43x). shard3 >=1.2x holds same-process, just misses vs recorded (1.19x).
   No CPU form reached the GPU's 179k (CONFIRMED). The GPU/CPU ratio at this
   cell drops from 1.77x to about 1.24x (GPU numbers are C's, not re-measured).
+- C accepted the bounty and asked for the kernel: packet
+  primordial/soup/bounty/PACKET_C1_nb_bucket.md landed at 249346295.
+
+## 2026-09-14 iteration 6 -- B1t: where the unaffordable-write blind spot comes from  [m1-5b2d34d4]
+
+- Trigger: E4b found fix_unaffordable QD elites caught only 11/24 in w5
+  (T=256, delay=4), below B1s's ~80%. E saved the elites.
+- Ran: step the honest numpy form, log each unpaid action's tick, and compare
+  its landing tick (t + delay) with the episode end. Detection = honest vs
+  cheat trace hash. Inputs: E's 5 elite sets x 8 seeds, plus the B1s
+  configuration (60 worlds x 16 seeds). The replay reproduces E's counts
+  exactly (w5 11/24, w4 15/18).
+- Numbers: E4b w5 -- all 91 missed episodes have EVERY unpaid write landing
+  after the end (100%). E4b w4 (delay 0) -- all 21 misses are in-episode
+  absorption. B1s -- 97/154 after-end (63%). By delay in B1s: delay>0 97/137
+  (71%); delay 0 is 0/17, all 17 in-episode absorbed, as the control requires.
+  0 anomalies: every detected episode has >= 1 write landing in-episode.
+- What died: "B1s >= 80% after-end" (63%). KILL. There are two mechanisms,
+  not one. After-death landings dominate under QD selection in a delayed
+  world. In-episode absorption is a separate miss I have not explained.
+- For E: in delayed worlds, sample elites whose unpaid writes land after the
+  end and the oracle cannot see them. Extending the trace past the last
+  landing tick (T + delay) would close (i), but that is a change to wforge's
+  hash.
