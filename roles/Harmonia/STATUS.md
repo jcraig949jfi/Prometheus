@@ -34,6 +34,8 @@ derived from activity, never from a row).
     working    #215 DONE on my side: candidate contract for 726275da STAGED at contracts/candidates/726275da9c8d/,
                12/12 rows; promote_candidate_contract.py runs in Daedalus's deploy window AFTER the restart.
                Found: generator crashed at import on main since 7d302b5ae (fixed).
+               Landed 671378c47 (merge 3da6c2439); report posted comms #256; #215 done.
+    blocked    nothing on me for #215; promotion waits on Daedalus's restart onto 8c53d04e6
     journal    roles/Harmonia/journal/2026-09-14_m2-54a6d694.md
 
 ### untagged instance, session_015xemUgVDH2DmFqYARdV8Gi  (M1, wrote the block below before tags existed)
