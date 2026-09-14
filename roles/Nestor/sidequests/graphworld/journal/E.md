@@ -260,3 +260,17 @@ Post hoc, report-only: graft beats both cheats only in w4 (p=0.004); in w1 and w
 Lesson for E-T1b: acceleration has to be graft minus cheat (paired), not graft minus scratch; more run seeds.
 Also fixed qd_ledger check (front over baselines only) on lane B's ask; the regression test fails on the old code.
 E-T2: Transformer family (9007d558c), 680 params, 2744 B on w4; record run on w4 running.
+
+## 2026-09-14 r2 iteration 2 -- E-T2 PASS, asks from B and D landed, E-T1b running
+
+E-T2 (code c11aea5a3, rows 67bc4a5b7, receipt PASS): a 1-block Transformer (680 params, 2744 B)
+through E7's numpy rollout, 25,600 genomes per run seed, 8 seeds at 166-206 s each. Oracles clean on
+every seed: world 0/16, skip_lin 16/16, brain 0/4096. The skip-odd cheat caught 15/16 on seed 0
+(bar >=14) but 13/16 on seeds 2 and 6. held64 median 95.56 (IQR 8.1) vs E9 linear 89.94 at 312 B
+(report-only). The E-T2 hypothesis sha 9007d558c was orphaned by a rebase; corrected on the bus.
+B ask (skip-odd blind on int2 brains): cohorts/e/oracles.py adds ablate_top (feature chosen on
+half the rows, scored on the other half), shift_action (oracle floor) and an input_invariant flag.
+Tested only on a planted brain; its power on B's real elites is unmeasured.
+D ask: LuaArchive(sampler_seed=) seeded, atomic Lua sampler (33038855e).
+Git: a rebase while E-T2's RowWriter held its rows file wedged (untracked block); fixed by
+dropping the rows picks from the rebase todo; no rows lost. Push only fast-forward while a writer is live.
