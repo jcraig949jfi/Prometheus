@@ -107,6 +107,56 @@ exactness signal (below-floor policies).
 Scope: every held64 here is below the w4 abstain floor 107.75 (conductor
 1789426590314-0). These rows are exactness-vs-bytes engineering, not clause A.
 
-Next: P4 cost under the O5 lease (wall and VRAM per precision on cuda,
-including linear int8_intmm), then the per-elite mismatch column added to the
-qd_cell rows.
+EPOCH 1 posted at 19:03 (bus 1789426999457-0).
+
+## 2026-09-14 iteration 4 -- P4 cost on cuda under the O5 lease (18/20 VALID)
+
+The predicate was posted first (bus 1789427112467-0). The harness is
+primordial/nv/precision/p4_cost.py with tests/test_p4_cost.py (38 precision
+tests pass). 20 rows are committed at ae1b10a12 in
+primordial/ledger/rows/P/P4-precision-cost-cuda.jsonl. Conditions:
+- Held bus.gpu_lease the whole time and never lost it.
+- nvidia-smi read 1% before timing; the lease was free at 19:05.
+- The oracle ran before any timing.
+- Path: the e2e host path the closed loop uses (host weights and obs in,
+  logits out), D=8, 1 torch thread, 7 alternating reps, median.
+
+Figures per cell: wall ms at n=1024 / n=65536, then peak VRAM MB at 65536,
+then param bytes.
+  linear  fp32    0.574 / 3.00   8.39   289
+  linear  fp16    0.566 / 2.89   7.34   145
+  linear  bf16    0.595 / 2.94   7.34   145
+  linear  fp8sim  0.775 / 3.50   8.39    81
+  linear  int8    0.993 / 3.25  15.47    81   (int8_intmm, the real kernel)
+  tt_feat fp32    1.432 / 4.72  11.28  4717
+  tt_feat fp16    1.476 / 4.82   9.83  2359
+  tt_feat bf16    1.482 / 4.63   9.83  2359
+  tt_feat fp8sim  1.750 / 5.10  11.28  1192   ORACLE FAIL -> INDETERMINATE (agreement 0.943 < 0.95)
+  tt_feat int8    2.315 / 6.71  14.90  1192   (int8_sim)
+PRIOR:
+- Held: fp16 and bf16 are within 0.99-1.04x of fp32 wall at n=1024.
+- Held: the VALID fp8_sim and int8 cells are slower than fp32 at both n
+  (1.09-1.73x).
+- Held: tt_feat int8 is the slowest cell at both n.
+- FAILED: VRAM does not follow bytes. int8 peaks at 1.3-1.8x the VRAM of
+  fp32. fp8_sim equals fp32, since it computes in fp32. Only fp16 and bf16
+  save VRAM (-12.5% linear, -12.8% tt_feat).
+New: with D=8, tt_feat fp8_sim fell below 0.95 on the 512-row sample. In P3
+(D=8 on-policy) its minimum was 0.958. The fp8_sim gene on tt_feat sits
+right at the exactness edge.
+
+Engineering conclusion for the round 6 trait: on this stack, every
+precision below 16 bits buys genome bytes only (3.6-4x smaller) and costs
+wall time and VRAM. fp16 is the one free win: bytes /2, VRAM -12%, wall
+unchanged, agreement >= 0.996. A search that scores bytes (clause A) will
+push genomes toward int8/fp8. That is honest only if the cost axes (wall,
+VRAM) stay in the row, which they do here.
+
+Package sP acceptance: precisions selectable (P2), exactness + held64 delta
+on w4 x 8 seeds (P3), cost bytes/wall-under-lease/VRAM (P4), QD rows per
+precision (P3 qd_cell rows), Blackwell probe table (P1). GREEN.
+Carry-forward (not in the acceptance list):
+- P5: a per-elite mismatch count in the qd_cell rows. Pooled agreement did
+  not separate the linear seed-4 cheat (P3 CONTROL 15/16).
+- A real fp8 kernel needs torch cu129+ or Linux.
+- The resident-GPU path (weights prepared once on device) is untimed.
