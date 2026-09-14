@@ -13,7 +13,8 @@ from primordial.bus import bus
 @pytest.fixture
 def live(monkeypatch):
     redis = pytest.importorskip("redis")
-    url = "redis://127.0.0.1:6390/13"
+    from primordial.tests._live import live_url
+    url = live_url()                              # per-lane db (was a shared db 13)
     r = redis.Redis.from_url(url, decode_responses=True)
     try:
         r.ping()

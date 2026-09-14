@@ -11,7 +11,9 @@ import pytest
 
 from primordial.fabric import worker as W
 
-URL = "redis://127.0.0.1:6390/13"
+from primordial.tests._live import live_url  # noqa: E402
+
+URL = live_url()                                  # per-lane db (was a shared db 13)
 FN = "primordial.fabric.selftest_jobs:"
 
 

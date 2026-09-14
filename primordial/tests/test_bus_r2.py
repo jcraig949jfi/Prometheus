@@ -17,7 +17,8 @@ REPO = pathlib.Path(__file__).resolve().parents[2]
 @pytest.fixture
 def live(monkeypatch, tmp_path):
     redis = pytest.importorskip("redis")
-    url = "redis://127.0.0.1:6390/15"
+    from primordial.tests._live import live_url
+    url = live_url()                              # per-lane db: concurrent builder suites
     r = redis.Redis.from_url(url, decode_responses=True)
     try:
         r.ping()
