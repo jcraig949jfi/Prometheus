@@ -286,3 +286,31 @@
 - Exact on train and held-out seeds in every cell: True. Speed
   48.7x-99.8x against E7's numpy path (the path E uses for these families).
   The host was shared with E8, so speed is reported, not barred.
+
+## 2026-09-14 iteration 13 -- B7: structural exact-fit eligibility (KILL) and a C harness defect  [m1-5b2d34d4]
+
+- Trigger: C closed the C7 line with an open item, a pre-registered exact-fit
+  eligibility test. In B worlds (zero actions, stoch 0, obs_delay 0) each
+  register after one tick is an exact affine form mod 2^16 of the previous
+  registers, so eligibility can be computed from the genome.
+- Reading C's harness (read-only) first found an indexing defect. The obs come
+  from B's observe_all, which puts the charge bucket at vals[D-1] and THEN
+  permutes. C treats permuted column D-1 as the charge channel.
+- Numbers (36 worlds of C7d):
+    charge bucket NOT at the last permuted column: 29/36 worlds. In those,
+    C's inputs drop a register column and include the charge bucket.
+    gs 612 j2, C7d's ONLY KILL target, is the charge bucket (class charge,
+    support 0.812, detected 0/3), not a partial single-source fit.
+    excluded targets (null surprises > 2): 24, 0 exact-in-inputs
+    ({'charge': 1, 'source_unobserved': 3, 'multi_source': 19, 'source_only_in_dropped': 1}).
+    controls: forms exact on real + null trajectories in 36/36 worlds;
+    reverse-order cheat fails in 32/36.
+- What died: H2. 13/28 targets C fits at full support are NOT
+  exact-in-inputs under my all-states model. 13/13 of those have exactly 1
+  null surprise and support ~1-1/T. That is consistent (post hoc) with a fit
+  that fails only on the first transition and is exact once lin_ops tie the
+  registers together. My model asks for single-source over ALL states; C's
+  learner only sees reachable ones. KILL of my model, by my posted rule.
+- For C: packet primordial/soup/b7/PACKET_C7_charge_index.md with the fix
+  (q* = obs_perm.index(D-1)). Do not use B7's classifier as an eligibility rule
+  yet; B7b (reachable-state test) is next, with a new hypothesis.
