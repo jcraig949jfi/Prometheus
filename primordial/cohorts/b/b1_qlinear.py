@@ -25,6 +25,7 @@ import time
 import numpy as np
 import redis
 
+from primordial.brain import genomes as gm
 from primordial.fabric.rows import RowWriter
 from primordial.ops import qd_ledger as QL
 from primordial.qd import e7_run as E7
@@ -44,9 +45,15 @@ LO, HI = -8, 7
 class QLin:
     """int4 linear params + nibble codebook; decodes to E7.G7(gs, 'linear')'s (params, codebook)."""
 
-    def __init__(self, gen_seed: int, bits: int = 4):
+    def __init__(self, gen_seed: int, bits: int = 4, acts: int = E7.A):
         self.g7 = E7.G7(gen_seed, "linear")
-        self.D, self.A, self.W = self.g7.D, E7.A, self.g7.W
+        if acts != E7.A:
+            # fewer codebook rows: the fused kernel reads A from W.shape[1] and indexes codebook[p, idx];
+            # E7.rollout is A-generic; brain_oracle's ref_logits reads fam.A, so the family is rebuilt.
+            self.g7.fam = gm.FAMILIES["linear"](self.g7.D, acts)
+            self.g7.pb, self.g7.cb = self.g7.fam.nbytes, acts * self.g7.W
+            self.g7.glen = (self.g7.pb + self.g7.cb + 3) // 4 * 4
+        self.D, self.A, self.W = self.g7.D, acts, self.g7.W
         self.nw, self.nb, self.nc = self.D * self.A, self.A, self.A * self.W
         self.bits = bits
         self.lo, self.hi = -(1 << (bits - 1)), (1 << (bits - 1)) - 1
@@ -114,6 +121,7 @@ def main() -> None:
     p.add_argument("--port", type=int, default=6391); p.add_argument("--tag", default="full")
     p.add_argument("--no-ledger", action="store_true", help="smoke: rows as dev, no QD ledger row")
     p.add_argument("--bits", type=int, default=4, choices=(2, 3, 4), help="weight code width (codebook stays 4)")
+    p.add_argument("--acts", type=int, default=E7.A, choices=(2, 4, 8), help="codebook rows (row 0 = abstain)")
     a = p.parse_args()
     gs, status = a.world, ("dev" if a.no_ledger else "record")
     global EXP, ROWS, TRAIN
@@ -121,17 +129,21 @@ def main() -> None:
     TRAIN = E8.seeds_n(128) if a.pressure == "train128" else E7.TRAIN
     a.gens = a.gens or (800 if a.pressure == "train128" else 200)
     pname = f"{a.pressure}_held64"
-    EXP = (f"B-R2-1-int4-linear-nibble-w{gs}-{a.pressure}" if a.bits == 4
-           else f"B-R2-4-int{a.bits}-linear-nibble-w{gs}-{a.pressure}")
+    if a.acts != E7.A:
+        EXP = f"B-R2-6-int{a.bits}-a{a.acts}-linear-nibble-w{gs}-{a.pressure}"
+    elif a.bits == 4:
+        EXP = f"B-R2-1-int4-linear-nibble-w{gs}-{a.pressure}"
+    else:
+        EXP = f"B-R2-4-int{a.bits}-linear-nibble-w{gs}-{a.pressure}"
     ROWS = ROWS.with_name(f"{EXP}.jsonl")
     r = redis.Redis(host="127.0.0.1", port=a.port)
-    q = QLin(gs, a.bits)
+    q = QLin(gs, a.bits, a.acts)
     held = []
     oracle_clean = None
     with RowWriter(ROWS, EXP, commit_every_s=120) as rw:
         for rs in E9.parse_seeds(a.run_seeds):
             t0 = time.perf_counter()
-            arch = LuaArchive(r, f"b-r2-1-{gs}-{rs}-{a.tag}-b{a.bits}", q.glen)
+            arch = LuaArchive(r, f"b-r2-1-{gs}-{rs}-{a.tag}-b{a.bits}-a{a.acts}", q.glen)
             arch.clear()
             rng = np.random.Generator(np.random.PCG64([2101, rs, gs]))
             fr = FusedRollout(q.g7.spec, a.batch, TRAIN, family="linear")
@@ -171,9 +183,9 @@ def main() -> None:
     med = float(np.median(held))
     iqr = float(np.percentile(held, 75) - np.percentile(held, 25))
     verdict = QL.check(QL.load(), f"w{gs}", pname, med, iqr, q.glen, len(held), bool(oracle_clean))
-    cell = {"cell": {"representation": f"linear_int{q.bits}_nibble", "world": f"w{gs}", "pressure": pname,
+    cell = {"cell": {"representation": f"linear_int{q.bits}_nibble" + ("" if q.A == E7.A else f"_a{q.A}"), "world": f"w{gs}", "pressure": pname,
                      "substrate": "numba_fused", "channel": "none"},
-            "mechanism": f"closed_loop_linear_int{q.bits}_nibble_codebook",
+            "mechanism": f"closed_loop_linear_int{q.bits}_nibble_codebook" + ("" if q.A == E7.A else f"_a{q.A}"),
             "fitness": {"held64_median": round(med, 4), "iqr": round(iqr, 4), "n_runs": len(held),
                         "held64_by_run_seed": held},
             "footprint": {"genome_bytes": q.glen, "params": q.nw + q.nb},

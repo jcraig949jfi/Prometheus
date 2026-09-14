@@ -436,3 +436,9 @@
   w1 44 B 40.11 IQR 15.65 PASS (fragile per D3). train128: w3 28 B 106.86 IQR 3.94 PASS, and
   above float linear 105.58 @ 208 (4 runs) outright; w1 44 B 58.44 FAIL vs 61.40. 4/5, priors
   .5/.6/.5/.6/.3.
+- B-R2-6 (codebook shrink, int3, train128): int3 elites used a median 2 (w4) / 3 (w3) of 8 rows on
+  HELD8. Control acts=8 re-pack byte-exact, held64 97.0566 reproduced. Oracles clean (skip-odd 15/16).
+  w4 A4 20 B 98.20 IQR 1.64 PASS; w4 A2 12 B 97.18 IQR 1.16 PASS; w3 A4 16 B 106.83 IQR 1.32 PASS
+  (also above float linear 105.58 @ 208). 3/3, priors .6/.35/.55.
+- A 12-byte brain choosing only abstain vs one fixed action is within 1.6 of float linear on w4:
+  the held-out metric may mostly reward abstain timing. Filed as an anomaly (possible easy metric).
