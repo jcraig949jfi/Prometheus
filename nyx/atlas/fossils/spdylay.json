@@ -1,0 +1,174 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "spdylay",
+ "techne_record": "techne/fossils/specimens/spdylay/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "spdylay",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "SPDY (spdylay) -- the experimental protocol that became HTTP/2 and was then retired",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/tatsuhiro-t/spdylay as of 2026-09-13 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2009-2015 (SPDY); HTTP/2 published 2015; SPDY removed from Chrome 2016",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "networks",
+     "protocol",
+     "http",
+     "multiplexing",
+     "loser"
+    ],
+    "lineage": "SPDY (Google, 2009) attacked HTTP/1.1 head-of-line blocking with multiplexed streams, header compression and prioritisation over one TLS connection. It worked, and the IETF took it as the BASIS for HTTP/2 (RFC 7540). Its authors then deprecated it: SPDY is a loser of an unusual kind -- defeated by its own successor, having won the argument. spdylay is Tatsuhiro Tsujikawa's C implementation (the ancestor of nghttp2)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "HTTP latency over high-latency links",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "remove HTTP/1.1's head-of-line blocking by multiplexing many requests over one connection with compressed headers",
+    "pressure": "pages needing dozens of round-trips over high-latency links; browsers opening many TCP connections to work around it",
+    "success_means": "fewer connections and lower page load time at the same bandwidth"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "latency and connection limits; TCP head-of-line blocking under loss",
+    "failure_condition": "retired by its own authors once its ideas were standardised as HTTP/2; deployments moved off it"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "SPDY (Google, 2009) attacked HTTP/1.1 head-of-line blocking with multiplexed streams, header compression and prioritisation over one TLS connection. It worked, and the IETF took it as the BASIS for HTTP/2 (RFC 7540). Its authors then deprecated it: SPDY is a loser of an unusual kind -- defeated by its own successor, having won the argument. spdylay is Tatsuhiro Tsujikawa's C implementation (the ancestor of nghttp2).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: HTTP/2 (RFC 7540)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "superior_rival"
+    ],
+    "evidence": [
+     {
+      "kind": "standards_history",
+      "ref": "RFC 7540 (HTTP/2), May 2015",
+      "says": "HTTP/2 was developed from SPDY as its starting point and supersedes it as the standardised protocol."
+     },
+     {
+      "kind": "release_notes",
+      "ref": "Chromium blog, 'Hello HTTP/2, Goodbye SPDY' (Feb 2015)",
+      "says": "Google announced it would remove SPDY support from Chrome in favour of HTTP/2."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "29f832fd903ac6bcb4c1cf5eef7fa7d0d4b050f908250b5465db6f6788c57a75"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "spdylay",
+   "relation": "superseded",
+   "to": "HTTP/2 (RFC 7540)",
+   "note": "SPDY was the basis of the standard that replaced it",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

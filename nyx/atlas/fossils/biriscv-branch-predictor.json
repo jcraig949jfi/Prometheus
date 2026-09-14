@@ -1,0 +1,166 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "biriscv-branch-predictor",
+ "techne_record": "techne/fossils/specimens/biriscv-branch-predictor/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "biriscv-branch-predictor",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "biRISC-V next-PC / branch prediction unit (biriscv_npc.v: BTB, bimodal or gshare, RAS; Ultra-Embedded)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/ultraembedded/biriscv master as of 2026-09-12 (commit in hashes); file src/core/biriscv_npc.v",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2019-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "hardware",
+     "branch-prediction",
+     "speculation",
+     "hidden-state",
+     "verilog"
+    ],
+    "lineage": "Dynamic branch prediction (Smith 1981 bimodal; McFarling 1993 gshare; Yeh & Patt two-level) as one Verilog module inside a small dual-issue RISC-V core: a branch target buffer, a bimodal/gshare pattern table, a return-address stack. The DECISION machinery is small and its state (counters, history) is exposed; the vault's picorv32 has no predictor at all -- this is the contrasting design point."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "speculative instruction fetch",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "guess the next instruction address before the branch resolves, so the pipeline never waits",
+    "pressure": "pipeline depth (a wrong guess costs a flush), tiny tables, hidden program behaviour",
+    "success_means": "misprediction rate falls to a few percent on loops; the RAS predicts returns exactly"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "hard timing bound (one guess per cycle), bounded table memory, hidden state (program control flow)",
+    "failure_condition": "aliasing in the pattern table makes two branches poison each other's counters"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Verilog"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "SYNCHRONOUS_DIGITAL_LOGIC (derived from language=Verilog)",
+   "basis": "NYX_DERIVED"
+  },
+  "ANCESTRY": {
+   "value": "Dynamic branch prediction (Smith 1981 bimodal; McFarling 1993 gshare; Yeh & Patt two-level) as one Verilog module inside a small dual-issue RISC-V core: a branch target buffer, a bimodal/gshare pattern table, a return-address stack. The DECISION machinery is small and its state (counters, history) is exposed; the vault's picorv32 has no predictor at all -- this is the contrasting design point.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Smith 1981 (bimodal); McFarling 1993 (gshare)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: picorv32"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "7ba854a7912cd236c743bd857c47695486a65aa07dcb97480881c41aa85f0e8b"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_EMULATED",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-hw:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "biriscv-branch-predictor",
+   "relation": "algorithm_from",
+   "to": "Smith 1981 (bimodal); McFarling 1993 (gshare)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "biriscv-branch-predictor",
+   "relation": "shares_ancestor_with",
+   "to": "picorv32",
+   "note": "RISC-V cores: one predicts, one does not",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

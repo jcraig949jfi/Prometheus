@@ -1,0 +1,182 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "lisp-1-5-ibm7090-1962",
+ "techne_record": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "lisp-1-5-ibm7090-1962",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "LISP 1.5 (1962) -- the IBM 7090 implementation, machine-readable transcription of the original assembly",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "informatimago/lisp-1-5 machine-readable transcription of the 1962 sources",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1962 (body: transcription of the original 7090 assembly sources)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "programming-language",
+     "interpreter",
+     "list-processing",
+     "symbolic",
+     "early-ai",
+     "garbage-collection",
+     "pre1970"
+    ],
+    "lineage": "McCarthy's LISP as implemented for the IBM 7090 by Hart, Levin and the MIT group, distributed with the 1962 LISP 1.5 Programmer's Manual. The body here is a machine-readable transcription of the original 7090 assembly listing (lisp15.asm, ~500 KB) together with the LISP-level sources. LISP is the branch that SURVIVED the early list-processing competition; its principal rival IPL-V (Newell, Shaw and Simon at RAND, from 1956) survives in this search only as scanned manuals, with no machine-readable body found -- an asymmetry that is itself evidence about what gets preserved."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "symbolic computation and automatic storage management",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "evaluate symbolic expressions -- programs as data -- on a machine designed for numeric work, with automatic storage reclamation",
+    "pressure": "36-bit words, a 6-bit character set, no dynamic memory from the operating system, and symbolic structures whose lifetime the programmer could not track by hand",
+    "success_means": "eval computes the value of an S-expression and the garbage collector reclaims cells without the programmer's help"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "fixed core, no OS memory management, numeric-oriented hardware",
+    "failure_condition": "the free list exhausts and the collector cannot recover enough cells"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "IBM 7090 assembly (FAP)",
+    "LISP"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "McCarthy's LISP as implemented for the IBM 7090 by Hart, Levin and the MIT group, distributed with the 1962 LISP 1.5 Programmer's Manual. The body here is a machine-readable transcription of the original 7090 assembly listing (lisp15.asm, ~500 KB) together with the LISP-level sources. LISP is the branch that SURVIVED the early list-processing competition; its principal rival IPL-V (Newell, Shaw and Simon at RAND, from 1956) survives in this search only as scanned manuals, with no machine-readable body found -- an asymmetry that is itself evidence about what gets preserved.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: femtolisp"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Bobrow & Raphael, CACM 7(4) 1964",
+      "says": "Compares COMIT, IPL-V, LISP 1.5 and SLIP as the competing list-processing languages of the period, establishing that they were contemporaneous rivals."
+     },
+     {
+      "kind": "project_documentation",
+      "ref": "Computer History Museum Software Preservation Group, LISP 1.5 family",
+      "says": "Documents the LISP 1.5 sources and their transcription as preserved historical artifacts."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "36e31960ceddb8666282b20ac7274dd16b722db2d3998fbaa111ee679883a076"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "machine": "IBM 7090/7094",
+     "word_size": "36-bit",
+     "number_representation": "one's complement",
+     "character_set": "BCD (6-bit)",
+     "os": "batch monitor (FMS/IBSYS)",
+     "assembler": "FAP-style",
+     "storage": "cards and tape",
+     "input_format": "punched cards",
+     "runner": "none yet"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "lisp-1-5-ibm7090-1962",
+   "relation": "shares_ancestor_with",
+   "to": "femtolisp",
+   "note": "the vault holds a modern Lisp; this is a 1962 one. Techne records the shared domain, not equivalence",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

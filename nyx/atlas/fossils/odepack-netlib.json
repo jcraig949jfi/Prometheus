@@ -1,0 +1,179 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "odepack-netlib",
+ "techne_record": "techne/fossils/specimens/odepack-netlib/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "odepack-netlib",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "ODEPACK -- LSODE and family, Hindmarsh (LLNL, 1983-2001)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "netlib odepack (double precision: opkdmain.f, opkda1.f, opkda2.f), as fetched 2026-09-12",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1983-2001",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "numerical",
+     "ODE",
+     "stiffness",
+     "adaptive-step-control",
+     "failure"
+    ],
+    "lineage": "Netlib Fortran ODE solvers descended from GEAR (1974): variable-step variable-order Adams (non-stiff) and BDF (stiff) methods with error control, a corrector iteration and a Jacobian strategy chosen by the method flag MF. Sibling of QUADPACK/EISPACK in the vault; ancestor of scipy.integrate.odeint (which wraps LSODA)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "stiff and non-stiff initial value problems",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "integrate ODE systems with automatic step and order selection, including stiff systems whose fast modes would otherwise force absurdly small steps",
+    "pressure": "stiffness: time scales separated by 10^10 in Robertson's problem; error tolerances; work limits",
+    "success_means": "the requested tolerance is met in a bounded number of steps; a method mismatched to the problem is reported, not silently wrong"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "stiffness (widely separated time scales), accuracy tolerance, step budget",
+    "failure_condition": "the non-stiff method's stability region forces steps ~1/|lambda|: the integrator exhausts its step budget (ISTATE=-1) or diverges"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Fortran 77"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Netlib Fortran ODE solvers descended from GEAR (1974): variable-step variable-order Adams (non-stiff) and BDF (stiff) methods with error control, a corrector iteration and a Jacobian strategy chosen by the method flag MF. Sibling of QUADPACK/EISPACK in the vault; ancestor of scipy.integrate.odeint (which wraps LSODA).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "derived_from: GEAR (Hindmarsh 1974)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: scipy.integrate.odeint / LSODA"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: quadpack-netlib"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "evidence": []
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "a241fb44842769e5e21f24ab7b2d0731cf197f10959c1b910e0738df4b2008fc"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_NATIVE",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "odepack-netlib",
+   "relation": "derived_from",
+   "to": "GEAR (Hindmarsh 1974)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "shares_ancestor_with",
+   "to": "quadpack-netlib",
+   "note": "netlib numerical lineage",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "superseded",
+   "to": "scipy.integrate.odeint / LSODA",
+   "note": "LSODA (in this same package) auto-switches; wrapped by SciPy",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

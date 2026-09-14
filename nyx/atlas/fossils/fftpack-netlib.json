@@ -1,0 +1,145 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "fftpack-netlib",
+ "techne_record": "techne/fossils/specimens/fftpack-netlib/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "fftpack-netlib",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "FFTPACK -- Paul Swarztrauber's Fortran FFT package (NCAR, 1985)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "netlib.org/fftpack as served 2026-09-12 (per-file; no tarball endpoint)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1976-1985",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "scientific-computing",
+     "fft",
+     "signal-processing",
+     "numerical"
+    ],
+    "lineage": "fftpack (netlib historical distribution): the authoritative Fortran source as served by netlib.org, the authors' own channel"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "Paul Swarztrauber's Fortran FFT package (NCAR, 1985)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "compute forward/inverse real and complex FFTs and related sine/cosine transforms in Fortran 77, mixed-radix",
+    "pressure": "the O(N^2) DFT cost, plus the many transform variants (real, complex, quarter-wave) each needing its own optimised radix passes",
+    "success_means": "transforms invert to the input within round-off; the classic NCAR reference results"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Fortran 77"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "fftpack (netlib historical distribution): the authoritative Fortran source as served by netlib.org, the authors' own channel",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "e45ea77a24e418253549e373389e5116a8873cf2a15faf60ec505416c35b68d2"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_NATIVE",
+    "test": "UPSTREAM_DRIVERS_RUN_NO_ORACLE",
+    "environment": {
+     "runner": "native"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "UPSTREAM_DRIVERS_RUN_NO_ORACLE"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

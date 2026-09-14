@@ -1,0 +1,166 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "padasip-1.2.2",
+ "techne_record": "techne/fossils/specimens/padasip-1.2.2/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "padasip-1.2.2",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "padasip 1.2.2 -- adaptive filters (LMS, NLMS, RLS, AP, GNGD) and adaptive system identification in Python (Matous Cejnek)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "v1.2.2 (2021)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2016-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "adaptation",
+     "estimation",
+     "signal-processing",
+     "online-learning",
+     "system-identification"
+    ],
+    "lineage": "Widrow & Hoff's LMS (1960; the ADALINE rule) and its descendants -- normalised LMS, recursive least squares, affine projection -- as a small library for adaptive filtering, prediction and system identification. Genuinely ADAPTIVE: weights change online in response to error. Recorded honestly as an adaptive FILTER/identifier, not a closed-loop controller (the charter's 'genuinely adaptive controller' with pinned provenance was not found this batch; see the report)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "online system identification and adaptive filtering",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "fit a model to a system whose parameters are unknown or drifting, one sample at a time, from the error alone",
+    "pressure": "unknown/drifting plant, noise, step-size stability limits",
+    "success_means": "the weights converge to the plant's; tracking resumes after the plant changes"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "unknown or time-varying plant, noise, real-time budget",
+    "failure_condition": "step size too large: the weights diverge; too small: the filter cannot track the drift"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Widrow & Hoff's LMS (1960; the ADALINE rule) and its descendants -- normalised LMS, recursive least squares, affine projection -- as a small library for adaptive filtering, prediction and system identification. Genuinely ADAPTIVE: weights change online in response to error. Recorded honestly as an adaptive FILTER/identifier, not a closed-loop controller (the charter's 'genuinely adaptive controller' with pinned provenance was not found this batch; see the report).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Widrow & Hoff 1960 (LMS / ADALINE)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: genann"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "843358e3a62ec8653536c70a7643f346053c661288287c1a303596792c371ab8"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "python:3.11-slim"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "padasip-1.2.2",
+   "relation": "algorithm_from",
+   "to": "Widrow & Hoff 1960 (LMS / ADALINE)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "padasip-1.2.2",
+   "relation": "shares_ancestor_with",
+   "to": "genann",
+   "note": "the delta rule is LMS applied to a perceptron",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

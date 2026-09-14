@@ -1,0 +1,146 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "bzip2-1.0.8",
+ "techne_record": "techne/fossils/specimens/bzip2-1.0.8/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "bzip2-1.0.8",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "bzip2 1.0.8 -- Burrows-Wheeler block-sorting compressor (Julian Seward)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "1.0.8 from sourceware.org (the maintainer's site)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1996 (1.0.8 rel. 2019)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "compression",
+     "burrows-wheeler-transform",
+     "move-to-front",
+     "huffman"
+    ],
+    "lineage": "bzip2 (1996-, Julian Seward): the Burrows-Wheeler transform + move-to-front + Huffman pipeline -- a DIFFERENT compression paradigm from LZ, reordering the data so that context redundancy becomes local run redundancy"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "block-sorting (BWT) lossless compression",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "compress losslessly by first BLOCK-SORTING the data (the Burrows-Wheeler transform) so repeated contexts cluster, then move-to-front and Huffman coding the transformed stream",
+    "pressure": "to beat DEFLATE's ratio on text; the BWT trades speed and memory for a better model of long-range redundancy",
+    "success_means": "exact round-trip at a higher ratio than gzip on text; the shipped self-test passes"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "bzip2 (1996-, Julian Seward): the Burrows-Wheeler transform + move-to-front + Huffman pipeline -- a DIFFERENT compression paradigm from LZ, reordering the data so that context redundancy becomes local run redundancy",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "70fe5728f37aa57560430df75cf8646bc87f0fd4f2a85b5b8d04f471fce955b4"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

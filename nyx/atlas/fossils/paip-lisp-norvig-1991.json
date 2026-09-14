@@ -1,0 +1,167 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "paip-lisp-norvig-1991",
+ "techne_record": "techne/fossils/specimens/paip-lisp-norvig-1991/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "paip-lisp-norvig-1991",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Paradigms of Artificial Intelligence Programming -- Norvig's Common Lisp programs (GPS, ELIZA, pattern matcher, unifier, Prolog-in-Lisp, 1991)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/norvig/paip-lisp main as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1991 (book); repository 2018-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "symbolic-AI",
+     "search",
+     "pattern-matching",
+     "unification",
+     "lisp",
+     "legacy-culture"
+    ],
+    "lineage": "The canonical Common Lisp exposition of classical AI machinery: Newell & Simon's General Problem Solver (means-ends analysis), Weizenbaum's ELIZA (pattern-directed rewriting), STUDENT, a unifier and a Prolog interpreter/compiler, search tools, Othello. Real problem-solving programs from the symbolic-AI culture, kept runnable by Norvig's repository under SBCL."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "classical AI problem solving in Lisp",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "solve problems by reducing goal/state differences with operators (GPS), converse by pattern rewriting (ELIZA), and answer queries by unification and backtracking (Prolog)",
+    "pressure": "the symbolic-AI programme's demand for general methods; the book's demand that they be small and readable",
+    "success_means": "GPS finds the operator sequence the book prints; ELIZA responds; the Prolog interpreter answers member/append queries"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "combinatorial search, goal interaction (the 'prerequisite clobbers sibling goal' problem GPS exposes)",
+    "failure_condition": "GPS loops or 'running around the block' (the book's own catalogue of GPS failures)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Common Lisp"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The canonical Common Lisp exposition of classical AI machinery: Newell & Simon's General Problem Solver (means-ends analysis), Weizenbaum's ELIZA (pattern-directed rewriting), STUDENT, a unifier and a Prolog interpreter/compiler, search tools, Othello. Real problem-solving programs from the symbolic-AI culture, kept runnable by Norvig's repository under SBCL.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Newell & Simon 1961 (GPS); Weizenbaum 1966 (ELIZA); Robinson 1965 (unification)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: tinyscheme-1.42"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "9ec5c1c33390c7524a51f8ffe1f1092cc6ac3d618089d896bafb867895688998"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "paip-lisp-norvig-1991",
+   "relation": "algorithm_from",
+   "to": "Newell & Simon 1961 (GPS); Weizenbaum 1966 (ELIZA); Robinson 1965 (unification)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "paip-lisp-norvig-1991",
+   "relation": "shares_ancestor_with",
+   "to": "tinyscheme-1.42",
+   "note": "Lisp family: programs vs language machine",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

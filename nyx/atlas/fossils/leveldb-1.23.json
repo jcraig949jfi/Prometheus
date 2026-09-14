@@ -1,0 +1,166 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "leveldb-1.23",
+ "techne_record": "techne/fossils/specimens/leveldb-1.23/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "leveldb-1.23",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "LevelDB 1.23 -- log-structured merge key-value store (Jeff Dean, Sanjay Ghemawat; Google)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "1.23 (2021)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2011-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "database",
+     "recovery",
+     "write-ahead-log",
+     "compaction",
+     "contention"
+    ],
+    "lineage": "LSM-tree storage (O'Neil et al. 1996) as Google built it for Chrome/IndexedDB in 2011: a write-ahead log, an in-memory memtable, sorted on-disk tables, and background compaction; RECOVERY replays the log. Ancestor of RocksDB (Facebook fork, 2012)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "durable ordered key-value storage under heavy write load",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "absorb writes fast by appending to a log and merging later, and recover the unflushed tail of the log after a crash",
+    "pressure": "write bursts, bounded memory (memtable), background compaction competing with foreground I/O, crash mid-write",
+    "success_means": "every acknowledged write is readable after reopen; compaction keeps read cost bounded"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "write bursts, bounded memory, crash mid-write, foreground/background contention",
+    "failure_condition": "lost acknowledged writes after a crash, or unbounded read amplification"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "LSM-tree storage (O'Neil et al. 1996) as Google built it for Chrome/IndexedDB in 2011: a write-ahead log, an in-memory memtable, sorted on-disk tables, and background compaction; RECOVERY replays the log. Ancestor of RocksDB (Facebook fork, 2012).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: O'Neil et al. 1996 LSM-tree"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: RocksDB (Facebook fork 2012)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "9f24633cc601cdeb2bc7ee6edf135b093c305da050cd88f47681a7871debc983"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "leveldb-1.23",
+   "relation": "algorithm_from",
+   "to": "O'Neil et al. 1996 LSM-tree",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "leveldb-1.23",
+   "relation": "superseded",
+   "to": "RocksDB (Facebook fork 2012)",
+   "note": "human history: the fork became the mainstream LSM engine; LevelDB continues",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

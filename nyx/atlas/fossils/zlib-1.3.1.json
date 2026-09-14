@@ -1,0 +1,146 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "zlib-1.3.1",
+ "techne_record": "techne/fossils/specimens/zlib-1.3.1/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "zlib-1.3.1",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "zlib 1.3.1 -- the DEFLATE reference (Gailly & Adler)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "git tag v1.3.1, github.com/madler/zlib",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1995 (1.3.1 rel. 2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "compression",
+     "lz77",
+     "huffman",
+     "dictionary-coding"
+    ],
+    "lineage": "zlib (1995-, Jean-loup Gailly & Mark Adler): the reference DEFLATE -- LZ77 sliding-window matching + Huffman coding of literals/lengths/distances; the compression behind gzip, PNG, zip and HTTP"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "lossless general-purpose stream compression (DEFLATE)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "compress and decompress a byte stream losslessly by finding repeated substrings within a 32KB window (LZ77) and entropy-coding the result (Huffman)",
+    "pressure": "the LZ77 vs DEFLATE competitors of the early 90s and the LZW patent; zlib had to be free, fast, and byte-stream-safe",
+    "success_means": "inflate exactly reconstructs deflate's input, at a competitive ratio and speed; the test suite's CRCs match"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "zlib (1995-, Jean-loup Gailly & Mark Adler): the reference DEFLATE -- LZ77 sliding-window matching + Huffman coding of literals/lengths/distances; the compression behind gzip, PNG, zip and HTTP",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "de66ed57b3a84acfb93b8c2e73f365df280754b56118c4f1dc7499cce68fc327"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "UPSTREAM_TESTS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "UPSTREAM_TESTS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

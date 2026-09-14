@@ -1,0 +1,147 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "whitakers-words-ada",
+ "techne_record": "techne/fossils/specimens/whitakers-words-ada/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "whitakers-words-ada",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Whitaker's Words -- a Latin morphological analyser and dictionary in Ada (Col. William Whitaker, 1993-2006; maintained by Martin Keegan)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/mk270/whitakers-words master as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1993-2006 (Whitaker); repository 2013-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "natural-language",
+     "morphology",
+     "dictionary",
+     "legacy-culture",
+     "ada"
+    ],
+    "lineage": "A large REAL Ada program (tens of thousands of lines) from the language's first generation: parses Latin word forms into stem + inflection against a 39,000-entry dictionary, handling enclitics, tackons, prefixes/suffixes and syncope; runs on DOS/Windows/Unix for three decades. Public domain by its author. The Ada culture's strong typing and packages are visible throughout."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "Latin morphological analysis",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "explain any Latin word form by finding which stem plus which inflection could produce it, against a real dictionary",
+    "pressure": "morphological ambiguity, a large dictionary, DOS-era memory limits the design still shows",
+    "success_means": "known forms parse to the right lemma and inflection; unknown forms are reported as such"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "ambiguity, dictionary scale, limited memory (1990s PCs)",
+    "failure_condition": "a form is parsed to a wrong lemma or missed"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Ada"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "A large REAL Ada program (tens of thousands of lines) from the language's first generation: parses Latin word forms into stem + inflection against a 39,000-entry dictionary, handling enclitics, tackons, prefixes/suffixes and syncope; runs on DOS/Windows/Unix for three decades. Public domain by its author. The Ada culture's strong typing and packages are visible throughout.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "LATER_SAME_LINEAGE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "f660d9efaa19c586b012f015c14cce67d53bd58ddf6516b29187d2d2004a1eda"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-legacy:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

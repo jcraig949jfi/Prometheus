@@ -1,0 +1,161 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "tiny-aes-c",
+ "techne_record": "techne/fossils/specimens/tiny-aes-c/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "tiny-aes-c",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "AES (tiny-AES-c) -- the Rijndael successor that replaced DES",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/kokke/tiny-AES-c as of 2026-09-13 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1998 (Rijndael); FIPS 197 in 2001",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "cryptography",
+     "block-cipher",
+     "substitution-permutation-network",
+     "security",
+     "successor"
+    ],
+    "lineage": "Rijndael (Daemen & Rijmen) won the NIST AES competition and became FIPS 197 in 2001, replacing DES. Not a Feistel network but a substitution-permutation network over GF(2^8), with 128/192/256-bit keys. Kept as the WINNER of the cipher pair so the loser can be compared on shared test vectors."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "standardised symmetric encryption after DES",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "replace DES with a cipher whose key length and structure resist foreseeable attack, efficient in both hardware and software",
+    "pressure": "the same adversary that killed DES, plus a public competition demanding analysable security margins",
+    "success_means": "matching the FIPS-197 vectors with no practical attack better than brute force on a 128-bit key"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "adversarial cryptanalysis; an open selection process",
+    "failure_condition": "implementation-level leakage (timing/cache side channels) rather than a break of the cipher"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Rijndael (Daemen & Rijmen) won the NIST AES competition and became FIPS 197 in 2001, replacing DES. Not a Feistel network but a substitution-permutation network over GF(2^8), with 128/192/256-bit keys. Kept as the WINNER of the cipher pair so the loser can be compared on shared test vectors.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: des-reference"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "evidence": []
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "PSEUDOCODE_PLUS_REFERENCE_IMPL",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "ceac46bb10ea8f2bbab812bc39f49a65effb6fc3f0714a225015eeeeb32e05d0"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "tiny-aes-c",
+   "relation": "superseded",
+   "to": "des-reference",
+   "note": "AES replaced DES as the US standard",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

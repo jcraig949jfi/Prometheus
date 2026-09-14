@@ -1,0 +1,174 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "cosell-eliza-bbn-lisp-1969",
+ "techne_record": "techne/fossils/specimens/cosell-eliza-bbn-lisp-1969/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "cosell-eliza-bbn-lisp-1969",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "ELIZA in BBN-LISP (1969, revised 1972) -- Bernie Cosell's independent implementation at BBN",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "coselleliza1969and1972.lisp, as released via elizagen.org",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1969 (body: the file is dated 1969 and 1972 by its own name and content)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "conversational-ai",
+     "natural-language",
+     "pattern-matching",
+     "early-ai",
+     "lisp",
+     "pre1970"
+    ],
+    "lineage": "Bernie Cosell wrote an ELIZA independently at BBN in LISP, having read the CACM description rather than the code. A SECOND, independent organism solving the same problem in a different language and a different world -- BBN-LISP on a PDP-10 rather than MAD-SLIP on a 7094 under CTSS. Its behaviour and structure are therefore an independent answer to the same pressure, not a port."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "scripted natural-language dialogue, reached independently",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "reproduce the conversational behaviour described in the CACM paper, from the description alone, in LISP",
+    "pressure": "the same illusion must be produced with list structure and no access to the original code",
+    "success_means": "a session transcript that behaves like the published dialogues"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "reconstructing behaviour from a paper rather than from source; a different machine and language",
+    "failure_condition": "same class: unmatched input falls through to deflection"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "BBN-LISP"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Bernie Cosell wrote an ELIZA independently at BBN in LISP, having read the CACM description rather than the code. A SECOND, independent organism solving the same problem in a different language and a different world -- BBN-LISP on a PDP-10 rather than MAD-SLIP on a 7094 under CTSS. Its behaviour and structure are therefore an independent answer to the same pressure, not a port.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "reimplementation_of: eliza-weizenbaum-mad-slip-1965"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "HISTORICAL_ONLY",
+    "failure_reasons": [],
+    "evidence": [
+     {
+      "kind": "archived_technical_discussion",
+      "ref": "elizagen.org Cosell materials",
+      "says": "Cosell's BBN-LISP ELIZA is published with its own session transcript and author attribution; BBN-LISP and the PDP-10/TENEX world it ran in are no longer in use."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "5d5a33159ddfafebbfcc8239a98c6c07cfbe566442a8c6bf0c5115f1c01986cf"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "machine": "DEC PDP-10",
+     "word_size": "36-bit",
+     "number_representation": "two's complement",
+     "character_set": "ASCII/SIXBIT",
+     "os": "TENEX (BBN)",
+     "interpreter": "BBN-LISP",
+     "storage": "disk",
+     "runner": "none yet"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "cosell-eliza-bbn-lisp-1969",
+   "relation": "reimplementation_of",
+   "to": "eliza-weizenbaum-mad-slip-1965",
+   "note": "independent, from the published description rather than from the code",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

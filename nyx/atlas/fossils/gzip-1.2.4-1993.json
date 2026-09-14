@@ -1,0 +1,176 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "gzip-1.2.4-1993",
+ "techne_record": "techne/fossils/specimens/gzip-1.2.4-1993/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "gzip-1.2.4-1993",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "gzip 1.2.4 (1993) -- GNU zip: DEFLATE (LZ77 + Huffman), the redesign forced by the LZW patent",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "gzip-1.2.4 (18 Aug 1993), ftp.gnu.org/gnu/gzip",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1993",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "compression",
+     "LZ77",
+     "Huffman",
+     "historical-redesign",
+     "legal-pressure"
+    ],
+    "lineage": "Compression lineage, the HISTORICAL REDESIGN under legal pressure: Unisys's enforcement of the LZW patent (1993-94) made compress unshippable for GNU; Jean-loup Gailly's gzip (1992-93) used Ziv-Lempel 1977 plus Huffman -- DEFLATE, later RFC 1951 and zlib's core -- and replaced compress across Unix. 1.2.4 (Aug 1993) is the version that stayed frozen for a decade. Beside the vault's zlib-1.3.1 (the library form, 2024) and compress/ncompress, this closes the compress -> gzip -> zlib series."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "patent-free lossless compression",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "compress files better than compress without infringing the LZW patent, and interoperate forever via a fixed format",
+    "pressure": "the Unisys LZW patent (legal), disk/bandwidth scarcity, portability across 1993 Unixes and DOS",
+    "success_means": "exact round trip, better ratio than compress, patent-free"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "legal pressure (patent), storage scarcity, portability",
+    "failure_condition": "a format change would orphan every archive; a patent claim would stop distribution"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C (1993, pre-ANSI-tolerant)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Compression lineage, the HISTORICAL REDESIGN under legal pressure: Unisys's enforcement of the LZW patent (1993-94) made compress unshippable for GNU; Jean-loup Gailly's gzip (1992-93) used Ziv-Lempel 1977 plus Huffman -- DEFLATE, later RFC 1951 and zlib's core -- and replaced compress across Unix. 1.2.4 (Aug 1993) is the version that stayed frozen for a decade. Beside the vault's zlib-1.3.1 (the library form, 2024) and compress/ncompress, this closes the compress -> gzip -> zlib series.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "historical_version_of: zlib-1.3.1"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: ncompress-5.0-lzw-1985"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "ACTIVE",
+    "failure_reasons": [],
+    "evidence": [
+     {
+      "kind": "standards_history",
+      "ref": "RFC 1951 (DEFLATE)",
+      "says": "gzip's DEFLATE was standardised and remains in ubiquitous use."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "gzip-1.2.4-1993",
+   "relation": "superseded",
+   "to": "ncompress-5.0-lzw-1985",
+   "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "gzip-1.2.4-1993",
+   "relation": "historical_version_of",
+   "to": "zlib-1.3.1",
+   "note": "same author (Gailly) and algorithm; the library form",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

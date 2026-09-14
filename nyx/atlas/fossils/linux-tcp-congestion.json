@@ -1,0 +1,165 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "linux-tcp-congestion",
+ "techne_record": "techne/fossils/specimens/linux-tcp-congestion/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "linux-tcp-congestion",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Linux TCP congestion control -- CUBIC and BBR (the congestion-avoidance lineage under pressure)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "linux v6.6 net/ipv4/tcp_cubic.c + tcp_bbr.c (pinned tag)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1988- (cubic 2008, bbr 2016)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "networks",
+     "congestion-control",
+     "feedback-control",
+     "adaptation",
+     "contention"
+    ],
+    "lineage": "TCP congestion control (1988-, Van Jacobson onward): Tahoe -> Reno -> NewReno -> CUBIC (2008, loss-based, the Linux default) -> BBR (2016, Google, model-based rate/RTT). Each redesign was forced by a changed network: higher bandwidth-delay products, then bufferbloat. Preserved here as the actual Linux kernel modules tcp_cubic.c and tcp_bbr.c."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "congestion avoidance on a shared network",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "regulate a TCP sender's transmission rate so it uses available bandwidth without collapsing the shared network -- inferring congestion from loss (CUBIC) or from a bandwidth/RTT model (BBR)",
+    "pressure": "a shared link of unknown, varying capacity with many competing senders; too fast causes loss and congestion collapse, too slow wastes the link",
+    "success_means": "high throughput, low queueing delay, and fairness to other flows across a range of bandwidth-delay products and loss rates"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "bandwidth scarcity, packet loss, variable RTT, bufferbloat, competing flows",
+    "failure_condition": "congestion collapse (1986): everyone retransmits into a saturated link and useful throughput drops toward zero"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C (Linux kernel)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "TCP congestion control (1988-, Van Jacobson onward): Tahoe -> Reno -> NewReno -> CUBIC (2008, loss-based, the Linux default) -> BBR (2016, Google, model-based rate/RTT). Each redesign was forced by a changed network: higher bandwidth-delay products, then bufferbloat. Preserved here as the actual Linux kernel modules tcp_cubic.c and tcp_bbr.c.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Jacobson 1988"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: TCP Reno/NewReno"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "9a8f38abdfec736771b1a9d41ac5cf049231927506b7be3d39efa895a7566e6f"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "SOURCE_ONLY",
+    "test": "NO_TESTS",
+    "environment": {
+     "runner": "none this pass -- SOURCE pinned; a runnable comparison needs a kernel with tc/netem injecting loss and delay (RUNNABLE_EMULATED candidate via a VM)"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "no",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "NO_TESTS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "linux-tcp-congestion",
+   "relation": "superseded",
+   "to": "TCP Reno/NewReno",
+   "note": "CUBIC replaced Reno-family as Linux default",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linux-tcp-congestion",
+   "relation": "algorithm_from",
+   "to": "Jacobson 1988",
+   "note": "the congestion-avoidance lineage all descend from",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

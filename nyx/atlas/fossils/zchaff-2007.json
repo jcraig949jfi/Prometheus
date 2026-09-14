@@ -1,0 +1,1803 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "zchaff-2007",
+ "techne_record": "techne/fossils/specimens/zchaff-2007/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "zchaff-2007",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "zChaff (Princeton, 2001-2007) -- the Chaff CDCL SAT solver: VSIDS and two-watched-literals, the RIVAL MiniSat displaced",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "zchaff.64bit.2007.3.12 (Princeton distribution)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2001-2007",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "SAT",
+     "search",
+     "CDCL",
+     "loser",
+     "superseded-design"
+    ],
+    "lineage": "SAT lineage, the LOSING COMPETITOR: Chaff (Moskewicz, Madigan, Zhao, Zhang, Malik, DAC 2001) introduced the VSIDS decision heuristic and two-literal watching that every later CDCL solver uses; zChaff won SAT 2002. MiniSat (Een & Sorensson 2003) reimplemented the same ideas in a fraction of the code with better restarts/learnt-clause management and took the field; zChaff's last release is 2007.3.12 and it has not been developed since. Preserved from Princeton's page."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "industrial SAT solving (2001-2005)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "decide propositional satisfiability on industrial instances (verification, EDA) by conflict-driven learning with cheap propagation and a decaying activity heuristic",
+    "pressure": "instance sizes from hardware verification; the SAT competitions; then a smaller, faster rival",
+    "success_means": "correct SAT/UNSAT with a checkable proof; the human record: MiniSat's design beat it on speed and simplicity"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "combinatorial explosion, competition (SAT races), code complexity",
+    "failure_condition": "a wrong UNSAT (hence zverify_df); or being out-competed"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++ (2001-era)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "SAT lineage, the LOSING COMPETITOR: Chaff (Moskewicz, Madigan, Zhao, Zhang, Malik, DAC 2001) introduced the VSIDS decision heuristic and two-literal watching that every later CDCL solver uses; zChaff won SAT 2002. MiniSat (Een & Sorensson 2003) reimplemented the same ideas in a fraction of the code with better restarts/learnt-clause management and took the field; zChaff's last release is 2007.3.12 and it has not been developed since. Preserved from Princeton's page.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: minisat-2.2.0"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: picosat-965"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "LOSING_RIVAL",
+    "failure_reasons": [
+     "superior_rival"
+    ],
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Moskewicz, Madigan, Zhao, Zhang, Malik, Chaff: Engineering an Efficient SAT Solver, DAC 2001",
+      "says": "Chaff introduced VSIDS and two-literal watching, the techniques later CDCL solvers adopted."
+     },
+     {
+      "kind": "original_paper",
+      "ref": "Een & Sorensson, An Extensible SAT-solver, SAT 2003",
+      "says": "MiniSat reimplements the same CDCL techniques in a far smaller core, and became the solver subsequent work built on."
+     },
+     {
+      "kind": "benchmark_history",
+      "ref": "SAT Competition results (zChaff 2002; MiniSat placements from 2005)",
+      "says": "zChaff won the 2002 competition; MiniSat and its descendants displaced it in later years."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "3e95242e880b29d8ab9201f6a74451710f5d9819a5bb44e7c1f2be5911e06cdf"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp"
+   }
+  ],
+  "inspected_files": [
+   "zchaff_solver.cpp[54-330,406-712,863-960,1058-1200,1396-1418]",
+   "method index"
+  ],
+  "date": "2026-09-14T00:09Z",
+  "note": "a LOSING_RIVAL by Techne's disposition audit (superseded by minisat); the distinctive 2007 machinery (shrinking) is exactly what its successors dropped"
+ },
+ "organs": [
+  {
+   "organ_id": "zchaff-2007::decide_deduce_analyze_loop",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "the CDCL main loop",
+   "human_interpretation": "pick a variable, propagate, learn from conflicts, until SAT/UNSAT/timeout",
+   "mechanism": "while undetermined: run the periodic housekeeping; if a decision can be made, propagate until no conflict (each conflict analysed and a backjump level returned; a conflict at level 0 is UNSAT); if no free variable remains, SAT; termination also on time, memory or external abort",
+   "input": "a CNF (clause database), parameters",
+   "output": "SAT/UNSAT/TIME_OUT/MEM_OUT/ABORTED",
+   "state": "outcome flag; everything below",
+   "update": "one decision per iteration",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [
+    "zchaff-2007::assignment_stack_per_level",
+    "zchaff-2007::two_watched_literals_bidirectional_scan",
+    "zchaff-2007::implication_queue_with_antecedent_shortening",
+    "zchaff-2007::first_uip_conflict_analysis",
+    "zchaff-2007::literal_score_bump_with_galloping_reinsertion",
+    "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+    "zchaff-2007::learned_clause_shrinking_by_level_gap",
+    "zchaff-2007::learned_clause_deletion_by_activity_and_size_with_age_split",
+    "zchaff-2007::restart_on_backtrack_count_with_pool_compaction"
+   ],
+   "composition_neighbors": [
+    "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+    "zchaff-2007::literal_score_bump_with_galloping_reinsertion"
+   ],
+   "fitness_value_in_ancestor": "the scaffold every other organ hangs on",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:863-909"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "CSolver::real_solve + solve",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "EPISODE",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zchaff-2007::assignment_stack_per_level",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "trail / decision levels",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "one vector of assigned variables per decision level; each variable records its level, its antecedent clause and its position; backtracking to level k unassigns every level >= k in reverse push order and drops the vectors",
+   "input": "assignments with a level",
+   "output": "ordered undo",
+   "state": "vector<vector<int>> indexed by level; per-variable (value, dlevel, antecedent, pos)",
+   "update": "push on assign; reverse pop on back_track",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "zchaff-2007::decide_deduce_analyze_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zchaff-2007::implication_queue_with_antecedent_shortening",
+    "zchaff-2007::first_uip_conflict_analysis",
+    "zchaff-2007::learned_clause_shrinking_by_level_gap",
+    "zchaff-2007::restart_on_backtrack_count_with_pool_compaction"
+   ],
+   "fitness_value_in_ancestor": "makes non-chronological backjumping a single call",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:246-260,910-923"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "_assignment_stack + back_track + set_var_value head",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "FULL_HISTORY",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zchaff-2007::two_watched_literals_bidirectional_scan",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "two-watched-literal BCP",
+   "human_interpretation": "unit propagation that only visits clauses whose watched literal became false",
+   "mechanism": "each clause watches two literals; when a variable is assigned, only the clauses watching the now-false literal are visited; from the watched position the scan walks the clause in one direction to its terminator then the other, looking for a non-false literal to move the watch to; if none exists the OTHER watched literal is either false (conflict) or unknown (implied, queued with the clause as antecedent). Clauses live in a flat literal pool with terminator elements carrying the clause id, so the scan needs no clause header",
+   "input": "a newly false literal",
+   "output": "implications queued / conflicts recorded / watches moved",
+   "state": "per-literal watch lists; per-literal-pool-element watch bit + direction",
+   "update": "watch relocation by swap-with-last in the watch list",
+   "assumptions": [
+    "a clause has >= 2 literals",
+    "the pool layout: literals then a terminator with val <= 0"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "zchaff-2007::decide_deduce_analyze_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zchaff-2007::implication_queue_with_antecedent_shortening"
+   ],
+   "fitness_value_in_ancestor": "the cost of propagation does not depend on clause length until a watch must move; backtracking needs no watch updates",
+   "failure_landscape": "long clauses with many false literals still scanned when a watch moves",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:261-311"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "CSolver::set_var_value_BCP",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zchaff-2007::implication_queue_with_antecedent_shortening",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "deduce()",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a FIFO of (literal, reason clause); pop: unknown variable -> assign with that reason (which enqueues more); already assigned opposite -> record the conflict and stop; already assigned same -> if the new reason is a shorter clause, replace the recorded reason. On conflict the remaining queue is discarded",
+   "input": "implications from the watch scan",
+   "output": "assignments or a conflict list",
+   "state": "queue; _conflicts",
+   "update": "FIFO",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "zchaff-2007::decide_deduce_analyze_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zchaff-2007::two_watched_literals_bidirectional_scan",
+    "zchaff-2007::assignment_stack_per_level",
+    "zchaff-2007::first_uip_conflict_analysis",
+    "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score"
+   ],
+   "fitness_value_in_ancestor": "breadth-first propagation; the antecedent-shortening keeps learned clauses smaller (a small, undocumented trick)",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:924-957"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "CSolver::deduce",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zchaff-2007::first_uip_conflict_analysis",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "1-UIP learning",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "UNKNOWN in detail (body of conflict_analysis_firstUIP not read); the caller shows: a conflict at level 0 is UNSAT with an optional resolution trace; otherwise the routine returns a backjump level and fills _conflict_lits, which finish_add_conf_clause turns into a learned clause",
+   "input": "the conflicting clause(s) + the trail",
+   "output": "a learned clause + backjump level",
+   "state": "_conflict_lits, marks",
+   "update": "UNKNOWN (not read)",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "zchaff-2007::decide_deduce_analyze_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zchaff-2007::implication_queue_with_antecedent_shortening",
+    "zchaff-2007::assignment_stack_per_level",
+    "zchaff-2007::literal_score_bump_with_galloping_reinsertion",
+    "zchaff-2007::learned_clause_shrinking_by_level_gap"
+   ],
+   "fitness_value_in_ancestor": "the 'L' in CDCL",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:1058-1110 (caller only)"
+   },
+   "confidence": "LOW on mechanism; HIGH on existence and interface",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "CSolver::conflict_analysis_firstUIP (unread) + analyze_conflicts",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zchaff-2007::literal_score_bump_with_galloping_reinsertion",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "VSIDS-style activity (zchaff form)",
+   "human_interpretation": "variables in recent conflicts become more attractive to branch on",
+   "mechanism": "every literal of a new learned clause gets its per-phase score incremented; the variable is then moved UP a sorted array by a galloping search: jump backwards in strides of bubble_init_step until a higher score is met, then halve the stride repeatedly to pin the insertion point, then swap; every decay_period backtracks ALL scores are halved and the array re-synchronised",
+   "input": "the literals of a learned clause; a backtrack counter",
+   "output": "a sorted array of (variable, score) with per-variable position",
+   "state": "score(0), score(1) per variable; _ordered_vars; _max_score_pos",
+   "update": "increment + galloping reinsertion; periodic halving",
+   "assumptions": [
+    "scores only rise between decays, so reinsertion only moves upward"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "zchaff-2007::decide_deduce_analyze_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zchaff-2007::first_uip_conflict_analysis",
+    "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+    "zchaff-2007::decide_deduce_analyze_loop"
+   ],
+   "fitness_value_in_ancestor": "branching follows the conflict frontier (the VSIDS idea) without a heap",
+   "failure_landscape": "a full re-sort after each decay; the array becomes stale between syncs (the decay does not re-sort, only rewrites scores -- read at 569-580)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:532-580,1396-1405"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "adjust_variable_order + decay_variable_score + update_var_score",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "decision heuristic (BerkMin-like first stage + VSIDS fallback)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "first: walk learned clauses from the newest downward to the first one not currently satisfied (caching a satisfying literal index per clause to skip fast); among its unknown variables pick the highest score. Only if every learned clause is satisfied: take the highest-score branchable unknown variable from the sorted array, skipping a random number of candidates bounded by a randomness parameter. Sign: the phase with the higher score, tie -> the phase with more binary-clause occurrences, tie -> coin flip",
+   "input": "clause database, scores, randomness",
+   "output": "a decision literal queued as an implication with no antecedent",
+   "state": "top_unsat_cls pointer; per-clause sat_lit_idx cache; current_randomness",
+   "update": "pointer decreases as learned clauses are satisfied; randomness decays to a base",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "zchaff-2007::decide_deduce_analyze_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zchaff-2007::learned_clause_shrinking_by_level_gap",
+    "zchaff-2007::literal_score_bump_with_galloping_reinsertion",
+    "zchaff-2007::implication_queue_with_antecedent_shortening",
+    "zchaff-2007::learned_clause_deletion_by_activity_and_size_with_age_split"
+   ],
+   "fitness_value_in_ancestor": "focuses on the most recent conflict region before global scores",
+   "failure_landscape": "the newest-unsatisfied scan is linear in the number of learned clauses in the worst case",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:581-711"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "CSolver::decide_next_branch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zchaff-2007::learned_clause_shrinking_by_level_gap",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "clause shrinking (zchaff 2004+)",
+   "human_interpretation": "when a learned clause is too long, backtrack further and re-decide its literals so a shorter clause is learned",
+   "mechanism": "if a new learned clause exceeds a size threshold: sort its literals by decision level; walk upward while consecutive levels are within 2 of each other, deleting those; at the first gap > 2, backtrack to just above the last kept level, discard the learned clause, and queue the remaining literals (negated) as forced decisions one per level. A windowed statistic of (old length - new length) over recent shrinkings raises or lowers the size threshold every N shrinkings",
+   "input": "a fresh learned clause",
+   "output": "a backtrack + a queue of forced decisions, or nothing",
+   "state": "_shrinking_cls multimap; window of recent benefits; adaptive size threshold",
+   "update": "adaptive threshold: += upper_delta if benefit > upper_bound, += lower_delta if < lower_bound",
+   "assumptions": [
+    "re-deciding the same literals reproduces the conflict with a shorter reason"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "zchaff-2007::decide_deduce_analyze_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zchaff-2007::first_uip_conflict_analysis",
+    "zchaff-2007::assignment_stack_per_level",
+    "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+    "zchaff-2007::restart_on_backtrack_count_with_pool_compaction"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN in effect -- not measured here; historically zchaff's distinguishing 2004-2007 feature; successors (minisat, picosat, in the vault) do not have it",
+   "failure_landscape": "restarts are suppressed while shrinking is in progress (run_periodic_functions checks _shrinking_cls.empty()); the forced decisions bypass the score heuristic",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:581-604,1128-1185,187-190"
+   },
+   "confidence": "HIGH on mechanism; UNKNOWN on value",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "finish_add_conf_clause shrinking block + decide_next_branch shrinking block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zchaff-2007::learned_clause_deletion_by_activity_and_size_with_age_split",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "clause database reduction",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at each restart, walk learned clauses oldest to newest: a clause satisfied at level 0 with more than one non-false literal is deleted outright; otherwise an activity threshold interpolated from head to tail (older clauses need MORE activity to survive) and a size threshold (older 'head' clauses allowed fewer unknown literals than 'tail' clauses) decide deletion by counting unknown literals",
+   "input": "the learned clause list, activities",
+   "output": "marked-deleted clauses",
+   "state": "per-clause activity; head/tail parameters",
+   "update": "sweep at restart",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "zchaff-2007::decide_deduce_analyze_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+    "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score"
+   ],
+   "fitness_value_in_ancestor": "bounds memory; keeps recent and active clauses",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:406-470"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "delete_unrelevant_clauses",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "restarts",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when the backtrack count passes a moving target (target += a fixed increment each time), and no shrinking is pending: delete clauses, backtrack to level 1 (level-0 facts kept), and every fifth restart compact the literal pool",
+   "input": "backtrack counter",
+   "output": "a reset of the trail above level 0",
+   "state": "next_restart, restart_incr, num_restarts",
+   "update": "linear schedule",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "zchaff-2007::decide_deduce_analyze_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "zchaff-2007::learned_clause_shrinking_by_level_gap",
+    "zchaff-2007::learned_clause_deletion_by_activity_and_size_with_age_split",
+    "zchaff-2007::assignment_stack_per_level",
+    "zchaff-2007::decide_deduce_analyze_loop"
+   ],
+   "fitness_value_in_ancestor": "escapes bad early decisions while keeping learned clauses",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:187-200,1407-1416"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "run_periodic_functions (a) + restart",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "WINDOW",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "zchaff-2007::resolution_proof_checker",
+   "fossil_ancestry": "zchaff-2007",
+   "human_name": "zverify_df",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "UNKNOWN (24 KB file present, not read); the record says it checks UNSAT proofs; VERIFY_ON blocks in the solver emit per-conflict resolvent traces that would be its input",
+   "input": "a trace of learned clauses and their resolvents (from the VERIFY_ON stream)",
+   "output": "accept/reject of an UNSAT claim",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "METADATA",
+    "ref": "zverify_df.cpp exists; solver lines 1065-1099 emit the trace"
+   },
+   "confidence": "LOW",
+   "portability": "UNKNOWN",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "zverify_df.cpp (unread)",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "hook functions / periodic callbacks",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:182-215 add_hook / hooks loop: a callback registry with intervals; scaffolding for embedding, no solving behaviour",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "zchaff-2007"
+  },
+  {
+   "candidate": "statistics and timing (_stats, cpu time, time_out, mem_usage)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "F:/Prometheus/vault/fossils/zchaff-2007/upstream/tree/zchaff64/zchaff_solver.cpp:54-146,528-531,1342-1350",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "zchaff-2007"
+  },
+  {
+   "candidate": "'CDCL' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the name covers at least eight mechanisms with separate state and update rules (above); no single function or state corresponds to it",
+   "note": "the famous name decomposes; this is the directive's example and the body confirms it",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "zchaff-2007"
+  },
+  {
+   "candidate": "preprocess()",
+   "reason": "OTHER",
+   "evidence": "called once before the search (line 899); body not read; NOT a rejection of a mechanism but of a cut Nyx cannot yet make -- recorded so the gap is visible",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "zchaff-2007"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "zchaff-2007::P.combinatorial_search_with_unbounded_learned_memory",
+   "source_fossil": "zchaff-2007",
+   "source_evidence": "record.human_environmental_pressure + source",
+   "condition": "the space of assignments is exponential; every conflict yields a clause worth remembering; memory is finite",
+   "resource_or_constraint": "memory for learned clauses; time",
+   "failure_condition": "MEM_OUT or TIME_OUT before an answer",
+   "world_punishes": "keeping everything (memory) and forgetting everything (repeat the same conflicts)",
+   "world_rewards": "keeping the recent and active clauses",
+   "observable_consequence": "delete_unrelevant_clauses at each restart; MEM_OUT outcome exists",
+   "vacuity_condition": "instances small enough to finish before the first restart",
+   "trivial_shortcuts": "never learn (DPLL)",
+   "cheat_control": "Techne's ORACLE: agreement with minisat-2.2.0 and picosat-965 on the same CNFs",
+   "cost_class": "exponential worst case",
+   "purpose_separated_from_pressure": "PURPOSE: decide satisfiability of industrial CNFs",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "zchaff-2007::P.expensive_wrong_unsat",
+   "source_fossil": "zchaff-2007",
+   "source_evidence": "record.human_failure_condition 'a wrong UNSAT (hence zverify_df)'",
+   "condition": "an UNSAT answer cannot be checked by exhibiting a model; a wrong UNSAT silently certifies an impossible design as impossible",
+   "resource_or_constraint": "trust in the answer",
+   "failure_condition": "a bug in learning produces a clause that does not follow",
+   "world_punishes": "undetected wrong UNSAT",
+   "world_rewards": "a checkable trace of resolvents",
+   "observable_consequence": "VERIFY_ON resolvent stream + zverify_df",
+   "vacuity_condition": "SAT answers (the model is its own certificate)",
+   "trivial_shortcuts": "none",
+   "cheat_control": "UNKNOWN",
+   "cost_class": "trace I/O per conflict",
+   "purpose_separated_from_pressure": "PURPOSE: verification customers who act on UNSAT",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "zchaff-2007::P.competition_by_race_time",
+   "source_fossil": "zchaff-2007",
+   "source_evidence": "record.acquisition_tags loser/superseded; historical_disposition",
+   "condition": "solvers are ranked by problems solved within a time limit in public competitions",
+   "resource_or_constraint": "wall-clock per instance",
+   "failure_condition": "being out-solved",
+   "world_punishes": "slow propagation, poor branching",
+   "world_rewards": "whatever wins races that year (shrinking did in 2004; minisat's simplicity won after)",
+   "observable_consequence": "Techne's disposition: LOSING_RIVAL",
+   "vacuity_condition": "no competition",
+   "trivial_shortcuts": "tuning to the benchmark set",
+   "cheat_control": "UNKNOWN",
+   "cost_class": "engineering effort",
+   "purpose_separated_from_pressure": "PURPOSE: same as above; the pressure is social, not computational",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "zchaff-2007::two_watched_literals_bidirectional_scan",
+   "to": "zchaff-2007::implication_queue_with_antecedent_shortening",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::implication_queue_with_antecedent_shortening",
+   "to": "zchaff-2007::assignment_stack_per_level",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::implication_queue_with_antecedent_shortening",
+   "to": "zchaff-2007::first_uip_conflict_analysis",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::first_uip_conflict_analysis",
+   "to": "zchaff-2007::assignment_stack_per_level",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "backjump",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::first_uip_conflict_analysis",
+   "to": "zchaff-2007::literal_score_bump_with_galloping_reinsertion",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "the learned clause's literals get bumped",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::first_uip_conflict_analysis",
+   "to": "zchaff-2007::learned_clause_shrinking_by_level_gap",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "a long learned clause may be shrunk instead of kept",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::learned_clause_shrinking_by_level_gap",
+   "to": "zchaff-2007::assignment_stack_per_level",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::learned_clause_shrinking_by_level_gap",
+   "to": "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "forced decisions bypass the heuristic",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::learned_clause_shrinking_by_level_gap",
+   "to": "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "no restart while shrinking",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::literal_score_bump_with_galloping_reinsertion",
+   "to": "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+   "to": "zchaff-2007::implication_queue_with_antecedent_shortening",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "a decision is an implication with no antecedent",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+   "to": "zchaff-2007::learned_clause_deletion_by_activity_and_size_with_age_split",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+   "to": "zchaff-2007::assignment_stack_per_level",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::learned_clause_deletion_by_activity_and_size_with_age_split",
+   "to": "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "top_unsat_cls pointer resets over the surviving clauses",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::decide_deduce_analyze_loop",
+   "to": "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::decide_deduce_analyze_loop",
+   "to": "zchaff-2007::literal_score_bump_with_galloping_reinsertion",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "decay every decay_period backtracks",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "zchaff-2007",
+   "relation": "superseded",
+   "to": "minisat-2.2.0",
+   "note": "MiniSat (2003) reimplemented Chaff's ideas and displaced it",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "zchaff-2007",
+   "relation": "shares_ancestor_with",
+   "to": "picosat-965",
+   "note": "CDCL family",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "conflict_analysis_firstUIP body (the learning rule itself) not read",
+   "clause database layout (zchaff_dbase.cpp) not read -- the literal pool with terminators is inferred from the scan code",
+   "preprocess() not read",
+   "zverify_df not read",
+   "clause group ids / incremental add (add_clause_incr, delete_clause_group) not cut: incremental-SAT API surface"
+  ],
+  "note": "the search loop is accounted for by organs 1-10; learning and storage are named but not opened",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

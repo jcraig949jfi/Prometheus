@@ -1,0 +1,148 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "glpk-5.0",
+ "techne_record": "techne/fossils/specimens/glpk-5.0/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "glpk-5.0",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "GLPK 5.0 (GNU Linear Programming Kit) -- Andrew Makhorin",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "5.0 from ftp.gnu.org",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2000 (5.0 rel. 2020)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "optimization",
+     "linear-programming",
+     "integer-programming",
+     "simplex",
+     "interior-point",
+     "branch-and-bound"
+    ],
+    "lineage": "GLPK (2000-, Makhorin): revised primal/dual SIMPLEX and a primal-dual INTERIOR-POINT method for LP, plus branch-and-cut MIP and the GNU MathProg modelling language; a complete free LP/MIP solver ecosystem"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "linear and mixed-integer optimisation to optimality",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "solve linear programs (simplex or interior-point) and mixed-integer programs (branch-and-cut) to proven optimality, from a modelling-language description",
+    "pressure": "large sparse LPs where the choice of pivot rule / interior path decides speed, and MIPs where branching and cutting decide tractability",
+    "success_means": "the certified optimal (or optimal-integer) solution, or a proof of infeasibility/unboundedness"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "GLPK (2000-, Makhorin): revised primal/dual SIMPLEX and a primal-dual INTERIOR-POINT method for LP, plus branch-and-cut MIP and the GNU MathProg modelling language; a complete free LP/MIP solver ecosystem",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "c0b0bdcab06c9d5c21cbde9e4d07275fd2b382206cca70afd0bf6fa8c85820d2"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

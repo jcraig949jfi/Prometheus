@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "lmdb-0.9.31",
+ "techne_record": "techne/fossils/specimens/lmdb-0.9.31/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "lmdb-0.9.31",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "LMDB 0.9.31 -- Lightning Memory-Mapped Database (Howard Chu, Symas / OpenLDAP)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "LMDB_0.9.31 (2023)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2011-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "database",
+     "recovery",
+     "contention",
+     "memory-mapped",
+     "MVCC"
+    ],
+    "lineage": "B+tree key-value store with single-writer/multi-reader MVCC and copy-on-write pages: crash consistency WITHOUT a write-ahead log (two meta pages, the last committed root wins). Descends from OpenLDAP's back-mdb work (2011); rival to Berkeley DB and to log-structured stores such as LevelDB."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "crash-consistent concurrent key-value storage without a log",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "give readers a consistent snapshot while one writer commits, and survive a crash at any instant without replaying a log",
+    "pressure": "concurrent readers and a writer on one file; power loss mid-write; bounded memory via the OS page cache",
+    "success_means": "every reader sees a committed root; after a crash the database opens at the last committed state with no repair step"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "competing writers/readers, partial failure (crash mid-commit), bounded memory",
+    "failure_condition": "a torn write corrupts the tree, or a reader observes a half-committed page"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "B+tree key-value store with single-writer/multi-reader MVCC and copy-on-write pages: crash consistency WITHOUT a write-ahead log (two meta pages, the last committed root wins). Descends from OpenLDAP's back-mdb work (2011); rival to Berkeley DB and to log-structured stores such as LevelDB.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: leveldb-1.23"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "c4a064d6d711367624fa19b7b57c333c0e6da891ef8da31f6b24dc012c296fe0"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "lmdb-0.9.31",
+   "relation": "shares_ancestor_with",
+   "to": "leveldb-1.23",
+   "note": "rival designs for the same problem: copy-on-write B+tree vs log-structured merge",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

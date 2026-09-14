@@ -1,0 +1,158 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "radamsa-0.6",
+ "techne_record": "techne/fossils/specimens/radamsa-0.6/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "radamsa-0.6",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Radamsa 0.6 -- a general-purpose mutational fuzzer (Aki Helin, OUSPG), written in Owl Lisp",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "v0.6 (2018)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2010-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "adversarial",
+     "fuzzing",
+     "robustness",
+     "input-generation",
+     "lisp"
+    ],
+    "lineage": "Black-box mutation fuzzing (Miller 1990 'fuzz'; Helin's Radamsa 2010-): take valid samples, apply a menu of structural mutations (byte flips, repeats, list/tree edits, number nudges) and emit adversarial inputs. Written in Owl Lisp (Helin's own purely functional Scheme dialect) and compiled to C -- a legacy-culture artifact as well as a pressure generator. PAIR: radamsa (pressure) <-> cJSON (the parser under attack)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "robustness testing by mutation",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "manufacture inputs that are almost valid, in volume, to find where a parser breaks",
+    "pressure": "the parser's assumptions; the human need to find crashes before attackers do",
+    "success_means": "the emitted cases are diverse, reproducible under a seed, and reach deep parser states"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "adversarial input, the asymmetry between one parser and unbounded malformed input",
+    "failure_condition": "mutations too shallow (all rejected at the first byte) or non-reproducible"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Owl Lisp (Scheme dialect)",
+    "C (generated)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Black-box mutation fuzzing (Miller 1990 'fuzz'; Helin's Radamsa 2010-): take valid samples, apply a menu of structural mutations (byte flips, repeats, list/tree edits, number nudges) and emit adversarial inputs. Written in Owl Lisp (Helin's own purely functional Scheme dialect) and compiled to C -- a legacy-culture artifact as well as a pressure generator. PAIR: radamsa (pressure) <-> cJSON (the parser under attack).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Miller et al. 1990 (fuzz)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "d324e3686c126799cfe20a9fb29bdcc7ce806d7268700d7b8c4b9e61122c77fc"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "radamsa-0.6",
+   "relation": "algorithm_from",
+   "to": "Miller et al. 1990 (fuzz)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

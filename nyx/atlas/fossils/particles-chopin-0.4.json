@@ -1,0 +1,174 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "particles-chopin-0.4",
+ "techne_record": "techne/fossils/specimens/particles-chopin-0.4/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "particles-chopin-0.4",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "particles 0.4 -- sequential Monte Carlo / particle filtering in Python (Nicolas Chopin)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "v0.4 (2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2018-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "estimation",
+     "hidden-state",
+     "Monte-Carlo",
+     "filtering",
+     "resampling"
+    ],
+    "lineage": "Particle filtering (Gordon, Salmond, Smith 1993 bootstrap filter; Doucet et al.) as the companion code to Chopin & Papaspiliopoulos, An Introduction to Sequential Monte Carlo (2020): state-space models, resampling schemes (multinomial, residual, stratified, systematic), SMC samplers, particle MCMC."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "nonlinear Bayesian filtering",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "track a hidden state through nonlinear, non-Gaussian dynamics by propagating and reweighting a cloud of hypotheses",
+    "pressure": "hidden state, noisy observations, models where the Kalman filter's Gaussian assumption fails; weight degeneracy fought by resampling",
+    "success_means": "the weighted cloud's mean tracks the true posterior mean; on the linear-Gaussian case it matches the Kalman filter to Monte-Carlo error"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "hidden state, observation noise, nonlinearity, particle degeneracy",
+    "failure_condition": "weight degeneracy: one particle carries all the weight and the estimate collapses"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Particle filtering (Gordon, Salmond, Smith 1993 bootstrap filter; Doucet et al.) as the companion code to Chopin & Papaspiliopoulos, An Introduction to Sequential Monte Carlo (2020): state-space models, resampling schemes (multinomial, residual, stratified, systematic), SMC samplers, particle MCMC.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Gordon, Salmond, Smith 1993"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: filterpy-labbe",
+    "shares_ancestor_with: libdai-mooij"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "e27cbce29e5f876c07ff42487879d9ee04db7b1b2d59fad93336834c9a15be6c"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "python:3.11-slim"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "algorithm_from",
+   "to": "Gordon, Salmond, Smith 1993",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "shares_ancestor_with",
+   "to": "filterpy-labbe",
+   "note": "Bayesian filtering: Kalman (linear) vs particle (nonlinear)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "shares_ancestor_with",
+   "to": "libdai-mooij",
+   "note": "particle MCMC (PMMH) and belief propagation: two inference lineages; PMMH added to this specimen in batch 06 phase 5",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

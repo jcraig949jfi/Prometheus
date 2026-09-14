@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "py-vollib-lets-be-rational",
+ "techne_record": "techne/fossils/specimens/py-vollib-lets-be-rational/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "py-vollib-lets-be-rational",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "py_vollib + py_lets_be_rational -- Black-Scholes(-Merton) pricing and Jaeckel's 'Let's Be Rational' implied volatility (vollib)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/vollib/py_vollib master as of 2026-09-12 (commit in hashes); py_lets_be_rational from PyPI at run time (recorded)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1973 (model); 2015 (algorithm); 2017- (package)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "finance",
+     "option-pricing",
+     "root-finding",
+     "precision",
+     "volatility"
+    ],
+    "lineage": "Option pricing (Black & Scholes 1973; Merton 1973) and the inverse problem -- implied volatility -- solved to machine precision in two iterations by Peter Jaeckel's 'Let's Be Rational' (2013/2015), a precision-engineering algorithm (rational approximations per branch, careful handling of extreme moneyness). vollib wraps Jaeckel's reference C++ as Python (py_lets_be_rational is the translation)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "option pricing and implied volatility",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "price European options and, more demandingly, recover the volatility a market price implies, to full double precision, in constant time",
+    "pressure": "markets quoting prices at extreme strikes where naive root-finders lose all digits or fail to converge; latency budgets",
+    "success_means": "the round trip price -> implied vol -> price closes to ~1e-12 across the grid"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "numerical ill-conditioning at extreme moneyness, latency",
+    "failure_condition": "the inversion fails or returns a volatility off by percent for deep out-of-the-money options"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Option pricing (Black & Scholes 1973; Merton 1973) and the inverse problem -- implied volatility -- solved to machine precision in two iterations by Peter Jaeckel's 'Let's Be Rational' (2013/2015), a precision-engineering algorithm (rational approximations per branch, careful handling of extreme moneyness). vollib wraps Jaeckel's reference C++ as Python (py_lets_be_rational is the translation).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Black & Scholes 1973; Jaeckel 2015"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "b0220057275c417bd1ac94a20829fe481c80bfb9beedb5cd50ef21810de2bb9e"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "python:3.11-slim"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "py-vollib-lets-be-rational",
+   "relation": "algorithm_from",
+   "to": "Black & Scholes 1973; Jaeckel 2015",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

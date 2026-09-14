@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "cjson-1.7.18",
+ "techne_record": "techne/fossils/specimens/cjson-1.7.18/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "cjson-1.7.18",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "cJSON 1.7.18 -- an ultralightweight JSON parser in ANSI C (Dave Gamble et al.)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "v1.7.18 (2024)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2009-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "parsing",
+     "robustness",
+     "adversarial",
+     "embedded",
+     "C"
+    ],
+    "lineage": "Single-file recursive-descent JSON parser (2009-) used in embedded and IoT code; the defensive half of the fuzzing PAIR with radamsa-0.6: fed mutated inputs under AddressSanitizer, it must reject or parse, never crash. cJSON's own history includes CVEs found by exactly this pressure (e.g. CVE-2019-11834), which is why the pair is instructive."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "safe parsing of untrusted JSON",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "turn untrusted text into a tree or refuse it, on small machines",
+    "pressure": "malformed, truncated, deeply nested and hostile input; tiny memory budgets",
+    "success_means": "every input either parses to a well-formed tree or returns NULL; no memory error"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "adversarial input, bounded memory",
+    "failure_condition": "a crafted input reads or writes out of bounds (the CVE history)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Single-file recursive-descent JSON parser (2009-) used in embedded and IoT code; the defensive half of the fuzzing PAIR with radamsa-0.6: fed mutated inputs under AddressSanitizer, it must reject or parse, never crash. cJSON's own history includes CVEs found by exactly this pressure (e.g. CVE-2019-11834), which is why the pair is instructive.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: radamsa-0.6"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "04d713005ebce02fb84b14a70240fdb46171128c372baaf39f349031bc3c1ffe"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "cjson-1.7.18",
+   "relation": "shares_ancestor_with",
+   "to": "radamsa-0.6",
+   "note": "PAIR: pressure generator <-> defended parser (humans regarded fuzzing as the corrective for parser bugs)",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

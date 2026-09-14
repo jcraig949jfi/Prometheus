@@ -1,0 +1,146 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "dlmalloc",
+ "techne_record": "techne/fossils/specimens/dlmalloc/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "dlmalloc",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "dlmalloc -- Doug Lea's memory allocator",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "gee.cs.oswego.edu/pub/misc/malloc.c as served 2026-09-12 (the file carries its own version string)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1987-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "operating-systems",
+     "memory-allocation",
+     "data-structures",
+     "resource-management"
+    ],
+    "lineage": "dlmalloc (1987-, Doug Lea): the boundary-tag, binned free-list general-purpose allocator behind glibc's ptmalloc and countless embedded mallocs; a whole lineage of heap management in one file"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "general-purpose dynamic memory allocation",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "hand out and reclaim variable-size blocks of memory from a heap, fast, with low fragmentation, using boundary tags and size-binned free lists",
+    "pressure": "fragmentation vs speed vs footprint under adversarial allocation patterns; every general program depends on it being fast and not leaking",
+    "success_means": "correct non-overlapping blocks, quick allocation/free, and low fragmentation across real workloads"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "dlmalloc (1987-, Doug Lea): the boundary-tag, binned free-list general-purpose allocator behind glibc's ptmalloc and countless embedded mallocs; a whole lineage of heap management in one file",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "957081e882ffec000899ea57dbb7f7cada0c5457aa959497d18bfc819b344c4d"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

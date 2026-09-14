@@ -1,0 +1,158 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "redlock-py-redis-2014",
+ "techne_record": "techne/fossils/specimens/redlock-py-redis-2014/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "redlock-py-redis-2014",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "Redlock (antirez, 2014) as redlock-py, with Debian's redis-server as the lock store -- a lease-based distributed mutex, and the design Kleppmann's 2016 analysis argued is unsafe for correctness-critical use",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/SPSCommerce/redlock-py master as of 2026-09-13 (commit in hashes); redis-server 7.0 (Debian bookworm) at run time",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2014-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "distributed-systems",
+     "distributed-mutex",
+     "lease",
+     "timeout-based",
+     "contested-design"
+    ],
+    "lineage": "A LEASE-based distributed mutex: acquire a key with a TTL on a majority of N independent Redis instances within a validity window; release by a check-and-delete script. Proposed by Antirez (redis.io/topics/distlock, 2014); criticised by Martin Kleppmann ('How to do distributed locking', 2016) for depending on bounded clock drift and process pauses, with Antirez's reply ('Is Redlock safe?'). Preserved as a runnable lease mechanism AND as a documented contested design (Phase 9: incorrect timing assumption)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "distributed mutual exclusion with liveness",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "grant one client at a time exclusive access to a resource across machines, with a lease so a crashed holder cannot block forever",
+    "pressure": "crashes of holders, network delay, clock drift, process pauses (GC) -- the last two are exactly the contested assumptions",
+    "success_means": "mutual exclusion while the lease is valid; liveness after a holder dies"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "partial failure, unbounded delay, unsynchronised clocks",
+    "failure_condition": "two holders at once after a pause or clock jump (Kleppmann's scenario); or permanent blocking without a lease"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python",
+    "Lua (release script)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "A LEASE-based distributed mutex: acquire a key with a TTL on a majority of N independent Redis instances within a validity window; release by a check-and-delete script. Proposed by Antirez (redis.io/topics/distlock, 2014); criticised by Martin Kleppmann ('How to do distributed locking', 2016) for depending on bounded clock drift and process pauses, with Antirez's reply ('Is Redlock safe?'). Preserved as a runnable lease mechanism AND as a documented contested design (Phase 9: incorrect timing assumption).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: willemt-raft"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "FAITHFUL_PORT",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "09488f1ae9cf4bf50049c8646cdac9ccf055482964352b554688304de8f48dc8"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "python:3.11-slim"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "redlock-py-redis-2014",
+   "relation": "shares_ancestor_with",
+   "to": "willemt-raft",
+   "note": "lease-based exclusion vs consensus-based",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

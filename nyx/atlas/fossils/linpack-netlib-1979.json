@@ -1,0 +1,184 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "linpack-netlib-1979",
+ "techne_record": "techne/fossils/specimens/linpack-netlib-1979/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "linpack-netlib-1979",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "LINPACK (1979) -- the Fortran dense linear algebra library, superseded by LAPACK",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "netlib linpack routines + the linpackd benchmark, as served by netlib 2026-09-13",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1979 (LINPACK); superseded from 1992 (LAPACK)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "numerical-linear-algebra",
+     "scientific-computing",
+     "dense-linear-algebra",
+     "benchmark",
+     "loser"
+    ],
+    "lineage": "LINPACK (Dongarra, Bunch, Moler, Stewart, 1979) organised dense linear algebra around COLUMN operations expressed in Level-1 BLAS (vector-vector: daxpy, dscal, ddot, idamax). It defined the field and gave the world the LINPACK benchmark still used for the TOP500. It was superseded by LAPACK, which solves the SAME problems restructured around blocked Level-3 BLAS. The loser and the winner compute the same LU factorisation; only the memory-access structure differs."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "dense linear systems (LU, QR, SVD) in portable Fortran",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "solve dense linear systems and least-squares problems portably and reliably in Fortran, on the vector machines of the late 1970s",
+    "pressure": "limited memory and the arithmetic cost of O(n^3) factorisation on machines whose fast path was long vector operations",
+    "success_means": "an accurate factorisation and solution, with a small residual, at the machine's peak vector rate"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "expensive arithmetic on vector hardware; portability across wildly different machines",
+    "failure_condition": "on cache-based machines the Level-1 BLAS inner loops move O(n^3) words through memory and the factorisation becomes MEMORY-bound, running far below peak"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Fortran 77"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "LINPACK (Dongarra, Bunch, Moler, Stewart, 1979) organised dense linear algebra around COLUMN operations expressed in Level-1 BLAS (vector-vector: daxpy, dscal, ddot, idamax). It defined the field and gave the world the LINPACK benchmark still used for the TOP500. It was superseded by LAPACK, which solves the SAME problems restructured around blocked Level-3 BLAS. The loser and the winner compute the same LU factorisation; only the memory-access structure differs.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: lapack-reference"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: fftpack-netlib"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "poor_scaling",
+     "superior_rival"
+    ],
+    "evidence": [
+     {
+      "kind": "successor_documentation",
+      "ref": "LAPACK Users' Guide (SIAM), 'LAPACK supersedes LINPACK and EISPACK'",
+      "says": "LAPACK was written to supersede LINPACK and EISPACK, providing the same functionality with better performance."
+     },
+     {
+      "kind": "successor_documentation",
+      "ref": "LAPACK Users' Guide, design rationale / netlib LAPACK FAQ",
+      "says": "LINPACK and EISPACK are based on vector (Level-1 BLAS) operations whose memory-reference pattern performs poorly on machines with cache and multi-level memory hierarchies; LAPACK restructures the algorithms to use blocked Level-3 BLAS so that data is reused in cache."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "cfe571decfc7752f2ad51137dac1b26f5b931d0d47cab70110f89cb4194a4fdf"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "linpack-netlib-1979",
+   "relation": "superseded",
+   "to": "lapack-reference",
+   "note": "same problems, restructured for memory hierarchy; the human record states the reason",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linpack-netlib-1979",
+   "relation": "shares_ancestor_with",
+   "to": "fftpack-netlib",
+   "note": "both netlib Fortran numerical libraries of the same era",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

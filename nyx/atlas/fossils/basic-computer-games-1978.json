@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "basic-computer-games-1978",
+ "techne_record": "techne/fossils/specimens/basic-computer-games-1978/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "basic-computer-games-1978",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "BASIC Computer Games (David Ahl, 1978): HAMURABI and SUPER STAR TREK -- original BASIC listings run under Bywater BASIC",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "coding-horror/basic-computer-games main: 43_Hammurabi/hammurabi.bas, 84_Super_Star_Trek/superstartrek.bas (as fetched 2026-09-12)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1971-1978 (programs); 1993 (bwBASIC)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "games",
+     "simulation",
+     "resource-rationing",
+     "legacy-culture",
+     "basic"
+    ],
+    "lineage": "The hobbyist BASIC culture of the 1970s: HAMURABI (a resource-rationing simulation under scarcity and random plague/rat pressure, from DEC's 1968 'King'/'Sumer' via Ahl) and SUPER STAR TREK (Mayfield 1971; Leedom/Ahl 1974-78), the most-copied game program of its era. Preserved as the original line-numbered BASIC (from the coding-horror/basic-computer-games transcription of Ahl's book) and executed by Bywater BASIC 2.20, itself a 1990s interpreter of the classic dialect."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "resource-rationing simulation as a game",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "let a player govern a city for ten years by rationing grain between food, seed and land purchases under random harvests, rats and plague (HAMURABI); command a starship against Klingons with finite energy and torpedoes (STAR TREK)",
+    "pressure": "scarcity (grain, energy), randomness, deadlines (ten years; stardates)",
+    "success_means": "the program runs the simulation to its end state and reports it; the classic dialect executes under a later interpreter"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "scarcity, random shocks, hard time limit",
+    "failure_condition": "starve the people -> impeachment; run out of energy -> destruction"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "BASIC (Microsoft/Altair dialect, 1978)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The hobbyist BASIC culture of the 1970s: HAMURABI (a resource-rationing simulation under scarcity and random plague/rat pressure, from DEC's 1968 'King'/'Sumer' via Ahl) and SUPER STAR TREK (Mayfield 1971; Leedom/Ahl 1974-78), the most-copied game program of its era. Preserved as the original line-numbered BASIC (from the coding-horror/basic-computer-games transcription of Ahl's book) and executed by Bywater BASIC 2.20, itself a 1990s interpreter of the classic dialect.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "derived_from: DEC 'The Sumer Game' (Dyment 1968) / Ahl's HAMURABI (1973)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "3ada27a07e30b17b0e767d0d4ec1d7f5de9f8b2e67794b0fe9e9793b46239c75"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-legacy:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "basic-computer-games-1978",
+   "relation": "derived_from",
+   "to": "DEC 'The Sumer Game' (Dyment 1968) / Ahl's HAMURABI (1973)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

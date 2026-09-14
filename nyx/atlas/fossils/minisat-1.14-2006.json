@@ -1,0 +1,180 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "minisat-1.14-2006",
+ "techne_record": "techne/fossils/specimens/minisat-1.14-2006/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "minisat-1.14-2006",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "MiniSat 1.14 (2006) -- the small CDCL solver in its pre-2.0 form (Een & Sorensson)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "MiniSat_v1.14.2006-Aug-29.src.zip (minisat.se/downloads)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2003-2006",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "SAT",
+     "search",
+     "CDCL",
+     "predecessor"
+    ],
+    "lineage": "SAT lineage, the PREDECESSOR of the vault's minisat-2.2.0: 1.14 is the version described in 'An Extensible SAT-solver' (SAT 2003) as it stood in 2006 -- ~600 lines of core, before 2.0's rewrite (SimpSolver, new restart/reduce policies). Beside zchaff-2007 (the rival it displaced) and 2.2.0 (its successor) the vault holds the transition."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "extensible SAT solving",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "be the smallest complete CDCL solver competitive with the large ones, so others could extend it",
+    "pressure": "the SAT competitions; the size and opacity of Chaff-era solvers",
+    "success_means": "correct SAT/UNSAT; extensibility that made it the base of a generation of solvers"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "combinatorial explosion, competition, code complexity",
+    "failure_condition": "a wrong answer; a heuristic regression versus rivals"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C++ (2006)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "SAT lineage, the PREDECESSOR of the vault's minisat-2.2.0: 1.14 is the version described in 'An Extensible SAT-solver' (SAT 2003) as it stood in 2006 -- ~600 lines of core, before 2.0's rewrite (SimpSolver, new restart/reduce policies). Beside zchaff-2007 (the rival it displaced) and 2.2.0 (its successor) the vault holds the transition.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "historical_version_of: minisat-2.2.0"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: zchaff-2007"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [],
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Een & Sorensson, An Extensible SAT-solver, SAT 2003",
+      "says": "Describes the MiniSat core that 1.14 represents."
+     },
+     {
+      "kind": "release_notes",
+      "ref": "MiniSat 2.0/2.2 release history",
+      "says": "The 2.x line rewrote the solver (SimpSolver, new restart and clause-reduction policies) and replaced the 1.x line."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "e98aa45b9bfa07254073a643dd74e657bde052a6846da76f02849501e2400bcf"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "gcc:4.9"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "minisat-1.14-2006",
+   "relation": "historical_version_of",
+   "to": "minisat-2.2.0",
+   "note": "1.14 (2006) -> 2.2.0 (2010)",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "minisat-1.14-2006",
+   "relation": "superseded",
+   "to": "zchaff-2007",
+   "note": "direction: MiniSat superseded zChaff (recorded on both records)",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

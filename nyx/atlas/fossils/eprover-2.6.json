@@ -1,0 +1,167 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "eprover-2.6",
+ "techne_record": "techne/fossils/specimens/eprover-2.6/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "eprover-2.6",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "E 2.6 -- a superposition-based theorem prover for first-order logic with equality (Stephan Schulz)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/eprover/eprover master as of 2026-09-13 (commit in hashes; 3.x line)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1965 (resolution); 1998- (E); 2.6 = 2022",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "theorem-proving",
+     "automated-reasoning",
+     "first-order-logic",
+     "saturation",
+     "search",
+     "symbolic"
+    ],
+    "lineage": "Automated theorem proving by SATURATION: the resolution lineage (Robinson 1965) as refined into superposition/paramodulation with term orderings and a given-clause loop -- Otter (McCune 1988) -> E (Schulz 1998-) and Vampire, the engines that win CASC. Distinct execution model from every solver in the vault: it searches a space of DERIVED CLAUSES for the empty clause, proving a conjecture by refuting its negation. First theorem-proving fossil."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "automated first-order theorem proving",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "decide whether a first-order conjecture follows from axioms, by systematically deriving consequences until it finds a contradiction with the negated goal",
+    "pressure": "the search space of derivable clauses is unbounded; term orderings, literal selection and the given-clause loop keep it tractable on real problems",
+    "success_means": "a conjecture that is a theorem is proved (empty clause derived); a checkable proof object is emitted"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "unbounded search; combinatorial explosion of derived clauses",
+    "failure_condition": "the prover runs forever or exhausts memory on a true theorem it cannot order well (incompleteness of the strategy, not of the calculus)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Automated theorem proving by SATURATION: the resolution lineage (Robinson 1965) as refined into superposition/paramodulation with term orderings and a given-clause loop -- Otter (McCune 1988) -> E (Schulz 1998-) and Vampire, the engines that win CASC. Distinct execution model from every solver in the vault: it searches a space of DERIVED CLAUSES for the empty clause, proving a conjecture by refuting its negation. First theorem-proving fossil.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Robinson 1965 (resolution); Bachmair-Ganzinger (superposition)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: cocagne-plain-paxos"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "fe9c8d0b1272629df58a27611190c4d4869b708c98f3539ffe12ef2a3eb42e2e"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "eprover-2.6",
+   "relation": "algorithm_from",
+   "to": "Robinson 1965 (resolution); Bachmair-Ganzinger (superposition)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eprover-2.6",
+   "relation": "shares_ancestor_with",
+   "to": "cocagne-plain-paxos",
+   "note": "both search, but for a proof vs for agreement -- different problems (Techne records the domain, not equivalence)",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

@@ -1,0 +1,157 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "ssw-smith-waterman",
+ "techne_record": "techne/fossils/specimens/ssw-smith-waterman/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "ssw-smith-waterman",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "SSW -- a SIMD (SSE2) striped Smith-Waterman implementation in C (Zhao, Lee, Bustamante 2013)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/mengyao/Complete-Striped-Smith-Waterman-Library master as of 2026-09-13 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1981 (SW); 2007 (Farrar striped); SSW 2013",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "bioinformatics",
+     "sequence-alignment",
+     "SIMD",
+     "biological-computation"
+    ],
+    "lineage": "The Smith-Waterman 1981 recurrence re-expressed for vector hardware: Farrar's striped SIMD layout (2007) as the SSW library (2013), tens of times faster than the scalar DP by computing the score matrix in SSE2 lanes. The architecture-and-era DEPTH partner of EMBOSS's `water`: same algorithm, 32 years and one hardware model apart."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "fast optimal local alignment at read-mapping scale",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "compute the exact Smith-Waterman local-alignment score on vector hardware, an order of magnitude faster than the scalar recurrence",
+    "pressure": "aligning millions of short reads to a genome; the O(mn) DP is too slow scalar; SIMD lanes and striping recover the throughput",
+    "success_means": "the SIMD score equals the exact SW optimum, computed far faster"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "throughput: millions of alignments; the quadratic scalar cost",
+    "failure_condition": "a saturating 8/16-bit score overflow silently returning a wrong optimum (the known SIMD hazard the library guards with an overflow-and-recompute path)"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "C++"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "The Smith-Waterman 1981 recurrence re-expressed for vector hardware: Farrar's striped SIMD layout (2007) as the SSW library (2013), tens of times faster than the scalar DP by computing the score matrix in SSE2 lanes. The architecture-and-era DEPTH partner of EMBOSS's `water`: same algorithm, 32 years and one hardware model apart.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Smith-Waterman 1981; Farrar 2007 (striped SIMD)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "3d5056fdb387b085dce770a5e7b708c0401368793d2187dc74f3a2889830f5fb"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "ssw-smith-waterman",
+   "relation": "algorithm_from",
+   "to": "Smith-Waterman 1981; Farrar 2007 (striped SIMD)",
+   "note": "first bioinformatics fossil; the global/local DP pair (EMBOSS needle/water or seq-align) is a later add -- its build needs submodules/heavy autotools, deferred honestly",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

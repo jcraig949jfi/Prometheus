@@ -1,0 +1,144 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "ncompress-5.0-lzw-1985",
+ "techne_record": "techne/fossils/specimens/ncompress-5.0-lzw-1985/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "ncompress-5.0-lzw-1985",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "ncompress 5.0 -- the Unix compress(1) LZW lineage (Spencer Thomas et al., 1984-85)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "git tag v5.0, github.com/vapier/ncompress",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1984 (5.0 released 2021)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "compression",
+     "dictionary-coding",
+     "lzw"
+    ],
+    "lineage": "compress(1) (1984-85, Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost): adaptive LZW dictionary coding, the 4.3BSD/Unix standard before gzip; ncompress is the maintained continuation of the same code"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "lossless adaptive dictionary compression",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "shrink files losslessly with an adaptive dictionary that needs no side information",
+    "pressure": "1980s disk and modem bandwidth; the patent history of LZW is why gzip displaced it",
+    "success_means": "exact reconstruction after decompression, with a good compression ratio on text"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "compress(1) (1984-85, Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost): adaptive LZW dictionary coding, the 4.3BSD/Unix standard before gzip; ncompress is the maintained continuation of the same code",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "LATER_SAME_LINEAGE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "5de18704eb9c8c16a0e8ca28ae333541504bc24968b1fda4a76226185c5948ff"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_NATIVE",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "wsl"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

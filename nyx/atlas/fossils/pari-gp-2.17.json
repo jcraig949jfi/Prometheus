@@ -1,0 +1,158 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "pari-gp-2.17",
+ "techne_record": "techne/fossils/specimens/pari-gp-2.17/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "pari-gp-2.17",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "PARI/GP 2.17.4 -- a computer algebra system specialised for number theory (Henri Cohen et al., Bordeaux)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "PARI/GP 2.17.4 (pari.math.u-bordeaux.fr source)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1985- (PARI); 2.15 = 2022",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "symbolic",
+     "computer-algebra",
+     "number-theory",
+     "exact-arithmetic",
+     "scientific-computing"
+    ],
+    "lineage": "PARI/GP (1985-): a CAS built for fast number theory -- arbitrary-precision integers/reals, factoring, elliptic curves, number fields, modular forms, L-functions -- with its own stack-based interpreter (gp). A distinct symbolic/exact execution model (a computation stack, exact arithmetic, mathematical objects as first-class values) absent from the vault. First computer-algebra fossil."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "computational number theory",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "compute exact number-theoretic quantities fast -- factorisations, curve orders, class numbers, L-values -- on a purpose-built stack machine",
+    "pressure": "exact arithmetic on huge integers; algorithms whose cost is number-theoretic (factoring is hard); a finite computation stack",
+    "success_means": "the exact mathematical value is returned; known values (LMFDB, tables) match"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "exact arithmetic at scale; the hardness of factoring/discrete log; bounded stack memory",
+    "failure_condition": "stack overflow on a too-large object, or an intractable factorisation that never returns"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "GP (the PARI scripting language)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "PARI/GP (1985-): a CAS built for fast number theory -- arbitrary-precision integers/reals, factoring, elliptic curves, number fields, modular forms, L-functions -- with its own stack-based interpreter (gp). A distinct symbolic/exact execution model (a computation stack, exact arithmetic, mathematical objects as first-class values) absent from the vault. First computer-algebra fossil.",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: reed-solomon-rockliff-1991"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "992f33881d7ba8e6e14336ec63f159c542d6f6e69ceb54c32040e590ff137dc0"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "pari-gp-2.17",
+   "relation": "shares_ancestor_with",
+   "to": "reed-solomon-rockliff-1991",
+   "note": "finite-field / GF arithmetic underlies both (Techne records the shared machinery domain, not equivalence)",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

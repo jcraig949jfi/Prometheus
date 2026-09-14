@@ -1,0 +1,165 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "tinyscheme-1.42",
+ "techne_record": "techne/fossils/specimens/tinyscheme-1.42/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "tinyscheme-1.42",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "TinyScheme 1.42 -- Dimitrios Souflis et al.",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "tinyscheme-1.42.tar.gz (sourceforge)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1989/2000 (1.42 released 2021)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "languages",
+     "interpreters",
+     "lisp",
+     "garbage-collection"
+    ],
+    "lineage": "TinyScheme (2000-, from Atsushi Moriwaki's MiniScheme 1989): a small R5RS-ish Scheme interpreter in one C file -- s-expression reader, eval/apply on a dispatch loop, mark-and-sweep GC, call/cc, tail calls"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "a minimal, embeddable Lisp interpreter",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "embed a complete, tiny Scheme in a C program as a scripting/extension language",
+    "pressure": "memory and code-size limits of embedded and scripting hosts; correctness of tail calls and continuations in little code",
+    "success_means": "R5RS programs evaluate correctly within a few hundred kilobytes"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C",
+    "Scheme"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "TinyScheme (2000-, from Atsushi Moriwaki's MiniScheme 1989): a small R5RS-ish Scheme interpreter in one C file -- s-expression reader, eval/apply on a dispatch loop, mark-and-sweep GC, call/cc, tail calls",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "derived_from: MiniScheme (Moriwaki 1989)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: microkanren-scheme"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "134ca51590fd79bbcc7549318aa450540f39980f5b7bb22af4cff199f69921ce"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_NATIVE",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "wsl"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "tinyscheme-1.42",
+   "relation": "derived_from",
+   "to": "MiniScheme (Moriwaki 1989)",
+   "note": "TinyScheme grew from MiniScheme",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinyscheme-1.42",
+   "relation": "shares_ancestor_with",
+   "to": "microkanren-scheme",
+   "note": "both Scheme; microKanren is hosted in a Scheme like this one",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

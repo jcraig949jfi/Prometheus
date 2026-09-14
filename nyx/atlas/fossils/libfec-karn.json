@@ -1,0 +1,149 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "libfec-karn",
+ "techne_record": "techne/fossils/specimens/libfec-karn/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "libfec-karn",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "libfec -- Phil Karn's forward-error-correction library (Viterbi + Reed-Solomon)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "github.com/ka9q/libfec master as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1995-",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "error-correcting-codes",
+     "viterbi",
+     "convolutional-codes",
+     "estimation",
+     "signal-processing",
+     "state-estimation"
+    ],
+    "lineage": "libfec (1995-, Phil Karn KA9Q): optimised VITERBI decoders for convolutional codes (the trellis / add-compare-select / traceback machinery) plus Reed-Solomon; the amateur-radio and deep-space FEC reference"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "maximum-likelihood decoding of noisy coded signals (hidden-state estimation)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "recover the most-likely transmitted bit sequence from a noisy convolutionally-coded signal by the Viterbi algorithm (dynamic programming over a trellis of hidden encoder states), and to correct Reed-Solomon block errors",
+    "pressure": "channel noise on band-limited links (satellite, deep space, radio); the decoder must find the maximum-likelihood path through an exponential state space in linear time",
+    "success_means": "decoded bit-error rate at or below the code's theoretical curve for a given SNR; the self-tests pass"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "libfec (1995-, Phil Karn KA9Q): optimised VITERBI decoders for convolutional codes (the trellis / add-compare-select / traceback machinery) plus Reed-Solomon; the amateur-radio and deep-space FEC reference",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "e140027b76e27d81b19322968c6d54cfaf0c768d1d4c14807cb742cce737770f"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm",
+     "obstruction_2026-09-12": "libfec's Viterbi decoders ship hand-written 32-bit x86 MMX/SSE assembly (mmxbfly27.s: `push` with 32-bit suffixes) that will not assemble on x86-64, and its 1990s configure emits an invalid -march=x86_64. The portable C path (viterbi27_port.c) exists but the lib target forces the SIMD objects. A faithful run needs an i386 world (gcc -m32 / a 32-bit container) = RUNNABLE_HISTORICAL_TOOLCHAIN, queued. Source is pinned+hashed; nothing modernised. This is a preserved 'needs an old machine' fossil, not a failure."
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "no",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

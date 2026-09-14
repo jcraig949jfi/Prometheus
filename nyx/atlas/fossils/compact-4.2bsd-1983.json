@@ -1,0 +1,182 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "compact-4.2bsd-1983",
+ "techne_record": "techne/fossils/specimens/compact-4.2bsd-1983/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "compact-4.2bsd-1983",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "compact / uncompact (4.2BSD, 1983) -- adaptive Huffman file compression, the LOSER superseded by compress",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "4.2BSD usr/src/ucb/compact (unix-history-repo tag BSD-4_2)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1980-1983",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "compression",
+     "entropy-coding",
+     "superseded-design",
+     "loser"
+    ],
+    "lineage": "Compression lineage, the SUPERSEDED DESIGN: compact (Colin McMaster, 1980; shipped in 4.xBSD ucb/) used Gallager's adaptive Huffman coding -- one-pass, no table transmitted, but slow and ~38% savings. compress (Thomas et al. 1984, LZW) beat it decisively on speed and ratio, then LZW's Unisys patent pressure produced gzip/DEFLATE (1992-93). Preserved from the unix-history-repo at tag BSD-4_2 (ucb/compact: compact.c, uncompact.c, tree.c, compact.h, Makefile, ccat.sh)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "lossless file compression (1980)",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "shrink files on 1980 disks with one pass and no side table, by adapting the Huffman tree as symbols arrive",
+    "pressure": "disk scarcity; CPU cost; the arrival of LZW, which did better on both counts",
+    "success_means": "round trip exact; the human record: the ratio and speed lost to compress within two years"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "storage scarcity, CPU cost, competition from a better algorithm",
+    "failure_condition": "corrupt round trip; or -- historically -- being out-competed"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C (pre-ANSI, K&R)"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Compression lineage, the SUPERSEDED DESIGN: compact (Colin McMaster, 1980; shipped in 4.xBSD ucb/) used Gallager's adaptive Huffman coding -- one-pass, no table transmitted, but slow and ~38% savings. compress (Thomas et al. 1984, LZW) beat it decisively on speed and ratio, then LZW's Unisys patent pressure produced gzip/DEFLATE (1992-93). Preserved from the unix-history-repo at tag BSD-4_2 (ucb/compact: compact.c, uncompact.c, tree.c, compact.h, Makefile, ccat.sh).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "algorithm_from: Gallager 1978 (adaptive Huffman)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": [
+    "superseded: ncompress-5.0-lzw-1985"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": {
+    "state": "SUPERSEDED",
+    "failure_reasons": [
+     "superior_rival"
+    ],
+    "evidence": [
+     {
+      "kind": "original_paper",
+      "ref": "Welch, A Technique for High-Performance Data Compression, IEEE Computer 1984",
+      "says": "LZW is presented as a fast, high-ratio compression technique; compress implemented it and became the standard Unix compressor, displacing the adaptive-Huffman compact."
+     },
+     {
+      "kind": "project_documentation",
+      "ref": "4.xBSD distribution contents (compact in ucb/, later absent)",
+      "says": "compact shipped in 4.xBSD and did not survive into later standard Unix toolsets."
+     }
+    ]
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-c:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "yes",
+    "INTERVENTION_READY": "yes",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "yes",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "yes",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "compact-4.2bsd-1983",
+   "relation": "superseded",
+   "to": "ncompress-5.0-lzw-1985",
+   "note": "compress (LZW, 1984) displaced compact in BSD",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Gallager 1978 (adaptive Huffman)",
+   "note": "",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}

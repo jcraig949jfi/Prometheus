@@ -1,0 +1,165 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "walksat-v56",
+ "techne_record": "techne/fossils/specimens/walksat-v56/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "walksat-v56",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "WalkSAT -- Kautz and Selman (stochastic local search for SAT)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "Kautz's Walksat repository default branch as of 2026-09-12 (commit in hashes)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "1994 (this repo the maintained C source)",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "sat",
+     "stochastic-local-search",
+     "search",
+     "optimization"
+    ],
+    "lineage": "GSAT (1992) -> WalkSAT (1994, Selman, Kautz, Cohen): STOCHASTIC LOCAL SEARCH for SAT -- flip the variable that minimises broken clauses, with a random-walk escape; an incomplete solver that finds models fast but never proves UNSAT. The opposite paradigm to CDCL (MiniSat/PicoSAT)."
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "fast (incomplete) satisfiability by local search",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "find a satisfying assignment for a hard SAT instance quickly by hill-climbing on the count of unsatisfied clauses with random restarts and walks",
+    "pressure": "instances where systematic search is too slow but a model exists; the trade of completeness for speed",
+    "success_means": "an assignment satisfying all clauses within a flip budget; it cannot report UNSAT"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": null,
+    "failure_condition": null
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "C"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "GSAT (1992) -> WalkSAT (1994, Selman, Kautz, Cohen): STOCHASTIC LOCAL SEARCH for SAT -- flip the variable that minimises broken clauses, with a random-walk escape; an incomplete solver that finds models fast but never proves UNSAT. The opposite paradigm to CDCL (MiniSat/PicoSAT).",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": [
+    "derived_from: GSAT (Selman/Levesque/Mitchell 1992)"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": [
+    "shares_ancestor_with: picosat-965"
+   ],
+   "basis": "NYX_DERIVED"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "b65452d65d50b26e27f8185d7a0d430eca3c9dc6c34bd8df2ead372f8aba7bd2"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "RUNNABLE_CONTAINER",
+    "test": "TECHNE_SMOKE_HARNESS_PASS",
+    "environment": {
+     "runner": "docker",
+     "image": "prometheus-fossil-lang:bookworm"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "yes",
+    "OBSERVABLE": "yes",
+    "ORACLE_BACKED": "no",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "no"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "no",
+    "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": true
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "NOT_CUT",
+  "mode": null,
+  "evidence": [],
+  "inspected_files": [],
+  "date": null,
+  "note": "census only; no source opened"
+ },
+ "organs": [],
+ "rejected_cuts": [],
+ "pressures": [],
+ "composition_edges": [],
+ "ancestry_edges": [
+  {
+   "from": "walksat-v56",
+   "relation": "shares_ancestor_with",
+   "to": "picosat-965",
+   "note": "same problem (SAT), opposite paradigm: stochastic local search vs CDCL",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "walksat-v56",
+   "relation": "derived_from",
+   "to": "GSAT (Selman/Levesque/Mitchell 1992)",
+   "note": "WalkSAT is the random-walk successor to GSAT",
+   "basis": "TECHNE_RECORD"
+  }
+ ],
+ "residue": {
+  "state": "NOT_CHECKED",
+  "unexplained": []
+ }
+}
