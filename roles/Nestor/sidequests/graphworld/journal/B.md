@@ -458,3 +458,8 @@
   (above float 89.94); w1 train8 55.21 IQR 3.31 PASS (> 35.46 + 0.5 IQR); w4 train128 97.19
   IQR 0.47 PASS but ablate_top exactly 14/16 with 2 input-invariant elites (open loop in effect).
 - Input-invariant 8 B elites scoring ~97 on w4 add weight to the easy-metric anomaly.
+- B-R2-10 (8 B int2 A2, powered rule): w1 train128 58.59 IQR 4.94 FAIL (5/5 B variants 57.6-58.6
+  < 61.40) -> stop rule fired: w1 train128 recorded as a protocol ceiling (D3 float linear 8-seed
+  median 59.2 is itself below the 4-run baseline). w3 train8 106.88 IQR 2.58 PASS (above float
+  103.16); w3 train128 103.97 IQR 0.87 PASS (ablate 15/16, 1 input-invariant). Priors .2/.55/.5.
+- Every baseline cell except w1 train128 now has an 8 B B cell at clause A parity.
