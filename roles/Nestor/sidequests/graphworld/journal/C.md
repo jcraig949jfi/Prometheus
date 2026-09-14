@@ -65,3 +65,22 @@
   every cell under every load: use it, or report nothing.
 - Would steal next: E5's brain oracle (my ref64 agreed with E's batched float32 forward on every clear row) as a
   standing regression test for any new TT backend.
+
+## 2026-09-14 iteration 4: C3 representation ecology -> PASS by the posted rule (H4 held 2/3)
+
+- Ran: 5 known functions of 4 hex digits x {dense, bits1-8, TT r1-16, CP R1-32, Tucker R1-12, additive, pairwise,
+  exhaustive tiny digit program} x seeds 0-2. Charged serialized bytes, analytic flops, rel MSE decoded from the
+  bytes ONLY. Code 36a6e3eee (pushed before run). nb_bucket wired in as a backend (credit B).
+- Numbers (cheapest at rel_mse <= 1e-4): tt_rank2 -> tt2 827 B (CP 2,129, Tucker 2,109); separable_decay -> cp8
+  2,129 B (TT 9,275); program_in -> program 45 B (best tensor tt16 34,875 = 775x); program_out -> cp32 8,369 B in
+  seeds 0-1 (EXACT, rel 8e-15 in seed 0), tt16 34,875 B in seed 2; noise -> bits8 65,563 B at 1e-2, dense at 1e-8.
+- What died: H4 in seed 2 -- CP32 ALS from a random init did not converge there; TT-SVD (deterministic) won. CP's
+  representational advantage is real but its FIT is init-dependent: a Pareto point that depends on the optimiser.
+- Surprise: (x0*x1*x2 + x3^2) mod 13 is exactly CP rank <= 32 (consistent with discrete-log characters making a
+  mod-prime product separable; not verified). Digit arithmetic outside the program search space is still cheap
+  for SOME tensor form.
+- Controls: cheat_ref (answer in Python memory, empty blob) flagged 15/15 by from-bytes vs in-memory error; 0 honest
+  flags after the dev fix (a pointwise gap rule had flagged an honest degenerate CP fit -- fixed BEFORE the
+  hypothesis, on dev seed 100). Near-constructive predictions (H1, H3, H5) disclosed as such in the claim.
+- Would steal next: E's QD archive over representation genomes -- let selection pick the representation per
+  target instead of my sweep, charged the same bytes+flops+error.
