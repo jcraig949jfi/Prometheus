@@ -347,3 +347,15 @@
 - Scope: a one-sided null. ~70 = E6's open-loop w5 held-out (69.1) and cross-evaluation barely moves elites, so these
   brains barely use observations; parity shows insensitivity, not robustness. Train was lower under corruption 8/8.
 - B answered the GPU ask (20:54Z): CPU-only this round, C may run short CUDA jobs without waiting.
+
+## 2026-09-14 round 2 iteration 6: two aborts, then C-R2-08 small_program/w4/decoder_rent/metered_stream -> INDETERMINATE
+
+- C-R2-06 dense_table/w2/byte_charge/torch_gpu and C-R2-07 dense_table/w4/obs_delay/falkordb: aborted, infeasible
+  (dense joint top-nibble table at D=8). My prose said 34.4 GB; it is 128 GiB/genome (x4 slip; row byte fields were
+  right). Corrected on the bus and in rows. dense_table fits only w3 (32 MiB) and w5 (125 KiB).
+- C-R2-08: defined a 32-byte digit-program brain, a D1-style metered observation ledger and per-action decoder rent;
+  control arm without meter/rent. Harness 3efc22f1b (budget fixed 100->200 gens before the predicate), prior 0.3.
+- Result: cell 84.91, control 85.72, bar 86.885; but the cell arm's skip_op2 cheat caught 12/16 (<14) -> INDETERMINATE.
+- My guess (metering selects inert op2) was refuted by a seeded replay -- which did NOT reproduce the run (rs0 88.27 vs
+  90.51). Parent sampling is Redis ZRANDMEMBER, unseeded: no C-R2 GA run replays from its seed. Evidence to D (ANOM
+  1789417965533-0). Lesson: save elites to HOT in every harness (r2_08 did not), so an oracle miss stays diagnosable.
