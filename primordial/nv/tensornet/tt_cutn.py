@@ -37,27 +37,26 @@ def digit_index(obs: np.ndarray) -> np.ndarray:
     return digits(np.asarray(obs).astype(np.uint16)).astype(np.int64)
 
 
+def build_operands(al, cores, onehots, Wo):
+    """Interleave [al, X_0, G_0, X_1, G_1, ..., Wo, out] for the kept cores (any array module).
+    Labels are ints (no 52-letter limit): 0 batch, 1 action, bonds from 2, digits after the bonds."""
+    N, K, A0 = 0, 1, 2
+    D0 = A0 + len(cores) + 1
+    ops = [al, [A0]]
+    for j, (G, X) in enumerate(zip(cores, onehots)):
+        ops += [X, [N, D0 + j], G, [D0 + j, A0 + j, A0 + j + 1]]
+    ops += [Wo, [A0 + len(cores), K], [N, K]]
+    return ops
+
+
 def network_operands(g1, obs, stride: int = 1, xp=np, dtype=np.float64):
-    """Interleaved einsum operands for the batched network; labels are ints (no 52-letter limit)."""
+    """Host-built operands for the batched network (one-hots made with numpy, then moved by xp)."""
     al, G, Wo = g1
     idx = digit_index(obs)
-    B, C = idx.shape
-    r = al.shape[0]
-    N, K = 0, 1                     # batch label, action label
-    A0 = 2                          # bond labels A0.., digit labels after them
-    D0 = A0 + C + 1
-    ops = [xp.asarray(al, dtype=dtype), [A0]]
-    bond = A0
     eye = np.eye(16, dtype=dtype)
-    cores = list(range(0, C, stride))
-    for j, c in enumerate(cores):
-        ops += [xp.asarray(eye[idx[:, c]]), [N, D0 + c]]
-        ops += [xp.asarray(G[c], dtype=dtype), [D0 + c, bond, A0 + j + 1]]
-        bond = A0 + j + 1
-    ops += [xp.asarray(Wo, dtype=dtype), [bond, K]]
-    ops.append([N, K])
-    assert r == G.shape[2]
-    return ops
+    kept = range(0, idx.shape[1], stride)
+    return build_operands(xp.asarray(al, dtype=dtype), [xp.asarray(G[c], dtype=dtype) for c in kept],
+                          [xp.asarray(eye[idx[:, c]]) for c in kept], xp.asarray(Wo, dtype=dtype))
 
 
 def contract_logits(g1, obs, stride: int = 1):

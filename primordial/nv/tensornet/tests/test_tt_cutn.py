@@ -66,6 +66,37 @@ def test_n4_oracle_quick_receipt(tmp_path):
     assert all(r["status"] in ("dev", "cheat") for r in rows[1:-1])
 
 
+def test_n4_timing_combine_ratios_and_breakeven():
+    from primordial.nv.tensornet.n4_timing import combine
+    cell = lambda side, B, t, plan=0.0, valid=True, stride=1: {
+        "kind": "cell", "side": side, "d": 16, "r": 4, "B": B, "stride": stride,
+        "t_median_s": t, "plan_s": plan, "valid": valid}
+    cu = [cell("cutn", 1024, 0.01, plan=1.0), cell("cutn", 4096, 0.02, plan=1.0),
+          cell("cutn", 1024, 0.01, valid=False, stride=2)]
+    to = [cell("torch", 1024, 0.03), cell("torch", 4096, 0.01)]
+    r = combine(cu, to)
+    s = {x["B"]: x for x in r["shapes"]}
+    assert r["n_shapes"] == 2 and r["cutn_faster_shapes"] == 1 and r["invalid_honest"] == 0
+    assert s[1024]["bucket_over_cutn"] == pytest.approx(3.0) and s[1024]["breakeven_execs"] == pytest.approx(50.0)
+    assert s[4096]["breakeven_execs"] is None
+    assert r["cheat_caught"] == [1, 1]
+
+
+def test_n4_timing_cutn_quick_is_exact_and_cheat_caught(tmp_path):
+    _gpu()
+    import json
+    from primordial.nv.tensornet import n4_timing
+    out = tmp_path / "t.jsonl"
+    assert n4_timing.main(["--side", "cutn", "--quick", "--out", str(out)]) == 0
+    rows = [json.loads(x) for x in out.read_text().splitlines()]
+    assert rows[0]["speed"] == "INDETERMINATE" and all(x["status"] == "dev" for x in rows)
+    cells = [x for x in rows if x["kind"] == "cell"]
+    honest = [c for c in cells if c["stride"] == 1]
+    cheat = [c for c in cells if c["stride"] == 2]
+    assert len(honest) == 2 and all(c["valid"] and c["plan_s"] > 0 for c in honest)
+    assert len(cheat) == 1 and not cheat[0]["valid"]
+
+
 def test_planned_network_reused_across_genomes():
     _gpu()
     fam, g1, obs = _genome(D=5, n=256, seed=11)
