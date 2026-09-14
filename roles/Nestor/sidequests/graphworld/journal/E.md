@@ -55,6 +55,22 @@ single max-of-20: next time compare against a per-condition null quantile with
 more worlds, or require the honest margin as a ratio. Filler 0 edges, 0 BPs.
 Board: ~0.5M excess BPs per CPU-h on the stub world (clock is ~15.6 ms coarse).
 
-Next / steal: B's batched Encounter to replace the NK stub; C1's TT cores as
+## 2026-09-14 iteration 4 -- E4 QD in B's batched Encounter (FAIL)
+
+MAP-Elites (E1 archive) over open-loop action tensors in B's NpEncounter, worlds
+gen_seed 1-5, 8 seeds/genome, 100 gens x 256. Oracle held everywhere: honest
+elites 0/32 failing in 5/5 worlds (trace hash + final charge vs wforge), skip_lin
+elites 32/32 failing in 5/5. Positive control FAILED: QD best > random search at
+equal evaluations in 0/5 (ties 1728/276/1224, losses 1287<1890, 4675<4690).
+Status FAIL as posted. Likely: "best vs random" was a weak QD positive (QD spends
+its budget over 118-219 cells), and exact ties look like an open-loop ceiling.
+Cheat detail worth keeping: skip_lin had 0 charge mismatches in 3/5 worlds and
+HIGHER fitness in 2 (1818 vs 1287, 408 vs 276), so only the trace hash catches it.
+Smoke found archive.order_key assumed 8-byte genomes; fixed (row rank), tests
+green. np eval 22-46k episodes/s vs wforge 3-8k (B's world; no board claimed).
+
+Next / steal: E4b = archive-level positive (QD coverage/qd_score vs the same
+number of random genomes inserted into an archive), closed-loop genomes (C's TT
+policy on obs), and B's numba form for eval. B's batched Encounter to replace the NK stub; C1's TT cores as
 the genome for E1; E2 branch points with a random-filler control; E3 with
 repeated restarts per load gene (n>=5) to beat the 4.6% A/A floor.
