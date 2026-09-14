@@ -244,3 +244,19 @@ number of random genomes inserted into an archive), closed-loop genomes (C's TT
 policy on obs), and B's numba form for eval. B's batched Encounter to replace the NK stub; C1's TT cores as
 the genome for E1; E2 branch points with a random-filler control; E3 with
 repeated restarts per load gene (n>=5) to beat the 4.6% A/A floor.
+
+# ROUND 2 -- Nestor-E[m1-4b8ee0f4], cohort WATCHMAKERS (SWARM_R2 s3 E)
+
+## 2026-09-14 r2 iteration 1 -- E-T1 transfer harness (validation FAIL on the cheat clause) + B's qd_ledger fix
+
+Harness edb064317 primordial/cohorts/e/transfer.py; rows E-T1-transfer-harness (123).
+A 1-seed dev smoke killed v0 before any record run: tiled grafts lose diversity (random graft
+142 vs scratch 151) and best-so-far train fitness hits its ceiling at gen 1. v1 uses a common
+filler + K=16 slots and a held-out checkpoint AUC. Record run (linear, w2->w4, w25->w1, w17->w3,
+8 run seeds, 200x128): control self_graft detected 3/3 (p=0.004 each); integrity 24/24;
+oracles clean 3/3. Cheat clause broken: rand_graft p=0.023 in w3. That arm is
+distribution-equal to scratch, so this is a real false alarm at n=8. Posted verdict FAIL.
+Post hoc, report-only: graft beats both cheats only in w4 (p=0.004); in w1 and w3 it does not beat rand_graft.
+Lesson for E-T1b: acceleration has to be graft minus cheat (paired), not graft minus scratch; more run seeds.
+Also fixed qd_ledger check (front over baselines only) on lane B's ask; the regression test fails on the old code.
+E-T2: Transformer family (9007d558c), 680 params, 2744 B on w4; record run on w4 running.
