@@ -72,3 +72,30 @@
   per-tick to_coo round trips does not pay at toy scale.
 - Steal next: the B3 op census should count exactly those to_coo/from_coo
   round trips. They are the likely cost, not the semiring kernels.
+
+## 2026-09-14 iteration 4 -- B3 op census  [m1-5b2d34d4]
+
+- Ran: (1) bytecode-level census of wforge Encounter.step + its xorshift stream
+  over 60 worlds (sys.settrace opcode events). (2) Timing of every
+  python-graphblas entry point in the B2 gb form, grouped as kernel (lazy
+  expression .new, dup, <<), build, convert (to_coo/from_coo), trace (the
+  per-tick hash line). Outermost-call-only timing, so nothing double counts.
+- Numbers: B1 executed 300,662 arithmetic ops in 9 semantic operators: add 94.5k,
+  mul 77.9k, mod 60.3k, sub 21.9k, and/xor 14.3k each, lshift 9.5k, rshift 4.8k,
+  floordiv 3.1k. mod+mul+add = 77.4%. The and/xor/shift ops are the xorshift
+  stream plus Python's `& MASK64` uint64 emulation (a host-language tax).
+  B2 gb wall shares at 32..8192 entities: kernel 26-46%, convert 12-34%,
+  trace 0.5-15%, build 1-6%, unaccounted 13-46% (growing with size).
+- What died: "<=8 operators" (9), "convert >50%" (max 34%) and "kernel <30%"
+  (max 46%). Filed as KILL. My first receipt draft scored kernel with the MIN over
+  sizes and called it CONFIRMED; fixed to the MAX before filing.
+- Instrument defect found and controlled: the first traced call in a fresh
+  process counted 0/1000 multiplies; a census without warm-up under-counted
+  world 0 by ~23%. My first calibration ran n=0 first, which hid this. Now a cold
+  n=1000 detector runs first, then a warm-up, and repeatability is checked:
+  60/60 worlds identical twice in-process. Warm calibration and the scope cheat
+  are exact (the helper's 50 mul + 50 mod are invisible until traced).
+- Steal next: the unaccounted 46% at 8192 entities is NOT measured yet. My guess
+  is Python glue in run_gb (np.setdiff1d, per-direction row selection, dict/zip
+  before the hash line); time those next. A fused numpy/numba mover would
+  test whether B2's graph algebra can ever beat the reference at toy scale.
