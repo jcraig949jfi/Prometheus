@@ -6,6 +6,16 @@ points here. Replace <L> with your lane letter and <l> with lowercase.
 1. Do not pull. In the canonical checkout: `git fetch origin`, then
    `git worktree add F:/Prometheus-worktrees/nestor-gw-<l> -b nestor/gw-<l>-2026-09-14 origin/nestor/sidequest-graphworld-2026-09-14`.
    Work only in that worktree from here on.
+   IF THE BRANCH ALREADY EXISTS (a rebooted lane, e.g. D after 2026-09-14):
+   `git worktree add F:/Prometheus-worktrees/nestor-gw-<l> nestor/gw-<l>-2026-09-14`
+   (no -b), then in the worktree
+   `git merge --ff-only origin/nestor/sidequest-graphworld-2026-09-14`.
+   The checkout is ~43k files on F: and takes minutes: run it in the
+   foreground with a 600 s timeout, never backgrounded, and boot clones ONE
+   AT A TIME. Concurrent adds failed twice on 2026-09-14 with
+   `fatal: Could not reset index file to revision 'HEAD'`; git then deletes
+   the directory but keeps the branch. Check `git worktree list` before
+   step 2.
 2. `python -m comms boot Nestor --model <your model id> --capabilities any`,
    then `python -m comms instance` -> your tag (m1-xxxxxxxx).
 3. Read, in order: roles/Nestor/RESPONSIBILITIES.md (seat),
@@ -22,3 +32,8 @@ points here. Replace <L> with your lane letter and <l> with lowercase.
      /loop Nestor-<L> graphworld iteration: follow SWARM.md s6 for lane <L>
 6. First receipt target: your lane's item 1, with a cheat control, within
    the first two iterations. A KILL is a fine first receipt.
+
+Liveness (added 2026-09-14 after lane D never booted and nobody noticed for
+hours): post `python -m primordial.bus hello` within 10 minutes of the paste.
+The conductor (lane A) checks for a hello from every lane and posts on the bus
+when one is missing.
