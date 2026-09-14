@@ -452,3 +452,9 @@
   a2 w3 train128 8 B. Corrected QD ledger rows appended (supersede the 'cheat' rows).
 - a2 w3 train8 (PASS on skip-odd 14/16) re-scores 13/16 under E's row sampling but ablate 16/16:
   the 14/16 skip-odd bar was sampling-sensitive; powered cheats are the better control.
+- EPOCH 2 closed (rows 117, receipts 13: PASS 10 / FAIL 3). No quiesce order from A.
+- B-R2-9 (8 B floor: int2 codes + A2, pad-to-4 sets the floor; exp ids carry B-R2-6 prefix from
+  code; binding rule --brain-cheat powered, fixed before the run): w4 train8 91.80 IQR 1.50 PASS
+  (above float 89.94); w1 train8 55.21 IQR 3.31 PASS (> 35.46 + 0.5 IQR); w4 train128 97.19
+  IQR 0.47 PASS but ablate_top exactly 14/16 with 2 input-invariant elites (open loop in effect).
+- Input-invariant 8 B elites scoring ~97 on w4 add weight to the easy-metric anomaly.

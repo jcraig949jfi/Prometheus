@@ -26,6 +26,7 @@ import numpy as np
 import redis
 
 from primordial.brain import genomes as gm
+from primordial.cohorts.e.oracles import brain_oracle_cheats
 from primordial.fabric.rows import RowWriter
 from primordial.ops import qd_ledger as QL
 from primordial.qd import e7_run as E7
@@ -122,6 +123,8 @@ def main() -> None:
     p.add_argument("--no-ledger", action="store_true", help="smoke: rows as dev, no QD ledger row")
     p.add_argument("--bits", type=int, default=4, choices=(2, 3, 4), help="weight code width (codebook stays 4)")
     p.add_argument("--acts", type=int, default=E7.A, choices=(2, 4, 8), help="codebook rows (row 0 = abstain)")
+    p.add_argument("--brain-cheat", choices=("skip_odd", "powered"), default="skip_odd",
+                   help="binding brain-oracle cheat: E7 skip-odd, or E-T3 ablate_top + shift_action")
     a = p.parse_args()
     gs, status = a.world, ("dev" if a.no_ledger else "record")
     global EXP, ROWS, TRAIN
@@ -173,6 +176,16 @@ def main() -> None:
                            brain_oracle_cheat=bc, fused_vs_numpy_elites_differing=ex)
                 oracle_clean = (wo["elites_failing"] == 0 and wc["elites_failing"] >= 14
                                 and bo["mismatched_rows"] == 0 and bc["elites_mismatching"] >= 14 and ex == 0)
+                if a.brain_cheat == "powered":
+                    # E-T3 cheats (B-R2-8 rule): ablate_top >= 14/16 (input-invariant elites never count as
+                    # caught), shift_action floor 16/16, honest 0; skip-odd is recorded but not binding.
+                    pc = brain_oracle_cheats(q.g7, top, HELD8)
+                    row["brain_oracle_powered"] = pc
+                    oracle_clean = (wo["elites_failing"] == 0 and wc["elites_failing"] >= 14 and ex == 0
+                                    and bo["mismatched_rows"] == 0 and pc["honest"]["mismatched_rows"] == 0
+                                    and pc["shift_action"]["elites_caught"] == pc["elites"]
+                                    and pc["ablate_top"]["elites_caught"] >= 14)
+                row["oracle_rule"] = a.brain_cheat
                 row["oracle_clean"] = oracle_clean
             row["wall_s"] = round(time.perf_counter() - t0, 1)
             held.append(row["held64_per_seed"])
@@ -189,8 +202,11 @@ def main() -> None:
             "fitness": {"held64_median": round(med, 4), "iqr": round(iqr, 4), "n_runs": len(held),
                         "held64_by_run_seed": held},
             "footprint": {"genome_bytes": q.glen, "params": q.nw + q.nb},
-            "oracle": "clean (world hash+charge, brain ref logits, fused==numpy; skip_lin + skip-odd fail)"
-                      if oracle_clean else "NOT clean (see rows run_seed 0)",
+            "oracle": (("clean (world hash+charge, brain ref logits, fused==numpy; skip_lin + skip-odd fail)"
+                        if a.brain_cheat == "skip_odd" else
+                        "clean (world hash+charge, brain ref logits, fused==numpy; skip_lin fails; E-T3 ablate_top"
+                        " >=14/16 + shift_action 16/16)")
+                       if oracle_clean else "NOT clean (see rows run_seed 0)"),
             "baseline": False, "cohort": "B", "status": "record" if oracle_clean else "cheat",
             "clause_a": verdict, "source": {"exp_id": EXP, "rows": ROWS.relative_to(ROOT).as_posix()}}
     with RowWriter(QL.CELLS, EXP, commit_every_s=10**9) as w:
