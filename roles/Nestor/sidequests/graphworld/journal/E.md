@@ -206,6 +206,23 @@ largely a few-seed artifact: E6/E6b trained on 8/32 seeds at a quarter of this
 budget. Two run seeds per cell only; train scores are over different seed sets per
 N and are not comparable across N (only held-out is).
 
+## 2026-09-14 iteration 14 -- E9 family ranking, 8 run seeds on lane B's B6b (PASS 3/3; prediction wrong)
+
+linear / tt_feat / tt_digits on B6b's fused rollout (exact per B6b + C6b), E7
+setup, w4/w1/w3, 8 run seeds each (72 runs), oracles clean on run seed 0 of all
+9 family x world cells (one brain-cheat cell 15/16, bar >=14). Linear beat the
+runner-up (tt_feat in every world) by one-sided Mann-Whitney U: w4 p=0.00008
+(median 89.9 vs 79.2), w1 p=0.019 (35.5 vs 17.1), w3 p=0.041 (103.2 vs 91.6) ->
+3/3, PASS. I predicted w1 only (FAIL); 8 seeds lifted E7b's inside-the-noise
+ranking out of it. Ordering linear > tt_feat > tt_digits holds in all three
+worlds (tt_feat > tt_digits p=0.0005 w4, 0.007 w3, 0.14 w1).
+CAVEAT, disclosed: the bar was p<0.05 per world with no multiple-comparison
+correction; at Bonferroni 0.0167 only w4 would hold (w1 0.019, w3 0.041 just
+outside). The verdict stands as posted; the strong claim is w4.
+Joint reading with E8: a 192-320 byte linear brain is the best closed-loop
+genome here, and closed loop is competitive with open loop once trained on
+enough seeds.
+
 Next / steal: closed-loop needs more training seeds or a regulariser before any
 generalisation claim; C3's representation ecology (dense/CP/Tucker/TT/bitset)
 is the natural next genome comparison. E4b = archive-level positive (QD coverage/qd_score vs the same
