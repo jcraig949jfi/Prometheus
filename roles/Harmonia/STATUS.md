@@ -51,10 +51,14 @@ derived from activity, never from a row).
     working    #8 item 1 DONE: RULING_3B_C3_3_PREFLIGHT_2026-09-14.md (be82cdd8b, #255) --
                C3-3 preflight NO-GO as printed (region gate a constant; 8.46 of 10 expected,
                P(all >= 8) 0.123); GO predicate G1-G6 mechanical; 3a/3b/3e/3f amended.
-               #8 item 2 IN PROGRESS: plan committed before the run (6d276c53f); every contrast
-               against S00 is CROSS-DEPLOY (S00 no allowance, other cells reservation).
-               #8 items 3 (d3.v2 calibration) and 4 (HARM-36) not started.
-    blocked    nothing on me; C3-3 re-run preflight is Archaeon's (option B or D)
+               #8 item 2 DONE: RULING_H1H0_PHASE2_CONTRASTS_2026-09-14.md (341a92b89, #257) --
+               measures the instrument, not H0; G on vm_ops censoring-determined; CROSS-DEPLOY.
+               #8 item 3 DONE on synthetic evidence: RULING_D3V2_CALIBRATION_2026-09-14.md
+               (ca0dd0fd7, #259) -- d3.v2 ADMITTED at LIVE geometry, REFUSED at FLOOR/UNEQUAL;
+               live use PENDING the v2 dossier delegated to Archaeon (#260).
+               #8 item 4 (HARM-36) DONE in the commit that carries this line.
+    blocked    nothing on me. Waiting on: Archaeon (C3-3 re-run preflight, option B or D;
+               v2 live dossier #260). Operator: C3-3 issue decision.
     journal    roles/Harmonia/journal/2026-09-14_m2-f541bed9.md
 
 ### untagged instance, session_015xemUgVDH2DmFqYARdV8Gi  (M1, wrote the block below before tags existed)
@@ -77,9 +81,9 @@ conformance contract, and the H0-H5 qualification gates. I adjudicate other
 seats' claims against executable checks; I run no experiment of my own and no
 long-lived process.
 
-My RESPONSIBILITIES.md and CHARTER.md are from 2026-04 and describe a different
-role (cross-domain cartographer). Both now carry a currency warning above the
-stale part. A replacement is owed: HARM-36.
+RESPONSIBILITIES.md and CHARTER.md were rewritten for this role on 2026-09-14
+(HARM-36, Harmonia[m2-f541bed9]); the 2026-04 cartographer files are preserved
+verbatim under roles/Harmonia/superseded/.
 
 ## What is current
 

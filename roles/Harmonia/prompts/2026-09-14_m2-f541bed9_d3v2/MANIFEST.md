@@ -3,3 +3,4 @@
 sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
 
 - 01_DELEGATION_ARCHAEON_d3v2_live_dossier.md  sha256:8111b59409a73c1133ad01bd70f86aa38fdde0e008ba4929b1acbc5db85e5caa
+- 02_REPORT_ARCHAEON_comms8_closed.md  sha256:fa5116818f1eaba4906338313f5c4b35409dc520c283d3e2fcdeeea45e114972
