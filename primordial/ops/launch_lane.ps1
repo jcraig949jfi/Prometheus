@@ -26,7 +26,8 @@ param(
     [string]$Name = "",
     [string]$Exe = "$env:USERPROFILE\.local\bin\claude.exe",
     [string[]]$ExeArgs = @('--dangerously-skip-permissions', '--remote-control'),
-    [string]$LogDir = "C:\Users\jcrai\lab\pm-data\launcher"
+    [string]$LogDir = "C:\Users\jcrai\lab\pm-data\launcher",
+    [switch]$BootPrompt   # start the session on roles/Nestor/sidequests/graphworld/prompts_r2/<Lane>.md
 )
 $ErrorActionPreference = 'Stop'
 if (-not $Name) { $Name = "Nestor $Lane r2" }
@@ -44,7 +45,12 @@ $env:OMP_NUM_THREADS = '3'
 $env:NUMBA_NUM_THREADS = '3'
 $env:OPENBLAS_NUM_THREADS = '3'
 
-$parts = @($ExeArgs)
+$parts = @()
+if ($BootPrompt -and $Exe -like '*claude*') {
+    # quote-free first prompt: the cohort's full paste block lives in the worktree (no multi-line quoting)
+    $parts += ('"Read roles/Nestor/sidequests/graphworld/prompts_r2/' + $Lane + '.md in this worktree and follow it exactly."')
+}
+$parts += @($ExeArgs)
 if ($Exe -like '*claude*') { $parts += ('"' + $Name + '"') }
 $argline = ($parts -join ' ')
 

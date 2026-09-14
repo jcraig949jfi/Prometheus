@@ -15,6 +15,10 @@ letter and <l> with lowercase.
    then paste that cohort's block (below). Wait for its `hello` on the bus
    before launching the next lane.
 
+When the operator is on mobile, the conductor launches lanes itself, one at a time, with
+`wt.exe -w 0 new-tab --title "Nestor <L> r2" -d <worktree> powershell -NoExit -ExecutionPolicy Bypass -File <worktree>\primordial\ops\launch_lane.ps1 -Lane <L> -Worktree <worktree> -BootPrompt`.
+-BootPrompt starts the session on prompts_r2/<L>.md (the block below), and --remote-control lists it on claude.ai/code.
+
 ## Session boot (what the pasted block points to)
 
 1. You are already in F:/Prometheus-worktrees/nestor-r2-<l>, a sparse
