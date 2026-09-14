@@ -202,3 +202,26 @@
   The committed rows say 38-40%. The receipt's structured list and the KILL
   verdict are right. Corrected on the bus; the script now computes the range.
   Lesson: a receipt script must not carry numbers written from memory.
+
+## 2026-09-14 iteration 9 -- B5: is B's world the closed-loop bottleneck? No.  [m1-5b2d34d4]
+
+- Trigger: E5/E5b/E6 closed-loop rollouts run 0.2-1.0M episode-steps/s on B's
+  NpEncounter(with_obs), vs 46-70M for B's open-loop numba world. Before
+  building a closed-loop numba world, measure where the time goes.
+- Ran: an exact copy of E5's rollout loop (E code imported read-only, P=128,
+  seeds 9100..9107, worlds 1-5) with timers on brain forward, codebook gather,
+  descriptor bookkeeping, and the B world step. The decision rule was posted
+  before the run.
+- Numbers:
+    w1: brain 82%, world 16%, act+books 2%, 397k episode-steps/s
+    w2: brain 85%, world 13%, act+books 2%, 248k episode-steps/s
+    w3: brain 85%, world 12%, act+books 3%, 753k episode-steps/s
+    w4: brain 88%, world 9%, act+books 2%, 350k episode-steps/s
+    w5: brain 80%, world 17%, act+books 3%, 825k episode-steps/s
+  Timed parts sum to 0.998-0.999 of loop wall. The copy's fitness
+  equals E5's own rollout in 5/5 worlds.
+- What died: "world step >= 50% of rollout in >= 3/5 worlds" (0/5; world
+  9%-17%). KILL. By the posted rule, B does NOT build a closed-loop
+  world: even a free world would speed E's rollouts by at most
+  1.10-1.20x. The cost is E's numpy TT brain forward (80%-88%), one
+  [n, r, r] gather plus an einsum per core. That is C/E code: offered, not built.
