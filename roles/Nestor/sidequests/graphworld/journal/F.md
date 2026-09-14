@@ -166,3 +166,29 @@ Threads: 3 (conductor contract 1789425755152-0 overrides the boot prompt's 5).
   BUSY never posts `missing`. All quiet lanes share one sample window.
 - Tests: test_f9_checkpoint.py (2), test_x_liveness.py (3, all sources
   faked). Suite 133 passed, 1 skipped.
+
+## 2026-09-14 iteration 8 -- F15 boot pack (DONE); PACKAGE GREEN, lane F pauses
+
+- ops/bootpack.py `build(lane, epoch)` generates the pack from live state:
+  boot block (fetch/merge, comms boot, env with the lane's threads,
+  hello), the lane's charter + SWARM_R2 s4 rules extracted by heading at
+  generation time (headings demoted under the pack's own sections), open
+  claims, inbox digest (last 15 addressed to the lane via XREVRANGE:
+  nothing consumed, group untouched; bodies cut at 400 chars), the QD
+  ledger Pareto front per world (top 3) + floor, OPEN anomalies, and the
+  lane's last journal entry. The pack warns if it exceeds 16 KB. With
+  EpochController(bootpack=True), every boundary writes
+  epoch_<n>/bootpack/<L>.md into the committed epoch directory.
+- Measured (live bus, lane F): pack 14.2 KB / 124 lines (vs ~70-74k tokens
+  of round 1 boot reading), generated in 0.38 s; read pack + comms boot +
+  comms instance + bus hello = 5.45 s, hello rc 0. This is tool time
+  only; model reading time is not measured.
+- Tests: test_f15_bootpack.py (2): every section present, only the lane's
+  claims and messages, a long body cut, front/floor line, demoted
+  headings, no consumer group touched, < 16 KB; a boundary with
+  bootpack=True commits one pack per lane. Suite 147 passed, 1 skipped.
+
+PACKAGE F: O3 0712083bc, O5 98f8bf705, O1 a96830abc, F7 00586cf91,
+F8 ec6322c07, F14 13802b096, F9 + X 0bdc60259, F15 (this commit): all green.
+Stopping per brief s0.8 (package green before epoch 4). No open claims,
+nothing running, all pushed.

@@ -8,6 +8,8 @@ At T + n x epoch_s the controller:
      by the worker; a lane with no live worker is not waited for), or
      drain_timeout_s, recording stragglers;
   4. exports the bus (ops/bus_export) into <out>/epoch_<n>/;
+  4b. (bootpack=True, F15) writes one boot pack per lane into
+     <out>/epoch_<n>/bootpack/<L>.md;
   5. writes the conductor record <out>/EPOCH_<n>.json and commits the
      directory (commit_path: that path only, PM_TAG required);
   6. clears the stop flags and marks epoch n+1 running (pm:epoch:state).
@@ -35,7 +37,8 @@ STATE = "pm:epoch:state"
 
 class EpochController:
     def __init__(self, lanes, epoch_s: float = 1800, r=None, out=DEFAULT_OUT, repo=None, export=None,
-                 drain_timeout_s: float = 120, post: bool = True, log=print):
+                 drain_timeout_s: float = 120, post: bool = True, log=print, bootpack: bool = False,
+                 bootpack_kw: dict | None = None):
         from primordial.bus import bus
         from primordial.ops import bus_export
         self.lanes = list(lanes)
@@ -47,6 +50,7 @@ class EpochController:
         self.drain_timeout_s = drain_timeout_s
         self.post, self.log = post, log
         self.events: list[dict] = []
+        self.bootpack, self.bootpack_kw = bootpack, dict(bootpack_kw or {})
 
     def _event(self, name: str, **kw) -> dict:
         e = {"ts": round(time.time(), 3), "event": name, **kw}
@@ -81,6 +85,10 @@ class EpochController:
         epoch_dir = self.out / f"epoch_{n}"
         counts = self.export(out=epoch_dir, stamp=f"e{n}", r=self.r)
         self._event("exported", counts={k: v[1] for k, v in counts.items()})
+        if self.bootpack:
+            from primordial.ops import bootpack
+            packs = bootpack.write_all(n, self.lanes, epoch_dir / "bootpack", r=self.r, **self.bootpack_kw)
+            self._event("bootpacks", files=[p.name for p in packs])
         record = {"epoch": n, "lanes": self.lanes, "begin_ts": begin["ts"], "drained_ts": drained["ts"],
                   "workers": {L: s for L, s in live.items()}, "stragglers": waiting,
                   "export": {k: v[1] for k, v in counts.items()},
