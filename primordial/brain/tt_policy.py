@@ -380,6 +380,44 @@ class CheatGpuNoSync(TorchGpuResident):
         return self._act_dev(x)      # returns while the kernels are still queued
 
 
+class TorchGpuBucketE2E(_Torch):
+    """C1c: no gather of r x r cores. Samples stay permuted from core to core (lane B's trick):
+    per core, stable-sort the current order by digit, gather v (B x r, not B x r x r), then 16
+    dense matmuls on contiguous slices. Digit counts for ALL cores come back in one host sync."""
+    name = "torch_gpu_bucket_e2e"
+    stride = 1
+
+    def __init__(self, p):
+        super().__init__(p, "cuda")
+        self.Gkj = [[g[j] for j in range(16)] for g in self.Gk]
+
+    def prepare(self, obs):
+        return self._host(obs)
+
+    def _logits_dev(self, x16):
+        t = self.t
+        x = x16.to(t.int32) & 0xFFFF
+        dig = ((x.unsqueeze(-1) >> self.sh) & 15).reshape(x.shape[0], -1).to(t.int64)
+        B = dig.shape[0]
+        counts = t.zeros((self.p.d, 16), dtype=t.int64, device=self.dev)
+        counts.scatter_add_(1, dig.t().contiguous(), t.ones_like(dig.t()))
+        counts = counts.cpu().tolist()                        # the one sync
+        perm = t.arange(B, device=self.dev)
+        v = self.alpha.expand(B, -1)
+        for k in range(0, self.p.d, self.stride):            # stride 2 = the C1c cheat control
+            order = t.argsort(dig[perm, k], stable=True)
+            perm = perm[order]
+            v = v[order]
+            parts = [s @ g for s, g, c in zip(t.split(v, counts[k]), self.Gkj[k], counts[k]) if c]
+            v = t.cat(parts)
+        out = t.empty((B, self.p.A), dtype=v.dtype, device=self.dev)
+        out[perm] = v @ self.W
+        return out
+
+    def run(self, x):
+        return self._act_dev(self.t.from_numpy(x).to(self.dev)).cpu().numpy()
+
+
 class TorchGpuGraphE2E(_Torch):
     """Captured CUDA graph per batch size; pinned host buffers both ways."""
     name = "torch_gpu_graph_e2e"
@@ -431,10 +469,10 @@ class TorchGpuGraphE2E(_Torch):
 
 
 BACKENDS = {b.name: b for b in (NpGather, NpBucket, NumbaPar, Numba1, NbBucket, NumbaParC3, TorchCPU,
-                                TorchGpuE2E, TorchGpuGraphE2E, TorchGpuResident,
+                                TorchGpuE2E, TorchGpuGraphE2E, TorchGpuResident, TorchGpuBucketE2E,
                                 CheatSkipHalf, CheatGpuNoSync)}
 CPU_HONEST = ("np_gather", "np_bucket", "numba_par", "numba_1", "torch_cpu")
-GPU_HONEST = ("torch_gpu_e2e", "torch_gpu_graph_e2e", "torch_gpu_resident")
+GPU_HONEST = ("torch_gpu_e2e", "torch_gpu_graph_e2e", "torch_gpu_resident", "torch_gpu_bucket_e2e")
 CHEATS = ("cheat_skip_half", "cheat_gpu_nosync")
 
 
