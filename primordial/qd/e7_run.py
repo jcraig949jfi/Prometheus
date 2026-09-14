@@ -142,7 +142,11 @@ def main() -> None:
     p.add_argument("--worlds", default="4,1,3"); p.add_argument("--fams", default="linear,lut_top,tt_feat,tt_digits")
     p.add_argument("--gens", type=int, default=200); p.add_argument("--batch", type=int, default=128)
     p.add_argument("--port", type=int, default=6394); p.add_argument("--tag", default="full")
+    p.add_argument("--run-seed", type=int, default=-1, help="-1 = E7's RNG; >=0 = E7b repeat run seed")
+    p.add_argument("--exp", default=EXP, help="exp_id; rows go to ledger/rows/E/<exp>.jsonl")
     a = p.parse_args()
+    global ROWS
+    ROWS = E4.ROWS.with_name(f"{a.exp}.jsonl")
     HOT.mkdir(parents=True, exist_ok=True)
     r = redis.Redis(port=a.port)
     e6 = {x["gen_seed"]: x for x in (json.loads(l) for l in open(E4.ROWS.with_name("E6-heldout-seed-generalisation.jsonl")))
@@ -151,9 +155,12 @@ def main() -> None:
         for fam in a.fams.split(","):
             t0 = time.perf_counter()
             g7 = G7(gs, fam)
-            arch = LuaArchive(r, f"e7-{gs}-{fam}", g7.glen)
+            rs = a.run_seed
+            arch = LuaArchive(r, f"e7-{gs}-{fam}" + (f"-r{rs}" if rs >= 0 else ""), g7.glen)
             arch.clear()
-            rng = np.random.Generator(np.random.PCG64([700, gs, len(fam)]))
+            # E7 used [700, gs, len(fam)] (lut_top and tt_feat share a length); E7b indexes the family
+            seed = [700, gs, len(fam)] if rs < 0 else [710, rs, gs, list(gm.FAMILIES).index(fam)]
+            rng = np.random.Generator(np.random.PCG64(seed))
             for _ in range(a.gens):
                 par = arch.sample(a.batch)
                 g = g7.init(rng, a.batch) if len(par) == 0 else g7.mutate(rng, g7.unpack(par))
@@ -164,9 +171,9 @@ def main() -> None:
                                     np.uint8).reshape(-1, g7.glen)
             arch.clear()
             top = g7.unpack(top_raw)
-            np.save(HOT / f"{a.tag}_w{gs}_{fam}_top.npy", top_raw)
+            np.save(HOT / f"{a.tag}_w{gs}_{fam}{f'_r{rs}' if rs >= 0 else ''}_top.npy", top_raw)
             row = {
-                "exp_id": EXP, "tag": a.tag, "gen_seed": gs, "family": fam, "param_bytes": g7.pb,
+                "exp_id": a.exp, "tag": a.tag, "run_seed": rs, "gen_seed": gs, "family": fam, "param_bytes": g7.pb,
                 "genome_bytes": g7.glen, "D": g7.D, "T": g7.T, "genomes": a.gens * a.batch, "cells": len(el),
                 "train_per_seed": float(rollout(g7, top, TRAIN)[0].mean() / len(TRAIN)),
                 "held64_per_seed": float(rollout(g7, top, HELD64)[0].mean() / len(HELD64)),
