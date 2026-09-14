@@ -108,7 +108,20 @@ only that it did not win at this budget. skip_lin again had 0 charge mismatches
 in 3/5 worlds: only the trace hash sees it.
 
 Next / steal: equal-budget E5b (25,600 genomes) before any claim about closed vs
-open loop; C2's plastic rank as adapt() inside an episode. E4b = archive-level positive (QD coverage/qd_score vs the same
+open loop; C2's plastic rank as adapt() inside an episode.
+
+## 2026-09-14 iteration 7 -- E5b closed-loop at equal budget (FAIL, as predicted)
+
+Same code (--exp), 200 gens x 128 = 25,600 genomes per world (E4b's budget; one
+seed vs E4b's median of 3). Oracles clean again in 5/5 (world honest 0/16,
+skip_lin 16/16; brain 0 mismatched over 2,214-4,095 clear rows, skip-odd 16/16).
+Budget moved the closed-loop best in 4/5 (586->942, 1164->1576, 156->228,
+1092->1151; w5 4690 tie) but it still beat open loop 0/5; prediction "<2/5"
+held. So E5's loss was not only budget. Untested candidates: r=3 TT over 36 hex
+digits is a poor function class for these obs (corruption + delay in w1), the
+8-entry codebook caps actions, or open loop simply suffices in fixed-seed worlds.
+B1t (lane B) explained E4b w5's fix_unaffordable misses from my saved elites:
+91/91 were unpaid writes landing after episode end. E4b = archive-level positive (QD coverage/qd_score vs the same
 number of random genomes inserted into an archive), closed-loop genomes (C's TT
 policy on obs), and B's numba form for eval. B's batched Encounter to replace the NK stub; C1's TT cores as
 the genome for E1; E2 branch points with a random-filler control; E3 with
