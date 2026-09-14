@@ -98,7 +98,23 @@ def _bench_lua(k):
     return f
 
 
-FORMS = {"ref": bench_ref, "np": bench_np, "nb": bench_nb, "lua1": _bench_lua(1), "luak": _bench_lua(0)}
+def bench_fk(mech, wid, seeds, acts, lens):
+    from .falkor_world import FalkorEncounter
+    w = FalkorEncounter(mech, wid, graph="b1bench")
+    p0 = time.perf_counter()
+    w.prepare(seeds)
+    prep = time.perf_counter() - p0
+    t0 = time.perf_counter()
+    t = 0
+    while t < mech.horizon and (t == 0 or time.perf_counter() - t0 < BUDGET_S):
+        w.run(acts, ticks=1)
+        t += 1
+    wall = time.perf_counter() - t0
+    return {"ticks": t, "steps": int(np.minimum(lens, t).sum()), "wall_s": wall, "prep_s": prep}
+
+
+FORMS = {"ref": bench_ref, "np": bench_np, "nb": bench_nb, "lua1": _bench_lua(1), "luak": _bench_lua(0),
+         "fk": bench_fk}
 
 
 def main(argv=None):

@@ -62,6 +62,16 @@ FORMS["lua1"] = _lua_form(1)
 FORMS["luak"] = _lua_form(0)
 
 
+def form_fk(mech, wid, seeds, acts, cheat):
+    from .falkor_world import FalkorEncounter
+    w = FalkorEncounter(mech, wid, cheat=cheat)
+    w.prepare(seeds)
+    return [h.decode() for h in w.trace_hashes(w.run(acts, record=True))], None
+
+
+FORMS["fk"] = form_fk
+
+
 def run(form: str, worlds: int, envs: int, cheat: str = "", world_base: int = 0) -> dict:
     rows = []
     for g in range(world_base, world_base + worlds):
