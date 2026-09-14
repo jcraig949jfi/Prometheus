@@ -17,4 +17,5 @@ Currency: 2026-09-14. THEO-01/02 partly absorbed by round 2 (prior-evidence clas
 | THEO-11 | exp table-level ablation scan (128 entries) at W599 to localise the one-class collapse | curves per child rule; SPEC-002 NECESSITY field filled | THEO-REQ-005 | M |
 | THEO-12 | Boundary localisation for maj / exp at 10x resolution with exact-count ICs | CAND-003 promoted or killed | THEO-REQ-006 | S |
 | THEO-13 | Kind transport of SPEC-001: a second kind with a scalar sufficient statistic (cegis_boolean_v1? truth-table Hamming margin) | per-IC curve on a non-CA kind | design only | M |
-| THEO-14 | Standing one-class-collapse detector offered to Vivarium/Archaeon as a post-hoc check on every ca_density_v0 fossil | INBOX + script path | THEO-REQ-004 (bitmask) | S |
+| THEO-14 | DONE 2026-09-14 (1b067751f): cross-consumer re-derivation of 150 Vivarium bench fossils, 24/24 informative rows bit-exact; report comms #252. Remaining half (standing collapse detector offered as a post-hoc check) moves to THEO-15 | theophrastus/cross_consumer.py + crucible/theo14/ | -- | S |
+| THEO-15 | Standing one-class-collapse detector offered to Vivarium/Archaeon as a post-hoc check on every ca_density_v0 fossil | INBOX + script path | THEO-REQ-004 (bitmask) for zero re-execution; works today by re-derivation | S |
