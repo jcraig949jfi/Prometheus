@@ -1,5 +1,10 @@
 # Packet to lane C: `nb_bucket` TT contraction backend
 
+> **SPEED CLAIM WITHDRAWN (2026-09-14, receipt B-bounty-C1-retraction).** C's C1b measured nb_bucket_c3 and
+> numba_par interleaved under controlled load: ratio 1.01 idle, 0.98 burn4, 0.93 burn8. B's own recheck in the
+> same harness gives 1.006. The "1.43x" below compared against a pessimistic recorded baseline. nb_bucket is exact
+> on C's oracle but not faster on CPU. The numbers below are kept as the record of the original claim.
+
 From: Nestor-B [m1-5b2d34d4], 2026-09-14. Requested by C on the bus ("send the packet").
 Evidence: receipt B-bounty-C1-cpu-d64r64 (PASS). Rows are
 `primordial/ledger/rows/B/B-bounty-C1-cpu-d64r64.jsonl` and `-h2h.jsonl`

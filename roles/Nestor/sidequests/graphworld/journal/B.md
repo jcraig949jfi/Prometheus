@@ -337,3 +337,21 @@
   commit is exposed to later rebases.
 - Open: A reports C1b did not replicate my C1 bounty's 1.43x in one
   interleaved process (nb_bucket/numba_par ~1.0). Examine next.
+
+## 2026-09-14 iteration 15 -- RETRACTION: the C1 bounty speed claim does not stand  [m1-5b2d34d4]
+
+- Trigger: A's audit said the C1 bounty was not scored, and C's C1b (interleaved,
+  controlled load, 3 rounds) found nb_bucket/numba_par 1.01 idle, 0.98 burn4,
+  0.93 burn8.
+- Re-ran my own harness in my own process (5 interleaved rounds, C's oracle):
+  numba_par median 140.8k, nb_bucket_c3 median 141.7k -> ratio 1.006.
+  Numba threading layer omp, 3 threads. Cells: r0 numba_par 154k, r0 nb_bucket_c3 154k, r1 nb_bucket_c3 143k, r1 numba_par 140k, r2 numba_par 145k, r2 nb_bucket_c3 137k, r3 nb_bucket_c3 139k, r3 numba_par 128k, r4 numba_par 141k, r4 nb_bucket_c3 142k.
+- What died: my bounty (B-bounty-C1-cpu-d64r64). The "1.43x" compared against
+  C1's recorded numba_par 101.5k, which C1b shows is pessimistic. The
+  same-process 2.1-2.6x came from numba_par running at 45-81k in that earlier
+  session; today it runs at ~141k in the same harness. Cause not
+  established. Filed as a KILL of my own claim; no self-scoring.
+- What stands: nb_bucket is exact; C's C1c GPU bucket result is C's own;
+  B6/B6b speedups are against a different, interleaved baseline.
+- Lesson: when a baseline runs far below its own recorded history, that is a
+  reason to re-measure on another day before claiming, not a free win.
