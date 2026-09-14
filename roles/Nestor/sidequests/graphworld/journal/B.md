@@ -225,3 +225,23 @@
   world: even a free world would speed E's rollouts by at most
   1.10-1.20x. The cost is E's numpy TT brain forward (80%-88%), one
   [n, r, r] gather plus an einsum per core. That is C/E code: offered, not built.
+
+## 2026-09-14 iteration 10 -- B5b: after C5, the world is the cost again  [m1-5b2d34d4]
+
+- Trigger: C5 made E's brain forward exact and 5-9x faster (rollout 2.2-2.7x).
+  C offered a joint item: one numba call per rollout, world + brain fused.
+  Measure before building, with the decision rule posted first.
+- Ran: the same exact copy of E5's rollout as B5, with C's tt_digits
+  forward_fast(parallel) swapped in exactly as c5_rollout builds it. E and C
+  code imported read-only. P=128, seeds 9100..9107, worlds 1-5.
+- Numbers:
+    w1: brain 37%, world 56%, act+books 6% (glue 62%), 1.44M episode-steps/s (B5 numpy 0.40M)
+    w2: brain 45%, world 46%, act+books 9% (glue 55%), 0.98M episode-steps/s (B5 numpy 0.25M)
+    w3: brain 42%, world 46%, act+books 11% (glue 57%), 2.73M episode-steps/s (B5 numpy 0.75M)
+    w4: brain 53%, world 38%, act+books 9% (glue 47%), 1.44M episode-steps/s (B5 numpy 0.35M)
+    w5: brain 37%, world 53%, act+books 9% (glue 62%), 2.82M episode-steps/s (B5 numpy 0.82M)
+  Timed parts sum to 0.996-0.998 of loop wall. The fast copy's fitness
+  equals E5's numpy rollout in 5/5 worlds.
+- Held: "world + act + books >= 50% in >= 4/5" (4/5; glue 47%-62%). PASS.
+  By the posted rule, B builds the fused closed-loop kernel (B6). Cross-run
+  speeds vs B5 are indicative only, not a controlled ratio.
