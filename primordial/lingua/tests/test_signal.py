@@ -63,7 +63,7 @@ def test_np_world_conserves_charge():
 
 @pytest.fixture
 def r():
-    c = redis.Redis(port=6393)
+    c = redis.Redis(host="127.0.0.1", port=6393)
     try:
         c.ping()
     except redis.ConnectionError:

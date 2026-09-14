@@ -39,7 +39,7 @@ LIE_RATE = 0.01
 
 
 def worker(a) -> None:
-    r = redis.Redis(port=a.port)
+    r = redis.Redis(host="127.0.0.1", port=a.port)
     arch = (LuaArchive if a.kind == "lua" else RacyArchive)(r, a.run, GLEN)
     world = NKWorld()
     rng = np.random.Generator(np.random.PCG64([a.k, int(a.run.split("-")[-1])]))
@@ -79,7 +79,7 @@ def _pct(x, q):
 
 def run_condition(name, kind, n_workers, liar, a, py) -> dict:
     run = f"e1{name}-{int(time.time() * 1000) % 10**9}"
-    r = redis.Redis(port=a.port)
+    r = redis.Redis(host="127.0.0.1", port=a.port)
     arch = LuaArchive(r, run, GLEN)
     arch.clear()
     procs = [subprocess.Popen([py, "-m", "primordial.qd.e1_run", "worker", "--run", run, "--kind", kind,

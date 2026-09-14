@@ -52,7 +52,7 @@ def main() -> None:
         for gene in genes:
             cache, omp = GENES[gene]
             boot_s = E3.start_engine(a.port, cache, omp)
-            r = redis.Redis(port=a.port)
+            r = redis.Redis(host="127.0.0.1", port=a.port)
             fp = E3.ensure_corpus(r)
             psutil.cpu_percent(None)
             total, hashes = 0.0, {}

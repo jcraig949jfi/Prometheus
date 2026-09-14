@@ -235,7 +235,7 @@ def main() -> None:
     p.add_argument("--tag", default="full")
     a = p.parse_args()
     ROWS.parent.mkdir(parents=True, exist_ok=True)
-    r = redis.Redis(port=a.port)
+    r = redis.Redis(host="127.0.0.1", port=a.port)
     worlds = {"held25": perturbed_world(0.25, 11), "null100": perturbed_world(1.0, 12), "train": NKWorld()}
     for rep in range(a.reps):
         for mode in ("honest", "filler"):

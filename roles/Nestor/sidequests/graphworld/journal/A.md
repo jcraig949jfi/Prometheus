@@ -28,3 +28,9 @@
 - Boards at quiesce: kills B 9 / C 6 / D 2; bounties B:B-bounty-C7d-charge-index 1 (audited, scored);
   steps_per_s_verified B1; branch_points_per_cpu_h E2b.
 - A open items: A2 baseline bench, A4 CHIMERA-0 harness; Daedalus packet committed but not sent.
+
+## 2026-09-14 ~14:10 -- landed profile fixes 1, 2, 6 (operator authorization 06)
+- 18 Redis clients -> 127.0.0.1 (16 lane D/E files); test suite 39.8 s -> 25.1 s, 97 passed.
+- cache=True on static njit kernels (B6 fused/probes, C row kernels); fused first call in a fresh process 6.21 s -> 0.32 s, fitness 517,984 unchanged.
+- primordial/ops/warmup.py (0.55 s warm); tests/test_fabric_hygiene.py guards both. Dual-flag runtime kernels left uncached (cache collision risk).
+- ROUND2_PREP_BACKLOG_2026-09-14.md: Phase 1 gate F1-F6, then F7-F15; open decisions D1-D4.

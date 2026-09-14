@@ -299,7 +299,7 @@ def clear_rows(ref: np.ndarray, rel: float = 1e-6) -> np.ndarray:
 import numba as _nb  # noqa: E402
 
 
-@_nb.njit(nogil=True, boundscheck=False)
+@_nb.njit(nogil=True, boundscheck=False, cache=True)
 def tt_digits_act_row(obs_row, al, G, Wo, stride, v, u):
     """TTDigits: core c reads hex digit c of the obs string (feature c//4, most significant first)."""
     D = obs_row.shape[0]
@@ -333,7 +333,7 @@ def tt_digits_act_row(obs_row, al, G, Wo, stride, v, u):
     return best
 
 
-@_nb.njit(nogil=True, boundscheck=False)
+@_nb.njit(nogil=True, boundscheck=False, cache=True)
 def tt_feat_act_row(obs_row, al, G, Wo, stride, v, u):
     """TTFeat: core f reads the top hex digit of feature f."""
     D = obs_row.shape[0]
@@ -367,7 +367,7 @@ def tt_feat_act_row(obs_row, al, G, Wo, stride, v, u):
     return best
 
 
-@_nb.njit(nogil=True, boundscheck=False)
+@_nb.njit(nogil=True, boundscheck=False, cache=True)
 def lut_top_act_row(obs_row, T, stride):
     D = obs_row.shape[0]
     A = T.shape[2]
@@ -383,7 +383,7 @@ def lut_top_act_row(obs_row, T, stride):
     return best
 
 
-@_nb.njit(nogil=True, boundscheck=False)
+@_nb.njit(nogil=True, boundscheck=False, cache=True)
 def linear_act_row(obs_row, W, b, stride):
     D = obs_row.shape[0]
     A = W.shape[1]

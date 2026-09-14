@@ -173,7 +173,7 @@ def main() -> None:
     global ROWS
     ROWS = E4.ROWS.with_name(f"{a.exp}.jsonl")
     HOT.mkdir(parents=True, exist_ok=True)
-    r = redis.Redis(port=a.port)
+    r = redis.Redis(host="127.0.0.1", port=a.port)
     e4b = [json.loads(l) for l in open(E4.ROWS.with_name("E4b-qd-encounter-archive-positive.jsonl"))]
     for gs in [int(x) for x in a.worlds.split(",")]:
         bs = BrainSpec(gs)

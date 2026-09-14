@@ -54,7 +54,7 @@ def main() -> None:
     p.add_argument("--tag", default="full"); p.add_argument("--skip-oracles", action="store_true")
     a = p.parse_args()
     HOT.mkdir(parents=True, exist_ok=True)
-    r = redis.Redis(port=a.port)
+    r = redis.Redis(host="127.0.0.1", port=a.port)
     for gs in [int(x) for x in a.worlds.split(",")]:
         for fam in a.fams.split(","):
             for rs in parse_seeds(a.run_seeds):

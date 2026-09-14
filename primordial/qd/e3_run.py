@@ -88,7 +88,7 @@ def start_engine(port: int, cache, omp) -> float:
        "-p", f"127.0.0.1:{port}:6379", "-v", f"{CONTAINER}-data:/var/lib/falkordb/data",
        "--entrypoint", "redis-server", IMAGE, "--loadmodule", "/var/lib/falkordb/bin/falkordb.so", *margs,
        "--appendonly", "yes", "--dir", "/var/lib/falkordb/data")
-    r = redis.Redis(port=port)
+    r = redis.Redis(host="127.0.0.1", port=port)
     while True:
         try:
             r.ping()
@@ -189,7 +189,7 @@ def main() -> None:
     ref: dict[str, str] = {}
     for li, (cache, omp) in enumerate(LOAD_GENES):
         boot_s = start_engine(a.port, cache, omp)
-        r = redis.Redis(port=a.port)
+        r = redis.Redis(host="127.0.0.1", port=a.port)
         fp = ensure_corpus(r)
         cfg = {k.decode() if isinstance(k, bytes) else k: v for k, v in
                zip(*[iter(sum(r.execute_command("GRAPH.CONFIG", "GET", "*"), []))] * 2)}

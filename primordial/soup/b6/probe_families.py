@@ -24,13 +24,13 @@ from primordial.brain import genomes as gm
 from primordial.qd import e7_run as E7
 
 
-@njit(nogil=True, boundscheck=False)
+@njit(nogil=True, boundscheck=False, cache=True)
 def _linear_rows(obs, gidx, W, b, out):
     for i in range(obs.shape[0]):
         out[i] = gm.linear_act_row(obs[i], W[gidx[i]], b[gidx[i]], 1)
 
 
-@njit(nogil=True, boundscheck=False)
+@njit(nogil=True, boundscheck=False, cache=True)
 def _tt_feat_rows(obs, gidx, al, G, Wo, out):
     r = al.shape[1]
     v = np.empty(r, dtype=np.float32)

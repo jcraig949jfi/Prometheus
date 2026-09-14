@@ -9,7 +9,7 @@ from primordial.qd.stubworld import GLEN, NKWorld, mutate, random_genomes
 
 @pytest.fixture
 def r():
-    c = redis.Redis(port=6394)
+    c = redis.Redis(host="127.0.0.1", port=6394)
     try:
         c.ping()
     except redis.ConnectionError:

@@ -90,7 +90,7 @@ def main() -> None:
     p.add_argument("--skip-oracles", action="store_true", help="smoke only")
     a = p.parse_args()
     HOT.mkdir(parents=True, exist_ok=True)
-    r = redis.Redis(port=a.port)
+    r = redis.Redis(host="127.0.0.1", port=a.port)
     cg, cb = max(1, int(800 * a.scale)), 128
     og, ob = max(1, int(400 * a.scale)), 256
     for gs in [int(x) for x in a.worlds.split(",")]:

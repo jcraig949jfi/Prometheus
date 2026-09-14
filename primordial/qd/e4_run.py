@@ -168,7 +168,7 @@ def main() -> None:
     p.add_argument("--tag", default="full")
     a = p.parse_args()
     ROWS.parent.mkdir(parents=True, exist_ok=True)
-    r = redis.Redis(port=a.port)
+    r = redis.Redis(host="127.0.0.1", port=a.port)
     for gs in [int(x) for x in a.worlds.split(",")]:
         spec = Spec(gs)
         m = spec.mech

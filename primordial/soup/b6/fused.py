@@ -31,7 +31,7 @@ GRID = 33                                                        # lane E's desc
 FAMILY_CODE = {"tt_digits": 0, "linear": 1, "tt_feat": 2}
 
 
-@njit(inline="always")
+@njit(cache=True, inline="always")
 def _xs(s):
     s ^= s << np.uint64(13)
     s ^= s >> np.uint64(7)
@@ -39,7 +39,7 @@ def _xs(s):
     return s, s * C64
 
 
-@njit(parallel=True, nogil=True, boundscheck=False)
+@njit(parallel=True, nogil=True, boundscheck=False, cache=True)
 def _fused(T, R, S, W, D, delay, regime_period, stoch_rate, act_cost, step_cost, yield_reg, ylo, yhi,
            yield_amt, corrupt_rate, obs_delay, lin, tgts, obs_regs, perm,
            regs0, charge0, st_stoch0, st_corr0, genome_of_env,

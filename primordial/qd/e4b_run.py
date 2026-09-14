@@ -91,7 +91,7 @@ def main() -> None:
     p.add_argument("--port", type=int, default=6394); p.add_argument("--tag", default="full")
     a = p.parse_args()
     HOT.mkdir(parents=True, exist_ok=True)
-    r = redis.Redis(port=a.port)
+    r = redis.Redis(host="127.0.0.1", port=a.port)
     for gs in [int(x) for x in a.worlds.split(",")]:
         spec = E4.Spec(gs)
         base = {"exp_id": EXP, "tag": a.tag, "gen_seed": gs, "world_id": spec.wid, "T": spec.T, "S": spec.S,

@@ -30,7 +30,7 @@ def main() -> None:
     p.add_argument("--reps", type=int, default=3); p.add_argument("--port", type=int, default=6394)
     p.add_argument("--tag", default="full")
     a = p.parse_args()
-    r = redis.Redis(port=a.port)
+    r = redis.Redis(host="127.0.0.1", port=a.port)
     worlds = {"held25": E.perturbed_world(0.25, 11)}
     worlds.update({f"null{i}": E.perturbed_world(1.0, 100 + i) for i in range(N_NULL)})
     for rep in range(a.reps):
