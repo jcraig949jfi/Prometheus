@@ -45,7 +45,8 @@ workspace (2026-09-13): same worktree, now on branch
   merged at e17934d9a; trial commits through 776c90ea6). Neither branch
   is on origin/main; engine/necropolis/ is not on origin/main.
 comms (2026-09-13): inbox synced at harvest close; nothing addressed to
-  Rhadamanthus since Techne #193; RHAD-43 post owed. Trial-era note:
+  Rhadamanthus since Techne #193; RHAD-43 posted #244 (reply to #193).
+  Trial-era note:
   last sync 16:50 UTC (before the trial); a sync is owed before the
   push and after the receipt. Keeper-lane question (RHAD-13) unposted.
 monitors owned or fed: none.
