@@ -28,3 +28,29 @@
   check a block-move mutation (one bucket at a time) as the positive control. Then D2 consequential
   symbols by ablation. Steal: E's archive (QD over codes instead of one climber) and B's
   one-semantic-cheat sensitivity floor for the conservation audit.
+
+## 2026-09-14 iteration 2 -- D1b code-learner valleys  [m1-5ab220e6]
+
+- Hypothesis on the bus before the run. It opened by correcting iteration 1: rent alone cannot explain
+  the traps, because alpha=0.1, beta=0 was also trapped.
+- Ran: an exhaustive single-move scan of the 24 D1 elites under exact cost, and an exact-cost (1+32)
+  climber with acceptance threshold eps in {0,.01,.03,.1} from D1's start genomes (10 cells x 3 seeds x
+  4000 gens). Rows c277e6e8b.
+- Controls PASS: a planted encoder defect is found by the full scanner and MISSED by the skip_enc cheat
+  scanner; a planted decoder defect is found by both; the clean m=8 code is not improvable; alpha=1.5
+  held gap 0 at every eps.
+- Died (KILL): H1 -- 8 of the 21 "valley" elites have an improving single move (all width cells, plus
+  (0,0.01) seed 0). H2a -- the exact eps=0 climber escapes (0,0) 0/3, so D1's (0,0) gap was not
+  sampling noise. H3 -- eps=0.01 escapes 0/3 in every rent cell. eps >= 0.03 behaves like "always take
+  the best child" (identical results).
+- Held: H2b (the beta>0 silent elites are true single-move optima) and H4 (the width cells stay
+  trapped at eps=0).
+- POST HOC, unscored (scratchpad script): with 1 enc + 1 dec change per child instead of 4 + 2, the
+  exact climber reaches gap 0.000 3/3 in (0,0) against 0.055 bundled. The width cells (0.1,0) and
+  (0.3,0) stop at k=1, m=2 under both operators, and the rent cells stay silent under both. So there
+  are three traps: operator bundling (0,0), width valley (alpha>0, beta=0), and a rent valley that a
+  small eps does not cross.
+- Next: D1c. A symbol-split move (split one symbol's register set into a new symbol with a copied
+  decoder entry: neutral on yield, costs beta + bits) should cross the rent and width valleys if the
+  valley picture is right. Pre-register which cells it should fix. Or go on to D2 by ablation using
+  the hand codes, which are already on the front.
