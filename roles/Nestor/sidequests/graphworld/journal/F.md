@@ -58,3 +58,30 @@ Threads: 3 (conductor contract 1789425755152-0 overrides the boot prompt's 5).
   disabled).
 - Tests: test_o1_schtask_launch.py (7 with schtasks faked + 1 live behind
   PM_LIVE_SCHTASKS=1). Suite 50 passed, 1 skipped.
+
+## 2026-09-14 iteration 4 -- F7 warm worker per lane (DONE)
+
+- fabric/worker.py: a supervisor per lane reads job specs from pm:jobs:<L>
+  (consumer group worker-<L>) and owns the RowWriter. One long-lived spawned
+  child holds imports, kernels, a Redis pool and ctx.cache, runs
+  `module:function(ctx, **kwargs)`, and XADDs rows to pm:rows:<L>. The
+  supervisor watches the child's CPU time (psutil). Past ttl_cpu_s it kills
+  the child tree, drains the rows already emitted, appends status=timeout,
+  commits, and respawns a child for the next job. Job errors and child
+  deaths end with an aborted row. Outcomes go to pm:jobs:<L>:done.
+  CLI: `python -m primordial.fabric.worker serve --lane L | submit ...`.
+- Measured (temp repo, db 13): jit_probe call 607.40 ms in job 1, then
+  0.01 ms in jobs 2 and 3 (one child). burn with ttl_cpu_s=2.0: killed at
+  2.05 CPU-s, 41 partial rows plus the timeout row committed, wall 2.13 s.
+- Found on the way:
+  (1) Other builders' suites FLUSH db 15 while mine runs: my first F7 run
+      lost its job stream mid-test (NOGROUP). Moved F7 and O5 tests to db 13
+      with unique keys that delete only their own keys. Cause inferred, not
+      caught in the act: no pytest was running when I looked.
+  (2) Spawned children cannot re-import a __main__ read from stdin. The
+      worker records such a job as died/aborted, and the CLI runs via -m,
+      so it is not affected.
+  (3) The fabric hygiene test rejects static njit without cache=True. The
+      probe kernel is compiled at runtime and held in memory, the exemption
+      the test documents.
+- Tests: test_f7_worker.py (3). Suite 53 passed, 1 skipped.

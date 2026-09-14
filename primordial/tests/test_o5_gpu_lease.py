@@ -1,4 +1,5 @@
-"""O5: GPU lease pm:gpu:lease. Live tests use throwaway db 15 on 6390 and skip without it."""
+"""O5: GPU lease pm:gpu:lease. Live tests use db 13 on 6390 (other suites flush db 15 concurrently) and touch only the lease key
+and this test's own bus keys."""
 from __future__ import annotations
 
 import json
@@ -12,18 +13,18 @@ from primordial.bus import bus
 @pytest.fixture
 def live(monkeypatch):
     redis = pytest.importorskip("redis")
-    url = "redis://127.0.0.1:6390/15"
+    url = "redis://127.0.0.1:6390/13"
     r = redis.Redis.from_url(url, decode_responses=True)
     try:
         r.ping()
     except Exception:
         pytest.skip("substrate not reachable on 6390")
-    r.flushdb()
+    r.delete(bus.GPU_LEASE)
     monkeypatch.setattr(bus, "URL", url)
     monkeypatch.setenv("PM_LANE", "F")
     monkeypatch.setenv("PM_TAG", "t-f")
     yield r
-    r.flushdb()
+    r.delete(bus.GPU_LEASE)
 
 
 def test_second_holder_blocks_then_gets_it_after_release(live, monkeypatch):
