@@ -88,7 +88,7 @@ def agreement(g7, top, seeds) -> float:
             continue
         e_i = e_i + q * k
         obs = L["obs"][t_i, e_i, s_i]
-        npa = gm.TTFeat.logits(g7.fam, top, obs, np.full(len(obs), q)).argmax(1)
+        npa = gm.TTFeat.logits(g7.fam, top[0], obs, np.full(len(obs), q)).argmax(1)
         same += int((npa == L["idx"][t_i, e_i, s_i]).sum()); n += len(obs)
     return round(same / max(n, 1), 6)
 
