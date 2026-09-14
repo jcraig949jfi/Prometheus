@@ -148,9 +148,14 @@ class TorchBucket:
         self.be.close()
 
 
-def sweep(side: str, quick: bool, budget: float, emit) -> list[dict]:
+def sweep(side: str, quick: bool, budget: float, emit, only=None, min_B: int = 0) -> list[dict]:
+    """only: optional set of (obs_dim, r) to run; min_B: skip smaller batches (resume a timed-out side).
+    The cheat cell runs at the first batch actually measured."""
     configs = [(4, 4)] if quick else [(4, 4), (4, 16), (4, 64), (16, 4), (16, 16), (16, 64)]
+    if only:
+        configs = [c for c in configs if c in only]
     batches = [1024, 4096] if quick else [4 ** i for i in range(5, 11)]
+    batches = [B for B in batches if B >= min_B]
     cells = []
     for od, r in configs:
         p = tt.random_policy(od, r, A_ACTIONS, seed=1000 * od + r)
@@ -231,7 +236,10 @@ def main(argv=None) -> int:
     ap.add_argument("--git", default="")
     ap.add_argument("--cutn")
     ap.add_argument("--torch")
+    ap.add_argument("--configs", default="", help="obs_dim:r list to run, e.g. 16:16,16:64 (resume)")
+    ap.add_argument("--min-b", type=int, default=0)
     a = ap.parse_args(argv)
+    only = {tuple(int(v) for v in c.split(":")) for c in a.configs.split(",") if c} or None
     if a.side == "combine":
         res = {"exp_id": EXP_ID, "kind": "combine", **combine(_read(a.cutn), _read(a.torch))}
         text = json.dumps(res, indent=1)
@@ -249,8 +257,9 @@ def main(argv=None) -> int:
 
         emit({"kind": "header", "side": a.side, "git": a.git, "lease": a.lease or None,
               "speed": "LEASED" if a.lease else "INDETERMINATE", "ts": time.strftime("%Y%m%dT%H%M%S"),
-              "gpu_start": nvsmi(), "pm_tag": os.environ.get("PM_TAG"), "threads": os.environ.get("OMP_NUM_THREADS")})
-        cells = sweep(a.side, a.quick, a.budget, emit)
+              "gpu_start": nvsmi(), "pm_tag": os.environ.get("PM_TAG"), "threads": os.environ.get("OMP_NUM_THREADS"),
+              "configs": a.configs or "all", "min_B": a.min_b})
+        cells = sweep(a.side, a.quick, a.budget, emit, only=only, min_B=a.min_b)
         emit({"kind": "footer", "gpu_end": nvsmi(), "cells": len(cells),
               "honest_invalid": sum(1 for c in cells if "skipped" not in c and not c["cheat"] and not c["valid"]),
               "cheat_invalid": [sum(1 for c in cells if "skipped" not in c and c["cheat"] and not c["valid"]),

@@ -97,6 +97,49 @@ def test_n4_timing_cutn_quick_is_exact_and_cheat_caught(tmp_path):
     assert len(cheat) == 1 and not cheat[0]["valid"]
 
 
+def test_n4_leased_commands():
+    import pathlib
+    import sys
+    from primordial.nv.tensornet import n4_leased as nl
+    assert nl.wsl_path(pathlib.Path("C:/Users/x/lab/pm-data/T/a.jsonl")) == "/mnt/c/Users/x/lab/pm-data/T/a.jsonl"
+    out = pathlib.Path("C:/tmp/a.jsonl")
+    t = nl.command("torch", out, "abc", "T[m1]:12345678", 540, False)
+    assert t[0] == sys.executable and t[t.index("--lease") + 1] == "T[m1]:12345678" and "--quick" not in t
+    c = nl.command("cutn", out, "abc", "L", 300, True)
+    assert c[:3] == ["wsl.exe", "-e", "bash"] and "timeout 300" in c[-1] and "--out /mnt/c/tmp/a.jsonl" in c[-1]
+    assert "--side cutn" in c[-1] and "--quick" in c[-1] and "nv-venv-t" in c[-1]
+
+
+def test_n4_timing_resume_filters(monkeypatch):
+    from primordial.nv.tensornet import n4_timing, n4_leased
+    seen = []
+
+    class Fake:
+        name, cheat, plan_s, plan = "fake", False, 0.0, None
+
+        def __init__(self, p, B, stride=1):
+            self.p, self.cheat = p, stride != 1
+            seen.append((p.obs_dim, p.r, B, stride))
+
+        def prepare(self, obs):
+            return obs
+
+        def run(self, x):
+            return np.zeros(len(x), np.int32)
+
+        to_numpy = staticmethod(lambda a: a)
+        sync = close = lambda self: None
+        peak_mem = lambda self: 0
+
+    monkeypatch.setattr(n4_timing, "CutnE2E", Fake)
+    monkeypatch.setattr(n4_timing.tt, "ref64_logits", lambda p, obs: np.zeros((len(obs), 8)))
+    n4_timing.sweep("cutn", False, 99.0, lambda row: None, only={(16, 64)}, min_B=262144)
+    assert seen == [(16, 64, 262144, 1), (16, 64, 262144, 2), (16, 64, 1048576, 1)]
+    c = n4_leased.command("cutn", n4_leased.pathlib.Path("C:/t/a.jsonl"), "g", "L", 60, False,
+                          ["--configs", "16:64", "--min-b", "262144"])
+    assert "--configs 16:64 --min-b 262144" in c[-1]
+
+
 def test_planned_network_reused_across_genomes():
     _gpu()
     fam, g1, obs = _genome(D=5, n=256, seed=11)
