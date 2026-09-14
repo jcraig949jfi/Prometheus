@@ -1,6 +1,6 @@
 # Rhadamanthus backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
-Currency: 2026-09-11 (charter day; regenerated on the charter commit to the
+Currency: 2026-09-13 (harvest close; rows RHAD-36..43 added; earlier currency: 2026-09-11, charter day; regenerated on the charter commit to the
 schema floor; DONE marks refreshed at trial close, HEAD 776c90ea6). Columns: id | item | type | scope | size | blocker | deliverable.
 DONE rows are kept for one day so the receipt can cite them.
 
@@ -39,3 +39,11 @@ RHAD-32 | DONE 2026-09-11 [was: Memory: update the seat's project memory with th
 RHAD-33 | Intake: Clio corpse from Eos (#96): PRODUCER ALIVE / CONSUMER DEAD / OUTPUT CONTINUED 11 DAYS; Necromancer pass owed; ack posted #103 | EVIDENCE | necropolis | M | after the native trial | engine/necropolis/dossiers/clio.dossier.json + clio_evidence/
 RHAD-34 | Base-rate sweep for the Eos question: over the roster, count PRODUCER ALIVE / CONSUMER DEAD vs reverse vs neither, from consumer-side rows, not producer self-reports; no base-rule proposal to Archaeon before the count exists | EVIDENCE | necropolis | M | RHAD-35 | ledgers/PRODUCER_CONSUMER_BASE_RATE.md + script
 RHAD-35 | Archaeological sweep of agora.intelligence_outputs (Atalanta handover #98, ack #102): the ~14,000 unmined rows, by stage prefix, with the three traps and the dual-recorded caveat baked into the script; fleet-halt waves 2026-05-24 and 2026-05-30 already measured (dossiers/_keeper_evidence/fleet_halt_census.py) | EVIDENCE | necropolis | L | none | ledgers/INTELLIGENCE_OUTPUTS_SWEEP.md + script
+RHAD-36 | DONE 2026-09-13: harvest charter executed; workshop registry 93 rows (38 READY / 7 READY_WITH_CAVEAT / 31 NEEDS_VALIDATION / 9 NEEDS_DEPENDENCY / 2 NEEDS_ADAPTER / 1 BROKEN / 2 UNTRUSTED / 3 HISTORICAL_ONLY), 11 adapters, 194 Keeper controls, 5 batteries, coroner contract PROPOSED, CR-001 plan PROPOSED and pre-killed | TOOLS | necropolis | L | none | engine/necropolis/workshop/* on rhadamanthus/tool-harvest-2026-09-11; prompts/2026-09-11_harvest/RECEIPT.md
+RHAD-37 | Coroner contract rulings R-CR-1 (per-plan vs standing approval for M1-M6 reads), R-CR-2 (DEAD_BEFORE_RUN recordable without execution), R-CR-3 (who writes approval records) | program | necropolis | S | HITL: James | CORONER_RUN.md section 6 filled; hitl_status vocabulary frozen
+RHAD-38 | Refile FRANK-004 / CR-001 read: upper-tail or Anderson-Darling / energy distance on gaps with a planted-shift positive control; then re-plan CR-002 | EVIDENCE | necropolis | M | RHAD-37 (no execution before the contract is ruled) | coroner_plans/CR-002_*.json with a passable positive control
+RHAD-39 | Write Keeper controls for the 24 author-tested-only rows (NEEDS_VALIDATION), starting with the five that carry frankenstein_refs (NT-058..061, NT-077, NT-078) | TOOLS | necropolis | M | none | tests/cases_g.py + regenerated TOOLS.jsonl
+RHAD-40 | Diagnose NT-090 icarus holdout R1 (3 failed): read the RED cause; record it as evidence, do not repair the algorithm | EVIDENCE | necropolis | S | none | registry row notes + DEFECTS.md entry
+RHAD-41 | FRANK-002 judge attestation: ask Hephaestus whether judge_version / api_state were ever recorded anywhere other than ledger.jsonl before declaring the frozen-judge precondition unattestable | EVIDENCE | necropolis | S | comms reply | FRANKENSTEIN_XREF.json blocking_dependencies[0] status CHECK or UNATTESTABLE
+RHAD-42 | Re-run the harvest loop once (charter XI) against the 87 PRESENT_UNREGISTERED and 183 IMPORTS_UNREGISTERED leads with the registry unit applied; stop when the loop returns only duplicates | TOOLS | necropolis | M | none | CANDIDATE_INDEX.jsonl regenerated; registry delta
+RHAD-43 | Report the registry and disputes to Techne (hypothesis / Lean host-local, z3 receipt redirect, DB TCP-reachable) | EVIDENCE | program | S | none | comms post + reply
