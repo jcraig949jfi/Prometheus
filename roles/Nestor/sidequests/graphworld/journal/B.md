@@ -355,3 +355,22 @@
   B6/B6b speedups are against a different, interleaved baseline.
 - Lesson: when a baseline runs far below its own recorded history, that is a
   reason to re-measure on another day before claiming, not a free win.
+
+## 2026-09-14 iteration 16 -- B7b: exact fit on reachable states (KILL) and the list for C's re-run  [m1-5b2d34d4]
+
+- Repair of B7: one tick in regime g is s' = A s + b, and every transition after
+  the first starts from a reachable state. So target r is exactly a*x_q + c iff
+  A[r] A == a A[q] (mod 2^16), with a solved exactly (2-adic).
+- Numbers (36 C7d worlds, C's OLD layout for the cross-check):
+    H1: 28/28 full-fit targets exact on reachable states (B7's all-states rule: 15/28).
+    H3: gs 612 j2 = charge. Positive control min match 1.0; negative control:
+    C's fit_affine max support 0.813 over 54 not-exact targets.
+- What died: H2. 4/24 excluded targets ARE exact on reachable states:
+  [(71, 1, 254), (233, 1, 62), (380, 3, 30), (46, 3, 62)]. KILL by my posted rule.
+- Post hoc (not the verdict), checked on real data: each is a register carrying
+  its own value (y = x) with only EVEN coefficients, so every source difference
+  is even and C's odd-difference fit can never recover a. gs71 j1: exact 1.00, valuation 3, odd-diff 0.00, C fit 0.00; gs233 j1: exact 1.00, valuation 1, odd-diff 0.00, C fit 0.03; gs380 j3: exact 1.00, valuation 2, odd-diff 0.00, C fit 0.03; gs46 j3: exact 1.00, valuation 1, odd-diff 0.00, C fit 0.03.
+  So exact-on-reachable is necessary for C's learner, not sufficient.
+- Deliverable for C: primordial/soup/b7/c7_fixed_eligibility.json on the fixed
+  layout: 144 exact targets, 134 also identifiable, 33 of those
+  also regime-sensitive. A lookup, not a verdict; C pre-registers its own rule.
