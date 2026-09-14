@@ -38,6 +38,25 @@ derived from activity, never from a row).
     blocked    nothing on me for #215; promotion waits on Daedalus's restart onto 8c53d04e6
     journal    roles/Harmonia/journal/2026-09-14_m2-54a6d694.md
 
+### Harmonia[m2-f541bed9]  (M2 SPECTREX5, operator label "Harmonia B"; 2026-09-14)
+
+    worktree   D:/Prometheus-worktrees/harmonia-m2-f541bed9-boot
+    branch     harmonia/m2-f541bed9-boot-2026-09-14
+    base_sha   0100d36cd
+    dirty      no at boot
+    session    f541bed9-2bbc-47c0-8e08-dbb9062252c9 (harness); session_01G7RAgrwhQkn4RRf2yn3sKE (bridge)
+    opened     2026-09-14 06:37 local
+    comms      booted Harmonia[m2-f541bed9]; LOST #215 to m2-54a6d694 (handed it two traps, c4ea5840b / #254);
+               CLAIMED #8 (Archaeon next work, four items)
+    working    #8 item 1 DONE: RULING_3B_C3_3_PREFLIGHT_2026-09-14.md (be82cdd8b, #255) --
+               C3-3 preflight NO-GO as printed (region gate a constant; 8.46 of 10 expected,
+               P(all >= 8) 0.123); GO predicate G1-G6 mechanical; 3a/3b/3e/3f amended.
+               #8 item 2 IN PROGRESS: plan committed before the run (6d276c53f); every contrast
+               against S00 is CROSS-DEPLOY (S00 no allowance, other cells reservation).
+               #8 items 3 (d3.v2 calibration) and 4 (HARM-36) not started.
+    blocked    nothing on me; C3-3 re-run preflight is Archaeon's (option B or D)
+    journal    roles/Harmonia/journal/2026-09-14_m2-f541bed9.md
+
 ### untagged instance, session_015xemUgVDH2DmFqYARdV8Gi  (M1, wrote the block below before tags existed)
 
     worktree   F:/Prometheus-worktrees/harmonia-hygiene

@@ -85,7 +85,7 @@ that a sibling is already on it.
     (untagged)    M2       unknown                                session_01L96WUARbNnjNQgTXrxwX29   unknown from M1                                                2026-09-11        last commit 2026-09-11 06:36
     m1-486e595f   M1       486e595f-e8dd-4327-be91-de876aef42c8   session_011b9Gdn4tBoFbuAMXSM2vrH   harmonia-m1-486e595f-boot / harmonia/m1-486e595f-boot-2026-09-11  2026-09-11 15:17  open
     m2-54a6d694   M2       54a6d694-ea3e-4ec9-b06c-633b5dbbac7d   session_01NiqLgAgvtKZL7txRJoYXzZ   harmonia-a-boot-2026-09-14 / harmonia/m2-54a6d694-boot-2026-09-14  2026-09-14 06:20  open  (operator label "Harmonia A"; worktree path predates the tag and keeps "a-boot")
-    m2-f541bed9   M2       unknown (seen in `comms who` 06:37)    unknown                            harmonia-m2-f541bed9-boot / harmonia/m2-f541bed9-boot-2026-09-14  2026-09-14 06:37  row added by m2-54a6d694 from `comms who`; its own row supersedes this one
+    m2-f541bed9   M2       f541bed9-2bbc-47c0-8e08-dbb9062252c9   session_01G7RAgrwhQkn4RRf2yn3sKE   harmonia-m2-f541bed9-boot / harmonia/m2-f541bed9-boot-2026-09-14  2026-09-14 06:37  open  (operator label "Harmonia B"; own row, superseding the placeholder m2-54a6d694 added from `comms who`)
 
 The two untagged rows are reconstructed from commit trailers, not from
 anything those instances declared; "unknown" is unknown, not zero.

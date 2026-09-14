@@ -36,9 +36,13 @@ class Refused(Exception):
 
 
 def est_dict(e):
-    return {"name": e.name, "estimate": e.estimate, "lo": e.lo, "hi": e.hi,
-            "se": e.se, "n": e.n, "alpha": e.alpha,
-            "min_attainable_p": e.min_attainable_p}
+    # QR-1.1.0 Estimate fields are point / n_blocks / alpha_used; the ledger keeps
+    # estimate / n / alpha. POST-PLAN FIX after run 1 crashed in the positive
+    # control (journal 2026-09-14_m2-f541bed9); no analysis choice changed.
+    return {"name": e.name, "estimate": e.point, "lo": e.lo, "hi": e.hi,
+            "se": e.se, "n": e.n_blocks, "alpha": e.alpha_used,
+            "min_attainable_p": e.min_attainable_p,
+            "decision_at_threshold_0": e.decide(0.0)}
 
 
 def check_labels(table, dedup):
@@ -171,8 +175,19 @@ def scale_v(table):
         solved = sorted([x for x in keyed if x[1][0] == 0], key=lambda x: x[1][1])
         cens = [x for x in keyed if x[1][0] == 1]
         ranks = {}
-        for i, (k, _) in enumerate(solved):
-            ranks[k] = float(i + 1)
+        # POST-PLAN FIX 2, caught by the CHEAT control (S11 := S00 gave G = +0.167
+        # on V-3): equal vm_ops among solved cells take the MID-RANK, the same
+        # tie principle the plan states for censored rows. Positional ranks had
+        # turned identical rows into a difference of 1.
+        i = 0
+        while i < len(solved):
+            j = i
+            while j + 1 < len(solved) and solved[j + 1][1][1] == solved[i][1][1]:
+                j += 1
+            mid = (i + 1 + j + 1) / 2.0
+            for t in range(i, j + 1):
+                ranks[solved[t][0]] = mid
+            i = j + 1
         if cens:
             worst = (len(solved) + 1 + len(CELLS)) / 2.0
             for k, _ in cens:
