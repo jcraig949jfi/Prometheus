@@ -80,6 +80,37 @@ def test_forward_fast_matches_reference_and_cheat_is_caught(name, parallel):
     assert mism_bad > 30
 
 
+def _row_act(name, g1, row, stride):
+    if name in ("tt_digits", "tt_feat"):
+        al, G, Wo = g1
+        v = np.empty(len(al), np.float32)
+        u = np.empty(len(al), np.float32)
+        fn = gm.tt_digits_act_row if name == "tt_digits" else gm.tt_feat_act_row
+        return fn(row, al, G, Wo, stride, v, u)
+    if name == "lut_top":
+        return gm.lut_top_act_row(row, g1[0], stride)
+    return gm.linear_act_row(row, g1[0], g1[1], stride)
+
+
+@pytest.mark.parametrize("name", list(gm.FAMILIES))
+def test_row_kernels_match_reference_and_cheat_is_caught(name):
+    fam = gm.FAMILIES[name](D=5, A=8)
+    g, obs, gidx = _batch(fam, n=300, seed=4)
+    checked = wrong_cheat = 0
+    for p in range(len(g[0])):
+        rows = np.flatnonzero(gidx == p)
+        g1 = fam.one(g, p)
+        ref = fam.ref_logits(g1, obs[rows])
+        ok = gm.clear_rows(ref)
+        got = np.array([_row_act(name, g1, obs[i], 1) for i in rows])
+        bad = np.array([_row_act(name, g1, obs[i], 2) for i in rows])
+        assert np.array_equal(got[ok], ref.argmax(1)[ok])
+        checked += ok.sum()
+        wrong_cheat += int((bad != ref.argmax(1)).sum())
+    assert checked > 250
+    assert wrong_cheat > 30
+
+
 def test_sizes_are_ordered_smallest_first():
     D = 6
     sizes = [gm.FAMILIES[n](D).nbytes for n in ("linear", "lut_top", "tt_feat", "tt_digits")]

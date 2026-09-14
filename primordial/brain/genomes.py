@@ -289,3 +289,111 @@ def clear_rows(ref: np.ndarray, rel: float = 1e-6) -> np.ndarray:
     top2 = np.sort(ref, 1)[:, -2:]
     scale = np.maximum(np.abs(ref).max(1), 1e-12)
     return (top2[:, 1] - top2[:, 0]) > rel * scale
+
+
+# ------------------------------------------------------------------ ROW kernels for fused rollouts
+# Module-level numba.njit scalar functions: callable from inside another lane's njit/prange code
+# (e.g. lane B's fused world+brain rollout). One genome, one observation row, no allocation:
+# the caller passes float32 work buffers v, u of length r. stride 1 = honest, 2 = skip-odd cheat.
+
+import numba as _nb  # noqa: E402
+
+
+@_nb.njit(nogil=True, boundscheck=False)
+def tt_digits_act_row(obs_row, al, G, Wo, stride, v, u):
+    """TTDigits: core c reads hex digit c of the obs string (feature c//4, most significant first)."""
+    D = obs_row.shape[0]
+    r = al.shape[0]
+    A = Wo.shape[1]
+    for a in range(r):
+        v[a] = al[a]
+    for c in range(0, 4 * D, stride):
+        x = (obs_row[c // 4] >> (12 - 4 * (c % 4))) & 15
+        m = np.float32(0.0)
+        for b in range(r):
+            s = np.float32(0.0)
+            for a in range(r):
+                s += v[a] * G[c, x, a, b]
+            u[b] = s
+            if abs(s) > m:
+                m = abs(s)
+        if m < np.float32(1e-30):
+            m = np.float32(1e-30)
+        for b in range(r):
+            v[b] = u[b] / m
+    best = 0
+    bv = -np.inf
+    for k in range(A):
+        s2 = 0.0
+        for b in range(r):
+            s2 += v[b] * Wo[b, k]
+        if s2 > bv:
+            bv = s2
+            best = k
+    return best
+
+
+@_nb.njit(nogil=True, boundscheck=False)
+def tt_feat_act_row(obs_row, al, G, Wo, stride, v, u):
+    """TTFeat: core f reads the top hex digit of feature f."""
+    D = obs_row.shape[0]
+    r = al.shape[0]
+    A = Wo.shape[1]
+    for a in range(r):
+        v[a] = al[a]
+    for f in range(0, D, stride):
+        x = (obs_row[f] >> 12) & 15
+        m = np.float32(0.0)
+        for b in range(r):
+            s = np.float32(0.0)
+            for a in range(r):
+                s += v[a] * G[f, x, a, b]
+            u[b] = s
+            if abs(s) > m:
+                m = abs(s)
+        if m < np.float32(1e-30):
+            m = np.float32(1e-30)
+        for b in range(r):
+            v[b] = u[b] / m
+    best = 0
+    bv = -np.inf
+    for k in range(A):
+        s2 = 0.0
+        for b in range(r):
+            s2 += v[b] * Wo[b, k]
+        if s2 > bv:
+            bv = s2
+            best = k
+    return best
+
+
+@_nb.njit(nogil=True, boundscheck=False)
+def lut_top_act_row(obs_row, T, stride):
+    D = obs_row.shape[0]
+    A = T.shape[2]
+    best = 0
+    bv = -np.inf
+    for k in range(A):
+        s = 0.0
+        for f in range(0, D, stride):
+            s += T[f, (obs_row[f] >> 12) & 15, k]
+        if s > bv:
+            bv = s
+            best = k
+    return best
+
+
+@_nb.njit(nogil=True, boundscheck=False)
+def linear_act_row(obs_row, W, b, stride):
+    D = obs_row.shape[0]
+    A = W.shape[1]
+    best = 0
+    bv = -np.inf
+    for k in range(A):
+        s = np.float32(b[k])
+        for f in range(0, D, stride):
+            s += (np.float32(obs_row[f]) / np.float32(65535.0) - np.float32(0.5)) * W[f, k]
+        if s > bv:
+            bv = s
+            best = k
+    return best
