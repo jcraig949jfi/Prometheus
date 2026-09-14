@@ -28,7 +28,7 @@ from primordial.brain import genomes as gm
 from primordial.qd import e4_run as E4
 from primordial.qd import e5_run as E5
 from primordial.qd import e6_run as E6
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.soup.b1.np_world import NpEncounter
 
 EXP = "E7-c4-families-heldout"
@@ -156,7 +156,7 @@ def main() -> None:
             t0 = time.perf_counter()
             g7 = G7(gs, fam)
             rs = a.run_seed
-            arch = LuaArchive(r, f"e7-{gs}-{fam}" + (f"-r{rs}" if rs >= 0 else ""), g7.glen)
+            arch = LuaArchive(r, f"e7-{gs}-{fam}" + (f"-r{rs}" if rs >= 0 else ""), g7.glen, UNSEEDED)
             arch.clear()
             # E7 used [700, gs, len(fam)] (lut_top and tt_feat share a length); E7b indexes the family
             seed = [700, gs, len(fam)] if rs < 0 else [710, rs, gs, list(gm.FAMILIES).index(fam)]

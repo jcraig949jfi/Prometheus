@@ -23,7 +23,7 @@ from primordial.fabric.rows import RowWriter
 from primordial.qd import e7_run as E7
 from primordial.qd import e8_run as E8
 from primordial.qd import e9_run as E9
-from primordial.qd.archive import LuaArchive
+from primordial.qd.archive import UNSEEDED, LuaArchive
 from primordial.soup.b6.fused import FusedRollout
 
 EXP = "D3-w1-linear-spread"
@@ -64,7 +64,7 @@ def per_elite(arm, raw, seeds) -> np.ndarray:
 def one_run(r, arm_name, rs, gens, status):
     arm = FloatArm(GS) if arm_name == "float" else QLin(GS)
     t0 = time.perf_counter()
-    arch = LuaArchive(r, f"d3-{arm_name}-{GS}-{rs}-{gens}", arm.glen)
+    arch = LuaArchive(r, f"d3-{arm_name}-{GS}-{rs}-{gens}", arm.glen, UNSEEDED)
     arch.clear()
     rng = np.random.Generator(np.random.PCG64([3303, rs, GS]))
     fr = FusedRollout(arm.g7.spec, BATCH, TRAIN, family="linear")

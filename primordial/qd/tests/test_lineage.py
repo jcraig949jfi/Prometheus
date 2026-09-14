@@ -22,7 +22,7 @@ def _g(*bs):
 
 
 def test_wins_stream_with_parent_and_losses_do_not(r):
-    a = LineageArchive(r, "test-lin", GLEN)
+    a = LineageArchive(r, "test-lin", GLEN, sampler_seed=1)
     a.clear()
     cells = np.array([3, 3, 9], np.uint32)
     fits = np.array([10, 20, 5], np.int32)

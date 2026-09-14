@@ -27,7 +27,7 @@ from collections import defaultdict
 import numpy as np
 import redis
 
-from primordial.qd.archive import SAMPLE_LUA, LuaArchive, reduce_batch
+from primordial.qd.archive import SAMPLE_LUA, UNSEEDED, LuaArchive, reduce_batch
 from primordial.qd.stubworld import GLEN, N_CELLS, NKWorld, mutate, random_genomes
 
 EXP = "E2-branch-points"
@@ -72,8 +72,8 @@ return wins
 
 
 class LineageArchive(LuaArchive):
-    def __init__(self, r, run, glen):
-        super().__init__(r, run, glen)
+    def __init__(self, r, run, glen, sampler_seed):
+        super().__init__(r, run, glen, sampler_seed)
         self.skey = f"pm:qd:{run}:wins"
         self._lin = r.register_script(LINEAGE_LUA)
 
@@ -99,7 +99,7 @@ def redis_cpu(r) -> float:
 
 
 def evolve(r, run, mode, gens, batch, seed) -> dict:
-    arch = LineageArchive(r, run, GLEN)
+    arch = LineageArchive(r, run, GLEN, UNSEEDED)
     arch.clear()
     world, rng = NKWorld(), np.random.Generator(np.random.PCG64(seed))
     c0, rc0, t0 = time.process_time(), redis_cpu(r), time.perf_counter()
