@@ -207,7 +207,14 @@ def main(argv=None) -> int:
         c.add_argument(f"--{k}", type=float, required=True)
     c.add_argument("--runs", type=int, required=True)
     c.add_argument("--held", help="comma-separated per-run-seed held64 values -> bootstrap CI band (M3)")
+    cb = sub.add_parser("check-b", help="clause B (S1, builder H): graft vs both cheats per run seed, Holm")
+    cb.add_argument("--rows", nargs="+", required=True, help="transfer harness rows (E-T1b protocol)")
+    cb.add_argument("--alpha", type=float, default=0.05)
     a = ap.parse_args(argv)
+    if a.cmd == "check-b":
+        from primordial.score import transfer_b
+        print(json.dumps(transfer_b.check_b(transfer_b.load_rows(a.rows), a.alpha), indent=1, default=str))
+        return 0
     if a.cmd == "seed-round1":
         if any(r.get("baseline") for r in load()):
             print("round 1 baseline already seeded")

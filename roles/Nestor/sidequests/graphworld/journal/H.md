@@ -74,3 +74,26 @@ budget 1789425755152-0).
   carry wall time only. Wall time is not CPU, so the budget split was unmeasurable in round 2.
 - Live epoch 1 report: 0 cohort jobs on the worker streams (INDETERMINATE). Cohorts must
   submit through the worker in round 4 for F13 to measure anything.
+- Pushed 0ef4d600c. Posted EPOCH 1 (1789427422565-0). Its "tests=18" is wrong: H tests were 20
+  (11 + 5 + 4).
+
+## 2026-09-14 epoch 2, iteration 4: S1 clause B check-b
+
+- Told G on the bus before touching qd_ledger.py (1789427441027-0). The change is a
+  `check-b` subparser plus a dispatch branch only; check/floor_of/_check_raw are untouched.
+- Code: primordial/score/transfer_b.py. Per (exp_id, family, donor, recipient) and per run
+  seed: d = held_auc(graft) - held_auc(cheat) for rand_graft and shuffle_graft. p is the
+  one-sided exact sign-flip (E's computation, reimplemented to avoid importing the harness);
+  p_max over both cheats; Holm across world pairs WITHIN one experiment. Gates, any of which
+  makes the pair INDETERMINATE (never FAIL): all conditions paired on every run seed; graft
+  bytes unmodified and fused == numpy; oracle row clean (world 0 failing, skip_lin >= 14;
+  brain 0 mismatched, cheat >= 14); planted positive self_graft p_max < alpha.
+- E-T1b re-derived from rows, exact vs the harness summary on all 3 pairs:
+    w2->w4   p_max 0.000275  Holm 0.000824  PASS
+    w17->w3  p_max 0.3466    Holm 0.6933    FAIL
+    w25->w1  p_max 0.7046    Holm 0.7046    FAIL
+  self_graft p_max 1.5e-05 in every pair, and every gate is clean. The same code on E-T1
+  (8 seeds) gives w2->w4 PASS (0.0039, Holm 0.0117) and w17->w3 / w25->w1 FAIL, matching E's
+  report-only post-hoc graft-minus-cheat numbers.
+- Reading for round 5: one displacement survives (the w2 linear genome grafted into w4).
+  That result has not been re-run on new seeds, so it is not yet a primitive.
