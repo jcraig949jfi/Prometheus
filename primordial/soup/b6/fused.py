@@ -1,17 +1,20 @@
-"""B6: lane E's closed-loop rollout (primordial/qd/e5_run.rollout) fused into ONE numba call.
+"""B6/B6b: lane E's closed-loop rollout fused into ONE numba call, for lane C's C4 brain families.
 
 prange over envs; each env runs every tick serially:
   observe   NpEncounter.observe_all semantics: obs_delay history ring, charge bucket
             min(15, charge // 32), per-(env, slot) corruption stream (second draw adopted only
-            on a hit), channel permutation. Values reach the brain as uint16 (low 16 bits),
-            exactly as E5's forward casts them before taking digits.
-  brain     lane C's njit row kernel genomes.tt_digits_act_row (commit 36dacd589, imported
-            read-only): one genome, one obs row -> action index; stride 2 = C's skip-odd cheat
+            on a hit), channel permutation.
+  brain     lane C's njit row kernels (primordial/brain/genomes.py, imported read-only):
+              family 0 tt_digits  tt_digits_act_row  (commit 36dacd589)  obs as uint16
+              family 1 linear     linear_act_row                          obs as raw int64
+              family 2 tt_feat    tt_feat_act_row                         obs as uint16
+            E5/E7 feed tt families uint16 digits; E7's linear forward casts the int64 obs to
+            float32 directly, so linear gets the unmasked value. stride 2 = C's skip cheat.
   act       lane E's codebook C[p, idx, i]
-  books     E5's descriptor counters on live slots, before the step
+  books     E5/E7 descriptor counters on live slots, before the step
   step      B1 world semantics (proved == wforge in B1) + the obs history ring
-An env stops at its done tick: E5 keeps stepping finished envs, but their charge and
-counters can no longer change, so fitness and cells are unaffected.
+An env stops at its done tick: E keeps stepping finished envs, but their charge and counters can
+no longer change, so fitness and cells are unaffected.
 
 Nothing in primordial/brain or primordial/qd is edited.
 """
@@ -20,11 +23,12 @@ from __future__ import annotations
 import numpy as np
 from numba import njit, prange
 
-from primordial.brain.genomes import tt_digits_act_row          # lane C, read-only
+from primordial.brain.genomes import linear_act_row, tt_digits_act_row, tt_feat_act_row   # lane C, read-only
 from primordial.soup.b1.common import M, init_regs, stream_state
 
 C64 = np.uint64(0x2545F4914F6CDD1D)
 GRID = 33                                                        # lane E's descriptor grid (E4.GRID)
+FAMILY_CODE = {"tt_digits": 0, "linear": 1, "tt_feat": 2}
 
 
 @njit(inline="always")
@@ -39,7 +43,7 @@ def _xs(s):
 def _fused(T, R, S, W, D, delay, regime_period, stoch_rate, act_cost, step_cost, yield_reg, ylo, yhi,
            yield_amt, corrupt_rate, obs_delay, lin, tgts, obs_regs, perm,
            regs0, charge0, st_stoch0, st_corr0, genome_of_env,
-           al, G, Wo, codebook, brain_stride, skip_lin,
+           family, al, G, Wo, LW, Lb, codebook, brain_stride, skip_lin,
            fit_charge, abst, mag, cnt, done_tick,
            rec_slot, log_acts, log_obs, log_idx, log_regs, log_charge, log_alive):
     n = regs0.shape[0]
@@ -56,12 +60,13 @@ def _fused(T, R, S, W, D, delay, regime_period, stoch_rate, act_cost, step_cost,
         st = st_stoch0[e]
         stc = st_corr0[e].copy()
         vals = np.empty(D, dtype=np.int64)
-        obs_all = np.empty((S, D), dtype=np.uint16)
-        obs_row = np.empty(D, dtype=np.uint16)
+        obs_i64 = np.empty((S, D), dtype=np.int64)
+        row_u16 = np.empty(D, dtype=np.uint16)
+        row_i64 = np.empty(D, dtype=np.int64)
         idx = np.empty(S, dtype=np.int64)
         act = np.empty((S, W), dtype=np.int64)
-        v = np.empty(r, dtype=np.float32)
-        u = np.empty(r, dtype=np.float32)
+        v = np.empty(max(r, 1), dtype=np.float32)
+        u = np.empty(max(r, 1), dtype=np.float32)
         k = rec_slot[e]
         tick = 0
         while True:
@@ -85,12 +90,20 @@ def _fused(T, R, S, W, D, delay, regime_period, stoch_rate, act_cost, step_cost,
                             vals[j] ^= np.int64(o2 % np.uint64(M))
                     stc[s] = sc
                 for c in range(D):
-                    obs_all[s, c] = np.uint16(vals[perm[c]] & 0xFFFF)
+                    obs_i64[s, c] = vals[perm[c]]
             # ---------------- brain + codebook
             for s in range(S):
-                for c in range(D):
-                    obs_row[c] = obs_all[s, c]
-                idx[s] = tt_digits_act_row(obs_row, al[p], G[p], Wo[p], brain_stride, v, u)
+                if family == 1:
+                    for c in range(D):
+                        row_i64[c] = obs_i64[s, c]
+                    idx[s] = linear_act_row(row_i64, LW[p], Lb[p], brain_stride)
+                else:
+                    for c in range(D):
+                        row_u16[c] = np.uint16(obs_i64[s, c] & 0xFFFF)
+                    if family == 0:
+                        idx[s] = tt_digits_act_row(row_u16, al[p], G[p], Wo[p], brain_stride, v, u)
+                    else:
+                        idx[s] = tt_feat_act_row(row_u16, al[p], G[p], Wo[p], brain_stride, v, u)
                 for i in range(W):
                     act[s, i] = codebook[p, idx[s], i]
             # ---------------- descriptor counters (live slots, before the step)
@@ -107,7 +120,7 @@ def _fused(T, R, S, W, D, delay, regime_period, stoch_rate, act_cost, step_cost,
                 for s in range(S):
                     log_idx[tick, k, s] = idx[s]
                     for c in range(D):
-                        log_obs[tick, k, s, c] = obs_all[s, c]
+                        log_obs[tick, k, s, c] = obs_i64[s, c]
                     for i in range(W):
                         log_acts[tick, k, s, i] = act[s, i]
             # ---------------- world step
@@ -177,11 +190,15 @@ def _fused(T, R, S, W, D, delay, regime_period, stoch_rate, act_cost, step_cost,
 
 
 class FusedRollout:
-    """bs: lane E's E5 BrainSpec; P genomes x the given seeds; env e = genome e // k, seed e % k."""
+    """spec: an object with .mech, .wid, .W (lane E's E4.Spec / E5.BrainSpec / G7.spec).
+    P genomes x the given seeds; env e = genome e // k, seed e % k.
+    family: 'tt_digits' (B6), 'linear' or 'tt_feat' (B6b)."""
 
-    def __init__(self, bs, P: int, seeds: np.ndarray):
+    def __init__(self, bs, P: int, seeds: np.ndarray, family: str = "tt_digits"):
+        if family not in FAMILY_CODE:
+            raise ValueError(f"family must be one of {sorted(FAMILY_CODE)}")
         m = bs.mech
-        self.bs, self.P, self.k = bs, P, len(seeds)
+        self.bs, self.P, self.k, self.family = bs, P, len(seeds), family
         self.seeds_env = np.tile(np.asarray(seeds, np.int64), P)
         n = P * self.k
         self.n = n
@@ -197,19 +214,30 @@ class FusedRollout:
         self.perm = np.array(m.obs_perm, dtype=np.int64)
         self.D = len(m.obs_perm)
 
+    def _params(self, g):
+        """Accepts E7's (params, codebook) for any family, or E5's (al, G, W, codebook) for tt_digits."""
+        if self.family == "tt_digits" and len(g) == 4:
+            p, C = (g[0], g[1], g[2]), g[3]
+        else:
+            p, C = g
+        f32 = lambda x: np.ascontiguousarray(x, np.float32)
+        dummy2, dummy3, dummy5 = (np.zeros((1, 1), np.float32), np.zeros((1, 1, 1), np.float32),
+                                  np.zeros((1, 1, 1, 1, 1), np.float32))
+        if self.family == "linear":
+            LW, Lb = p
+            return dummy2, dummy5, dummy3, f32(LW), f32(Lb), np.ascontiguousarray(C, np.uint8)
+        al, G, Wo = p
+        return f32(al), f32(G), f32(Wo), dummy3, dummy2, np.ascontiguousarray(C, np.uint8)
+
     def run(self, g, world_cheat: str = "", brain_stride: int = 1, record=None):
         m, bs, n = self.bs.mech, self.bs, self.n
-        al, G, Wo, Cb = g
-        al = np.ascontiguousarray(al, np.float32)
-        G = np.ascontiguousarray(G, np.float32)
-        Wo = np.ascontiguousarray(Wo, np.float32)
-        Cb = np.ascontiguousarray(Cb, np.uint8)
+        al, G, Wo, LW, Lb, Cb = self._params(g)
         S, W, D, T, R = m.n_slots, m.act_width, self.D, m.horizon, m.n_regs
         rec = np.asarray(record if record is not None else [], np.int64)
         nr = max(1, len(rec))
         rec_slot = np.full(n, -1, np.int64)
         rec_slot[rec] = np.arange(len(rec))
-        logs = dict(acts=np.zeros((T, nr, S, W), np.int64), obs=np.zeros((T, nr, S, D), np.uint16),
+        logs = dict(acts=np.zeros((T, nr, S, W), np.int64), obs=np.zeros((T, nr, S, D), np.int64),
                     idx=np.zeros((T, nr, S), np.int64), regs=np.zeros((T, nr, R), np.int64),
                     charge=np.zeros((T, nr, S), np.int64), alive=np.zeros((T, nr, S), np.bool_))
         fit_charge = np.zeros(n, np.int64)
@@ -218,8 +246,8 @@ class FusedRollout:
         _fused(T, R, S, W, D, m.delay, m.regime_period, m.stoch_rate, m.act_cost, m.step_cost, m.yield_reg,
                m.yield_lo, m.yield_hi, m.yield_amt, m.corrupt_rate, m.obs_delay, self.lin, self.tgts,
                self.obs_regs, self.perm, self.regs0, self.charge0, self.st_stoch0, self.st_corr0,
-               self.genome_of_env, al, G, Wo, Cb, brain_stride, world_cheat == "skip_lin",
-               fit_charge, abst, mag, cnt, done_tick,
+               self.genome_of_env, FAMILY_CODE[self.family], al, G, Wo, LW, Lb, Cb, brain_stride,
+               world_cheat == "skip_lin", fit_charge, abst, mag, cnt, done_tick,
                rec_slot, logs["acts"], logs["obs"], logs["idx"], logs["regs"], logs["charge"], logs["alive"])
         P, k = self.P, self.k
         fit = fit_charge.reshape(P, k).sum(1).astype(np.int32)

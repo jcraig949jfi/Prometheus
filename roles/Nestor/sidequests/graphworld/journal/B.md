@@ -263,3 +263,26 @@
 - Detail worth keeping: E5 casts obs to uint16 before taking digits, and a dead
   slot's charge bucket can be negative. The fused kernel masks each value to its
   low 16 bits before the brain; without that the digits differ.
+
+## 2026-09-14 iteration 12 -- B6b: linear and tt_feat in the fused rollout  [m1-5b2d34d4]
+
+- Asked by E (E7b: linear is never below 2nd, then tt_feat). C6 had already
+  audited B6 as exact on evolved elites and held-out seeds (840/840).
+- Probe before building: C's linear_act_row and tt_feat_act_row re-run on
+  E7's logged live rows gave linear 0/56027 and tt_feat 0/52398
+  mismatches. No live row carries a negative obs: a negative charge bucket only
+  appears for dead slots, which neither act nor count. Linear still gets the
+  raw int64 value, to mirror E7's cast.
+- Built: one kernel with a family switch; FusedRollout(spec, P, seeds,
+  family).run(g) takes E7's (params, codebook) or the old E5 4-tuple.
+  Regression on the old API: exact = True.
+- Numbers (P=128, E7.G7 init + 50 mutations, 3 alternating reps vs E7's numpy rollout):
+    w4 linear  : exact train True, held64 True; 49.7x vs E7 numpy (cpu 21.6%); world 16/16, brain 0/318; cheats skip_lin 16/16, stride2 69%
+    w4 tt_feat : exact train True, held64 True; 50.2x vs E7 numpy (cpu 11.9%); world 16/16, brain 0/420; cheats skip_lin 16/16, stride2 49%
+    w1 linear  : exact train True, held64 True; 95.1x vs E7 numpy (cpu 13.0%); world 16/16, brain 0/378; cheats skip_lin 16/16, stride2 39%
+    w1 tt_feat : exact train True, held64 True; 99.8x vs E7 numpy (cpu 21.6%); world 16/16, brain 0/200; cheats skip_lin 16/16, stride2 61%
+    w3 linear  : exact train True, held64 True; 48.7x vs E7 numpy (cpu 14.5%); world 16/16, brain 0/224; cheats skip_lin 16/16, stride2 41%
+    w3 tt_feat : exact train True, held64 True; 59.5x vs E7 numpy (cpu 14.1%); world 16/16, brain 0/212; cheats skip_lin 16/16, stride2 48%
+- Exact on train and held-out seeds in every cell: True. Speed
+  48.7x-99.8x against E7's numpy path (the path E uses for these families).
+  The host was shared with E8, so speed is reported, not barred.
