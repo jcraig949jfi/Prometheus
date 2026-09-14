@@ -463,3 +463,9 @@
   median 59.2 is itself below the 4-run baseline). w3 train8 106.88 IQR 2.58 PASS (above float
   103.16); w3 train128 103.97 IQR 0.87 PASS (ablate 15/16, 1 input-invariant). Priors .2/.55/.5.
 - Every baseline cell except w1 train128 now has an 8 B B cell at clause A parity.
+- QUIESCE (A, 1789421177690-0): no task in hand; rows/receipts/journal pushed; EPOCH 3 (final)
+  posted; no open claims; loop stopped. Carry-forward for round 3: (1) re-seed round 1 baselines
+  with >=8 runs + IQR (w1 train128 bar is a 4-run draw); (2) easy-metric anomaly (2-action and
+  input-invariant 8 B brains near float linear on w4) needs D's constant/random-action discriminator
+  before more clause A compression on held64 counts; (3) bind E-T3 powered cheats, not skip-odd;
+  (4) 8 B floor is pad-to-4, so bytes below it need a different archive, not a smaller genome.
