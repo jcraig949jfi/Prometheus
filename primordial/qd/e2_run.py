@@ -108,11 +108,13 @@ def evolve(r, run, mode, gens, batch, seed) -> dict:
         parents = arch.sample(batch)
         if len(parents) == 0:
             kids, parents = random_genomes(rng, batch), np.zeros((batch, GLEN), np.uint8)
-        elif mode == "honest":
+        elif mode in ("honest", "fakefit"):
             kids = mutate(rng, parents)
         else:  # filler: random genomes, falsely attributed to the sampled elites
             kids = random_genomes(rng, batch)
         fits, cells = world.evaluate(kids)
+        if mode == "fakefit":  # CHEAT: real descent, fitness shuffled across the batch (no information)
+            fits = rng.permutation(fits)
         wins += arch.insert_lineage(cells, fits, kids, parents, gen)
     return {"cpu_worker_s": time.process_time() - c0, "cpu_redis_s": redis_cpu(r) - rc0,
             "wall_s": time.perf_counter() - t0, "wins": wins, "arch": arch}
@@ -132,7 +134,32 @@ def read_events(r, skey):
     return recs
 
 
-def branch_points(recs, gens, k, z_min, worlds: dict) -> dict:
+def popcount_genomes(rng, d0: int, d1: int, m: int) -> np.ndarray:
+    """m uniform genomes with exactly d0 ones in bits 0..31 and d1 in bits 32..63 (one descriptor cell)."""
+    def half(d):
+        ranks = np.argsort(np.argsort(rng.random((m, 32)), axis=1), axis=1)
+        return (ranks < d).astype(np.uint8)
+    return np.packbits(np.concatenate([half(d0), half(d1)], axis=1), axis=1)
+
+
+_CELL_STATS: dict = {}
+
+
+def cell_stats(world: NKWorld, cells: np.ndarray, m: int = 2000) -> tuple[np.ndarray, np.ndarray]:
+    """Per-cell random baseline (mean, std) of `world` fitness; cached per (world, cell). std 0 -> z undefined."""
+    from primordial.qd.stubworld import GRID
+    mu, sd = np.empty(len(cells)), np.empty(len(cells))
+    for j, c in enumerate(cells):
+        key = (id(world), int(c))
+        if key not in _CELL_STATS:
+            rng = np.random.Generator(np.random.PCG64([7, int(c)]))
+            f = world.evaluate(popcount_genomes(rng, int(c) // GRID, int(c) % GRID, m))[0].astype(np.float64)
+            _CELL_STATS[key] = (f.mean(), f.std())
+        mu[j], sd[j] = _CELL_STATS[key]
+    return mu, sd
+
+
+def branch_points(recs, gens, k, z_min, worlds: dict, z_mode: str = "global", return_z: bool = False) -> dict:
     n = len(recs)
     cell = np.array([x[0] for x in recs]); fit = np.array([x[1] for x in recs], np.int64)
     G = np.frombuffer(b"".join(x[2] for x in recs), np.uint8).reshape(n, GLEN)
@@ -185,10 +212,17 @@ def branch_points(recs, gens, k, z_min, worlds: dict) -> dict:
     for name, w in worlds.items():
         rf = w.evaluate(ref)[0].astype(np.float64)
         if surv:
-            z = (w.evaluate(G[[best[f] for f in surv]])[0] - rf.mean()) / rf.std()
+            wf, wc = w.evaluate(G[[best[f] for f in surv]])
+            if z_mode == "cell":
+                mu, sd = cell_stats(w, wc)
+                z = np.divide(wf - mu, sd, out=np.full(len(wf), np.nan), where=sd > 0)
+            else:
+                z = (wf - rf.mean()) / rf.std()
             bp = int((z >= z_min).sum())
         else:
-            bp = 0
+            z, bp = np.empty(0), 0
+        if return_z:
+            out[f"z_{name}"] = z.tolist()
         out[f"bp_{name}"] = bp
         out[f"transfer_rate_{name}"] = round(bp / len(surv), 4) if surv else None
     return out
