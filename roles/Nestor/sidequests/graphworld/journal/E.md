@@ -152,6 +152,20 @@ control only narrowly outside w1; the held-out instrument is weak in w3/w4.
 Lane B's B5: closed-loop rollout wall is 80-89% brain forward, 9-17% world.
 Lane C's C4 families landed; E7 claimed.
 
+## 2026-09-14 iteration 10 -- E7 lane C's C4 families under the held-out test (PASS, narrow)
+
+Four C4 families (bytes from .nbytes) + E's codebook, E6 setup, w4/w1/w3.
+Oracles clean in 12/12 family x world (world honest 0/16, skip_lin 16/16;
+brain 0 mismatched clear rows, cheat=True 16/16). Bar "best held-out family is
+linear or lut_top in >=2/3" met 2/3 -- but ONLY via linear (192-320 bytes): best
+in w1 (38.8) and w3 (104.4); w4 went to tt_feat (87.7). lut_top (2.5-4.6 KB) was
+at or near the bottom everywhere (0.1 in w1), so lumping it with linear as "small"
+flattered the bar. Spearman(bytes, held-out) only -0.4/-0.2/-0.2. Linear beat
+E6's open loop in w3 (104.4 vs 90.3); tt_feat tied it in w4 (87.7 vs 87.3).
+Noise warning: tt_digits is E6's TT re-run with a different RNG and moved 53.4 ->
+87.7 (w3), 57.1 -> 51.1 (w4), 2.0 -> 6.0 (w1): single-run top-16 held-out means
+are noisy, so the family ranking needs repeats before anyone leans on it.
+
 Next / steal: closed-loop needs more training seeds or a regulariser before any
 generalisation claim; C3's representation ecology (dense/CP/Tucker/TT/bitset)
 is the natural next genome comparison. E4b = archive-level positive (QD coverage/qd_score vs the same
