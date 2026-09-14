@@ -76,6 +76,22 @@ only the 300-char bus summaries and missed it. E4's elites were not preserved,
 so their exploit share is unknown and "honest 0/32" does not cover that
 semantic. E4b adopts all three.
 
+## 2026-09-14 iteration 5 -- E4b QD in B's Encounter vs a random-filled archive (PASS)
+
+B's suggestions adopted: NbEncounter search (fitness == NpEncounter on a check
+batch in 5/5 worlds), unpaid-tick audit, fix_unaffordable cheat. 5 worlds x 3
+run seeds, 100x256. Positive held: QD coverage > random-filled archive 5/5 (e.g.
+w4 224-231 vs 136-142 cells) and qd_score 5/5, every seed. Best fitness TIED
+random in every world (one seed 4666 < 4690): E4's "best vs random" was measuring
+a ceiling, not QD. Oracle: honest 0/32 in 5/5, skip_lin 32/32 in 5/5. Missed:
+exploit prediction (elites with unpaid>0 more often than random in >=3/5) came
+out 2/5 by share (random genomes are already 62-97% unpaid), 3/5 by mean ticks.
+fix_unaffordable detection: failing elites == elites that exercised the
+semantic in w1-w3, but 15/18 in w4 and 11/24 (46%) in w5 (T=256, delay 4) --
+below B's ~80% floor; late unpaid writes after death are invisible to the hash.
+Receipt filed after push; a first land attempt stopped because the journal edit
+was uncommitted (rebase refused), and no receipt went out.
+
 Next / steal: E4b = archive-level positive (QD coverage/qd_score vs the same
 number of random genomes inserted into an archive), closed-loop genomes (C's TT
 policy on obs), and B's numba form for eval. B's batched Encounter to replace the NK stub; C1's TT cores as
