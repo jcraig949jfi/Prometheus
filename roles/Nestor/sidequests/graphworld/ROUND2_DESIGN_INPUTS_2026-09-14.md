@@ -115,9 +115,60 @@ Change, where the ChatGPT version lets language or judgement back in:
   NOT verified). Make it a test, and extend it to message payloads and
   genomes. Lane D's codes are already integers.
 
-## 5. For the operator
+## 5. Operator decisions (2026-09-14 ~13:20, verbatim in 04_...)
 
-- Write PROMETHEUS_SUCCESS_CONTRACT.md, and decide its home (roles/Nestor/
-  or repo-wide).
-- Round length, lane TTL and experiment TTL defaults.
-- The allocation split, including the RNG-drawn share.
+- Success contract adopted: clauses A (minimum viable abstraction), B
+  (invariance under displacement), C (algorithmic scaffolding). The file is
+  roles/Nestor/PROMETHEUS_SUCCESS_CONTRACT.md, the operator's text verbatim.
+- Epoch 30 min; agent TTL 5-10 min; heartbeat every 2 min, with a reap on
+  silence; a 60 s death rattle to dump partial state.
+- Budget split, enforced and never chosen by the conductor: 40
+  exploitation / 25 anti-prior / 20 anomaly queue / 15 tooling.
+- The "why" carries no weight unless we are being fooled. What counts is
+  that it works and survives another generation.
+
+## 6. Round 1 timings against those defaults (measured, bus export + transcripts)
+
+    lane  prompt pasted  hello     first claim  first receipt  paste->receipt
+    B     07:32:08       07:36:43  07:36:43     07:53:44       21:36
+    C     07:32:28       07:37:29  07:38:20     08:05:08       32:40
+    E     07:33:24       07:37:09  07:37:53     07:48:43       15:19
+    D*    TBD            11:43:46  11:51:35     11:59:08       hello->15:22
+    (* rebooted D; paste time TBD)
+
+Steady state after boot: B 16 receipts, E 16 and C 14 over ~4-4.5 h, about
+one per 15-20 min per lane. Long runs: E8 ~75 min, E10 ~64 min
+(11:16-12:20).
+
+Consequences, for implementation rather than a re-decision:
+
+- T1 A 5-10 min TTL cannot apply to a Claude Code SESSION: boot to hello
+  alone took 3:45-5:01, and no clone filed within 10 min of its paste.
+  Apply the agent TTL to worker TASKS (an experiment process or one build
+  or debug attempt, killed by the harness). The session persists across
+  epochs and reads its state from the ledger. If sessions do reboot each
+  epoch, budget ~5 min of each 30 min for the boot (S4 pre-built
+  worktrees help).
+- T2 A 30 min epoch ends the runs that overturned round 1's few-seed
+  story: E8 (~75 min) and E10 (~64 min) would both have been TIMEOUT. So
+  a long run must be a checkpointed job that emits partial rows each epoch
+  and continues in the next, and it must be charged explicitly to one of
+  the four budget shares. Otherwise the epoch selects for short
+  experiments.
+- T3 The death rattle cannot depend on the agent: a single Claude tool call
+  blocked 120 s (D's worktree add), longer than the 60 s grace. The harness
+  dumps state; commit-on-write (S5) makes the dump already done.
+- T4 The heartbeat is the harness's job too (S1 wrapper + S2 key). Reaping
+  needs the launcher to own the process tree; round 1 had no launcher.
+- T5 "Only care about why if fooled" keeps cheat controls and oracles
+  mandatory; they are the fooling detector. Round 1's fooled-and-caught
+  cases were E4 (fitness gate passed a wrong world; only the trace hash
+  caught it), C2 (score blind to a leak) and C7 (column-index bug).
+  INTERPRETATION becomes optional. Promotion = survives the next
+  generation under its oracle.
+- T6 Undefined per round in the contract: "benchmark X" and "the baseline"
+  (A), the Domain A/B graft pairs (B), and the control task and baseline
+  (C). Round 1 has MAP-Elites baselines (E1, E4b) and the C3 byte-footprint
+  instrument for A; it has no Transformer baseline and no cross-domain
+  graft harness. The ledgers are JSONL + SQLite, not DuckDB/Postgres.
+  These are build items, not contract edits.
