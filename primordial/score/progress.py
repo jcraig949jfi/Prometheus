@@ -89,7 +89,8 @@ def compression(qd: list[dict], lane: str, window) -> dict:
             continue
         c = r["cell"]
         res = Q.check(qd, c["world"], c["pressure"], f["held64_median"], f.get("iqr") or 0.0,
-                      int(r["footprint"]["genome_bytes"]), int(f.get("n_runs") or 0))
+                      int(r["footprint"]["genome_bytes"]), int(f.get("n_runs") or 0),
+                      held=f.get("held64_by_run_seed"))          # M3: bootstrap CI band when per-seed values exist
         fv = (res.get("floor") or {}).get("verdict", "NO_FLOOR")
         by_floor[fv] = by_floor.get(fv, 0) + 1
         if res["verdict"] == "PASS":

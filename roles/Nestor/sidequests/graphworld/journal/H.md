@@ -55,3 +55,22 @@ budget 1789425755152-0).
     D  failure 341 anomalies_filed 3 anomalies_resolved 4
     E  failure 145 instruments 1
   Round 2 had no refutations and no own-KILLs.
+- Push held: the integration tip 660ab7f38 failed collection (test_fabric_hygiene.py:59, A's
+  file). Asked A (1789427057457-0); A had already fixed it at fb15cc3a2. Rebased, suite 105
+  passed, pushed b15d3aece via primordial.ops.push. The backup push to nestor/bld-h was
+  rejected non-ff after the rebase (not forced).
+- With G's floor rows live on integration, all 28 B clause A cells read BELOW_FLOOR, so
+  compression stays 0 for cause.
+
+## 2026-09-14 epoch 1, iteration 3: F13 budget enforcement
+
+- Code: primordial/score/budget.py. The live source is F7's worker ledger (pm:jobs:<L>:done
+  cpu_s, joined to pm:jobs:<L> specs for exp_id), windowed by stream-id time. Verdict per
+  cohort vs 40/25/20/15: OVER / WITHIN / INDETERMINATE. INDETERMINATE applies when total
+  < 60 CPU-s or any cohort is unmetered. Died jobs count with unknown CPU; nothing is guessed.
+  `warn` posts one BUDGET WARNING per OVER cohort per epoch to <L>,A (SET NX dedupe).
+- F12 now passes held=held64_by_run_seed to check (M3 band). F10 keeps the posted IQR rule.
+- Round 2 replay from rows: INDETERMINATE. Only C recorded CPU (348 CPU-s); B, D and E rows
+  carry wall time only. Wall time is not CPU, so the budget split was unmeasurable in round 2.
+- Live epoch 1 report: 0 cohort jobs on the worker streams (INDETERMINATE). Cohorts must
+  submit through the worker in round 4 for F13 to measure anything.
