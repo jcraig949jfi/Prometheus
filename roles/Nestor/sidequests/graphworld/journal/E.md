@@ -274,3 +274,16 @@ Tested only on a planted brain; its power on B's real elites is unmeasured.
 D ask: LuaArchive(sampler_seed=) seeded, atomic Lua sampler (33038855e).
 Git: a rebase while E-T2's RowWriter held its rows file wedged (untracked block); fixed by
 dropping the rows picks from the rebase todo; no rows lost. Push only fast-forward while a writer is live.
+
+## 2026-09-14 r2 iteration 3 -- E-T1b PASS: the transfer harness read against its cheats
+
+Rows 425083145, receipt PASS; posted before the run. Same harness (4c69b55ef), 16 run seeds per world.
+Seeds 0-7 re-run bit-identical to E-T1 (120/120 rows). Planted self_graft beats both cheats in 3/3
+worlds (p < 1e-4). rand_graft vs scratch no longer fires (p 0.83/0.15/0.32), so E-T1's w3 false alarm
+was a small-n graft-minus-scratch artefact. Integrity 48/48, oracles clean 3/3.
+Report-only: the w2->w4 linear graft beats both cheats (p_max 0.0003, +9.9/+8.4); w25->w1 and
+w17->w3 do not. Told the conductor the clause B gate condition is met (E-T1 + E-T2 committed with
+tests), recommending that clause B score graft against both cheats (Holm across worlds), not
+graft against scratch.
+Next: E-T3 asks as they come; an E-T2 fused kernel if B wants the Transformer in the QD loop at
+E9 speed (numpy runs at ~180 s per 25,600 genomes).
