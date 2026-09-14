@@ -41,14 +41,10 @@ class GraphRollout(TorchRollout):
             TorchRollout.load(self, g, seeds, cheat)
             self._capture()
             self.key = key
-        fresh = TorchRollout(self.g7, self.device, self.world.cheat)
-        fresh.load(g, seeds, cheat)
-        for dst, src in zip(self.state(), fresh.state()):
-            dst.copy_(src)
-        self.P, self.k = fresh.P, fresh.k
+        self.restore(self.snapshot(g, seeds, cheat))
 
-    def run(self, g, seeds, cheat: bool = False):
-        self.load(g, seeds, cheat)
+    def replay(self):
+        """Run the loaded rollout: whole-graph replays, then any leftover ticks eagerly."""
         full, rest = divmod(self.g7.T, self.K)
         for _ in range(full):
             self.graph.replay()

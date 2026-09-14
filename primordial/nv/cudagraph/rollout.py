@@ -72,11 +72,26 @@ class TorchRollout:
         cells = torch.round(ab * 32) * GRID + torch.round(torch.clamp(mg, 0, 1) * 32)
         return fit.cpu().numpy(), cells.cpu().numpy().astype(np.uint32)
 
-    def run(self, g, seeds, cheat: bool = False):
-        self.load(g, seeds, cheat)
+    def snapshot(self, g, seeds, cheat: bool = False):
+        """A fresh eager load (the per-env host stream seeding, done once) for restore()."""
+        fresh = TorchRollout(self.g7, self.device, self.world.cheat)
+        fresh.load(g, seeds, cheat)
+        return fresh.state(), (fresh.P, fresh.k)
+
+    def restore(self, snap) -> None:
+        """Copy a snapshot into this rollout's same-shape tensors (device to device, in place)."""
+        tensors, (self.P, self.k) = snap
+        for dst, src in zip(self.state(), tensors):
+            dst.copy_(src)
+
+    def replay(self):
         for _ in range(self.g7.T):
             self.tick()
         return self.result()
+
+    def run(self, g, seeds, cheat: bool = False):
+        self.load(g, seeds, cheat)
+        return self.replay()
 
 
 def genomes(g7, P: int, seed: int, mutate_steps: int = 3):
