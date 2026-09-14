@@ -148,3 +148,26 @@
   end and the oracle cannot see them. Extending the trace past the last
   landing tick (T + delay) would close (i), but that is a change to wforge's
   hash.
+
+## 2026-09-14 iteration 7 -- B1u: what in-episode absorption is  [m1-5b2d34d4]
+
+- Ran: an instrumented scalar replica of wforge Encounter.step, with probes
+  after landing, after each lin_op, after the stoch kick, and at the trace line.
+  Honest and fix_unaffordable replicas run in lock-step, and at each probe I
+  record which registers differ. Every tick where a new difference appears is
+  classified by where the difference vanishes. Replayed B1t's 81 absorbed
+  episodes plus 150 sampled detected episodes as control.
+- Numbers: replica == wforge trace hash 231/231. Absorbed: 79/81 (97.5%) had
+  every unpaid write erased by a lin_op overwriting its target register in the
+  same tick. Erase events over all ticks: 203 by a lin_op, 2 by a stoch kick,
+  0 cancellations. 2 episodes had a lin_op read the differing register first,
+  and the difference was still erased. Controls: absorbed episodes with a trace
+  difference in the replica 0/81; detected episodes whose difference survives
+  to a trace line 150/150.
+- Held: ">=90% same-tick lin_op overwrite", and "the rest are stoch, no
+  cancellation". PASS. Correction: my pre-run post said 78 absorbed misses; B1t
+  rows hold 81 (I omitted E4b w1's 3).
+- Together B1t and B1u explain every fix_unaffordable miss measured: (i) a
+  delayed write lands after the trace ends; (ii) a write lands and a lin_op
+  overwrites its target the same tick. Both are structural blind spots of a
+  per-tick state hash, not noise.
