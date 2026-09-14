@@ -214,17 +214,125 @@ def load_elites(path) -> dict:
 
 
 def restore_elites(arch: _Base, doc: dict) -> int:
-    """Insert saved elites into arch (same genome length required); returns the archive's win count."""
-    if doc["glen"] != arch.glen:
-        raise ValueError(f"glen {doc['glen']} != archive glen {arch.glen}")
+    """Insert saved elites into arch; returns the archive's win count. A fixed-length archive needs the
+    same glen; a VarArchive takes any saved genome no longer than its max length."""
     es = doc["elites"]
+    if isinstance(arch, VarArchive):
+        if any(len(e[2]) // 2 > arch.glen for e in es):
+            raise ValueError(f"a saved genome is longer than the archive max length {arch.glen}")
+    elif doc["glen"] != arch.glen:
+        raise ValueError(f"glen {doc['glen']} != archive glen {arch.glen}")
     if not es:
         return 0
     cells = np.array([e[0] for e in es], np.uint32)
     fits = np.array([e[1] for e in es], np.int32)
-    genomes = np.frombuffer(bytes.fromhex("".join(e[2] for e in es)), np.uint8).reshape(-1, arch.glen)
     meta = np.frombuffer(bytes.fromhex("".join(e[3] for e in es)), "<u4").reshape(-1, 2)
+    if isinstance(arch, VarArchive):
+        return arch.insert(cells, fits, [bytes.fromhex(e[2]) for e in es], meta)
+    genomes = np.frombuffer(bytes.fromhex("".join(e[2] for e in es)), np.uint8).reshape(-1, arch.glen)
     return arch.insert(cells, fits, genomes, meta)
+
+
+# C4 (round 3, builder G): variable-length genomes. The pad-to-4 rule came from the u32-chunk tie-break;
+# here genomes are compared byte by byte (string.byte, never Lua `<`), a shorter genome winning on an
+# equal prefix -- Python's bytes order. For equal-length genomes whose length is a multiple of 4 this is
+# the same order as INSERT_LUA's, so an archive written by LuaArchive loads and keeps its elites.
+INSERT_VAR_LUA = r"""
+local zkey, pre = KEYS[1], ARGV[1]
+local cells, fits, lens, gs, meta = ARGV[2], ARGV[3], ARGV[4], ARGV[5], ARGV[6]
+local function bless(a, b)
+  local n = math.min(#a, #b)
+  for p = 1, n do
+    local x, y = string.byte(a, p), string.byte(b, p)
+    if x ~= y then return x < y end
+  end
+  return #a < #b
+end
+local wins, off = 0, 1
+for i = 0, #cells / 4 - 1 do
+  local c = struct.unpack('<I4', cells, 4 * i + 1)
+  local f = struct.unpack('<i4', fits, 4 * i + 1)
+  local L = struct.unpack('<I4', lens, 4 * i + 1)
+  local g = string.sub(gs, off, off + L - 1)
+  off = off + L
+  local k = pre .. c
+  local old = redis.call('HMGET', k, 'f', 'g')
+  local better
+  if not old[1] then better = true
+  else
+    local of = tonumber(old[1])
+    better = (f > of) or (f == of and bless(g, old[2]))
+  end
+  if better then
+    redis.call('HSET', k, 'f', f, 'g', g, 'm', string.sub(meta, 8 * i + 1, 8 * (i + 1)))
+    redis.call('ZADD', zkey, f, c)
+    wins = wins + 1
+  end
+end
+return wins
+"""
+
+SAMPLE_VAR_LUA = r"""
+local ms = redis.call('ZRANDMEMBER', KEYS[1], -tonumber(ARGV[2]))
+local out = {}
+for i, c in ipairs(ms) do out[i] = redis.call('HGET', ARGV[1] .. c, 'g') end
+return out
+"""
+
+SEEDED_SAMPLE_VAR_LUA = r"""
+local ms = redis.call('ZRANGE', KEYS[1], 0, -1)
+local n = #ms
+local out = {}
+if n == 0 then return out end
+local cs = {}
+for i, c in ipairs(ms) do cs[i] = tonumber(c) end
+table.sort(cs)
+local u = ARGV[2]
+for i = 0, #u / 8 - 1 do
+  local j = math.floor(struct.unpack('<d', u, 8 * i + 1) * n) + 1
+  if j > n then j = n end
+  out[i + 1] = redis.call('HGET', ARGV[1] .. cs[j], 'g')
+end
+return out
+"""
+
+
+def reduce_var(cells, fits, genomes) -> list[int]:
+    """Indices of the best offer per cell under (higher fit, then smaller bytes), ascending."""
+    best = {}
+    for i, (c, f, g) in enumerate(zip(cells, fits, genomes)):
+        key = (-int(f), g)
+        if int(c) not in best or key < best[int(c)][0]:
+            best[int(c)] = (key, i)
+    return sorted(i for _, i in best.values())
+
+
+class VarArchive(_Base):
+    """LuaArchive for genomes of 1..max_len bytes. insert takes a list of bytes; sample returns one."""
+
+    def __init__(self, r, run, max_len, sampler_seed):
+        super().__init__(r, run, max_len, sampler_seed)
+        self._insert = r.register_script(INSERT_VAR_LUA)
+        self._sample_var = r.register_script(SAMPLE_VAR_LUA)
+        self._seeded_var = r.register_script(SEEDED_SAMPLE_VAR_LUA)
+
+    def insert(self, cells, fits, genomes, meta) -> int:
+        genomes = [bytes(g) for g in genomes]
+        bad = [len(g) for g in genomes if not 1 <= len(g) <= self.glen]
+        if bad:
+            raise ValueError(f"genome lengths {sorted(set(bad))} outside 1..{self.glen}")
+        s = reduce_var(cells, fits, genomes)
+        cells, fits, meta = np.asarray(cells)[s], np.asarray(fits)[s], np.asarray(meta)[s]
+        gs = [genomes[i] for i in s]
+        return int(self._insert(keys=[self.zkey], args=[
+            self.pre, cells.astype("<u4").tobytes(), fits.astype("<i4").tobytes(),
+            np.array([len(g) for g in gs], "<u4").tobytes(), b"".join(gs), meta.astype("<u4").tobytes()]))
+
+    def sample(self, n: int) -> list[bytes]:
+        if self.srng is not None:
+            u = self.srng.random(n).astype("<f8").tobytes()
+            return list(self._seeded_var(keys=[self.zkey], args=[self.pre, u]))
+        return list(self._sample_var(keys=[self.zkey], args=[self.pre, n]))
 
 
 def serial_reference(cells, fits, genomes) -> dict[int, tuple[int, bytes]]:

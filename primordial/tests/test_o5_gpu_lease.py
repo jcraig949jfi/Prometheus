@@ -58,17 +58,35 @@ def test_expired_lease_is_taken_over_and_old_holder_cannot_release_it(live, monk
     assert bus.lease_holder(live)["holder"] == "W[t-w]"
 
 
+def _poll(pred, timeout_s=6.0, every_s=0.05):
+    end = time.monotonic() + timeout_s
+    while time.monotonic() < end:
+        if pred():
+            return True
+        time.sleep(every_s)
+    return pred()
+
+
 def test_redis_ttl_expiry_frees_the_lease(live):
     bus.lease_acquire("short", ttl_s=0.3, r=live)
-    time.sleep(0.5)
-    assert bus.lease_holder(live) is None
+    assert _poll(lambda: bus.lease_holder(live) is None, timeout_s=5)          # polled: load-stable
     assert bus.lease_acquire("next", ttl_s=5, r=live)["holder"] == "F[t-f]"
 
 
 def test_context_manager_renews_past_ttl(live):
-    with bus.gpu_lease("long timing", ttl_s=0.6, r=live) as rec:
-        time.sleep(1.5)                                              # > 2 TTLs
-        assert bus.lease_holder(live)["token"] == rec["token"]
+    # conductor/P/W 18:57: ttl 0.6 + a fixed 1.5 s sleep flaked under 8-builder load; poll for 2 renewals
+    ttl = 1.5
+    with bus.gpu_lease("long timing", ttl_s=ttl, r=live) as rec:
+        first_until = rec["until"]
+        seen = []
+
+        def renewed_twice():
+            h = bus.lease_holder(live)
+            assert h is not None and h["token"] == rec["token"]              # never lost in between
+            if not seen or h["until"] > seen[-1]:
+                seen.append(h["until"])
+            return len([u for u in seen if u > first_until]) >= 2
+        assert _poll(renewed_twice, timeout_s=4 * ttl)
         assert not rec["lost"]
     assert live.get(bus.GPU_LEASE) is None
 

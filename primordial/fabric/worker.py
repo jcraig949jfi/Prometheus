@@ -18,6 +18,17 @@ status=timeout row, commits the file, and spawns a fresh child for the next
 job. Rows are committed by the supervisor's RowWriter, so a job cannot lose
 its rows by dying. Each job's outcome goes to pm:jobs:<L>:done.
 
+F14: while pm:jobs:<L>:stop exists the worker takes no job and reports
+`stopped` in pm:worker:<L>; a job received before it saw the flag runs to
+completion first, so no job spans an epoch's export and commit.
+
+F9: a long job checkpoints across epochs. It polls ctx.should_pause() (the
+stop flag) at safe points and calls ctx.pause(state): the state is pickled
+atomically to <ckpt_dir>/<lane>/<job_key>.pkl, the segment ends `paused`,
+and the supervisor requeues the same job (job_key, segment + 1, cumulative
+CPU carried so ttl_cpu_s bounds the whole job). The next segment reads
+ctx.load_checkpoint(). A finished job's checkpoint is removed.
+
     python -m primordial.fabric.worker serve --lane F
     python -m primordial.fabric.worker submit F primordial.fabric.selftest_jobs:jit_probe \\
         --exp F7-probe --rows primordial/ledger/rows/F/F7-probe.jsonl --ttl-cpu-s 60 --kwargs '{}'
@@ -30,6 +41,8 @@ import json
 import multiprocessing as mp
 import os
 import pathlib
+import pickle
+import tempfile
 import sys
 import time
 import traceback
@@ -38,6 +51,14 @@ import uuid
 from primordial.fabric.rows import RowWriter
 
 JOBS, ROWS, DONE = "pm:jobs:{}", "pm:rows:{}", "pm:jobs:{}:done"
+STOP = "pm:jobs:{}:stop"            # F14: set by the epoch controller; the worker takes no job while it exists
+WSTATE = "pm:worker:{}"             # hash {state: idle|busy|stopped, job_id, ts}, TTL WSTATE_TTL
+WSTATE_TTL = 30
+CKPT_DIR = pathlib.Path(os.environ.get("PM_CKPT_DIR", "C:/Users/jcrai/lab/pm-data/ckpt"))
+
+
+class JobPaused(Exception):
+    pass
 
 
 def _redis(url):
@@ -46,14 +67,15 @@ def _redis(url):
 
 
 def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs: dict | None = None,
-           url: str | None = None, r=None) -> str:
-    """Queue a job. -> job_id."""
+           url: str | None = None, r=None, job_key: str = "", segment: int = 0, cpu_prior: float = 0.0) -> str:
+    """Queue a job (or the next segment of a checkpointed one). -> job_id."""
     from primordial.bus import bus
     r = r or _redis(url or bus.URL)
     job_id = uuid.uuid4().hex[:12]
     r.xadd(JOBS.format(lane), {"job_id": job_id, "fn": fn, "exp_id": exp_id, "rows": str(rows_path),
                                "ttl_cpu_s": str(float(ttl_cpu_s)), "kwargs": json.dumps(kwargs or {}),
-                               "ts": f"{time.time():.3f}"})
+                               "job_key": job_key or job_id, "segment": str(int(segment)),
+                               "cpu_prior": f"{float(cpu_prior):.6f}", "ts": f"{time.time():.3f}"})
     return job_id
 
 
@@ -62,8 +84,36 @@ def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs:
 class Ctx:
     def __init__(self, r, lane):
         self.r, self.lane, self.cache = r, lane, {}
-        self.job_id = ""
+        self.job_id = self.job_key = ""
+        self.segment = 0
+        self.ckpt_dir = CKPT_DIR
         self.n_emitted = 0
+
+    # F9 checkpoints
+    def _ckpt(self) -> pathlib.Path:
+        return pathlib.Path(self.ckpt_dir) / self.lane / f"{self.job_key}.pkl"
+
+    def should_pause(self) -> bool:
+        return bool(self.r.exists(STOP.format(self.lane)))
+
+    def load_checkpoint(self):
+        p = self._ckpt()
+        if not p.exists():
+            return None
+        with open(p, "rb") as fh:
+            return pickle.load(fh)
+
+    def checkpoint(self, state) -> None:
+        p = self._ckpt()
+        p.parent.mkdir(parents=True, exist_ok=True)
+        fd, tmp = tempfile.mkstemp(prefix=".ck-", dir=p.parent)
+        with os.fdopen(fd, "wb") as fh:
+            pickle.dump(state, fh)
+        os.replace(tmp, p)
+
+    def pause(self, state) -> None:
+        self.checkpoint(state)
+        raise JobPaused()
 
     def emit(self, row: dict) -> None:
         self.r.xadd(ROWS.format(self.lane), {"job_id": self.job_id, "json": json.dumps(row, sort_keys=True)})
@@ -77,11 +127,16 @@ def _child_main(pipe, url: str, lane: str) -> None:
         if job is None:
             return
         ctx.job_id, ctx.n_emitted = job["job_id"], 0
+        ctx.job_key, ctx.segment = job.get("job_key") or job["job_id"], int(job.get("segment", 0))
+        ctx.ckpt_dir = job.get("ckpt_dir") or CKPT_DIR
         t0 = time.perf_counter()
         try:
             mod, _, name = job["fn"].partition(":")
             getattr(importlib.import_module(mod), name)(ctx, **json.loads(job["kwargs"]))
+            ctx._ckpt().unlink(missing_ok=True)
             pipe.send({"ok": True, "wall_s": time.perf_counter() - t0, "emitted": ctx.n_emitted})
+        except JobPaused:
+            pipe.send({"ok": True, "paused": True, "wall_s": time.perf_counter() - t0, "emitted": ctx.n_emitted})
         except Exception:
             pipe.send({"ok": False, "wall_s": time.perf_counter() - t0, "emitted": ctx.n_emitted,
                        "error": traceback.format_exc()[-2000:]})
@@ -90,7 +145,8 @@ def _child_main(pipe, url: str, lane: str) -> None:
 # ------------------------------------------------------------------ supervisor
 
 class Worker:
-    def __init__(self, lane: str, url: str | None = None, repo=None, poll_s: float = 0.05, log=print):
+    def __init__(self, lane: str, url: str | None = None, repo=None, poll_s: float = 0.05, log=print,
+                 ckpt_dir=None):
         from primordial.bus import bus
         self.lane, self.url = lane, url or bus.URL
         self.r = _redis(self.url)
@@ -98,6 +154,8 @@ class Worker:
         self.poll_s, self.log = poll_s, log
         self.child = self.pipe = None
         self.children_spawned = 0
+        self.ckpt_dir = str(ckpt_dir or CKPT_DIR)
+        self.exit_requested = False             # set from another thread: serve() returns after the current job
         self.rows_cursor = "$"
         self.group = f"worker-{lane}"
         try:
@@ -155,6 +213,8 @@ class Worker:
         if self.child is None or not self.child.is_alive():
             self._spawn()
         ttl = float(job["ttl_cpu_s"])
+        cpu_prior = float(job.get("cpu_prior", 0) or 0)
+        job = dict(job, ckpt_dir=self.ckpt_dir)
         rows_path = pathlib.Path(job["rows"])
         if not rows_path.is_absolute():
             rows_path = self.repo / rows_path
@@ -163,7 +223,7 @@ class Worker:
         self.rows_cursor = last[0][0] if last else "0"
         w = RowWriter(rows_path, job["exp_id"], commit_every_s=60, repo=self.repo)
         cpu0 = self._child_cpu()
-        t0 = time.perf_counter()
+        t0, started = time.perf_counter(), time.time()
         self.pipe.send(job)
         result, status = None, "ok"
         n = 0
@@ -171,13 +231,13 @@ class Worker:
             n += self._drain(job["job_id"], w)
             if self.pipe.poll(self.poll_s):
                 result = self.pipe.recv()
-                status = "ok" if result["ok"] else "error"
+                status = ("paused" if result.get("paused") else "ok") if result["ok"] else "error"
                 break
             if not self.child.is_alive():
                 status, result = "died", {"ok": False, "error": f"child exit {self.child.exitcode}"}
                 break
             cpu = self._child_cpu() - cpu0
-            if cpu > ttl:
+            if cpu + cpu_prior > ttl:
                 self._kill_child()
                 status, result = "timeout", {"ok": False, "cpu_s": cpu}
                 break
@@ -192,11 +252,19 @@ class Worker:
         if status in ("timeout", "died", "error"):
             w.write({"status": "timeout" if status == "timeout" else "aborted", "job_id": job["job_id"],
                      "kind": "job_end", "reason": status, "ttl_cpu_s": ttl, "cpu_s": cpu_s, "wall_s": wall_s,
-                     "rows_before": n, "error": (result.get("error") or "")[-500:]})
+                     "rows_before": n, "error": (result.get("error") or "")[-500:],
+                     "job_key": job.get("job_key"), "segment": int(job.get("segment", 0)), "cpu_prior": cpu_prior})
         w.close(note=f"(job {job['job_id']} {status})")
         sha = self._head()
         out = {"job_id": job["job_id"], "status": status, "rows": n, "cpu_s": cpu_s, "wall_s": round(wall_s, 3),
-               "child_wall_s": result.get("wall_s"), "sha": sha, "rows_path": str(rows_path)}
+               "child_wall_s": result.get("wall_s"), "sha": sha, "rows_path": str(rows_path),
+               "started": round(started, 3), "ended": round(time.time(), 3),
+               "job_key": job.get("job_key") or job["job_id"], "segment": int(job.get("segment", 0)),
+               "cpu_prior": cpu_prior}
+        if status == "paused":
+            out["next_job_id"] = submit(self.lane, job["fn"], job["exp_id"], job["rows"], ttl,
+                                        json.loads(job["kwargs"]), r=self.r, job_key=out["job_key"],
+                                        segment=out["segment"] + 1, cpu_prior=cpu_prior + (cpu_s or 0))
         self.r.xadd(DONE.format(self.lane), {"json": json.dumps(out, sort_keys=True)})
         self.log(f"job {job['job_id']} {job['fn']} -> {status} rows={n} cpu={cpu_s} wall={wall_s:.2f}s")
         return out
@@ -207,11 +275,25 @@ class Worker:
                            text=True)
         return q.stdout.strip()
 
-    def serve(self, max_jobs: int | None = None, block_ms: int = 5000, idle_exit_s: float | None = None) -> list:
+    def _state(self, state: str, job_id: str = "") -> None:
+        k = WSTATE.format(self.lane)
+        self.r.hset(k, mapping={"state": state, "job_id": job_id, "ts": f"{time.time():.3f}"})
+        self.r.expire(k, WSTATE_TTL)
+
+    def serve(self, max_jobs: int | None = None, block_ms: int = 5000, idle_exit_s: float | None = None,
+              deadline_s: float | None = None) -> list:
         consumer = os.environ.get("PM_TAG", "worker")
         done, idle0 = [], time.monotonic()
+        end = None if deadline_s is None else time.monotonic() + deadline_s
         try:
-            while max_jobs is None or len(done) < max_jobs:
+            while ((max_jobs is None or len(done) < max_jobs) and (end is None or time.monotonic() < end)
+                   and not self.exit_requested):
+                if self.r.exists(STOP.format(self.lane)):
+                    self._state("stopped")
+                    time.sleep(min(block_ms / 1000, 0.1))
+                    idle0 = time.monotonic()
+                    continue
+                self._state("idle")
                 got = self.r.xreadgroup(self.group, consumer, {JOBS.format(self.lane): ">"}, count=1,
                                         block=block_ms)
                 msgs = [m for _, ms in (got or []) for m in ms]
@@ -220,6 +302,7 @@ class Worker:
                         break
                     continue
                 mid, job = msgs[0]
+                self._state("busy", job["job_id"])
                 done.append(self.run_job(job))
                 self.r.xack(JOBS.format(self.lane), self.group, mid)
                 idle0 = time.monotonic()
@@ -228,6 +311,7 @@ class Worker:
         return done
 
     def stop(self) -> None:
+        self.r.delete(WSTATE.format(self.lane))
         if self.child is not None and self.child.is_alive():
             try:
                 self.pipe.send(None)

@@ -36,7 +36,7 @@ def test_graph_replay_equals_e7_and_eager_state(g7, K):
     assert (fit == ref_fit).sum() == P and (cells == ref_cells).sum() == P
     eager = TorchRollout(g7, "cuda")
     eager.run(g, E6.TRAIN)
-    for a, b in zip(gr._static(), GraphRollout._static(eager)):
+    for a, b in zip(gr.state(), eager.state()):
         assert torch.equal(a, b)
 
 

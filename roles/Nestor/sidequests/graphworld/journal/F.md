@@ -109,3 +109,86 @@ Threads: 3 (conductor contract 1789425755152-0 overrides the boot prompt's 5).
   repeated seed; run() fitness, cells and done ticks match the uncached
   path; the digest keeps worlds that share an id apart; the cache is >= 5x
   faster. Suite 76 passed, 1 skipped (the 1 warning is from U's torch test).
+
+## 2026-09-14 EPOCH 1 posted 19:07: done=[O3,O5,O1,F7,F8] tests=76 open=[F14,F9,F15,X]
+
+## 2026-09-14 iteration 6 -- F14 epoch controller (DONE) + O5 tests load-stable
+
+- ops/epoch.py `EpochController(lanes, epoch_s=1800)`. At T + n x epoch_s it
+  posts EPOCH n (to ALL) and sets pm:jobs:<L>:stop. It waits until every live
+  worker reports `stopped` (stragglers are recorded after drain_timeout_s),
+  exports the bus into <out>/epoch_<n>/, and writes <out>/EPOCH_<n>.json.
+  It commits that directory, clears the flags, and sets pm:epoch:state
+  running n+1. Every step is logged to <out>/epoch_log.jsonl.
+  CLI: `python -m primordial.ops.epoch run --lanes B,C,D,E [--epoch-min 30]`
+  or `boundary N --lanes ...`.
+- worker.py: no job is taken while the stop flag exists. State goes to
+  pm:worker:<L> {idle|busy|stopped} with a 30 s TTL. A job received before
+  the flag runs to completion before `stopped`. Done records carry
+  started/ended. serve() gains deadline_s and exit_requested.
+- Test (acceptance): 2 simulated epochs of 4 s with 2 real workers and a
+  submitter feeding 0.25 s jobs. Checked: event order start + 2 x (post,
+  stop_set, drained, exported, committed, resumed); no stragglers; no job
+  interval overlaps [drained, resumed]; each worker ran jobs in all 3
+  windows; EPOCH-1/EPOCH-2 commits present; log file == events; flags
+  cleared. First version took 61 s because workers waited for their
+  deadline; exit_requested brings it to 11 s.
+- O5 tests: A, P and W reported renew/expiry flakes under 8-builder load.
+  Most were the shared-db flush (A fixed it: per-lane test dbs 660ab7f38 +
+  fb15cc3a2). The fixed sleeps are gone too: the TTL-expiry test polls up to
+  5 s, and the renew test uses ttl 1.5 s and polls for 2 renewals with the
+  same token.
+- My F7/O5 move to db 13 collided with U's per-lane db (13); A's live_url()
+  supersedes it, and F14 uses live_url().
+- Suite on the integration tip, PM_LANE=F: 115 passed, 1 skipped.
+
+## 2026-09-14 iteration 7 -- F9 checkpointed long jobs (DONE) + X liveness BUSY (DONE)
+
+- F9, worker.py: ctx.should_pause() reads the epoch stop flag. ctx.pause(state)
+  pickles the state atomically to <ckpt_dir>/<lane>/<job_key>.pkl and ends
+  the segment `paused`. The supervisor requeues the job as the next segment
+  (same job_key, segment + 1, cpu_prior += this segment's CPU), so
+  ttl_cpu_s bounds the whole job, and ctx.load_checkpoint() resumes it.
+  A finished job deletes its checkpoint. Done and end rows carry job_key,
+  segment and cpu_prior, so F13 can charge the whole job to its cohort.
+- Test (acceptance): a deterministic RNG walk (60 steps, seed 11). It ran
+  once uninterrupted, then again across 3 epochs, with EpochController
+  boundaries at 15 and 35 rows while it was running. Done statuses were
+  paused, paused, ok (segments 0,1,2); the rows carry segments {0,1,2} and
+  are EXACTLY the uninterrupted rows (ts/job_id/exp_id/segment excluded);
+  the checkpoint is removed at the end. A second test: a segment with
+  cpu_prior 0.9 and ttl 1.0 times out after < 0.1 CPU-s of its own.
+- X, ops/liveness.py: E was flagged STALE at 16:53 during a background run
+  (transcript quiet 618 s; heartbeat lapsed while it waited; nothing looked
+  at the run itself). A lane with a quiet transcript and no heartbeat is
+  now sampled once more: CPU gained by its session's process tree over
+  sample_s (psutil) or a live F7 worker state makes it BUSY, not STALE.
+  BUSY never posts `missing`. All quiet lanes share one sample window.
+- Tests: test_f9_checkpoint.py (2), test_x_liveness.py (3, all sources
+  faked). Suite 133 passed, 1 skipped.
+
+## 2026-09-14 iteration 8 -- F15 boot pack (DONE); PACKAGE GREEN, lane F pauses
+
+- ops/bootpack.py `build(lane, epoch)` generates the pack from live state:
+  boot block (fetch/merge, comms boot, env with the lane's threads,
+  hello), the lane's charter + SWARM_R2 s4 rules extracted by heading at
+  generation time (headings demoted under the pack's own sections), open
+  claims, inbox digest (last 15 addressed to the lane via XREVRANGE:
+  nothing consumed, group untouched; bodies cut at 400 chars), the QD
+  ledger Pareto front per world (top 3) + floor, OPEN anomalies, and the
+  lane's last journal entry. The pack warns if it exceeds 16 KB. With
+  EpochController(bootpack=True), every boundary writes
+  epoch_<n>/bootpack/<L>.md into the committed epoch directory.
+- Measured (live bus, lane F): pack 14.2 KB / 124 lines (vs ~70-74k tokens
+  of round 1 boot reading), generated in 0.38 s; read pack + comms boot +
+  comms instance + bus hello = 5.45 s, hello rc 0. This is tool time
+  only; model reading time is not measured.
+- Tests: test_f15_bootpack.py (2): every section present, only the lane's
+  claims and messages, a long body cut, front/floor line, demoted
+  headings, no consumer group touched, < 16 KB; a boundary with
+  bootpack=True commits one pack per lane. Suite 147 passed, 1 skipped.
+
+PACKAGE F: O3 0712083bc, O5 98f8bf705, O1 a96830abc, F7 00586cf91,
+F8 ec6322c07, F14 13802b096, F9 + X 0bdc60259, F15 (this commit): all green.
+Stopping per brief s0.8 (package green before epoch 4). No open claims,
+nothing running, all pushed.

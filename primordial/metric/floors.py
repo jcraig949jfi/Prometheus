@@ -93,3 +93,91 @@ def floors(gen_seed: int, pressure: str, policy_seeds=range(8)) -> dict:
         "const_held64_quantiles": {q: float(np.percentile(held, q)) for q in (0, 50, 90, 100)},
         "floor_held64": float(max(held[0], held[b], np.median(rnd))),
     }
+
+
+# ---------------------------------------------------------------- M1 third floor: best 2-action brain
+# A gate: act with one fixed action a iff obs[f] >= theta (dir +1) or obs[f] < theta (dir -1), else
+# abstain. It is exactly an A=2 linear brain with one nonzero weight (see tests). Thresholds are 16
+# quantiles of feature f as seen by the abstain policy on TRAIN8 (selection seeds only, never HELD64).
+N_QUANTILES = 16
+SCREEN_K = 64
+
+
+def gate_candidates(spec: E4.Spec, n_q: int = N_QUANTILES) -> dict:
+    """All gates: arrays feat, thr, dir [K] and act [K, W] (non-abstain actions only)."""
+    n = len(TRAIN8)
+    w = NpEncounter(spec.mech, spec.wid, with_obs=True)
+    obs = w.reset(TRAIN8)
+    seen = []
+    zero = np.zeros((n, spec.S, spec.W), np.int32)
+    for _ in range(spec.T):
+        seen.append(obs[w.alive & ~w.done[:, None]])
+        obs, _, done = w.step(zero)
+        if done.all():
+            break
+    seen = np.concatenate(seen)
+    acts = all_actions(spec.W)[1:]
+    F_, T_, D_ = [], [], []
+    for f in range(seen.shape[1]):
+        for th in np.unique(np.quantile(seen[:, f], np.arange(1, n_q + 1) / (n_q + 1), method="lower")):
+            # obs are uint16: thr 0 is "obs >= 0" (always = a constant action, the best_fixed floor) or
+            # "obs < 0" (never = abstain). v1 kept them; D x 511 never-gates tied at the abstain score
+            # and filled the whole top-64 screen, so the train128 rescore saw no real gate.
+            if th <= 0:
+                continue
+            for d in (1, -1):
+                F_.append(f); T_.append(int(th)); D_.append(d)
+    m = len(F_)
+    return {"feat": np.repeat(np.array(F_), len(acts)), "thr": np.repeat(np.array(T_, np.int64), len(acts)),
+            "dir": np.repeat(np.array(D_), len(acts)), "act": np.tile(acts, (m, 1))}
+
+
+def gate_scores(spec: E4.Spec, gates: dict, seeds: np.ndarray) -> np.ndarray:
+    """Per-seed score of each gate policy [K]."""
+    k, K = len(seeds), len(gates["feat"])
+    step = max(1, MAX_ENVS // k)
+    out = []
+    for i in range(0, K, step):
+        sl = slice(i, i + step)
+        P = len(gates["feat"][sl])
+        fe = np.repeat(gates["feat"][sl], k)
+        th = np.repeat(gates["thr"][sl], k)[:, None]
+        dr = np.repeat(gates["dir"][sl], k)[:, None]
+        ac = np.repeat(gates["act"][sl], k, axis=0)[:, None, :].astype(np.int32)
+        n = P * k
+        w = NpEncounter(spec.mech, spec.wid, with_obs=True)
+        obs = w.reset(np.tile(seeds, P))
+        rows = np.arange(n)
+        for _ in range(spec.T):
+            v = obs[rows, :, fe]                                  # [n, S]
+            on = np.where(dr > 0, v >= th, v < th)
+            obs, _, done = w.step(np.where(on[:, :, None], ac, 0))
+            if done.all():
+                break
+        out.append(np.clip(w.charge, 0, None).sum(1).reshape(P, k).sum(1) / k)
+    return np.concatenate(out)
+
+
+def _pick(g: dict, idx) -> dict:
+    return {key: v[idx] for key, v in g.items()}
+
+
+def gate_floor(gen_seed: int, pressures=tuple(PRESSURES), screen_k: int = SCREEN_K) -> list[dict]:
+    """Best-found gate per pressure: screen every gate on TRAIN8, rescore the top screen_k on the
+    pressure's TRAIN, pick the best (ties -> smallest index), score it on HELD64."""
+    spec = E4.Spec(gen_seed)
+    g = gate_candidates(spec)
+    s8 = gate_scores(spec, g, TRAIN8)
+    top = np.argsort(-s8, kind="stable")[:screen_k]
+    out = []
+    for pressure in pressures:
+        tr = s8[top] if pressure == "train8_held64" else gate_scores(spec, _pick(g, top), PRESSURES[pressure])
+        j = int(top[int(np.argmax(tr))])
+        held = float(gate_scores(spec, _pick(g, [j]), HELD64)[0])
+        out.append({"world": f"w{gen_seed}", "pressure": pressure, "W": spec.W, "T": spec.T,
+                    "n_gates": int(len(s8)), "screen_k": int(screen_k), "search": "best-found (TRAIN8 screen)",
+                    "gate": {"feat": int(g["feat"][j]), "thr": int(g["thr"][j]), "dir": int(g["dir"][j]),
+                             "act": g["act"][j].tolist()},
+                    "gate_train": float(tr.max()), "gate_screen_train8": float(s8[j]), "gate_held64": held,
+                    "screen_train8_top": float(s8[top[0]])})
+    return out
