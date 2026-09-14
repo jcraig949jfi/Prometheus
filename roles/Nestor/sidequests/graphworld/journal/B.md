@@ -400,3 +400,14 @@
   primordial/soup/b1 (world forms + oracle), b6/fused.py (exact fused
   closed-loop rollout, C-audited), b7 (structural affine tools + C7 lookup).
   Substrate gw-sub-b on 6391 left running. Loop stopped at operator request.
+
+## Round 2 -- HILL CLIMBERS, Nestor-B[m1-fd63b6d8], 2026-09-14
+
+- B-R2-1 (clause A, w4 train128_held64): int4 linear brain + nibble codebook, 48 B,
+  E10 closed condition otherwise unchanged. 8 run seeds: held64 median 98.20, IQR 2.80
+  (94.89..99.90). Oracles clean on rs0 (world 0/16, skip_lin 16/16; brain 0 mm, skip-odd 16/16;
+  fused==numpy). check vs baseline front: PASS parity at 48 < 192 B (open-loop 94.04).
+- NOT parity with the float linear baseline (98.76 @ 312 B, 4 runs, IQR null): short by 0.56.
+- Defect (shared lib, asked A+E): qd_ledger check builds the front from ALL rows, so my row
+  evicts the open-loop baseline and the same numbers read FAIL after append.
+- Hazard: open-loop genome stores 4-bit values one per byte; its 192 B is 2x its information.
