@@ -42,7 +42,7 @@ from primordial.score.round2 import ROOT
 INTEGRATION_REF = "origin/nestor/sidequest-graphworld-2026-09-14"
 STAGES = ("SMOKE", "PILOT", "PRODUCTION", "REPLICATION")
 CHECKS = ("rows_exist", "rows_committed", "sha_on_integration", "identity_tag", "campaign_stage",
-          "predicate_predates_run", "required_controls", "oracle_result", "sample_rule")
+          "predicate_predates_run", "predicate_code_reachable", "required_controls", "oracle_result", "sample_rule")
 TAG_RE = re.compile(r"[a-z0-9]+-[0-9a-f]{8}")
 ROWS_RE = re.compile(r"primordial/[\w./-]+\.jsonl?")
 SAMPLE_FIELDS = ("runs_total", "rng_family_count", "runs_per_family")
@@ -138,14 +138,44 @@ def run_start_ts(paths: list[str], root=ROOT) -> float | None:
     return min(ts) if ts else None
 
 
+def predicate_code_sha_default(predicate_id: str, r=None) -> str | None:
+    """H-R6-1: the code_sha=<sha> line of the earliest bus claim 'PREDICATE <predicate_id>' (exact id)."""
+    from primordial.bus import bus
+    from primordial.ops.predicate_ref import cited_code_sha
+    r = r or bus.conn()
+    pat = re.compile(rf"PREDICATE {re.escape(predicate_id)}(?![\w.-])")
+    posts = sorted(((float(f.get("ts") or 0), f.get("body") or "") for _, f in r.xrange(bus.SWARM)
+                    if f.get("kind") == "claim" and pat.match(f.get("subject") or "")))
+    return cited_code_sha(posts[0][1]) if posts else None
+
+
+def verify_code_default(root=ROOT):
+    from primordial.ops import predicate_ref as PR
+    return lambda predicate_id, sha: PR.verify(predicate_id, sha, repo=root)
+
+
 def guard(rec: dict, envelope: dict | None = None, *, root=ROOT, git=None, on_integration=None,
-          predicate_ts=None) -> dict:
+          predicate_ts=None, code_verify=None, code_sha_of=None) -> dict:
     """-> {accepted, refusals: [{check, reason, detail}], checks: {check: OK|REFUSED}}."""
     env = envelope or {}
     refusals: list[dict] = []
 
     def refuse(check, reason, detail):
         refusals.append({"check": check, "reason": reason, "detail": detail})
+
+    # H-R6-1 (D7): the predicate's cited code must stay reachable: refs/pm/pred/<id> on origin names it (or its patch)
+    pid_code = rec.get("predicate_id") or env.get("predicate_id")
+    if not pid_code:
+        refuse("predicate_code_reachable", "PREDICATE_CODE_UNREACHABLE", "no predicate_id to look up the cited code")
+    else:
+        cited = rec.get("predicate_code_sha") or (code_sha_of or predicate_code_sha_default)(pid_code)
+        if not cited:
+            refuse("predicate_code_reachable", "PREDICATE_CODE_UNREACHABLE",
+                   f"no cited code sha (receipt predicate_code_sha, or 'code_sha=' on the PREDICATE {pid_code} post)")
+        else:
+            v = (code_verify or verify_code_default(root))(pid_code, cited)
+            if not v.get("ok"):
+                refuse("predicate_code_reachable", v.get("reason") or "PREDICATE_CODE_UNREACHABLE", v.get("detail"))
 
     paths = rows_paths(rec)
     if not paths:

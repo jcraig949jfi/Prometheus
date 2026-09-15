@@ -542,5 +542,29 @@ budget 1789425755152-0).
     input-invariant 0/32.
 - Scope: oracle cleanliness is B's recorded value (the oracles were not re-run). Same model
   family: a cross-lane check, not a promotion.
+
+# Round 6 R6-BUILD (SWARM_R6 s3 H-R6-1..3; hard cap 11:15; status to A at 11:00)
+
+## 2026-09-15 09:41, item 1: H-R6-1 (D7) predicate code stays reachable
+
+- primordial/ops/predicate_ref.py:
+  - pin(id, sha) pushes <full sha>:refs/pm/pred/<id>. Never forced; idempotent for the same sha;
+    PREDICATE_REF_CONFLICT for another sha; PREDICATE_ID_INVALID and PREDICATE_SHA_INVALID refused.
+  - verify(id, cited) is OK via the ref (full sha or >= 7 prefix) or via patch-id; else
+    PREDICATE_CODE_UNREACHABLE.
+  - post_predicate pins FIRST, then posts the claim with a leading 'code_sha=<sha>'.
+- receipt_guard gains the check predicate_code_reachable. The cited sha is rec.predicate_code_sha,
+  else the earliest exact PREDICATE post's code_sha. Both lookup and verify are injectable.
+- A 1789479784925-0 accepted: push.py only pushes HEAD:refs/heads/<branch>, nothing prunes
+  refs/pm/*, and H pushes the ref directly.
+- Tests, against a real bare remote:
+  - A local-only cited commit is pinned (the ref push uploads the objects).
+  - A rebase orphans it and origin is gc --prune=now'd; verify still passes via the ref, and a
+    fresh clone can check the code out.
+  - A cherry-picked copy verifies via patch-id; unrelated code, a missing ref, conflict, bad id
+    and bad sha are refused.
+  - Guard: unreachable is refused; a missing cited sha is refused; the receipt field wins; the
+    earliest exact post is read.
+- Suite 405 passed, 1 skipped, pytest rc 0 (09:47).
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".

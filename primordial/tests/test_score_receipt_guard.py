@@ -49,7 +49,8 @@ ENV = {"campaign_stage": "PILOT", "predicate_id": "B-R5-demo", "required_control
 def _guard(repo, rec, env=ENV, integ=True, pts=999.0):
     root, _ = repo
     return RG.guard(rec, env, root=root, git=RG.git_runner(root), on_integration=lambda s: integ,
-                    predicate_ts=lambda pid: pts)
+                    predicate_ts=lambda pid: pts, code_sha_of=lambda pid: "c0de" * 10,
+                    code_verify=lambda pid, sha: {"ok": True, "via": "ref"})
 
 
 def _reasons(out):
@@ -201,10 +202,46 @@ def test_thresholds_come_from_the_judge():
     assert RG._minimum() == (Q.BASELINE_MIN_RUNS, Q.BASELINE_MIN_FAMILIES, Q.BASELINE_MIN_PER_FAMILY) == (32, 4, 8)
 
 
+def _guard_code(repo, rec, code_sha_of, code_verify):
+    root, _ = repo
+    return RG.guard(rec, ENV, root=root, git=RG.git_runner(root), on_integration=lambda s: True,
+                    predicate_ts=lambda pid: 999.0, code_sha_of=code_sha_of, code_verify=code_verify)
+
+
+def test_unreachable_predicate_code_is_refused(repo):
+    """H-R6-1 (D7): the cited code must verify through refs/pm/pred/<id> (or its patch-id)."""
+    seen = []
+    unreachable = lambda pid, sha: seen.append((pid, sha)) or {"ok": False, "reason": "PREDICATE_CODE_UNREACHABLE",
+                                                               "detail": "refs/pm/pred/B-R5-demo does not exist"}
+    out = _guard_code(repo, _rec(repo[1]), lambda pid: "ab12cd34", unreachable)
+    assert _reasons(out) == ["PREDICATE_CODE_UNREACHABLE"] and out["checks"]["predicate_code_reachable"] == "REFUSED"
+    assert seen == [("B-R5-demo", "ab12cd34")]
+    out = _guard_code(repo, _rec(repo[1]), lambda pid: None, lambda pid, sha: {"ok": True})
+    assert _reasons(out) == ["PREDICATE_CODE_UNREACHABLE"] and "no cited code sha" in out["refusals"][0]["detail"]
+    seen.clear()
+    ok = lambda pid, sha: seen.append(sha) or {"ok": True, "via": "ref"}
+    assert _guard_code(repo, _rec(repo[1], predicate_code_sha="feed1234"), lambda pid: "ab12cd34", ok)["accepted"]
+    assert seen == ["feed1234"]                                            # the receipt's own field wins
+
+
+def test_the_cited_code_sha_is_read_from_the_earliest_exact_predicate_post():
+    class R:
+        def xrange(self, key):
+            return [("2-0", {"kind": "claim", "subject": "PREDICATE B-R5-demo: later", "ts": "20.0",
+                             "body": "code_sha=bbbbbbb\nrerun"}),
+                    ("1-0", {"kind": "claim", "subject": "PREDICATE B-R5-demo: rule", "ts": "10.0",
+                             "body": "code_sha=aaaaaaa\nrule text"}),
+                    ("3-0", {"kind": "claim", "subject": "PREDICATE B-R5-demo-other", "ts": "1.0",
+                             "body": "code_sha=ccccccc"})]
+    assert RG.predicate_code_sha_default("B-R5-demo", r=R()) == "aaaaaaa"
+    assert RG.predicate_code_sha_default("B-R5-none", r=R()) is None
+
+
 def test_file_posts_the_refusal_and_raises_and_files_when_clean(repo):
     root, sha = repo
     posts, filed = [], []
     kw = dict(root=root, git=RG.git_runner(root), on_integration=lambda s: True, predicate_ts=lambda pid: 999.0,
+              code_sha_of=lambda pid: "c0de" * 10, code_verify=lambda pid, s: {"ok": True},
               post=lambda kind, subject, body, to: posts.append((kind, subject, json.loads(body), to)),
               file_receipt=lambda rec: filed.append(rec) or "1-0")
     with pytest.raises(ReceiptError):
