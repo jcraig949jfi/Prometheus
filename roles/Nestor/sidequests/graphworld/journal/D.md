@@ -250,3 +250,7 @@
   107.64/106.59 -> 107.75), so "ignore" is HELD8-local, not a brain property; odd |W| mass blind .56/.52/.56 vs caught
   .49-.65 (not zero weights, as filed).
 - Receipt D-R6-2 filed 1789488889783-0 (guard 10/10 OK, status NULL, decision MIXED), rows 9927ff9b4; ANOM-..7943 RESOLVED; child anomaly filed (HELD8 coverage).
+- Loop iteration 1 (12:15, T+76): claimed child ANOM-..5775 (HELD8 coverage). D-R6-3 code + test (4 passed rc 0), 0 QD:
+  numpy honest vs cheat charge per HELD64 seed x any-flip census on the cheat trajectory; COVERAGE / PATH_DISAGREE /
+  NOT_COVERAGE; I1 = numpy == fused (stride 1 and 2) and D-R6-2 held64 reproduced; control planted_zero_odd.
+  Memory saved: stale prior-round worker steals jobs; watch pm:jobs:<L>:done.
