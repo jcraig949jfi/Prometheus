@@ -90,8 +90,9 @@ LAUNCH GATE (conductor checks; all must hold before any cohort launches):
 3. budget report defaults to SHARES_R4.
 4. Operator answers to s7 Q1-Q2, or an explicit "launch on defaults".
 5. Worktrees nestor-r4-{b,c,d,e} verified (prepare_worktrees --round r4) and
-   fast-forwarded to the gate tip (which must contain 519d081c8, the F7
-   worker socket_timeout fix).
+   fast-forwarded to the gate tip. The tip must contain 519d081c8 (the F7
+   worker socket_timeout fix) and 7fa40eec9 (the rows commit fix for
+   Windows long paths; a failed commit no longer kills the worker).
 6. Worker smoke check in one cohort worktree at the gate tip: a worker left
    idle for more than 60 s is still alive (pm:worker:<L> present). Before
    519d081c8, redis-py 8's 5 s default socket_timeout killed idle workers.
