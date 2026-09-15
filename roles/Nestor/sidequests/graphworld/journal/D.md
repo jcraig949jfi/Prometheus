@@ -298,3 +298,6 @@
   archives. No cell result was emitted. Fix in r6_6 only (linear_runs: family linear AND genome_bytes == G7 glen; glen
   mismatch -> INDETERMINATE, not a crash); test asserts 8 linear runs and no g-r4-inv. Worker restarted 12:34:30
   (A ruling). New predicate D-R6-6b; the aborted row stays in the D-R6-6 rows file.
+- Receipt D-R6-6 filed 1789490157101-0: status INDETERMINATE (job aborted, index bug, no cell value seen), rows 2e31ed755.
+  job() now takes exp / predicate_id so D-R6-6b runs under its own predicate and rows file (the aborted row predates
+  any new predicate). Tests 10 passed rc 0; worker restarted again after this edit (A ruling).

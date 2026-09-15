@@ -124,11 +124,12 @@ def read_cell(cell: dict, text: str) -> dict:
             "reach_k": sum(reach), "held_k": sum(held), "decision": decide_n(all(i1.values()), ok, reach, held)}
 
 
-def job(ctx, status="record"):
+def job(ctx, status="record", exp=EXP, predicate_id=PREDICATE_ID):
+    """exp / predicate_id: D-R6-6b re-runs this reader after the index fix under its own predicate and rows file."""
     t0 = time.perf_counter()
     text = (R4.ROOT / R4.SRC_ROWS).read_text(encoding="utf-8")
     cells = [read_cell(c, text) for c in CELLS]
-    ctx.emit({"kind": "summary", "exp": EXP, "predicate_id": PREDICATE_ID, "status": status, "ts": round(time.time(), 3),
+    ctx.emit({"kind": "summary", "exp": exp, "predicate_id": predicate_id, "status": status, "ts": round(time.time(), 3),
               "qd_runs": 0, "source_rows": R4.SRC_ROWS, "gate_source": "primordial/ledger/rows/G/G-R4-3-stage1.jsonl suite_cheap",
               "source_rows_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "cells": cells,
               "decisions": {f"{c['world']} {c['pressure']}": c["decision"] for c in cells},
