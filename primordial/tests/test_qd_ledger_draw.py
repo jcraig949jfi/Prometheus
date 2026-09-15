@@ -52,17 +52,40 @@ def test_round1_seed_reads_receipts_and_computes_bytes():
     assert w4_linear[0]["footprint"]["genome_bytes"] == E7.G7(4, "linear").glen
 
 
+def screen_doc():
+    """A planted worlds_r4 doc: w7 SURVIVED (train8), w8 CULLED, w9 HELD under the active gate_in|HOLD."""
+    from primordial.metric import worlds as WR
+    from primordial.tests.test_qd_ledger_r4 import base, suite
+    s8 = "train8_held64"
+    return WR.build([WR.cell(suite(7, s8, (100.0, 100.0, 5.0, 60.0), 90.0), base(7, s8, 200.0, 150.0, 250.0)),
+                     WR.cell(suite(8, s8, (100.0, 100.0, 5.0, 60.0), 90.0), base(8, s8, 95.0, 80.0, 99.0)),
+                     WR.cell(suite(9, s8, (100.0, 100.0, 5.0, 60.0), 170.0), base(9, s8, 140.0, 120.0, 160.0))],
+                    commit="t")
+
+
 def test_draw_is_reproducible_and_on_grid(monkeypatch):
     monkeypatch.setattr(DC, "visits", lambda: {})
-    a, b = DC.draw(seed=7), DC.draw(seed=7)
+    doc = screen_doc()
+    a, b = DC.draw(seed=7, doc=doc), DC.draw(seed=7, doc=doc)
+    ax = DC.axes(doc)
     assert a["cell"] == b["cell"]
-    assert all(a["cell"][k] in DC.AXES[k] for k in DC.AXES)
-    assert a["grid_cells"] == 13 * 8 * 8 * 6 * 2
+    assert all(a["cell"][k] in ax[k] for k in ax)
+    assert ax["world"] == ["w7"] + DC.NON_GRAPHWORLD
+    assert a["grid_cells"] == 13 * 4 * 8 * 6 * 2
 
 
 def test_draw_prefers_unvisited_cells(monkeypatch):
-    allk = list(itertools.product(*DC.AXES.values()))
+    doc = screen_doc()
+    allk = list(itertools.product(*DC.axes(doc).values()))
     free = allk[1234]
     monkeypatch.setattr(DC, "visits", lambda: {k: 10**9 for k in allk if k != free})
-    got = [DC._key(DC.draw(seed=s)["cell"]) for s in range(20)]
+    got = [DC._key(DC.draw(seed=s, doc=doc)["cell"]) for s in range(20)]
     assert got.count(free) >= 19
+
+
+def test_draw_takes_graphworld_worlds_only_from_survivors(monkeypatch):
+    monkeypatch.setattr(DC, "visits", lambda: {})
+    drawn = {DC.draw(seed=s, doc=screen_doc())["cell"]["world"] for s in range(400)}
+    assert "w7" in drawn and not drawn & {"w1", "w2", "w3", "w4", "w5", "w8", "w9"}
+    none = {DC.draw(seed=s, doc=None)["cell"]["world"] for s in range(200)}      # no screen file: no graphworld
+    assert none <= set(DC.NON_GRAPHWORLD)

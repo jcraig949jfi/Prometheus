@@ -12,6 +12,11 @@ Every draw is logged, with its RNG seed, to primordial/ledger/qd/draws.jsonl
 
 Weights: 1 / (1 + visits), where visits counts QD ledger rows plus earlier
 draws with the same (representation, world, pressure, substrate, channel).
+
+Round 4 (SWARM_R4 s2 G-R4-4): graphworld worlds are drawn ONLY from the screen's
+survivors (primordial/ledger/qd/worlds_r4.json, active variant; read, never
+recomputed). No file means no graphworld world. The non-graphworld domains have
+no floor suite and stay on the axis as landscape rows (no clause A claim).
 """
 from __future__ import annotations
 
@@ -37,6 +42,17 @@ AXES = {
 }
 
 
+NON_GRAPHWORLD = ["graphworld_b2", "signal_world_d1", "nk_stub"]
+_FROM_FILE = object()
+
+
+def axes(doc=_FROM_FILE) -> dict:
+    """The draw grid: AXES with the world axis = screen survivors (w<gen_seed>) + NON_GRAPHWORLD."""
+    from primordial.metric import worlds as WR
+    doc = WR.load() if doc is _FROM_FILE else doc
+    return {**AXES, "world": WR.survivor_worlds(doc) + NON_GRAPHWORLD}
+
+
 def _key(cell: dict) -> tuple:
     return tuple(cell.get(k) for k in AXES)
 
@@ -55,25 +71,26 @@ def visits() -> dict:
     return v
 
 
-def draw(seed: int | None = None) -> dict:
+def draw(seed: int | None = None, doc=_FROM_FILE) -> dict:
     seed = int.from_bytes(os.urandom(8), "little") if seed is None else int(seed)
     rng = np.random.default_rng(seed)
-    names = list(AXES)
-    sizes = [len(AXES[n]) for n in names]
+    ax = axes(doc)
+    names = list(ax)
+    sizes = [len(ax[n]) for n in names]
     n_cells = int(np.prod(sizes))
     v = visits()
     weights = np.ones(n_cells)
     for k, cnt in v.items():
         try:
-            idx = np.ravel_multi_index([AXES[n].index(x) for n, x in zip(names, k)], sizes)
+            idx = np.ravel_multi_index([ax[n].index(x) for n, x in zip(names, k)], sizes)
         except ValueError:
             continue
         weights[idx] = 1.0 / (1.0 + cnt)
     flat = int(rng.choice(n_cells, p=weights / weights.sum()))
     coords = np.unravel_index(flat, sizes)
-    cell = {n: AXES[n][int(i)] for n, i in zip(names, coords)}
+    cell = {n: ax[n][int(i)] for n, i in zip(names, coords)}
     return {"cell": cell, "seed": seed, "grid_cells": n_cells, "prior_visits": v.get(_key(cell), 0),
-            "status": "control", "ts": round(time.time(), 3)}
+            "worlds_screen": "primordial/ledger/qd/worlds_r4.json", "status": "control", "ts": round(time.time(), 3)}
 
 
 def main(argv=None) -> int:
