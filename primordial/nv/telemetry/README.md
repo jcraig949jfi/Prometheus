@@ -107,3 +107,10 @@ check. `judge_capture()` re-derives PASS from the rows. NVIDIA's `extras/python/
 the report under py3.12. In the default `basic` set, only launch/occupancy metrics are filled, and gpu__time_duration,
 cycles and throughput have 0 instances. So the counter-derived features stay unmeasured until a `--set detailed`
 capture (Q2e) fills them. torch CUPTI is still INVALID_DEVICE, so it is not the permission.
+
+## Q2e `--set detailed` -- counters still empty (BOUND; predicate 1789431181532-0, receipt 1789431362332-0)
+
+`smoke.py --set detailed` then `ncurep.py` (the vendor `ncu_report` dump) and `ncurep.judge`: 3 kernels, 104 counter metrics
+each (gpu__time_duration, *cycles_elapsed, *throughput), 0 nonzero instances. The static metrics do read, so the
+parser works. Final acceptance: capture DONE; features DONE unprivileged (Q3b/Q4); ncu counter-derived features
+BOUND on this host (ncu 2025.2.1, driver 576.88); cheats DONE. Package GREEN.

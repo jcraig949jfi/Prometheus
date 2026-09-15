@@ -117,3 +117,18 @@ user-space ncu 2025.2.1 under the O5 lease (released). Rows 84a42fae0 (rebased),
   After the rebase the suite is 155 passed, pushed ff e7b872e29 (ancestor verified).
 Next: Q2e under its own predicate. Capture the torch forward with `--set detailed` and parse via ncu_report.
 If duration/cycle metrics fill, the parser + copy/sleep cheats follow. If they stay empty, record the bound and pause.
+
+## 2026-09-14 20:35-20:50 -- Q2e ncu --set detailed (BOUND -> receipt FAIL); package green; PAUSE
+
+Predicate 1789431181532-0 posted first. smoke.py gained --set; ncurep.py dumps the report through NVIDIA's
+ncu_report pyd (nv-venv-q) and judges counter fill by code (3 tests). Under the O5 lease (released):
+control ok, ncu --set detailed rc 0, report 21.5 MB, the same 3 kernels. Counter metrics per kernel: 104, and 0
+have a nonzero instance (filled 125-132 of 928, all launch/occupancy/static). Basic (Q2d) and detailed
+agree, so ncu counter-derived features cannot be measured here even with RmProfilingAdminOnly=0 loaded.
+The parser is not the miss: the same path reads the filled static metrics. Cause not isolated (tool/driver
+version, consumer Blackwell, or Windows). Rows Q2e-ncu-detailed-set + Q2e-ncu-detailed-judge; pushed
+b3368e94a (suite 158); receipt 1789431362332-0 (FAIL, prior PASS 0.4).
+Package Q: capture DONE (Q2d), parser DONE unprivileged (Q3b/Q4) with ncu counters BOUND (Q2e), cheats DONE.
+GREEN -> pause. Reopen only on an operator ask: a newer driver (ncu 2026.2 needs one), or nsys elevated.
+Lane branch origin/nestor/bld-q-2026-09-14 is stale (6b7e771e4). A non-ff push was rejected and not forced;
+integration holds all work.
