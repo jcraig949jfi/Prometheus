@@ -433,3 +433,10 @@
   First push failed on a remote ref race ("cannot lock ref"), retried clean (3746854e3).
 - A 1789512067159-0 routed the O8 fused != numpy graft anomaly (1789512027239-0; E adds a 2nd case 2101|2255, draw 31)
   to D priority 1. Claimed. Predicate before any replay (reproducibility is itself a discriminator class).
+- D-R7-3 code + test (r7_3_fused_vs_numpy_graft.py; 4 passed rc 0; tests use draw-0 donors only, no replay of the two
+  mismatching cases). Rebuild draw 24/31 donors (sha vs E's donor_sha256), repeat E's P=16 comparison (3x granted
+  threads + 1 thread), localize each differing genome alone per env (obs -> idx -> acts -> done -> charge), analyse the
+  first idx-divergent obs row (numpy f32 einsum, f32 sequential emulation, kernel direct, f64 ref + clear_rows).
+  Labels NOT_REPRODUCED/NONDETERMINISTIC/BATCH_ONLY/OBS_FIRST/BRAIN_NEAR_TIE/BRAIN_CLEAR/STEP_FIRST; binding controls
+  clean genome (no divergence) + planted brain_stride 2 (idx first). OBSERVATION (2 loci). E's O8 closed ADMISSIBLE and
+  the live w14->w13 pair (requires fused_eq_numpy every run) is now running, so this answer matters for its gates.
