@@ -230,3 +230,32 @@ Owns:
 Does not own the floor suite, the screen verdicts, the progress threshold or
 any scoring. Production seats (SFE, Vivarium, PEW, wforge) are read-only and
 never started or stopped by Nestor.
+
+## 8. Operator rulings after test launch 1 (message 15)
+
+R15-1 READOUT: invalidate B's w13 claims; E patches the reader; B re-adjudicates.
+- B-R4-3 (int5a8 36 B) and B-R4-5 (int4a4 16 B) on w13 train128_held64 are INVALIDATED now. They are not promoted, not on the front, and not cited as PASS.
+- E writes ONE readout function used by BOTH the M2 baseline and every clause A candidate. A different readout on each side is the defect class.
+  - Default: top-1 elite selected on TRAIN, scored on HELD64. D-R4-4 and B-R4-7 already computed it: the w13 t128 baseline is 189.53, denominator 23.06.
+  - E posts the definition before building; the operator may name another.
+  - Regression test: a planted archive where top-16 mean != top-1; check() must use the same readout on both sides; the w13 t128 baseline must reproduce under the fixed reader.
+- Then G re-assembles worlds_r4.json baselines under that reader from saved archives (rows only, no QD). H replays it.
+- Then B re-adjudicates its saved w13 elites through qd_ledger check. Below 0.95 progress, the PASS is lost.
+
+R15-2 B2 INTERFACE: E builds an adapter for graphworld_b2.
+- The adapter maps relational graph state to a fixed-width uint16 observation vector per slot, and integer actions (read mod 8, 0 = abstain) to graph mutations.
+- It needs a charge/fitness objective. E posts the objective, the obs/action layout and the oracles as a predicate before building.
+- Oracles:
+  - the GraphBLAS path == the Cypher path, same trajectory hash;
+  - a skip-mutation cheat must fail;
+  - planted controllability: an obs-reading policy beats abstain and a blind policy on a planted objective.
+- Then G screens B2 (floor suite + baseline), and draw_cell re-admits graphworld_b2 only as a screened world.
+
+Order:
+1. E: readout fix first.
+2. G re-assembly, then H replay.
+3. B re-adjudication.
+4. E: B2 adapter.
+5. G screens B2.
+
+B and C resume on the corrected landscapes after that. G's 4 PENDING learners run while the cohorts are paused.
