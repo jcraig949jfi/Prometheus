@@ -413,3 +413,13 @@ linear 14.4 us (t1) / 6.7 us (t3; the worker child's NUMBA_NUM_THREADS was 3 alt
 ~746 h (R5, table basis) -> 6.7 h single worker at t1 linear (3.1 h at t3); full screen 13.4 h. Caveat: G's R5 1.6 ms timed a TABLE
 policy; the pilot evaluates linear genomes, whose RefB2 cost (14 ms) would have given ~6,500 h -- like-for-like speedup ~970x
 (linear), ~212x (table). QD mutation/archive overhead still outside the estimate. t3 CPU-s/episode 20 us is process_time-coarse.
+Receipt E-R6-2 PASS 1789486928415-0 (guard 10/10 OK, rows 78e65ac89); PC 1789468339986-0 re-costed by file_candidate. E-R6-3 posted
+(1789486933439-0). Items 1-3 complete.
+
+Iteration 4 (11:58, after EPOCH 1 boundary). Inbox untruncated: no asks to E (A's D13 ruling already applied). No job queued. Holding
+for asks until NO_NEW_WORK 14:20; nothing new started (no item left in prompts_r6/E.md).
+
+Iterations 5-6 (12:29, 13:00). No asks to E. A ruling 1789489756428-0 (F-R6-2 gap: the worker fingerprints only the job fn module,
+not its imports): restart the F7 worker after editing any harness module. E check: worker E started 11:14, before soup/b2/compiled.py
+existed, so E-R6-2 imported that module fresh (the pinned adf146468 code); no harness module edited since. Any later E job gets a worker
+restart first. Note: the bus stream is pm:swarm (my 11:37 monitor watched a wrong key for A's reply; the inbox read covered it).
