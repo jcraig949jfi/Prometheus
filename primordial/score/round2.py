@@ -37,6 +37,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 EXPORT = ROOT / "roles" / "Nestor" / "sidequests" / "graphworld" / "bus_export"
 DATE = "2026-09-14"
 ROUND2_START = 1789415000.0   # after the last round 1 receipt (E10, ts 1789402803), before the QD seed (1789415669)
+COHORTS = ("B", "C", "D", "E")   # round 2 cohort lanes (SWARM_R2 s1)
 OUT = ROOT / "primordial" / "ledger" / "rows" / "H" / "F10-prior-vs-reality-r2.jsonl"
 POSTED = "POSTED"
 ORACLE_GATE = [["oracle_clean", "==", True]]
@@ -251,7 +252,10 @@ def resolve(export=EXPORT, root=ROOT) -> dict:
     swarm = jsonl(export / f"pm_swarm_{DATE}.jsonl")
     results = jsonl(export / f"pm_results_{DATE}.jsonl")
     load, posts = Loader(root), predicate_posts(swarm)
-    receipts = sorted((r for r in results if float(r["ts"]) >= ROUND2_START), key=lambda r: float(r["ts"]))
+    # round 2 = the cohort lanes only: builder receipts (round 3 F-H, round 6 MVPs P Q W T U) land in the
+    # same export after ROUND2_START and must not enter the round 2 ledger (the export grows every epoch)
+    receipts = sorted((r for r in results if float(r["ts"]) >= ROUND2_START and r["lane"] in COHORTS),
+                      key=lambda r: float(r["ts"]))
     resolutions, no_prior = [], []
     for rec in receipts:
         pid = predicate_id(rec)
