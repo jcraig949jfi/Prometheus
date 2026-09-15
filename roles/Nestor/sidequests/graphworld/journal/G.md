@@ -357,3 +357,27 @@ full suite, push, receipt, and tell H to re-replay. Push under a live RowWriter 
 - A process note: my first attempt at the checkpoint chain died on a bash quoting error before running anything
   (nested heredoc + Python in one -c string); state was verified clean before retrying with a script file.
 - No worlds_r4/v2 written (partial screen). No B2. Paused. Resume steps: G R16 CHECKPOINT post + the resume record.
+
+## 2026-09-15 R5 P-BUILD (SMOKE stage, hard cap 2 h: 06:12:59 -> 08:12:59 local)
+
+Brief prompts_bld_r5/G.md; SWARM_R5 s3 G-R5-1..4 with overrides O2, O4; prompt 19 s2, s3, s7, s8 read. R16 stays parked.
+- Coordination before coding: G's names posted to H/F/A (1789467274589-0): runs_total, rng_family_count,
+  runs_per_family top-level; CANDIDATE_N payload + judge order. A (1789467299042-0): no second list spelling --
+  ONE list 'families' + ONE map 'n_per_family'. A (1789467765694-0): no red tip -- H pushes its 5 judge-vs-F12
+  fixture updates first, then G's CANDIDATE_N. F asked for the O3 probe workload; sized (w13 train128, gens
+  ~6400 x batch 128 ~30 s at 5 threads, distinct run keys per concurrent copy). A (1789468003264-0) fixed the B2
+  pilot sample before data: first 4 specs above E's validation range, families 4200 + 2101, train128_held64,
+  R16 floor paths incl. the gate; over PILOT ceilings -> PRODUCTION_CANDIDATE, never trimmed.
+- G-R5-4 w13 eligibility lookup: primordial/metric/eligibility.py -- r16_doc(cells) builds an in-memory
+  worlds_r4/v2-shaped doc from committed R16 rows (complete cells only; w13 train128_held64 today), never writes
+  worlds_r4.json; check(..., doc=r16_doc()) judges w13 alone, other cells UNSCREENED. Pushed 1791a6655 (suite 489
+  passed rc 0); B told (1789467520528-0).
+- G-R5-2 CANDIDATE_N: check_r4/check/CLI take runs_total, rng_family_count, runs_per_family, n_per_family; refusal
+  why CANDIDATE_N with candidate_* / need_* payload; order screen -> BASELINE_N -> CANDIDATE_N -> READOUT_MISMATCH ->
+  oracles/cheats -> progress; old runs < 8 removed. 13 tests went red on first run (8 my fixtures, 5 H's); my
+  fixtures moved to the explicit sample (41 calls), test_candidate_n.py added. Committed locally, held for H.
+- G-R5-1 seed schema: primordial/metric/sample.py (stamp, invariant, meets/refusal, N x M run-count lint) +
+  suite lint over receipts since the round 5 start and R5 tables. Committed locally.
+- G-R5-3 B2 admission rule: primordial/metric/b2_screen.py -- four verdicts in fixed precedence, never SURVIVED,
+  pilot-sample + readout checks, gate_in floor, full_screen_cost / pilot_cost. Committed locally. B2 episode wall
+  measured timing-only (no scores read): ~1.6 ms per reference episode (planted spec, 64 ticks).
