@@ -1,6 +1,7 @@
 """H-R6-1 (D7): a predicate-cited commit orphaned by a rebase still verifies through refs/pm/pred/<id>."""
 from __future__ import annotations
 
+import json
 import subprocess
 
 import pytest
@@ -100,12 +101,50 @@ def test_refusals(world):
     assert e.value.reason == "PREDICATE_SHA_INVALID"
 
 
-def test_post_predicate_pins_first_and_writes_the_structured_code_sha(world):
+GOOD = {"runs_total": 32, "rng_family_count": 4, "runs_per_family": 8, "families": [4200, 2101, 3303, 5501],
+        "n_per_family": {"4200": 8, "2101": 8, "3303": 8, "5501": 8}}
+
+
+def _poster(posts):
+    return lambda kind, subject, body, to: posts.append((kind, subject, body, to)) or "9-0"
+
+
+def test_post_predicate_pins_first_and_writes_the_structured_code_sha_and_evidence(world):
     origin, lane, cited = world
     posts = []
-    out = PR.post_predicate("C-R6-p", cited[:10], "demo rule", "body text", repo=lane,
-                            post=lambda kind, subject, body, to: posts.append((kind, subject, body, to)) or "9-0")
+    out = PR.post_predicate("C-R6-p", cited[:10], "demo rule", "body text", repo=lane, post=_poster(posts),
+                            experiment_class="CLAUSE_B", sample=GOOD)
     assert out["bus_id"] == "9-0" and PR.resolve("C-R6-p", repo=lane) == cited
     kind, subject, body, _ = posts[0]
     assert kind == "claim" and subject == "PREDICATE C-R6-p: demo rule"
-    assert body.splitlines()[0] == f"code_sha={cited}" and PR.cited_code_sha(body) == cited
+    lines = body.splitlines()
+    assert lines[0] == f"code_sha={cited}" and PR.cited_code_sha(body) == cited
+    ev = json.loads(lines[1].split("=", 1)[1])
+    assert ev == {"rule": "EVIDENCE_N_v1", "experiment_class": "CLAUSE_B", "evidence_class": "VERDICT", "sample": GOOD}
+
+
+@pytest.mark.parametrize("kw", [
+    dict(experiment_class="CLAUSE_B", sample={**GOOD, "runs_total": 16, "rng_family_count": 1, "runs_per_family": 16,
+                                              "families": [4200], "n_per_family": {"4200": 16}}),       # E-R6-1 shape
+    dict(experiment_class="CLAUSE_A", sample={**GOOD, "n_per_family": {"4200": 29, "2101": 1, "3303": 1, "5501": 1},
+                                              "runs_per_family": None}),
+    dict(experiment_class="ANTI_PRIOR", sample=None),
+    dict(experiment_class=None, sample=GOOD),
+])
+def test_a_verdict_predicate_without_a_conforming_sample_is_refused_before_anything_is_pinned(world, kw):
+    origin, lane, cited = world
+    posts = []
+    with pytest.raises(PR.PredicateRefError) as e:
+        PR.post_predicate("E-R7-bad", cited, "rule", repo=lane, post=_poster(posts), **kw)
+    assert e.value.reason == "SAMPLE_RULE_MISMATCH"
+    assert posts == [] and PR.resolve("E-R7-bad", repo=lane) is None                   # zero side effects
+
+
+def test_observation_and_non_verdict_predicates_are_posted(world):
+    origin, lane, cited = world
+    posts = []
+    PR.post_predicate("E-R7-obs", cited, "look", repo=lane, post=_poster(posts), experiment_class="CLAUSE_B",
+                      sample={"runs_total": 16}, evidence_class="OBSERVATION")
+    PR.post_predicate("E-R7-probe", cited, "probe", repo=lane, post=_poster(posts), experiment_class="PROBE")
+    assert len(posts) == 2
+    assert json.loads(posts[0][2].splitlines()[1].split("=", 1)[1])["evidence_class"] == "OBSERVATION"

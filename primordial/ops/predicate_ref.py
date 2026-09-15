@@ -121,12 +121,25 @@ def cited_code_sha(body: str) -> str | None:
 
 
 def post_predicate(predicate_id: str, sha: str, subject: str, body: str = "", to: str = "ALL", repo=ROOT,
-                   remote: str = "origin", post=None) -> dict:
-    """Pin the cited commit, then post 'PREDICATE <id>: <subject>' with a leading code_sha=<full sha> line."""
+                   remote: str = "origin", post=None, *, experiment_class: str | None = None,
+                   sample: dict | None = None, evidence_class: str | None = None) -> dict:
+    """H-R7-1: check EVIDENCE_N_v1 FIRST (a verdict-class predicate needs a conforming 32/4/8 sample block, else
+    SAMPLE_RULE_MISMATCH and nothing is pinned or posted); then pin the cited commit and post
+    'PREDICATE <id>: <subject>' whose body starts with 'code_sha=<full sha>' and 'evidence=<json>'."""
+    from primordial.score import evidence_n as EN
+    if not experiment_class:
+        raise PredicateRefError("SAMPLE_RULE_MISMATCH", f"experiment_class not declared ({EN.RULE} needs it)")
+    ev = EN.requirement(experiment_class, sample, evidence_class)
+    if ev is not None:
+        raise PredicateRefError("SAMPLE_RULE_MISMATCH", json.dumps(ev["failures"]))
     pinned = pin(predicate_id, sha, repo, remote)
     if post is None:
         from primordial.bus.bus import post
-    mid = post("claim", f"PREDICATE {predicate_id}: {subject}", f"code_sha={pinned['sha']}\n{body}", to=to)
+    declared = evidence_class or ("VERDICT" if experiment_class in EN.VERDICT_CLASSES else None)
+    evidence = json.dumps({"rule": EN.RULE, "experiment_class": experiment_class, "evidence_class": declared,
+                           "sample": sample}, sort_keys=True)
+    mid = post("claim", f"PREDICATE {predicate_id}: {subject}", f"code_sha={pinned['sha']}\nevidence={evidence}\n{body}",
+               to=to)
     return {**pinned, "bus_id": mid}
 
 

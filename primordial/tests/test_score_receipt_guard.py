@@ -37,6 +37,7 @@ def _rec(sha, **kw):
            "controls": {"cheat": "failed as expected", "input_invariance": "ran"},
            "oracles": {"wforge": "0 failing"},
            "runs_total": 32, "rng_family_count": 4, "runs_per_family": 8,
+           "families": [4200, 2101, 3303, 5501], "n_per_family": {"4200": 8, "2101": 8, "3303": 8, "5501": 8},
            "science": {"verdict": "FAIL"}, "engineering": {}, "claim": "c"}
     rec.update(kw)
     return rec
@@ -190,16 +191,32 @@ def test_every_failure_is_reported_not_just_the_first(repo):
 
 def test_pilot_undersample_without_a_verdict_is_not_refused(repo):
     """Labelling a deliberate under-sample is H-R5-4's classifier; the stage never moves a threshold."""
-    rec = _rec(repo[1], runs_total=16, rng_family_count=2, runs_per_family=8,
-               science={"judge": {"verdict": "INELIGIBLE", "why": "CANDIDATE_N"}})
+    rec = _rec(repo[1], runs_total=16, rng_family_count=2, runs_per_family=8, families=[4200, 2101],
+               n_per_family={"4200": 8, "2101": 8}, science={"judge": {"verdict": "INELIGIBLE", "why": "CANDIDATE_N"}})
     assert _guard(repo, rec)["accepted"]
     rec["science"] = {"verdict": "PASS"}
     assert _reasons(_guard(repo, rec)) == ["CANDIDATE_N"]
 
 
-def test_thresholds_come_from_the_judge():
-    from primordial.ops import qd_ledger as Q
-    assert RG._minimum() == (Q.BASELINE_MIN_RUNS, Q.BASELINE_MIN_FAMILIES, Q.BASELINE_MIN_PER_FAMILY) == (32, 4, 8)
+def test_the_guard_reads_the_one_evidence_n_table(repo):
+    """H-R7-1: no private copy; EVIDENCE_N_v1 is exact (40/5/8 is not a verdict sample)."""
+    from primordial.score import evidence_n as EN
+    assert RG.EN is EN and not hasattr(RG, "_minimum")
+    fams5 = [4200, 2101, 3303, 5501, 6601]
+    big = _rec(repo[1], runs_total=40, rng_family_count=5, runs_per_family=8, families=fams5,
+               n_per_family={str(f): 8 for f in fams5})
+    out = _guard(repo, big)
+    assert _reasons(out) == ["CANDIDATE_N"] and out["refusals"][0]["detail"]["rule"] == "EVIDENCE_N_v1"
+
+
+def test_an_observation_receipt_cannot_carry_pass_or_fail(repo):
+    obs = _rec(repo[1], evidence_class="OBSERVATION", status="PASS", science={"reading": "looks good"},
+               runs_total=16, rng_family_count=1, runs_per_family=16, families=[4200], n_per_family={"4200": 16})
+    assert "OBSERVATION_CARRIES_VERDICT" in _reasons(_guard(repo, obs))
+    quiet = {**obs, "status": "INDETERMINATE"}
+    assert _guard(repo, quiet)["accepted"]                                  # an observation at 16/1/16 files fine
+    labelled = {**obs, "status": "INDETERMINATE", "science": {"verdict": "FAIL"}}
+    assert _reasons(_guard(repo, labelled)) == ["OBSERVATION_CARRIES_VERDICT"]
 
 
 def _guard_code(repo, rec, code_sha_of, code_verify):

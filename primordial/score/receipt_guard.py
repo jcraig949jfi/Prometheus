@@ -49,9 +49,7 @@ SAMPLE_FIELDS = ("runs_total", "rng_family_count", "runs_per_family")
 SCIENTIFIC_VERDICTS = ("PASS", "FAIL", "BELOW_FLOOR", "KILL")
 
 
-def _minimum() -> tuple[int, int, int]:
-    from primordial.ops import qd_ledger as Q
-    return Q.BASELINE_MIN_RUNS, Q.BASELINE_MIN_FAMILIES, Q.BASELINE_MIN_PER_FAMILY
+from primordial.score import evidence_n as EN          # noqa: E402 -- H-R7-1: the ONE sample rule (EVIDENCE_N_v1)
 
 
 def rows_paths(rec: dict) -> list[str]:
@@ -252,17 +250,17 @@ def guard(rec: dict, envelope: dict | None = None, *, root=ROOT, git=None, on_in
         broken.append("runs_total != sum(n_per_family)")
     if broken:
         refuse("sample_rule", "SAMPLE_INVARIANT", {**sample, "families": fams, "n_per_family": per, "broken": broken})
-    if science.get("verdict") in SCIENTIFIC_VERDICTS:
-        n_runs, n_fam, n_per = _minimum()
+    for x in EN.receipt(rec):                        # H-R7-1: an OBSERVATION receipt cannot carry PASS/FAIL
+        refuse("sample_rule", x["reason"], x["failures"])
+    if science.get("verdict") in SCIENTIFIC_VERDICTS and EN.evidence_class_of(rec) != "OBSERVATION":
         rule = rec.get("sample_rule") if rec.get("sample_rule") in ("CANDIDATE_N", "BASELINE_N") else "CANDIDATE_N"
-        thin = isinstance(per, dict) and any(int(v) < n_per for v in per.values())       # G: any n_per_family < 8
         if not have:
             refuse("sample_rule", "SAMPLE_FIELDS_MISSING", sample)
-        elif (sample["runs_total"] < n_runs or sample["rng_family_count"] < n_fam
-              or sample["runs_per_family"] < n_per or thin):
-            refuse("sample_rule", rule, {**sample, "n_per_family": per,
-                                         "need": {"runs_total": n_runs, "rng_family_count": n_fam,
-                                                  "runs_per_family": n_per}})
+        else:
+            miss = EN.mismatch(EN.sample_of(rec))    # the ONE rule table (EVIDENCE_N_v1), no private copy
+            if miss is not None:
+                refuse("sample_rule", rule, {**sample, "families": fams, "n_per_family": per, "rule": EN.RULE,
+                                             "failures": miss["failures"], "need": EN.NEED})
 
     failed = {x["check"] for x in refusals}
     return {"accepted": not refusals, "refusals": refusals,

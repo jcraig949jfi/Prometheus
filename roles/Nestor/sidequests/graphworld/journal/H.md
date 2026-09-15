@@ -614,5 +614,27 @@ budget 1789425755152-0).
     >= 37; reproducible across stores; cells only.
   - R never sees arms. Unpublished and unlisted cells refused. A tampered prior is never ranked.
   - Calibration by arm and quartile.
+
+# Round 7 R7-BUILD (SWARM_R7 s3 H-R7-1..3; O1; operator 23 ruling; hard cap 18:35; status 18:15)
+
+## 2026-09-15 16:29, item 1 (part 1): H-R7-1 EVIDENCE_N_v1 as one rule module
+
+- primordial/score/evidence_n.py (H owns the one table).
+  - RULE EVIDENCE_N_v1, 8 VERDICT_CLASSES. The rule is exactly runs_total 32, rng_family_count 4,
+    runs_per_family 8, 4 distinct declared families, n_per_family 8 each, sum == runs_total.
+  - failures/mismatch report every miss. admission(env) / admission_reasons(env) read the
+    envelope's top-level fields (F 1789504304514-0) or a sample block.
+  - OBSERVATION and non-verdict classes pass; an unknown evidence_class is refused.
+  - receipt(rec) refuses OBSERVATION_CARRIES_VERDICT.
+- predicate_ref.post_predicate now requires experiment_class and a conforming sample for verdict
+  classes. It refuses SAMPLE_RULE_MISMATCH BEFORE pinning or posting (tested: no ref, no post),
+  and writes an 'evidence=<json>' line after code_sha.
+- receipt_guard: the private _minimum copy is deleted and "below rule" is decided by EN.mismatch
+  (CANDIDATE_N/BASELINE_N reason names kept). EN.receipt adds OBSERVATION_CARRIES_VERDICT. Fixture
+  receipts now declare families and n_per_family.
+- Tests: 16/1/16, 32/4/(16,8,4,4), 32/4/(29,1,1,1), 40/5/8, unbalanced, bad keys and a missing
+  block are refused for every verdict class. The exact E-R6-1 envelope JSON (pm:jobs:E
+  1789485387695-0) is refused, and so is its 16/1/16; its 32/4/8 rerun is admitted. The admit hook
+  line and the worker-level zero-rows test follow F's push.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
