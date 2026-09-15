@@ -46,6 +46,7 @@ from primordial.metric import floors as F
 from primordial.metric import invariant as I
 from primordial.metric import r16 as R
 from primordial.metric import screen as SC
+from primordial.metric import sample as SM
 from primordial.metric import worlds as WR
 
 ROOT = R.ROOT
@@ -66,6 +67,18 @@ CPU_BUDGET_S = 14400.0                      # SWARM_R6 s2 PRODUCTION cpu_budget_
 EVENTS = "pm:events"                        # F's event stream (envelope.EVENTS)
 RECIPE_CHANGED = "REPLICATION_RECIPE_CHANGED"
 PREDICATE_ID = "G-R16-SCREEN"      # envelope.validate refuses a None/empty predicate_id (all 73 R6 submits at 11:01)
+
+# G-R7-3 (SWARM_R7 O4, s2): the 5 PENDING train128 input-invariant learners of the R6 receipt (1789495407858-0)
+R7_CPU_CEILING_S = 36000.0          # s2: checkpointable cpu job, cpu_budget_s per job
+R7_SEGMENT_S = 2400                 # s2: segment wall
+T128 = "train128_held64"
+PENDING_R6 = ((1, T128), (7, T128), (10, T128), (26, T128), (34, T128))
+LEARNER_PLAN_FILE = "roles/Nestor/sidequests/graphworld/R16_LEARNER_PLAN_R7.json"
+LEARNER_CHUNK_FN = "primordial.metric.r16_cells:learner_chunk_job"
+LEARNER_CHUNK_RUNS = 4
+LEARNER_COST_FORMULA = ("cpu_s(world, runs) = (12030.94 / 32) * T * S * runs / 32 -- J3's committed CPU for the w13 "
+                        "train128 learner (12,030.94 CPU-s, 32 runs, T*S 32) per unit T*S; T and S from E4.Spec(gen_seed) "
+                        "only, no outcome data")
 
 
 def ts_of(gen_seed: int) -> int:
@@ -116,6 +129,25 @@ def write_order(doc: dict, path=ORDER_FILE) -> pathlib.Path:
 
 def job_key(gen_seed: int, pressure: str) -> str:
     return f"g-r16-cell-w{int(gen_seed)}-{pressure}"
+
+
+def learner128_cost(gen_seed: int, runs: int = 32) -> float:
+    """G-R7-3 cost estimate: a function of the world's T and S only (LEARNER_COST_FORMULA)."""
+    return LEARN128_CPU_PER_TS_32RUNS * ts_of(gen_seed) * runs / 32
+
+
+def sample_block(families=R.FAMILIES, run_seeds=R.RUN_SEEDS) -> dict:
+    """The EVIDENCE_N_v1 sample block of a full R16 cell (32/4/8 with a balanced n_per_family)."""
+    return SM.from_counts({int(f): len(run_seeds) for f in families})
+
+
+def learner128_remaining(st: dict, gen_seed: int, pressure: str, families=R.FAMILIES, run_seeds=R.RUN_SEEDS) -> dict:
+    """Learner runs of the cell already in st['done'] (committed by chunk jobs or earlier segments) and the CPU estimate
+    of the runs still missing. cell_job admits the learner on the remaining cost, not the full 32 runs."""
+    need = len(families) * len(run_seeds)
+    have = sum(1 for f in families for rs in run_seeds if I.run_key(int(gen_seed), pressure, int(rs), int(f)) in st["done"])
+    return {"runs_needed": need, "runs_committed": have,
+            "remaining_cpu_s": learner128_cost(gen_seed, runs=need) * (need - have) / need}
 
 
 def estimates(gen_seed: int, pressure: str, runs: int = 32) -> dict:
@@ -225,7 +257,12 @@ def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS
     status, pc, learner128 = "complete", None, None
     if fl["floor_is_bound"] and SC.needs_learner(fl["floor"], fl["gate_held64"], float(base["ci95"][0])):
         est = estimates(gs, p, runs=len(families) * len(run_seeds))
-        if est["learner128_cpu_s"] > cpu_budget_s:
+        prefill_done(st, gs, p, **({} if prefill_paths is None else {"paths": prefill_paths}))   # G-R7-3 chunk runs
+        rem = learner128_remaining(st, gs, p, families, run_seeds)
+        if rem["runs_committed"]:
+            est = {**est, "learner128_runs_committed": rem["runs_committed"],
+                   "learner128_remaining_cpu_s": rem["remaining_cpu_s"]}
+        if rem["remaining_cpu_s"] > cpu_budget_s:
             status = "PENDING"
             if "pc" not in st:
                 st["pc"] = _file_candidate(ctx, {
@@ -233,7 +270,7 @@ def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS
                     "question": f"R16 train128 input-invariant learner for w{gs} {p} (decides this cell's verdict)",
                     "reasons": ["CPU_BUDGET_OVER_CEILING"], "measured_cost": est,
                     "basis": "estimate from committed R16 J3 CPU (12,031 CPU-s for 32 runs at T*S 32), scaled by T*S",
-                    "requested_cost": {"cpu_budget_s": est["learner128_cpu_s"]}, "ceiling": {"cpu_budget_s": cpu_budget_s}})
+                    "requested_cost": {"cpu_budget_s": rem["remaining_cpu_s"]}, "ceiling": {"cpu_budget_s": cpu_budget_s}})
                 ctx.checkpoint(st)
             pc = st["pc"]
         else:
@@ -252,14 +289,14 @@ def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS
     replication_check(ctx, [fl, base] + ([learner128] if learner128 is not None else []), r=replication_r)
 
 
-def envelope_for(gen_seed: int, pressure: str, runs: int = 32) -> dict:
+def envelope_for(gen_seed: int, pressure: str, runs: int = 32, cpu_budget_s: float = CPU_BUDGET_S) -> dict:
     est = estimates(gen_seed, pressure, runs)
     cpu = est["baseline_cpu_s"] + est["learner8_cpu_s"] + (est["learner128_cpu_s"] if est["learner128_admissible"] else 0.0)
     # cpu_budget_s is the job's whole CPU TTL (worker: min(ttl, envelope)). The estimate is from 5-thread J1/J2/J3 walls;
     # an 8-thread token burns more CPU per wall and w4 train8 died TIMEOUT at 641 CPU-s with 19/99 rows (R6 11:38).
     # The estimate decides learner128 admission only; every admitted cell gets the PRODUCTION ceiling as its bound.
     del cpu
-    return {"campaign_stage": "PRODUCTION", "wall_budget_s": 2400, "cpu_budget_s": CPU_BUDGET_S,
+    return {**sample_block(), "campaign_stage": "PRODUCTION", "wall_budget_s": 2400, "cpu_budget_s": cpu_budget_s,
             "gpu_budget_s": 0, "expected_output_rows": 3 + runs * (3 if pressure == "train8_held64" else 2),
             "checkpointable": True, "required_controls": ["floor_suite", "det_matches_stage1"],
             "required_oracles": ["world_oracle", "fused_eq_numpy"], "cohort": "G", "predicate_id": PREDICATE_ID,
@@ -308,3 +345,56 @@ def partial_v2(cell_rows=ROWS, floors=R.ROWS["floors"], baseline=R.ROWS["baselin
     doc["unscreened"] = [[gs, p] for gs, p in unscreened]
     doc["coverage"] = {"cells": len(all_cells()), "complete": len(recs), "unscreened": len(unscreened)}
     return doc
+
+
+# ---------------------------------------------------------------- G-R7-3 PENDING train128 learner plan (SWARM_R7 O4)
+
+def learner_chunk_job(ctx, gen_seed, pressure, rng_family, run_seeds, learner_gens=None, learner_batch=None,
+                      learn_archive=I.ARCHIVE_URL, learn_elites=str(R.ELITES_LEARN), prefill_paths=None):
+    """G-R7-3: LEARNER_CHUNK_RUNS runs of one cell's input-invariant learner for one RNG family. Emits the run rows
+    (same run keys as cell_job, so cell_job's prefill reuses them) and one r16_learner_chunk control row; no verdict."""
+    import redis
+    gs, p, fam, rss = int(gen_seed), str(pressure), int(rng_family), [int(x) for x in run_seeds]
+    rl = redis.Redis.from_url(learn_archive)
+    st = ctx.load_checkpoint() or {"done": {}, "cur": None}
+    prefill_done(st, gs, p, **({} if prefill_paths is None else {"paths": prefill_paths}))
+    runs = I.learner_cell(ctx, st, rl, gs, p, rss, learner_gens, learner_batch, learn_elites, families=[fam])
+    ctx.checkpoint(st)
+    ctx.emit({"kind": "r16_learner_chunk", "world": f"w{gs}", "gen_seed": gs, "pressure": p, "rng_family": fam,
+              "run_seeds": rss, "runs": len(runs), "status": "control"})
+
+
+def learner_plan(cells=PENDING_R6, families=R.FAMILIES, run_seeds=R.RUN_SEEDS, chunk=LEARNER_CHUNK_RUNS) -> dict:
+    """Cells in ascending learner128_cost (ties: gen_seed); per cell every (family, run-seed chunk) job, then one
+    assembly cell_job (fresh -r7 job key) that pools the committed runs and emits the verdict."""
+    order = sorted(((int(g), p) for g, p in cells), key=lambda c: (learner128_cost(c[0]), c[0]))
+    jobs = []
+    for gs, p in order:
+        for fam in families:
+            for i in range(0, len(run_seeds), chunk):
+                rss = [int(x) for x in run_seeds[i:i + chunk]]
+                est = learner128_cost(gs, runs=len(rss))
+                env = {**sample_block(families, run_seeds), "campaign_stage": "PRODUCTION", "wall_budget_s": R7_SEGMENT_S,
+                       "cpu_budget_s": float(min(R7_CPU_CEILING_S, round(2 * est + 300))), "gpu_budget_s": 0,
+                       "expected_output_rows": len(rss) + 1, "checkpointable": True, "required_controls": [],
+                       "required_oracles": [], "cohort": "G", "predicate_id": PREDICATE_ID,
+                       "experiment_class": "R16_LEARNER_CHUNK", "evidence_class": "OBSERVATION"}
+                jobs.append({"lane": "G", "fn": LEARNER_CHUNK_FN, "exp_id": EXP, "rows": ROWS,
+                             "job_key": f"g-r16-learn128-w{gs}-f{fam}-r{rss[0]}-{rss[-1]}",
+                             "kwargs": {"gen_seed": gs, "pressure": p, "rng_family": int(fam), "run_seeds": rss},
+                             "envelope": env, "estimate_cpu_s": round(est, 2)})
+        jobs.append({"lane": "G", "fn": FN, "exp_id": EXP, "rows": ROWS, "job_key": f"{job_key(gs, p)}-r7",
+                     "kwargs": {"gen_seed": gs, "pressure": p, "cpu_budget_s": R7_CPU_CEILING_S},
+                     "envelope": envelope_for(gs, p, cpu_budget_s=R7_CPU_CEILING_S), "estimate_cpu_s": 0.0})
+    return {"round": "r7", "item": "G-R7-3",
+            "rule": "SWARM_R7 O4: ascending cost estimate, a function of T and the world only",
+            "formula": LEARNER_COST_FORMULA, "chunk_runs": chunk,
+            "cpu_budget_rule": f"min({R7_CPU_CEILING_S:.0f}, round(2 * chunk estimate + 300)); segment {R7_SEGMENT_S} s",
+            "source": "PENDING cells of receipt G-R16-SCREEN-R6 (pm:results 1789495407858-0)",
+            "order": [{"gen_seed": gs, "pressure": p, "t_x_s": ts_of(gs), "learner128_cpu_s": round(learner128_cost(gs), 2)}
+                      for gs, p in order],
+            "r16_remainder_order_file": str(ORDER_FILE), "jobs": jobs}
+
+
+def write_learner_plan(doc: dict, path=LEARNER_PLAN_FILE):
+    return write_order(doc, path)
