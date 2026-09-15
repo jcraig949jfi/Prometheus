@@ -423,3 +423,9 @@ Iterations 5-6 (12:29, 13:00). No asks to E. A ruling 1789489756428-0 (F-R6-2 ga
 not its imports): restart the F7 worker after editing any harness module. E check: worker E started 11:14, before soup/b2/compiled.py
 existed, so E-R6-2 imported that module fresh (the pinned adf146468 code); no harness module edited since. Any later E job gets a worker
 restart first. Note: the bus stream is pm:swarm (my 11:37 monitor watched a wrong key for A's reply; the inbox read covered it).
+
+ROUND 6 FINAL (14:21, after NO_NEW_WORK). 1 receipt: E-R6-2 PASS 1789486928415-0 (EXACT; B2 pilot 746 h -> 6.7 h). Unreceipted rows:
+E-R6-1 only (ruling b, OBSERVATION: check_b v2 FAIL gates clean, 16/1/16). E-R6-3 dispatch table committed (no rows). PCs filed:
+1789471324763-0, 1789486665691-0 (new, family-aware Clause B 32/4/8), 1789468339986-0. Open claims none. Own errors: no guard dry-run
+before E-R6-1's predicate; monitor on a wrong bus key; numba 3 threads vs token 8 unnoticed before E-R6-2. Final posted to A; worker
+stopped; loop stopped.
