@@ -163,6 +163,55 @@ def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, h
     return raw
 
 
+PROGRESS_PASS = 0.95
+
+
+def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_failed=True, held=None,
+             doc=None) -> dict:
+    """Clause A, round 4 binding (SWARM_R4 s4), read against primordial/ledger/qd/worlds_r4.json.
+
+    The cell must be SURVIVED under the file's active variant (else INELIGIBLE UNSCREENED / CULLED / HELD,
+    looked up, never recomputed). floor = that variant's floor; baseline = the cell's M2 baseline.
+      progress = (median - floor) / (baseline median - floor)          (> 0 denominator by the screen)
+      PASS iff progress >= 0.95 AND bytes < baseline bytes; BELOW_FLOOR iff progress < 0; else FAIL.
+    `held` (per-run-seed values) adds the bootstrap CI of the median mapped through the same formula:
+    reported, not judged."""
+    from primordial.metric import worlds as WR
+    doc = WR.load() if doc is None else doc
+    base = {"rules": "r4", "world": world, "pressure": pressure}
+    g = WR.guard(doc, world, pressure)
+    if g is not None:
+        return {**base, **g}
+    if not oracle_clean:
+        return {**base, "verdict": "INELIGIBLE", "why": "oracles not clean"}
+    if not cheat_failed:
+        return {**base, "verdict": "INELIGIBLE", "why": "a cheat control did not fail"}
+    if runs < 8:
+        return {**base, "verdict": "INELIGIBLE", "why": f"{runs} run seeds < 8"}
+    c = WR.lookup(doc, world, pressure)
+    from primordial.metric import screen as SC
+    k = SC.vkey(doc["q1_floor_policy"], doc["q2_policy"])
+    fv, bm, bb = c["verdicts"][k]["floor"], c["baseline"]["median"], c["baseline"]["bytes"]
+    if not bm > fv:
+        raise ValueError(f"screen defect: {world} {pressure} SURVIVED with baseline median {bm} <= floor {fv}")
+    prog = (median - fv) / (bm - fv)
+    out = {**base, "variant": k, "floor": fv, "baseline_median": bm, "baseline_bytes": bb, "median": median,
+           "bytes": nbytes, "progress": prog, "pass_at": PROGRESS_PASS}
+    if held is not None:
+        from primordial.metric.ci import median_ci
+        lo, hi = median_ci(held)
+        out["candidate_ci95"] = [lo, hi]
+        out["progress_ci95"] = [(lo - fv) / (bm - fv), (hi - fv) / (bm - fv)]
+    if prog < 0:
+        out["verdict"] = "BELOW_FLOOR"
+    elif prog >= PROGRESS_PASS and nbytes < bb:
+        out["verdict"] = "PASS"
+    else:
+        out["verdict"] = "FAIL"
+        out["why"] = "progress < 0.95" if prog < PROGRESS_PASS else "bytes not below the baseline's"
+    return out
+
+
 def _check_raw(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, held=None) -> dict:
     """Clause A verdict of a candidate against the baseline Pareto front for (world, pressure)."""
     if not oracle_clean:
@@ -200,13 +249,18 @@ def main(argv=None) -> int:
     sub.add_parser("seed-round1")
     t = sub.add_parser("top"); t.add_argument("--world"); t.add_argument("--pressure"); t.add_argument("--n", type=int, default=10)
     p = sub.add_parser("pareto"); p.add_argument("--world", required=True); p.add_argument("--pressure")
-    c = sub.add_parser("check")
+    c = sub.add_parser("check", help="clause A; round 4 (default) reads worlds_r4.json, --rules r2 the old front")
     for k in ("world", "pressure"):
         c.add_argument(f"--{k}", required=True)
-    for k in ("median", "iqr", "bytes"):
+    for k in ("median", "bytes"):
         c.add_argument(f"--{k}", type=float, required=True)
+    c.add_argument("--iqr", type=float, default=0.0, help="r2 only")
     c.add_argument("--runs", type=int, required=True)
     c.add_argument("--held", help="comma-separated per-run-seed held64 values -> bootstrap CI band (M3)")
+    c.add_argument("--rules", choices=("r4", "r2"), default="r4")
+    c.add_argument("--oracle-unclean", action="store_true")
+    c.add_argument("--cheat-did-not-fail", action="store_true")
+    c.add_argument("--worlds", help="worlds_r4.json path (default primordial/ledger/qd/worlds_r4.json)")
     cb = sub.add_parser("check-b", help="clause B (S1, builder H): graft vs both cheats per run seed, Holm")
     cb.add_argument("--rows", nargs="+", required=True, help="transfer harness rows (E-T1b protocol)")
     cb.add_argument("--alpha", type=float, default=0.05)
@@ -237,7 +291,15 @@ def main(argv=None) -> int:
                   f"bytes {r['footprint']['genome_bytes']:6d}")
     elif a.cmd == "check":
         held = [float(x) for x in a.held.split(",")] if a.held else None
-        print(json.dumps(check(rows, a.world, a.pressure, a.median, a.iqr, int(a.bytes), a.runs, held=held), indent=1))
+        if a.rules == "r4":
+            from primordial.metric import worlds as WR
+            doc = WR.load(a.worlds) if a.worlds else WR.load()
+            out = check_r4(a.world, a.pressure, a.median, int(a.bytes), a.runs, oracle_clean=not a.oracle_unclean,
+                           cheat_failed=not a.cheat_did_not_fail, held=held, doc=doc)
+        else:
+            out = check(rows, a.world, a.pressure, a.median, a.iqr, int(a.bytes), a.runs,
+                        oracle_clean=not a.oracle_unclean, held=held)
+        print(json.dumps(out, indent=1))
     return 0
 
 
