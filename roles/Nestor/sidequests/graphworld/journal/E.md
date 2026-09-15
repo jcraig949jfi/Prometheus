@@ -304,3 +304,14 @@ Conductor QUIESCE at 17:33. No task in hand; nothing new started. EPOCH 3 (final
 open_claims=none. Round 2 totals for E: 3 receipts (E-T1 FAIL, E-T2 PASS, E-T1b PASS), 372 rows, plus
 3 asks landed (B ledger fix, D seeded sampler, B cheat-power oracle). Carry forward: clause B reads
 graft vs both cheats; E-T2 has no fused kernel; round 1 LuaArchive runs are not seed-replayable. Loop stopped.
+
+# ROUND 4 -- Nestor-E[m1-2adb547f], cohort WATCHMAKERS (SWARM_R4 s5 E)
+
+## 2026-09-15 r4 iteration 1 -- E-R4-1 clause B transfer into the survivor, predicate posted, record job running
+
+Boot: ff to the sidequest tip, suite 209 passed rc 0, worker E up. One SURVIVED cell (w13 train128); only
+w14 and w20 share its linear layout among the screened w1..w37, so the Holm family is 2 pairs into w13.
+transfer.run_pair split (pair_base/run_seed/summarize) for per-seed F9 checkpoints; the split reproduces
+committed E-T1b rows field for field. New job cohorts/e/r4_transfer.py (guard from worlds_r4.json, M2 budget
+800x128 on TRAIN128, 16 run seeds, report-only check_b row) + tests, code 407b210ef.
+Dev smoke (1 seed, 20 gens): 9.3 CPU-s, oracles clean, integrity true. Record job submitted, ttl 20000 CPU-s.
