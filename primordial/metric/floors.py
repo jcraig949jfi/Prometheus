@@ -62,11 +62,13 @@ def const_scores(spec: E4.Spec, actions: np.ndarray, seeds: np.ndarray) -> np.nd
     return np.concatenate(out)
 
 
-def random_scores(spec: E4.Spec, seeds: np.ndarray, policy_seeds) -> np.ndarray:
-    """Per-seed score of the uniform random-action policy, one value per policy seed."""
+def random_scores(spec: E4.Spec, seeds: np.ndarray, policy_seeds, rng_family: int | None = None) -> np.ndarray:
+    """Per-seed score of the uniform random-action policy, one value per policy seed.
+    rng_family=None: the round 3/4 P0 stream PCG64([7001, ps, gen_seed]); a family F (operator 16): [F, ps, gen_seed]."""
     out = []
+    head = 7001 if rng_family is None else int(rng_family)
     for ps in policy_seeds:
-        rng = np.random.Generator(np.random.PCG64([7001, int(ps), spec.gen_seed]))
+        rng = np.random.Generator(np.random.PCG64([head, int(ps), spec.gen_seed]))
         out.append(_run(spec, seeds, 1, lambda t, n: rng.integers(0, 8, (n, spec.S, spec.W), dtype=np.int32))[0])
     return np.array(out)
 

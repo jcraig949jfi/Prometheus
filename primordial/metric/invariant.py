@@ -72,8 +72,30 @@ def e4_seeds(seeds):
         E4.SEEDS = old
 
 
-def run_key(gen_seed: int, pressure: str, run_seed: int) -> str:
-    return f"g-r4-inv-w{gen_seed}-{pressure}-r{run_seed}"
+FAMILIES = (4200, 2101, 3303, 5501)          # operator 16 (SWARM_R4 s9): the baseline's four RNG families
+R16_MIN_RUNS, R16_MIN_FAMILIES, R16_PER_FAMILY = 32, 4, 8
+
+
+def run_key(gen_seed: int, pressure: str, run_seed: int, rng_family: int | None = None) -> str:
+    if rng_family is None:
+        return f"g-r4-inv-w{gen_seed}-{pressure}-r{run_seed}"
+    return f"g-r16-inv-w{gen_seed}-{pressure}-f{int(rng_family)}-r{run_seed}"
+
+
+def seeds_of(gen_seed: int, n_train: int, run_seed: int, rng_family: int | None) -> tuple[list, list]:
+    """(mutation rng seed, archive sampler seed). None = the round 4 P0 learner stream (4100/4101); a family F
+    uses D-R4-2's convention [F, rs, gs, n_train] / [F+1, rs, gs, n_train]."""
+    f = 4100 if rng_family is None else int(rng_family)
+    return [f, run_seed, gen_seed, n_train], [f + 1, run_seed, gen_seed, n_train]
+
+
+def top1_per_seed(spec: E4.Spec, arch_elites: list, seeds: np.ndarray) -> tuple[float, str]:
+    """The shared readout's selection (readout.select: -train fit, genome bytes) on an open-loop archive, scored
+    by the numba world: (per-seed mean on `seeds`, sha256 of the genome)."""
+    from primordial.metric import readout as RO
+    raw = RO.packed(RO.select(arch_elites), spec.glen)
+    g = spec.unpack(raw)
+    return per_seed(spec, g, seeds), hashlib.sha256(np.ascontiguousarray(raw).tobytes()).hexdigest()
 
 
 def top_genomes(arch: LuaArchive, spec: E4.Spec, n: int = TOP) -> np.ndarray:
@@ -83,16 +105,19 @@ def top_genomes(arch: LuaArchive, spec: E4.Spec, n: int = TOP) -> np.ndarray:
 
 
 def learner_run(r, gen_seed: int, pressure: str, run_seed: int, gens: int | None = None, batch: int | None = None,
-                elites_dir=ELITES_DIR, should_pause=None, state: dict | None = None) -> dict:
-    """One run seed. Returns the row, or {"paused": state} when should_pause() fired (archive kept)."""
+                elites_dir=ELITES_DIR, should_pause=None, state: dict | None = None,
+                rng_family: int | None = None) -> dict:
+    """One run seed. Returns the row, or {"paused": state} when should_pause() fired (archive kept).
+    rng_family=None: the round 4 P0 stream and row (top-16 readout). A family: operator 16 run, the row carries
+    rng_family and BOTH readouts -- held64_per_seed under readout.NAME (top1_train) and held64_legacy_top16."""
     spec = E4.Spec(gen_seed)
     train = F.PRESSURES[pressure]
     bg, bb = BUDGET[pressure]
     gens, batch = gens or bg, batch or bb
-    key = run_key(gen_seed, pressure, run_seed)
-    sseed = [4101, run_seed, gen_seed, len(train)]
+    key = run_key(gen_seed, pressure, run_seed, rng_family)
+    rseed, sseed = seeds_of(gen_seed, len(train), run_seed, rng_family)
     arch = LuaArchive(r, key, spec.glen, sseed)
-    rng = np.random.Generator(np.random.PCG64([4100, run_seed, gen_seed, len(train)]))
+    rng = np.random.Generator(np.random.PCG64(rseed))
     if state is None:
         arch.clear()
         state = {"gen": 0, "qd_wall_s": 0.0}
@@ -111,18 +136,25 @@ def learner_run(r, gen_seed: int, pressure: str, run_seed: int, gens: int | None
         state["gen"] += 1
     qd_wall = state["qd_wall_s"] + time.perf_counter() - t0
     top = top_genomes(arch, spec)
-    n_cells = len(arch.dump())
+    el = arch.dump()
+    n_cells = len(el)
     epath = pathlib.Path(elites_dir) / f"{key}.json"
-    save_elites(arch, epath, [run_seed, gen_seed])
+    save_elites(arch, epath, [run_seed, gen_seed] if rng_family is None else [int(rng_family), run_seed, gen_seed])
     arch.clear()
-    return {"kind": "run", "world": f"w{gen_seed}", "gen_seed": gen_seed, "pressure": pressure, "run_seed": run_seed,
-            "T": spec.T, "S": spec.S, "W": spec.W, "genome_bytes": spec.glen,
-            "gens": gens, "batch": batch, "genomes": gens * batch, "budget_ok": (gens, batch) == (bg, bb),
-            "budget_source": BUDGET_SOURCE[pressure], "train_seeds": len(train), "top": len(top),
-            "sampler_seed": sseed, "cells": n_cells, "qd_wall_s": round(qd_wall, 2),
-            "train_per_seed": per_seed(spec, top, train), "held64_per_seed": per_seed(spec, top, F.HELD64),
-            "top_sha256": hashlib.sha256(np.ascontiguousarray(top).tobytes()).hexdigest(),
-            "elites": str(epath)}
+    row = {"kind": "run", "world": f"w{gen_seed}", "gen_seed": gen_seed, "pressure": pressure, "run_seed": run_seed,
+           "T": spec.T, "S": spec.S, "W": spec.W, "genome_bytes": spec.glen,
+           "gens": gens, "batch": batch, "genomes": gens * batch, "budget_ok": (gens, batch) == (bg, bb),
+           "budget_source": BUDGET_SOURCE[pressure], "train_seeds": len(train), "top": len(top),
+           "sampler_seed": sseed, "cells": n_cells, "qd_wall_s": round(qd_wall, 2),
+           "train_per_seed": per_seed(spec, top, train), "held64_per_seed": per_seed(spec, top, F.HELD64),
+           "top_sha256": hashlib.sha256(np.ascontiguousarray(top).tobytes()).hexdigest(),
+           "elites": str(epath)}
+    if rng_family is not None:
+        from primordial.metric import readout as RO
+        h1, sha1 = top1_per_seed(spec, [(v[0], v[1]) for v in el.values()], F.HELD64)
+        row.update(rng_family=int(rng_family), readout=RO.NAME, top=1, held64_legacy_top16=row["held64_per_seed"],
+                   held64_per_seed=h1, top_sha256=sha1, top16_sha256=row["top_sha256"])
+    return row
 
 
 S_PER_T64_RUN = 320.0            # measured: E10-budget learner on w4 (T=64, S=1), 5 threads (journal, G-R4 iteration 1)
@@ -164,33 +196,62 @@ def oracle_top(gen_seed: int, top: np.ndarray, seeds=F.HELD64[:8]) -> dict:
 
 
 def learner_cell(ctx, st: dict, r, gs: int, pressure: str, run_seeds, gens=None, batch=None,
-                 elites_dir=str(ELITES_DIR), oracle_run_seed=0) -> list[dict]:
-    """Every run seed of one (gen_seed, pressure) inside a worker job: emits a run row per run seed not yet
-    in st["done"]; on should_pause() stores the generation state in st["cur"] and calls ctx.pause(st)."""
+                 elites_dir=str(ELITES_DIR), oracle_run_seed=0, families=None) -> list[dict]:
+    """Every run of one (gen_seed, pressure) inside a worker job: emits a run row per run not yet in st["done"];
+    on should_pause() stores the generation state in st["cur"] and calls ctx.pause(st).
+    families=None: the round 4 P0 single stream; else every family x run seed (operator 16)."""
     runs = []
-    for rs in run_seeds:
-        k = run_key(gs, pressure, int(rs))
-        if k in st["done"]:
-            runs.append(st["done"][k])
-            continue
-        cur = st["cur"]["state"] if st.get("cur") and st["cur"]["key"] == k else None
-        out = learner_run(r, gs, pressure, int(rs), gens, batch, elites_dir, ctx.should_pause, cur)
-        if "paused" in out:
-            st["cur"] = {"key": k, "state": out["paused"]}
-            ctx.pause(st)
-        if int(rs) == oracle_run_seed:
-            from primordial.qd.archive import load_elites
-            doc = load_elites(out["elites"])
-            spec = E4.Spec(gs)
-            best = sorted(doc["elites"], key=lambda e: (-e[1], e[2]))[:TOP]
-            top = spec.unpack(np.frombuffer(bytes.fromhex("".join(e[2] for e in best)), np.uint8)
-                              .reshape(-1, spec.glen))
-            out["oracle_held8"] = oracle_top(gs, top)
-        out["status"] = "control"
-        ctx.emit(out)
-        st["done"][k], st["cur"] = out, None
-        runs.append(out)
+    for fam in (families if families is not None else [None]):
+        for rs in run_seeds:
+            k = run_key(gs, pressure, int(rs), fam)
+            if k in st["done"]:
+                runs.append(st["done"][k])
+                continue
+            cur = st["cur"]["state"] if st.get("cur") and st["cur"]["key"] == k else None
+            out = learner_run(r, gs, pressure, int(rs), gens, batch, elites_dir, ctx.should_pause, cur, fam)
+            if "paused" in out:
+                st["cur"] = {"key": k, "state": out["paused"]}
+                ctx.pause(st)
+            if int(rs) == oracle_run_seed and (families is None or fam == families[0]):
+                from primordial.qd.archive import load_elites
+                doc = load_elites(out["elites"])
+                spec = E4.Spec(gs)
+                best = sorted(doc["elites"], key=lambda e: (-e[1], e[2]))[:TOP]
+                top = spec.unpack(np.frombuffer(bytes.fromhex("".join(e[2] for e in best)), np.uint8)
+                                  .reshape(-1, spec.glen))
+                out["oracle_held8"] = oracle_top(gs, top)
+            out["status"] = "control"
+            ctx.emit(out)
+            st["done"][k], st["cur"] = out, None
+            runs.append(out)
     return runs
+
+
+def pooled_summary(runs: list[dict], readout: str | None = None, min_runs: int = R16_MIN_RUNS,
+                   min_families: int = R16_MIN_FAMILIES, per_family: int = R16_PER_FAMILY) -> dict:
+    """Operator 16 floor part: the input-invariant learner pooled over RNG families. readout=None: the rows'
+    own readout (top1_train); 'm2_top16': the legacy value each R16 row also carries. Refuses fewer than
+    min_runs / min_families / per_family, duplicate run ids."""
+    from primordial.metric import readout as RO
+    ids = [f"{int(x['rng_family'])}|{int(x['run_seed'])}" for x in runs]
+    if len(set(ids)) != len(ids):
+        raise ValueError("duplicate run ids in the pool")
+    order = sorted(range(len(runs)), key=lambda i: (FAMILIES.index(int(runs[i]["rng_family"])), int(runs[i]["run_seed"])))
+    runs, ids = [runs[i] for i in order], [ids[i] for i in order]
+    fams = sorted({int(x["rng_family"]) for x in runs})
+    per = {str(f): sum(int(x["rng_family"]) == f for x in runs) for f in fams}
+    if len(runs) < min_runs or len(fams) < min_families or min(per.values()) < per_family:
+        raise ValueError(f"LEARNER_N: {len(runs)} runs over families {per}; need >= {min_runs} runs, "
+                         f">= {min_families} families x {per_family}")
+    rd = readout or runs[0].get("readout", RO.NAME)
+    key = "held64_legacy_top16" if rd == RO.LEGACY else "held64_per_seed"
+    v = [float(x[key]) for x in runs]
+    x0 = runs[0]
+    return {"kind": "floor_invariant_r16", "world": x0["world"], "gen_seed": x0["gen_seed"], "pressure": x0["pressure"],
+            "readout": rd, "invariant_held64_median": float(np.median(v)),
+            "invariant_held64_iqr": float(np.percentile(v, 75) - np.percentile(v, 25)),
+            "n_runs": len(v), "families": fams, "n_per_family": per, "held64_by_run": dict(zip(ids, v)),
+            "run_seeds": ids, "budget_ok": all(x["budget_ok"] for x in runs), "genomes": x0["genomes"]}
 
 
 def job(ctx, cells, run_seeds=tuple(range(MIN_RUNS)), gens=None, batch=None, archive_url=ARCHIVE_URL,
