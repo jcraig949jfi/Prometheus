@@ -394,3 +394,22 @@ predicate E-R6-1-clauseB-live-w14-w13 pinned at 59f6047db (bus 1789485387411-0, 
 13 tests green; dev smoke oracle clean, ~16 us/episode linear vs RefB2 ~1.5 ms (smoke only, not quoted). E-R6-3: nv/dispatch_surface.py
 builds E_R6_3_DISPATCH_SURFACE.md from committed E-R5-3 + D-R5-2 rows (32 cells, UNMEASURED list, no new timing).
 B2 code not pushed yet: my RowWriter is live and origin is ahead, so ops.push would rebase under it; push after E-R6-1 ends.
+
+Iteration 2 (~11:36, T+36). E-R6-1 done (1 segment, 1066 s, 3158 CPU-s, 50 rows @ 520260e4e): check_b v2 FAIL, gates clean --
+graft-scratch -0.011 (p .506), graft-sham -0.018 (p .513), as predicted. Zero-shot: graft 138 and sham 146 vs scratch 80, so the
+early lead is the donor's value structure, not its observation mapping; final held64 graft 169 < scratch 176. file_candidate on PC
+1789471324763-0 filed. Receipt guard dry-run refuses sample_rule CANDIDATE_N (a Clause A minimum applied to this Clause B verdict,
+16/1/16): not filed, not relabelled; ruling asked of A. Pushed B2 + dispatch code adf146468 (ops.push rc 0); predicate
+E-R6-2-b2-compiled-rollout pinned there (bus 1789486511529-0), job 63b7c33725f8 queued, waiting for a CPU token.
+A ruled (b) (D13, A's sample-rule defect in SWARM_R6): E-R6-1 is an OBSERVATION below the verdict sample rule, not a Clause B
+verdict; no receipt; rows stay as UNRECEIPTED_OBSERVATION. New PC 1789486665691-0 "family-aware Clause B at CANDIDATE_N 32/4/8"
+filed (est 2132 s / 6316 CPU-s for 32 runs + family plumbing). Lesson: dry-run the receipt guard on a synthetic receipt with the
+planned sample BEFORE the predicate, not after the rows.
+
+Iteration 3 (~11:47). E-R6-2 job 63b7c33725f8 ok (14 s wall, 141 rows @ 52c80ead2). Oracle EXACT: O1 96/96 (32 specs x random /
+forager / linear: hash + charges + moving), O2 skip_mutation detected 32/32 moved specs and == RefB2's cheat 32/32, O3 64-episode
+batch == per-episode RefB2. Throughput, planted spec, medians: RefB2 table 1.47 ms, RefB2 linear 14.0 ms; compiled table 6.9 us (t1),
+linear 14.4 us (t1) / 6.7 us (t3; the worker child's NUMBA_NUM_THREADS was 3 although the token granted 8). b2_screen.pilot_cost:
+~746 h (R5, table basis) -> 6.7 h single worker at t1 linear (3.1 h at t3); full screen 13.4 h. Caveat: G's R5 1.6 ms timed a TABLE
+policy; the pilot evaluates linear genomes, whose RefB2 cost (14 ms) would have given ~6,500 h -- like-for-like speedup ~970x
+(linear), ~212x (table). QD mutation/archive overhead still outside the estimate. t3 CPU-s/episode 20 us is process_time-coarse.
