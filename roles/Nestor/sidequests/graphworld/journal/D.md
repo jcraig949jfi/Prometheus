@@ -352,3 +352,4 @@
   FAKEFIT exceeds the 100-null max 0/10 (CP CI [0, 0.31]) and E2b's 20-null max 0/10; rates 0.0036-0.0332, percentiles
   0.00-0.76 among own nulls. E2b's 6.5% FAKEFIT rate lies above all 10 here; the 20-null max itself swings
   0.036-0.073 across reps. Cost: branch_points 24-91 s per rep (the 100 nulls), evolve ~1.5 s.
+- Receipt D-R6-10 filed 1789492198616-0 (guard 10/10, status NULL, NULL_HOLDS), rows 988ee3745; ANOM-..0379 RESOLVED.
