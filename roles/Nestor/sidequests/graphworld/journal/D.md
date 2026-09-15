@@ -327,3 +327,7 @@
   symbol short 45/45/7 three-bit). One-bit splits improve 0/89 trapped codes (best +0.035..+0.185), three-bit 89/89
   (best -0.0125..-0.0775). Caveat: one census signature per cell -> 3 distinct codes, 3/3. Receipt 1789490774638-0,
   ANOM-..2892 RESOLVED. D-R6-8 predicate + job submitted (background).
+- D-R6-8 RECORD (job 7d72f1d38ae9 ok, 0 QD, predicate 1789490790710-0): MIXED. I1 6/6, self_pair clean. Control train >
+  cell train 32/32 pairs, control held > cell held 17/32 (TRAIN_NOT_HELD needed <= 16: one pair short). Shuffled
+  pairing t 31 h 17. Spearman train-held control -0.04. Receipt 1789490865360-0. ANOM-..3451 left OPEN (rule did not
+  return the mechanism; not explained away).
