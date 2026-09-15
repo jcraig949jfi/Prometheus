@@ -491,3 +491,7 @@
   CLAIM (first item): int5a8 36B is the smallest-bytes rung that PASSes on BOTH preregistered seed sets (0-7 and 8-15) and pooled; 36 B vs the 200 B float baseline (5.6x smaller).
   NOT claimed: int4a8 28B PASS on seeds 8-15 only -- choosing that set is seed shopping; its verdict flips FAIL/PASS by seed set and pools to FAIL.
   Finding for D: 8-seed clause A verdicts on w13 t128 flip with the run-seed set (baseline itself has only 5/8 seeds >= the pass line); filed as an anomaly.
+- Receipt B-R4-3 PASS filed (1789450196529-0), mirror pushed c99ab44bc (on integration). Operator notified. A 1789449028866-0: w13 baseline is the top-16 readout (D-R4-1: it reads below top-1 in many cells); a w13 PASS carries that caveat, nothing promoted in the test launch; keep working.
+- Loop iteration 1: B-R4-4 (shrink via codebook): int5a4 20B, int4a4 16B, int5a2 12B, seeds 0-7, ttl 2400. Rule fixed before the run: front membership needs PASS on seeds 0-7 AND 8-15.
+- B-R4-4 (2 segments across the EPOCH 1 stop flag, 1392 CPU-s; oracles clean, 0 input-invariant): int5a4 20B 183.82 PASS progress 1.068 CI [.81,1.40]; int4a4 16B 189.91 PASS 1.442 [.86,1.76]; int5a2 12B 167.60 FAIL .070 [-.18,.14].
+  Both PASSes are single-set: NOT claimed. B-R4-5 replicates int5a4 + int4a4 on run seeds 8-15. Front stays int5a8 36B until then.
