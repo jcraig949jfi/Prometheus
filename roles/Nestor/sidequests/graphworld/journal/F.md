@@ -233,3 +233,16 @@ Interfaces posted to G,H,E,A 06:14 (1789467306628-0).
   clears queued_job_id, so the object stays resumable. Worker(auto_requeue=False) leaves resume to code.
 - Test: walk 40 steps paused after 5+ rows by the stop flag, object complete, fresh worker resumes, rows ==
   uninterrupted run exactly, object + checkpoint gone. With F-R5-1/2, F7, F9, hygiene: 33 passed rc 0.
+
+## 2026-09-15 R5 iteration 4 -- F-R5-4 liveness states + F-R5-6 drain/controller repo (DONE, built by forks of this session)
+
+- F-R5-4 liveness.py: DEAD / BUSY_COMPUTE / DRAINING / ACTIVE (transcript <= 120 s) / IDLE / STALE;
+  holds_job(r, L) = pm:worker job_id or XPENDING on worker-<L>. post_changes pages A only on a change into
+  STALE or DEAD of a lane holding a job. Tests: test_r5_f4_liveness.py (4), test_x_liveness.py renamed and
+  tightened (OK -> ACTIVE / IDLE).
+- F-R5-6 epoch.py (defect F8): drain_timeout_s=None sizes the drain to max(remaining envelope wall budget of
+  busy jobs; no envelope -> 900) + 30 s; the value lands in the drained event and EPOCH record. (Defect F7)
+  CLI run/boundary/round need --repo / PM_EPOCH_REPO, refuse (rc 2, before Redis) ROOT, a path inside it, or
+  a non-git dir; records commit there and push from there (push_failed logged, clock continues). The
+  controller worktree (e.g. nestor-epoch) is the conductor's to create. Tests: test_r5_f6_drain.py (7).
+- Combined run (all R5 + F7/F9/F14/F15/X/hygiene), db 6: 60 passed rc 0.

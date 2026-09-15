@@ -15,6 +15,19 @@ At T + n x epoch_s the controller:
   6. clears the stop flags and marks epoch n+1 running (pm:epoch:state).
 Every step is an event in self.events and in <out>/epoch_log.jsonl.
 
+F-R5-6 (defect F8): drain_timeout_s=None sizes the drain to the jobs actually running: for every live
+worker reporting `busy` with a job_id, that job's remaining wall bound (envelope wall_budget_s -
+wall_prior; no envelope -> the PILOT cpu wall ceiling), max over workers, + DRAIN_MARGIN_S. No busy
+worker -> DRAIN_MARGIN_S. The value is recorded in the `drained` event and the EPOCH record.
+
+F-R5-6 (defect F7): the controller runs from its OWN worktree (e.g. F:/Prometheus-worktrees/nestor-epoch
+on the integration branch), created by the conductor, never by a lane. The CLI requires --repo (or
+PM_EPOCH_REPO) and refuses (exit 2, no Redis writes) a missing repo, the worktree holding this code
+(a lane or conductor worktree) or a non-git directory. Records go to <repo>/roles/Nestor/sidequests/
+graphworld/epochs and are committed there; with push=True (the CLI) each commit is pushed by
+`python -m primordial.ops.push` run with cwd=repo. A failed push is an event `push_failed`; the clock
+never waits on it.
+
     python -m primordial.ops.epoch run --lanes B,C,D,E [--epoch-min 30] [--epochs N]
     python -m primordial.ops.epoch boundary N --lanes B,C,D,E      # one boundary now
 """
@@ -24,22 +37,42 @@ import argparse
 import json
 import os
 import pathlib
+import subprocess
 import sys
 import time
 
 from primordial.fabric.rows import commit_path
-from primordial.fabric.worker import DONE, STOP, WSTATE
+from primordial.fabric.worker import DONE, JOBS, STOP, WSTATE
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_OUT = ROOT / "roles" / "Nestor" / "sidequests" / "graphworld" / "epochs"
+EPOCHS_REL = pathlib.Path("roles") / "Nestor" / "sidequests" / "graphworld" / "epochs"
+DEFAULT_OUT = ROOT / EPOCHS_REL
 STATE = "pm:epoch:state"
+DRAIN_MARGIN_S = 30.0
+
+
+def controller_repo(repo) -> tuple[bool, str]:
+    """F-R5-6 (F7): -> (ok, reason). The controller's repo must be its own git worktree, not this code's."""
+    if not repo:
+        return False, "no controller repo: pass --repo or set PM_EPOCH_REPO (its own worktree, not a lane's)"
+    p = pathlib.Path(repo)
+    if not p.is_dir():
+        return False, f"controller repo {p} is not a directory"
+    if p.resolve() == ROOT.resolve():
+        return False, f"controller repo {p} is the worktree holding this code ({ROOT}); use a dedicated worktree"
+    q = subprocess.run(["git", "-C", str(p), "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+    if q.returncode != 0:
+        return False, f"controller repo {p} is not a git work tree"
+    if pathlib.Path(q.stdout.strip()).resolve() == ROOT.resolve():
+        return False, f"controller repo {p} is inside the worktree holding this code ({ROOT})"
+    return True, ""
 NO_NEW_WORK = "pm:round:{}:no_new_work"     # informational flag; workers refuse from the clock timestamps
 
 
 class EpochController:
     def __init__(self, lanes, epoch_s: float = 1800, r=None, out=DEFAULT_OUT, repo=None, export=None,
-                 drain_timeout_s: float = 120, post: bool = True, log=print, bootpack: bool = False,
-                 bootpack_kw: dict | None = None):
+                 drain_timeout_s: float | None = None, post: bool = True, log=print, bootpack: bool = False,
+                 bootpack_kw: dict | None = None, push: bool = False):
         from primordial.bus import bus
         from primordial.ops import bus_export
         self.lanes = list(lanes)
@@ -52,6 +85,43 @@ class EpochController:
         self.post, self.log = post, log
         self.events: list[dict] = []
         self.bootpack, self.bootpack_kw = bootpack, dict(bootpack_kw or {})
+        self.push = push
+
+    def _job_wall_bound(self, lane: str, job_id: str) -> float:
+        from primordial.fabric import envelope as EV
+        fallback = float(EV.CEILINGS["PILOT"]["cpu_wall_s"])
+        for _, f in self.r.xrange(JOBS.format(lane)):
+            if f.get("job_id") != job_id:
+                continue
+            try:
+                env = json.loads(f.get("envelope") or "null")
+            except ValueError:
+                env = None
+            if isinstance(env, dict) and isinstance(env.get("wall_budget_s"), (int, float)):
+                return max(0.0, float(env["wall_budget_s"]) - float(f.get("wall_prior") or 0))
+            return fallback
+        return fallback
+
+    def drain_timeout(self) -> float:
+        """F-R5-6 (F8): the drain window for this boundary (explicit value, else sized to running jobs)."""
+        if self.drain_timeout_s is not None:
+            return float(self.drain_timeout_s)
+        bounds = [self._job_wall_bound(L, s["job_id"]) for L, s in self._live_workers().items()
+                  if s.get("state") == "busy" and s.get("job_id")]
+        return (max(bounds) if bounds else 0.0) + DRAIN_MARGIN_S
+
+    def _push(self) -> None:
+        if not self.push:
+            return
+        try:
+            q = subprocess.run([sys.executable, "-m", "primordial.ops.push"], cwd=str(self.repo or ROOT),
+                               capture_output=True, text=True, timeout=600)
+            if q.returncode != 0:
+                self._event("push_failed", rc=q.returncode, tail=(q.stdout + q.stderr)[-500:])
+            else:
+                self._event("pushed")
+        except Exception as e:                              # never block the clock on a push
+            self._event("push_failed", error=f"{type(e).__name__}: {e}"[:500])
 
     def _event(self, name: str, **kw) -> dict:
         e = {"ts": round(time.time(), 3), "event": name, **kw}
@@ -115,6 +185,7 @@ class EpochController:
         self._event("round_closed", round_id=rid)
         rec["sha"] = commit_path(self.out, f"ROUND-{rid}", "(round close record)", repo=self.repo)
         self._event("round_committed", sha=rec["sha"])
+        self._push()
         return rec
 
     def boundary(self, n: int, resume: bool = True) -> dict:
@@ -127,14 +198,15 @@ class EpochController:
         for L in self.lanes:
             self.r.set(STOP.format(L), n)
         self._event("stop_set", lanes=self.lanes)
-        deadline = time.monotonic() + self.drain_timeout_s
+        drain_s = self.drain_timeout()
+        deadline = time.monotonic() + drain_s
         while True:
             live = self._live_workers()
             waiting = sorted(L for L, s in live.items() if s.get("state") != "stopped")
             if not waiting or time.monotonic() >= deadline:
                 break
             time.sleep(0.05)
-        drained = self._event("drained", workers=sorted(live), stragglers=waiting)
+        drained = self._event("drained", workers=sorted(live), stragglers=waiting, drain_timeout_s=drain_s)
         epoch_dir = self.out / f"epoch_{n}"
         counts = self.export(out=epoch_dir, stamp=f"e{n}", r=self.r)
         self._event("exported", counts={k: v[1] for k, v in counts.items()})
@@ -143,12 +215,13 @@ class EpochController:
             packs = bootpack.write_all(n, self.lanes, epoch_dir / "bootpack", r=self.r, **self.bootpack_kw)
             self._event("bootpacks", files=[p.name for p in packs])
         record = {"epoch": n, "lanes": self.lanes, "begin_ts": begin["ts"], "drained_ts": drained["ts"],
-                  "workers": {L: s for L, s in live.items()}, "stragglers": waiting,
+                  "workers": {L: s for L, s in live.items()}, "stragglers": waiting, "drain_timeout_s": drain_s,
                   "export": {k: v[1] for k, v in counts.items()}, "budget": self._budget(),
                   "controller": f"{os.environ.get('PM_LANE', '?')}[{os.environ.get('PM_TAG', '?')}]"}
         (self.out / f"EPOCH_{n}.json").write_text(json.dumps(record, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         sha = commit_path(self.out, f"EPOCH-{n}", "(epoch record + bus export)", repo=self.repo)
         self._event("committed", sha=sha)
+        self._push()
         if not resume:
             self.r.hset(STATE, mapping={"n": n, "phase": "draining", "ts": round(time.time(), 3)})
             self._event("drain_hold", n=n)
@@ -187,18 +260,27 @@ def main(argv=None) -> int:
     rd.add_argument("--lanes", required=True)
     rd.add_argument("--round", default="r5")
     rd.add_argument("--stage", default="PILOT")
+    for p in (ru, bo, rd):
+        p.add_argument("--repo", default=os.environ.get("PM_EPOCH_REPO"),
+                       help="the controller's own worktree (F-R5-6); never a lane or conductor worktree")
     a = ap.parse_args(argv)
+    ok, why = controller_repo(a.repo)
+    if not ok:
+        print(f"refused: {why}", file=sys.stderr)
+        return 2
     lanes = [x.strip() for x in a.lanes.split(",") if x.strip()]
+    repo = pathlib.Path(a.repo).resolve()
+    kw = {"out": repo / EPOCHS_REL, "repo": repo, "push": True}
     if a.cmd == "round":
         from primordial.ops import round_clock as RC
-        ec = EpochController(lanes)
+        ec = EpochController(lanes, **kw)
         rec = ec.run_round(RC.start(ec.r, a.round, stage=a.stage))
         print(json.dumps({k: rec[k] for k in ("round_id", "closed_ts", "sha")}, sort_keys=True))
         return 0
     if a.cmd == "boundary":
-        print(json.dumps(EpochController(lanes).boundary(a.n), sort_keys=True))
+        print(json.dumps(EpochController(lanes, **kw).boundary(a.n), sort_keys=True))
         return 0
-    for rec in EpochController(lanes, epoch_s=a.epoch_min * 60).run(a.epochs):
+    for rec in EpochController(lanes, epoch_s=a.epoch_min * 60, **kw).run(a.epochs):
         print(json.dumps(rec, sort_keys=True))
     return 0
 
