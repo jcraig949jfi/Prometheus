@@ -256,3 +256,23 @@ Brief: prompts_bld_r4/G.md; items SWARM_R4 s2 G-R4-1..5. Threads 5. M2 unheld (G
   (H ask 1789435262391-0); CLI check defaults to r4. draw_cell: graphworld worlds only from survivors.
 - Tests green (pytest rc 0 each): screen 5, qd_ledger r4 + draw + floor + ci 32. Commits local, pushing at
   the next worker gap with the full suite.
+- Pushed acfa9dd78 through a second stop-flag gap (full suite 378 passed, rc 0); it carries A's F14 fix.
+
+## 2026-09-14 P0 epoch 3, iteration 4 -- stage 1 DONE (74/74), table to A, receipt; stage 2 submitted
+
+- Stage 1 finished: 8 jobs + 2 resumed segments, 444 rows, 0 aborted/timeout, 296 learner runs at budget,
+  learner oracle clean on run seed 0 of all 37 train8 cells. Void condition not triggered: w1/w3/w4
+  abstain, best_constant, random and gate == committed G-M1 cells to 4 dp.
+- Table: SCREEN_R4_STAGE1_2026-09-14.md (pushed e365d4fa3, suite 393 passed rc 0). Abstain is the floor in
+  all 74 cells; train8 learner <= max(abstain, best_constant) in 37/37 (prior TRUE); w4 learner 88.59 vs
+  E6 87.32 (TRUE). gate > four-policy floor in 10 cells (w7 both +1293.31, w26 t128 +96.84, w1 both
+  +82.19, w34 t128 +63.19 / t8 +16.00, w10 t128 +11.98, w13 both +7.47). Degenerate: w19, w24, w25 (0 everywhere).
+- Posted table + stage 2 plan to A,H (1789436794057-0). Receipt G-R4-3-stage1 PASS (1789436817120-0),
+  ledger mirror pushed b2bcb165d.
+- Stage 2 driver primordial/metric/stage2.py (4d5f7ed71): baselines in gate-headroom order, train128
+  learner only for A-cleared gen_seeds (else PENDING, reported), stop at 8 exact survivors under
+  gate_in|HOLD; baseline_cell factored out. Tests 3 + baseline 6, rc 0. Cost probe: w4 train128 baseline
+  ~21 s per run seed at 2 threads -> all 74 cells ~4.8 h at 2 threads.
+- Predicate G-R4-3-stage2 posted before the run (1789436803186-0); prior: no survivor on w1/w3/w4.
+- Restarted the idle worker (fresh modules, A's worker fixes), burst announced, submitted job 5af1dacd7c5d
+  (ttl_cpu_s 120000, learner_train128 [1,3,4]). Monitor watches job ends, stage2_cell rows, worker death.
