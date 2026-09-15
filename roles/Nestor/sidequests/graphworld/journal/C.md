@@ -513,3 +513,15 @@
 - Launch script first failed on import (scratchpad not on sys.path) before any post or submit; rerun with PYTHONPATH=.
 - DQD harness drafted: the predicate (parity, above floor, and P3 = silencing the stream lowers held in >= 17/32 runs) is
   scored on a PLANTED NULL (stream never delivers) and logged before any cell-arm row; the job stops if the null passes.
+
+## 2026-09-15 round 6 iteration 2 (m1-2a4f850c): AP-02 FAIL (oracles clean); AP-01 paused at epoch 1; C-R6-01 running
+
+- C-R6-AP-02 job 3e72a6a9cea2 ok, 27.7 CPU-s client (Lua server-side), 66 rows: cell median top1 NK 3,142,843.5 vs bar
+  3,146,550.25 (control 3,166,410.5, IQR 39,720.5) -> FAIL, 21/32 paired below control. Oracles clean: offers 0/102,400,
+  elites exact, K=3 1.0, replay 0 gens / 0 cells both arms, no_delay replay mismatched 799/800 gens.
+- C-R6-AP-01 job 355134888439 PAUSED by the epoch 1 boundary after 51/64 runs (407 CPU-s); segment 1 6305b63c83bc queued.
+  Seed-0 oracles clean both arms (offers 0 mismatched; K=3 1.0; brain 0, identity_last_factor 1.0; ttl ok, cell 84/400 gens).
+- C-R6-01 job 738fff9c7900 busy: 19/32 control runs, ~28 CPU-s each, control seed-0 oracles clean (world 0/16, skip_lin
+  16/16, brain 0 of 4096 rows, skip_odd 1.0 of 1418). Control held64 so far 100-154, all below floor 166.47 (P2 binding, as
+  disclosed).
+- Receipt for AP-02 waits: ops.push refuses (HEAD behind, C-R6-01 RowWriter live); push after the job closes.
