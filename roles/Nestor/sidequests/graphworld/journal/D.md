@@ -390,3 +390,27 @@
   streams (seeds_of: mutation [F,rs,13,128], sampler [F+1,...]; keys 32/32, sampler seeds equal). STREAM axis: are
   3303|2/6/7's same-stream BASELINE runs in the bottom 8 of 32; OBS axis: control_obs_use of the low runs. No 3303
   baseline value or obs-use value read before the predicate. Admission dry-run ok.
+- A ruling 1789509956511-0 on the starvation: D22, no mid-round broker change, bounded by E's O8 (~18:25); D logs wait
+  per job. Both D jobs were fingerprinted at submit, so the wait goes into each receipt from the pm:jobs:D entry ts and
+  the done record's `started` (no module edit). D-R7-2 predicate 1789509988068-0 (pinned 1a66d97dd), job f564042e7a5b
+  queued 18:06; claimed ANOM-..7773 + exp id.
+- Item 3 (GPU exactness ANOM-..1534) NOT run: nv.gpuq children run with cwd/PYTHONPATH = the arbiter's repo
+  (nestor-r7-e, HEAD 1d344021d, lacks D's commits; E has a live O8 writer). A D GPU job would run from E's tree. Not
+  claimed. Minimum loci-dump discriminator posted to A,E for a PC/OPEN item (one lease segment). E's journal shows no
+  loci dump planned.
+- Item 4 triage while starved (18:09, worker D waiting_cpu, lag 2): ANOM-..0370 (closed vs open loop, 8 vs 128 train
+  seeds) -- E6/E6b/E8 rows carry no elites/genome file paths, so R6 D's "0-QD re-score from committed genomes" depends on
+  whether the genome fields are inline; checked by type only. Items 1-2 stay first when a token frees.
+  Result: closed_genomes/open_genomes are int counts in E6, E6b and E8 -> no committed genomes, no 0-QD re-score;
+  ANOM-..0370 needs new QD (not started; after items 1-2, sized against the clock).
+- D-R7-1 RECORD (job e2a0a3510473 ok, 66 rows fe9650a6c, 472.8 s wall, 764 CPU-s; queued 17:57:56, started 18:26:42 ->
+  token wait 1526 s = 25.4 min, D22): decision SATURATED. I1 7/7 (all 32 control rows at g400 and all 32 cell replays
+  reproduce C exactly, bar recomputed == 2226419.05, elite recounts clean); control checkpoint_equals_stopped_run
+  identical (4200|0 at m=84). H1 2150006 < B; Hm 2237328 >= B; s = 18/32 runs with held(400) > held(m) (<= 21).
+  Reported: held medians g1 2150006 / g10 2180261 / g25 2203280 / g50 2224061 / m 2237328 / g100 2252633 / g200 2245777
+  / g400 2243838 (g_sat 100 on the fixed grid; m 75-91 already clears); train keeps rising 2238574 -> 2457885; held
+  400 - m median +4487; cell-stream minus control-stream at m +14026; held minus random-bits g1 +55168, m +142489, 400 +149000.
+  Reading: on nk_stub the top1_train held-out NK stops responding at ~80-100 generations while train rises to 400; the
+  cpu_ttl cut lands past that knee, so the anti-prior arm's PASS is what the saturation predicts (the "cut truncates
+  search" prior was about train, not held). Not claimed: why held saturates (landscape vs Tucker brain).
+- D-R7-2 job f564042e7a5b ERROR (0 rows, 0.6 s, commit 61389e5f3); cause being read.
