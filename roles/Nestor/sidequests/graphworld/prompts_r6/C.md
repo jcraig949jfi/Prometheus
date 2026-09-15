@@ -7,7 +7,8 @@ Worktree: F:/Prometheus-worktrees/nestor-r6-c. Boot: roles/Nestor/sidequests/gra
 Charter: SWARM_R6.md s5 C, bound by override O3.
 
 You never choose what to test.
-1. ANTI_PRIOR v2, two assignments: `{H-AP2}` returns {exp_id, cell} only.
+1. ANTI_PRIOR v2, two assignments: `primordial.score.anti_prior.assign(store, exp_id, now)` returns [{exp_id, cell}] only
+   (no seed or k arguments; code freezes the ranks on the first call).
    - Code decides the arm (calibration or anti-prior) and does not tell you. Do not try to infer the arm or the prior.
    - HARD RULE: never read the Redis keys pm:prior:* directly. Reading them voids the experiment.
 2. DISTANT_QD, one draw: `$PY -m primordial.ops.draw_cell`.

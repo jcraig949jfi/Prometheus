@@ -11,17 +11,20 @@ Your round 5 result B-R5-1 (receipt 1789473262958-0, rows 4e69568e8) is a SURVIV
 re-run it and do not tune it.
 
 Items, in order:
-1. Search-budget accounting (O2).
-   - Read B-R5-1 and the w13 R16 baseline with {G-BUDGET}: evals, generations and cpu_s, from committed rows.
-   - Post the numbers with a receipt.
-2. If candidate evals > baseline evals, the equal-budget float comparator on w13 train128_held64 runs.
+1. Search-budget accounting (O2). This is ALREADY COMPUTED by code:
+   - G-R6-1 `primordial.metric.search_budget.accounting()` (a3d628b4a) gives 102,400 evals per run on both sides, ratio
+     1.000, so comparator_fires = False.
+   - Re-run `accounting()` yourself; post the result with a guarded receipt citing it. Do not recompute by hand.
+   - CPU per run is not in either rows file, so no CPU comparison is claimed.
+2. Only if `accounting()["comparator_fires"]` is True does the equal-budget float comparator on w13 train128_held64 run
+   (it is False as of the build).
    - The comparator is the float linear baseline, given the candidate's eval count.
    - runs_total 32, rng_family_count 4, runs_per_family 8; top1_train; same judge.
    - Report BOTH interpretations: "smaller representation found by this search process" and whether the float
      baseline at equal budget closes the gap.
    - If the evals are equal or fewer, record the accounting and skip the comparator.
 3. REPLICATION.
-   - Read `{G-REPL}` (pm:replication) every iteration. When a record appears, run the FROZEN B-R5-1 recipe it names on
+   - Read `primordial.metric.replication.records(r)` (stream pm:replication) every iteration. When a record appears, run the FROZEN B-R5-1 recipe it names on
      that cell: the same code sha, genome layout rule, search budget, 32/4/8, top1_train and check_r4.
    - No hyperparameter change of any kind.
    - A layout the recipe cannot express -> INAPPLICABLE with the reason, not a fail, and not a retune.

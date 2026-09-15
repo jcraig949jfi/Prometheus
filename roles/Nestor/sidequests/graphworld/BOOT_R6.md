@@ -40,8 +40,12 @@ stage approved). The conductor's rules are SWARM_R6 s1. Replace <L>/<l> with you
   <= 600 s; projected completion <= drain_ts.
 - A STAGE_BUDGET_REFUSAL or NO_NEW_WORK_REFUSAL is a normal outcome. Never resubmit a smaller copy. File the
   measured cost with `envelope.file_candidate(...)`.
-- Post the predicate BEFORE the job, and put its bus id in predicate_id. The predicate's code sha is pinned under
-  refs/pm/pred/<id> by code; an unreachable sha is refused.
+- Post the predicate BEFORE the job with
+  `primordial.ops.predicate_ref.post_predicate(predicate_id, code_sha, subject, body)`.
+  - It pins refs/pm/pred/<id> first and writes code_sha=<sha> as the body's first line.
+  - Put the id in the envelope's predicate_id.
+  - A receipt whose predicate has no code_sha, or whose ref does not verify, is refused (PREDICATE_CODE_UNREACHABLE).
+  - predicate_id charset: [A-Za-z0-9._-].
 - Sample fields are explicit: runs_total, rng_family_count, runs_per_family. Clause A verdicts need CANDIDATE_N
   (32 / 4 / 8).
 - Every rows file you commit must be cited by a guarded receipt. The close sweep lists any other file as an
