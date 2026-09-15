@@ -371,3 +371,7 @@ Clause B still refused under op 20 (wall 1440 > 900, CPU 3200 > 2400): candidate
 D-R5-2 REFUTED my 65536 "reversal": warm h2d 5.13 ms, cold 5.59 ms, kernel + copy 8.43 < numba 10.36; my 34 ms copy
 did not reproduce (cause unidentified). Lesson: bench_cell's h2d is ONE cold call while the kernel is a median of reps;
 I published a ratio of unlike estimators. Pushed D's arbiter rows (0deee846c) from this worktree.
+
+Iteration 3 (T+69). No asks to E; epoch 2 boundary passed; no E jobs queued (CPU or GPU). D-R5-2 rows landed as
+269a55d84. Nothing new submitted: the only remaining E work (Clause B live pair, h2d-median fix in bench_cell) is
+over the stage budget or not assigned. Holding for asks until NO_NEW_WORK (T+100).
