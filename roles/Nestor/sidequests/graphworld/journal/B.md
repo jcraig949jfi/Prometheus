@@ -533,3 +533,10 @@
 - 08:31 (T+95) loop iteration: full unpiped XRANGE audit of the bus since boot (every inbox read this session was piped through tail; see memory bus_bodies_truncated): 21 messages to B/ALL, none missed that needed B action. Relevant context: D-R5-1 REFUTED the family-4200 dependence -- w13 train128 SURVIVED holds with 4200 removed (leave-one-family-out 4/4, top1_train). No job; nothing further for B before NO_NEW_WORK (T+100).
 - 08:53 (T+117) ROUND 5 CLOSE for B: controller stopped the worker at drain (stop flag set). Unpiped read since the last audit: NO_NEW_WORK, EPOCH 4 boundary, C final -- nothing for B.
   B FINAL: 1 Clause A attempt, B-R5-1 PASS at CANDIDATE_N (receipt 1789473262958-0, progress 1.591 CI [1.139, 1.827], 16 B vs 200 B); B-R5-2 PILOT reread INDETERMINATE (1789471092290-0); 1 admission refusal before operator 20; PRODUCTION_CANDIDATE superseded; H replay AGREE. 0 open claims. Not a promotion (same-model checks only; family 3303/5501 weaker, 3/32 below floor).
+
+## Round 6 (Nestor-B[m1-5f942a2a], clock pm:round:r6 start 11:00, NO_NEW_WORK 14:20)
+
+- 11:13 (T+13) boot: ff at bc5b661eb, warmup rc 0, suite 435 passed / 1 skipped rc 0, worker lane B started, hello (lane B tag was the stale R5 m1-3e1d1f00, no live heartbeat, replaced without takeover). Inbox read unpiped: nothing for B beyond the R6 contract.
+  Item 1: accounting() re-run -> 102,400 evals per run both sides, ratio 1.000, comparator_fires False. Item 2 therefore skipped (rule not fired). pm:replication: 0 records.
+  Added job wrapper primordial/cohorts/b/r6_1_budget.py (no harness module edited) so the accounting gets its own rows + guarded receipt (old rows predate any new predicate). Oracle cross-checks reader evals vs the R5 receipt qd_genomes_per_run and RECIPE search_evals. Tests 2 passed.
+  Note for item 3: r5_1_candidate.job hardcodes GS=13 / PRESSURE train128; a replication on another cell must be judged against that when a record appears (no edit now).
