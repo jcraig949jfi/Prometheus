@@ -37,6 +37,7 @@ runs_per_family 8, read top1_train, verdict under gate_in|HOLD. Round 6 changes 
 from __future__ import annotations
 
 import json
+import time
 import pathlib
 
 import numpy as np
@@ -464,3 +465,90 @@ def learner_plan(cells=PENDING_R6, families=R.FAMILIES, run_seeds=R.RUN_SEEDS, c
 
 def write_learner_plan(doc: dict, path=LEARNER_PLAN_FILE):
     return write_order(doc, path)
+
+
+# ---------------------------------------------------------------- G-R7-2 option (b) oracle (A 1789505640089-0, E 1789505779961-0)
+
+ORACLE_CELL = (13, "train8_held64")
+WALL_TOLERANCE = 0.10
+
+
+def _run_values(row: dict) -> dict:
+    """A run row's values that must match across backends (walls, CPU, elites path and backend stamps excluded)."""
+    vol = ("qd_wall_s", "elites", "search_cpu_s", "search_wall_s", "backend", "oracle_held8", "status")
+    return {k: v for k, v in row.items() if k not in vol}
+
+
+def lockstep_oracle_job(ctx, gen_seed=ORACLE_CELL[0], pressure=ORACLE_CELL[1], backends=("cpu_lockstep",),
+                        families=R.FAMILIES, run_seeds=R.RUN_SEEDS, gens=None, batch=None, base_archive=B.ARCHIVE_URL,
+                        elites_root=str(R.ELITES_BASE), e_digests=None, e_wall_s=None):
+    """Before pm:r7:backend is written: on ONE real cell, G's production baseline stage under cpu_sequential and under
+    each lockstep backend. Per backend one lockstep_oracle row: every run's elites digest (E's elites_digest over the
+    save_elites doc) and run-row values equal to cpu_sequential; the digests equal E's measured lockstep digests
+    (e_digests: {backend: {"family|run_seed": sha}}); G's stage wall within WALL_TOLERANCE of E's median stage wall
+    (e_wall_s: {backend: s}). A missing E reference is E_REFERENCE_MISSING (the row does not pass)."""
+    import redis
+    from primordial.nv import r7_gpu_eval as EG
+    from primordial.qd.archive import load_elites
+    gs, p = int(gen_seed), str(pressure)
+    r = redis.Redis.from_url(base_archive)
+    root = pathlib.Path(elites_root) / f"r7-oracle-w{gs}-{p}"
+
+    class _Quiet:                                                    # stage rows stay inside the oracle row
+        def __init__(self):
+            self.rows = []
+
+        def emit(self, row):
+            self.rows.append(row)
+
+        def should_pause(self):
+            return False
+
+        def pause(self, st):
+            raise RuntimeError("the oracle stage does not pause")
+
+    def stage(backend):
+        q, st = _Quiet(), {"done": {}, "cur": None}
+        t0 = time.perf_counter()
+        if backend == "cpu_sequential":
+            runs = B.baseline_cell(q, st, r, gs, p, run_seeds, gens, batch, str(root / backend), families=list(families))
+        else:
+            runs = B.baseline_cell_lockstep(q, st, r, gs, p, run_seeds, gens, batch, str(root / backend),
+                                            families=list(families), evaluator=evaluator_for(backend), backend=backend)
+        wall = time.perf_counter() - t0
+        dig = {f"{int(x['rng_family'])}|{int(x['run_seed'])}": EG.elites_digest(load_elites(x["elites"])) for x in runs}
+        vals = {f"{int(x['rng_family'])}|{int(x['run_seed'])}": _run_values(x) for x in runs}
+        return dig, vals, wall
+
+    seq_dig, seq_vals, seq_wall = stage("cpu_sequential")
+    out = []
+    for backend in backends:
+        try:
+            dig, vals, wall = stage(backend)
+        except Exception as e:                                       # e.g. gpu_lockstep without torch in this venv
+            row = {"kind": "lockstep_oracle", "world": f"w{gs}", "gen_seed": gs, "pressure": p, "backend": backend,
+                   "pass": False, "reason": f"STAGE_FAILED:{type(e).__name__}:{str(e)[:160]}", "status": "control"}
+            ctx.emit(row)
+            out.append(row)
+            continue
+        mism_elites = sorted(k for k in seq_dig if dig.get(k) != seq_dig[k])
+        mism_rows = sorted(k for k in seq_vals if vals.get(k) != seq_vals[k])
+        e_d = (e_digests or {}).get(backend)
+        e_w = (e_wall_s or {}).get(backend)
+        mism_e = None if e_d is None else sorted(k for k in dig if e_d.get(k) != dig[k])
+        within = None if e_w is None else abs(wall - float(e_w)) <= WALL_TOLERANCE * float(e_w)
+        reasons = ([] if not mism_elites else ["ELITES_NE_SEQUENTIAL"]) + ([] if not mism_rows else ["ROWS_NE_SEQUENTIAL"])
+        if e_d is None or e_w is None:
+            reasons.append("E_REFERENCE_MISSING")
+        else:
+            reasons += ([] if not mism_e else ["ELITES_NE_E_LOCKSTEP"]) + ([] if within else ["WALL_OUTSIDE_10PCT"])
+        row = {"kind": "lockstep_oracle", "world": f"w{gs}", "gen_seed": gs, "pressure": p, "backend": backend,
+               "runs": len(seq_dig), "elites_eq_sequential": not mism_elites, "rows_eq_sequential": not mism_rows,
+               "elites_eq_e_lockstep": None if mism_e is None else not mism_e, "mismatched_runs": {
+                   "elites_vs_sequential": mism_elites, "rows_vs_sequential": mism_rows, "elites_vs_e": mism_e},
+               "g_stage_wall_s": round(wall, 3), "g_sequential_wall_s": round(seq_wall, 3), "e_stage_wall_s": e_w,
+               "wall_within_10pct_of_e": within, "digests": dig, "pass": not reasons, "reasons": reasons,
+               "rule": "A 1789505640089-0 option (b) / E 1789505779961-0", "status": "control"}
+        ctx.emit(row)
+        out.append(row)
+    return out

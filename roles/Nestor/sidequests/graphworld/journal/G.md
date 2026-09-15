@@ -427,3 +427,21 @@ file_candidate / segment contract (1789479761855-0).
   worker started 11:00 and r16_cells.py (the job fn module) was edited at 11:05 and 11:39; the worker had reloaded it by
   fingerprint (CODE_RELOADED) but is restarted while nothing is pending. No other harness module was edited.
 - Epoch status: 12:21 14/74 complete; 13:01 23/74 complete (SURVIVED 1 origin, HELD 2, PENDING 5, CULLED 15), 51 UNSCREENED.
+
+### R7-BUILD (G, 16:29-) -- SMOKE build, hard cap 18:35
+
+- G-R7-3 (O4) PENDING learner plan: roles/Nestor/sidequests/graphworld/R16_LEARNER_PLAN_R7.json (committed 139389a2d,
+  blob sha256 2aeea455...c457). Order w26, w1, w10, w7, w34 by cpu_s = (12030.94/32) x T x S x runs/32 (T and S of
+  the world only). Per cell 8 checkpointable learner_chunk_job jobs (4 runs; cpu_budget min(36000, 2 x est + 300);
+  segment 2400; experiment_class R16_LEARNER_CHUNK, evidence_class OBSERVATION) then one -r7 assembly cell_job at
+  32/4/8. cell_job now admits the learner on the REMAINING uncommitted runs. R16 envelopes carry the EVIDENCE_N_v1
+  sample block; the remainder keeps R16_ORDER_R6.json. The admit test skips until F-R7-5's 36000 ceilings land.
+- G-R7-1 B2 rule v2 (75e2486e1 -> f008cb947): RULES B2_ADMISSION_v1 (kept, default, byte-identical output) and
+  B2_ADMISSION_v2 (32/4/8); admission_cost_v2 adds E-R7-3's measured search overhead and projects against the clock;
+  cost_inputs_from_e_r7_3 reads rollout_s_per_episode / overhead_s_per_gen (E rows 8d1bb7db9: 9.04e-6 s/episode,
+  0.00313 s/gen overhead). r16_cells reads PRODUCTION cpu_budget_s from envelope.CEILINGS at call time (F note).
+- G-R7-2 backend (c89548287 -> 7f8fc9b7f): cpu_sequential | cpu_lockstep | gpu_lockstep (A O2'), resolved at job
+  start from pm:r7:backend / pm:r7:gpu_adopt, kept in the checkpoint, stamped on rows. baseline_cell_lockstep uses E's
+  evaluators; baseline_run's row tail refactored into _run_row with pre-refactor golden digests.
+- Option (b) (A 1789505640089-0, E 1789505779961-0): lockstep_oracle_job on w13 train8 before pm:r7:backend is written;
+  E_REFERENCE_MISSING until E posts its measured digests and median wall.
