@@ -287,3 +287,4 @@
   (best 217-332). Reported: top1 TRAIN8 == 756.75 in 7/8 runs (run 7: 1399.1), top1 HELD64 == abstain 189.19 in 3 --
   the search stalls on one plateau. Opposite of w13 (OVERFIT_ONLY): w7's HELD is a real search shortfall.
   Rows file also holds the aborted job_end row of d6eecdc3a3c8; the receipt cites the file.
+- Receipt D-R6-5 filed 1789489833767-0 (guard 10/10, status NULL, SEARCH_SHORT), rows 98f7f2efa; ANOM-..9534 RESOLVED. A ruling 1789489756428-0: restart worker after any harness edit (done 12:28:49).
