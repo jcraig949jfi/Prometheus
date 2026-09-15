@@ -237,3 +237,4 @@
   CANDIDATE_N as predicted. Reported only: matched-baseline LOO 4/4 > 1.08 (leave-4200-out 2.35: without 4200 the
   baseline median drops to 176.73); 8-run blocks CI low 3303 -0.256, 5501 0.688. Item 3 discriminator NOT triggered.
   Anomaly ..7773 (3303 bimodal) stays OPEN: the PASS does not depend on 3303, the observation is unexplained.
+- Receipt D-R6-1 filed 1789488540808-0 (guard 10/10 OK, status NULL: robustness read, decision ROBUST), rows 4660b347c.
