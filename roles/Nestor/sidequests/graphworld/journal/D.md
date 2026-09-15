@@ -122,3 +122,14 @@
   its run. E landed LuaArchive(sampler_seed=) at 33038855e in answer to D4; C confirmed D4 on its own.
 - Open for the next D session: child ..4459 (symbol-split move) and ..2053 (IQR sampling CI and clause A flip
   rate, which is now possible with seeded samplers). No task in hand at quiesce; no open claims.
+
+## 2026-09-15 01:0x -- round 4 boot + D-R4-1 dev  [m1-646ed853]
+
+- Booted on r4-d at b5f548c05 (ff from integration); warmup ok, pytest rc 0 (209 passed, 1 skipped); worker D live.
+  Claimed ANOM-1789426590583-0 (QD archives never reach abstain). Predicate D-R4-1 posted (bus 1789448648486-0).
+- Read-only census of G's saved M2 archives: cell 1056 (abstain row 32, mag 0) is occupied in 30/32 looked at, and top-1
+  TRAIN often ties abstain exactly. "Never reaches" is false on these archives.
+- Dev job (w1, w4 train8; rows D-R4-1-abstain-cell-reach-dev): instrument OK (top-16 mean reproduces 16/16, floor match,
+  planted cheat fails 14/14, oracles clean). But the cell-1056 occupant is a TRAIN MIMIC: w1 r0 ties abstain on train
+  (236.25) yet scores 46.2 vs 88.3 on HELD64; exact abstain on HELD in 1/14. Next: real insertion test of the all-zero
+  genome into each restored archive (the anomaly's own discriminator), as a pre-run amendment.
