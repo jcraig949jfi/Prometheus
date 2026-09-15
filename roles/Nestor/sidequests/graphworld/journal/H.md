@@ -417,5 +417,48 @@ budget 1789425755152-0).
   - guard() refuses a missing stage with CAMPAIGN_STAGE_MISSING.
   - Tests: A's 4 clock cases (active + omitted is guarded; outside a round is the old path; active
     + valid PILOT is guarded; clock absent is no active round), plus the grace edges and MISSING.
+- Suite 322 passed, 2 skipped, pytest rc 0. Pushed e3412c04b and told G to push CANDIDATE_N
+  (bus 1789468367121-0).
+
+## 2026-09-15 06:32, item 4: H-R5-3 F12 progress axes by rule (O8)
+
+- Code: primordial/score/axes_r5.py, axes(receipts).
+  - Computed from receipt type and lineage only. A receipt's own points are never read, and
+    neither is prose.
+  - error_metabolism:
+    - +1 per distinct other-lane exp_id named in `refutes` (F12's identifier matcher) by a
+      board-eligible PASS/KILL receipt.
+    - Credited to the FILING lane, earliest filer first, never the originator (O8).
+    - Own-lane refutations score 0 and are listed under own_refutations_unscored.
+  - instrument_gain: +1 per PASS receipt with experiment_class instrument|tooling (envelope or top
+    level) whose regression_test names an existing primordial/ test file (FIXED_WITH_REGRESSION).
+  - boundary_resolution: +1 per FAIL/KILL receipt with committed rows and science.boundary
+    {parameter, below{value, verdict}, above{value, verdict}}, with below.value < above.value and
+    differing verdicts.
+- Tests: test_score_axes_r5.py, 11.
+  - Credit goes to the refuter, not the originator. A second refutation of the same claim gets 0.
+    Own lane gets 0 and is listed. A non-board-eligible receipt gets 0, and so does a FAIL
+    "refutation".
+  - Instrument gain needs a tooling/instrument class, an existing test, and PASS.
+  - 8 boundary cases.
+  - Self-reported points are ignored.
+- Suite on the pushed tip e3412c04b plus axes_r5: 336 passed, 2 skipped, pytest rc 0 (06:35).
+
+## 2026-09-15 06:35 R5 BUILD close-out (all four H items green, 22 min of the 2 h cap)
+
+- H-R5-1 receipt guard: 50707b07b, plus the clock trigger in e3412c04b. H-R5-2 sealed ledger:
+  3b94d3fbd. H-R5-4 classifier: e3412c04b. H-R5-3 axes: this push.
+- Gate items from H: 4 (EXPECTED_REFUSAL_OBSERVED), 9 (the guard refuses each failure case), 14
+  (sealed prior read-denied to the experimenter), and 15 (suite rc 0 on the tip).
+- PRODUCTION_CANDIDATE notes (not done in this SMOKE build, not extended):
+  1. The sealed ledger is enforced by its API plus a sha256 commitment. It is not cryptographic
+     against a session reading pm:prior:* directly; a production fix is encryption, or a separate
+     Redis ACL user for the predictor.
+  2. axes_r5 is a library, not yet wired into progress.vector / the `progress` CLI as a round 5
+     output row.
+  3. F12's s4 mirror keeps the old `runs < 8` check for a candidate row without the three sample
+     fields, until G's CANDIDATE_N is on integration; then that fallback should be removed.
+  4. The receipt guard reads oracle results from rec['oracles']; cohort receipt writers must fill
+     it. Currently a convention, posted to A/F/G.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
