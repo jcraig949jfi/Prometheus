@@ -135,7 +135,7 @@ def check_seeds(donor: int, recipient: int, run_seeds) -> None:
 
 # ------------------------------------------------------------------ one paired run
 def run_seed(donor_mode: str, donor: int, recipient: int, family: str, rs: int, gens: int, batch: int, n_train: int,
-             base: dict, oracles: bool = False, rng_family=None) -> tuple[dict, dict]:
+             base: dict, oracles: bool = False, rng_family=None, random_tag: int = 1707) -> tuple[dict, dict]:
     if donor_mode not in DONOR_MODES:
         raise ValueError(f"donor_mode {donor_mode!r}")
     gb = E7.G7(recipient, family)
@@ -150,7 +150,7 @@ def run_seed(donor_mode: str, donor: int, recipient: int, family: str, rs: int, 
     elif donor_mode == "self":
         dA = T.evolve(gb, family, train, gens, batch, pcg(1702, rs + 1000, recipient))[0].top()
     else:
-        dA = gb.pack(gb.init(pcg(1707, rs, recipient), T.TOP))
+        dA = gb.pack(gb.init(pcg(random_tag, rs, recipient), T.TOP))          # E-R7 O8 calibration: fresh tags
     filler = gb.pack(gb.init(pcg(1705, rs, recipient), batch))
     sham, perm = featperm(gb, dA, rs, recipient, rng_family)
     slots = {"scratch": filler[:T.TOP].copy(), "graft": dA, "sham": sham}
@@ -226,7 +226,7 @@ def summarize(base: dict, per: dict, run_seeds, cpu_s_per_seed=None) -> dict:
     return out
 
 
-def _runs(ctx, donor_mode, donor, recipient, family, families, run_seeds, gens, batch, n_train, base):
+def _runs(ctx, donor_mode, donor, recipient, family, families, run_seeds, gens, batch, n_train, base, random_tag=1707):
     """Every (family, run seed) with an F9 checkpoint per run; returns (per-condition row lists, run keys, walls)."""
     ids = run_ids(families, run_seeds)
     st = ctx.load_checkpoint() or {"done": {}, "wall": {}}
@@ -238,7 +238,7 @@ def _runs(ctx, donor_mode, donor, recipient, family, families, run_seeds, gens, 
             ctx.pause(st)
         t0 = time.perf_counter()
         rows, _ = run_seed(donor_mode, donor, recipient, family, rs, gens, batch, n_train, base, oracles=i == 0,
-                           rng_family=fam)
+                           rng_family=fam, random_tag=random_tag)
         for c in CONDITIONS:
             ctx.emit(rows[c])
         st["done"][k], st["wall"][k] = rows, time.perf_counter() - t0

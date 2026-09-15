@@ -448,3 +448,14 @@ Build 2 (16:53). E-R7-1 planted positive at 32/4/8: check_b v2 PASS, gates clean
 device batch per generation is ~15x SLOWER on the GPU than numba (t8: 0.749 vs 0.050 s at 32,768 episodes; t128: 12.98 vs 0.78 s
 at 524,288). The gpuq child ran numba at 3 threads (inherited env beat setdefault): forced. Procedural amendment before any timing
 row: 1 oracle job + 3 single-rep timing jobs per cell, median over reps; train128 stays unmeasured; GPU jobs wait for worker idle.
+
+Build 3 (~17:00). E-R7-1 planted NEGATIVE judged PASS at 32/4/8 (graft-scratch +0.757 p .037, graft-sham +0.508 p .049): the
+re-validation does not hold (receipt FAIL 1789505772057-0; positive PASS 1789505767100-0). A ruled O8 (no tuning): K=40 fresh
+planted-negative draws in the clock, INSTRUMENT_ADMISSIBLE iff false_pass <= 5/40, live w14->w13 pair only then. Built
+cohorts/e/r7_clauseb_calibration.py (fresh donor tag 27000+d AND fresh run seeds 2000+8d per draw, so the 40 draws are
+independent; decide()) + transfer_v2 random_tag (default 1707 unchanged) + tests. E-R7-3 receipt 1789505775862-0: B2 search
+overhead 3.1 ms/gen vs rollout 148 ms/gen (2.1%), episode 9.04 us at 3 threads -- the F7 worker child ALSO ran numba at 3
+threads under an 8-thread token (A files D19). GPU arbiter now registers lane gpu (F-R7-1 residue.register/refresh/unregister)
++ test. G-R7-2: E chose option (b): G's production lockstep must match E's measured lockstep elites and cpu_sequential on
+w13 train8 and sit within 10% of E's wall before set_decision writes pm:r7:backend. E-R7-2 oracle + 3 timing GPU jobs running.
+Owed by 18:35: stop worker E + gpuq in nestor-r6-e (lane E moves to nestor-r7-e for the clock).
