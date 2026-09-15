@@ -468,3 +468,28 @@ receipt 1789506653147-0. Lockstep buys nothing here: at 32 x 128 x 8 the fused r
 sequential calls are not the bottleneck. O8 predicate pinned f790dbb52 (bus 1789506659352-0); draws run in the clock from nestor-r7-e.
 gpuq registration pushed 3143ecd39 (7 gpuq tests pass). Push lesson: ops.push refuses to rebase a dirty tree; set the
 uncommitted edit aside by file copy (never stash), push, restore, test, commit. Worker E and gpuq arbiter STOPPED (~17:00, ~17:09).
+
+# ROUND 7 CLOCK -- Nestor-E[m1-cf4b44f6] (prompts_r7/E.md; SWARM_R7 s5 E + O8), worktree nestor-r7-e
+
+Boot (~17:55, epoch 1). ff ab1787d14; comms boot m1-cf4b44f6; warmup ok; bus hello. Read the R7-BUILD DONE record and journal.
+Item 0 (O8) first: predicate E-R7-O8-clauseB-false-pass-calibration already pinned f790dbb52 (bus 1789506659352-0, seed list
+27000+d / 2000+8d committed); f790dbb52 is an ancestor of HEAD and no judged path (cohorts/e, score/transfer_b, metric/floors,
+fabric, evidence_n) changed since. Dry-runs on the predicate's envelope: evidence_n.admission_reasons [], envelope.admit ok
+(PRODUCTION, noncheckpointable 900 s); receipt guard on a synthetic 40-draw receipt: sample_rule OK, only ROWS_MISSING /
+UNCOMMITTED / RUN_START_UNKNOWN (no rows yet). pm:jobs:E clean (0 consumers, 0 pending). Suite running; worker after it.
+
+Iteration 1 (17:58). Suite 568 passed / 1 skipped rc 0. Worker E pid 24596 started from nestor-r7-e and registered (round r7,
+tag m1-cf4b44f6). O8: 40 draw jobs queued 17:58:34 (kwargs {draw: d} only; envelope = the predicate's, re-admitted ok before
+submit); queue note to A 1789509545408-0. Draw 0 writing rows (~78 at 35 s). pm:r7:gpu_adopt GPU_REJECT -> item 3 off, no
+GPU arbiter. No harness module edited this session.
+
+Iteration 2 (~18:04). A (cross-session, ruling 1789509847892-0 on C 1789509820818-0): C's code-drawn DISTANT_QD cell needs the
+torch_gpu substrate and nothing consumed pm:gpu:jobs; GPU_REJECT covered only the R16 screen backend. Started the GPU arbiter
+from nestor-r7-e (no idle exit): pm:worker:reg:gpu:27084, round r7, tag m1-cf4b44f6; gpu-arbiter consumers 1 (was 0, no
+leftover consumer), pending 0. Posted "E: gpuq up" to A,C. Stop it at the FINAL along with worker E. O8 draws unaffected (CPU).
+
+Iteration 3 (18:15). O8 draws 0-17 committed (9edd3653f), all check_b FAIL with gates clean (p_max .24-.96); ~36 s per draw at
+8 threads. My first draw monitor watched pm:jobs:E:done for exp_id, a field those entries do not carry, so it was silent; replaced
+by a rows-file check_b monitor. A 300 s "stall" after draw 17 is the FIFO broker: both k*=2 tokens are held (C eca39ef50161 since
+18:09, G w6 train8 cell since 18:14, leases to ~18:51/18:56); worker E alive, 0 pending, draw 18 waiting for a token. No action; no
+decide() before 40 check_b rows.
