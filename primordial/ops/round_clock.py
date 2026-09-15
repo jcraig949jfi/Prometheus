@@ -69,7 +69,13 @@ def start(r, round_id: str = DEFAULT_ROUND, start_ts: float | None = None, **kw)
     return rec
 
 
-def read(r, round_id: str | None = None) -> dict | None:
+EPOCH_STATE = "pm:epoch:state"      # written by ops.epoch (phase, round_id); duplicated name to avoid an import cycle
+
+
+def read(r, round_id: str | None = None, now: float | None = None) -> dict | None:
+    """The clock record. With round_id: that round's hash as history (closed or not). Without: the CURRENT round,
+    and None when it is over (now > end_ts, or pm:epoch:state marks it closed) -- D18: a closed r6 still pointed
+    to by pm:round:current made admission refuse every build-phase job NO_NEW_WORK."""
     rid = round_id or r.get(CURRENT)
     if not rid:
         return None
@@ -80,6 +86,11 @@ def read(r, round_id: str | None = None) -> dict | None:
     for k in FLOATS:
         out[k] = float(out[k])
     out["epochs"] = int(out["epochs"])
+    if round_id is None:
+        now = time.time() if now is None else now
+        st = r.hgetall(EPOCH_STATE) or {}
+        if now > out["end_ts"] or (st.get("phase") == "closed" and st.get("round_id") == rid):
+            return None
     return out
 
 
@@ -101,7 +112,8 @@ def phase(clock: dict | None, now: float | None = None) -> dict:
 def active(r, now: float | None = None, grace_s: float = 1800.0) -> dict | None:
     """The current round's clock if now is in [start_ts, end_ts + grace_s] (close-out receipts), else None.
     A missing pm:round:current means no active round; the launch gate asserts the key before T+0."""
-    clock = read(r)
+    rid = r.get(CURRENT)                     # explicit id: read(r) hides a round past end_ts (D18), the grace must not
+    clock = read(r, rid) if rid else None
     now = time.time() if now is None else now
     if clock is None or not clock["start_ts"] <= now <= clock["end_ts"] + grace_s:
         return None

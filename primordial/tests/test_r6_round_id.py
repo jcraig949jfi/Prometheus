@@ -28,6 +28,7 @@ def test_start_writes_pm_round_r6(monkeypatch):
     try:
         c = RC.start(r, "r6", start_ts=5000.0)
         assert r.get(RC.CURRENT) == "r6" and r.hget("pm:round:r6", "stage") == "PRODUCTION"
-        assert RC.read(r) == c and c["end_ts"] == 5000.0 + 14400
+        assert RC.read(r, "r6") == c and c["end_ts"] == 5000.0 + 14400
+        assert RC.read(r) is None                        # D18: a round past its end_ts is history, not the current clock
     finally:
         r.delete("pm:round:r6", RC.CURRENT)
