@@ -644,3 +644,16 @@
 - C-R7-01 harness on origin 2778c4ea3; envelope.admit(kind gpu) ok; predicate refs/pm/pred/C-R7-01 -> 2778c4ea3, bus
   1789512260419-0. Told E the sha (1789512263035-0); the GPU job is submitted only after 'E: pushed' contains it.
 - AP-02 ec5a36e1c102 still waiting_cpu (tokens: G slot 0, E slot 1).
+
+## 2026-09-15 round 7 loop iteration 5 (m1-440f0317): 19:05, AP-02 aborted on a genome-length defect (mine), fixed
+
+- AP-02 job ec5a36e1c102 aborted after its reference row, 2.6 s in: INSERT_LUA:6 "data string too short"
+  (done 1789512534586-0, status error, PEL empty -- the supervisor closed it; no bookkeeping needed).
+- Cause CONFIRMED by reproduction with the committed pre-fix module (GLEN 6, control arm, 10 gens -> same error at
+  archive.py:158): archive.order_key's contract is "the rank equals the Lua comparison for any genome length that is a
+  MULTIPLE OF 4"; INSERT_LUA gless() reads the genome in 4-byte words. A 6-byte stored genome breaks it. Two smaller
+  probes (a forced tie, and 128-genome batches with duplicate cells and ties) did NOT reproduce it, so the repro used
+  the real path. No verdict row ever existed.
+- Fix: stored length 8 with two zero pad bytes (init and mutate keep them zero); decode still reads bytes 0..5 and
+  byte_charge still counts FUNCTIONAL bytes, so no definition changes. Post-fix: control and cell 4 gens clean,
+  oracles world 0/144, k3 1.0, brain 0, free_stream 1.0 of 48, charge 0, ok true. Amendment posted before any run row.

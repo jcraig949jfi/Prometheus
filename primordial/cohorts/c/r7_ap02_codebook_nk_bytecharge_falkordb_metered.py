@@ -6,15 +6,21 @@ landscape rows only, no clause A claim. The definitions below are fixed before a
 
   world     lane E's NK stub (N=64, K=4). A seed is a LANDSCAPE (C-R2-09 / C-R6-AP-01): selection on TRAIN = 8 train
             landscapes (9100..9107); score on HELD = 64 held-out landscapes (30000..30063), NK fitness per landscape.
-  brain     codebook. Genome 6 bytes [d, m, cb0, cb1, cb2, cb3]:
+  brain     codebook. Genome 6 meaningful bytes [d, m, cb0, cb1, cb2, cb3], STORED in 8 bytes (two zero pad bytes):
               d  = byte0 % 5          hex digits read per table entry, most significant first (entry q = v >> (16 - 4d))
               Ls = 1 + byte1 % 32     code length
               cb = uint32 little-endian from bytes 2..5
             For locus j of a landscape the brain sees that locus's 32-entry contribution row (if delivered):
               sym = argmax_i q_i (ties: lowest i; silence or d = 0: sym 0);  bit_j = (cb >> (sym % Ls)) & 1
             Target-blind (the brain reads only the landscape's own table). Functional bytes = 2 + ceil(Ls / 8) (the
-            codebook bytes the code can address). Init: bytes uniform. Mutation: d +-1 mod 5 with p 0.2; byte1 +-1 mod 32
-            with p 0.2; each codebook bit flipped with p 1/32.
+            codebook bytes the code can address; the pad bytes are never charged). Init: the 6 meaningful bytes uniform,
+            pad zero. Mutation: d +-1 mod 5 with p 0.2; byte1 +-1 mod 32 with p 0.2; each codebook bit flipped with
+            p 1/32; the pad stays zero.
+            AMENDMENT (job ec5a36e1c102 aborted after its reference row, before any run row): the stored length was 6.
+            LuaArchive's INSERT_LUA tie-break gless() reads the genome in 4-byte words (for p = 1, glen, 4), so an equal
+            -fitness tie on a 6-byte genome raises "data string too short" in Redis. The stored length is now 8 with two
+            zero pad bytes; nothing else changes -- byte_charge has always counted FUNCTIONAL bytes, not stored length,
+            and the decode reads bytes 0..5 as before.
   channel   metered_stream (C-R6-01's half-observation rule applied to this reader): per landscape the loci are read in
             order j = 0..63; before locus j ledger += CREDIT; cost = ALPHA * 32 * d; if ledger >= cost the row is
             delivered and ledger -= cost, else silence. ALPHA = 2; CREDIT = ALPHA * 32 * 2 = 128 (half of the 4-digit
@@ -78,7 +84,7 @@ ROWS = ROOT / "primordial" / "ledger" / "rows" / "C" / f"{EXP}.jsonl"
 CELL = {"representation": "codebook", "world": "nk_stub", "pressure": "byte_charge", "substrate": "falkordb_cypher",
         "channel": "metered_stream"}
 CELL_CTRL = dict(CELL, pressure="byte_charge_off_control")
-GLEN, BATCH, TOP, E = 6, 128, 16, 32
+GLEN, NG, BATCH, TOP, E = 8, 6, 128, 16, 32       # GLEN must be a multiple of 4 (INSERT_LUA gless); NG = meaningful bytes
 ALPHA = 2
 CREDIT = ALPHA * 32 * 2
 START = CREDIT
@@ -96,8 +102,8 @@ WALL_CAP = 5400.0
 # BETA 169144 (random NK mean per train landscape 2114314.67). Oracles on 16 random genomes + P_ONES + P_METER, both
 # arms: world 0/144 mismatched, k3 1.0 of 144 / 128 eligible, brain 0, free_stream 1.0 of 72 / 64 eligible, charge 0.
 GENS = 50
-P_ONES = np.array([4, 31, 255, 255, 255, 255], np.uint8)
-P_METER = np.array([4, 31, 0xA5, 0xA5, 0xA5, 0xA5], np.uint8)
+P_ONES = np.array([4, 31, 255, 255, 255, 255, 0, 0], np.uint8)
+P_METER = np.array([4, 31, 0xA5, 0xA5, 0xA5, 0xA5, 0, 0], np.uint8)
 
 Q_FIT = """UNWIND range(0, size($bits) - 1) AS p
 UNWIND range(0, $L - 1) AS l
@@ -131,7 +137,9 @@ def functional_bytes(B):
 
 
 def init(rng, P):
-    return rng.integers(0, 256, (P, GLEN), dtype=np.uint8)
+    B = np.zeros((P, GLEN), np.uint8)
+    B[:, :NG] = rng.integers(0, 256, (P, NG), dtype=np.uint8)
+    return B
 
 
 def mutate(rng, B):
@@ -147,6 +155,7 @@ def mutate(rng, B):
     cb = cb ^ (flips << np.arange(32)[None, :]).sum(1)
     for i in range(4):
         B[:, 2 + i] = ((cb >> (8 * i)) & 255).astype(np.uint8)
+    B[:, NG:] = 0
     return B
 
 
