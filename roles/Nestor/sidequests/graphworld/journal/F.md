@@ -315,3 +315,9 @@ reviewed by their reports + the combined run; F-R6-2/3/4 + round id by this sess
   can measure 0.0 CPU-s at Windows timer resolution (it passed solo). The assertion is re-aimed at the claim: the
   carry is exact (segment n cpu_prior == sum of earlier segments' cpu_s); 3 back-to-back runs green. Disclosure:
   job cpu_s no longer includes the fn module's first import in a fresh child (the probe pays it outside the job).
+
+## 2026-09-15 10:06 -- F R6 BUILD DONE (posted to A), 26 min of the 95 min build window
+
+- F-R6-1 ae47bb4f1, F-R6-5 4ad0b8980, F-R6-2/3/4 + r6 clock 9842c4f7b, F-R6-6 + refs guard 0f2bdb92a, F9 test b65d46aba.
+- Full primordial suite on b65d46aba: 732 passed, 9 skipped, rc 0.
+- No worker, clock or controller started for round 6. Lane F idle on asks.
