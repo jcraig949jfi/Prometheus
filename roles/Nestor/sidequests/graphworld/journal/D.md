@@ -458,3 +458,14 @@
   Reading, if it holds on accepted rows: the fused kernel is not wrong here -- it agrees with the float64 reference;
   the numpy reference's einsum accumulation order produces an exact float32 tie on a near-tie row and argmax breaks it
   to the lower action. Thread count is irrelevant (1 == 8 threads, 3 repeats agree).
+- Item 4 picked: ANOM-1789417958280-0 (C-R2-02 rent does not shrink programs), discriminator (b) LAMBDA sweep.
+  D-R7-4 code + test (r7_4_nk_rent_sweep.py; 7 passed rc 0 after I fixed my own wrong control assertion -- my fake
+  "perfect" evaluator honours the cheat flag, so skip_last IS caught; the test now also uses a cheat-blind evaluator).
+  Imports C's EVAL_LUA + decode_ref unchanged with LAMBDA as a parameter; C's sampler was UNSEEDED so its rows are
+  REFERENCES ONLY (D-R6-9 precedent) -- D re-runs the program arm with a seeded sampler on D's Redis :6393 under D's own
+  table key (C's :6392 keys untouched). 3 LAMBDAs x 4 families x 8 run seeds = 32/4/8 per LAMBDA (VERDICT class).
+  Rule RENT_BINDS / RENT_INERT / MIXED fixed before any sweep value; half_rent cheat control declared EXEMPT at
+  LAMBDA 0 (it charges LAMBDA//2 == LAMBDA there) BEFORE the run, not after.
+  No-rows smoke (one stream, l=16384, 4200|0): wall 2.31 s, offers 38400/0 mismatched, elites 1021/0 mismatched,
+  controls honest 0.0 / skip_last 0.789 / half_rent 1.0. Only timing and oracle counters were read -- best_active and
+  every fitness stayed unread. 96 runs project ~222 s; declared checkpointable, wall 900 s.
