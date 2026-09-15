@@ -379,3 +379,16 @@
   1 INDETERMINATE (C-R2-08 oracle bar); 7 receipts; anomalies filed 1789417561532-0 (weakened), 1789417958280-0.
 - Open claims: none. Carry-forward: C-R2-01..05 and 08 GA runs are not seed-replayable (pre-seeded-sampler); from
   C-R2-09 on, harnesses use sampler_seed, save elites, and brain cells should add E's brain_oracle_cheats.
+
+## 2026-09-15 round 4 iteration 1 (m1-abfeeef8): C-R4-01 cp/nk_stub/decoder_rent/torch_gpu/metered_stream -> FAIL
+
+- Boot: ff to 88e22c2a0, suite 209 passed (rc 0), F7 worker up. Draw seed 6451292431859625233; nk_stub is not a
+  screened world, so landscape rows only, no clause A. Harness 83673c385 (CP rank 4 over the 5-bit row index with an
+  attend mask; C-R2-08 meter constants; rent 16384 per active component). Prior 0.55, claim 1789448656549-0.
+- Disclosed: skip_last cheat eligibility set after a no-rows random-genome check (lam_3 != 0 flipped a bit 27-35%);
+  now "rows where the float64 reference itself changes a bit", bar 90%.
+- Job 970068f1fa60 on the worker: 13.2 CPU-s, 18 rows at 142e1de6a. Oracles clean (307,200 offers/arm exact, K=3,
+  skip_last and free_unaffordable caught). Cell held 2.206M vs control 2.237M (bar 2.229M) -> FAIL, 7/8 below control.
+- Cell arm converged to mask 1 (read bit j only, the cheapest affordable read), 1-2 components. Both arms sit BELOW the
+  analytic greedy i0 reference (2.260M) though mask 1 rank 1 can express it: likely the top-nibble quantization I
+  defined, not the meter. No anomaly (prior near coin flip); noted in the result.
