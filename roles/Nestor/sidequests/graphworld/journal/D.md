@@ -342,3 +342,8 @@
   references with a seeded sampler: gen 14 train 133.35 / held 59.73 (C-R2-01 133.3 / 59.9), gen 200 143.42 / 78.90
   (E9 143.9 / 79.2). Held64 per run is noisy (rs 3: 56.2 -> 59.3; rs 6: 43.8 -> 78.4).
 - Receipt D-R6-9 filed 1789491225180-0 (guard 10/10, status NULL, HELD_KEEPS_RISING), rows c40173d9c; ANOM-..1532 RESOLVED.
+- Loop iteration 7 (12:55): next cheapest aimed item ANOM-..0379 (E2b FAKEFIT beat the 20-null max in 1/3 reps).
+  Claimed. D-R6-10 = E2b's own functions, 100 null worlds (seeds 100..199, E2b's 20 included), 10 FAKEFIT reps
+  (fresh seeds 4000..4009), honest x3 (positive control: beats 100-null max >= 2/3), filler x1 (founders 0).
+  NULL_HOLDS e == 0 / RARE 1-2 / CHEAT_LEAKS >= 3; exact CP CI reported. Cost uncertain (branch_points evaluates
+  100k reference genomes + cell baselines per world): per-rep rows + envelope 2400 s wall, 6000 CPU-s. Test 3 passed.
