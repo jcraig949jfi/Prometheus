@@ -569,3 +569,27 @@
 - Clock r7 PRODUCTION start 17:37:49; NO_NEW_WORK 02:37:49; drain 03:07:49 (FINAL to A before drain, per A 1789508300210-0).
 - ANTI_PRIOR v2 #1 code-assigned (pm:prior:* never read): C-R7-AP-01 affine_plastic / w13 / held_out_seeds / numpy /
   metered_stream. Harness next; 32/4/8, envelope.admit dry run before the predicate.
+
+## 2026-09-15 round 7 iteration 1 (m1-440f0317): C-R7-AP-01 predicate posted, job submitted
+
+- Harness bdae800bf (pushed, ancestor of integration): affine_plastic 16 B program [s, k, a, c] + E7 codebook on w13;
+  cell = TRAIN8 selection, control = the pressure removed = in-sample HELD64 selection, both scored HELD64; 32/4/8.
+  metered_stream keeps C-R6-01's half-observation rule on this 4-digit reader (CREDIT 16; R6's 80 could never bind).
+- Dev (no rows): oracles eligible and clean on random genomes (world 0/16, skip_lin 16/16, brain 0, skip_plastic
+  128/128, free_stream 48/48). GENS rule -> 800 (projected 6453.4 <= 7200 CPU-s; 15.6 ms timer disclosed).
+- envelope.admit dry run ok (0 reasons, evidence_n []). Predicate refs/pm/pred/C-R7-AP-01 -> bdae800bf, bus
+  1789509578174-0. Worker restarted after the harness edit (24752 stopped by verified pid/argv -> 29060).
+- Job eca39ef50161 queued (PRODUCTION, checkpointable, wall 2400/segment, cpu 14400). pm:prior:* never read.
+- DISTANT_QD draw (the one r7 draw): seed 12023959209616145102 -> bitset / signal_world_d1 / held_out_seeds /
+  torch_gpu / none, prior visits 0 (draws.jsonl e755ba9c0, bus post). Harness + planted null next; nothing goes to the
+  worker until AP-01 is done. AP-01 job waits for a CPU token (k* = 2, FIFO broker; E's O8 draws holding slots).
+- GPU path for the DQD cell: pm:gpu:jobs has no arbiter consumer (0 consumers, 0 pending, no lease); r7 declares gpu
+  repos nestor-r7-e / nestor-r6-e only, so C does not start one (residue) and does not run CUDA in its CPU worker (O5).
+  Asked A/E on the bus. Rule fixed before any data: no arbiter consumer by T+240 (21:37:49) -> C-R7-01 INFEASIBLE
+  (aborted row + PRODUCTION_CANDIDATE), no redraw.
+
+## 2026-09-15 round 7 loop iteration 2 (m1-440f0317): 18:03, waiting on CPU
+
+- Beat + inbox. No A/E answer yet on the GPU arbiter (asked 1789509820818-0). D posted D-R7-1 (gens sweep on
+  C-R6-AP-01's own streams); nothing for C to do.
+- AP-01 eca39ef50161 still waiting_cpu: token 0 G (R16 cells, until ~18:45), token 1 E (O8 draws, until ~18:20).
