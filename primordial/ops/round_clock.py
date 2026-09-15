@@ -78,6 +78,16 @@ def phase(clock: dict | None, now: float | None = None) -> dict:
     return {"phase": "CLOSED", "epoch": None}
 
 
+def active(r, now: float | None = None, grace_s: float = 1800.0) -> dict | None:
+    """The current round's clock if now is in [start_ts, end_ts + grace_s] (close-out receipts), else None.
+    A missing pm:round:current means no active round; the launch gate asserts the key before T+0."""
+    clock = read(r)
+    now = time.time() if now is None else now
+    if clock is None or not clock["start_ts"] <= now <= clock["end_ts"] + grace_s:
+        return None
+    return clock
+
+
 def main(argv=None) -> int:
     from primordial.bus import bus
     ap = argparse.ArgumentParser()

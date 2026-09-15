@@ -48,6 +48,7 @@ import time
 import traceback
 import uuid
 
+from primordial.fabric import broker
 from primordial.fabric.rows import RowWriter
 
 JOBS, ROWS, DONE = "pm:jobs:{}", "pm:rows:{}", "pm:jobs:{}:done"
@@ -195,6 +196,13 @@ def _child_main(pipe, url: str, lane: str) -> None:
         ctx.job_id, ctx.n_emitted = job["job_id"], 0
         ctx.job_key, ctx.segment = job.get("job_key") or job["job_id"], int(job.get("segment", 0))
         ctx.ckpt_dir = job.get("ckpt_dir") or CKPT_DIR
+        ctx.threads = int(job["threads"]) if job.get("threads") else None
+        if ctx.threads and "numba" in sys.modules:           # F-R5-5: the CPU token's thread grant
+            try:
+                import numba
+                numba.set_num_threads(max(1, min(ctx.threads, numba.config.NUMBA_NUM_THREADS)))
+            except Exception:
+                pass
         t0 = time.perf_counter()
         try:
             mod, _, name = job["fn"].partition(":")
@@ -212,9 +220,10 @@ def _child_main(pipe, url: str, lane: str) -> None:
 
 class Worker:
     def __init__(self, lane: str, url: str | None = None, repo=None, poll_s: float = 0.05, log=print,
-                 ckpt_dir=None, auto_requeue: bool = True):
+                 ckpt_dir=None, auto_requeue: bool = True, broker: bool | None = None):
         from primordial.bus import bus
         self.lane, self.url = lane, url or bus.URL
+        self.broker = broker                      # F-R5-5: None = broker iff pm:capacity:profile exists
         self.auto_requeue = auto_requeue          # F9: requeue a paused job's next segment (F-R5-3 can resume instead)
         self.r = _redis(self.url)
         self.repo = pathlib.Path(repo) if repo else pathlib.Path(__file__).resolve().parents[2]
@@ -285,6 +294,9 @@ class Worker:
             return json.loads(raw)
         except ValueError:
             return "unparseable"
+
+    def _brokered(self) -> bool:
+        return self.broker if self.broker is not None else broker.profile(self.r) is not None
 
     def _admit(self, job: dict) -> dict | None:
         """F-R5-1/2: None = legacy job outside a round (no envelope, no clock); else admit()'s verdict."""
@@ -392,7 +404,8 @@ class Worker:
                "started": round(started, 3), "ended": round(time.time(), 3),
                "job_key": job.get("job_key") or job["job_id"], "segment": int(job.get("segment", 0)),
                "cpu_prior": cpu_prior, "wall_prior": wall_prior, "commit_error": commit_error,
-               "limit": result.get("limit"), **{k: env.get(k) for k in DONE_ENV_FIELDS}}
+               "limit": result.get("limit"), **{k: env.get(k) for k in DONE_ENV_FIELDS},
+               "cpu_token": json.loads(job["cpu_token"]) if job.get("cpu_token") else None}
         if status == "paused" and self.auto_requeue:
             out["next_job_id"] = submit(self.lane, job["fn"], job["exp_id"], job["rows"], float(job["ttl_cpu_s"]),
                                         json.loads(job["kwargs"]), r=self.r, job_key=out["job_key"],
@@ -456,22 +469,41 @@ class Worker:
                     time.sleep(min(block_ms / 1000, 0.1))
                     idle0 = time.monotonic()
                     continue
+                tok = None
+                if self._brokered():                           # F-R5-5: no free CPU token -> take no job
+                    tok = broker.acquire(self.r, self.lane, ttl_s=60)
+                    if tok is None:
+                        self._state("waiting_cpu")
+                        time.sleep(min(block_ms / 1000, 0.1))
+                        continue
                 self._state("idle")
                 got = self.r.xreadgroup(self.group, consumer, {JOBS.format(self.lane): ">"}, count=1,
-                                        block=block_ms)
+                                        block=min(block_ms, 200) if tok else block_ms)
                 msgs = [m for _, ms in (got or []) for m in ms]
                 if not msgs:
+                    broker.release(self.r, tok)
                     if idle_exit_s is not None and time.monotonic() - idle0 > idle_exit_s:
                         break
                     continue
                 mid, job = msgs[0]
                 verdict = self._admit(job)
                 if verdict is not None and not verdict["ok"]:
+                    broker.release(self.r, tok)
                     done.append(self._refuse(job, verdict))
                     self.r.xack(JOBS.format(self.lane), self.group, mid)
                     continue
+                if tok is not None:
+                    env = self._envelope(job)
+                    env = env if isinstance(env, dict) else {}
+                    tok = broker.assign(self.r, tok, job, env.get("cohort"),
+                                        ttl_s=float(env.get("wall_budget_s") or 3600) + 120)
+                    job = dict(job, threads=str(tok["threads"]),
+                               cpu_token=json.dumps({"slot": tok["slot"], "threads": tok["threads"]}))
                 self._state("busy", job["job_id"])
-                done.append(self.run_job(job))
+                try:
+                    done.append(self.run_job(job))
+                finally:
+                    broker.release(self.r, tok)
                 self.r.xack(JOBS.format(self.lane), self.group, mid)
                 idle0 = time.monotonic()
         finally:
