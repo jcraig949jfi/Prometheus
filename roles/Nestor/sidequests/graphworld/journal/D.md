@@ -347,3 +347,8 @@
   (fresh seeds 4000..4009), honest x3 (positive control: beats 100-null max >= 2/3), filler x1 (founders 0).
   NULL_HOLDS e == 0 / RARE 1-2 / CHEAT_LEAKS >= 3; exact CP CI reported. Cost uncertain (branch_points evaluates
   100k reference genomes + cell baselines per world): per-rep rows + envelope 2400 s wall, 6000 CPU-s. Test 3 passed.
+- D-R6-10 RECORD (job 6e2987dba762 ok, 690.8 s wall, 676.5 CPU-s, 14 evolve runs, predicate 1789491427890-0): NULL_HOLDS.
+  I1 3/3: honest beats the 100-null max 3/3 (0.69-0.87 vs 0.10-0.14), filler founders 0, FAKEFIT rates defined 10/10.
+  FAKEFIT exceeds the 100-null max 0/10 (CP CI [0, 0.31]) and E2b's 20-null max 0/10; rates 0.0036-0.0332, percentiles
+  0.00-0.76 among own nulls. E2b's 6.5% FAKEFIT rate lies above all 10 here; the 20-null max itself swings
+  0.036-0.073 across reps. Cost: branch_points 24-91 s per rep (the 100 nulls), evolve ~1.5 s.
