@@ -238,3 +238,7 @@
   baseline median drops to 176.73); 8-run blocks CI low 3303 -0.256, 5501 0.688. Item 3 discriminator NOT triggered.
   Anomaly ..7773 (3303 bimodal) stays OPEN: the PASS does not depend on 3303, the observation is unexplained.
 - Receipt D-R6-1 filed 1789488540808-0 (guard 10/10 OK, status NULL: robustness read, decision ROBUST), rows 4660b347c.
+- Item 3 -> OPEN queue (D-R6-1 ROBUST, no discriminator owed). Claimed ANOM-..7943 (skip-odd brain cheat blind on 3
+  of 16 int2 w4 elites). D-R6-2 code + test (4 passed rc 0): zero QD, B-R2-4 rs0 committed top_hex; census of EVERY
+  live row of the cheat trajectory vs E7's 256-row sample. SAMPLE_MISS vs GENUINE_IGNORE per blind elite; I1 = B's
+  recorded oracle (13/709/4096, honest 0) reproduced; controls planted_zero_odd + honest_census.
