@@ -354,3 +354,14 @@ whole child, 19 s6 fields, timeout -> TIMEOUT event + candidate. First smoke cra
 status and my test writer accepted anything (a test aimed beside the claim) -- fixed, the test writer enforces
 rows.STATUSES. E-R5-3 wiring (nv/r5_harness.py): 1-cell smokes all exact, lease held, rows VALID. GPU-3 resident fp16
 path is not in the P MVP -> PRODUCTION_CANDIDATE stub. Workers stopped for the P-PILOT cohort session.
+
+# ROUND 5 P-PILOT -- Nestor-E[m1-cdc0934f] (prompts_r5/E.md), boot T+19
+
+Iteration 1 (T+19..T+40). Code gap: transfer_v2 had no live-pair job -> live_job (O1 donor = o1_donors()[0], refuses any
+other donor, seen seeds, non-SURVIVED recipient; test) at 2072511b0 (ops.push rebased my 288ae11a6; predicate cites the old sha).
+Clause B w14->w13 seeds 16..31 (predicate 1789471264221-0): STAGE_BUDGET_REFUSAL (wall 1440 > 900, CPU 3200 > 1200) ->
+PRODUCTION_CANDIDATE 1789471324763-0 with measured cost; not run, not trimmed. GPU queue: 6 jobs, all exact, lease held,
+max wall 22 s. GPU-1 Warp beats t8 numba only at 4096/16384; loses at 65536 (h2d 34 ms) -> anomaly to D. GPU-2 at 8192:
+B6 t8 beats CUDA graph kT 5.9x (linear) / 4.1x (tt_digits); B6 stops envs at done, torch steps all T. GPU-3 not run.
+Missing machine checks: (1) admission stubs carry measured_cost null and no code files the measured cost (filed by hand);
+(2) nothing ties a predicate's cited code sha to the pushed sha after a push rebase.
