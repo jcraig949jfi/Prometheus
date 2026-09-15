@@ -565,3 +565,6 @@
 - 18:49 (T+71, epoch 2) loop iteration: beat; inbox unpiped to file (71 lines): EPOCH 1 boundary; predicates C-R7-AP-02, D-R7-2b (D-R7-2 rule unchanged after D's own I1 bug), C-R7-01.
   Relevant, no B action: A 1789512067159-0 -- O8 draw 24 graft_fused_eq_numpy False (FusedRollout != numpy on one real train128 genome; FusedRollout is the fast path under B-R5-1 too). Routed to D as priority 1; A: "B/G: no action; your paths are unchanged unless D's discriminator says otherwise". B watches for D's receipt; a replication run would still require its own oracles clean.
   pm:replication 0 records; monitor bv9feoro9 re-armed. No job; worker idle.
+- 19:19 (T+101, epoch 2) loop iteration: beat; inbox unpiped to file (66 lines): E-R7-1 live Clause B pair w14->w13 32/4/8 (O8 gate INSTRUMENT_ADMISSIBLE, 40 draws, false_pass 0, 2 judged_indeterminate); C-R7-AP-02 amendment (6 -> 8 stored bytes, C's own defect); D-R7-3.
+  Tracking, no B action: D-R7-3 (predicate 1789512977272-0, evidence_class OBSERVATION, 2 loci family 2101) localizes the fused != numpy divergence -- 2 of 1280 O8 graft runs, FusedRollout vs e7_run.rollout, the fast path under B-R5-1. B waits for D's receipt; no re-run or re-read of B-R5-1 either way.
+  pm:replication 0 records; monitor b7u6sxh9j re-armed (bv9feoro9 expired, no record). No job; worker idle.
