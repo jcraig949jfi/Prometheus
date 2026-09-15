@@ -64,6 +64,15 @@ def sleep_rows(ctx, s: float = 0.3):
     ctx.emit({"status": "dev", "kind": "sleep_rows", "at": "end"})
 
 
+def thread_report(ctx):
+    """D19: what thread count does this job really run with (numba pool, numba current, OMP env)?"""
+    import os
+    import numba
+    ctx.emit({"status": "dev", "kind": "threads", "numba_get": int(numba.get_num_threads()),
+              "numba_config": int(numba.config.NUMBA_NUM_THREADS), "omp_env": os.environ.get("OMP_NUM_THREADS"),
+              "numba_env": os.environ.get("NUMBA_NUM_THREADS")})
+
+
 def walk(ctx, steps: int = 60, seed: int = 7, step_s: float = 0.02):
     """A deterministic random walk that checkpoints at a step boundary when asked (F9)."""
     st = ctx.load_checkpoint() or {"i": 0, "acc": 0, "rng": np.random.default_rng(seed).bit_generator.state}

@@ -156,6 +156,30 @@ def code_repo_of(fn: str) -> str | None:
     return _repo_root(spec.origin, mod) if spec is not None and spec.origin else None
 
 
+THREAD_ENV = ("NUMBA_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS")
+_SPAWN_LOCK = __import__("threading").Lock()
+
+
+def thread_env(threads: int) -> dict:
+    """D19: the environment a child must be SPAWNED with to get `threads` (pools are sized at import)."""
+    return {k: str(int(threads)) for k in THREAD_ENV}
+
+
+def apply_child_threads(threads: int | None) -> int | None:
+    """D19, inside a child: set numba to the grant (bounded by the pool it was spawned with); -> effective threads."""
+    if threads:
+        try:
+            import numba
+            numba.set_num_threads(max(1, min(int(threads), numba.config.NUMBA_NUM_THREADS)))
+        except Exception:
+            pass
+    nb = sys.modules.get("numba")
+    try:
+        return int(nb.get_num_threads()) if nb is not None else None
+    except Exception:
+        return None
+
+
 def _norm_path(p) -> str | None:
     return None if not p else os.path.normcase(os.path.abspath(str(p))).replace("\\", "/").rstrip("/")
 
@@ -201,6 +225,7 @@ class Ctx:
         self.ckpt_dir = CKPT_DIR
         self.n_emitted = 0
         self.seg_wall_s, self.seg_t0 = None, 0.0
+        self.threads = self.numba_threads = None
 
     # F9 checkpoints
     def _ckpt(self) -> pathlib.Path:
@@ -239,6 +264,10 @@ class Ctx:
         raise JobPaused()
 
     def emit(self, row: dict) -> None:
+        if self.threads is not None or self.numba_threads is not None:        # D19: every row says how it ran
+            row = dict(row)
+            row.setdefault("granted_threads", self.threads)
+            row.setdefault("numba_threads", self.numba_threads)
         self.r.xadd(ROWS.format(self.lane), {"job_id": self.job_id, "json": json.dumps(row, sort_keys=True)})
         self.n_emitted += 1
 
@@ -287,13 +316,8 @@ def _child_main(pipe, url: str, lane: str) -> None:
         ctx.seg_wall_s = float(job["segment_wall_s"]) if job.get("segment_wall_s") else None
         ctx.job_key, ctx.segment = job.get("job_key") or job["job_id"], int(job.get("segment", 0))
         ctx.ckpt_dir = job.get("ckpt_dir") or CKPT_DIR
-        ctx.threads = int(job["threads"]) if job.get("threads") else None
-        if ctx.threads and "numba" in sys.modules:           # F-R5-5: the CPU token's thread grant
-            try:
-                import numba
-                numba.set_num_threads(max(1, min(ctx.threads, numba.config.NUMBA_NUM_THREADS)))
-            except Exception:
-                pass
+        ctx.threads = int(job["threads"]) if job.get("threads") else None     # F-R5-5: the CPU token's grant
+        ctx.numba_threads = apply_child_threads(ctx.threads)                  # D19: effective, stamped on rows
         t0 = ctx.seg_t0 = time.perf_counter()
         try:
             mod, _, name = job["fn"].partition(":")
@@ -301,11 +325,11 @@ def _child_main(pipe, url: str, lane: str) -> None:
             _LOADED.setdefault(mod, _file_sha(getattr(m, "__file__", None)))
             getattr(m, name)(ctx, **json.loads(job["kwargs"]))
             ctx._ckpt().unlink(missing_ok=True)
-            pipe.send({"ok": True, "wall_s": time.perf_counter() - t0, "emitted": ctx.n_emitted})
+            pipe.send({"ok": True, "wall_s": time.perf_counter() - t0, "emitted": ctx.n_emitted, "numba_threads": ctx.numba_threads})
         except JobPaused:
-            pipe.send({"ok": True, "paused": True, "wall_s": time.perf_counter() - t0, "emitted": ctx.n_emitted})
+            pipe.send({"ok": True, "paused": True, "wall_s": time.perf_counter() - t0, "emitted": ctx.n_emitted, "numba_threads": ctx.numba_threads})
         except Exception:
-            pipe.send({"ok": False, "wall_s": time.perf_counter() - t0, "emitted": ctx.n_emitted,
+            pipe.send({"ok": False, "wall_s": time.perf_counter() - t0, "emitted": ctx.n_emitted, "numba_threads": ctx.numba_threads,
                        "error": traceback.format_exc()[-2000:]})
 
 
@@ -323,6 +347,7 @@ class Worker:
         self.poll_s, self.log = poll_s, log
         self.child = self.pipe = None
         self.children_spawned = 0
+        self.child_threads = None                 # D19: threads the current child was spawned with
         self.ckpt_dir = str(ckpt_dir or CKPT_DIR)
         self.exit_requested = False             # set from another thread: serve() returns after the current job
         self.rows_cursor = "$"
@@ -333,11 +358,25 @@ class Worker:
             if "BUSYGROUP" not in str(e):
                 raise
 
-    def _spawn(self) -> None:
+    def _spawn(self, threads: int | None = None) -> None:
+        """D19: the child's thread pools are sized at import from the environment it is spawned with, so a granted
+        token's threads go into the CHILD environment (the session's NUMBA_NUM_THREADS=3 capped every job)."""
         c = mp.get_context("spawn")
         self.pipe, child_end = c.Pipe()
         self.child = c.Process(target=_child_main, args=(child_end, self.url, self.lane), daemon=True)
-        self.child.start()
+        with _SPAWN_LOCK:                          # os.environ is process-wide; restore it for the parent
+            saved = {k: os.environ.get(k) for k in THREAD_ENV}
+            if threads:
+                os.environ.update(thread_env(threads))
+            try:
+                self.child.start()
+            finally:
+                for k, v in saved.items():
+                    if v is None:
+                        os.environ.pop(k, None)
+                    else:
+                        os.environ[k] = v
+        self.child_threads = threads
         self.children_spawned += 1
 
     def _kill_child(self) -> None:
@@ -431,8 +470,11 @@ class Worker:
                                                                   sort_keys=True)})
 
     def run_job(self, job: dict) -> dict:
+        granted = int(job["threads"]) if job.get("threads") else None
+        if self.child is not None and self.child.is_alive() and granted and self.child_threads != granted:
+            self._kill_child()                               # D19: pools are fixed at spawn; respawn at the grant
         if self.child is None or not self.child.is_alive():
-            self._spawn()
+            self._spawn(granted)
         want, want_repo = job.get("code_file_sha256"), job.get("code_repo")
         if want or want_repo:                                # F-R6-2 (D4) + F-R7-3: never run stale resident code
             got = self._probe(job["fn"])
@@ -450,7 +492,7 @@ class Worker:
                 if want and got.get("sha") != want and mod not in changed:
                     changed.append(mod)
                 self._kill_child()
-                self._spawn()
+                self._spawn(granted)
                 self._event("CODE_RELOADED", {"job_id": job["job_id"], "job_key": job.get("job_key"),
                                               "fn": job["fn"], "loaded": got.get("sha"), "want": want,
                                               "changed": changed})
@@ -536,7 +578,8 @@ class Worker:
                "job_key": job.get("job_key") or job["job_id"], "segment": int(job.get("segment", 0)),
                "cpu_prior": cpu_prior, "wall_prior": wall_prior, "commit_error": commit_error,
                "limit": result.get("limit"), **{k: env.get(k) for k in DONE_ENV_FIELDS},
-               "cpu_token": json.loads(job["cpu_token"]) if job.get("cpu_token") else None}
+               "cpu_token": json.loads(job["cpu_token"]) if job.get("cpu_token") else None,
+               "granted_threads": granted, "numba_threads": result.get("numba_threads")}
         if status == "paused" and self.auto_requeue:
             out["next_job_id"] = submit(self.lane, job["fn"], job["exp_id"], job["rows"], float(job["ttl_cpu_s"]),
                                         json.loads(job["kwargs"]), r=self.r, job_key=out["job_key"],
