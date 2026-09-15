@@ -19,6 +19,12 @@ INDETERMINATE. The verdict reads rows only (per-run-seed rows; summary rows are 
 cross-check that the re-derived p equals the harness's).
 
     python -m primordial.ops.qd_ledger check-b --rows primordial/ledger/rows/E/E-T1b-transfer-harness-vs-cheats.jsonl
+
+v2 (E-R5-1, preregistered bus 1789467311525-0): rows stamped control_version clauseB_ctrl_v2_featperm are read
+against CONTROLS_V2 = (scratch, sham) -- equal-budget scratch and the observation-feature-permuted donor. v1's
+rand_graft lost to scratch at w13 train128 (E-R4-1), so beating it proved nothing. v2 gates: paired seeds, graft
+integrity, sham integrity (sham_integrity.ok on every run seed), oracles clean. The planted positive/negative are
+separate preregistered validation experiments, not an in-pair gate. v1 rows keep the v1 rule unchanged.
 """
 from __future__ import annotations
 
@@ -30,6 +36,9 @@ import numpy as np
 
 CHEATS = ("rand_graft", "shuffle_graft")
 CONDITIONS = ("graft", "self_graft") + CHEATS
+CONTROL_V2 = "clauseB_ctrl_v2_featperm"
+CONTROLS_V2 = ("scratch", "sham")
+CONDITIONS_V2 = ("graft",) + CONTROLS_V2
 ALPHA = 0.05
 CHEAT_BAR = 14
 METRIC = "held_auc"
@@ -74,15 +83,67 @@ def pairs_from_rows(rows: list[dict]) -> dict:
         key = (r.get("exp_id") or "", r.get("family"), r.get("donor_world"), r.get("recipient_world"))
         if None in key[1:]:
             continue
-        g = out.setdefault(key, {"by_cond": {}, "summary": None})
+        g = out.setdefault(key, {"by_cond": {}, "summary": None, "control_version": None})
+        if r.get("control_version"):
+            g["control_version"] = g["control_version"] or r["control_version"]
+            if g["control_version"] != r["control_version"]:
+                g["mixed_control_versions"] = True
         if r.get("condition") == "summary":
             g["summary"] = r
-        elif r.get("condition") in CONDITIONS + ("scratch",) and r.get("run_seed") is not None:
+        elif r.get("condition") in CONDITIONS + ("scratch", "sham") and r.get("run_seed") is not None:
             g["by_cond"].setdefault(r["condition"], {})[r["run_seed"]] = r
     return out
 
 
+def evaluate_pair_v2(g: dict, alpha: float = ALPHA, metric: str = METRIC) -> dict:
+    """clauseB_ctrl_v2_featperm: the graft must beat BOTH equal-budget scratch and the feature-permuted sham."""
+    bc = g["by_cond"]
+    problems = []
+    if g.get("mixed_control_versions"):
+        problems.append("rows of this pair carry more than one control_version")
+    seeds = sorted(set.intersection(*(set(bc.get(c, {})) for c in CONDITIONS_V2))) if all(c in bc for c in CONDITIONS_V2) else []
+    for c in CONDITIONS_V2:
+        extra = set(bc.get(c, {})) - set(seeds)
+        if c not in bc:
+            problems.append(f"no {c} rows")
+        elif extra:
+            problems.append(f"{c} has unpaired run seeds {sorted(extra)}")
+    res: dict = {"run_seeds": seeds, "n": len(seeds), "control_version": CONTROL_V2}
+    if len(seeds) < 2:
+        return dict(res, verdict="INDETERMINATE", problems=problems or ["fewer than 2 paired run seeds"])
+    col = lambda c: np.array([bc[c][s][metric] for s in seeds], float)
+    for other in CONTROLS_V2:
+        d = col("graft") - col(other)
+        res[f"graft_vs_{other}_diff_mean"] = float(d.mean())
+        res[f"graft_vs_{other}_p"] = signflip_p(d)
+    res["graft_p_max"] = max(res[f"graft_vs_{c}_p"] for c in CONTROLS_V2)
+    d = col("sham") - col("scratch")
+    res["sham_vs_scratch_diff_mean"], res["sham_below_scratch_p"] = float(d.mean()), signflip_p(-d)
+    grafts = [bc["graft"][s] for s in seeds]
+    if not all(r.get("graft_bytes_unmodified") is True and r.get("graft_fused_eq_numpy") is True for r in grafts):
+        problems.append("graft integrity (bytes unmodified and fused == numpy) not true on every run seed")
+    bad_sham = [s for s in seeds if (bc["sham"][s].get("sham_integrity") or {}).get("ok") is not True]
+    if bad_sham:
+        problems.append(f"sham integrity not ok on run seeds {bad_sham}")
+    oracle_rows = [r for r in grafts if "world_oracle_honest" in r]
+    if not oracle_rows:
+        problems.append("no oracle row on the graft condition")
+    for r in oracle_rows:
+        problems += [f"run seed {r['run_seed']}: {p}" for p in _oracle_problems(r)]
+    logged = (g.get("summary") or {}).get("graft_vs_controls_held_auc_p_max")
+    if metric == "held_auc" and logged is not None:
+        res["harness_graft_p_max"] = logged
+        res["rederived_equals_harness"] = abs(logged - res["graft_p_max"]) < 1e-12
+    res["problems"] = problems
+    return res
+
+
 def evaluate_pair(g: dict, alpha: float = ALPHA, metric: str = METRIC) -> dict:
+    if g.get("control_version") == CONTROL_V2:
+        return evaluate_pair_v2(g, alpha, metric)
+    if g.get("control_version"):
+        return {"run_seeds": [], "n": 0, "verdict": "INDETERMINATE",
+                "problems": [f"unknown control_version {g['control_version']!r}"]}
     bc = g["by_cond"]
     problems = []
     seeds = sorted(set.intersection(*(set(bc.get(c, {})) for c in CONDITIONS))) if all(c in bc for c in CONDITIONS) else []
@@ -137,7 +198,7 @@ def check_b(rows: list[dict], alpha: float = ALPHA, metric: str = METRIC) -> dic
             v["holm_p_adj"], v["verdict"] = adj[k]["p_adj"], "PASS" if adj[k]["reject"] else "FAIL"
         else:
             v.setdefault("verdict", "INDETERMINATE")
-        table.append({"exp_id": exp, "pair": f"w{donor}->w{rec}", "family": fam, **v})
+        table.append({"exp_id": exp, "pair": f"w{donor}->w{rec}", "family": fam, "control_version": v.get("control_version"), **v})
     return {"clause": "B", "metric": metric, "alpha": alpha, "holm_families": families, "pairs": table}
 
 
