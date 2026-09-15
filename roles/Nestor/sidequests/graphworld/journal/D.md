@@ -301,3 +301,11 @@
 - Receipt D-R6-6 filed 1789490157101-0: status INDETERMINATE (job aborted, index bug, no cell value seen), rows 2e31ed755.
   job() now takes exp / predicate_id so D-R6-6b runs under its own predicate and rows file (the aborted row predates
   any new predicate). Tests 10 passed rc 0; worker restarted again after this edit (A ruling).
+- D-R6-6b RECORD (job 0eeef9dc00e9 ok, 3.1 s, 0 QD, predicate 1789490222662-0): I1 and both controls clean in all 3 cells.
+  w1 train128: SEARCH_SHORT (reach 0/8: top1 TRAIN128 160.3-179.1 vs gate 271.8; held 0/8, best HELD64 71-98 vs 170.5).
+  w34 train8: OVERFIT_ONLY (reach 8/8: top1 TRAIN8 79.8-182.8 vs gate 76.5; held 0/8, best HELD64 230-277 vs 289.3;
+  top1 HELD64 is 0.0 in 3 runs, below the 273.3 abstain value in all 8).
+  w1 train8: OVERFIT_ONLY by the rule, but only by TIES: top1 TRAIN8 == the gate's 236.25 exactly in 5/8 (reach uses
+  >=), 0 elites strictly above it in any archive; best HELD64 46-87 vs 170.5. Under strict > it would read SEARCH_SHORT.
+  Reported, not re-judged. Five HELD cells now read: w13 t8 OVERFIT, w7 t8 SEARCH_SHORT, w1 t8 OVERFIT (tie),
+  w1 t128 SEARCH_SHORT, w34 t8 OVERFIT. None is a selection miss: no archive hid a gate-quality policy.
