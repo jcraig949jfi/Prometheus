@@ -421,3 +421,16 @@
 - Runs so far (HELD64 per seed): cell 198.79 / 195.38 / 198.75 reading 8 / 6 / 4 bits; control 151.56 / 153.33.
   Seed-0 oracles clean both arms. Not a result: 3 vs 2 of 8 per arm, predicate unresolved. GPU lease released.
 - Round 4 lane C so far: 5 draws (C-R4-01 FAIL, C-R4-02..04 aborted infeasible, C-R4-05 paused); 1 receipt.
+
+## 2026-09-15 round 5 pilot iteration 1 (m1-12a62e35): C-R5-01 drawn + C-R5-AP-01 assigned, harnesses b93147148
+
+- Boot: ff to eca1a725b, suite 384 passed 1 skipped (rc 0), worker C up; clock stage PILOT, started T+16 min at boot.
+- DISTANT_QD draw seed 1697858559309454776 -> affine_plastic/signal_world_d1/corruption/numpy/metered_stream.
+  ANTI_PRIOR via anti_prior.assign (seed 4796911454902464105) -> tt_digits/signal_world_d1/cpu_ttl/redis_lua/none.
+  Cell only; pm:prior:* never read. Both on D1's signal world: not screened, so no clause A, landscape rows only.
+- Definitions fixed in the harness docstrings; no-rows dev checks clean (all cheats caught at share 1.0 with eligible
+  rows). GENS 400 both, AP TTL 1.56 CPU-s, from the rule "largest of {100,200,400,800} within half PILOT ceilings".
+- Predicates 1789471296255-0 (C-R5-01, prior .7) and 1789471304937-0 (C-R5-AP-01, prior .35), runs_total 32,
+  rng_family_count 4, runs_per_family 8 per arm. Job d170c4bc4648 (C-R5-01) submitted; AP-01 queued after it.
+- Worker's first dequeue was R4's stale C-R4-05 segment 8a41bec5a391 (no envelope): STAGE_BUDGET_REFUSAL
+  ENVELOPE_MISSING, a normal refusal. Not resubmitted; told A.
