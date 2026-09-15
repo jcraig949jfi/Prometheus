@@ -193,6 +193,13 @@ H still write all four variants.
   - It carries no clause A: the progress denominator is <= 0.
   - It stays out of B and C's grids until D resolves it and G re-screens it.
 - CULLED otherwise.
+- PENDING (conductor scheduling, 21:5x): the baseline ci95 low is <= a
+  bound made of the pressure's own parts, so the cell cannot SURVIVE, but
+  HELD vs CULLED needs the expensive learner.
+  - It is recorded as PENDING, not computed from the bound.
+  - check() and F12 treat it as INELIGIBLE(PENDING).
+  - It does not block the launch. Its learner runs after test launch 1
+    quiesces, then the file is updated and H re-replays it.
 - Launch: operator "launch when G and H are ready", so gate item 4 is met.
   If the screen yields 0 SURVIVED but >= 1 HELD, the conductor asks the
   operator before launching B, since B would have no cells.
