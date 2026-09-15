@@ -321,3 +321,13 @@ reviewed by their reports + the combined run; F-R6-2/3/4 + round id by this sess
 - F-R6-1 ae47bb4f1, F-R6-5 4ad0b8980, F-R6-2/3/4 + r6 clock 9842c4f7b, F-R6-6 + refs guard 0f2bdb92a, F9 test b65d46aba.
 - Full primordial suite on b65d46aba: 732 passed, 9 skipped, rc 0.
 - No worker, clock or controller started for round 6. Lane F idle on asks.
+
+## 2026-09-15 ~12:30 (round 6 live) -- D4 gap: PRODUCTION_CANDIDATE 1789489827401-0 filed (no code, no push)
+
+- D 1789489737094-0: job d6eecdc3a3c8 ran a stale IMPORTED module (fn module fingerprint matched, helper r6_4 was
+  edited): TypeError, 0 rows (80292450a). A 1789489756428-0: D4 PARTIALLY FIXED; no mid-round fabric change.
+- My error: the contract said the child keeps the sha of each module it imported. The shipped check covers the fn
+  module only, and my test edited only the fn module, so the test never touched an imported module.
+- Filed through envelope.file_candidate (stub XADDed first, no refusal existed): import-closure fingerprint +
+  respawn/refuse. Measured cost: 240 primordial .py files, 1.62 MB, 12.7 ms warm hash. Estimates: 3600 s build,
+  900 s tests. Test plan: helper edited between jobs in one serve(). This commit stays local until round close.
