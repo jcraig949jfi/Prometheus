@@ -1,5 +1,5 @@
 {
- "begin_ts": 1789489199.852,
+ "begin_ts": 1789515469.229,
  "budget": {
   "by_cohort": {
    "B": {
@@ -12,37 +12,39 @@
     }
    },
    "C": {
-    "cpu_s": 2640.674,
-    "jobs": 8,
+    "cpu_s": 3668.175,
+    "jobs": 11,
     "status": {
-     "error": 1,
+     "died": 1,
+     "error": 2,
      "ok": 6,
-     "paused": 1
+     "paused": 2
     }
    },
    "D": {
-    "cpu_s": 12.142,
-    "jobs": 5,
+    "cpu_s": 2409.314,
+    "jobs": 18,
     "status": {
-     "error": 1,
-     "ok": 4
+     "error": 4,
+     "ok": 14
     }
    },
    "E": {
-    "cpu_s": 3280.874,
-    "jobs": 5,
+    "cpu_s": 26460.311,
+    "jobs": 50,
     "status": {
-     "ok": 4,
+     "ok": 48,
+     "paused": 1,
      "refused": 1
     }
    },
    "G": {
-    "cpu_s": 18551.968,
-    "jobs": 89,
+    "cpu_s": 97038.247,
+    "jobs": 168,
     "status": {
-     "ok": 13,
-     "paused": 2,
-     "refused": 73,
+     "ok": 45,
+     "paused": 6,
+     "refused": 116,
      "timeout": 1
     }
    },
@@ -92,21 +94,21 @@
   },
   "by_lane": {
    "B": 11689.141,
-   "C": 5230.908,
-   "D": 9370.363,
-   "E": 13505.483,
-   "G": 89527.093
+   "C": 6258.409,
+   "D": 11767.535,
+   "E": 36684.92,
+   "G": 168013.374
   }
  },
  "controller": "A[m1-449a9e76]",
  "drain_timeout_s": 2430.0,
- "drained_ts": 1789489202.274,
+ "drained_ts": 1789515493.416,
  "epoch": 2,
  "export": {
-  "anomalies": 45,
-  "results": 117,
+  "anomalies": 59,
+  "results": 137,
   "state": 8,
-  "swarm": 974
+  "swarm": 1177
  },
  "lanes": [
   "B",
@@ -120,27 +122,27 @@
   "B": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789489202.266"
+   "ts": "1789515493.326"
   },
   "C": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789489202.266"
+   "ts": "1789515493.382"
   },
   "D": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789489202.266"
+   "ts": "1789515493.326"
   },
   "E": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789489202.266"
+   "ts": "1789515493.326"
   },
   "G": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789489202.221"
+   "ts": "1789515493.338"
   }
  }
 }
