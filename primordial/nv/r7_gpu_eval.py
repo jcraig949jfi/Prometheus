@@ -15,6 +15,9 @@ share no state, so each run's trajectory is the sequential one iff every evaluat
                gpu_lockstep: every generation's fitness AND cells == numba on the same batch AND every run's elites ==
                sequential. Any gpu miss -> INSTRUMENT_FAIL (no timing row).
   timing       baseline stage of a REAL cell, median of `reps` whole stages per backend; cells/hour = 3600 / stage wall.
+               Lease-bounded (E amendment, before any timing row): mode="oracle" (one job) + mode="timing" (one whole stage
+               per backend per job, repeated as separate jobs); decide() takes each backend's median over every timing row of
+               the cell, the same estimator as reps inside one job.
   decision     (A 1789505093129-0, amendment posted before any timing row) per measured cell eligible = backends whose
                oracle rows all PASS (+ cpu_sequential); CHOSEN = fastest eligible iff its cells/hour >= 1.25 x
                cpu_sequential on EVERY measured cell (>= 1 measured), else cpu_sequential. set_decision writes STRING keys
@@ -229,8 +232,10 @@ def _timing(cell: dict, backend: str, walls: list, comparison: str, **extra) -> 
 
 def cell_job(emit, gen_seed: int = 13, pressure: str = "train8_held64", families=FAMILIES, run_seeds=RUN_SEEDS,
              gens=None, batch=None, reps: int = 3, threads: int = 8, archive_url: str = ARCHIVE_URL,
-             lease_s: float = 600.0, checkpoint_path=None):
-    os.environ.setdefault("NUMBA_NUM_THREADS", str(int(threads)))
+             lease_s: float = 600.0, mode: str = "all", checkpoint_path=None):
+    if mode not in ("all", "oracle", "timing"):
+        raise ValueError(f"mode {mode!r}")
+    os.environ["NUMBA_NUM_THREADS"] = str(int(threads))          # forced: the gpuq child inherited 3 (E-R7-2 probe row)
     import numba
     import redis
     import torch
@@ -276,12 +281,24 @@ def cell_job(emit, gen_seed: int = 13, pressure: str = "train8_held64", families
         t0 = time.perf_counter()
         ev_gpu(probe)
         tg = time.perf_counter() - t0
-    projected = gens_ * (tg + 3 * tn) + int(reps) * gens_ * (tg + 3 * tn)
-    cell.update(probe_gen_s_numba=round(tn, 5), probe_gen_s_gpu=round(tg, 5) if ev_gpu else None,
+    n_reps = int(reps) if mode == "all" else (1 if mode == "timing" else 0)
+    seq_gen = tn * 3                                                          # sequential runs: per-run calls, measured ~3x
+    projected = (gens_ * (tg + tn + seq_gen) if mode in ("all", "oracle") else 0.0) + n_reps * gens_ * (tg + tn + seq_gen)
+    cell.update(mode=mode, probe_gen_s_numba=round(tn, 5), probe_gen_s_gpu=round(tg, 5) if ev_gpu else None,
                 projected_job_s=round(projected, 1))
     if projected > float(lease_s) * 0.8:
         emit({"kind": "projected_over_lease", "status": "control", **cell, "lease_s": lease_s,
               "note": "oracles + timing projected past 80% of the lease segment: cell not measured"})
+        return
+    if mode == "timing":
+        walls = {k: [] for k in BACKENDS if k != "gpu_lockstep" or ev_gpu is not None}
+        walls["cpu_sequential"].append(sequential(r, gen_seed, pressure, families, run_seeds, gens, batch)["wall_s"])
+        walls["cpu_lockstep"].append(lockstep(r, gen_seed, pressure, ev_numba, families, run_seeds, gens, batch, tag="cpu")["wall_s"])
+        if "gpu_lockstep" in walls:
+            walls["gpu_lockstep"].append(lockstep(r, gen_seed, pressure, ev_gpu, families, run_seeds, gens, batch, tag="gpu")["wall_s"])
+        for k, w in walls.items():
+            emit(_timing(cell, k, w, "cpu_sequential" if k != "cpu_sequential" else "fastest_eligible", status="record",
+                         compile_s=round(gpu_capture_s if k == "gpu_lockstep" else numba_init_s, 3)))
         return
     # ---- oracles: reference = G's sequential loop
     seq = sequential(r, gen_seed, pressure, families, run_seeds, gens, batch)
@@ -315,6 +332,8 @@ def cell_job(emit, gen_seed: int = 13, pressure: str = "train8_held64", families
         else:
             emit({"kind": "verdict", "status": "control", **cell, "backend": "gpu_lockstep", "verdict": "INSTRUMENT_FAIL",
                   "throughput": None})
+    if mode == "oracle":
+        return
     # ---- timing: median of reps of the whole baseline stage, same estimator on every eligible backend
     walls = {k: [] for k in eligible}
     for _ in range(int(reps)):
@@ -333,31 +352,41 @@ def cell_job(emit, gen_seed: int = 13, pressure: str = "train8_held64", families
 
 
 def decide(rows: list[dict]) -> dict:
-    """A 1789505093129-0 (amended E-R7-2): per measured cell, eligible = cpu_sequential + backends whose oracle rows all
-    PASS; chosen = the fastest eligible backend (median of its per-cell ratios' minimum) iff its ratio vs cpu_sequential is
-    >= RATIO_MIN on EVERY measured cell, else cpu_sequential. GPU_ADOPT iff chosen == gpu_lockstep."""
-    oracle_ok: dict = {}
+    """A 1789505093129-0 (amended E-R7-2): per measured cell, each backend's wall = median over EVERY timing row of that cell
+    (reps inside one job or one rep per job: the same estimator); eligible = cpu_sequential + backends whose oracle rows for
+    the cell all PASS (an INSTRUMENT_FAIL verdict makes the backend ineligible). chosen = the fastest eligible backend by its
+    minimum ratio vs cpu_sequential across measured cells, iff that minimum >= RATIO_MIN, else cpu_sequential. A cell is
+    measured iff it has cpu_sequential timing and >= 1 oracle row. GPU_ADOPT iff chosen == gpu_lockstep."""
+    cellkey = lambda x: f"{x['world']} {x['pressure']}"
+    ok: dict = {}
     for x in rows:
         if x.get("kind") == "oracle":
-            oracle_ok[x["backend"]] = oracle_ok.get(x["backend"], True) and x.get("exactness") == "PASS"
-    for x in rows:
+            k = (cellkey(x), x["backend"])
+            ok[k] = ok.get(k, True) and x.get("exactness") == "PASS"
         if x.get("kind") == "verdict" and x.get("verdict") == "INSTRUMENT_FAIL":
-            oracle_ok[x.get("backend", "gpu_lockstep")] = False
-    cells = [x for x in rows if x.get("kind") == "cell_ratio"]
-    ratios = {f"{x['world']} {x['pressure']}": x["ratio_vs_cpu_sequential"] for x in cells}
+            ok[(cellkey(x), x.get("backend", "gpu_lockstep"))] = False
+    walls: dict = {}
+    for x in rows:
+        if x.get("kind") == "timing":
+            walls.setdefault(cellkey(x), {}).setdefault(x["backend"], []).extend(x.get("walls_s") or [x["wall_s"]])
+    measured = sorted(c for c, w in walls.items() if "cpu_sequential" in w and any(k[0] == c for k in ok))
+    ratios = {}
+    for c in measured:
+        med = {b: statistics.median(v) for b, v in walls[c].items()}
+        ratios[c] = {b: med["cpu_sequential"] / med[b] for b in med
+                     if b == "cpu_sequential" or ok.get((c, b))}
     candidates = {}
     for b in ("cpu_lockstep", "gpu_lockstep"):
-        if not oracle_ok.get(b) or not cells:
-            continue
-        per = [float(c["ratio_vs_cpu_sequential"][b]) for c in cells if b in c.get("eligible", ()) and b in c["ratio_vs_cpu_sequential"]]
-        if len(per) == len(cells):
-            candidates[b] = min(per)
+        if measured and all(b in ratios[c] for c in measured):
+            candidates[b] = min(ratios[c][b] for c in measured)
     passing = {b: v for b, v in candidates.items() if v >= RATIO_MIN}
     chosen = max(passing, key=passing.get) if passing else "cpu_sequential"
     return {"backend": chosen, "decision": ADOPT if chosen == "gpu_lockstep" else REJECT, "ratios": ratios,
-            "min_ratio_by_backend": candidates, "oracle_ok": oracle_ok, "ratio_min": RATIO_MIN,
-            "device_oom_cells": [f"{x['world']} {x['pressure']}" for x in rows if x.get("kind") == "device_oom"],
-            "over_lease_cells": [f"{x['world']} {x['pressure']}" for x in rows if x.get("kind") == "projected_over_lease"],
+            "min_ratio_by_backend": candidates, "oracle_ok": {f"{c} {b}": v for (c, b), v in ok.items()},
+            "reps": {c: {b: len(v) for b, v in w.items()} for c, w in walls.items()}, "ratio_min": RATIO_MIN,
+            "measured_cells": measured,
+            "device_oom_cells": [cellkey(x) for x in rows if x.get("kind") == "device_oom"],
+            "over_lease_cells": sorted({cellkey(x) for x in rows if x.get("kind") == "projected_over_lease"} - set(measured)),
             "rule": "SWARM_R7 O2 + O2' (A 1789505093129-0): fastest eligible (oracle PASS) backend iff >= 1.25x cpu_sequential "
                     "on every measured cell, else cpu_sequential; GPU_ADOPT iff chosen == gpu_lockstep"}
 

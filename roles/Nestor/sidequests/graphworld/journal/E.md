@@ -429,3 +429,22 @@ E-R6-1 only (ruling b, OBSERVATION: check_b v2 FAIL gates clean, 16/1/16). E-R6-
 1789471324763-0, 1789486665691-0 (new, family-aware Clause B 32/4/8), 1789468339986-0. Open claims none. Own errors: no guard dry-run
 before E-R6-1's predicate; monitor on a wrong bus key; numba 3 threads vs token 8 unnoticed before E-R6-2. Final posted to A; worker
 stopped; loop stopped.
+
+# ROUND 7 R7-BUILD -- Nestor-E[m1-77e78a19] (prompts_bld_r7/E.md; SWARM_R7 s3 E-R7-1..3), 16:29 -> cap 18:35
+
+Build 1 (16:29-16:52). ff dfdb22a8a. E-R7-1: transfer_v2 family axis (streams prefixed by F; None keeps r5/r6 streams),
+check_b v2 pairs on (family, run seed) and refuses mixed axes; signflip exact n <= 20 else seeded MC (2^32 enumeration was
+impossible at 32/4/8); tests 6 new + old pass. Predicates E-R7-1-val-positive/negative (32/4/8, CLAUSE_B sample block; the first
+attempt was refused SAMPLE_RULE_MISMATCH by H's new post_predicate for lacking experiment_class -- nothing pinned). E-R7-2:
+nv/r7_gpu_eval.py lockstep (32 runs, one evaluation per generation; G's per-run archives + streams untouched), oracle vs
+numba every generation + elites vs G's baseline_run, lease projection guard, decision widened by A (best exact backend,
+amendment posted before any timing row), G hook baseline_runs_lockstep; GPU dev smoke under a bus lease EXACT, 0.07x at
+2 runs x 3 gens (not a verdict). E-R7-3: cohorts/e/r7_b2_overhead.py. r6 residue (stop flag + closed r6 clock) blocked
+every admission; A cleared it (counted, D18). Code 935a31e5a; jobs queued: worker 438f1f7b5c00 / 72d76b705c37 / b11d7e858e31,
+GPU 198efb6b735e (w13 t8) / 2f5abcb6bb9e (w13 t128).
+
+Build 2 (16:53). E-R7-1 planted positive at 32/4/8: check_b v2 PASS, gates clean, graft-scratch +8.27, graft-sham +4.41 (MC p
+5e-6 both), sham-scratch +3.86; 94.8 s. Both E-R7-2 cell jobs refused themselves projected_over_lease (no oracle, no timing): one
+device batch per generation is ~15x SLOWER on the GPU than numba (t8: 0.749 vs 0.050 s at 32,768 episodes; t128: 12.98 vs 0.78 s
+at 524,288). The gpuq child ran numba at 3 threads (inherited env beat setdefault): forced. Procedural amendment before any timing
+row: 1 oracle job + 3 single-rep timing jobs per cell, median over reps; train128 stays unmeasured; GPU jobs wait for worker idle.

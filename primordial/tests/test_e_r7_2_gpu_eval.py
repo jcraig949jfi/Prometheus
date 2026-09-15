@@ -85,29 +85,34 @@ def test_g_hook_rows_equal_baseline_run_rows_including_pause_resume(tmp_path):
 
 
 def _cell(world="w13", pressure="train8_held64", eligible=("cpu_sequential", "cpu_lockstep", "gpu_lockstep"), **ratio):
+    """Timing rows whose medians give the requested ratio vs cpu_sequential (wall = 10 / ratio), 3 reps as 3 single rows."""
     base = {"cpu_sequential": 1.0, "cpu_lockstep": 1.0, "gpu_lockstep": 1.0}
     base.update(ratio)
-    return {"kind": "cell_ratio", "world": world, "pressure": pressure, "eligible": list(eligible),
-            "ratio_vs_cpu_sequential": {k: base[k] for k in eligible}}
+    return [{"kind": "timing", "world": world, "pressure": pressure, "backend": b, "wall_s": 10.0 / base[b],
+             "walls_s": [10.0 / base[b]]} for b in eligible for _ in range(3)]
 
 
-def _oracles(cpu="PASS", gpu="PASS"):
-    return [{"kind": "oracle", "backend": "cpu_lockstep", "exactness": cpu},
-            {"kind": "oracle", "backend": "gpu_lockstep", "exactness": gpu}]
+def _oracles(cpu="PASS", gpu="PASS", world="w13", pressure="train8_held64"):
+    return [{"kind": "oracle", "world": world, "pressure": pressure, "backend": "cpu_lockstep", "exactness": cpu},
+            {"kind": "oracle", "world": world, "pressure": pressure, "backend": "gpu_lockstep", "exactness": gpu}]
 
 
 def test_decision_rule_best_exact_backend():
-    d = G.decide(_oracles() + [_cell(cpu_lockstep=1.6, gpu_lockstep=1.3)])
+    d = G.decide(_oracles() + _cell(cpu_lockstep=1.6, gpu_lockstep=1.3))
     assert d["backend"] == "cpu_lockstep" and d["decision"] == G.REJECT                  # fastest eligible wins
-    d = G.decide(_oracles() + [_cell(cpu_lockstep=1.3, gpu_lockstep=2.0)])
+    assert d["reps"]["w13 train8_held64"] == {"cpu_sequential": 3, "cpu_lockstep": 3, "gpu_lockstep": 3}
+    d = G.decide(_oracles() + _cell(cpu_lockstep=1.3, gpu_lockstep=2.0))
     assert d["backend"] == "gpu_lockstep" and d["decision"] == G.ADOPT
-    assert G.decide(_oracles() + [_cell(cpu_lockstep=1.25)])["backend"] == "cpu_lockstep"  # >= inclusive
-    assert G.decide(_oracles() + [_cell(cpu_lockstep=1.2499, gpu_lockstep=0.1)])["backend"] == "cpu_sequential"
-    two = [_cell(cpu_lockstep=1.5, gpu_lockstep=3.0), _cell(pressure="train128_held64", cpu_lockstep=1.4, gpu_lockstep=1.1)]
-    assert G.decide(_oracles() + two)["backend"] == "cpu_lockstep"                        # every measured cell
-    assert G.decide(_oracles(gpu="FAIL") + [_cell(cpu_lockstep=1.0, gpu_lockstep=9.0)])["backend"] == "cpu_sequential"
-    assert G.decide(_oracles(cpu="FAIL", gpu="FAIL") + [_cell(cpu_lockstep=9.0, gpu_lockstep=9.0)])["backend"] == "cpu_sequential"
+    assert G.decide(_oracles() + _cell(cpu_lockstep=1.25))["backend"] == "cpu_lockstep"   # >= inclusive
+    assert G.decide(_oracles() + _cell(cpu_lockstep=1.2499, gpu_lockstep=0.1))["backend"] == "cpu_sequential"
+    two = (_oracles() + _cell(cpu_lockstep=1.5, gpu_lockstep=3.0) + _oracles(pressure="train128_held64")
+           + _cell(pressure="train128_held64", cpu_lockstep=1.4, gpu_lockstep=1.1))
+    assert G.decide(two)["backend"] == "cpu_lockstep"                                      # every measured cell
+    assert G.decide(_oracles(gpu="FAIL") + _cell(cpu_lockstep=1.0, gpu_lockstep=9.0))["backend"] == "cpu_sequential"
+    assert G.decide(_oracles(cpu="FAIL", gpu="FAIL") + _cell(cpu_lockstep=9.0, gpu_lockstep=9.0))["backend"] == "cpu_sequential"
     assert G.decide(_oracles())["backend"] == "cpu_sequential"                              # nothing measured
-    d = G.decide(_oracles() + [_cell(eligible=("cpu_sequential", "cpu_lockstep"), cpu_lockstep=1.5),
-                               {"kind": "device_oom", "world": "w13", "pressure": "train128_held64"}])
-    assert d["backend"] == "cpu_lockstep" and d["device_oom_cells"] == ["w13 train128_held64"]
+    assert G.decide(_cell(cpu_lockstep=9.0))["backend"] == "cpu_sequential"                 # timing without an oracle
+    d = G.decide(_oracles() + _cell(eligible=("cpu_sequential", "cpu_lockstep"), cpu_lockstep=1.5)
+                 + [{"kind": "projected_over_lease", "world": "w13", "pressure": "train128_held64"}])
+    assert d["backend"] == "cpu_lockstep" and d["over_lease_cells"] == ["w13 train128_held64"]
+    assert d["measured_cells"] == ["w13 train8_held64"]
