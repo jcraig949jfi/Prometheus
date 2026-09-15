@@ -61,9 +61,13 @@ class JobPaused(Exception):
     pass
 
 
+SOCKET_TIMEOUT_S = 30.0             # > serve's block_ms: redis-py 8 defaults socket_timeout to 5 s, which
+                                    # raced XREADGROUP block=5000 and killed an idle worker (G, 2026-09-14)
+
+
 def _redis(url):
     import redis
-    return redis.Redis.from_url(url, decode_responses=True)
+    return redis.Redis.from_url(url, decode_responses=True, socket_timeout=SOCKET_TIMEOUT_S)
 
 
 def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs: dict | None = None,
