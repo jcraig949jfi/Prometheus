@@ -486,3 +486,8 @@
   NOT claimed: the ladder is non-monotone and bits enter the seed tuple. Per-seed read: int5 held [200.3,177.0,189.4,196.0,190.9,201.0,173.8,195.6], train median 194.8 (held tracks train), 0 shared top genomes, budget_ok.
   Predicate B-R4-3 posted: replicate int5a8 (int4a8 contrast) on run seeds 8-15, after B-R4-2 ends.
 - B-R4-2 end (job ok, 2171 CPU-s): int2a2 4B 159.55 BELOW_FLOOR -0.426 (CI wholly below floor). QD ledger rows appended for the 4 summaries (ledger() now takes the exp id from the rows file; it had hardcoded B-R4-1's).
+- B-R4-3 (job ok, 1114 CPU-s; run seeds 8-15; oracles clean, 0 input-invariant): int5a8 36B median 182.82 PASS progress 1.006 CI [.56,1.50]; int4a8 28B (contrast) 184.35 PASS 1.100 CI [-.58,1.84].
+  Pooled 16 seeds (check_r4 with runs=16, report-only): int5a8 189.02 progress 1.388 CI [.72,1.60] PASS, 10/16 seeds >= 181.906; int4a8 179.59 progress .807 CI [-.10,1.42] FAIL, 8/16.
+  CLAIM (first item): int5a8 36B is the smallest-bytes rung that PASSes on BOTH preregistered seed sets (0-7 and 8-15) and pooled; 36 B vs the 200 B float baseline (5.6x smaller).
+  NOT claimed: int4a8 28B PASS on seeds 8-15 only -- choosing that set is seed shopping; its verdict flips FAIL/PASS by seed set and pools to FAIL.
+  Finding for D: 8-seed clause A verdicts on w13 t128 flip with the run-seed set (baseline itself has only 5/8 seeds >= the pass line); filed as an anomaly.
