@@ -501,5 +501,46 @@ budget 1789425755152-0).
     unchanged; assign ignores a prediction on an unlisted cell.
   - Also: assign before publish is refused; the default grid is draw_cell.axes (no screen doc
     gives non-graphworld worlds only, grid size from AXES).
+- Pushed c5128d0d3 (fast-forward). Suite 383 passed, 1 skipped, pytest rc 0 on that exact tree.
+  Posted H R5 BUILD DONE (1789469402049-0).
+
+## 2026-09-15 07:55 pilot: H replay of B-R5-1 (the round's first CANDIDATE_N-eligible Clause A PASS) -- AGREE
+
+- Order: Nestor-A cross-session; before NO_NEW_WORK (~08:36). ff-merged to 950cb6dcf; B's rows at
+  4e69568e8 plus 32 saved elite files.
+- Predicate posted first (1789473448642-0, 07:57). The five checks and the agreement rule were
+  fixed before the run.
+- Code: primordial/score/replay_b_r5_1.py.
+  - replay() re-reads all 32 elite files with primordial.metric.readout (top1_train), using B's
+    family scorer (QLin int4 + a4 decode, fused linear rollout).
+  - It recomputes per-run held64, top_sha256 and train_fit; pools in (4200, 2101, 3303, 5501;
+    run_seed) order; and recomputes median + median_ci, the sample stamp from the run rows,
+    progress and its CI against eligibility (r16_doc), and qd_ledger.check_r4 (readout
+    top1_train, runs_total 32 / rng_family_count 4 / runs_per_family 8 / n_per_family).
+  - It also runs the W-zeroed obs-use control and the brain_oracle_cheats input-invariance
+    count on each selected elite.
+  - Every field is compared with B's committed rows.
+- Tests: test_score_replay_b_r5_1.py, 9, with a planted scorer.
+  - AGREE when everything recomputes, with the s9 pooling order and the judge kwargs.
+  - DISAGREE names the field for held64, sha, W-zeroed, CI, progress and runs_per_family.
+  - A disagreeing judge is reported.
+  - The obs-use control must drop to abstain and not be input-invariant.
+- Job: H F7 worker, job 06b7bf163457.
+  - PILOT envelope (cpu_budget_s 300, wall_budget_s 600, REPLICATION, predicate
+    H-R5-replay-B-R5-1): validate [] and admit ok against the r5 clock.
+  - Ran on CPU token slot 1: ok, 33 rows, cpu 1.05 s, wall 1.13 s. The worker served one job and
+    exited. Rows were committed by the worker at a81a0e6e6.
+- RESULT: AGREE, 0 mismatches.
+  - 32 replay_run rows, 32 distinct top1 shas, 8 per family. Every held64_per_seed, top_sha256,
+    train_fit and W-zeroed value equals B's run row exactly (spot 2101|1: 199.09375,
+    14a77b626750, 159.0).
+  - Pooled median 194.21875, CI [186.328125, 198.328125]. floor 166.46875, baseline 183.90625,
+    denominator 17.4375.
+  - progress 1.5913978, CI [1.1388889, 1.8270609].
+  - check_r4: PASS, why None, readout top1_train, progress 1.5913978.
+  - Obs-use: W zeroed equals the abstain floor part 159.0 on 32/32 selected elites;
+    input-invariant 0/32.
+- Scope: oracle cleanliness is B's recorded value (the oracles were not re-run). Same model
+  family: a cross-lane check, not a promotion.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
