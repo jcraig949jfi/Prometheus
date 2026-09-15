@@ -75,7 +75,7 @@ def test_plan_puts_the_floor_remainder_first_and_uses_production_envelopes():
     assert len(plan) == 68 + 5 and [p["kwargs"]["gen_seed"] for p in plan[:5]] == [c[0] for c in doc["floor_remainder"]]
     assert [ [p["kwargs"]["gen_seed"], p["kwargs"]["pressure"]] for p in plan[5:]] == doc["order"]
     env = plan[0]["envelope"]
-    assert env["campaign_stage"] == "PRODUCTION" and env["checkpointable"] and env["cpu_budget_s"] <= 14400
+    assert env["campaign_stage"] == "PRODUCTION" and env["checkpointable"] and env["cpu_budget_s"] == RC.production_cpu_budget_s()
     assert len({p["job_key"] for p in plan}) == len(plan)
 
 
@@ -253,5 +253,5 @@ def test_every_plan_envelope_is_admitted_by_the_worker_rules_under_a_production_
         v = EV.admit(env, "cpu", clock=clock, now=now)
         assert v["ok"], (p["job_key"], v["reasons"])
         assert EV.admit(env, "cpu", clock=None, now=now)["ok"]
-    assert all(p["envelope"]["predicate_id"] == RC.PREDICATE_ID and p["envelope"]["cpu_budget_s"] == RC.CPU_BUDGET_S
+    assert all(p["envelope"]["predicate_id"] == RC.PREDICATE_ID and p["envelope"]["cpu_budget_s"] == RC.production_cpu_budget_s()
                for p in RC.plan_jobs(r6_start_order()))                   # 11:38 w4 t8 TIMEOUT at a 641 CPU-s estimate

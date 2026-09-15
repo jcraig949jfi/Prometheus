@@ -63,7 +63,6 @@ BASE_WALL_PER_RUN_TS = {"train128_held64": 0.1163, "train8_held64": 0.0041}
 LEARN8_WALL_PER_RUN_TS = 0.0424
 CPU_PER_WALL = 11231.83 / 2302.53
 LEARN128_CPU_PER_TS_32RUNS = 12030.94 / 32
-CPU_BUDGET_S = 14400.0                      # SWARM_R6 s2 PRODUCTION cpu_budget_s per job
 EVENTS = "pm:events"                        # F's event stream (envelope.EVENTS)
 RECIPE_CHANGED = "REPLICATION_RECIPE_CHANGED"
 PREDICATE_ID = "G-R16-SCREEN"      # envelope.validate refuses a None/empty predicate_id (all 73 R6 submits at 11:01)
@@ -79,6 +78,13 @@ LEARNER_CHUNK_RUNS = 4
 LEARNER_COST_FORMULA = ("cpu_s(world, runs) = (12030.94 / 32) * T * S * runs / 32 -- J3's committed CPU for the w13 "
                         "train128 learner (12,030.94 CPU-s, 32 runs, T*S 32) per unit T*S; T and S from E4.Spec(gen_seed) "
                         "only, no outcome data")
+
+
+def production_cpu_budget_s() -> float:
+    """PRODUCTION cpu_budget_s per job, read from the ONE CEILINGS table at call time (F 1789504767181-0: a module copy
+    kept gating at the R6 14400 after F-R7-5 set 36000)."""
+    from primordial.fabric import envelope as EV
+    return float(EV.CEILINGS["PRODUCTION"]["cpu_budget_s"])
 
 
 def ts_of(gen_seed: int) -> int:
@@ -156,7 +162,7 @@ def estimates(gen_seed: int, pressure: str, runs: int = 32) -> dict:
     learn8_cpu = runs * LEARN8_WALL_PER_RUN_TS * ts * CPU_PER_WALL if pressure == "train8_held64" else 0.0
     learn128_cpu = LEARN128_CPU_PER_TS_32RUNS * ts * runs / 32 if pressure == "train128_held64" else 0.0
     return {"t_x_s": ts, "baseline_cpu_s": base_cpu, "learner8_cpu_s": learn8_cpu, "learner128_cpu_s": learn128_cpu,
-            "learner128_admissible": learn128_cpu <= CPU_BUDGET_S, "basis": "R16 J1/J2/J3 committed walls, 5 threads"}
+            "learner128_admissible": learn128_cpu <= production_cpu_budget_s(), "basis": "R16 J1/J2/J3 committed walls, 5 threads"}
 
 
 def prefill_done(st: dict, gen_seed: int, pressure: str, paths=(R.ROWS["floors"], R.ROWS["baseline"], R.ROWS["learner128"], ROWS)) -> int:
@@ -214,9 +220,10 @@ def replication_check(ctx, extra_rows, r=None, source: str = "r16_cell_job") -> 
 def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS, gens=None, batch=None,
              learner_gens=None, learner_batch=None, base_archive=B.ARCHIVE_URL, learn_archive=I.ARCHIVE_URL,
              base_elites=str(R.ELITES_BASE), learn_elites=str(R.ELITES_LEARN), stage1_rows=R.STAGE1,
-             prefill_paths=None, cpu_budget_s=CPU_BUDGET_S, replication_r=None):
+             prefill_paths=None, cpu_budget_s=None, replication_r=None):
     import redis
     gs, p = int(gen_seed), str(pressure)
+    cpu_budget_s = production_cpu_budget_s() if cpu_budget_s is None else float(cpu_budget_s)
     rb, rl = redis.Redis.from_url(base_archive), redis.Redis.from_url(learn_archive)
     st = ctx.load_checkpoint()
     if st is None:
@@ -289,7 +296,8 @@ def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS
     replication_check(ctx, [fl, base] + ([learner128] if learner128 is not None else []), r=replication_r)
 
 
-def envelope_for(gen_seed: int, pressure: str, runs: int = 32, cpu_budget_s: float = CPU_BUDGET_S) -> dict:
+def envelope_for(gen_seed: int, pressure: str, runs: int = 32, cpu_budget_s: float | None = None) -> dict:
+    cpu_budget_s = production_cpu_budget_s() if cpu_budget_s is None else float(cpu_budget_s)
     est = estimates(gen_seed, pressure, runs)
     cpu = est["baseline_cpu_s"] + est["learner8_cpu_s"] + (est["learner128_cpu_s"] if est["learner128_admissible"] else 0.0)
     # cpu_budget_s is the job's whole CPU TTL (worker: min(ttl, envelope)). The estimate is from 5-thread J1/J2/J3 walls;

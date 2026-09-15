@@ -40,6 +40,13 @@ MAX_SPECS = 4
 FLOOR_PARTS = ("abstain", "best_constant", "uniform_random_median", "input_invariant_learner")
 NOT_RUN_STAGE_BUDGET = "NOT_RUN_STAGE_BUDGET"
 
+# G-R7-1 (SWARM_R7 O5): the rule is versioned. v1 is the round 5 pilot rule, kept unchanged for history (no B2 data
+# exists under it); v2 sizes admission to EVIDENCE_N_v1 (runs_total 32, rng_family_count 4, runs_per_family 8)
+# prospectively. Verdict names are the same under both; neither can return SURVIVED.
+RULE_V1, RULE_V2 = "B2_ADMISSION_v1", "B2_ADMISSION_v2"
+RULES = {RULE_V1: {"sample": PILOT_SAMPLE, "tag": "PILOT_SAMPLE", "source": "G-R5-3, operator 19 s7, SWARM_R5 O2"},
+         RULE_V2: {"sample": FULL_SAMPLE, "tag": "EVIDENCE_N_v1", "source": "G-R7-1, SWARM_R7 O1 + O5"}}
+
 
 def floor_of(parts: dict, gate_held64: float | None = None) -> float | None:
     """The spec's floor under gate_in|HOLD: max over the four-policy parts that were run and the 2-action gate
@@ -50,28 +57,31 @@ def floor_of(parts: dict, gate_held64: float | None = None) -> float | None:
     return max(vals) if vals else None
 
 
-def _spec_problems(s: dict) -> list[str]:
+def _spec_problems(s: dict, rule: str = RULE_V1) -> list[str]:
+    need, tag = RULES[rule]["sample"], RULES[rule]["tag"]
     out = []
     if s.get("floor") is None and floor_of(s.get("floor_parts") or {}, s.get("gate_held64")) is None:
         out.append("FLOOR_MISSING")
     b = s.get("baseline") or {}
     if not b.get("ci95") or len(b["ci95"]) != 2:
         out.append("BASELINE_MISSING")
-    if b and not SM.meets(b, need=PILOT_SAMPLE):
-        out.append("BASELINE_BELOW_PILOT_SAMPLE")
+    if b and not SM.meets(b, need=need):
+        out.append(f"BASELINE_BELOW_{tag}")
     if b and b.get("readout") not in (None, "top1_train"):
         out.append("BASELINE_READOUT_NOT_TOP1_TRAIN")
     for part, stats in (s.get("floor_stats") or {}).items():
-        if not SM.meets(stats, need=PILOT_SAMPLE):
-            out.append(f"FLOOR_PART_BELOW_PILOT_SAMPLE:{part}")
+        if not SM.meets(stats, need=need):
+            out.append(f"FLOOR_PART_BELOW_{tag}:{part}")
     return out
 
 
-def verdict(specs: list[dict]) -> dict:
+def verdict(specs: list[dict], rule: str = RULE_V1) -> dict:
     """specs: one dict per B2 spec:
          {spec_id, oracles: {name: bool}, floor_parts: {...} (or floor), floor_stats: {part: sample stamp},
           baseline: {ci95: [lo, hi], median, readout, runs_total, rng_family_count, runs_per_family, ...}}
     -> {verdict (one of VERDICTS), per_spec, reasons}. Never SURVIVED."""
+    if rule not in RULES:
+        raise ValueError(f"unknown B2 admission rule {rule!r}; one of {sorted(RULES)}")
     if not specs:
         raise ValueError("no B2 spec to judge")
     if len(specs) > MAX_SPECS:
@@ -94,7 +104,7 @@ def verdict(specs: list[dict]) -> dict:
             floor = floor_of(s.get("floor_parts") or {}, s.get("gate_held64"))
         b = s.get("baseline") or {}
         ci = b.get("ci95")
-        problems = _spec_problems(s) + ([] if s.get("oracles") else ["ORACLES_NOT_RUN"])
+        problems = _spec_problems(s, rule) + ([] if s.get("oracles") else ["ORACLES_NOT_RUN"])
         above = bool(ci) and floor is not None and not problems and float(ci[0]) > float(floor)
         below = bool(ci) and floor is not None and not problems and float(ci[1]) < float(floor)
         row = {"spec_id": s.get("spec_id"), "floor": floor, "baseline_ci95": ci, "oracles_failed": failed,
@@ -114,8 +124,12 @@ def verdict(specs: list[dict]) -> dict:
     else:
         v = INDETERMINATE
     assert v in VERDICTS and v != "SURVIVED"
-    return {"verdict": v, "per_spec": per, "reasons": reasons, "pilot_sample": PILOT_SAMPLE,
-            "note": "admission pilot only: never SURVIVED; WORTHY warrants a full screen, it does not authorize one"}
+    if rule == RULE_V1:                                      # v1 output unchanged, byte for byte
+        return {"verdict": v, "per_spec": per, "reasons": reasons, "pilot_sample": PILOT_SAMPLE,
+                "note": "admission pilot only: never SURVIVED; WORTHY warrants a full screen, it does not authorize one"}
+    return {"verdict": v, "per_spec": per, "reasons": reasons, "rule": rule, "sample": dict(RULES[rule]["sample"]),
+            "note": "B2 admission screen at EVIDENCE_N_v1: never SURVIVED; WORTHY warrants a Clause A screen, "
+                    "it does not authorize one"}
 
 
 def full_screen_cost(episode_s: float, n_specs: int, n_pressures: int = 1, train_seeds: int = 128,
@@ -169,3 +183,43 @@ def not_run_outcome(spec_ids, production_candidate_id: str, cost: dict, reason: 
                    for sid in spec_ids])
     out.update(reason=reason, production_candidate_id=production_candidate_id, cost=cost)
     return out
+
+
+def admission_cost_v2(episode_s: float, search_overhead_s_per_gen: float, n_specs: int = MAX_SPECS,
+                      clock_remaining_s: float | None = None, workers: int = 1, n_pressures: int = 1,
+                      batch: int = 128, **kw) -> dict:
+    """G-R7-1: projected cost of the B2 v2 admission screen (EVIDENCE_N_v1 32/4/8) = rollout episodes x episode_s
+    (full_screen_cost) + the measured search overhead of every searched run (baseline and learner: runs_total each per
+    spec x pressure) x its generations (evaluations / batch) x search_overhead_s_per_gen (E-R7-3: mutation, archive and
+    batch assembly per generation, rollout excluded). Admitted onto the clock only if the projection fits
+    clock_remaining_s with `workers` parallel workers; otherwise PRODUCTION_CANDIDATE with this cost."""
+    if search_overhead_s_per_gen is None or float(search_overhead_s_per_gen) < 0:
+        raise ValueError("search_overhead_s_per_gen must be E-R7-3's measured figure (>= 0), not a default")
+    c = full_screen_cost(episode_s, n_specs, n_pressures, sample=FULL_SAMPLE, **kw)
+    runs = int(FULL_SAMPLE["runs_total"])
+    b_evals = int(kw.get("baseline_evals", 102_400))
+    l_evals = int(kw.get("learner_evals", 102_400))
+    gens = {"linear_baseline": b_evals // int(batch), "input_invariant_learner": l_evals // int(batch)}
+    overhead_s = float(search_overhead_s_per_gen) * runs * sum(gens.values()) * c["cells"]
+    rollout_s = c["episodes_total"] * float(episode_s)
+    total_s = rollout_s + overhead_s
+    projected_s = total_s / max(int(workers), 1)
+    fits = clock_remaining_s is not None and projected_s <= float(clock_remaining_s)
+    return {**c, "rule": RULE_V2, "search_overhead_s_per_gen": float(search_overhead_s_per_gen), "generations_per_run": gens,
+            "rollout_s": rollout_s, "search_overhead_s": overhead_s, "total_s_single_worker": total_s,
+            "workers": int(workers), "projected_wall_s": projected_s, "clock_remaining_s": clock_remaining_s,
+            "fits_clock": fits, "outcome": "ADMISSION_SCREEN" if fits else "PRODUCTION_CANDIDATE"}
+
+
+E_R7_3_EPISODES_PER_GEN = 128 * 128        # E-R7-3 predicate 1789505150761-0: batch 128 genomes x 128 train seeds
+
+
+def cost_inputs_from_e_r7_3(row: dict, episodes_per_gen: int = E_R7_3_EPISODES_PER_GEN) -> dict:
+    """E-R7-3's committed measurement row -> admission_cost_v2 inputs: episode_s = rollout_s_per_gen / episodes per
+    generation (compiled rollout only), search_overhead_s_per_gen = overhead_s_per_gen (mutation, archive, pack,
+    descriptor, insert). Refuses a row without both measured figures."""
+    missing = [k for k in ("overhead_s_per_gen", "rollout_s_per_gen") if row.get(k) is None]
+    if missing:
+        raise ValueError(f"E-R7-3 row lacks {missing}")
+    return {"episode_s": float(row["rollout_s_per_gen"]) / int(episodes_per_gen),
+            "search_overhead_s_per_gen": float(row["overhead_s_per_gen"])}
