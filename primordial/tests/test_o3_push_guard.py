@@ -8,6 +8,7 @@ import sys
 import pytest
 
 from primordial.fabric.rows import RowWriter, commit_path, live_writers, writers_dir
+from primordial.ops import push as P
 from primordial.ops.push import CONFLICT, REFUSED, push
 
 BR = "integ"
@@ -32,6 +33,8 @@ def commit_file(repo, name, text):
 def tagged(monkeypatch):
     monkeypatch.setenv("PM_TAG", "t-0000")
     monkeypatch.setenv("PM_LANE", "F")
+    # the push lock talks to the bus; these git-only tests must never touch the production bus
+    monkeypatch.setattr(P, "acquire_push_lock", lambda *a, **k: None)
 
 
 @pytest.fixture
@@ -118,3 +121,59 @@ def test_push_aborts_conflicting_rebase(world):
     commit_file(me, "README", "mine")
     assert push(me, branch=BR, log=lambda m: None) == CONFLICT
     assert "rebase" not in git(me, "status")                        # aborted, clean
+
+
+@pytest.fixture
+def lockenv(monkeypatch):
+    redis = pytest.importorskip("redis")
+    import uuid
+    from primordial.tests._live import live_url
+    r = redis.Redis.from_url(live_url(), decode_responses=True)
+    try:
+        r.ping()
+    except Exception:
+        pytest.skip("substrate not reachable")
+    from primordial.fabric.worker import PUSH_LOCK, WSTATE
+    lane = "p" + uuid.uuid4().hex[:8]
+    monkeypatch.setenv("PM_LANE", lane)
+    monkeypatch.setattr(P, "acquire_push_lock", REAL_ACQUIRE)
+    yield r, lane, PUSH_LOCK.format(lane), WSTATE.format(lane)
+    r.delete(PUSH_LOCK.format(lane), WSTATE.format(lane))
+
+
+REAL_ACQUIRE = P.acquire_push_lock
+
+
+def test_push_holds_the_lane_lock_during_the_rebase_and_releases_it(world, lockenv, monkeypatch):
+    # 09-15 E: the epoch controller cleared the stop flag mid-rebase and the next segment's RowWriter
+    # opened its rows file; the push lock is what the worker honours instead
+    r, lane, key, _ = lockenv
+    remote, me, other = world
+    commit_file(other, "o.txt", "sibling")
+    git(other, "push", "-q", "origin", f"HEAD:{BR}")
+    commit_file(me, "m.txt", "mine")
+    seen, real_git = [], P._git
+    def spy(repo, *a, **k):
+        if a and a[0] == "rebase" and a[1:2] != ("--abort",):
+            seen.append(bool(r.exists(key)))
+        return real_git(repo, *a, **k)
+    monkeypatch.setattr(P, "_git", spy)
+    assert push(me, branch=BR, log=lambda m: None, lock_redis=r) == 0
+    assert seen == [True]                       # the lock was held while git rebase ran
+    assert not r.exists(key)                    # and released after the push
+    assert {"o.txt", "m.txt"} <= set(git(remote, "ls-tree", "-r", "--name-only", BR).split())
+
+
+def test_push_refuses_without_rebasing_while_the_worker_stays_busy(world, lockenv):
+    r, lane, key, wstate = lockenv
+    _, me, other = world
+    commit_file(other, "o.txt", "sibling")
+    git(other, "push", "-q", "origin", f"HEAD:{BR}")
+    commit_file(me, "m.txt", "mine")
+    head = git(me, "rev-parse", "HEAD")
+    r.hset(wstate, mapping={"state": "busy", "job_id": "j"})
+    msgs = []
+    assert push(me, branch=BR, log=msgs.append, lock_wait_s=0.5, lock_redis=r) == REFUSED
+    assert "stayed busy" in msgs[-1]
+    assert git(me, "rev-parse", "HEAD") == head
+    assert not r.exists(key)

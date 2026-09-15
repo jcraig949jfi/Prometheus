@@ -141,3 +141,19 @@ def test_a_job_longer_than_the_state_ttl_keeps_the_worker_key_alive(env, monkeyp
     assert not t.is_alive()
     done = [json.loads(f["json"]) for _, f in r.xrange(W.DONE.format(L))]
     assert [d["status"] for d in done] == ["ok"]
+
+
+def test_the_worker_takes_no_job_while_the_push_lock_is_held(env):
+    # ops.push parks the worker with pm:push:lock:<L>; unlike STOP, the epoch controller never clears it
+    r, repo, L = env
+    W.submit(L, FN + "emit_n", "F7-lock", "rows/lock.jsonl", ttl_cpu_s=30, kwargs={"n": 1}, r=r)
+    r.set(W.PUSH_LOCK.format(L), "1", ex=60)
+    try:
+        wk = W.Worker(L, url=URL, repo=repo, log=lambda m: None)
+        assert wk.serve(max_jobs=1, block_ms=200, deadline_s=2) == []
+        assert r.xlen(W.DONE.format(L)) == 0
+    finally:
+        r.delete(W.PUSH_LOCK.format(L))
+    wk = W.Worker(L, url=URL, repo=repo, log=lambda m: None)
+    (done,) = wk.serve(max_jobs=1, block_ms=500)
+    assert done["status"] == "ok"

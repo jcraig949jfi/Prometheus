@@ -52,6 +52,8 @@ from primordial.fabric.rows import RowWriter
 
 JOBS, ROWS, DONE = "pm:jobs:{}", "pm:rows:{}", "pm:jobs:{}:done"
 STOP = "pm:jobs:{}:stop"            # F14: set by the epoch controller; the worker takes no job while it exists
+PUSH_LOCK = "pm:push:lock:{}"       # ops.push holds it during a rebase; the worker takes no job while it exists.
+                                    # Separate from STOP: the epoch controller clears STOP at resume (E, 09-15).
 WSTATE = "pm:worker:{}"             # hash {state: idle|busy|stopped, job_id, ts}, TTL WSTATE_TTL
 WSTATE_TTL = 30
 CKPT_DIR = pathlib.Path(os.environ.get("PM_CKPT_DIR", "C:/Users/jcrai/lab/pm-data/ckpt"))
@@ -301,7 +303,7 @@ class Worker:
         try:
             while ((max_jobs is None or len(done) < max_jobs) and (end is None or time.monotonic() < end)
                    and not self.exit_requested):
-                if self.r.exists(STOP.format(self.lane)):
+                if self.r.exists(STOP.format(self.lane)) or self.r.exists(PUSH_LOCK.format(self.lane)):
                     self._state("stopped")
                     time.sleep(min(block_ms / 1000, 0.1))
                     idle0 = time.monotonic()
