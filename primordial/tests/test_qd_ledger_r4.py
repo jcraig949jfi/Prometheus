@@ -111,6 +111,34 @@ def test_world_not_on_the_list_and_not_surviving_cells_are_ineligible(doc):
     assert Q.check_r4("w7", S8, 195.0, 200, 8, doc={**doc, "cells": []})["why"] == "UNSCREENED"
 
 
+def test_every_verdict_carries_its_variant_floor(doc):
+    for c in doc["cells"]:
+        for k, v in c["verdicts"].items():
+            want = c["floor"] if k.startswith("four_policy") else max(c["floor"], c["gate_held64"])
+            assert v["floor"] == want, (c["world"], k, v)
+    one = WR.build([WR.cell(suite(n, S8, (10.0, 10.0, 0.0, 0.0), 11.0 + n), base(n, S8, 50.0, 40.0, 60.0))
+                    for n in range(1, 4)], commit="t", max_survivors=1)
+    nr = [c["verdicts"]["gate_in|HOLD"] for c in one["cells"] if c["cull_reason"] == "NOT_REACHED"]
+    assert len(nr) == 2 and all(v["floor"] == v["computed"]["floor"] for v in nr)
+
+
+def test_check_carries_the_r4_judge_block_for_f12(doc):
+    rows = [{"cell": {"representation": "linear", "world": "w7", "pressure": S8, "substrate": "x", "channel": "none"},
+             "mechanism": "linear", "fitness": {"held64_median": 200.0, "iqr": 1.0, "n_runs": 8},
+             "footprint": {"genome_bytes": 312}, "baseline": True, "status": "record", "source": {"exp_id": "t"}}]
+    got = Q.check(rows, "w7", S8, 195.0, 1.0, 200, 8, doc=doc)["clause_a_r4"]
+    assert got == {"verdict": "PASS", "why": None, "progress": pytest.approx(0.95), "progress_ci": None, "floor": 100.0,
+                   "baseline_median": 200.0, "baseline_bytes": 312, "variant": "gate_in|HOLD", "screen": "SURVIVED"}
+    assert got["verdict"] == Q.check_r4("w7", S8, 195.0, 200, 8, doc=doc)["verdict"]
+    held = Q.check(rows, "w9", S8, 1e9, 1.0, 0, 8, doc=doc)["clause_a_r4"]
+    assert held["verdict"] == "INELIGIBLE" and held["screen"] == "HELD" and held["floor"] == 170.0
+    assert Q.check(rows, "w11", S8, 1e9, 1.0, 0, 8, doc=doc)["clause_a_r4"]["screen"] == "NOT_REACHED"
+    assert Q.check(rows, "w1", S8, 1e9, 1.0, 0, 8, doc=doc)["clause_a_r4"]["screen"] == "UNSCREENED"
+    below = Q.check(rows, "w7", S8, 99.0, 1.0, 0, 8, oracle_clean=True, held=[90.0, 95, 99, 99, 100, 101, 104, 110],
+                    doc=doc)["clause_a_r4"]
+    assert below["verdict"] == "BELOW_FLOOR" and below["progress_ci"][0] < below["progress"] < below["progress_ci"][1]
+
+
 def test_cli_check_defaults_to_r4(doc, tmp_path, capsys):
     p = WR.write(doc, tmp_path / "worlds_r4.json")
     assert Q.main(["check", "--world", "w7", "--pressure", S8, "--median", "195", "--bytes", "200", "--runs", "8",

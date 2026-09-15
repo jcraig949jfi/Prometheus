@@ -134,7 +134,27 @@ def floor_of(rows, world, pressure):
     return max(fs, key=lambda r: r["fitness"]["held64_median"]) if fs else None
 
 
-def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, held=None) -> dict:
+def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, held=None, doc=None) -> dict:
+    """The round 2/3 verdict (raw + floor) with the round 4 judge attached as `clause_a_r4` (H ask
+    1789435262391-0: one judge, read by F12). doc: a worlds_r4 document; None reads the committed file."""
+    out = _check_r2(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean, held)
+    out["clause_a_r4"] = clause_a_r4_block(check_r4(world, pressure, median, nbytes, runs, oracle_clean=oracle_clean,
+                                                    held=held, doc=doc))
+    return out
+
+
+def clause_a_r4_block(r4: dict) -> dict:
+    """check_r4's result in F12's block: screen SURVIVED|HELD|CULLED|NOT_REACHED|UNSCREENED."""
+    if r4.get("why") in ("UNSCREENED", "CULLED", "HELD"):
+        screen = "NOT_REACHED" if r4.get("cull_reason") == "NOT_REACHED" else r4["why"]
+    else:
+        screen = "SURVIVED"
+    return {"verdict": r4["verdict"], "why": r4.get("why"), "progress": r4.get("progress"),
+            "progress_ci": r4.get("progress_ci95"), "floor": r4.get("floor"), "baseline_median": r4.get("baseline_median"),
+            "baseline_bytes": r4.get("baseline_bytes"), "variant": r4.get("variant"), "screen": screen}
+
+
+def _check_r2(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, held=None) -> dict:
     """Clause A verdict (raw) plus the M1 floor reading: `floor` = the verdict read against the
     trivial-policy floor. No new threshold: BELOW_FLOOR if the candidate's lower bound <= floor;
     NO_HEADROOM if every baseline on the front is <= floor (parity with it means nothing); else the raw
@@ -181,6 +201,11 @@ def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_fai
     base = {"rules": "r4", "world": world, "pressure": pressure}
     g = WR.guard(doc, world, pressure)
     if g is not None:
+        c = WR.lookup(doc, world, pressure)
+        if c is not None:
+            base.update(floor=c["verdicts"][g["variant"]].get("floor"),
+                        baseline_median=(c["baseline"] or {}).get("median"),
+                        baseline_bytes=(c["baseline"] or {}).get("bytes"))
         return {**base, **g}
     if not oracle_clean:
         return {**base, "verdict": "INELIGIBLE", "why": "oracles not clean"}

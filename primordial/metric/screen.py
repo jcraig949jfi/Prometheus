@@ -45,6 +45,10 @@ def variant_verdict(floor: float, gate: float, ci_lo: float, q1: str, q2: str) -
     return {"verdict": "CULLED", "cull_reason": "BASELINE" if gate > floor else "WEAK_WORLD", "floor": f}
 
 
+def variant_floor(floor: float, gate: float, q1: str) -> float:
+    return float(floor) if q1 == "four_policy" else max(float(floor), float(gate))
+
+
 def needs_learner(bound: float, gate: float, ci_lo: float) -> bool:
     """True iff some variant's verdict could change when the bound is raised to the full floor."""
     return ci_lo > bound or gate > bound
@@ -69,7 +73,8 @@ def apply_stop(cells: list[dict], max_survivors: int = MAX_SURVIVORS) -> list[di
         c = dict(c, verdicts=dict(c["verdicts"]))
         for k in count:
             if count[k] >= max_survivors:
-                c["verdicts"][k] = {"verdict": "CULLED", "cull_reason": "NOT_REACHED", "computed": c["verdicts"][k]}
+                c["verdicts"][k] = {"verdict": "CULLED", "cull_reason": "NOT_REACHED",
+                                    "floor": c["verdicts"][k].get("floor"), "computed": c["verdicts"][k]}
             elif c["verdicts"][k]["verdict"] == "SURVIVED":
                 count[k] += 1
         out.append(c)

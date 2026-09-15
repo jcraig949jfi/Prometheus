@@ -58,9 +58,10 @@ def cell(suite_row: dict, baseline: dict | None = None, learner: dict | None = N
     gate = float(suite_row["gate_held64"])
     rec = {"world": suite_row["world"], "gen_seed": int(suite_row["gen_seed"]), "pressure": suite_row["pressure"],
            "floor_parts": parts, **f, "gate_held64": gate, "learner": lrn, "sources": sources or {}}
+    vf = {SC.vkey(*v): SC.variant_floor(f["floor"], gate, v[0]) for v in SC.VARIANTS}
     if baseline is None:
         rec.update(stage=1, baseline=None,
-                   verdicts={SC.vkey(*v): {"verdict": "CULLED", "cull_reason": "NOT_REACHED"} for v in SC.VARIANTS})
+                   verdicts={k: {"verdict": "CULLED", "cull_reason": "NOT_REACHED", "floor": vf[k]} for k in vf})
         return rec
     if (baseline["gen_seed"], baseline["pressure"]) != key:
         raise ValueError(f"baseline {baseline['gen_seed']}/{baseline['pressure']} is not this cell's {key}")
@@ -68,7 +69,7 @@ def cell(suite_row: dict, baseline: dict | None = None, learner: dict | None = N
     rec.update(stage=2, baseline={k: baseline[k] for k in ("median", "ci95", "bytes", "n_runs", "held64_by_run_seed")}
                | {"elites": baseline.get("elites")})
     if f["floor_is_bound"] and SC.needs_learner(f["floor"], gate, lo):
-        rec["verdicts"] = {SC.vkey(*v): {"verdict": PENDING, "cull_reason": None} for v in SC.VARIANTS}
+        rec["verdicts"] = {k: {"verdict": PENDING, "cull_reason": None, "floor": vf[k]} for k in vf}
     else:
         rec["verdicts"] = SC.verdicts(f["floor"], gate, lo)
     return rec
