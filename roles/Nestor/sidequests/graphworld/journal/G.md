@@ -227,3 +227,32 @@ Brief: prompts_bld_r4/G.md; items SWARM_R4 s2 G-R4-1..5. Threads 5. M2 unheld (G
   worker thread), passes 3/3 alone; rerun 354 passed, 9 skipped, rc 0. Committed only on the green rc.
   Flake reported to A,F (1789434512258-0). Pushed fc1ebf81c.
 - Next: G-R4-3 stage 1 on 37 candidates (w1..w5 + gen_seeds 6..37) through the worker; predicate posted first.
+
+## 2026-09-14 P0 epoch 2, iteration 3 -- stage 1 running; stage 2, screen, worlds_r4, r4 check, draw built
+
+- Stage 1 (predicate 1789434570568-0) submitted as 8 jobs to my worker. First push gap used the F14 stop
+  flag: job 1 paused at an F9 checkpoint in 4 s, ops.push rebased with no live writer (bc7d66b37), flag
+  cleared, worker resumed. The paused segment requeues at the end of the queue (w2/w5 finish last).
+- Monitor false alarm WORKER_GONE: pm:worker:G has TTL 30 s and is refreshed only between jobs, so a
+  busy worker looks dead 30 s into a job (supervisor pid 15368 and child alive, rows growing). Reported
+  (1789434887289-0); A patches run_job; I check the process, not the key.
+- Stage 1 so far (9 worlds): cheap parts + gate for w4/w1 MATCH the committed G-M1 cells to 4 dp; learner
+  oracles clean (wforge 0 failing, nb == np) on every run seed 0. Abstain is the floor in every cell; the
+  train8 learner is below abstain everywhere (w4 88.59 vs 107.75, w1 42.69 vs 88.28, w6 190.16 vs 229.53).
+  The gate column is below abstain in several worlds (w8 62.44 vs 70.44; w10 train8 0.00): a gate is
+  selected on TRAIN over non-abstain actions and can generalise worse; under gate_in it cannot lower the
+  floor. w7 gate 1482.50 vs abstain 189.19 (7.8x).
+- M2 stage 2 code: primordial/metric/baseline.py (E9 200x128 / E10 800x128, seeded sampler, elites per run
+  seed, top-16 fused held64, M3 CI, bytes = G7 linear glen). 6 tests.
+- OPERATOR RULED (message 13 via A 1789434918331-0): Q1 GATE IN, Q2 HOLD -> active gate_in|HOLD.
+  My screen draft was WRONG for gate_in|HOLD: HELD compared the gate with the variant floor, which under
+  gate_in contains the gate, so HELD could never occur. Fixed to A's text before any verdict was written
+  (1789435058202-0): HELD iff gate > four-policy floor and CI low <= variant floor.
+- screen.py: four variants, strict survival, needs_learner = CI low > bound or gate > bound (brute-force
+  test: verdicts from a bound equal those from every true floor >= bound when false), gate-headroom order,
+  per-variant NOT_REACHED after 8 survivors. worlds.py (G-R4-4): records from rows only, PENDING_LEARNER
+  blocks write, guard -> INELIGIBLE UNSCREENED|CULLED|HELD. qd_ledger.check_r4 (G-R4-5): progress above
+  floor, PASS iff >= 0.95 and fewer bytes, BELOW_FLOOR iff < 0; check() attaches it as clause_a_r4 for F12
+  (H ask 1789435262391-0); CLI check defaults to r4. draw_cell: graphworld worlds only from survivors.
+- Tests green (pytest rc 0 each): screen 5, qd_ledger r4 + draw + floor + ci 32. Commits local, pushing at
+  the next worker gap with the full suite.
