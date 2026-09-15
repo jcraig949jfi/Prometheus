@@ -98,3 +98,12 @@ What would unblock capture (operator decisions, not taken by the lane):
 3. CUPTI INVALID_DEVICE also hit the 2025.1.1 CUPTI. It may be the Windows
    GPU performance-counter permission (NVIDIA Control Panel: "Allow access
    to GPU performance counters to all users"). This is untested.
+
+## Q2d after the reboot -- capture PASS, counter metrics empty (predicate 1789430655670-0, receipt 1789431111818-0)
+
+With RmProfilingAdminOnly=0 loaded by the driver, ncu 2025.2.1 (user-space) profiles the torch target on cc 12.0:
+rc 0, 3 kernels x 9 passes, a 20 MB `.ncu-rep`. The committed row reads `failed`: that is the old `.ncu` extension
+check. `judge_capture()` re-derives PASS from the rows. NVIDIA's `extras/python/ncu_report` (`load_report`) opens
+the report under py3.12. In the default `basic` set, only launch/occupancy metrics are filled, and gpu__time_duration,
+cycles and throughput have 0 instances. So the counter-derived features stay unmeasured until a `--set detailed`
+capture (Q2e) fills them. torch CUPTI is still INVALID_DEVICE, so it is not the permission.

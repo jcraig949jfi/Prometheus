@@ -97,3 +97,23 @@ NVIDIA App). The operator set RmProfilingAdminOnly=0 from an admin shell in both
 ncu 2025.2.1 is still perm_gpu_counters and CUPTI is still invalid_device. Per the predicate
 that is INDETERMINATE (driver not reloaded). Rows Q2c-ncu-after-regkey. Next: reboot
 (A schedules it, since it stops the swarm) -> Q2d, the same probe.
+
+## 2026-09-14 20:03-20:35 -- Q2d after the reboot (PASS; counters still empty) -- Nestor-Q[m1-b5b65cc2], new session
+
+Boot: ff no-op at d97020e12; comms boot -> PM_TAG m1-b5b65cc2; bus hello; inbox had A's 'Q2d go'
+(1789430520491-0). Last boot 19:55, RmProfilingAdminOnly=0 verified.
+Predicate 1789430655670-0 posted first. Ran smoke.py --only control_torch,ncu_torch,cupti_torch with the
+user-space ncu 2025.2.1 under the O5 lease (released). Rows 84a42fae0 (rebased), receipt 1789431111818-0.
+- control_torch ok; ncu_torch rc 0, no ERR_NVGPUCTRPERM, 3 kernels x 9 passes, 20 MB report.
+- DEFECT: the row verdict reads 'failed'. smoke.py required a '.ncu' file and ncu 2025 writes '.ncu-rep'
+  (my predicate text also said '.ncu'). Fixed by report_ok + judge_capture with tests. The committed rows are
+  re-judged by code, not rewritten: Q2d PASS, Q2c REFUSAL:perm_gpu_counters.
+- Loaded the report with NVIDIA's extras/python/ncu_report (py3.12 pyd loads). 66 of 418 non-attribute
+  metrics per kernel are filled, all launch config/occupancy/numa. gpu__time_duration, sm__cycles_elapsed
+  and throughput have 0 instances. The capture works; counter-derived N2 features are still NOT measured.
+- CUPTI side readout is still INVALID_DEVICE, so its cause was not the counter permission (claim WRONG).
+- ncu_b6 was not run: B6 is a CPU numba kernel with no CUDA context, and Q4 already has its GPU features at 0.
+- Integration: A's replay fix 052aeeb84 had landed. Before the rebase, H's test failed on receipts 42 vs 37.
+  After the rebase the suite is 155 passed, pushed ff e7b872e29 (ancestor verified).
+Next: Q2e under its own predicate. Capture the torch forward with `--set detailed` and parse via ncu_report.
+If duration/cycle metrics fill, the parser + copy/sleep cheats follow. If they stay empty, record the bound and pause.
