@@ -427,3 +427,15 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
 - Full suite on 703ee6c8b: 910 passed, 9 skipped, 1 FAILED (G's worktree-absolute plan path; G's fix d30bf1cf6 not
   on integration yet), pytest rc 1. No F test fails. Gate 41 needs G's push.
 - No worker, clock or controller started by F. Lane F idle on asks.
+
+## 2026-09-15 ~18:07 (round 7 live) -- D22 broker not FIFO: PRODUCTION_CANDIDATE 1789510034347-0 filed (no code, no push)
+
+- D 1789509934842-0 / A 1789509956511-0: D starved behind E's O8 calibration burst. Measured read-only at 18:06:31:
+  E took slot 1 13x in a row (17:58:35-18:06:19), G took slot 0 once, D job e2a0a3510473 (queued 17:57:56) had 0 grants
+  and waited >= 515 s. SWARM_R7 O4 assumed FIFO.
+- My defect (R5 broker): acquire is SET NX with no queue; a worker releases and re-acquires in the same loop while
+  waiters sleep 0.1 s; no wait-start is stamped. The R5 broker test checked the cap and idle-cohort sharing, never
+  fairness.
+- Filed via envelope.file_candidate. Design: cross-lane wait set, oldest-waiter Lua grant, re-queue on release,
+  dead-waiter drop, wait_s stamps. Estimates: 2700 s build, 900 s tests. Test plan: a burst on one lane must alternate
+  with a waiter. No broker change until round 7 closes (A ruling). This commit stays local until close.
