@@ -498,3 +498,18 @@
   runs_per_family 8. 0 open claims. The prior ledger was never read by C.
 - Production candidates: respawn the F7 child on job-module source change; charge Redis server Lua CPU in cpu_ttl;
   D1 metered_stream constants make any delivered message a loss (DISTANT_QD cells there are degenerate).
+
+## 2026-09-15 round 6 iteration 1 (m1-2a4f850c): boot, 2 assignments + 1 draw, AP-01/AP-02 queued
+
+- Boot: ff to 398894fc6, warmup rc 0, suite 435 passed 1 skipped (rc 0), worker C up; clock r6 PRODUCTION, T+9.5 at boot.
+- ANTI_PRIOR (code-assigned, cells only, pm:prior:* never read): C-R6-AP-01 tucker/nk_stub/cpu_ttl/graphblas/none;
+  C-R6-AP-02 bitset/nk_stub/obs_delay/redis_lua/none. DISTANT_QD draw seed 6355500877785897427 -> cp/w13/cpu_ttl/graphblas/
+  metered_stream.
+- Harnesses d14622fe4 (AP-01, AP-02). AP-02's obs_delay for an observation-free bitset = delayed fitness feedback into
+  the archive, d = 2 = the world generator's only non-zero obs_delay (taken, not tuned). cpu_ttl TTL set in-job from the
+  first control run / 5 (thread-count safe). No-rows dev checks clean; GENS 400 / 800 by pre-stated projection rules.
+- Predicates pinned refs/pm/pred/C-R6-AP-0{1,2} (bus 1789485629072-0, 1789485631254-0); jobs 355134888439, 3e72a6a9cea2
+  queued; worker C waiting_cpu behind G's screen (2 host tokens).
+- Launch script first failed on import (scratchpad not on sys.path) before any post or submit; rerun with PYTHONPATH=.
+- DQD harness drafted: the predicate (parity, above floor, and P3 = silencing the stream lowers held in >= 17/32 runs) is
+  scored on a PLANTED NULL (stream never delivers) and logged before any cell-arm row; the job stops if the null passes.
