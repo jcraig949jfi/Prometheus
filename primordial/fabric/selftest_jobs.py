@@ -72,7 +72,7 @@ def walk(ctx, steps: int = 60, seed: int = 7, step_s: float = 0.02):
     while st["i"] < steps:
         if ctx.should_pause():
             st["rng"] = rng.bit_generator.state
-            ctx.pause(st)
+            ctx.pause(st, completed_units=st["i"], remaining_units=steps - st["i"])
         x = int(rng.integers(0, 1000))
         st["acc"] += x
         ctx.emit({"status": "record", "kind": "walk", "i": st["i"], "x": x, "acc": st["acc"],

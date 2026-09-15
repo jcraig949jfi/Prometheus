@@ -221,3 +221,15 @@ Interfaces posted to G,H,E,A 06:14 (1789467306628-0).
 - Test (scaled 2.5 s epochs, real worker + feeder): 3 resumes, NO_NEW_WORK before drain_hold, work in
   epochs 1-3, every post-NNW job refused NO_NEW_WORK_REFUSAL and none admitted, EPOCH-1..4 + ROUND
   commits. With F14/F9/F15: 9 passed rc 0.
+
+## 2026-09-15 R5 iteration 3 -- F-R5-3 resumable job object (DONE)
+
+- worker.py: a paused job (or a timeout that left a checkpoint) writes pm:resumable[job_key] with the ten
+  operator-19 s4.5 fields + lane, exp_id, envelope, ttl, next segment, code_file_sha256, queued_job_id;
+  CHECKPOINTED event. ctx.progress()/pause(completed_units=, remaining_units=) feed the units (kept in
+  Redis, so a killed job still has them). A finished job deletes the object.
+- resume(r, job_key) requeues from the object alone; refuses NO_OBJECT / ALREADY_QUEUED / CODE_CHANGED
+  (module source hash; HEAD moves with rows commits) / NO_CHECKPOINT. A refused queued segment (NO_NEW_WORK)
+  clears queued_job_id, so the object stays resumable. Worker(auto_requeue=False) leaves resume to code.
+- Test: walk 40 steps paused after 5+ rows by the stop flag, object complete, fresh worker resumes, rows ==
+  uninterrupted run exactly, object + checkpoint gone. With F-R5-1/2, F7, F9, hygiene: 33 passed rc 0.

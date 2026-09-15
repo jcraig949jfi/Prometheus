@@ -56,7 +56,9 @@ PUSH_LOCK = "pm:push:lock:{}"       # ops.push holds it during a rebase; the wor
                                     # Separate from STOP: the epoch controller clears STOP at resume (E, 09-15).
 WSTATE = "pm:worker:{}"             # hash {state: idle|busy|stopped, job_id, ts}, TTL WSTATE_TTL
 WSTATE_TTL = 30
-DONE_ENV_FIELDS = ("cohort", "campaign_stage", "experiment_class", "predicate_id")   # F-R5-1: copied into done
+RESUMABLE = "pm:resumable"         # F-R5-3: hash job_key -> resumable job object (JSON)
+PROGRESS = "pm:progress:{}:{}"      # F-R5-3: ctx.progress() units, readable after a kill
+DONE_ENV_FIELDS =("cohort", "campaign_stage", "experiment_class", "predicate_id")   # F-R5-1: copied into done
 CKPT_DIR = pathlib.Path(os.environ.get("PM_CKPT_DIR", "C:/Users/jcrai/lab/pm-data/ckpt"))
 
 
@@ -92,6 +94,50 @@ def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs:
     return job_id
 
 
+def code_sha(repo) -> str:
+    import subprocess
+    q = subprocess.run(["git", "-C", str(repo), "rev-parse", "HEAD"], capture_output=True, text=True)
+    return q.stdout.strip()
+
+
+def code_file_sha256(fn: str) -> str | None:
+    """sha256 of the job function's module source: rows commits move HEAD, so resume compares this."""
+    import hashlib
+    import importlib.util
+    try:
+        spec = importlib.util.find_spec(fn.partition(":")[0])
+    except (ImportError, ValueError):
+        return None
+    if spec is None or not spec.origin or not os.path.exists(spec.origin):
+        return None
+    return hashlib.sha256(pathlib.Path(spec.origin).read_bytes()).hexdigest()
+
+
+def resumables(r) -> dict:
+    return {k: json.loads(v) for k, v in r.hgetall(RESUMABLE).items()}
+
+
+def resume(r, job_key: str, force: bool = False) -> dict:
+    """F-R5-3: requeue a job from its resumable object. -> {ok, job_id} or {ok: False, reason}.
+    Refused (not raised): NO_OBJECT, ALREADY_QUEUED (a segment is still queued), CODE_CHANGED (the job
+    module's source differs from the checkpointing run; force=True overrides), NO_CHECKPOINT."""
+    raw = r.hget(RESUMABLE, job_key)
+    if not raw:
+        return {"ok": False, "reason": "NO_OBJECT"}
+    o = json.loads(raw)
+    if o.get("queued_job_id") and not force:
+        return {"ok": False, "reason": "ALREADY_QUEUED", "queued_job_id": o["queued_job_id"]}
+    if code_file_sha256(o["function"]) != o.get("code_file_sha256") and not force:
+        return {"ok": False, "reason": "CODE_CHANGED"}
+    if not pathlib.Path(o["checkpoint"]).exists():
+        return {"ok": False, "reason": "NO_CHECKPOINT"}
+    job_id = submit(o["lane"], o["function"], o["exp_id"], o["rows"], o["ttl_cpu_s"], o["kwargs"], r=r,
+                    job_key=o["job_key"], segment=o["segment"], cpu_prior=o["budget_consumed"]["cpu_s"],
+                    envelope=o.get("envelope"), wall_prior=o["budget_consumed"]["wall_s"])
+    r.hset(RESUMABLE, job_key, json.dumps(dict(o, queued_job_id=job_id), sort_keys=True))
+    return {"ok": True, "job_id": job_id}
+
+
 # ------------------------------------------------------------------ child
 
 class Ctx:
@@ -124,7 +170,14 @@ class Ctx:
             pickle.dump(state, fh)
         os.replace(tmp, p)
 
-    def pause(self, state) -> None:
+    def progress(self, completed_units, remaining_units) -> None:
+        """F-R5-3: report work units; the resumable object carries the last report (survives a kill)."""
+        self.r.set(PROGRESS.format(self.lane, self.job_key),
+                   json.dumps({"completed_units": completed_units, "remaining_units": remaining_units}), ex=86400)
+
+    def pause(self, state, completed_units=None, remaining_units=None) -> None:
+        if completed_units is not None or remaining_units is not None:
+            self.progress(completed_units, remaining_units)
         self.checkpoint(state)
         raise JobPaused()
 
@@ -248,6 +301,11 @@ class Worker:
         env = self._envelope(job)
         ev = EV.refuse(self.r, self.lane, job, verdict, env)
         env = env if isinstance(env, dict) else {}
+        key = job.get("job_key") or job["job_id"]
+        raw = self.r.hget(RESUMABLE, key)
+        if raw and json.loads(raw).get("queued_job_id") == job["job_id"]:   # its queued segment was refused:
+            self.r.hset(RESUMABLE, key, json.dumps(dict(json.loads(raw), queued_job_id=None,   # resumable again
+                                                        refused=verdict["reasons"]), sort_keys=True))
         out = {"job_id": job["job_id"], "status": "refused", "event": ev["event"], "reasons": verdict["reasons"],
                "rows": 0, "cpu_s": 0.0, "wall_s": 0.0, "job_key": job.get("job_key") or job["job_id"],
                "segment": int(job.get("segment", 0) or 0), "ended": round(time.time(), 3),
@@ -340,12 +398,39 @@ class Worker:
                                         json.loads(job["kwargs"]), r=self.r, job_key=out["job_key"],
                                         segment=out["segment"] + 1, cpu_prior=cpu_prior + (cpu_s or 0),
                                         envelope=env or None, wall_prior=wall_prior + wall_s)
+        ckpt = pathlib.Path(self.ckpt_dir) / self.lane / f"{out['job_key']}.pkl"
+        if status == "ok":
+            self.r.hdel(RESUMABLE, out["job_key"])
+            self.r.delete(PROGRESS.format(self.lane, out["job_key"]))
+        elif status == "paused" or (status == "timeout" and ckpt.exists()):
+            obj = self._resumable(job, env, out, ckpt, ttl, wall_limit)
+            out["resumable"] = True
+            self._event("CHECKPOINTED", {k: obj[k] for k in ("job_key", "segment", "checkpoint", "completed_units",
+                                                              "remaining_units", "reason", "queued_job_id")})
         if status == "timeout":
             self._event("TIMEOUT", {k: out[k] for k in ("job_id", "job_key", "segment", "rows", "cpu_s", "wall_s",
                                                          "limit", "sha", "rows_path")})
         self.r.xadd(DONE.format(self.lane), {"json": json.dumps(out, sort_keys=True)})
         self.log(f"job {job['job_id']} {job['fn']} -> {status} rows={n} cpu={cpu_s} wall={wall_s:.2f}s")
         return out
+
+    def _resumable(self, job: dict, env: dict, out: dict, ckpt: pathlib.Path, ttl: float, wall_limit) -> dict:
+        """F-R5-3: the resumable job object (operator 19 s4.5), written to pm:resumable[job_key]."""
+        units = json.loads(self.r.get(PROGRESS.format(self.lane, out["job_key"])) or "{}")
+        cpu_used = out["cpu_prior"] + (out["cpu_s"] or 0.0)
+        wall_used = out["wall_prior"] + out["wall_s"]
+        obj = {"job_key": out["job_key"], "function": job["fn"], "kwargs": json.loads(job["kwargs"]),
+               "checkpoint": str(ckpt), "rows": job["rows"],
+               "completed_units": units.get("completed_units"), "remaining_units": units.get("remaining_units"),
+               "budget_consumed": {"cpu_s": round(cpu_used, 3), "wall_s": round(wall_used, 3)},
+               "budget_remaining": {"cpu_s": round(ttl - cpu_used, 3),
+                                    "wall_s": None if wall_limit is None else round(wall_limit - wall_used, 3)},
+               "code_sha": code_sha(self.repo), "code_file_sha256": code_file_sha256(job["fn"]),
+               "lane": self.lane, "exp_id": job["exp_id"], "envelope": env or None,
+               "ttl_cpu_s": float(job["ttl_cpu_s"]), "segment": out["segment"] + 1, "reason": out["status"],
+               "queued_job_id": out.get("next_job_id"), "ts": round(time.time(), 3)}
+        self.r.hset(RESUMABLE, out["job_key"], json.dumps(obj, sort_keys=True))
+        return obj
 
     def _head(self) -> str:
         import subprocess
