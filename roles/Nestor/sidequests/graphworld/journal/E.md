@@ -365,3 +365,9 @@ max wall 22 s. GPU-1 Warp beats t8 numba only at 4096/16384; loses at 65536 (h2d
 B6 t8 beats CUDA graph kT 5.9x (linear) / 4.1x (tt_digits); B6 stops envs at done, torch steps all T. GPU-3 not run.
 Missing machine checks: (1) admission stubs carry measured_cost null and no code files the measured cost (filed by hand);
 (2) nothing ties a predicate's cited code sha to the pushed sha after a push rebase.
+
+Iteration 2 (T+47). ff to 3a6beef19 for D (A ask; op 20 PILOT cpu_budget_s 2400); worker restarted on new CEILINGS.
+Clause B still refused under op 20 (wall 1440 > 900, CPU 3200 > 2400): candidate stands, not resubmitted.
+D-R5-2 REFUTED my 65536 "reversal": warm h2d 5.13 ms, cold 5.59 ms, kernel + copy 8.43 < numba 10.36; my 34 ms copy
+did not reproduce (cause unidentified). Lesson: bench_cell's h2d is ONE cold call while the kernel is a median of reps;
+I published a ratio of unlike estimators. Pushed D's arbiter rows (0deee846c) from this worktree.
