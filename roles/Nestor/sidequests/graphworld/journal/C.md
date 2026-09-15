@@ -482,3 +482,9 @@
 - Worker C up on d64580db2; the two pids are one worker (gw-venv launcher 21844 -> interpreter 26568), one consumer.
 - No job: R5 C target met (C-R5-01 DISTANT_QD PASS vacuous; C-R5-AP-01 INDETERMINATE -> AP-01b ANTI_PRIOR FAIL).
   Not drawing more: s5 assigns C one of each, and chasing more cells is not in the charter. Holding to close.
+
+## 2026-09-15 round 5 pilot loop iteration (m1-12a62e35): T+80, idle hold
+
+- Beat + inbox: controller EPOCH 2 and EPOCH 3 boundaries only (controller-run export/commit); nothing for C.
+- Worker C idle (waiting_cpu, no job queued); tree clean. No new draw: target met, NO_NEW_WORK at T+100.
+- Next: close-out after the drain (final lane post, stop worker, stop loop).
