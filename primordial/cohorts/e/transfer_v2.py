@@ -226,3 +226,47 @@ def validation_job(ctx, mode: str = "positive", recipient: int = VAL["recipient"
     ctx.emit({"kind": "check_b", "status": "record", "report_only": True, "exp_id": exp, "control_version": CONTROL_VERSION,
               "mode": mode, "expected": base["expected"], "verdict": verdict,
               "as_expected": (verdict == "PASS") if mode == "positive" else (verdict != "PASS"), **got})
+
+
+# ------------------------------------------------------------------ round 5 live pair (O1 + O6)
+LIVE = {"recipient": 13, "pressure": "train128_held64", "run_seeds": tuple(range(16, 32)), "gens": 800, "batch": 128}
+
+
+def live_job(ctx, donor: int | None = None, recipient: int = LIVE["recipient"], pressure: str = LIVE["pressure"],
+             run_seeds=LIVE["run_seeds"], gens: int = LIVE["gens"], batch: int = LIVE["batch"], family: str = "linear",
+             exp: str | None = None, campaign_stage: str = "PILOT"):
+    """The ONE live Clause B pair: donor = first o1_donors() entry (code rule, never chosen), run seeds checked disjoint
+    from any earlier use of the pair (check_seeds), M2 budget. Rows per run seed (F9 checkpoint each), summary, check-b."""
+    from primordial.metric import floors as F
+    from primordial.score.transfer_b import check_b
+    donors = o1_donors(f"w{recipient}", pressure, family)
+    if donor is None:
+        donor = donors[0]
+    elif int(donor) != donors[0]:
+        raise ValueError(f"O1: the live donor is the first o1_donors() entry {donors[0]}, not {donor}")
+    run_seeds = [int(s) for s in run_seeds]
+    check_seeds(donor, recipient, run_seeds)
+    exp = exp or f"E-R5-1-live-w{donor}-w{recipient}"
+    n_train = len(F.PRESSURES[pressure])
+    base = dict(base_row("world", donor, recipient, family, pressure, gens, batch, n_train, "live"),
+                campaign_stage=campaign_stage, runs_total=len(run_seeds), rng_family_count=1,
+                runs_per_family=len(run_seeds), o1_donors=donors)
+    st = ctx.load_checkpoint() or {"done": {}, "wall": {}}
+    for i, rs in enumerate(run_seeds):
+        if str(rs) in st["done"]:
+            continue
+        if ctx.should_pause():
+            ctx.pause(st)
+        t0 = time.perf_counter()
+        rows, _ = run_seed("world", donor, recipient, family, rs, gens, batch, n_train, base, oracles=i == 0)
+        for c in CONDITIONS:
+            ctx.emit(rows[c])
+        st["done"][str(rs)], st["wall"][str(rs)] = rows, time.perf_counter() - t0
+        ctx.checkpoint(st)
+    per = {c: [st["done"][str(s)][c] for s in run_seeds] for c in CONDITIONS}
+    summ = summarize(base, per, run_seeds, [st["wall"][str(s)] for s in run_seeds])
+    ctx.emit(summ)
+    rows = [dict(r, exp_id=exp) for s in run_seeds for r in st["done"][str(s)].values()] + [dict(summ, exp_id=exp)]
+    got = check_b(rows)
+    ctx.emit({"kind": "check_b", "status": "record", "exp_id": exp, "control_version": CONTROL_VERSION,
+              "verdict": got["pairs"][0]["verdict"] if got["pairs"] else "INDETERMINATE", **got})

@@ -96,6 +96,23 @@ def test_o1_donor_rule_and_disjoint_seed_guard():
     V.check_seeds(34, 13, range(0, 8))                                           # a pair never seen
 
 
+def test_live_job_takes_the_o1_donor_and_refuses_seen_seeds_and_other_donors():
+    assert V.LIVE["run_seeds"] == tuple(range(16, 32)) and (V.LIVE["gens"], V.LIVE["batch"]) == (800, 128)
+    with pytest.raises(ValueError, match="O1"):
+        V.live_job(_Ctx(), donor=20)                                             # not the first O1 donor
+    with pytest.raises(ValueError, match="already ran"):
+        V.live_job(_Ctx(), run_seeds=range(0, 16))                                # E-R4-1's seeds
+    a = _Ctx()
+    with pytest.raises(ValueError, match="not SURVIVED"):
+        V.live_job(_Ctx(), pressure="train8_held64")                              # recipient must be SURVIVED there
+    V.live_job(a, run_seeds=(16, 17), gens=2, batch=24)
+    graft = [r for r in a.rows if r.get("condition") == "graft"]
+    assert {r["donor_world"] for r in graft} == {14} and all(r["donor_mode"] == "world" for r in graft)
+    summ, chk = a.rows[-2], a.rows[-1]
+    assert summ["condition"] == "summary" and summ["runs_total"] == 2 and summ["o1_donors"][0] == 14
+    assert chk["kind"] == "check_b" and chk["verdict"] in ("PASS", "FAIL", "INDETERMINATE")
+
+
 def test_run_seed_rows_are_deterministic_and_stamped():
     base = V.base_row("self", 13, 13, "linear", "train8_held64", 2, 24, 2, "test")
     a, _ = V.run_seed("self", 13, 13, "linear", 0, 2, 24, 2, base, oracles=False)
