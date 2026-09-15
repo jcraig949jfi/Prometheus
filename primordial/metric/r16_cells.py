@@ -65,6 +65,7 @@ LEARN128_CPU_PER_TS_32RUNS = 12030.94 / 32
 CPU_BUDGET_S = 14400.0                      # SWARM_R6 s2 PRODUCTION cpu_budget_s per job
 EVENTS = "pm:events"                        # F's event stream (envelope.EVENTS)
 RECIPE_CHANGED = "REPLICATION_RECIPE_CHANGED"
+PREDICATE_ID = "G-R16-SCREEN"      # envelope.validate refuses a None/empty predicate_id (all 73 R6 submits at 11:01)
 
 
 def ts_of(gen_seed: int) -> int:
@@ -257,7 +258,7 @@ def envelope_for(gen_seed: int, pressure: str, runs: int = 32) -> dict:
     return {"campaign_stage": "PRODUCTION", "wall_budget_s": 2400, "cpu_budget_s": min(CPU_BUDGET_S, round(cpu * 1.25 + 60)),
             "gpu_budget_s": 0, "expected_output_rows": 3 + runs * (3 if pressure == "train8_held64" else 2),
             "checkpointable": True, "required_controls": ["floor_suite", "det_matches_stage1"],
-            "required_oracles": ["world_oracle", "fused_eq_numpy"], "cohort": "G", "predicate_id": None,
+            "required_oracles": ["world_oracle", "fused_eq_numpy"], "cohort": "G", "predicate_id": PREDICATE_ID,
             "experiment_class": "R16_SCREEN_CELL"}
 
 

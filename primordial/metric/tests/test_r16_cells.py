@@ -222,3 +222,20 @@ def test_partial_v2_merges_extra_rows_over_committed_rows():
     planted_base = {**base, "gen_seed": 99, "world": "w99"}
     with_extra = RC.partial_v2(extra_rows=[planted_fl, planted_base])                      # w99 is not a stage 1 cell
     assert with_extra["coverage"] == doc["coverage"]                                        # only stage 1 cells are listed
+
+
+def test_every_plan_envelope_is_admitted_by_the_worker_rules_under_a_production_clock():
+    """R6 11:01: predicate_id None made the worker refuse all 73 submits; the plan must pass envelope.admit itself."""
+    import time
+    from primordial.fabric import envelope as EV
+    from primordial.ops import round_clock as RCK
+    now = time.time()
+    clock = RCK.plan(now - 60, round_id="r6")                 # the r6 clock record exactly as round_clock writes it
+    assert clock["stage"] == "PRODUCTION" and RCK.phase(clock, now)["phase"] != "NO_ROUND"
+    for p in RC.plan_jobs(RC.build_order()):
+        env = p["envelope"]
+        assert EV.validate(env) == [], (p["job_key"], EV.validate(env))
+        v = EV.admit(env, "cpu", clock=clock, now=now)
+        assert v["ok"], (p["job_key"], v["reasons"])
+        assert EV.admit(env, "cpu", clock=None, now=now)["ok"]
+    assert all(p["envelope"]["predicate_id"] == RC.PREDICATE_ID for p in RC.plan_jobs(RC.build_order()))
