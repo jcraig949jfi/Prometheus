@@ -336,3 +336,8 @@
   (E9's was UNSEEDED, so its rows are references only), run seeds 0..7, checkpoints 14/25/50/100/200 inside one
   trajectory each (top-16 readout as filed). I1: exact top-16 fitness recount at every checkpoint + repeat of run
   seed 0 identical. Cost ~9 x 200 gens at batch 128 (E9: ~5 s per run). Test 5 passed rc 0; worker restarted.
+- D-R6-9 RECORD (job 83366bc5f506 ok, 53.7 s, 148 CPU-s, 9 trajectories, predicate 1789491108407-0): HELD_KEEPS_RISING.
+  I1 3/3 (exact top-16 recount at every checkpoint; run seed 0 repeat identical). Train gain 14->200 = median 6.9% of
+  final, held64 gain = 16.4% (d 0.096 >= 0.05); held64 rises 50->200 in 7/8. Medians reproduce the anomaly's two
+  references with a seeded sampler: gen 14 train 133.35 / held 59.73 (C-R2-01 133.3 / 59.9), gen 200 143.42 / 78.90
+  (E9 143.9 / 79.2). Held64 per run is noisy (rs 3: 56.2 -> 59.3; rs 6: 43.8 -> 78.4).
