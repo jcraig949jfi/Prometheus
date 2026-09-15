@@ -357,3 +357,8 @@
   with the run RNG split: init stream (first generation only) x mutation stream (+ seeded sampler), 4 x 4 grid +
   repeat of (0,0), ~17 x 31 s. NO_SWING (range < 20) / INIT_DOMINATES (vi >= 2 vm) / MUTATION_DOMINATES / BOTH.
   I1: 16 cells, exact top-16 recount, (0,0) repeat identical. Test 4 passed rc 0; worker restarted.
+- D-R6-11 RECORD (job 9f936a06ee53 ok, 238.8 s wall, 668 CPU-s, 17 runs, predicate 1789492352243-0): INIT_DOMINATES,
+  BARELY. I1 3/3 (16 cells, exact recount, (0,0) repeat identical). Held64 grid range 38.8 (55.4-94.2): the swing
+  reproduces. var(init means) 47.8 vs 2 x var(mutation means) 46.0 -> clears by 1.8. Interaction residual variance
+  122.4 exceeds both main effects: most of the spread is init x mutation combination / run noise, not one stream.
+  Row means (init) 63.2 / 75.4 / 73.0 / 79.4; column means (mutation) 79.7 / 70.0 / 72.1 / 69.1. Train 21.6-29.2.
