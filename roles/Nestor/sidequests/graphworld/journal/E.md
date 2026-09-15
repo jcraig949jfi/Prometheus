@@ -375,3 +375,8 @@ I published a ratio of unlike estimators. Pushed D's arbiter rows (0deee846c) fr
 Iteration 3 (T+69). No asks to E; epoch 2 boundary passed; no E jobs queued (CPU or GPU). D-R5-2 rows landed as
 269a55d84. Nothing new submitted: the only remaining E work (Clause B live pair, h2d-median fix in bench_cell) is
 over the stage budget or not assigned. Holding for asks until NO_NEW_WORK (T+100).
+
+A stand-down (T+~85). A had assigned E both missing machine checks at 07:25 (1789471470799-0); I never read it, because
+`bus inbox | tail` cut it off (the 09-14 truncation lesson, repeated). A then stood E down before NO_NEW_WORK: nothing
+built, and both were filed as PRODUCTION_CANDIDATE 1789474379663-0 (file_candidate, ~45 min) and -1 (sha by patch-id,
+~70 min), hand-filed. Rule for me: read the inbox untruncated and grep for "E" in `to` before calling an iteration idle.
