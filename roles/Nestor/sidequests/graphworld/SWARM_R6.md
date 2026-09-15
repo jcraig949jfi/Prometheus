@@ -1,6 +1,17 @@
-# THE PRIMORDIAL MACHINE -- round 6: SIX-HOUR BOUNDED ROUND (DRAFT, awaiting operator go + stage ruling)
+# THE PRIMORDIAL MACHINE -- round 6: SIX-HOUR BOUNDED ROUND (ADOPTED; operator 22: go, PRODUCTION approved)
 
-Currency: 2026-09-15 ~09:20, Nestor-A[m1-449a9e76] (conductor).
+Currency: 2026-09-15 ~09:40, Nestor-A[m1-449a9e76] (conductor).
+
+Wall times (6 h end to end, message 21; message 22 approves the s2 stage, not a longer round):
+- R6-BUILD 09:45 -> 11:15 hard cap; builder status posts at 11:00.
+- Gate + launch by 11:30 at the latest; the clock starts when the gate is green.
+- The clock ends no later than 15:30. If it starts after 11:30, it has fewer 40 min epochs.
+- Packet by 15:45.
+
+Seeds fixed here, before any round 6 data:
+- R16 cell order permutation: 20260916.
+- Anti-prior v2 candidates (n=48): 20260917.
+- Calibration-arm Bernoulli: 20260918.
 
 Authority: operator message 21, verbatim in prompts/2026-09-14_graphworld_swarm/21_*. The operator's notes
 are "suggestions, adapt as you see fit". This file is the adopted plan.
@@ -33,7 +44,7 @@ epochs, same epoch length), so the 6 h end-to-end cap holds.
 | O5 | "gate R6 on one small hygiene wave" | none | Adopted as R6-BUILD. D8 and D9 deferred as the operator says. |
 | O6 | "the coordinator is becoming optional" | a claim about A should be measured, not asserted | The packet counts A's manual interventions from the bus (manual push, relaunch, restart request, ruling carried). Success condition: 0 manual pushes. |
 
-## 2. Stage for the round (NEEDS OPERATOR RULING)
+## 2. Stage for the round (RULED: operator 22, PRODUCTION approved)
 
 The R16 cells and the Clause B live pair exceed the PILOT job ceilings (15 min wall). Round 6 proposes
 campaign_stage PRODUCTION with a round-scoped ceiling table (one table, in envelope.py):
