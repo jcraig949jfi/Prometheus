@@ -214,3 +214,26 @@
   (..6045 w13 not a one-family artifact under top1_train; ..1162 GPU-1 reversal gone, mechanism unconfirmed),
   1 PRODUCTION_CANDIDATE (5th RNG family, 32 QD runs, 1789471299163-0), 0 QD runs, ~19 s total compute.
   Own error metabolised: D's cold-copy mechanism for ..1162 was wrong (cold 5.59 ms, not 33.97 ms).
+
+## Round 6 PRODUCTION (Nestor-D[m1-bff769b2], worktree nestor-r6-d)
+
+- Boot ~T+19 (clock pm:round:r6 live 11:00): ff to integration, warmup ok, suite 437 passed / 1 skipped rc 0, worker D
+  serving (fresh process, so no stale-module reload needed). A cleared the stale r5 stop flags (1789485113451-0).
+- Item 2 first (pure filing, 0 compute): anomaly 1789485427773-0 -- B-R5-1's 3/32 below-floor runs are all family 3303
+  (3303|2 165.88, |6 162.00, |7 161.61 vs floor 166.47); the other 5 runs of 3303 sit 16-44 above. Not explained.
+- Item 1: D-R6-1 code 6a498d6db (+ test, 5 passed rc 0), predicate D-R6-1-b-r5-1-family-loo bus 1789485461951-0,
+  ref refs/pm/pred pinned. Rule: ROBUST iff progress CI low > 0.95 in 4/4 held-out pools. check_r4 refuses 24-run
+  pools CANDIDATE_N by design, so the LOO CI goes through check_r4's formula + median_ci; refusal recorded per pool.
+- Job 38c04bba9aeb was granted a CPU token at 11:34 but consumed by the STALE round 5 D worker (nestor-r5-d, pids
+  25004/26160, consumer m1-181e5997, alive since 07:28): status error in 0.11 s, 0 rows (r5 checkout lacks the module).
+  My wait loop watched only pm:events + the rows file and missed pm:jobs:D:done: ~44 min lost (submit 11:17:52,
+  error 11:34:17, found 12:00, resubmit 01f9789d6e6f 12:01:34 = T+62). Own error: watch the
+  done stream for every terminal status. Killed exactly those 2 pids (cwd checked); told A 1789488081865-0.
+  Resubmitted the identical job (execution error, not a refusal); predicate unchanged.
+- D-R6-1 RECORD (job 01f9789d6e6f ok, 0.27 s wall, 0 QD, worker rows commit e82ada8e8): decision ROBUST.
+  I1 exact (32-run pool via check_r4 PASS 1.5914 CI [1.1389, 1.8271]); controls ok (one-family-carries 0/4,
+  all-progress-2 4/4); source-rows oracle clean (B rows byte-equal 4e69568e8). LOO CI low: -4200 0.9964, -2101 1.1022,
+  -3303 1.1568, -5501 1.2366 -> 4/4 > 0.95. Thin: leave-4200-out clears by 0.046. check_r4 refused all 4 pools
+  CANDIDATE_N as predicted. Reported only: matched-baseline LOO 4/4 > 1.08 (leave-4200-out 2.35: without 4200 the
+  baseline median drops to 176.73); 8-run blocks CI low 3303 -0.256, 5501 0.688. Item 3 discriminator NOT triggered.
+  Anomaly ..7773 (3303 bimodal) stays OPEN: the PASS does not depend on 3303, the observation is unexplained.
