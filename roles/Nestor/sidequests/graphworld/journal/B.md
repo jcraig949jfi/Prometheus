@@ -521,3 +521,5 @@
 - B-R5-2 PILOT reread job 4b7883cbb0c7 ok (1.7 CPU-s, 8-thread token, rows 7335089f2): int4a4 16 B under top1_train, runs_total 16, rng_family_count 1, runs_per_family 16 (round 4 stream 4410). candidate_score 194.23 CI [187.78, 201.19]; floor 166.47; baseline 183.91 @ 200 B; progress_above_floor 1.59 CI [1.22, 1.99]; wall 0.42 s reread only (QD cost is in the PRODUCTION_CANDIDATE); VRAM none.
   Control: 16/16 selected elites use observations (W zeroed -> 159.0, 105.8 on rs 4/10; input_invariant 0); oracles clean on rs 0. One run seed (rs 0, 156.84) is below the floor.
   Judge INELIGIBLE(CANDIDATE_N), as predicted: PILOT, no verdict, no claim. The only eligible test is the filed PRODUCTION_CANDIDATE.
+- B-R5-2 receipt 1789471092290-0 (INDETERMINATE, PILOT; guard 9/9 OK). EXPECTED_REFUSAL_OBSERVED emitted 1789471014088-0.
+- Loop iteration (07:18): beat, inbox empty for B, no job. First item complete; worker idle. No further w13 work inside PILOT ceilings (CANDIDATE_N is the PRODUCTION_CANDIDATE).
