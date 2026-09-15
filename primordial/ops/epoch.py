@@ -274,7 +274,7 @@ class EpochController:
         return out
 
 
-def main(argv=None) -> int:
+def parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     ru = sub.add_parser("run")
@@ -288,10 +288,24 @@ def main(argv=None) -> int:
     rd.add_argument("--lanes", required=True)
     rd.add_argument("--round", default="r6")
     rd.add_argument("--stage", default=None, help="default: round_clock.ROUNDS row of --round")
+    # F-R6-6: the clock shape; each default (None) is the ROUNDS row of --round, so --round r5 is exactly R5
+    rd.add_argument("--epoch-s", type=float, default=None)
+    rd.add_argument("--epochs", type=int, default=None)
+    rd.add_argument("--drain-s", type=float, default=None)
+    rd.add_argument("--close-s", type=float, default=None)
     for p in (ru, bo, rd):
         p.add_argument("--repo", default=os.environ.get("PM_EPOCH_REPO"),
                        help="the controller's own worktree (F-R5-6); never a lane or conductor worktree")
-    a = ap.parse_args(argv)
+    return ap
+
+
+def round_shape(a) -> dict:
+    """F-R6-6: round_clock.start/plan kwargs from the `round` flags (None -> the round's ROUNDS row)."""
+    return {"stage": a.stage, "epoch_s": a.epoch_s, "epochs": a.epochs, "drain_s": a.drain_s, "close_s": a.close_s}
+
+
+def main(argv=None) -> int:
+    a = parser().parse_args(argv)
     ok, why = controller_repo(a.repo)
     if not ok:
         print(f"refused: {why}", file=sys.stderr)
@@ -302,7 +316,7 @@ def main(argv=None) -> int:
     if a.cmd == "round":
         from primordial.ops import round_clock as RC
         ec = EpochController(lanes, **kw)
-        rec = ec.run_round(RC.start(ec.r, a.round, stage=a.stage))
+        rec = ec.run_round(RC.start(ec.r, a.round, **round_shape(a)))
         print(json.dumps({k: rec[k] for k in ("round_id", "closed_ts", "sha")}, sort_keys=True))
         return 0
     if a.cmd == "boundary":

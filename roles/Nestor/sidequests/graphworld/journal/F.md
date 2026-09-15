@@ -299,3 +299,14 @@ reviewed by their reports + the combined run; F-R6-2/3/4 + round id by this sess
   contract.LANES letter rc 0, Z refused, prompt_exists reported.
 - Gate 16: round_clock.ROUNDS {r5 PILOT 4x1500, r6 PRODUCTION 5x2400 drain 1200 close 1200}, DEFAULT_ROUND r6; CLIs
   default r6; R5 tests pinned to "r5".
+
+## 2026-09-15 R6 iteration 2 -- F-R6-6 round shape flags + refs/pm guard (DONE)
+
+- A 1789479834686-0: `epoch round` gains --epoch-s/--epochs/--drain-s/--close-s (default None = the ROUNDS row of
+  --round, so --round r5 is exactly R5); parser()/round_shape() split out so the launch command is tested without
+  Redis. A's launch line (r6 PRODUCTION 2400 x epochs, drain 1200, close 1200) reaches the plan verbatim.
+- A 1789479784925-0 (for H-R6-1 D7): static scan -- no --prune/--mirror/--delete/empty-source ref push in
+  primordial/ops or fabric; bare-remote test: a controller boundary push that must rebase keeps refs/pm/pred/P-test
+  at the cited sha, and the cited commit is an ancestor of the pushed branch.
+- Pushed F-R6-1..5 at 09:53 (ae47bb4f1, 4ad0b8980, 9842c4f7b) after one lost push race (remote moved, rejected, re-run
+  rebased; never forced). Tests: 22 passed rc 0 (epoch-related + round id).
