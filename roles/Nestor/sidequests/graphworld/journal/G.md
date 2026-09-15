@@ -330,3 +330,30 @@ RESUME (after test launch 1 quiesces, per A): submit primordial.metric.invariant
 predicate first, burst ~7.8 h at 5 threads, or ask A for the order), then
 `python -m primordial.metric.screen_run --write --commit <rows sha>`, rerun the scratchpad-style raw-row audit,
 full suite, push, receipt, and tell H to re-replay. Push under a live RowWriter only through a stop-flag gap.
+
+## 2026-09-15 R16 (operator 16) smoke test, stopped by operator 18 -- CHECKPOINT
+
+- Operator 16 via A: every baseline and stochastic floor part at 32 runs x 4 RNG families (4200, 2101, 3303,
+  5501), read top1_train, worlds_r4/v2. Plan posted 1789455371443-0; A cleared phase 1 (1789455401413-0).
+- Code: family-aware runs (D-R4-2 convention; family 4200 == the v1 M2 stream, v1 rows reproduce) and pooled
+  32x4 summaries refusing < 32 runs / < 4 families / < 8 per family / duplicate ids / mixed readouts (205dedfed);
+  r16.py jobs; worlds_r4/v2 assembly with families, n_per_family, n_runs, floor_stats, no stop, write refuses
+  < 32x4x8 (bd70319bb). E's BASELINE_N judge reads those names. Full suite 470 passed rc 0 at the rebased tip.
+- Ran: J1 floors (w13 complete: det parts == stage 1; random pooled 58.07; train8 learner pooled 151.27 top1),
+  J2 baselines (6 cells: w13 t128 183.91 [170.95, 188.56]; w7 t8 189.19 [160.50, 189.19]; w7 t128 188.67
+  [184.62, 189.19]; w26 t128 197.83 [192.22, 201.73]; w1 t8 67.15 [52.69, 74.68]; w1 t128 75.40 [65.23, 78.78]).
+- Cross-checks on w13 t128: family 4200 top1 == E-R15-1 committed 8/8 (median 189.53); legacy top-16 == D-R4-2
+  32/32 exactly; top1 == D held64_elite[0] within D's 4 dp. My quoted D CI [171.02] was MY ordering artifact:
+  M3 median_ci is not permutation invariant; the stamped order (family 4200, 2101, 3303, 5501, then run seed)
+  gives [170.95] (1789456804803-0).
+- The push gap requeued J1's remainder behind J2/J3 (reported to A 1789456288436-0; no values change).
+- Operator 18 via A: stop at a checkpoint (smoke test). Stop flag -> J2 paused in 2 s; J1 remainder + J2 parked
+  (removed from pm:jobs:G, exact entries in R16_CHECKPOINT_2026-09-15.json, 419da07a9); only J3 ran.
+- J3 w13 train128 learner 32x4 (rows 1817bed46): median 151.75, CI [151.44, 151.91], IQR 0.98 (legacy top-16
+  151.64); oracle clean; 6,049 s wall (~189 s/run; plan said 1.42 h). VERDICT w13 train128 under gate_in|HOLD:
+  floor = max(159.00, 159.00, 58.07, 151.75, gate 166.47) = 166.47 < ci95[0] 170.95 -> SURVIVED (every variant).
+- Measured walls (5 threads): J1 seg0 362 s, J2 seg0 2,303 s, J3 6,049 s. Projection for the full phase 1:
+  baselines ~7.2 h, train8 learner ~2.5 h (plan 1.75), plus overhead and survivor-deciding train128 learners.
+- A process note: my first attempt at the checkpoint chain died on a bash quoting error before running anything
+  (nested heredoc + Python in one -c string); state was verified clean before retrying with a script file.
+- No worlds_r4/v2 written (partial screen). No B2. Paused. Resume steps: G R16 CHECKPOINT post + the resume record.
