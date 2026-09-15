@@ -30,8 +30,14 @@ KEY = "pm:round:{}"
 ROUNDS = {
     "r5": {"stage": "PILOT", "epoch_s": 1500.0, "epochs": 4, "drain_s": 600.0, "close_s": 600.0},
     "r6": {"stage": "PRODUCTION", "epoch_s": 2400.0, "epochs": 5, "drain_s": 1200.0, "close_s": 1200.0},
+    "r7": {"stage": "PRODUCTION", "epoch_s": 3600.0, "epochs": 8, "drain_s": 1800.0, "close_s": 1800.0,  # SWARM_R7 s0
+           # F-R7-1 (A 1789504349834-0): the DECLARED worker repos per lane group; a live worker anywhere else is
+           # residue (ops.residue). G's screen worker runs from the G builder worktree; the GPU arbiter from E's.
+           "lane_repos": {**{L: [f"F:/Prometheus-worktrees/nestor-r7-{L.lower()}"] for L in "BCDER"},
+                          "G": ["F:/Prometheus-worktrees/nestor-bld-g"],
+                          "gpu": ["F:/Prometheus-worktrees/nestor-r7-e", "F:/Prometheus-worktrees/nestor-r6-e"]}},
 }
-DEFAULT_ROUND = "r6"
+DEFAULT_ROUND = "r7"
 R5 = ROUNDS["r5"]
 FLOATS = ("start_ts", "epoch_s", "no_new_work_ts", "drain_ts", "end_ts")
 

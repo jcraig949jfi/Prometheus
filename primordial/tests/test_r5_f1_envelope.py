@@ -22,9 +22,10 @@ LANE = "F-r5-1"
 # ------------------------------------------------------------------ the table (no Redis)
 
 def test_ceilings_pilot_values():
-    assert EV.CEILINGS["PILOT"] == {"cpu_wall_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 2400}   # operator 20
+    assert EV.CEILINGS["PILOT"] == {"cpu_wall_s": 900, "cpu_wall_noncheckpointable_s": 900, "gpu_wall_s": 600,
+                                    "cpu_budget_s": 2400}   # operator 20; R7 non-checkpointable key
     for stage in EV.STAGES:
-        assert set(EV.CEILINGS[stage]) == {"cpu_wall_s", "gpu_wall_s", "cpu_budget_s"}
+        assert set(EV.CEILINGS[stage]) == {"cpu_wall_s", "cpu_wall_noncheckpointable_s", "gpu_wall_s", "cpu_budget_s"}
 
 
 @pytest.mark.parametrize("override,kind,reason", [
@@ -85,7 +86,8 @@ def test_horizon_is_drain_ts_not_end_ts():
 
 def test_production_stage_outside_a_round_uses_its_own_row():
     """R6 (F-R6-4): PRODUCTION is no longer unbounded; outside a round its own CEILINGS row applies."""
-    assert EV.admit(EV.example(campaign_stage="PRODUCTION", wall_budget_s=2400, cpu_budget_s=14400))["ok"]
+    assert EV.admit(EV.example(campaign_stage="PRODUCTION", checkpointable=True, wall_budget_s=2400,
+                               cpu_budget_s=14400))["ok"]   # R7: a 2400 s wall needs checkpointable
     v = EV.admit(EV.example(campaign_stage="PRODUCTION", wall_budget_s=10 ** 6, cpu_budget_s=10 ** 6))
     assert set(v["reasons"]) == {"CPU_WALL_OVER_CEILING", "CPU_BUDGET_OVER_CEILING"}
 

@@ -31,17 +31,22 @@ FIELDS = ("campaign_stage", "wall_budget_s", "cpu_budget_s", "gpu_budget_s", "ex
           "checkpointable", "required_controls", "required_oracles", "cohort", "predicate_id",
           "experiment_class")
 NUMERIC = ("wall_budget_s", "cpu_budget_s", "gpu_budget_s", "expected_output_rows")
+EVIDENCE_CLASSES = ("VERDICT", "OBSERVATION")           # optional envelope field (R7, EVIDENCE_N_v1 at admission)
 LISTS = ("required_controls", "required_oracles")
 
 # The one ceiling table. None = no ceiling at that stage (operator-authorized stages only).
 # PILOT per operator 19 s1 / SWARM_R5 s3 F-R5-1; SMOKE may not exceed PILOT.
+#   cpu_wall_s                   wall of one segment of a CHECKPOINTABLE cpu job (it continues in its next segment)
+#   cpu_wall_noncheckpointable_s wall of a NON-checkpointable cpu job (R7 D15: one such job held every lane 8.8 min)
+#   gpu_wall_s                   leased GPU wall per lease segment (a longer GPU job checkpoints between leases)
+#   cpu_budget_s                 CPU seconds per job, cumulative over segments
 CEILINGS = {
-    "SMOKE":       {"cpu_wall_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 1200},
-    "PILOT":       {"cpu_wall_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 2400},   # operator 20 (09-15 07:23): 40 CPU-min
-    # round 6 (SWARM_R6 s2, operator 22): cpu_wall_s is the SEGMENT wall (a checkpointable job continues in its
-    # next segment); cpu_budget_s is cumulative over segments; completion <= drain_ts as for every stage.
-    "PRODUCTION":  {"cpu_wall_s": 2400, "gpu_wall_s": 600, "cpu_budget_s": 14400},
-    "REPLICATION": {"cpu_wall_s": 2400, "gpu_wall_s": 600, "cpu_budget_s": 14400},
+    "SMOKE":       {"cpu_wall_s": 900, "cpu_wall_noncheckpointable_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 1200},
+    "PILOT":       {"cpu_wall_s": 900, "cpu_wall_noncheckpointable_s": 900, "gpu_wall_s": 600,
+                    "cpu_budget_s": 2400},   # operator 20 (09-15 07:23): 40 CPU-min
+    # PRODUCTION: operator 22; round 7 values per SWARM_R7 s2 (cpu_budget_s 36000 = 10 CPU-h; non-checkpointable 900)
+    "PRODUCTION":  {"cpu_wall_s": 2400, "cpu_wall_noncheckpointable_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 36000},
+    "REPLICATION": {"cpu_wall_s": 2400, "cpu_wall_noncheckpointable_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 36000},
 }
 # Which job stages an active stage admits (A 1789467348712-0): a PILOT round admits SMOKE and REPLICATION
 # at PILOT's ceilings (never looser); PRODUCTION needs an operator ruling. A stage not in this table or in
@@ -74,6 +79,10 @@ def validate(env) -> list[str]:
     for k in ("cohort", "predicate_id", "experiment_class"):
         if k in env and not (isinstance(env[k], str) and env[k].strip()):
             out.append(f"ENVELOPE_BAD_VALUE:{k}")
+    # R7 (A 1789504263405-0): evidence_class is optional; an unknown value is a malformed envelope, not a sample
+    # defect. Whether the sample satisfies EVIDENCE_N_v1 is H's evidence_n module, called from admit().
+    if "evidence_class" in env and env["evidence_class"] not in EVIDENCE_CLASSES:
+        out.append("ENVELOPE_BAD_VALUE:evidence_class")
     return out
 
 
@@ -98,6 +107,9 @@ def admit(env, kind: str = "cpu", clock: dict | None = None, now: float | None =
             reasons.append("GPU_WALL_OVER_CEILING")
     elif ceil["cpu_wall_s"] is not None and env["wall_budget_s"] > ceil["cpu_wall_s"]:
         reasons.append("CPU_WALL_OVER_CEILING")
+    elif (not env["checkpointable"] and ceil["cpu_wall_noncheckpointable_s"] is not None
+          and env["wall_budget_s"] > ceil["cpu_wall_noncheckpointable_s"]):
+        reasons.append("NONCHECKPOINTABLE_WALL_OVER_CEILING")      # F-R7-2 (D15)
     if ceil["cpu_budget_s"] is not None and env["cpu_budget_s"] > ceil["cpu_budget_s"]:
         reasons.append("CPU_BUDGET_OVER_CEILING")
     wall = env["gpu_budget_s"] if kind == "gpu" else env["wall_budget_s"]
@@ -113,7 +125,7 @@ def admit(env, kind: str = "cpu", clock: dict | None = None, now: float | None =
             if len(reasons) == 1:
                 event = NO_NEW_WORK_REFUSAL
     return {"ok": not reasons, "event": None if not reasons else event, "reasons": reasons, "stage": stage,
-            "ceiling": ceil}
+            "ceiling": ceil, "stub": bool(reasons) and event == STAGE_BUDGET_REFUSAL}
 
 
 def refuse(r, lane: str, job: dict, verdict: dict, env, stub: bool = True) -> dict:

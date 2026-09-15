@@ -8,8 +8,8 @@ from primordial.tests._live import live_url
 
 
 def test_r6_row_and_defaults():
-    c = RC.plan(0.0)
-    assert RC.DEFAULT_ROUND == "r6" and c["round_id"] == "r6" and c["stage"] == "PRODUCTION"
+    c = RC.plan(0.0, "r6")
+    assert c["round_id"] == "r6" and c["stage"] == "PRODUCTION"
     assert (c["epoch_s"], c["epochs"], c["no_new_work_ts"], c["drain_ts"], c["end_ts"]) == (2400.0, 5, 12000, 13200, 14400)
     assert [RC.phase(c, t)["epoch"] for t in (0, 2399, 2400, 11999)] == [1, 1, 2, 5]
     r5 = RC.plan(0.0, "r5")
@@ -26,7 +26,7 @@ def test_start_writes_pm_round_r6(monkeypatch):
         pytest.skip("substrate not reachable on 6390")
     r.delete("pm:round:r6", RC.CURRENT)
     try:
-        c = RC.start(r, start_ts=5000.0)
+        c = RC.start(r, "r6", start_ts=5000.0)
         assert r.get(RC.CURRENT) == "r6" and r.hget("pm:round:r6", "stage") == "PRODUCTION"
         assert RC.read(r) == c and c["end_ts"] == 5000.0 + 14400
     finally:

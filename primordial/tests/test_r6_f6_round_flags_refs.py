@@ -34,7 +34,7 @@ def test_flag_defaults_are_the_round_row():
     r5 = EP.parser().parse_args(["round", "--lanes", "B", "--round", "r5", "--repo", "X"])
     assert RC.plan(0.0, r5.round, **EP.round_shape(r5)) == RC.plan(0.0, "r5")
     assert RC.plan(0.0, "r5")["end_ts"] == 7200 and RC.plan(0.0, "r5")["stage"] == "PILOT"
-    r6 = EP.parser().parse_args(["round", "--lanes", "B", "--repo", "X"])
+    r6 = EP.parser().parse_args(["round", "--lanes", "B", "--round", "r6", "--repo", "X"])
     assert r6.round == "r6" and RC.plan(0.0, r6.round, **EP.round_shape(r6)) == RC.plan(0.0, "r6")
 
 

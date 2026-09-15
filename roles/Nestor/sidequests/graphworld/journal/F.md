@@ -331,3 +331,20 @@ reviewed by their reports + the combined run; F-R6-2/3/4 + round id by this sess
 - Filed through envelope.file_candidate (stub XADDed first, no refusal existed): import-closure fingerprint +
   respawn/refuse. Measured cost: 240 primordial .py files, 1.62 MB, 12.7 ms warm hash. Estimates: 3600 s build,
   900 s tests. Test plan: helper edited between jobs in one serve(). This commit stays local until round close.
+
+# Round 7 R7-BUILD -- Nestor-F[m1-7aa3e77b], start 16:29 (A-new request, synced to dfdb22a8a via push of the r6 journal), cap 18:35
+
+Contract 1789504304514-0 (hook, stub flag, registration, ceilings); H agreed the admit hook (H adds the line);
+A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 by a fork of this session (in flight).
+
+## 2026-09-15 R7 iteration 1 -- F-R7-2 + F-R7-5 (DONE)
+
+- envelope.CEILINGS gains cpu_wall_noncheckpointable_s (900 in every row); a non-checkpointable cpu job above it is
+  refused NONCHECKPOINTABLE_WALL_OVER_CEILING (D15). PRODUCTION = REPLICATION cpu_budget_s 36000, segment 2400, gpu 600
+  per lease segment. admit() returns stub (True only for STAGE_BUDGET_REFUSAL). validate() owns evidence_class values
+  (VERDICT/OBSERVATION; else ENVELOPE_BAD_VALUE:evidence_class, per A).
+- round_clock ROUNDS r7 = PRODUCTION 3600 x 8, drain 1800, close 1800; DEFAULT_ROUND r7; r7 row declares lane_repos
+  (B-E,R nestor-r7-<l>; G nestor-bld-g; gpu nestor-r7-e/nestor-r6-e) for residue.
+- Tests updated where they pinned the old row or used a non-checkpointable 2400 s job (the new rule refused them
+  correctly). metric/r16_cells.py CPU_BUDGET_S = 14400 is G's copy of the old budget: told G (1789504767181-0).
+- 89 passed rc 0 on the envelope/clock/R6/receipt-guard/r16_cells subset.

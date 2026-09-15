@@ -28,13 +28,13 @@ def prod_clock(start=0.0):
 
 
 def test_production_row():
-    assert EV.CEILINGS["PRODUCTION"] == {"cpu_wall_s": 2400, "gpu_wall_s": 600, "cpu_budget_s": 14400}
+    assert {k: EV.CEILINGS["PRODUCTION"][k] for k in ("cpu_wall_s", "gpu_wall_s")} == {"cpu_wall_s": 2400, "gpu_wall_s": 600}   # R7 budget: test_r7_ceilings_clock
     assert EV.CEILINGS["REPLICATION"] == EV.CEILINGS["PRODUCTION"]
 
 
 @pytest.mark.parametrize("override,kind,reason", [
     ({"wall_budget_s": 2401}, "cpu", "CPU_WALL_OVER_CEILING"),
-    ({"cpu_budget_s": 14401}, "cpu", "CPU_BUDGET_OVER_CEILING"),
+    ({"cpu_budget_s": 36001}, "cpu", "CPU_BUDGET_OVER_CEILING"),   # R7: 36000
     ({"gpu_budget_s": 601}, "gpu", "GPU_WALL_OVER_CEILING"),
 ])
 def test_production_refusals(override, kind, reason):
@@ -44,11 +44,14 @@ def test_production_refusals(override, kind, reason):
 
 def test_production_edges_and_drain_horizon():
     c = prod_clock()
-    assert EV.admit(EV.example(campaign_stage="PRODUCTION", wall_budget_s=2400, cpu_budget_s=14400), clock=c, now=0)["ok"]
+    assert EV.admit(EV.example(campaign_stage="PRODUCTION", checkpointable=True, wall_budget_s=2400, cpu_budget_s=14400),
+                    clock=c, now=0)["ok"]   # R7: a 2400 s segment wall needs checkpointable
     assert EV.admit(EV.example(campaign_stage="PILOT"), clock=c, now=0)["ok"]           # a PRODUCTION round admits all
-    late = EV.admit(EV.example(campaign_stage="PRODUCTION", wall_budget_s=2400), clock=c, now=c["drain_ts"] - 2399)
+    late = EV.admit(EV.example(campaign_stage="PRODUCTION", checkpointable=True, wall_budget_s=2400), clock=c,
+                    now=c["drain_ts"] - 2399)
     assert late["reasons"] == ["NO_NEW_WORK"] or late["reasons"] == ["PROJECTED_PAST_ROUND_END"]
-    pre = EV.admit(EV.example(campaign_stage="PRODUCTION", wall_budget_s=2400), clock=c, now=c["no_new_work_ts"] - 1)
+    pre = EV.admit(EV.example(campaign_stage="PRODUCTION", checkpointable=True, wall_budget_s=2400), clock=c,
+                   now=c["no_new_work_ts"] - 1)
     assert pre["reasons"] == ["PROJECTED_PAST_ROUND_END"]
 
 
