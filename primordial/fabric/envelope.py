@@ -38,8 +38,10 @@ LISTS = ("required_controls", "required_oracles")
 CEILINGS = {
     "SMOKE":       {"cpu_wall_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 1200},
     "PILOT":       {"cpu_wall_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 2400},   # operator 20 (09-15 07:23): 40 CPU-min
-    "PRODUCTION":  {"cpu_wall_s": None, "gpu_wall_s": None, "cpu_budget_s": None},
-    "REPLICATION": {"cpu_wall_s": None, "gpu_wall_s": None, "cpu_budget_s": None},
+    # round 6 (SWARM_R6 s2, operator 22): cpu_wall_s is the SEGMENT wall (a checkpointable job continues in its
+    # next segment); cpu_budget_s is cumulative over segments; completion <= drain_ts as for every stage.
+    "PRODUCTION":  {"cpu_wall_s": 2400, "gpu_wall_s": 600, "cpu_budget_s": 14400},
+    "REPLICATION": {"cpu_wall_s": 2400, "gpu_wall_s": 600, "cpu_budget_s": 14400},
 }
 # Which job stages an active stage admits (A 1789467348712-0): a PILOT round admits SMOKE and REPLICATION
 # at PILOT's ceilings (never looser); PRODUCTION needs an operator ruling. A stage not in this table or in
@@ -114,22 +116,62 @@ def admit(env, kind: str = "cpu", clock: dict | None = None, now: float | None =
             "ceiling": ceil}
 
 
-def refuse(r, lane: str, job: dict, verdict: dict, env) -> dict:
-    """Publish a refusal: one pm:events record and one PRODUCTION_CANDIDATE stub. -> the event record."""
+def refuse(r, lane: str, job: dict, verdict: dict, env, stub: bool = True) -> dict:
+    """Publish a refusal: one pm:events record and (stub=True) one PRODUCTION_CANDIDATE stub.
+    -> the event record, with stub_id (the stub's stream id, for file_candidate) or None."""
     env = env if isinstance(env, dict) else {}
     ev = {"event": verdict["event"], "lane": lane, "job_id": job.get("job_id"),
           "job_key": job.get("job_key") or job.get("job_id"), "fn": job.get("fn"), "exp_id": job.get("exp_id"),
           "reasons": verdict["reasons"], "stage": verdict["stage"], "ceiling": verdict["ceiling"],
-          "envelope": env, "ts": round(time.time(), 3)}
+          "envelope": env, "ts": round(time.time(), 3),
+          **{k: verdict[k] for k in ("loaded", "want", "error") if k in verdict}}
     r.xadd(EVENTS, {"event": ev["event"], "json": json.dumps(ev, sort_keys=True)})
+    if not stub:
+        return dict(ev, stub_id=None)
     stub = {"kind": "PRODUCTION_CANDIDATE", "status": "STUB", "source_event": ev["event"], "lane": lane,
             "job_key": ev["job_key"], "fn": ev["fn"], "exp_id": ev["exp_id"], "reasons": ev["reasons"],
             "question": env.get("predicate_id"), "experiment_class": env.get("experiment_class"),
             "cohort": env.get("cohort"),
             "requested_cost": {k: env.get(k) for k in ("wall_budget_s", "cpu_budget_s", "gpu_budget_s")},
             "measured_cost": None, "dependencies": [], "ts": ev["ts"]}
-    r.xadd(CANDIDATES, {"json": json.dumps(stub, sort_keys=True)})
-    return ev
+    stub_id = r.xadd(CANDIDATES, {"json": json.dumps(stub, sort_keys=True)})
+    return dict(ev, stub_id=stub_id)
+
+
+FILED = "pm:production_candidates:filed"     # F-R6-3: stub_id -> filing JSON (one filing per stub)
+
+
+def file_candidate(r, stub_id: str, measured_cost: dict, basis: str, lane: str | None = None) -> dict:
+    """F-R6-3 (D6): file a measured cost against a PRODUCTION_CANDIDATE stub. -> {ok, reason?, filing?}.
+    measured_cost: non-empty {name: number >= 0} (e.g. wall_s, cpu_s, gpu_s, runs); basis: where it was
+    measured (rows path / sha / receipt id). Refused, not raised: NO_STUB, BAD_COST, NO_BASIS, ALREADY_FILED."""
+    import os
+    if not r.xrange(CANDIDATES, stub_id, stub_id):
+        return {"ok": False, "reason": "NO_STUB"}
+    if not (isinstance(measured_cost, dict) and measured_cost and all(
+            isinstance(v, (int, float)) and not isinstance(v, bool) and v >= 0 for v in measured_cost.values())):
+        return {"ok": False, "reason": "BAD_COST"}
+    if not (isinstance(basis, str) and basis.strip()):
+        return {"ok": False, "reason": "NO_BASIS"}
+    filing = {"stub_id": stub_id, "measured_cost": measured_cost, "basis": basis.strip(),
+              "lane": lane or os.environ.get("PM_LANE"), "tag": os.environ.get("PM_TAG"), "ts": round(time.time(), 3)}
+    if not r.hsetnx(FILED, stub_id, json.dumps(filing, sort_keys=True)):
+        return {"ok": False, "reason": "ALREADY_FILED", "filing": json.loads(r.hget(FILED, stub_id))}
+    r.xadd(EVENTS, {"event": "CANDIDATE_FILED", "json": json.dumps(dict(filing, event="CANDIDATE_FILED"),
+                                                                   sort_keys=True)})
+    return {"ok": True, "filing": filing}
+
+
+def open_candidates(r) -> list[dict]:
+    """Stubs with no measured-cost filing, oldest first, each with its stub_id (the close tally reads this)."""
+    filed = set(r.hkeys(FILED))
+    return [dict(json.loads(f["json"]), stub_id=mid) for mid, f in r.xrange(CANDIDATES) if mid not in filed]
+
+
+def filed_candidates(r) -> list[dict]:
+    filings = {k: json.loads(v) for k, v in r.hgetall(FILED).items()}
+    return [dict(json.loads(f["json"]), stub_id=mid, filing=filings[mid]) for mid, f in r.xrange(CANDIDATES)
+            if mid in filings]
 
 
 def events(r, name: str | None = None) -> list[dict]:

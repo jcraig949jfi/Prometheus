@@ -36,13 +36,13 @@ def test_ceilings_pilot_values():
     ({"cohort": ""}, "cpu", "ENVELOPE_BAD_VALUE:cohort"),
 ])
 def test_refusal_reasons(override, kind, reason):
-    clock = RC.plan(1000.0)
+    clock = RC.plan(1000.0, "r5")
     v = EV.admit(EV.example(**override), kind=kind, clock=clock, now=1000.0)
     assert not v["ok"] and reason in v["reasons"] and v["event"] == EV.STAGE_BUDGET_REFUSAL
 
 
 def test_edges_admitted_and_missing_field():
-    clock = RC.plan(1000.0)
+    clock = RC.plan(1000.0, "r5")
     ok = EV.admit(EV.example(wall_budget_s=900, cpu_budget_s=2400), clock=clock, now=1000.0)
     assert ok["ok"] and ok["reasons"] == [] and ok["event"] is None
     assert EV.admit(EV.example(gpu_budget_s=600), kind="gpu", clock=clock, now=1000.0)["ok"]
@@ -56,7 +56,7 @@ def test_edges_admitted_and_missing_field():
 def test_stage_pins_in_a_pilot_round():
     """A 1789467348712-0: PRODUCTION refused; SMOKE/REPLICATION admitted at PILOT ceilings, never looser;
     an unlisted stage (job or clock) -> STAGE_NOT_ALLOWED."""
-    clock = RC.plan(1000.0)
+    clock = RC.plan(1000.0, "r5")
     assert EV.admit(EV.example(campaign_stage="PRODUCTION"), clock=clock, now=1000.0)["reasons"] == ["STAGE_NOT_ALLOWED"]
     for s in ("SMOKE", "REPLICATION"):
         assert EV.admit(EV.example(campaign_stage=s), clock=clock, now=1000.0)["ok"]
@@ -68,7 +68,7 @@ def test_stage_pins_in_a_pilot_round():
 
 
 def test_projected_past_round_end():
-    clock = RC.plan(0.0)
+    clock = RC.plan(0.0, "r5")
     v = EV.admit(EV.example(wall_budget_s=900), clock=clock, now=clock["no_new_work_ts"] - 1)
     assert v["reasons"] == ["PROJECTED_PAST_ROUND_END"]
     late = EV.admit(EV.example(wall_budget_s=700), clock=clock, now=clock["drain_ts"])   # past NNW: one reason
@@ -77,15 +77,17 @@ def test_projected_past_round_end():
 
 def test_horizon_is_drain_ts_not_end_ts():
     """A 1789468596599-0 / operator 19 s14: no job accepted if projected completion exceeds T+110 (drain_ts)."""
-    clock = RC.plan(0.0)                                                     # drain 6600, end 7200
+    clock = RC.plan(0.0, "r5")                                                     # drain 6600, end 7200
     inside = EV.admit(EV.example(wall_budget_s=800), clock=clock, now=5900)  # completes 6700 in (drain, end]
     assert inside["reasons"] == ["PROJECTED_PAST_ROUND_END"] and inside["event"] == EV.STAGE_BUDGET_REFUSAL
     assert EV.admit(EV.example(wall_budget_s=700), clock=clock, now=5900)["ok"]   # completes exactly at drain_ts
 
 
-def test_production_stage_unbounded_outside_pilot_round():
+def test_production_stage_outside_a_round_uses_its_own_row():
+    """R6 (F-R6-4): PRODUCTION is no longer unbounded; outside a round its own CEILINGS row applies."""
+    assert EV.admit(EV.example(campaign_stage="PRODUCTION", wall_budget_s=2400, cpu_budget_s=14400))["ok"]
     v = EV.admit(EV.example(campaign_stage="PRODUCTION", wall_budget_s=10 ** 6, cpu_budget_s=10 ** 6))
-    assert v["ok"]
+    assert set(v["reasons"]) == {"CPU_WALL_OVER_CEILING", "CPU_BUDGET_OVER_CEILING"}
 
 
 # ------------------------------------------------------------------ the worker (live db)

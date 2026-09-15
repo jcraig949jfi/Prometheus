@@ -24,19 +24,33 @@ import time
 
 CURRENT = "pm:round:current"
 KEY = "pm:round:{}"
-R5 = {"epoch_s": 1500.0, "epochs": 4, "drain_s": 600.0, "close_s": 600.0}
+# One row per round, frozen by its SWARM file: r5 = SWARM_R5 O7; r6 = SWARM_R6 s0 (5 x 40 min, NNW T+200 min,
+# drain to T+220, close T+240; stage PRODUCTION per operator 22). An unknown round id takes DEFAULT_ROUND's row
+# for every parameter not passed explicitly.
+ROUNDS = {
+    "r5": {"stage": "PILOT", "epoch_s": 1500.0, "epochs": 4, "drain_s": 600.0, "close_s": 600.0},
+    "r6": {"stage": "PRODUCTION", "epoch_s": 2400.0, "epochs": 5, "drain_s": 1200.0, "close_s": 1200.0},
+}
+DEFAULT_ROUND = "r6"
+R5 = ROUNDS["r5"]
 FLOATS = ("start_ts", "epoch_s", "no_new_work_ts", "drain_ts", "end_ts")
 
 
-def plan(start_ts: float, round_id: str = "r5", stage: str = "PILOT", epoch_s: float = R5["epoch_s"],
-         epochs: int = R5["epochs"], drain_s: float = R5["drain_s"], close_s: float = R5["close_s"]) -> dict:
+def plan(start_ts: float, round_id: str = DEFAULT_ROUND, stage: str | None = None, epoch_s: float | None = None,
+         epochs: int | None = None, drain_s: float | None = None, close_s: float | None = None) -> dict:
+    row = ROUNDS.get(round_id, ROUNDS[DEFAULT_ROUND])
+    stage = row["stage"] if stage is None else stage
+    epoch_s = row["epoch_s"] if epoch_s is None else epoch_s
+    epochs = row["epochs"] if epochs is None else epochs
+    drain_s = row["drain_s"] if drain_s is None else drain_s
+    close_s = row["close_s"] if close_s is None else close_s
     nnw = start_ts + epochs * epoch_s
     return {"round_id": round_id, "stage": stage, "start_ts": round(start_ts, 3), "epoch_s": float(epoch_s),
             "epochs": int(epochs), "no_new_work_ts": round(nnw, 3), "drain_ts": round(nnw + drain_s, 3),
             "end_ts": round(nnw + drain_s + close_s, 3)}
 
 
-def start(r, round_id: str = "r5", start_ts: float | None = None, **kw) -> dict:
+def start(r, round_id: str = DEFAULT_ROUND, start_ts: float | None = None, **kw) -> dict:
     """Start the round once. A second start returns the existing clock unchanged (no restart, no extension)."""
     existing = read(r, round_id)
     if existing is not None:
@@ -93,8 +107,8 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("start")
-    s.add_argument("--round", default="r5")
-    s.add_argument("--stage", default="PILOT")
+    s.add_argument("--round", default=DEFAULT_ROUND)
+    s.add_argument("--stage", default=None, help="default: the round's ROUNDS row")
     sub.add_parser("show")
     a = ap.parse_args(argv)
     r = bus.conn()

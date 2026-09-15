@@ -21,7 +21,7 @@ RID = "t-r5-2"
 
 
 def test_r5_plan_is_frozen_o7():
-    c = RC.plan(0.0)
+    c = RC.plan(0.0, "r5")
     assert (c["epoch_s"], c["epochs"], c["no_new_work_ts"], c["drain_ts"], c["end_ts"]) == (1500.0, 4, 6000, 6600, 7200)
     assert [RC.phase(c, t)["phase"] for t in (-1, 0, 5999, 6000, 6599, 6600, 7199, 7200)] == [
         "NOT_STARTED", "WORKING", "WORKING", "NO_NEW_WORK", "NO_NEW_WORK", "DRAINING", "DRAINING", "CLOSED"]
@@ -29,7 +29,7 @@ def test_r5_plan_is_frozen_o7():
 
 
 def test_no_new_work_admission_rule():
-    c = RC.plan(0.0)
+    c = RC.plan(0.0, "r5")
     v = EV.admit(EV.example(wall_budget_s=60), clock=c, now=6000)
     assert v["reasons"] == ["NO_NEW_WORK"] and v["event"] == EV.NO_NEW_WORK_REFUSAL
     assert EV.admit(EV.example(wall_budget_s=60), clock=c, now=5999)["ok"]
@@ -46,7 +46,7 @@ def test_start_is_idempotent_no_extension():
         pytest.skip("substrate not reachable on 6390")
     r.delete(RC.KEY.format(RID), RC.CURRENT)
     try:
-        a = RC.start(r, RID, start_ts=1000.0)
+        a = RC.start(r, RID, start_ts=1000.0, **RC.ROUNDS["r5"])
         b = RC.start(r, RID, start_ts=99999.0)
         assert a == b == RC.read(r) and b["end_ts"] == 8200.0
     finally:

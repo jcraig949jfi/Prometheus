@@ -271,3 +271,31 @@ Interfaces posted to G,H,E,A 06:14 (1789467306628-0).
 - Full primordial suite on 119508e87: 660 passed, 9 skipped, rc 0.
 - Open for A: controller worktree + `epoch round --repo`; restart F7 workers after pulling (broker live).
 - Lane F stopped: nothing running, all pushed.
+
+# Round 6 R6-BUILD -- Nestor-F[m1-7aa3e77b], start 09:40 (A-new request, ff db1cab836), cap 11:15
+
+Interfaces posted to G,H,A 09:44 (1789479761855-0). F-R6-1 and F-R6-5 built by forks of this session (no git),
+reviewed by their reports + the combined run; F-R6-2/3/4 + round id by this session.
+
+## 2026-09-15 R6 iteration 1 -- F-R6-1..5 + pm:round:r6 (DONE, one combined run 109 passed rc 0)
+
+- F-R6-1 (D3) epoch.py: events go to a log OUTSIDE the repo (PM_EPOCH_LOGDIR, log_dir arg); copied into
+  <out>/epoch_log.jsonl just before each commit, so nothing is written in the repo after a commit; _push runs this
+  code's push.py against the controller repo (push_branch -> PM_INTEGRATION_BRANCH, PM_LANE cleared). Test vs a bare
+  remote: clean + `pushed` + origin == HEAD after every boundary and close. test_f14_epoch adapted (it asserted the
+  old in-repo-after-commit log).
+- F-R6-2 (D4) worker.py: submit carries code_file_sha256; the warm child records the sha of each module it imports
+  and answers a probe; mismatch -> respawn + CODE_RELOADED; still mismatched -> refused CODE_FINGERPRINT_MISMATCH (no
+  stub). Segments and resume carry the original sha. My first test ran the two jobs in two serve() calls, which stop
+  the child, so job 2 got a fresh child and never exercised the stale path (CODE_RELOADED count 0 exposed it);
+  rewritten as one serve() with a feeder thread editing the module between jobs.
+- F-R6-4 envelope.CEILINGS PRODUCTION = REPLICATION = segment wall 2400, gpu 600, cpu_budget 14400; wall_budget_s is
+  the SEGMENT wall (not cumulative); a checkpointable job gets should_pause() at it (killed only SEGMENT_GRACE_S 60 s
+  later) and continues by segment (test: 1 s segments reproduce an unsegmented walk exactly). Lint test: no
+  ceiling-table copy outside envelope.py.
+- F-R6-3 (D6) envelope.file_candidate(r, stub_id, measured_cost, basis) / open_candidates / filed_candidates;
+  refuse() returns stub_id; NO_STUB / BAD_COST / NO_BASIS / ALREADY_FILED refused; CANDIDATE_FILED event.
+- F-R6-5 launch_lane.ps1 -DryRun: parse, resolve, print one JSON line, exit 0, no log/env/process; every
+  contract.LANES letter rc 0, Z refused, prompt_exists reported.
+- Gate 16: round_clock.ROUNDS {r5 PILOT 4x1500, r6 PRODUCTION 5x2400 drain 1200 close 1200}, DEFAULT_ROUND r6; CLIs
+  default r6; R5 tests pinned to "r5".

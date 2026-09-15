@@ -57,6 +57,7 @@ PUSH_LOCK = "pm:push:lock:{}"       # ops.push holds it during a rebase; the wor
                                     # Separate from STOP: the epoch controller clears STOP at resume (E, 09-15).
 WSTATE = "pm:worker:{}"             # hash {state: idle|busy|stopped, job_id, ts}, TTL WSTATE_TTL
 WSTATE_TTL = 30
+SEGMENT_GRACE_S = 60.0              # F-R6-4: a checkpointable job past its segment wall gets this long to pause
 RESUMABLE = "pm:resumable"         # F-R5-3: hash job_key -> resumable job object (JSON)
 PROGRESS = "pm:progress:{}:{}"      # F-R5-3: ctx.progress() units, readable after a kill
 DONE_ENV_FIELDS =("cohort", "campaign_stage", "experiment_class", "predicate_id")   # F-R5-1: copied into done
@@ -78,9 +79,11 @@ def _redis(url):
 
 def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs: dict | None = None,
            url: str | None = None, r=None, job_key: str = "", segment: int = 0, cpu_prior: float = 0.0,
-           envelope: dict | None = None, wall_prior: float = 0.0) -> str:
+           envelope: dict | None = None, wall_prior: float = 0.0, code_file_sha256: str | None = None) -> str:
     """Queue a job (or the next segment of a checkpointed one). -> job_id.
-    envelope (F-R5-1): the job envelope; the worker admits or refuses it (fabric/envelope.py)."""
+    envelope (F-R5-1): the job envelope; the worker admits or refuses it (fabric/envelope.py).
+    code_file_sha256 (F-R6-2): the fn module's source fingerprint; computed here when not given (a later
+    segment passes the original, so a mid-job edit is caught)."""
     from primordial.bus import bus
     r = r or _redis(url or bus.URL)
     job_id = uuid.uuid4().hex[:12]
@@ -91,6 +94,9 @@ def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs:
             "ts": f"{time.time():.3f}"}
     if envelope is not None:
         spec["envelope"] = json.dumps(envelope, sort_keys=True)
+    fp = code_file_sha256 or code_file_sha256_of(fn)
+    if fp:
+        spec["code_file_sha256"] = fp
     r.xadd(JOBS.format(lane), spec)
     return job_id
 
@@ -101,17 +107,26 @@ def code_sha(repo) -> str:
     return q.stdout.strip()
 
 
+def _file_sha(path) -> str | None:
+    import hashlib
+    if not path or not os.path.exists(path):
+        return None
+    return hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()
+
+
 def code_file_sha256(fn: str) -> str | None:
     """sha256 of the job function's module source: rows commits move HEAD, so resume compares this."""
-    import hashlib
     import importlib.util
     try:
         spec = importlib.util.find_spec(fn.partition(":")[0])
     except (ImportError, ValueError):
         return None
-    if spec is None or not spec.origin or not os.path.exists(spec.origin):
+    if spec is None or not spec.origin:
         return None
-    return hashlib.sha256(pathlib.Path(spec.origin).read_bytes()).hexdigest()
+    return _file_sha(spec.origin)
+
+
+code_file_sha256_of = code_file_sha256      # submit() has a parameter of the same name
 
 
 def resumables(r) -> dict:
@@ -134,7 +149,8 @@ def resume(r, job_key: str, force: bool = False) -> dict:
         return {"ok": False, "reason": "NO_CHECKPOINT"}
     job_id = submit(o["lane"], o["function"], o["exp_id"], o["rows"], o["ttl_cpu_s"], o["kwargs"], r=r,
                     job_key=o["job_key"], segment=o["segment"], cpu_prior=o["budget_consumed"]["cpu_s"],
-                    envelope=o.get("envelope"), wall_prior=o["budget_consumed"]["wall_s"])
+                    envelope=o.get("envelope"), wall_prior=o["budget_consumed"]["wall_s"],
+                    code_file_sha256=o.get("code_file_sha256"))
     r.hset(RESUMABLE, job_key, json.dumps(dict(o, queued_job_id=job_id), sort_keys=True))
     return {"ok": True, "job_id": job_id}
 
@@ -148,12 +164,16 @@ class Ctx:
         self.segment = 0
         self.ckpt_dir = CKPT_DIR
         self.n_emitted = 0
+        self.seg_wall_s, self.seg_t0 = None, 0.0
 
     # F9 checkpoints
     def _ckpt(self) -> pathlib.Path:
         return pathlib.Path(self.ckpt_dir) / self.lane / f"{self.job_key}.pkl"
 
     def should_pause(self) -> bool:
+        """The epoch stop flag, or (F-R6-4) this checkpointable job's segment wall is used up."""
+        if self.seg_wall_s is not None and time.perf_counter() - self.seg_t0 >= self.seg_wall_s:
+            return True
         return bool(self.r.exists(STOP.format(self.lane)))
 
     def load_checkpoint(self):
@@ -187,13 +207,30 @@ class Ctx:
         self.n_emitted += 1
 
 
+_LOADED: dict = {}                  # F-R6-2 (child): module -> sha256 of its source when this child imported it
+
+
+def _loaded_sha(mod: str) -> dict:
+    if mod not in _LOADED:
+        try:
+            m = importlib.import_module(mod)
+        except Exception:
+            return {"sha": None, "error": traceback.format_exc()[-500:]}
+        _LOADED[mod] = _file_sha(getattr(m, "__file__", None))
+    return {"sha": _LOADED[mod]}
+
+
 def _child_main(pipe, url: str, lane: str) -> None:
     ctx = Ctx(_redis(url), lane)
     while True:
         job = pipe.recv()
         if job is None:
             return
+        if "probe" in job:                                   # F-R6-2: which code would this child run?
+            pipe.send(_loaded_sha(job["probe"]))
+            continue
         ctx.job_id, ctx.n_emitted = job["job_id"], 0
+        ctx.seg_wall_s = float(job["segment_wall_s"]) if job.get("segment_wall_s") else None
         ctx.job_key, ctx.segment = job.get("job_key") or job["job_id"], int(job.get("segment", 0))
         ctx.ckpt_dir = job.get("ckpt_dir") or CKPT_DIR
         ctx.threads = int(job["threads"]) if job.get("threads") else None
@@ -203,10 +240,12 @@ def _child_main(pipe, url: str, lane: str) -> None:
                 numba.set_num_threads(max(1, min(ctx.threads, numba.config.NUMBA_NUM_THREADS)))
             except Exception:
                 pass
-        t0 = time.perf_counter()
+        t0 = ctx.seg_t0 = time.perf_counter()
         try:
             mod, _, name = job["fn"].partition(":")
-            getattr(importlib.import_module(mod), name)(ctx, **json.loads(job["kwargs"]))
+            m = importlib.import_module(mod)
+            _LOADED.setdefault(mod, _file_sha(getattr(m, "__file__", None)))
+            getattr(m, name)(ctx, **json.loads(job["kwargs"]))
             ctx._ckpt().unlink(missing_ok=True)
             pipe.send({"ok": True, "wall_s": time.perf_counter() - t0, "emitted": ctx.n_emitted})
         except JobPaused:
@@ -308,10 +347,16 @@ class Worker:
             return None
         return EV.admit(env, kind="cpu", clock=clock, continuation=int(job.get("segment", 0) or 0) > 0)
 
-    def _refuse(self, job: dict, verdict: dict) -> dict:
+    def _probe(self, fn: str) -> dict:
+        self.pipe.send({"probe": fn.partition(":")[0]})
+        if not self.pipe.poll(120):
+            return {"sha": None, "error": "probe timeout"}
+        return self.pipe.recv()
+
+    def _refuse(self, job: dict, verdict: dict, stub: bool = True) -> dict:
         from primordial.fabric import envelope as EV
         env = self._envelope(job)
-        ev = EV.refuse(self.r, self.lane, job, verdict, env)
+        ev = EV.refuse(self.r, self.lane, job, verdict, env, stub=stub)
         env = env if isinstance(env, dict) else {}
         key = job.get("job_key") or job["job_id"]
         raw = self.r.hget(RESUMABLE, key)
@@ -334,15 +379,34 @@ class Worker:
     def run_job(self, job: dict) -> dict:
         if self.child is None or not self.child.is_alive():
             self._spawn()
+        want = job.get("code_file_sha256")
+        if want:                                             # F-R6-2 (D4): never run stale resident code
+            got = self._probe(job["fn"])
+            if got.get("sha") != want:
+                self._kill_child()
+                self._spawn()
+                self._event("CODE_RELOADED", {"job_id": job["job_id"], "job_key": job.get("job_key"),
+                                              "fn": job["fn"], "loaded": got.get("sha"), "want": want})
+                got = self._probe(job["fn"])
+                if got.get("sha") != want:
+                    return self._refuse(job, {"ok": False, "event": "CODE_FINGERPRINT_MISMATCH",
+                                              "reasons": ["CODE_FINGERPRINT_MISMATCH"], "stage": None,
+                                              "ceiling": None, "loaded": got.get("sha"), "want": want,
+                                              "error": got.get("error")}, stub=False)
         env = self._envelope(job)
         env = env if isinstance(env, dict) else {}
         ttl = float(job["ttl_cpu_s"])
         if env.get("cpu_budget_s") is not None:              # F-R5-1: the envelope caps the task TTL
             ttl = min(ttl, float(env["cpu_budget_s"]))
+        # F-R6-4: wall_budget_s is the SEGMENT wall. A checkpointable job is told to pause at it (and killed only
+        # SEGMENT_GRACE_S later); any other job is killed at it. CPU stays cumulative (cpu_prior).
         wall_limit = float(env["wall_budget_s"]) if env.get("wall_budget_s") is not None else None
+        checkpointable = env.get("checkpointable") is True
+        kill_at = None if wall_limit is None else wall_limit + (SEGMENT_GRACE_S if checkpointable else 0.0)
         wall_prior = float(job.get("wall_prior", 0) or 0)
         cpu_prior = float(job.get("cpu_prior", 0) or 0)
-        job = dict(job, ckpt_dir=self.ckpt_dir)
+        job = dict(job, ckpt_dir=self.ckpt_dir,
+                   segment_wall_s=str(wall_limit) if (checkpointable and wall_limit is not None) else "")
         rows_path = pathlib.Path(job["rows"])
         if not rows_path.is_absolute():
             rows_path = self.repo / rows_path
@@ -373,7 +437,7 @@ class Worker:
                 self._kill_child()
                 status, result = "timeout", {"ok": False, "cpu_s": cpu, "limit": "cpu"}
                 break
-            if wall_limit is not None and time.perf_counter() - t0 + wall_prior > wall_limit:
+            if kill_at is not None and time.perf_counter() - t0 > kill_at:
                 cpu = self._child_cpu() - cpu0
                 self._kill_child()
                 status, result = "timeout", {"ok": False, "cpu_s": cpu, "limit": "wall"}
@@ -410,7 +474,8 @@ class Worker:
             out["next_job_id"] = submit(self.lane, job["fn"], job["exp_id"], job["rows"], float(job["ttl_cpu_s"]),
                                         json.loads(job["kwargs"]), r=self.r, job_key=out["job_key"],
                                         segment=out["segment"] + 1, cpu_prior=cpu_prior + (cpu_s or 0),
-                                        envelope=env or None, wall_prior=wall_prior + wall_s)
+                                        envelope=env or None, wall_prior=wall_prior + wall_s,
+                                        code_file_sha256=job.get("code_file_sha256"))
         ckpt = pathlib.Path(self.ckpt_dir) / self.lane / f"{out['job_key']}.pkl"
         if status == "ok":
             self.r.hdel(RESUMABLE, out["job_key"])
