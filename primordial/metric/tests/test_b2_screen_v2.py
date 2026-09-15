@@ -53,10 +53,16 @@ def test_v2_cost_adds_the_measured_search_overhead_and_projects_against_the_cloc
 
 
 def test_cost_inputs_come_from_the_e_r7_3_row_fields():
-    row = {"overhead_s_per_gen": 0.02, "rollout_s_per_gen": 0.1638, "overhead_fraction": 0.109}
+    # E-R7-3's committed row (rows 8d1bb7db9), the fields used
+    row = {"kind": "b2_search_overhead", "overhead_s_per_gen": 0.0031303500072681345,
+           "rollout_s_per_episode": 9.041998290992836e-06, "rollout_s_per_gen": 0.14814409999962663,
+           "episodes_per_gen": 16384, "overhead_fraction": 0.020689306525231772}
     got = B2.cost_inputs_from_e_r7_3(row)
-    assert got == {"episode_s": pytest.approx(0.1638 / 16384), "search_overhead_s_per_gen": 0.02}
+    assert got == {"episode_s": row["rollout_s_per_episode"], "search_overhead_s_per_gen": row["overhead_s_per_gen"]}
+    no_ep = {k: v for k, v in row.items() if k != "rollout_s_per_episode"}
+    assert B2.cost_inputs_from_e_r7_3(no_ep)["episode_s"] == pytest.approx(0.14814409999962663 / 16384)
     c = B2.admission_cost_v2(n_specs=4, clock_remaining_s=3600.0, **got)
-    assert c["search_overhead_s_per_gen"] == 0.02 and c["episode_s"] == pytest.approx(0.1638 / 16384)
-    with pytest.raises(ValueError):
-        B2.cost_inputs_from_e_r7_3({"rollout_s_per_gen": 0.1})
+    assert c["search_overhead_s_per_gen"] == row["overhead_s_per_gen"] and c["episode_s"] == row["rollout_s_per_episode"]
+    for bad in ({"rollout_s_per_gen": 0.1}, {"overhead_s_per_gen": 0.01}):
+        with pytest.raises(ValueError):
+            B2.cost_inputs_from_e_r7_3(bad)

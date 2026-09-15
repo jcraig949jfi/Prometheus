@@ -215,11 +215,16 @@ E_R7_3_EPISODES_PER_GEN = 128 * 128        # E-R7-3 predicate 1789505150761-0: b
 
 
 def cost_inputs_from_e_r7_3(row: dict, episodes_per_gen: int = E_R7_3_EPISODES_PER_GEN) -> dict:
-    """E-R7-3's committed measurement row -> admission_cost_v2 inputs: episode_s = rollout_s_per_gen / episodes per
-    generation (compiled rollout only), search_overhead_s_per_gen = overhead_s_per_gen (mutation, archive, pack,
-    descriptor, insert). Refuses a row without both measured figures."""
-    missing = [k for k in ("overhead_s_per_gen", "rollout_s_per_gen") if row.get(k) is None]
-    if missing:
-        raise ValueError(f"E-R7-3 row lacks {missing}")
-    return {"episode_s": float(row["rollout_s_per_gen"]) / int(episodes_per_gen),
-            "search_overhead_s_per_gen": float(row["overhead_s_per_gen"])}
+    """E-R7-3's committed b2_search_overhead row (E 1789505394506-0 field map) -> admission_cost_v2 inputs:
+    episode_s = row.rollout_s_per_episode (compiled rollout only; else rollout_s_per_gen / row.episodes_per_gen),
+    search_overhead_s_per_gen = row.overhead_s_per_gen (sample, init/mutate, pack, descriptor, insert). Refuses a row
+    without the measured figures."""
+    if row.get("overhead_s_per_gen") is None:
+        raise ValueError("E-R7-3 row lacks overhead_s_per_gen")
+    if row.get("rollout_s_per_episode") is not None:
+        episode_s = float(row["rollout_s_per_episode"])
+    elif row.get("rollout_s_per_gen") is not None:
+        episode_s = float(row["rollout_s_per_gen"]) / int(row.get("episodes_per_gen") or episodes_per_gen)
+    else:
+        raise ValueError("E-R7-3 row lacks rollout_s_per_episode and rollout_s_per_gen")
+    return {"episode_s": episode_s, "search_overhead_s_per_gen": float(row["overhead_s_per_gen"])}

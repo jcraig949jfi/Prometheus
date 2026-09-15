@@ -217,10 +217,59 @@ def replication_check(ctx, extra_rows, r=None, source: str = "r16_cell_job") -> 
     return out
 
 
+BACKENDS = ("cpu_sequential", "cpu_lockstep", "gpu_lockstep")         # G-R7-2, A 1789505093129-0 (O2 widened)
+BACKEND_KEY, GPU_ADOPT_KEY = "pm:r7:backend", "pm:r7:gpu_adopt"      # written only by primordial.nv.r7_gpu_eval
+
+
+def _decision(raw):
+    if raw is None:
+        return None
+    raw = raw.decode() if isinstance(raw, bytes) else str(raw)
+    try:
+        doc = json.loads(raw)
+    except ValueError:
+        return raw.strip()
+    if isinstance(doc, dict):
+        return doc.get("backend") or doc.get("chosen") or doc.get("decision")
+    return str(doc)
+
+
+def resolve_backend(requested: str | None = None, r=None) -> dict:
+    """The baseline-stage backend for one cell job, fixed at job start (never mid-job). A requested backend (job
+    kwarg) wins over pm:r7:backend; gpu_lockstep needs pm:r7:gpu_adopt == GPU_ADOPT. Anything unreadable, unknown
+    or not adopted -> cpu_sequential, with the reason in `source`."""
+    try:
+        if r is None:
+            from primordial.bus import bus
+            r = bus.conn()
+        key_val = _decision(r.get(BACKEND_KEY))
+        adopt = _decision(r.get(GPU_ADOPT_KEY))
+    except Exception as e:                                           # the store is down: never block a cell on it
+        return {"backend": "cpu_sequential", "source": f"UNREADABLE:{type(e).__name__}"}
+    want, source = (requested, "PARAM") if requested is not None else (key_val, BACKEND_KEY)
+    if want is None:
+        return {"backend": "cpu_sequential", "source": "DEFAULT"}
+    if want not in BACKENDS:
+        return {"backend": "cpu_sequential", "source": f"INVALID:{want}"}
+    if want == "gpu_lockstep" and adopt != "GPU_ADOPT":
+        return {"backend": "cpu_sequential", "source": f"GPU_NOT_ADOPTED:{adopt}"}
+    return {"backend": want, "source": source}
+
+
+def evaluator_for(backend: str):
+    """cpu_lockstep / gpu_lockstep -> evaluator(g7, n_genomes, train) from E-R7-2's module (imported lazily)."""
+    from primordial.nv import r7_gpu_eval as EG
+    if backend == "cpu_lockstep":
+        return EG.numba_evaluator
+    if backend == "gpu_lockstep":
+        return lambda g7, n, train: EG.gpu_evaluator(g7, train)
+    raise ValueError(f"no evaluator for backend {backend!r}")
+
+
 def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS, gens=None, batch=None,
              learner_gens=None, learner_batch=None, base_archive=B.ARCHIVE_URL, learn_archive=I.ARCHIVE_URL,
              base_elites=str(R.ELITES_BASE), learn_elites=str(R.ELITES_LEARN), stage1_rows=R.STAGE1,
-             prefill_paths=None, cpu_budget_s=None, replication_r=None):
+             prefill_paths=None, cpu_budget_s=None, replication_r=None, backend=None):
     import redis
     gs, p = int(gen_seed), str(pressure)
     cpu_budget_s = production_cpu_budget_s() if cpu_budget_s is None else float(cpu_budget_s)
@@ -229,6 +278,7 @@ def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS
     if st is None:
         st = {"done": {}, "cur": None, "stage": "start"}
         st["prefilled"] = prefill_done(st, gs, p, **({} if prefill_paths is None else {"paths": prefill_paths}))
+        st["backend"] = resolve_backend(backend)                          # G-R7-2: fixed at job start
     kw = dict(min_runs=len(families) * len(run_seeds), min_families=len(families), per_family=len(run_seeds))
     if "det" not in st:
         st["det"] = {d["pressure"]: d for d in R.det_check(gs, R.stage1_suite(stage1_rows))}
@@ -256,9 +306,15 @@ def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS
         if committed:
             st["base"] = committed[-1]
         else:
-            runs = B.baseline_cell(ctx, st, rb, gs, p, run_seeds, gens, batch, base_elites, families=list(families))
+            be = st.get("backend") or {"backend": "cpu_sequential", "source": "DEFAULT"}
+            if be["backend"] == "cpu_sequential":
+                runs = B.baseline_cell(ctx, st, rb, gs, p, run_seeds, gens, batch, base_elites, families=list(families))
+            else:
+                runs = B.baseline_cell_lockstep(ctx, st, rb, gs, p, run_seeds, gens, batch, base_elites,
+                                                families=list(families), evaluator=evaluator_for(be["backend"]),
+                                                backend=be["backend"])
             st["base"] = B.pooled_summary(runs, **kw)
-            ctx.emit({**st["base"], "status": "control"})
+            ctx.emit({**st["base"], "status": "control", "backend": be["backend"], "backend_source": be["source"]})
         ctx.checkpoint(st)
     fl, base = st["floor"], st["base"]
     status, pc, learner128 = "complete", None, None
@@ -292,7 +348,9 @@ def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS
     ctx.emit({"kind": "r16_cell", "world": f"w{gs}", "gen_seed": gs, "pressure": p, "job_key": job_key(gs, p),
               "status_cell": status, "production_candidate": pc, "pending": rec.get("pending"),
               "verdicts": rec["verdicts"], "floor": rec["floor"], "gate_held64": rec["gate_held64"],
-              "baseline_ci95": base["ci95"], "prefilled_runs": st.get("prefilled", 0), "status": "control"})
+              "baseline_ci95": base["ci95"], "prefilled_runs": st.get("prefilled", 0), "status": "control",
+              "backend": (st.get("backend") or {}).get("backend", "cpu_sequential"),
+              "backend_source": (st.get("backend") or {}).get("source", "DEFAULT")})
     replication_check(ctx, [fl, base] + ([learner128] if learner128 is not None else []), r=replication_r)
 
 

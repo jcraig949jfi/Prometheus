@@ -110,6 +110,14 @@ def baseline_run(r, gen_seed: int, pressure: str, run_seed: int, gens: int | Non
         state["gen"] += 1
     qd_wall = state["qd_wall_s"] + time.perf_counter() - t0
     qd_cpu = state.get("qd_cpu_s", 0.0) + time.process_time() - c0      # process CPU: every numba thread of the child
+    return _run_row(arch, g7, gen_seed, pressure, run_seed, rng_family, gens, batch, sseed, key, elites_dir, qd_wall, qd_cpu)
+
+
+def _run_row(arch, g7, gen_seed, pressure, run_seed, rng_family, gens, batch, sseed, key, elites_dir, qd_wall, qd_cpu) -> dict:
+    """The run row from a finished archive (saves the elites file, clears the archive). Shared by baseline_run and
+    baseline_cell_lockstep so both backends produce the row with the same code."""
+    train = F.PRESSURES[pressure]
+    bg, bb = BUDGET[pressure]
     el = arch.dump()
     pairs = [(v[0], v[1]) for v in el.values()]
     raw = RO.packed(RO.select(pairs), g7.glen)
@@ -248,3 +256,78 @@ def job(ctx, cells, run_seeds=tuple(range(MIN_RUNS)), gens=None, batch=None, arc
         runs = baseline_cell(ctx, st, r, int(gs), pressure, run_seeds, gens, batch, elites_dir, oracle_run_seed)
         if len(runs) >= MIN_RUNS:
             ctx.emit({**summary(runs), "status": "control"})
+
+
+# ---------------------------------------------------------------- G-R7-2: lockstep baseline stage (SWARM_R7 O2)
+
+def _concat(gl: list):
+    """[((W, b), C) per run] -> one batch ((W, b), C), runs in order (E7.G7 linear genomes)."""
+    return ((np.concatenate([g[0][0] for g in gl]), np.concatenate([g[0][1] for g in gl])),
+            np.concatenate([g[1] for g in gl]))
+
+
+def baseline_cell_lockstep(ctx, st: dict, r, gs: int, pressure: str, run_seeds, gens=None, batch=None,
+                           elites_dir=str(ELITES_DIR), families=FAMILIES, evaluator=None, backend: str = "cpu_lockstep",
+                           oracle_run_seed=0) -> list[dict]:
+    """Every run of one cell stepped together: each generation every pending run samples + mutates on CPU with its
+    own streams (seeds_of) and archive (run_key), then ONE evaluator call scores all of them; each run inserts its
+    slice. evaluator(g7, n_genomes, train) -> callable(genomes) -> (fit, cells). Rows come from _run_row (the same
+    code as baseline_run) and carry `backend`; walls and CPU are the shared stage's, split evenly over the runs.
+    Checkpoint every PAUSE_EVERY generations in st['lock'] (every run's mutation and sampler state)."""
+    g7 = E7.G7(int(gs), FAM)
+    train = F.PRESSURES[pressure]
+    bg, bb = BUDGET[pressure]
+    gens, batch = gens or bg, batch or bb
+    order = [(int(f), int(rs)) for f in families for rs in run_seeds]
+    pending = [(f, rs) for f, rs in order if run_key(gs, pressure, rs, f) not in st["done"]]
+    if pending:
+        lock = st.get("lock")
+        runs = []
+        for f, rs in pending:
+            key = run_key(gs, pressure, rs, f)
+            rseed, sseed = seeds_of(int(gs), len(train), rs, f)
+            arch = LuaArchive(r, key, g7.glen, sseed)
+            rng = np.random.Generator(np.random.PCG64(rseed))
+            if lock is None:
+                arch.clear()
+            else:
+                rng.bit_generator.state = lock["rng"][key]
+                arch.srng.bit_generator.state = lock["srng"][key]
+            runs.append((f, rs, key, sseed, arch, rng))
+        if lock is None:
+            lock = {"gen": 0, "qd_wall_s": 0.0, "qd_cpu_s": 0.0}
+        evaluate = evaluator(g7, len(runs) * batch, train)
+        t0, c0 = time.perf_counter(), time.process_time()
+        while lock["gen"] < gens:
+            if lock["gen"] > 0 and lock["gen"] % PAUSE_EVERY == 0 and ctx.should_pause():
+                lock.update(rng={k: g.bit_generator.state for _, _, k, _, _, g in runs},
+                            srng={k: a.srng.bit_generator.state for _, _, k, _, a, _ in runs},
+                            qd_wall_s=lock["qd_wall_s"] + time.perf_counter() - t0,
+                            qd_cpu_s=lock["qd_cpu_s"] + time.process_time() - c0)
+                st["lock"] = lock
+                ctx.pause(st)
+            gl = []
+            for _, _, _, _, arch, rng in runs:
+                par = arch.sample(batch)
+                gl.append(g7.init(rng, batch) if len(par) == 0 else g7.mutate(rng, g7.unpack(par)))
+            g = _concat(gl)
+            fit, cells = evaluate(g)
+            (W, b), C = g
+            for i, (_, _, _, _, arch, _) in enumerate(runs):
+                sl = slice(i * batch, (i + 1) * batch)
+                arch.insert(np.asarray(cells[sl]), np.asarray(fit[sl]), g7.pack(((W[sl], b[sl]), C[sl])),
+                            np.zeros((batch, 2), np.uint32))
+            lock["gen"] += 1
+        wall = (lock["qd_wall_s"] + time.perf_counter() - t0) / len(runs)
+        cpu = (lock["qd_cpu_s"] + time.process_time() - c0) / len(runs)
+        for f, rs, key, sseed, arch, _ in runs:
+            out = _run_row(arch, g7, int(gs), pressure, rs, f, gens, batch, sseed, key, elites_dir, wall, cpu)
+            if rs == oracle_run_seed and f == int(families[0]):
+                doc = load_elites(out["elites"])
+                raw = top_raw([(e[1], bytes.fromhex(e[2])) for e in doc["elites"]], doc["glen"])
+                out["oracle_held8"] = oracle_top(int(gs), raw)
+            out.update(status="control", backend=backend)
+            ctx.emit(out)
+            st["done"][key] = out
+        st.pop("lock", None)
+    return [st["done"][run_key(gs, pressure, rs, f)] for f, rs in order]
