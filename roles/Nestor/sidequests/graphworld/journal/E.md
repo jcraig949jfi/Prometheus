@@ -459,3 +459,12 @@ threads under an 8-thread token (A files D19). GPU arbiter now registers lane gp
 + test. G-R7-2: E chose option (b): G's production lockstep must match E's measured lockstep elites and cpu_sequential on
 w13 train8 and sit within 10% of E's wall before set_decision writes pm:r7:backend. E-R7-2 oracle + 3 timing GPU jobs running.
 Owed by 18:35: stop worker E + gpuq in nestor-r6-e (lane E moves to nestor-r7-e for the clock).
+
+Build 4 (~17:10). E-R7-2 oracle job: cpu_lockstep PASS (32/32 elites == G's sequential), gpu_lockstep FAIL (6 fitness + 3 cells
+mismatched in 819,200 evaluations vs numba; elites still 32/32; anomaly 1789505981534-0). Timing, 3 single-rep jobs, whole baseline
+stage: cpu_sequential 21.7/23.2/22.3 s, cpu_lockstep 21.8/27.1/21.7 s, gpu_lockstep 166.9/155.4/159.8 s. decide(): cpu_sequential,
+GPU_REJECT (cpu_lockstep 1.02x < 1.25; gpu ineligible and ~7x slower end to end); pm:r7:backend + pm:r7:gpu_adopt written;
+receipt 1789506653147-0. Lockstep buys nothing here: at 32 x 128 x 8 the fused rollout is already ~0.02 s/gen and per-run
+sequential calls are not the bottleneck. O8 predicate pinned f790dbb52 (bus 1789506659352-0); draws run in the clock from nestor-r7-e.
+gpuq registration pushed 3143ecd39 (7 gpuq tests pass). Push lesson: ops.push refuses to rebase a dirty tree; set the
+uncommitted edit aside by file copy (never stash), push, restore, test, commit. Worker E and gpuq arbiter STOPPED (~17:00, ~17:09).
