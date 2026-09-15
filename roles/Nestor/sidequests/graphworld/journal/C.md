@@ -434,3 +434,13 @@
   rng_family_count 4, runs_per_family 8 per arm. Job d170c4bc4648 (C-R5-01) submitted; AP-01 queued after it.
 - Worker's first dequeue was R4's stale C-R4-05 segment 8a41bec5a391 (no envelope): STAGE_BUDGET_REFUSAL
   ENVELOPE_MISSING, a normal refusal. Not resubmitted; told A.
+
+## 2026-09-15 round 5 pilot iteration 2 (m1-12a62e35): C-R5-01 -> PASS (vacuous), receipt 1789471711859-0
+
+- Job d170c4bc4648: 311.5 CPU-s, 316.9 s wall, 66 rows, pushed at ddf96260b. Oracles clean both arms (world hash 0/96,
+  conservation 0, free_unaffordable 64/64, skip_plastic 96/96, no_corrupt 86/86).
+- Cell 32.2578 vs control 32.0938 (bar 32.0938, IQR 0) -> PASS on runs_total 32, rng_family_count 4, runs_per_family 8.
+- VACUOUS: all 64 runs converged to silence, with 0.0 delivered bits and chance yield. Under D1's audit constants a 3-bit
+  send costs 6 charge and a right action earns 3, so this metered_stream never pays for a message; the hand D1 code
+  scores 3.83 against silence's 32.26. Corruption had nothing to act on. Landscape row; constants not retuned.
+- Receipt accepted by H's guard first try. C-R5-AP-01 job 8d300f986186 submitted after the rows push.
