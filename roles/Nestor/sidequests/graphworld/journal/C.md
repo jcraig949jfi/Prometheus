@@ -411,3 +411,13 @@
   brain verdict, free_read + cost oracles. Budget = the survivor's own 800x128, F9 pauses at run boundaries.
 - Dev check caught my slip: worlds_r4.json top-level "floor" is the four-policy 159.0; the active gate_in|HOLD floor
   is 166.47 (the assert on BETA fired). Fixed before any run. Dev clean; 0.61 CPU-s/gen (GPU world saved no CPU).
+- A removed graphworld_b2 from the r4 grid (267fea584) after C-R4-04/05 were drawn; E declined a B2 interface
+  pending the operator. Harness b6a29b61d, prior 0.6 (claim 1789450116310-0), job 70757c0672fe, ttl 12000 CPU-s.
+
+## 2026-09-15 QUIESCE (A 1789452239356-0): C-R4-05 PAUSED at a run boundary, no verdict
+
+- Stop flag set by C; segment 0 ended paused after 5/16 runs (2,577 CPU-s, rows e157a7c7d); segment 1 requeued as
+  8a41bec5a391 on job_key 70757c0672fe. Worker killed before the flag was cleared (E's push-race lesson).
+- Runs so far (HELD64 per seed): cell 198.79 / 195.38 / 198.75 reading 8 / 6 / 4 bits; control 151.56 / 153.33.
+  Seed-0 oracles clean both arms. Not a result: 3 vs 2 of 8 per arm, predicate unresolved. GPU lease released.
+- Round 4 lane C so far: 5 draws (C-R4-01 FAIL, C-R4-02..04 aborted infeasible, C-R4-05 paused); 1 receipt.
