@@ -145,7 +145,11 @@ All green, each as a test or receipt:
 12. transfer sham version id + planted positive/negative;
 13. CANDIDATE_N;
 14. sealed prior ledger read-denied to the experimenter;
-15. full suite rc 0 on the gate tip.
+15. full suite rc 0 on the gate tip;
+16. at T+0, before any cohort launch, code asserts that pm:round:current exists and points at a pm:round:r5
+    hash whose [start_ts, end_ts] contains now.
+    The receipt guard triggers on the round clock, so an unset clock would let field-less receipts skip it
+    (H e3412c04b; A 1789467821844-0).
 
 ## 5. P-PILOT (the 120 min clock), cohorts and GPU
 
