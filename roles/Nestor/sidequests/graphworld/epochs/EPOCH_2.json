@@ -1,13 +1,91 @@
 {
- "begin_ts": 1789452109.472,
+ "begin_ts": 1789472770.904,
+ "budget": {
+  "by_cohort": {
+   "B": {
+    "cpu_s": 566.25,
+    "jobs": 3,
+    "status": {
+     "ok": 1,
+     "paused": 1,
+     "refused": 1
+    }
+   },
+   "C": {
+    "cpu_s": 835.032,
+    "jobs": 4,
+    "status": {
+     "error": 1,
+     "ok": 3
+    }
+   },
+   "D": {
+    "cpu_s": 10.969,
+    "jobs": 1,
+    "status": {
+     "ok": 1
+    }
+   },
+   "E": {
+    "cpu_s": 104.281,
+    "jobs": 3,
+    "status": {
+     "ok": 2,
+     "refused": 1
+    }
+   },
+   "lane:B": {
+    "cpu_s": 10049.923,
+    "jobs": 8,
+    "status": {
+     "ok": 6,
+     "paused": 1,
+     "timeout": 1
+    }
+   },
+   "lane:C": {
+    "cpu_s": 2590.235,
+    "jobs": 3,
+    "status": {
+     "ok": 1,
+     "paused": 1,
+     "refused": 1
+    }
+   },
+   "lane:D": {
+    "cpu_s": 9358.221,
+    "jobs": 10,
+    "status": {
+     "error": 1,
+     "ok": 6,
+     "paused": 3
+    }
+   },
+   "lane:E": {
+    "cpu_s": 10224.608,
+    "jobs": 6,
+    "status": {
+     "ok": 5,
+     "paused": 1
+    }
+   }
+  },
+  "by_lane": {
+   "B": 10616.173,
+   "C": 3425.267,
+   "D": 9369.19,
+   "E": 10328.89
+  }
+ },
  "controller": "A[m1-449a9e76]",
- "drained_ts": 1789452229.49,
+ "drain_timeout_s": 650.0,
+ "drained_ts": 1789472782.332,
  "epoch": 2,
  "export": {
-  "anomalies": 35,
-  "results": 100,
+  "anomalies": 40,
+  "results": 107,
   "state": 8,
-  "swarm": 715
+  "swarm": 892
  },
  "lanes": [
   "B",
@@ -15,30 +93,27 @@
   "D",
   "E"
  ],
- "stragglers": [
-  "C",
-  "E"
- ],
+ "stragglers": [],
  "workers": {
   "B": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789452229.486"
+   "ts": "1789472782.307"
   },
   "C": {
-   "job_id": "70757c0672fe",
-   "state": "busy",
-   "ts": "1789452221.778"
+   "job_id": "",
+   "state": "stopped",
+   "ts": "1789472782.261"
   },
   "D": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789452229.486"
+   "ts": "1789472782.261"
   },
   "E": {
-   "job_id": "0166fa3fa1e1",
-   "state": "busy",
-   "ts": "1789452225.029"
+   "job_id": "",
+   "state": "stopped",
+   "ts": "1789472782.261"
   }
  }
 }
