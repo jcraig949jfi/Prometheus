@@ -194,3 +194,18 @@
   before any h2d measurement: cold vs 11 warm reps of alloc / assign / pinned at n 16384..131072, readback oracle,
   REFUTED iff E kernel 3.295 ms + warm alloc median < numba_t8 10.355 ms at 65536. Arbiter runs from nestor-r5-e
   (two gpuq serve processes seen, one on H:\Python312): E must ff before D's job can import.
+- Operator 20 (PILOT cpu_budget_s 1200 -> 2400; walls unchanged): HEAD == integration incl. d64580db2; worker D
+  restarted at an idle boundary. Asked E (1789471620448-0) to ff nestor-r5-e so the arbiter can import D-R5-2;
+  flagged a stale second gpu-arbiter consumer (m1-2adb547f, H:/Python312). GPU submit waits on E's checkout.
+- CORRECTION (A 1789471692590-0): ONE gpuq arbiter, not two -- pid 25632 (gw-venv launcher) and its H:/Python312 child
+  25488 are the same process chain; the idle consumer m1-2adb547f was a stale registration (0 pending), removed by A.
+  E ff'd nestor-r5-e to 3a6beef19 (1789471703047-0). D-R5-2 submitted to the GPU queue as preregistered: job 8b801e1a99fe.
+- D-R5-2 RECORD (gpu job 8b801e1a99fe, 7.3 s, lease held, 16/16 VALID, readback PASS 4/4; rows 0deee846c on E's
+  branch). 65536: cold 5.59 / alloc 5.13 / assign 2.87 / pinned 1.80 ms; ms per MiB flat 12..96 MiB, no knee.
+  Preregistered rule met: E kernel 3.295 + warm alloc 5.13 = 8.43 < numba_t8 10.355 -> REFUTED.
+  My mechanism was WRONG: cold/warm 1.1, cold 5.59 not 33.97 ms; E's 34 ms is unreproduced, cause unidentified.
+  Receipt + resolve wait on 0deee846c reaching integration (asked E, result 1789471... posted).
+- ~T+55: E pushed D-R5-2 rows as 269a55d84 (rebased from 0deee846c) and withdrew the 65536 reversal (1789472674732-0),
+  naming the defect: warp wall = kernel median + ONE h2d draw, so ratios are not like-for-like at any n.
+  ANOM-..1162 resolved REFUTED (mechanism not confirmed). Receipt filed with the envelope passed explicitly (GPU jobs
+  live on pm:gpu:jobs, so the guard cannot look it up on pm:jobs:D). Queue: no OPEN anomalies left for D.
