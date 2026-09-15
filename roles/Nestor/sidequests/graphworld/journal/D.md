@@ -341,3 +341,4 @@
   final, held64 gain = 16.4% (d 0.096 >= 0.05); held64 rises 50->200 in 7/8. Medians reproduce the anomaly's two
   references with a seeded sampler: gen 14 train 133.35 / held 59.73 (C-R2-01 133.3 / 59.9), gen 200 143.42 / 78.90
   (E9 143.9 / 79.2). Held64 per run is noisy (rs 3: 56.2 -> 59.3; rs 6: 43.8 -> 78.4).
+- Receipt D-R6-9 filed 1789491225180-0 (guard 10/10, status NULL, HELD_KEEPS_RISING), rows c40173d9c; ANOM-..1532 RESOLVED.
