@@ -186,6 +186,8 @@ def _check_r2(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=Tru
 
 
 PROGRESS_PASS = 0.95
+BASELINE_MIN_RUNS = 32          # operator 16 (SWARM_R4 s9): >= 32 run seeds pooled across
+BASELINE_MIN_FAMILIES = 4       # >= 4 RNG families; else INELIGIBLE(BASELINE_N)
 
 
 def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_failed=True, held=None,
@@ -199,7 +201,10 @@ def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_fai
     `held` (per-run-seed values) adds the bootstrap CI of the median mapped through the same formula:
     reported, not judged.
     Operator 15 R15-1: the candidate's readout (None = readout.LEGACY) must equal the cell baseline's readout
-    (absent = LEGACY), else INELIGIBLE READOUT_MISMATCH -- one reader on both sides of the fraction."""
+    (absent = LEGACY), else INELIGIBLE READOUT_MISMATCH -- one reader on both sides of the fraction.
+    Operator 16: the cell baseline must pool >= BASELINE_MIN_RUNS run seeds over >= BASELINE_MIN_FAMILIES distinct
+    RNG families (baseline.n_runs, baseline.families -- G's worlds_r4/v2 names; absent families = none), else
+    INELIGIBLE BASELINE_N. Order: screen guard -> BASELINE_N -> READOUT_MISMATCH -> oracles / cheats / runs -> progress."""
     from primordial.metric import readout as RO
     from primordial.metric import worlds as WR
     doc = WR.load() if doc is None else doc
@@ -215,7 +220,14 @@ def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_fai
     c = WR.lookup(doc, world, pressure)
     from primordial.metric import screen as SC
     k = SC.vkey(doc["q1_floor_policy"], doc["q2_policy"])
-    base.update(readout=readout or RO.LEGACY, baseline_readout=(c["baseline"] or {}).get("readout", RO.LEGACY))
+    cb = c["baseline"] or {}
+    fams = cb.get("families")
+    if int(cb.get("n_runs") or 0) < BASELINE_MIN_RUNS or len(set(fams or ())) < BASELINE_MIN_FAMILIES:
+        return {**base, "verdict": "INELIGIBLE", "why": "BASELINE_N", "baseline_n_runs": cb.get("n_runs"),
+                "baseline_families": fams, "need_runs": BASELINE_MIN_RUNS, "need_families": BASELINE_MIN_FAMILIES,
+                "variant": k, "floor": c["verdicts"][k]["floor"], "baseline_median": cb.get("median"),
+                "baseline_bytes": cb.get("bytes")}
+    base.update(readout=readout or RO.LEGACY, baseline_readout=cb.get("readout", RO.LEGACY))
     if base["readout"] != base["baseline_readout"]:
         return {**base, "verdict": "INELIGIBLE", "why": "READOUT_MISMATCH", "variant": k,
                 "floor": c["verdicts"][k]["floor"], "baseline_median": c["baseline"]["median"],

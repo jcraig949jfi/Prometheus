@@ -10,6 +10,7 @@ from primordial.metric import worlds as WR
 from primordial.ops import qd_ledger as Q
 
 S8, S128 = "train8_held64", "train128_held64"
+FAM4 = (2101, 3303, 4200, 5501)                         # operator 16: the four RNG families
 
 
 def suite(gs, p, parts, gate, learner=True):
@@ -20,7 +21,8 @@ def suite(gs, p, parts, gate, learner=True):
 
 
 def base(gs, p, median, lo, hi, nbytes=312):
-    return {"gen_seed": gs, "pressure": p, "median": median, "ci95": [lo, hi], "bytes": nbytes, "n_runs": 8,
+    return {"gen_seed": gs, "pressure": p, "median": median, "ci95": [lo, hi], "bytes": nbytes, "n_runs": 32,
+            "families": list(FAM4), "n_per_family": {str(f): 8 for f in FAM4},
             "held64_by_run_seed": {str(i): median for i in range(8)}, "elites": {}}
 
 
@@ -184,3 +186,40 @@ def test_readout_mismatch_is_ineligible_on_both_sides(doc, tmp_path, capsys):
 
 def by_cell(doc, world, pressure):
     return next(c for c in doc["cells"] if c["world"] == world and c["pressure"] == pressure)
+
+
+# ---------------------------------------------------------------- operator 16: BASELINE_N (32 run seeds x 4 families)
+
+@pytest.mark.parametrize("n_runs,fams", [(8, FAM4), (31, FAM4), (32, (4200,)), (32, FAM4[:3]), (32, (4200,) * 4),
+                                         (32, None), (32, ())])
+def test_baseline_n_refuses_retired_and_single_family_baselines(n_runs, fams):
+    b = base(7, S8, 200.0, 150.0, 250.0) | {"n_runs": n_runs}
+    if fams is None:
+        b.pop("families")
+    else:
+        b["families"] = list(fams)
+    d = WR.build([WR.cell(suite(7, S8, (100.0, 100.0, 5.0, 60.0), 90.0), b)], commit="r16")
+    got = Q.check_r4("w7", S8, 195.0, 200, 8, doc=d)
+    assert got["verdict"] == "INELIGIBLE" and got["why"] == "BASELINE_N" and got["floor"] == 100.0
+    assert (got["need_runs"], got["need_families"], got["baseline_n_runs"]) == (32, 4, n_runs)
+    blk = Q.check([], "w7", S8, 195.0, 0.0, 200, 8, doc=d)["clause_a_r4"]
+    assert blk["verdict"] == "INELIGIBLE" and blk["why"] == "BASELINE_N" and blk["screen"] == "SURVIVED"
+
+
+def test_baseline_n_passes_32x4_and_precedes_readout(doc):
+    c = next(c for c in doc["cells"] if (c["world"], c["pressure"]) == ("w7", S8))
+    assert c["baseline"]["n_runs"] == 32 and c["baseline"]["families"] == list(FAM4)
+    assert c["baseline"]["n_per_family"] == {str(f): 8 for f in FAM4}
+    assert Q.check_r4("w7", S8, 195.0, 200, 8, doc=doc)["verdict"] == "PASS"
+    short = WR.build([WR.cell(suite(7, S8, (100.0, 100.0, 5.0, 60.0), 90.0),
+                              base(7, S8, 200.0, 150.0, 250.0) | {"n_runs": 8, "readout": "top1_train"})], commit="r16")
+    assert Q.check_r4("w7", S8, 195.0, 200, 8, doc=short)["why"] == "BASELINE_N"      # refused before the readout
+
+
+def test_committed_v1_screen_is_retired_by_baseline_n():
+    committed = WR.load()
+    if committed is None or committed.get("schema") != "worlds_r4/v1":
+        pytest.skip("the committed file is no longer v1")
+    got = Q.check_r4("w13", S128, 1e9, 1, 8, doc=committed)
+    assert got["verdict"] == "INELIGIBLE" and got["why"] == "BASELINE_N" and got["baseline_n_runs"] == 8
+    assert got["baseline_families"] is None

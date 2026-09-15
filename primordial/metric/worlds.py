@@ -74,7 +74,8 @@ def cell(suite_row: dict, baseline: dict | None = None, learner: dict | None = N
         raise ValueError(f"baseline {baseline['gen_seed']}/{baseline['pressure']} is not this cell's {key}")
     lo = float(baseline["ci95"][0])
     rec.update(stage=2, baseline={k: baseline[k] for k in ("median", "ci95", "bytes", "n_runs", "held64_by_run_seed")}
-               | {"elites": baseline.get("elites"), "readout": baseline.get("readout", RO.LEGACY)})
+               | {"elites": baseline.get("elites"), "readout": baseline.get("readout", RO.LEGACY),
+                  "families": baseline.get("families"), "n_per_family": baseline.get("n_per_family")})
     rec["pending"] = None
     if f["floor_is_bound"] and SC.needs_learner(f["floor"], gate, lo):
         from primordial.metric.invariant import est_hours
