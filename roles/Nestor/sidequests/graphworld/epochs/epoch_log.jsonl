@@ -1,46 +1,5 @@
-{"epoch_s": 1800.0, "event": "start", "lanes": ["B", "C", "D", "E"], "ts": 1789448509.549}
-{"event": "epoch_post", "n": 1, "ts": 1789450309.549}
-{"event": "stop_set", "lanes": ["B", "C", "D", "E"], "ts": 1789450309.553}
-{"event": "drained", "stragglers": ["C"], "ts": 1789450429.553, "workers": ["B", "C", "D", "E"]}
-{"counts": {"anomalies": 32, "results": 99, "state": 8, "swarm": 698}, "event": "exported", "ts": 1789450429.593}
-{"event": "committed", "sha": "3fad87f40", "ts": 1789450431.491}
-{"event": "resumed", "next_epoch": 2, "ts": 1789450431.497}
-{"event": "epoch_post", "n": 2, "ts": 1789452109.472}
-{"event": "stop_set", "lanes": ["B", "C", "D", "E"], "ts": 1789452109.475}
-{"event": "drained", "stragglers": ["C", "E"], "ts": 1789452229.49, "workers": ["B", "C", "D", "E"]}
-{"counts": {"anomalies": 35, "results": 100, "state": 8, "swarm": 715}, "event": "exported", "ts": 1789452229.528}
-{"event": "committed", "sha": "22211e716", "ts": 1789452230.954}
-{"event": "resumed", "next_epoch": 3, "ts": 1789452230.956}
-{"clock": {"drain_ts": 1789476370.904, "end_ts": 1789476970.904, "epoch_s": 1500.0, "epochs": 4, "no_new_work_ts": 1789475770.904, "round_id": "r5", "stage": "PILOT", "start_ts": 1789469770.904}, "event": "round_start", "round_id": "r5", "ts": 1789469770.905}
-{"event": "epoch_post", "n": 1, "ts": 1789471270.904}
-{"event": "stop_set", "lanes": ["B", "C", "D", "E"], "ts": 1789471270.907}
-{"drain_timeout_s": 30.0, "event": "drained", "stragglers": [], "ts": 1789471271.071, "workers": ["B", "C", "D", "E"]}
-{"counts": {"anomalies": 38, "results": 103, "state": 8, "swarm": 860}, "event": "exported", "ts": 1789471271.103}
-{"event": "committed", "sha": "f10774b30", "ts": 1789471272.807}
-{"event": "push_failed", "rc": 4, "tail": "behind origin/nestor/sidequest-graphworld-2026-09-14, no live writer, worker A parked: rebasing\nCONFLICT: rebase onto origin/nestor/sidequest-graphworld-2026-09-14 aborted: error: cannot rebase: You have unstaged changes.\nerror: Please commit or stash them.\n", "ts": 1789471273.529}
-{"event": "resumed", "next_epoch": 2, "ts": 1789471273.532}
-{"event": "epoch_post", "n": 2, "ts": 1789472770.904}
-{"event": "stop_set", "lanes": ["B", "C", "D", "E"], "ts": 1789472770.907}
-{"drain_timeout_s": 650.0, "event": "drained", "stragglers": [], "ts": 1789472782.332, "workers": ["B", "C", "D", "E"]}
-{"counts": {"anomalies": 40, "results": 107, "state": 8, "swarm": 892}, "event": "exported", "ts": 1789472782.362}
-{"event": "committed", "sha": "c8f792404", "ts": 1789472783.547}
-{"event": "push_failed", "rc": 4, "tail": "behind origin/nestor/sidequest-graphworld-2026-09-14, no live writer, worker A parked: rebasing\nCONFLICT: rebase onto origin/nestor/sidequest-graphworld-2026-09-14 aborted: error: cannot rebase: You have unstaged changes.\nerror: Please commit or stash them.\n", "ts": 1789472784.293}
-{"event": "resumed", "next_epoch": 3, "ts": 1789472784.296}
-{"event": "epoch_post", "n": 3, "ts": 1789474270.904}
-{"event": "stop_set", "lanes": ["B", "C", "D", "E"], "ts": 1789474270.908}
-{"drain_timeout_s": 30.0, "event": "drained", "stragglers": [], "ts": 1789474271.071, "workers": ["B", "C", "D", "E"]}
-{"counts": {"anomalies": 41, "results": 109, "state": 8, "swarm": 900}, "event": "exported", "ts": 1789474271.102}
-{"event": "committed", "sha": "430f6c7b0", "ts": 1789474272.342}
-{"event": "push_failed", "rc": 4, "tail": "behind origin/nestor/sidequest-graphworld-2026-09-14, no live writer, worker A parked: rebasing\nCONFLICT: rebase onto origin/nestor/sidequest-graphworld-2026-09-14 aborted: error: cannot rebase: You have unstaged changes.\nerror: Please commit or stash them.\n", "ts": 1789474273.526}
-{"event": "resumed", "next_epoch": 4, "ts": 1789474273.528}
-{"event": "no_new_work", "round_id": "r5", "ts": 1789475770.905}
-{"event": "epoch_post", "n": 4, "ts": 1789476370.905}
-{"event": "stop_set", "lanes": ["B", "C", "D", "E"], "ts": 1789476370.908}
-{"drain_timeout_s": 30.0, "event": "drained", "stragglers": [], "ts": 1789476371.018, "workers": ["B", "C", "D", "E"]}
-{"counts": {"anomalies": 41, "results": 109, "state": 8, "swarm": 903}, "event": "exported", "ts": 1789476371.052}
-{"event": "committed", "sha": "233a77ba8", "ts": 1789476372.313}
-{"event": "push_failed", "rc": 4, "tail": "behind origin/nestor/sidequest-graphworld-2026-09-14, no live writer, worker A parked: rebasing\nCONFLICT: rebase onto origin/nestor/sidequest-graphworld-2026-09-14 aborted: error: cannot rebase: You have unstaged changes.\nerror: Please commit or stash them.\n", "ts": 1789476373.185}
-{"event": "drain_hold", "n": 4, "ts": 1789476373.185}
-{"event": "round_closed", "round_id": "r5", "ts": 1789476970.906}
-{"event": "round_committed", "sha": "26768c747", "ts": 1789476971.774}
-{"event": "push_failed", "rc": 4, "tail": "behind origin/nestor/sidequest-graphworld-2026-09-14, no live writer, worker A parked: rebasing\nCONFLICT: rebase onto origin/nestor/sidequest-graphworld-2026-09-14 aborted: error: cannot rebase: You have unstaged changes.\nerror: Please commit or stash them.\n", "ts": 1789476972.501}
+{"clock": {"drain_ts": 1789497599.852, "end_ts": 1789498799.852, "epoch_s": 2400.0, "epochs": 5, "no_new_work_ts": 1789496399.852, "round_id": "r6", "stage": "PRODUCTION", "start_ts": 1789484399.852}, "event": "round_start", "round_id": "r6", "ts": 1789484399.853}
+{"event": "epoch_post", "n": 1, "ts": 1789486799.852}
+{"event": "stop_set", "lanes": ["B", "C", "D", "E", "G"], "ts": 1789486799.856}
+{"drain_timeout_s": 2430.0, "event": "drained", "stragglers": [], "ts": 1789486809.194, "workers": ["B", "C", "D", "E", "G"]}
+{"counts": {"anomalies": 42, "results": 110, "state": 8, "swarm": 950}, "event": "exported", "ts": 1789486809.239}
