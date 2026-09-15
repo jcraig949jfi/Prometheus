@@ -39,6 +39,17 @@ SCHEMA = "worlds_r4/v1"
 GRAPHWORLD = re.compile(r"^w\d+$")
 PENDING = "PENDING"
 NON_SURVIVABLE_REASON = "non-survivable exact; HELD/CULLED needs learner"
+SCHEMA_V2 = "worlds_r4/v2"            # operator 16 (SWARM_R4 s9): pooled 32 runs x 4 RNG families, 8 each
+V2_NEED = {"min_runs": 32, "min_families": 4, "per_family": 8}
+
+
+def pooled_ok(stats: dict | None) -> bool:
+    """A pooled block (baseline or floor_stats entry) meets the operator 16 minimum."""
+    if not stats:
+        return False
+    per = stats.get("n_per_family") or {}
+    return (int(stats.get("n_runs") or 0) >= V2_NEED["min_runs"] and len(set(stats.get("families") or ())) >= V2_NEED["min_families"]
+            and bool(per) and min(int(v) for v in per.values()) >= V2_NEED["per_family"])
 
 
 def is_graphworld(world: str) -> bool:
@@ -46,25 +57,40 @@ def is_graphworld(world: str) -> bool:
 
 
 def _learner_block(summary: dict) -> dict:
-    return {"status": "run", "median": summary["invariant_held64_median"], "iqr": summary["invariant_held64_iqr"],
-            "held64_by_run_seed": summary["held64_by_run_seed"], "run_seeds": summary["run_seeds"],
-            "budget_ok": summary["budget_ok"]}
+    out = {"status": "run", "median": summary["invariant_held64_median"], "iqr": summary["invariant_held64_iqr"],
+           "run_seeds": summary["run_seeds"], "budget_ok": summary["budget_ok"]}
+    for k in ("held64_by_run_seed", "held64_by_run", "n_runs", "families", "n_per_family", "readout"):
+        if k in summary:
+            out[k] = summary[k]
+    return out
 
 
-def cell(suite_row: dict, baseline: dict | None = None, learner: dict | None = None, sources: dict | None = None) -> dict:
-    """One record from a floor_suite row, the cell's M2 baseline row (or None) and, for a pressure whose suite
-    row has no learner, that pressure's own learner summary (or None)."""
+def _stats(summary: dict) -> dict:
+    return {"n_runs": summary["n_runs"], "families": summary["families"], "n_per_family": summary["n_per_family"],
+            "readout": summary.get("readout"), "median": summary["invariant_held64_median"]}
+
+
+def cell(suite_row: dict, baseline: dict | None = None, learner: dict | None = None, sources: dict | None = None,
+         est_runs: int = 8) -> dict:
+    """One record from a floor_suite row (v1 floor_suite or R16 floor_suite_r16), the cell's baseline row (v1
+    baseline or R16 baseline_r16, or None) and, for a pressure whose suite row has no learner, that pressure's own
+    learner summary (or None). est_runs: run count the PENDING learner-hour estimate assumes (32 under R16)."""
     key = (suite_row["gen_seed"], suite_row["pressure"])
     parts, lrn = dict(suite_row["floor_parts"]), dict(suite_row["learner"])
+    stats = {k: dict(v) for k, v in (suite_row.get("floor_stats") or {}).items()}
     if learner is not None:
         if (learner["gen_seed"], learner["pressure"]) != key:
             raise ValueError(f"learner {learner['gen_seed']}/{learner['pressure']} is not this cell's {key}")
         parts["input_invariant_learner"] = learner["invariant_held64_median"]
         lrn = _learner_block(learner)
+        if "families" in learner:
+            stats["input_invariant_learner"] = _stats(learner)
     f = SU.floor_of_parts(parts)
     gate = float(suite_row["gate_held64"])
     rec = {"world": suite_row["world"], "gen_seed": int(suite_row["gen_seed"]), "pressure": suite_row["pressure"],
            "floor_parts": parts, **f, "gate_held64": gate, "learner": lrn, "sources": sources or {}}
+    if stats:
+        rec["floor_stats"] = stats
     vf = {SC.vkey(*v): SC.variant_floor(f["floor"], gate, v[0]) for v in SC.VARIANTS}
     if baseline is None:
         rec.update(stage=1, baseline=None,
@@ -73,13 +99,17 @@ def cell(suite_row: dict, baseline: dict | None = None, learner: dict | None = N
     if (baseline["gen_seed"], baseline["pressure"]) != key:
         raise ValueError(f"baseline {baseline['gen_seed']}/{baseline['pressure']} is not this cell's {key}")
     lo = float(baseline["ci95"][0])
-    rec.update(stage=2, baseline={k: baseline[k] for k in ("median", "ci95", "bytes", "n_runs", "held64_by_run_seed")}
-               | {"elites": baseline.get("elites"), "readout": baseline.get("readout", RO.LEGACY),
-                  "families": baseline.get("families"), "n_per_family": baseline.get("n_per_family")})
+    bl = {k: baseline[k] for k in ("median", "ci95", "bytes", "n_runs")} | {
+        "elites": baseline.get("elites"), "readout": baseline.get("readout", RO.LEGACY),
+        "families": baseline.get("families"), "n_per_family": baseline.get("n_per_family")}
+    for k in ("held64_by_run_seed", "held64_by_run"):          # v1 per run seed; R16 per 'F|rs' run id
+        if k in baseline:
+            bl[k] = baseline[k]
+    rec.update(stage=2, baseline=bl)
     rec["pending"] = None
     if f["floor_is_bound"] and SC.needs_learner(f["floor"], gate, lo):
         from primordial.metric.invariant import est_hours
-        est = round(est_hours(int(suite_row["gen_seed"]), suite_row["pressure"]), 2)
+        est = round(est_hours(int(suite_row["gen_seed"]), suite_row["pressure"], runs=est_runs), 2)
         if lo > f["floor"]:
             rec["pending"] = "survivable"
             rec["verdicts"] = {k: {"verdict": PENDING, "cull_reason": None, "floor": vf[k]} for k in vf}
@@ -96,16 +126,36 @@ def cell(suite_row: dict, baseline: dict | None = None, learner: dict | None = N
     return rec
 
 
-def build(records: list[dict], commit: str, active=SC.ACTIVE, max_survivors: int = SC.MAX_SURVIVORS) -> dict:
-    cells = SC.apply_stop(records, max_survivors)
+def build(records: list[dict], commit: str, active=SC.ACTIVE, max_survivors: int | None = SC.MAX_SURVIVORS,
+          schema: str = SCHEMA) -> dict:
+    """max_survivors=None: no stop (operator 16 re-screens every candidate cell)."""
+    cells = SC.apply_stop(records, len(records) + 1 if max_survivors is None else max_survivors)
     k = SC.vkey(*active)
     for c in cells:
         c["verdict"], c["cull_reason"] = c["verdicts"][k]["verdict"], c["verdicts"][k]["cull_reason"]
-    return {"schema": SCHEMA, "commit": commit,
-            "bootstrap": {"fn": "primordial.metric.ci.median_ci", "stat": "median", "resamples": N_BOOT,
-                          "alpha": 0.05, "rng": "numpy PCG64", "seed": BOOT_SEED},
-            "q1_floor_policy": active[0], "q2_policy": active[1], "max_survivors": max_survivors,
-            "variants": [SC.vkey(*v) for v in SC.VARIANTS], "cells": cells}
+    doc = {"schema": schema, "commit": commit,
+           "bootstrap": {"fn": "primordial.metric.ci.median_ci", "stat": "median", "resamples": N_BOOT,
+                         "alpha": 0.05, "rng": "numpy PCG64", "seed": BOOT_SEED},
+           "q1_floor_policy": active[0], "q2_policy": active[1], "max_survivors": max_survivors,
+           "variants": [SC.vkey(*v) for v in SC.VARIANTS], "cells": cells}
+    if schema == SCHEMA_V2:
+        doc.update(V2_NEED, families=[4200, 2101, 3303, 5501], ruling="operator 16 (SWARM_R4 s9)")
+    return doc
+
+
+def v2_defects(doc: dict) -> list[tuple]:
+    """Cells of a v2 document below the operator 16 minimum: a stage 2 baseline, or a stochastic floor part that
+    was run (uniform random always; the learner wherever it entered the floor)."""
+    bad = []
+    for c in doc["cells"]:
+        fs = c.get("floor_stats") or {}
+        if not pooled_ok(fs.get("uniform_random_median")):
+            bad.append((c["world"], c["pressure"], "uniform_random_median"))
+        if c["floor_parts"].get("input_invariant_learner") is not None and not pooled_ok(fs.get("input_invariant_learner")):
+            bad.append((c["world"], c["pressure"], "input_invariant_learner"))
+        if c.get("baseline") is not None and not pooled_ok(c["baseline"]):
+            bad.append((c["world"], c["pressure"], "baseline"))
+    return bad
 
 
 def pending(doc: dict) -> list[tuple]:
@@ -122,6 +172,10 @@ def write(doc: dict, path=WORLDS_R4) -> pathlib.Path:
     p = blocking(doc)
     if p:
         raise ValueError(f"{len(p)} survivable cells still need the learner before a verdict is exact: {p[:5]}")
+    if doc.get("schema") == SCHEMA_V2:
+        bad = v2_defects(doc)
+        if bad:
+            raise ValueError(f"BASELINE_N: {len(bad)} v2 entries below 32 runs x 4 families x 8: {bad[:5]}")
     path = pathlib.Path(path)                        # an all-culled screen is written too: it is the result
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(doc, sort_keys=True, indent=1) + "\n", encoding="utf-8", newline="\n")
@@ -133,8 +187,8 @@ def load(path=WORLDS_R4) -> dict | None:
     if not p.exists():
         return None
     doc = json.loads(p.read_text(encoding="utf-8"))
-    if doc.get("schema") != SCHEMA:
-        raise ValueError(f"{p} is not {SCHEMA}")
+    if doc.get("schema") not in (SCHEMA, SCHEMA_V2):
+        raise ValueError(f"{p} is neither {SCHEMA} nor {SCHEMA_V2}")
     return doc
 
 

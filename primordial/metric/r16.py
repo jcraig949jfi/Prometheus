@@ -162,6 +162,58 @@ def baseline_job(ctx, cells, families=FAMILIES, run_seeds=RUN_SEEDS, gens=None, 
         ctx.checkpoint(st)
 
 
+ROWS = {"floors": "primordial/ledger/rows/G/G-R16-floors.jsonl",
+        "baseline": "primordial/ledger/rows/G/G-R16-baseline.jsonl",
+        "learner128": "primordial/ledger/rows/G/G-R16-learner128.jsonl"}
+
+
+def assemble_v2(floors=ROWS["floors"], baseline=ROWS["baseline"], learner128=ROWS["learner128"]) -> list[dict]:
+    """worlds_r4/v2 records from R16 rows only: floor_suite_r16 (J1), baseline_r16 (J2), floor_invariant_r16 on
+    train128 (J3). A cell J2 has not reached yet gets a stage-1-only record (NOT_REACHED)."""
+    from primordial.metric import worlds as WR
+    fl = {(int(x["gen_seed"]), x["pressure"]): x for x in _rows(floors) if x.get("kind") == "floor_suite_r16"}
+    base = {(int(x["gen_seed"]), x["pressure"]): x for x in _rows(baseline) if x.get("kind") == "baseline_r16"}
+    lrn = {(int(x["gen_seed"]), x["pressure"]): x for x in _rows(learner128)
+           if x.get("kind") == "floor_invariant_r16" and x["pressure"] == "train128_held64"}
+    recs = []
+    for key in sorted(fl, key=lambda k: SC.order_key(fl[k])):
+        src = {"floor": {"exp_id": "G-R16-floors", "rows": [str(floors)]}}
+        if key in base:
+            src["baseline"] = {"exp_id": "G-R16-baseline", "rows": [str(baseline)]}
+        if key in lrn:
+            src["learner"] = {"exp_id": "G-R16-learner128", "rows": [str(learner128)]}
+        recs.append(WR.cell(fl[key], base.get(key), lrn.get(key), sources=src, est_runs=len(FAMILIES) * len(RUN_SEEDS)))
+    return recs
+
+
+def build_v2(commit: str, **paths) -> dict:
+    from primordial.metric import worlds as WR
+    return WR.build(assemble_v2(**paths), commit=commit, max_survivors=None, schema=WR.SCHEMA_V2)
+
+
+def main(argv=None) -> int:
+    import argparse
+    from primordial.metric import screen_run as SR
+    from primordial.metric import worlds as WR
+    ap = argparse.ArgumentParser(description="assemble worlds_r4/v2 from R16 rows")
+    ap.add_argument("--floors", default=ROWS["floors"])
+    ap.add_argument("--baseline", default=ROWS["baseline"])
+    ap.add_argument("--learner128", default=ROWS["learner128"])
+    ap.add_argument("--write", action="store_true")
+    ap.add_argument("--commit", default="")
+    ap.add_argument("--out", default=str(WR.WORLDS_R4))
+    a = ap.parse_args(argv)
+    doc = build_v2(a.commit, floors=a.floors, baseline=a.baseline, learner128=a.learner128)
+    rep = SR.report(doc)
+    rep["v2_defects"] = WR.v2_defects(doc)
+    print(json.dumps(rep, indent=1, default=str))
+    if a.write:
+        if not a.commit:
+            raise SystemExit("--write needs --commit (the sha holding the rows)")
+        print(WR.write(doc, a.out))
+    return 0
+
+
 def learner128_job(ctx, cells, families=FAMILIES, run_seeds=RUN_SEEDS, gens=None, batch=None,
                    archive_url=I.ARCHIVE_URL, elites_dir=str(ELITES_LEARN)):
     """J3. The train128 input-invariant learner over 32 runs for each cleared (gen_seed, pressure)."""
@@ -177,3 +229,7 @@ def learner128_job(ctx, cells, families=FAMILIES, run_seeds=RUN_SEEDS, gens=None
         ctx.emit({**I.pooled_summary(runs, **kw), "status": "control"})
         st["cells"].append(key)
         ctx.checkpoint(st)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

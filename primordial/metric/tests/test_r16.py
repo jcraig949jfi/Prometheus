@@ -182,3 +182,90 @@ def test_order_puts_w13_train128_first_then_gate_headroom():
     o = R.order_r16()
     assert o[0] == [13, "train128_held64"] and len(o) == 74 and len({tuple(c) for c in o}) == 74
     assert o[1] == [7, "train8_held64"]                               # the largest gate headroom in stage 1
+
+
+# ---------------------------------------------------------------- worlds_r4/v2 assembly (rows only)
+
+def _pool(n_fam=4, per=8, base=0.0):
+    fams = (4200, 2101, 3303, 5501)[:n_fam]
+    ids = [f"{f}|{i}" for f in fams for i in range(per)]
+    return {"n_runs": len(ids), "families": sorted(fams), "n_per_family": {str(f): per for f in fams},
+            "held64_by_run": {k: base for k in ids}, "readout": RO.NAME}
+
+
+def _floor(gs, p, floor, gate, learner=True):
+    parts = {"abstain": floor, "best_constant": floor, "uniform_random_median": 1.0,
+             "input_invariant_learner": floor - 5 if learner else None}
+    stats = {"uniform_random_median": {**{k: v for k, v in _pool().items() if k != "held64_by_run"}, "median": 1.0}}
+    if learner:
+        stats["input_invariant_learner"] = {**{k: v for k, v in _pool().items() if k != "held64_by_run"}, "median": floor - 5}
+    return {"kind": "floor_suite_r16", "world": f"w{gs}", "gen_seed": gs, "pressure": p, "floor_parts": parts,
+            "floor": floor, "gate_held64": gate, "floor_stats": stats, "det_matches_stage1": True,
+            "learner": {"status": "run" if learner else "not_run"}, "status": "control"}
+
+
+def _base(gs, p, median, lo, hi, **pool):
+    return {"kind": "baseline_r16", "world": f"w{gs}", "gen_seed": gs, "pressure": p, "family": "linear", "median": median,
+            "ci95": [lo, hi], "bytes": 200, **_pool(**pool), "elites": {}, "budget_ok": True, "status": "control"}
+
+
+def _write(path, rows):
+    path.write_text("".join(json.dumps(x) + "\n" for x in rows), encoding="utf-8")
+    return path
+
+
+def test_v2_assembly_stamps_pooled_fields_no_stop_and_round_trips(tmp_path):
+    from primordial.metric import worlds as WR
+    S8 = "train8_held64"
+    fl = _write(tmp_path / "f.jsonl", [_floor(g, S8, 100.0, 90.0) for g in range(1, 11)])
+    bs = _write(tmp_path / "b.jsonl", [_base(g, S8, 200.0, 150.0, 250.0) for g in range(1, 11)])   # 10 survivors
+    doc = R.build_v2("abc", floors=fl, baseline=bs, learner128=tmp_path / "none.jsonl")
+    assert doc["schema"] == WR.SCHEMA_V2 and doc["min_runs"] == 32 and doc["per_family"] == 8
+    assert sum(c["verdict"] == "SURVIVED" for c in doc["cells"]) == 10                              # no 8-survivor stop
+    c = doc["cells"][0]
+    assert c["baseline"]["families"] == [2101, 3303, 4200, 5501] and c["baseline"]["n_per_family"]["5501"] == 8
+    assert c["baseline"]["n_runs"] == 32 and len(c["baseline"]["held64_by_run"]) == 32 and c["floor_stats"]["uniform_random_median"]["n_runs"] == 32
+    got = WR.load(WR.write(doc, tmp_path / "w.json"))
+    assert got["schema"] == WR.SCHEMA_V2 and WR.guard(got, "w3", S8) is None and WR.v2_defects(got) == []
+
+
+def test_v2_write_refuses_any_entry_below_32x4x8(tmp_path):
+    from primordial.metric import worlds as WR
+    S8 = "train8_held64"
+    for bad in (dict(per=7, n_fam=4), dict(per=8, n_fam=3)):
+        fl = _write(tmp_path / "f.jsonl", [_floor(1, S8, 100.0, 90.0)])
+        bs = _write(tmp_path / "b.jsonl", [_base(1, S8, 200.0, 150.0, 250.0, **bad)])
+        doc = R.build_v2("x", floors=fl, baseline=bs, learner128=tmp_path / "none.jsonl")
+        assert WR.v2_defects(doc) == [("w1", S8, "baseline")]
+        with pytest.raises(ValueError, match="BASELINE_N"):
+            WR.write(doc, tmp_path / "w.json")
+    thin = _floor(2, S8, 100.0, 90.0)
+    thin["floor_stats"]["input_invariant_learner"]["n_per_family"]["4200"] = 7
+    fl = _write(tmp_path / "f2.jsonl", [thin])
+    bs = _write(tmp_path / "b2.jsonl", [_base(2, S8, 200.0, 150.0, 250.0)])
+    doc = R.build_v2("x", floors=fl, baseline=bs, learner128=tmp_path / "none.jsonl")
+    assert WR.v2_defects(doc) == [("w2", S8, "input_invariant_learner")]
+
+
+def test_v2_train128_learner_row_resolves_a_bound_and_stamps_its_stats(tmp_path):
+    from primordial.metric import worlds as WR
+    T = "train128_held64"
+    fl = _write(tmp_path / "f.jsonl", [_floor(13, T, 159.0, 166.47, learner=False)])
+    bs = _write(tmp_path / "b.jsonl", [_base(13, T, 183.9, 171.0, 188.6)])
+    none = tmp_path / "none.jsonl"
+    pend = R.build_v2("x", floors=fl, baseline=bs, learner128=none)
+    assert WR.blocking(pend) == [("w13", T)] and pend["cells"][0]["learner"]["est_hours"] == round(4 * I.est_hours(13), 2)
+    lr = {"kind": "floor_invariant_r16", "world": "w13", "gen_seed": 13, "pressure": T, "readout": RO.NAME,
+          "invariant_held64_median": 151.0, "invariant_held64_iqr": 1.0, **{k: v for k, v in _pool().items() if k != "readout"},
+          "run_seeds": list(_pool()["held64_by_run"]), "budget_ok": True, "genomes": 1, "status": "control"}
+    ln = _write(tmp_path / "l.jsonl", [lr])
+    doc = R.build_v2("x", floors=fl, baseline=bs, learner128=ln)
+    c = doc["cells"][0]
+    assert c["verdict"] == "SURVIVED" and not c["floor_is_bound"] and c["floor_stats"]["input_invariant_learner"]["n_runs"] == 32
+    assert c["learner"]["families"] == [2101, 3303, 4200, 5501] and WR.v2_defects(doc) == []
+
+
+def test_v1_file_still_loads():
+    from primordial.metric import worlds as WR
+    doc = WR.load()
+    assert doc["schema"] in (WR.SCHEMA, WR.SCHEMA_V2) and len(doc["cells"]) == 74
