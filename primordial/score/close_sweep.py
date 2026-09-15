@@ -92,6 +92,19 @@ def emit(r, result: dict, round_id: str) -> list[str]:
     return emitted
 
 
+def sweep_round(r, round_id: str, repo=ROOT, ledger_dir=LEDGER_DIR, reader=None) -> dict | None:
+    """H-R7-3: the sweep for one round id, its window read from that round's clock (primordial.ops.round_clock).
+    -> the sweep stamped with the round, or None when the round has no clock."""
+    if reader is None:
+        from primordial.ops import round_clock as RC
+        reader = RC.read
+    clock = reader(r, round_id)
+    if clock is None:
+        return None
+    out = sweep(repo, float(clock["start_ts"]), float(clock["end_ts"]), ledger_dir=ledger_dir)
+    return {"round": round_id, **out}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--round")
@@ -102,15 +115,13 @@ def main(argv=None) -> int:
     from primordial.bus import bus
     r = bus.conn()
     rid = a.round or "adhoc"
-    start, end = a.start, a.end
     if a.round:
-        from primordial.ops import round_clock as RC
-        clock = RC.read(r, a.round)
-        if clock is None:
+        out = sweep_round(r, a.round)
+        if out is None:
             print(f"no clock for round {a.round}")
             return 2
-        start, end = clock["start_ts"], clock["end_ts"]
-    out = sweep(ROOT, start or 0.0, end if end is not None else float("inf"))
+    else:
+        out = sweep(ROOT, a.start or 0.0, a.end if a.end is not None else float("inf"))
     print(json.dumps({"round": rid, "rows_files": len(out["rows_files"]), "cited": len(out["cited"]),
                       "unreceipted": out["unreceipted"]}, indent=1))
     if a.emit:

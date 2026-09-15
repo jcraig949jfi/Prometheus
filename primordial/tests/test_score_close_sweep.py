@@ -43,6 +43,20 @@ RECEIPTS = [
 ]
 
 
+def test_the_sweep_takes_a_round_id_and_reads_that_rounds_clock(repo, tmp_path):
+    root, planted = repo
+    clocks = {"r7": {"start_ts": 1000.0, "end_ts": 2000.0}, "r6": {"start_ts": 1250.0, "end_ts": 1350.0}}
+    reader = lambda r, rid: clocks.get(rid)
+    (tmp_path / "ledger").mkdir()
+    (tmp_path / "ledger" / "B.jsonl").write_text(json.dumps(RECEIPTS[0]) + "\n", encoding="utf-8")
+    r7 = CS.sweep_round(None, "r7", repo=root, ledger_dir=tmp_path / "ledger", reader=reader)
+    assert r7["round"] == "r7" and r7["window"] == [1000.0, 2000.0]
+    assert [u["path"] for u in r7["unreceipted"]] == [f"{ROWS}/E/E-R6-gpu.jsonl", f"{ROWS}/H/H-R6-planted.jsonl"]
+    r6 = CS.sweep_round(None, "r6", repo=root, ledger_dir=tmp_path / "ledger", reader=reader)
+    assert r6["rows_files"] == [f"{ROWS}/H/H-R6-planted.jsonl"]                 # only its own window
+    assert CS.sweep_round(None, "r9", repo=root, reader=reader) is None
+
+
 def test_planted_unreceipted_rows_are_named(repo):
     root, planted = repo
     out = CS.sweep(root, start=1000, end=2000, receipts=RECEIPTS)

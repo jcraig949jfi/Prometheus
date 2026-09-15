@@ -636,5 +636,30 @@ budget 1789425755152-0).
   block are refused for every verdict class. The exact E-R6-1 envelope JSON (pm:jobs:E
   1789485387695-0) is refused, and so is its 16/1/16; its 32/4/8 rerun is admitted. The admit hook
   line and the worker-level zero-rows test follow F's push.
+- Suite 508 passed, 1 skipped, pytest rc 0 (16:44). Pushed 384c01f05 (rebased onto E-R7-1/2).
+  Posted to F/A/E (1789505113529-0).
+
+## 2026-09-15 16:45, items 2 + 3: H-R7-2 (D11) round-namespaced prior ledger; H-R7-3 by round id
+
+- anti_prior v3:
+  - Every key is pm:prior:<round>:{sealed,commit,assign,candidates,ranks}, via keys(round_id)
+    (ROUND_ID_INVALID otherwise).
+  - round_id is a REQUIRED keyword on candidates, seal, verify, published, freeze_ranks, assign
+    and read.
+  - SEEDS: r6 (20260917, 20260918), r7 (20260919, 20260920); any other round is SEED_NOT_FIXED.
+  - candidates() refuses only within its own round. Nothing un-namespaced is ever written.
+  - migrate_unnamespaced(r, "r6") RENAMENXes the 5 legacy keys and reports
+    moved/skipped/conflict. It never overwrites and never reads pm:prior:r5:*. r7 candidates are
+    NOT published.
+  - calibration(store, outcomes_by_round, rounds=[...]) reports by_arm pooled across rounds, plus
+    per_round, by_quartile and buckets; descriptive only.
+- close_sweep.sweep_round(r, round_id) reads that round's clock window; the CLI --round uses it.
+- Tests:
+  - anti-prior 12: namespaced keys and seeds; round_id required; the same-round refusal while
+    another round is allowed; migration moves r6, leaves r5, repeats as a no-op and never
+    overwrites a conflict; the same prediction id in two rounds stays separate; round tie and arm
+    seeds; R never told arms; r6+r7 calibration by arm.
+  - close_sweep +1: round windows from an injected clock; unknown round gives None.
+- No live Python caller of the v2 anti_prior signature on integration.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
