@@ -57,7 +57,8 @@ def test_records_and_active_variant(doc):
 def test_bound_that_could_flip_is_pending_and_write_refuses(tmp_path):
     rec = WR.cell(suite(12, S128, (100.0, 100.0, 5.0, 0.0), 90.0, learner=False), base(12, S128, 200.0, 150.0, 250.0))
     d = WR.build([rec], commit="x")
-    assert WR.pending(d) == [("w12", S128)]
+    assert WR.pending(d) == WR.blocking(d) == [("w12", S128)] and rec["pending"] == "survivable"
+    assert all(v["verdict"] == "PENDING" for v in rec["verdicts"].values())
     with pytest.raises(ValueError):
         WR.write(d, tmp_path / "w.json")
     full = WR.cell(suite(12, S128, (100.0, 100.0, 5.0, 0.0), 90.0, learner=False), base(12, S128, 200.0, 150.0, 250.0),

@@ -61,7 +61,7 @@ def test_pending_without_clearance_and_learner_when_cleared(fake):
     S2.job(ctx, path, learner_train128=(), archive_url="redis://127.0.0.1:1/0")
     got = cells(ctx)
     # w1 train128: bound 100, gate 150 > bound -> PENDING, not counted, learner not run
-    assert (1, S128, "PENDING_LEARNER", True) in got and calls["learn"] == []
+    assert (1, S128, "PENDING", True) in got and calls["learn"] == []
     assert (3, S8, "CULLED", False) in got and (2, S8, "SURVIVED", False) in got
     ctx2 = FakeCtx()
     S2.job(ctx2, path, learner_train128=[1], archive_url="redis://127.0.0.1:1/0")

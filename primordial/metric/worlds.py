@@ -12,7 +12,12 @@ world x pressure:
   verdict, cull_reason   the active variant's (top-level q1_floor_policy / q2_policy)
   sources            exp_ids and rows files of every number
 Numbers are never recomputed here: records are assembled from the floor_suite, baseline and learner rows.
-A record whose floor is a bound that could change a verdict is PENDING_LEARNER, and `write` refuses.
+A record whose floor is a bound that could change a verdict (screen.needs_learner) is PENDING
+(conductor 1789440120713-0):
+  survivable      ci95[0] > bound: every variant PENDING; `write` refuses (the learner decides SURVIVED)
+  non-survivable  ci95[0] <= bound (gate > bound): no variant can SURVIVE, exact. HOLD variants PENDING
+                  (HELD vs CULLED needs the learner); CULL variants CULLED with cull_reason PENDING.
+                  learner {status not_run, est_hours, reason}. Written; check() gives INELIGIBLE(PENDING).
 
 The guard: `guard(doc, world, pressure)` -> None for a SURVIVED cell under the active variant, else an
 INELIGIBLE dict (UNSCREENED if absent, else CULLED or HELD). Graphworld worlds are named w<gen_seed>.
@@ -31,7 +36,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 WORLDS_R4 = ROOT / "primordial" / "ledger" / "qd" / "worlds_r4.json"
 SCHEMA = "worlds_r4/v1"
 GRAPHWORLD = re.compile(r"^w\d+$")
-PENDING = "PENDING_LEARNER"
+PENDING = "PENDING"
+NON_SURVIVABLE_REASON = "non-survivable exact; HELD/CULLED needs learner"
 
 
 def is_graphworld(world: str) -> bool:
@@ -68,8 +74,21 @@ def cell(suite_row: dict, baseline: dict | None = None, learner: dict | None = N
     lo = float(baseline["ci95"][0])
     rec.update(stage=2, baseline={k: baseline[k] for k in ("median", "ci95", "bytes", "n_runs", "held64_by_run_seed")}
                | {"elites": baseline.get("elites")})
+    rec["pending"] = None
     if f["floor_is_bound"] and SC.needs_learner(f["floor"], gate, lo):
-        rec["verdicts"] = {k: {"verdict": PENDING, "cull_reason": None, "floor": vf[k]} for k in vf}
+        from primordial.metric.invariant import est_hours
+        est = round(est_hours(int(suite_row["gen_seed"]), suite_row["pressure"]), 2)
+        if lo > f["floor"]:
+            rec["pending"] = "survivable"
+            rec["verdicts"] = {k: {"verdict": PENDING, "cull_reason": None, "floor": vf[k]} for k in vf}
+            rec["learner"] = {**lrn, "status": "not_run", "est_hours": est, "reason": "survivor-deciding"}
+        else:
+            rec["pending"] = "non_survivable"
+            rec["verdicts"] = {SC.vkey(*v): ({"verdict": PENDING, "cull_reason": None, "floor": vf[SC.vkey(*v)]}
+                                             if v[1] == "HOLD" else
+                                             {"verdict": "CULLED", "cull_reason": PENDING, "floor": vf[SC.vkey(*v)]})
+                               for v in SC.VARIANTS}
+            rec["learner"] = {**lrn, "status": "not_run", "est_hours": est, "reason": NON_SURVIVABLE_REASON}
     else:
         rec["verdicts"] = SC.verdicts(f["floor"], gate, lo)
     return rec
@@ -88,15 +107,19 @@ def build(records: list[dict], commit: str, active=SC.ACTIVE, max_survivors: int
 
 
 def pending(doc: dict) -> list[tuple]:
-    return [(c["world"], c["pressure"]) for c in doc["cells"]
-            if any(v["verdict"] == PENDING or (v.get("computed") or {}).get("verdict") == PENDING
-                   for v in c["verdicts"].values())]
+    """Every cell with a PENDING verdict (survivable or not)."""
+    return [(c["world"], c["pressure"]) for c in doc["cells"] if c.get("pending")]
+
+
+def blocking(doc: dict) -> list[tuple]:
+    """Survivable PENDING cells: the learner decides SURVIVED, so the file cannot be written yet."""
+    return [(c["world"], c["pressure"]) for c in doc["cells"] if c.get("pending") == "survivable"]
 
 
 def write(doc: dict, path=WORLDS_R4) -> pathlib.Path:
-    p = pending(doc)
+    p = blocking(doc)
     if p:
-        raise ValueError(f"{len(p)} cells still need the learner before a verdict is exact: {p[:5]}")
+        raise ValueError(f"{len(p)} survivable cells still need the learner before a verdict is exact: {p[:5]}")
     path = pathlib.Path(path)                        # an all-culled screen is written too: it is the result
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(doc, sort_keys=True, indent=1) + "\n", encoding="utf-8", newline="\n")

@@ -145,7 +145,7 @@ def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, h
 
 def clause_a_r4_block(r4: dict) -> dict:
     """check_r4's result in F12's block: screen SURVIVED|HELD|CULLED|NOT_REACHED|UNSCREENED."""
-    if r4.get("why") in ("UNSCREENED", "CULLED", "HELD"):
+    if r4.get("why") in ("UNSCREENED", "CULLED", "HELD", "PENDING"):
         screen = "NOT_REACHED" if r4.get("cull_reason") == "NOT_REACHED" else r4["why"]
     else:
         screen = "SURVIVED"

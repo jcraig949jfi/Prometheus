@@ -125,6 +125,17 @@ def learner_run(r, gen_seed: int, pressure: str, run_seed: int, gens: int | None
             "elites": str(epath)}
 
 
+S_PER_T64_RUN = 320.0            # measured: E10-budget learner on w4 (T=64, S=1), 5 threads (journal, G-R4 iteration 1)
+
+
+def est_hours(gen_seed: int, pressure: str = "train128_held64", runs: int = MIN_RUNS) -> float:
+    """Wall-hours estimate of `runs` learner run seeds at the pressure's budget: scales with T x S and genomes x seeds."""
+    spec = E4.Spec(gen_seed)
+    gens, batch = BUDGET[pressure]
+    work = gens * batch * len(F.PRESSURES[pressure]) / (400 * 256 * 128)
+    return S_PER_T64_RUN * (spec.T * spec.S / 64) * work * runs / 3600
+
+
 def floor_part(values) -> float:
     """The G-R4-1 floor: median of the per-run-seed held64 values over >= MIN_RUNS run seeds."""
     v = [float(x) for x in values]
