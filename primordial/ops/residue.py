@@ -13,11 +13,14 @@ scan(r, round_id, allowed_repos) is READ-ONLY. Residue kinds:
   MULTI_CONSUMER        > 1 live consumer of group worker-<L> (or > 1 live verified registration) for a lane; a
                         consumer is LIVE only if a live, cmdline-verified registration of lane L has tag == its name
   DEAD_CONSUMER         a consumer of worker-<L> with no live registered pid bound to its name (detail: pending)
+  UNREGISTERED_ACTIVE_CONSUMER  the same, but it read from its group less than ACTIVE_IDLE_S ago: a LIVE worker
+                        that never registered (e.g. started on pre-F-R7-1 code); stop or restart it, never clear it
   UNARCHIVED_PRIOR_KEY  a key in a round-namespaced family (pm:prior:) not namespaced by a round id (r<digits>)
 
 clear(r, prior_round) removes only what a CLOSED prior round provably left (A, 16:40): its stop flags when
 pm:epoch:state shows that round closed and the flag value == that round's epoch count; dead consumers with
-pending == 0. Everything else is refused (FLAG_ROUND_NOT_CLOSED, FLAG_VALUE_MISMATCH, CONSUMER_PENDING,
+pending == 0 and idle >= ACTIVE_IDLE_S. Everything else is refused (FLAG_ROUND_NOT_CLOSED, FLAG_VALUE_MISMATCH,
+CONSUMER_RECENTLY_ACTIVE, CONSUMER_PENDING,
 CONSUMER_LIVE, NOT_CLEARABLE). It never kills and never touches pm:prior:* (H-R7-2 migrates those).
     python -m primordial.ops.residue clear --prior-round r6 [--round r7 --allowed-repos a,b]   # rc 2 if refused
 Notes (not residue): STALE_REGISTRATION (pid gone), PID_CMDLINE_MISMATCH (pid alive, not a worker: pid reuse).
@@ -230,6 +233,14 @@ def lane_groups(r):
         yield lane, k, group, consumers
 
 
+ACTIVE_IDLE_S = 120.0   # an unregistered consumer that read within this window is a live, unregistered worker
+
+
+def _recently_active(c: dict) -> bool:
+    idle = c.get("idle")
+    return idle is not None and int(idle) < ACTIVE_IDLE_S * 1000
+
+
 def _bound(live: list[dict], lane: str, name: str) -> list[dict]:
     """A consumer is live only if a live, verified registration of this lane carries its name as tag."""
     return [g for g in live if g.get("lane") == lane and g.get("tag") == name]
@@ -257,7 +268,8 @@ def scan(r, round_id: str, allowed=None, now: float | None = None) -> dict:
             if _bound(live, lane, name):
                 live_names.append(name)
             else:
-                residue.append({"kind": "DEAD_CONSUMER", "lane": lane, "key": key,
+                kind = "UNREGISTERED_ACTIVE_CONSUMER" if _recently_active(c) else "DEAD_CONSUMER"
+                residue.append({"kind": kind, "lane": lane, "key": key,
                                 "detail": {"group": group, "consumer": name,
                                            "pending": int(c.get("pending", 0)), "idle_ms": c.get("idle")}})
         if len(live_names) > 1:
@@ -343,6 +355,9 @@ def clear(r, prior_round: str, own_pid: int | None = None, round_id: str | None 
             rec = {"kind": "DEAD_CONSUMER", "key": key, "group": group, "consumer": name, "pending": pending}
             if _bound(live, lane, name):
                 refused.append(dict(rec, reason="CONSUMER_LIVE"))
+            elif _recently_active(c):
+                refused.append(dict(rec, kind="UNREGISTERED_ACTIVE_CONSUMER", idle_ms=c.get("idle"),
+                                    reason="CONSUMER_RECENTLY_ACTIVE"))
             elif pending > 0:
                 refused.append(dict(rec, reason="CONSUMER_PENDING"))
             else:

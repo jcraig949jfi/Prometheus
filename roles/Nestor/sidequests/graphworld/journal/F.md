@@ -380,3 +380,17 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
 - Combined run (R7 + R5/R6 fabric + liveness + receipt guard + r16_cells), db 6: 180 passed rc 0.
 - Live store (fork, read-only): E runs an F7 worker from nestor-r6-e (pids 8668, 28760) -> FOREIGN_REPO under the r7
   map; told A. Not touched.
+
+## 2026-09-15 R7 iteration 4 -- D19 granted threads + residue recency + F-R7-4 prep (DONE)
+
+- D19 (A, E 1789505689927-0: numba 3 under an 8-thread token): worker._spawn puts the grant into the CHILD env
+  (NUMBA/OMP/MKL/OPENBLAS_NUM_THREADS; spawn lock; parent env restored), a child with another thread count is
+  respawned, the child calls numba.set_num_threads(grant); rows and done records carry granted_threads and effective
+  numba_threads. Helpers thread_env()/apply_child_threads() for E's gpuq. Test from a parent env of 3: grant 8 -> 8
+  (numba + OMP), no grant -> 3 (control), grant change -> respawn.
+- Live read-only scan 16:55 (posted 1789505863151-0): rc 1, 16 DEAD_CONSUMER, nothing else; 2 were LIVE unregistered E
+  processes (idle 31 ms / 43 s). A scan/clear gap: residue now reports an unbound consumer that read < 120 s ago as
+  UNREGISTERED_ACTIVE_CONSUMER and clear refuses CONSUMER_RECENTLY_ACTIVE.
+- capacity.py: exp/budget flags (NODE_CAPACITY_PROFILE_R7, --budget-s 1200); the profile key keeps sha_local + rows
+  path instead of a sha a later rebase orphans (R5 lesson).
+- 64 passed rc 0 (residue, D19, closure, capacity, epoch/round, F7).

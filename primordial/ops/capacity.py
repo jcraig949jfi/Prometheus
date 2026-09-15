@@ -196,13 +196,13 @@ def _ctx(q) -> int:
 # ------------------------------------------------------------------ the probe
 
 def probe(step_fn=run_step, grid=GRID, target_s: float = TARGET_S, cal_gens: int = 400, gens: int | None = None,
-          budget_s: float = BUDGET_S, log=print) -> dict:
+          budget_s: float = BUDGET_S, log=print, exp: str = EXP) -> dict:
     t_start = time.monotonic()
     cal = None
     if gens is None:
         cal = step_fn(1, cal_gens, 300)
         if cal["errors"] or not cal["copies"]:
-            prof = {"exp": EXP, "rule": rule([cal]), "calibration": cal, "steps": [],
+            prof = {"exp": exp, "rule": rule([cal]), "calibration": cal, "steps": [],
                     "profile_status": "INSTRUMENT_FAIL"}
             return prof
         per_gen = cal["copies"][0]["wall_s"] / cal_gens
@@ -224,7 +224,7 @@ def probe(step_fn=run_step, grid=GRID, target_s: float = TARGET_S, cal_gens: int
             untested = [x for x in grid if x > k]
             break
     verdict = rule(steps)
-    return {"exp": EXP, "rule": {"grid": list(grid), "gain": GAIN, "p95_limit": P95_LIMIT,
+    return {"exp": exp, "rule": {"grid": list(grid), "gain": GAIN, "p95_limit": P95_LIMIT,
                                  "threads": "floor(16/k) cap 8", **verdict},
             "k_star": verdict["k_star"], "threads_per_worker": verdict["threads"], "untested": untested,
             "workload": {"fn": "primordial.metric.baseline:baseline_run", "gen_seed": GEN_SEED, "pressure": PRESSURE,
@@ -234,7 +234,7 @@ def probe(step_fn=run_step, grid=GRID, target_s: float = TARGET_S, cal_gens: int
             "profile_status": "OK" if verdict["k_star"] else "INSTRUMENT_FAIL", "ts": round(time.time(), 3)}
 
 
-def from_rows(path, gens_log: dict | None = None) -> dict:
+def from_rows(path, gens_log: dict | None = None, exp: str = EXP) -> dict:
     """Rebuild the profile from committed capacity_step rows (the last run: k=1 starts a run). The rule is
     re-applied to the rows; nothing is re-measured. (06:35: the first probe committed its 3 step rows, then
     crashed writing the profile row -- its `status` key overwrote the row status.)"""
@@ -249,7 +249,7 @@ def from_rows(path, gens_log: dict | None = None) -> dict:
     verdict = rule(steps)
     tested = [s["k"] for s in steps]
     untested = [k for k in GRID if k not in tested] if verdict["failed_at"] is not None or len(tested) < len(GRID) else []
-    return {"exp": EXP, "rule": {"grid": list(GRID), "gain": GAIN, "p95_limit": P95_LIMIT,
+    return {"exp": exp, "rule": {"grid": list(GRID), "gain": GAIN, "p95_limit": P95_LIMIT,
                                  "threads": "floor(16/k) cap 8", **verdict},
             "k_star": verdict["k_star"], "threads_per_worker": verdict["threads"], "untested": untested,
             "workload": {"fn": "primordial.metric.baseline:baseline_run", "gen_seed": GEN_SEED, "pressure": PRESSURE,
@@ -260,11 +260,14 @@ def from_rows(path, gens_log: dict | None = None) -> dict:
 
 
 def write(prof: dict, r=None, repo=ROOT, host_load=None, out=OUT) -> dict:
+    """Rows + JSON profile (committed) + pm:capacity:profile. The key carries the LOCAL commit sha as sha_local:
+    a later ops.push rebase rewrites it (R5: the stamped sha was orphaned), and the broker reads only k*/threads."""
     from primordial.fabric.rows import RowWriter, commit_path
+    exp = prof.get("exp") or EXP
     out = pathlib.Path(out)
     out.mkdir(parents=True, exist_ok=True)
-    rows = out / f"{EXP}.jsonl"
-    w = RowWriter(rows, EXP, repo=repo)
+    rows = out / f"{exp}.jsonl"
+    w = RowWriter(rows, exp, repo=repo)
     for s in prof["steps"]:
         w.write({"kind": "capacity_step", **{k: v for k, v in s.items() if k not in ("copies", "status")},
                  "copy_walls_s": [round(c["wall_s"], 3) for c in s["copies"]],
@@ -272,12 +275,13 @@ def write(prof: dict, r=None, repo=ROOT, host_load=None, out=OUT) -> dict:
     w.write({"kind": "capacity_profile", **{k: v for k, v in prof.items() if k not in ("steps", "status")},
              "host_load_before": host_load, "status": "record"})
     w.close(note="(O3 capacity profile)")
-    (out / f"{EXP}.json").write_text(json.dumps(dict(prof, host_load_before=host_load), indent=1, sort_keys=True,
+    (out / f"{exp}.json").write_text(json.dumps(dict(prof, host_load_before=host_load), indent=1, sort_keys=True,
                                                 default=str) + "\n", encoding="utf-8")
-    sha = commit_path(out / f"{EXP}.json", EXP, "(profile JSON)", repo=repo)
+    sha = commit_path(out / f"{exp}.json", exp, "(profile JSON)", repo=repo)
     if r is not None and prof.get("k_star"):
         r.set(PROFILE_KEY, json.dumps({"k_star": prof["k_star"], "threads_per_worker": prof["threads_per_worker"],
-                                       "exp": EXP, "sha": sha, "ts": prof["ts"]}, sort_keys=True))
+                                       "exp": exp, "sha_local": sha, "rows": str(rows), "ts": prof["ts"]},
+                                      sort_keys=True))
     return {"rows": str(rows), "sha": sha}
 
 
@@ -292,21 +296,24 @@ def main(argv=None) -> int:
     p = sub.add_parser("probe")
     p.add_argument("--target-s", type=float, default=TARGET_S)
     p.add_argument("--gens", type=int)
+    p.add_argument("--exp", default=EXP, help="R7: NODE_CAPACITY_PROFILE_R7")
+    p.add_argument("--budget-s", type=float, default=BUDGET_S, help="probe wall budget (R7: 1200)")
     fr = sub.add_parser("profile-from-rows")
     fr.add_argument("--calibration-json", default="null")
+    fr.add_argument("--exp", default=EXP)
     a = ap.parse_args(argv)
     if a.cmd == "copy":
         return copy_main(a.idx, a.gens, a.go, a.ready)
     from primordial.bus import bus
     r = bus.conn()
     if a.cmd == "profile-from-rows":
-        prof = from_rows(OUT / f"{EXP}.jsonl", json.loads(a.calibration_json))
+        prof = from_rows(OUT / f"{a.exp}.jsonl", json.loads(a.calibration_json), exp=a.exp)
         out = write(prof, r=r)
         print(json.dumps({"k_star": prof["k_star"], "threads": prof["threads_per_worker"],
                           "why": prof["rule"]["why"], **out}, sort_keys=True))
         return 0 if prof["k_star"] else 1
     load = bus.host_load(r)
-    prof = probe(target_s=a.target_s, gens=a.gens)
+    prof = probe(target_s=a.target_s, gens=a.gens, budget_s=a.budget_s, exp=a.exp)
     out = write(prof, r=r, host_load=load)
     print(json.dumps({"k_star": prof.get("k_star"), "threads": prof.get("threads_per_worker"),
                       "why": prof["rule"].get("why"), **out}, sort_keys=True))

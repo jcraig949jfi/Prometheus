@@ -90,6 +90,9 @@ def r(monkeypatch):
     monkeypatch.setattr(bus, "URL", URL)
     monkeypatch.setenv("PM_TAG", "t-r7-1")
     monkeypatch.delenv("PM_ROUND_WORKTREES", raising=False)
+    # planted consumers read seconds ago; these tests exercise the DEAD rules, so no recency window here
+    # (test_unregistered_active_consumer_is_flagged_and_never_cleared restores the real window)
+    monkeypatch.setattr(RS, "ACTIVE_IDLE_S", 0.0)
 
     def wipe():
         for pat in ("pm:jobs:*", "pm:worker:*", "pm:prior:*", "pm:round:*", "pm:epoch:*", "pm:events", "pm:gpu:*"):
@@ -321,6 +324,24 @@ def test_clear_fallback_when_state_has_no_round_id(r):
     rr.set(RC.CURRENT, "some-other-round")
     rr.set("pm:jobs:E:stop", "5")
     assert [x["reason"] for x in RS.clear(rr, rid, allowed=[str(ROOT)])["refused"]] == ["FLAG_ROUND_NOT_CLOSED"]
+
+
+def test_unregistered_active_consumer_is_flagged_and_never_cleared(r, monkeypatch):
+    """Live store 16:55: E's worker on pre-registration code read from worker-E 31 ms before the scan, pending 0.
+    It must not look DEAD, and clear must not DELCONSUMER it."""
+    rr, _ = r
+    monkeypatch.setattr(RS, "ACTIVE_IDLE_S", 120.0)
+    rid = closed_prior(rr)
+    lane = f"K{uuid.uuid4().hex[:6]}"
+    key = dead_consumer(rr, lane, "old-code-live")                         # just read, pending 0, unregistered
+    rep = RS.scan(rr, "t-r7", [str(ROOT)])
+    mine = [x for x in rep["residue"] if x.get("lane") == lane]
+    assert [(x["kind"], x["detail"]["consumer"]) for x in mine] == [("UNREGISTERED_ACTIVE_CONSUMER", "old-code-live")]
+    assert not rep["ok"]
+    out = RS.clear(rr, rid, round_id="t-r7", allowed=[str(ROOT)])
+    assert [(x["consumer"], x["reason"]) for x in out["refused"] if x.get("consumer") == "old-code-live"] == [
+        ("old-code-live", "CONSUMER_RECENTLY_ACTIVE")]
+    assert "old-code-live" in [c["name"] for c in rr.xinfo_consumers(key, f"worker-{lane}")]
 
 
 def test_clear_dead_pending_and_live_consumers(r):
