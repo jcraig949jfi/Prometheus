@@ -362,3 +362,4 @@
   reproduces. var(init means) 47.8 vs 2 x var(mutation means) 46.0 -> clears by 1.8. Interaction residual variance
   122.4 exceeds both main effects: most of the spread is init x mutation combination / run noise, not one stream.
   Row means (init) 63.2 / 75.4 / 73.0 / 79.4; column means (mutation) 79.7 / 70.0 / 72.1 / 69.1. Train 21.6-29.2.
+- Receipt D-R6-11 filed 1789492661706-0 (guard 10/10, status NULL, INIT_DOMINATES by 1.76, interaction 122.4 > both main effects), rows e4a4dfefd; ANOM-..0372 RESOLVED.
