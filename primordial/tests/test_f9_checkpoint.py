@@ -99,7 +99,11 @@ def test_three_epoch_job_reproduces_uninterrupted_rows(env):
     done = [json.loads(f["json"]) for _, f in r.xrange(W.DONE.format(Lb))]
     assert [d["status"] for d in done] == ["paused", "paused", "ok"]
     assert [d["segment"] for d in done] == [0, 1, 2] and {d["job_key"] for d in done} == {"walk-b"}
-    assert done[2]["cpu_prior"] > 0                                           # CPU carried across segments
+    # CPU carried across segments, exactly. (Was `> 0`: since F-R6-2 the fingerprint probe imports the module
+    # before the segment's CPU clock starts, so a sleep-heavy walk segment can read 0.0 CPU-s at Windows timer
+    # resolution; the claim is the carry, not that a sleeping job burns CPU.)
+    assert done[1]["cpu_prior"] == pytest.approx(done[0]["cpu_s"], abs=1e-5)
+    assert done[2]["cpu_prior"] == pytest.approx(done[0]["cpu_s"] + done[1]["cpu_s"], abs=1e-5)
     rows_a, rows_b = committed(repo, "rows/a.jsonl"), committed(repo, "rows/b.jsonl")
     assert sorted({x["segment"] for x in rows_b}) == [0, 1, 2]                # it really spanned 3 epochs
     assert stable(rows_b) == stable(rows_a)                                  # exact reproduction

@@ -310,3 +310,8 @@ reviewed by their reports + the combined run; F-R6-2/3/4 + round id by this sess
   at the cited sha, and the cited commit is an ancestor of the pushed branch.
 - Pushed F-R6-1..5 at 09:53 (ae47bb4f1, 4ad0b8980, 9842c4f7b) after one lost push race (remote moved, rejected, re-run
   rebased; never forced). Tests: 22 passed rc 0 (epoch-related + round id).
+- Full suite on 0f2bdb92a: 728 passed, 1 FAILED (test_f9_checkpoint cpu_prior > 0 read 0.0). Cause is mine (F-R6-2):
+  the fingerprint probe imports the fn module BEFORE the segment's CPU clock starts, so a sleep-heavy walk segment
+  can measure 0.0 CPU-s at Windows timer resolution (it passed solo). The assertion is re-aimed at the claim: the
+  carry is exact (segment n cpu_prior == sum of earlier segments' cpu_s); 3 back-to-back runs green. Disclosure:
+  job cpu_s no longer includes the fn module's first import in a fresh child (the probe pays it outside the job).
