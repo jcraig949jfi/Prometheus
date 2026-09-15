@@ -21,6 +21,7 @@ Controls per cell: planted_gate counted n/n, planted_abstain 0/n; else INDETERMI
 from __future__ import annotations
 
 import hashlib
+import json
 import math
 import pathlib
 import time
@@ -49,6 +50,22 @@ CELLS = [
 ]
 
 
+def linear_runs(text: str, gs: int, pressure: str, glen: int) -> list[dict]:
+    """The float linear M2 baseline runs only (family 'linear', genome_bytes == G7 glen), last row per run seed.
+    D-R6-6 job 4fe3ba1d1c3b crashed because R4.runs_from_rows also indexes w1 train128's input-invariant learner
+    archives (g-r4-inv, 384 B, no family) and keeps them as the last row per run seed."""
+    out = {}
+    for line in text.splitlines():
+        if not line.strip():
+            continue
+        x = json.loads(line)
+        if (x.get("kind") == "run" and x.get("gen_seed") == gs and x.get("pressure") == pressure
+                and x.get("rng_family") is None and x.get("family") == "linear"
+                and int(x.get("genome_bytes") or -1) == glen):
+            out[int(x["run_seed"])] = x
+    return [out[k] for k in sorted(out)]
+
+
 def decide_n(i1: bool, controls_ok: bool, reach: list[bool], held: list[bool]) -> str:
     n = len(reach)
     if not (i1 and controls_ok) or n < 8:
@@ -68,7 +85,7 @@ def read_cell(cell: dict, text: str) -> dict:
     gs, pressure = cell["gs"], cell["pressure"]
     train = F.PRESSURES[pressure]
     g7 = E7.G7(gs, "linear")
-    runs = R4.runs_from_rows(text, gs, pressure)
+    runs = linear_runs(text, gs, pressure, g7.glen)
     graw = R4.gate_genome(g7, cell["gate"])
     zraw = np.zeros_like(graw)
     g_tr, g_hd = float(R4.per_seed(g7, graw, train)[0]), float(R4.per_seed(g7, graw, F.HELD64)[0])
@@ -80,6 +97,10 @@ def read_cell(cell: dict, text: str) -> dict:
     per = []
     for x in runs:
         doc = load_elites(x["elites"])
+        if int(doc["glen"]) != g7.glen:
+            per.append({"run_seed": int(x["run_seed"]), "glen_mismatch": int(doc["glen"]), "archive_fit_recount_ok": False,
+                        "reach": False, "held": False, "planted_gate_counted": False, "planted_abstain_counted": False})
+            continue
         per.append({"run_seed": int(x["run_seed"]),
                     "elites_sha256": hashlib.sha256(pathlib.Path(x["elites"]).read_bytes()).hexdigest(),
                     **R4.read_run(g7, doc, graw, zraw, cell["gate_train"], cell["gate_held"], train)})

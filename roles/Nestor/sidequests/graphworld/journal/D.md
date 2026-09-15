@@ -292,3 +292,9 @@
   suite_cheap rows carry their gates (gate_held64 == worlds_r4 == anomaly text). Claimed ANOM-..9536/..9538/..9539.
   D-R6-6 = D-R6-4 reader over the 3 cells, one row, per-cell decision, thresholds scaled to runs found (n = 8 gives
   5/3); new module only, r6_4 untouched since the restart. Test 3 passed rc 0. F filed the import-closure PC 1789489827401-0.
+- D-R6-6 job 4fe3ba1d1c3b ERROR (0 rows, job_end aborted row 2e31ed755): ValueError reshape into (344) on w1 train128.
+  MY index bug: G-R4-3-stage2 lists 16 w1 train128 run rows (8 float linear 344 B + 8 input-invariant learner
+  archives g-r4-inv 384 B, no family); R4.runs_from_rows keeps the last row per run seed, so it picked the learner
+  archives. No cell result was emitted. Fix in r6_6 only (linear_runs: family linear AND genome_bytes == G7 glen; glen
+  mismatch -> INDETERMINATE, not a crash); test asserts 8 linear runs and no g-r4-inv. Worker restarted 12:34:30
+  (A ruling). New predicate D-R6-6b; the aborted row stays in the D-R6-6 rows file.

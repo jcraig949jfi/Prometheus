@@ -25,4 +25,13 @@ def test_cells_decode_and_have_saved_runs():
         g7 = E7.G7(c["gs"], "linear")
         (W, b), C = g7.unpack(R4.gate_genome(g7, c["gate"]))
         assert int((W != 0).sum()) == 1 and list(C[0, 1]) == c["gate"]["act"]
-        assert len(R4.runs_from_rows(text, c["gs"], c["pressure"])) >= 8
+        runs = D.linear_runs(text, c["gs"], c["pressure"], g7.glen)
+        assert [x["run_seed"] for x in runs] == list(range(8))
+        assert all(x["family"] == "linear" and x["genome_bytes"] == g7.glen for x in runs)
+
+
+def test_w1_train128_index_excludes_input_invariant_learner_archives():
+    text = (R4.ROOT / R4.SRC_ROWS).read_text(encoding="utf-8")
+    g7 = E7.G7(1, "linear")
+    runs = D.linear_runs(text, 1, "train128_held64", g7.glen)
+    assert len(runs) == 8 and not any("g-r4-inv" in x["elites"] for x in runs)
