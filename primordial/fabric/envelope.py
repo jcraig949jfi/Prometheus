@@ -95,6 +95,14 @@ def admit(env, kind: str = "cpu", clock: dict | None = None, now: float | None =
     reasons = validate(env)
     if reasons:
         return {"ok": False, "event": STAGE_BUDGET_REFUSAL, "reasons": reasons, "stage": None, "ceiling": None}
+    # H-R7-1 (SWARM_R7 O1, operator 23): EVIDENCE_N_v1 at admission, before any ceiling, clock or simulation.
+    # The rule lives in ONE module (primordial.score.evidence_n); fail closed if it cannot be evaluated.
+    try:
+        from primordial.score.evidence_n import admission_reasons
+        evidence = list(admission_reasons(env))
+    except Exception:                                   # noqa: BLE001 -- no permissive default
+        evidence = ["EVIDENCE_RULE_UNAVAILABLE"]
+    reasons.extend(evidence)
     stage = (clock or {}).get("stage") or env["campaign_stage"]
     if stage not in CEILINGS or stage not in ALLOWED:
         return {"ok": False, "event": STAGE_BUDGET_REFUSAL, "reasons": ["STAGE_NOT_ALLOWED"], "stage": stage,
@@ -124,6 +132,8 @@ def admit(env, kind: str = "cpu", clock: dict | None = None, now: float | None =
             reasons.append("NO_NEW_WORK")
             if len(reasons) == 1:
                 event = NO_NEW_WORK_REFUSAL
+    if evidence:                                        # H-R7-1: the sample refusal names the event, never a stub (D16)
+        event = "SAMPLE_RULE_MISMATCH"
     return {"ok": not reasons, "event": None if not reasons else event, "reasons": reasons, "stage": stage,
             "ceiling": ceil, "stub": bool(reasons) and event == STAGE_BUDGET_REFUSAL}
 

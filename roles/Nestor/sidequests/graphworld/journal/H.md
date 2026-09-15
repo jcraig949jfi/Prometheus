@@ -661,5 +661,26 @@ budget 1789425755152-0).
     seeds; R never told arms; r6+r7 calibration by arm.
   - close_sweep +1: round windows from an injected clock; unknown round gives None.
 - No live Python caller of the v2 anti_prior signature on integration.
+- Suite 506 passed, 1 skipped, pytest rc 0 (16:51). Pushed 7964e3f44 (rebased onto E-R7-2/3 and
+  G-R7-3).
+- LIVE MIGRATION (A 1789505501801-0 authorized, code-owned): migrate_unnamespaced(r, "r6") from
+  the committed 7964e3f44, run 16:52.
+  - The JSON dump was written first (scratchpad prior_keys_r6_premigration_1789505536.json).
+  - Precondition: 5 sources present, 0 r6 targets present.
+  - Moved 5/5, 0 conflicts. Verified sealed 48, commit 48, assign 2, ranks and candidates present,
+    no un-namespaced key left, r5 fingerprint unchanged.
+  - Event PRIOR_KEYS_MIGRATED 1789505536400-0.
+
+## 2026-09-15 16:57, item 1 (part 2): the admit hook (after F's af3b42c74 / 19e34af1e)
+
+- fabric/envelope.admit: right after validate(), reasons += evidence_n.admission_reasons(env),
+  imported at call time. Any error there reads EVIDENCE_RULE_UNAVAILABLE (fail closed). The hook
+  runs before any ceiling or clock check.
+- Event SAMPLE_RULE_MISMATCH whenever an evidence reason is present, even with budget reasons, and
+  stub False (D16, F 1789504304514-0). The worker refuses before spawning the job: zero rows.
+- Test test_r7_h1_evidence_admission.py (live per-lane db, real Worker.serve):
+  - 16/1/16, 32/4/(16,8,4,4) and 32/4/(29,1,1,1) are refused, with no rows file and no
+    PRODUCTION_CANDIDATE stub; 32/4/8 runs and writes its rows.
+  - The exact E-R6-1 envelope under a PRODUCTION clock is refused with zero rows.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".

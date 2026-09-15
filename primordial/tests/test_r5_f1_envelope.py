@@ -120,7 +120,8 @@ def test_worker_refuses_over_ceiling_then_runs_next(env):
     r, repo = env
     RC.start(r, "t-r5-1", stage="PILOT")
     big = EV.example(wall_budget_s=3600, cpu_budget_s=7200, predicate_id="P-big", experiment_class="CLAUSE_A",
-                     cohort="B")
+                     cohort="B", runs_total=32, rng_family_count=4, runs_per_family=8,       # H-R7-1: EVIDENCE_N_v1
+                     families=[4200, 2101, 3303, 5501], n_per_family={"4200": 8, "2101": 8, "3303": 8, "5501": 8})
     W.submit(LANE, "primordial.fabric.selftest_jobs:emit_n", "R5-1-big", "rows/big.jsonl", 60, {"n": 2}, r=r,
              envelope=big)
     W.submit(LANE, "primordial.fabric.selftest_jobs:emit_n", "R5-1-bare", "rows/bare.jsonl", 60, {"n": 2}, r=r)
