@@ -276,3 +276,14 @@
   1910.875, held 1482.5); w1/w34 have none yet (w1 in G's floor remainder). Legacy top-16 TRAIN8 on w7 is 734-1075,
   far below the gate (seen before predicate). Claimed ANOM-..9534. D-R6-4 functions parameterised (defaults unchanged,
   test), D-R6-5 = same reader on w7 (6 passed rc 0). Harness module r6_4 edited: the worker reloads by fingerprint.
+- D-R6-5 job d6eecdc3a3c8 ERROR (0 rows, job_end aborted row 80292450a): TypeError runs_from_rows() takes 1
+  positional argument -- the warm child kept the pre-edit r6_4 module; F-R6-2 fingerprints only the fn module (r6_5,
+  first load), not its imports. My iteration-3 note "the worker reloads by fingerprint" was WRONG for imported modules.
+  Restarted worker D (pids 26800/29484, 12:28:49); resubmitted the identical job; told A,F 1789489737094-0.
+  Rule for myself: after editing ANY harness module, restart the worker, even when the fn module is new.
+- D-R6-5 RECORD (job a1b1ea707084 ok on the restarted worker, 0.86 s, 0 QD, predicate 1789489653073-0): SEARCH_SHORT.
+  I1 7/7 (gate genome 1910.875 / 1482.5 == floors; abstain 189.1875; recount 8/8); controls gate 8/8, abstain 0/8.
+  reach 0/8, held 0/8: no elite in any of 8 archives (~512-538 each) beats the gate on TRAIN8 or reaches its HELD64
+  (best 217-332). Reported: top1 TRAIN8 == 756.75 in 7/8 runs (run 7: 1399.1), top1 HELD64 == abstain 189.19 in 3 --
+  the search stalls on one plateau. Opposite of w13 (OVERFIT_ONLY): w7's HELD is a real search shortfall.
+  Rows file also holds the aborted job_end row of d6eecdc3a3c8; the receipt cites the file.
