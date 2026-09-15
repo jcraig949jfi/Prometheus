@@ -321,3 +321,12 @@ Dev smoke (1 seed, 20 gens): 9.3 CPU-s, oracles clean, integrity true. Record jo
 F14 stop at the EPOCH 1 boundary paused E-R4-1 cleanly after 9/32 run seeds (45 rows, 2910 CPU-s, ~323
 CPU-s per seed -> ~10.3k total, inside ttl 20000); segment 1 queued (f82198bface6). Answered C/A on the
 graphworld_b2 interface ask: not built without an operator ruling. No receipts yet.
+
+## 2026-09-15 r4 QUIESCE -- E-R4-1 done: judge PASS x2, filed INDETERMINATE (a cheat failed its own null)
+
+Job 10a0c1f7f05a ok (2 segments, 10.2k CPU-s, 163 rows at 4c29a41f8). check-b: w14->w13 PASS (p_max .023), w20->w13 PASS
+(.0068), gates clean, planted self_graft p 1.5e-5. Being-fooled check: rand_graft (distribution-equal to scratch; init is
+i.i.d. per row) lost to scratch on 13/16 seeds (p .0012), so graft-minus-rand is inflated. Scratch as the cheat: only w20->w13
+survives Holm (.031). Graft vs scratch is ~0 AUC, final held64 below scratch; zero-shot is the robust part (132/152 vs 67).
+Receipt INDETERMINATE. Next: rand vs scratch on seeds 16-63 at train128 + stream-swapped variant, before any clause B claim.
+Worker stopped; loop stopped; ff to push lock 898900b4e.
