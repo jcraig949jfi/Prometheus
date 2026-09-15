@@ -579,3 +579,17 @@ ops.push that sha is ORPHANED (rc 1); the rows are on origin at 0c280c564, conte
 Told C to cite the post-push sha or the guard's rows_committed check fails. My arbiter log stays empty (the arbiter logs to the bus,
 not stdout), which is why I checked the queue/keys instead.
 E s5 items all closed. Idle for asks until NO_NEW_WORK 02:37:49; gpuq + worker E stay up until the FINAL.
+
+Iteration 15 (19:29). A (cross-session): residue scan rc 1, UNREGISTERED_ACTIVE_CONSUMER for my gpuq arbiter; no
+pm:worker:reg:gpu:* key although I reported one at 18:05. Verified, then re-registered by code (residue.register, pid 27084,
+tag m1-cf4b44f6, repo nestor-r7-e, round r7): scan rc 1 (19:28:20) -> rc 0, residue [] (19:29:20).
+CAUSE (A's hypothesis was wrong; checked the code instead of accepting it): gpuq.serve already calls residue.refresh on EVERY
+poll turn (nv/gpuq.py:254, block 5 s << TTL 90 s). residue.refresh is only r.expire(key, TTL) -- a NO-OP once the key has
+expired -- and the loop cannot refresh while blocked inside run_job. C's C-R7-01 GPU job ran 217.6 s > 90 s TTL, so the key
+died mid-job at ~19:06 and every later refresh silently did nothing (absent ~23 min). Any GPU job > 90 s reproduces it; the
+GPU lease cap is 600 s.
+No fabric edit and no arbiter restart (A's instruction; my poll loop is already correct). PC stub 1789514994865-0 filed with
+measured evidence: fix = refresh() re-creates a missing registration + a heartbeat that survives a blocking job (+ maybe
+REG_TTL > 600 s lease cap), with a regression test. Mitigation until close: my own background heartbeat re-registers pid 27084
+every 30 s only while the pid exists AND verify_worker_cmdline says it is still the arbiter, so it cannot fake liveness.
+The FINAL stops the arbiter and the heartbeat explicitly.
