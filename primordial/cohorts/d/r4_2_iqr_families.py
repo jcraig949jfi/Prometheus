@@ -157,7 +157,8 @@ def analyse(runs: list[dict], cells: dict) -> dict:
         groups = {f: np.array([v for _, v in sorted(vs)]) for f, vs in sorted(fams.items())}
         pool = np.concatenate(list(groups.values()))
         pools[name] = pool
-        draws = np.array([rng.choice(len(pool), 8, replace=False) for _ in range(N_DRAWS)])
+        k = min(8, len(pool))
+        draws = np.array([rng.choice(len(pool), k, replace=False) for _ in range(N_DRAWS)])
         iq = np.array([iqr(pool[d]) for d in draws])
         lo, hi = (float(v) for v in np.percentile(iq, [2.5, 97.5]))
         shift = {f: g + (2 * pool.std() if i == 1 else 0) for i, (f, g) in enumerate(groups.items())}
@@ -175,7 +176,8 @@ def analyse(runs: list[dict], cells: dict) -> dict:
         fl, i4 = pools["float_w1"], pools["int4_w1"]
         wins = 0
         for _ in range(N_DRAWS):
-            a, b = fl[rng.choice(len(fl), 8, replace=False)], i4[rng.choice(len(i4), 8, replace=False)]
+            a = fl[rng.choice(len(fl), min(8, len(fl)), replace=False)]
+            b = i4[rng.choice(len(i4), min(8, len(i4)), replace=False)]
             wins += bool(np.median(b) >= np.median(a) - 0.5 * iqr(a))           # r2 parity; int4 52 B < float 344 B
         vals = lambda name, f: np.array([v for _, v in sorted(by[name][f])])
         blocks = [bool(np.median(vals("int4_w1", g)) >= np.median(vals("float_w1", f)) - 0.5 * iqr(vals("float_w1", f)))
@@ -184,10 +186,10 @@ def analyse(runs: list[dict], cells: dict) -> dict:
     for name, w in (("float_w13", "w13"), ("float_w1", "w1")):
         if name not in pools:
             continue
-        pool, floor = pools[name], float(cells[w]["floor"])
+        pool, floor = pools[name], float(cells[w]["verdicts"]["gate_in|HOLD"]["floor"])     # the active variant
         surv, head = 0, []
         for _ in range(N_SCREEN_DRAWS):
-            s = pool[rng.choice(len(pool), 8, replace=False)]
+            s = pool[rng.choice(len(pool), min(8, len(pool)), replace=False)]
             surv += median_ci(s)[0] > floor
             head.append(float(np.median(s)) - floor)
         fam_surv = {str(f): bool(median_ci([v for _, v in sorted(vs)])[0] > floor) for f, vs in sorted(by[name].items())}
