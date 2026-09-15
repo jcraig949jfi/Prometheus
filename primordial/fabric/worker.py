@@ -57,6 +57,8 @@ PUSH_LOCK = "pm:push:lock:{}"       # ops.push holds it during a rebase; the wor
                                     # Separate from STOP: the epoch controller clears STOP at resume (E, 09-15).
 WSTATE = "pm:worker:{}"             # hash {state: idle|busy|stopped, job_id, ts}, TTL WSTATE_TTL
 WSTATE_TTL = 30
+REG = "pm:worker:reg:{}:{}"         # F-R7-1: hash {pid, lane, repo, round_id, cmdline, host, started_ts, tag}, TTL REG_TTL
+REG_TTL = 90
 SEGMENT_GRACE_S = 60.0              # F-R6-4: a checkpointable job past its segment wall gets this long to pause
 RESUMABLE = "pm:resumable"         # F-R5-3: hash job_key -> resumable job object (JSON)
 PROGRESS = "pm:progress:{}:{}"      # F-R5-3: ctx.progress() units, readable after a kill
@@ -97,6 +99,9 @@ def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs:
     fp = code_file_sha256 or code_file_sha256_of(fn)
     if fp:
         spec["code_file_sha256"] = fp
+    repo = code_repo_of(fn)                  # F-R7-3 (D14 guard): where the submitter's code lives
+    if repo:
+        spec["code_repo"] = repo
     r.xadd(JOBS.format(lane), spec)
     return job_id
 
@@ -127,6 +132,37 @@ def code_file_sha256(fn: str) -> str | None:
 
 
 code_file_sha256_of = code_file_sha256      # submit() has a parameter of the same name
+
+
+def _repo_root(path, modname: str) -> str | None:
+    """The sys.path root a module was imported from (for primordial.x.y: the worktree), forward slashes."""
+    if not path:
+        return None
+    p = pathlib.Path(path).resolve()
+    depth = len(modname.split(".")) - (0 if p.name == "__init__.py" else 1)
+    try:
+        return p.parents[depth].as_posix()
+    except IndexError:
+        return None
+
+
+def code_repo_of(fn: str) -> str | None:
+    import importlib.util
+    mod = fn.partition(":")[0]
+    try:
+        spec = importlib.util.find_spec(mod)
+    except (ImportError, ValueError):
+        return None
+    return _repo_root(spec.origin, mod) if spec is not None and spec.origin else None
+
+
+def _norm_path(p) -> str | None:
+    return None if not p else os.path.normcase(os.path.abspath(str(p))).replace("\\", "/").rstrip("/")
+
+
+def _closure_prefixes() -> tuple:
+    """F-R7-3: module-name prefixes that count as in-repo code (the import closure fingerprinted per job)."""
+    return tuple(x for x in os.environ.get("PM_CLOSURE_PREFIXES", "primordial.").split(",") if x)
 
 
 def resumables(r) -> dict:
@@ -210,14 +246,31 @@ class Ctx:
 _LOADED: dict = {}                  # F-R6-2 (child): module -> sha256 of its source when this child imported it
 
 
+_CLOSURE: dict = {}                 # F-R7-3 (child): in-repo module -> (file, sha256 when this child first saw it)
+
+
+def _snapshot_closure() -> None:
+    pre = _closure_prefixes()
+    for name, m in list(sys.modules.items()):
+        if name in _CLOSURE or not name.startswith(pre):
+            continue
+        f = getattr(m, "__file__", None)
+        if f and os.path.exists(f):
+            _CLOSURE[name] = (f, _file_sha(f))
+
+
 def _loaded_sha(mod: str) -> dict:
+    """-> {sha: the fn module as loaded, stale: in-repo modules whose source changed since loaded, repo}."""
     if mod not in _LOADED:
         try:
             m = importlib.import_module(mod)
         except Exception:
-            return {"sha": None, "error": traceback.format_exc()[-500:]}
+            return {"sha": None, "stale": [], "repo": None, "error": traceback.format_exc()[-500:]}
         _LOADED[mod] = _file_sha(getattr(m, "__file__", None))
-    return {"sha": _LOADED[mod]}
+    _snapshot_closure()
+    stale = sorted(n for n, (f, s) in _CLOSURE.items() if _file_sha(f) != s)
+    return {"sha": _LOADED[mod], "stale": stale,
+            "repo": _repo_root(getattr(sys.modules.get(mod), "__file__", None), mod)}
 
 
 def _child_main(pipe, url: str, lane: str) -> None:
@@ -226,6 +279,7 @@ def _child_main(pipe, url: str, lane: str) -> None:
         job = pipe.recv()
         if job is None:
             return
+        _snapshot_closure()                                  # F-R7-3: modules a finished job imported lazily
         if "probe" in job:                                   # F-R6-2: which code would this child run?
             pipe.send(_loaded_sha(job["probe"]))
             continue
@@ -379,16 +433,29 @@ class Worker:
     def run_job(self, job: dict) -> dict:
         if self.child is None or not self.child.is_alive():
             self._spawn()
-        want = job.get("code_file_sha256")
-        if want:                                             # F-R6-2 (D4): never run stale resident code
+        want, want_repo = job.get("code_file_sha256"), job.get("code_repo")
+        if want or want_repo:                                # F-R6-2 (D4) + F-R7-3: never run stale resident code
             got = self._probe(job["fn"])
-            if got.get("sha") != want:
+            if want_repo and not got.get("error") and _norm_path(got.get("repo")) != _norm_path(want_repo):
+                # D14 guard: this child imports the code from another repo; a respawn cannot change sys.path
+                return self._refuse(job, {"ok": False, "event": "CODE_REPO_MISMATCH", "reasons": ["CODE_REPO_MISMATCH"],
+                                          "stage": None, "ceiling": None, "loaded": got.get("repo"),
+                                          "want": want_repo}, stub=False)
+
+            def stale(g):
+                return (want and g.get("sha") != want) or bool(g.get("stale"))
+            if stale(got):
+                changed = list(got.get("stale") or [])
+                mod = job["fn"].partition(":")[0]
+                if want and got.get("sha") != want and mod not in changed:
+                    changed.append(mod)
                 self._kill_child()
                 self._spawn()
                 self._event("CODE_RELOADED", {"job_id": job["job_id"], "job_key": job.get("job_key"),
-                                              "fn": job["fn"], "loaded": got.get("sha"), "want": want})
+                                              "fn": job["fn"], "loaded": got.get("sha"), "want": want,
+                                              "changed": changed})
                 got = self._probe(job["fn"])
-                if got.get("sha") != want:
+                if stale(got):
                     return self._refuse(job, {"ok": False, "event": "CODE_FINGERPRINT_MISMATCH",
                                               "reasons": ["CODE_FINGERPRINT_MISMATCH"], "stage": None,
                                               "ceiling": None, "loaded": got.get("sha"), "want": want,
@@ -520,10 +587,30 @@ class Worker:
         k = WSTATE.format(self.lane)
         self.r.hset(k, mapping={"state": state, "job_id": job_id, "ts": f"{time.time():.3f}"})
         self.r.expire(k, WSTATE_TTL)
+        if getattr(self, "_reg_key", None):                  # F-R7-1: the registration lives as long as the heartbeat
+            self.r.expire(self._reg_key, REG_TTL)
+
+    def _register(self) -> None:
+        """F-R7-1 (D14): register this process (os.getpid() is the real interpreter, not a venv launcher) so the
+        round close can stop exactly it and the residue scan can see its repo and round."""
+        import psutil
+        pid = os.getpid()
+        self._reg_key = REG.format(self.lane, pid)
+        try:
+            cmdline = psutil.Process(pid).cmdline()
+        except Exception:
+            cmdline = list(sys.argv)
+        self.r.hset(self._reg_key, mapping={
+            "pid": pid, "lane": self.lane, "repo": str(self.repo.resolve()).replace("\\", "/"),
+            "round_id": self.r.get("pm:round:current") or "", "cmdline": json.dumps(cmdline),
+            "host": os.environ.get("COMPUTERNAME", ""), "started_ts": f"{time.time():.3f}",
+            "tag": os.environ.get("PM_TAG", "")})
+        self.r.expire(self._reg_key, REG_TTL)
 
     def serve(self, max_jobs: int | None = None, block_ms: int = 5000, idle_exit_s: float | None = None,
               deadline_s: float | None = None) -> list:
         consumer = os.environ.get("PM_TAG", "worker")
+        self._register()
         done, idle0 = [], time.monotonic()
         end = None if deadline_s is None else time.monotonic() + deadline_s
         try:
@@ -554,7 +641,7 @@ class Worker:
                 verdict = self._admit(job)
                 if verdict is not None and not verdict["ok"]:
                     broker.release(self.r, tok)
-                    done.append(self._refuse(job, verdict))
+                    done.append(self._refuse(job, verdict, stub=verdict.get("stub", True)))   # R7: no stub for sample refusals
                     self.r.xack(JOBS.format(self.lane), self.group, mid)
                     continue
                 if tok is not None:
@@ -577,6 +664,9 @@ class Worker:
 
     def stop(self) -> None:
         self.r.delete(WSTATE.format(self.lane))
+        if getattr(self, "_reg_key", None):
+            self.r.delete(self._reg_key)
+            self._reg_key = None
         if self.child is not None and self.child.is_alive():
             try:
                 self.pipe.send(None)

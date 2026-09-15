@@ -210,6 +210,21 @@ class EpochController:
         rec["sha"] = commit_path(self.out, f"ROUND-{rid}", "(round close record)", repo=self.repo)
         self._event("round_committed", sha=rec["sha"])
         self._push()
+        # F-R7-1 (D12 + D14): stop exactly the registered worker processes, THEN clear the stop flags, so no
+        # worker of this round can wake into the next one. Events go to the outside log only (F-R6-1).
+        from primordial.ops import residue
+        actions = residue.stop_registered(self.r, round_id=rid, lanes=self.lanes)
+        self._event("workers_stopped", actions=actions)
+        for L in self.lanes:
+            self.r.delete(STOP.format(L))
+        self._event("flags_cleared", lanes=self.lanes)
+        # D18: a closed round must not stay current (admission refused every build-phase job NO_NEW_WORK). Only
+        # if the pointer still names THIS round; the pm:round:<rid> hash stays as history. Outside-log event only.
+        from primordial.ops import round_clock as RC
+        if self.r.get(RC.CURRENT) == rid:
+            self.r.delete(RC.CURRENT)
+            self._event("current_unset", round_id=rid)
+        rec["workers_stopped"] = actions
         return rec
 
     def boundary(self, n: int, resume: bool = True, max_drain_s: float | None = None) -> dict:
@@ -286,13 +301,16 @@ def parser() -> argparse.ArgumentParser:
     bo.add_argument("--lanes", required=True)
     rd = sub.add_parser("round", help="F-R5-2: start (or join) the round clock and run it to close")
     rd.add_argument("--lanes", required=True)
-    rd.add_argument("--round", default="r6")
+    from primordial.ops import round_clock as RC
+    rd.add_argument("--round", default=RC.DEFAULT_ROUND, help="default: round_clock.DEFAULT_ROUND (one source)")
     rd.add_argument("--stage", default=None, help="default: round_clock.ROUNDS row of --round")
     # F-R6-6: the clock shape; each default (None) is the ROUNDS row of --round, so --round r5 is exactly R5
     rd.add_argument("--epoch-s", type=float, default=None)
     rd.add_argument("--epochs", type=int, default=None)
     rd.add_argument("--drain-s", type=float, default=None)
     rd.add_argument("--close-s", type=float, default=None)
+    rd.add_argument("--allow-repos", "--allowed-repos", dest="allowed_repos", default=None,
+                    help="F-R7-1: G=F:/x;B=F:/y or a flat comma list (default: ROUNDS lane_repos)")
     for p in (ru, bo, rd):
         p.add_argument("--repo", default=os.environ.get("PM_EPOCH_REPO"),
                        help="the controller's own worktree (F-R5-6); never a lane or conductor worktree")
@@ -314,8 +332,15 @@ def main(argv=None) -> int:
     repo = pathlib.Path(a.repo).resolve()
     kw = {"out": repo / EPOCHS_REL, "repo": repo, "push": True}
     if a.cmd == "round":
+        from primordial.ops import residue
         from primordial.ops import round_clock as RC
         ec = EpochController(lanes, **kw)
+        allowed = a.allowed_repos                       # residue.parse_allow: per-lane map or flat list
+        rep = residue.scan(ec.r, a.round, allowed)       # F-R7-1: no clock opens over residue (read-only scan)
+        if not rep["ok"]:
+            print(json.dumps(rep, sort_keys=True, default=str))
+            print(f"refused: residue in the live store ({len(rep['residue'])} items)", file=sys.stderr)
+            return 3
         rec = ec.run_round(RC.start(ec.r, a.round, **round_shape(a)))
         print(json.dumps({k: rec[k] for k in ("round_id", "closed_ts", "sha")}, sort_keys=True))
         return 0

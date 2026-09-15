@@ -48,7 +48,8 @@ def test_start_is_idempotent_no_extension():
     try:
         a = RC.start(r, RID, start_ts=1000.0, **RC.ROUNDS["r5"])
         b = RC.start(r, RID, start_ts=99999.0)
-        assert a == b == RC.read(r) and b["end_ts"] == 8200.0
+        # by id: read(r) without an id now hides a round whose end_ts has passed (D18); this clock ended at 8200
+        assert a == b == RC.read(r, RID) and b["end_ts"] == 8200.0 and RC.read(r) is None
     finally:
         r.delete(RC.KEY.format(RID), RC.CURRENT)
 
@@ -110,7 +111,11 @@ def test_round_runs_itself_and_refuses_after_no_new_work(env):
     wt.join(timeout=30)
 
     names = [e["event"] for e in ec.events]
-    assert names[0] == "round_start" and names[-2:] == ["round_closed", "round_committed"]
+    # F-R7-1 close contract: the close record is committed, THEN the registered workers are stopped, THEN the
+    # stop flags are cleared (round 6 D12/D14: flags left set, a live worker woke into the next round)
+    assert names[0] == "round_start" and names[-5:] == ["round_closed", "round_committed", "workers_stopped",
+                                                        "flags_cleared", "current_unset"]
+    assert r.get(RC.CURRENT) is None and RC.read(r, RID) is not None                  # D18: pointer gone, history kept
     assert names.count("resumed") == 3 and names.count("drain_hold") == 1
     assert names.index("no_new_work") > max(i for i, n in enumerate(names) if n == "resumed")
     assert names.index("no_new_work") < names.index("drain_hold")
@@ -130,5 +135,5 @@ def test_round_runs_itself_and_refuses_after_no_new_work(env):
     log = subprocess.run(["git", "-C", str(repo), "log", "--format=%s"], capture_output=True, text=True).stdout
     for tag in ("EPOCH-1", "EPOCH-2", "EPOCH-3", "EPOCH-4", f"ROUND-{RID}"):
         assert tag in log, tag
-    assert r.hget(EP.STATE, "phase") == "closed" and r.exists(W.STOP.format(LANE))
+    assert r.hget(EP.STATE, "phase") == "closed" and not r.exists(W.STOP.format(LANE))   # F-R7-1: cleared at close
     assert rec["budget"]["by_cohort"]["F"]["jobs"] == len(done)

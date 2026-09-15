@@ -348,3 +348,35 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
 - Tests updated where they pinned the old row or used a non-checkpointable 2400 s job (the new rule refused them
   correctly). metric/r16_cells.py CPU_BUDGET_S = 14400 is G's copy of the old budget: told G (1789504767181-0).
 - 89 passed rc 0 on the envelope/clock/R6/receipt-guard/r16_cells subset.
+
+## 2026-09-15 R7 iteration 2 -- F-R7-3 import-closure fingerprint + D18 current-round fix (DONE locally)
+
+- F-R7-3 worker.py: the warm child snapshots every in-repo module it has loaded (primordial.*; PM_CLOSURE_PREFIXES
+  for tests), each as (file, sha256 at first sight), refreshed each loop; the probe returns {sha, stale, repo}. A
+  stale closure or fn sha mismatch -> respawn + CODE_RELOADED {changed}; still stale -> refused
+  CODE_FINGERPRINT_MISMATCH. submit stamps code_repo (the sys.path root the fn was imported from); a child importing
+  from another repo -> refused CODE_REPO_MISMATCH at once (D14 guard). Test replays D-R6-5 inside one serve(): helper
+  signature changed + new job module -> runs, CODE_RELOADED names the helper; unchanged -> no respawn; 14 passed rc 0.
+- D18 (A): round_clock.read(r) without a round id returns None past end_ts or when pm:epoch:state marks that round
+  closed (a closed r6 in pm:round:current refused every build job NO_NEW_WORK); read(r, id) stays history;
+  active() reads by explicit id so the receipt guard's close-out grace survives. The close unsets current and scan
+  flags it (fork, in flight). test_r6_round_id asserted read(r) of a past round: corrected.
+- Push blocked 16:45 (PUSH_RC 4): ops.push will not rebase over the fork's uncommitted files; no stash, no WIP
+  commit of fork work; cc10210d1 (F-R7-2/5) waits to push with F-R7-1.
+
+## 2026-09-15 R7 iteration 3 -- F-R7-1 residue hygiene (DONE, built by a fork of this session) + batch push
+
+- worker.py registers pm:worker:reg:<L>:<pid> {pid, lane, repo, round_id, cmdline, host, started_ts, tag} (TTL 90 s,
+  refreshed with the heartbeat, deleted on stop). ops/residue.py: scan (read-only, rc 1) kinds STOP_FLAG,
+  FOREIGN_REPO (per-lane declared repos: --allow-repos, else ROUNDS[r]["lane_repos"]), MULTI_CONSUMER (live =
+  registered, alive, argv tokens verified), DEAD_CONSUMER, UNARCHIVED_PRIOR_KEY, CURRENT_POINTS_AT_CLOSED_ROUND;
+  stop (registered pids only, argv tokens, own pid skipped; unregistered decoys survive in tests); clear
+  --prior-round (flags only for a closed prior round at its final epoch value, DELCONSUMER only pending 0 and no
+  live pid, current only if it names a closed prior round; pm:prior:* never; RESIDUE_CLEARED events; rc 2 on refusal);
+  register/refresh/unregister for the gpu arbiter (lane gpu, argv -m primordial.nv.gpuq serve).
+- epoch round refuses rc 3 on residue before any clock write; the close: commit, push, stop registered workers, clear
+  flags, unset current (outside-log events only). --round default = round_clock.DEFAULT_ROUND.
+- Fork found its own defect: the argv check required >= 5 tokens, so a bare 4-token gpuq serve never counted live.
+- Combined run (R7 + R5/R6 fabric + liveness + receipt guard + r16_cells), db 6: 180 passed rc 0.
+- Live store (fork, read-only): E runs an F7 worker from nestor-r6-e (pids 8668, 28760) -> FOREIGN_REPO under the r7
+  map; told A. Not touched.
