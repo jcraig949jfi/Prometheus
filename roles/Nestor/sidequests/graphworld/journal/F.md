@@ -418,3 +418,12 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
 - Effective threads verified from the committed rows (each copy stamps numba.get_num_threads): {"steps": [[1, 8, [8], 0], [2, 8, [8, 8], 0], [3, 5, [5, 5, 5], 0]], "threads_ok": true, "k_star": 2, "exp": "NODE_CAPACITY_PROFILE_R7", "untested": [4, 6, 8]}
 - Rows 8c088ea39 + JSON d3a6cc3c3 (local shas; rebased by the push). pm:capacity:profile exp NODE_CAPACITY_PROFILE_R7,
   k_star 2, threads_per_worker 8, sha_local only (no orphanable pushed sha).
+
+## 2026-09-15 17:27 -- F R7 BUILD DONE (posted to A, G), about 58 min of the 2 h build window
+
+- F-R7-2/5 af3b42c74; D18 2e13d4014; F-R7-1 + D18 parts 2/3 + F-R7-3 19e34af1e; D19 7cff32250; residue recency + probe
+  prep 606df2613; probe thread stamps 1d969c64a; NODE_CAPACITY_PROFILE_R7 rows 8c088ea39 / JSON d3a6cc3c3.
+- k* = 2 workers x 8 threads.
+- Full suite on 703ee6c8b: 910 passed, 9 skipped, 1 FAILED (G's worktree-absolute plan path; G's fix d30bf1cf6 not
+  on integration yet), pytest rc 1. No F test fails. Gate 41 needs G's push.
+- No worker, clock or controller started by F. Lane F idle on asks.
