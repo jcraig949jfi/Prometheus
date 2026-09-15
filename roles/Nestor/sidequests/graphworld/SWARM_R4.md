@@ -175,7 +175,28 @@ float linear baseline on that cell:
 - Tests via per-lane live dbs (primordial/tests/_live.py). Never db 0, never
   flushdb a shared db.
 
-## 7. Open questions for the operator (P0 computes both answers; launch waits)
+## 7. Operator rulings (message 13): Q1 GATE IN, Q2 HOLD
+
+The active variant is `gate_in|HOLD`, and `qd_ledger check` reads it. G and
+H still write all four variants.
+
+- Floor = max(abstain, best constant, uniform random, input-invariant learner,
+  2-action gate) for that pressure.
+- SURVIVED iff the baseline's ci95 low > that floor. Only SURVIVED worlds
+  carry clause A (B), are drawn by C, and host E's transfer work.
+- HELD iff the gate beats the four-policy floor but the baseline does not
+  beat the full floor: the world rewards reaction and the baseline search
+  missed it.
+  - Each HELD world x pressure is filed by the conductor as an OPEN anomaly
+    for D.
+  - It carries no clause A: the progress denominator is <= 0.
+  - It stays out of B and C's grids until D resolves it and G re-screens it.
+- CULLED otherwise.
+- Launch: operator "launch when G and H are ready", so gate item 4 is met.
+  If the screen yields 0 SURVIVED but >= 1 HELD, the conductor asks the
+  operator before launching B, since B would have no cells.
+
+Original questions (kept as the record):
 
 - Q1 GATE IN THE FLOOR? Message 12 lists a four-policy suite, and also names
   w1's 170.47 (the 2-action gate) as the floor.
