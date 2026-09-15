@@ -42,7 +42,10 @@ AXES = {
 }
 
 
-NON_GRAPHWORLD = ["graphworld_b2", "signal_world_d1", "nk_stub"]
+# graphworld_b2 removed for round 4 (conductor, 09-15, C-R4-02/03): the B2 toy has no observation vector,
+# no action channel and no charge, so every draw on it aborts for every representation. Giving it a
+# controllable interface means authoring a world objective (E + operator), not a draw-grid change.
+NON_GRAPHWORLD = ["signal_world_d1", "nk_stub"]
 _FROM_FILE = object()
 
 

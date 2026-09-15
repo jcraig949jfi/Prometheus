@@ -71,7 +71,7 @@ def test_draw_is_reproducible_and_on_grid(monkeypatch):
     assert a["cell"] == b["cell"]
     assert all(a["cell"][k] in ax[k] for k in ax)
     assert ax["world"] == ["w7"] + DC.NON_GRAPHWORLD
-    assert a["grid_cells"] == 13 * 4 * 8 * 6 * 2
+    assert a["grid_cells"] == 13 * (1 + len(DC.NON_GRAPHWORLD)) * 8 * 6 * 2
 
 
 def test_draw_prefers_unvisited_cells(monkeypatch):
@@ -89,3 +89,10 @@ def test_draw_takes_graphworld_worlds_only_from_survivors(monkeypatch):
     assert "w7" in drawn and not drawn & {"w1", "w2", "w3", "w4", "w5", "w8", "w9"}
     none = {DC.draw(seed=s, doc=None)["cell"]["world"] for s in range(200)}      # no screen file: no graphworld
     assert none <= set(DC.NON_GRAPHWORLD)
+
+
+def test_graphworld_b2_is_not_drawable_in_round_4():
+    # C-R4-02/03: B2 has no obs/action/charge interface, so every draw on it aborted
+    from primordial.ops import draw_cell as DC
+    assert "graphworld_b2" not in DC.NON_GRAPHWORLD
+    assert "graphworld_b2" not in DC.axes(None)["world"]
