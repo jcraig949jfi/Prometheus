@@ -114,7 +114,9 @@ def refuted_targets(rec: dict, exp_lane: dict[str, str]) -> list[str]:
     return sorted(n for n in names if n in exp_lane and n != rec["exp_id"])
 
 
-def vector(export=EXPORT, root=ROOT, window=(ROUND2_START, float("inf")), cohorts=COHORTS) -> dict:
+def vector(export=EXPORT, root=ROOT, window=(ROUND2_START, float("inf")), cohorts=COHORTS, worlds=None) -> dict:
+    """worlds: None = the round 2 compression rule; a loaded worlds_r4.json (or {} for none on disk) =
+    round 4, where only SURVIVED cells are judged (primordial.score.clause_a_r4, H-R4-2)."""
     export, root = pathlib.Path(export), pathlib.Path(root)
     results = jsonl(export / f"pm_results_{DATE}.jsonl")
     anomalies = jsonl(export / f"pm_anomalies_{DATE}.jsonl")
@@ -124,7 +126,11 @@ def vector(export=EXPORT, root=ROOT, window=(ROUND2_START, float("inf")), cohort
     for lane in cohorts:
         recs = [r for r in results if r["lane"] == lane and _in(r["ts"], window)]
         rows = rows_of(root, lane, window)
-        comp = compression(qd, lane, window)
+        if worlds is None:
+            comp = compression(qd, lane, window)
+        else:
+            from primordial.score.clause_a_r4 import compression_r4
+            comp = compression_r4(qd, lane, window, worlds or None)
         cells = {_cell(r) for r in qd if r.get("cohort") == lane and not r.get("baseline") and not r.get("floor")
                  and _in(r.get("ts"), window)}
         failures = [r for r in rows if r.get("status") in FAILURE_STATUSES]
@@ -178,23 +184,36 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--export", default=str(EXPORT))
     ap.add_argument("--write", action="store_true")
+    ap.add_argument("--round", choices=("r2", "r4"), default="r2")
+    ap.add_argument("--since", type=float, default=ROUND2_START, help="window start (ts); set it for round 4")
+    ap.add_argument("--worlds", default=None, help="worlds_r4.json path (round 4; default the ledger's)")
     a = ap.parse_args(argv)
-    v = vector(a.export)
+    worlds = None
+    if a.round == "r4":
+        from primordial.score import clause_a_r4 as CA
+        worlds = CA.load_worlds(a.worlds or CA.WORLDS_R4) or {}
+    v = vector(a.export, window=(a.since, float("inf")), worlds=worlds)
     print("cohort " + " ".join(f"{x[:11]:>11s}" for x in AXES))
     for lane, d in v.items():
         print(f"{lane:6s} " + " ".join(f"{d['axes'][x]:11d}" for x in AXES))
     for lane, d in v.items():
         c = d["detail"]["compression"]
-        print(f"{lane} compression raw_pass={c['raw_pass']} floor={c['floor_verdicts']} scored={c['value']}")
+        if worlds is None:
+            print(f"{lane} compression raw_pass={c['raw_pass']} floor={c['floor_verdicts']} scored={c['value']}")
+        else:
+            print(f"{lane} compression variant={c['variant']} verdicts={c['verdicts']} scored={c['value']} "
+                  f"mismatches={len(c['mismatches'])}")
     if a.write:
-        if OUT.exists():
-            print(f"{OUT.relative_to(ROOT).as_posix()} exists; rows are append-only, not rewritten")
+        out = OUT if a.round == "r2" else OUT.with_name("F12-progress-vector-r4.jsonl")
+        if out.exists():
+            print(f"{out.relative_to(ROOT).as_posix()} exists; rows are append-only, not rewritten")
             return 1
         from primordial.fabric.rows import RowWriter
-        with RowWriter(OUT, "F12-progress-vector-r2", commit_every_s=10**9) as w:
+        with RowWriter(out, f"F12-progress-vector-{a.round}", commit_every_s=10**9) as w:
             for d in v.values():
-                w.write({"kind": "progress_vector", "status": "record", "window": [ROUND2_START, None], **d})
-        print(f"wrote {OUT.relative_to(ROOT).as_posix()}")
+                w.write({"kind": "progress_vector", "status": "record", "round": a.round,
+                         "window": [a.since, None], **d})
+        print(f"wrote {out.relative_to(ROOT).as_posix()}")
     return 0
 
 

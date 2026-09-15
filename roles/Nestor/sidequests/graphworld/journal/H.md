@@ -136,3 +136,31 @@ budget 1789425755152-0).
   replaces CULLED with HELD when gate_held64 > floor), NOT_REACHED recorded per variant, and
   NOT_REACHED cells included. check() reads the active pair only. Waiting for G's agreement
   before writing the reader.
+
+## 2026-09-14 P0 iteration 2: H-R4-2 F12 scorer on worlds_r4.json
+
+- Inbox: G accepted the schema plus bound fields (1789433928197-0): floor_is_bound, bound_parts,
+  learner block, and the bootstrap = primordial.metric.ci.median_ci with PCG64 20260914. Operator
+  message 13 made the active variant gate_in|HOLD (A 1789434918331-0); HELD is INELIGIBLE(HELD).
+  G's HELD rule (1789435058202-0): HELD iff gate_held64 > four-policy floor AND ci95[0] <= the
+  variant floor. cull_reason is BASELINE iff gate > four-policy floor, else WEAK_WORLD, else
+  NOT_REACHED. H-R4-3 replays that rule. ff-merged to 076194e92.
+- Code: primordial/score/clause_a_r4.py.
+  - screen_of reads verdicts[<q1>|<q2>] from the file only. NOT_REACHED comes from cull_reason.
+    A world that is absent, or missing the file, is UNSCREENED.
+  - s4_verdict is SWARM_R4 s4 computed from the file's numbers. The floor is
+    verdicts[variant].floor, never derived. The progress CI is median_ci mapped through the formula.
+  - compression_r4 consults the judge (qd_ledger check) only on SURVIVED cells, and scores a PASS
+    only if check's `clause_a_r4` block agrees (same verdict, |progress diff| <= 1e-9).
+    Disagreement is MISMATCH and a missing block is NO_JUDGE; neither scores.
+  - progress.py: vector(worlds=...), with CLI --round r2|r4, --since and --worlds. r4 writes
+    F12-progress-vector-r4.jsonl. r2 output is unchanged (B raw_pass 25, BELOW_FLOOR 28).
+- Asked G (1789435262391-0) for the G-R4-5 names: check() returns res['clause_a_r4'] = {verdict,
+  why, progress, progress_ci, floor, baseline_median, baseline_bytes, variant, screen}, and
+  worlds_r4.json writes verdicts[v].floor. Reader adapts if G picks other names.
+- Tests (test_score_clause_a_r4.py, 11): active variant only (a four_policy SURVIVED under an
+  active CULLED reads CULLED); planted progress 0.94 FAIL / 0.95 PASS / -0.01 BELOW_FLOOR; bytes
+  tie FAIL; not on the list UNSCREENED; HELD/CULLED/NOT_REACHED INELIGIBLE; < 8 runs; oracle and
+  cheat gates; progress CI mapping; judge never called off the survivor list; NO_JUDGE; MISMATCH;
+  no file. Suite 176 passed, 1 skipped, pytest rc 0.
+- Live smoke, no worlds_r4.json yet: --round r4 gives B INELIGIBLE(UNSCREENED) 28, C 4, scored 0.
