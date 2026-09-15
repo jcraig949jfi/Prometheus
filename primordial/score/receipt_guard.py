@@ -101,23 +101,19 @@ def envelope_of_job(lane: str, job_id: str | None, r=None) -> dict | None:
     return None
 
 
-ROUND_CURRENT = "pm:round:current"   # F-R5-2 clock: pm:round:current = r5; hash pm:round:r5 {start_ts, end_ts, ...}
 CLOSE_OUT_GRACE_S = 1800.0           # A 1789467821844-0: close-out receipts are still guarded
 
 
 def active_round(r, now: float | None = None, grace_s: float = CLOSE_OUT_GRACE_S) -> str | None:
-    """The round whose clock window [start_ts, end_ts + grace] holds now; None if the clock key is absent."""
-    import time
-    now = time.time() if now is None else now
-    cur = r.get(ROUND_CURRENT)
-    if not cur:
-        return None
-    h = r.hgetall(f"pm:round:{cur}") or {}
+    """The active round id from F's clock (primordial.ops.round_clock.active: pm:round:current -> pm:round:<id>,
+    now in [start_ts, end_ts + grace]); one clock reader for the guard and launch-gate item 16. An absent clock
+    key is no active round; a malformed clock hash also reads as none rather than crashing bus.receipt."""
+    from primordial.ops import round_clock as RC
     try:
-        start, end = float(h["start_ts"]), float(h["end_ts"])
+        clock = RC.active(r, now=now, grace_s=grace_s)
     except (KeyError, TypeError, ValueError):
         return None
-    return cur if start <= now <= end + grace_s else None
+    return None if clock is None else str(clock.get("round_id") or r.get(RC.CURRENT))
 
 
 def should_guard(rec: dict, r, now: float | None = None) -> bool:

@@ -119,11 +119,18 @@ def test_a_missing_campaign_stage_is_refused(repo):
 
 
 class Clock:
-    """pm:round:current -> pm:round:<r> {start_ts, end_ts} (F 1789467306628-0)."""
+    """pm:round:current -> pm:round:<r>, the hash F's round_clock.start writes (plan(): end_ts = start + 7200)."""
 
-    def __init__(self, current=None, start=None, end=None):
+    def __init__(self, current=None, start=None, end=None, hash_override=None):
+        from primordial.ops import round_clock as RC
         self.kv = {} if current is None else {"pm:round:current": current}
-        self.h = {} if start is None else {f"pm:round:{current}": {"start_ts": str(start), "end_ts": str(end)}}
+        self.h = {}
+        if start is not None:
+            plan = RC.plan(start, round_id=current)
+            assert end is None or plan["end_ts"] == end
+            self.h[f"pm:round:{current}"] = {k: str(v) for k, v in plan.items()}
+        if hash_override is not None:
+            self.h[f"pm:round:{current}"] = hash_override
 
     def get(self, k):
         return self.kv.get(k)
@@ -144,6 +151,10 @@ def test_the_guard_triggers_on_the_active_round_clock_not_on_field_presence():
     assert RG.active_round(Clock(), now=5000.0) is None
     assert RG.active_round(live, now=5000.0) == "r5"
     assert RG.should_guard({**legacy, "campaign_stage": "PILOT"}, Clock(), now=5000.0)   # the field alone still guards
+    partial = Clock("r5", hash_override={"start_ts": "1000.0", "end_ts": "8200.0"})       # malformed (no epoch_s)
+    assert RG.active_round(partial, now=5000.0) is None                                  # no crash inside bus.receipt
+    from primordial.ops import round_clock as RC
+    assert RG.active_round(live, now=5000.0) == RC.active(live, now=5000.0)["round_id"]  # one clock reader (F)
 
 
 def test_envelope_is_read_from_the_job_spec():

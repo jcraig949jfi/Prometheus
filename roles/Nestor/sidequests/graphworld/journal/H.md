@@ -460,5 +460,16 @@ budget 1789425755152-0).
      fields, until G's CANDIDATE_N is on integration; then that fallback should be removed.
   4. The receipt guard reads oracle results from rec['oracles']; cohort receipt writers must fill
      it. Currently a convention, posted to A/F/G.
+- The H-R5-3 push (5a0a3488e) rebased onto E's round 5 items and F-R5-4/5/6. The suite on that
+  tip: 365 passed, 2 skipped, pytest rc 0 (06:38). G's CANDIDATE_N is still not on integration.
+- One clock reader:
+  - F 999083dee added primordial.ops.round_clock.active(r, now, grace_s=1800), the same window
+    rule as receipt_guard.active_round. A's launch-gate item 16 asserts that clock at T+0.
+  - receipt_guard.active_round now delegates to round_clock.active (returns round_id), so the
+    guard and the gate cannot disagree.
+  - F's read() raises on a malformed hash; the guard turns that into "no active round" rather
+    than crashing bus.receipt (tested).
+  - The test Clock fake is built from round_clock.plan (end = start + 7200).
+  - Suite 365 passed, 2 skipped, pytest rc 0 (06:41).
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
