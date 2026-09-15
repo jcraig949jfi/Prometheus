@@ -149,6 +149,52 @@ def test_a_written_survivable_pending_cell_is_a_mismatch(tmp_path):
     assert [m["field"] for m in mm] == ["survivable PENDING in a written file"]
 
 
+def test_v1_rows_refuse_clause_a_on_every_survivor(tmp_path):
+    """H-R16-1: 8-seed baselines with no rng_family are retired from judging (operator 16)."""
+    recs, _ = SR.replay(*_write_rows(tmp_path))
+    s = SR.summary(recs)
+    assert s["survived"] == [["w1", T8], ["w3", T128]]
+    assert s["clause_a_refused_baseline_n"] == s["survived"] and s["clause_a_eligible"] == []
+
+
+def _pooled_rows(tmp_path, counts):
+    """One cell (w5 train8): learner 8 runs, baseline runs split over rng families as `counts` {family: n}."""
+    s1 = [_cheap(5, T8, 100.0, 100.0)] + _runs(5, T8, 60.0)
+    s2, i = [], 0
+    for fam, n in counts.items():
+        for rs in range(n):
+            s2.append({**_runs(5, T8, 0.0, family="linear")[0], "rng_family": fam, "run_seed": rs,
+                       "held64_per_seed": 200.0 + i})
+            i += 1
+    paths = []
+    for name, rows in (("s1", s1), ("s2", s2), ("sl", [])):
+        f = tmp_path / f"{name}.jsonl"
+        f.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+        paths.append(f)
+    return paths
+
+
+def test_pooled_8x4_baseline_is_eligible_and_29_1_1_1_is_refused(tmp_path):
+    recs, defects = SR.replay(*_pooled_rows(tmp_path, {4200: 8, 2101: 8, 3303: 8, 5501: 8}))
+    r = _by(recs)[("w5", T8)]
+    assert defects == [] and r["baseline"]["n_runs"] == 32                  # seeds 0-7 repeat across families
+    assert r["baseline"]["families"] == [2101, 3303, 4200, 5501]
+    assert r["baseline"]["n_per_family"] == {"2101": 8, "3303": 8, "4200": 8, "5501": 8}
+    assert r["clause_a_baseline_n"] == "OK" and r["verdicts"]["gate_in|HOLD"]["verdict"] == "SURVIVED"
+    # pooling order is SWARM_R4 s9's listing (4200, 2101, 3303, 5501), then run seed: the CI depends on it
+    from primordial.metric.ci import median_ci
+    shuffled = _pooled_rows(tmp_path, {3303: 8, 5501: 8, 2101: 8, 4200: 8})      # rows written 3303 first
+    m, _ = SR.measure(*shuffled)
+    rows = [json.loads(x) for x in shuffled[1].read_text(encoding="utf-8").splitlines()]
+    in_order = [r["held64_per_seed"] for r in sorted(rows, key=lambda r: (SR.FAMILY_ORDER.index(r["rng_family"]),
+                                                                          r["run_seed"]))]
+    assert m[(5, T8)]["baseline"]["ci95"] == list(median_ci(in_order))
+    assert SR._family_rank(None) < SR._family_rank(4200) < SR._family_rank(2101) < SR._family_rank(9999)
+    recs, _ = SR.replay(*_pooled_rows(tmp_path, {4200: 29, 2101: 1, 3303: 1, 5501: 1}))
+    r = _by(recs)[("w5", T8)]
+    assert r["baseline"]["n_runs"] == 32 and r["clause_a_baseline_n"] == "BASELINE_N"
+
+
 def test_the_committed_screen_replays_with_zero_mismatches():
     if not SR.WORLDS_R4.exists():
         pytest.skip("worlds_r4.json not committed")
@@ -156,4 +202,7 @@ def test_the_committed_screen_replays_with_zero_mismatches():
     recs, defects = SR.replay()
     assert defects == []
     assert SR.compare(doc, recs) == []
-    assert SR.summary(recs)["cells"] == len(doc["cells"])
+    s = SR.summary(recs)
+    assert s["cells"] == len(doc["cells"])
+    if doc.get("schema") == "worlds_r4/v1":                                  # 8-seed survivors carry no clause A
+        assert s["clause_a_refused_baseline_n"] == s["survived"] and s["clause_a_eligible"] == []

@@ -238,3 +238,53 @@ budget 1789425755152-0).
   - All-time window: round 2 B cells read INELIGIBLE(CULLED) 19 and INELIGIBLE(HELD) 9. C reads
     INELIGIBLE(UNSCREENED) 4 (non-graphworld domains). 0 mismatches, 0 scored.
 - H P0 DONE: H-R4-1 (490601595), H-R4-2 (a97934437, 519103e45), H-R4-3 (this push).
+
+## 2026-09-15 R16 iteration 1: H-R16-1 BASELINE_N in F12 and the replay
+
+- Trigger: Nestor-A cross-session order.
+  - Operator ruling 16 (SWARM_R4 s9): 32 run seeds x 4 RNG families (4200/2101/3303/5501), 8 per
+    family, mandatory for every baseline and every stochastic floor part.
+  - Bus: 1789455185855-0 (ruling), 1789455359216-0 (G's v2 names win: baseline.{n_runs,
+    families, n_per_family, readout}; run rows carry rng_family), 1789455401413-0 (G phase 1
+    cleared), 1789455552584-0 (per-family minimum; 29+1+1+1 must be refused).
+  - E's judge at 3dd777386 enforces n_runs < 32 and < 4 families; E is adding the per-family
+    condition.
+- Code:
+  - clause_a_r4.baseline_n(baseline) returns None, or INELIGIBLE(BASELINE_N) when n_runs < 32,
+    len(set(families)) < 4, n_per_family absent or empty, or any value < 8. Payload:
+    baseline_n_runs, baseline_families, baseline_n_per_family, need_runs 32, need_families 4,
+    need_per_family 8.
+  - s4_verdict applies it right after the screen check, in check_r4's order (guard ->
+    BASELINE_N -> oracles/cheats/runs).
+  - For BASELINE_N, _agrees also requires the judge's why to match. The compression tally reads
+    INELIGIBLE(BASELINE_N), and a judge without the rule reads MISMATCH (scores 0).
+  - screen_replay:
+    - Runs are pooled by (rng_family, run_seed), since v2 reuses seeds 0-7 per family.
+    - Baseline families and n_per_family come from the rows.
+    - Each cell gets clause_a_baseline_n OK|BASELINE_N from the same baseline_n.
+    - families and n_per_family are compared when the file carries them (v2).
+    - The summary lists clause_a_eligible vs clause_a_refused_baseline_n.
+- Committed v1 file: replay still PASS, 0 mismatches, 0 row defects. The one survivor, w13
+  train128, is refused BASELINE_N (8 seeds, no families); clause_a_eligible is empty.
+- Tests:
+  - test_score_clause_a_r4.py gains the 8x4 fixture, and these cases with the payload checked:
+    29+1+1+1 / v1 / no n_per_family / 3 families / 31 with a 7 all give BASELINE_N.
+  - 8x4 passes through to progress 0.95 PASS. BASELINE_N precedes the oracle and run-count gates.
+  - The compression tally, and MISMATCH against a judge without the rule.
+  - The real judge agrees on all 6. The 3 per-family cases skip until
+    qd_ledger.BASELINE_MIN_PER_FAMILY exists.
+  - test_score_screen_replay.py: v1 rows refuse clause A on every survivor; pooled 8x4 is OK
+    (n_runs 32 despite repeated seeds) and 29+1+1+1 is refused. The committed v1 survivors are
+    all refused.
+- Suite before the merge of G 205dedfed / E de91fbd52: 237 passed, 4 skipped, pytest rc 0.
+- Pooling order:
+  - Reading G 205dedfed (metric/baseline.pooled_stats): G pools in FAMILIES order
+    (4200, 2101, 3303, 5501), then run seed.
+  - median_ci resamples by index, so order changes the CI. My first draft sorted families
+    numerically, which would have reported false CI mismatches on every v2 cell.
+  - The replay now pools in SWARM_R4 s9's listed order (4200, 2101, 3303, 5501), written in
+    the replay itself rather than imported from G. v1 rows come first; unlisted families
+    follow by id.
+  - Test: rows written 3303-first give exactly median_ci over the s9 order.
+- H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
+  "G R16 DONE".

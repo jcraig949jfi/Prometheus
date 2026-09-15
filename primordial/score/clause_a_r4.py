@@ -11,6 +11,11 @@ the cell's baseline block.
                   PENDING (A 1789440120713-0, G 1789440338587-0): a non-survivable cell whose HELD vs
                   CULLED waits for the train128 learner; it never counts as SURVIVED.
 
+Operator 16 (SWARM_R4 s9; A 1789455359216-0, 1789455552584-0), H-R16-1: on a SURVIVED cell the baseline
+must pool >= 32 run seeds over >= 4 RNG families with >= 8 per family (worlds_r4/v2 names
+baseline.{n_runs, families, n_per_family}); otherwise INELIGIBLE(BASELINE_N). A v1 baseline (no families,
+no n_per_family) is refused. Order, as in qd_ledger.check_r4: screen -> BASELINE_N -> oracles / cheats / runs.
+
 Clause A, round 4 binding (SWARM_R4 s4), per candidate on a SURVIVED cell:
   progress = (median_candidate - floor) / (median_baseline - floor)
   PASS iff progress >= 0.95 AND bytes < baseline bytes; BELOW_FLOOR iff progress < 0; FAIL otherwise;
@@ -35,6 +40,9 @@ MIN_RUNS = 8
 SCREEN = ("SURVIVED", "HELD", "CULLED", "NOT_REACHED", "PENDING")
 ALIASES = {"PENDING_LEARNER": "PENDING"}      # primordial.metric.worlds.PENDING before G's rename (1789440338587-0)
 PROGRESS_TOL = 1e-9
+BASELINE_MIN_RUNS = 32               # operator 16: the statistical minimum for a baseline
+BASELINE_MIN_FAMILIES = 4
+BASELINE_MIN_PER_FAMILY = 8
 
 
 def load_worlds(path=WORLDS_R4) -> dict | None:
@@ -68,11 +76,27 @@ def _ineligible(why: str, **kw) -> dict:
     return {"verdict": "INELIGIBLE", "why": why, **kw}
 
 
+def baseline_n(baseline: dict | None) -> dict | None:
+    """None when the baseline meets operator 16's minimum, else the INELIGIBLE(BASELINE_N) refusal."""
+    b = baseline or {}
+    fams, per = b.get("families"), b.get("n_per_family")
+    per_ok = isinstance(per, dict) and len(per) > 0 and all(
+        isinstance(v, (int, float)) and not isinstance(v, bool) and v >= BASELINE_MIN_PER_FAMILY for v in per.values())
+    if int(b.get("n_runs") or 0) >= BASELINE_MIN_RUNS and len(set(fams or ())) >= BASELINE_MIN_FAMILIES and per_ok:
+        return None
+    return _ineligible("BASELINE_N", baseline_n_runs=b.get("n_runs"), baseline_families=fams,
+                       baseline_n_per_family=per, need_runs=BASELINE_MIN_RUNS, need_families=BASELINE_MIN_FAMILIES,
+                       need_per_family=BASELINE_MIN_PER_FAMILY)
+
+
 def s4_verdict(screen: dict, median: float, nbytes: int, runs: int, held=None,
                oracle_clean: bool = True, cheats_fail: bool = True) -> dict:
     """SWARM_R4 s4 from the screen's numbers (the cross-check on the judge)."""
     if screen["status"] != "SURVIVED":
         return _ineligible(screen["status"])
+    refusal = baseline_n(screen["cell"].get("baseline"))
+    if refusal is not None:
+        return refusal
     if not oracle_clean:
         return _ineligible("oracles not clean")
     if not cheats_fail:
@@ -102,6 +126,8 @@ def s4_verdict(screen: dict, median: float, nbytes: int, runs: int, held=None,
 def _agrees(judge: dict, mine: dict) -> bool:
     if judge.get("verdict") != mine["verdict"]:
         return False
+    if mine.get("why") == "BASELINE_N":
+        return judge.get("why") == "BASELINE_N"
     if "progress" in mine:
         jp = judge.get("progress")
         return jp is not None and abs(float(jp) - mine["progress"]) <= PROGRESS_TOL
@@ -139,7 +165,7 @@ def compression_r4(qd: list[dict], lane: str, window, doc: dict | None, check=No
             key = "MISMATCH"
             mismatches.append({"exp_id": r.get("exp_id"), "cell": list(_cell(r)), "judge": judge, "screen_s4": mine_v})
         else:
-            key = judge["verdict"]
+            key = "INELIGIBLE(BASELINE_N)" if mine_v.get("why") == "BASELINE_N" else judge["verdict"]
             if key == "PASS":
                 scored.append({"exp_id": r.get("exp_id"), "cell": list(_cell(r)), "genome_bytes": nbytes,
                                "progress": mine_v["progress"], "progress_ci": mine_v.get("progress_ci")})

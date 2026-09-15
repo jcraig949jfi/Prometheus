@@ -9,9 +9,12 @@ read from the file or from G's aggregate rows. Numbers come from the lowest comm
   learner       run rows without `family`, grouped by the cell's OWN (gen_seed, pressure) (train8 in
                 G-R4-3-stage1; train128 in G-R4-3-stage2 / G-R4-3-stage2-learner): median over >= 8 run
                 seeds (SWARM_R4 s2 G-R4-1). A train8 learner never enters a train128 floor.
-  baseline      run rows with family linear (G-R4-3-stage2): held64_per_seed per run seed, the median, and
-                primordial.metric.ci.median_ci over the values in run-seed order (M3: 10,000 resamples,
-                PCG64 20260914; G 1789433928197-0); bytes = genome_bytes (one value per cell)
+  baseline      run rows with family linear (G-R4-3-stage2): held64_per_seed per (rng_family, run_seed), the
+                median, and primordial.metric.ci.median_ci over the values in (rng_family, run_seed) order (M3:
+                10,000 resamples, PCG64 20260914; G 1789433928197-0); bytes = genome_bytes (one value per cell).
+                Operator 16 (H-R16-1): families and n_per_family come from the rows' rng_family (v1 rows carry
+                none), and clause A on a cell is refused INELIGIBLE(BASELINE_N) by the same rule F12 uses
+                (clause_a_r4.baseline_n: n_runs >= 32, >= 4 families, >= 8 per family).
 
 Rules (SWARM_R4 s2/s3/s7, operator message 13, conductor 1789433714703-0, 1789433825087-0, 1789440120713-0):
   F      the four-policy floor = max of the parts run; a lower BOUND when the learner was not run
@@ -39,6 +42,7 @@ import subprocess
 import numpy as np
 
 from primordial.metric.ci import median_ci
+from primordial.score.clause_a_r4 import baseline_n
 from primordial.score.round2 import ROOT
 
 ROWS = ROOT / "primordial" / "ledger" / "rows" / "G"
@@ -61,19 +65,36 @@ def jsonl(path) -> list[dict]:
     return [json.loads(x) for x in p.read_text(encoding="utf-8").splitlines() if x.strip()] if p.exists() else []
 
 
-def _per_run_seed(runs: list[dict], what: str, defects: list[str]) -> list[float] | None:
-    by: dict[int, float] = {}
+FAMILY_ORDER = (4200, 2101, 3303, 5501)      # SWARM_R4 s9 as listed by the operator; median_ci resamples by index
+
+
+def _family_rank(fam) -> tuple:
+    """Pooling order: v1 rows (no family) first, then the s9 families as listed, then any other family by id."""
+    if fam is None:
+        return (0, 0)
+    f = int(fam)
+    return (1, FAMILY_ORDER.index(f)) if f in FAMILY_ORDER else (2, f)
+
+
+def _pooled(runs: list[dict], what: str, defects: list[str]) -> dict | None:
+    """Per-seed values keyed by (rng_family, run_seed), in that order, with the family counts."""
+    by: dict[tuple, float] = {}
     for r in runs:
-        rs, v = int(r["run_seed"]), float(r["held64_per_seed"])
-        if rs in by and by[rs] != v:
-            defects.append(f"{what}: run seed {rs} has two values {by[rs]} and {v}")
-        by[rs] = v
+        k, v = (r.get("rng_family"), int(r["run_seed"])), float(r["held64_per_seed"])
+        if k in by and by[k] != v:
+            defects.append(f"{what}: run seed {k[1]} (rng family {k[0]}) has two values {by[k]} and {v}")
+        by[k] = v
     if not all(r.get("budget_ok") for r in runs):
         defects.append(f"{what}: a run is not at its budget")
     if len(by) < MIN_RUNS:
         defects.append(f"{what}: {len(by)} run seeds < {MIN_RUNS}")
         return None
-    return [by[k] for k in sorted(by)]
+    keys = sorted(by, key=lambda k: (_family_rank(k[0]), k[1]))
+    per: dict[str, int] = {}
+    for fam, _ in keys:
+        if fam is not None:
+            per[str(fam)] = per.get(str(fam), 0) + 1
+    return {"values": [by[k] for k in keys], "families": sorted(int(f) for f in per), "n_per_family": per}
 
 
 def measure(stage1=STAGE1, stage2=STAGE2, learner=LEARNER) -> tuple[dict, list[str]]:
@@ -108,18 +129,19 @@ def measure(stage1=STAGE1, stage2=STAGE2, learner=LEARNER) -> tuple[dict, list[s
         if abs(gate - float(r["gate_held64"])) > TOL:
             defects.append(f"{what}: suite_cheap gate_held64 {r['gate_held64']} != gate.gate_held64 {gate}")
         if k in learn:
-            lv = _per_run_seed(learn[k], f"{what} learner", defects)
-            if lv is not None:
-                parts["input_invariant_learner"] = float(np.median(lv))
+            lp = _pooled(learn[k], f"{what} learner", defects)
+            if lp is not None:
+                parts["input_invariant_learner"] = float(np.median(lp["values"]))
         b = None
         if k in base:
-            bv = _per_run_seed(base[k], f"{what} baseline", defects)
+            bp = _pooled(base[k], f"{what} baseline", defects)
             nbytes = {int(x["genome_bytes"]) for x in base[k]}
             if len(nbytes) != 1:
                 defects.append(f"{what} baseline: genome_bytes differ across run seeds {sorted(nbytes)}")
-            if bv is not None:
-                lo, hi = median_ci(bv)
-                b = {"median": float(np.median(bv)), "ci95": [lo, hi], "bytes": min(nbytes), "n_runs": len(bv)}
+            if bp is not None:
+                lo, hi = median_ci(bp["values"])
+                b = {"median": float(np.median(bp["values"])), "ci95": [lo, hi], "bytes": min(nbytes),
+                     "n_runs": len(bp["values"]), "families": bp["families"], "n_per_family": bp["n_per_family"]}
         out[k] = {"world": f"w{k[0]}", "gen_seed": k[0], "pressure": k[1], "parts": parts, "gate": gate, "baseline": b}
     for k in sorted(set(learn) | set(base)):
         if k not in cheap:
@@ -143,7 +165,8 @@ def replay_cell(m: dict, defects: list[str]) -> dict:
     bound = m["parts"]["input_invariant_learner"] is None
     floors = {v: (F if v.startswith("four_policy") else max(F, gate)) for v in VARIANTS}
     rec = {"world": m["world"], "gen_seed": m["gen_seed"], "pressure": m["pressure"], "floor_parts": m["parts"],
-           "floor": F, "floor_is_bound": bound, "gate_held64": gate, "baseline": m["baseline"], "pending": None}
+           "floor": F, "floor_is_bound": bound, "gate_held64": gate, "baseline": m["baseline"], "pending": None,
+           "clause_a_baseline_n": "OK" if baseline_n(m["baseline"]) is None else "BASELINE_N"}
     if m["baseline"] is None:
         rec.update(stage=1, verdicts={v: {"verdict": "CULLED", "cull_reason": "NOT_REACHED", "floor": floors[v]}
                                       for v in VARIANTS})
@@ -243,6 +266,10 @@ def compare(doc: dict, recs: list[dict], active=ACTIVE, max_survivors=MAX_SURVIV
                 fv = (cb.get("ci95") or [None, None])[i]
                 if not _eq(fv, rb["ci95"][i]):
                     miss(k, f"baseline.ci95[{i}]", fv, rb["ci95"][i])
+            if "families" in cb and sorted(int(x) for x in cb["families"] or ()) != rb["families"]:
+                miss(k, "baseline.families", cb["families"], rb["families"])
+            if "n_per_family" in cb and {str(a): int(b) for a, b in (cb["n_per_family"] or {}).items()} != rb["n_per_family"]:
+                miss(k, "baseline.n_per_family", cb["n_per_family"], rb["n_per_family"])
         for v in VARIANTS:
             cv, rv = (c.get("verdicts") or {}).get(v) or {}, r["verdicts"][v]
             for f in ("verdict", "cull_reason"):
@@ -262,8 +289,12 @@ def summary(recs: list[dict], active=ACTIVE) -> dict:
     for r in recs:
         tally[r["verdicts"][ak]["verdict"]] = tally.get(r["verdicts"][ak]["verdict"], 0) + 1
     pick = lambda st: [[r["world"], r["pressure"]] for r in recs if r["verdicts"][ak]["verdict"] == st]
+    surv = [r for r in recs if r["verdicts"][ak]["verdict"] == "SURVIVED"]
     return {"cells": len(recs), "stage2_cells": sum(r["stage"] == 2 for r in recs), "active": ak, "verdicts": tally,
             "survived": pick("SURVIVED"), "held": pick("HELD"),
+            "clause_a_eligible": [[r["world"], r["pressure"]] for r in surv if r["clause_a_baseline_n"] == "OK"],
+            "clause_a_refused_baseline_n": [[r["world"], r["pressure"]] for r in surv
+                                            if r["clause_a_baseline_n"] == "BASELINE_N"],
             "pending_non_survivable": [{"world": r["world"], "pressure": r["pressure"], **r["non_survivable_exact"],
                                         "gate_held64": r["gate_held64"]}
                                        for r in recs if r["pending"] == "non_survivable"],

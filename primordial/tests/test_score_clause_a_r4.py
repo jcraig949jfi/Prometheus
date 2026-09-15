@@ -19,6 +19,67 @@ def _cell(world, pressure, active, other=None, floor=100.0, base_median=200.0, b
                          "n_per_family": {"2101": 8, "3303": 8, "4200": 8, "5501": 8}}, "verdicts": vs}
 
 
+# operator 16 (SWARM_R4 s9, A 1789455359216-0 / 1789455552584-0): H-R16-1 BASELINE_N in F12
+BASELINES = {
+    "8x4": {"n_runs": 32, "families": [2101, 3303, 4200, 5501], "n_per_family": {"2101": 8, "3303": 8, "4200": 8, "5501": 8}},
+    "29+1+1+1": {"n_runs": 32, "families": [2101, 3303, 4200, 5501],
+                 "n_per_family": {"4200": 29, "2101": 1, "3303": 1, "5501": 1}},
+    "v1": {"n_runs": 8},
+    "no_n_per_family": {"n_runs": 32, "families": [2101, 3303, 4200, 5501]},
+    "3_families": {"n_runs": 32, "families": [2101, 3303, 4200], "n_per_family": {"2101": 11, "3303": 11, "4200": 10}},
+    "31x4": {"n_runs": 31, "families": [2101, 3303, 4200, 5501], "n_per_family": {"2101": 8, "3303": 8, "4200": 8, "5501": 7}},
+}
+
+
+def _with_baseline(doc, name):
+    for c in doc["cells"]:
+        if (c["world"], c["pressure"]) == ("w1", "train8_held64"):
+            c["baseline"] = {**{k: v for k, v in c["baseline"].items()
+                                if k not in ("n_runs", "families", "n_per_family")}, **BASELINES[name]}
+    return doc
+
+
+@pytest.mark.parametrize("name", ["29+1+1+1", "v1", "no_n_per_family", "3_families", "31x4"])
+def test_baseline_n_refuses_below_the_operator_16_minimum(doc, name):
+    got = CA.s4_verdict(CA.screen_of(_with_baseline(doc, name), "w1", "train8_held64"), 195.0, 32, 8)
+    assert got["verdict"] == "INELIGIBLE" and got["why"] == "BASELINE_N"
+    assert (got["need_runs"], got["need_families"], got["need_per_family"]) == (32, 4, 8)
+    assert got["baseline_n_runs"] == BASELINES[name]["n_runs"] and "progress" not in got
+
+
+def test_baseline_n_8x4_passes_through_to_progress(doc):
+    got = CA.s4_verdict(CA.screen_of(_with_baseline(doc, "8x4"), "w1", "train8_held64"), 195.0, 32, 8)
+    assert got["verdict"] == "PASS" and got["progress"] == pytest.approx(0.95)
+    assert CA.baseline_n(BASELINES["8x4"]) is None and CA.baseline_n(None)["why"] == "BASELINE_N"
+
+
+def test_baseline_n_precedes_the_run_count_and_oracle_gates(doc):
+    scr = CA.screen_of(_with_baseline(doc, "v1"), "w1", "train8_held64")
+    assert CA.s4_verdict(scr, 195.0, 32, 2, oracle_clean=False)["why"] == "BASELINE_N"     # judge order
+
+
+def test_compression_tallies_baseline_n_and_scores_nothing(doc):
+    doc = _with_baseline(doc, "29+1+1+1")
+    qd = [_row("w1", "train8_held64", 195.0)]
+    agree = lambda rows, w, p, m, iqr, b, runs, held=None, doc=None: {
+        "clause_a_r4": {"verdict": "INELIGIBLE", "why": "BASELINE_N"}}
+    got = CA.compression_r4(qd, "B", (0, 100), doc, check=agree)
+    assert got["value"] == 0 and got["verdicts"] == {"INELIGIBLE(BASELINE_N)": 1}
+    passes = lambda *a, **k: {"clause_a_r4": {"verdict": "PASS", "progress": 0.95}}          # judge without the rule
+    assert CA.compression_r4(qd, "B", (0, 100), doc, check=passes)["verdicts"] == {"MISMATCH": 1}
+
+
+@pytest.mark.parametrize("name", list(BASELINES))
+def test_the_real_judge_agrees_on_baseline_n(doc, name):
+    from primordial.ops import qd_ledger as Q
+    if name in ("29+1+1+1", "no_n_per_family", "31x4") and not hasattr(Q, "BASELINE_MIN_PER_FAMILY"):
+        pytest.skip("E's per-family minimum (A 1789455552584-0) not on this tip yet")
+    doc = _with_baseline(doc, name)
+    mine = CA.s4_verdict(CA.screen_of(doc, "w1", "train8_held64"), 195.0, 32, 8)
+    judge = Q.check([], "w1", "train8_held64", 195.0, 0.0, 32, 8, doc=doc)["clause_a_r4"]
+    assert CA._agrees(judge, mine), (judge, mine)
+
+
 @pytest.fixture
 def doc():
     return {"schema": "worlds_r4/v1", "q1_floor_policy": "gate_in", "q2_policy": "HOLD", "cells": [
