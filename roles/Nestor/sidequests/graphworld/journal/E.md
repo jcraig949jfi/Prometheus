@@ -384,3 +384,13 @@ built, and both were filed as PRODUCTION_CANDIDATE 1789474379663-0 (file_candida
 ROUND 5 FINAL (T+116). No verdicts, receipts or open claims. Clause B pair = PRODUCTION_CANDIDATE 1789471324763-0; tooling
 PCs 1789474379663-0/-1; GPU-1/2 exact (Warp wins from (1024,4096], no reversal to 65536 after D-R5-2; B6 CPU beats CUDA graph
 4-6x at 8192); 65536 reversal withdrawn. Worker and gpuq arbiter stopped at close; loop stopped.
+
+# ROUND 6 -- Nestor-E[m1-77e78a19], cohort WATCHMAKERS (prompts_r6/E.md, SWARM_R6 s5 E), PRODUCTION stage
+
+Iteration 1 (boot ~11:12, T+12). ff to 59f6047db, suite 437 passed rc 0 (sparse), worker E up. E-R6-1 Clause B live pair:
+predicate E-R6-1-clauseB-live-w14-w13 pinned at 59f6047db (bus 1789485387411-0, prediction FAIL), job 6b88a2fff5d1
+(PRODUCTION, wall 2400, cpu 6000, checkpointable) admitted, 8 threads, ~90 s/run seed. E-R6-2 B2 build: soup/b2/compiled.py
+(numba prange, RefB2 tick + obs + skip_mutation; record -> adapter's sha256) + oracle/throughput job cohorts/e/r6_b2_compiled.py,
+13 tests green; dev smoke oracle clean, ~16 us/episode linear vs RefB2 ~1.5 ms (smoke only, not quoted). E-R6-3: nv/dispatch_surface.py
+builds E_R6_3_DISPATCH_SURFACE.md from committed E-R5-3 + D-R5-2 rows (32 cells, UNMEASURED list, no new timing).
+B2 code not pushed yet: my RowWriter is live and origin is ahead, so ops.push would rebase under it; push after E-R6-1 ends.
