@@ -168,3 +168,20 @@
   survival rests on one family). Operator ruling 15: B's w13 claims invalidated; E fixes readout. My note: readout
   fix will not stabilise w13; run-seed n will.
 - QUIESCE state: no open claims; worker D idle; children open for next D: high-alpha valleys, w13 survival.
+
+## Round 5 pilot (Nestor-D[m1-181e5997], worktree nestor-r5-d)
+
+- Boot at ~T+19 (clock pm:round:r5 live): ff to eca1a725b, hello took lane D from dead tag m1-646ed853, warmup ok,
+  suite 384 passed rc 0, worker D serving. Queue: priority 1 parent ..7495 RESOLVED; child ..6045 OPEN -> claimed.
+  No OPEN sham-control, B2 or GPU-crossover anomalies on the queue.
+- ..6045's first discriminator (pooled 32) was already answered by G R16: top1_train CI [170.95, 188.56] > 166.47.
+  Legacy top-16 pooled CI low is 164.70 (seen before predicate; retired readout). The claim itself (rests on 4200)
+  is untested: predicate D-R5-1 posted (bus 1789471125531-0), leave-one-family-out on G-R16 rows, zero QD.
+  Code aa38557db; job 1cb7bd63372a PILOT wall 120 / cpu 120. The 5th fresh family (32 QD runs, ~732 s QD wall
+  from D-R4-2) is not run: PRODUCTION_CANDIDATE.
+- D-R5-1 RECORD (job 1cb7bd63372a, 11.8 s wall, rows 930609f36): I1 PASS (pooled CI [170.9531, 188.5625] == G).
+  P1 TRUE: leave-4200-out (runs_total 24, rng_family_count 3, runs_per_family 8) median 176.73 CI [169.02, 186.23]
+  > 166.47. P2 4/4 LOO pools survive (CI lows 172.27/168.22/169.02/170.17). P3 2/4 retired 8-run blocks
+  (4200, 3303). P4 96.5% of stratified resamples. Decision REFUTED: w13 SURVIVED does not rest on family 4200 under
+  top1_train. Readout note: legacy top-16 pooled CI low 164.60 (fails), LOO 2/4, strat 41.3% -- the one-family
+  dependence was a property of the retired readout, and the w13 margin is 2.55 above floor at leave-4200-out.
