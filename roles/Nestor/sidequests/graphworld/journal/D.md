@@ -249,3 +249,4 @@
   sample stream and missed by the other. Reported: held64 changes under brain_stride 2 for 16/16 elites (0 and 1
   107.64/106.59 -> 107.75), so "ignore" is HELD8-local, not a brain property; odd |W| mass blind .56/.52/.56 vs caught
   .49-.65 (not zero weights, as filed).
+- Receipt D-R6-2 filed 1789488889783-0 (guard 10/10 OK, status NULL, decision MIXED), rows 9927ff9b4; ANOM-..7943 RESOLVED; child anomaly filed (HELD8 coverage).
