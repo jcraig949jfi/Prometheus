@@ -89,19 +89,44 @@ def baseline_n(baseline: dict | None) -> dict | None:
                        need_per_family=BASELINE_MIN_PER_FAMILY)
 
 
+def candidate_n(sample: dict) -> dict | None:
+    """SWARM_R5 O4 / G-R5-2: a Clause A candidate needs runs_total >= 32, rng_family_count >= 4,
+    runs_per_family >= 8 and no n_per_family below 8; else INELIGIBLE(CANDIDATE_N) with G's payload names."""
+    s = sample or {}
+    num = lambda v: isinstance(v, (int, float)) and not isinstance(v, bool)
+    per = s.get("n_per_family")
+    ok = (num(s.get("runs_total")) and s["runs_total"] >= BASELINE_MIN_RUNS
+          and num(s.get("rng_family_count")) and s["rng_family_count"] >= BASELINE_MIN_FAMILIES
+          and num(s.get("runs_per_family")) and s["runs_per_family"] >= BASELINE_MIN_PER_FAMILY
+          and not (isinstance(per, dict) and any(int(v) < BASELINE_MIN_PER_FAMILY for v in per.values())))
+    if ok:
+        return None
+    return _ineligible("CANDIDATE_N", candidate_runs_total=s.get("runs_total"),
+                       candidate_rng_family_count=s.get("rng_family_count"),
+                       candidate_runs_per_family=s.get("runs_per_family"), candidate_n_per_family=per,
+                       need_runs_total=BASELINE_MIN_RUNS, need_rng_family_count=BASELINE_MIN_FAMILIES,
+                       need_runs_per_family=BASELINE_MIN_PER_FAMILY)
+
+
 def s4_verdict(screen: dict, median: float, nbytes: int, runs: int, held=None,
-               oracle_clean: bool = True, cheats_fail: bool = True) -> dict:
-    """SWARM_R4 s4 from the screen's numbers (the cross-check on the judge)."""
+               oracle_clean: bool = True, cheats_fail: bool = True, sample: dict | None = None) -> dict:
+    """SWARM_R4 s4 from the screen's numbers (the cross-check on the judge). `sample` = the candidate's
+    {runs_total, rng_family_count, runs_per_family, n_per_family}: when given, CANDIDATE_N replaces the old
+    run-count check, in the judge's order (screen -> BASELINE_N -> CANDIDATE_N -> oracles / cheats)."""
     if screen["status"] != "SURVIVED":
         return _ineligible(screen["status"])
     refusal = baseline_n(screen["cell"].get("baseline"))
     if refusal is not None:
         return refusal
+    if sample is not None:
+        refusal = candidate_n(sample)
+        if refusal is not None:
+            return refusal
     if not oracle_clean:
         return _ineligible("oracles not clean")
     if not cheats_fail:
         return _ineligible("a cheat control did not fail")
-    if runs < MIN_RUNS:
+    if sample is None and runs < MIN_RUNS:
         return _ineligible(f"{runs} run seeds < {MIN_RUNS}")
     floor, base = screen.get("floor"), screen["cell"].get("baseline") or {}
     if floor is None or base.get("median") is None or base.get("bytes") is None:
@@ -123,11 +148,23 @@ def s4_verdict(screen: dict, median: float, nbytes: int, runs: int, held=None,
     return {"verdict": "FAIL", **out}
 
 
+SAMPLE_KEYS = ("runs_total", "rng_family_count", "runs_per_family", "n_per_family")
+SAMPLE_REFUSALS = ("BASELINE_N", "CANDIDATE_N")
+
+
+def _accepts(fn, name: str) -> bool:
+    import inspect
+    try:
+        return name in inspect.signature(fn).parameters
+    except (TypeError, ValueError):
+        return False
+
+
 def _agrees(judge: dict, mine: dict) -> bool:
     if judge.get("verdict") != mine["verdict"]:
         return False
-    if mine.get("why") == "BASELINE_N":
-        return judge.get("why") == "BASELINE_N"
+    if mine.get("why") in SAMPLE_REFUSALS:
+        return judge.get("why") == mine["why"]
     if "progress" in mine:
         jp = judge.get("progress")
         return jp is not None and abs(float(jp) - mine["progress"]) <= PROGRESS_TOL
@@ -155,17 +192,19 @@ def compression_r4(qd: list[dict], lane: str, window, doc: dict | None, check=No
             key = f"INELIGIBLE({scr['status']})"
             tally[key] = tally.get(key, 0) + 1
             continue
-        mine_v = s4_verdict(scr, f["held64_median"], nbytes, runs, held)
+        sample = {k: f[k] for k in SAMPLE_KEYS if f.get(k) is not None} or None      # G-R5-1 fields on the row
+        mine_v = s4_verdict(scr, f["held64_median"], nbytes, runs, held, sample=sample)
         hl = list(held.values()) if isinstance(held, dict) else held
+        extra = dict(sample) if sample and _accepts(check, "runs_total") else {}
         judge = (check(qd, c["world"], c["pressure"], f["held64_median"], f.get("iqr") or 0.0, nbytes, runs,
-                       held=hl, doc=doc) or {}).get("clause_a_r4")         # the judge reads the same file
+                       held=hl, doc=doc, **extra) or {}).get("clause_a_r4")   # the judge reads the same file
         if judge is None:
             key = "NO_JUDGE"
         elif not _agrees(judge, mine_v):
             key = "MISMATCH"
             mismatches.append({"exp_id": r.get("exp_id"), "cell": list(_cell(r)), "judge": judge, "screen_s4": mine_v})
         else:
-            key = "INELIGIBLE(BASELINE_N)" if mine_v.get("why") == "BASELINE_N" else judge["verdict"]
+            key = f"INELIGIBLE({mine_v['why']})" if mine_v.get("why") in SAMPLE_REFUSALS else judge["verdict"]
             if key == "PASS":
                 scored.append({"exp_id": r.get("exp_id"), "cell": list(_cell(r)), "genome_bytes": nbytes,
                                "progress": mine_v["progress"], "progress_ci": mine_v.get("progress_ci")})

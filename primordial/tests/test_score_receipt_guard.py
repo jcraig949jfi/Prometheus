@@ -111,6 +111,41 @@ def test_family_invariants_and_per_family_minimum(repo, edit, reason, why):
     assert _guard(repo, _rec(repo[1], **ok))["accepted"]
 
 
+def test_a_missing_campaign_stage_is_refused(repo):
+    rec = _rec(repo[1])
+    del rec["campaign_stage"]
+    out = _guard(repo, rec)
+    assert _reasons(out) == ["CAMPAIGN_STAGE_MISSING"] and out["checks"]["campaign_stage"] == "REFUSED"
+
+
+class Clock:
+    """pm:round:current -> pm:round:<r> {start_ts, end_ts} (F 1789467306628-0)."""
+
+    def __init__(self, current=None, start=None, end=None):
+        self.kv = {} if current is None else {"pm:round:current": current}
+        self.h = {} if start is None else {f"pm:round:{current}": {"start_ts": str(start), "end_ts": str(end)}}
+
+    def get(self, k):
+        return self.kv.get(k)
+
+    def hgetall(self, k):
+        return dict(self.h.get(k, {}))
+
+
+def test_the_guard_triggers_on_the_active_round_clock_not_on_field_presence():
+    live = Clock("r5", start=1000.0, end=8200.0)
+    legacy = {"lane": "B", "exp_id": "B-R4-x"}
+    assert RG.should_guard(legacy, live, now=5000.0)                        # (1) active round, field omitted
+    assert RG.should_guard(legacy, live, now=8200.0 + 1799.0)               # close-out grace
+    assert not RG.should_guard(legacy, live, now=8200.0 + 1801.0)
+    assert not RG.should_guard(legacy, live, now=999.0)                     # (2) outside any round -> old path
+    assert RG.should_guard({**legacy, "campaign_stage": "PILOT"}, live, now=5000.0)   # (3) valid PILOT receipt guarded
+    assert not RG.should_guard(legacy, Clock(), now=5000.0)                 # (4) clock key absent -> no active round
+    assert RG.active_round(Clock(), now=5000.0) is None
+    assert RG.active_round(live, now=5000.0) == "r5"
+    assert RG.should_guard({**legacy, "campaign_stage": "PILOT"}, Clock(), now=5000.0)   # the field alone still guards
+
+
 def test_envelope_is_read_from_the_job_spec():
     class R:
         def xrange(self, key):

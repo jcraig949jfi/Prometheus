@@ -69,15 +69,56 @@ def test_compression_tallies_baseline_n_and_scores_nothing(doc):
     assert CA.compression_r4(qd, "B", (0, 100), doc, check=passes)["verdicts"] == {"MISMATCH": 1}
 
 
+FULL_SAMPLE = {"runs_total": 32, "rng_family_count": 4, "runs_per_family": 8}
+PILOT_SAMPLE = {"runs_total": 16, "rng_family_count": 2, "runs_per_family": 8}
+
+
+def _judge_has_candidate_n():
+    import inspect
+    from primordial.ops import qd_ledger as Q
+    return "runs_total" in inspect.signature(Q.check).parameters
+
+
+def _judge_kw(sample):
+    """G-R5-2 kwargs for the real judge when it accepts them (G 1789467746914-0); today's judge takes runs only."""
+    return dict(sample) if _judge_has_candidate_n() else {}
+
+
+def _mine_kw(sample):
+    return {"sample": sample} if _judge_has_candidate_n() else {}
+
+
 @pytest.mark.parametrize("name", list(BASELINES))
 def test_the_real_judge_agrees_on_baseline_n(doc, name):
     from primordial.ops import qd_ledger as Q
     if name in ("29+1+1+1", "no_n_per_family", "31x4") and not hasattr(Q, "BASELINE_MIN_PER_FAMILY"):
         pytest.skip("E's per-family minimum (A 1789455552584-0) not on this tip yet")
     doc = _with_baseline(doc, name)
-    mine = CA.s4_verdict(CA.screen_of(doc, "w1", "train8_held64"), 195.0, 32, 8)
-    judge = Q.check([], "w1", "train8_held64", 195.0, 0.0, 32, 8, doc=doc)["clause_a_r4"]
+    mine = CA.s4_verdict(CA.screen_of(doc, "w1", "train8_held64"), 195.0, 32, 32, **_mine_kw(FULL_SAMPLE))
+    judge = Q.check([], "w1", "train8_held64", 195.0, 0.0, 32, 32, doc=doc, **_judge_kw(FULL_SAMPLE))["clause_a_r4"]
     assert CA._agrees(judge, mine), (judge, mine)
+
+
+def test_candidate_n_refuses_a_pilot_sized_candidate_in_f12(doc):
+    scr = CA.screen_of(_with_baseline(doc, "8x4"), "w1", "train8_held64")
+    got = CA.s4_verdict(scr, 195.0, 32, 16, sample=PILOT_SAMPLE)
+    assert got["verdict"] == "INELIGIBLE" and got["why"] == "CANDIDATE_N"
+    assert (got["need_runs_total"], got["need_rng_family_count"], got["need_runs_per_family"]) == (32, 4, 8)
+    assert CA.s4_verdict(scr, 195.0, 32, 32, sample=FULL_SAMPLE)["verdict"] == "PASS"
+    thin = {**FULL_SAMPLE, "n_per_family": {"4200": 29, "2101": 1, "3303": 1, "5501": 1}}
+    assert CA.s4_verdict(scr, 195.0, 32, 32, sample=thin)["why"] == "CANDIDATE_N"
+    v1 = CA.screen_of(_with_baseline(doc, "v1"), "w1", "train8_held64")
+    assert CA.s4_verdict(v1, 195.0, 32, 16, sample=PILOT_SAMPLE)["why"] == "BASELINE_N"          # judge order
+
+
+def test_the_real_judge_agrees_on_a_pilot_sized_candidate(doc):
+    if not _judge_has_candidate_n():
+        pytest.skip("G's CANDIDATE_N (G-R5-2) not in qd_ledger.check on this tip yet")
+    from primordial.ops import qd_ledger as Q
+    doc = _with_baseline(doc, "8x4")
+    mine = CA.s4_verdict(CA.screen_of(doc, "w1", "train8_held64"), 195.0, 32, 16, sample=PILOT_SAMPLE)
+    judge = Q.check([], "w1", "train8_held64", 195.0, 0.0, 32, 16, doc=doc, **PILOT_SAMPLE)["clause_a_r4"]
+    assert mine["why"] == "CANDIDATE_N" and CA._agrees(judge, mine), (judge, mine)
 
 
 @pytest.fixture
@@ -197,8 +238,8 @@ def test_the_real_judge_agrees_with_the_screen_s4(doc, world, pressure, median, 
     """Independent check aimed at the claim: qd_ledger.check (G-R4-5, the only judge) and F12's s4 from the
     file's numbers give the same verdict and progress on every planted cell."""
     from primordial.ops import qd_ledger as Q
-    mine = CA.s4_verdict(CA.screen_of(doc, world, pressure), median, nbytes, 8)
-    judge = Q.check([], world, pressure, median, 0.0, nbytes, 8, doc=doc)["clause_a_r4"]
+    mine = CA.s4_verdict(CA.screen_of(doc, world, pressure), median, nbytes, 32, **_mine_kw(FULL_SAMPLE))
+    judge = Q.check([], world, pressure, median, 0.0, nbytes, 32, doc=doc, **_judge_kw(FULL_SAMPLE))["clause_a_r4"]
     assert CA._agrees(judge, mine), (judge, mine)
 
 

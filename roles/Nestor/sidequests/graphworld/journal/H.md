@@ -380,5 +380,42 @@ budget 1789425755152-0).
   - A late prediction is never drawn, and a tie is refused.
   - Experimenter read denied then allowed after the receipt; conductor read; unknown role.
   - The calibration table.
+- Pushed 3b94d3fbd. Suite on the tip with H-R5-2 included: 303 passed, 1 skipped, pytest rc 0
+  (06:24).
+
+## 2026-09-15 06:26, item 3 + integration asks: H-R5-4 classifier, G's CANDIDATE_N tests, A's guard bypass
+
+- H-R5-4: primordial/score/expected_refusal.py.
+  - Deliberate under-sample = stage SMOKE|PILOT|REPLICATION AND the job sample below the judge's
+    own minimum (imported from qd_ledger). No agent declares the expectation.
+  - classify() reads only the judge's output. Labels:
+    - EXPECTED_REFUSAL_OBSERVED: INELIGIBLE with CANDIDATE_N | BASELINE_N | FAMILY_COVERAGE.
+    - UNEXPECTED_REFUSAL_REASON.
+    - EXPECTED_REFUSAL_MISSING: the judge gave a verdict to a deliberate under-sample (a defect).
+    - NOT_APPLICABLE.
+  - emit() writes pm:events and never emits NOT_APPLICABLE.
+  - Tests, 12: every label; a deep copy shows the judge result untouched; the real qd_ledger.check
+    output is byte-identical across the 4 stages, and its BASELINE_N on an 8-run baseline labels
+    OBSERVED (PRODUCTION reads NOT_APPLICABLE); emit.
+- G 1789467746914-0 / A 1789467765694-0 (integration stays green): G's CANDIDATE_N would turn 5
+  of my real-judge tests red, since they pass runs only.
+  - The tests pass runs_total / rng_family_count / runs_per_family when check()'s signature
+    accepts them, so they hold on today's judge and G's.
+  - Added a PILOT-sized agreement test (16/2/8 -> CANDIDATE_N on both sides), skipped until G's
+    judge lands.
+  - F12 mirror: clause_a_r4.candidate_n uses G's payload names in the order screen -> BASELINE_N
+    -> CANDIDATE_N -> oracles, when a candidate sample is supplied. Otherwise the old runs < 8
+    check stays until G lands.
+  - compression_r4 passes the row's sample fields to s4 and to check (when accepted). _agrees
+    requires the why to match for both sample refusals.
+- A 1789467821844-0 (defect): the 50707b07b guard was bypassable by OMISSION, since it only ran
+  when the receipt carried campaign_stage.
+  - receipt_guard.should_guard = campaign_stage present OR active_round(r). active_round reads
+    pm:round:current -> pm:round:<r> start_ts/end_ts, with a 1800 s close-out grace; an absent or
+    malformed clock returns None.
+  - bus.receipt uses should_guard.
+  - guard() refuses a missing stage with CAMPAIGN_STAGE_MISSING.
+  - Tests: A's 4 clock cases (active + omitted is guarded; outside a round is the old path; active
+    + valid PILOT is guarded; clock absent is no active round), plus the grace edges and MISSING.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".

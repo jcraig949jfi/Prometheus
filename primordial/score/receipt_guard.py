@@ -101,6 +101,31 @@ def envelope_of_job(lane: str, job_id: str | None, r=None) -> dict | None:
     return None
 
 
+ROUND_CURRENT = "pm:round:current"   # F-R5-2 clock: pm:round:current = r5; hash pm:round:r5 {start_ts, end_ts, ...}
+CLOSE_OUT_GRACE_S = 1800.0           # A 1789467821844-0: close-out receipts are still guarded
+
+
+def active_round(r, now: float | None = None, grace_s: float = CLOSE_OUT_GRACE_S) -> str | None:
+    """The round whose clock window [start_ts, end_ts + grace] holds now; None if the clock key is absent."""
+    import time
+    now = time.time() if now is None else now
+    cur = r.get(ROUND_CURRENT)
+    if not cur:
+        return None
+    h = r.hgetall(f"pm:round:{cur}") or {}
+    try:
+        start, end = float(h["start_ts"]), float(h["end_ts"])
+    except (KeyError, TypeError, ValueError):
+        return None
+    return cur if start <= now <= end + grace_s else None
+
+
+def should_guard(rec: dict, r, now: float | None = None) -> bool:
+    """Guard a receipt that carries campaign_stage OR is filed inside an active round: omitting the field is
+    not a way around the checks (A 1789467821844-0); the guard then refuses CAMPAIGN_STAGE_MISSING."""
+    return rec.get("campaign_stage") is not None or active_round(r, now) is not None
+
+
 def run_start_ts(paths: list[str], root=ROOT) -> float | None:
     ts = []
     for p in paths:
@@ -152,7 +177,9 @@ def guard(rec: dict, envelope: dict | None = None, *, root=ROOT, git=None, on_in
         refuse("identity_tag", "IDENTITY_TAG_MISSING", f"tag {tag!r} is not <machine>-<8 hex>")
 
     stage, env_stage = rec.get("campaign_stage"), env.get("campaign_stage")
-    if stage not in STAGES:
+    if stage is None:
+        refuse("campaign_stage", "CAMPAIGN_STAGE_MISSING", "a round 5 receipt must carry campaign_stage (19 s1)")
+    elif stage not in STAGES:
         refuse("campaign_stage", "CAMPAIGN_STAGE_INVALID", f"{stage!r} not in {STAGES}")
     elif env_stage is None:
         refuse("campaign_stage", "CAMPAIGN_STAGE_NO_ENVELOPE", "the job envelope carries no campaign_stage")
