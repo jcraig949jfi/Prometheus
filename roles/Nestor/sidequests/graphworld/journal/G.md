@@ -414,3 +414,16 @@ file_candidate / segment contract (1789479761855-0).
 - Pushed G-R6-1..3 + order file (order commit 558777ab7, blob sha256 45c05b95...a519); ops.push re-rebased, full
   suite re-run on the actual tip a3d628b4a: 702 passed rc 0. O2 result posted (1789480558750-0): comparator does not fire.
 - R16 baseline and learner run rows now stamp measured search_* fields (process CPU across F9 pauses); v1 rows unchanged.
+
+### R6 clock (G, 11:00-) -- R16 per-cell screen on lane G
+
+- 11:01 all 73 plan_jobs REFUSED ENVELOPE_BAD_VALUE:predicate_id (envelope_for had None). 73 spurious PRODUCTION_CANDIDATE
+  stubs left open (file_candidate refuses measured_cost None; ids sent to A 1789484830471-0). Fix 398894fc6: predicate_id
+  G-R16-SCREEN, posted + pinned refs/pm/pred/G-R16-SCREEN via predicate_ref.post_predicate; resubmitted 11:08.
+- 11:38 w4 train8 TIMEOUT at cpu 641 CPU-s (19/99 rows): cpu_budget_s is the whole-job CPU TTL and the 5-thread estimate
+  starved an 8-thread grant. Pulled the 65 undelivered entries from pm:jobs:G, fixed cpu_budget_s = 14400 (d788eac8d;
+  tests pinned to R6-start inputs), resubmitted 66 at 11:46; suite rc 0 on the pushed tip (760 passed).
+- 13:01 WORKER RESTART per A ruling 1789489756428-0 (restart the F7 worker after editing ANY harness module): the lane G
+  worker started 11:00 and r16_cells.py (the job fn module) was edited at 11:05 and 11:39; the worker had reloaded it by
+  fingerprint (CODE_RELOADED) but is restarted while nothing is pending. No other harness module was edited.
+- Epoch status: 12:21 14/74 complete; 13:01 23/74 complete (SURVIVED 1 origin, HELD 2, PENDING 5, CULLED 15), 51 UNSCREENED.
