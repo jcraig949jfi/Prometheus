@@ -455,3 +455,18 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
   be amended; the bus post to A and C restates the missing text. From now on, filing text goes through a quoted
   heredoc or a file, never through bash double quotes.
 - This commit stays local until round 7 closes.
+
+## 2026-09-15 ~19:27 (round 7 live) -- D26 + D27 filed as siblings (no code, no push)
+
+- D26 1789514839378-0: a filing cannot be superseded by measured actuals. Verified: stub 1789486665691-0 holds the r6
+  ESTIMATE (wall 2132.4 s, cpu 6315.8 s); tonight's run measured 1560 s / 11709 CPU-s (job 90f1b50b9cb2, rows
+  e7d095a19, receipt 1789514378793-0) -> wall 0.732x, cpu 1.854x. file_candidate returns ALREADY_FILED (HSETNX, one
+  filing per stub). Design: keep the hash as current, add an append-only filings stream, kind estimate|measured,
+  supersede + measured_at + supersedes, drift() and a tally line. 1800 s build / 600 s tests.
+- D27 1789514839383-0: no code path opens a PC without a refusal. envelope.refuse (envelope.py:159) is the only API
+  and needs a refusal event; nv/gpuq.py:234 raw-XADDs a second copy of the schema. 4 hand-written stubs tonight
+  (E's D25 + my D4-closure, D22, D24). Design: envelope.open_candidate(...) in the refuse() record shape, origin
+  classifier REFUSAL/OPENED/HAND_WRITTEN with tally counts, gpuq moved onto it. 1200 s build / 600 s tests.
+- Filing text came from a script file as Python literals, and both stored bases were checked byte-identical to the
+  source (the D24 backtick loss made that check necessary). E's D25 stub untouched, per A.
+- Local commits held for close: 6b6c03829 (D22), f4d3a6e39 (D24), this one.
