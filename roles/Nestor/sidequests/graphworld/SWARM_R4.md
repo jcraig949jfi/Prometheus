@@ -259,3 +259,37 @@ Order:
 5. G screens B2.
 
 B and C resume on the corrected landscapes after that. G's 4 PENDING learners run while the cohorts are paused.
+
+## 9. Operator ruling after D-R4-2 (message 16): 32 seeds x 4 RNG families, mandatory
+
+- STATISTICAL MINIMUM for every baseline and every stochastic floor part
+  (uniform random, input-invariant learner):
+  - >= 32 run seeds pooled across 4 RNG families, 8 per family:
+    family 4200 (G's M2 streams), 2101, 3303, 5501, the same four as D-R4-2;
+  - the value is the pooled median, and the CI is M3 median_ci over the
+    pooled 32;
+  - the screen rule is unchanged: SURVIVED iff CI low > floor, under
+    gate_in|HOLD.
+- PURGE (conductor implementation):
+  - The 8-seed baselines are RETIRED from every judging path. No committed
+    row is deleted: rows are the audit trail and failure landscape
+    (contract), and they are the evidence that w13 was a ghost.
+  - worlds_r4.json v1 is superseded by a regenerated file, schema
+    worlds_r4/v2.
+  - qd_ledger check and F12 refuse, as INELIGIBLE(BASELINE_N), any baseline
+    with n_runs < 32 or fewer than 4 families.
+  - G recomputes all 32 seeds per cell from scratch, family 4200 included.
+    Old 8-seed baseline values are not reused.
+- READOUT: baselines are read with E's shared reader (E-R15-1, top1_train)
+  once it lands. Archives are saved per run seed, so runs may start before
+  the reader.
+- ORDER:
+  1. E lands the reader.
+  2. G re-screens all 74 candidate cells under 32x4, with the exactness
+     rule for expensive learners kept; G posts counts and hours before
+     bursting.
+  3. H replays.
+  4. B re-scores its saved elites on every SURVIVED cell, w13 included if
+     it survives; below 0.95 progress the PASS is stripped.
+  5. B and C resume on the new landscape.
+- The HOLD of 1789453831961-0 is replaced by this order.
