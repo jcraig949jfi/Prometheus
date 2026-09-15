@@ -1,0 +1,69 @@
+{
+ "model": "C5-medium",
+ "weights": "weights/C5-medium-D.pt",
+ "weights_sha256": "ab5819601c258cba906c2176cca52341805b94ba3acb424bf6dd7f473d527de2",
+ "reach_weights_sha256": "ae0706c16951b5fb60dbf7e498f7e338acdc55150e071eb9ce2141ec940a8140",
+ "isolated_script_sha256": "cbe26c6e52639dd36f91ca301bf87a207c659f0ea0da90736f30bc78e5f650cc",
+ "A_provenance": {
+  "held_targets": [
+   "0000011",
+   "0000110",
+   "0001000",
+   "0001101",
+   "0001110",
+   "0001111",
+   "0011010",
+   "0100100",
+   "0100110",
+   "0101001",
+   "0101110",
+   "0101111",
+   "0111010"
+  ],
+  "fit_rows_containing_any_held_target": 0,
+  "fit_rows_total": 4289843,
+  "val_objects": "val states x train targets only (early stopping); VAL rows with held targets used: 0",
+  "val_rows_with_held_targets": 0,
+  "target_indexed_statistics_from_full_D": "none; the pipeline derives one scalar (FIT mean of D) -- re-derived below",
+  "fit_mean_rederived": 16.733412
+ },
+ "B_serialization": {
+  "tensors": 20,
+  "extra_tensors": {},
+  "missing_tensors": [],
+  "shapes_match_architecture": true,
+  "parameter_count": 124657,
+  "expected_parameter_count": 124657,
+  "dtypes": [
+   "torch.float16"
+  ],
+  "integer_tables_present": false,
+  "file_bytes": 255759
+ },
+ "C_isolated_evaluation": {
+  "HELD_TARGETS": {
+   "rows": 200000,
+   "exact": 0.89624,
+   "within_1": 0.999305,
+   "R2": 0.9876287906334406,
+   "isolated_process_report": "isolated: rows=200000 alien_circuitry_modules_loaded=[] D_in_memory=False"
+  },
+  "HELD_BOTH": {
+   "rows": 200000,
+   "exact": 0.897495,
+   "within_1": 0.99938,
+   "R2": 0.987617753919305,
+   "isolated_process_report": "isolated: rows=200000 alien_circuitry_modules_loaded=[] D_in_memory=False"
+  }
+ },
+ "D_target_relabelling": {
+  "index_is_not_an_input": "the isolated process receives only 14 digits per row; target ids never cross the boundary",
+  "max_abs_diff_same_digits_reordered": 0.0,
+  "relabelled_rows_scored_against_relabelled_truth_exact": 0.251985
+ },
+ "E_state_relabelling": {
+  "max_abs_diff": 0.0,
+  "note": "state ids never cross the process boundary; rows re-ordered under a random permutation give identical predictions"
+ },
+ "verdict": "PASS"
+}

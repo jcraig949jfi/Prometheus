@@ -1,0 +1,1759 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 141, in <module>
+    run()
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 118, in run
+    child = crossover(rng, a, b) if rng.random() < 0.6 else mutate(rng, a)
+                                                            ^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 50, in mutate
+    node = list(node); i = rng.randrange(1, len(node)); node[i] = mutate(rng, node[i], depth - 1); return tuple(node)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 50, in mutate
+    node = list(node); i = rng.randrange(1, len(node)); node[i] = mutate(rng, node[i], depth - 1); return tuple(node)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 50, in mutate
+    node = list(node); i = rng.randrange(1, len(node)); node[i] = mutate(rng, node[i], depth - 1); return tuple(node)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 49, in mutate
+    if rng.random() < 0.15 or isinstance(node, str): return rand_tree(rng, depth)
+                                                            ^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 7 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 11 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 8 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 6 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 6 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 7 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 7 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 5 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 4 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 18 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 8 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 6 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 10 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 3 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 15 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 5 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 12 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 3 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 5 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 9 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 5 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 11 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 6 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 6 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 6 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 16 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 3 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 4 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 8 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 3 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 12 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 5 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 7 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 18 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 3 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 10 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 3 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 14 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 5 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 4 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 11 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 14 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 16 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 8 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 6 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 8 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 10 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 9 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 44, in rand_tree
+    if r < 0.9: return ("abs", rand_tree(rng, depth - 1))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 45, in rand_tree
+    return ("ite", rand_tree(rng, depth - 1), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\alien-circuitry-phase-ab\alien_circuitry\ac01d\families\c6_dsl.py", line 43, in rand_tree
+    if r < 0.8: return (rng.choice(BIN), rand_tree(rng, depth - 1), rand_tree(rng, depth - 1))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 8 more times]
+  File "H:\Python312\Lib\random.py", line 348, in choice
+    return seq[self._randbelow(len(seq))]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+RecursionError: maximum recursion depth exceeded
+EXIT 1

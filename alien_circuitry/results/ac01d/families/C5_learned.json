@@ -1,0 +1,743 @@
+{
+ "family": "C5 learned digit embedding (torch)",
+ "device": "cuda",
+ "configs": {
+  "small": {
+   "name": "C5-small",
+   "serialized_bytes": 58772,
+   "CR": 18.047641734159125,
+   "sets": {
+    "HELD_PAIRS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 53.95333333333333,
+      "mean_states": 26.35,
+      "mean_excess": 2.006666666666667,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.6814814814814815,
+      "HC_D_transitions_CI95": [
+       0.6428037006417414,
+       0.7169155410998239
+      ],
+      "HC_D_states": 0.6098624165645008,
+      "HC_D_states_CI95": [
+       0.5584759119892713,
+       0.6578863231981421
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 50.71666666666667,
+      "mean_states": 24.216666666666665,
+      "mean_excess": 5.363333333333333,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.7451327433628319,
+      "HC_D_transitions_CI95": [
+       0.7079789260918492,
+       0.7778423328197964
+      ],
+      "HC_D_states": 0.6970439994551151,
+      "HC_D_states_CI95": [
+       0.6496284351687873,
+       0.7369591809755649
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.982041057544903,
+      "exact": 0.8259933333333334,
+      "within_1": 0.9984966666666667,
+      "MAE": 0.2954877924156189,
+      "spearman": 0.9908710105175899
+     },
+     "references": {
+      "oracle_transitions": 37.75666666666667,
+      "KA-DFS_transitions": 88.60666666666667,
+      "KA-DFS_excess": 23.47,
+      "KA-GBFS_transitions": 126.28333333333333,
+      "KA-GBFS_excess": 3.3833333333333333
+     }
+    },
+    "HELD_STATES": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 54.31333333333333,
+      "mean_states": 26.53,
+      "mean_excess": 2.2066666666666666,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.6738590296848437,
+      "HC_D_transitions_CI95": [
+       0.6326082965375835,
+       0.7125318576592068
+      ],
+      "HC_D_states": 0.6044089802542603,
+      "HC_D_states_CI95": [
+       0.5471369434308688,
+       0.6578615330685078
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 50.8,
+      "mean_states": 24.253333333333334,
+      "mean_excess": 5.37,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.7427749444226495,
+      "HC_D_transitions_CI95": [
+       0.7055092930855295,
+       0.7772159121745955
+      ],
+      "HC_D_states": 0.6967811739248039,
+      "HC_D_states_CI95": [
+       0.649291993536133,
+       0.7398045020597699
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.9822794600179473,
+      "exact": 0.8279066666666667,
+      "within_1": 0.9986166666666667,
+      "MAE": 0.2938586907704671,
+      "spearman": 0.9909682119427853
+     },
+     "references": {
+      "oracle_transitions": 37.68666666666667,
+      "KA-DFS_transitions": 88.66666666666667,
+      "KA-DFS_excess": 23.483333333333334,
+      "KA-GBFS_transitions": 119.63333333333334,
+      "KA-GBFS_excess": 2.8566666666666665
+     }
+    },
+    "HELD_TARGETS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 59.553333333333335,
+      "mean_states": 29.803333333333335,
+      "mean_excess": 1.95,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.5680918448139352,
+      "HC_D_transitions_CI95": [
+       0.5214504577539675,
+       0.6108866629283988
+      ],
+      "HC_D_states": 0.4639944713199724,
+      "HC_D_states_CI95": [
+       0.3997215935441302,
+       0.5227615695086156
+      ],
+      "band": "meaningful structural compression",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 58.38666666666666,
+      "mean_states": 28.87,
+      "mean_excess": 7.91,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.5911850092372657,
+      "HC_D_transitions_CI95": [
+       0.5425798851616674,
+       0.6385036886811362
+      ],
+      "HC_D_states": 0.5026952315134762,
+      "HC_D_states_CI95": [
+       0.4419157831331293,
+       0.5620415059035488
+      ],
+      "band": "meaningful structural compression",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.9760862262453462,
+      "exact": 0.7720266666666666,
+      "within_1": 0.9958866666666667,
+      "MAE": 0.3391383546002706,
+      "spearman": 0.9884524015359576
+     },
+     "references": {
+      "oracle_transitions": 37.733333333333334,
+      "KA-DFS_transitions": 88.25333333333333,
+      "KA-DFS_excess": 23.0,
+      "KA-GBFS_transitions": 124.20666666666666,
+      "KA-GBFS_excess": 3.15
+     }
+    },
+    "HELD_BOTH": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 58.806666666666665,
+      "mean_states": 29.27,
+      "mean_excess": 1.7133333333333334,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.5940127817019845,
+      "HC_D_transitions_CI95": [
+       0.5505436903343249,
+       0.6387733285255937
+      ],
+      "HC_D_states": 0.4948338452946105,
+      "HC_D_states_CI95": [
+       0.43731025579651284,
+       0.5529682808526216
+      ],
+      "band": "meaningful structural compression",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 57.88666666666666,
+      "mean_states": 28.453333333333333,
+      "mean_excess": 7.323333333333333,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.6125798856374033,
+      "HC_D_transitions_CI95": [
+       0.5692443346667626,
+       0.6573010628575331
+      ],
+      "HC_D_states": 0.5290421669924602,
+      "HC_D_states_CI95": [
+       0.47305000049367074,
+       0.5862627410202012
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.9761429745888486,
+      "exact": 0.7726333333333333,
+      "within_1": 0.99598,
+      "MAE": 0.3385975611972809,
+      "spearman": 0.9884365626716163
+     },
+     "references": {
+      "oracle_transitions": 38.69,
+      "KA-DFS_transitions": 88.24,
+      "KA-DFS_excess": 22.746666666666666,
+      "KA-GBFS_transitions": 123.48333333333333,
+      "KA-GBFS_excess": 3.0766666666666667
+     }
+    }
+   },
+   "AC01R": {
+    "rows": 400000,
+    "prevalence": 0.206485,
+    "pr_auc": 0.9999994580115411
+   },
+   "landmarks": {
+    "1.5": "eligible",
+    "2.0": "eligible",
+    "4.0": "eligible",
+    "8.0": "eligible"
+   },
+   "seconds": 18.0,
+   "fit": {
+    "emb": 8,
+    "hidden": 128,
+    "params": 31609,
+    "D_model": {
+     "best_epoch": 11,
+     "best_val": 0.3863978087902069,
+     "history": [
+      [
+       0,
+       1.2455589771270752
+      ],
+      [
+       1,
+       0.8689982891082764
+      ],
+      [
+       2,
+       0.7621493935585022
+      ],
+      [
+       3,
+       0.6561908721923828
+      ],
+      [
+       4,
+       0.5602279901504517
+      ],
+      [
+       5,
+       0.5329219102859497
+      ],
+      [
+       6,
+       0.4869161546230316
+      ],
+      [
+       7,
+       0.5102109909057617
+      ],
+      [
+       8,
+       0.466208815574646
+      ],
+      [
+       9,
+       0.4356030225753784
+      ],
+      [
+       10,
+       0.39628276228904724
+      ],
+      [
+       11,
+       0.3863978087902069
+      ]
+     ]
+    },
+    "R_model": {
+     "best_epoch": 9,
+     "best_val": -1.0,
+     "history": [
+      [
+       0,
+       -0.6081765736424113
+      ],
+      [
+       1,
+       -0.8456945826748933
+      ],
+      [
+       2,
+       -0.9620910887156164
+      ],
+      [
+       3,
+       -0.9927131432482406
+      ],
+      [
+       4,
+       -0.9997740630719513
+      ],
+      [
+       5,
+       -0.9999922743736483
+      ],
+      [
+       6,
+       -0.9999995786854826
+      ],
+      [
+       7,
+       -0.9999999739037557
+      ],
+      [
+       8,
+       -0.9999999925436125
+      ],
+      [
+       9,
+       -1.0
+      ],
+      [
+       10,
+       -1.0
+      ],
+      [
+       11,
+       -1.0
+      ]
+     ]
+    },
+    "bytes_D_lzma": 58772,
+    "bytes_R_lzma": 59052,
+    "observed_D_rows": 3000000,
+    "observed_R_rows": 3000000
+   }
+  },
+  "medium": {
+   "name": "C5-medium",
+   "serialized_bytes": 226956,
+   "CR": 4.673575494809566,
+   "sets": {
+    "HELD_PAIRS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 43.43666666666667,
+      "mean_states": 19.496666666666666,
+      "mean_excess": 0.07333333333333333,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.8882989183874139,
+      "HC_D_transitions_CI95": [
+       0.8695897773609562,
+       0.9051427207213522
+      ],
+      "HC_D_states": 0.8899332516005993,
+      "HC_D_states_CI95": [
+       0.8672836991782799,
+       0.9102037131340293
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 40.086666666666666,
+      "mean_states": 18.04,
+      "mean_excess": 1.2366666666666666,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.9541789577187807,
+      "HC_D_transitions_CI95": [
+       0.9428265276192682,
+       0.9641186739983447
+      ],
+      "HC_D_states": 0.949461926168097,
+      "HC_D_states_CI95": [
+       0.9352077072913741,
+       0.9616646878124506
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.9929474215482598,
+      "exact": 0.9548666666666666,
+      "within_1": 0.9998266666666666,
+      "MAE": 0.18188399462382,
+      "spearman": 0.9943031444717056
+     },
+     "references": {
+      "oracle_transitions": 37.75666666666667,
+      "KA-DFS_transitions": 88.60666666666667,
+      "KA-DFS_excess": 23.47,
+      "KA-GBFS_transitions": 126.28333333333333,
+      "KA-GBFS_excess": 3.3833333333333333
+     }
+    },
+    "HELD_STATES": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 42.54333333333334,
+      "mean_states": 18.993333333333332,
+      "mean_excess": 0.04666666666666667,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.9047338825683274,
+      "HC_D_transitions_CI95": [
+       0.8895091915039965,
+       0.9176344194748917
+      ],
+      "HC_D_states": 0.9101974573978902,
+      "HC_D_states_CI95": [
+       0.8909391894151738,
+       0.9262015750523227
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 39.68666666666667,
+      "mean_states": 17.846666666666668,
+      "mean_excess": 1.0666666666666667,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.9607689289917615,
+      "HC_D_transitions_CI95": [
+       0.9492452015860781,
+       0.9698920818970923
+      ],
+      "HC_D_states": 0.9567216662158506,
+      "HC_D_states_CI95": [
+       0.9439443165116598,
+       0.9679162378040557
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.993015389727457,
+      "exact": 0.9559166666666666,
+      "within_1": 0.9998466666666667,
+      "MAE": 0.1812176322587331,
+      "spearman": 0.9943111223105086
+     },
+     "references": {
+      "oracle_transitions": 37.68666666666667,
+      "KA-DFS_transitions": 88.66666666666667,
+      "KA-DFS_excess": 23.483333333333334,
+      "KA-GBFS_transitions": 119.63333333333334,
+      "KA-GBFS_excess": 2.8566666666666665
+     }
+    },
+    "HELD_TARGETS": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 42.053333333333335,
+      "mean_states": 18.7,
+      "mean_excess": 0.0,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.9144893111638955,
+      "HC_D_transitions_CI95": [
+       0.9042271467934068,
+       0.9237683399226431
+      ],
+      "HC_D_states": 0.9243953006219765,
+      "HC_D_states_CI95": [
+       0.9111009325045094,
+       0.9356530227070576
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 40.08,
+      "mean_states": 18.243333333333332,
+      "mean_excess": 1.3666666666666667,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.9535497492742149,
+      "HC_D_transitions_CI95": [
+       0.9421589859379214,
+       0.9630500394124344
+      ],
+      "HC_D_states": 0.9433310297166552,
+      "HC_D_states_CI95": [
+       0.9279662941718796,
+       0.9561748061256534
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.987586169814442,
+      "exact": 0.8958966666666667,
+      "within_1": 0.99932,
+      "MAE": 0.238732698208491,
+      "spearman": 0.9925217609683451
+     },
+     "references": {
+      "oracle_transitions": 37.733333333333334,
+      "KA-DFS_transitions": 88.25333333333333,
+      "KA-DFS_excess": 23.0,
+      "KA-GBFS_transitions": 124.20666666666666,
+      "KA-GBFS_excess": 3.15
+     }
+    },
+    "HELD_BOTH": {
+     "GBFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 43.23,
+      "mean_states": 19.263333333333332,
+      "mean_excess": 0.006666666666666667,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.9083753784056509,
+      "HC_D_transitions_CI95": [
+       0.8954966475130259,
+       0.9199496546956318
+      ],
+      "HC_D_states": 0.9139905054454063,
+      "HC_D_states_CI95": [
+       0.8976384024256365,
+       0.927565613244597
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 41.306666666666665,
+      "mean_states": 18.826666666666668,
+      "mean_excess": 1.6166666666666667,
+      "traps_taken": 0.0,
+      "HC_D_transitions": 0.9471913891691893,
+      "HC_D_transitions_CI95": [
+       0.9350584397146081,
+       0.9574581699464417
+      ],
+      "HC_D_states": 0.9322814856185423,
+      "HC_D_states_CI95": [
+       0.9158003413372673,
+       0.9465921253858697
+      ],
+      "band": "strong result",
+      "dominance": "DOMINATES KA-DFS"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.9876910506536911,
+      "exact": 0.8973633333333333,
+      "within_1": 0.99932,
+      "MAE": 0.23748029289563496,
+      "spearman": 0.9925326047322143
+     },
+     "references": {
+      "oracle_transitions": 38.69,
+      "KA-DFS_transitions": 88.24,
+      "KA-DFS_excess": 22.746666666666666,
+      "KA-GBFS_transitions": 123.48333333333333,
+      "KA-GBFS_excess": 3.0766666666666667
+     }
+    }
+   },
+   "AC01R": {
+    "rows": 400000,
+    "prevalence": 0.206485,
+    "pr_auc": 0.9999745775073364
+   },
+   "landmarks": {
+    "1.5": "eligible",
+    "2.0": "eligible",
+    "4.0": "eligible",
+    "8.0": "not reached"
+   },
+   "seconds": 16.0,
+   "fit": {
+    "emb": 16,
+    "hidden": 256,
+    "params": 124657,
+    "D_model": {
+     "best_epoch": 10,
+     "best_val": 0.2425501048564911,
+     "history": [
+      [
+       0,
+       0.8098552823066711
+      ],
+      [
+       1,
+       0.5402244329452515
+      ],
+      [
+       2,
+       0.4510285258293152
+      ],
+      [
+       3,
+       0.4478183686733246
+      ],
+      [
+       4,
+       0.37828758358955383
+      ],
+      [
+       5,
+       0.33876174688339233
+      ],
+      [
+       6,
+       0.31787970662117004
+      ],
+      [
+       7,
+       0.3388304114341736
+      ],
+      [
+       8,
+       0.3401602506637573
+      ],
+      [
+       9,
+       0.2544025480747223
+      ],
+      [
+       10,
+       0.2425501048564911
+      ],
+      [
+       11,
+       0.27523374557495117
+      ]
+     ]
+    },
+    "R_model": {
+     "best_epoch": 8,
+     "best_val": -1.0,
+     "history": [
+      [
+       0,
+       -0.7992015950321208
+      ],
+      [
+       1,
+       -0.9936241661605609
+      ],
+      [
+       2,
+       -0.9998915329823282
+      ],
+      [
+       3,
+       -0.9999853325076454
+      ],
+      [
+       4,
+       -0.999999722308232
+      ],
+      [
+       5,
+       -0.9999999178284951
+      ],
+      [
+       6,
+       -0.9999999984020227
+      ],
+      [
+       7,
+       -0.9999999994673369
+      ],
+      [
+       8,
+       -1.0
+      ],
+      [
+       9,
+       -1.0
+      ],
+      [
+       10,
+       -1.0
+      ],
+      [
+       11,
+       -1.0
+      ]
+     ]
+    },
+    "bytes_D_lzma": 226956,
+    "bytes_R_lzma": 227484,
+    "observed_D_rows": 3000000,
+    "observed_R_rows": 3000000
+   }
+  }
+ },
+ "seconds": 137.7
+}

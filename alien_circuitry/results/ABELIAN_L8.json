@@ -1,0 +1,2101 @@
+{
+ "universe": "ABELIAN",
+ "L": 8,
+ "NS": 87381,
+ "rules": [
+  "cancel[xX]: 'xX'->''",
+  "cancel[Xx]: 'Xx'->''",
+  "cancel[yY]: 'yY'->''",
+  "cancel[Yy]: 'Yy'->''",
+  "rel0[xy->yx]: 'xy'->'yx'",
+  "rel0[yx->xy]: 'yx'->'xy'",
+  "rel1[xY->Yx]: 'xY'->'Yx'",
+  "rel1[Yx->xY]: 'Yx'->'xY'",
+  "rel2[Xy->yX]: 'Xy'->'yX'",
+  "rel2[yX->Xy]: 'yX'->'Xy'",
+  "rel3[XY->YX]: 'XY'->'YX'",
+  "rel3[YX->XY]: 'YX'->'XY'"
+ ],
+ "edges_nominal": 436908,
+ "edges_distinct": 405960,
+ "enumeration_seconds": 0.2,
+ "distance_seconds": 0.03,
+ "targets": [
+  "",
+  "x",
+  "X",
+  "y",
+  "Y",
+  "xx",
+  "xX",
+  "xy",
+  "xY",
+  "Xx",
+  "XX",
+  "Xy",
+  "XY",
+  "yx",
+  "yX",
+  "yy",
+  "yY",
+  "Yx",
+  "YX",
+  "Yy",
+  "YY"
+ ],
+ "hashes": {
+  "edges_nominal_sha256": "77a775341c8045ec26da52c9ec8deabb9620de72dcfd52cdac9df84d3a14636f",
+  "edges_distinct_sha256": "ff9ba64ef2ec6064164067e9feb5331717f4f6b521f105d8aaaedf913f797a18",
+  "D_sha256": "21b7b7a633f678766d8ff7163e3371100d7c0083c4f655f971deede4e1933c7d",
+  "targets": [
+   "",
+   "x",
+   "X",
+   "y",
+   "Y",
+   "xx",
+   "xX",
+   "xy",
+   "xY",
+   "Xx",
+   "XX",
+   "Xy",
+   "XY",
+   "yx",
+   "yX",
+   "yy",
+   "yY",
+   "Yx",
+   "YX",
+   "Yy",
+   "YY"
+  ],
+  "rules": [
+   "cancel[xX]",
+   "cancel[Xx]",
+   "cancel[yY]",
+   "cancel[Yy]",
+   "rel0[xy->yx]",
+   "rel0[yx->xy]",
+   "rel1[xY->Yx]",
+   "rel1[Yx->xY]",
+   "rel2[Xy->yX]",
+   "rel2[yX->Xy]",
+   "rel3[XY->YX]",
+   "rel3[YX->XY]"
+  ]
+ },
+ "platform": "Windows-11-10.0.26200-SP0",
+ "numpy": "2.2.6",
+ "difficulty": {
+  "min_start_len": 3,
+  "candidate_problems": 71640,
+  "distance_histogram": {
+   "1": 188,
+   "2": 1948,
+   "3": 19580,
+   "4": 27300,
+   "5": 16184,
+   "6": 4928,
+   "7": 1208,
+   "8": 240,
+   "9": 64
+  },
+  "max_D": 9,
+  "eligible_TRIVIAL": 2136,
+  "eligible_EASY": 46880,
+  "eligible_MEDIUM": 21112,
+  "eligible_HARD": 1512,
+  "branching_nominal_hist_all_states": {
+   "0": 33,
+   "1": 336,
+   "2": 2016,
+   "3": 7560,
+   "4": 18144,
+   "5": 27216,
+   "6": 23328,
+   "7": 8748
+  },
+  "branching_effective_hist_all_states": {
+   "0": 33,
+   "1": 560,
+   "2": 3416,
+   "3": 11456,
+   "4": 22692,
+   "5": 26808,
+   "6": 17520,
+   "7": 4896
+  },
+  "mean_branching_nominal_all": 5.000034332406359,
+  "mean_branching_effective_all": 4.6458612284135,
+  "mean_branching_nominal_live": 5.361731063457755,
+  "mean_branching_effective_live": 4.926342375598028,
+  "fixpoint_states": 33,
+  "states_live_for_some_target": 41177
+ },
+ "t_difficulty": 0.01,
+ "traps": {
+  "nominal_edges": 436908,
+  "totals": {
+   "live_action_target_triples": 389844,
+   "trap": 3472,
+   "visible_no_continuation": 4,
+   "visible_length_bound": 0,
+   "latent": 3468
+  },
+  "trap_rate_of_live_triples": 0.008906126553185376,
+  "latent_fraction_of_traps": 0.9988479262672811,
+  "by_rule_family": {
+   "cancel": {
+    "live": 149940,
+    "trap": 3472,
+    "latent": 3468,
+    "trap_rate": 0.02315592903828198
+   },
+   "relator": {
+    "live": 239904,
+    "trap": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   }
+  },
+  "distinct_latent_trap_successors": 440,
+  "latent_successor_forward_region_size": {
+   "min": 2,
+   "p25": 25.0,
+   "median": 25.0,
+   "p75": 32.0,
+   "max": 32,
+   "mean": 23.445454545454545
+  },
+  "latent_successor_forward_region_hist": {
+   "2": 4,
+   "3": 8,
+   "4": 16,
+   "5": 8,
+   "6": 16,
+   "7": 4,
+   "9": 24,
+   "25": 240,
+   "32": 120
+  },
+  "latent_successor_eccentricity": {
+   "min": 1,
+   "p25": 5.0,
+   "median": 5.0,
+   "p75": 7.0,
+   "max": 8,
+   "mean": 5.409090909090909
+  },
+  "latent_successor_eccentricity_hist": {
+   "1": 4,
+   "2": 12,
+   "3": 56,
+   "4": 32,
+   "5": 120,
+   "6": 104,
+   "7": 64,
+   "8": 48
+  },
+  "latent_successor_outdeg_hist": {
+   "1": 332,
+   "2": 400,
+   "3": 832,
+   "4": 1232,
+   "5": 672
+  },
+  "latent_trap_delta_length_bound_hist": {
+   "-1": 3468
+  },
+  "latent_traps_with_a_nontrap_sibling_action": 3468,
+  "latent_traps_locally_indistinguishable_from_a_nontrap_sibling": 1448,
+  "local_signature": "(rule family, len(successor), outdeg(successor))",
+  "per_target": [
+   {
+    "target": "",
+    "live_triples": 29780,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "x",
+    "live_triples": 6352,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "X",
+    "live_triples": 6352,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "y",
+    "live_triples": 6352,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "Y",
+    "live_triples": 6352,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "xx",
+    "live_triples": 18136,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "xX",
+    "live_triples": 19004,
+    "traps": 868,
+    "visible_no_continuation": 1,
+    "visible_length_bound": 0,
+    "latent": 867,
+    "trap_rate": 0.04567459482214271
+   },
+   {
+    "target": "xy",
+    "live_triples": 23262,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "xY",
+    "live_triples": 23262,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "Xx",
+    "live_triples": 19004,
+    "traps": 868,
+    "visible_no_continuation": 1,
+    "visible_length_bound": 0,
+    "latent": 867,
+    "trap_rate": 0.04567459482214271
+   },
+   {
+    "target": "XX",
+    "live_triples": 18136,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "Xy",
+    "live_triples": 23262,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "XY",
+    "live_triples": 23262,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "yx",
+    "live_triples": 23262,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "yX",
+    "live_triples": 23262,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "yy",
+    "live_triples": 18136,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "yY",
+    "live_triples": 19004,
+    "traps": 868,
+    "visible_no_continuation": 1,
+    "visible_length_bound": 0,
+    "latent": 867,
+    "trap_rate": 0.04567459482214271
+   },
+   {
+    "target": "Yx",
+    "live_triples": 23262,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "YX",
+    "live_triples": 23262,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   },
+   {
+    "target": "Yy",
+    "live_triples": 19004,
+    "traps": 868,
+    "visible_no_continuation": 1,
+    "visible_length_bound": 0,
+    "latent": 867,
+    "trap_rate": 0.04567459482214271
+   },
+   {
+    "target": "YY",
+    "live_triples": 18136,
+    "traps": 0,
+    "visible_no_continuation": 0,
+    "visible_length_bound": 0,
+    "latent": 0,
+    "trap_rate": 0.0
+   }
+  ],
+  "examples": [
+   {
+    "target": "xX",
+    "state": "xXXx",
+    "D_state": 1,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "Xx",
+    "trap_successor_outdeg": 1,
+    "trap_successor_forward_region": 2,
+    "trap_successor_eccentricity": 1,
+    "ok_action": "cancel[Xx]@2",
+    "ok_successor": "xX",
+    "ok_successor_D": 0,
+    "ok_successor_outdeg": 1
+   },
+   {
+    "target": "xX",
+    "state": "xXyY",
+    "D_state": 1,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "yY",
+    "trap_successor_outdeg": 1,
+    "trap_successor_forward_region": 2,
+    "trap_successor_eccentricity": 1,
+    "ok_action": "cancel[yY]@2",
+    "ok_successor": "xX",
+    "ok_successor_D": 0,
+    "ok_successor_outdeg": 1
+   },
+   {
+    "target": "xX",
+    "state": "xXYy",
+    "D_state": 1,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "Yy",
+    "trap_successor_outdeg": 1,
+    "trap_successor_forward_region": 2,
+    "trap_successor_eccentricity": 1,
+    "ok_action": "cancel[Yy]@2",
+    "ok_successor": "xX",
+    "ok_successor_D": 0,
+    "ok_successor_outdeg": 1
+   },
+   {
+    "target": "xX",
+    "state": "XxxX",
+    "D_state": 1,
+    "trap_action": "cancel[xX]@2",
+    "trap_successor": "Xx",
+    "trap_successor_outdeg": 1,
+    "trap_successor_forward_region": 2,
+    "trap_successor_eccentricity": 1,
+    "ok_action": "cancel[Xx]@0",
+    "ok_successor": "xX",
+    "ok_successor_D": 0,
+    "ok_successor_outdeg": 1
+   },
+   {
+    "target": "xX",
+    "state": "yYxX",
+    "D_state": 1,
+    "trap_action": "cancel[xX]@2",
+    "trap_successor": "yY",
+    "trap_successor_outdeg": 1,
+    "trap_successor_forward_region": 2,
+    "trap_successor_eccentricity": 1,
+    "ok_action": "cancel[yY]@0",
+    "ok_successor": "xX",
+    "ok_successor_D": 0,
+    "ok_successor_outdeg": 1
+   },
+   {
+    "target": "xX",
+    "state": "YyxX",
+    "D_state": 1,
+    "trap_action": "cancel[xX]@2",
+    "trap_successor": "Yy",
+    "trap_successor_outdeg": 1,
+    "trap_successor_forward_region": 2,
+    "trap_successor_eccentricity": 1,
+    "ok_action": "cancel[Yy]@0",
+    "ok_successor": "xX",
+    "ok_successor_D": 0,
+    "ok_successor_outdeg": 1
+   },
+   {
+    "target": "xX",
+    "state": "xXXxyY",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxyY",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@2",
+    "ok_successor": "xXyY",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "xXXxYy",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxYy",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@2",
+    "ok_successor": "xXYy",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "xXyXxY",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "yXxY",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 3,
+    "ok_action": "cancel[Xx]@3",
+    "ok_successor": "xXyY",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "xXyYXx",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "yYXx",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@4",
+    "ok_successor": "xXyY",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "xXYXxy",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "YXxy",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 3,
+    "ok_action": "cancel[Xx]@3",
+    "ok_successor": "xXYy",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "xXYyXx",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "YyXx",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@4",
+    "ok_successor": "xXYy",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "XxxXyY",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@2",
+    "trap_successor": "XxyY",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@0",
+    "ok_successor": "xXyY",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "XxxXYy",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@2",
+    "trap_successor": "XxYy",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@0",
+    "ok_successor": "xXYy",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "XxyxXY",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@3",
+    "trap_successor": "XxyY",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@0",
+    "ok_successor": "yxXY",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "XxyYxX",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@4",
+    "trap_successor": "XxyY",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@0",
+    "ok_successor": "yYxX",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "XxYxXy",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@3",
+    "trap_successor": "XxYy",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@0",
+    "ok_successor": "YxXy",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "XxYyxX",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@4",
+    "trap_successor": "XxYy",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@0",
+    "ok_successor": "YyxX",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "yxXXxY",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@1",
+    "trap_successor": "yXxY",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 3,
+    "ok_action": "cancel[Xx]@3",
+    "ok_successor": "yxXY",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "yxXYXx",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@1",
+    "trap_successor": "yYXx",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@4",
+    "ok_successor": "yxXY",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "yXxxXY",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@3",
+    "trap_successor": "yXxY",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 3,
+    "ok_action": "cancel[Xx]@1",
+    "ok_successor": "yxXY",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "yXxYxX",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@4",
+    "trap_successor": "yXxY",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 3,
+    "ok_action": "cancel[Xx]@1",
+    "ok_successor": "yYxX",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "yYxXXx",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@2",
+    "trap_successor": "yYXx",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@4",
+    "ok_successor": "yYxX",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "yYXxxX",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@4",
+    "trap_successor": "yYXx",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@2",
+    "ok_successor": "yYxX",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "YxXXxy",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@1",
+    "trap_successor": "YXxy",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 3,
+    "ok_action": "cancel[Xx]@3",
+    "ok_successor": "YxXy",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "YxXyXx",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@1",
+    "trap_successor": "YyXx",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@4",
+    "ok_successor": "YxXy",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "YXxxXy",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@3",
+    "trap_successor": "YXxy",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 3,
+    "ok_action": "cancel[Xx]@1",
+    "ok_successor": "YxXy",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "YXxyxX",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@4",
+    "trap_successor": "YXxy",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 3,
+    "ok_action": "cancel[Xx]@1",
+    "ok_successor": "YyxX",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "YyxXXx",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@2",
+    "trap_successor": "YyXx",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@4",
+    "ok_successor": "YyxX",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "YyXxxX",
+    "D_state": 2,
+    "trap_action": "cancel[xX]@4",
+    "trap_successor": "YyXx",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 9,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@2",
+    "ok_successor": "YyxX",
+    "ok_successor_D": 1,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "xXXxXXxx",
+    "D_state": 3,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxXXxx",
+    "trap_successor_outdeg": 2,
+    "trap_successor_forward_region": 5,
+    "trap_successor_eccentricity": 3,
+    "ok_action": "cancel[Xx]@5",
+    "ok_successor": "xXXxXx",
+    "ok_successor_D": 2,
+    "ok_successor_outdeg": 2
+   },
+   {
+    "target": "xX",
+    "state": "xXXxXyxY",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxXyxY",
+    "trap_successor_outdeg": 4,
+    "trap_successor_forward_region": 25,
+    "trap_successor_eccentricity": 7,
+    "ok_action": "cancel[xX]@3",
+    "ok_successor": "xXXyxY",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 4
+   },
+   {
+    "target": "xX",
+    "state": "xXXxXyYx",
+    "D_state": 3,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxXyYx",
+    "trap_successor_outdeg": 4,
+    "trap_successor_forward_region": 25,
+    "trap_successor_eccentricity": 6,
+    "ok_action": "cancel[xX]@3",
+    "ok_successor": "xXXyYx",
+    "ok_successor_D": 2,
+    "ok_successor_outdeg": 4
+   },
+   {
+    "target": "xX",
+    "state": "xXXxXYxy",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxXYxy",
+    "trap_successor_outdeg": 4,
+    "trap_successor_forward_region": 25,
+    "trap_successor_eccentricity": 7,
+    "ok_action": "cancel[xX]@3",
+    "ok_successor": "xXXYxy",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 4
+   },
+   {
+    "target": "xX",
+    "state": "xXXxXYyx",
+    "D_state": 3,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxXYyx",
+    "trap_successor_outdeg": 4,
+    "trap_successor_forward_region": 25,
+    "trap_successor_eccentricity": 6,
+    "ok_action": "cancel[xX]@3",
+    "ok_successor": "xXXYyx",
+    "ok_successor_D": 2,
+    "ok_successor_outdeg": 4
+   },
+   {
+    "target": "xX",
+    "state": "xXXxyXxY",
+    "D_state": 3,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxyXxY",
+    "trap_successor_outdeg": 5,
+    "trap_successor_forward_region": 25,
+    "trap_successor_eccentricity": 6,
+    "ok_action": "cancel[Xx]@2",
+    "ok_successor": "xXyXxY",
+    "ok_successor_D": 2,
+    "ok_successor_outdeg": 5
+   },
+   {
+    "target": "xX",
+    "state": "xXXxyXYx",
+    "D_state": 4,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxyXYx",
+    "trap_successor_outdeg": 5,
+    "trap_successor_forward_region": 25,
+    "trap_successor_eccentricity": 5,
+    "ok_action": "cancel[Xx]@2",
+    "ok_successor": "xXyXYx",
+    "ok_successor_D": 3,
+    "ok_successor_outdeg": 5
+   },
+   {
+    "target": "xX",
+    "state": "xXXxyyYY",
+    "D_state": 3,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxyyYY",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 25,
+    "trap_successor_eccentricity": 8,
+    "ok_action": "cancel[Xx]@2",
+    "ok_successor": "xXyyYY",
+    "ok_successor_D": 2,
+    "ok_successor_outdeg": 3
+   },
+   {
+    "target": "xX",
+    "state": "xXXxyYXx",
+    "D_state": 3,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxyYXx",
+    "trap_successor_outdeg": 5,
+    "trap_successor_forward_region": 25,
+    "trap_successor_eccentricity": 4,
+    "ok_action": "cancel[Xx]@2",
+    "ok_successor": "xXyYXx",
+    "ok_successor_D": 2,
+    "ok_successor_outdeg": 5
+   },
+   {
+    "target": "xX",
+    "state": "xXXxyYyY",
+    "D_state": 3,
+    "trap_action": "cancel[xX]@0",
+    "trap_successor": "XxyYyY",
+    "trap_successor_outdeg": 3,
+    "trap_successor_forward_region": 25,
+    "trap_successor_eccentricity": 8,
+    "ok_action": "cancel[Xx]@2",
+    "ok_successor": "xXyYyY",
+    "ok_successor_D": 2,
+    "ok_successor_outdeg": 3
+   }
+  ]
+ },
+ "t_traps": 0.53,
+ "target_stats": {
+  "targets": [
+   {
+    "target": "",
+    "len": 0,
+    "reachable_states": 5341,
+    "reachable_fraction_of_parity_compatible": 0.07640369072312424,
+    "distance_histogram": {
+     "0": 1,
+     "1": 4,
+     "2": 28,
+     "3": 240,
+     "4": 2236,
+     "5": 2040,
+     "6": 680,
+     "7": 96,
+     "8": 16
+    }
+   },
+   {
+    "target": "x",
+    "len": 1,
+    "reachable_states": 1335,
+    "reachable_fraction_of_parity_compatible": 0.07639047837033647,
+    "distance_histogram": {
+     "0": 1,
+     "1": 7,
+     "2": 60,
+     "3": 559,
+     "4": 510,
+     "5": 170,
+     "6": 24,
+     "7": 4
+    }
+   },
+   {
+    "target": "X",
+    "len": 1,
+    "reachable_states": 1335,
+    "reachable_fraction_of_parity_compatible": 0.07639047837033647,
+    "distance_histogram": {
+     "0": 1,
+     "1": 7,
+     "2": 60,
+     "3": 559,
+     "4": 510,
+     "5": 170,
+     "6": 24,
+     "7": 4
+    }
+   },
+   {
+    "target": "y",
+    "len": 1,
+    "reachable_states": 1335,
+    "reachable_fraction_of_parity_compatible": 0.07639047837033647,
+    "distance_histogram": {
+     "0": 1,
+     "1": 7,
+     "2": 60,
+     "3": 559,
+     "4": 510,
+     "5": 170,
+     "6": 24,
+     "7": 4
+    }
+   },
+   {
+    "target": "Y",
+    "len": 1,
+    "reachable_states": 1335,
+    "reachable_fraction_of_parity_compatible": 0.07639047837033647,
+    "distance_histogram": {
+     "0": 1,
+     "1": 7,
+     "2": 60,
+     "3": 559,
+     "4": 510,
+     "5": 170,
+     "6": 24,
+     "7": 4
+    }
+   },
+   {
+    "target": "xx",
+    "len": 2,
+    "reachable_states": 3378,
+    "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+    "distance_histogram": {
+     "0": 1,
+     "1": 10,
+     "2": 101,
+     "3": 1036,
+     "4": 1146,
+     "5": 734,
+     "6": 250,
+     "7": 78,
+     "8": 16,
+     "9": 6
+    }
+   },
+   {
+    "target": "xX",
+    "len": 2,
+    "reachable_states": 3378,
+    "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+    "distance_histogram": {
+     "0": 1,
+     "1": 10,
+     "2": 101,
+     "3": 1036,
+     "4": 1146,
+     "5": 732,
+     "6": 250,
+     "7": 80,
+     "8": 16,
+     "9": 6
+    }
+   },
+   {
+    "target": "xy",
+    "len": 2,
+    "reachable_states": 4246,
+    "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+    "distance_histogram": {
+     "0": 1,
+     "1": 11,
+     "2": 109,
+     "3": 1102,
+     "4": 1732,
+     "5": 950,
+     "6": 269,
+     "7": 58,
+     "8": 12,
+     "9": 2
+    }
+   },
+   {
+    "target": "xY",
+    "len": 2,
+    "reachable_states": 4246,
+    "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+    "distance_histogram": {
+     "0": 1,
+     "1": 11,
+     "2": 109,
+     "3": 1102,
+     "4": 1732,
+     "5": 950,
+     "6": 269,
+     "7": 58,
+     "8": 12,
+     "9": 2
+    }
+   },
+   {
+    "target": "Xx",
+    "len": 2,
+    "reachable_states": 3378,
+    "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+    "distance_histogram": {
+     "0": 1,
+     "1": 10,
+     "2": 101,
+     "3": 1036,
+     "4": 1146,
+     "5": 732,
+     "6": 250,
+     "7": 80,
+     "8": 16,
+     "9": 6
+    }
+   },
+   {
+    "target": "XX",
+    "len": 2,
+    "reachable_states": 3378,
+    "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+    "distance_histogram": {
+     "0": 1,
+     "1": 10,
+     "2": 101,
+     "3": 1036,
+     "4": 1146,
+     "5": 734,
+     "6": 250,
+     "7": 78,
+     "8": 16,
+     "9": 6
+    }
+   },
+   {
+    "target": "Xy",
+    "len": 2,
+    "reachable_states": 4246,
+    "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+    "distance_histogram": {
+     "0": 1,
+     "1": 11,
+     "2": 109,
+     "3": 1102,
+     "4": 1732,
+     "5": 950,
+     "6": 269,
+     "7": 58,
+     "8": 12,
+     "9": 2
+    }
+   },
+   {
+    "target": "XY",
+    "len": 2,
+    "reachable_states": 4246,
+    "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+    "distance_histogram": {
+     "0": 1,
+     "1": 11,
+     "2": 109,
+     "3": 1102,
+     "4": 1732,
+     "5": 950,
+     "6": 269,
+     "7": 58,
+     "8": 12,
+     "9": 2
+    }
+   },
+   {
+    "target": "yx",
+    "len": 2,
+    "reachable_states": 4246,
+    "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+    "distance_histogram": {
+     "0": 1,
+     "1": 11,
+     "2": 109,
+     "3": 1102,
+     "4": 1732,
+     "5": 950,
+     "6": 269,
+     "7": 58,
+     "8": 12,
+     "9": 2
+    }
+   },
+   {
+    "target": "yX",
+    "len": 2,
+    "reachable_states": 4246,
+    "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+    "distance_histogram": {
+     "0": 1,
+     "1": 11,
+     "2": 109,
+     "3": 1102,
+     "4": 1732,
+     "5": 950,
+     "6": 269,
+     "7": 58,
+     "8": 12,
+     "9": 2
+    }
+   },
+   {
+    "target": "yy",
+    "len": 2,
+    "reachable_states": 3378,
+    "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+    "distance_histogram": {
+     "0": 1,
+     "1": 10,
+     "2": 101,
+     "3": 1036,
+     "4": 1146,
+     "5": 734,
+     "6": 250,
+     "7": 78,
+     "8": 16,
+     "9": 6
+    }
+   },
+   {
+    "target": "yY",
+    "len": 2,
+    "reachable_states": 3378,
+    "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+    "distance_histogram": {
+     "0": 1,
+     "1": 10,
+     "2": 101,
+     "3": 1036,
+     "4": 1146,
+     "5": 732,
+     "6": 250,
+     "7": 80,
+     "8": 16,
+     "9": 6
+    }
+   },
+   {
+    "target": "Yx",
+    "len": 2,
+    "reachable_states": 4246,
+    "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+    "distance_histogram": {
+     "0": 1,
+     "1": 11,
+     "2": 109,
+     "3": 1102,
+     "4": 1732,
+     "5": 950,
+     "6": 269,
+     "7": 58,
+     "8": 12,
+     "9": 2
+    }
+   },
+   {
+    "target": "YX",
+    "len": 2,
+    "reachable_states": 4246,
+    "reachable_fraction_of_parity_compatible": 0.06073957513768686,
+    "distance_histogram": {
+     "0": 1,
+     "1": 11,
+     "2": 109,
+     "3": 1102,
+     "4": 1732,
+     "5": 950,
+     "6": 269,
+     "7": 58,
+     "8": 12,
+     "9": 2
+    }
+   },
+   {
+    "target": "Yy",
+    "len": 2,
+    "reachable_states": 3378,
+    "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+    "distance_histogram": {
+     "0": 1,
+     "1": 10,
+     "2": 101,
+     "3": 1036,
+     "4": 1146,
+     "5": 732,
+     "6": 250,
+     "7": 80,
+     "8": 16,
+     "9": 6
+    }
+   },
+   {
+    "target": "YY",
+    "len": 2,
+    "reachable_states": 3378,
+    "reachable_fraction_of_parity_compatible": 0.04832272369644518,
+    "distance_histogram": {
+     "0": 1,
+     "1": 10,
+     "2": 101,
+     "3": 1036,
+     "4": 1146,
+     "5": 734,
+     "6": 250,
+     "7": 78,
+     "8": 16,
+     "9": 6
+    }
+   }
+  ],
+  "note": "length parity and the length lower bound are syntactically visible reachability filters; see receipt"
+ },
+ "t_targets": 0.01,
+ "baselines": {
+  "sampled": 2000,
+  "distance_mismatches_bfs_bibfs_D_oracle": 0,
+  "per_stratum": {
+   "TRIVIAL": {
+    "n": 500,
+    "mean_D": 1.92,
+    "forward_bfs": {
+     "mean_states_expanded": 5.292,
+     "mean_transitions_examined": 13.194
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 1.92,
+     "mean_transitions_examined": 12.168
+    },
+    "oracle": {
+     "mean_states_expanded": 1.92,
+     "mean_transitions_examined": 5.062
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.63718820861678,
+    "oracle_SA_vs_bibfs_states": 0.0,
+    "ordering_inflation_states_points": 63.718820861678005,
+    "bibfs_over_bfs_states_ratio": 0.36281179138321995,
+    "oracle_SA_vs_forward_bfs_transitions": 0.6163407609519478,
+    "oracle_SA_vs_bibfs_transitions": 0.5839907955292571,
+    "ordering_inflation_transitions_points": 3.234996542269064,
+    "bibfs_over_bfs_transitions_ratio": 0.922237380627558
+   },
+   "EASY": {
+    "n": 500,
+    "mean_D": 3.582,
+    "forward_bfs": {
+     "mean_states_expanded": 30.026,
+     "mean_transitions_examined": 130.506
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 12.254,
+     "mean_transitions_examined": 106.898
+    },
+    "oracle": {
+     "mean_states_expanded": 3.582,
+     "mean_transitions_examined": 11.636
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.880703390394991,
+    "oracle_SA_vs_bibfs_states": 0.7076872857842338,
+    "ordering_inflation_states_points": 17.30161046107572,
+    "bibfs_over_bfs_states_ratio": 0.40811296876040765,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9108393483824498,
+    "oracle_SA_vs_bibfs_transitions": 0.8911485715354824,
+    "ordering_inflation_transitions_points": 1.9690776846967406,
+    "bibfs_over_bfs_transitions_ratio": 0.819104102493372
+   },
+   "MEDIUM": {
+    "n": 500,
+    "mean_D": 5.238,
+    "forward_bfs": {
+     "mean_states_expanded": 63.648,
+     "mean_transitions_examined": 283.376
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 33.718,
+     "mean_transitions_examined": 270.934
+    },
+    "oracle": {
+     "mean_states_expanded": 5.238,
+     "mean_transitions_examined": 16.928
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9177036199095022,
+    "oracle_SA_vs_bibfs_states": 0.8446527077525358,
+    "ordering_inflation_states_points": 7.305091215696646,
+    "bibfs_over_bfs_states_ratio": 0.5297574157868276,
+    "oracle_SA_vs_forward_bfs_transitions": 0.940263113319406,
+    "oracle_SA_vs_bibfs_transitions": 0.9375198387799243,
+    "ordering_inflation_transitions_points": 0.2743274539481755,
+    "bibfs_over_bfs_transitions_ratio": 0.956093670600192
+   },
+   "HARD": {
+    "n": 500,
+    "mean_D": 7.25,
+    "forward_bfs": {
+     "mean_states_expanded": 87.374,
+     "mean_transitions_examined": 379.512
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 67.712,
+     "mean_transitions_examined": 435.138
+    },
+    "oracle": {
+     "mean_states_expanded": 7.25,
+     "mean_transitions_examined": 22.876
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9170233707968045,
+    "oracle_SA_vs_bibfs_states": 0.8929288752362949,
+    "ordering_inflation_states_points": 2.4094495560509577,
+    "bibfs_over_bfs_states_ratio": 0.7749673816009339,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9397225911170134,
+    "oracle_SA_vs_bibfs_transitions": 0.9474281722120339,
+    "ordering_inflation_transitions_points": -0.7705581095020508,
+    "bibfs_over_bfs_transitions_ratio": 1.1465724403971416
+   }
+  },
+  "per_target": {
+   "": {
+    "n": 122,
+    "mean_D": 5.434426229508197,
+    "forward_bfs": {
+     "mean_states_expanded": 67.52459016393442,
+     "mean_transitions_examined": 299.0
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 36.122950819672134,
+     "mean_transitions_examined": 202.327868852459
+    },
+    "oracle": {
+     "mean_states_expanded": 5.434426229508197,
+     "mean_transitions_examined": 16.950819672131146
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9195193008011653,
+    "oracle_SA_vs_bibfs_states": 0.8495575221238938,
+    "ordering_inflation_states_points": 6.996177867727149,
+    "bibfs_over_bfs_states_ratio": 0.5349599417334304,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9433082954109326,
+    "oracle_SA_vs_bibfs_transitions": 0.9162210338680927,
+    "ordering_inflation_transitions_points": 2.7087261542839913,
+    "bibfs_over_bfs_transitions_ratio": 0.6766818356269533
+   },
+   "x": {
+    "n": 32,
+    "mean_D": 3.0,
+    "forward_bfs": {
+     "mean_states_expanded": 16.4375,
+     "mean_transitions_examined": 58.90625
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 8.53125,
+     "mean_transitions_examined": 57.25
+    },
+    "oracle": {
+     "mean_states_expanded": 3.0,
+     "mean_transitions_examined": 8.0625
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.8174904942965779,
+    "oracle_SA_vs_bibfs_states": 0.6483516483516483,
+    "ordering_inflation_states_points": 16.913884594492966,
+    "bibfs_over_bfs_states_ratio": 0.5190114068441065,
+    "oracle_SA_vs_forward_bfs_transitions": 0.863129973474801,
+    "oracle_SA_vs_bibfs_transitions": 0.8591703056768559,
+    "ordering_inflation_transitions_points": 0.3959667797945099,
+    "bibfs_over_bfs_transitions_ratio": 0.9718832891246685
+   },
+   "X": {
+    "n": 31,
+    "mean_D": 2.870967741935484,
+    "forward_bfs": {
+     "mean_states_expanded": 16.612903225806452,
+     "mean_transitions_examined": 60.83870967741935
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 7.967741935483871,
+     "mean_transitions_examined": 51.29032258064516
+    },
+    "oracle": {
+     "mean_states_expanded": 2.870967741935484,
+     "mean_transitions_examined": 7.806451612903226
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.8271844660194174,
+    "oracle_SA_vs_bibfs_states": 0.6396761133603239,
+    "ordering_inflation_states_points": 18.75083526590935,
+    "bibfs_over_bfs_states_ratio": 0.4796116504854369,
+    "oracle_SA_vs_forward_bfs_transitions": 0.8716861081654295,
+    "oracle_SA_vs_bibfs_transitions": 0.8477987421383648,
+    "ordering_inflation_transitions_points": 2.388736602706465,
+    "bibfs_over_bfs_transitions_ratio": 0.8430540827147401
+   },
+   "y": {
+    "n": 29,
+    "mean_D": 3.1379310344827585,
+    "forward_bfs": {
+     "mean_states_expanded": 17.275862068965516,
+     "mean_transitions_examined": 61.37931034482759
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 9.03448275862069,
+     "mean_transitions_examined": 56.758620689655174
+    },
+    "oracle": {
+     "mean_states_expanded": 3.1379310344827585,
+     "mean_transitions_examined": 8.413793103448276
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.8183632734530938,
+    "oracle_SA_vs_bibfs_states": 0.6526717557251909,
+    "ordering_inflation_states_points": 16.569151772790292,
+    "bibfs_over_bfs_states_ratio": 0.5229540918163673,
+    "oracle_SA_vs_forward_bfs_transitions": 0.8629213483146068,
+    "oracle_SA_vs_bibfs_transitions": 0.8517618469015795,
+    "ordering_inflation_transitions_points": 1.115950141302724,
+    "bibfs_over_bfs_transitions_ratio": 0.9247191011235955
+   },
+   "Y": {
+    "n": 33,
+    "mean_D": 3.121212121212121,
+    "forward_bfs": {
+     "mean_states_expanded": 17.454545454545453,
+     "mean_transitions_examined": 62.57575757575758
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 9.909090909090908,
+     "mean_transitions_examined": 61.45454545454545
+    },
+    "oracle": {
+     "mean_states_expanded": 3.121212121212121,
+     "mean_transitions_examined": 8.151515151515152
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.8211805555555556,
+    "oracle_SA_vs_bibfs_states": 0.6850152905198776,
+    "ordering_inflation_states_points": 13.616526503567794,
+    "bibfs_over_bfs_states_ratio": 0.5677083333333334,
+    "oracle_SA_vs_forward_bfs_transitions": 0.8697336561743342,
+    "oracle_SA_vs_bibfs_transitions": 0.8673570019723866,
+    "ordering_inflation_transitions_points": 0.23766542019475478,
+    "bibfs_over_bfs_transitions_ratio": 0.9820823244552058
+   },
+   "xx": {
+    "n": 107,
+    "mean_D": 4.869158878504673,
+    "forward_bfs": {
+     "mean_states_expanded": 48.52336448598131,
+     "mean_transitions_examined": 208.4392523364486
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 32.71028037383178,
+     "mean_transitions_examined": 232.4018691588785
+    },
+    "oracle": {
+     "mean_states_expanded": 4.869158878504673,
+     "mean_transitions_examined": 15.074766355140186
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.899653312788906,
+    "oracle_SA_vs_bibfs_states": 0.8511428571428572,
+    "ordering_inflation_states_points": 4.851045564604883,
+    "bibfs_over_bfs_states_ratio": 0.6741140215716487,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9276778908666996,
+    "oracle_SA_vs_bibfs_transitions": 0.9351349177624965,
+    "ordering_inflation_transitions_points": -0.7457026895796859,
+    "bibfs_over_bfs_transitions_ratio": 1.1149621127202618
+   },
+   "xX": {
+    "n": 105,
+    "mean_D": 4.609523809523809,
+    "forward_bfs": {
+     "mean_states_expanded": 51.53333333333333,
+     "mean_transitions_examined": 225.65714285714284
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 33.06666666666667,
+     "mean_transitions_examined": 233.4857142857143
+    },
+    "oracle": {
+     "mean_states_expanded": 4.609523809523809,
+     "mean_transitions_examined": 16.695238095238096
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9105525780816854,
+    "oracle_SA_vs_bibfs_states": 0.8605990783410138,
+    "ordering_inflation_states_points": 4.995349974067165,
+    "bibfs_over_bfs_states_ratio": 0.6416558861578266,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9260150249008188,
+    "oracle_SA_vs_bibfs_transitions": 0.9284956762930331,
+    "ordering_inflation_transitions_points": -0.2480651392214317,
+    "bibfs_over_bfs_transitions_ratio": 1.0346923271714359
+   },
+   "xy": {
+    "n": 99,
+    "mean_D": 4.3232323232323235,
+    "forward_bfs": {
+     "mean_states_expanded": 45.07070707070707,
+     "mean_transitions_examined": 198.96969696969697
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 27.383838383838384,
+     "mean_transitions_examined": 209.95959595959596
+    },
+    "oracle": {
+     "mean_states_expanded": 4.3232323232323235,
+     "mean_transitions_examined": 12.808080808080808
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9040788883908562,
+    "oracle_SA_vs_bibfs_states": 0.8421246772408706,
+    "ordering_inflation_states_points": 6.195421114998556,
+    "bibfs_over_bfs_states_ratio": 0.6075750784401613,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9356279825362981,
+    "oracle_SA_vs_bibfs_transitions": 0.9389974020975657,
+    "ordering_inflation_transitions_points": -0.33694195612675726,
+    "bibfs_over_bfs_transitions_ratio": 1.0552340339120723
+   },
+   "xY": {
+    "n": 109,
+    "mean_D": 4.36697247706422,
+    "forward_bfs": {
+     "mean_states_expanded": 42.972477064220186,
+     "mean_transitions_examined": 184.27522935779817
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 27.954128440366972,
+     "mean_transitions_examined": 201.52293577981652
+    },
+    "oracle": {
+     "mean_states_expanded": 4.36697247706422,
+     "mean_transitions_examined": 12.788990825688073
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.8983774551665243,
+    "oracle_SA_vs_bibfs_states": 0.8437807679684937,
+    "ordering_inflation_states_points": 5.459668719803068,
+    "bibfs_over_bfs_states_ratio": 0.6505123825789924,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9305984267649109,
+    "oracle_SA_vs_bibfs_transitions": 0.9365382864426841,
+    "ordering_inflation_transitions_points": -0.5939859677773218,
+    "bibfs_over_bfs_transitions_ratio": 1.0935975306183412
+   },
+   "Xx": {
+    "n": 123,
+    "mean_D": 4.520325203252033,
+    "forward_bfs": {
+     "mean_states_expanded": 50.53658536585366,
+     "mean_transitions_examined": 218.0731707317073
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 31.804878048780488,
+     "mean_transitions_examined": 223.89430894308944
+    },
+    "oracle": {
+     "mean_states_expanded": 4.520325203252033,
+     "mean_transitions_examined": 16.252032520325205
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9105534105534105,
+    "oracle_SA_vs_bibfs_states": 0.8578732106339468,
+    "ordering_inflation_states_points": 5.268019991946371,
+    "bibfs_over_bfs_states_ratio": 0.6293436293436293,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9254744062931066,
+    "oracle_SA_vs_bibfs_transitions": 0.9274120338429137,
+    "ordering_inflation_transitions_points": -0.1937627549807086,
+    "bibfs_over_bfs_transitions_ratio": 1.0266935093017187
+   },
+   "XX": {
+    "n": 100,
+    "mean_D": 4.68,
+    "forward_bfs": {
+     "mean_states_expanded": 47.05,
+     "mean_transitions_examined": 203.37
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 30.18,
+     "mean_transitions_examined": 218.34
+    },
+    "oracle": {
+     "mean_states_expanded": 4.68,
+     "mean_transitions_examined": 14.83
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9005313496280553,
+    "oracle_SA_vs_bibfs_states": 0.8449304174950298,
+    "ordering_inflation_states_points": 5.560093213302542,
+    "bibfs_over_bfs_states_ratio": 0.6414452709883103,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9270787235088754,
+    "oracle_SA_vs_bibfs_transitions": 0.9320784098195475,
+    "ordering_inflation_transitions_points": -0.4999686310672047,
+    "bibfs_over_bfs_transitions_ratio": 1.073609676943502
+   },
+   "Xy": {
+    "n": 121,
+    "mean_D": 4.4958677685950414,
+    "forward_bfs": {
+     "mean_states_expanded": 45.34710743801653,
+     "mean_transitions_examined": 195.7520661157025
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 28.355371900826448,
+     "mean_transitions_examined": 213.39669421487602
+    },
+    "oracle": {
+     "mean_states_expanded": 4.4958677685950414,
+     "mean_transitions_examined": 13.239669421487603
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9008565700747221,
+    "oracle_SA_vs_bibfs_states": 0.8414456426697756,
+    "ordering_inflation_states_points": 5.941092740494646,
+    "bibfs_over_bfs_states_ratio": 0.6252961545471114,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9323651101916745,
+    "oracle_SA_vs_bibfs_transitions": 0.9379574764726386,
+    "ordering_inflation_transitions_points": -0.5592366280964156,
+    "bibfs_over_bfs_transitions_ratio": 1.0901376340454276
+   },
+   "XY": {
+    "n": 107,
+    "mean_D": 4.364485981308412,
+    "forward_bfs": {
+     "mean_states_expanded": 43.74766355140187,
+     "mean_transitions_examined": 188.3271028037383
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 28.046728971962615,
+     "mean_transitions_examined": 211.78504672897196
+    },
+    "oracle": {
+     "mean_states_expanded": 4.364485981308412,
+     "mean_transitions_examined": 12.962616822429906
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9002349925229651,
+    "oracle_SA_vs_bibfs_states": 0.8443852049316894,
+    "ordering_inflation_states_points": 5.5849787591275675,
+    "bibfs_over_bfs_states_ratio": 0.641102328562273,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9311696689990572,
+    "oracle_SA_vs_bibfs_transitions": 0.9387935219098893,
+    "ordering_inflation_transitions_points": -0.7623852910832118,
+    "bibfs_over_bfs_transitions_ratio": 1.1245595752071857
+   },
+   "yx": {
+    "n": 107,
+    "mean_D": 4.411214953271028,
+    "forward_bfs": {
+     "mean_states_expanded": 44.38317757009346,
+     "mean_transitions_examined": 193.0841121495327
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 27.233644859813083,
+     "mean_transitions_examined": 206.3177570093458
+    },
+    "oracle": {
+     "mean_states_expanded": 4.411214953271028,
+     "mean_transitions_examined": 13.11214953271028
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9006106548747105,
+    "oracle_SA_vs_bibfs_states": 0.8380233356211393,
+    "ordering_inflation_states_points": 6.25873192535712,
+    "bibfs_over_bfs_states_ratio": 0.6136028637607918,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9320909970958373,
+    "oracle_SA_vs_bibfs_transitions": 0.9364468200761007,
+    "ordering_inflation_transitions_points": -0.43558229802633797,
+    "bibfs_over_bfs_transitions_ratio": 1.068538238141336
+   },
+   "yX": {
+    "n": 120,
+    "mean_D": 4.441666666666666,
+    "forward_bfs": {
+     "mean_states_expanded": 47.24166666666667,
+     "mean_transitions_examined": 207.725
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 29.091666666666665,
+     "mean_transitions_examined": 218.23333333333332
+    },
+    "oracle": {
+     "mean_states_expanded": 4.441666666666666,
+     "mean_transitions_examined": 13.5
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9059798906332687,
+    "oracle_SA_vs_bibfs_states": 0.8473216843311372,
+    "ordering_inflation_states_points": 5.865820630213148,
+    "bibfs_over_bfs_states_ratio": 0.6158052566590227,
+    "oracle_SA_vs_forward_bfs_transitions": 0.935010229871224,
+    "oracle_SA_vs_bibfs_transitions": 0.9381396059263785,
+    "ordering_inflation_transitions_points": -0.3129376055154509,
+    "bibfs_over_bfs_transitions_ratio": 1.0505877161311028
+   },
+   "yy": {
+    "n": 111,
+    "mean_D": 4.351351351351352,
+    "forward_bfs": {
+     "mean_states_expanded": 42.153153153153156,
+     "mean_transitions_examined": 180.16216216216216
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 26.74774774774775,
+     "mean_transitions_examined": 193.27027027027026
+    },
+    "oracle": {
+     "mean_states_expanded": 4.351351351351352,
+     "mean_transitions_examined": 13.288288288288289
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.8967728147039966,
+    "oracle_SA_vs_bibfs_states": 0.8373189626136747,
+    "ordering_inflation_states_points": 5.945385209032194,
+    "bibfs_over_bfs_states_ratio": 0.6345372942936525,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9262426242624262,
+    "oracle_SA_vs_bibfs_transitions": 0.9312450473127302,
+    "ordering_inflation_transitions_points": -0.5002423050303961,
+    "bibfs_over_bfs_transitions_ratio": 1.0727572757275727
+   },
+   "yY": {
+    "n": 103,
+    "mean_D": 4.563106796116505,
+    "forward_bfs": {
+     "mean_states_expanded": 54.23300970873787,
+     "mean_transitions_examined": 239.20388349514562
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 34.398058252427184,
+     "mean_transitions_examined": 235.51456310679612
+    },
+    "oracle": {
+     "mean_states_expanded": 4.563106796116505,
+     "mean_transitions_examined": 16.58252427184466
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9158610812746151,
+    "oracle_SA_vs_bibfs_states": 0.8673440587073102,
+    "ordering_inflation_states_points": 4.8517022567304835,
+    "bibfs_over_bfs_states_ratio": 0.6342642320085929,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9306761912492897,
+    "oracle_SA_vs_bibfs_transitions": 0.9295902382719103,
+    "ordering_inflation_transitions_points": 0.10859529773793453,
+    "bibfs_over_bfs_transitions_ratio": 0.9845766701842682
+   },
+   "Yx": {
+    "n": 112,
+    "mean_D": 4.428571428571429,
+    "forward_bfs": {
+     "mean_states_expanded": 43.785714285714285,
+     "mean_transitions_examined": 189.11607142857142
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 26.741071428571427,
+     "mean_transitions_examined": 206.14285714285714
+    },
+    "oracle": {
+     "mean_states_expanded": 4.428571428571429,
+     "mean_transitions_examined": 13.133928571428571
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.8988580750407831,
+    "oracle_SA_vs_bibfs_states": 0.8343906510851419,
+    "ordering_inflation_states_points": 6.4467423955641205,
+    "bibfs_over_bfs_states_ratio": 0.6107259380097879,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9305509654879373,
+    "oracle_SA_vs_bibfs_transitions": 0.9362872487872488,
+    "ordering_inflation_transitions_points": -0.5736283299311529,
+    "bibfs_over_bfs_transitions_ratio": 1.0900335206080922
+   },
+   "YX": {
+    "n": 118,
+    "mean_D": 4.398305084745763,
+    "forward_bfs": {
+     "mean_states_expanded": 41.389830508474574,
+     "mean_transitions_examined": 177.27966101694915
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 25.35593220338983,
+     "mean_transitions_examined": 191.3135593220339
+    },
+    "oracle": {
+     "mean_states_expanded": 4.398305084745763,
+     "mean_transitions_examined": 12.864406779661017
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.8937346437346437,
+    "oracle_SA_vs_bibfs_states": 0.8265374331550802,
+    "ordering_inflation_states_points": 6.7197210579563516,
+    "bibfs_over_bfs_states_ratio": 0.6126126126126126,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9274343897891869,
+    "oracle_SA_vs_bibfs_transitions": 0.9327574750830565,
+    "ordering_inflation_transitions_points": -0.53230852938696,
+    "bibfs_over_bfs_transitions_ratio": 1.0791624838663416
+   },
+   "Yy": {
+    "n": 104,
+    "mean_D": 4.961538461538462,
+    "forward_bfs": {
+     "mean_states_expanded": 63.06730769230769,
+     "mean_transitions_examined": 279.0
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 39.21153846153846,
+     "mean_transitions_examined": 271.52884615384613
+    },
+    "oracle": {
+     "mean_states_expanded": 4.961538461538462,
+     "mean_transitions_examined": 18.16346153846154
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.9213294709559384,
+    "oracle_SA_vs_bibfs_states": 0.8734673859735165,
+    "ordering_inflation_states_points": 4.786208498242194,
+    "bibfs_over_bfs_states_ratio": 0.6217411190730294,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9348979873173422,
+    "oracle_SA_vs_bibfs_transitions": 0.9331066964127624,
+    "ordering_inflation_transitions_points": 0.17912909045797454,
+    "bibfs_over_bfs_transitions_ratio": 0.9732216708023159
+   },
+   "YY": {
+    "n": 107,
+    "mean_D": 4.859813084112149,
+    "forward_bfs": {
+     "mean_states_expanded": 46.22429906542056,
+     "mean_transitions_examined": 197.0373831775701
+    },
+    "bidirectional_bfs": {
+     "mean_states_expanded": 30.018691588785046,
+     "mean_transitions_examined": 214.22429906542055
+    },
+    "oracle": {
+     "mean_states_expanded": 4.859813084112149,
+     "mean_transitions_examined": 14.83177570093458
+    },
+    "oracle_SA_vs_forward_bfs_states": 0.8948645369995957,
+    "oracle_SA_vs_bibfs_states": 0.838107098381071,
+    "ordering_inflation_states_points": 5.675743861852467,
+    "bibfs_over_bfs_states_ratio": 0.64941366761019,
+    "oracle_SA_vs_forward_bfs_transitions": 0.9247260826258122,
+    "oracle_SA_vs_bibfs_transitions": 0.9307652037344036,
+    "ordering_inflation_transitions_points": -0.6039121108591394,
+    "bibfs_over_bfs_transitions_ratio": 1.0872266755205615
+   }
+  },
+  "all": {
+   "n": 2000,
+   "mean_D": 4.4975,
+   "forward_bfs": {
+    "mean_states_expanded": 46.585,
+    "mean_transitions_examined": 201.647
+   },
+   "bidirectional_bfs": {
+    "mean_states_expanded": 28.901,
+    "mean_transitions_examined": 206.2845
+   },
+   "oracle": {
+    "mean_states_expanded": 4.4975,
+    "mean_transitions_examined": 14.1255
+   },
+   "oracle_SA_vs_forward_bfs_states": 0.9034560480841473,
+   "oracle_SA_vs_bibfs_states": 0.8443825473167018,
+   "ordering_inflation_states_points": 5.907350076744544,
+   "bibfs_over_bfs_states_ratio": 0.6203928303101857,
+   "oracle_SA_vs_forward_bfs_transitions": 0.9299493669630592,
+   "oracle_SA_vs_bibfs_transitions": 0.9315241814096551,
+   "ordering_inflation_transitions_points": -0.15748144465959069,
+   "bibfs_over_bfs_transitions_ratio": 1.0229981105595423
+  }
+ },
+ "t_baselines": 0.12,
+ "chart_D": {
+  "dtype": "int16",
+  "shape": [
+   87381,
+   21
+  ],
+  "unreach_value": -1,
+  "live_entries": 71673,
+  "density": 0.03905883430036278,
+  "value_histogram": {
+   "0": 21,
+   "1": 200,
+   "2": 1948,
+   "3": 19580,
+   "4": 27300,
+   "5": 16184,
+   "6": 4928,
+   "7": 1208,
+   "8": 240,
+   "9": 64
+  },
+  "storage_dense": {
+   "raw_bytes": 3670002,
+   "zlib9_bytes": 55989,
+   "lzma_bytes": 30680
+  },
+  "storage_sparse_coo": {
+   "raw_bytes": 430038,
+   "zlib9_bytes": 76249,
+   "lzma_bytes": 34944
+  },
+  "reference_size_note": "M1 denominators must use an entropy-coded size (lzma of the sparse COO) so that generic sparsity is not credited as structure",
+  "sha256": "62c386df812385b4cd6c0d6308eb05fa41af0eee3593ea7f70af7743cd7963d9"
+ },
+ "t_chart_D": 0.45,
+ "chart_M": {
+  "schema": {
+   "edge_table": {
+    "key": "one row per nominal legal action (s, rule, position)",
+    "fields": {
+     "src": "int32 state index",
+     "dst": "int32 successor index",
+     "rule": "int8 rule id",
+     "pos": "int8 position",
+     "dst_outdeg": "int16 distinct-successor out-degree of dst",
+     "dst_forward_region": "int32 forward-reachable set size from dst (target-independent)",
+     "dst_eccentricity": "int16 BFS eccentricity from dst"
+    }
+   },
+   "edge_target_table": {
+    "key": "(edge row, target column); only rows with D[src,t] >= 0 are live",
+    "fields": {
+     "dD": "int8: D[dst,t]-D[src,t] when both live; +127 = target lost (trap); -128 = source not live (entry inert)",
+     "flags": "uint8 bitfield: 1=live, 2=target_retained, 4=on_shortest_path (D[dst]+1==D[src]), 8=trap, 16=latent_trap"
+    }
+   }
+  },
+  "edges": 436908,
+  "targets": 21,
+  "edge_target_entries": 9175068,
+  "live_entries": 389844,
+  "live_density": 0.04248949435579115,
+  "flag_counts": {
+   "retained": 386372,
+   "on_shortest_path": 266036,
+   "trap": 3472,
+   "latent_trap": 3468
+  },
+  "dD_histogram_live_retained": {
+   "-1": 266036,
+   "1": 120320,
+   "3": 16
+  },
+  "storage": {
+   "edge_table_raw_bytes": 7864344,
+   "edge_target_raw_bytes": 18350136,
+   "edge_target_zlib9_bytes": 343548
+  },
+  "sha256_edge_target": "c66cdadf11fac311f811df71edbeca9d2a99ba56602b24a29e5757693f76acfd"
+ },
+ "t_chart_M": 0.8,
+ "mask_proposal": {
+  "state_rows": {
+   "train": {
+    "states": 52082,
+    "live_entries": 42633
+   },
+   "val": {
+    "states": 17622,
+    "live_entries": 14355
+   },
+   "test": {
+    "states": 17677,
+    "live_entries": 14685
+   }
+  },
+  "state_target_entries": {
+   "train": 42705,
+   "val": 14539,
+   "test": 14429
+  },
+  "target_columns": {
+   "held_out": [
+    "Y",
+    "yY",
+    "YX",
+    "XY"
+   ],
+   "held_out_live_entries": 13205,
+   "kept_live_entries": 58468
+  },
+  "hash_scheme": "states: sha256('AC01|<universe>|state|<word>'); entries: sha256('AC01|<universe>|entry|<word>|<target>'); target columns: sha256('AC01|target|<target>') (universe-independent); first 12 hex digits / 16^12; roles by split fractions",
+  "state_split": [
+   0.6,
+   0.2,
+   0.2
+  ],
+  "entry_split": [
+   0.6,
+   0.2,
+   0.2
+  ]
+ },
+ "t_masks": 1.56,
+ "total_seconds": 3.77
+}

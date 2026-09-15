@@ -1,0 +1,186 @@
+{
+ "audit": {
+  "fit_rows": 3000000,
+  "fit_roles": "train states x train targets x pair-fit only (asserted)",
+  "inputs": "14 raw digits (asserted equal to F[state], F[target])",
+  "held_targets": 13,
+  "prohibited_features_present": false
+ },
+ "NC_PERM": {
+  "name": "C5-medium-LABEL-PERMUTED",
+  "serialized_bytes": 223252,
+  "CR": 4.751115331553581,
+  "sets": {
+   "HELD_TARGETS": {
+    "GBFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 2514.4533333333334,
+     "mean_states": 1078.1466666666668,
+     "mean_excess": 26.553333333333335,
+     "traps_taken": 0.0,
+     "HC_D_transitions": -46.63810684281408,
+     "HC_D_transitions_CI95": [
+      -58.796401364947954,
+      -35.094309064115585
+     ],
+     "HC_D_states": -41.579588014981276,
+     "HC_D_states_CI95": [
+      -52.30553872859503,
+      -31.484664934237767
+     ],
+     "band": "no useful compression",
+     "dominance": "NONE"
+    },
+    "DFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 187.98333333333332,
+     "mean_states": 89.00666666666666,
+     "mean_excess": 68.39,
+     "traps_taken": 0.0,
+     "HC_D_transitions": -1.8782145834669404,
+     "HC_D_transitions_CI95": [
+      -2.121673625825081,
+      -1.645731442618858
+     ],
+     "HC_D_states": -1.8869716425896201,
+     "HC_D_states_CI95": [
+      -2.1478301310074106,
+      -1.6515658618455469
+     ],
+     "band": "no useful compression",
+     "dominance": "NONE"
+    },
+    "distance": {
+     "rows": 300000,
+     "coverage": 1.0,
+     "R2": -0.00471371117843522,
+     "exact": 0.12861333333333333,
+     "within_1": 0.37937,
+     "MAE": 2.339462032254537,
+     "spearman": -0.01450879950157196
+    },
+    "references": {
+     "oracle_transitions": 38.38333333333333,
+     "KA-DFS_transitions": 90.36,
+     "KA-DFS_excess": 23.78,
+     "KA-GBFS_transitions": 125.95333333333333,
+     "KA-GBFS_excess": 3.513333333333333
+    }
+   },
+   "HELD_BOTH": {
+    "GBFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 1999.1033333333332,
+     "mean_states": 863.9633333333334,
+     "mean_excess": 25.716666666666665,
+     "traps_taken": 0.0,
+     "HC_D_transitions": -37.611326202506724,
+     "HC_D_transitions_CI95": [
+      -49.42489079579021,
+      -28.772692941822996
+     ],
+     "HC_D_states": -33.77175697865353,
+     "HC_D_states_CI95": [
+      -44.10260858604882,
+      -25.94293179095886
+     ],
+     "band": "no useful compression",
+     "dominance": "NONE"
+    },
+    "DFS": {
+     "solve_rate": 1.0,
+     "failures": 0,
+     "mean_transitions": 193.68333333333334,
+     "mean_states": 91.77,
+     "mean_excess": 70.64333333333333,
+     "traps_taken": 0.0,
+     "HC_D_transitions": -2.069230264453048,
+     "HC_D_transitions_CI95": [
+      -2.3321730341872464,
+      -1.802773500517447
+     ],
+     "HC_D_states": -2.0725232621784344,
+     "HC_D_states_CI95": [
+      -2.3541579809543056,
+      -1.8028167557839325
+     ],
+     "band": "no useful compression",
+     "dominance": "NONE"
+    },
+    "distance": {
+     "rows": 300000,
+     "coverage": 1.0,
+     "R2": -0.005301077353331962,
+     "exact": 0.12993666666666667,
+     "within_1": 0.3816333333333333,
+     "MAE": 2.333474567718506,
+     "spearman": -0.013543808095899506
+    },
+    "references": {
+     "oracle_transitions": 37.776666666666664,
+     "KA-DFS_transitions": 88.57333333333334,
+     "KA-DFS_excess": 23.233333333333334,
+     "KA-GBFS_transitions": 122.23333333333333,
+     "KA-GBFS_excess": 3.1333333333333333
+    }
+   }
+  },
+  "landmarks": {
+   "1.5": "eligible",
+   "2.0": "eligible",
+   "4.0": "eligible",
+   "8.0": "not reached"
+  },
+  "seconds": 228.4,
+  "fit": {
+   "best_epoch": 3,
+   "best_val": 2.8811066150665283,
+   "history": [
+    [
+     0,
+     2.881493330001831
+    ],
+    [
+     1,
+     2.881286144256592
+    ],
+    [
+     2,
+     2.881268262863159
+    ],
+    [
+     3,
+     2.8811066150665283
+    ],
+    [
+     4,
+     2.8813834190368652
+    ],
+    [
+     5,
+     2.8811843395233154
+    ],
+    [
+     6,
+     2.8815712928771973
+    ]
+   ]
+  },
+  "std_D": 2.8847343921661377
+ },
+ "cost": {
+  "small": {
+   "seconds_per_decision_gpu_batch3": 0.0004481594000098994,
+   "seconds_per_decision_cpu_batch3": 0.00033599760000652167
+  },
+  "medium": {
+   "seconds_per_decision_gpu_batch3": 0.00047374430000490976,
+   "seconds_per_decision_cpu_batch3": 0.00018753779999678953
+  },
+  "seconds_per_transition_expansion_python": 5.57709999702638e-07
+ },
+ "seconds": 266.0
+}

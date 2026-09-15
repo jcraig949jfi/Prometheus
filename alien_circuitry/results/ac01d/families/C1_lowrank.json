@@ -1,0 +1,283 @@
+{
+ "family": "C1 masked low-rank completion",
+ "ranks": {
+  "1": {
+   "name": "C1-lowrank-r1",
+   "serialized_bytes": 854116,
+   "CR": 1.2418641027682422,
+   "sets": {
+    "HELD_PAIRS": {
+     "GBFS": {
+      "solve_rate": 0.9433333333333334,
+      "failures": 17,
+      "mean_transitions": 25457.31333333333,
+      "mean_states": 10865.61,
+      "mean_excess": 26.04946996466431,
+      "traps_taken": 0.0,
+      "HC_D_transitions": null,
+      "note": "failures present: no HC_D"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 210.93666666666667,
+      "mean_states": 101.39666666666666,
+      "mean_excess": 76.45666666666666,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -2.4057030481809245,
+      "HC_D_transitions_CI95": [
+       -2.71012208690022,
+       -2.120699874585606
+      ],
+      "HC_D_states": -2.4570222040593923,
+      "HC_D_states_CI95": [
+       -2.7847215569506476,
+       -2.150389916699741
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.37537598324061705,
+      "exact": 0.17892,
+      "within_1": 0.5136666666666667,
+      "MAE": 1.7795066030343374,
+      "spearman": 0.6178045244276956
+     },
+     "references": {
+      "oracle_transitions": 37.75666666666667,
+      "KA-DFS_transitions": 88.60666666666667,
+      "KA-DFS_excess": 23.47,
+      "KA-GBFS_transitions": 126.28333333333333,
+      "KA-GBFS_excess": 3.3833333333333333
+     }
+    }
+   },
+   "landmarks": {
+    "1.5": "not reached",
+    "2.0": "not reached",
+    "4.0": "not reached",
+    "8.0": "not reached"
+   },
+   "seconds": 37.1,
+   "fit": {
+    "rank": 1,
+    "fit_rmse": 2.0177621841430664,
+    "observed_cells": 4289843,
+    "bytes_lzma": 854116,
+    "CR": 1.2418641027682422
+   }
+  },
+  "2": {
+   "name": "C1-lowrank-r2",
+   "serialized_bytes": 1715292,
+   "CR": 0.618376346417986,
+   "sets": {
+    "HELD_PAIRS": {
+     "GBFS": {
+      "solve_rate": 0.9433333333333334,
+      "failures": 17,
+      "mean_transitions": 25471.993333333332,
+      "mean_states": 10871.773333333333,
+      "mean_excess": 26.07773851590106,
+      "traps_taken": 0.0,
+      "HC_D_transitions": null,
+      "note": "failures present: no HC_D"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 204.67333333333335,
+      "mean_states": 98.66333333333333,
+      "mean_excess": 73.35,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -2.282530317928548,
+      "HC_D_transitions_CI95": [
+       -2.597557400687159,
+       -2.015372330810588
+      ],
+      "HC_D_states": -2.345320800980793,
+      "HC_D_states_CI95": [
+       -2.670079148603504,
+       -2.0668945912998744
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.32273775734779087,
+      "exact": 0.17451666666666665,
+      "within_1": 0.5010566666666667,
+      "MAE": 1.8431647875118256,
+      "spearman": 0.599178403751839
+     },
+     "references": {
+      "oracle_transitions": 37.75666666666667,
+      "KA-DFS_transitions": 88.60666666666667,
+      "KA-DFS_excess": 23.47,
+      "KA-GBFS_transitions": 126.28333333333333,
+      "KA-GBFS_excess": 3.3833333333333333
+     }
+    }
+   },
+   "landmarks": {
+    "1.5": "not reached",
+    "2.0": "not reached",
+    "4.0": "not reached",
+    "8.0": "not reached"
+   },
+   "seconds": 34.5,
+   "fit": {
+    "rank": 2,
+    "fit_rmse": 1.795525312423706,
+    "observed_cells": 4289843,
+    "bytes_lzma": 1715292,
+    "CR": 0.618376346417986
+   }
+  },
+  "4": {
+   "name": "C1-lowrank-r4",
+   "serialized_bytes": 3411496,
+   "CR": 0.3109181426564768,
+   "sets": {
+    "HELD_PAIRS": {
+     "GBFS": {
+      "solve_rate": 0.9433333333333334,
+      "failures": 17,
+      "mean_transitions": 25408.76,
+      "mean_states": 10844.896666666667,
+      "mean_excess": 25.9434628975265,
+      "traps_taken": 0.0,
+      "HC_D_transitions": null,
+      "note": "failures present: no HC_D"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 207.70666666666668,
+      "mean_states": 100.7,
+      "mean_excess": 74.96666666666667,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -2.342182890855457,
+      "HC_D_transitions_CI95": [
+       -2.6342891940247775,
+       -2.033641465399511
+      ],
+      "HC_D_states": -2.4285519683966763,
+      "HC_D_states_CI95": [
+       -2.7442867599340794,
+       -2.095182742686659
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.1985289265218504,
+      "exact": 0.17155333333333334,
+      "within_1": 0.48164,
+      "MAE": 1.979057785730362,
+      "spearman": 0.5365432896782018
+     },
+     "references": {
+      "oracle_transitions": 37.75666666666667,
+      "KA-DFS_transitions": 88.60666666666667,
+      "KA-DFS_excess": 23.47,
+      "KA-GBFS_transitions": 126.28333333333333,
+      "KA-GBFS_excess": 3.3833333333333333
+     }
+    }
+   },
+   "landmarks": {
+    "1.5": "not reached",
+    "2.0": "not reached",
+    "4.0": "not reached",
+    "8.0": "not reached"
+   },
+   "seconds": 34.5,
+   "fit": {
+    "rank": 4,
+    "fit_rmse": 1.5407897233963013,
+    "observed_cells": 4289843,
+    "bytes_lzma": 3411496,
+    "CR": 0.3109181426564768
+   }
+  },
+  "8": {
+   "name": "C1-lowrank-r8",
+   "serialized_bytes": 6809868,
+   "CR": 0.15575867256164144,
+   "sets": {
+    "HELD_PAIRS": {
+     "GBFS": {
+      "solve_rate": 0.94,
+      "failures": 18,
+      "mean_transitions": 25546.65,
+      "mean_states": 10905.226666666667,
+      "mean_excess": 25.652482269503547,
+      "traps_taken": 0.0,
+      "HC_D_transitions": null,
+      "note": "failures present: no HC_D"
+     },
+     "DFS": {
+      "solve_rate": 1.0,
+      "failures": 0,
+      "mean_transitions": 205.08666666666667,
+      "mean_states": 99.91,
+      "mean_excess": 73.53333333333333,
+      "traps_taken": 0.0,
+      "HC_D_transitions": -2.2906588003933135,
+      "HC_D_transitions_CI95": [
+       -2.604973347705436,
+       -2.0022782595053856
+      ],
+      "HC_D_states": -2.3962675384824954,
+      "HC_D_states_CI95": [
+       -2.7337180968306085,
+       -2.090220046714981
+      ],
+      "band": "no useful compression",
+      "dominance": "NONE"
+     },
+     "distance": {
+      "rows": 300000,
+      "coverage": 1.0,
+      "R2": 0.07977524615838916,
+      "exact": 0.16707333333333332,
+      "within_1": 0.46571,
+      "MAE": 2.1021866638787587,
+      "spearman": 0.4945238242258455
+     },
+     "references": {
+      "oracle_transitions": 37.75666666666667,
+      "KA-DFS_transitions": 88.60666666666667,
+      "KA-DFS_excess": 23.47,
+      "KA-GBFS_transitions": 126.28333333333333,
+      "KA-GBFS_excess": 3.3833333333333333
+     }
+    }
+   },
+   "landmarks": {
+    "1.5": "not reached",
+    "2.0": "not reached",
+    "4.0": "not reached",
+    "8.0": "not reached"
+   },
+   "seconds": 34.9,
+   "fit": {
+    "rank": 8,
+    "fit_rmse": 1.139154314994812,
+    "observed_cells": 4289843,
+    "bytes_lzma": 6809868,
+    "CR": 0.15575867256164144
+   }
+  }
+ },
+ "structural_note": "per-state factors cost >= 823,543 x r x 2 bytes before compression; CR < 1 for every r >= 1 at float16",
+ "seconds": 246.7
+}
