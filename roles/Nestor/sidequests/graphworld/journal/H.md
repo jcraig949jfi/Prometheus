@@ -114,3 +114,25 @@ budget 1789425755152-0).
   (zset members <cohort>|<domain>|<metric>, replaced atomically), readable via
   `bus board prior_vs_reality` and exported by ops/bus_export. It is display only.
   CLI: python -m primordial.score.round2 --board.
+
+# Round 4 phase P0 (SWARM_R4 s2 H-R4-1..3)
+
+## 2026-09-14 P0 iteration 1: H-R4-1 round-versioned budget shares
+
+- Boot: Nestor[m1-ff4b74b8] (claude-opus-5), ff-merged to 86a3825ae, bus hello 1789433610923-0,
+  claim H-R4-1-budget-shares. PM_LANE=H, OMP = NUMBA = 2.
+- Code: budget.py now has SHARES_R2 (40/25/20/15) and SHARES_R4 (35/25/25/15), SHARES_BY_ROUND,
+  DEFAULT_ROUND = r4. `report` takes --round (default r4) and writes round + shares on its row.
+  `replay-round2` is always judged against SHARES_R2. Its output is unchanged: INDETERMINATE,
+  unmetered B/D/E, C 348.176 CPU-s, shares printed 0.40/0.25/0.20/0.15.
+- Tests: the old report test pinned round 2 arithmetic, so it now passes SHARES_R2 explicitly.
+  Two tests were added: r4 is the default (B 38% is OVER in r4 and WITHIN in r2, D 22% the
+  reverse), and replay-round2 calls report with SHARES_R2. Suite 160 passed, 1 skipped, pytest rc 0.
+- Not changed: anomaly_triage.SHARES is the round 2 split used by S2's replayed proposal, and
+  S2 already proposed the 35/25/25/15 move.
+- H-R4-2 schema: proposed worlds_r4.json to G and A (1789433688592-0). A accepted it with an
+  amendment (1789433714703-0): per-cell `verdicts` for the four Q1 x Q2 variants
+  (four_policy|gate_in x CULL|HOLD, where gate_in floor = max(floor, gate_held64) and HOLD
+  replaces CULLED with HELD when gate_held64 > floor), NOT_REACHED recorded per variant, and
+  NOT_REACHED cells included. check() reads the active pair only. Waiting for G's agreement
+  before writing the reader.

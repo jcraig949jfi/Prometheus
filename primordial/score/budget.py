@@ -1,7 +1,9 @@
 """Budget enforcement (backlog F13): CPU-seconds per cohort against the operator's split.
 
-Split (operator message 04, section 3; the conductor enforces it and never chooses it):
-B 40% exploitation, C 25% anti-prior, D 20% anomaly queue, E 15% tooling.
+Split, round-versioned (the conductor enforces it and never chooses it):
+  SHARES_R2  B 40 / C 25 / D 20 / E 15   operator message 04 s3; replay-round2 always uses it
+  SHARES_R4  B 35 / C 25 / D 25 / E 15   operator message 12 (SWARM_R4 s1); default for `report`
+A report row records the round and the shares it was judged against.
 
 Source of truth for a live round: builder F's warm worker ledger. Every finished job XADDs
 {job_id, status, cpu_s, wall_s, ...} to pm:jobs:<L>:done, and its spec (exp_id, fn,
@@ -29,7 +31,11 @@ import time
 from primordial.score.progress import rows_of
 from primordial.score.round2 import ROOT, ROUND2_START
 
-SHARES = {"B": 0.40, "C": 0.25, "D": 0.20, "E": 0.15}
+SHARES_R2 = {"B": 0.40, "C": 0.25, "D": 0.20, "E": 0.15}
+SHARES_R4 = {"B": 0.35, "C": 0.25, "D": 0.25, "E": 0.15}
+SHARES_BY_ROUND = {"r2": SHARES_R2, "r4": SHARES_R4}
+DEFAULT_ROUND = "r4"
+SHARES = SHARES_BY_ROUND[DEFAULT_ROUND]
 MIN_TOTAL_CPU_S = 60.0
 JOBS, DONE = "pm:jobs:{}", "pm:jobs:{}:done"
 WARNED = "pm:budget:warned:{}:{}"
@@ -138,28 +144,32 @@ def main(argv=None) -> int:
     rp.add_argument("--until", type=float, default=INF)
     rp.add_argument("--warn", action="store_true")
     rp.add_argument("--write", action="store_true")
+    rp.add_argument("--round", choices=sorted(SHARES_BY_ROUND), default=DEFAULT_ROUND)
     r2 = sub.add_parser("replay-round2")
     r2.add_argument("--write", action="store_true")
     a = ap.parse_args(argv)
     if a.cmd == "report":
         from primordial.bus import bus
         r = bus.conn()
+        shares = SHARES_BY_ROUND[a.round]
         led = job_ledger(r, window=(a.since, a.until))
-        rep = report(led)
+        rep = report(led, shares)
+        print(f"round {a.round}")
         _print(rep)
         warned = warn(rep, a.epoch, r) if a.warn else []
         if warned:
             print("warned", warned)
         if a.write:
-            _write({"kind": "budget_report", "source": "worker_done_streams", "epoch": a.epoch,
-                    "window": [a.since, None if a.until == INF else a.until], "ledger": led, **rep, "warned": warned})
+            _write({"kind": "budget_report", "source": "worker_done_streams", "epoch": a.epoch, "round": a.round,
+                    "shares": shares, "window": [a.since, None if a.until == INF else a.until], "ledger": led,
+                    **rep, "warned": warned})
     else:
         led = rows_ledger()
-        rep = report(led)
+        rep = report(led, SHARES_R2)
         _print(rep)
         if a.write:
-            _write({"kind": "budget_report", "source": "round2_rows_replay", "epoch": None,
-                    "window": [ROUND2_START, None], "ledger": led, **rep, "warned": []})
+            _write({"kind": "budget_report", "source": "round2_rows_replay", "epoch": None, "round": "r2",
+                    "shares": SHARES_R2, "window": [ROUND2_START, None], "ledger": led, **rep, "warned": []})
     return 0
 
 

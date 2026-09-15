@@ -14,7 +14,7 @@ def led(**cpu):
 
 
 def test_report_flags_over_share_and_holds_on_small_or_unmetered_totals():
-    rep = BU.report(led(B=50.0, C=20.0, D=20.0, E=10.0))
+    rep = BU.report(led(B=50.0, C=20.0, D=20.0, E=10.0), BU.SHARES_R2)
     assert {k: v["verdict"] for k, v in rep["lanes"].items()} == {"B": "OVER", "C": "WITHIN", "D": "WITHIN", "E": "WITHIN"}
     assert rep["lanes"]["B"]["actual"] == 0.5 and rep["lanes"]["B"]["over_cpu_s"] == 10.0
     assert rep["lanes"]["E"]["verdict"] == "WITHIN"                      # exactly at share is within
@@ -22,6 +22,29 @@ def test_report_flags_over_share_and_holds_on_small_or_unmetered_totals():
     assert set(v["verdict"] for v in small["lanes"].values()) == {"INDETERMINATE"} and "< 60" in small["why_indeterminate"]
     gap = BU.report({**led(B=500.0, C=500.0, D=0.0), "E": {"cpu_s": 0.0, "metered": False}})
     assert gap["lanes"]["B"]["verdict"] == "INDETERMINATE" and "['E']" in gap["why_indeterminate"]
+
+
+def test_shares_are_round_versioned_and_report_defaults_to_round4():
+    assert BU.SHARES_R2 == {"B": 0.40, "C": 0.25, "D": 0.20, "E": 0.15}
+    assert BU.SHARES_R4 == {"B": 0.35, "C": 0.25, "D": 0.25, "E": 0.15}
+    for s in (BU.SHARES_R2, BU.SHARES_R4):
+        assert abs(sum(s.values()) - 1.0) < 1e-12
+    assert BU.DEFAULT_ROUND == "r4" and BU.SHARES is BU.SHARES_R4
+    ledger = led(B=38.0, C=25.0, D=22.0, E=15.0)                          # B 38%: OVER in r4, WITHIN in r2
+    r4 = BU.report(ledger)
+    assert r4["lanes"]["B"]["share"] == 0.35 and r4["lanes"]["B"]["verdict"] == "OVER"
+    assert r4["lanes"]["D"]["share"] == 0.25 and r4["lanes"]["D"]["verdict"] == "WITHIN"
+    r2 = BU.report(ledger, BU.SHARES_R2)
+    assert r2["lanes"]["B"]["verdict"] == "WITHIN" and r2["lanes"]["D"]["verdict"] == "OVER"
+
+
+def test_replay_round2_is_judged_against_round2_shares(monkeypatch, capsys):
+    seen = []
+    real = BU.report
+    monkeypatch.setattr(BU, "report", lambda ledger, shares=BU.SHARES, **kw: seen.append(shares) or real(ledger, shares, **kw))
+    assert BU.main(["replay-round2"]) == 0
+    assert seen == [BU.SHARES_R2]
+    assert "share 0.40" in capsys.readouterr().out
 
 
 def test_round2_replay_is_indeterminate_because_most_cohorts_recorded_no_cpu():
