@@ -393,3 +393,21 @@ Brief prompts_bld_r5/G.md; SWARM_R5 s3 G-R5-1..4 with overrides O2, O4; prompt 1
   commits, so G re-ran the full suite on the actual tip bf88d7387: 658 passed, 9 skipped, pytest rc 0. Posted and
   corrected on the bus (the first rc was on the pre-push tree).
 - ROUND 5 P-BUILD G: G-R5-1..4 all green on integration at 06:39 (cap 08:12:59). R16 re-screen stays parked.
+
+## 2026-09-15 R6-BUILD (hygiene wave + screen resume prep; start 09:41, hard cap 11:15)
+
+Brief prompts_bld_r6/G.md; SWARM_R6 s3 G-R6-1..3 (O1, O2, O4); prompts 21, 22 (PRODUCTION approved). Field names
+posted before coding (1789479722885-0); A accepted with the O1 applicability change (1789479784674-0); F's
+file_candidate / segment contract (1789479761855-0).
+- G-R6-2 R16 resume as per-cell jobs: primordial/metric/r16_cells.py. Order file R16_ORDER_R6.json =
+  PCG64(20260916).permutation over the 68 sorted unscreened cells + a 5-cell floor remainder (baselines done,
+  floors not) first; never regenerated with other content. cell_job pre-fills committed run rows by run key
+  (w34 t128 baseline 15 runs, w7 t8 learner 26 + baseline 32 reused), train8 learner only in train8 cells, a
+  train128 learner estimated > 14400 CPU-s -> PENDING + PRODUCTION_CANDIDATE (stub + envelope.file_candidate).
+  partial_v2 marks unfinished cells UNSCREENED (never CULLED). Tests 7 incl. a 1-cell tiny-budget smoke + resume.
+- G-R6-3 replication trigger: primordial/metric/replication.py -- one pm:replication record per new SURVIVED cell
+  (SETNX-guarded, origin w13 t128 excluded), frozen B-R5-1 recipe (code c2e9b5ec3, QLin(gs, 4, 4) layout rule,
+  absolute 800 gens x batch 128, sample runs_total 32 / rng_family_count 4 / runs_per_family 8, top1_train,
+  check_r4), applicability = the rule instantiates (bytes recorded) else INAPPLICABLE with reason.
+- G-R6-1 search budget: primordial/metric/search_budget.py -- fields + reader from committed rows. B-R5-1 and the
+  w13 R16 baseline both searched 102,400 evals per run over 32 runs: ratio 1.0 -> the O2 comparator does NOT fire.
