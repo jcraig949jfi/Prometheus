@@ -271,3 +271,4 @@
   search). Archives with >= 1 elite at HELD64 >= 166.47: 2/8 (runs 2, 5: 7 and 2 elites; top1 is rank 1 / near,
   held 182.84 / 172.03). Other 6 runs: best elite of ~488 reaches 157.9-163.2, none at the gate. The search overfits
   TRAIN8; it is not a selection miss. Caveat: 8 runs, one RNG stream (round 4 v1 = family 4200).
+- Receipt D-R6-4 filed 1789489506239-0 (guard 10/10, status NULL, OVERFIT_ONLY), rows 4f4525fdf; ANOM-..9541 RESOLVED.
