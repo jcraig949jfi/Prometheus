@@ -23,7 +23,7 @@
   # Through a scheduled task, with disable-after-run: python -m primordial.ops.schtask_launch selftest
 #>
 param(
-    [Parameter(Mandatory = $true)][ValidateSet('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'P', 'Q', 'W', 'T', 'U')][string]$Lane,
+    [Parameter(Mandatory = $true)][ValidateSet('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'P', 'Q', 'W', 'T', 'U', 'R')][string]$Lane,  # must equal core/contract.py LANES (test_launch_lane_lanes.py)
     [Parameter(Mandatory = $true)][string]$Worktree,
     [string]$Name = "",
     [string]$Exe = "$env:USERPROFILE\.local\bin\claude.exe",
