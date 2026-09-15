@@ -1,5 +1,5 @@
 {
- "begin_ts": 1789486799.852,
+ "begin_ts": 1789511869.228,
  "budget": {
   "by_cohort": {
    "B": {
@@ -12,37 +12,38 @@
     }
    },
    "C": {
-    "cpu_s": 1242.47,
-    "jobs": 5,
+    "cpu_s": 2640.674,
+    "jobs": 8,
     "status": {
      "error": 1,
-     "ok": 3,
+     "ok": 6,
      "paused": 1
     }
    },
    "D": {
-    "cpu_s": 11.063,
-    "jobs": 2,
+    "cpu_s": 2409.283,
+    "jobs": 17,
     "status": {
-     "error": 1,
-     "ok": 1
+     "error": 4,
+     "ok": 13
     }
    },
    "E": {
-    "cpu_s": 3262.14,
-    "jobs": 4,
+    "cpu_s": 9979.498,
+    "jobs": 31,
     "status": {
-     "ok": 3,
+     "ok": 29,
+     "paused": 1,
      "refused": 1
     }
    },
    "G": {
-    "cpu_s": 8406.5,
-    "jobs": 81,
+    "cpu_s": 71126.999,
+    "jobs": 161,
     "status": {
-     "ok": 6,
-     "paused": 1,
-     "refused": 73,
+     "ok": 39,
+     "paused": 5,
+     "refused": 116,
      "timeout": 1
     }
    },
@@ -92,21 +93,21 @@
   },
   "by_lane": {
    "B": 11689.141,
-   "C": 3832.704,
-   "D": 9369.284,
-   "E": 13486.749,
-   "G": 79381.625
+   "C": 5230.908,
+   "D": 11767.504,
+   "E": 20204.108,
+   "G": 142102.124
   }
  },
  "controller": "A[m1-449a9e76]",
  "drain_timeout_s": 2430.0,
- "drained_ts": 1789486809.194,
+ "drained_ts": 1789511871.341,
  "epoch": 1,
  "export": {
-  "anomalies": 42,
-  "results": 110,
+  "anomalies": 57,
+  "results": 134,
   "state": 8,
-  "swarm": 950
+  "swarm": 1137
  },
  "lanes": [
   "B",
@@ -120,27 +121,27 @@
   "B": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789486809.117"
+   "ts": "1789511871.303"
   },
   "C": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789486809.172"
+   "ts": "1789511871.282"
   },
   "D": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789486809.117"
+   "ts": "1789511871.303"
   },
   "E": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789486809.117"
+   "ts": "1789511871.296"
   },
   "G": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789486809.152"
+   "ts": "1789511871.306"
   }
  }
 }
