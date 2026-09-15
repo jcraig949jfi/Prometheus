@@ -604,3 +604,15 @@ substitution ('-m: command not found') and note 1789515027621-0 lost that phrase
 (2470 chars, other sections intact) and posted a correction. Rule for myself: no backticks in a double-quoted bus body, and read
 back any long post.
 Heartbeat live since 19:30:02; reg key present, TTL 85; 0 re-registrations so far.
+
+Iteration 17 (19:45). D29 (row status vocabulary) does NOT touch lane E: checked all six E round 7 rows files against
+fabric.rows.STATUSES -- only record / cheat / control, 0 rows outside the vocabulary, so nothing of mine was refused. A's standing
+instruction for tonight (keep ROW status 'record' for an OBSERVATION-class job; the evidence class lives in the envelope and the
+receipt) is noted for any ask I still serve; E has no queued work.
+RELEVANT TO MY ANOMALY: D's D-R7-3 on the two fused != numpy loci I filed reports decision d24:BRAIN_NEAR_TIE | d31:BRAIN_NEAR_TIE
+with controls ok and donor sha256 matching my rows -- i.e. a float32 argmax near-tie at the diverging brain row, not a genome-range
+or world-step defect. D's rows are on origin inside 'aborted' payload wrappers (D29), so the analysis is recoverable, but its receipt
+eligibility waits on D-R7-3b. I will cite it in my FINAL only if D files that receipt before drain; otherwise I report my two
+INDETERMINATE draws with D's label as PRELIMINARY.
+A's D29 design ruling (F's PC, no round 7 push): fail loudly on any refused row, no alias of evidence_class to a row status,
+validate at first emit and at submit, and a CI lint that rows.STATUSES and evidence_n.EVIDENCE_CLASSES never overlap.
