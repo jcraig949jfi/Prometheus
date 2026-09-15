@@ -134,9 +134,10 @@ def run_step(k: int, gens: int, timeout_s: float, python: str = sys.executable) 
                 break
             time.sleep(0.05)
         ps = []
-        for p, _ in procs:
+        for p, _ in procs:                  # the venv python.exe is a launcher: its child does the work
             try:
-                ps.append(psutil.Process(p.pid))
+                q = psutil.Process(p.pid)
+                ps.extend([q] + q.children(recursive=True))
             except psutil.Error:
                 pass
         ctx0 = sum(_ctx(q) for q in ps)
@@ -201,7 +202,8 @@ def probe(step_fn=run_step, grid=GRID, target_s: float = TARGET_S, cal_gens: int
     if gens is None:
         cal = step_fn(1, cal_gens, 300)
         if cal["errors"] or not cal["copies"]:
-            prof = {"exp": EXP, "rule": rule([cal]), "calibration": cal, "steps": [], "status": "INSTRUMENT_FAIL"}
+            prof = {"exp": EXP, "rule": rule([cal]), "calibration": cal, "steps": [],
+                    "profile_status": "INSTRUMENT_FAIL"}
             return prof
         per_gen = cal["copies"][0]["wall_s"] / cal_gens
         gens = max(10, round(target_s / per_gen))
@@ -229,24 +231,50 @@ def probe(step_fn=run_step, grid=GRID, target_s: float = TARGET_S, cal_gens: int
                          "rng_family": FAMILY, "batch": BATCH, "gens": gens, "target_s": target_s,
                          "run_seeds": "100+copy", "warm_run_seeds": "900+copy"},
             "calibration": cal, "steps": steps, "wall_s": round(time.monotonic() - t_start, 1),
-            "status": "OK" if verdict["k_star"] else "INSTRUMENT_FAIL", "ts": round(time.time(), 3)}
+            "profile_status": "OK" if verdict["k_star"] else "INSTRUMENT_FAIL", "ts": round(time.time(), 3)}
 
 
-def write(prof: dict, r=None, repo=ROOT, host_load=None) -> dict:
+def from_rows(path, gens_log: dict | None = None) -> dict:
+    """Rebuild the profile from committed capacity_step rows (the last run: k=1 starts a run). The rule is
+    re-applied to the rows; nothing is re-measured. (06:35: the first probe committed its 3 step rows, then
+    crashed writing the profile row -- its `status` key overwrote the row status.)"""
+    rows = [json.loads(x) for x in pathlib.Path(path).read_text(encoding="utf-8").splitlines() if x.strip()]
+    steps = []
+    for row in rows:
+        if row.get("kind") != "capacity_step":
+            continue
+        if row["k"] == GRID[0]:
+            steps = []
+        steps.append({k: v for k, v in row.items() if k not in ("status", "kind", "exp_id")})
+    verdict = rule(steps)
+    tested = [s["k"] for s in steps]
+    untested = [k for k in GRID if k not in tested] if verdict["failed_at"] is not None or len(tested) < len(GRID) else []
+    return {"exp": EXP, "rule": {"grid": list(GRID), "gain": GAIN, "p95_limit": P95_LIMIT,
+                                 "threads": "floor(16/k) cap 8", **verdict},
+            "k_star": verdict["k_star"], "threads_per_worker": verdict["threads"], "untested": untested,
+            "workload": {"fn": "primordial.metric.baseline:baseline_run", "gen_seed": GEN_SEED, "pressure": PRESSURE,
+                         "rng_family": FAMILY, "batch": BATCH, "gens": steps[0]["gens"] if steps else None,
+                         "target_s": TARGET_S, "run_seeds": "100+copy", "warm_run_seeds": "900+copy"},
+            "calibration": gens_log, "steps": [], "step_rows_from": str(path), "rebuilt_from_rows": True,
+            "profile_status": "OK" if verdict["k_star"] else "INSTRUMENT_FAIL", "ts": round(time.time(), 3)}
+
+
+def write(prof: dict, r=None, repo=ROOT, host_load=None, out=OUT) -> dict:
     from primordial.fabric.rows import RowWriter, commit_path
-    OUT.mkdir(parents=True, exist_ok=True)
-    rows = OUT / f"{EXP}.jsonl"
+    out = pathlib.Path(out)
+    out.mkdir(parents=True, exist_ok=True)
+    rows = out / f"{EXP}.jsonl"
     w = RowWriter(rows, EXP, repo=repo)
     for s in prof["steps"]:
-        w.write({"status": "record", "kind": "capacity_step", **{k: v for k, v in s.items() if k != "copies"},
+        w.write({"kind": "capacity_step", **{k: v for k, v in s.items() if k not in ("copies", "status")},
                  "copy_walls_s": [round(c["wall_s"], 3) for c in s["copies"]],
-                 "copy_cpu_s": [round(c["cpu_s"], 3) for c in s["copies"]]})
-    w.write({"status": "record", "kind": "capacity_profile", **{k: v for k, v in prof.items() if k != "steps"},
-             "host_load_before": host_load})
-    w.close(note="(O3 capacity probe)")
-    (OUT / f"{EXP}.json").write_text(json.dumps(dict(prof, host_load_before=host_load), indent=1, sort_keys=True,
-                                                 default=str) + "\n", encoding="utf-8")
-    sha = commit_path(OUT / f"{EXP}.json", EXP, "(profile JSON)", repo=repo)
+                 "copy_cpu_s": [round(c["cpu_s"], 3) for c in s["copies"]], "status": "record"})
+    w.write({"kind": "capacity_profile", **{k: v for k, v in prof.items() if k not in ("steps", "status")},
+             "host_load_before": host_load, "status": "record"})
+    w.close(note="(O3 capacity profile)")
+    (out / f"{EXP}.json").write_text(json.dumps(dict(prof, host_load_before=host_load), indent=1, sort_keys=True,
+                                                default=str) + "\n", encoding="utf-8")
+    sha = commit_path(out / f"{EXP}.json", EXP, "(profile JSON)", repo=repo)
     if r is not None and prof.get("k_star"):
         r.set(PROFILE_KEY, json.dumps({"k_star": prof["k_star"], "threads_per_worker": prof["threads_per_worker"],
                                        "exp": EXP, "sha": sha, "ts": prof["ts"]}, sort_keys=True))
@@ -264,11 +292,19 @@ def main(argv=None) -> int:
     p = sub.add_parser("probe")
     p.add_argument("--target-s", type=float, default=TARGET_S)
     p.add_argument("--gens", type=int)
+    fr = sub.add_parser("profile-from-rows")
+    fr.add_argument("--calibration-json", default="null")
     a = ap.parse_args(argv)
     if a.cmd == "copy":
         return copy_main(a.idx, a.gens, a.go, a.ready)
     from primordial.bus import bus
     r = bus.conn()
+    if a.cmd == "profile-from-rows":
+        prof = from_rows(OUT / f"{EXP}.jsonl", json.loads(a.calibration_json))
+        out = write(prof, r=r)
+        print(json.dumps({"k_star": prof["k_star"], "threads": prof["threads_per_worker"],
+                          "why": prof["rule"]["why"], **out}, sort_keys=True))
+        return 0 if prof["k_star"] else 1
     load = bus.host_load(r)
     prof = probe(target_s=a.target_s, gens=a.gens)
     out = write(prof, r=r, host_load=load)

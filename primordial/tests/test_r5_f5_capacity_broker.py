@@ -136,3 +136,34 @@ def test_idle_cohort_strands_no_cpu_and_cap_holds(env):
     grants = [e for e in EV.events(r, "CPU_TOKEN_GRANT")]
     assert sorted(e["cohort"] for e in grants) == ["B", "D", "D", "D", "D"]
     assert {d["cohort"] for d in recs} == {"B", "D"} and BR.holders(r) == []
+
+
+# ------------------------------------------------------------------ profile writing (06:35 crash regression)
+
+def _git_repo(p):
+    for a in (["init", "-q"], ["config", "user.email", "t@t"], ["config", "user.name", "t"]):
+        subprocess.run(["git", "-C", str(p), *a], check=True)
+    (p / "README").write_text("x", encoding="utf-8")
+    subprocess.run(["git", "-C", str(p), "add", "README"], check=True)
+    subprocess.run(["git", "-C", str(p), "commit", "-q", "-m", "init"], check=True)
+
+
+MEASURED = [(1, 9917.271880240265, 20.818628600005468), (2, 13259.81214153191, 31.14131599999382),
+            (3, 14854.6, 41.697)]                                      # the 06:35 committed step rows
+
+
+def test_write_profile_row_and_rebuild_from_rows(tmp_path, monkeypatch):
+    monkeypatch.setenv("PM_TAG", "t-r5-5w")
+    _git_repo(tmp_path)
+    out = tmp_path / "rows"
+    steps = [dict(step(k, thr, p95), gens=1613, batch=128, copies=[{"wall_s": p95, "cpu_s": 1.0}])
+             for k, thr, p95 in MEASURED]
+    prof = CAP.probe(step_fn=lambda k, g, t: steps[[1, 2, 3].index(k)], gens=1613, log=lambda *_: None)
+    assert prof["profile_status"] == "OK" and prof["k_star"] == 2          # k=3: 1.12x < 1.15x and p95 41.7 > 31.2
+    CAP.write(prof, repo=tmp_path, out=out)                               # raised ValueError at 06:35
+    rows = [json.loads(x) for x in (out / f"{CAP.EXP}.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert [x["kind"] for x in rows] == ["capacity_step"] * 3 + ["capacity_profile"]
+    assert all(x["status"] == "record" for x in rows) and rows[-1]["profile_status"] == "OK"
+    again = CAP.from_rows(out / f"{CAP.EXP}.jsonl")
+    assert (again["k_star"], again["threads_per_worker"], again["rule"]["failed_at"], again["untested"]) == (
+        2, 8, 3, [4, 6, 8])

@@ -175,7 +175,7 @@ class EpochController:
             bus.post("note", f"ROUND {rid} NO_NEW_WORK", "controller: workers refuse new jobs by the clock",
                      to="ALL", r=self.r)
         self._wait_until(clock["drain_ts"])
-        out.append(self.boundary(int(clock["epochs"]), resume=False))
+        out.append(self.boundary(int(clock["epochs"]), resume=False, max_drain_s=clock["end_ts"] - time.time()))
         self._wait_until(clock["end_ts"])
         rec = {"round_id": rid, "clock": clock, "closed_ts": round(time.time(), 3), "epochs": out,
                "budget": self._budget()}
@@ -188,7 +188,8 @@ class EpochController:
         self._push()
         return rec
 
-    def boundary(self, n: int, resume: bool = True) -> dict:
+    def boundary(self, n: int, resume: bool = True, max_drain_s: float | None = None) -> dict:
+        """max_drain_s caps the sized drain (run_round passes the time left to end_ts: the close never slips)."""
         from primordial.bus import bus
         begin = self._event("epoch_post", n=n)
         if self.post:
@@ -199,6 +200,8 @@ class EpochController:
             self.r.set(STOP.format(L), n)
         self._event("stop_set", lanes=self.lanes)
         drain_s = self.drain_timeout()
+        if max_drain_s is not None:
+            drain_s = max(0.0, min(drain_s, float(max_drain_s)))
         deadline = time.monotonic() + drain_s
         while True:
             live = self._live_workers()
