@@ -91,16 +91,17 @@ def baseline_run(r, gen_seed: int, pressure: str, run_seed: int, gens: int | Non
     rng = np.random.Generator(np.random.PCG64(rseed))
     if state is None:
         arch.clear()
-        state = {"gen": 0, "qd_wall_s": 0.0}
+        state = {"gen": 0, "qd_wall_s": 0.0, "qd_cpu_s": 0.0}
     else:
         rng.bit_generator.state = state["rng"]
         arch.srng.bit_generator.state = state["srng"]
     fr = FusedRollout(g7.spec, batch, train, family=FAM)
-    t0 = time.perf_counter()
+    t0, c0 = time.perf_counter(), time.process_time()
     while state["gen"] < gens:
         if should_pause is not None and state["gen"] > 0 and state["gen"] % PAUSE_EVERY == 0 and should_pause():
             state.update(rng=rng.bit_generator.state, srng=arch.srng.bit_generator.state,
-                         qd_wall_s=state["qd_wall_s"] + time.perf_counter() - t0)
+                         qd_wall_s=state["qd_wall_s"] + time.perf_counter() - t0,
+                         qd_cpu_s=state.get("qd_cpu_s", 0.0) + time.process_time() - c0)
             return {"paused": state}
         par = arch.sample(batch)
         g = g7.init(rng, batch) if len(par) == 0 else g7.mutate(rng, g7.unpack(par))
@@ -108,6 +109,7 @@ def baseline_run(r, gen_seed: int, pressure: str, run_seed: int, gens: int | Non
         arch.insert(cells, fit, g7.pack(g), np.zeros((batch, 2), np.uint32))
         state["gen"] += 1
     qd_wall = state["qd_wall_s"] + time.perf_counter() - t0
+    qd_cpu = state.get("qd_cpu_s", 0.0) + time.process_time() - c0      # process CPU: every numba thread of the child
     el = arch.dump()
     pairs = [(v[0], v[1]) for v in el.values()]
     raw = RO.packed(RO.select(pairs), g7.glen)
@@ -124,6 +126,8 @@ def baseline_run(r, gen_seed: int, pressure: str, run_seed: int, gens: int | Non
     if rng_family is not None:
         row["rng_family"] = int(rng_family)
         row["held64_legacy_top16"] = fused_per_seed(g7, top_raw(pairs, g7.glen), F.HELD64)   # D-R4-2 cross-check only
+        from primordial.metric import search_budget as SB                # G-R6-1: search-budget accounting fields
+        row.update(SB.fields(gens, batch, pressure, cpu_s=round(qd_cpu, 3), wall_s=round(qd_wall, 3)))
     return row
 
 

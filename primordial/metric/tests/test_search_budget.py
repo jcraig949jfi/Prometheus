@@ -40,3 +40,29 @@ def test_the_rule_fires_only_when_the_candidate_searched_more_per_run():
     assert SB.accounting(_acc(51200), _acc(102400))["comparator_fires"] is False
     with pytest.raises(ValueError):
         SB.accounting({**_acc(1), "search_evals_per_run": [1, 2]}, _acc(1))
+
+
+def test_r16_run_rows_carry_measured_search_fields(tmp_path):
+    """G-R6-1: new R16 baseline and learner run rows stamp the search budget (evals = generations x batch, CPU measured)."""
+    redis = pytest.importorskip("redis")
+    from primordial.metric import baseline as B
+    from primordial.metric import invariant as I
+    from primordial.tests._live import live_url
+    r = redis.Redis.from_url(live_url())
+    try:
+        r.ping()
+    except Exception:
+        pytest.skip("substrate not reachable")
+    try:
+        b = B.baseline_run(r, 4, "train8_held64", 0, gens=3, batch=8, elites_dir=tmp_path / "b", rng_family=4200)
+        l = I.learner_run(r, 4, "train8_held64", 0, gens=3, batch=8, elites_dir=tmp_path / "l", rng_family=2101)
+    finally:
+        for k in r.scan_iter("pm:qd:g-r16-*", count=5000):
+            r.delete(k)
+    for row in (b, l):
+        assert (row["search_generations"], row["search_batch"], row["search_evals"]) == (3, 8, 24)
+        assert row["search_train_episodes"] == 24 * 8 and row["search_cpu_s"] > 0 and row["search_wall_s"] > 0
+    v1 = B.baseline_run(r, 4, "train8_held64", 0, gens=2, batch=8, elites_dir=tmp_path / "v1")
+    for k in r.scan_iter("pm:qd:g-r4-base-*", count=5000):
+        r.delete(k)
+    assert "search_evals" not in v1                                        # v1 rows reproduce unchanged

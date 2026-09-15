@@ -131,7 +131,7 @@ class Ctx:
         raise RuntimeError("paused")
 
 
-VOL = ("qd_wall_s", "elites", "wall_s", "oracle_held8", "gate", "wforge_episodes_per_s")
+VOL = ("qd_wall_s", "elites", "wall_s", "oracle_held8", "gate", "wforge_episodes_per_s", "search_cpu_s", "search_wall_s")
 
 
 def strip(x):

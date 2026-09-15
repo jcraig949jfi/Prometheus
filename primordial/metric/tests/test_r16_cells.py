@@ -117,6 +117,6 @@ def test_cell_job_smoke_tiny_budget_rows_and_resume(r, tmp_path, monkeypatch):
         RC.cell_job(ctx, **kw)
     ctx.pause_after = None
     RC.cell_job(ctx, **kw)
-    vol = ("qd_wall_s", "elites", "wall_s", "oracle_held8", "gate", "ts")
+    vol = ("qd_wall_s", "elites", "wall_s", "oracle_held8", "gate", "ts", "search_cpu_s", "search_wall_s")
     strip = lambda x: {k: v for k, v in x.items() if k not in vol}
     assert [strip(x) for x in ctx.rows] == [strip(x) for x in ref.rows]

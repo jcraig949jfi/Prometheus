@@ -411,3 +411,6 @@ file_candidate / segment contract (1789479761855-0).
   check_r4), applicability = the rule instantiates (bytes recorded) else INAPPLICABLE with reason.
 - G-R6-1 search budget: primordial/metric/search_budget.py -- fields + reader from committed rows. B-R5-1 and the
   w13 R16 baseline both searched 102,400 evals per run over 32 runs: ratio 1.0 -> the O2 comparator does NOT fire.
+- Pushed G-R6-1..3 + order file (order commit 558777ab7, blob sha256 45c05b95...a519); ops.push re-rebased, full
+  suite re-run on the actual tip a3d628b4a: 702 passed rc 0. O2 result posted (1789480558750-0): comparator does not fire.
+- R16 baseline and learner run rows now stamp measured search_* fields (process CPU across F9 pauses); v1 rows unchanged.
