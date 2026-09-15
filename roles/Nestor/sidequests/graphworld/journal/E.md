@@ -593,3 +593,14 @@ measured evidence: fix = refresh() re-creates a missing registration + a heartbe
 REG_TTL > 600 s lease cap), with a regression test. Mitigation until close: my own background heartbeat re-registers pid 27084
 every 30 s only while the pid exists AND verify_worker_cmdline says it is still the arbiter, so it cannot fake liveness.
 The FINAL stops the arbiter and the heartbeat explicitly.
+
+Iteration 16 (19:31). A ruling (cross-session): KEEP the heartbeat to the FINAL, on conditions I accepted -- stop it BEFORE the
+arbiter at the FINAL, never re-register after the arbiter exits, log every re-registration, and state in the FINAL that it ran
+(a disclosed live mitigation, not a silent fix). D28 recorded with MY cause, not A's; PC 1789514994865-0 accepted with both
+halves + regression tests. A's packet also notes why F7 workers do not show this: their supervisor heartbeats while the child
+computes, whereas the arbiter blocks in-process.
+MY ERROR (posting): I wrapped the arbiter command line in backticks inside a double-quoted bus body, so bash ran it as a command
+substitution ('-m: command not found') and note 1789515027621-0 lost that phrase. Verified by reading the posted body back
+(2470 chars, other sections intact) and posted a correction. Rule for myself: no backticks in a double-quoted bus body, and read
+back any long post.
+Heartbeat live since 19:30:02; reg key present, TTL 85; 0 re-registrations so far.
