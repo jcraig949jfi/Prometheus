@@ -566,3 +566,16 @@ mean -0.6624): judge order (sorted) p_sham .85243 / p_scratch .04626; harness or
 the verdict is unaffected (same side of alpha both ways) but near alpha it could flip a verdict. NOT fixed mid-round (it would
 change a judge that has already emitted a verdict); reported to A for the packet / a round 8 PC. Posted item 1 + item 2 + the defect
 to A. All three prompt items are now closed (item 3 off: GPU_REJECT). Idle for asks until NO_NEW_WORK 02:37:49.
+
+Iteration 14 (19:23). A ruling 1789514517552-0: E-R7-1 FAIL STANDS (no rerun/re-judge/pooling); the order-sensitivity is D25,
+credited to E, packet defect + round 8 PC, fix NOT applied tonight; item 2's refusal correct; D26 = a PC stub accepts only ONE
+filing, so E's MEASURED item-1 cost (1560 s / 11709 CPU-s) could not supersede the r6 ESTIMATE (2132 s / 6316 CPU-s).
+D25 PC FILED: stub 1789514596470-0 + file_candidate ok (evidence: the four recomputed p-values). DISCLOSED: file_candidate cannot
+OPEN a PC (only envelope.refuse creates stubs, and it publishes a refusal event; no job was refused here), so I wrote the stub dict
+by hand in refuse()'s schema with source_event E_DISCLOSED_DEFECT_D25 -- auditable, precedent E r5 1789471324763-0; asked F for an
+envelope.open_candidate as D26's sibling.
+C's GPU job 14100077cf4d ran through my arbiter earlier (rows written into MY repo by its RowWriter, committed c0f79af3c). After
+ops.push that sha is ORPHANED (rc 1); the rows are on origin at 0c280c564, content identical (sha256 1c5a7b90..., 100 lines).
+Told C to cite the post-push sha or the guard's rows_committed check fails. My arbiter log stays empty (the arbiter logs to the bus,
+not stdout), which is why I checked the queue/keys instead.
+E s5 items all closed. Idle for asks until NO_NEW_WORK 02:37:49; gpuq + worker E stay up until the FINAL.
