@@ -368,3 +368,17 @@
   RESOLVED, 2 filed records left OPEN (3303, C-R6-AP-01). close_sweep r6: 0 unreceipted D rows. Worker D stopped by D.
   Own errors: done-stream not watched (44 min), wrong times to A (corrected), fingerprint over-claim (1 resubmit),
   run-index bug (1 INDETERMINATE). Not started for time: E8 closed-vs-open re-score (0 QD, new reader).
+
+## Round 7 (ANOMALY HUNTERS, 12 h overnight PRODUCTION), Nestor-D[m1-188fc46f], worktree nestor-r7-d
+
+- BOOT 17:52 (T+15): ff to ab1787d14; comms boot m1-188fc46f; warmup rc 0; suite 568 passed 1 skipped rc 0 (sparse
+  worktree); worker pid 25220 registered (repo nestor-r7-d, round r7); bus hello; inbox read (not piped).
+- Claim ANOM-1789490583451-0 -> TAKEN by D[m1-bff769b2] (D's own r6 session). pm:claims has no round namespace and no
+  TTL: every earlier ANOM claim sits under an older D tag. Not deleted (no hand residue clearing); worked as lane D's
+  claim and D-R7-1 claimed by exp id. Defect for the final (cross-round claim residue, same class as D20).
+- Item 1: D-R7-1 (primordial/cohorts/d/r7_1_ap01_gens_sweep.py + test 8 passed rc 0). C's control streams run to 400
+  with C's exact top1_train readout at g 1/10/25/50/100/200/400 and at m = paired cell gens_done; C's cell streams
+  replayed at gens_done. Rule NO_SEARCH_SIGNAL / STREAM_DRAW / SATURATED / BAR_ABSORBS_GAIN / MIXED; I1 = exact
+  reproduction of all 64 C rows + bar; binding control checkpoint == stopped run. Seen before predicate: gens_done
+  75-91 and loop CPU (TTL binds on generations), D-R6-8 counts; no-rows smoke: cell (4200,0) replay == C row at default
+  and 1 BLAS thread; dev trajectory (4200,0) g400 == C control row, 18.8 CPU-s -> job ~720 CPU-s, checkpointable.
