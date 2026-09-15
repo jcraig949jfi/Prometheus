@@ -263,3 +263,11 @@ Interfaces posted to G,H,E,A 06:14 (1789467306628-0).
 - A ruled 06:38 (1789468596599-0): admission horizon = drain_ts (operator 19 s14). admit() refuses
   PROJECTED_PAST_ROUND_END when now + wall > drain_ts (name kept for H/E), checked only before no_new_work_ts;
   past it NO_NEW_WORK alone decides (keeps the single-reason NO_NEW_WORK_REFUSAL). Tests F-R5-1/2 18 passed rc 0.
+
+## 2026-09-15 06:42 -- F R5 BUILD DONE (posted to A 1789468904084-0), 29 min of the 2 h cap
+
+- F-R5-1 16e510f91 (+ horizon aa053dd77->pushed c6e130c66), F-R5-2 6b8747794, F-R5-3 f27dd9258, F-R5-4 e2f7756d6,
+  F-R5-5 999083dee + 19de31605 (profile 7d36e0cb7 / 119508e87, k*=2 x 8 threads), F-R5-6 a1c9a3c87.
+- Full primordial suite on 119508e87: 660 passed, 9 skipped, rc 0.
+- Open for A: controller worktree + `epoch round --repo`; restart F7 workers after pulling (broker live).
+- Lane F stopped: nothing running, all pushed.
