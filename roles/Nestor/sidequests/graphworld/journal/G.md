@@ -181,3 +181,29 @@ RESUME: read this section; bus inbox; if the operator ruled for a world screen, 
 `python -m primordial.metric.floors_run --worlds <new>` and `python -m primordial.metric.gate_run
 --worlds <new>` (about 2 min per world, 4 threads), then M2 on worlds that have headroom above the
 floor. Push with `python -m primordial.ops.push`; file receipts only after the push.
+
+# Round 4 phase P0 -- Nestor-G[m1-c8188115] (claude-opus-5), METRIC builder
+
+Brief: prompts_bld_r4/G.md; items SWARM_R4 s2 G-R4-1..5. Threads 5. M2 unheld (G-R4-3 stage 2).
+
+## 2026-09-14 P0 epoch 1, iteration 1 -- G-R4-1 input-invariant learner; screen cost ruling
+
+- Cost probe (w4, 5 threads): E4b open-loop QD at the E10 budget = 32 s / 40 gens -> ~320 s per run seed,
+  scaling with T x S. Over w1..w5 + 32 new gen_seeds x 8 run seeds: train128 learner ~74 h, train8 ~1.2 h.
+  The literal "floor suite on every candidate" in stage 1 is not cheap.
+- Posted (1789433793789-0); A APPROVED as scheduling (1789433825087-0): cheap parts + gate + M2 baseline on
+  every candidate; the train128 learner only on cells whose verdict it can change under any Q1/Q2 variant.
+  A's correction: a pressure's bound uses only its own parts (the train8 learner never enters train128).
+  Before the rest of the train128 batch: post cell count, hours, burst plan; run if <= 8 h, else wait.
+- Schema: accepted H's worlds_r4/v1 + A's per-variant verdicts, plus floor_is_bound, bound_parts, learner
+  status (1789433928197-0). Bootstrap = M3's median_ci (PCG64 seed 20260914).
+- G-R4-1: primordial/metric/invariant.py. E4b MAP-Elites exactly (init/mutate/descriptor, NbEncounter
+  fitness) with a SEEDED sampler (C2) and elites saved per run seed; budgets train8 100x256 (E6 open),
+  train128 400x256 (E10 open), asserted against the committed rows; per run seed = top-16 by train, per-seed
+  mean on HELD64 (round 1's open score); floor part = median over >= 8 run seeds. F9: pause polled every 10
+  gens, archive kept in Redis, RNG states checkpointed. Worker job `invariant:job` emits a run row per run
+  seed (oracle on run seed 0: wforge hash+charge, nb == np) and one floor_invariant row per cell.
+- Tests test_invariant.py (7): budget from rows; nb_fit == E4b == numpy; wforge oracle 0 failing; replay
+  byte-identical elites; pause/resume == uninterrupted; job pause/resume rows == uninterrupted; median rule.
+- Suite 345 passed, 9 skipped (rc 0). Pushed 187b4b471.
+- Next: G-R4-2 floor suite (cheap parts + gate + train8 learner) per world x pressure, via the F7 worker.
