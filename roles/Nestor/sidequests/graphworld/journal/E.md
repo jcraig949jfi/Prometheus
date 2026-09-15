@@ -549,3 +549,20 @@ feature-permuted donor transfers MORE than the donor itself; against scratch alo
 Integrity 32/32 graft (bytes + fused==numpy; no recurrence of the O8 anomaly), sham_integrity 32/32; oracles clean (world honest
 0/16 failing, skip_lin 16/16 caught, brain 0 mismatched rows, cheat 16/16). p_method montecarlo_200000_seed20260915.
 FLAG to disclose: pair.rederived_equals_harness false (harness_graft_p_max .85148 vs rederived .85243) -- reading the judge code now.
+
+Iteration 12 (19:20). Pushed e7d095a19 (rc 0 first try). ITEM 1 RECEIPT 1789514378793-0, guard 10/10 OK, status FAIL -- the first
+Clause B verdict admissible under EVIDENCE_N_v1. file_candidate against PC 1789486665691-0 refused ALREADY_FILED (my r6 session
+filed the ESTIMATE 2132 s / 6316 CPU-s at filing time); the MEASURED cost is 1560 s wall / 11709 CPU-s (32 runs, 1 segment, 8
+threads) -- CPU-s ~1.85x the estimate because the estimate scaled E-R6-1's CPU-s linearly while the wall halved on 8 threads.
+Reported to A rather than re-filed (no second filing exists for a stub).
+ITEM 2: admission refused by code -- admit reasons CPU_WALL_OVER_CEILING + PROJECTED_PAST_ROUND_END on the measured projection
+(4 specs x 32/4/8: rollout 30,340 s + search overhead 641 s = 8.61 h single worker vs 7.80 h to drain). PC stub 1789514379229-0
+filed with that projection (envelope.refuse + file_candidate ok). No trimming, no re-measurement, no spec dropped. Also recorded:
+no B2 v2 screen job fn exists in the repo (nothing calls admission_cost_v2).
+
+Iteration 13 (19:22). Verified the rederived_equals_harness flag rather than assuming: transfer.signflip_p's MC branch (n > 20)
+draws ONE seeded sign matrix PCG64(20260915), so the p depends on the ORDER of the paired diffs. Same 32 diffs (identical multiset,
+mean -0.6624): judge order (sorted) p_sham .85243 / p_scratch .04626; harness order (4200 first) .85148 / .04549. E defect, mine;
+the verdict is unaffected (same side of alpha both ways) but near alpha it could flip a verdict. NOT fixed mid-round (it would
+change a judge that has already emitted a verdict); reported to A for the packet / a round 8 PC. Posted item 1 + item 2 + the defect
+to A. All three prompt items are now closed (item 3 off: GPU_REJECT). Idle for asks until NO_NEW_WORK 02:37:49.
