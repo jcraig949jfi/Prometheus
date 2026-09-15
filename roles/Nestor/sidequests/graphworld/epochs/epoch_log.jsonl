@@ -33,3 +33,8 @@
 {"event": "committed", "sha": "430f6c7b0", "ts": 1789474272.342}
 {"event": "push_failed", "rc": 4, "tail": "behind origin/nestor/sidequest-graphworld-2026-09-14, no live writer, worker A parked: rebasing\nCONFLICT: rebase onto origin/nestor/sidequest-graphworld-2026-09-14 aborted: error: cannot rebase: You have unstaged changes.\nerror: Please commit or stash them.\n", "ts": 1789474273.526}
 {"event": "resumed", "next_epoch": 4, "ts": 1789474273.528}
+{"event": "no_new_work", "round_id": "r5", "ts": 1789475770.905}
+{"event": "epoch_post", "n": 4, "ts": 1789476370.905}
+{"event": "stop_set", "lanes": ["B", "C", "D", "E"], "ts": 1789476370.908}
+{"drain_timeout_s": 30.0, "event": "drained", "stragglers": [], "ts": 1789476371.018, "workers": ["B", "C", "D", "E"]}
+{"counts": {"anomalies": 41, "results": 109, "state": 8, "swarm": 903}, "event": "exported", "ts": 1789476371.052}
