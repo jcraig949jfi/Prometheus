@@ -86,3 +86,28 @@ def test_failing_job_keeps_its_rows_and_an_aborted_end_row(env):
     assert out["status"] == "error"
     rows = committed_rows(repo, "rows/fail.jsonl")
     assert [x["status"] for x in rows] == ["dev", "aborted"] and "deliberate" in rows[-1]["error"]
+
+
+def test_a_rows_commit_failure_is_recorded_and_serve_keeps_running(env, monkeypatch):
+    # 09-14 flake: RowWriter.close raised inside run_job and killed that lane's serve thread.
+    r, repo, L = env
+    real, calls = W.RowWriter.close, {"n": 0}
+
+    def flaky_close(self, note=""):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            self.closed = True
+            self.marker.unlink(missing_ok=True)
+            raise ValueError("simulated commit failure")
+        return real(self, note)
+
+    monkeypatch.setattr(W.RowWriter, "close", flaky_close)
+    W.submit(L, FN + "emit_n", "F7-cf1", "rows/cf1.jsonl", ttl_cpu_s=30, kwargs={"n": 2}, r=r)
+    W.submit(L, FN + "emit_n", "F7-cf2", "rows/cf2.jsonl", ttl_cpu_s=30, kwargs={"n": 2}, r=r)
+    wk = W.Worker(L, url=URL, repo=repo, log=lambda m: None)
+    a, b = wk.serve(max_jobs=2, block_ms=1000)
+    assert a["status"] == "ok" and a["commit_error"].startswith("ValueError: simulated")
+    assert b["status"] == "ok" and b["commit_error"] is None
+    assert [x["i"] for x in committed_rows(repo, "rows/cf2.jsonl")] == [0, 1]
+    done = [json.loads(f["json"]) for _, f in r.xrange(W.DONE.format(L))]
+    assert [d["job_id"] for d in done] == [a["job_id"], b["job_id"]]

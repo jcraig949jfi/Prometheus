@@ -258,13 +258,18 @@ class Worker:
                      "kind": "job_end", "reason": status, "ttl_cpu_s": ttl, "cpu_s": cpu_s, "wall_s": wall_s,
                      "rows_before": n, "error": (result.get("error") or "")[-500:],
                      "job_key": job.get("job_key"), "segment": int(job.get("segment", 0)), "cpu_prior": cpu_prior})
-        w.close(note=f"(job {job['job_id']} {status})")
+        commit_error = None
+        try:
+            w.close(note=f"(job {job['job_id']} {status})")
+        except Exception as e:                 # a failed rows commit must not kill serve(); rows stay in the file
+            commit_error = f"{type(e).__name__}: {e}"[:500]
+            self.log(f"job {job['job_id']} rows commit FAILED: {commit_error}")
         sha = self._head()
         out = {"job_id": job["job_id"], "status": status, "rows": n, "cpu_s": cpu_s, "wall_s": round(wall_s, 3),
                "child_wall_s": result.get("wall_s"), "sha": sha, "rows_path": str(rows_path),
                "started": round(started, 3), "ended": round(time.time(), 3),
                "job_key": job.get("job_key") or job["job_id"], "segment": int(job.get("segment", 0)),
-               "cpu_prior": cpu_prior}
+               "cpu_prior": cpu_prior, "commit_error": commit_error}
         if status == "paused":
             out["next_job_id"] = submit(self.lane, job["fn"], job["exp_id"], job["rows"], ttl,
                                         json.loads(job["kwargs"]), r=self.r, job_key=out["job_key"],

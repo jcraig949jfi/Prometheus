@@ -90,19 +90,43 @@ def live_writers(repo=".") -> list[dict]:
     return out
 
 
+def plain(p) -> pathlib.Path:
+    """Drop Windows' extended-length prefix. Path.resolve() can return '\\\\?\\C:\\...' (seen in a
+    worker thread under pytest, 09-14) while the repo is 'C:\\...', and relative_to then raises."""
+    s = str(p)
+    if s.startswith("\\\\?\\UNC\\"):
+        s = "\\\\" + s[8:]
+    elif s.startswith("\\\\?\\"):
+        s = s[4:]
+    return pathlib.Path(s)
+
+
 def repo_root(path) -> pathlib.Path:
-    p = pathlib.Path(path).resolve()
+    p = plain(pathlib.Path(path).resolve())
     q = _git(p.parent if p.suffix else p, "rev-parse", "--show-toplevel")
     if q.returncode != 0:
         raise RuntimeError(f"{path} is not inside a git worktree")
-    return pathlib.Path(q.stdout.strip())
+    return plain(pathlib.Path(q.stdout.strip()))
+
+
+def rel_to(path, repo) -> str:
+    """POSIX path of `path` under `repo`, comparing prefix-free, case-normalized forms."""
+    path, repo = plain(pathlib.Path(path).resolve()), plain(pathlib.Path(repo).resolve())
+    try:
+        rel = os.path.relpath(path, repo)
+    except ValueError as e:                              # different drives
+        raise ValueError(f"{path} is not inside {repo}") from e
+    rel = pathlib.PurePath(rel).as_posix()
+    if rel == ".." or rel.startswith("../") or os.path.isabs(rel):
+        raise ValueError(f"{path} is not inside {repo}")
+    return rel
 
 
 def commit_path(path, exp_id: str, note: str = "", repo=None, tries: int = 10) -> str | None:
     """Commit only `path`. -> new short sha, or None when there was nothing to commit."""
-    path = pathlib.Path(path).resolve()
-    repo = pathlib.Path(repo) if repo else repo_root(path)
-    rel = path.relative_to(repo).as_posix()
+    path = plain(pathlib.Path(path).resolve())
+    repo = plain(pathlib.Path(repo).resolve()) if repo else repo_root(path)
+    rel = rel_to(path, repo)
     lane = os.environ.get("PM_LANE", "?")
     tag = require_tag()
     msg = f"{lane}[{tag}]: rows {exp_id}{(' ' + note) if note else ''}\n\nNestor-Instance: {lane} {tag}\n"
@@ -128,11 +152,11 @@ def commit_path(path, exp_id: str, note: str = "", repo=None, tries: int = 10) -
 class RowWriter:
     def __init__(self, path, exp_id: str, commit_every_s: float = 60.0, repo=None):
         self.tag = require_tag()
-        self.path = pathlib.Path(path).resolve()
+        self.path = plain(pathlib.Path(path).resolve())
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.exp_id = exp_id
         self.every = float(commit_every_s)
-        self.repo = pathlib.Path(repo) if repo else repo_root(self.path)
+        self.repo = plain(pathlib.Path(repo).resolve()) if repo else repo_root(self.path)
         self.fh = open(self.path, "a", encoding="utf-8", newline="\n")
         self.n = self.n_committed = 0
         self.last_commit = time.monotonic()

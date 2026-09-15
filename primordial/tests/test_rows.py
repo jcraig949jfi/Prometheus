@@ -67,3 +67,26 @@ def test_exception_inside_context_still_commits_rows(repo):
             raise RuntimeError("TTL")
     assert "(aborted)" in git(repo, "log", "-1", "--format=%s")
     assert commit_path(p, "X3", repo=repo) is None                 # nothing left uncommitted
+
+
+@pytest.mark.skipif(__import__("os").name != "nt", reason="Windows extended-length paths")
+def test_commit_path_accepts_extended_length_prefix_on_either_side(repo):
+    # 09-14 flake: Path.resolve() returned '\?\C:\...' in a worker thread while repo was 'C:\...';
+    # relative_to raised ValueError and the F7 serve thread died.
+    p = repo / "rows" / "L.jsonl"
+    p.parent.mkdir()
+    p.write_text('{"status": "dev"}\n', encoding="utf-8")
+    long_p = "\\?\\" + str(p.resolve())
+    assert commit_path(long_p, "L1", repo=repo)
+    assert json.loads(git(repo, "show", "HEAD:rows/L.jsonl"))["status"] == "dev"
+    p.write_text('{"status": "dev"}\n{"status": "record"}\n', encoding="utf-8")
+    assert commit_path(p, "L1", repo="\\?\\" + str(repo.resolve()))
+    assert len(git(repo, "show", "HEAD:rows/L.jsonl").splitlines()) == 2
+
+
+def test_rel_to_refuses_a_path_outside_the_repo(repo, tmp_path_factory):
+    from primordial.fabric.rows import rel_to
+    outside = tmp_path_factory.mktemp("elsewhere") / "x.jsonl"
+    with pytest.raises(ValueError):
+        rel_to(outside, repo)
+    assert rel_to(repo / "rows" / "a.jsonl", repo) == "rows/a.jsonl"
