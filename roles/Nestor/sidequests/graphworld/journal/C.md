@@ -525,3 +525,18 @@
   16/16, brain 0 of 4096 rows, skip_odd 1.0 of 1418). Control held64 so far 100-154, all below floor 166.47 (P2 binding, as
   disclosed).
 - Receipt for AP-02 waits: ops.push refuses (HEAD behind, C-R6-01 RowWriter live); push after the job closes.
+
+## 2026-09-15 round 6 iteration 3 (m1-2a4f850c): 3 receipts; lane target met
+
+- Rows pushed 6ff8f1e49 (all three rows commits verified ancestors of integration). Guard accepted 10/10 each.
+- C-R6-AP-01 PASS (1789488872310-0): cell held 2,249,154 vs bar 2,226,419 (control 2,243,838); TTL 2.63 CPU-s, cell
+  75-91 of 400 gens. A fifth of the CPU reached parity on held-out landscapes. Oracles clean, 0 elite mismatches in 64 runs.
+- C-R6-AP-02 FAIL (1789488837056-0): see iteration 2.
+- C-R6-01 FAIL (1789488874742-0), cell and control oracles clean: P1 parity holds (146.24 vs bar 125.54; cell ABOVE control
+  134.76), P2 fails (146.24 < floor 166.47), P3 fails (7/32). Planted null FAIL logged before any cell row: median 159.0
+  IQR 0, P2 false, P3 0/32. Cell top1 elites read 6-12 digits, all affordable every tick (delivered share 1.0): the meter
+  never bound the winners.
+- Disclosure: the null arm's oracle flag is false only because skip_odd had 0 eligible rows (all-zero inputs); world and
+  honest brain oracles clean; the null fails P2/P3 regardless.
+- Surprise, not chased: the null (input-invariant, 159.0) beat both the control (134.8) and the cell (146.2) on HELD64 under
+  TRAIN8 selection -- at 200 gens x 8 seeds, reading the observation hurt held-out charge. The prior ledger was never read.
