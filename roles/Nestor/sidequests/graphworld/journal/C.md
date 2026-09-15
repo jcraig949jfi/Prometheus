@@ -463,3 +463,13 @@
   kwarg change it would have silently rerun the DEFECTIVE decoder. Stopped worker C (TaskStop), verified by argv tokens
   that no lane C supervisor or spawn child survived and pm:worker:C expired, restarted, resubmitted same predicate as
   7d446937f010. Rule for me: restart the worker after ANY harness edit. Told A (1789472153474-0).
+
+## 2026-09-15 round 5 pilot iteration 4 (m1-12a62e35): C-R5-AP-01b -> FAIL, oracles clean
+
+- Job 7d446937f010: 258.5 CPU-s, 305.9 s wall, 66 rows (a5aa52554). All four oracles clean in both arms (fitness recount
+  0/16, archive exact, brain 0 mismatched with skip_odd caught at 1.0, ttl ok).
+- Cell 0.4529 vs control 0.569 (bar 0.5468) -> FAIL on runs_total 32, rng_family_count 4, runs_per_family 8; the cell
+  was below its paired control in 31/32 runs. The cell stopped at 89-101 gens under TTL 1.56 CPU-s vs 400 for control.
+- Loophole sized: Redis Lua server CPU is ~0.21 s per cell run, uncharged (~13% of the charged client CPU).
+- Round 5 target met: one DISTANT_QD (C-R5-01 PASS, vacuous) and one ANTI_PRIOR (C-R5-AP-01 INDETERMINATE -> AP-01b
+  FAIL). Prior ledger not read by C; calibration is H's.
