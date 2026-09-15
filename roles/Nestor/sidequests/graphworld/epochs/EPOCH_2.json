@@ -1,37 +1,49 @@
 {
- "begin_ts": 1789472770.904,
+ "begin_ts": 1789489199.852,
  "budget": {
   "by_cohort": {
    "B": {
-    "cpu_s": 566.25,
-    "jobs": 3,
+    "cpu_s": 1639.218,
+    "jobs": 5,
     "status": {
-     "ok": 1,
+     "ok": 3,
      "paused": 1,
      "refused": 1
     }
    },
    "C": {
-    "cpu_s": 835.032,
-    "jobs": 4,
+    "cpu_s": 2640.674,
+    "jobs": 8,
     "status": {
      "error": 1,
-     "ok": 3
+     "ok": 6,
+     "paused": 1
     }
    },
    "D": {
-    "cpu_s": 10.969,
-    "jobs": 1,
+    "cpu_s": 12.142,
+    "jobs": 5,
     "status": {
-     "ok": 1
+     "error": 1,
+     "ok": 4
     }
    },
    "E": {
-    "cpu_s": 104.281,
-    "jobs": 3,
+    "cpu_s": 3280.874,
+    "jobs": 5,
     "status": {
-     "ok": 2,
+     "ok": 4,
      "refused": 1
+    }
+   },
+   "G": {
+    "cpu_s": 18551.968,
+    "jobs": 89,
+    "status": {
+     "ok": 13,
+     "paused": 2,
+     "refused": 73,
+     "timeout": 1
     }
    },
    "lane:B": {
@@ -68,52 +80,67 @@
      "ok": 5,
      "paused": 1
     }
+   },
+   "lane:G": {
+    "cpu_s": 70975.125,
+    "jobs": 17,
+    "status": {
+     "ok": 11,
+     "paused": 6
+    }
    }
   },
   "by_lane": {
-   "B": 10616.173,
-   "C": 3425.267,
-   "D": 9369.19,
-   "E": 10328.89
+   "B": 11689.141,
+   "C": 5230.908,
+   "D": 9370.363,
+   "E": 13505.483,
+   "G": 89527.093
   }
  },
  "controller": "A[m1-449a9e76]",
- "drain_timeout_s": 650.0,
- "drained_ts": 1789472782.332,
+ "drain_timeout_s": 2430.0,
+ "drained_ts": 1789489202.274,
  "epoch": 2,
  "export": {
-  "anomalies": 40,
-  "results": 107,
+  "anomalies": 45,
+  "results": 117,
   "state": 8,
-  "swarm": 892
+  "swarm": 974
  },
  "lanes": [
   "B",
   "C",
   "D",
-  "E"
+  "E",
+  "G"
  ],
  "stragglers": [],
  "workers": {
   "B": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789472782.307"
+   "ts": "1789489202.266"
   },
   "C": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789472782.261"
+   "ts": "1789489202.266"
   },
   "D": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789472782.261"
+   "ts": "1789489202.266"
   },
   "E": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789472782.261"
+   "ts": "1789489202.266"
+  },
+  "G": {
+   "job_id": "",
+   "state": "stopped",
+   "ts": "1789489202.221"
   }
  }
 }
