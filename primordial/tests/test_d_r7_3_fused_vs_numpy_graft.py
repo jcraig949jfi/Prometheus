@@ -51,6 +51,16 @@ def test_donor_rebuild_recipe_is_transfer_v2_random_mode():
     assert np.array_equal(raw, ref) and len(hashlib.sha256(raw.tobytes()).hexdigest()) == 64
 
 
+def test_emitted_status_is_writable_by_the_rowwriter():
+    """D-R7-3 emitted status 'observation' and every row was rejected; the evidence class is a row field, not a status."""
+    import inspect
+
+    from primordial.fabric import rows as R
+    default = inspect.signature(D.job).parameters["status"].default
+    assert default in R.STATUSES, f"{default!r} not in {R.STATUSES}"
+    assert "observation" not in R.STATUSES
+
+
 def test_brain_row_paths_agree_on_a_clear_row():
     gb, raw = D.donors({"donor_tag": 27000, "run_seed": 2000})
     g1 = D.one(gb.unpack(raw), 0)

@@ -147,7 +147,10 @@ def label(repro: dict, local: dict, brain: dict | None) -> str:
     return "STEP_FIRST"
 
 
-def job(ctx, status: str = "observation"):
+def job(ctx, status: str = "record", exp: str = EXP, predicate_id: str = PREDICATE_ID):
+    """D-R7-3's rows were all rejected by the RowWriter (`status 'observation'` is not in fabric.rows.STATUSES); the
+    evidentiary class lives in the row's `evidence_class` field, not in the writer's status. D-R7-3b re-runs the same
+    deterministic zero-QD rule with status 'record' under its own predicate and rows file."""
     import numba
     from primordial.qd import e7_run as E7
     from primordial.soup.b6.fused import FusedRollout
@@ -194,14 +197,14 @@ def job(ctx, status: str = "observation"):
                               "ok": plant_first is not None and plant_first["kind"] == "idx"}}
         lab = label(repro, local, brain)
         labels[f"d{case['draw']}"] = lab
-        ctx.emit({"kind": "case", "exp": EXP, "status": status, "ts": round(time.time(), 3), **case,
+        ctx.emit({"kind": "case", "exp": exp, "status": status, "ts": round(time.time(), 3), **case,
                   "rng_family": FAMILY, "recipient": f"w{RECIPIENT}", "train_seeds": N_TRAIN, "donor_sha256_rebuilt": sha,
                   "repro": repro, "localize": {q: {"envs_diverging": v["envs_diverging"],
                                                    "divergences": v["divergences"][:32]} for q, v in local.items()},
                   "brain_at_first_divergence": brain, "controls": ctl[f"d{case['draw']}"], "label": lab})
     ok = all(c["clean_genome"]["ok"] and c["planted_brain"]["ok"] for c in ctl.values())
     decision = "INDETERMINATE" if not (all(i1.values()) and ok) else "|".join(f"{k}:{v}" for k, v in labels.items())
-    ctx.emit({"kind": "summary", "exp": EXP, "predicate_id": PREDICATE_ID, "anomaly": ANOMALY, "status": status,
+    ctx.emit({"kind": "summary", "exp": exp, "predicate_id": predicate_id, "anomaly": ANOMALY, "status": status,
               "evidence_class": "OBSERVATION", "ts": round(time.time(), 3), "qd_runs": 0,
               "runs_total": len(CASES), "rng_family_count": 1, "runs_per_family": len(CASES), "families": [FAMILY],
               "n_per_family": {str(FAMILY): len(CASES)}, "checks": {"I1": i1, "controls_ok": ok}, "controls": ctl,

@@ -440,3 +440,21 @@
   Labels NOT_REPRODUCED/NONDETERMINISTIC/BATCH_ONLY/OBS_FIRST/BRAIN_NEAR_TIE/BRAIN_CLEAR/STEP_FIRST; binding controls
   clean genome (no divergence) + planted brain_stride 2 (idx first). OBSERVATION (2 loci). E's O8 closed ADMISSIBLE and
   the live w14->w13 pair (requires fused_eq_numpy every run) is now running, so this answer matters for its gates.
+- D-R7-3 job 74bc27094543 "ok" but ALL 3 ROWS REJECTED by the RowWriter: I emitted status "observation", and
+  fabric/rows.py:44 STATUSES = (record, dev, aborted, timeout, cheat, control); rows.py:184 raised on every write, so
+  the file holds 3 "bad row" wrappers with status aborted and the payload nested under "row". No valid record row ->
+  D-R7-3 is INDETERMINATE by the writer, not by its rule. OWN ERROR (the evidence class is a row field,
+  evidence_class: OBSERVATION, never the writer's status; my test suite did not pin the emitted status).
+  DISCLOSURE: the rejected wrappers are readable and D read them before the re-run, so the D-R7-3b values are seen in
+  advance. D-R7-3b changes NO rule, threshold or input: same module, same deterministic 0-QD computation, status
+  "record", own predicate + rows file (D-R6-6b / D-R7-2b precedent). New test pins job()'s default status to
+  fabric.rows.STATUSES.
+  What the rejected rows contain (to be re-earned on accepted rows): I1 both donor sha256 == E's committed hashes;
+  controls ok (clean genome 0 divergences; planted brain_stride 2 -> idx first, 116 / 11 envs); d24 genome 14 numpy
+  20871 vs fused 20868, ONE env (84, seed 9184) diverges at tick 30, kind idx (numpy 0, fused 4); at that obs row the
+  numpy float32 einsum logits TIE EXACTLY (both 1.9400792121887207, gap 0.0) and numpy's argmax takes the lower index,
+  while the sequential float32 kernel (gap 3.58e-07), linear_act_row direct and the float64 reference all choose 4
+  (ref top-2 gap 1.08e-07, clear_rows False). Label BRAIN_NEAR_TIE for both cases; d31 the same.
+  Reading, if it holds on accepted rows: the fused kernel is not wrong here -- it agrees with the float64 reference;
+  the numpy reference's einsum accumulation order produces an exact float32 tie on a near-tie row and argmax breaks it
+  to the lower action. Thread count is irrelevant (1 == 8 threads, 3 repeats agree).
