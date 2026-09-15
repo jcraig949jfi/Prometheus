@@ -162,8 +162,11 @@ def job(ctx, gen_seed=13, pressure="train128_held64", rungs=RUNGS, run_seeds=tup
 
 
 def ledger(rows_path=ROWS) -> list[dict]:
-    """QD ledger cells for every committed summary row (status record or cheat) not yet in cells.jsonl."""
+    """QD ledger cells for every committed summary row (status record or cheat) not yet in cells.jsonl.
+    The exp id is the rows file's stem (the worker names rows <exp>.jsonl)."""
     from primordial.fabric.rows import RowWriter
+    rows_path = pathlib.Path(rows_path).resolve()
+    exp = rows_path.stem
     src = rows_path.relative_to(ROOT).as_posix()
     have = {(r.get("source", {}).get("exp_id"), r["cell"]["representation"]) for r in QL.load()}
     out = []
@@ -171,7 +174,7 @@ def ledger(rows_path=ROWS) -> list[dict]:
         if s.get("kind") != "summary" or s.get("status") not in ("record", "cheat"):
             continue
         rep = f"linear_int{s['bits']}_nibble_a{s['acts']}"
-        if (EXP, rep) in have:
+        if (exp, rep) in have:
             continue
         v = QL.check(QL.load(), s["world"], s["pressure"], s["median"], s["iqr"], s["genome_bytes"], s["n_runs"],
                      s["oracle_clean"], held=list(s["held64_by_run_seed"].values()))
@@ -185,9 +188,9 @@ def ledger(rows_path=ROWS) -> list[dict]:
                     "oracle": ("clean (world hash+charge, skip_lin fails, fused==numpy, brain honest; E-T3 powered)"
                                if s["oracle_clean"] else "NOT clean (see rows run_seed 0)"),
                     "baseline": False, "cohort": "B", "status": s["status"], "clause_a": v,
-                    "source": {"exp_id": EXP, "rows": src}})
+                    "source": {"exp_id": exp, "rows": src}})
     if out:
-        with RowWriter(QL.CELLS, EXP, commit_every_s=10**9) as w:
+        with RowWriter(QL.CELLS, exp, commit_every_s=10**9) as w:
             for c in out:
                 w.write(c)
     return out
@@ -196,8 +199,9 @@ def ledger(rows_path=ROWS) -> list[dict]:
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("cmd", choices=("ledger",))
+    p.add_argument("--rows", default=str(ROWS))
     a = p.parse_args()
-    for c in ledger():
+    for c in ledger(a.rows):
         print(json.dumps({"rep": c["cell"]["representation"], "bytes": c["footprint"]["genome_bytes"],
                           "median": c["fitness"]["held64_median"], "r4": c["clause_a"]["clause_a_r4"]}))
 

@@ -480,3 +480,9 @@
   No PASS: first item open. Progress falls monotonically with weight precision; <= 16 B sits under the 2-action gate. int4a8 run seeds span 158.8..195.6 (the float baseline spans 156.8..189.2): 8-seed CIs are wider than the headroom (16.25).
   QD ledger rows appended for the 6 summaries. Cost: ~500 CPU-s per rung at 4 threads (TTL undersized by ~1 rung).
 - Next (B-R4-2): climb toward float precision under 200 B -- int8a8 52B, int6a8 40B, int5a8 36B -- plus finish int2a2 4B; ttl 3000 per ~5 rungs is short, set 4000.
+- Push of B-R4-1 hit the shared cells.jsonl conflict (push.py aborted, exit 4); manual rebase with union merge of cells.jsonl only, 103 lines, 0 dups, all parse; pushed a8da4f1d4 (on integration). Result posted 1789449146854-0.
+- B-R4-2 (predicate 1789449162773-0): int8a8 52B, int6a8 40B, int5a8 36B, int2a2 4B, same code/budget/oracles/judge, ttl 4000. Smoke: pack/unpack exact at bits 8/6/5. Job 366394a41746 submitted.
+- B-R4-2 so far (judge): int8a8 52B 174.15 FAIL progress .473 CI [.15,.89]; int6a8 40B 176.53 FAIL .619 [.38,1.35]; int5a8 36B 193.25 PASS 1.648 [.65,2.08], oracles clean, 0 input-invariant.
+  NOT claimed: the ladder is non-monotone and bits enter the seed tuple. Per-seed read: int5 held [200.3,177.0,189.4,196.0,190.9,201.0,173.8,195.6], train median 194.8 (held tracks train), 0 shared top genomes, budget_ok.
+  Predicate B-R4-3 posted: replicate int5a8 (int4a8 contrast) on run seeds 8-15, after B-R4-2 ends.
+- B-R4-2 end (job ok, 2171 CPU-s): int2a2 4B 159.55 BELOW_FLOOR -0.426 (CI wholly below floor). QD ledger rows appended for the 4 summaries (ledger() now takes the exp id from the rows file; it had hardcoded B-R4-1's).
