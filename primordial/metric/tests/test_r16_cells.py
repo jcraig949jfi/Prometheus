@@ -13,8 +13,20 @@ from primordial.metric.tests.test_r16 import Ctx
 from primordial.tests._live import live_url
 
 
+# The R16 per-cell screen appends to RC.ROWS while it runs, so every test below pins the R6-start inputs: the legacy
+# R16 files only (no per-cell rows), which is exactly what the committed order file R16_ORDER_R6.json was built from.
+LEGACY_FLOORS = (RC.R.ROWS["floors"],)
+LEGACY_PREFILL = (RC.R.ROWS["floors"], RC.R.ROWS["baseline"], RC.R.ROWS["learner128"])
+
+
+def r6_start_order():
+    return RC.build_order(floor_rows=LEGACY_FLOORS)
+
+
 def test_order_is_pcg64_20260916_over_the_sorted_unscreened_cells():
-    doc = RC.build_order()
+    doc = r6_start_order()
+    committed = json.load(open(RC.ORDER_FILE, encoding="utf-8"))
+    assert all(doc[k] == committed[k] for k in ("seed", "order", "floor_remainder", "complete"))   # the order file reproduces
     assert doc["seed"] == 20260916 and doc["counts"]["cells"] == 74
     uns = [tuple(c) for c in doc["unscreened_sorted"]]
     assert uns == sorted(uns) and doc["counts"]["unscreened"] == len(uns) == 68
@@ -28,7 +40,7 @@ def test_order_is_pcg64_20260916_over_the_sorted_unscreened_cells():
 
 
 def test_order_file_is_never_regenerated_with_different_content(tmp_path):
-    doc = RC.build_order()
+    doc = r6_start_order()
     p = RC.write_order(doc, tmp_path / "o.json")
     assert RC.write_order(doc, p) == p                                   # same content: idempotent
     other = dict(doc, seed=1, order=list(reversed(doc["order"])))
@@ -47,18 +59,18 @@ def test_estimates_and_learner128_admission_boundary():
 
 def test_prefill_reuses_committed_runs_under_their_run_keys():
     st = {"done": {}}
-    n = RC.prefill_done(st, 34, "train128_held64")
+    n = RC.prefill_done(st, 34, "train128_held64", paths=LEGACY_PREFILL)
     assert n == 15 and all(k.startswith("g-r16-base-w34-train128_held64-f") for k in st["done"])
     st7 = {"done": {}}
-    n7 = RC.prefill_done(st7, 7, "train8_held64")
+    n7 = RC.prefill_done(st7, 7, "train8_held64", paths=LEGACY_PREFILL)
     inv = [k for k in st7["done"] if k.startswith("g-r16-inv-w7-train8_held64-f")]      # J1's train8 learner runs
     base = [k for k in st7["done"] if k.startswith("g-r16-base-w7-train8_held64-f")]    # J2 finished w7 train8's baseline
     assert len(inv) == 26 and len(base) == 32 and n7 == len(inv) + len(base) == len(st7["done"])
-    assert RC.prefill_done({"done": {}}, 7, "train128_held64") == 32                      # w7 t128 baseline done
+    assert RC.prefill_done({"done": {}}, 7, "train128_held64", paths=LEGACY_PREFILL) == 32                      # w7 t128 baseline done
 
 
 def test_plan_puts_the_floor_remainder_first_and_uses_production_envelopes():
-    doc = RC.build_order()
+    doc = r6_start_order()
     plan = RC.plan_jobs(doc)
     assert len(plan) == 68 + 5 and [p["kwargs"]["gen_seed"] for p in plan[:5]] == [c[0] for c in doc["floor_remainder"]]
     assert [ [p["kwargs"]["gen_seed"], p["kwargs"]["pressure"]] for p in plan[5:]] == doc["order"]
@@ -67,8 +79,9 @@ def test_plan_puts_the_floor_remainder_first_and_uses_production_envelopes():
     assert len({p["job_key"] for p in plan}) == len(plan)
 
 
-def test_partial_v2_marks_unfinished_cells_unscreened_never_culled():
-    doc = RC.partial_v2()
+def test_partial_v2_marks_unfinished_cells_unscreened_never_culled(tmp_path):
+    (tmp_path / "cells.jsonl").write_text("")
+    doc = RC.partial_v2(cell_rows=tmp_path / "cells.jsonl")                  # R6-start: no per-cell rows yet
     by = {(c["gen_seed"], c["pressure"]): c for c in doc["cells"]}
     assert len(by) == 74 and doc["coverage"] == {"cells": 74, "complete": 1, "unscreened": 73}
     assert by[(13, "train128_held64")]["verdicts"]["gate_in|HOLD"]["verdict"] == "SURVIVED"
@@ -212,15 +225,17 @@ def test_cell_job_refuses_to_publish_when_the_recipe_code_changed(rs, tmp_path, 
     assert json.loads(ev[0][1]["json"])["frozen_code_sha"] == "c2e9b5ec3"
 
 
-def test_partial_v2_merges_extra_rows_over_committed_rows():
-    doc = RC.partial_v2()
+def test_partial_v2_merges_extra_rows_over_committed_rows(tmp_path):
+    empty = tmp_path / "cells.jsonl"
+    empty.write_text("")
+    doc = RC.partial_v2(cell_rows=empty)
     assert doc["coverage"]["complete"] == 1
     fl = [x for x in RC.R._rows(RC.R.ROWS["floors"]) if x.get("kind") == "floor_suite_r16" and x["gen_seed"] == 13
           and x["pressure"] == "train128_held64"][-1]
     base = {**[x for x in RC.R._rows(RC.R.ROWS["baseline"]) if x.get("kind") == "baseline_r16" and x["gen_seed"] == 13][-1]}
     planted_fl = {**fl, "gen_seed": 99, "world": "w99"}
     planted_base = {**base, "gen_seed": 99, "world": "w99"}
-    with_extra = RC.partial_v2(extra_rows=[planted_fl, planted_base])                      # w99 is not a stage 1 cell
+    with_extra = RC.partial_v2(cell_rows=empty, extra_rows=[planted_fl, planted_base])                      # w99 is not a stage 1 cell
     assert with_extra["coverage"] == doc["coverage"]                                        # only stage 1 cells are listed
 
 
@@ -232,10 +247,11 @@ def test_every_plan_envelope_is_admitted_by_the_worker_rules_under_a_production_
     now = time.time()
     clock = RCK.plan(now - 60, round_id="r6")                 # the r6 clock record exactly as round_clock writes it
     assert clock["stage"] == "PRODUCTION" and RCK.phase(clock, now)["phase"] != "NO_ROUND"
-    for p in RC.plan_jobs(RC.build_order()):
+    for p in RC.plan_jobs(r6_start_order()):
         env = p["envelope"]
         assert EV.validate(env) == [], (p["job_key"], EV.validate(env))
         v = EV.admit(env, "cpu", clock=clock, now=now)
         assert v["ok"], (p["job_key"], v["reasons"])
         assert EV.admit(env, "cpu", clock=None, now=now)["ok"]
-    assert all(p["envelope"]["predicate_id"] == RC.PREDICATE_ID for p in RC.plan_jobs(RC.build_order()))
+    assert all(p["envelope"]["predicate_id"] == RC.PREDICATE_ID and p["envelope"]["cpu_budget_s"] == RC.CPU_BUDGET_S
+               for p in RC.plan_jobs(r6_start_order()))                   # 11:38 w4 t8 TIMEOUT at a 641 CPU-s estimate

@@ -255,7 +255,11 @@ def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS
 def envelope_for(gen_seed: int, pressure: str, runs: int = 32) -> dict:
     est = estimates(gen_seed, pressure, runs)
     cpu = est["baseline_cpu_s"] + est["learner8_cpu_s"] + (est["learner128_cpu_s"] if est["learner128_admissible"] else 0.0)
-    return {"campaign_stage": "PRODUCTION", "wall_budget_s": 2400, "cpu_budget_s": min(CPU_BUDGET_S, round(cpu * 1.25 + 60)),
+    # cpu_budget_s is the job's whole CPU TTL (worker: min(ttl, envelope)). The estimate is from 5-thread J1/J2/J3 walls;
+    # an 8-thread token burns more CPU per wall and w4 train8 died TIMEOUT at 641 CPU-s with 19/99 rows (R6 11:38).
+    # The estimate decides learner128 admission only; every admitted cell gets the PRODUCTION ceiling as its bound.
+    del cpu
+    return {"campaign_stage": "PRODUCTION", "wall_budget_s": 2400, "cpu_budget_s": CPU_BUDGET_S,
             "gpu_budget_s": 0, "expected_output_rows": 3 + runs * (3 if pressure == "train8_held64" else 2),
             "checkpointable": True, "required_controls": ["floor_suite", "det_matches_stage1"],
             "required_oracles": ["world_oracle", "fused_eq_numpy"], "cohort": "G", "predicate_id": PREDICATE_ID,
