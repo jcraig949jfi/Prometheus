@@ -473,3 +473,5 @@
 - Loophole sized: Redis Lua server CPU is ~0.21 s per cell run, uncharged (~13% of the charged client CPU).
 - Round 5 target met: one DISTANT_QD (C-R5-01 PASS, vacuous) and one ANTI_PRIOR (C-R5-AP-01 INDETERMINATE -> AP-01b
   FAIL). Prior ledger not read by C; calibration is H's.
+- Per A's inbox note (CEILINGS moved, d64580db2: PILOT cpu_budget_s 1200 -> 2400), ff'd and restarted worker C at an
+  idle boundary; verified by argv tokens that no lane C supervisor, spawn child or CPU token survived. No open claims.
