@@ -140,3 +140,15 @@
 - Reading: REFUTED as stated. Archives reach abstain (top-1 TRAIN >= abstain 583/592); the HELD64 deficit is train-seed
   overfitting of the selected elites + the top-16 mean readout (top-16 below abstain 66/74 cells; top-1 >= 30/74).
   w7 train8 HELD: top-1 = occupant = abstain 189.19 exactly, baseline top-16 mean 174.14. Child anomaly for G/A.
+- ANOM-..0583 RESOLVED REFUTED (--exp D-R4-1-abstain-cell-reach, pushed fe1694c74). Child anomaly filed: M2 readout
+  (top-16 mean by TRAIN) below its own archive's abstain-grade elite; told A and G (bus 1789448985956-0).
+- Claimed ANOM-..2053 (8-seed IQR). D-R4-2 predicate posted (bus 1789449122570-0): float_w1, int4_w1, float_w13 x RNG
+  families 4200/2101/3303/5501 x 8 seeded run seeds at M2 budget; family 4200 float must reproduce G's M2 16/16.
+  Dev (gens 20) caught two analyse bugs (8-of-4 draw; screen read the four-policy floor, not gate_in 166.47): fixed
+  before the record run. Worker restarted twice (the child caches imported modules; no reload).
+- D-R4-2 record job 4dd87eded458 running (96 runs, ~33 s each): family 4200 float_w1 reproduces G's M2 held64 7/7 so
+  far, oracles clean on float_w1. Seeded archives are reproducible across processes; that half of ..2053 holds.
+- Claimed ANOM-..4459 (symbol-split valleys). D-R4-3 predicate posted (bus 1789449431422-0) BEFORE any scored run:
+  P1 neutral split crosses none of the 6 D1c trapped cells (eps=0: +beta, no yield; width cells saturated);
+  P2 split+re-point macro crosses all 6. Local smoke only (no scored rows): split yield-neutral 83/512, D1c single
+  reproduced exactly. Record job 24f2f1a3dcf3 queued behind D-R4-2.
