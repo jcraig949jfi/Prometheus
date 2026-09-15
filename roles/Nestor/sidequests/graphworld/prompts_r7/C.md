@@ -7,7 +7,9 @@ Worktree: F:/Prometheus-worktrees/nestor-r7-c. Boot: roles/Nestor/sidequests/gra
 Charter: SWARM_R7.md s5 C.
 
 You never choose what to test.
-1. ANTI_PRIOR v2, target 6 assignments, one at a time: `{H-AP-R7}` returns [{exp_id, cell}] only.
+1. ANTI_PRIOR v2, target 6 assignments, one at a time:
+   `primordial.score.anti_prior.assign(store, exp_id, now, round_id="r7")` returns [{exp_id, cell}] only
+   (round_id is required; the arm seed is fixed in code).
    - Code decides the arm and does not tell you.
    - HARD RULE: never read pm:prior:* keys directly (any round).
    - An infeasible cell is reported INFEASIBLE with its reason; you never redraw.

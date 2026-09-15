@@ -9,8 +9,9 @@ must never see your priors before its receipt is filed.
 - You run NO experiments and start NO worker.
 
 Your only job, finished before T+15:
-1. Read the round 7 candidate list published once by code (n=48, seed 20260919) through the anti_prior API for round r7.
-2. For each cell, seal ONE prediction with `anti_prior.seal(...)` for round r7, as the predictor:
+1. Read the round 7 candidate list published once by code (n=48, seed 20260919):
+   `anti_prior.published(store, round_id="r7")`.
+2. For each cell, seal ONE prediction with `anti_prior.seal(store, prediction, "predictor", round_id="r7")`:
    - prior_p_pass (your honest probability that the cell's predicate passes);
    - prior_expected_direction;
    - prior_expected_mechanism (one line);

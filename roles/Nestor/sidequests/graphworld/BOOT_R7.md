@@ -1,7 +1,8 @@
 # Boot for a round 7 session (lanes B, C, D, E, R = predictor)
 
-Currency: 2026-09-15, Nestor-A[m1-449a9e76]. DRAFT until the launch gate is green. The names marked {H-EVN},
-{H-AP-R7} and {F-RESIDUE} are filled from the builders' DONE posts.
+Currency: 2026-09-15, Nestor-A[m1-449a9e76]. DRAFT until the launch gate is green. API names are taken from the
+builders' commits: evidence_n (H 384c01f05), anti_prior round_id API (H 7964e3f44), and the residue tool
+`python -m primordial.ops.residue scan --round r7` (F-R7-1).
 
 The plan is SWARM_R7.md (read it all). Operator authority: messages 22 (PRODUCTION) and 23 (12 h overnight;
 CANDIDATE_N binds Clause B). The conductor's rules are SWARM_R7 s1. The operator is ASLEEP: never wait for an
@@ -36,7 +37,8 @@ note in your final post. Replace <L>/<l> with your lane.
 
 ## Hard rules (code enforces them; do not argue with a refusal)
 
-- EVIDENCE_N_v1 ({H-EVN}):
+- EVIDENCE_N_v1 (primordial/score/evidence_n.py; dry-run with `evidence_n.admission_reasons(env)` -> [] or
+  ['SAMPLE_RULE_MISMATCH'], and `evidence_n.requirement(experiment_class, sample, evidence_class)` for the detail):
   - A job whose experiment_class can emit a verdict must carry runs_total 32, rng_family_count 4,
     runs_per_family 8 and n_per_family 8/8/8/8 over 4 declared families.
   - Anything else is refused SAMPLE_RULE_MISMATCH at admission with zero simulation, unless the envelope
