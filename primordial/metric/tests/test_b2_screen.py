@@ -41,7 +41,8 @@ def test_instrument_fail_takes_precedence_over_worthy():
     got = B2.verdict([spec("a", 100.0, 150.0, 160.0),
                       spec("b", 100.0, 150.0, 160.0, oracles={"O1_forms_agree": True, "O2_cheat_detected": False})])
     assert got["verdict"] == B2.INSTRUMENT_FAIL and got["per_spec"][1]["oracles_failed"] == ["O2_cheat_detected"]
-    assert B2.verdict([spec("a", 100.0, 150.0, 160.0, oracles={})])["verdict"] == B2.INSTRUMENT_FAIL   # oracles not run
+    not_run = B2.verdict([spec("a", 100.0, 150.0, 160.0, oracles={})])          # oracles NOT run: not an instrument failure
+    assert not_run["verdict"] == B2.INDETERMINATE and "ORACLES_NOT_RUN" in not_run["per_spec"][0]["problems"]
 
 
 @pytest.mark.parametrize("bad", [
@@ -66,7 +67,7 @@ def test_stochastic_floor_parts_below_the_pilot_sample_block_a_verdict():
 
 def test_never_survived_and_bounded_spec_count():
     names = set()
-    for lo, hi, oracles in ((150, 160, None), (10, 20, None), (95, 105, None), (150, 160, {"O1": False})):
+    for lo, hi, oracles in ((150, 160, None), (10, 20, None), (95, 105, None), (150, 160, {"O1": False, "O2": True})):
         names.add(B2.verdict([spec("a", 100.0, lo, hi, oracles=oracles)])["verdict"])
     assert names == set(B2.VERDICTS) and "SURVIVED" not in names
     with pytest.raises(ValueError):
@@ -107,3 +108,19 @@ def test_pilot_cost_uses_the_pilot_sample_and_flags_production_candidate():
     real = B2.pilot_cost(0.0016, n_specs=4)                                                 # train128 budget
     assert real["outcome"] == "PRODUCTION_CANDIDATE" and not real["fits_pilot_ceiling"]
     assert real["per_spec_job_wall_s"] == pytest.approx(real["wall_h_single_worker"] * 3600 / 4)
+
+
+def test_not_run_for_stage_budget_is_indeterminate_with_the_production_candidate_never_instrument_fail():
+    """Conductor 1789468233897-0: B2's instrument is valid (E-R15-2 oracles pass); a pilot refused on stage budget is
+    B2_SCREEN_INDETERMINATE(NOT_RUN_STAGE_BUDGET), and only an oracle that RAN and FAILED is INSTRUMENT_FAIL."""
+    cost = B2.pilot_cost(0.0016, n_specs=4)
+    got = B2.not_run_outcome(["b2-g1", "b2-g2", "b2-g3", "b2-g4"], "PC-123", cost)
+    assert got["verdict"] == B2.INDETERMINATE and got["reason"] == B2.NOT_RUN_STAGE_BUDGET
+    assert got["production_candidate_id"] == "PC-123" and got["cost"]["outcome"] == "PRODUCTION_CANDIDATE"
+    assert all(r["not_run"]["production_candidate_id"] == "PC-123" and not r["oracles_failed"] for r in got["per_spec"])
+    mixed = B2.verdict([{"spec_id": "x", "not_run": {"reason": B2.NOT_RUN_STAGE_BUDGET, "production_candidate_id": "PC-1"}},
+                        spec("y", 100.0, 150.0, 160.0, oracles={"O1_forms_agree": False, "O2_cheat_detected": True})])
+    assert mixed["verdict"] == B2.INSTRUMENT_FAIL                                  # an oracle that ran and failed still wins
+    ok_and_not_run = B2.verdict([{"spec_id": "x", "not_run": {"reason": B2.NOT_RUN_STAGE_BUDGET}},
+                                 spec("y", 100.0, 150.0, 160.0)])
+    assert ok_and_not_run["verdict"] == B2.WORTHY                                   # one run spec above its floor is enough

@@ -14,10 +14,13 @@ the 2-action gate, readout top1_train; a pilot over the PILOT stage ceilings is 
 measured cost, never trimmed to fit. The floor is the active variant's (gate_in|HOLD): max(four-policy floor,
 gate_held64). The verdict, in this precedence:
 
-    B2_SCREEN_INSTRUMENT_FAIL    any oracle failed on any spec (O1 forms agree, O2 cheat detected, run oracles)
+    B2_SCREEN_INSTRUMENT_FAIL    an oracle RAN and FAILED on any spec (O1 forms agree, O2 cheat detected, run oracles)
     B2_SCREEN_WORTHY             pilot baseline ci95 low > floor on >= 1 spec
     B2_SCREEN_UNPROMISING        pilot baseline ci95 high < floor on EVERY spec
-    B2_SCREEN_INDETERMINATE      otherwise (including a spec whose inputs are missing)
+    B2_SCREEN_INDETERMINATE      otherwise -- including a spec whose inputs are missing, whose oracles were not run,
+                                 or that was NOT RUN because stage admission refused it (reason NOT_RUN_STAGE_BUDGET,
+                                 with its PRODUCTION_CANDIDATE id; conductor 1789468233897-0: a slow valid instrument
+                                 is not an instrument failure)
 
 It never returns SURVIVED (operator 19 s7: "do not manufacture SURVIVED from pilot statistics"); a WORTHY outcome
 means only that a full screen at the production sample (runs_total 32, rng_family_count 4, runs_per_family 8) is
@@ -35,6 +38,7 @@ PILOT_SAMPLE = dict(SM.PILOT_B2)                  # runs_total 16, rng_family_co
 FULL_SAMPLE = dict(SM.NEED)                        # runs_total 32, rng_family_count 4, runs_per_family 8
 MAX_SPECS = 4
 FLOOR_PARTS = ("abstain", "best_constant", "uniform_random_median", "input_invariant_learner")
+NOT_RUN_STAGE_BUDGET = "NOT_RUN_STAGE_BUDGET"
 
 
 def floor_of(parts: dict, gate_held64: float | None = None) -> float | None:
@@ -75,15 +79,22 @@ def verdict(specs: list[dict]) -> dict:
     per, reasons = [], []
     any_oracle_fail = False
     for s in specs:
-        failed = sorted(k for k, ok in (s.get("oracles") or {}).items() if not ok)
-        if not s.get("oracles"):
-            failed = ["ORACLES_NOT_RUN"]
+        nr = s.get("not_run")
+        if nr:
+            row = {"spec_id": s.get("spec_id"), "floor": None, "baseline_ci95": None, "oracles_failed": [],
+                   "problems": [nr.get("reason", NOT_RUN_STAGE_BUDGET)], "not_run": dict(nr),
+                   "ci_low_above_floor": False, "ci_high_below_floor": False}
+            per.append(row)
+            reasons.append(f"{s.get('spec_id')}: not run ({nr.get('reason', NOT_RUN_STAGE_BUDGET)}, "
+                           f"production candidate {nr.get('production_candidate_id')})")
+            continue
+        failed = sorted(k for k, ok in (s.get("oracles") or {}).items() if not ok)   # ran AND failed only
         floor = s.get("floor")
         if floor is None:
             floor = floor_of(s.get("floor_parts") or {}, s.get("gate_held64"))
         b = s.get("baseline") or {}
         ci = b.get("ci95")
-        problems = _spec_problems(s)
+        problems = _spec_problems(s) + ([] if s.get("oracles") else ["ORACLES_NOT_RUN"])
         above = bool(ci) and floor is not None and not problems and float(ci[0]) > float(floor)
         below = bool(ci) and floor is not None and not problems and float(ci[1]) < float(floor)
         row = {"spec_id": s.get("spec_id"), "floor": floor, "baseline_ci95": ci, "oracles_failed": failed,
@@ -148,3 +159,12 @@ def pilot_cost(episode_s: float, n_specs: int = MAX_SPECS, **kw) -> dict:
     c.update(per_spec_job_wall_s=per_spec_s, fits_pilot_ceiling=per_spec_s <= PILOT_CEILINGS["cpu_wall_s"],
              outcome="PILOT" if per_spec_s <= PILOT_CEILINGS["cpu_wall_s"] else "PRODUCTION_CANDIDATE")
     return c
+
+
+def not_run_outcome(spec_ids, production_candidate_id: str, cost: dict, reason: str = NOT_RUN_STAGE_BUDGET) -> dict:
+    """The admission outcome when the pilot was refused on stage budget (round 5): every spec NOT RUN ->
+    B2_SCREEN_INDETERMINATE(NOT_RUN_STAGE_BUDGET) with the PRODUCTION_CANDIDATE id and the measured cost attached."""
+    out = verdict([{"spec_id": sid, "not_run": {"reason": reason, "production_candidate_id": production_candidate_id}}
+                   for sid in spec_ids])
+    out.update(reason=reason, production_candidate_id=production_candidate_id, cost=cost)
+    return out
