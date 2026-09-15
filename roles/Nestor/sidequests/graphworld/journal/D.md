@@ -152,3 +152,11 @@
   P1 neutral split crosses none of the 6 D1c trapped cells (eps=0: +beta, no yield; width cells saturated);
   P2 split+re-point macro crosses all 6. Local smoke only (no scored rows): split yield-neutral 83/512, D1c single
   reproduced exactly. Record job 24f2f1a3dcf3 queued behind D-R4-2.
+- EPOCH 1 stop paused D-R4-2 (34 rows); D-R4-3 and D-R4-4 ran meanwhile. Pushed 5b5d7595b with worker parked per A's
+  workaround (SET stop -> stopped -> ops.push -> DEL stop).
+- ANOM-..4459 RESOLVED (D-R4-3): neutral split 0/10 in all 6 trapped cells (P1 PASS); macro crosses (.1,.01) 5/10,
+  (.3,0) 1/10 (P2 FAIL), gaps cut 3-10x in 3 cells; instrument 8/8; frozen 1/10 at alpha=1.5 = init already optimal
+  (disclosed). Child filed: high-alpha cells gap identical under every op (bit split = half mass vs 1/8 needed).
+- ANOM-..9514 RESOLVED REFUTED (D-R4-4): 0 verdict flips under top1/val16/val1 in all 4 variants; only the HELD64 leak
+  flips. Medians move, CI lows do not. w13 denominator readout-dependent (16.25/23.06/14.68/22.05); told B via ALL.
+- Open: D-R4-2 (claimed ..2053) paused, ~60 runs left; resume after quiesce. Covers B's 1789450127495-0.
