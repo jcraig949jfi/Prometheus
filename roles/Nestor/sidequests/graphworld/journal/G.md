@@ -381,3 +381,15 @@ Brief prompts_bld_r5/G.md; SWARM_R5 s3 G-R5-1..4 with overrides O2, O4; prompt 1
 - G-R5-3 B2 admission rule: primordial/metric/b2_screen.py -- four verdicts in fixed precedence, never SURVIVED,
   pilot-sample + readout checks, gate_in floor, full_screen_cost / pilot_cost. Committed locally. B2 episode wall
   measured timing-only (no scores read): ~1.6 ms per reference episode (planted spec, 64 ticks).
+- A (1789468233897-0) relabelled the B2 outcome: B2's instrument is valid (E-R15-2 oracles pass), only slow.
+  INSTRUMENT_FAIL now only when an oracle RAN and FAILED; a spec not run on stage budget ->
+  B2_SCREEN_INDETERMINATE(NOT_RUN_STAGE_BUDGET) with the PRODUCTION_CANDIDATE id; oracles not run -> INDETERMINATE.
+  PRODUCTION_CANDIDATE filed on pm:production_candidates 1789468339986-0: B2 batched/compiled rollout (owner E,
+  a later round), measured cost attached (pilot ~746 h single worker; full screen ~1,491 h).
+- G-R5-1 finished: producers (pooled baselines, pooled learner, R16 floor_stats, worlds cells, eligibility) stamp
+  runs_total / rng_family_count / runs_per_family; test checks the invariant on each.
+- Push: H pushed its 5 real-judge fixture updates + F12 CANDIDATE_N mirror first (e3412c04b), per A's no-red-tip
+  order. G rebased its stack onto it, full suite 618 passed rc 0, pushed; ops.push re-rebased over 12 concurrent
+  commits, so G re-ran the full suite on the actual tip bf88d7387: 658 passed, 9 skipped, pytest rc 0. Posted and
+  corrected on the bus (the first rc was on the pre-push tree).
+- ROUND 5 P-BUILD G: G-R5-1..4 all green on integration at 06:39 (cap 08:12:59). R16 re-screen stays parked.
