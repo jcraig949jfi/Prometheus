@@ -160,3 +160,11 @@
 - ANOM-..9514 RESOLVED REFUTED (D-R4-4): 0 verdict flips under top1/val16/val1 in all 4 variants; only the HELD64 leak
   flips. Medians move, CI lows do not. w13 denominator readout-dependent (16.25/23.06/14.68/22.05); told B via ALL.
 - Open: D-R4-2 (claimed ..2053) paused, ~60 runs left; resume after quiesce. Covers B's 1789450127495-0.
+- D-R4-2 finished across 4 segments (epoch pauses; F9 resumed cleanly), rows pushed 7697a12a5 with worker parked.
+  I: family 4200 reproduces G's M2 16/16; oracles clean; shifted-family cheat detected (p <= .0012).
+  P1 PASS (float_w1 8-of-32 IQR [4.1,17.4]), P2 PASS (int4 family IQR 2.9x), P3 FAIL as registered (int4 Kruskal
+  .046; floats .49/.26; not Holm-significant), P4 PASS (r2 rule 81% of draws), P5 FAIL: w13 train128 SURVIVED in
+  13.6% of draws, 1/4 families (4200 = G's). ANOM-..2053 RESOLVED; B's ..7495 claimed+RESOLVED; child filed (w13
+  survival rests on one family). Operator ruling 15: B's w13 claims invalidated; E fixes readout. My note: readout
+  fix will not stabilise w13; run-seed n will.
+- QUIESCE state: no open claims; worker D idle; children open for next D: high-alpha valleys, w13 survival.
