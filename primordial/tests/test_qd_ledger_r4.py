@@ -223,3 +223,28 @@ def test_committed_v1_screen_is_retired_by_baseline_n():
     got = Q.check_r4("w13", S128, 1e9, 1, 8, doc=committed)
     assert got["verdict"] == "INELIGIBLE" and got["why"] == "BASELINE_N" and got["baseline_n_runs"] == 8
     assert got["baseline_families"] is None
+
+
+@pytest.mark.parametrize("npf", [{"2101": 29, "3303": 1, "4200": 1, "5501": 1},     # pooled 32 over 4 families: the ghost
+                                 {"2101": 8, "3303": 8, "4200": 8, "5501": 7},      # one family short
+                                 None, {}])                                          # absent / empty
+def test_baseline_n_refuses_family_concentration_and_missing_per_family(npf):
+    b = base(7, S8, 200.0, 150.0, 250.0)
+    if npf is None:
+        b.pop("n_per_family")
+    else:
+        b["n_per_family"] = npf
+    assert b["n_runs"] == 32 and len(b["families"]) == 4                              # the other two conditions hold
+    d = WR.build([WR.cell(suite(7, S8, (100.0, 100.0, 5.0, 60.0), 90.0), b)], commit="r16")
+    got = Q.check_r4("w7", S8, 195.0, 200, 8, doc=d)
+    assert got["verdict"] == "INELIGIBLE" and got["why"] == "BASELINE_N"
+    assert got["need_per_family"] == 8 and got["baseline_n_per_family"] == npf
+    assert Q.check([], "w7", S8, 195.0, 0.0, 200, 8, doc=d)["clause_a_r4"]["why"] == "BASELINE_N"
+
+
+def test_eight_per_family_passes_through_to_readout_and_progress(doc):
+    c = next(c for c in doc["cells"] if (c["world"], c["pressure"]) == ("w7", S8))
+    assert c["baseline"]["n_per_family"] == {str(f): 8 for f in FAM4}
+    assert Q.check_r4("w7", S8, 195.0, 200, 8, doc=doc)["verdict"] == "PASS"            # progress reached
+    mix = Q.check_r4("w7", S8, 195.0, 200, 8, doc=doc, readout="top1_train")
+    assert mix["why"] == "READOUT_MISMATCH"                                               # passed BASELINE_N, stopped at readout

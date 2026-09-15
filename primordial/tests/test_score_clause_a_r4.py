@@ -15,7 +15,8 @@ def _cell(world, pressure, active, other=None, floor=100.0, base_median=200.0, b
     vs["gate_in|HOLD"] = active
     return {"world": world, "pressure": pressure, "floor": floor, "gate_held64": floor,
             "baseline": {"median": base_median, "ci95": [base_median - 20, base_median + 20], "bytes": base_bytes,
-                         "n_runs": 32, "families": [2101, 3303, 4200, 5501]}, "verdicts": vs}
+                         "n_runs": 32, "families": [2101, 3303, 4200, 5501],
+                         "n_per_family": {"2101": 8, "3303": 8, "4200": 8, "5501": 8}}, "verdicts": vs}
 
 
 @pytest.fixture

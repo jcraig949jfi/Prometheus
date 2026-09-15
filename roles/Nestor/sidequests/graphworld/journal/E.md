@@ -330,3 +330,13 @@ i.i.d. per row) lost to scratch on 13/16 seeds (p .0012), so graft-minus-rand is
 survives Holm (.031). Graft vs scratch is ~0 AUC, final held64 below scratch; zero-shot is the robust part (132/152 vs 67).
 Receipt INDETERMINATE. Next: rand vs scratch on seeds 16-63 at train128 + stream-swapped variant, before any clause B claim.
 Worker stopped; loop stopped; ff to push lock 898900b4e.
+
+## 2026-09-15 operator 15/16 -- reader, BASELINE_N, B2 adapter
+
+R15-1 reader landed a70fcd841: primordial/metric/readout.py (top1_train) used by M2 baseline + candidates; check_r4
+refuses READOUT_MISMATCH. Verified: w13 t128 reread == D-R4-4 top1 8/8, median 189.53125 (rows ff082667f).
+R16 BASELINE_N: n_runs < 32 / families < 4 (3dd777386), then per-family < 8 or absent n_per_family (A caught the gap:
+29+1+1+1 passed; my own note had waved it off as the screen's job). Lesson: every refusal condition in the ruling goes
+in the judge, not in the writer. R15-2 B2 adapter de91fbd52: prey-controlled graphworld_b2 (obs 8 x uint16, a % 8,
+charge); record oracles O1 gb/cy == ref 64/64, O2 skip_mutation caught 32/32 moving specs, O3 forager 440 CI [432,444]
+> blind max 356.75. Suite 325 passed. Next: G screens B2 and re-screens 32x4 under the reader; E on asks.
