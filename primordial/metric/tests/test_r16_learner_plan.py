@@ -16,7 +16,7 @@ def test_order_is_ascending_cost_from_t_and_s_only():
     assert [c["gen_seed"] for c in doc["order"]] == [26, 1, 10, 7, 34]          # T*S 64, 128, 128, 256, 256; ties by gen_seed
     for c in doc["order"]:
         assert c["learner128_cpu_s"] == pytest.approx(12030.94 / 32 * RC.ts_of(c["gen_seed"]), abs=0.01)
-    assert "T * S" in doc["formula"] and doc["r16_remainder_order_file"] == str(RC.ORDER_FILE)
+    assert "T * S" in doc["formula"] and doc["r16_remainder_order_file"] == "roles/Nestor/sidequests/graphworld/R16_ORDER_R6.json"
 
 
 def test_every_cell_is_eight_chunks_then_one_assembly_under_the_r7_ceilings():
@@ -70,8 +70,22 @@ def test_cell_job_admits_the_learner_on_the_remaining_runs_only():
 
 def test_committed_plan_file_reproduces():
     doc = RC.learner_plan()
-    committed = json.load(open(RC.LEARNER_PLAN_FILE, encoding="utf-8"))
+    committed = json.load(open(RC.ROOT / RC.LEARNER_PLAN_FILE, encoding="utf-8"))     # from the repo root, any worktree
     assert committed == json.loads(json.dumps(doc))
+    assert not any(":" in str(v) or "\\" in str(v) for v in (committed["r16_remainder_order_file"], RC.LEARNER_PLAN_FILE))
+
+
+def test_write_learner_plan_refuses_a_different_plan_unless_replaced(tmp_path, monkeypatch):
+    doc = RC.learner_plan()                                    # built against the real root, then written under tmp
+    monkeypatch.setattr(RC, "ROOT", tmp_path)
+    (tmp_path / "roles/Nestor/sidequests/graphworld").mkdir(parents=True)
+    p = RC.write_learner_plan(doc)
+    assert RC.write_learner_plan(doc) == p                                                 # same content: fine
+    other = dict(doc, chunk_runs=8)
+    with pytest.raises(ValueError):
+        RC.write_learner_plan(other)
+    RC.write_learner_plan(other, replace=True)
+    assert json.load(open(p, encoding="utf-8"))["chunk_runs"] == 8
 
 
 @pytest.fixture

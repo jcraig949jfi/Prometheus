@@ -460,11 +460,18 @@ def learner_plan(cells=PENDING_R6, families=R.FAMILIES, run_seeds=R.RUN_SEEDS, c
             "source": "PENDING cells of receipt G-R16-SCREEN-R6 (pm:results 1789495407858-0)",
             "order": [{"gen_seed": gs, "pressure": p, "t_x_s": ts_of(gs), "learner128_cpu_s": round(learner128_cost(gs), 2)}
                       for gs, p in order],
-            "r16_remainder_order_file": str(ORDER_FILE), "jobs": jobs}
+            "r16_remainder_order_file": ORDER_FILE.relative_to(ROOT).as_posix(), "jobs": jobs}
 
 
-def write_learner_plan(doc: dict, path=LEARNER_PLAN_FILE):
-    return write_order(doc, path)
+def write_learner_plan(doc: dict, path=LEARNER_PLAN_FILE, replace: bool = False) -> pathlib.Path:
+    """Write the plan under the repo root (paths inside it are repo-relative, F 1789506520992-0). An existing file with
+    different content is refused unless replace=True (allowed only before T+0)."""
+    p = ROOT / path
+    text = json.dumps(doc, indent=1) + "\n"
+    if p.exists() and json.loads(p.read_text(encoding="utf-8")) != json.loads(text) and not replace:
+        raise ValueError(f"{p} already holds a different learner plan")
+    p.write_text(text, encoding="utf-8", newline="\n")
+    return p
 
 
 # ---------------------------------------------------------------- G-R7-2 option (b) oracle (A 1789505640089-0, E 1789505779961-0)
