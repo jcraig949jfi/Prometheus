@@ -493,3 +493,35 @@ Iteration 3 (18:15). O8 draws 0-17 committed (9edd3653f), all check_b FAIL with 
 by a rows-file check_b monitor. A 300 s "stall" after draw 17 is the FIFO broker: both k*=2 tokens are held (C eca39ef50161 since
 18:09, G w6 train8 cell since 18:14, leases to ~18:51/18:56); worker E alive, 0 pending, draw 18 waiting for a token. No action; no
 decide() before 40 check_b rows.
+
+Iteration 4 (18:20). Correction to iteration 3: the broker is NOT FIFO across lanes (A D22, 1789509956511-0): my ~36 s O8 jobs
+re-took slot 1 seven times and starved D; A: no hand throttling, bounded by O8. D 1789510133837-0: gpuq children run with
+cwd/PYTHONPATH = nestor-r7-e, so a GPU job needs its module in THIS tree. My first plan (ff after O8) was wrong and corrected
+on the bus (1789510560665-0 -> correction): the tree is 19 ahead (O8 rows + journal) / 3 behind origin (C AP-01 CPU harness, D-R7-1,
+D-R7-2), so the route is ops.push once the O8 RowWriter is idle, before item 1. C's torch_gpu harness is not on origin yet.
+gpuq itself has no fingerprint/repo check and spawns a child per job, so no arbiter restart unless nv/gpuq.py changes.
+Item 1 prepared (scratchpad e_r7_live.py): LIVE7 families x run seeds 16..23, checkpointable, wall 2400/seg, cpu 12000;
+dry-run admit ok, evidence_n [], guard sample_rule OK (only pre-run refusals). O8 decide(): 18/40, 0 PASS, PENDING.
+
+Iteration 5 (18:40). O8 23/40 check_b, 0 PASS, 0 error rows, gates clean on all. Draw 22 (job ebadac01b269) PAUSED at the
+EPOCH 1 boundary (18:37:49 stop flag) after 16/32 runs, 48 rows committed 9e0d43371 without a check_b row; the worker requeued its
+segment 1 as b8a02eab75ef behind draws 24-39 (resumable, F9 checkpoint per run, same streams). decide() counts only check_b rows, so
+the order is irrelevant; draw 22 is neither dropped nor re-run. Own envelope inaccuracy: the O8 envelope says checkpointable false,
+but draw_job goes through transfer_v2._runs, which checkpoints per run, so an epoch boundary resumes it rather than aborting.
+Disclose in the receipt. C freed its token at 18:26 (AP-01 INDETERMINATE); G holds slot 0 (w5 t128), E slot 1.
+
+Iteration 6 (18:50). O8 25/40: 24 FAIL gates clean, 1 INDETERMINATE (draw 24), 0 PASS, 0 error rows. Draw 24: graft run 2101|2192
+graft_fused_eq_numpy False (bytes unmodified True): FusedRollout != E7.rollout on the 16 untrained donor genomes over train128;
+the only such run of ~800 graft runs; check_b v2 correctly INDETERMINATE (p .999). Filed as an anomaly for D with a zero-search
+discriminator (rebuild the 16 genomes from PCG64([2101, 27024, 2192, 13]), per genome x seed, K=1/16, threads 1/8, first diverging
+tick, argmax near-tie?). decide() counts it completed, not PASS; no rule change. Checked envelope.admit: a continuation segment
+is refused only past NNW, so draw 22's segment 1 (b8a02eab75ef) is admissible.
+
+Iteration 7 (~19:00; the iteration 6 header said 18:50, but the clock read 18:40 at that point). O8 31/40: 29 FAIL gates clean, 2 INDETERMINATE,
+0 PASS, 0 error rows. Second graft_fused_eq_numpy False: draw 31 run 2101|2255 (donor_tag 27031). Both mismatches are in family 2101
+(2/1020 graft runs; chance of both in one named family 1/16, so a lead only). Addendum to anomaly 1789512027239-0 posted to D,A.
+
+Iteration 8 (18:49). O8 COMPLETE: 40/40 check_b rows committed (last ea108a92e, draw 22 segment 1). decide() over the rows at HEAD:
+INSTRUMENT_ADMISSIBLE -- false_pass 0/40 (rule <= 5), judged INDETERMINATE 2 (draws 24, 31: graft_fused_eq_numpy False, anomaly
+1789512027239-0 + addendum), error rows 0. Prediction was ADMISSIBLE with 1-4 false passes; observed 0, so E-R7-1's single
+negative PASS (p_max .049) did not recur in 40 independent draws. Worker idle (0 pending) -> ops.push now, then receipt, then item 1.
