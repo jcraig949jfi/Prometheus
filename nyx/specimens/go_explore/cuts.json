@@ -660,7 +660,19 @@
   "file": "nyx/specimens/go_explore/ablations/n3_c04_controls.py",
   "sha256": "398da889ebcfbd3fc1b10eaf3e6e5eccf01274992b8c60b5b772a68add25509a",
   "frozen": "2026-09-12T04:40Z",
-  "rule": "not altered after a result except to repair a demonstrably malformed control, ledgered before rerun (ruling 2026-09-12)"
+  "rule": "not altered after a result except to repair a demonstrably malformed control, ledgered before rerun (ruling 2026-09-12)",
+  "runs": [
+   {"date": "2026-09-12T13:13Z", "env": "SOURCE_ONLY pin, host python", "receipt": "ablations/RECEIPT_N3_c04_2026-09-12.json", "outcome": "IMPORT CANNOT_INSTANTIATE (loky); no block reached"},
+   {"date": "2026-09-15T16:15Z", "env": "docker prometheus-fossil-goexplore:min (Techne #204), pin mounted read-only, PYTHONDONTWRITEBYTECODE=1", "receipt": "ablations/RECEIPT_N3_c04_2026-09-15.json (first 09-15 run, committed before any repair)", "outcome": "IMPORT OK. Blocks 5,6,7,2,1 ERROR AttributeError: type object 'RLEArray' has no attribute 'fromarray' -- no c04 evidence. Block 4 prob_override observed p0=0/200, p0.5=109/200 (policy F5, not c04). Pin tree_sha256 67bfdebe... verify matches before and after; robustified file-hash digest 24af115c... unchanged."}
+  ],
+  "repairs": [
+   {"ledgered": "2026-09-15T16:30Z, committed BEFORE the repaired rerun",
+    "control": "run_split() frame encoder (feeds blocks 5, 6, 7, 2, 1)",
+    "malformation": "the control encoded frames with ge.RLEArray.fromarray(f), a method name the control guessed; the shipped class (goexplore_py/import_ai.py:131-149) has __init__(array), to_np(), tobytes(), frombytes(byt, dtype) and no fromarray",
+    "demonstration": "receipt 2026-09-15 AttributeError on all five blocks; the ancestor stores RLEArray(gray_uint8_frame) (montezuma_env.py:56, generic_atari_env.py:23, utils.py:73) and try_split_frames decodes with RLEArray.frombytes(f, dtype=np.uint8) (goexplore.py:467)",
+    "repair": "ge.RLEArray.fromarray(f) -> ge.RLEArray(f), i.e. the ancestor's own encoder; the .tobytes() step, the frames, the args, the predictions and the kill criterion are unchanged",
+    "not_repaired": "try_split_frames draws its initial shape/pix_val from the unseeded stdlib random module (goexplore.py:491-492); the control does not seed it. This is not a malformation (it is how the ancestor runs) and is left as is; the repaired control is run more than once and every run is kept"}
+  ]
  },
  "pins": {
   "techne_203": {
