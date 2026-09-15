@@ -340,3 +340,17 @@ R16 BASELINE_N: n_runs < 32 / families < 4 (3dd777386), then per-family < 8 or a
 in the judge, not in the writer. R15-2 B2 adapter de91fbd52: prey-controlled graphworld_b2 (obs 8 x uint16, a % 8,
 charge); record oracles O1 gb/cy == ref 64/64, O2 skip_mutation caught 32/32 moving specs, O3 forager 440 CI [432,444]
 > blind max 356.75. Suite 325 passed. Next: G screens B2 and re-screens 32x4 under the reader; E on asks.
+
+# ROUND 5 P-BUILD -- Nestor-E[m1-2adb547f] (SWARM_R5 s3 E-R5-1..3), started 06:13, green at ~06:34
+
+E-R5-1 hardened Clause B control clauseB_ctrl_v2_featperm (preregistered 1789467311525-0 before code; 3ba828c43):
+sham = donor linear W row-permuted along the observation-feature axis by a seeded derangement (values, column
+multisets, zeros, bias, codebook kept); check-b v2 requires graft > scratch AND > sham. Smoke validation at w13
+train128 (gens 50, batch 64, seeds 100..107): planted positive PASS (+9.42 / +4.84, p .0039 each), planted negative
+FAIL; sham - scratch +4.58 on the positive (harder than scratch, the E-R4-1 defect is gone). A accepted (gate 12).
+Live pair at M2 budget ~20 min for 16 seeds -> PRODUCTION_CANDIDATE under O6 in the pilot.
+E-R5-2 GPU queue + arbiter (nv/gpuq.py): F's admit(kind=gpu) + refuse, cap min(gpu_budget_s, 600), O5 lease for the
+whole child, 19 s6 fields, timeout -> TIMEOUT event + candidate. First smoke crashed: child rows had no RowWriter
+status and my test writer accepted anything (a test aimed beside the claim) -- fixed, the test writer enforces
+rows.STATUSES. E-R5-3 wiring (nv/r5_harness.py): 1-cell smokes all exact, lease held, rows VALID. GPU-3 resident fp16
+path is not in the P MVP -> PRODUCTION_CANDIDATE stub. Workers stopped for the P-PILOT cohort session.
