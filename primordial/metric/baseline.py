@@ -8,9 +8,11 @@ sampler and the elites of every run seed saved (C2), at round 1's budget:
   train128_held64   9100..9227        800 x 128 = 102,400     E10 closed linear
 
 Genome: E7.G7(gen_seed, "linear") -- lane C's linear params + lane E's A x W action codebook; bytes =
-g7.glen (packed genome, codebook included). Per run seed: the top-16 elites by train fitness, per-seed
-mean on HELD64 (E9.fused_score). The cell's baseline: median over run seeds, the bootstrap 95% CI of that
-median (M3, primordial.metric.ci.median_ci), and the bytes.
+g7.glen (packed genome, codebook included). Per run seed: the value under THE shared readout
+(primordial.metric.readout, operator 15 R15-1: top-1 elite by train fitness, per-seed mean on HELD64), stamped
+`readout` on every row. Rows written before R15-1 used top-16 (readout.LEGACY; top_raw is kept to reproduce
+them). The cell's baseline: median over run seeds, the bootstrap 95% CI of that median (M3,
+primordial.metric.ci.median_ci), and the bytes. `reread` re-reads a saved archive (no QD).
 
     python -m primordial.fabric.worker submit G primordial.metric.baseline:job --exp G-R4-3-stage2-baseline \\
         --rows primordial/ledger/rows/G/G-R4-3-stage2-baseline.jsonl --ttl-cpu-s S \\
@@ -25,6 +27,7 @@ import time
 import numpy as np
 
 from primordial.metric import floors as F
+from primordial.metric import readout as RO
 from primordial.metric.ci import BOOT_SEED, N_BOOT, median_ci
 from primordial.qd import e7_run as E7
 from primordial.qd.archive import LuaArchive, load_elites, save_elites
@@ -53,7 +56,8 @@ def fused_per_seed(g7: E7.G7, raw: np.ndarray, seeds: np.ndarray) -> float:
 
 
 def top_raw(elites: list, glen: int, n: int = TOP) -> np.ndarray:
-    """elites: [(fit, genome bytes)] -> the n best by (-fit, genome bytes), packed [n, glen]."""
+    """elites: [(fit, genome bytes)] -> the n best by (-fit, genome bytes), packed [n, glen]. LEGACY readout (n=16)
+    and the oracle's top-16; the baseline value itself comes from readout.read."""
     best = sorted(elites, key=lambda v: (-v[0], v[1]))[:n]
     return np.frombuffer(b"".join(g for _, g in best), np.uint8).reshape(-1, glen)
 
@@ -89,29 +93,38 @@ def baseline_run(r, gen_seed: int, pressure: str, run_seed: int, gens: int | Non
         state["gen"] += 1
     qd_wall = state["qd_wall_s"] + time.perf_counter() - t0
     el = arch.dump()
-    raw = top_raw([(v[0], v[1]) for v in el.values()], g7.glen)
+    raw = RO.packed(RO.select([(v[0], v[1]) for v in el.values()]), g7.glen)
     epath = pathlib.Path(elites_dir) / f"{key}.json"
     save_elites(arch, epath, [run_seed, gen_seed])
     arch.clear()
     return {"kind": "run", "world": f"w{gen_seed}", "gen_seed": gen_seed, "pressure": pressure, "run_seed": run_seed,
             "family": FAM, "genome_bytes": int(g7.glen), "param_bytes": int(g7.pb),
             "gens": gens, "batch": batch, "genomes": gens * batch, "budget_ok": (gens, batch) == (bg, bb),
-            "budget_source": BUDGET_SOURCE[pressure], "train_seeds": len(train), "top": len(raw),
+            "budget_source": BUDGET_SOURCE[pressure], "train_seeds": len(train), "readout": RO.NAME, "top": len(raw),
             "sampler_seed": sseed, "cells": len(el), "qd_wall_s": round(qd_wall, 2),
             "train_per_seed": fused_per_seed(g7, raw, train), "held64_per_seed": fused_per_seed(g7, raw, F.HELD64),
             "top_sha256": hashlib.sha256(raw.tobytes()).hexdigest(), "elites": str(epath)}
 
 
+def reread(gen_seed: int, elites_path) -> dict:
+    """One saved M2 archive under the shared readout (rows only, no QD): {readout, held64_per_seed, ...}."""
+    return RO.read_doc(load_elites(elites_path), RO.linear_scorer(gen_seed))
+
+
 def summary(runs: list[dict]) -> dict:
-    """The cell's baseline: median, M3 bootstrap CI of the median, IQR, bytes, per-run-seed values."""
+    """The cell's baseline: median, M3 bootstrap CI of the median, IQR, bytes, per-run-seed values, readout.
+    Refuses run rows read under different readouts."""
     runs = sorted(runs, key=lambda x: x["run_seed"])
+    kinds = {x.get("readout", RO.LEGACY) for x in runs}
+    if len(kinds) != 1:
+        raise ValueError(f"run rows mix readouts {sorted(kinds)}")
     v = [x["held64_per_seed"] for x in runs]
     if len(v) < MIN_RUNS:
         raise ValueError(f"{len(v)} run seeds < {MIN_RUNS}")
     lo, hi = median_ci(v)
     x0 = runs[0]
     return {"kind": "baseline", "world": x0["world"], "gen_seed": x0["gen_seed"], "pressure": x0["pressure"],
-            "family": FAM, "median": float(np.median(v)), "ci95": [lo, hi],
+            "family": FAM, "readout": kinds.pop(), "median": float(np.median(v)), "ci95": [lo, hi],
             "iqr": float(np.percentile(v, 75) - np.percentile(v, 25)), "bytes": x0["genome_bytes"],
             "n_runs": len(v), "held64_by_run_seed": {str(x["run_seed"]): x["held64_per_seed"] for x in runs},
             "bootstrap": {"fn": "primordial.metric.ci.median_ci", "resamples": N_BOOT, "seed": BOOT_SEED},

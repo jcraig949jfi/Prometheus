@@ -134,12 +134,14 @@ def floor_of(rows, world, pressure):
     return max(fs, key=lambda r: r["fitness"]["held64_median"]) if fs else None
 
 
-def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, held=None, doc=None) -> dict:
+def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, held=None, doc=None,
+          readout=None) -> dict:
     """The round 2/3 verdict (raw + floor) with the round 4 judge attached as `clause_a_r4` (H ask
-    1789435262391-0: one judge, read by F12). doc: a worlds_r4 document; None reads the committed file."""
+    1789435262391-0: one judge, read by F12). doc: a worlds_r4 document; None reads the committed file.
+    readout: the candidate's readout name (primordial.metric.readout); None = LEGACY top-16."""
     out = _check_r2(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean, held)
     out["clause_a_r4"] = clause_a_r4_block(check_r4(world, pressure, median, nbytes, runs, oracle_clean=oracle_clean,
-                                                    held=held, doc=doc))
+                                                    held=held, doc=doc, readout=readout))
     return out
 
 
@@ -149,7 +151,7 @@ def clause_a_r4_block(r4: dict) -> dict:
         screen = "NOT_REACHED" if r4.get("cull_reason") == "NOT_REACHED" else r4["why"]
     else:
         screen = "SURVIVED"
-    return {"verdict": r4["verdict"], "why": r4.get("why"), "progress": r4.get("progress"),
+    return {"verdict": r4["verdict"], "why": r4.get("why"), "progress": r4.get("progress"), "readout": r4.get("readout"),
             "progress_ci": r4.get("progress_ci95"), "floor": r4.get("floor"), "baseline_median": r4.get("baseline_median"),
             "baseline_bytes": r4.get("baseline_bytes"), "variant": r4.get("variant"), "screen": screen}
 
@@ -187,7 +189,7 @@ PROGRESS_PASS = 0.95
 
 
 def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_failed=True, held=None,
-             doc=None) -> dict:
+             doc=None, readout=None) -> dict:
     """Clause A, round 4 binding (SWARM_R4 s4), read against primordial/ledger/qd/worlds_r4.json.
 
     The cell must be SURVIVED under the file's active variant (else INELIGIBLE UNSCREENED / CULLED / HELD,
@@ -195,7 +197,10 @@ def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_fai
       progress = (median - floor) / (baseline median - floor)          (> 0 denominator by the screen)
       PASS iff progress >= 0.95 AND bytes < baseline bytes; BELOW_FLOOR iff progress < 0; else FAIL.
     `held` (per-run-seed values) adds the bootstrap CI of the median mapped through the same formula:
-    reported, not judged."""
+    reported, not judged.
+    Operator 15 R15-1: the candidate's readout (None = readout.LEGACY) must equal the cell baseline's readout
+    (absent = LEGACY), else INELIGIBLE READOUT_MISMATCH -- one reader on both sides of the fraction."""
+    from primordial.metric import readout as RO
     from primordial.metric import worlds as WR
     doc = WR.load() if doc is None else doc
     base = {"rules": "r4", "world": world, "pressure": pressure}
@@ -207,15 +212,20 @@ def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_fai
                         baseline_median=(c["baseline"] or {}).get("median"),
                         baseline_bytes=(c["baseline"] or {}).get("bytes"))
         return {**base, **g}
+    c = WR.lookup(doc, world, pressure)
+    from primordial.metric import screen as SC
+    k = SC.vkey(doc["q1_floor_policy"], doc["q2_policy"])
+    base.update(readout=readout or RO.LEGACY, baseline_readout=(c["baseline"] or {}).get("readout", RO.LEGACY))
+    if base["readout"] != base["baseline_readout"]:
+        return {**base, "verdict": "INELIGIBLE", "why": "READOUT_MISMATCH", "variant": k,
+                "floor": c["verdicts"][k]["floor"], "baseline_median": c["baseline"]["median"],
+                "baseline_bytes": c["baseline"]["bytes"]}
     if not oracle_clean:
         return {**base, "verdict": "INELIGIBLE", "why": "oracles not clean"}
     if not cheat_failed:
         return {**base, "verdict": "INELIGIBLE", "why": "a cheat control did not fail"}
     if runs < 8:
         return {**base, "verdict": "INELIGIBLE", "why": f"{runs} run seeds < 8"}
-    c = WR.lookup(doc, world, pressure)
-    from primordial.metric import screen as SC
-    k = SC.vkey(doc["q1_floor_policy"], doc["q2_policy"])
     fv, bm, bb = c["verdicts"][k]["floor"], c["baseline"]["median"], c["baseline"]["bytes"]
     if not bm > fv:
         raise ValueError(f"screen defect: {world} {pressure} SURVIVED with baseline median {bm} <= floor {fv}")
@@ -286,6 +296,7 @@ def main(argv=None) -> int:
     c.add_argument("--oracle-unclean", action="store_true")
     c.add_argument("--cheat-did-not-fail", action="store_true")
     c.add_argument("--worlds", help="worlds_r4.json path (default primordial/ledger/qd/worlds_r4.json)")
+    c.add_argument("--readout", help="candidate readout name (primordial.metric.readout; default the legacy top-16)")
     cb = sub.add_parser("check-b", help="clause B (S1, builder H): graft vs both cheats per run seed, Holm")
     cb.add_argument("--rows", nargs="+", required=True, help="transfer harness rows (E-T1b protocol)")
     cb.add_argument("--alpha", type=float, default=0.05)
@@ -320,7 +331,7 @@ def main(argv=None) -> int:
             from primordial.metric import worlds as WR
             doc = WR.load(a.worlds) if a.worlds else WR.load()
             out = check_r4(a.world, a.pressure, a.median, int(a.bytes), a.runs, oracle_clean=not a.oracle_unclean,
-                           cheat_failed=not a.cheat_did_not_fail, held=held, doc=doc)
+                           cheat_failed=not a.cheat_did_not_fail, held=held, doc=doc, readout=a.readout)
         else:
             out = check(rows, a.world, a.pressure, a.median, a.iqr, int(a.bytes), a.runs,
                         oracle_clean=not a.oracle_unclean, held=held)

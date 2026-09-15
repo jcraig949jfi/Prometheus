@@ -102,3 +102,12 @@ def test_job_rows_and_resume(r, tmp_path, monkeypatch):
         x = {k: v for k, v in x.items() if k not in ("qd_wall_s", "elites")}
         return x
     assert [strip(x) for x in ctx.rows] == [strip(x) for x in ref.rows]
+
+
+def test_m2_run_value_is_the_shared_reader_over_its_own_saved_elites(r, tmp_path):
+    """R15-1: the baseline assembly and a candidate re-read go through one function (readout.read)."""
+    from primordial.metric import readout as RO
+    row = B.baseline_run(r, 4, "train8_held64", 0, gens=3, batch=16, elites_dir=tmp_path)
+    again = B.reread(4, row["elites"])
+    assert row["readout"] == again["readout"] == RO.NAME and row["top"] == 1
+    assert row["held64_per_seed"] == again["held64_per_seed"] and row["top_sha256"] == again["top_sha256"]

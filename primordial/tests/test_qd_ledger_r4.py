@@ -129,7 +129,8 @@ def test_check_carries_the_r4_judge_block_for_f12(doc):
              "footprint": {"genome_bytes": 312}, "baseline": True, "status": "record", "source": {"exp_id": "t"}}]
     got = Q.check(rows, "w7", S8, 195.0, 1.0, 200, 8, doc=doc)["clause_a_r4"]
     assert got == {"verdict": "PASS", "why": None, "progress": pytest.approx(0.95), "progress_ci": None, "floor": 100.0,
-                   "baseline_median": 200.0, "baseline_bytes": 312, "variant": "gate_in|HOLD", "screen": "SURVIVED"}
+                   "baseline_median": 200.0, "baseline_bytes": 312, "variant": "gate_in|HOLD", "screen": "SURVIVED",
+                   "readout": "m2_top16"}
     assert got["verdict"] == Q.check_r4("w7", S8, 195.0, 200, 8, doc=doc)["verdict"]
     held = Q.check(rows, "w9", S8, 1e9, 1.0, 0, 8, doc=doc)["clause_a_r4"]
     assert held["verdict"] == "INELIGIBLE" and held["screen"] == "HELD" and held["floor"] == 170.0
@@ -149,3 +150,37 @@ def test_cli_check_defaults_to_r4(doc, tmp_path, capsys):
     assert Q.main(["check", "--world", "w1", "--pressure", S8, "--median", "195", "--bytes", "200", "--runs", "8",
                    "--worlds", str(p)]) == 0
     assert json.loads(capsys.readouterr().out)["why"] == "UNSCREENED"
+
+
+# ---------------------------------------------------------------- operator 15 R15-1: one readout on both sides
+
+def test_readout_mismatch_is_ineligible_on_both_sides(doc, tmp_path, capsys):
+    from primordial.metric import readout as RO
+    assert by_cell(doc, "w7", S8)["baseline"]["readout"] == RO.LEGACY          # a legacy baseline row carries m2_top16
+    assert Q.check_r4("w7", S8, 195.0, 200, 8, doc=doc)["verdict"] == "PASS"   # undeclared candidate == legacy: unchanged
+    assert Q.check_r4("w7", S8, 195.0, 200, 8, doc=doc, readout=RO.LEGACY)["verdict"] == "PASS"
+    mix = Q.check_r4("w7", S8, 195.0, 200, 8, doc=doc, readout=RO.NAME)
+    assert mix["verdict"] == "INELIGIBLE" and mix["why"] == "READOUT_MISMATCH" and mix["floor"] == 100.0
+    top1 = WR.build([WR.cell(suite(7, S8, (100.0, 100.0, 5.0, 60.0), 90.0),
+                             base(7, S8, 200.0, 150.0, 250.0) | {"readout": RO.NAME})], commit="r15")
+    assert by_cell(top1, "w7", S8)["baseline"]["readout"] == RO.NAME
+    assert Q.check_r4("w7", S8, 195.0, 200, 8, doc=top1, readout=RO.NAME)["verdict"] == "PASS"
+    old = Q.check_r4("w7", S8, 195.0, 200, 8, doc=top1)                         # a candidate not re-read is refused
+    assert old["verdict"] == "INELIGIBLE" and old["why"] == "READOUT_MISMATCH" and old["baseline_readout"] == RO.NAME
+    rows = [{"cell": {"representation": "linear", "world": "w7", "pressure": S8, "substrate": "x", "channel": "none"},
+             "mechanism": "linear", "fitness": {"held64_median": 200.0, "iqr": 1.0, "n_runs": 8},
+             "footprint": {"genome_bytes": 312}, "baseline": True, "status": "record", "source": {"exp_id": "t"}}]
+    blk = Q.check(rows, "w7", S8, 195.0, 1.0, 200, 8, doc=top1)["clause_a_r4"]
+    assert blk["verdict"] == "INELIGIBLE" and blk["why"] == "READOUT_MISMATCH" and blk["screen"] == "SURVIVED"
+    assert Q.check(rows, "w7", S8, 195.0, 1.0, 200, 8, doc=top1, readout=RO.NAME)["clause_a_r4"]["verdict"] == "PASS"
+    p = WR.write(top1, tmp_path / "w.json")
+    assert Q.main(["check", "--world", "w7", "--pressure", S8, "--median", "195", "--bytes", "200", "--runs", "8",
+                   "--worlds", str(p), "--readout", RO.NAME]) == 0
+    assert json.loads(capsys.readouterr().out)["verdict"] == "PASS"
+    assert Q.main(["check", "--world", "w7", "--pressure", S8, "--median", "195", "--bytes", "200", "--runs", "8",
+                   "--worlds", str(p)]) == 0
+    assert json.loads(capsys.readouterr().out)["why"] == "READOUT_MISMATCH"
+
+
+def by_cell(doc, world, pressure):
+    return next(c for c in doc["cells"] if c["world"] == world and c["pressure"] == pressure)
