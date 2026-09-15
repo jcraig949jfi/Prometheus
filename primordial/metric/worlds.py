@@ -66,7 +66,8 @@ def _learner_block(summary: dict) -> dict:
 
 
 def _stats(summary: dict) -> dict:
-    return {"n_runs": summary["n_runs"], "families": summary["families"], "n_per_family": summary["n_per_family"],
+    from primordial.metric import sample as SM
+    return {**SM.from_counts(summary["n_per_family"]), "n_runs": summary["n_runs"],
             "readout": summary.get("readout"), "median": summary["invariant_held64_median"]}
 
 
@@ -105,6 +106,9 @@ def cell(suite_row: dict, baseline: dict | None = None, learner: dict | None = N
     for k in ("held64_by_run_seed", "held64_by_run"):          # v1 per run seed; R16 per 'F|rs' run id
         if k in baseline:
             bl[k] = baseline[k]
+    if baseline.get("n_per_family"):                             # G-R5-1: the explicit three fields, top-level in the stamp
+        from primordial.metric import sample as SM
+        bl.update({k: v for k, v in SM.from_counts(baseline["n_per_family"]).items() if k in SM.FIELDS})
     rec.update(stage=2, baseline=bl)
     rec["pending"] = None
     if f["floor_is_bound"] and SC.needs_learner(f["floor"], gate, lo):

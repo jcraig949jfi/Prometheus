@@ -177,7 +177,8 @@ def pooled_stats(runs: list[dict], min_runs: int = R16_MIN_RUNS, min_families: i
                          f">= {min_families} families x {per_family}")
     v = [x["held64_per_seed"] for x in runs]
     lo, hi = median_ci(v)
-    return {"readout": kinds.pop(), "median": float(np.median(v)), "ci95": [lo, hi],
+    from primordial.metric import sample as SM
+    return {**SM.from_counts(per), "readout": kinds.pop(), "median": float(np.median(v)), "ci95": [lo, hi],
             "iqr": float(np.percentile(v, 75) - np.percentile(v, 25)), "n_runs": len(v), "families": fams,
             "n_per_family": per, "held64_by_run": dict(zip(ids, v)),
             "bootstrap": {"fn": "primordial.metric.ci.median_ci", "resamples": N_BOOT, "seed": BOOT_SEED,

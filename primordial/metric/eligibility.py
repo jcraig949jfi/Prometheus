@@ -72,7 +72,8 @@ def eligibility(world: str, pressure: str, doc: dict | None = None) -> dict:
     return {"world": world, "pressure": pressure, "eligible": v["verdict"] == "SURVIVED", "verdict": v["verdict"],
             "cull_reason": v.get("cull_reason"), "variant": k, "floor": v["floor"], "floor_parts": c["floor_parts"],
             "gate_held64": c["gate_held64"],
-            "baseline": {key: b.get(key) for key in ("median", "ci95", "bytes", "readout", "n_runs", "families",
+            "baseline": {key: b.get(key) for key in ("median", "ci95", "bytes", "readout", "runs_total",
+                                                    "rng_family_count", "runs_per_family", "n_runs", "families",
                                                     "n_per_family")},
             "progress_denominator": (b.get("median") - v["floor"]) if b.get("median") is not None else None,
             "scope": doc.get("scope"), "rows_commits": doc.get("rows_commits"), "sources": c.get("sources")}

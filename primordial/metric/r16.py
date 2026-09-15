@@ -86,8 +86,9 @@ def det_check(gen_seed: int, stage1: dict) -> list[dict]:
 
 
 def _stats(s: dict) -> dict:
-    return {k: s[k] for k in ("n_runs", "families", "n_per_family")} | {"readout": s["readout"], "median": s.get(
-        "median", s.get("invariant_held64_median"))}
+    from primordial.metric import sample as SM
+    return {**SM.from_counts(s["n_per_family"]), "n_runs": s["n_runs"], "readout": s["readout"],
+            "median": s.get("median", s.get("invariant_held64_median"))}
 
 
 def floor_row(gs: int, p: str, det: dict, rnd: dict, learner: dict | None) -> dict:

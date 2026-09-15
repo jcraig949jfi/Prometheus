@@ -91,3 +91,22 @@ def test_no_new_receipt_or_round5_table_prints_n_x_m_run_counts():
             continue
         hits += [(q.name, None, h) for h in SM.lint_text(q.read_text(encoding="utf-8"))]
     assert hits == [], f"N x M run counts in new receipts/tables (use runs_total / rng_family_count / runs_per_family): {hits[:10]}"
+
+
+def test_producers_stamp_the_explicit_three_fields_and_hold_the_invariant():
+    """G-R5-1: every new summary / worlds stamp carries runs_total, rng_family_count, runs_per_family."""
+    from primordial.metric import baseline as B
+    from primordial.metric import eligibility as EL
+    from primordial.metric import invariant as I
+    from primordial.metric import r16 as R
+    runs = [{"rng_family": f, "run_seed": i, "held64_per_seed": float(i), "readout": "top1_train", "world": "w1",
+             "gen_seed": 1, "pressure": "p", "genome_bytes": 8, "budget_ok": True, "genomes": 1, "elites": ""}
+            for f in (4200, 2101, 3303, 5501) for i in range(8)]
+    for s in (B.pooled_stats(runs), B.pooled_summary(runs), I.pooled_summary(runs), R._stats(B.pooled_stats(runs))):
+        assert {k: s[k] for k in SM.FIELDS} == {"runs_total": 32, "rng_family_count": 4, "runs_per_family": 8}
+        assert "rng_families" not in s
+        SM.check_invariant(s)
+    e = EL.w13_eligibility()
+    b = e["baseline"]
+    assert (b["runs_total"], b["rng_family_count"], b["runs_per_family"]) == (32, 4, 8)
+    assert b["rng_family_count"] == len(b["families"]) and b["runs_total"] == sum(b["n_per_family"].values())

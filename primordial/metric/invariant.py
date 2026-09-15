@@ -247,8 +247,9 @@ def pooled_summary(runs: list[dict], readout: str | None = None, min_runs: int =
     key = "held64_legacy_top16" if rd == RO.LEGACY else "held64_per_seed"
     v = [float(x[key]) for x in runs]
     x0 = runs[0]
-    return {"kind": "floor_invariant_r16", "world": x0["world"], "gen_seed": x0["gen_seed"], "pressure": x0["pressure"],
-            "readout": rd, "invariant_held64_median": float(np.median(v)),
+    from primordial.metric import sample as SM
+    return {**SM.from_counts(per), "kind": "floor_invariant_r16", "world": x0["world"], "gen_seed": x0["gen_seed"],
+            "pressure": x0["pressure"], "readout": rd, "invariant_held64_median": float(np.median(v)),
             "invariant_held64_iqr": float(np.percentile(v, 75) - np.percentile(v, 25)),
             "n_runs": len(v), "families": fams, "n_per_family": per, "held64_by_run": dict(zip(ids, v)),
             "run_seeds": ids, "budget_ok": all(x["budget_ok"] for x in runs), "genomes": x0["genomes"]}
