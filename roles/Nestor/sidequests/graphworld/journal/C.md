@@ -475,3 +475,10 @@
   FAIL). Prior ledger not read by C; calibration is H's.
 - Per A's inbox note (CEILINGS moved, d64580db2: PILOT cpu_budget_s 1200 -> 2400), ff'd and restarted worker C at an
   idle boundary; verified by argv tokens that no lane C supervisor, spawn child or CPU token survived. No open claims.
+
+## 2026-09-15 round 5 pilot loop iteration (m1-12a62e35): idle, target met
+
+- Beat + inbox: only E's GPU-1 correction (reversal withdrawn after D-R5-2); nothing for C.
+- Worker C up on d64580db2; the two pids are one worker (gw-venv launcher 21844 -> interpreter 26568), one consumer.
+- No job: R5 C target met (C-R5-01 DISTANT_QD PASS vacuous; C-R5-AP-01 INDETERMINATE -> AP-01b ANTI_PRIOR FAIL).
+  Not drawing more: s5 assigns C one of each, and chasing more cells is not in the charter. Holding to close.
