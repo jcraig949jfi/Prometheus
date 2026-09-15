@@ -241,20 +241,29 @@ class Arbiter:
         return self._done({**base, "status": end["status"] if end["status"] != "control" else "ok", "wall_s": end["wall_s"],
                            "rows": len(rows), "timing_rows_valid": n_valid, "lease_lost": lease_stamp["lease_lost"]})
 
-    def serve(self, max_jobs: int | None = None, block_ms: int = 5000, idle_exit_s: float | None = None) -> list:
+    def serve(self, max_jobs: int | None = None, block_ms: int = 5000, idle_exit_s: float | None = None,
+              round_id: str | None = None) -> list:
+        """F-R7-1 contract (A 1789505078796-era ruling): the arbiter registers as lane 'gpu' with tag == its consumer name
+        (PM_TAG), refreshes the registration on every loop turn (block_ms << residue.REG_TTL) and unregisters on exit."""
+        from primordial.ops import residue
         done, idle0 = [], time.monotonic()
         consumer = os.environ.get("PM_TAG", "gpu-arbiter")
-        while max_jobs is None or len(done) < max_jobs:
-            got = self.r.xreadgroup(GROUP, consumer, {QUEUE: ">"}, count=1, block=block_ms)
-            msgs = [m for _, ms in (got or []) for m in ms]
-            if not msgs:
-                if idle_exit_s is not None and time.monotonic() - idle0 > idle_exit_s:
-                    break
-                continue
-            mid, job = msgs[0]
-            done.append(self.run_job(job))
-            self.r.xack(QUEUE, GROUP, mid)
-            idle0 = time.monotonic()
+        reg = residue.register(self.r, residue.GPU_LANE, self.repo, round_id, tag=consumer)
+        try:
+            while max_jobs is None or len(done) < max_jobs:
+                residue.refresh(self.r, reg)
+                got = self.r.xreadgroup(GROUP, consumer, {QUEUE: ">"}, count=1, block=block_ms)
+                msgs = [m for _, ms in (got or []) for m in ms]
+                if not msgs:
+                    if idle_exit_s is not None and time.monotonic() - idle0 > idle_exit_s:
+                        break
+                    continue
+                mid, job = msgs[0]
+                done.append(self.run_job(job))
+                self.r.xack(QUEUE, GROUP, mid)
+                idle0 = time.monotonic()
+        finally:
+            residue.unregister(self.r, reg)
         return done
 
 
