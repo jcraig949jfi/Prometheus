@@ -50,10 +50,10 @@ def test_busy_stale_ok_dead(world):
     snap, calls = world
     slept = []
     t = lv.status(stale_s=600, r=FakeR(workers={"D"}), snap=snap, sleep=slept.append, sample_s=0.7)
-    assert t["B"]["state"] == "BUSY" and t["B"]["tree_cpu_gained_s"] == 2.5
+    assert t["B"]["state"] == "BUSY_COMPUTE" and t["B"]["tree_cpu_gained_s"] == 2.5
     assert t["C"]["state"] == "STALE" and t["C"]["tree_cpu_gained_s"] == 0.0
-    assert t["D"]["state"] == "BUSY" and t["D"]["worker_live"] is True
-    assert t["E"]["state"] == "OK" and t["G"]["state"] == "OK" and t["H"]["state"] == "DEAD"
+    assert t["D"]["state"] == "BUSY_COMPUTE" and t["D"]["worker_live"] is True
+    assert t["E"]["state"] == "ACTIVE" and t["G"]["state"] == "IDLE" and t["H"]["state"] == "DEAD"
     assert slept == [0.7]                                                   # one sample window for all
     assert set(calls) == {101, 102, 103}                                    # only quiet lanes sampled
 
@@ -70,12 +70,18 @@ def test_busy_does_not_post_missing(monkeypatch):
 
     class R:
         def __init__(self):
-            self.kv = {"pm:liveness:B": "OK", "pm:liveness:C": "OK"}
+            self.kv = {"pm:liveness:B": "ACTIVE", "pm:liveness:C": "ACTIVE"}
+
+        def hgetall(self, k):
+            return {"state": "busy", "job_id": "j1"} if k == "pm:worker:C" else {}
+
+        def xpending(self, *a):
+            return {"pending": 0}
 
         def get(self, k):
             return self.kv.get(k)
 
         def set(self, k, v):
             self.kv[k] = v
-    lv.post_changes({"B": {"state": "BUSY"}, "C": {"state": "STALE"}}, R())
+    lv.post_changes({"B": {"state": "BUSY_COMPUTE"}, "C": {"state": "STALE"}}, R())
     assert [a[1] for a in posted] == ["C STALE"]

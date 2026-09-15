@@ -9,12 +9,20 @@ A lane is judged from three sources that need no cooperation from the LLM:
              samples (e.g. a background python run), or a live F7 worker
              state pm:worker:<L>
 
-States: DEAD (exit logged or pid gone); OK (transcript fresh OR heartbeat
-live); BUSY (both quiet, but the tree is doing work); STALE (pid alive, both
-quiet, no activity); NOT_LAUNCHED. On a change into DEAD or STALE the monitor
-posts `missing` on the bus once; BUSY never posts. (Round 2: E was flagged
-STALE at 16:53 during a background run -- transcript 618 s quiet, heartbeat
-lapsed while it waited, and nothing looked at the run itself.)
+States (F-R5-4, operator 19 s4.3), first match wins:
+  DEAD          exit logged or pid gone
+  BUSY_COMPUTE  pm:worker:<L> state busy, or (quiet lane) CPU gained by the session tree over one shared
+                sample window, or a live worker key of unknown state
+  DRAINING      stop flag pm:jobs:<L>:stop set (or pm:epoch:state phase draining) and the worker is
+                stopped or absent -- before STALE, so a draining lane is never paged
+  ACTIVE        transcript written within active_s (120 s)
+  IDLE          heartbeat live, or transcript age <= stale_s: idle never pages
+  STALE         pid alive, transcript older than stale_s (or unknown), no heartbeat, no compute
+  NOT_LAUNCHED  no launch recorded
+The monitor posts `missing` to A only on a change into STALE or DEAD of a lane that HOLDS A JOB
+(pm:worker:<L> job_id non-empty, or pending entries in pm:jobs:<L> group worker-<L>). Round 2: E was
+flagged STALE at 16:53 during a background run -- transcript 618 s quiet, heartbeat lapsed while it
+waited, and nothing looked at the run itself.
 
     python -m primordial.ops.liveness                     # one table
     python -m primordial.ops.liveness --watch 60 --post --export-every-min 10
@@ -99,8 +107,46 @@ def tree_cpu(pid: int) -> dict:
     return out
 
 
+def _wstate(r, lane: str) -> dict | None:
+    """pm:worker:<L> as a dict, {} for a live key whose fields cannot be read, None when absent."""
+    try:
+        if not r.exists(f"pm:worker:{lane}"):
+            return None
+    except Exception:
+        return None
+    try:
+        return dict(r.hgetall(f"pm:worker:{lane}") or {})
+    except Exception:
+        return {}
+
+
+def _draining(r, lane: str) -> bool:
+    try:
+        if r.exists(f"pm:jobs:{lane}:stop"):
+            return True
+    except Exception:
+        pass
+    try:
+        return r.hget("pm:epoch:state", "phase") == "draining"
+    except Exception:
+        return False
+
+
+def holds_job(r, lane: str) -> bool:
+    """A job in the lane's hands: the worker names one, or the lane's job stream has pending entries."""
+    try:
+        if (r.hgetall(f"pm:worker:{lane}") or {}).get("job_id"):
+            return True
+    except Exception:
+        pass
+    try:
+        return int((r.xpending(f"pm:jobs:{lane}", f"worker-{lane}") or {}).get("pending", 0)) > 0
+    except Exception:
+        return False
+
+
 def status(stale_s: float = 600, r=None, sample_s: float = 1.0, min_cpu_s: float = 0.05,
-           snap=tree_cpu, sleep=time.sleep) -> dict:
+           snap=tree_cpu, sleep=time.sleep, active_s: float = 120) -> dict:
     from primordial.bus import bus
     try:
         r = r or bus.conn()
@@ -113,29 +159,35 @@ def status(stale_s: float = 600, r=None, sample_s: float = 1.0, min_cpu_s: float
         age = transcript_age(L.get("session_id"))
         hb = beats.get(lane)
         live_pid = "exit_code" not in L and pid_alive(int(L["pid"]))
+        ws = _wstate(r, lane) if live_pid else None
+        wst = None if ws is None else ws.get("state")
         if not live_pid:
             state = "DEAD"
-        elif (age is None or age > stale_s) and not hb:
+        elif wst == "busy":
+            state = "BUSY_COMPUTE"
+        elif _draining(r, lane) and wst in (None, "stopped"):
+            state = "DRAINING"
+        elif age is not None and age <= active_s:
+            state = "ACTIVE"
+        elif hb or (age is not None and age <= stale_s):
+            state = "IDLE"
+        else:
             state = "STALE"                              # provisional: activity is checked below
             quiet[lane] = int(L["pid"])
-        else:
-            state = "OK"
         table[lane] = dict(state=state, pid=L["pid"], session_id=L.get("session_id"),
                            up_s=round(now - _ts(L["start"])), transcript_age_s=None if age is None else round(age),
-                           heartbeat_tag=(hb or {}).get("tag"), exit_code=L.get("exit_code"))
+                           heartbeat_tag=(hb or {}).get("tag"), exit_code=L.get("exit_code"), worker_state=wst)
     if quiet:
         before = {lane: snap(pid) for lane, pid in quiet.items()}
         sleep(sample_s)
         for lane, pid in quiet.items():
             after = snap(pid)
             gained = sum(max(0.0, c - before[lane].get(k, 0.0)) for k, c in after.items())
-            try:
-                worker = bool(r.exists(f"pm:worker:{lane}"))
-            except Exception:
-                worker = False
+            ws = _wstate(r, lane)
+            worker = ws is not None and ws.get("state") not in ("idle", "stopped")
             if gained >= min_cpu_s or worker:
-                table[lane]["state"] = "BUSY"
-            table[lane].update(tree_cpu_gained_s=round(gained, 3), worker_live=worker)
+                table[lane]["state"] = "BUSY_COMPUTE"
+            table[lane].update(tree_cpu_gained_s=round(gained, 3), worker_live=ws is not None)
     for lane in LANES:
         table.setdefault(lane, {"state": "NOT_LAUNCHED"})
     return table
@@ -149,16 +201,20 @@ def print_table(t: dict) -> None:
               f"exit={s.get('exit_code')} session={s.get('session_id')}")
 
 
-def post_changes(t: dict, r) -> None:
+def post_changes(t: dict, r) -> list[str]:
+    """Record each lane's state; page A only on a change into STALE or DEAD of a lane holding a job. -> paged."""
     from primordial.bus import bus
     os.environ.setdefault("PM_LANE", "A")
+    paged = []
     for lane, s in t.items():
         key = f"pm:liveness:{lane}"
         prev = r.get(key)
         if s["state"] != prev:
             r.set(key, s["state"])
-            if s["state"] in ("DEAD", "STALE") and prev is not None:
+            if s["state"] in ("DEAD", "STALE") and prev is not None and holds_job(r, lane):
                 bus.post("missing", f"{lane} {s['state']}", json.dumps(s), to="A", r=r)
+                paged.append(lane)
+    return paged
 
 
 def reap(lane: str, yes: bool) -> int:
