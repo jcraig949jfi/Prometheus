@@ -1,18 +1,24 @@
 """H-R5-2 (round 5 P-BUILD, builder H): the SEALED ANTI-PRIOR LEDGER (prompt 19 s10-11, SWARM_R5 O5).
 
-A predictor (a separate session, never the experimenter) posts a prior per candidate cell BEFORE assignment.
-Code then assigns falsification attempts among the confident expected failures; the experimenter receives
-only the cell and cannot read the prior until its receipt is filed. Priors never enter scientific scoring.
+A predictor (lane R, a separate session, never the experimenter) posts a prior per candidate cell BEFORE
+assignment. Code publishes the candidate cells, so the predictor never chooses them (A 1789469025336-0). Code then
+assigns falsification attempts among the confident expected failures; the experimenter receives only the cell and
+cannot read the prior until its receipt is filed. Priors never enter scientific scoring.
 
+  candidates(store, seed, n)                code-published candidate list: a seeded PCG64 draw of n distinct cells
+                                            from primordial.ops.draw_cell.axes() (the survivor-restricted grid C's
+                                            DISTANT_QD draw uses), written ONCE to pm:prior:candidates {seed, ts, n,
+                                            grid_cells, cells}. A second call refuses (CANDIDATES_ALREADY_PUBLISHED).
   seal(store, prediction, writer_role)      predictor-only write, once per prediction_id; fields
                                             prior_p_pass in [0, 1], prior_expected_direction,
                                             prior_expected_mechanism, predictor_id, prediction_ts, cell.
                                             A sha256 commitment of the canonical record is stored beside it,
                                             so a changed prior is detectable (verify()).
-  assign(store, exp_id, seed, now, k=1)     code assignment: among predictions with prior_p_pass <= P_MAX (0.2)
-                                            and prediction_ts < now, a seeded PCG64 draw of k in prediction_id
-                                            order. -> {exp_id, cell} only. A prediction made at or after the
-                                            assignment time is never eligible (PREDICTION_NOT_BEFORE_ASSIGNMENT).
+  assign(store, exp_id, seed, now, k=1)     code assignment: among predictions on a PUBLISHED candidate cell with
+                                            prior_p_pass <= P_MAX (0.2) and prediction_ts < now, a seeded PCG64 draw
+                                            of k in prediction_id order. -> {exp_id, cell} only. No published list:
+                                            CANDIDATES_NOT_PUBLISHED. A prediction made at or after the assignment
+                                            time is never eligible (PREDICTION_NOT_BEFORE_ASSIGNMENT).
   read(store, prediction_id, reader_role, receipt_filed)
                                             predictor and conductor may read; the experimenter is denied
                                             (EXPERIMENTER_READ_DENIED) until receipt_filed(exp_id) is true for the
@@ -21,8 +27,8 @@ only the cell and cannot read the prior until its receipt is filed. Priors never
                                             observed PASS rate, Brier. No inference from small N (19 s11).
 
 Sealing is enforced by this API (the only reader the experimenter is given), plus the commitment for tamper
-evidence. It is not cryptographic against a session that reads Redis keys directly: that is a
-PRODUCTION_CANDIDATE note, not a SMOKE-stage requirement.
+evidence. It is not cryptographic against a session that reads Redis keys directly: accepted for the pilot
+(A 1789469025336-0, prompt ban on C reading pm:prior:*), recorded as a PRODUCTION_CANDIDATE.
 
 Store: any object with hget/hset/hgetall/hsetnx (redis.Redis with decode_responses=True).
 """
@@ -30,16 +36,20 @@ from __future__ import annotations
 
 import hashlib
 import json
+import time
 
 import numpy as np
 
 SEALED = "pm:prior:sealed"            # prediction_id -> canonical json
 COMMIT = "pm:prior:commit"            # prediction_id -> sha256(canonical json)
 ASSIGN = "pm:prior:assign"            # exp_id -> json {prediction_id, cell, assignment_ts, seed}
+CANDIDATES = "pm:prior:candidates"    # field "record" -> json {seed, ts, n, grid_cells, cells}
 FIELDS = ("prior_p_pass", "prior_expected_direction", "prior_expected_mechanism", "predictor_id", "prediction_ts")
 P_MAX = 0.2                           # SWARM_R5 O5: high-confidence expected failures
+N_CANDIDATES = 12
 ROLES = ("predictor", "experimenter", "conductor")
 BUCKETS = (0.0, 0.1, 0.2, 0.4, 0.6, 0.8, 1.0)
+_FROM_FILE = object()
 
 
 class PriorLedgerError(PermissionError):
@@ -48,8 +58,41 @@ class PriorLedgerError(PermissionError):
         self.reason, self.detail = reason, detail
 
 
-def _canon(rec: dict) -> str:
+def _canon(rec) -> str:
     return json.dumps(rec, sort_keys=True, separators=(",", ":"))
+
+
+def cell_key(cell) -> str:
+    """Canonical identity of a cell (a draw_cell dict, or any JSON value) for list membership."""
+    return _canon(cell)
+
+
+def candidates(store, seed: int, n: int = N_CANDIDATES, now: float | None = None, grid: dict | None = None,
+               doc=_FROM_FILE) -> dict:
+    """Publish the candidate cell list once, by seeded draw over the draw grid. The predictor never chooses cells."""
+    if store.hget(CANDIDATES, "record") is not None:
+        raise PriorLedgerError("CANDIDATES_ALREADY_PUBLISHED", "the candidate list is drawn once per round")
+    if grid is None:
+        from primordial.ops import draw_cell as DC
+        grid = DC.axes() if doc is _FROM_FILE else DC.axes(doc)
+    names = list(grid)
+    sizes = [len(grid[k]) for k in names]
+    n_cells = int(np.prod(sizes))
+    if n_cells == 0:
+        raise PriorLedgerError("EMPTY_GRID", "the draw grid has no cells")
+    rng = np.random.Generator(np.random.PCG64(int(seed)))
+    flats = sorted(rng.choice(n_cells, size=min(int(n), n_cells), replace=False).tolist())
+    cells = [{k: grid[k][int(i)] for k, i in zip(names, np.unravel_index(f, sizes))} for f in flats]
+    record = {"seed": int(seed), "ts": round(time.time() if now is None else float(now), 3), "n": len(cells),
+              "grid_cells": n_cells, "cells": cells}
+    if not store.hsetnx(CANDIDATES, "record", _canon(record)):
+        raise PriorLedgerError("CANDIDATES_ALREADY_PUBLISHED", "the candidate list is drawn once per round")
+    return record
+
+
+def published(store) -> dict | None:
+    body = store.hget(CANDIDATES, "record")
+    return None if body is None else json.loads(body)
 
 
 def seal(store, prediction: dict, writer_role: str, experimenter_ids=()) -> str:
@@ -85,13 +128,18 @@ def _all(store) -> list[dict]:
 
 
 def assign(store, exp_id: str, seed: int, now: float, k: int = 1, p_max: float = P_MAX) -> list[dict]:
-    """Seeded draw among confident expected failures predicted before `now`. The caller gets cells only."""
+    """Seeded draw among confident expected failures on published candidate cells, predicted before `now`.
+    The caller gets cells only."""
     if store.hget(ASSIGN, exp_id) is not None:
         raise PriorLedgerError("ALREADY_ASSIGNED", exp_id)
+    pub = published(store)
+    if pub is None:
+        raise PriorLedgerError("CANDIDATES_NOT_PUBLISHED", "publish the candidate cells (candidates()) first")
+    listed = {cell_key(c) for c in pub["cells"]}
     taken = {json.loads(v)["prediction_id"] for v in store.hgetall(ASSIGN).values()}
     pool = [p for p in _all(store)
             if p["prior_p_pass"] <= p_max and p["prediction_ts"] < now and p["prediction_id"] not in taken
-            and verify(store, p["prediction_id"])]
+            and cell_key(p["cell"]) in listed and verify(store, p["prediction_id"])]
     if not pool:
         return []
     rng = np.random.Generator(np.random.PCG64(int(seed)))

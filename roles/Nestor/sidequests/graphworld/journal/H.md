@@ -471,5 +471,35 @@ budget 1789425755152-0).
     than crashing bus.receipt (tested).
   - The test Clock fake is built from round_clock.plan (end = start + 7200).
   - Suite 365 passed, 2 skipped, pytest rc 0 (06:41).
+- The first push of the clock delegation was REJECTED non-fast-forward (push_rc 1). ops.push had
+  rebased onto a tip that moved again before the push landed.
+  - The new base carried G-R5-1..4 (CANDIDATE_N live in qd_ledger.check), A's lane R (predictor)
+    in LANES, and F's admission horizon at drain_ts (reason code name unchanged).
+  - Suite on the rebased local HEAD f72d8e300: 380 passed, 1 skipped, pytest rc 0. The PILOT
+    agreement test ran for the first time and passed: F12's CANDIDATE_N mirror agrees with G's
+    live judge.
+  - Retry pushed edc1ad323 (rebased onto A prompts_r5 C/R and F's journal only).
+
+## 2026-09-15 06:46, A ask 1789469025336-0: code-published candidate cells (anti_prior.candidates)
+
+- A accepted anti_prior.py but flagged a gap: without a code-produced cell list, the predictor
+  (lane R) chooses the cells, which is the prior injection O5 removes.
+- Code:
+  - candidates(store, seed, n=12, now, grid|doc): a seeded PCG64 draw of n distinct flat indices
+    over primordial.ops.draw_cell.axes(), the survivor-restricted grid C's DISTANT_QD draw uses.
+    Cells are built exactly as draw_cell.draw builds them.
+  - The list is written ONCE to pm:prior:candidates {seed, ts, n, grid_cells, cells} via hsetnx; a
+    second call is refused CANDIDATES_ALREADY_PUBLISHED, never redrawn. published() reads it back.
+  - assign(): CANDIDATES_NOT_PUBLISHED when no list exists, and only predictions whose
+    cell_key(cell) is on the published list are drawn.
+  - The docstring records A's acceptance of the API-level seal for the pilot (prompt ban on C
+    reading pm:prior:*) as a PRODUCTION_CANDIDATE.
+- Tests: test_score_anti_prior.py rewritten.
+  - Cells are dicts published through a 6-cell injected grid, so every earlier case tests the
+    same thing.
+  - A's three: deterministic by seed and distinct; a redraw is refused and the published list is
+    unchanged; assign ignores a prediction on an unlisted cell.
+  - Also: assign before publish is refused; the default grid is draw_cell.axes (no screen doc
+    gives non-graphworld worlds only, grid size from AXES).
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
