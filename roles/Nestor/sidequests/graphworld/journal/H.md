@@ -193,3 +193,48 @@ budget 1789425755152-0).
 - r2 progress output unchanged after G's check change (B raw_pass 25, BELOW_FLOOR 28).
 - Tests: test_score_clause_a_r4.py 22. Suite 198 passed, 1 skipped, pytest rc 0.
 - H-R4-3 still waits for "G P0 DONE".
+
+## 2026-09-15 P0 iteration 4: H-R4-3 independent screen replay (0 mismatches)
+
+- Trigger: conductor Nestor-A cross-session order to start H-R4-3 now. worlds_r4.json committed at
+  ee86620f4 (file commit da8c5312a); G PASS receipts G-R4-3/4/5 mirrored at 45c46442f. ff-merged to
+  45c46442f; claim H-R4-3-screen-replay.
+- G fixed my two H-R4-2 defects before the file (1789442491847-0): PENDING screen label, and
+  worlds.PENDING = 'PENDING'.
+- Code: primordial/score/screen_replay.py.
+  - Imports nothing from G's metric screen/worlds/suite/baseline/invariant/screen_run.
+  - Numbers come from the lowest committed rows, never from the file or G's aggregates:
+    - suite_cheap floors: abstain, best_fixed, and the median of the 8 random policy seeds;
+      gate.gate_held64.
+    - Learner: run rows without `family`, grouped by the cell's own (gen_seed, pressure), median
+      over >= 8 run seeds.
+    - Baseline: family=linear run rows, median, and median_ci in run-seed order (PCG64
+      20260914), bytes.
+  - Rules re-implemented from SWARM_R4 s2/s3/s7, operator message 13 and A's rulings: variant
+    floors, HELD, cull_reason, bound exactness (re-judged at a larger floor), PENDING survivable
+    vs non-survivable, and the 8-survivor stop in gate-headroom order.
+  - The comparison covers every field of every cell under all four variants, plus the active
+    pair and max_survivors.
+- Result on the committed rows vs the committed file: PASS, 0 mismatches, 0 row defects, 74 cells
+  (all stage 2).
+  - gate_in|HOLD: SURVIVED 1 (w13 train128), HELD 5 (w7 t8, w1 t8, w1 t128, w34 t8, w13 t8),
+    PENDING 4, CULLED 64. NOT_REACHED 0 in every variant.
+  - PENDING non-survivability is exact from rows (ci95[0] <= the pressure's own bound):
+      w7 t128   161.45 <= 189.19   w26 t128  188.51 <= 227.39
+      w34 t128  155.26 <= 273.33   w10 t128   11.57 <=  22.30
+  - Row written: primordial/ledger/rows/H/H-R4-3-screen-replay.jsonl.
+- Tests (test_score_screen_replay.py, 11):
+  - Rules on 6 planted cells.
+  - G's own assembler (screen_run.assemble + worlds.build) on the same synthetic rows gives 0
+    mismatches at max_survivors 8 and 1.
+  - The stop marks later survivors NOT_REACHED.
+  - Four tampered fields are each caught by name.
+  - Row defects: a duplicate run seed with two values, and 7 run seeds.
+  - A written survivable PENDING cell is a mismatch.
+  - The committed screen replays with 0 mismatches.
+- Suite 209 passed, 1 skipped, pytest rc 0.
+- F12 on the real file (H-R4-2 end to end):
+  - `progress --round r4 --since <round 4 plan ts>`: no cohort cells yet, scored 0.
+  - All-time window: round 2 B cells read INELIGIBLE(CULLED) 19 and INELIGIBLE(HELD) 9. C reads
+    INELIGIBLE(UNSCREENED) 4 (non-graphworld domains). 0 mismatches, 0 scored.
+- H P0 DONE: H-R4-1 (490601595), H-R4-2 (a97934437, 519103e45), H-R4-3 (this push).
