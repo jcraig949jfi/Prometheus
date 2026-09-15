@@ -101,16 +101,24 @@ def test_cell_job_smoke_tiny_budget_rows_and_resume(r, tmp_path, monkeypatch):
     monkeypatch.setattr(B, "PAUSE_EVERY", 2)
     monkeypatch.setattr(I, "PAUSE_EVERY", 2)
     empty = tmp_path / "none.jsonl"
+    import redis as _redis
+    from primordial.metric import replication as RP
+    pub = _redis.Redis.from_url(live_url(), decode_responses=True)       # the worker Ctx has .r; the test Ctx does not
+    monkeypatch.setattr(RP, "STREAM", "pm:test:g-r6-smoke-repl")         # never the real replication stream
+    monkeypatch.setattr(RP, "PUBLISHED", "pm:test:g-r6-smoke-repl:published:{}|{}")
+    monkeypatch.setattr(RC, "EVENTS", "pm:test:g-r6-smoke-events")
     kw = dict(gen_seed=3, pressure="train8_held64", families=(4200, 2101), run_seeds=(0, 1), gens=3, batch=8,
               learner_gens=3, learner_batch=8, base_archive=live_url(), learn_archive=live_url(),
-              base_elites=str(tmp_path / "b"), learn_elites=str(tmp_path / "l"), prefill_paths=(empty,))
+              base_elites=str(tmp_path / "b"), learn_elites=str(tmp_path / "l"), prefill_paths=(empty,),
+              replication_r=pub)
     monkeypatch.setattr(RC.R, "ROWS", {**RC.R.ROWS, "baseline": str(empty)})
     ref = Ctx()
     RC.cell_job(ref, **kw)
     kinds = [x["kind"] for x in ref.rows]
-    assert kinds[:2] == ["r16_det", "r16_random"] and kinds[-1] == "r16_cell"
+    assert kinds[:2] == ["r16_det", "r16_random"] and kinds[-2:] == ["r16_cell", "replication_check"]   # G-R6-3: trigger last
     assert kinds.count("run") == 8 and "floor_suite_r16" in kinds and "baseline_r16" in kinds
-    cell = ref.rows[-1]
+    cell = ref.rows[-2]
+    assert ref.rows[-1]["published"] == [] and ref.rows[-1]["refused"] is None        # only the origin w13 t128 survives
     assert cell["status_cell"] == "complete" and cell["job_key"] == "g-r16-cell-w3-train8_held64"
     ctx = Ctx(pause_after=3)
     with pytest.raises(RuntimeError):
@@ -120,3 +128,97 @@ def test_cell_job_smoke_tiny_budget_rows_and_resume(r, tmp_path, monkeypatch):
     vol = ("qd_wall_s", "elites", "wall_s", "oracle_held8", "gate", "ts", "search_cpu_s", "search_wall_s")
     strip = lambda x: {k: v for k, v in x.items() if k not in vol}
     assert [strip(x) for x in ctx.rows] == [strip(x) for x in ref.rows]
+
+
+# ---------------------------------------------------------------- G-R6-3 wiring: cell_job calls the replication trigger
+
+@pytest.fixture
+def rs(monkeypatch):
+    """A decode_responses client with the replication and event streams moved to test keys."""
+    redis = pytest.importorskip("redis")
+    from primordial.metric import replication as RP
+    c = redis.Redis.from_url(live_url(), decode_responses=True)
+    try:
+        c.ping()
+    except Exception:
+        pytest.skip("substrate not reachable")
+    monkeypatch.setattr(RP, "STREAM", "pm:test:g-r6-repl")
+    monkeypatch.setattr(RP, "PUBLISHED", "pm:test:g-r6-repl:published:{}|{}")
+    monkeypatch.setattr(RC, "EVENTS", "pm:test:g-r6-events")
+    keys = lambda: list(c.scan_iter("pm:test:g-r6-*", count=1000)) + list(c.scan_iter("pm:qd:g-r16-*", count=5000))
+    for k in keys():
+        c.delete(k)
+    yield c
+    for k in keys():
+        c.delete(k)
+
+
+def _smoke_kw(tmp_path, rs):
+    empty = tmp_path / "none.jsonl"
+    return dict(gen_seed=3, pressure="train8_held64", families=(4200, 2101), run_seeds=(0, 1), gens=3, batch=8,
+                learner_gens=3, learner_batch=8, base_archive=live_url(), learn_archive=live_url(),
+                base_elites=str(tmp_path / "b"), learn_elites=str(tmp_path / "l"), prefill_paths=(empty,),
+                replication_r=rs), empty
+
+
+def test_cell_job_publishes_a_planted_survivor_exactly_once_and_a_rerun_publishes_none(rs, tmp_path, monkeypatch):
+    from primordial.metric import replication as RP
+    kw, empty = _smoke_kw(tmp_path, rs)
+    monkeypatch.setattr(RC.R, "ROWS", {**RC.R.ROWS, "baseline": str(empty)})
+    seen = {}
+    real = RC.partial_v2
+
+    def planted(**k):
+        seen["extra_kinds"] = sorted(x.get("kind") for x in k.get("extra_rows", ()))
+        doc = real(**k)
+        for c in doc["cells"]:
+            if (c["gen_seed"], c["pressure"]) == (4, "train8_held64"):                 # the planted new survivor
+                c["verdicts"] = {SC.vkey(*v): {"verdict": "SURVIVED", "cull_reason": None, "floor": 1.0} for v in SC.VARIANTS}
+        return doc
+    monkeypatch.setattr(RC, "partial_v2", planted)
+    first = Ctx()
+    RC.cell_job(first, **kw)
+    assert seen["extra_kinds"] == ["baseline_r16", "floor_suite_r16"]                      # the job's own rows are in the doc
+    chk = [x for x in first.rows if x["kind"] == "replication_check"]
+    assert len(chk) == 1 and chk[0]["published"] == [{"world": "w4", "pressure": "train8_held64", "gen_seed": 4}]
+    assert first.rows[-1]["kind"] == "replication_check"                                  # the last step of the job
+    recs = RP.records(rs)
+    assert len(recs) == 1 and recs[0]["source"] == "r16_cell_job" and recs[0]["recipe"]["id"] == "B-R5-1"
+    again = Ctx()
+    RC.cell_job(again, **kw)
+    chk2 = [x for x in again.rows if x["kind"] == "replication_check"]
+    assert len(chk2) == 1 and chk2[0]["published"] == [] and len(RP.records(rs)) == 1        # rerun: nothing new
+
+
+def test_cell_job_refuses_to_publish_when_the_recipe_code_changed(rs, tmp_path, monkeypatch):
+    from primordial.metric import replication as RP
+    kw, empty = _smoke_kw(tmp_path, rs)
+    monkeypatch.setattr(RC.R, "ROWS", {**RC.R.ROWS, "baseline": str(empty)})
+    monkeypatch.setattr(RP, "frozen_code_intact", lambda root=None: False)
+
+    def planted(**k):
+        doc = RC.WR.build([], commit="", max_survivors=None, schema=RC.WR.SCHEMA_V2)
+        doc["cells"] = [{"world": "w4", "pressure": "train8_held64", "gen_seed": 4,
+                         "verdicts": {SC.vkey(*v): {"verdict": "SURVIVED"} for v in SC.VARIANTS}}]
+        return doc
+    monkeypatch.setattr(RC, "partial_v2", planted)
+    ctx = Ctx()
+    RC.cell_job(ctx, **kw)
+    chk = [x for x in ctx.rows if x["kind"] == "replication_check"][0]
+    assert chk["refused"] == RC.RECIPE_CHANGED and chk["published"] == []
+    assert RP.records(rs) == []
+    ev = rs.xrange("pm:test:g-r6-events")
+    assert len(ev) == 1 and ev[0][1]["event"] == "REPLICATION_RECIPE_CHANGED"
+    assert json.loads(ev[0][1]["json"])["frozen_code_sha"] == "c2e9b5ec3"
+
+
+def test_partial_v2_merges_extra_rows_over_committed_rows():
+    doc = RC.partial_v2()
+    assert doc["coverage"]["complete"] == 1
+    fl = [x for x in RC.R._rows(RC.R.ROWS["floors"]) if x.get("kind") == "floor_suite_r16" and x["gen_seed"] == 13
+          and x["pressure"] == "train128_held64"][-1]
+    base = {**[x for x in RC.R._rows(RC.R.ROWS["baseline"]) if x.get("kind") == "baseline_r16" and x["gen_seed"] == 13][-1]}
+    planted_fl = {**fl, "gen_seed": 99, "world": "w99"}
+    planted_base = {**base, "gen_seed": 99, "world": "w99"}
+    with_extra = RC.partial_v2(extra_rows=[planted_fl, planted_base])                      # w99 is not a stage 1 cell
+    assert with_extra["coverage"] == doc["coverage"]                                        # only stage 1 cells are listed

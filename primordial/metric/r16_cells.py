@@ -25,6 +25,14 @@ runs_per_family 8, read top1_train, verdict under gate_in|HOLD. Round 6 changes 
        PRODUCTION_CANDIDATE is filed with the estimate (SWARM_R6 s2), never run;
     7. an r16_cell row with the cell's status.
   The partial worlds_r4/v2 (partial_v2) records every cell that is not complete as UNSCREENED -- never CULLED.
+
+  REPLICATION TRIGGER (G-R6-3, SWARM_R6 s6: code calls it, A never relays): the LAST step of every cell_job, after
+  its r16_cell row, calls replication.publish_new_survivors(r, partial_v2(extra_rows=this job's rows),
+  source='r16_cell_job'). Inside the F7 worker a job's rows reach the rows file only after the job returns, so the
+  job's own floor / baseline / learner rows are merged over the committed rows: a new survivor publishes from its own
+  job (idempotent per cell key; every later job re-reads all committed cells too). Guarded by
+  replication.frozen_code_intact(): if B-R5-1's frozen code changed, nothing is published and one
+  REPLICATION_RECIPE_CHANGED event goes to pm:events. Either way a replication_check row records the outcome.
 """
 from __future__ import annotations
 
@@ -55,6 +63,8 @@ LEARN8_WALL_PER_RUN_TS = 0.0424
 CPU_PER_WALL = 11231.83 / 2302.53
 LEARN128_CPU_PER_TS_32RUNS = 12030.94 / 32
 CPU_BUDGET_S = 14400.0                      # SWARM_R6 s2 PRODUCTION cpu_budget_s per job
+EVENTS = "pm:events"                        # F's event stream (envelope.EVENTS)
+RECIPE_CHANGED = "REPLICATION_RECIPE_CHANGED"
 
 
 def ts_of(gen_seed: int) -> int:
@@ -151,10 +161,27 @@ def _file_candidate(ctx, stub: dict) -> dict:
         return {"stub_id": None, "filing": {"ok": False, "reason": f"FILE_FAILED:{type(e).__name__}"}}
 
 
+def replication_check(ctx, extra_rows, r=None, source: str = "r16_cell_job") -> dict:
+    """G-R6-3 wiring: publish new SURVIVED cells (frozen B-R5-1 recipe) from the partial eligibility doc = committed
+    R16 rows + this job's rows. Refuses (event, no record) if the recipe's frozen code changed."""
+    from primordial.metric import replication as RP
+    r = ctx.r if r is None else r
+    if not RP.frozen_code_intact():
+        ev = {"event": RECIPE_CHANGED, "lane": "G", "source": source, "recipe": RP.RECIPE_ID,
+              "frozen_code_sha": RP.RECIPE_CODE_SHA, "files": list(RP.RECIPE_FILES)}
+        eid = r.xadd(EVENTS, {"event": RECIPE_CHANGED, "json": json.dumps(ev, sort_keys=True)})
+        out = {"published": [], "refused": RECIPE_CHANGED, "event_id": eid}
+    else:
+        recs = RP.publish_new_survivors(r, partial_v2(extra_rows=extra_rows), source=source)
+        out = {"published": [x["cell"] for x in recs], "stream_ids": [x.get("stream_id") for x in recs], "refused": None}
+    ctx.emit({"kind": "replication_check", "source": source, **out, "status": "control"})
+    return out
+
+
 def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS, gens=None, batch=None,
              learner_gens=None, learner_batch=None, base_archive=B.ARCHIVE_URL, learn_archive=I.ARCHIVE_URL,
              base_elites=str(R.ELITES_BASE), learn_elites=str(R.ELITES_LEARN), stage1_rows=R.STAGE1,
-             prefill_paths=None, cpu_budget_s=CPU_BUDGET_S):
+             prefill_paths=None, cpu_budget_s=CPU_BUDGET_S, replication_r=None):
     import redis
     gs, p = int(gen_seed), str(pressure)
     rb, rl = redis.Redis.from_url(base_archive), redis.Redis.from_url(learn_archive)
@@ -221,6 +248,7 @@ def cell_job(ctx, gen_seed, pressure, families=R.FAMILIES, run_seeds=R.RUN_SEEDS
               "status_cell": status, "production_candidate": pc, "pending": rec.get("pending"),
               "verdicts": rec["verdicts"], "floor": rec["floor"], "gate_held64": rec["gate_held64"],
               "baseline_ci95": base["ci95"], "prefilled_runs": st.get("prefilled", 0), "status": "control"})
+    replication_check(ctx, [fl, base] + ([learner128] if learner128 is not None else []), r=replication_r)
 
 
 def envelope_for(gen_seed: int, pressure: str, runs: int = 32) -> dict:
@@ -243,12 +271,15 @@ def plan_jobs(order_doc: dict) -> list[dict]:
     return out
 
 
-def partial_v2(cell_rows=ROWS, floors=R.ROWS["floors"], baseline=R.ROWS["baseline"], learner128=R.ROWS["learner128"]) -> dict:
-    """worlds_r4/v2 over ALL stage 1 cells: complete cells from R16 rows (legacy R16 files + per-cell rows); every other
-    cell is recorded UNSCREENED under every variant -- never CULLED, never NOT_REACHED."""
-    frows = R._rows(floors) + R._rows(cell_rows)
-    brows = R._rows(baseline) + R._rows(cell_rows)
-    lrows = R._rows(learner128) + R._rows(cell_rows)
+def partial_v2(cell_rows=ROWS, floors=R.ROWS["floors"], baseline=R.ROWS["baseline"], learner128=R.ROWS["learner128"],
+               extra_rows=()) -> dict:
+    """worlds_r4/v2 over ALL stage 1 cells: complete cells from R16 rows (legacy R16 files + per-cell rows + extra_rows,
+    i.e. a running job's own rows not yet committed); every other cell is recorded UNSCREENED under every variant --
+    never CULLED, never NOT_REACHED."""
+    extra = list(extra_rows)
+    frows = R._rows(floors) + R._rows(cell_rows) + extra
+    brows = R._rows(baseline) + R._rows(cell_rows) + extra
+    lrows = R._rows(learner128) + R._rows(cell_rows) + extra
     fl = {(int(x["gen_seed"]), x["pressure"]): x for x in frows if x.get("kind") == "floor_suite_r16"}
     base = {(int(x["gen_seed"]), x["pressure"]): x for x in brows if x.get("kind") == "baseline_r16"}
     lrn = {(int(x["gen_seed"]), x["pressure"]): x for x in lrows
