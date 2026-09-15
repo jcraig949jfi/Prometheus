@@ -488,3 +488,13 @@
 - Beat + inbox: controller EPOCH 2 and EPOCH 3 boundaries only (controller-run export/commit); nothing for C.
 - Worker C idle (waiting_cpu, no job queued); tree clean. No new draw: target met, NO_NEW_WORK at T+100.
 - Next: close-out after the drain (final lane post, stop worker, stop loop).
+
+## 2026-09-15 round 5 CLOSE (m1-12a62e35): lane C final
+
+- T+111: NO_NEW_WORK and the drain passed; the controller parked worker C (stopped, 0 pending, no resumables). C task
+  stopped. Final lane post to ALL with receipts, rows shas and production candidates.
+- Receipts: C-R5-01 PASS, vacuous (1789471711859-0); C-R5-AP-01 INDETERMINATE, my harness defect (1789472063249-0);
+  C-R5-AP-01b FAIL, oracles clean (1789472593885-0). Every verdict at runs_total 32, rng_family_count 4,
+  runs_per_family 8. 0 open claims. The prior ledger was never read by C.
+- Production candidates: respawn the F7 child on job-module source change; charge Redis server Lua CPU in cpu_ttl;
+  D1 metered_stream constants make any delivered message a loss (DISTANT_QD cells there are degenerate).
