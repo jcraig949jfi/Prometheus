@@ -349,6 +349,13 @@ def receipt(rec: dict, board: dict | None = None, r=None) -> str:
         problems = guard_git(rec)
         if problems:
             raise ReceiptError("receipt guard: " + "; ".join(problems))
+        if rec.get("campaign_stage") is not None:          # round 5 receipt: H-R5-1 automatic guard (19 s4.4)
+            from primordial.score import receipt_guard as RG
+            out = RG.guard(rec, rec.get("envelope") or RG.envelope_of_job(lane, rec.get("job_id"), r=r or conn()))
+            if not out["accepted"]:
+                post("note", f"RECEIPT_REFUSED {rec.get('exp_id')}: {sorted({x['reason'] for x in out['refusals']})}",
+                     json.dumps(out, default=str), to=f"{lane},A", r=r)
+                raise ReceiptError("receipt guard: " + json.dumps(out["refusals"], default=str))
     r = r or conn()
     eng = dict(rec["engineering"])
     eng.setdefault("host_load", host_load(r))

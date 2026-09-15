@@ -286,5 +286,65 @@ budget 1789425755152-0).
     the replay itself rather than imported from G. v1 rows come first; unlisted families
     follow by id.
   - Test: rows written 3303-first give exactly median_ci over the s9 order.
+- Push:
+  - The first ops.push was refused (exit 4) on a rebase conflict in test_score_clause_a_r4.py.
+    E's per-family commit c0a1404b4 had added the same n_per_family 8x4 fixture line.
+  - Rebased by hand, taking my commit's version, and verified both of E's lines are kept (no
+    conflict markers).
+  - With qd_ledger.BASELINE_MIN_PER_FAMILY present, the 3 per-family cross-checks run instead
+    of skipping: the real judge agrees on all 6 BASELINE_N cases.
+  - Suite on the rebased tip: 245 passed, 1 skipped, pytest rc 0. Committed v1 replay still
+    PASS, 0 mismatches.
+  - Pushed e26668c8b as a fast-forward (no rebase during the push).
+
+# Round 5 P-BUILD (SWARM_R5 s3 H-R5-1..4; overrides O5, O8; SMOKE stage, hard cap 2 h)
+
+## 2026-09-15 06:13 start, item 1: H-R5-1 automatic receipt guard
+
+- Trigger: Nestor-A cross-session order. ff-merged to 130848210 and read prompts_bld_r5/H.md,
+  SWARM_R5.md, and prompt 19 s2/s3/s4.4/s8/s11/s12. Cap 08:13; "H BUILD STATUS" due 07:58.
+- Coordination (before coding), H ask 1789467218102-0:
+  - A 1789467242979-0: names match; campaign_stage has 4 values, SMOKE|PILOT|PRODUCTION|REPLICATION.
+  - F 1789467306628-0: envelope is the JSON field `envelope` on the job spec in pm:jobs:<L>;
+    admit() reason codes; pm:events; pm:resumable.
+  - G: CANDIDATE_N payload and order; it also refuses any n_per_family < 8.
+  - A 1789467299042-0: invariants rng_family_count == len(families) and runs_total ==
+    sum(n_per_family); no rng_families key.
+- Code: primordial/score/receipt_guard.py.
+  - guard(rec, envelope) runs every check and reports every refusal as {check, reason, detail}.
+  - The nine 19 s4.4 checks, with campaign_stage and the sample rule:
+      rows_exist               ROWS_MISSING
+      rows_committed           ROWS_UNCOMMITTED   (absent at the sha, or dirty)
+      sha_on_integration       SHA_INVALID | SHA_NOT_ON_INTEGRATION
+      identity_tag             IDENTITY_TAG_MISSING
+      campaign_stage           CAMPAIGN_STAGE_INVALID | _NO_ENVELOPE | _MISMATCH
+      predicate_predates_run   PREDICATE_MISSING | RUN_START_UNKNOWN | PREDICATE_AFTER_RUN
+                               (bus 'PREDICATE <id>' with an exact-id match, vs the earliest
+                               committed row ts)
+      required_controls        CONTROLS_MISSING
+      oracle_result            ORACLE_MISSING
+      sample_rule              SAMPLE_INVARIANT (3 invariants) | SAMPLE_FIELDS_MISSING |
+                               CANDIDATE_N | BASELINE_N
+  - Thresholds are imported from qd_ledger. A PILOT under-sample that claims no scientific
+    verdict is not refused; that label is H-R5-4's.
+  - file() posts RECEIPT_REFUSED to <lane>,A and raises, or files through bus.receipt.
+    envelope_of_job reads F's job spec.
+- Wiring: bus.receipt runs the H guard on every receipt carrying campaign_stage. The envelope
+  comes from rec.envelope or the job spec. A refusal posts RECEIPT_REFUSED and raises
+  ReceiptError. Older receipts keep only guard_git.
+- Tests: test_score_receipt_guard.py, 35 cases.
+  - A clean receipt is accepted in all 4 stages.
+  - Each reason code is refused, with the check marked REFUSED.
+  - Uncommitted both ways (dirty file, and absent at the sha).
+  - All failures are reported together.
+  - A PILOT under-sample with no verdict is accepted.
+  - Thresholds come from the judge.
+  - file() refusal post, and the clean path.
+  - Exact predicate-id match.
+  - Family invariants and 29+1+1+1.
+  - Envelope from the job spec.
+- Suite 278 passed, 1 skipped, pytest rc 0 at 06:20.
+- For after R5: G's CANDIDATE_N replaces the judge's 'runs < 8' refusal, so F12's
+  clause_a_r4.s4_verdict mirror must follow when G lands it, or F12 reads MISMATCH.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
