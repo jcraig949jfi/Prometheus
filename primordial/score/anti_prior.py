@@ -1,34 +1,35 @@
-"""H-R5-2 (round 5 P-BUILD, builder H): the SEALED ANTI-PRIOR LEDGER (prompt 19 s10-11, SWARM_R5 O5).
+"""H-R5-2 / H-R6-3: the SEALED ANTI-PRIOR LEDGER, version 2 (prompt 19 s10-11, SWARM_R5 O5, SWARM_R6 O3).
 
 A predictor (lane R, a separate session, never the experimenter) posts a prior per candidate cell BEFORE
-assignment. Code publishes the candidate cells, so the predictor never chooses them (A 1789469025336-0). Code then
-assigns falsification attempts among the confident expected failures; the experimenter receives only the cell and
-cannot read the prior until its receipt is filed. Priors never enter scientific scoring.
+assignment. Code publishes the candidate cells, so the predictor never chooses them (A 1789469025336-0). Priors never
+enter scientific scoring.
 
-  candidates(store, seed, n)                code-published candidate list: a seeded PCG64 draw of n distinct cells
-                                            from primordial.ops.draw_cell.axes() (the survivor-restricted grid C's
-                                            DISTANT_QD draw uses), written ONCE to pm:prior:candidates {seed, ts, n,
-                                            grid_cells, cells}. A second call refuses (CANDIDATES_ALREADY_PUBLISHED).
-  seal(store, prediction, writer_role)      predictor-only write, once per prediction_id; fields
-                                            prior_p_pass in [0, 1], prior_expected_direction,
-                                            prior_expected_mechanism, predictor_id, prediction_ts, cell.
-                                            A sha256 commitment of the canonical record is stored beside it,
-                                            so a changed prior is detectable (verify()).
-  assign(store, exp_id, seed, now, k=1)     code assignment: among predictions on a PUBLISHED candidate cell with
-                                            prior_p_pass <= P_MAX (0.2) and prediction_ts < now, a seeded PCG64 draw
-                                            of k in prediction_id order. -> {exp_id, cell} only. No published list:
-                                            CANDIDATES_NOT_PUBLISHED. A prediction made at or after the assignment
-                                            time is never eligible (PREDICTION_NOT_BEFORE_ASSIGNMENT).
-  read(store, prediction_id, reader_role, receipt_filed)
-                                            predictor and conductor may read; the experimenter is denied
-                                            (EXPERIMENTER_READ_DENIED) until receipt_filed(exp_id) is true for the
-                                            assignment that holds the prediction.
-  calibration(store, outcomes)              descriptive close-of-round table per prior bucket: n, mean prior,
-                                            observed PASS rate, Brier. No inference from small N (19 s11).
+Round 5 finding (operator 21): 12/12 priors were <= 0.2, so an absolute p filter did not discriminate. Version 2
+works on RANK among the sealed set and adds a calibration arm (O3):
 
-Sealing is enforced by this API (the only reader the experimenter is given), plus the commitment for tamper
-evidence. It is not cryptographic against a session that reads Redis keys directly: accepted for the pilot
-(A 1789469025336-0, prompt ban on C reading pm:prior:*), recorded as a PRODUCTION_CANDIDATE.
+  candidates(store, seed=20260917, n=48)   code-published candidate list: a seeded PCG64 draw of n distinct cells from
+                                           primordial.ops.draw_cell.axes(), written ONCE to pm:prior:candidates
+                                           {seed, ts, n, grid_cells, cells}; a second call refuses
+                                           (CANDIDATES_ALREADY_PUBLISHED). A publishes it once at launch.
+  seal(store, prediction, writer_role)     predictor-only write, once per prediction_id; fields prior_p_pass in [0, 1],
+                                           prior_expected_direction, prior_expected_mechanism, predictor_id,
+                                           prediction_ts, cell; sha256 commitment beside it (verify()).
+  freeze_ranks(store, now)                 ONCE (pm:prior:ranks): every verified prediction on a published cell with
+                                           prediction_ts < now is ranked by prior_p_pass descending (rank 1 = most
+                                           confident PASS); ties in p are broken by a seeded permutation (seed = the
+                                           candidates seed) and the tie groups + order are recorded. quantile =
+                                           (rank - 0.5) / n. Absolute prior_p_pass is kept beside rank and quantile.
+  assign(store, exp_id, now)               assignment index i (0, 1, ...): u = PCG64([ARM_SEED 20260918, i]).random();
+                                           arm = calibration iff u < 0.25 (pool: quantile < 0.25, the top rank
+                                           quartile) else anti_prior (pool: quantile > 0.75, the bottom quartile); one
+                                           unassigned prediction drawn from the arm's pool by PCG64([ARM_SEED, i, 1]).
+                                           The record stores arm, u, rank, quantile. -> [{exp_id, cell}] only.
+  read(store, prediction_id, role, ...)    predictor and conductor read the sealed record only (never an arm or a
+                                           rank: R is not told the arms); the experimenter is denied
+                                           (EXPERIMENTER_READ_DENIED) until its receipt is filed.
+  calibration(store, outcomes)             descriptive: by arm, by rank quartile, and by absolute p bucket.
+
+Sealing is API-level plus the commitment (round 5 PC D8), not cryptographic against direct Redis reads.
 
 Store: any object with hget/hset/hgetall/hsetnx (redis.Redis with decode_responses=True).
 """
@@ -42,11 +43,16 @@ import numpy as np
 
 SEALED = "pm:prior:sealed"            # prediction_id -> canonical json
 COMMIT = "pm:prior:commit"            # prediction_id -> sha256(canonical json)
-ASSIGN = "pm:prior:assign"            # exp_id -> json {prediction_id, cell, assignment_ts, seed}
+ASSIGN = "pm:prior:assign"            # exp_id -> json {prediction_id, cell, assignment_ts, index, u, arm, rank, quantile}
 CANDIDATES = "pm:prior:candidates"    # field "record" -> json {seed, ts, n, grid_cells, cells}
+RANKS = "pm:prior:ranks"              # field "record" -> json {ts, n, tie_seed, ranks, ties}
 FIELDS = ("prior_p_pass", "prior_expected_direction", "prior_expected_mechanism", "predictor_id", "prediction_ts")
-P_MAX = 0.2                           # SWARM_R5 O5: high-confidence expected failures
-N_CANDIDATES = 12
+N_CANDIDATES = 48                     # SWARM_R6 s3 H-R6-3
+CANDIDATES_SEED_R6 = 20260917         # SWARM_R6 seeds, fixed before any round 6 data
+ARM_SEED_R6 = 20260918
+ARM_P = 0.25                          # SWARM_R6 O3: calibration arm probability
+TOP_Q, BOTTOM_Q = 0.25, 0.75
+ARMS = ("calibration", "anti_prior")
 ROLES = ("predictor", "experimenter", "conductor")
 BUCKETS = (0.0, 0.1, 0.2, 0.4, 0.6, 0.8, 1.0)
 _FROM_FILE = object()
@@ -67,8 +73,8 @@ def cell_key(cell) -> str:
     return _canon(cell)
 
 
-def candidates(store, seed: int, n: int = N_CANDIDATES, now: float | None = None, grid: dict | None = None,
-               doc=_FROM_FILE) -> dict:
+def candidates(store, seed: int = CANDIDATES_SEED_R6, n: int = N_CANDIDATES, now: float | None = None,
+               grid: dict | None = None, doc=_FROM_FILE) -> dict:
     """Publish the candidate cell list once, by seeded draw over the draw grid. The predictor never chooses cells."""
     if store.hget(CANDIDATES, "record") is not None:
         raise PriorLedgerError("CANDIDATES_ALREADY_PUBLISHED", "the candidate list is drawn once per round")
@@ -127,31 +133,62 @@ def _all(store) -> list[dict]:
     return [json.loads(v) for _, v in sorted(store.hgetall(SEALED).items())]
 
 
-def assign(store, exp_id: str, seed: int, now: float, k: int = 1, p_max: float = P_MAX) -> list[dict]:
-    """Seeded draw among confident expected failures on published candidate cells, predicted before `now`.
-    The caller gets cells only."""
-    if store.hget(ASSIGN, exp_id) is not None:
-        raise PriorLedgerError("ALREADY_ASSIGNED", exp_id)
+def freeze_ranks(store, now: float, tie_seed: int | None = None) -> dict:
+    """Rank the sealed set once. Rank 1 = highest prior_p_pass; ties broken by a seeded permutation, recorded."""
+    body = store.hget(RANKS, "record")
+    if body is not None:
+        return json.loads(body)
     pub = published(store)
     if pub is None:
         raise PriorLedgerError("CANDIDATES_NOT_PUBLISHED", "publish the candidate cells (candidates()) first")
     listed = {cell_key(c) for c in pub["cells"]}
-    taken = {json.loads(v)["prediction_id"] for v in store.hgetall(ASSIGN).values()}
-    pool = [p for p in _all(store)
-            if p["prior_p_pass"] <= p_max and p["prediction_ts"] < now and p["prediction_id"] not in taken
-            and cell_key(p["cell"]) in listed and verify(store, p["prediction_id"])]
+    preds = sorted((p for p in _all(store) if p["prediction_ts"] < now and cell_key(p["cell"]) in listed
+                    and verify(store, p["prediction_id"])), key=lambda p: p["prediction_id"])
+    if not preds:
+        raise PriorLedgerError("NO_PREDICTIONS", "no sealed prediction on a published cell before the freeze")
+    tie_seed = int(pub["seed"] if tie_seed is None else tie_seed)
+    perm = np.random.Generator(np.random.PCG64(tie_seed)).permutation(len(preds)).tolist()
+    tie_break = {p["prediction_id"]: int(perm[i]) for i, p in enumerate(preds)}
+    order = sorted(preds, key=lambda p: (-p["prior_p_pass"], tie_break[p["prediction_id"]]))
+    n = len(order)
+    ranks = {p["prediction_id"]: {"rank": i + 1, "quantile": (i + 0.5) / n, "prior_p_pass": p["prior_p_pass"],
+                                  "tie_break": tie_break[p["prediction_id"]]} for i, p in enumerate(order)}
+    groups: dict[float, list[str]] = {}
+    for p in order:
+        groups.setdefault(p["prior_p_pass"], []).append(p["prediction_id"])
+    record = {"ts": float(now), "n": n, "tie_seed": tie_seed, "ranks": ranks,
+              "ties": [{"prior_p_pass": pv, "order": ids} for pv, ids in groups.items() if len(ids) > 1]}
+    if not store.hsetnx(RANKS, "record", _canon(record)):
+        return json.loads(store.hget(RANKS, "record"))
+    return record
+
+
+def arm_of(index: int, arm_seed: int = ARM_SEED_R6, p: float = ARM_P) -> tuple[str, float]:
+    u = float(np.random.Generator(np.random.PCG64([int(arm_seed), int(index)])).random())
+    return ("calibration" if u < p else "anti_prior"), u
+
+
+def assign(store, exp_id: str, now: float, arm_seed: int = ARM_SEED_R6, p: float = ARM_P) -> list[dict]:
+    """One assignment: the arm by seeded Bernoulli(p), a prediction from that arm's rank quartile. Cells only."""
+    if store.hget(ASSIGN, exp_id) is not None:
+        raise PriorLedgerError("ALREADY_ASSIGNED", exp_id)
+    ranks = freeze_ranks(store, now)
+    existing = [json.loads(v) for v in store.hgetall(ASSIGN).values()]
+    index = len(existing)
+    arm, u = arm_of(index, arm_seed, p)
+    taken = {a["prediction_id"] for a in existing}
+    in_arm = (lambda q: q < TOP_Q) if arm == "calibration" else (lambda q: q > BOTTOM_Q)
+    pool = sorted((pid for pid, rk in ranks["ranks"].items() if in_arm(rk["quantile"]) and pid not in taken
+                   and verify(store, pid)), key=lambda pid: ranks["ranks"][pid]["rank"])
     if not pool:
         return []
-    rng = np.random.Generator(np.random.PCG64(int(seed)))
-    picks = sorted(rng.choice(len(pool), size=min(k, len(pool)), replace=False).tolist())
-    out = []
-    for i, idx in enumerate(picks):
-        p = pool[idx]
-        key = exp_id if len(picks) == 1 else f"{exp_id}.{i}"
-        store.hset(ASSIGN, key, _canon({"prediction_id": p["prediction_id"], "cell": p["cell"],
-                                       "assignment_ts": float(now), "seed": int(seed)}))
-        out.append({"exp_id": key, "cell": p["cell"]})
-    return out
+    pick = pool[int(np.random.Generator(np.random.PCG64([int(arm_seed), index, 1])).integers(len(pool)))]
+    pred = json.loads(store.hget(SEALED, pick))
+    rk = ranks["ranks"][pick]
+    store.hset(ASSIGN, exp_id, _canon({"prediction_id": pick, "cell": pred["cell"], "assignment_ts": float(now),
+                                       "arm_seed": int(arm_seed), "index": index, "u": u, "arm": arm,
+                                       "rank": rk["rank"], "quantile": rk["quantile"]}))
+    return [{"exp_id": exp_id, "cell": pred["cell"]}]
 
 
 def eligible_at(prediction: dict, assignment_ts: float) -> None:
@@ -162,6 +199,7 @@ def eligible_at(prediction: dict, assignment_ts: float) -> None:
 
 
 def read(store, prediction_id: str, reader_role: str, receipt_filed=lambda exp_id: False) -> dict:
+    """The sealed record only: no arm, rank or quantile is ever returned (R is not told the arms)."""
     if reader_role not in ROLES:
         raise PriorLedgerError("READ_DENIED", f"unknown role {reader_role!r}")
     body = store.hget(SEALED, prediction_id)
@@ -174,19 +212,42 @@ def read(store, prediction_id: str, reader_role: str, receipt_filed=lambda exp_i
     return json.loads(body)
 
 
+def _stats(ps: list[float], hits: list[float], quantiles: list[float] | None = None) -> dict:
+    if not ps:
+        return {"n": 0}
+    pr, hit = np.array(ps), np.array(hits)
+    out = {"n": len(ps), "mean_prior": round(float(pr.mean()), 4), "pass_rate": round(float(hit.mean()), 4),
+           "brier": round(float(((pr - hit) ** 2).mean()), 4)}
+    if quantiles:
+        out["mean_quantile"] = round(float(np.mean(quantiles)), 4)
+    return out
+
+
 def calibration(store, outcomes: dict) -> dict:
-    """outcomes: {prediction_id: True (PASS) | False (not PASS)} for resolved predictions. Descriptive only."""
-    rows = []
+    """outcomes: {prediction_id: True (PASS) | False (not PASS)} for resolved predictions. Descriptive only:
+    by arm (assigned predictions), by rank quartile (ranked predictions) and by absolute p bucket."""
+    sealed = {p["prediction_id"]: p for p in _all(store)}
+    resolved = [pid for pid in outcomes if pid in sealed]
+    hit = lambda pid: 1.0 if outcomes[pid] else 0.0
+    buckets = []
     for lo, hi in zip(BUCKETS, BUCKETS[1:]):
-        ps = [p for p in _all(store) if p["prediction_id"] in outcomes
-              and (lo <= p["prior_p_pass"] < hi or (hi == 1.0 and p["prior_p_pass"] == 1.0))]
-        if not ps:
-            rows.append({"bucket": [lo, hi], "n": 0})
-            continue
-        pr = np.array([p["prior_p_pass"] for p in ps])
-        hit = np.array([1.0 if outcomes[p["prediction_id"]] else 0.0 for p in ps])
-        rows.append({"bucket": [lo, hi], "n": len(ps), "mean_prior": round(float(pr.mean()), 4),
-                     "pass_rate": round(float(hit.mean()), 4), "brier": round(float(((pr - hit) ** 2).mean()), 4)})
-    n = sum(r["n"] for r in rows)
-    return {"kind": "anti_prior_calibration", "descriptive_only": True, "n": n, "buckets": rows,
+        ids = [pid for pid in resolved
+               if lo <= sealed[pid]["prior_p_pass"] < hi or (hi == 1.0 and sealed[pid]["prior_p_pass"] == 1.0)]
+        buckets.append({"bucket": [lo, hi], **_stats([sealed[i]["prior_p_pass"] for i in ids], [hit(i) for i in ids])})
+    body = store.hget(RANKS, "record")
+    ranks = json.loads(body)["ranks"] if body else {}
+    by_arm = {}
+    assigned = [json.loads(v) for v in store.hgetall(ASSIGN).values()]
+    for arm in ARMS:
+        ids = [a["prediction_id"] for a in assigned if a.get("arm") == arm and a["prediction_id"] in outcomes]
+        by_arm[arm] = _stats([sealed[i]["prior_p_pass"] for i in ids], [hit(i) for i in ids],
+                             [ranks[i]["quantile"] for i in ids if i in ranks])
+    by_quartile = {}
+    for name, rule in (("top", lambda q: q < TOP_Q), ("middle", lambda q: TOP_Q <= q <= BOTTOM_Q),
+                       ("bottom", lambda q: q > BOTTOM_Q)):
+        ids = [i for i in resolved if i in ranks and rule(ranks[i]["quantile"])]
+        by_quartile[name] = _stats([sealed[i]["prior_p_pass"] for i in ids], [hit(i) for i in ids],
+                                   [ranks[i]["quantile"] for i in ids])
+    return {"kind": "anti_prior_calibration", "version": 2, "descriptive_only": True,
+            "n": sum(b["n"] for b in buckets), "buckets": buckets, "by_arm": by_arm, "by_quartile": by_quartile,
             "note": "small N: no inference (prompt 19 s11)"}

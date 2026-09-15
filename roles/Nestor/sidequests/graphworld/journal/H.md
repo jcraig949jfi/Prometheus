@@ -584,5 +584,35 @@ budget 1789425755152-0).
   - Before-window, after-window and non-rows files are ignored.
   - The ledger mirror reader keeps only guarded, in-window receipts.
   - emit is idempotent.
+- Suite 409 passed, 1 skipped, pytest rc 0 (09:53). Pushed c054da915 (ops.push rebased). Posted
+  H-R6-1/2 (1789480452979-0).
+
+## 2026-09-15 09:54, item 3: H-R6-3 anti-prior v2 (O3)
+
+- anti_prior.py v2.
+  - candidates() defaults to n 48 with seed 20260917 (CANDIDATES_SEED_R6). Nothing published in
+    the build.
+  - freeze_ranks(now), written ONCE to pm:prior:ranks:
+    - verified predictions on published cells with prediction_ts < now are ranked by prior_p_pass
+      descending (rank 1 = most confident PASS), with quantile = (rank - 0.5)/n and the absolute p
+      kept;
+    - p ties are broken by a PCG64(candidates seed) permutation, and tie groups and order are
+      recorded.
+  - assign(exp_id, now): index i gives u = PCG64([20260918, i]).random(). u < 0.25 is the
+    calibration arm (quantile < 0.25), else anti_prior (quantile > 0.75); a pick within the arm
+    by PCG64([seed, i, 1]). arm, u, rank and quantile are stored; the experimenter gets the cell
+    only.
+  - read() returns only the sealed record, so R is never told arms or ranks.
+  - calibration() reports by_arm, by_quartile and absolute buckets.
+  - The v1 p <= 0.2 filter and k are gone.
+- Tests: 18.
+  - Constants and defaults; candidates deterministic and not redrawable.
+  - Seal refusals.
+  - Ranks: order, quantiles, and a seeded tie-break equal to the recorded permutation; the freeze
+    is idempotent against a later prediction; an at-freeze prediction is unranked.
+  - Arms: each index's arm equals the seeded Bernoulli, calibration ranks <= 12, anti-prior ranks
+    >= 37; reproducible across stores; cells only.
+  - R never sees arms. Unpublished and unlisted cells refused. A tampered prior is never ranked.
+  - Calibration by arm and quartile.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
