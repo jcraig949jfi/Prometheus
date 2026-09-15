@@ -439,3 +439,19 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
 - Filed via envelope.file_candidate. Design: cross-lane wait set, oldest-waiter Lua grant, re-queue on release,
   dead-waiter drop, wait_s stamps. Estimates: 2700 s build, 900 s tests. Test plan: a burst on one lane must alternate
   with a waiter. No broker change until round 7 closes (A ruling). This commit stays local until close.
+
+## 2026-09-15 ~18:30 (round 7 live) -- D24 supervisor dies on child EOF: PRODUCTION_CANDIDATE 1789511386497-0 filed (no code, no push)
+
+- C 1789511278131-0 / A 1789511323172-0: C terminated its own job child; worker.run_job pipe.recv() raised EOFError,
+  serve() let it through, supervisor exited rc 1; no job_end row, no done entry. Live read-only at 18:29: the job
+  message is still PENDING in worker-C (1154 s since delivery), 0 done entries, tokens held by G and D only.
+- My defect: run_job polls the pipe before child.is_alive(), so a dead child's closed pipe reads as "result ready";
+  _child_cpu() on a dead pid is a second crash path. I never tested an externally killed child.
+- Correction to the report: serve() reads only new entries (XREADGROUP >), so a plain restart does not rerun the
+  PEL entry; the defects are the dead supervisor, the lost close record and a PEL leak.
+- Filed: died handling + sanctioned cancel via a cancel key + close_job helper. Estimates: 2400 s build, 900 s tests.
+- MY FILING ERROR: a backticked CLI example inside a bash double-quoted string ran as command substitution (the worker
+  CLI started, argparse rejected "cancel", no side effect) and blanked that span of the stored basis. Filings cannot
+  be amended; the bus post to A and C restates the missing text. From now on, filing text goes through a quoted
+  heredoc or a file, never through bash double quotes.
+- This commit stays local until round 7 closes.
