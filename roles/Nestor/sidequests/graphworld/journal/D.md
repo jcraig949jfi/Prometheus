@@ -422,3 +422,6 @@
   refused IDENTITY_TAG_MISSING (D omitted `tag`), refiled with the tag and nothing else changed. OWN ERROR.
 - D-R7-2b: same rule; I1 reads held64_by_run by "F|rs" key (+ key-set check), job() takes exp/predicate_id; tests 6
   passed rc 0, including one pinned to the committed candidate row's dict shape. Worker restarted for the edited module.
+- 18:38 worker D restarted after the module edit: pid 25220 stopped by verified cmdline + cwd (exit 15), new pid 30748
+  registered (nestor-r7-d, r7); the 25220 reg key had TTL 45 s and expires by itself (a terminate skips unregister).
+  D-R7-2b claimed, predicate 1789511917971-0 (pinned 5b681baac, rule unchanged), admission ok, job 23ae002ee09c queued.
