@@ -622,3 +622,20 @@
 - Design applies the AP-01 lesson: meter / k3 cheat eligibility is STRUCTURAL (planted genomes P_ONES, P_METER in the
   oracle set), so evolved winners cannot void the gate. byte_charge BETA = floor(1% random NK per landscape) x 8 per
   functional byte (stated choice, no repo definition). GENS by a pre-stated WALL rule (<= 5400 s).
+- C-R7-AP-02: harness 3eabea887 (pushed; first push refused on the unstaged ledger mirror of the AP-01 receipt, committed
+  bb9235dae). Dev (no rows) clean both arms, GENS 50 by the wall rule. envelope.admit dry run ok. Predicate
+  refs/pm/pred/C-R7-AP-02 -> 3eabea887, bus 1789511887982-0. Worker restarted after the harness edit (18120 -> 26300).
+  Job ec5a36e1c102 queued (PRODUCTION, checkpointable, wall 2400/segment, cpu 1800).
+- Next: C-R7-01 DISTANT_QD torch_gpu harness (bitset / D1 / held_out_seeds / none), planted null first; must reach origin
+  before E's post-O8 ops.push; GPU submit only after 'E: pushed'.
+- C-R7-01 harness drafted (bitset 792-bit code table on D1, channel none, TRAIN 8 episodes vs in-sample HELD control,
+  planted null = slot 1 hears silence, P1/P2/P3 as C-R6-01, torch_gpu fitness on CUDA, one gpuq job). No-rows dev check
+  in nv-venv-u under the O5 lease: GPU == reference, world 0/17, offers/recount 0 all arms, GENS 800 (314.7 <= 480 s).
+  It CAUGHT an eligibility defect before any predicate: the encoder-bit-order cheat had 0 eligible genomes with the
+  channel off (the null never reads enc) -- the R6 null trap again. Changed to a DECODER-bit-order cheat with planted
+  HAND + DEC1 (dec[0] = 1) so eligibility is structural in every arm; disclosed in the docstring; dev re-run next.
+- C-R7-01 dev re-run under the lease after the fix: cheat on 18/18, cheat off 12/12 (structural), world 0/18, GPU ==
+  reference, offers/recount 0 in all arms, GENS 800 (315.0 <= 480 s). Harness committed for push before E's push.
+- A rulings 1789511323172-0 / 1789511924715-0: close the killed AP-01 job (done entry status died + XACK 1789509597879-0,
+  post ids); no rerun risk (serve reads '>'). F filed D24 PC 1789511386497-0 (child-death handling + sanctioned cancel;
+  no fabric change in r7). Epoch 1 boundary 18:37 (A controller).
