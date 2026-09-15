@@ -208,3 +208,16 @@ Interfaces posted to G,H,E,A 06:14 (1789467306628-0).
   Done records carry cohort/campaign_stage/experiment_class/predicate_id.
 - ops/round_clock.py (used by admission; F-R5-2 wires the controller).
 - Tests test_r5_f1_envelope.py (12, incl. A pins: PRODUCTION refused, SMOKE/REPLICATION at PILOT ceilings, unlisted stage refused) + F7/F9/F14 regression: 23 passed rc 0.
+
+## 2026-09-15 R5 iteration 2 -- F-R5-2 round clock + NO_NEW_WORK (DONE)
+
+- ops/round_clock.py: pm:round:r5 {start_ts, epoch_s 1500, epochs 4, no_new_work_ts +6000, drain_ts +6600,
+  end_ts +7200, stage PILOT}; start() is idempotent (a second start cannot move or extend the clock).
+- epoch.py run_round(clock): boundaries 1..3 resume; at no_new_work_ts a flag + event; at drain_ts
+  boundary 4 without resume (stop flags stay: F9 jobs pause); at end_ts ROUND_<id>.json committed.
+  Every EPOCH record now carries budget by cohort and lane. CLI: `epoch round --lanes B,C,D,E`.
+- Worker refusal after no_new_work_ts is admit()'s NO_NEW_WORK (event NO_NEW_WORK_REFUSAL); a
+  continuation segment runs only if it can finish by drain_ts.
+- Test (scaled 2.5 s epochs, real worker + feeder): 3 resumes, NO_NEW_WORK before drain_hold, work in
+  epochs 1-3, every post-NNW job refused NO_NEW_WORK_REFUSAL and none admitted, EPOCH-1..4 + ROUND
+  commits. With F14/F9/F15: 9 passed rc 0.

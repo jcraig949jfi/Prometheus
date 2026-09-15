@@ -28,11 +28,12 @@ import sys
 import time
 
 from primordial.fabric.rows import commit_path
-from primordial.fabric.worker import STOP, WSTATE
+from primordial.fabric.worker import DONE, STOP, WSTATE
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "roles" / "Nestor" / "sidequests" / "graphworld" / "epochs"
 STATE = "pm:epoch:state"
+NO_NEW_WORK = "pm:round:{}:no_new_work"     # informational flag; workers refuse from the clock timestamps
 
 
 class EpochController:
@@ -64,7 +65,59 @@ class EpochController:
     def _live_workers(self) -> dict:
         return {L: self.r.hgetall(WSTATE.format(L)) for L in self.lanes if self.r.exists(WSTATE.format(L))}
 
-    def boundary(self, n: int) -> dict:
+    def _budget(self) -> dict:
+        """Budget use so far, by cohort (envelope) and by lane, from the done records (F13 identity)."""
+        by_cohort, by_lane = {}, {}
+        for L in self.lanes:
+            for _, f in self.r.xrange(DONE.format(L)):
+                d = json.loads(f["json"])
+                c = d.get("cpu_s") or 0.0
+                key = d.get("cohort") or f"lane:{L}"
+                agg = by_cohort.setdefault(key, {"cpu_s": 0.0, "jobs": 0, "status": {}})
+                agg["cpu_s"] = round(agg["cpu_s"] + float(c), 3)
+                agg["jobs"] += 1
+                agg["status"][d.get("status")] = agg["status"].get(d.get("status"), 0) + 1
+                by_lane[L] = round(by_lane.get(L, 0.0) + float(c), 3)
+        return {"by_cohort": by_cohort, "by_lane": by_lane}
+
+    def _wait_until(self, ts: float) -> None:
+        while (wait := ts - time.time()) > 0:
+            time.sleep(min(wait, 1.0))
+
+    def run_round(self, clock: dict) -> dict:
+        """F-R5-2: run a round from its clock alone (ops.round_clock). No session announces a boundary.
+        epochs 1..E-1: boundary + resume. no_new_work_ts: flag + event (workers refuse by the clock; a job
+        already running finishes). drain_ts: boundary E without resume (stop flags stay: checkpointable jobs
+        pause). end_ts: closed record committed."""
+        rid = clock["round_id"]
+        self._event("round_start", round_id=rid, clock=clock)
+        self.r.hset(STATE, mapping={"n": 1, "phase": "running", "ts": round(time.time(), 3), "round_id": rid})
+        out = []
+        for n in range(1, int(clock["epochs"])):
+            self._wait_until(clock["start_ts"] + n * clock["epoch_s"])
+            out.append(self.boundary(n))
+        self._wait_until(clock["no_new_work_ts"])
+        self.r.set(NO_NEW_WORK.format(rid), f"{time.time():.3f}")
+        self.r.hset(STATE, mapping={"phase": "no_new_work", "ts": round(time.time(), 3)})
+        self._event("no_new_work", round_id=rid)
+        if self.post:
+            from primordial.bus import bus
+            bus.post("note", f"ROUND {rid} NO_NEW_WORK", "controller: workers refuse new jobs by the clock",
+                     to="ALL", r=self.r)
+        self._wait_until(clock["drain_ts"])
+        out.append(self.boundary(int(clock["epochs"]), resume=False))
+        self._wait_until(clock["end_ts"])
+        rec = {"round_id": rid, "clock": clock, "closed_ts": round(time.time(), 3), "epochs": out,
+               "budget": self._budget()}
+        (self.out / f"ROUND_{rid}.json").write_text(json.dumps(rec, indent=1, sort_keys=True, default=str) + "\n",
+                                                   encoding="utf-8")
+        self.r.hset(STATE, mapping={"phase": "closed", "ts": rec["closed_ts"]})
+        self._event("round_closed", round_id=rid)
+        rec["sha"] = commit_path(self.out, f"ROUND-{rid}", "(round close record)", repo=self.repo)
+        self._event("round_committed", sha=rec["sha"])
+        return rec
+
+    def boundary(self, n: int, resume: bool = True) -> dict:
         from primordial.bus import bus
         begin = self._event("epoch_post", n=n)
         if self.post:
@@ -91,11 +144,15 @@ class EpochController:
             self._event("bootpacks", files=[p.name for p in packs])
         record = {"epoch": n, "lanes": self.lanes, "begin_ts": begin["ts"], "drained_ts": drained["ts"],
                   "workers": {L: s for L, s in live.items()}, "stragglers": waiting,
-                  "export": {k: v[1] for k, v in counts.items()},
+                  "export": {k: v[1] for k, v in counts.items()}, "budget": self._budget(),
                   "controller": f"{os.environ.get('PM_LANE', '?')}[{os.environ.get('PM_TAG', '?')}]"}
         (self.out / f"EPOCH_{n}.json").write_text(json.dumps(record, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         sha = commit_path(self.out, f"EPOCH-{n}", "(epoch record + bus export)", repo=self.repo)
         self._event("committed", sha=sha)
+        if not resume:
+            self.r.hset(STATE, mapping={"n": n, "phase": "draining", "ts": round(time.time(), 3)})
+            self._event("drain_hold", n=n)
+            return dict(record, sha=sha)
         for L in self.lanes:
             self.r.delete(STOP.format(L))
         self.r.hset(STATE, mapping={"n": n + 1, "phase": "running", "ts": round(time.time(), 3)})
@@ -126,8 +183,18 @@ def main(argv=None) -> int:
     bo = sub.add_parser("boundary")
     bo.add_argument("n", type=int)
     bo.add_argument("--lanes", required=True)
+    rd = sub.add_parser("round", help="F-R5-2: start (or join) the round clock and run it to close")
+    rd.add_argument("--lanes", required=True)
+    rd.add_argument("--round", default="r5")
+    rd.add_argument("--stage", default="PILOT")
     a = ap.parse_args(argv)
     lanes = [x.strip() for x in a.lanes.split(",") if x.strip()]
+    if a.cmd == "round":
+        from primordial.ops import round_clock as RC
+        ec = EpochController(lanes)
+        rec = ec.run_round(RC.start(ec.r, a.round, stage=a.stage))
+        print(json.dumps({k: rec[k] for k in ("round_id", "closed_ts", "sha")}, sort_keys=True))
+        return 0
     if a.cmd == "boundary":
         print(json.dumps(EpochController(lanes).boundary(a.n), sort_keys=True))
         return 0
