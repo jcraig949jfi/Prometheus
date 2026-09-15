@@ -323,3 +323,7 @@
   (family, run seed): t = control train > cell train, h = control held > cell held; TRAIN_NOT_HELD / BOTH_GAIN /
   NO_TRAIN_GAIN / MIXED; self_pair binding, shuffled pairing reported. Seen before predicate: C's summary and one
   control run row (train 2423879.75, held 2253685.20). Worker restarted for the new module.
+- D-R6-7 RECORD: MASS_BARRIER. I1 90/90 replays exact, hand codes cost c_opt; controls ok (optimum 0 improving; one
+  symbol short 45/45/7 three-bit). One-bit splits improve 0/89 trapped codes (best +0.035..+0.185), three-bit 89/89
+  (best -0.0125..-0.0775). Caveat: one census signature per cell -> 3 distinct codes, 3/3. Receipt 1789490774638-0,
+  ANOM-..2892 RESOLVED. D-R6-8 predicate + job submitted (background).
