@@ -13,7 +13,11 @@ At T + n x epoch_s the controller:
   5. writes the conductor record <out>/EPOCH_<n>.json and commits the
      directory (commit_path: that path only, PM_TAG required);
   6. clears the stop flags and marks epoch n+1 running (pm:epoch:state).
-Every step is an event in self.events and in <out>/epoch_log.jsonl.
+Every step is an event in self.events and in an event log OUTSIDE the repo (F-R6-1, defect D3: the log was
+appended after each commit, so ops.push refused on a dirty tree 5/5 in round 5). Default
+$PM_EPOCH_LOGDIR (or pm-data/epoch-logs)/epochs-<hash of out>/epoch_log.jsonl; log_dir overrides. Just
+before every commit the log is copied verbatim to <out>/epoch_log.jsonl, so a commit carries every event
+up to it and the next commit carries the tail. Nothing is written in the repo after a commit.
 
 F-R5-6 (defect F8): drain_timeout_s=None sizes the drain to the jobs actually running: for every live
 worker reporting `busy` with a job_id, that job's remaining wall bound (envelope wall_budget_s -
@@ -34,6 +38,7 @@ never waits on it.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import pathlib
@@ -49,6 +54,7 @@ EPOCHS_REL = pathlib.Path("roles") / "Nestor" / "sidequests" / "graphworld" / "e
 DEFAULT_OUT = ROOT / EPOCHS_REL
 STATE = "pm:epoch:state"
 DRAIN_MARGIN_S = 30.0
+DEFAULT_LOGDIR = "C:/Users/jcrai/lab/pm-data/epoch-logs"
 
 
 def controller_repo(repo) -> tuple[bool, str]:
@@ -72,13 +78,18 @@ NO_NEW_WORK = "pm:round:{}:no_new_work"     # informational flag; workers refuse
 class EpochController:
     def __init__(self, lanes, epoch_s: float = 1800, r=None, out=DEFAULT_OUT, repo=None, export=None,
                  drain_timeout_s: float | None = None, post: bool = True, log=print, bootpack: bool = False,
-                 bootpack_kw: dict | None = None, push: bool = False):
+                 bootpack_kw: dict | None = None, push: bool = False, log_dir=None, push_branch: str | None = None):
         from primordial.bus import bus
         from primordial.ops import bus_export
         self.lanes = list(lanes)
         self.epoch_s = float(epoch_s)
         self.r = r or bus.conn()
         self.out = pathlib.Path(out)
+        # F-R6-1 (D3): events live OUTSIDE the publish repo; each commit carries a verbatim copy up to it
+        key = hashlib.sha1(str(self.out.resolve()).encode()).hexdigest()[:12]
+        base = pathlib.Path(log_dir) if log_dir else pathlib.Path(os.environ.get("PM_EPOCH_LOGDIR", DEFAULT_LOGDIR)) / f"epochs-{key}"
+        self.log_path = base / "epoch_log.jsonl"
+        self.push_branch = push_branch
         self.repo = repo
         self.export = export or bus_export.export
         self.drain_timeout_s = drain_timeout_s
@@ -110,12 +121,24 @@ class EpochController:
                   if s.get("state") == "busy" and s.get("job_id")]
         return (max(bounds) if bounds else 0.0) + DRAIN_MARGIN_S
 
+    def _publish_log(self) -> None:
+        """F-R6-1: copy the outside event log into <out>/epoch_log.jsonl just before a commit (never after)."""
+        self.out.mkdir(parents=True, exist_ok=True)
+        data = self.log_path.read_bytes() if self.log_path.exists() else b""
+        (self.out / "epoch_log.jsonl").write_bytes(data)
+
     def _push(self) -> None:
         if not self.push:
             return
+        # this code's push (ROOT), targeting the controller repo; PM_LANE cleared: the controller is no lane's
+        # worker, so push never takes a lane push lock on the live bus
+        cmd = [sys.executable, "-m", "primordial.ops.push", "--repo", str(self.repo or ROOT)]
+        env = dict(os.environ, PYTHONPATH=str(ROOT), PM_LANE="")
+        if self.push_branch:
+            cmd += ["--branch", self.push_branch]
+            env["PM_INTEGRATION_BRANCH"] = self.push_branch
         try:
-            q = subprocess.run([sys.executable, "-m", "primordial.ops.push"], cwd=str(self.repo or ROOT),
-                               capture_output=True, text=True, timeout=600)
+            q = subprocess.run(cmd, cwd=str(ROOT), env=env, capture_output=True, text=True, timeout=600)
             if q.returncode != 0:
                 self._event("push_failed", rc=q.returncode, tail=(q.stdout + q.stderr)[-500:])
             else:
@@ -126,8 +149,8 @@ class EpochController:
     def _event(self, name: str, **kw) -> dict:
         e = {"ts": round(time.time(), 3), "event": name, **kw}
         self.events.append(e)
-        self.out.mkdir(parents=True, exist_ok=True)
-        with open(self.out / "epoch_log.jsonl", "a", encoding="utf-8", newline="\n") as fh:
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(self.log_path, "a", encoding="utf-8", newline="\n") as fh:
             fh.write(json.dumps(e, sort_keys=True) + "\n")
         self.log(f"[epoch] {name} {json.dumps(kw, sort_keys=True)}")
         return e
@@ -183,6 +206,7 @@ class EpochController:
                                                    encoding="utf-8")
         self.r.hset(STATE, mapping={"phase": "closed", "ts": rec["closed_ts"]})
         self._event("round_closed", round_id=rid)
+        self._publish_log()
         rec["sha"] = commit_path(self.out, f"ROUND-{rid}", "(round close record)", repo=self.repo)
         self._event("round_committed", sha=rec["sha"])
         self._push()
@@ -222,6 +246,7 @@ class EpochController:
                   "export": {k: v[1] for k, v in counts.items()}, "budget": self._budget(),
                   "controller": f"{os.environ.get('PM_LANE', '?')}[{os.environ.get('PM_TAG', '?')}]"}
         (self.out / f"EPOCH_{n}.json").write_text(json.dumps(record, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+        self._publish_log()
         sha = commit_path(self.out, f"EPOCH-{n}", "(epoch record + bus export)", repo=self.repo)
         self._event("committed", sha=sha)
         self._push()
@@ -261,8 +286,8 @@ def main(argv=None) -> int:
     bo.add_argument("--lanes", required=True)
     rd = sub.add_parser("round", help="F-R5-2: start (or join) the round clock and run it to close")
     rd.add_argument("--lanes", required=True)
-    rd.add_argument("--round", default="r5")
-    rd.add_argument("--stage", default="PILOT")
+    rd.add_argument("--round", default="r6")
+    rd.add_argument("--stage", default=None, help="default: round_clock.ROUNDS row of --round")
     for p in (ru, bo, rd):
         p.add_argument("--repo", default=os.environ.get("PM_EPOCH_REPO"),
                        help="the controller's own worktree (F-R5-6); never a lane or conductor worktree")

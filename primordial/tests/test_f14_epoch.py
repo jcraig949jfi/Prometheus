@@ -110,6 +110,11 @@ def test_two_simulated_epochs_have_clean_boundaries(env):
     assert "rows EPOCH-1" in log and "rows EPOCH-2" in log
     rec2 = json.loads(git(repo, "show", "HEAD:epochs/EPOCH_2.json"))
     assert rec2["epoch"] == 2 and rec2["stragglers"] == [] and rec2["export"] == {"swarm": 1}
-    assert [json.loads(x)["event"] for x in (repo / "epochs" / "epoch_log.jsonl").read_text().splitlines()] == names
+    # F-R6-1 (D3): the full log lives outside the repo; the in-repo copy is written just BEFORE each commit, so
+    # it holds every event up to the last `committed` (never an event appended after a commit)
+    assert [json.loads(x)["event"] for x in ctl.log_path.read_text().splitlines()] == names
+    last_commit = len(names) - 1 - names[::-1].index("committed")
+    assert [json.loads(x)["event"] for x in (repo / "epochs" / "epoch_log.jsonl").read_text().splitlines()] == \
+        names[:last_commit]
     assert not any(r.exists(W.STOP.format(L)) for L in lanes)                # flags cleared at resume
     assert r.hgetall("pm:epoch:state")["phase"] == "running" and len(recs) == 2
