@@ -56,6 +56,7 @@ PUSH_LOCK = "pm:push:lock:{}"       # ops.push holds it during a rebase; the wor
                                     # Separate from STOP: the epoch controller clears STOP at resume (E, 09-15).
 WSTATE = "pm:worker:{}"             # hash {state: idle|busy|stopped, job_id, ts}, TTL WSTATE_TTL
 WSTATE_TTL = 30
+DONE_ENV_FIELDS = ("cohort", "campaign_stage", "experiment_class", "predicate_id")   # F-R5-1: copied into done
 CKPT_DIR = pathlib.Path(os.environ.get("PM_CKPT_DIR", "C:/Users/jcrai/lab/pm-data/ckpt"))
 
 
@@ -73,15 +74,21 @@ def _redis(url):
 
 
 def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs: dict | None = None,
-           url: str | None = None, r=None, job_key: str = "", segment: int = 0, cpu_prior: float = 0.0) -> str:
-    """Queue a job (or the next segment of a checkpointed one). -> job_id."""
+           url: str | None = None, r=None, job_key: str = "", segment: int = 0, cpu_prior: float = 0.0,
+           envelope: dict | None = None, wall_prior: float = 0.0) -> str:
+    """Queue a job (or the next segment of a checkpointed one). -> job_id.
+    envelope (F-R5-1): the job envelope; the worker admits or refuses it (fabric/envelope.py)."""
     from primordial.bus import bus
     r = r or _redis(url or bus.URL)
     job_id = uuid.uuid4().hex[:12]
-    r.xadd(JOBS.format(lane), {"job_id": job_id, "fn": fn, "exp_id": exp_id, "rows": str(rows_path),
-                               "ttl_cpu_s": str(float(ttl_cpu_s)), "kwargs": json.dumps(kwargs or {}),
-                               "job_key": job_key or job_id, "segment": str(int(segment)),
-                               "cpu_prior": f"{float(cpu_prior):.6f}", "ts": f"{time.time():.3f}"})
+    spec = {"job_id": job_id, "fn": fn, "exp_id": exp_id, "rows": str(rows_path),
+            "ttl_cpu_s": str(float(ttl_cpu_s)), "kwargs": json.dumps(kwargs or {}),
+            "job_key": job_key or job_id, "segment": str(int(segment)),
+            "cpu_prior": f"{float(cpu_prior):.6f}", "wall_prior": f"{float(wall_prior):.6f}",
+            "ts": f"{time.time():.3f}"}
+    if envelope is not None:
+        spec["envelope"] = json.dumps(envelope, sort_keys=True)
+    r.xadd(JOBS.format(lane), spec)
     return job_id
 
 
@@ -152,9 +159,10 @@ def _child_main(pipe, url: str, lane: str) -> None:
 
 class Worker:
     def __init__(self, lane: str, url: str | None = None, repo=None, poll_s: float = 0.05, log=print,
-                 ckpt_dir=None):
+                 ckpt_dir=None, auto_requeue: bool = True):
         from primordial.bus import bus
         self.lane, self.url = lane, url or bus.URL
+        self.auto_requeue = auto_requeue          # F9: requeue a paused job's next segment (F-R5-3 can resume instead)
         self.r = _redis(self.url)
         self.repo = pathlib.Path(repo) if repo else pathlib.Path(__file__).resolve().parents[2]
         self.poll_s, self.log = poll_s, log
@@ -215,10 +223,54 @@ class Worker:
                     w.write({"status": "aborted", "reason": f"bad row: {e}", "job_id": job_id, "row": row})
                 n += 1
 
+    @staticmethod
+    def _envelope(job: dict):
+        raw = job.get("envelope")
+        if not raw:
+            return None
+        try:
+            return json.loads(raw)
+        except ValueError:
+            return "unparseable"
+
+    def _admit(self, job: dict) -> dict | None:
+        """F-R5-1/2: None = legacy job outside a round (no envelope, no clock); else admit()'s verdict."""
+        from primordial.fabric import envelope as EV
+        from primordial.ops import round_clock as RC
+        clock = RC.read(self.r)
+        env = self._envelope(job)
+        if env is None and clock is None:
+            return None
+        return EV.admit(env, kind="cpu", clock=clock, continuation=int(job.get("segment", 0) or 0) > 0)
+
+    def _refuse(self, job: dict, verdict: dict) -> dict:
+        from primordial.fabric import envelope as EV
+        env = self._envelope(job)
+        ev = EV.refuse(self.r, self.lane, job, verdict, env)
+        env = env if isinstance(env, dict) else {}
+        out = {"job_id": job["job_id"], "status": "refused", "event": ev["event"], "reasons": verdict["reasons"],
+               "rows": 0, "cpu_s": 0.0, "wall_s": 0.0, "job_key": job.get("job_key") or job["job_id"],
+               "segment": int(job.get("segment", 0) or 0), "ended": round(time.time(), 3),
+               **{k: env.get(k) for k in DONE_ENV_FIELDS}}
+        self.r.xadd(DONE.format(self.lane), {"json": json.dumps(out, sort_keys=True)})
+        self.log(f"job {job['job_id']} {job.get('fn')} -> refused {ev['event']} {verdict['reasons']}")
+        return out
+
+    def _event(self, name: str, rec: dict) -> None:
+        from primordial.fabric import envelope as EV
+        self.r.xadd(EV.EVENTS, {"event": name, "json": json.dumps(dict(rec, event=name, lane=self.lane),
+                                                                  sort_keys=True)})
+
     def run_job(self, job: dict) -> dict:
         if self.child is None or not self.child.is_alive():
             self._spawn()
+        env = self._envelope(job)
+        env = env if isinstance(env, dict) else {}
         ttl = float(job["ttl_cpu_s"])
+        if env.get("cpu_budget_s") is not None:              # F-R5-1: the envelope caps the task TTL
+            ttl = min(ttl, float(env["cpu_budget_s"]))
+        wall_limit = float(env["wall_budget_s"]) if env.get("wall_budget_s") is not None else None
+        wall_prior = float(job.get("wall_prior", 0) or 0)
         cpu_prior = float(job.get("cpu_prior", 0) or 0)
         job = dict(job, ckpt_dir=self.ckpt_dir)
         rows_path = pathlib.Path(job["rows"])
@@ -249,7 +301,12 @@ class Worker:
             cpu = self._child_cpu() - cpu0
             if cpu + cpu_prior > ttl:
                 self._kill_child()
-                status, result = "timeout", {"ok": False, "cpu_s": cpu}
+                status, result = "timeout", {"ok": False, "cpu_s": cpu, "limit": "cpu"}
+                break
+            if wall_limit is not None and time.perf_counter() - t0 + wall_prior > wall_limit:
+                cpu = self._child_cpu() - cpu0
+                self._kill_child()
+                status, result = "timeout", {"ok": False, "cpu_s": cpu, "limit": "wall"}
                 break
         n += self._drain(job["job_id"], w)
         if status == "timeout":
@@ -261,7 +318,8 @@ class Worker:
         wall_s = time.perf_counter() - t0
         if status in ("timeout", "died", "error"):
             w.write({"status": "timeout" if status == "timeout" else "aborted", "job_id": job["job_id"],
-                     "kind": "job_end", "reason": status, "ttl_cpu_s": ttl, "cpu_s": cpu_s, "wall_s": wall_s,
+                     "kind": "job_end", "reason": status, "limit": result.get("limit"), "ttl_cpu_s": ttl,
+                     "wall_budget_s": wall_limit, "cpu_s": cpu_s, "wall_s": wall_s,
                      "rows_before": n, "error": (result.get("error") or "")[-500:],
                      "job_key": job.get("job_key"), "segment": int(job.get("segment", 0)), "cpu_prior": cpu_prior})
         commit_error = None
@@ -275,11 +333,16 @@ class Worker:
                "child_wall_s": result.get("wall_s"), "sha": sha, "rows_path": str(rows_path),
                "started": round(started, 3), "ended": round(time.time(), 3),
                "job_key": job.get("job_key") or job["job_id"], "segment": int(job.get("segment", 0)),
-               "cpu_prior": cpu_prior, "commit_error": commit_error}
-        if status == "paused":
-            out["next_job_id"] = submit(self.lane, job["fn"], job["exp_id"], job["rows"], ttl,
+               "cpu_prior": cpu_prior, "wall_prior": wall_prior, "commit_error": commit_error,
+               "limit": result.get("limit"), **{k: env.get(k) for k in DONE_ENV_FIELDS}}
+        if status == "paused" and self.auto_requeue:
+            out["next_job_id"] = submit(self.lane, job["fn"], job["exp_id"], job["rows"], float(job["ttl_cpu_s"]),
                                         json.loads(job["kwargs"]), r=self.r, job_key=out["job_key"],
-                                        segment=out["segment"] + 1, cpu_prior=cpu_prior + (cpu_s or 0))
+                                        segment=out["segment"] + 1, cpu_prior=cpu_prior + (cpu_s or 0),
+                                        envelope=env or None, wall_prior=wall_prior + wall_s)
+        if status == "timeout":
+            self._event("TIMEOUT", {k: out[k] for k in ("job_id", "job_key", "segment", "rows", "cpu_s", "wall_s",
+                                                         "limit", "sha", "rows_path")})
         self.r.xadd(DONE.format(self.lane), {"json": json.dumps(out, sort_keys=True)})
         self.log(f"job {job['job_id']} {job['fn']} -> {status} rows={n} cpu={cpu_s} wall={wall_s:.2f}s")
         return out
@@ -317,6 +380,11 @@ class Worker:
                         break
                     continue
                 mid, job = msgs[0]
+                verdict = self._admit(job)
+                if verdict is not None and not verdict["ok"]:
+                    done.append(self._refuse(job, verdict))
+                    self.r.xack(JOBS.format(self.lane), self.group, mid)
+                    continue
                 self._state("busy", job["job_id"])
                 done.append(self.run_job(job))
                 self.r.xack(JOBS.format(self.lane), self.group, mid)

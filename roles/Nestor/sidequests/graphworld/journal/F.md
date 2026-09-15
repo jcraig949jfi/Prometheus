@@ -192,3 +192,19 @@ PACKAGE F: O3 0712083bc, O5 98f8bf705, O1 a96830abc, F7 00586cf91,
 F8 ec6322c07, F14 13802b096, F9 + X 0bdc60259, F15 (this commit): all green.
 Stopping per brief s0.8 (package green before epoch 4). No open claims,
 nothing running, all pushed.
+
+# Round 5 P-BUILD -- Nestor-F[m1-7aa3e77b], hello 06:13:16, cap 08:13
+
+Interfaces posted to G,H,E,A 06:14 (1789467306628-0).
+
+## 2026-09-15 R5 iteration 1 -- F-R5-1 envelope + stage admission (DONE)
+
+- fabric/envelope.py: the 11 mandatory fields, one CEILINGS table (PILOT cpu wall 900, gpu 600,
+  cpu_budget 1200), ALLOWED stages per active stage, admit() -> {ok, event, reasons}; refuse()
+  writes STAGE_BUDGET_REFUSAL to pm:events + a PRODUCTION_CANDIDATE stub to pm:production_candidates.
+- worker.py: serve() admits before running (a round clock makes the envelope mandatory; no clock and
+  no envelope = legacy); refused jobs get a done record status=refused, no rows file, worker survives.
+  The envelope caps ttl_cpu_s at cpu_budget_s and kills past wall_budget_s (limit=wall, TIMEOUT event).
+  Done records carry cohort/campaign_stage/experiment_class/predicate_id.
+- ops/round_clock.py (used by admission; F-R5-2 wires the controller).
+- Tests test_r5_f1_envelope.py (12, incl. A pins: PRODUCTION refused, SMOKE/REPLICATION at PILOT ceilings, unlisted stage refused) + F7/F9/F14 regression: 23 passed rc 0.
