@@ -394,3 +394,7 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
 - capacity.py: exp/budget flags (NODE_CAPACITY_PROFILE_R7, --budget-s 1200); the profile key keeps sha_local + rows
   path instead of a sha a later rebase orphans (R5 lesson).
 - 64 passed rc 0 (residue, D19, closure, capacity, epoch/round, F7).
+- Full suite on 606df2613 (17:03-17:08): 896 passed, 9 skipped, 1 FAILED = G's test_r16_learner_plan
+  ::test_committed_plan_file_reproduces. Cause (not F): the committed R16_LEARNER_PLAN_R7.json stores an absolute
+  nestor-bld-g path for the order file, so the regenerated plan differs in any other worktree (gate 41 would fail).
+  Told G + A with a repo-relative fix (1789506520992-0). H R7 BUILD DONE 17:08; F-R7-4 waits for G + E DONE or 18:10.
