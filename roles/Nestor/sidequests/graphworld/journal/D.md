@@ -265,3 +265,9 @@
   test (3 passed rc 0), 0 QD: re-read G's 8 saved M2 archives, every elite on TRAIN8 + HELD64; gate as a float linear
   genome must reproduce the floor rows; SEARCH_SHORT / SELECTION / OVERFIT_ONLY / MIXED. w13 train8 is position 20
   in G's R6 screen order; this reads round 4 archives only, no overlap with G's runs.
+- D-R6-4 RECORD (job e304812b3a6e ok, 0.40 s, 0 QD, predicate 1789489433361-0): decision OVERFIT_ONLY. I1 7/7 (gate as
+  float linear genome == floor rows 183.625 / 166.46875, floors.gate_scores agrees, abstain 159.0, archive fitness
+  recount 8/8); controls planted gate 8/8, planted abstain 0/8. top1 TRAIN8 197.5-233.75 > 183.625 in 8/8 (not
+  search). Archives with >= 1 elite at HELD64 >= 166.47: 2/8 (runs 2, 5: 7 and 2 elites; top1 is rank 1 / near,
+  held 182.84 / 172.03). Other 6 runs: best elite of ~488 reaches 157.9-163.2, none at the gate. The search overfits
+  TRAIN8; it is not a selection miss. Caveat: 8 runs, one RNG stream (round 4 v1 = family 4200).
