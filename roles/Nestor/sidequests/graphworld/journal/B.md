@@ -561,3 +561,4 @@
   Inbox read unpiped (to a file, all 66 lines): R7 CLOCK LIVE (A 1789508300210-0), E predicates E-R7-1/2/3/O8 -- nothing for B. Backend cpu_sequential / GPU_REJECT.
   Only item: REPLICATION of frozen B-R5-1 per pm:replication record. pm:replication 0 records, 0 published keys -> idle (bus beat only). Monitor bd22ejf9b polls the stream every 15 s.
   Carry-forward from R6: r5_1_candidate.job hardcodes GS=13 / train128; check that against a record's cell before submitting (no edit now). No harness module edited.
+- 18:19 (T+41, epoch 1) loop iteration: beat; inbox unpiped to file (97 lines): predicates C-R7-AP-01, D-R7-1 (C-R6-AP-01 gens sweep), D-R7-2 (family 3303 below-floor runs of B-R5-1, same-stream baseline + obs use) -- D-R7-2 is D's anomaly work on B-R5-1; B does not act (no re-run, no re-read). pm:replication 0 records; monitor bm4n7w927 re-armed (bd22ejf9b expired, no record). No job; worker idle.
