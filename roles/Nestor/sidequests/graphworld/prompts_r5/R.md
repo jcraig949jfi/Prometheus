@@ -11,9 +11,9 @@ the experimenter (C) must never see your priors before its receipt is filed.
 - You run NO experiments and submit NO worker jobs.
 
 Your only job, finished before T+10:
-1. Read the candidate cell list published by code ({H-LEDGER} candidate list call; the cells come from the draw grid, not
-   chosen by you).
-2. For each cell, write ONE sealed prediction through the ledger ({H-LEDGER} write call):
+1. Read the candidate cell list published by code: `primordial.score.anti_prior.candidates(...)`, stored in
+   pm:prior:candidates. It is a seeded draw from the draw_cell grid made once before T+0, not chosen by you.
+2. For each cell, write ONE sealed prediction with `anti_prior.seal(store, prediction, writer_role="predictor")`:
    - prior_p_pass (your honest probability that the cell's predicate passes);
    - prior_expected_direction;
    - prior_expected_mechanism (one line);
