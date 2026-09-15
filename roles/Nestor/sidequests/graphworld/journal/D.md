@@ -425,3 +425,11 @@
 - 18:38 worker D restarted after the module edit: pid 25220 stopped by verified cmdline + cwd (exit 15), new pid 30748
   registered (nestor-r7-d, r7); the 25220 reg key had TTL 45 s and expires by itself (a terminate skips unregister).
   D-R7-2b claimed, predicate 1789511917971-0 (pinned 5b681baac, rule unchanged), admission ok, job 23ae002ee09c queued.
+- D-R7-2b RECORD (job 23ae002ee09c ok, 1 row d0e09a7d8, 0.66 s, 0 QD, token wait 632 s): NOT_STREAM+OBS_USED. I1 5/5,
+  planted_shared -> SHARED_STREAM, planted_specific -> NOT_STREAM. The 3 low candidate streams rank 15/16/23 of 32 in
+  G's same-stream float baseline (182.75/183.69/189.22, all above floor); q = 0. All 3 read observations (W-zeroed
+  159.0 like every run). Baseline family medians 4200 189.5 / 3303 183.2 / 5501 176.7 / 2101 169.2. Same-stream
+  Spearman -0.07 (rotation 0.17). Receipt 1789512668923-0; ANOM-..7773 RESOLVED (mechanism not claimed).
+  First push failed on a remote ref race ("cannot lock ref"), retried clean (3746854e3).
+- A 1789512067159-0 routed the O8 fused != numpy graft anomaly (1789512027239-0; E adds a 2nd case 2101|2255, draw 31)
+  to D priority 1. Claimed. Predicate before any replay (reproducibility is itself a discriminator class).
