@@ -1,13 +1,81 @@
 {
- "begin_ts": 1789450309.549,
+ "begin_ts": 1789471270.904,
+ "budget": {
+  "by_cohort": {
+   "B": {
+    "cpu_s": 1.734,
+    "jobs": 2,
+    "status": {
+     "ok": 1,
+     "refused": 1
+    }
+   },
+   "D": {
+    "cpu_s": 10.969,
+    "jobs": 1,
+    "status": {
+     "ok": 1
+    }
+   },
+   "E": {
+    "cpu_s": 104.281,
+    "jobs": 2,
+    "status": {
+     "ok": 2
+    }
+   },
+   "lane:B": {
+    "cpu_s": 10049.923,
+    "jobs": 8,
+    "status": {
+     "ok": 6,
+     "paused": 1,
+     "timeout": 1
+    }
+   },
+   "lane:C": {
+    "cpu_s": 2590.235,
+    "jobs": 3,
+    "status": {
+     "ok": 1,
+     "paused": 1,
+     "refused": 1
+    }
+   },
+   "lane:D": {
+    "cpu_s": 9358.221,
+    "jobs": 10,
+    "status": {
+     "error": 1,
+     "ok": 6,
+     "paused": 3
+    }
+   },
+   "lane:E": {
+    "cpu_s": 10224.608,
+    "jobs": 6,
+    "status": {
+     "ok": 5,
+     "paused": 1
+    }
+   }
+  },
+  "by_lane": {
+   "B": 10051.657,
+   "C": 2590.235,
+   "D": 9369.19,
+   "E": 10328.89
+  }
+ },
  "controller": "A[m1-449a9e76]",
- "drained_ts": 1789450429.553,
+ "drain_timeout_s": 30.0,
+ "drained_ts": 1789471271.071,
  "epoch": 1,
  "export": {
-  "anomalies": 32,
-  "results": 99,
+  "anomalies": 38,
+  "results": 103,
   "state": 8,
-  "swarm": 698
+  "swarm": 860
  },
  "lanes": [
   "B",
@@ -15,29 +83,27 @@
   "D",
   "E"
  ],
- "stragglers": [
-  "C"
- ],
+ "stragglers": [],
  "workers": {
   "B": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789450429.501"
+   "ts": "1789471271.062"
   },
   "C": {
-   "job_id": "70757c0672fe",
-   "state": "busy",
-   "ts": "1789450428.575"
+   "job_id": "",
+   "state": "stopped",
+   "ts": "1789471271.062"
   },
   "D": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789450429.501"
+   "ts": "1789471271.061"
   },
   "E": {
    "job_id": "",
    "state": "stopped",
-   "ts": "1789450429.501"
+   "ts": "1789471271.066"
   }
  }
 }
