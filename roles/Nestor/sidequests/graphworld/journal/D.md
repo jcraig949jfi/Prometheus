@@ -260,3 +260,8 @@
   18 seeds, 2 in HELD8. Caught elites 28-54 seeds. Every charge-diff seed has >= 1 flip. The skip-odd oracle's HELD8
   blindness on elites 0,1 is seed coverage: the cheat has power, HELD8 never reaches it.
 - Receipt D-R6-3 filed 1789489146880-0 (guard 10/10, status NULL, COVERAGE), rows 55c35e49d; ANOM-..9775 RESOLVED; ..7943 chain closed.
+- Loop iteration 2 (12:23): claimed ANOM-..9541 (HELD w13 train8: gate 166.47 held vs baseline 149.08). Committed M2
+  legacy rows already show top-16 TRAIN8 193-220 > gate 183.625 in 8/8 runs (seen before predicate). D-R6-4 code +
+  test (3 passed rc 0), 0 QD: re-read G's 8 saved M2 archives, every elite on TRAIN8 + HELD64; gate as a float linear
+  genome must reproduce the floor rows; SEARCH_SHORT / SELECTION / OVERFIT_ONLY / MIXED. w13 train8 is position 20
+  in G's R6 screen order; this reads round 4 archives only, no overlap with G's runs.
