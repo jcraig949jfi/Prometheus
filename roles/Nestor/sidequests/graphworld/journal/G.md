@@ -302,3 +302,31 @@ Brief: prompts_bld_r4/G.md; items SWARM_R4 s2 G-R4-1..5. Threads 5. M2 unheld (G
   w26 (0.71 h), w34 (2.84 h), w10 (1.42 h). The running child still has the old modules loaded, so its
   stage2_cell rows say PENDING_LEARNER; worlds_r4.json is rebuilt from baseline/floor/learner rows, never
   from that string.
+
+## 2026-09-15 P0 final, iteration 6 -- stage 2 DONE; worlds_r4.json written, audited, pushed; G P0 DONE
+
+- Stage 2 finished (job 5af1dacd7c5d in 3 segments + w13 learner 34bcd7c509e6): 74/74 cells, 749 stage 2
+  rows (last rows commit da8c5312a), 0 aborted. No cell NOT_REACHED (1 survivor < 8).
+- A (1789442653996-0): no 4-epoch cap in round 4 P0; operator asleep, standing order to launch when G and H
+  are ready. H found 2 small defects (PENDING screen label, PENDING_LEARNER string) -- both already fixed
+  locally; pushed through a stop-flag gap (1f3c550d3, suite 397 rc 0).
+- worlds_r4.json (primordial.metric.screen_run --write --commit da8c5312a), active gate_in|HOLD:
+  SURVIVED 1: w13 train128 (floor 159.00 abstain exact after learner 151.41; gate 166.47; baseline median
+  182.72, CI [173.41, 188.11], 200 bytes). HELD 5: w7 t8, w1 t8, w1 t128, w34 t8, w13 t8. PENDING 4
+  (non-survivable, learners deferred, ~7.81 h): w7 t128 2.84, w26 t128 0.71, w34 t128 2.84, w10 t128 1.42.
+  CULLED 64 (incl. degenerate w19/w24/w25). Notable: w28 t128 baseline == abstain exactly (170.88) -> tie
+  culled; w30 t128 CI high == floor 660.19.
+- Independent audit (scratchpad script, recomputes medians + bootstrap CIs from raw run rows and the four
+  variant rules without screen/worlds code): 74/74 cells, 0 problems. Live checks: guard w13 t128 None,
+  w1 t8 HELD, w7 t128 PENDING, w99 UNSCREENED; draw_cell survivors ['w13']; check_r4 w13 t128 at the
+  baseline median with 199 bytes -> PASS.
+- Pushed ee86620f4 (suite 408 passed, 9 skipped, rc 0); sha256 f007f4e23d356a202cf5097bd2bdda139893b6a56e5769511cb8563eaac6d4e4
+  identical on integration. Receipts PASS: G-R4-3-stage2 (1789447347341-0), G-R4-4-worlds-r4
+  (1789447348162-0), G-R4-5-clause-a-progress (1789447348881-0); ledger mirror 45c46442f.
+- G-R4-1..5 green. G P0 DONE posted to A.
+
+RESUME (after test launch 1 quiesces, per A): submit primordial.metric.invariant:job for [[7,"train128_held64"],
+[26,"train128_held64"],[34,"train128_held64"],[10,"train128_held64"]] (rows G-R4-3-stage2-learner.jsonl,
+predicate first, burst ~7.8 h at 5 threads, or ask A for the order), then
+`python -m primordial.metric.screen_run --write --commit <rows sha>`, rerun the scratchpad-style raw-row audit,
+full suite, push, receipt, and tell H to re-replay. Push under a live RowWriter only through a stop-flag gap.
