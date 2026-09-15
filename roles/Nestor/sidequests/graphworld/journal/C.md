@@ -560,3 +560,12 @@
 - Own errors: the launch script import failure (nothing posted); null-arm oracle exemption not pre-stated (skip_odd 0
   eligible on constant inputs); the TRAIN8 fallback made P2 near-certain to bind (disclosed before the run).
 - Worker C stopped (no queued jobs). The prior ledger was never read by C.
+
+## 2026-09-15 round 7 BOOT (m1-440f0317): lane C up at T+15
+
+- Boot: branch already at 7da5e86fd (ff no-op), warmup rc 0, suite 568 passed 1 skipped (rc 0), residue scan r7 ok (no residue).
+- Worker C pid 24752 registered (repo nestor-r7-c, round r7, tag m1-440f0317); bus hello 1789509134994-0 took lane C
+  over from the round 6 tag m1-2a4f850c (no live heartbeat, R6 worker stopped at R6 close).
+- Clock r7 PRODUCTION start 17:37:49; NO_NEW_WORK 02:37:49; drain 03:07:49 (FINAL to A before drain, per A 1789508300210-0).
+- ANTI_PRIOR v2 #1 code-assigned (pm:prior:* never read): C-R7-AP-01 affine_plastic / w13 / held_out_seeds / numpy /
+  metered_stream. Harness next; 32/4/8, envelope.admit dry run before the predicate.
