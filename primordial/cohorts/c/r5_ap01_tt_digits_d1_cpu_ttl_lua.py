@@ -210,14 +210,14 @@ def held_row(raw):
             "symbols_used_top1": int(len(np.unique(sym[0]))), "actions_used_top1": int(len(np.unique(act[0])))}
 
 
-def job(ctx, gens: int = GENS, ttl_cpu_s: float = TTL_CPU_S, port: int = PORT):
+def job(ctx, gens: int = GENS, ttl_cpu_s: float = TTL_CPU_S, port: int = PORT, exp_id: str = EXP):
     import redis
     r = redis.Redis(host="127.0.0.1", port=port)
     arms = (("cell", ttl_cpu_s, CELL), ("control", None, CELL_CTRL))
     todo = [(f, rs, ai) for f in FAMILIES for rs in range(RUNS_PER_FAMILY) for ai in range(2)]
     st = ctx.load_checkpoint() or {"next": 0, "held": {"cell": [], "control": []}, "clean": True, "ref": False}
     if not st["ref"]:
-        ctx.emit({"kind": "reference", "exp_id": EXP, "gens": gens, "batch": BATCH, "ttl_cpu_s": ttl_cpu_s,
+        ctx.emit({"kind": "reference", "exp_id": exp_id, "gens": gens, "batch": BATCH, "ttl_cpu_s": ttl_cpu_s,
                   "genome_bytes": GLEN, "chance_yield": S.CHANCE, "status": "control", "ts": round(time.time(), 3)})
         st["ref"] = True
     while st["next"] < len(todo):
@@ -251,7 +251,7 @@ def job(ctx, gens: int = GENS, ttl_cpu_s: float = TTL_CPU_S, port: int = PORT):
     n = {a: len(st["held"][a]) for a in st["held"]}
     full = all(v == len(FAMILIES) * RUNS_PER_FAMILY for v in n.values())
     primary = "INDETERMINATE" if not (st["clean"] and full) else ("PASS" if q["cell"][1] >= bar else "FAIL")
-    ctx.emit({"kind": "summary", "exp_id": EXP, "cell": CELL, "runs_total": n["cell"],
+    ctx.emit({"kind": "summary", "exp_id": exp_id, "cell": CELL, "runs_total": n["cell"],
               "rng_family_count": len(FAMILIES), "runs_per_family": RUNS_PER_FAMILY, "families": list(FAMILIES),
               "held_yield_median_cell": round(q["cell"][1], 5), "iqr_cell": round(q["cell"][2] - q["cell"][0], 5),
               "held_yield_median_control": round(q["control"][1], 5),
