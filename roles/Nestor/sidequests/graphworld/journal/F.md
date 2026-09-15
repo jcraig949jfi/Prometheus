@@ -470,3 +470,19 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
 - Filing text came from a script file as Python literals, and both stored bases were checked byte-identical to the
   source (the D24 backtick loss made that check necessary). E's D25 stub untouched, per A.
 - Local commits held for close: 6b6c03829 (D22), f4d3a6e39 (D24), this one.
+
+## 2026-09-15 ~19:44 (round 7 live) -- D29 row-status vs evidence-class vocabulary: PC 1789515839791-0 filed (no code, no push)
+
+- D-R7-3 job 74bc27094543 emitted status 'observation'; rows.py:44 STATUSES has no such member, so every row was
+  refused at rows.py:184. Verified from origin rows + the live done stream:
+  * the rows are RECOVERABLE -- _drain (worker.py:416) wraps each refusal in an aborted row carrying the original
+    payload verbatim; all 3 (2 case + summary, decision d24:BRAIN_NEAR_TIE|d31:BRAIN_NEAR_TIE) are on origin;
+  * the job reported status ok, rows 3, cpu_s 2.34, wall_s 0.654 -- the INDETERMINATE was D's receipt decision.
+    A job can have every row refused and still finish ok: my defect, the worse half of D29;
+  * measured loss 0.654 s / 2.34 CPU-s, not a full anomaly job; D-R7-3b rows are not on origin, so the re-run is
+    unmeasured. D disclosed it correctly and lost one small job.
+- The collision is literal: the refused summary row carries evidence_class OBSERVATION and status observation.
+- Filed design: emit-time validation in the child with a message naming evidence_class; alias observation -> record
+  (my recommendation) or keep refusing; any refused row ends the job status error, never ok; a lint test that
+  rows.STATUSES and evidence_n.EVIDENCE_CLASSES never share a member. 1200 s build / 600 s tests.
+- Local commits held for close: 6b6c03829 (D22), f4d3a6e39 (D24), 20dd00d74 (D26+D27), this one.
