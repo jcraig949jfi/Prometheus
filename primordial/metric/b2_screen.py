@@ -147,7 +147,8 @@ def full_screen_cost(episode_s: float, n_specs: int, n_pressures: int = 1, train
             "episodes_total": total, "wall_h_single_worker": total * float(episode_s) / 3600.0}
 
 
-PILOT_CEILINGS = {"cpu_wall_s": 900.0, "cpu_budget_s": 1200.0}     # SWARM_R5 s3 F-R5-1 (F owns the table; mirrored for the report)
+from primordial.fabric.envelope import CEILINGS as _CEILINGS   # one ceiling table (drift killed the R5 launch)
+PILOT_CEILINGS = {"cpu_wall_s": float(_CEILINGS["PILOT"]["cpu_wall_s"]), "cpu_budget_s": float(_CEILINGS["PILOT"]["cpu_budget_s"])}
 
 
 def pilot_cost(episode_s: float, n_specs: int = MAX_SPECS, **kw) -> dict:

@@ -37,7 +37,7 @@ LISTS = ("required_controls", "required_oracles")
 # PILOT per operator 19 s1 / SWARM_R5 s3 F-R5-1; SMOKE may not exceed PILOT.
 CEILINGS = {
     "SMOKE":       {"cpu_wall_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 1200},
-    "PILOT":       {"cpu_wall_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 1200},
+    "PILOT":       {"cpu_wall_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 2400},   # operator 20 (09-15 07:23): 40 CPU-min
     "PRODUCTION":  {"cpu_wall_s": None, "gpu_wall_s": None, "cpu_budget_s": None},
     "REPLICATION": {"cpu_wall_s": None, "gpu_wall_s": None, "cpu_budget_s": None},
 }

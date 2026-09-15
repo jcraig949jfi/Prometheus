@@ -22,14 +22,14 @@ LANE = "F-r5-1"
 # ------------------------------------------------------------------ the table (no Redis)
 
 def test_ceilings_pilot_values():
-    assert EV.CEILINGS["PILOT"] == {"cpu_wall_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 1200}
+    assert EV.CEILINGS["PILOT"] == {"cpu_wall_s": 900, "gpu_wall_s": 600, "cpu_budget_s": 2400}   # operator 20
     for stage in EV.STAGES:
         assert set(EV.CEILINGS[stage]) == {"cpu_wall_s", "gpu_wall_s", "cpu_budget_s"}
 
 
 @pytest.mark.parametrize("override,kind,reason", [
     ({"wall_budget_s": 901}, "cpu", "CPU_WALL_OVER_CEILING"),
-    ({"cpu_budget_s": 1201}, "cpu", "CPU_BUDGET_OVER_CEILING"),
+    ({"cpu_budget_s": 2401}, "cpu", "CPU_BUDGET_OVER_CEILING"),   # one over the operator-20 ceiling
     ({"gpu_budget_s": 601}, "gpu", "GPU_WALL_OVER_CEILING"),
     ({"campaign_stage": "PRODUCTION"}, "cpu", "STAGE_NOT_ALLOWED"),
     ({"checkpointable": "yes"}, "cpu", "ENVELOPE_BAD_VALUE:checkpointable"),
@@ -43,7 +43,7 @@ def test_refusal_reasons(override, kind, reason):
 
 def test_edges_admitted_and_missing_field():
     clock = RC.plan(1000.0)
-    ok = EV.admit(EV.example(wall_budget_s=900, cpu_budget_s=1200), clock=clock, now=1000.0)
+    ok = EV.admit(EV.example(wall_budget_s=900, cpu_budget_s=2400), clock=clock, now=1000.0)
     assert ok["ok"] and ok["reasons"] == [] and ok["event"] is None
     assert EV.admit(EV.example(gpu_budget_s=600), kind="gpu", clock=clock, now=1000.0)["ok"]
     env = EV.example()
