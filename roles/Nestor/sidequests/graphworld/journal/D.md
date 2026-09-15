@@ -209,3 +209,8 @@
   naming the defect: warp wall = kernel median + ONE h2d draw, so ratios are not like-for-like at any n.
   ANOM-..1162 resolved REFUTED (mechanism not confirmed). Receipt filed with the envelope passed explicitly (GPU jobs
   live on pm:gpu:jobs, so the guard cannot look it up on pm:jobs:D). Queue: no OPEN anomalies left for D.
+- CLOSE ~T+95 (no new work before NO_NEW_WORK): queue has 0 OPEN D-priority anomalies; worker D idle, no open claims.
+  R5 D ledger: 2 claims, 2 receipts (D-R5-1 1789471347601-0, D-R5-2 1789473124768-0), 2 anomalies REFUTED
+  (..6045 w13 not a one-family artifact under top1_train; ..1162 GPU-1 reversal gone, mechanism unconfirmed),
+  1 PRODUCTION_CANDIDATE (5th RNG family, 32 QD runs, 1789471299163-0), 0 QD runs, ~19 s total compute.
+  Own error metabolised: D's cold-copy mechanism for ..1162 was wrong (cold 5.59 ms, not 33.97 ms).
