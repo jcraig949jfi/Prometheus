@@ -30,11 +30,35 @@ param(
     [string[]]$ExeArgs = @('--dangerously-skip-permissions', '--remote-control'),
     [string]$LogDir = "C:\Users\jcrai\lab\pm-data\launcher",
     [switch]$BootPrompt,  # start the session on roles/Nestor/sidequests/graphworld/<PromptDir>/<Lane>.md
-    [string]$PromptDir = "prompts_r2"
+    [string]$PromptDir = "prompts_r2",
+    [switch]$DryRun  # F-R6-5 gate helper: parse + build the launch line, print one JSON line, exit 0; no log, no env, no process
 )
 $ErrorActionPreference = 'Stop'
 if (-not $Name) { $Name = "Nestor $Lane r2" }
 $Worktree = (Resolve-Path $Worktree).Path
+
+$parts = @()
+if ($BootPrompt -and $Exe -like '*claude*') {
+    # quote-free first prompt: the cohort's full paste block lives in the worktree (no multi-line quoting)
+    $parts += ('"Read roles/Nestor/sidequests/graphworld/' + $PromptDir + '/' + $Lane + '.md in this worktree and follow it exactly."')
+}
+$parts += @($ExeArgs)
+if ($Exe -like '*claude*') { $parts += ('"' + $Name + '"') }
+$argline = ($parts -join ' ')
+
+if ($DryRun) {
+    $promptFile = $null
+    $promptExists = $null
+    if ($BootPrompt) {
+        $promptFile = Join-Path $Worktree ('roles\Nestor\sidequests\graphworld\' + $PromptDir + '\' + $Lane + '.md')
+        $promptExists = [bool](Test-Path -LiteralPath $promptFile -PathType Leaf)
+    }
+    $o = [ordered]@{ dry_run = $true; lane = $Lane; worktree = $Worktree; exe = $Exe; args = $argline;
+                     prompt_file = $promptFile; prompt_exists = $promptExists }
+    Write-Output ($o | ConvertTo-Json -Compress)
+    exit 0
+}
+
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
 $log = Join-Path $LogDir 'launch_log.jsonl'
 
@@ -47,15 +71,6 @@ $env:PM_LANE = $Lane
 $env:OMP_NUM_THREADS = '3'
 $env:NUMBA_NUM_THREADS = '3'
 $env:OPENBLAS_NUM_THREADS = '3'
-
-$parts = @()
-if ($BootPrompt -and $Exe -like '*claude*') {
-    # quote-free first prompt: the cohort's full paste block lives in the worktree (no multi-line quoting)
-    $parts += ('"Read roles/Nestor/sidequests/graphworld/' + $PromptDir + '/' + $Lane + '.md in this worktree and follow it exactly."')
-}
-$parts += @($ExeArgs)
-if ($Exe -like '*claude*') { $parts += ('"' + $Name + '"') }
-$argline = ($parts -join ' ')
 
 $start = Get-Date
 $p = Start-Process -FilePath $Exe -ArgumentList $argline -WorkingDirectory $Worktree -NoNewWindow -PassThru
