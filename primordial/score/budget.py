@@ -29,7 +29,7 @@ import pathlib
 import time
 
 from primordial.score.progress import rows_of
-from primordial.score.round2 import ROOT, ROUND2_START
+from primordial.score.round2 import ROOT, ROUND2_END, ROUND2_START
 
 SHARES_R2 = {"B": 0.40, "C": 0.25, "D": 0.20, "E": 0.15}
 SHARES_R4 = {"B": 0.35, "C": 0.25, "D": 0.25, "E": 0.15}
@@ -72,7 +72,7 @@ def job_ledger(r, lanes=tuple(SHARES), window=(0.0, INF)) -> dict:
     return out
 
 
-def rows_ledger(root=ROOT, lanes=tuple(SHARES), window=(ROUND2_START, INF)) -> dict:
+def rows_ledger(root=ROOT, lanes=tuple(SHARES), window=(ROUND2_START, ROUND2_END)) -> dict:
     """Replay from committed rows: CPU only where a row recorded it. Unmetered lanes stay unmetered."""
     out = {}
     for lane in lanes:

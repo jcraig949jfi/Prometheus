@@ -34,7 +34,7 @@ import pathlib
 import re
 
 from primordial.core.contract import board_eligible
-from primordial.score.round2 import DATE, EXPORT, ROOT, ROUND2_START, jsonl
+from primordial.score.round2 import DATE, EXPORT, ROOT, ROUND2_END, ROUND2_START, jsonl
 
 COHORTS = ("B", "C", "D", "E")
 FAILURE_STATUSES = ("dev", "aborted", "timeout", "cheat")
@@ -114,7 +114,7 @@ def refuted_targets(rec: dict, exp_lane: dict[str, str]) -> list[str]:
     return sorted(n for n in names if n in exp_lane and n != rec["exp_id"])
 
 
-def vector(export=EXPORT, root=ROOT, window=(ROUND2_START, float("inf")), cohorts=COHORTS, worlds=None) -> dict:
+def vector(export=EXPORT, root=ROOT, window=(ROUND2_START, ROUND2_END), cohorts=COHORTS, worlds=None) -> dict:
     """worlds: None = the round 2 compression rule; a loaded worlds_r4.json (or {} for none on disk) =
     round 4, where only SURVIVED cells are judged (primordial.score.clause_a_r4, H-R4-2)."""
     export, root = pathlib.Path(export), pathlib.Path(root)

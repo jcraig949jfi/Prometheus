@@ -37,6 +37,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 EXPORT = ROOT / "roles" / "Nestor" / "sidequests" / "graphworld" / "bus_export"
 DATE = "2026-09-14"
 ROUND2_START = 1789415000.0   # after the last round 1 receipt (E10, ts 1789402803), before the QD seed (1789415669)
+ROUND2_END = 1789447800.0     # 2026-09-15 00:50 local, before the first round 4 cohort launch (B 00:53:23): round 4
+                              # reuses lanes B-E, so the replay window must close (A, 09-15)
 COHORTS = ("B", "C", "D", "E")   # round 2 cohort lanes (SWARM_R2 s1)
 OUT = ROOT / "primordial" / "ledger" / "rows" / "H" / "F10-prior-vs-reality-r2.jsonl"
 POSTED = "POSTED"
@@ -134,7 +136,7 @@ def predicate_posts(swarm: list[dict]) -> dict[str, list[dict]]:
     """id -> predicate posts (JSON bodies carrying a prior), oldest first."""
     posts: dict[str, list[dict]] = {}
     for m in swarm:
-        if float(m["ts"]) < ROUND2_START or m.get("kind") == "result":
+        if not ROUND2_START <= float(m["ts"]) < ROUND2_END or m.get("kind") == "result":
             continue
         try:
             body = json.loads(m.get("body") or "")
@@ -254,7 +256,7 @@ def resolve(export=EXPORT, root=ROOT) -> dict:
     load, posts = Loader(root), predicate_posts(swarm)
     # round 2 = the cohort lanes only: builder receipts (round 3 F-H, round 6 MVPs P Q W T U) land in the
     # same export after ROUND2_START and must not enter the round 2 ledger (the export grows every epoch)
-    receipts = sorted((r for r in results if float(r["ts"]) >= ROUND2_START and r["lane"] in COHORTS),
+    receipts = sorted((r for r in results if ROUND2_START <= float(r["ts"]) < ROUND2_END and r["lane"] in COHORTS),
                       key=lambda r: float(r["ts"]))
     resolutions, no_prior = [], []
     for rec in receipts:

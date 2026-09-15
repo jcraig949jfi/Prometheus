@@ -97,3 +97,9 @@ def test_warning_is_posted_once_per_cohort_per_epoch(live):
     assert BU.warn(rep, 8, live) == ["B"]
     posts = [f for _, f in live.xrange(bus.SWARM) if f["subject"].startswith("BUDGET WARNING")]
     assert len(posts) == 2 and posts[0]["to"] == "B,A" and json.loads(posts[0]["body"])["verdict"] == "OVER"
+
+
+def test_round2_replay_window_closes_before_round4_reuses_the_lanes():
+    # 09-15: round 4 cohorts (same letters B-E) pushed rows and the open-ended round 2 replay counted them
+    from primordial.score import round2 as R2
+    assert R2.ROUND2_START < R2.ROUND2_END <= 1789448003.0          # B's round 4 launch, 2026-09-15 00:53:23
