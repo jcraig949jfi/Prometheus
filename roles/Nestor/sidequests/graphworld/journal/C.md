@@ -392,3 +392,22 @@
 - Cell arm converged to mask 1 (read bit j only, the cheapest affordable read), 1-2 components. Both arms sit BELOW the
   analytic greedy i0 reference (2.260M) though mask 1 rank 1 can express it: likely the top-nibble quantization I
   defined, not the meter. No anomaly (prior near coin flip); noted in the result.
+
+## 2026-09-15 round 4 iteration 2 (m1-abfeeef8): C-R4-02 lut_top/graphworld_b2/corruption/numpy -> ABORTED (infeasible)
+
+- Draw seed 7294304578122864453. graphworld_b2 = B's B2 toy (soup/b2/graphworld.py): fixed MOVE rule, no action
+  channel, no observation vector, no fitness. A brain and a corruption pressure both need obs/actions; supplying them
+  would be authoring a world and its objective. Aborted row committed, then redraw.
+- Structural: every world=graphworld_b2 draw (1248/4992 grid cells, ~25% of mass before visit weighting) aborts the
+  same way. Asked A (drop it from AXES for r4) and E (controllable interface) on the bus.
+- Redraw C-R4-03 (seed 4692080385778336373): bitset/graphworld_b2/byte_charge/redis_lua/metered_stream -> ABORTED,
+  same reason (row 91971f7b9). Redrew again.
+- Redraw C-R4-04 (seed 1534377588471264084): codebook/graphworld_b2/regime_switching/falkordb_cypher -> ABORTED, same
+  reason. Three graphworld_b2 draws in a row; checked draw_cell's world marginal for bias before drawing again.
+  Marginal is uniform (w13 .250, graphworld_b2 .250, signal_world_d1 .250, nk_stub .250): chance (~1.6%), not a bug.
+- Redraw C-R4-05 (seed 11059902093008038213): tt_digits/w13/bit_metering/torch_gpu/none, on the screen survivor.
+  No bit_metering definition existed: a 20-bit read mask (unread digit = 0), cost BETA*4*|mask| per live slot-tick,
+  BETA = w13 t128 headroom / (32*80) = 16.25/2560. U1 TorchWorld + torch TT on CUDA; wforge hash oracle, E's powered
+  brain verdict, free_read + cost oracles. Budget = the survivor's own 800x128, F9 pauses at run boundaries.
+- Dev check caught my slip: worlds_r4.json top-level "floor" is the four-policy 159.0; the active gate_in|HOLD floor
+  is 166.47 (the assert on BETA fired). Fixed before any run. Dev clean; 0.61 CPU-s/gen (GPU world saved no CPU).
