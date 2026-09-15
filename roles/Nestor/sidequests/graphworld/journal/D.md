@@ -133,3 +133,10 @@
   planted cheat fails 14/14, oracles clean). But the cell-1056 occupant is a TRAIN MIMIC: w1 r0 ties abstain on train
   (236.25) yet scores 46.2 vs 88.3 on HELD64; exact abstain on HELD in 1/14. Next: real insertion test of the all-zero
   genome into each restored archive (the anomaly's own discriminator), as a pre-run amendment.
+- D-R4-1 RECORD (rows D-R4-1-abstain-cell-reach, dec8c18ef; 592 archives, 82 CPU-s via worker D). I1 top-16 reproduces
+  592/592, I2 floor match 74/74, planted cheat fails 585/585, zero genome == abstain 592/592, oracles 74/74 clean.
+  P1 PASS reach 585/592. P2 FAIL occupant exact-abstain on HELD 309/585 (143 train mimics). P3 FAIL 32/66. P4 FAIL
+  zero survives 453/592, and all 139 losses are to an occupant strictly better on TRAIN (never a tie/worse).
+- Reading: REFUTED as stated. Archives reach abstain (top-1 TRAIN >= abstain 583/592); the HELD64 deficit is train-seed
+  overfitting of the selected elites + the top-16 mean readout (top-16 below abstain 66/74 cells; top-1 >= 30/74).
+  w7 train8 HELD: top-1 = occupant = abstain 189.19 exactly, baseline top-16 mean 174.14. Child anomaly for G/A.
