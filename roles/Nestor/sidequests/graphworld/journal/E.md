@@ -525,3 +525,27 @@ Iteration 8 (18:49). O8 COMPLETE: 40/40 check_b rows committed (last ea108a92e, 
 INSTRUMENT_ADMISSIBLE -- false_pass 0/40 (rule <= 5), judged INDETERMINATE 2 (draws 24, 31: graft_fused_eq_numpy False, anomaly
 1789512027239-0 + addendum), error rows 0. Prediction was ADMISSIBLE with 1-4 false passes; observed 0, so E-R7-1's single
 negative PASS (p_max .049) did not recur in 40 independent draws. Worker idle (0 pending) -> ops.push now, then receipt, then item 1.
+
+Iteration 9 (18:52). ops.push: first attempt rejected non-ff (concurrent push), retry rc 0 -> 3b59f0a66 on integration
+(merge-base verified); it contains C's 2778c4ea3 torch_gpu harness; nv/gpuq.py unchanged (no arbiter restart); no item-1 judged
+code changed since f790dbb52. Posted 'E: pushed at 3b59f0a66' (1789512677260-0). O8 RECEIPT 1789512697580-0 (guard 10/10 OK;
+status PASS = the calibration holds, decision INSTRUMENT_ADMISSIBLE; discloses judged_indeterminate [24, 31], the draw 22 epoch
+pause under checkpointable false, and D22). A 1789512067159-0: counting stands; D takes the fused != numpy anomaly as priority 1; a
+recurrence in the live pair gives INDETERMINATE. ITEM 1: predicate E-R7-1-clauseB-live-w14-w13 pinned 3b59f0a66 (bus
+1789512700124-0; prediction FAIL); LIVE7 families x run seeds 16..23, M2 800x128, checkpointable, 2400 s/segment, cpu 12000;
+submitted. E-R6-1 untouched, not pooled.
+
+Iteration 10 (~18:58). Item 1 job 90f1b50b9cb2 admitted, CPU slot 1 at 8 threads since 18:51:50 (G on slot 0); monitor armed on the
+rows (integrity, check_b, error/paused). Item 2 prep (read-only): metric.b2_screen.admission_cost_v2 on E-R7-3's committed row
+(episode 9.04 us, measured at 3 threads (D19); overhead 3.13 ms/gen): 4 specs x 32/4/8 = 30,340 s rollout + 641 s search = 8.43 h
+single worker. That does not fit ~7.6 h left after item 1 (fits only at workers=2, i.e. taking G's slot). No B2 v2 screen job fn
+exists in the repo either (no caller of admission_cost_v2). Expected route after item 1: admit -> refusal -> PC with this projection
+(scratchpad e_r7_b2.py). No trimming; no re-measurement at 8 threads (the figure is the measured one).
+
+Iteration 11 (19:18). ITEM 1 DONE, job 90f1b50b9cb2 ok, 1 segment, 1560 s wall / 11709 CPU-s, 98 rows at 7d9c0b06b.
+FIRST ADMISSIBLE CLAUSE B VERDICT: check_b v2 FAIL, gates clean (problems []). graft - scratch +0.738 (p .046), graft - sham
+-0.662 (p .852) -> graft_p_max .852, Holm .852. Sham BEAT graft: sham - scratch +1.400, sham_below_scratch_p .998. So the
+feature-permuted donor transfers MORE than the donor itself; against scratch alone this pair would have read as a PASS at p .046.
+Integrity 32/32 graft (bytes + fused==numpy; no recurrence of the O8 anomaly), sham_integrity 32/32; oracles clean (world honest
+0/16 failing, skip_lin 16/16 caught, brain 0 mismatched rows, cheat 16/16). p_method montecarlo_200000_seed20260915.
+FLAG to disclose: pair.rederived_equals_harness false (harness_graft_p_max .85148 vs rederived .85243) -- reading the judge code now.
