@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-15T16:18Z",
+  "date": "2026-09-15T16:17Z",
   "frozen": "2026-09-12T04:40Z",
   "blocks": [
     {
@@ -7,10 +7,10 @@
       "predicted": "~4 parts of near-equal occupancy",
       "observed": {
         "shape": [
-          8,
-          29
+          31,
+          8
         ],
-        "pix_val": 74,
+        "pix_val": 4,
         "n_parts": 4
       },
       "error": null
@@ -20,10 +20,10 @@
       "predicted": "one part; degenerate representation",
       "observed": {
         "shape": [
-          11,
-          1
+          25,
+          6
         ],
-        "pix_val": 168,
+        "pix_val": 93,
         "n_parts": 1
       },
       "error": null
@@ -33,11 +33,11 @@
       "predicted": "the unique-key (full-resolution) setting must LOSE to a coarser one: n_parts far below the sample size (200); if n_parts ~ 200, c04 is killed",
       "observed": {
         "shape": [
-          3,
-          1
+          7,
+          25
         ],
-        "pix_val": 2,
-        "n_parts": 8
+        "pix_val": 17,
+        "n_parts": 200
       },
       "error": null
     },
@@ -47,19 +47,19 @@
       "observed": {
         "target_0.02": {
           "shape": [
-            27,
-            4
+            3,
+            14
           ],
-          "pix_val": 3,
+          "pix_val": 2,
           "n_parts": 4
         },
         "target_0.5": {
           "shape": [
-            23,
-            35
+            85,
+            3
           ],
-          "pix_val": 146,
-          "n_parts": 122
+          "pix_val": 63,
+          "n_parts": 102
         }
       },
       "error": null
@@ -71,10 +71,10 @@
         "off_distinct_raw_keys": 200,
         "on": {
           "shape": [
-            7,
-            10
+            23,
+            13
           ],
-          "pix_val": 59,
+          "pix_val": 12,
           "n_parts": 4
         }
       },
@@ -85,7 +85,7 @@
       "predicted": "with prob_override > 0 should_accept_cell returns True for worse candidates at that rate; with 0 never",
       "observed": {
         "p0": 0,
-        "p0.5": 100
+        "p0.5": 103
       },
       "error": null
     },

@@ -672,7 +672,26 @@
     "demonstration": "receipt 2026-09-15 AttributeError on all five blocks; the ancestor stores RLEArray(gray_uint8_frame) (montezuma_env.py:56, generic_atari_env.py:23, utils.py:73) and try_split_frames decodes with RLEArray.frombytes(f, dtype=np.uint8) (goexplore.py:467)",
     "repair": "ge.RLEArray.fromarray(f) -> ge.RLEArray(f), i.e. the ancestor's own encoder; the .tobytes() step, the frames, the args, the predictions and the kill criterion are unchanged",
     "not_repaired": "try_split_frames draws its initial shape/pix_val from the unseeded stdlib random module (goexplore.py:491-492); the control does not seed it. This is not a malformation (it is how the ancestor runs) and is left as is; the repaired control is run more than once and every run is kept"}
-  ]
+  ],
+  "repaired_sha256": "6ce4ed612485c8d29abc0c8b24108605db3bcf7a65d8aba93c59b7a33141f62d",
+  "repaired_runs": {
+   "env": "docker prometheus-fossil-goexplore:min, 16 cpus, pin read-only; pin tree_sha256 67bfdebe verify matches after every batch; robustified digest 24af115c unchanged",
+   "r1": "2026-09-15T16:16Z rc=0; RECEIPT LOST -- a shell loop variable did not survive Git Bash -> wsl -> sh -c, so r1's copy was overwritten by r2 (and its stderr too). Its outcome is unknown and is not reconstructed.",
+   "rows": [
+    {"run": "r2", "receipt": "ablations/RECEIPT_N3_c04_2026-09-15_repaired_r2.json", "pos_k4": 4, "neg_const": 1, "cheat_n_parts": 200, "cheat_setting": "7x25 pix 17", "t0.02": 4, "t0.5": 102, "dyn_off": 200, "dyn_on": 4, "prob_override_p0_p05": [0, 103]},
+    {"run": "r3", "receipt": "ablations/RECEIPT_N3_c04_2026-09-15_repaired_r3.json", "pos_k4": 4, "neg_const": 1, "cheat_n_parts": 8, "cheat_setting": "1x3 pix 8", "t0.02": 4, "t0.5": 4, "dyn_off": 200, "dyn_on": 4, "prob_override_p0_p05": [0, 92]},
+    {"run": "r4", "receipt": "ablations/RECEIPT_N3_c04_2026-09-15_repaired_r4.json", "pos_k4": 4, "neg_const": 1, "cheat_n_parts": 4, "cheat_setting": "1x2 pix 30", "t0.02": 4, "t0.5": 102, "dyn_off": 200, "dyn_on": 4, "prob_override_p0_p05": [0, 91]},
+    {"run": "r5", "receipt": "ablations/RECEIPT_N3_c04_2026-09-15_repaired_r5.json", "pos_k4": 4, "neg_const": 1, "cheat_n_parts": 8, "cheat_setting": "3x1 pix 2", "t0.02": 4, "t0.5": 122, "dyn_off": 200, "dyn_on": 4, "prob_override_p0_p05": [0, 100]}
+   ],
+   "note_receipt_undated_name": "ablations/RECEIPT_N3_c04_2026-09-15.json is overwritten by every run; at commit it holds r5"
+  },
+  "post_result_diagnostic": {
+   "file": "ablations/diagnostics/nyx44_block7_reachability.py -> nyx44_block7_reachability_2026-09-15.json",
+   "status": "written AFTER block 7 returned 200 on r2; not a control; decides nothing",
+   "observed": "77 settings of the ancestor's imdownscale family on 200 fresh noise frames: 34 give <= 20 parts; ancestor score (goexplore.py:470-483) best 0.7452 at 4 parts (2x1); best at 200 parts 0.1414 (incl. 7x25 pix 17)",
+   "reading": "the objective rejects the unique-key setting whenever the search reaches a coarse one; block 7's 200 on r2 is the unseeded 60-iteration search failing to reach it (1 of 4 surviving runs). Block 2 shows the same search variance the other way (r3 t0.5 -> 4 parts)."
+  },
+  "c04_disposition": "UNCHANGED, PENDING RULING. The frozen kill criterion ('if n_parts ~ 200, c04 is killed') FIRES on r2 and does not fire on r3/r4/r5; r1 unknown. The frozen text does not say whether the unit is one run or the run distribution. Nyx does not choose (base role s0). N4 reopen condition A (NYX-44 executable evidence about c04) is met; ruling requested roles/Nyx/prompts/2026-09-15_nyx44_ruling_request/."
  },
  "pins": {
   "techne_203": {
