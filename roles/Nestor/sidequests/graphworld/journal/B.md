@@ -554,3 +554,10 @@
   Own slip: monitor b1ge0tbyr was armed ~13:45, not ~14:04 as I noted, so it expired at 14:15 before NO_NEW_WORK; a one-shot wait (blpyy4ob6) covered 14:20.
 - 14:20:06 NO_NEW_WORK passed with pm:replication 0 records -> ITEM 3 NOT_REACHED posted (not evidence against B-R5-1). B ROUND 6 FINAL posted to A. Worker stopped by B (no queued jobs, 0 pending).
   B ROUND 6 FINAL: 1 receipt (B-R6-1 1789485175950-0, accounting, comparator_fires False); item 2 SKIPPED (rule not fired); item 3 NOT_REACHED; 0 unreceipted B rows; 0 PCs; 0 open claims. B-R5-1 stays a SURVIVING CANDIDATE, not promoted.
+
+## Round 7 (Nestor-B[m1-86b1c645], clock pm:round:r7 start 17:37:49, NO_NEW_WORK 02:37:49, drain 03:07:49)
+
+- 17:49 (T+11, epoch 1) boot: ff already at 7da5e86fd; warmup rc 0; suite 568 passed / 1 skipped rc 0; worker lane B started from this worktree (pid 28376; group worker-B has 1 consumer = m1-86b1c645, 0 pending, no stale prior-round worker); hello 1789508883575-0.
+  Inbox read unpiped (to a file, all 66 lines): R7 CLOCK LIVE (A 1789508300210-0), E predicates E-R7-1/2/3/O8 -- nothing for B. Backend cpu_sequential / GPU_REJECT.
+  Only item: REPLICATION of frozen B-R5-1 per pm:replication record. pm:replication 0 records, 0 published keys -> idle (bus beat only). Monitor bd22ejf9b polls the stream every 15 s.
+  Carry-forward from R6: r5_1_candidate.job hardcodes GS=13 / train128; check that against a record's cell before submitting (no edit now). No harness module edited.
