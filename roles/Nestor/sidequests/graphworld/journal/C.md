@@ -639,3 +639,8 @@
 - A rulings 1789511323172-0 / 1789511924715-0: close the killed AP-01 job (done entry status died + XACK 1789509597879-0,
   post ids); no rerun risk (serve reads '>'). F filed D24 PC 1789511386497-0 (child-death handling + sanctioned cancel;
   no fabric change in r7). Epoch 1 boundary 18:37 (A controller).
+- AP-01 job closed per A: pm:jobs:C:done 1789512211053-0 (status died), XACK 1789509597879-0 (PEL empty), ids posted
+  1789512211081-0.
+- C-R7-01 harness on origin 2778c4ea3; envelope.admit(kind gpu) ok; predicate refs/pm/pred/C-R7-01 -> 2778c4ea3, bus
+  1789512260419-0. Told E the sha (1789512263035-0); the GPU job is submitted only after 'E: pushed' contains it.
+- AP-02 ec5a36e1c102 still waiting_cpu (tokens: G slot 0, E slot 1).
