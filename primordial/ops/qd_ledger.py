@@ -135,13 +135,16 @@ def floor_of(rows, world, pressure):
 
 
 def check(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean=True, held=None, doc=None,
-          readout=None) -> dict:
+          readout=None, runs_total=None, rng_family_count=None, runs_per_family=None, n_per_family=None) -> dict:
     """The round 2/3 verdict (raw + floor) with the round 4 judge attached as `clause_a_r4` (H ask
     1789435262391-0: one judge, read by F12). doc: a worlds_r4 document; None reads the committed file.
-    readout: the candidate's readout name (primordial.metric.readout); None = LEGACY top-16."""
+    readout: the candidate's readout name (primordial.metric.readout); None = LEGACY top-16.
+    runs_total / rng_family_count / runs_per_family / n_per_family: the candidate's sample (G-R5-2 CANDIDATE_N)."""
     out = _check_r2(rows, world, pressure, median, iqr, nbytes, runs, oracle_clean, held)
     out["clause_a_r4"] = clause_a_r4_block(check_r4(world, pressure, median, nbytes, runs, oracle_clean=oracle_clean,
-                                                    held=held, doc=doc, readout=readout))
+                                                    held=held, doc=doc, readout=readout, runs_total=runs_total,
+                                                    rng_family_count=rng_family_count,
+                                                    runs_per_family=runs_per_family, n_per_family=n_per_family))
     return out
 
 
@@ -192,7 +195,8 @@ BASELINE_MIN_PER_FAMILY = 8     # >= 8 run seeds in EVERY family (no 29+1+1+1 co
 
 
 def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_failed=True, held=None,
-             doc=None, readout=None) -> dict:
+             doc=None, readout=None, runs_total=None, rng_family_count=None, runs_per_family=None,
+             n_per_family=None) -> dict:
     """Clause A, round 4 binding (SWARM_R4 s4), read against primordial/ledger/qd/worlds_r4.json.
 
     The cell must be SURVIVED under the file's active variant (else INELIGIBLE UNSCREENED / CULLED / HELD,
@@ -206,7 +210,12 @@ def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_fai
     Operator 16: the cell baseline must pool >= BASELINE_MIN_RUNS run seeds over >= BASELINE_MIN_FAMILIES distinct
     RNG families with >= BASELINE_MIN_PER_FAMILY run seeds in every family (baseline.n_runs, baseline.families,
     baseline.n_per_family -- G's worlds_r4/v2 names; absent families or n_per_family = refused), else
-    INELIGIBLE BASELINE_N. Order: screen guard -> BASELINE_N -> READOUT_MISMATCH -> oracles / cheats / runs -> progress."""
+    INELIGIBLE BASELINE_N.
+    Operator 19 O4 (SWARM_R5 s1, G-R5-2): the CANDIDATE must meet the same three-field sample rule -- runs_total >= 32,
+    rng_family_count >= 4, runs_per_family >= 8 (every family when n_per_family is given) -- else INELIGIBLE
+    CANDIDATE_N. `runs` is the legacy positional run count and stands for runs_total when runs_total is not given; a
+    caller that gives no rng_family_count is refused. Campaign stage never changes this (operator 19 s3).
+    Order: screen guard -> BASELINE_N -> CANDIDATE_N -> READOUT_MISMATCH -> oracles / cheats -> progress."""
     from primordial.metric import readout as RO
     from primordial.metric import worlds as WR
     doc = WR.load() if doc is None else doc
@@ -231,6 +240,13 @@ def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_fai
                 "need_families": BASELINE_MIN_FAMILIES, "need_per_family": BASELINE_MIN_PER_FAMILY,
                 "variant": k, "floor": c["verdicts"][k]["floor"], "baseline_median": cb.get("median"),
                 "baseline_bytes": cb.get("bytes")}
+    from primordial.metric import sample as SM
+    cand = {"runs_total": runs if runs_total is None else runs_total, "rng_family_count": rng_family_count,
+            "runs_per_family": runs_per_family, "n_per_family": n_per_family}
+    if not SM.meets(cand):
+        return {**base, "verdict": "INELIGIBLE", "why": "CANDIDATE_N", **SM.refusal(cand, "candidate"),
+                "variant": k, "floor": c["verdicts"][k]["floor"], "baseline_median": cb.get("median"),
+                "baseline_bytes": cb.get("bytes")}
     base.update(readout=readout or RO.LEGACY, baseline_readout=cb.get("readout", RO.LEGACY))
     if base["readout"] != base["baseline_readout"]:
         return {**base, "verdict": "INELIGIBLE", "why": "READOUT_MISMATCH", "variant": k,
@@ -240,8 +256,6 @@ def check_r4(world, pressure, median, nbytes, runs, oracle_clean=True, cheat_fai
         return {**base, "verdict": "INELIGIBLE", "why": "oracles not clean"}
     if not cheat_failed:
         return {**base, "verdict": "INELIGIBLE", "why": "a cheat control did not fail"}
-    if runs < 8:
-        return {**base, "verdict": "INELIGIBLE", "why": f"{runs} run seeds < 8"}
     fv, bm, bb = c["verdicts"][k]["floor"], c["baseline"]["median"], c["baseline"]["bytes"]
     if not bm > fv:
         raise ValueError(f"screen defect: {world} {pressure} SURVIVED with baseline median {bm} <= floor {fv}")
@@ -306,7 +320,11 @@ def main(argv=None) -> int:
     for k in ("median", "bytes"):
         c.add_argument(f"--{k}", type=float, required=True)
     c.add_argument("--iqr", type=float, default=0.0, help="r2 only")
-    c.add_argument("--runs", type=int, required=True)
+    c.add_argument("--runs", type=int, required=True, help="the candidate's runs_total")
+    c.add_argument("--rng-family-count", type=int, help="the candidate's rng_family_count (G-R5-2 CANDIDATE_N)")
+    c.add_argument("--runs-per-family", type=int, help="the candidate's runs_per_family (G-R5-2 CANDIDATE_N)")
+    c.add_argument("--screen", choices=("file", "r16"), default="file",
+                   help="r16: judge against eligibility.r16_doc() (complete R16 cells only, e.g. w13 train128)")
     c.add_argument("--held", help="comma-separated per-run-seed held64 values -> bootstrap CI band (M3)")
     c.add_argument("--rules", choices=("r4", "r2"), default="r4")
     c.add_argument("--oracle-unclean", action="store_true")
@@ -345,9 +363,14 @@ def main(argv=None) -> int:
         held = [float(x) for x in a.held.split(",")] if a.held else None
         if a.rules == "r4":
             from primordial.metric import worlds as WR
-            doc = WR.load(a.worlds) if a.worlds else WR.load()
+            if a.screen == "r16":
+                from primordial.metric import eligibility as EL
+                doc = EL.r16_doc()
+            else:
+                doc = WR.load(a.worlds) if a.worlds else WR.load()
             out = check_r4(a.world, a.pressure, a.median, int(a.bytes), a.runs, oracle_clean=not a.oracle_unclean,
-                           cheat_failed=not a.cheat_did_not_fail, held=held, doc=doc, readout=a.readout)
+                           cheat_failed=not a.cheat_did_not_fail, held=held, doc=doc, readout=a.readout,
+                           runs_total=a.runs, rng_family_count=a.rng_family_count, runs_per_family=a.runs_per_family)
         else:
             out = check(rows, a.world, a.pressure, a.median, a.iqr, int(a.bytes), a.runs,
                         oracle_clean=not a.oracle_unclean, held=held)

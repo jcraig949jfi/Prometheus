@@ -10,6 +10,8 @@ from primordial.ops import qd_ledger as Q
 
 T = "train128_held64"
 
+CAND = dict(rng_family_count=4, runs_per_family=8)          # G-R5-2: a CANDIDATE_N-eligible sample (runs_total 32 passed positionally)
+
 
 def test_w13_is_survived_from_r16_rows_with_the_posted_numbers():
     e = EL.w13_eligibility()
@@ -37,11 +39,11 @@ def test_doc_holds_only_complete_cells_and_is_never_written(tmp_path, monkeypatc
 
 def test_check_judges_a_candidate_on_w13_alone_and_nothing_else():
     doc = EL.r16_doc()
-    other = Q.check_r4("w7", "train8_held64", 1e9, 1, 32, doc=doc)
+    other = Q.check_r4("w7", "train8_held64", 1e9, 1, 32, **CAND, doc=doc)
     assert other["verdict"] == "INELIGIBLE" and other["why"] == "UNSCREENED"
-    got = Q.check_r4("w13", T, 183.90625, 199, 32, doc=doc, readout=RO.NAME)
+    got = Q.check_r4("w13", T, 183.90625, 199, 32, **CAND, doc=doc, readout=RO.NAME)
     assert got.get("why") not in ("UNSCREENED", "BASELINE_N")                # the cell is judged, not refused by the screen
     assert got.get("floor") == 166.46875 and got.get("baseline_median") == 183.90625
-    legacy = Q.check_r4("w13", T, 183.90625, 199, 32, doc=doc)                  # undeclared readout = legacy top-16
+    legacy = Q.check_r4("w13", T, 183.90625, 199, 32, **CAND, doc=doc)                  # undeclared readout = legacy top-16
     assert legacy["why"] == "READOUT_MISMATCH"
     assert EL.eligibility("w1", "train8_held64", doc)["verdict"] == "UNSCREENED"
