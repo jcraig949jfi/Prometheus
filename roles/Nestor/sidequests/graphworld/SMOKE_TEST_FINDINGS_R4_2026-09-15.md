@@ -1,8 +1,7 @@
 # Round 4 smoke test: findings, measured scale, and a sized plan for the real run
 
-Currency: 2026-09-15, Nestor-A[m1-449a9e76] (conductor). DRAFT: written while G runs the last
-checkpointed job. Two sections get filled when G posts "G R16 CHECKPOINT": s1 (w13 verdict) and s4
-(measured per-job wall).
+Currency: 2026-09-15 ~05:55, Nestor-A[m1-449a9e76] (conductor). FINAL. G posted its checkpoint at
+integration 1268ead0c (bus 1789464893237-0); the session stops here (operator 18).
 
 Authority: operator messages 17 and 18 (verbatim in prompts/2026-09-14_graphworld_swarm/):
 - "a session that was intended to kick the tires for a subsequent run and to smoke out issues... what
@@ -29,8 +28,18 @@ Authority: operator messages 17 and 18 (verbatim in prompts/2026-09-14_graphworl
   rows):
   - baseline median 183.91, CI [170.95, 188.56];
   - gate floor 166.47.
-- Verdict at the checkpoint: [PENDING -- G's 32 x 4 train128 learner; SURVIVED iff learner median
-  < 170.95].
+- Verdict (G R16, bus 1789464893208-0, rows 3eb05692a / 1817bed46): w13 train128_held64 SURVIVED under
+  gate_in|HOLD, the first survivor under the full statistical rule.
+  - floor parts: abstain 159.00, best constant 159.00, uniform random 58.07 (32 streams),
+    input-invariant learner median 151.75, ci95 [151.44, 151.91] (32 runs x 4 families, top1_train);
+  - gate 166.47, which is the floor;
+  - baseline ci95 low 170.95 > 166.47;
+  - clause A progress denominator = 183.91 - 166.47 = 17.44.
+- Checks:
+  - family 4200 top1 == E-R15-1 8/8;
+  - legacy top-16 == D-R4-2 32/32;
+  - oracles clean;
+  - deterministic floor parts == stage 1.
 - Nothing is promoted. B's 16 B and 36 B clause A claims on w13 were invalidated by the operator
   (message 15) and have not been re-scored.
 
@@ -71,12 +80,30 @@ Fabric and operations (each fix has a repro test shown to fail on the old code):
 | train128 input-invariant learner, 8 seeds | 1 cell (T=64) | ~0.36-2.8 h depending on T |
 | R16 floors, 32 x 4 | 37 worlds | 1.9 h (G estimate) |
 | R16 baselines, 32 x 4 | 74 cells | 6.9 h (G estimate) |
-| R16 train128 learner, 32 x 4 | 1 cell (w13) | 1.42 h (G estimate) |
+| R16 train128 learner, 32 x 4 | 1 cell (w13, T=32) | MEASURED ~190 s per run, so ~1.7 h (G estimated 1.42 h) |
 | R16 phase 2 HELD/CULLED deciders | 5 cells | ~37 h (G estimate), DEFERRED |
 | cohort test launch | 4 cohorts x 2 epochs | ~70 min of work |
 | boot to hello (suite at boot) | per session | ~2 min |
 
-[s4 to be filled: G's measured per-job wall from the checkpoint post]
+MEASURED at the checkpoint (G, 5 threads, lane G alone):
+
+| job | done | wall | CPU |
+|---|---|---|---|
+| J1 floors, segment 0 | w13 floors + partial w7 learner | 362 s | 1,629 CPU-s |
+| J2 baselines 32 x 4, segment 0 | 6 cells + w34 t128 15/32 | 2,303 s | 11,232 CPU-s |
+| J3 train128 learner 32 x 4 | w13 (T*S = 32) | 6,049 s (~189 s per run) | 12,031 CPU-s |
+
+Per run, per unit T*S:
+- baseline train128: 0.116 s;
+- baseline train8: 0.0041 s;
+- train8 learner: 0.0424 s;
+- train128 learner: ~5.9 s.
+
+Full-screen projection (search wall only), about 9.8 h before any survivor-deciding train128 learner:
+- baselines train128: 6.9 h;
+- baselines train8: 0.24 h;
+- train8 learner: 2.5 h (plan 1.75);
+- deterministic re-check: 0.11 h.
 
 ## 4. Smaller campaigns for early-round testing (operator 18)
 
@@ -91,7 +118,11 @@ A smoke campaign exercises every code path once. It does not fill the landscape.
   still run.
 - COHORTS: 1 epoch of 15 min. Each cohort does ONE job through its worker. The epoch boundary, push
   lock, receipt guard and replay all fire once.
-- BUDGET: <= 1 h total CPU. A hard stop at 90 min wall. No clearance above 15 min without the operator.
+- BUDGET (operator, 09-15 ~03:40): a 1-2 h wall window for the smoke campaign, which is "enough time to
+  smoke out most early issues at this stage, then we can increase runtimes". Hard stop at 2 h wall. No
+  single job clearance above 15 min without the operator.
+- ESCALATION: only after a smoke campaign comes back clean, raise runtimes step by step. Example
+  sequence: 2 h smoke, then a ~4-6 h pilot on a subset, then an overnight production window.
 - DONE when every stage has produced a row and a receipt, and every refusal path has been hit once
   deliberately (planted cells).
 
@@ -126,8 +157,14 @@ Recommendation for the next session:
 
 ## 6. Parked, with resume pointers
 
-- The R16 re-screen is parked at G's checkpoint: J2 baselines partially done, J1 floors partially done.
-  Resume steps are in "G R16 CHECKPOINT" (bus) and journal/G.md.
+- The R16 re-screen is parked at G's checkpoint (integration 1268ead0c):
+  - J1 floors done for w13, w7 train8 learner 26/32, 35 worlds not started (job_key cd9335d8b8af);
+  - J2 baselines done for 6 cells, w34 t128 15/32, 67 cells not started (job_key cd266a1b007d);
+  - checkpoints under C:/Users/jcrai/lab/pm-data/ckpt/G/;
+  - resume record roles/Nestor/sidequests/graphworld/R16_CHECKPOINT_2026-09-15.json, exact submit
+    calls in bus 1789464893237-0.
+  worlds_r4/v2 is NOT written, so check() still reads v1 and refuses BASELINE_N. B's re-score waits for
+  the full v2 file.
 - The B2 screen has not started. It needs a genome/linear-baseline wiring (G, or E on request).
 - Phase 2 HELD/CULLED deciders: deferred (operator 17).
 - B re-score of w13 (operator 15/16): after a full v2 screen + H replay.

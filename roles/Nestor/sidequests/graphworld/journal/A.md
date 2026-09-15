@@ -74,3 +74,29 @@
   - draw_cell world axis = survivors (w13) + non-graphworld.
 - Launch: B at 00:53 (schtask PM_B_20260915_005323). C, D and E follow, each after the previous hello.
 - Framework writeup for operator/NotebookLM: FRAMEWORK_WRITEUP_2026-09-14.txt (54c2d95fc).
+
+## 2026-09-15 05:55 -- smoke-test session stopped at a checkpoint (operator 17, 18)
+
+- Operator rulings after test launch 1:
+  - 15: invalidate B's w13 claims; E fixes the readout; E builds the B2 adapter.
+  - 16: 32 runs x 4 RNG families mandatory.
+  - 17: defer phase 2; the stage is a smoke test.
+  - 18: stop at a checkpoint; smaller early-round campaigns; large windows or parallelism.
+- Landed:
+  - E one reader top1_train (a70fcd841);
+  - BASELINE_N judge with the per-family minimum (c0a1404b4);
+  - B2 adapter, oracles PASS (de91fbd52);
+  - H F12 mirror of BASELINE_N (e26668c8b);
+  - push lock (898900b4e);
+  - ROUND2_END (45847459e);
+  - b2 out of the draw grid (267fea584).
+- G R16 checkpoint at integration 1268ead0c:
+  - w13 train128 SURVIVED under 32x4 + top1_train: floor 166.47 (gate); baseline median 183.91,
+    CI [170.95, 188.56]; learner median 151.75; progress denominator 17.44.
+  - J1/J2 parked at F9 checkpoints (resume record R16_CHECKPOINT_2026-09-15.json). worlds_r4/v2 is not
+    written.
+- Findings, scale and next-session plan: SMOKE_TEST_FINDINGS_R4_2026-09-15.md (FINAL).
+- Conductor lesson: restate the session stage before clearing more than 1 h of compute (memory
+  feedback_smoke_test_stage_bounds_compute).
+- All lanes idle or paused. The conductor's bus watch and liveness monitor are stopped. The WSL
+  keepalive window is left up for the bus.
