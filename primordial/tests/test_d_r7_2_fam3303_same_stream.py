@@ -49,7 +49,17 @@ def test_controls_bind_and_i1():
     base[1]["sampler_seed"] = [0, 0, 0, 0]
     assert D.analyse(cand, base, FLOOR)["decision"] == "INDETERMINATE"
     cand, base = rows()
-    assert D.analyse(cand, base, FLOOR, by_run=[0.0] * 32)["decision"] == "INDETERMINATE"
+    good = {f"{c['rng_family']}|{c['run_seed']}": c["held64_per_seed"] for c in cand}
+    assert D.analyse(cand, base, FLOOR, by_run=good)["checks"]["I1"]["held64_by_run_matches"]
+    assert D.analyse(cand, base, FLOOR, by_run=dict(good, **{"4200|0": 0.0}))["decision"] == "INDETERMINATE"
+    assert D.analyse(cand, base, FLOOR, by_run={k: v for k, v in good.items() if k != "4200|0"})["decision"] == "INDETERMINATE"
+
+
+def test_held64_by_run_shape_of_committed_candidate_row():
+    import json
+    text = (D.ROOT / D.CAND_ROWS).read_text(encoding="utf-8")
+    summ = [json.loads(l) for l in text.splitlines() if l.strip() and json.loads(l).get("kind") == "candidate"][-1]
+    assert isinstance(summ["held64_by_run"], dict) and len(summ["held64_by_run"]) == 32
 
 
 def test_obs_mixed():

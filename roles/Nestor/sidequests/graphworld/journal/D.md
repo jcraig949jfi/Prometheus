@@ -414,3 +414,11 @@
   cpu_ttl cut lands past that knee, so the anti-prior arm's PASS is what the saturation predicts (the "cut truncates
   search" prior was about train, not held). Not claimed: why held saturates (landscape vs Tucker brain).
 - D-R7-2 job f564042e7a5b ERROR (0 rows, 0.6 s, commit 61389e5f3); cause being read.
+  Cause: B's candidate row stores held64_by_run as a dict keyed "F|rs"; D's I1 iterated it as a list (ValueError on
+  '2101|0') before any value was compared. OWN ERROR (untested against the committed row shape).
+- Push 1cd8c5ba6 rebased the D rows commits: fe9650a6c -> 7f4df6c84 (D-R7-1, 66 rows, identical), 61389e5f3 -> ae7079ca9.
+- Receipts: D-R7-1 1789511852981-0 (status NULL, SATURATED, token_wait_s 1525.8), ANOM-..3451 RESOLVED; D-R7-2
+  1789511863745-0 (INDETERMINATE: aborted on D's bug, no value seen, token_wait_s 1688.4). Both first filings were
+  refused IDENTITY_TAG_MISSING (D omitted `tag`), refiled with the tag and nothing else changed. OWN ERROR.
+- D-R7-2b: same rule; I1 reads held64_by_run by "F|rs" key (+ key-set check), job() takes exp/predicate_id; tests 6
+  passed rc 0, including one pinned to the committed candidate row's dict shape. Worker restarted for the edited module.

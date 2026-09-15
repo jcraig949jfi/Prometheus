@@ -94,7 +94,9 @@ def analyse(cand: list[dict], base: list[dict], floor: float, by_run=None) -> di
           "sampler_seeds_equal": all(list(a.get("sampler_seed") or []) == list(b.get("sampler_seed") or [])
                                      for a, b in zip(cand, base)),
           "low_set_as_filed": set(low) == set(FILED_LOW) and all(cv[k] == v for k, v in FILED_LOW.items()),
-          "held64_by_run_matches": by_run is None or [float(v) for v in by_run] == [cv[k] for k in ck]}
+          "held64_by_run_matches": by_run is None or (
+              sorted(by_run) == sorted(f"{k[0]}|{k[1]}" for k in ck)
+              and all(float(by_run[f"{k[0]}|{k[1]}"]) == cv[k] for k in ck))}   # D-R7-2b: dict keyed "F|rs"
     stream, q = stream_axis(low, bv)
     obs, u, big_u = obs_axis(low, uses)
     lowest = sorted(bv.values())[:len(low)]
@@ -129,7 +131,9 @@ def analyse(cand: list[dict], base: list[dict], floor: float, by_run=None) -> di
                        "runs_per_family": 8, "families": list(ORDER), "n_per_family": per_fam}}
 
 
-def job(ctx, status="record"):
+def job(ctx, status="record", exp: str = EXP, predicate_id: str = PREDICATE_ID):
+    """D-R7-2 aborted on the held64_by_run shape (a dict keyed "F|rs", read as a list) before any value was compared;
+    the same rule runs as D-R7-2b under its own predicate and rows file."""
     t0 = time.perf_counter()
     doc = EL.r16_doc()
     floor = float(EL.eligibility(L6.WORLD, L6.PRESSURE, doc)["floor"])
@@ -137,7 +141,7 @@ def job(ctx, status="record"):
     cand_text = cand_bytes.decode("utf-8")
     summary = [json.loads(l) for l in cand_text.splitlines() if l.strip() and json.loads(l).get("kind") == "candidate"][-1]
     res = analyse(L6.load_runs(cand_text), L6.load_runs(base_bytes.decode("utf-8")), floor, summary.get("held64_by_run"))
-    ctx.emit({"kind": "summary", "exp": EXP, "predicate_id": PREDICATE_ID, "anomaly": ANOMALY, "status": status,
+    ctx.emit({"kind": "summary", "exp": exp, "predicate_id": predicate_id, "anomaly": ANOMALY, "status": status,
               "ts": round(time.time(), 3), "qd_runs": 0,
               "source_rows": {CAND_ROWS: hashlib.sha256(cand_bytes).hexdigest(),
                               BASE_ROWS: hashlib.sha256(base_bytes).hexdigest()},
