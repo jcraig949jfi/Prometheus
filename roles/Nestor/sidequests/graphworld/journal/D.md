@@ -242,3 +242,10 @@
   of 16 int2 w4 elites). D-R6-2 code + test (4 passed rc 0): zero QD, B-R2-4 rs0 committed top_hex; census of EVERY
   live row of the cheat trajectory vs E7's 256-row sample. SAMPLE_MISS vs GENUINE_IGNORE per blind elite; I1 = B's
   recorded oracle (13/709/4096, honest 0) reproduced; controls planted_zero_odd + honest_census.
+- D-R6-2 RECORD (job 4f11a90219d2 ok, 0.71 s, 0 QD, predicate 1789488790812-0): decision MIXED. I1 exact (cheat
+  13/709/4096, honest 0, fused==numpy 16/16, sample replay equal); controls ok. Blind elites 0,1: 0 flips in 512 live
+  HELD8 rows (GENUINE_IGNORE on HELD8); elite 2: 2 flips in 512 (SAMPLE_MISS). The anomaly's per-elite list
+  0,0,1,94,... == separate per-elite oracle calls exactly; its 13/16 == the joint call: elite 2's 2 rows are hit by one
+  sample stream and missed by the other. Reported: held64 changes under brain_stride 2 for 16/16 elites (0 and 1
+  107.64/106.59 -> 107.75), so "ignore" is HELD8-local, not a brain property; odd |W| mass blind .56/.52/.56 vs caught
+  .49-.65 (not zero weights, as filed).
