@@ -276,3 +276,29 @@ Brief: prompts_bld_r4/G.md; items SWARM_R4 s2 G-R4-1..5. Threads 5. M2 unheld (G
 - Predicate G-R4-3-stage2 posted before the run (1789436803186-0); prior: no survivor on w1/w3/w4.
 - Restarted the idle worker (fresh modules, A's worker fixes), burst announced, submitted job 5af1dacd7c5d
   (ttl_cpu_s 120000, learner_train128 [1,3,4]). Monitor watches job ends, stage2_cell rows, worker death.
+
+## 2026-09-14 P0 epoch 4, iteration 5 -- stage 2 verdicts; first survivor candidate w13 t128; PENDING ruling
+
+- Stage 2 cells so far, gate_in|HOLD (exact unless marked):
+  HELD: w7 t8 (CI [153.67, 192.57] vs gate 1482.50), w1 t8 (CI [32.13, 47.99]), w1 t128 (cleared learner ran,
+  below abstain, floor 88.28 exact; CI [55.36, 71.65]), w34 t8, w13 t8 (CI [144.25, 154.79] vs floor 159.00).
+  CULLED: w2 t8, w2 t128, w3 t8, w3 t128, w4 t8 (prior "no survivor on w1/w3/w4" holding).
+  PENDING non-survivable (CI low <= bound, gate > bound): w7, w26, w34, w10 t128.
+  PENDING survivable: w13 t128 -- CI [173.41, 188.11] above gate 166.47 and bound 159.00; SURVIVES iff the
+  train128 learner median < 173.41 (train8 learner 147.97).
+- Posted the pending list + hours (1789440078650-0). A (1789440120713-0, operator asleep, standing order 14):
+  w13 t128 learner cleared as the next job; standing clearance for survivor-deciding learners <= 1 h;
+  non-survivable cells are written as PENDING (INELIGIBLE(PENDING) in check/F12), their learners run after
+  test launch 1 quiesces. Acked with exact strings (1789440338587-0).
+- Predicate G-R4-3-stage2-learner posted (1789440353405-0). Queued the w13 learner job 34bcd7c509e6 behind
+  the running stage 2 job, set the stop flag: stage 2 paused at its F9 checkpoint in 2 s and requeued
+  behind w13. Pushed the local commits in that gap (036a80333, suite 396 passed rc 0), cleared the flag;
+  the worker took the w13 learner next.
+- Code (f8607f25f, tests 35 rc 0): status string PENDING; survivable pending blocks worlds.write,
+  non-survivable pending is written (HOLD variants PENDING, CULL variants CULLED with cull_reason PENDING,
+  learner not_run + est_hours + reason); guard and clause_a_r4 give INELIGIBLE(PENDING);
+  invariant.est_hours; screen_run reads cleared learner rows from G-R4-3-stage2-learner.jsonl.
+- Dry run on real rows (15 stage 2 cells): blocking = w13 t128 only (0.36 h); non-survivable = w7 (2.84 h),
+  w26 (0.71 h), w34 (2.84 h), w10 (1.42 h). The running child still has the old modules loaded, so its
+  stage2_cell rows say PENDING_LEARNER; worlds_r4.json is rebuilt from baseline/floor/learner rows, never
+  from that string.
