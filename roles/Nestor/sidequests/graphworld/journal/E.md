@@ -380,3 +380,7 @@ A stand-down (T+~85). A had assigned E both missing machine checks at 07:25 (178
 `bus inbox | tail` cut it off (the 09-14 truncation lesson, repeated). A then stood E down before NO_NEW_WORK: nothing
 built, and both were filed as PRODUCTION_CANDIDATE 1789474379663-0 (file_candidate, ~45 min) and -1 (sha by patch-id,
 ~70 min), hand-filed. Rule for me: read the inbox untruncated and grep for "E" in `to` before calling an iteration idle.
+
+ROUND 5 FINAL (T+116). No verdicts, receipts or open claims. Clause B pair = PRODUCTION_CANDIDATE 1789471324763-0; tooling
+PCs 1789474379663-0/-1; GPU-1/2 exact (Warp wins from (1024,4096], no reversal to 65536 after D-R5-2; B6 CPU beats CUDA graph
+4-6x at 8192); 65536 reversal withdrawn. Worker and gpuq arbiter stopped at close; loop stopped.
