@@ -628,3 +628,10 @@ rows (D read the refused wrappers first and disclosed that). If D files that rec
 I report my 2 INDETERMINATE draws with D's label marked preliminary. Nothing here changes the O8 decision (they count completed,
 not PASS) or the item 1 verdict (integrity 32/32 there).
 gpuq registration heartbeat: 0 re-registrations since 19:30:02 (no lapse), for A's FINAL count.
+
+Iteration 19 (19:48). Watcher hygiene: my first ask watcher (19:21:07) was still polling when I armed a replacement (19:47:11), so
+asks would have been reported twice; stopped the old one and verified its pids are gone. Exactly one ask watcher and one gpuq
+registration heartbeat (19:30:02) now run. Inbox gap check between the two watchers: empty, nothing to E was missed.
+MY ERROR (diagnostic, harmless here): the psutil check matched ITSELF -- the process list entries at 19:47:43 were the checking
+process, whose own `python -c` source text contains the very substrings it greps for. Same class as the kill-script-matching-itself
+lesson: match argv TOKENS and skip your own pid; a substring search over cmdline text always finds the searcher.
