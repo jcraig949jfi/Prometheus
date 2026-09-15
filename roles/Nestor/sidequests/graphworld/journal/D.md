@@ -309,3 +309,4 @@
   >=), 0 elites strictly above it in any archive; best HELD64 46-87 vs 170.5. Under strict > it would read SEARCH_SHORT.
   Reported, not re-judged. Five HELD cells now read: w13 t8 OVERFIT, w7 t8 SEARCH_SHORT, w1 t8 OVERFIT (tie),
   w1 t128 SEARCH_SHORT, w34 t8 OVERFIT. None is a selection miss: no archive hid a gate-quality policy.
+- Receipt D-R6-6b filed 1789490299859-0 (guard 10/10, status NULL), rows a9320d655; ANOM ..9536/..9538/..9539 RESOLVED. All 5 HELD anomalies closed (2 SEARCH_SHORT, 3 OVERFIT_ONLY incl. w1 t8 by ties).
