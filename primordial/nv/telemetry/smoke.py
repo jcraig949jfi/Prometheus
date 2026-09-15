@@ -103,14 +103,15 @@ def _run(cmd, cwd, timeout, env=None):
         return 127, "", f"tool_missing: {e}"
 
 
-def probes(py: str, work: pathlib.Path, ncu: pathlib.Path = NCU):
+def probes(py: str, work: pathlib.Path, ncu: pathlib.Path = NCU, ncu_set: str = ""):
     return {
         "control_torch": [py, "-c", TORCH_TARGET],
         "nsys_trivial": [str(NSYS), "profile", "-t", "none", "-s", "none", "--cpuctxsw=none",
                          "-o", str(work / "nsys_trivial"), "-f", "true", "cmd.exe", "/c", "echo", "hi"],
         "nsys_cuda_torch": [str(NSYS), "profile", "-t", "cuda,nvtx", "-s", "none", "--cpuctxsw=none",
                             "-o", str(work / "nsys_cuda"), "-f", "true", py, "-c", TORCH_TARGET],
-        "ncu_torch": [str(ncu), "-o", str(work / "ncu_torch"), "-f", py, "-c", TORCH_TARGET],
+        "ncu_torch": [str(ncu), *(["--set", ncu_set] if ncu_set else []), "-o", str(work / "ncu_torch"), "-f", py, "-c",
+                      TORCH_TARGET],
         "cupti_torch": [py, "-c", CUPTI_TARGET],
     }
 
@@ -129,6 +130,7 @@ def main(argv=None) -> int:
     ap.add_argument("--only", default="")
     ap.add_argument("--ncu", default=str(NCU))
     ap.add_argument("--exp", default="Q1-capture-smoke")
+    ap.add_argument("--set", default="", help="ncu section set (Q2e: detailed)")
     a = ap.parse_args(argv)
     from primordial.fabric.rows import RowWriter
     env = dict(os.environ, OMP_NUM_THREADS="1", NUMBA_NUM_THREADS="1")
@@ -139,7 +141,7 @@ def main(argv=None) -> int:
             "first_blackwell": FIRST_BLACKWELL}
     only = set(a.only.split(",")) - {""}
     with RowWriter(a.out, a.exp, commit_every_s=3600) as w:
-        for name, cmd in probes(a.py, work, pathlib.Path(a.ncu)).items():
+        for name, cmd in probes(a.py, work, pathlib.Path(a.ncu), a.set).items():
             if only and name not in only:
                 continue
             rc, out, err = _run(cmd, work, a.timeout, env)
