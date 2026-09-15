@@ -315,3 +315,9 @@ transfer.run_pair split (pair_base/run_seed/summarize) for per-seed F9 checkpoin
 committed E-T1b rows field for field. New job cohorts/e/r4_transfer.py (guard from worlds_r4.json, M2 budget
 800x128 on TRAIN128, 16 run seeds, report-only check_b row) + tests, code 407b210ef.
 Dev smoke (1 seed, 20 gens): 9.3 CPU-s, oracles clean, integrity true. Record job submitted, ttl 20000 CPU-s.
+
+## 2026-09-15 r4 epoch 1 close
+
+F14 stop at the EPOCH 1 boundary paused E-R4-1 cleanly after 9/32 run seeds (45 rows, 2910 CPU-s, ~323
+CPU-s per seed -> ~10.3k total, inside ttl 20000); segment 1 queued (f82198bface6). Answered C/A on the
+graphworld_b2 interface ask: not built without an operator ruling. No receipts yet.
