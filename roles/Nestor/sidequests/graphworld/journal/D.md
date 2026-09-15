@@ -331,3 +331,8 @@
   cell train 32/32 pairs, control held > cell held 17/32 (TRAIN_NOT_HELD needed <= 16: one pair short). Shuffled
   pairing t 31 h 17. Spearman train-held control -0.04. Receipt 1789490865360-0. ANOM-..3451 left OPEN (rule did not
   return the mechanism; not explained away).
+- Loop iteration 6 (12:50): sized the old queue; cheapest aimed discriminator is ANOM-..1532 (tt_feat w4: train
+  saturates by gen 14, held64 does not). Claimed. D-R6-9 = E9's loop on E9's mutation stream with a SEEDED sampler
+  (E9's was UNSEEDED, so its rows are references only), run seeds 0..7, checkpoints 14/25/50/100/200 inside one
+  trajectory each (top-16 readout as filed). I1: exact top-16 fitness recount at every checkpoint + repeat of run
+  seed 0 identical. Cost ~9 x 200 gens at batch 128 (E9: ~5 s per run). Test 5 passed rc 0; worker restarted.
