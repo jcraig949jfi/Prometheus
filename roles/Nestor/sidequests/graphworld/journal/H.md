@@ -565,6 +565,24 @@ budget 1789425755152-0).
     and bad sha are refused.
   - Guard: unreachable is refused; a missing cited sha is refused; the receipt field wins; the
     earliest exact post is read.
-- Suite 405 passed, 1 skipped, pytest rc 0 (09:47).
+- Suite 405 passed, 1 skipped, pytest rc 0 (09:47). Pushed 3014876d5 (ops.push rebased).
+
+## 2026-09-15 09:49, item 2: H-R6-2 (D10) close sweep
+
+- primordial/score/close_sweep.py.
+  - Every primordial/ledger/rows/** file added or modified by a commit whose committer time is in
+    the round window must be cited by a GUARDED receipt: one carrying campaign_stage in the
+    primordial/ledger/<lane>.jsonl mirror, with ts >= start.
+  - Otherwise it is listed unreceipted, with its commits. emit() writes one UNRECEIPTED_OBSERVATION
+    to pm:events per (round, path), once.
+  - CLI: --round (reads round_clock) or --start/--end.
+  - Round 5's D10 sets (E-R5-3 GPU rows, H's own B-R5-1 replay rows) are exactly the class it names.
+- Tests, 4, on a real git repo with pinned commit times:
+  - A guarded receipt clears its file.
+  - A file cited only by an unguarded receipt, and the planted uncited file, are both named with
+    their commit.
+  - Before-window, after-window and non-rows files are ignored.
+  - The ledger mirror reader keeps only guarded, in-window receipts.
+  - emit is idempotent.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
