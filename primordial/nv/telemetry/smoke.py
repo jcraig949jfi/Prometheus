@@ -73,6 +73,26 @@ def classify(probe: str, rc: int | None, out: str, err: str) -> str:
     return "ok" if rc == 0 else "failed"
 
 
+REPORT_EXTS = (".ncu", ".ncu-rep")                             # ncu 2024.x writes .ncu, 2025.x writes .ncu-rep (Q2d)
+
+
+def report_ok(files) -> bool:
+    """An ncu capture counts only if a report file exists (rc 0 alone is not a capture)."""
+    return any(str(f).endswith(REPORT_EXTS) for f in files)
+
+
+def judge_capture(rows: list[dict]) -> str:
+    """Q2c/Q2d predicate by code: PASS iff control_torch ok AND ncu_torch rc 0 with no refusal text AND a report."""
+    by = {r.get("probe"): r for r in rows}
+    c, n = by.get("control_torch"), by.get("ncu_torch")
+    if not c or not n or classify("control_torch", c["rc"], c["stdout"], c["stderr"]) != "ok":
+        return "INVALID"
+    v = classify("ncu_torch", n["rc"], n["stdout"], n["stderr"])
+    if v == "ok" and report_ok(n["report_files"]):
+        return "PASS"
+    return "REFUSAL:" + v
+
+
 def _run(cmd, cwd, timeout, env=None):
     try:
         p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=timeout, env=env)
@@ -125,7 +145,7 @@ def main(argv=None) -> int:
             rc, out, err = _run(cmd, work, a.timeout, env)
             v = classify(name, rc, out, err)
             files = sorted(p.name for p in work.iterdir() if p.name.startswith(name.split("_")[0]))
-            if name == "ncu_torch" and v == "ok" and not any(f.endswith(".ncu") for f in files):
+            if name == "ncu_torch" and v == "ok" and not report_ok(files):
                 v = "failed"                                   # PASS needs the report file, not just rc 0
             if files:
                 keep = REPORTS                                 # binary reports stay out of git
