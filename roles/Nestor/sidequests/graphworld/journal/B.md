@@ -495,3 +495,6 @@
 - Loop iteration 1: B-R4-4 (shrink via codebook): int5a4 20B, int4a4 16B, int5a2 12B, seeds 0-7, ttl 2400. Rule fixed before the run: front membership needs PASS on seeds 0-7 AND 8-15.
 - B-R4-4 (2 segments across the EPOCH 1 stop flag, 1392 CPU-s; oracles clean, 0 input-invariant): int5a4 20B 183.82 PASS progress 1.068 CI [.81,1.40]; int4a4 16B 189.91 PASS 1.442 [.86,1.76]; int5a2 12B 167.60 FAIL .070 [-.18,.14].
   Both PASSes are single-set: NOT claimed. B-R4-5 replicates int5a4 + int4a4 on run seeds 8-15. Front stays int5a8 36B until then.
+- B-R4-5 (job ok, 1019 CPU-s; seeds 8-15; oracles clean on rs8, 0 input-invariant): int4a4 16B 191.14 PASS progress 1.518 CI [.22,1.91]; int5a4 20B 181.02 FAIL .895 [.50,1.15].
+  Pooled 16 (report-only): int4a4 191.14, 1.518, CI [.78,1.76], 11/16 seeds >= 181.906; int5a4 182.42, .981, CI [.80,1.15], 9/16.
+  FRONT UPDATE (rule fixed before B-R4-4): int4a4 16B PASSes on seeds 0-7 (1.442) AND 8-15 (1.518) -> new smallest claimed cell, 16 B vs 200 B (12.5x). int5a4 20B does not join (8-15 FAIL). Non-monotone again: 16B replicates, 20B does not -- another seed-set-dependent verdict on this cell (see anomaly 1789450127495-0).
