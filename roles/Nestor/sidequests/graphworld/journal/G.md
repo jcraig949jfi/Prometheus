@@ -207,3 +207,23 @@ Brief: prompts_bld_r4/G.md; items SWARM_R4 s2 G-R4-1..5. Threads 5. M2 unheld (G
   byte-identical elites; pause/resume == uninterrupted; job pause/resume rows == uninterrupted; median rule.
 - Suite 345 passed, 9 skipped (rc 0). Pushed 187b4b471.
 - Next: G-R4-2 floor suite (cheap parts + gate + train8 learner) per world x pressure, via the F7 worker.
+
+## 2026-09-14 P0 epoch 1, iteration 2 -- F7 worker idle death fixed; G-R4-2 floor suite
+
+- My F7 worker died idle within seconds: redis TimeoutError in serve's XREADGROUP. This venv's redis-py 8.1
+  defaults socket_timeout to 5 s, equal to block_ms=5000. Fix: worker._redis socket_timeout=30
+  (SOCKET_TIMEOUT_S) + test_f7_worker_timeout.py (a 5.5 s idle blocking read). F7/F9/F14 tests 8 passed.
+  Pushed 519d081c8; A accepted it as a shared-library change (1789434198534-0) and added "worker idle > 60 s
+  still alive" to the launch check. Also seen: host "localhost" costs a 5 s first connect; use 127.0.0.1.
+- G-R4-2: primordial/metric/suite.py. floor_of_parts = max over the parts run (ties -> PARTS order);
+  learner missing -> floor_is_bound true, bound_parts names the parts. Parts are the pressure's own
+  (best_constant and gate selected on its TRAIN; train8 learner never in a train128 bound). The gate is a
+  column only. cheap_parts reuses M1's floors/gate code; job emits suite_cheap rows, learner run rows
+  (invariant.learner_cell, factored out of invariant.job), and one floor_suite row per pressure.
+- Tests test_suite.py (5): max/bound/gate-column logic; w3 cheap parts == committed G-M1 floor cells
+  (abstain, best_fixed, random, gate v2) to 4 dp; job learner only on train8, train128 a bound without the
+  learner, pause/resume rows == uninterrupted.
+- Full suite: first run 1 failed (test_f14_epoch: RowWriter.close relative_to on a \\?\ long path killed a
+  worker thread), passes 3/3 alone; rerun 354 passed, 9 skipped, rc 0. Committed only on the green rc.
+  Flake reported to A,F (1789434512258-0). Pushed fc1ebf81c.
+- Next: G-R4-3 stage 1 on 37 candidates (w1..w5 + gen_seeds 6..37) through the worker; predicate posted first.
