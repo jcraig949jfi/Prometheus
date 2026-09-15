@@ -85,6 +85,7 @@ def copy_main(idx: int, gens: int, go: str, ready: str, warm_gens: int = 2) -> i
     import psutil
     import redis
     from primordial.metric import baseline as B
+    import numba
     r = redis.Redis.from_url(ARCHIVE_URL)
     with tempfile.TemporaryDirectory() as tmp:
         B.baseline_run(r, GEN_SEED, PRESSURE, 900 + idx, warm_gens, BATCH, tmp, None, None, FAMILY)   # JIT warm
@@ -100,7 +101,9 @@ def copy_main(idx: int, gens: int, go: str, ready: str, warm_gens: int = 2) -> i
         mem = me.memory_info().rss
     print(json.dumps({"idx": idx, "wall_s": wall, "cpu_s": (c1.user + c1.system) - (c0.user + c0.system),
                       "gens": gens, "batch": BATCH, "units": gens * BATCH, "rss_mb": round(mem / 2 ** 20, 1),
-                      "threads_env": os.environ.get("NUMBA_NUM_THREADS")}))
+                      "threads_env": os.environ.get("NUMBA_NUM_THREADS"),
+                      "numba_threads": int(numba.get_num_threads()),              # D19: effective, not the env
+                      "numba_pool": int(numba.config.NUMBA_NUM_THREADS)}))
     return 0
 
 
@@ -271,7 +274,8 @@ def write(prof: dict, r=None, repo=ROOT, host_load=None, out=OUT) -> dict:
     for s in prof["steps"]:
         w.write({"kind": "capacity_step", **{k: v for k, v in s.items() if k not in ("copies", "status")},
                  "copy_walls_s": [round(c["wall_s"], 3) for c in s["copies"]],
-                 "copy_cpu_s": [round(c["cpu_s"], 3) for c in s["copies"]], "status": "record"})
+                 "copy_cpu_s": [round(c["cpu_s"], 3) for c in s["copies"]],
+                 "copy_numba_threads": [c.get("numba_threads") for c in s["copies"]], "status": "record"})
     w.write({"kind": "capacity_profile", **{k: v for k, v in prof.items() if k not in ("steps", "status")},
              "host_load_before": host_load, "status": "record"})
     w.close(note="(O3 capacity profile)")
