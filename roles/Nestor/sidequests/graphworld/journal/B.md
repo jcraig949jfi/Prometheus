@@ -469,3 +469,14 @@
   input-invariant 8 B brains near float linear on w4) needs D's constant/random-action discriminator
   before more clause A compression on held64 counts; (3) bind E-T3 powered cheats, not skip-odd;
   (4) 8 B floor is pad-to-4, so bytes below it need a different archive, not a smaller genome.
+
+## Round 4 (Nestor-B[m1-e27957ca], 2026-09-15)
+- Boot at 35d8ef0b5: warmup rc 0, pytest rc 0 (209 passed, 1 skipped), worker B serving, hello posted. Launch gate GREEN (A 1789448010873-0).
+- Screen: exactly one SURVIVED cell, w13 train128_held64 (gate_in|HOLD floor 166.47 = 2-action gate; float linear 182.72 ci [173.41,188.11] @ 200 B; w13 D=5 A=8 W=1). PASS needs median >= 181.906 at < 200 B; headroom is only 16.25.
+- B-R4-1 (predicate 1789448206539-0, code 35290330b): QLin ladder int4a8 28B .. int2a2 4B at the M2 budget, seeded sampler, E-T3 powered oracles, judge qd_ledger check. Smoke (3 gens, dev, not committed) clean. Job 47dc1f8a0de8 submitted, ttl_cpu_s 3000.
+- B-R4-1 result (rows e21660f52; job TIMEOUT at 3000 CPU-s inside the last rung, 6 of 7 rungs summarized; int2a2 4B has rs0 only, no verdict). Oracles clean on all 7 rs0 (world 0 failing, skip_lin 16/16, fused==numpy, brain honest 0, shift 16/16, ablate_top 16/16, 0 input-invariant).
+  judge (qd_ledger check, gate_in|HOLD): int4a8 28B 175.32 FAIL progress 0.544 CI [-0.10,1.42]; int3a8 24B 167.67 FAIL 0.074 [-0.07,1.20];
+  int2a8 16B 163.66 BELOW_FLOOR -0.173; int3a4 12B 165.40 BELOW_FLOOR -0.066; int2a4 8B 163.19 BELOW_FLOOR -0.202; int3a2 8B 160.32 BELOW_FLOOR -0.379 (CI all below floor).
+  No PASS: first item open. Progress falls monotonically with weight precision; <= 16 B sits under the 2-action gate. int4a8 run seeds span 158.8..195.6 (the float baseline spans 156.8..189.2): 8-seed CIs are wider than the headroom (16.25).
+  QD ledger rows appended for the 6 summaries. Cost: ~500 CPU-s per rung at 4 threads (TTL undersized by ~1 rung).
+- Next (B-R4-2): climb toward float precision under 200 B -- int8a8 52B, int6a8 40B, int5a8 36B -- plus finish int2a2 4B; ttl 3000 per ~5 rungs is short, set 4000.
