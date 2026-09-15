@@ -41,6 +41,15 @@ Seeds fixed here, before any round 7 data:
 | O6 | "the 4200 family carried the performance" (reviewer 2) | an over-read: leave-4200-out was the THINNEST margin (CI low 0.996 > 0.95, still ROBUST) | The packet language stays "thin at leave-4200-out; no single family carries the PASS". No new gate on B-R5-1. |
 | O7 | "the round close must send a kill signal to the worker PIDs" | none | ADOPTED with a guard: workers register pid + repo + round_id; the close stops exactly the registered pids whose cmdline is `fabric.worker serve --lane <L>`. It never kills by name substring (feedback: a kill script matched itself). Production seats are never touched. |
 
+Added during R7-BUILD (fixed before the data they govern):
+
+| # | trigger | adopted rule |
+|---|---|---|
+| O2' | E's cpu_lockstep backend is itself a throughput optimization | CHOSEN backend = the fastest one whose oracle is clean, iff >= 1.25x cpu_sequential on every measured cell; pm:r7:backend + pm:r7:gpu_adopt; measured on the production path (G's cell_job) |
+| O8 | E-R7-1 planted NEGATIVE judged PASS at 32/4/8 (p_max .049) | No change to the control or check_b. K = 40 independent planted-negative draws; INSTRUMENT_ADMISSIBLE iff false_pass <= 5/40, else INSTRUMENT_NOT_VALIDATED. The live Clause B pair runs only if ADMISSIBLE. |
+| D18 | a closed round's clock kept refusing all admission | round_clock.read -> None for a closed round; the close unsets current; the scan flags it (F) |
+| D19 | worker/gpuq children ran numba at 3 threads under an 8-thread grant | the child env + set_num_threads = the grant; rows stamp effective threads; fixed before the k* re-probe (F) |
+
 ## 2. Stage and ceilings (PRODUCTION, operator 22; one CEILINGS table)
 
 - Checkpointable cpu job: segment wall <= 2400 s; cpu_budget_s per job <= 36000 (10 CPU-h).

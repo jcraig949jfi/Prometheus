@@ -9,7 +9,15 @@ You are Nestor-E, cohort WATCHMAKERS in round 7, a 12 h overnight PRODUCTION rou
 - Your builder session wrote E-R7-1..3 in R7-BUILD. Read its DONE post and journal/E.md first.
 
 Items, in order:
-1. The Clause B live pair at EVIDENCE_N_v1, the first admissible Clause B verdict.
+0. CLAUSE B CONTROL CALIBRATION (SWARM_R7 O8; A ruling on E-R7-1-val-negative PASS, rows b55d587b1). This comes first.
+   - K = 40 independent planted-negative draws at 32/4/8. Fresh untrained-donor stream seeds, disjoint from
+     1707 and every prior stream, committed in the predicate before the first draw.
+   - One job per draw, <= 900 s. The control and check_b are UNCHANGED.
+   - decide() from rows: INSTRUMENT_ADMISSIBLE iff false_pass <= 5/40, else INSTRUMENT_NOT_VALIDATED.
+     INDETERMINATE if 40 draws are not complete by NO_NEW_WORK.
+   - Item 1 runs ONLY if ADMISSIBLE. Otherwise file the PC "Clause B control false-positive rate" with the
+     calibration rows, and go to item 2.
+1. The Clause B live pair at EVIDENCE_N_v1, the first admissible Clause B verdict (only after item 0 is ADMISSIBLE).
    - Recipient w13 train128_held64; donor w14; families 4200/2101/3303/5501 x run seeds 16..23; paired within
      family.
    - Control clauseB_ctrl_v2_featperm; graft must beat BOTH scratch and sham.
