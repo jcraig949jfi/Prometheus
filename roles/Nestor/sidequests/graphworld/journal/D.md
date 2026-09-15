@@ -288,3 +288,7 @@
   the search stalls on one plateau. Opposite of w13 (OVERFIT_ONLY): w7's HELD is a real search shortfall.
   Rows file also holds the aborted job_end row of d6eecdc3a3c8; the receipt cites the file.
 - Receipt D-R6-5 filed 1789489833767-0 (guard 10/10, status NULL, SEARCH_SHORT), rows 98f7f2efa; ANOM-..9534 RESOLVED. A ruling 1789489756428-0: restart worker after any harness edit (done 12:28:49).
+- Loop iteration 4 (12:32): last three HELD siblings (w1 t8, w1 t128, w34 t8) have no R16 gate row; G's round 4 stage 1
+  suite_cheap rows carry their gates (gate_held64 == worlds_r4 == anomaly text). Claimed ANOM-..9536/..9538/..9539.
+  D-R6-6 = D-R6-4 reader over the 3 cells, one row, per-cell decision, thresholds scaled to runs found (n = 8 gives
+  5/3); new module only, r6_4 untouched since the restart. Test 3 passed rc 0. F filed the import-closure PC 1789489827401-0.
