@@ -61,7 +61,11 @@ def test_r16_run_rows_carry_measured_search_fields(tmp_path):
             r.delete(k)
     for row in (b, l):
         assert (row["search_generations"], row["search_batch"], row["search_evals"]) == (3, 8, 24)
-        assert row["search_train_episodes"] == 24 * 8 and row["search_cpu_s"] > 0 and row["search_wall_s"] > 0
+        assert row["search_train_episodes"] == 24 * 8
+        # measured and stamped, not None; a warm 3-generation search can finish inside one Windows process_time tick
+        # (~15.6 ms), so 0.0 is a correct reading of the clock -- the claim is presence + non-negativity, not > 0
+        assert isinstance(row["search_cpu_s"], float) and row["search_cpu_s"] >= 0.0
+        assert isinstance(row["search_wall_s"], float) and row["search_wall_s"] >= 0.0
     v1 = B.baseline_run(r, 4, "train8_held64", 0, gens=2, batch=8, elites_dir=tmp_path / "v1")
     for k in r.scan_iter("pm:qd:g-r4-base-*", count=5000):
         r.delete(k)
