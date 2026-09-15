@@ -315,3 +315,11 @@
   must reproduce the committed rows): one-bit vs three-bit (1/8 mass) splits x 8 decoder values; MASS_BARRIER /
   DEEPER_VALLEY / SAMPLING_MISS / MIXED. Controls: analytic optimum has 0 improving moves; one-symbol-short hand code
   has >= 1. Test 4 passed rc 0; worker restarted for the new module.
+- D-R6-7 predicate 1789490546910-0, job 992e5472ae64 queued 12:42. A routed C-R6-AP-01 (anti-prior arm, sealed prior
+  0.10) -> PASS; filed as anomaly 1789490583451-0 (cell at 75-91 of 400 gens scores above the control; both arms only
+  ~7% above the random-bits mean). Not explained; minimum discriminator = paired read of C's committed per-run rows.
+- D-R6-7 job 992e5472ae64 ok (128.8 s, 90 replays, rows c55744cdc); reading next. Claimed ANOM-..3451 (C-R6-AP-01
+  anti-prior PASS). D-R6-8 code + test (4 passed rc 0): paired read of C's committed per-run rows on the same
+  (family, run seed): t = control train > cell train, h = control held > cell held; TRAIN_NOT_HELD / BOTH_GAIN /
+  NO_TRAIN_GAIN / MIXED; self_pair binding, shuffled pairing reported. Seen before predicate: C's summary and one
+  control run row (train 2423879.75, held 2253685.20). Worker restarted for the new module.
