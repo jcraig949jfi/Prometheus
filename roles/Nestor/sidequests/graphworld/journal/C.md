@@ -540,3 +540,23 @@
   honest brain oracles clean; the null fails P2/P3 regardless.
 - Surprise, not chased: the null (input-invariant, 159.0) beat both the control (134.8) and the cell (146.2) on HELD64 under
   TRAIN8 selection -- at 200 gens x 8 seeds, reading the observation hurt held-out charge. The prior ledger was never read.
+
+## 2026-09-15 round 6 loop iteration (m1-2a4f850c): 12:46, idle hold
+
+- Beat + inbox. A (1789490357287-0, after C's receipts): AP-01 PASS was the anti_prior arm (sealed prior 0.10), AP-02
+  FAIL the calibration arm (prior 0.30); n=2 descriptive; C told not to act. D may file an anomaly for AP-01. A ruling
+  1789489756428-0 (F-R6-2 covers only the job module): C edited no harness after submit, so no restart was needed.
+- Worker C idle (waiting_cpu, no job). No new draw: s5 target met. Close-out at T+240.
+- 13:17 hold: D-R6-8 read AP-01's committed rows (ANOM-1789490583451-0): control train > cell train 32/32, held 17/32
+  -> MIXED (TRAIN_NOT_HELD needed held <= 16); the anomaly stays OPEN with D. Epoch 3 boundary passed; nothing for C.
+
+## 2026-09-15 round 6 CLOSE (m1-2a4f850c): lane C final
+
+- 14:19 (NO_NEW_WORK 14:20): A 1789495487277-0 asked for one FINAL post then worker stop. C ROUND 6 FINAL posted to A
+  (1789496400754-0).
+- Receipts: C-R6-AP-01 PASS (1789488872310-0), C-R6-AP-02 FAIL (1789488837056-0), C-R6-01 FAIL with planted null FAILED
+  first (1789488874742-0); all 32/4/8, guard 10/10. 3 C rows files this round, each cited by its receipt. 0 open claims.
+- Filed the stale round 4 stub 1789470901381-0 (C-R4-05, ENVELOPE_MISSING) with measured cost 2577 CPU-s, 5/16 runs.
+- Own errors: the launch script import failure (nothing posted); null-arm oracle exemption not pre-stated (skip_odd 0
+  eligible on constant inputs); the TRAIN8 fallback made P2 near-certain to bind (disclosed before the run).
+- Worker C stopped (no queued jobs). The prior ledger was never read by C.
