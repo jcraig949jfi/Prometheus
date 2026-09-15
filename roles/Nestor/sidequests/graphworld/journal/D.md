@@ -353,3 +353,7 @@
   0.00-0.76 among own nulls. E2b's 6.5% FAKEFIT rate lies above all 10 here; the 20-null max itself swings
   0.036-0.073 across reps. Cost: branch_points 24-91 s per rep (the 100 nulls), evolve ~1.5 s.
 - Receipt D-R6-10 filed 1789492198616-0 (guard 10/10, status NULL, NULL_HOLDS), rows 988ee3745; ANOM-..0379 RESOLVED.
+- Loop iteration 8 (13:11): claimed ANOM-..0372 (tt_digits w3 held-out swings with the run RNG). D-R6-11 = E7b setup
+  with the run RNG split: init stream (first generation only) x mutation stream (+ seeded sampler), 4 x 4 grid +
+  repeat of (0,0), ~17 x 31 s. NO_SWING (range < 20) / INIT_DOMINATES (vi >= 2 vm) / MUTATION_DOMINATES / BOTH.
+  I1: 16 cells, exact top-16 recount, (0,0) repeat identical. Test 4 passed rc 0; worker restarted.
