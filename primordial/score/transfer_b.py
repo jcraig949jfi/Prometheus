@@ -45,11 +45,15 @@ METRIC = "held_auc"
 
 
 def signflip_p(d) -> float:
-    """One-sided exact paired permutation p for mean(d) > 0 (same computation as E's harness)."""
-    d = np.asarray(d, float)
-    obs = d.mean()
-    flips = np.array(list(itertools.product((1.0, -1.0), repeat=len(d))))
-    return float(((flips * np.abs(d)).mean(1) >= obs - 1e-12).mean())
+    """One-sided paired sign-flip p for mean(d) > 0: E's transfer.signflip_p (exact for n <= 20; E-R7-1: a seeded
+    Monte Carlo above, so a 32-run family-axis pair is computable). One implementation, imported, never copied."""
+    from primordial.cohorts.e.transfer import signflip_p as _p
+    return _p(d)
+
+
+def _run_id(r: dict):
+    """E-R7-1: a family-axis row pairs on (rng_family, run_seed); a single-stream row on run_seed."""
+    return (int(r["rng_family"]), int(r["run_seed"])) if r.get("rng_family") is not None else r["run_seed"]
 
 
 def holm(pvals: dict, alpha: float = ALPHA) -> dict:
@@ -91,7 +95,9 @@ def pairs_from_rows(rows: list[dict]) -> dict:
         if r.get("condition") == "summary":
             g["summary"] = r
         elif r.get("condition") in CONDITIONS + ("scratch", "sham") and r.get("run_seed") is not None:
-            g["by_cond"].setdefault(r["condition"], {})[r["run_seed"]] = r
+            rid = _run_id(r)
+            g.setdefault("id_kinds", set()).add("family" if isinstance(rid, tuple) else "single")
+            g["by_cond"].setdefault(r["condition"], {})[rid] = r
     return out
 
 
@@ -101,6 +107,9 @@ def evaluate_pair_v2(g: dict, alpha: float = ALPHA, metric: str = METRIC) -> dic
     problems = []
     if g.get("mixed_control_versions"):
         problems.append("rows of this pair carry more than one control_version")
+    if len(g.get("id_kinds", ())) > 1:
+        return {"run_seeds": [], "n": 0, "control_version": CONTROL_V2, "verdict": "INDETERMINATE",
+                "problems": ["rows mix family-axis (rng_family) and single-stream run ids"]}
     seeds = sorted(set.intersection(*(set(bc.get(c, {})) for c in CONDITIONS_V2))) if all(c in bc for c in CONDITIONS_V2) else []
     for c in CONDITIONS_V2:
         extra = set(bc.get(c, {})) - set(seeds)
@@ -108,7 +117,16 @@ def evaluate_pair_v2(g: dict, alpha: float = ALPHA, metric: str = METRIC) -> dic
             problems.append(f"no {c} rows")
         elif extra:
             problems.append(f"{c} has unpaired run seeds {sorted(extra)}")
-    res: dict = {"run_seeds": seeds, "n": len(seeds), "control_version": CONTROL_V2}
+    res: dict = {"run_seeds": [list(s) if isinstance(s, tuple) else s for s in seeds], "n": len(seeds),
+                 "control_version": CONTROL_V2}
+    from primordial.cohorts.e.transfer import signflip_method
+    res["p_method"] = signflip_method(len(seeds))
+    if seeds and isinstance(seeds[0], tuple):                                  # E-R7-1 sample block, reported
+        per: dict = {}
+        for f, _ in seeds:
+            per[str(f)] = per.get(str(f), 0) + 1
+        res.update(families=sorted(int(f) for f in per), n_per_family=per, runs_total=len(seeds),
+                   rng_family_count=len(per), runs_per_family=min(per.values()))
     if len(seeds) < 2:
         return dict(res, verdict="INDETERMINATE", problems=problems or ["fewer than 2 paired run seeds"])
     col = lambda c: np.array([bc[c][s][metric] for s in seeds], float)

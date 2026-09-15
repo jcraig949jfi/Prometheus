@@ -195,12 +195,31 @@ def gens_to(curve: np.ndarray, target: float) -> int:
     return int(hit[0]) + 1 if len(hit) else len(curve) + 1
 
 
+SIGNFLIP_EXACT_MAX = 20            # 2^20 flips enumerated; above this (E-R7-1: n = 32) a seeded Monte Carlo
+SIGNFLIP_DRAWS = 200_000
+SIGNFLIP_SEED = 20260915
+
+
+def signflip_method(n: int) -> str:
+    return "exact" if n <= SIGNFLIP_EXACT_MAX else f"montecarlo_{SIGNFLIP_DRAWS}_seed{SIGNFLIP_SEED}"
+
+
 def signflip_p(d) -> float:
-    """One-sided exact paired permutation p for mean(d) > 0."""
+    """One-sided paired sign-flip p for mean(d) > 0: exact over all 2^n flips when n <= SIGNFLIP_EXACT_MAX, else
+    (count(flipped mean >= observed) + 1) / (draws + 1) over SIGNFLIP_DRAWS seeded sign vectors (PCG64(SIGNFLIP_SEED))."""
     d = np.asarray(d, float)
     obs = d.mean()
-    flips = np.array(list(itertools.product((1.0, -1.0), repeat=len(d))))
-    return float(((flips * np.abs(d)).mean(1) >= obs - 1e-12).mean())
+    if len(d) <= SIGNFLIP_EXACT_MAX:
+        flips = np.array(list(itertools.product((1.0, -1.0), repeat=len(d))))
+        return float(((flips * np.abs(d)).mean(1) >= obs - 1e-12).mean())
+    rng = np.random.Generator(np.random.PCG64(SIGNFLIP_SEED))
+    hits, left, a = 0, SIGNFLIP_DRAWS, np.abs(d)
+    while left:
+        k = min(left, 20_000)
+        s = rng.integers(0, 2, size=(k, len(d)), dtype=np.int8) * 2 - 1
+        hits += int(((s * a).mean(1) >= obs - 1e-12).sum())
+        left -= k
+    return float((hits + 1) / (SIGNFLIP_DRAWS + 1))
 
 
 def parse_seeds(s: str) -> list[int]:
