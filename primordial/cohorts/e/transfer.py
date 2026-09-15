@@ -220,13 +220,59 @@ def default_donor(recipient: int, family: str, search: range = range(1, 65)) -> 
 
 # ------------------------------------------------------------------ one recipient world
 
+def pair_base(donor: int, recipient: int, family: str, gens: int, batch: int, n_train: int, tag: str) -> dict:
+    return {"tag": tag, "family": family, "donor_world": donor, "recipient_world": recipient,
+            "gens": gens, "batch": batch, "train_seeds": n_train, "genome_bytes": E7.G7(recipient, family).glen,
+            "top_k": TOP, "checkpoints": checkpoints(gens).tolist()}
+
+
+def run_seed(donor: int, recipient: int, family: str, rs: int, gens: int, batch: int, n_train: int, base: dict,
+             oracles: bool = False) -> tuple[dict, dict]:
+    """One run seed of one pair: -> ({condition: row}, {condition: train curve}). Rows are not written."""
+    ga, gb = E7.G7(donor, family), E7.G7(recipient, family)
+    train = np.arange(9100, 9100 + n_train, dtype=np.int64)
+    # donors: A on its own train seeds; self-donor: B on a disjoint run-seed stream
+    dA = evolve(ga, family, train, gens, batch, np.random.Generator(np.random.PCG64([1701, rs, donor])))[0].top()
+    dB = evolve(gb, family, train, gens, batch,
+                np.random.Generator(np.random.PCG64([1702, rs + 1000, recipient])))[0].top()
+    srng = np.random.Generator(np.random.PCG64([1703, rs, recipient]))
+    filler = gb.pack(gb.init(np.random.Generator(np.random.PCG64([1705, rs, recipient])), batch))
+    slots = {"scratch": filler[:TOP].copy(), "graft": dA,
+             "rand_graft": gb.pack(gb.init(srng, TOP)),
+             "shuffle_graft": shuffle_genomes(gb, dA, srng), "self_graft": dB}
+    donor_sha = sha(dA)
+    rows, curves = {}, {}
+    for cond in CONDITIONS:
+        gen0 = filler.copy()
+        gen0[:TOP] = slots[cond]
+        rng = np.random.Generator(np.random.PCG64([1704, rs, recipient]))   # common stream per run seed
+        arch, curve, hcurve = evolve(gb, family, train, gens, batch, rng, gen0, held=HELD64)
+        top = arch.top()
+        row = dict(base, status=STATUS[cond], condition=cond, run_seed=rs, cells=len(arch),
+                   held_auc=float(hcurve.mean()), held_curve=[round(float(x), 3) for x in hcurve],
+                   train_auc=float(curve.mean()), train_final=float(curve[-1]),
+                   zero_shot_held64=score(gb, family, gen0[:TOP], HELD64),
+                   held64=float(hcurve[-1]), slot_sha256=sha(gen0[:TOP]))
+        if cond == "graft":
+            row["donor_sha256"] = donor_sha
+            row["graft_bytes_unmodified"] = row["slot_sha256"] == donor_sha
+            np_fit = E7.rollout(gb, gb.unpack(dA), train)[0]
+            fu_fit = FusedRollout(gb.spec, TOP, train, family=family).run(gb.unpack(dA))[0]
+            row["graft_fused_eq_numpy"] = bool(np.array_equal(np_fit, fu_fit))
+            if oracles:
+                tg = gb.unpack(top)
+                row["world_oracle_honest"] = E7.world_oracle(gb, tg, HELD8)
+                row["world_oracle_skip_lin"] = E7.world_oracle(gb, tg, HELD8, "skip_lin")
+                row["brain_oracle_honest"] = E7.brain_oracle(gb, tg, HELD8)
+                row["brain_oracle_cheat"] = E7.brain_oracle(gb, tg, HELD8, cheat=True)
+        rows[cond], curves[cond] = row, curve
+    return rows, curves
+
+
 def run_pair(donor: int, recipient: int, family: str, run_seeds, gens: int, batch: int, n_train: int,
              tag: str, writer, oracles: bool = True, log=print) -> dict:
     ga, gb = E7.G7(donor, family), E7.G7(recipient, family)
-    train = np.arange(9100, 9100 + n_train, dtype=np.int64)
-    base = {"tag": tag, "family": family, "donor_world": donor, "recipient_world": recipient,
-            "gens": gens, "batch": batch, "train_seeds": n_train, "genome_bytes": gb.glen, "top_k": TOP,
-            "checkpoints": checkpoints(gens).tolist()}
+    base = pair_base(donor, recipient, family, gens, batch, n_train, tag)
     ok, why = compatible(ga, gb)
     if not ok or batch <= TOP:
         writer.write(dict(base, status="aborted", reason=why or f"batch {batch} <= top_k {TOP}"))
@@ -235,45 +281,22 @@ def run_pair(donor: int, recipient: int, family: str, run_seeds, gens: int, batc
     curves = {c: [] for c in CONDITIONS}
     for rs in run_seeds:
         t0 = time.perf_counter()
-        # donors: A on its own train seeds; self-donor: B on a disjoint run-seed stream
-        dA = evolve(ga, family, train, gens, batch, np.random.Generator(np.random.PCG64([1701, rs, donor])))[0].top()
-        dB = evolve(gb, family, train, gens, batch,
-                    np.random.Generator(np.random.PCG64([1702, rs + 1000, recipient])))[0].top()
-        srng = np.random.Generator(np.random.PCG64([1703, rs, recipient]))
-        filler = gb.pack(gb.init(np.random.Generator(np.random.PCG64([1705, rs, recipient])), batch))
-        slots = {"scratch": filler[:TOP].copy(), "graft": dA,
-                 "rand_graft": gb.pack(gb.init(srng, TOP)),
-                 "shuffle_graft": shuffle_genomes(gb, dA, srng), "self_graft": dB}
-        donor_sha = sha(dA)
+        rows, cv = run_seed(donor, recipient, family, rs, gens, batch, n_train, base,
+                            oracles=oracles and rs == run_seeds[0])
         for cond in CONDITIONS:
-            gen0 = filler.copy()
-            gen0[:TOP] = slots[cond]
-            rng = np.random.Generator(np.random.PCG64([1704, rs, recipient]))   # common stream per run seed
-            arch, curve, hcurve = evolve(gb, family, train, gens, batch, rng, gen0, held=HELD64)
-            top = arch.top()
-            row = dict(base, status=STATUS[cond], condition=cond, run_seed=rs, cells=len(arch),
-                       held_auc=float(hcurve.mean()), held_curve=[round(float(x), 3) for x in hcurve],
-                       train_auc=float(curve.mean()), train_final=float(curve[-1]),
-                       zero_shot_held64=score(gb, family, gen0[:TOP], HELD64),
-                       held64=float(hcurve[-1]), slot_sha256=sha(gen0[:TOP]))
-            if cond == "graft":
-                row["donor_sha256"] = donor_sha
-                row["graft_bytes_unmodified"] = row["slot_sha256"] == donor_sha
-                np_fit = E7.rollout(gb, gb.unpack(dA), train)[0]
-                fu_fit = FusedRollout(gb.spec, TOP, train, family=family).run(gb.unpack(dA))[0]
-                row["graft_fused_eq_numpy"] = bool(np.array_equal(np_fit, fu_fit))
-                if oracles and rs == run_seeds[0]:
-                    tg = gb.unpack(top)
-                    row["world_oracle_honest"] = E7.world_oracle(gb, tg, HELD8)
-                    row["world_oracle_skip_lin"] = E7.world_oracle(gb, tg, HELD8, "skip_lin")
-                    row["brain_oracle_honest"] = E7.brain_oracle(gb, tg, HELD8)
-                    row["brain_oracle_cheat"] = E7.brain_oracle(gb, tg, HELD8, cheat=True)
-            per[cond].append(row)
-            curves[cond].append(curve)
-            writer.write(row)
+            per[cond].append(rows[cond])
+            curves[cond].append(cv[cond])
+            writer.write(rows[cond])
         log(f"w{donor}->w{recipient} rs={rs} " + " ".join(
             f"{c}:hauc={per[c][-1]['held_auc']:.1f}/z={per[c][-1]['zero_shot_held64']:.1f}" for c in CONDITIONS)
             + f" ({time.perf_counter() - t0:.1f}s)")
+    summ = summarize(base, per, curves, run_seeds)
+    writer.write(summ)
+    return summ
+
+
+def summarize(base: dict, per: dict, curves: dict, run_seeds) -> dict:
+    """The harness's summary row from per-condition row lists and train curves (run-seed order)."""
     target = float(np.median([r["train_final"] for r in per["scratch"]]))
     summ = dict(base, status="record", condition="summary", run_seeds=list(run_seeds),
                 scratch_train_final_median=target)
@@ -298,7 +321,6 @@ def run_pair(donor: int, recipient: int, family: str, run_seeds, gens: int, batc
             summ[c][f"vs_{cheat}_held_auc_p"] = signflip_p(d)
         summ[c]["vs_cheats_held_auc_p_max"] = max(summ[c]["vs_rand_graft_held_auc_p"],
                                                  summ[c]["vs_shuffle_graft_held_auc_p"])
-    writer.write(summ)
     return summ
 
 
