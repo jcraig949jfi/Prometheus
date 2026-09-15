@@ -606,3 +606,19 @@
   ops.push nestor-r7-e after O8 goes idle; C must push the torch_gpu harness first and not submit before E's push.
 - Lesson: a ">= 1 eligible" oracle gate on a channel the brain can make non-binding turns a pressure null into
   INDETERMINATE; state the gate's consequence (or make eligibility structural) before the run.
+- Stopping the child crashed worker 29060 (EOFError on the child pipe, worker.py:538; no job_end row, no done entry);
+  defect filed to A/F 1789511278131-0 (own-error trigger). Token was released by the finally clause; the job message
+  1789509597879-0 stays PENDING in worker-C, but serve() reads only '>' so a restart cannot rerun it (left as is).
+- Rows pushed (e7592ea83, ancestor of integration). RECEIPT C-R7-AP-01 INDETERMINATE 1789511351897-0 (guard accepted;
+  first attempt refused by validate_receipt before the guard: runs_completed in both ledgers, renamed).
+- Worker restarted: pid 18120 (repo nestor-r7-c, r7). Next: anti_prior.assign C-R7-AP-02.
+
+## 2026-09-15 round 7 iteration 3b (m1-440f0317): C-R7-AP-02 assigned and harness drafted
+
+- ANTI_PRIOR v2 #2 code-assigned (pm:prior:* never read): C-R7-AP-02 codebook / nk_stub / byte_charge /
+  falkordb_cypher / metered_stream.
+- Feasibility: lane C's :6392 is Redis 8 + FalkorDB (MODULE LIST graph, vectorset); falkordb client imports. Probe: NK
+  fitness as one GRAPH.QUERY per generation batch (128 x 8 landscapes) == numpy 1024/1024 rows, 0.87 s wall.
+- Design applies the AP-01 lesson: meter / k3 cheat eligibility is STRUCTURAL (planted genomes P_ONES, P_METER in the
+  oracle set), so evolved winners cannot void the gate. byte_charge BETA = floor(1% random NK per landscape) x 8 per
+  functional byte (stated choice, no repo definition). GENS by a pre-stated WALL rule (<= 5400 s).
