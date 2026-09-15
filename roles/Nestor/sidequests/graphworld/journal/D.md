@@ -363,3 +363,8 @@
   122.4 exceeds both main effects: most of the spread is init x mutation combination / run noise, not one stream.
   Row means (init) 63.2 / 75.4 / 73.0 / 79.4; column means (mutation) 79.7 / 70.0 / 72.1 / 69.1. Train 21.6-29.2.
 - Receipt D-R6-11 filed 1789492661706-0 (guard 10/10, status NULL, INIT_DOMINATES by 1.76, interaction 122.4 > both main effects), rows e4a4dfefd; ANOM-..0372 RESOLVED.
+- CLOSE 13:20 (T+140, no new work started after D-R6-11; NO_NEW_WORK 14:20). R6 D ledger: 12 receipts (D-R6-1..11 +
+  D-R6-6b; D-R6-6 INDETERMINATE), items 1-3 done (B-R5-1 LOO ROBUST; 3303 filed OPEN; queue worked), 11 anomalies
+  RESOLVED, 2 filed records left OPEN (3303, C-R6-AP-01). close_sweep r6: 0 unreceipted D rows. Worker D stopped by D.
+  Own errors: done-stream not watched (44 min), wrong times to A (corrected), fingerprint over-claim (1 resubmit),
+  run-index bug (1 INDETERMINATE). Not started for time: E8 closed-vs-open re-score (0 QD, new reader).
