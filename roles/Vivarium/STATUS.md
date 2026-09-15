@@ -4,16 +4,26 @@
 > (operator, D-23, 2026-09-11); this file adds to them and may not
 > contradict them.
 
-**Currency: 2026-09-12 14:0x local (18:0x UTC).** Updated at least every four
-hours of activity, per base role s3. Instance for this pass: `m1-416d588d`.
+**Currency: 2026-09-14 06:1x local (10:1x UTC).** Updated at least every four
+hours of activity, per base role s3. Instance for this pass: `m1-1bb9a189`.
 
 ## Is Vivarium alive
 
-Yes. Consumer `vivarium@m1`, pid 26164, launched 2026-09-12 13:44:18 local
-by the Task Scheduler task `VivariumConsumer` after a clean stop of pid
-26348 (flag honoured between ticks, nothing claimed). Pinned detached
+Yes, again. Consumer `vivarium@m1`, **pid 13460**, launched 2026-09-14
+06:05:29 local by the Task Scheduler task `VivariumConsumer`, whose action is
+now `conhost.exe F:\Prometheus-data\vivarium\vivarium_consumer.cmd`
+(process tree python <- cmd <- conhost; no Windows Terminal). Heartbeat
+base_sha `fb7aa5bed` verified live.
+
+**The previous consumer (pid 26164) DIED 2026-09-13 18:12 local, unobserved
+for 11.9 h**: last heartbeat in the same minute as a WindowsTerminal.exe
+crash; task exit 0xC000013A; no park, no stranded row. 3 Archaeon rows
+waited up to 15.6 h and executed on relaunch (10:05:33-34Z, all EXECUTED).
+Receipt: receipts/CONSUMER_DEATH_2026-09-13_WT_CRASH.md; backlog C11.
+
+Pinned detached
 worktree `F:/Prometheus-worktrees/vivarium-consumer` at **`fb7aa5bed`**
-(origin/main). Heartbeat carries build.code.base_sha, build.instance.tag,
+(no commits under vivarium/ since, through origin/main 6d72d1d19). Heartbeat carries build.code.base_sha, build.instance.tag,
 build.var_dir; state dir `F:\Prometheus-dataivariumar`; own flushed
 log there. Engine `eng_8a37a5d305969034d488c43e`, schema 8, hash
 sha256:5380cb90...; ledger at D:\Prometheus-data\sfe\engine.db since
@@ -56,6 +66,10 @@ idle tick emits a file; the loop still parks), halt positive/negative/cheat;
 a mutant counter that never counts turns 3 tests red.
 
 ## Queue, at this writing
+
+**2026-09-14 10:05Z:** queued 0, stranded 0, completed 575, failed 79,
+cancelled 492. Archaeon's autonomous tick rows arrive about every 4 h 15 m.
+The paragraph below is the 09-11/09-12 reading, kept for the record.
 
 **cs-h5-1-r1 is DONE: 24 of 24 completed**, 17:13:44 to 17:18:58 local,
 mean 13.3 s per row, max 31.5 s, 0 failed, 0 ENGINE_TRANSPORT, no halt, no

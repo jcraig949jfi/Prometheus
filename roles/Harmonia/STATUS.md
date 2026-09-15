@@ -22,6 +22,45 @@ derived from activity, never from a row).
     comms      first boot of the seat into comms (boot_count 1); queue: #8 Archaeon next-work
     journal    roles/Harmonia/journal/2026-09-11_m1-486e595f.md
 
+### Harmonia[m2-54a6d694]  (M2 SPECTREX5, operator label "Harmonia A"; 2026-09-14)
+
+    worktree   D:/Prometheus-worktrees/harmonia-a-boot-2026-09-14
+    branch     harmonia/m2-54a6d694-boot-2026-09-14
+    base_sha   0100d36cd
+    dirty      no at boot
+    session    54a6d694-ea3e-4ec9-b06c-633b5dbbac7d (harness); session_01NiqLgAgvtKZL7txRJoYXzZ (bridge)
+    opened     2026-09-14 06:20 local
+    comms      booted Harmonia[m2-54a6d694]; CLAIMED #215 (Daedalus contract step); #8 not claimed by me
+    working    #215 DONE on my side: candidate contract for 726275da STAGED at contracts/candidates/726275da9c8d/,
+               12/12 rows; promote_candidate_contract.py runs in Daedalus's deploy window AFTER the restart.
+               Found: generator crashed at import on main since 7d302b5ae (fixed).
+               Landed 671378c47 (merge 3da6c2439); report posted comms #256; #215 done.
+    blocked    nothing on me for #215; promotion waits on Daedalus's restart onto 8c53d04e6
+    journal    roles/Harmonia/journal/2026-09-14_m2-54a6d694.md
+
+### Harmonia[m2-f541bed9]  (M2 SPECTREX5, operator label "Harmonia B"; 2026-09-14)
+
+    worktree   D:/Prometheus-worktrees/harmonia-m2-f541bed9-boot
+    branch     harmonia/m2-f541bed9-boot-2026-09-14
+    base_sha   0100d36cd
+    dirty      no at boot
+    session    f541bed9-2bbc-47c0-8e08-dbb9062252c9 (harness); session_01G7RAgrwhQkn4RRf2yn3sKE (bridge)
+    opened     2026-09-14 06:37 local
+    comms      booted Harmonia[m2-f541bed9]; LOST #215 to m2-54a6d694 (handed it two traps, c4ea5840b / #254);
+               CLAIMED #8 (Archaeon next work, four items)
+    working    #8 item 1 DONE: RULING_3B_C3_3_PREFLIGHT_2026-09-14.md (be82cdd8b, #255) --
+               C3-3 preflight NO-GO as printed (region gate a constant; 8.46 of 10 expected,
+               P(all >= 8) 0.123); GO predicate G1-G6 mechanical; 3a/3b/3e/3f amended.
+               #8 item 2 DONE: RULING_H1H0_PHASE2_CONTRASTS_2026-09-14.md (341a92b89, #257) --
+               measures the instrument, not H0; G on vm_ops censoring-determined; CROSS-DEPLOY.
+               #8 item 3 DONE on synthetic evidence: RULING_D3V2_CALIBRATION_2026-09-14.md
+               (ca0dd0fd7, #259) -- d3.v2 ADMITTED at LIVE geometry, REFUSED at FLOOR/UNEQUAL;
+               live use PENDING the v2 dossier delegated to Archaeon (#260).
+               #8 item 4 (HARM-36) DONE in the commit that carries this line.
+    blocked    nothing on me. Waiting on: Archaeon (C3-3 re-run preflight, option B or D;
+               v2 live dossier #260). Operator: C3-3 issue decision.
+    journal    roles/Harmonia/journal/2026-09-14_m2-f541bed9.md
+
 ### untagged instance, session_015xemUgVDH2DmFqYARdV8Gi  (M1, wrote the block below before tags existed)
 
     worktree   F:/Prometheus-worktrees/harmonia-hygiene
@@ -42,9 +81,9 @@ conformance contract, and the H0-H5 qualification gates. I adjudicate other
 seats' claims against executable checks; I run no experiment of my own and no
 long-lived process.
 
-My RESPONSIBILITIES.md and CHARTER.md are from 2026-04 and describe a different
-role (cross-domain cartographer). Both now carry a currency warning above the
-stale part. A replacement is owed: HARM-36.
+RESPONSIBILITIES.md and CHARTER.md were rewritten for this role on 2026-09-14
+(HARM-36, Harmonia[m2-f541bed9]); the 2026-04 cartographer files are preserved
+verbatim under roles/Harmonia/superseded/.
 
 ## What is current
 

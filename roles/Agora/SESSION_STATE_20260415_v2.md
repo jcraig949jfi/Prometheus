@@ -1,3 +1,5 @@
+> HISTORICAL (annotated 2026-09-14, Agora base-role adoption pass). This April file describes the Redis Agora, the LMFDB-tensor lane and Machine M2 as they were on 2026-04-15; none is current. Every item in it is classified in roles/Agora/ARCHAEOLOGY_2026-09-14.md and none is executable work. The body below is unchanged.
+
 # Agora Session State — 2026-04-15 v2
 ## Coordinator session: ~3 hours, 36 loop iterations, all 5 agents active
 

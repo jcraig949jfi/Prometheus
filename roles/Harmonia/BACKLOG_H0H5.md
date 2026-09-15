@@ -33,8 +33,10 @@ HARM-13 | Apply the exchangeability diagnostic to D1, D2 and D4-D6 and report ea
 HARM-14 | Declare the calibration-corpus policy: which detectors may be calibrated on i.i.d. draws, and which need a trajectory-structured null | ENGINE | beta | M | HARM-13 | `CALIBRATION_CORPUS_POLICY.md` naming, per detector, the null family its rate is valid under
 HARM-15 | Build the trajectory-structured null and recalibrate D3 under it at the live geometry | ENGINE | beta | L | HARM-14 | a rate with its binomial SE at (n=40, k=4) under trended rows, beside the i.i.d. rate
 HARM-16 | Record the three EXCHANGEABLE survivors as a watch-list with their geometry and class, and the reopening condition | ENGINE | program | S | none | `D3_WATCHLIST.md` with three rows and the condition that would license a study
+  > 2026-09-14, Harmonia[m2-f541bed9]: the three survivors were computed with /(n-2) detrending, not the admitted d3.v2's /(n-1) (RULING_D3V2_CALIBRATION_2026-09-14.md s5). Now blocked on the v2 live dossier (#260); write the watch-list from that dossier, not from the 09-10 numbers.
 HARM-17 | Recompute my binomial-null calibration at the family's actual L under the trajectory null, since the i.i.d. result does not apply to the live corpus | ENGINE | beta | M | HARM-15 | an amended calibration file stating which corpus each rate is valid for
 HARM-18 | Adjudicate d3.v2 (detrended statistic) if the operator admits it, with its own calibration and its own eligibility count | ENGINE | 1.1 | XL | operator decision NEW: admit or refuse d3.v2 as a new detector version | a ruling file, or a recorded refusal with the reason
+  > 2026-09-14, Harmonia[m2-f541bed9]: operator admitted d3.v2 (D-21). Synthetic calibration RULED in RULING_D3V2_CALIBRATION_2026-09-14.md (ca0dd0fd7): ADMITTED at LIVE geometry, REFUSED at FLOOR and UNEQUAL. Live eligibility count still OPEN, blocked on Archaeon's v2 live dossier (delegation #260). Row stays open until that count is ruled.
 
 ## Corpora and analyses
 
@@ -57,6 +59,7 @@ HARM-30 | Add the shared-arm correlation to `paired_contrast` so contrasts shari
 HARM-35 | Extend the SFE contract to model the RESPONSE surface, so a removed or renamed response field is DRIFT rather than silence | ENGINE | beta | L | Daedalus A0 (filed b24246097, cross-linked d618c0d22): the engine declares NO response models, so the live spec carries 0 schemas on 67 of 67 200-responses -- there is nothing for the generator to read | contract records per-route response fields; a fixture proving a removed response field reports DRIFT where today it reports CONFORMANT
 
 HARM-36 | Replace RESPONSIBILITIES.md and CHARTER.md, which are dated 2026-04 and describe the cross-domain cartographer role rather than the SFE/PEW audit seat | program | program | M | none | both files rewritten for the current lane, the 2026-04 material moved to a dated history file, and the currency warning removed because it is no longer true
+  > CLOSED 2026-09-14, Harmonia[m2-f541bed9]: both files rewritten; April files moved verbatim (git mv, blobs 333e1dc9a8a6 / 8d42a1c36800 unchanged) to roles/Harmonia/superseded/; April queue classified in RESPONSIBILITIES.md s7. Closing commit named in the journal.
 
 ## Standing and program
 
