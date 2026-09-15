@@ -152,6 +152,36 @@ def oracle_top(gen_seed: int, top: np.ndarray, seeds=F.HELD64[:8]) -> dict:
     return o
 
 
+def learner_cell(ctx, st: dict, r, gs: int, pressure: str, run_seeds, gens=None, batch=None,
+                 elites_dir=str(ELITES_DIR), oracle_run_seed=0) -> list[dict]:
+    """Every run seed of one (gen_seed, pressure) inside a worker job: emits a run row per run seed not yet
+    in st["done"]; on should_pause() stores the generation state in st["cur"] and calls ctx.pause(st)."""
+    runs = []
+    for rs in run_seeds:
+        k = run_key(gs, pressure, int(rs))
+        if k in st["done"]:
+            runs.append(st["done"][k])
+            continue
+        cur = st["cur"]["state"] if st.get("cur") and st["cur"]["key"] == k else None
+        out = learner_run(r, gs, pressure, int(rs), gens, batch, elites_dir, ctx.should_pause, cur)
+        if "paused" in out:
+            st["cur"] = {"key": k, "state": out["paused"]}
+            ctx.pause(st)
+        if int(rs) == oracle_run_seed:
+            from primordial.qd.archive import load_elites
+            doc = load_elites(out["elites"])
+            spec = E4.Spec(gs)
+            best = sorted(doc["elites"], key=lambda e: (-e[1], e[2]))[:TOP]
+            top = spec.unpack(np.frombuffer(bytes.fromhex("".join(e[2] for e in best)), np.uint8)
+                              .reshape(-1, spec.glen))
+            out["oracle_held8"] = oracle_top(gs, top)
+        out["status"] = "control"
+        ctx.emit(out)
+        st["done"][k], st["cur"] = out, None
+        runs.append(out)
+    return runs
+
+
 def job(ctx, cells, run_seeds=tuple(range(MIN_RUNS)), gens=None, batch=None, archive_url=ARCHIVE_URL,
         elites_dir=str(ELITES_DIR), oracle_run_seed=0):
     """F7 worker job: every (gen_seed, pressure) in `cells` x run seed; one row per run seed, then one
@@ -160,29 +190,6 @@ def job(ctx, cells, run_seeds=tuple(range(MIN_RUNS)), gens=None, batch=None, arc
     r = redis.Redis.from_url(archive_url)
     st = ctx.load_checkpoint() or {"done": {}, "cur": None}
     for gs, pressure in cells:
-        gs = int(gs)
-        runs = []
-        for rs in run_seeds:
-            k = run_key(gs, pressure, int(rs))
-            if k in st["done"]:
-                runs.append(st["done"][k])
-                continue
-            cur = st["cur"]["state"] if st["cur"] and st["cur"]["key"] == k else None
-            out = learner_run(r, gs, pressure, int(rs), gens, batch, elites_dir, ctx.should_pause, cur)
-            if "paused" in out:
-                st["cur"] = {"key": k, "state": out["paused"]}
-                ctx.pause(st)
-            if int(rs) == oracle_run_seed:
-                from primordial.qd.archive import load_elites
-                doc = load_elites(out["elites"])
-                spec = E4.Spec(gs)
-                best = sorted(doc["elites"], key=lambda e: (-e[1], e[2]))[:TOP]
-                top = spec.unpack(np.frombuffer(bytes.fromhex("".join(e[2] for e in best)), np.uint8)
-                                  .reshape(-1, spec.glen))
-                out["oracle_held8"] = oracle_top(gs, top)
-            out["status"] = "control"
-            ctx.emit(out)
-            st["done"][k], st["cur"] = out, None
-            runs.append(out)
+        runs = learner_cell(ctx, st, r, int(gs), pressure, run_seeds, gens, batch, elites_dir, oracle_run_seed)
         if len(runs) >= MIN_RUNS:
             ctx.emit({**summary(runs), "status": "control"})
