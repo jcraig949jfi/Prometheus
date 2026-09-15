@@ -272,3 +272,7 @@
   held 182.84 / 172.03). Other 6 runs: best elite of ~488 reaches 157.9-163.2, none at the gate. The search overfits
   TRAIN8; it is not a selection miss. Caveat: 8 runs, one RNG stream (round 4 v1 = family 4200).
 - Receipt D-R6-4 filed 1789489506239-0 (guard 10/10, status NULL, OVERFIT_ONLY), rows 4f4525fdf; ANOM-..9541 RESOLVED.
+- Loop iteration 3 (12:27): siblings sized -- only w7 train8 has an R16 gate row (thr 2, dir -1, act 7,7,7; gate_train
+  1910.875, held 1482.5); w1/w34 have none yet (w1 in G's floor remainder). Legacy top-16 TRAIN8 on w7 is 734-1075,
+  far below the gate (seen before predicate). Claimed ANOM-..9534. D-R6-4 functions parameterised (defaults unchanged,
+  test), D-R6-5 = same reader on w7 (6 passed rc 0). Harness module r6_4 edited: the worker reloads by fingerprint.

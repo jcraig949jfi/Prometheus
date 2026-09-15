@@ -74,11 +74,11 @@ def per_seed(g7, raw: np.ndarray, seeds) -> np.ndarray:
     return FusedRollout(g7.spec, len(raw), seeds, family="linear").run(g7.unpack(raw))[0] / len(seeds)
 
 
-def runs_from_rows(text: str) -> list[dict]:
+def runs_from_rows(text: str, gs: int = GS, pressure: str = PRESSURE) -> list[dict]:
     rows = [json.loads(l) for l in text.splitlines() if l.strip()]
     out = {}
     for x in rows:
-        if x.get("kind") == "run" and x.get("gen_seed") == GS and x.get("pressure") == PRESSURE and x.get("rng_family") is None:
+        if x.get("kind") == "run" and x.get("gen_seed") == gs and x.get("pressure") == pressure and x.get("rng_family") is None:
             out[int(x["run_seed"])] = x
     return [out[k] for k in sorted(out)]
 
@@ -96,23 +96,24 @@ def decide(i1: bool, controls_ok: bool, reach: list[bool], held: list[bool]) -> 
     return "MIXED"
 
 
-def read_run(g7, doc: dict, graw: np.ndarray, zraw: np.ndarray) -> dict:
+def read_run(g7, doc: dict, graw: np.ndarray, zraw: np.ndarray, gate_train: float = GATE_TRAIN,
+             gate_held: float = GATE_HELD, train=F.TRAIN8) -> dict:
     elites = RO.elites_of(doc)
     raw = RO.packed(elites, g7.glen)
     fit = np.array([f for f, _ in elites], np.int64)
-    tr, hd = per_seed(g7, raw, F.TRAIN8), per_seed(g7, raw, F.HELD64)
-    recount_ok = bool(np.array_equal(np.rint(tr * len(F.TRAIN8)).astype(np.int64), fit))
+    tr, hd = per_seed(g7, raw, train), per_seed(g7, raw, F.HELD64)
+    recount_ok = bool(np.array_equal(np.rint(tr * len(train)).astype(np.int64), fit))
     top = RO.select(elites)[0]
     ti = next(i for i, (f, g) in enumerate(elites) if g == top[1])
     b = int(np.argmax(hd))
     plant = np.concatenate([hd, per_seed(g7, np.concatenate([graw, zraw]), F.HELD64)])
     return {"n_elites": len(elites), "archive_fit_recount_ok": recount_ok,
             "top1_train8": float(tr[ti]), "top1_held64": float(hd[ti]),
-            "reach": bool(tr[ti] >= GATE_TRAIN), "held": bool((hd >= GATE_HELD).any()),
-            "n_held_ge_gate": int((hd >= GATE_HELD).sum()), "n_train_gt_gate": int((tr > GATE_TRAIN).sum()),
+            "reach": bool(tr[ti] >= gate_train), "held": bool((hd >= gate_held).any()),
+            "n_held_ge_gate": int((hd >= gate_held).sum()), "n_train_gt_gate": int((tr > gate_train).sum()),
             "best_held64": float(hd[b]), "best_held_train8": float(tr[b]),
             "best_held_train_rank": int((tr > tr[b]).sum()) + 1,
-            "planted_gate_counted": bool(plant[-2] >= GATE_HELD), "planted_abstain_counted": bool(plant[-1] >= GATE_HELD)}
+            "planted_gate_counted": bool(plant[-2] >= gate_held), "planted_abstain_counted": bool(plant[-1] >= gate_held)}
 
 
 def job(ctx, status="record"):
