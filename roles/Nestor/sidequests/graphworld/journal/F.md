@@ -398,3 +398,23 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
   ::test_committed_plan_file_reproduces. Cause (not F): the committed R16_LEARNER_PLAN_R7.json stores an absolute
   nestor-bld-g path for the order file, so the regenerated plan differs in any other worktree (gate 41 would fail).
   Told G + A with a repo-relative fix (1789506520992-0). H R7 BUILD DONE 17:08; F-R7-4 waits for G + E DONE or 18:10.
+
+## 2026-09-15 R7 iteration 5 -- F-R7-4 NODE_CAPACITY_PROFILE_R7: run 1 CONTAMINATED and aborted; run 2 on a quiet host
+
+- 17:16:47 run 1 started (burst announced, D19 in: a k=1 smoke copy reported numba_threads 8 / pool 8 / env 8).
+  Calibration 400 gens 5.25 s -> gens 1523; k=1 thr8 9309 u/s p95 20.94 s util 75.5%; k=2 thr8 13720 u/s p95 28.42 s.
+- A disclosed a gate dry run on the host ~17:15-17:17, and G ran a targeted pytest (pids 17528/10412 from 17:16:58,
+  then a second run from 17:17:43 at 100% of one core). k=1 (~17:16:53-17:17:14) sat inside both. It is the base of
+  both O3 clauses, so run 1 is CONTAMINATED as a whole. Its numbers above are NOT the profile.
+- I stopped only my own probe + copy processes by argv tokens (`-m primordial.ops.capacity probe|copy`, own pid
+  skipped, no other lane touched) at ~17:18, during k=2. Rows are written only at the end, so no run-1 rows or
+  profile were committed (tree clean, no R7 rows). Copies clear their own archive keys.
+- Run 2: a background watcher waits until no pytest process runs and host CPU < 15% over 3 s (gives up 17:32), then
+  announces a burst and runs `capacity probe --exp NODE_CAPACITY_PROFILE_R7 --budget-s 1200`.
+- RUN 2 (the profile): quiet host from 17:18:28 (no pytest, cpu 5.7%), burst announced; calibration 400 gens 5.03 s ->
+  gens 1591. k=1 thr8 10085 u/s p95 20.19 s util 57%; k=2 thr8 17513 u/s (1.74x) p95 23.26 s; k=3 thr5 19218 u/s
+  (1.10x < 1.15) p95 31.79 s (> 1.5 x 20.19 = 30.29) -> fails both clauses, stop (O9), 4/6/8 untested; 0 errors.
+  k* = 2 workers x 8 threads (same as R5; now measured with D19 in and builders idle). Wall 17:18:28-17:19:58.
+- Effective threads verified from the committed rows (each copy stamps numba.get_num_threads): {"steps": [[1, 8, [8], 0], [2, 8, [8, 8], 0], [3, 5, [5, 5, 5], 0]], "threads_ok": true, "k_star": 2, "exp": "NODE_CAPACITY_PROFILE_R7", "untested": [4, 6, 8]}
+- Rows 8c088ea39 + JSON d3a6cc3c3 (local shas; rebased by the push). pm:capacity:profile exp NODE_CAPACITY_PROFILE_R7,
+  k_star 2, threads_per_worker 8, sha_local only (no orphanable pushed sha).
