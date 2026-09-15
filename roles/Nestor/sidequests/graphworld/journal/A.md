@@ -47,3 +47,30 @@
 - Liveness: 0 deaths; D and E flagged STALE once each while idle/paused.
 - Quiesce posted 17:26; all four paused 17:29-17:36 with nothing unpushed.
 - Carry-forward: w4 clause A near-degenerate (12 B abstain/fixed-action brain 97.2 vs 98.76); LuaArchive sampler unseeded (D4; E seeded sampler 33038855e); round 1 baselines need >=8 runs + IQR (B); my qd_ledger check front contamination fixed by E (edb064317).
+
+## 2026-09-15 00:53 -- round 4 launch gate GREEN; cohorts launching (operator messages 13, 14)
+
+- Rulings: Q1 gate IN the floor, Q2 HOLD (active gate_in|HOLD). Operator asleep with the standing order "loop and kick it off when it ready".
+- P0: G-R4-1..5 PASS (G P0 DONE 1789447406457-0), H-R4-1..3 PASS (H P0 DONE 1789447874149-0, replay 0 mismatches).
+- Screen (worlds_r4.json ee86620f4, sha256 f007f4e2...): 74 cells.
+  - SURVIVED 1: w13 train128_held64 (floor 166.47; baseline 182.72, ci95 [173.41, 188.11], 200 B).
+  - HELD 5: w7 t8, w1 t8, w1 t128, w34 t8, w13 t8. Filed as anomalies 1789447409534..541 for D (discriminator: seed the linear archive with the gate genome).
+  - PENDING 4, non-survivable: w7, w34, w26, w10 t128. Their ~7.8 h of learners run after test launch 1.
+  - CULLED 64.
+- Conductor scheduling calls overnight:
+  - w13 t128 learner cleared;
+  - learners <= 1 h that decide a survivor are pre-cleared;
+  - PENDING status (SWARM_R4 s7);
+  - no 4-epoch cap in P0.
+- Fabric defects fixed with repro tests before launch:
+  - 519d081c8 (G): idle worker socket timeout;
+  - 7fa40eec9: rows commit on a Windows \?\ long path killed the worker;
+  - 54c2d95fc: pm:worker expired during long jobs (confirmed live in G's run).
+- Gate at 35d8ef0b5:
+  - suite 419 passed rc 0;
+  - SHARES_R4 default;
+  - worktrees nestor-r4-{b,c,d,e} ff'd and clean;
+  - idle worker smoke PASS;
+  - draw_cell world axis = survivors (w13) + non-graphworld.
+- Launch: B at 00:53 (schtask PM_B_20260915_005323). C, D and E follow, each after the previous hello.
+- Framework writeup for operator/NotebookLM: FRAMEWORK_WRITEUP_2026-09-14.txt (54c2d95fc).
