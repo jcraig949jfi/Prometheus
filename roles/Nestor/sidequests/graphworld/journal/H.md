@@ -346,5 +346,39 @@ budget 1789425755152-0).
 - Suite 278 passed, 1 skipped, pytest rc 0 at 06:20.
 - For after R5: G's CANDIDATE_N replaces the judge's 'runs < 8' refusal, so F12's
   clause_a_r4.s4_verdict mirror must follow when G lands it, or F12 reads MISMATCH.
+- Pushed 50707b07b (ops.push rebased onto other lanes' commits; suite re-run on the tip below).
+
+## 2026-09-15 06:22, item 2: H-R5-2 sealed anti-prior ledger (O5)
+
+- Code: primordial/score/anti_prior.py. Keys pm:prior:sealed, pm:prior:commit, pm:prior:assign.
+  - seal(): predictor-only.
+    - WRITE_DENIED when the writer role is not predictor, or the predictor_id is an experimenter.
+    - FIELD_MISSING for the five 19 s11 fields plus prediction_id and cell.
+    - P_OUT_OF_RANGE outside [0, 1] (bools and strings too).
+    - ALREADY_SEALED on a second write (hsetnx).
+    - A sha256 commitment of the canonical record is stored, and verify() detects a changed
+      prior.
+  - assign(exp_id, seed, now, k):
+    - A seeded PCG64 draw in prediction_id order among prior_p_pass <= 0.2 with
+      prediction_ts < now, unassigned and verified.
+    - Returns {exp_id, cell} only. ALREADY_ASSIGNED on a repeat.
+    - eligible_at refuses a prediction at or after assignment (PREDICTION_NOT_BEFORE_ASSIGNMENT).
+  - read():
+    - The experimenter gets EXPERIMENTER_READ_DENIED until receipt_filed is true for every
+      assignment holding the prediction; an unassigned prior is denied too.
+    - Predictor and conductor may read; any other role gets READ_DENIED.
+  - calibration(outcomes): per bucket (0/.1/.2/.4/.6/.8/1) n, mean prior, pass rate, Brier.
+    Marked descriptive_only.
+- Limitation (PRODUCTION_CANDIDATE note): sealing is enforced by this API plus the commitment. It
+  is not cryptographic against a session reading the Redis hash directly.
+- Tests: test_score_anti_prior.py, 12.
+  - Write denials, and write-once.
+  - 6 bad-record refusals.
+  - The commitment detects a tamper, and a tampered prior is never drawn.
+  - The draw takes p <= 0.2 only, is reproducible by seed, gives cells only, and refuses a
+    repeat assignment.
+  - A late prediction is never drawn, and a tie is refused.
+  - Experimenter read denied then allowed after the receipt; conductor read; unknown role.
+  - The calibration table.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
