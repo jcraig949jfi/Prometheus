@@ -259,3 +259,4 @@
   2/64 seeds (7 flips), elite 1: 6/64 (71 flips), 0 of them in HELD8; the cheat RAISES their charge (-7, -74). Elite 2:
   18 seeds, 2 in HELD8. Caught elites 28-54 seeds. Every charge-diff seed has >= 1 flip. The skip-odd oracle's HELD8
   blindness on elites 0,1 is seed coverage: the cheat has power, HELD8 never reaches it.
+- Receipt D-R6-3 filed 1789489146880-0 (guard 10/10, status NULL, COVERAGE), rows 55c35e49d; ANOM-..9775 RESOLVED; ..7943 chain closed.
