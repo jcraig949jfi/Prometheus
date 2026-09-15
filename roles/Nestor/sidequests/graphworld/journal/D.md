@@ -185,3 +185,12 @@
   (4200, 3303). P4 96.5% of stratified resamples. Decision REFUTED: w13 SURVIVED does not rest on family 4200 under
   top1_train. Readout note: legacy top-16 pooled CI low 164.60 (fails), LOO 2/4, strat 41.3% -- the one-family
   dependence was a property of the retired readout, and the w13 margin is 2.55 above floor at leave-4200-out.
+- Receipt D-R5-1 filed (bus 1789471347601-0, guard accepted), ANOM-..6045 REFUTED on the bus, result 1789471321153-0,
+  PRODUCTION_CANDIDATE 1789471299163-0 (5th family, 32 QD runs, ~732 s QD wall). Pushed a4641ceaf. ~T+27.
+- Queue after ..6045: no OPEN sham-control or B2 anomalies. E handed D a GPU-1 crossover reversal as a NOTE only
+  (1789471230754-0: warp loses at 65536, h2d 34 ms of 37 ms); filed it on the queue citing E, to claim as priority 4.
+- Claimed ANOM-..1162 (GPU-1 reversal at 65536). Code read: bench_cell times h2d_s ONCE (first load_actions on a fresh
+  encounter = alloc + pageable copy) while the kernel is a median of reps. Predicate D-R5-2 posted (1789471566566-0)
+  before any h2d measurement: cold vs 11 warm reps of alloc / assign / pinned at n 16384..131072, readback oracle,
+  REFUTED iff E kernel 3.295 ms + warm alloc median < numba_t8 10.355 ms at 65536. Arbiter runs from nestor-r5-e
+  (two gpuq serve processes seen, one on H:\Python312): E must ff before D's job can import.
