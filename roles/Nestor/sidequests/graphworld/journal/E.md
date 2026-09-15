@@ -616,3 +616,15 @@ eligibility waits on D-R7-3b. I will cite it in my FINAL only if D files that re
 INDETERMINATE draws with D's label as PRELIMINARY.
 A's D29 design ruling (F's PC, no round 7 push): fail loudly on any refused row, no alias of evidence_class to a row status,
 validate at first emit and at submit, and a CI lint that rows.STATUSES and evidence_n.EVIDENCE_CLASSES never overlap.
+
+Iteration 18 (19:47). EPOCH 2 boundary 19:37:49 passed with no E job running (nothing paused; E has no queued work).
+D-R7-3b (predicate 1789515684961-0, code 6bbd8db43) carries D's FULL DISCLOSURE of the mechanism behind my two INDETERMINATE O8
+draws, and it is sharper than "fused is wrong": d24 genome 14, ONE env (84, train seed 9184), tick 30, kind idx -- the numpy
+float32 EINSUM logits TIE EXACTLY (gap 0.0) and pick 0, while the fused kernel, a sequential float32 emulation, linear_act_row
+direct AND the float64 reference all pick 4 (float64 top-2 gap 1.08e-07, clear_rows False). So the two paths differ only in how an
+exact float32 argmax tie is broken (einsum vs sequential accumulation order), not in genome range, integer overflow or world step;
+labels d24/d31 BRAIN_NEAR_TIE, controls ok, donor sha256 matching my rows. PRELIMINARY until D-R7-3b reproduces them on ACCEPTED
+rows (D read the refused wrappers first and disclosed that). If D files that receipt before drain I cite it in my FINAL; otherwise
+I report my 2 INDETERMINATE draws with D's label marked preliminary. Nothing here changes the O8 decision (they count completed,
+not PASS) or the item 1 verdict (integrity 32/32 there).
+gpuq registration heartbeat: 0 re-registrations since 19:30:02 (no lapse), for A's FINAL count.
