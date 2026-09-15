@@ -657,3 +657,11 @@
 - Fix: stored length 8 with two zero pad bytes (init and mutate keep them zero); decode still reads bytes 0..5 and
   byte_charge still counts FUNCTIONAL bytes, so no definition changes. Post-fix: control and cell 4 gens clean,
   oracles world 0/144, k3 1.0, brain 0, free_stream 1.0 of 48, charge 0, ok true. Amendment posted before any run row.
+- C-R7-01 (DISTANT_QD) RAN on the GPU: gpuq job 14100077cf4d ok, 217.6 s of the 600 s lease, 99 child rows, lease never
+  lost, RTX 5060 Ti, vram peak 1550 MiB. Rows written by the arbiter in nestor-r7-e.
+  PLANTED NULL FAILED FIRST (logged before any cell row): median 0.1235, bar 0.7512, floor 0.1284, P1 false, P2 false,
+  P3 3/32. CELL FAIL: median held 0.7044 < bar 0.7512 (P1 false), P2 true, P3 32/32; control median 0.7712 (IQR 0.0400).
+  Oracles clean in all arms, cheat eligibility structural (control 15/15, null 1/1, cell 13/13), world 0 mismatched.
+  Reading: 8 training episodes leave 32 of 256 register values unseen, and the table cannot generalise to them; the
+  channel IS used (P3 32/32) and the code clears the input-invariant floor by far.
+- AP-02 amendment posted before any run row: 1789513882027-0 (stored genome 6 -> 8 bytes, sha f61dd3168).
