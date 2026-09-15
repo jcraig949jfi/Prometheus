@@ -502,3 +502,8 @@
 - A 1789450588653-0 / 1789451109447-0 (push race, E incident): until quiesce, push only with the worker parked -- SET pm:jobs:B:stop, wait state stopped, ops.push, DEL; no push within 2 min of an epoch boundary. My earlier pushes ran with the worker idle and nothing queued; adopting the procedure from here. Push lock 898900b4e rolls out at quiesce.
 - B-R4-6 (job ok, 1353 CPU-s; seeds 0-7; oracles clean on all rs0, ablate_top 16/16 incl. int4a3 which was 14/16 at 3 smoke gens): int4a3 12B 180.19 FAIL progress .845 CI [-.41,1.87] (seeds 156.9..199.2); int3a3 12B 163.25 BELOW_FLOOR -.198; int6a2 12B 168.31 FAIL .113 CI [.04,.18] (seeds 164..170, pinned at the 2-action gate).
   No 12B rung PASSes seeds 0-7: front stays int4a4 16B. a2 genomes sit at the gate regardless of weight precision (int2..int6). No rerun of int4a3 (a failed first set is not fished).
+- B-R4-7 readout sensitivity (predicate 1789451717396-0, job 9e05da5173df ok, 72 rows, 1.5 CPU-s): re-read B's saved elites; top-16 re-read reproduces all 64 committed held64 exactly. Progress readout-for-readout vs D-R4-4 baseline medians (top16 182.72 / top1 189.53):
+  int4a4 16B  0-7 1.442 | top1 1.121;  8-15 1.518 | top1 1.283  -> FRONT SURVIVES the readout caveat (A 1789449028866-0) on both seed sets.
+  int5a8 36B  0-7 1.648 | 1.446;  8-15 1.006 | 1.087.   int5a4 20B  0-7 1.068 | 1.198;  8-15 .895 | 1.073 (top-1 flips its 8-15 verdict; still not claimed, judge is top-16).
+  int4a8 28B  0-7 .544 | .555;  8-15 1.100 | 1.367 (seed-set flip under both readouts).
+  Validation readouts not computed (no held-back split in B's TRAIN128 runs). Rows committed locally; push + post after the 02:01:49 quiesce with the worker parked.
