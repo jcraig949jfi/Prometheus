@@ -444,3 +444,22 @@
   send costs 6 charge and a right action earns 3, so this metered_stream never pays for a message; the hand D1 code
   scores 3.83 against silence's 32.26. Corruption had nothing to act on. Landscape row; constants not retuned.
 - Receipt accepted by H's guard first try. C-R5-AP-01 job 8d300f986186 submitted after the rows push.
+
+## 2026-09-15 round 5 pilot iteration 3 (m1-12a62e35): C-R5-AP-01 -> INDETERMINATE (my harness defect), rerun AP-01b
+
+- Job 8d300f986186: 264.9 CPU-s, 306.9 s wall, 66 rows (dff45752b). Control-arm fitness recount oracle failed on 1/16
+  elites (572 vs 578); brain, archive and ttl oracles clean. INDETERMINATE by the fixed rule, receipt 1789472063249-0.
+- Cause: init/mutate handed evaluate raw codebook bytes, and act = cb[sym] was indexed without % 8. Offer-time fitness
+  scored bytes >= 8 as never right, while stored genomes decode % 8. A no-rows deterministic replay reproduced the job's
+  top fits; elite 7's byte 179 gives 572 unreduced and 578 mod 8; 7/16 elites carry a byte >= 8. Search in both arms
+  selected on a non-declared decoder. Descriptive only: cell 0.423 vs control 0.537 (bar 0.507).
+- Fix c01f9c20a (tables() % 8 + regression test), exp_id kwarg 496ca2210. Rerun C-R5-AP-01b on the same assigned cell,
+  same GENS/TTL/seeds: predicate 1789472107606-0 (prior .2, posted after seeing AP-01's descriptive rows, disclosed),
+  job f6d5bfd19d0a. Prior ledger still unread.
+- Lesson: an oracle that re-derives fitness from the STORED genome catches decode-at-offer vs decode-at-store splits.
+  C-R5-01 is not exposed (no codebook; decode is shared by rollout and scalar reference).
+- AP-01b first submit f6d5bfd19d0a ERRORED in 0.004 s: the warm F7 child still held the module imported for AP-01,
+  so TypeError on the new exp_id kwarg (1 aborted row, 0396f5ace, after the predicate). Worse case avoided: without the
+  kwarg change it would have silently rerun the DEFECTIVE decoder. Stopped worker C (TaskStop), verified by argv tokens
+  that no lane C supervisor or spawn child survived and pm:worker:C expired, restarted, resubmitted same predicate as
+  7d446937f010. Rule for me: restart the worker after ANY harness edit. Told A (1789472153474-0).
