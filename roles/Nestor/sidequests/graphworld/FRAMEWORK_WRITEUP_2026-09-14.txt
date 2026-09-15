@@ -1,0 +1,616 @@
+==============================================================================
+THE PRIMORDIAL MACHINE
+A self-auditing AI research swarm that hunts for non-human abstractions
+Framework, architecture, results so far, and the round 6 roadmap
+==============================================================================
+Written:   2026-09-14, by Nestor-A (the conductor session), for the operator
+           and for NotebookLM
+Branch:    nestor/sidequest-graphworld-2026-09-14 (Prometheus repo)
+Status:    round 4 in pre-launch (worlds being screened); round 6 MVPs built
+
+------------------------------------------------------------------------------
+0. THE PITCH (with some honest hype)
+------------------------------------------------------------------------------
+Picture a small research lab running in one desktop computer. It is staffed
+by several AI agents (Claude Code sessions), and each has a different
+personality that is enforced by budget:
+- one team greedily optimizes;
+- one is forced by a random number generator to test ideas it believes will
+  fail;
+- one only investigates weird results;
+- one builds tools and is forbidden from doing science.
+
+A conductor agent runs logistics and is not allowed to judge anything.
+
+The goal is not to make the AIs smarter. The goal is to use them as tireless
+lab technicians that evolve tiny machine "brains" inside simulated worlds.
+Those brains are then pressured to become smaller, stranger and more
+transferable than anything a human would design. Human readability counts
+for nothing. A 20-byte unreadable blob that behaves as well as a
+300-parameter model is the prize.
+
+What makes it interesting is less any single result than the machine's
+immune system:
+- every claim needs committed data rows;
+- every experiment needs a cheat control that must fail;
+- the agents do not score themselves;
+- the system is built to catch itself being fooled.
+
+It already has. In round 2 the swarm celebrated 8-byte brains that matched
+the baselines. In round 3 its own measurement builder showed that a brain
+that does NOTHING (always abstain, zero bytes) beat every baseline and every
+one of those celebrated brains. Nobody was lying. The yardstick was broken,
+and the machine found that out by itself, from rows it had committed.
+
+Round 4 is the response. Worlds must now prove they demand real cognition
+before anyone may use them. "Success" is measured as progress above the
+best dumb policy, not in raw score.
+
+The hype, stated carefully: this is a working prototype of an evolutionary
+research institution. It runs short generations (30-minute epochs), keeps
+every failure as data, and treats its own tooling as something to
+falsify. If it works at scale, the output is not a paper. It is a growing,
+audited library of compact computational primitives, each with the receipts
+that show it survives displacement.
+
+------------------------------------------------------------------------------
+1. THE THESIS (operator)
+------------------------------------------------------------------------------
+- BOX OUT THE LLM PRIORS. Language models drift toward the conventional,
+  crowd-pleasing answer. So the models do not design the brains. They run
+  the lab around an evolutionary search, and the search does the designing.
+- KEEP THE FAILURE LANDSCAPES. Every evaluated candidate becomes a data row
+  with a status: record, dev, aborted, timeout, cheat or control. Most
+  experiments fail, and the shape of those failures is how a search
+  escapes local minima.
+- NO HUMAN LANGUAGE ON THE HOT PATH. Worlds, brains and channels exchange
+  integer arrays and packed bytes only. Symbols are unsigned integer codes,
+  never strings.
+- TTL PRESSURE. Short lives: 30-minute epochs, and each job capped at about
+  10 CPU-minutes. A stuck job is killed; the session survives.
+- "WHY" IS OPTIONAL. The operator's words: "we don't actually care unless
+  we're being fooled. We care that it works and survives another
+  generation."
+
+------------------------------------------------------------------------------
+2. THE SUCCESS CONTRACT (operator text, summarized)
+------------------------------------------------------------------------------
+File: roles/Nestor/PROMETHEUS_SUCCESS_CONTRACT.md. Agents work under it and
+never edit it. Every operator instruction is committed verbatim with a
+SHA-256 hash, so the rules cannot drift quietly.
+
+A  MINIMUM VIABLE ABSTRACTION (compression)
+   PASS: behavioural parity with a smaller footprint (fewer bytes, fewer
+   primitives, lower dimension). Human legibility has zero weight.
+   Live since round 2; hardened in round 4 (section 7).
+
+B  THE INVARIANCE RULE (transfer)
+   A representation is a true primitive only if it survives displacement.
+   PASS: a structure evolved in world A accelerates learning or inference
+   in world B without modification. Overfitting is penalized.
+   Tooling built in round 2; scoring rule built in round 3; opens as a live
+   clause in round 5.
+
+C  THE ALGORITHMIC SCAFFOLDING (efficiency)
+   "Evolve the architecture that evolves the architecture."
+   PASS: a new crossover, loss or routing mechanism lets the swarm solve a
+   later control task faster or with fewer parameters than the MAP-Elites
+   or Transformer baseline. Not yet live.
+
+------------------------------------------------------------------------------
+3. THE WORLDS
+------------------------------------------------------------------------------
+REFERENCE WORLD. "wforge Encounter", from the repo's World Foundry. It is
+the semantic oracle for the whole system:
+- integer-only mechanics;
+- xorshift random streams;
+- a trace hash computed every tick.
+
+Any faster implementation (numpy, numba, Warp, CUDA graph, Redis Lua,
+GraphBLAS) must reproduce the reference trace hash exactly, with zero
+tolerance, on sampled episodes. Otherwise it is not the same world.
+
+A WORLD IS A NUMBER. E4.Spec(gen_seed) builds the mechanics from one seed:
+- horizon T ticks (32 to 256);
+- S slots (organisms acting in parallel);
+- action width W, with each action component read mod 8, so 0 = abstain;
+- observations: uint16 feature vectors;
+- score: summed clipped final "charge" (energy) per episode.
+
+Named worlds are w1..w5. A batch of new worlds is just new seeds.
+
+SEEDS ARE SPLIT HONESTLY.
+- TRAIN8 (seeds 9100..9107) and TRAIN128 (9100..9227) are for evolving.
+- HELD64 (seeds 30000..30063) is for judging and is never used in search.
+
+"Pressure" names a world x train-set pairing, e.g. train128_held64.
+
+OTHER DOMAINS in the anti-prior grid: a GraphBLAS/FalkorDB graph world
+(graphworld_b2), a signalling world with a metered channel
+(signal_world_d1), and NK fitness landscapes (nk_stub).
+
+------------------------------------------------------------------------------
+4. THE ORGANISMS
+------------------------------------------------------------------------------
+Genomes are byte strings. Evolution is quality-diversity (MAP-Elites),
+with the archive living in Redis as Lua scripts. Several processes share
+one archive, and sampling is seeded, so every run replays from its seed.
+
+REPRESENTATIONS in play:
+- open-loop action tensor: T x S x W actions and no observations. It is
+  input-invariant, a "blind" policy.
+- linear brain: a weight matrix from observations to action logits;
+  int4/int3/int2 quantized; optional action codebook.
+- lut_top: a lookup table on top features.
+- tt_feat and tt_digits: TENSOR-TRAIN brains. A uint16 observation is split
+  into base-16 digits, one tensor core per digit, contracted to logits. The
+  policy is a quantum-style tensor network.
+- small_program: a register machine of a few instructions under "decoder
+  rent".
+- dense_table, CP, Tucker, bitset: the representation-ecology set.
+- a Transformer baseline: 1 block, d=8, 680 parameters, 2,744 bytes on w4.
+
+FOOTPRINT is packed genome bytes, codebook included. A representation must
+report the bytes its decoder needs with no access to the target.
+
+------------------------------------------------------------------------------
+5. THE ARCHITECTURE (layer by layer)
+------------------------------------------------------------------------------
+
+  +----------------------------------------------------------------------+
+  | OPERATOR (human, often on a phone via remote control)               |
+  |   rulings -> committed verbatim + sha256 (prompts/..., MANIFEST.md) |
+  +----------------------------------------------------------------------+
+  | CONDUCTOR  Nestor-A    logistics only: launch, liveness, integrate, |
+  |                        schedule compute, relay; never scores        |
+  +--------------+--------------+--------------+-------------------------+
+  | COHORTS      | B hill       | C anti-prior | D anomaly  | E watch-   |
+  | (swarm)      |   climbers   |   (RNG picks)|   hunters  |   makers   |
+  +--------------+--------------+--------------+------------+------------+
+  | BUILDERS     | F fabric  G metric  H measurement (gates for rounds)  |
+  |              | P Q W T U: NVIDIA-axis MVPs for round 6               |
+  +----------------------------------------------------------------------+
+  | SCORING      primordial/score: F10 priors-vs-reality, F12 scorer,    |
+  |              F13 budget, S1 transfer check, S2 anomaly triage        |
+  | METRIC       primordial/metric: trivial floors, 2-action gate,       |
+  |              input-invariant learner, bootstrap CI of the median     |
+  | LEDGERS      rows (JSONL, committed on write), QD ledger cells.jsonl,|
+  |              receipts, anomaly queue, worlds_r4.json (screen)        |
+  +----------------------------------------------------------------------+
+  | FABRIC       RowWriter, F7 warm worker, F8 world cache,              |
+  |              F9 checkpoints, F14 epoch controller, F15 boot pack     |
+  | BUS          Redis Streams pm:swarm: hello/beat/inbox/to/cc, claims, |
+  |              receipts (guarded), anomalies, GPU lease, bursts        |
+  | OPS          sparse worktrees, scheduled-task launcher, liveness,    |
+  |              ff-only push, draw_cell, qd_ledger                      |
+  +----------------------------------------------------------------------+
+  | SUBSTRATE    Redis 8.6 + FalkorDB graph (docker in WSL2, AOF on)     |
+  | COMPUTE      numpy / numba (cache=True) / torch cu128 / Warp /       |
+  |              cuTensorNet (WSL) / CUDA Graphs                         |
+  | HOST         one Windows desktop: 16 logical cores, RTX 5060 Ti      |
+  |              16 GB (Blackwell, cc 12.0), SMR HDD (no hot data on it) |
+  +----------------------------------------------------------------------+
+
+5.1 THE BUS (primordial/bus)
+- One Redis stream, pm:swarm, with a consumer group per lane and one
+  registered identity tag per session.
+- Messages are typed (hello, note, ask, claim, contract, result, anomaly),
+  addressed with to/cc, and carry full bodies. `inbox` shows what is
+  addressed to you; `tail` observes.
+- Heartbeats: key pm:alive:<lane> with a 180 s TTL, refreshed by every bus
+  call.
+- Receipt guard: a result is refused unless its git sha is already on the
+  pushed integration branch AND its rows exist at that sha. No rows, no
+  claim. Host load (and the GPU lease holder) is stamped into every
+  receipt.
+- Anomaly queue: add / list / claim / resolve, with RESOLVED, REFUTED and
+  INDETERMINATE outcomes and child anomalies.
+- GPU lease pm:gpu:lease: any timing claim must hold it. A contended
+  measurement is INDETERMINATE for speed.
+
+5.2 THE FABRIC (primordial/fabric)
+- RowWriter (commit-on-write): appends a JSON line per evaluated thing,
+  requires a status, and commits by itself every N seconds and on close,
+  exception or signal. A killed job strands at most one commit interval.
+  It refuses to run without an identity tag.
+- F7 warm worker (one per lane): kernels, Redis pool and world tables stay
+  hot. Jobs arrive on a stream. The TTL kills the JOB, not the session;
+  partial rows plus a timeout row are committed and the worker takes the
+  next job. The second job pays no JIT: 607 ms first, 0.01 ms second.
+- F8 world/seed cache; F9 checkpointed jobs that span epochs.
+- F14 epoch controller: at each 30-minute boundary it posts EPOCH, drains
+  the workers, exports the bus, commits the record and resumes.
+- F15 boot pack: a per-lane state file, so a new session reaches `hello`
+  in under a minute.
+
+5.3 OPS (primordial/ops)
+- Sparse git worktrees (~1,500 of 43,000 files), built one at a time,
+  warmed and verified (tests, numba warmup, pre-commit probes, imports).
+- Launcher: a one-shot interactive Windows scheduled task, disabled right
+  after it runs. Agent shells kill their child processes, so direct
+  launches died.
+- Liveness monitor: pid + transcript age + heartbeat + CPU gained by the
+  process tree + worker state -> OK / BUSY / STALE / DEAD. It posts
+  `missing`, and reaps only by hand.
+- Integration push: fast-forward only while any RowWriter is live. A
+  rebase under a live writer wedges it, as learned the hard way.
+- draw_cell: the anti-prior random drawer over a 9,984-cell grid
+  (representation x world x pressure x substrate x channel), weighted
+  1/(1+visits).
+- qd_ledger: the cross-domain quality-diversity ledger (pareto, top, check).
+
+5.4 METRIC AND SCORING (primordial/metric, primordial/score)
+- Floors: abstain, best constant action (exhaustive over 8^W), uniform
+  random, input-invariant learner, and the best 2-action gate (act with one
+  fixed action iff one observation feature crosses a threshold).
+- Bootstrap 95% CI of the median: 10,000 resamples, fixed seed.
+- F10 resolves every posted predicate by code against the rows and
+  builds a prior-vs-reality calibration ledger.
+- F12 scorer: a program that computes progress axes from rows only. It has
+  no manual path and never reads prose.
+- F13 budget: CPU-seconds per cohort, from the worker ledger, against the
+  split; an over-budget cohort gets one warning per epoch.
+- S1 transfer check: graft vs BOTH cheats (random graft, and scratch at
+  equal budget), paired per run seed, Holm-corrected across worlds.
+- S2 anomaly triage: D's share rises when OPEN anomalies outpace RESOLVED.
+
+5.5 CONVENTIONS THAT MAKE IT AUDITABLE
+- Predicate before run: {metric, cells, comparator, threshold, seeds,
+  ttl_cpu_s, prior} goes on the bus before any experiment.
+- Cheat controls, which must FAIL:
+  - skip_lin: a world that skips the linear ops;
+  - stride-2: a tensor network that skips cores;
+  - ablate_top / shift_action: powered brain cheats;
+  - random graft, for transfer;
+  - injected host sleep, for telemetry.
+- Oracles before speed: exactness is proven before any timing number is
+  allowed to exist.
+- Every commit subject names the lane and instance tag; every operator
+  prompt is hashed; production systems are read-only to the swarm.
+
+------------------------------------------------------------------------------
+6. THE SWARM ORGANIZATION
+------------------------------------------------------------------------------
+Cohorts (round 4 split, operator-set; the conductor enforces and never
+chooses):
+
+  lane  cohort            share  cores  job
+  ----  ----------------  -----  -----  -----------------------------------
+  B     HILL CLIMBERS       35%      4  take the best ledger cells; mutate
+                                        toward fewer bytes at parity
+  C     ANTI-PRIOR          25%      3  RNG draws the cell; posts its own
+                                        prior; forbidden to chase fitness
+  D     ANOMALY HUNTERS     25%      3  works ONLY from the anomaly queue;
+                                        builds minimum discriminators
+  E     WATCHMAKERS         15%      2  tools and harnesses only; forbidden
+                                        from primary science
+  A     CONDUCTOR            --     --  logistics only
+
+Why cohorts: operator ruling. One LLM asked to both exploit and falsify
+drifts back to its conversational mean, so the split is hard-coded into
+identity.
+
+Builders are separate sessions that build infrastructure between swarm
+rounds: F fabric, G metric, H measurement; P, Q, W, T and U for the NVIDIA
+axes.
+
+------------------------------------------------------------------------------
+7. HISTORY: WHAT EACH ROUND LEARNED
+------------------------------------------------------------------------------
+ROUND 1 (morning): five DOMAIN lanes.
+- Lanes: fabric, soup (worlds), brain (tensor brains), lingua (metered
+  channels), selection (QD).
+- Target: a "CHIMERA-0" integration.
+- Output: 49 receipts, a numba fused rollout exact to the reference, and
+  closed-loop brains beating open-loop at 128 seeds.
+- Problems: 2 unexplained session deaths; self-scored boards; boot took
+  3:45-5:01 per session.
+- Timing profile: 46% of wall time was the model thinking; each process
+  paid ~17 s fixed (10 s of that was a localhost Redis DNS fallback, 6.2 s
+  was JIT). Fixed.
+
+ROUND 2 (afternoon): COHORTS under the success contract, behind gate F1-F6
+(launcher log, heartbeat and liveness, bus inbox/guard, commit-on-write
+rows, receipt guard, pre-built sparse worktrees).
+- 4 sessions for ~75 minutes, 0 deaths, `hello` in under a minute.
+- 37 receipts, 18 anomalies (4 resolved), QD ledger 21 -> 65 cells.
+- Headline at the time: 8-byte quantized brains at parity with baselines
+  in 5 of 6 cells, via int4 -> int3 -> int2 plus a shrinking codebook.
+- Also real:
+  - D showed a "code learner stall" was operator bundling (1+1 moves
+    escape 10/10, bundled 0/10);
+  - D showed the QD archive sampler was unseeded server-side, so runs were
+    not replayable; E fixed it;
+  - C found a 132-byte linear NK policy that generalizes to 64 unseen
+    landscapes, while a memorized bitset equals random;
+  - E built the transfer harness, whose first version was FAIL as posted,
+    then redesigned (PASS), plus a Transformer baseline.
+- The review packet flagged its own headline: the held-out metric might be
+  easy and the baselines weak.
+
+ROUND 3 (evening): BUILD, no swarm.
+- F: warm workers, epoch controller, GPU lease, checkpoints, boot pack,
+  launcher.
+- G: trivial-policy floors, and the discovery below.
+- H: code-resolved priors, the scorer, budget enforcement, transfer scoring,
+  anomaly triage.
+- THE DISCOVERY: a zero-byte always-abstain policy beats every held64
+  baseline and every round 2 clause A candidate:
+
+      world  abstain  best 2-action gate  best baseline
+      w4     107.75   107.75 (= abstain)   98.76
+      w1      88.28   170.47               63.94
+      w3     122.63   122.63 (= abstain)  105.58
+
+  All 28 recorded clause A cells went BELOW_FLOOR. The conductor
+  re-derived the floor with separate code and got identical numbers.
+- Interpretation:
+  - w3 and w4 barely reward acting at all.
+  - w1 DOES reward reacting (a 4-byte gate nearly doubles do-nothing), but
+    the baseline search never found even do-nothing.
+  - The search, not only the world, was weak.
+
+ROUND 4 (now): SCREENED WORLDS, PROGRESS ABOVE FLOOR (operator rulings 12-13).
+
+  floor    = max(abstain, best constant, uniform random,
+                 input-invariant learner, 2-action gate)
+  progress = (candidate - floor) / (float linear baseline - floor)
+  PASS     = progress >= 0.95 at fewer bytes than the baseline
+  BELOW_FLOOR = progress < 0 ("worse than a blind rock")
+
+- World screen, run ahead of time by builder G:
+  - candidates are w1-w5 plus 32 new world seeds;
+  - baselines are re-run with 8 seeds and bootstrap CIs.
+- Verdicts:
+  - SURVIVED if the baseline's CI low beats the floor;
+  - HELD if the world rewards reaction (the gate beats the dumb policies)
+    but the baseline search failed;
+  - CULLED otherwise.
+- HELD worlds go to the anomaly hunters as search anomalies.
+- At run time the harness refuses cells on unscreened or culled worlds.
+- Compute honesty: the literal screen was ~74 CPU-hours. It now runs the
+  expensive learner only where it could change a verdict, and bounds use a
+  pressure's own components only.
+- Budget 35/25/25/15: D gained 5 points because anomaly inflow outpaced
+  resolution.
+- Infrastructure bugs caught and fixed during pre-launch, each with a test
+  that reproduces it:
+  - an idle worker killed by a client socket timeout;
+  - a Windows long-path form that crashed a row commit;
+  - a worker liveness key expiring mid-job.
+
+ROUND 5 (planned): clause B (transfer) opens as a live PASS rule; clause A
+continues on screened worlds.
+
+------------------------------------------------------------------------------
+8. ROUND 6 ROADMAP: THE NVIDIA AXES BECOME SEARCHABLE TRAITS
+------------------------------------------------------------------------------
+Idea: today the hardware is just where genomes run. In round 6 the
+execution itself becomes part of the genome:
+- numeric precision;
+- kernel substrate;
+- tensor-network topology and backend;
+- whole-loop graph capture.
+
+Hardware telemetry becomes a behaviour DESCRIPTOR (a QD map axis), not
+fitness. The search can then discover representations that are compact AND
+fast on real silicon, with cost axes kept in every row so a bytes-only
+metric cannot hide wall-time or VRAM costs.
+
+Each axis has a green MVP, built during rounds 3-4 by its own builder
+session with its own venv, under the GPU lease, oracle first.
+
+N1 PRECISION AS A GENE (builder P) -- GREEN
+- A gene selects fp32 / fp16 / bf16 / fp8 (simulated) / int8 for the linear
+  and tt_feat brain forward.
+- Exactness is action agreement vs an fp64 reference on clear rows, plus
+  the held64 delta on w4 over 8 seeds.
+- Cost (leased, n=1024 / n=65536 wall ms; peak VRAM MB; parameter bytes):
+
+      linear  fp32    0.574 / 3.00    8.39   289
+      linear  fp16    0.566 / 2.89    7.34   145
+      linear  int8    0.993 / 3.25   15.47    81
+      tt_feat fp32    1.432 / 4.72   11.28  4717
+      tt_feat fp16    1.476 / 4.82    9.83  2359
+      tt_feat int8    2.315 / 6.71   14.90  1192
+
+- Finding: fp16 is the one free win (bytes halved, VRAM -12%, wall
+  unchanged, agreement >= 0.996). Every precision below 16 bits buys genome
+  BYTES only (3.6-4x smaller) and costs wall time and VRAM. int8 peaks at
+  1.3-1.8x fp32's VRAM, and fp8 on tt_feat sits right at the 0.95
+  exactness edge.
+- Blackwell probe: no real fp8 kernel on this torch cu128 build; cutlass
+  python 4.2 fails on cc 12.0.
+- Round 6 trait: a precision gene with bytes, wall and VRAM all in the row.
+  A clause A search will push toward int8/fp8, which is honest only
+  because the cost axes stay visible.
+- Queued:
+  - P5: per-elite mismatch counts (pooled agreement missed a seeded cheat);
+  - a real fp8 kernel via torch cu129+ or Linux;
+  - timing the resident-GPU path.
+
+N2 NSIGHT TELEMETRY AS A DISCRIMINATOR (builder Q) -- GREEN, counters BOUND
+- Capture works on Blackwell after an admin registry change and a reboot:
+  user-space Nsight Compute 2025.2.1, 3 kernels x 9 passes, 20 MB report.
+- A parser extracts features by code; cheat controls (injected sleep, extra
+  device copy) are built.
+- Limit, measured: the per-kernel GPU performance counters stay EMPTY. Of
+  104 counter metrics, 0 have a nonzero instance, in both basic and
+  detailed modes, on driver 576.88.
+- Round 6 trait: telemetry features as QD descriptors, e.g. kernel time
+  share, host-device bytes, memory-bound flag.
+- Reopen triggers: a newer driver (Nsight Compute 2026.2 needs one), or
+  one elevated nsys capture.
+
+N3 WARP AS NUMBA'S SUCCESSOR FOR WORLD KERNELS (builder W) -- GREEN
+- The world step as an NVIDIA Warp kernel on CPU and CUDA.
+- Exactness against the reference on lane E's own recorded brain actions
+  (worlds 4, 1, 3 x 4 sources x 16 genomes x 8 seeds):
+  - Warp CPU and CUDA: 0/1536 hash mismatches, 0/1536 charge mismatches;
+  - skip_lin cheat: caught 1536/1536 by trace hash, but final charge
+    differed in only 118/1536. Charge alone is nearly BLIND to the cheat,
+    and only the hash catches it.
+- Crossover (million slot-steps/s; numba at 1 thread / Warp CPU / Warp
+  CUDA; leased):
+
+      n_envs    w1               w3               w4
+      1         3.3/0.6/0.2      1.1/0.2/0.1      4.1/0.7/0.2
+      1024      19/26/68         18/24/93         17/21/69
+      16384     36/26/609        32/24/846        27/22/664
+      65536     36/26/436        31/26/1131       30/23/451
+
+  Warp CUDA overtakes numba at 256-1024 envs; peak 12-36x over 1-thread
+  numba. Warp CPU is within 0.72-1.34x of numba at >= 1024 envs.
+- Caveats: numba was held to 1 thread. Host-to-device transfer of actions
+  (37 ms vs a 3 ms kernel at 65536) is outside the timed wall, so
+  closed-loop use needs actions produced on the GPU.
+- Round 6 trait: a kernel-substrate gene (numba / Warp CPU / Warp CUDA)
+  selected by world size.
+- Queued: threaded-numba comparison; brain on GPU so there is no
+  host-device transfer; the unexplained CUDA throughput drop from 16k to
+  65k envs. The operator has assigned cohort E the Nsight and Warp-vs-numba
+  tooling work.
+
+N4 cuTensorNet TENSOR-TRAIN BRAINS (builder T, in WSL) -- GREEN, timing partial
+- tt_digits logits via cuTensorNet contraction: 32/32 cells exact, clear-row
+  argmax mismatches 0 of 32,768, max error 4.7e-13; stride-2 cheat caught
+  32/32.
+- Speed vs the torch bucket kernel (leased, 28 of 36 shapes): cuTensorNet
+  faster on 22.
+  - 2.3-11.7x at batch <= 16k; about 1x at d64 r4 with batch >= 262k.
+  - The bucket kernel wins at bond dimension >= 16 with huge batches,
+    where memory spills past 16 GB.
+  - Planning: 0.01-0.05 s at 16 cores, 0.19-0.37 s at 64 cores. Break-even
+    is 0.8-45 executions.
+- Big idea for round 6, from the topology note: a contraction plan depends
+  on topology only, never on values.
+  - Value mutations cost ZERO replans: a population shares one plan.
+  - Bond-dimension and core-order mutations cost a cheap replan (<= 0.4 s).
+  - NON-CHAIN topologies (trees, a digit read by two cores, shared cores)
+    become possible with no new kernel code, and the torch bucket kernel
+    cannot express them.
+- Round 6 trait: a topology gene over tensor networks, with plans cached
+  by (cores, rank, actions, batch, topology hash).
+- Queued: shapes d64 r16 (batch >= 262k) and d64 r64 with a per-cell
+  watchdog; a workspace memory cap so large shapes slice instead of
+  spilling; validation on evolved elites rather than random genomes.
+
+N5 CUDA GRAPHS: THE WHOLE CLOSED LOOP ON DEVICE (builder U) -- GREEN
+- Brain forward + action decode + world update captured as one torch CUDA
+  graph per step. Every path is exact vs the numba reference and eager
+  mode in all 6 timed cells; fitness and cells == E's rollout 128/128.
+- VRAM (MiB per captured rollout):
+
+      n_envs      4096   16384   65536   262144
+      linear      12.2    49.9   195.8    783.0
+      tt_digits   28.9   116.6   462.8   1851.0
+
+  That extrapolates to ~5.5M linear or ~2.3M tensor-train environments in
+  16 GB.
+- Throughput vs numba held to 1 thread: the graph wins 2.38x (linear) and
+  3.70x (tt_digits) at 65,536 envs, and loses below ~4k envs, where kernel
+  launch cost dominates. Graph vs eager: 12.7-18.5x at small batch, only
+  2.3-3.3x at 65k (predicate FAIL 4/6, recorded as posted).
+- Round 6 trait: an execution gene (eager / graph), plus population sizes
+  in the millions.
+- Queued: U6b, the same comparison against numba at 8 threads.
+
+WHAT ROUND 6 LOOKS LIKE WHEN IT RUNS
+- A genome carries its representation AND its execution recipe: precision,
+  kernel substrate, network topology, graph capture.
+- The QD map gets hardware descriptors as axes, so the archive holds
+  diverse elites: fast-and-small, tiny-but-slow, graph-captured populations
+  of millions.
+- Clause A keeps bytes honest with wall and VRAM beside them. Clause B asks
+  whether a topology found on one world transfers. Clause C, the eventual
+  goal, asks whether the swarm can evolve the search machinery itself.
+- CHIMERA-0, the "final boss", stays parked until the library of proven
+  primitives exists. In one receipt:
+  - evolution breeds tensor brains in a batched world;
+  - two slots talk through a metered symbol channel;
+  - events drain through the fabric;
+  - sampled trace hashes match the reference.
+
+------------------------------------------------------------------------------
+9. WHY THIS COULD MATTER (the upside)
+------------------------------------------------------------------------------
+- It is a research institution in miniature that runs at machine speed:
+  hypotheses in minutes, epochs in 30 minutes, every failure kept.
+- Its answers are not prose. They are executable, byte-counted artifacts
+  with replay seeds, oracles and cheat controls attached.
+- It already corrects itself. It found its own broken metric, its own
+  unseeded sampler, its own blind cheat controls and its own launcher
+  failures, and it repaired each with a regression test.
+- The hardware roadmap turns "which representation is best" into "which
+  representation x precision x kernel x topology is best on this silicon",
+  a search space no human team would enumerate by hand.
+- Non-chain tensor-network brains, precision-evolving genomes and
+  million-environment on-device populations are each small experiments
+  today. Together they are a credible path to compact, strange, reusable
+  computational primitives.
+
+------------------------------------------------------------------------------
+10. WHAT COULD STILL BE FOOLING US (the honest part)
+------------------------------------------------------------------------------
+- SAME MODEL EVERYWHERE. Every cohort, builder and cross-check is a Claude
+  session. No verification here has an independent failure mode yet.
+- EASY WORLDS. Round 3 showed the old held-out metric was nearly saturated
+  by doing nothing. Round 4's screen may cull most worlds, and that result
+  would be reported as found.
+- WEAK SEARCH. The QD archives never reached the abstain cell. That is now
+  the anomaly hunters' first claim.
+- ONE HOST. One GPU, one CPU, shared with other production services, so
+  speed claims need the lease and an idle check.
+- MOST ROUND 2 RUNS ARE NOT REPLAYABLE (pre-seeded sampler). Their spread is
+  a valid sample; their paired claims are not.
+- Round 6 numbers are MVP-scale: random genomes in places, numba held to 1
+  thread, some shapes missing, counters unavailable.
+- Nothing has been promoted as a primitive yet. The machine is still
+  learning to measure.
+
+------------------------------------------------------------------------------
+11. GLOSSARY
+------------------------------------------------------------------------------
+abstain         action 0; the do-nothing policy
+anomaly queue   OPEN/RESOLVED/REFUTED/INDETERMINATE list of weird results
+bootstrap CI    resampled confidence interval of a median (10,000 draws)
+cheat control   a deliberately broken variant the instrument must catch
+clause A/B/C    compression / transfer / scaffolding success rules
+cohort          a swarm session whose identity is its budget share
+conductor       the logistics-only coordinating session (Nestor-A)
+epoch           30-minute generation boundary
+floor           best score of dumb policies on a world x pressure
+gate (2-action) act with one fixed action iff one feature crosses a threshold
+HELD64          the 64 held-out seeds used only for judging
+input-invariant a policy that never reads observations (a blind sequence)
+MAP-Elites / QD quality-diversity search keeping the best genome per niche
+oracle          exact reference check (trace hash, reference logits)
+predicate       the machine-checkable hypothesis posted before a run
+progress        (candidate - floor) / (baseline - floor)
+receipt         a result record guarded by pushed sha + committed rows
+RowWriter       commit-on-write JSONL row logger with status tags
+TT / tensor train  a chain of small tensor cores contracted to an output
+TTL             time-to-live; jobs die, sessions survive
+wforge          the reference world implementation (semantic oracle)
+
+------------------------------------------------------------------------------
+12. NUMBERS CHEAT SHEET
+------------------------------------------------------------------------------
+Round 1: 5 lanes, 49 receipts, 2 session deaths, boot 3:45-5:01.
+Round 2: 4 cohorts, 37 receipts, 0 deaths, hello < 1 min, 18 anomalies,
+         QD ledger 65 cells, 8-byte parity cells (later BELOW_FLOOR).
+Round 3: abstain beats all baselines (w4 107.75 > 98.76; w1 88.28 > 63.94;
+         w3 122.63 > 105.58); w1 2-action gate 170.47; 28/28 BELOW_FLOOR.
+Round 4: floor includes the gate; PASS at progress >= 0.95 at fewer bytes;
+         screen of w1-w5 + 32 new worlds; split 35/25/25/15.
+Round 6 MVPs:
+         fp16 free win; int8 4x fewer bytes but slower and more VRAM.
+         Warp CUDA up to 36x 1-thread numba; exact 0/1536; hash-only
+         catches skip_lin.
+         cuTensorNet faster on 22/28 shapes; error 4.7e-13; value
+         mutations need no replan.
+         CUDA Graphs ~2.3M TT envs in 16 GB; 3.70x 1-thread numba at 65k.
+         Nsight capture works; hardware counters empty on this driver.
+==============================================================================
+END
+==============================================================================

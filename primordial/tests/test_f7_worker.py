@@ -111,3 +111,33 @@ def test_a_rows_commit_failure_is_recorded_and_serve_keeps_running(env, monkeypa
     assert [x["i"] for x in committed_rows(repo, "rows/cf2.jsonl")] == [0, 1]
     done = [json.loads(f["json"]) for _, f in r.xrange(W.DONE.format(L))]
     assert [d["job_id"] for d in done] == [a["job_id"], b["job_id"]]
+
+
+def test_a_job_longer_than_the_state_ttl_keeps_the_worker_key_alive(env, monkeypatch):
+    # 09-14 (G): pm:worker:<L> was set only between jobs, so a liveness reader called a busy worker
+    # dead WSTATE_TTL seconds into any long job.
+    import threading
+    import time
+    r, repo, L = env
+    monkeypatch.setattr(W, "WSTATE_TTL", 3)
+    key = W.WSTATE.format(L)
+    W.submit(L, "primordial.fabric.selftest_jobs:sleep_rows", "F7-long", "rows/long.jsonl", ttl_cpu_s=60,
+             kwargs={"s": 9.0}, r=r)
+    wk = W.Worker(L, url=URL, repo=repo, log=lambda m: None)
+    t = threading.Thread(target=wk.serve, kwargs={"max_jobs": 1, "block_ms": 500}, daemon=True)
+    t.start()
+    t_end = time.monotonic() + 30
+    while r.hget(key, "state") != "busy" and time.monotonic() < t_end:
+        time.sleep(0.05)
+    assert r.hget(key, "state") == "busy"
+    seen = []
+    for _ in range(12):                       # ~6 s of a 9 s job: twice the TTL
+        time.sleep(0.5)
+        if not t.is_alive():
+            break
+        seen.append(r.exists(key) == 1)
+    assert len(seen) >= 10 and all(seen)
+    t.join(timeout=60)
+    assert not t.is_alive()
+    done = [json.loads(f["json"]) for _, f in r.xrange(W.DONE.format(L))]
+    assert [d["status"] for d in done] == ["ok"]

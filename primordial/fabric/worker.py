@@ -231,7 +231,11 @@ class Worker:
         self.pipe.send(job)
         result, status = None, "ok"
         n = 0
+        beat = time.monotonic()
         while result is None:
+            if time.monotonic() - beat >= WSTATE_TTL / 3:  # a long job must not look dead (pm:worker TTL)
+                self._state("busy", job["job_id"])
+                beat = time.monotonic()
             n += self._drain(job["job_id"], w)
             if self.pipe.poll(self.poll_s):
                 result = self.pipe.recv()
