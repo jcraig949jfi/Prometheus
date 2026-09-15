@@ -382,3 +382,11 @@
   reproduction of all 64 C rows + bar; binding control checkpoint == stopped run. Seen before predicate: gens_done
   75-91 and loop CPU (TTL binds on generations), D-R6-8 counts; no-rows smoke: cell (4200,0) replay == C row at default
   and 1 BLAS thread; dev trajectory (4200,0) g400 == C control row, 18.8 CPU-s -> job ~720 CPU-s, checkpointable.
+- D-R7-1 predicate 1789509676377-0 (pinned 92df341ef), admission dry-run ok, job e2a0a3510473 queued 17:57:56.
+  NOT STARTED by 18:05: worker D waiting_cpu, E re-took slot 1 x7 in a row (~40 s jobs) + G slot 0. broker.acquire is
+  SET NX with no queue (SWARM_R7 O4 says FIFO). Note to A,F 1789509934842-0; D does not touch tokens.
+- Item 2 while waiting: D-R7-2 (r7_2_fam3303_same_stream.py + test 5 passed rc 0; first test run 5 FAILED on my own
+  dict(**tuple-keys) bug in the planted controls, fixed before commit). Zero QD. B-R5-1 runs share G's float-baseline
+  streams (seeds_of: mutation [F,rs,13,128], sampler [F+1,...]; keys 32/32, sampler seeds equal). STREAM axis: are
+  3303|2/6/7's same-stream BASELINE runs in the bottom 8 of 32; OBS axis: control_obs_use of the low runs. No 3303
+  baseline value or obs-use value read before the predicate. Admission dry-run ok.
