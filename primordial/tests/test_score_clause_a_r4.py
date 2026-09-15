@@ -25,6 +25,10 @@ def doc():
         _cell("w1", "train128_held64", {"verdict": "HELD", "cull_reason": None, "floor": 170.0}),
         _cell("w3", "train8_held64", {"verdict": "CULLED", "cull_reason": "BASELINE", "floor": 122.6}),
         _cell("w9", "train8_held64", {"verdict": "CULLED", "cull_reason": "NOT_REACHED", "floor": 50.0}),
+        # non-survivable, HELD vs CULLED waits for the train128 learner: PENDING in HOLD variants,
+        # CULLED with cull_reason PENDING in CULL variants (G 1789440338587-0)
+        _cell("w7", "train128_held64", {"verdict": "PENDING", "cull_reason": None, "floor": 1400.0},
+              other={"verdict": "CULLED", "cull_reason": "PENDING", "floor": 110.0}),
         # four_policy variants say SURVIVED here; the active gate_in|HOLD says CULLED
         _cell("w4", "train8_held64", {"verdict": "CULLED", "cull_reason": "WEAK_WORLD", "floor": 107.75},
               other={"verdict": "SURVIVED", "cull_reason": None, "floor": 90.0}),
@@ -38,6 +42,9 @@ def test_screen_reads_the_active_variant_only(doc):
     assert CA.screen_of(doc, "w9", "train8_held64")["status"] == "NOT_REACHED"
     assert CA.screen_of(doc, "w4", "train8_held64")["status"] == "CULLED"
     assert CA.screen_of(doc, "w7", "train8_held64")["status"] == "UNSCREENED"
+    assert CA.screen_of(doc, "w7", "train128_held64")["status"] == "PENDING"
+    cull = dict(doc, q2_policy="CULL")
+    assert CA.screen_of(cull, "w7", "train128_held64")["status"] == "CULLED"   # cull_reason PENDING: still CULLED
     assert CA.screen_of(None, "w1", "train8_held64")["status"] == "UNSCREENED"
     assert CA.screen_of(doc, "w1", "train8_held64")["floor"] == 100.0       # floor from the file, not derived
 
@@ -57,7 +64,8 @@ def test_s4_planted_candidates(doc, median, nbytes, verdict):
 
 def test_s4_ineligible_off_the_survivor_list_and_on_gates(doc):
     for w, p, why in (("w7", "train8_held64", "UNSCREENED"), ("w3", "train8_held64", "CULLED"),
-                      ("w1", "train128_held64", "HELD"), ("w9", "train8_held64", "NOT_REACHED")):
+                      ("w1", "train128_held64", "HELD"), ("w9", "train8_held64", "NOT_REACHED"),
+                      ("w7", "train128_held64", "PENDING")):
         got = CA.s4_verdict(CA.screen_of(doc, w, p), 10**6, 1, 8)
         assert got == {"verdict": "INELIGIBLE", "why": why}
     scr = CA.screen_of(doc, "w1", "train8_held64")
@@ -87,7 +95,8 @@ def test_compression_scores_only_survivors_confirmed_by_the_judge(doc):
           _row("w7", "train8_held64", 999.0, exp="unscreened")]
     calls = []
 
-    def judge(rows, world, pressure, median, iqr, nbytes, runs, held=None):
+    def judge(rows, world, pressure, median, iqr, nbytes, runs, held=None, doc=None):
+        assert doc is not None                                        # F12 hands the judge its own file
         calls.append((world, pressure))
         scr = CA.screen_of(doc, world, pressure)
         return {"verdict": "PASS", "clause_a_r4": CA.s4_verdict(scr, median, nbytes, runs, held)}
@@ -108,6 +117,27 @@ def test_compression_records_no_judge_and_mismatch_and_scores_neither(doc):
     assert got["value"] == 0 and got["verdicts"] == {"MISMATCH": 1} and got["mismatches"][0]["exp_id"] == "B-R4-1"
     none = CA.compression_r4(qd, "B", (0, 100), None, check=wrong)
     assert none["verdicts"] == {"INELIGIBLE(UNSCREENED)": 1} and none["variant"] is None
+
+
+def test_pending_learner_alias_reads_pending(doc):
+    for c in doc["cells"]:
+        if (c["world"], c["pressure"]) == ("w7", "train128_held64"):
+            c["verdicts"]["gate_in|HOLD"]["verdict"] = "PENDING_LEARNER"
+    assert CA.screen_of(doc, "w7", "train128_held64")["status"] == "PENDING"
+
+
+@pytest.mark.parametrize("world,pressure,median,nbytes", [
+    ("w1", "train8_held64", 194.0, 32), ("w1", "train8_held64", 195.0, 32), ("w1", "train8_held64", 99.0, 32),
+    ("w1", "train8_held64", 200.0, 64), ("w1", "train128_held64", 999.0, 1), ("w3", "train8_held64", 999.0, 1),
+    ("w9", "train8_held64", 999.0, 1), ("w7", "train128_held64", 999.0, 1), ("w7", "train8_held64", 999.0, 1),
+    ("w4", "train8_held64", 999.0, 1)])
+def test_the_real_judge_agrees_with_the_screen_s4(doc, world, pressure, median, nbytes):
+    """Independent check aimed at the claim: qd_ledger.check (G-R4-5, the only judge) and F12's s4 from the
+    file's numbers give the same verdict and progress on every planted cell."""
+    from primordial.ops import qd_ledger as Q
+    mine = CA.s4_verdict(CA.screen_of(doc, world, pressure), median, nbytes, 8)
+    judge = Q.check([], world, pressure, median, 0.0, nbytes, 8, doc=doc)["clause_a_r4"]
+    assert CA._agrees(judge, mine), (judge, mine)
 
 
 def test_load_worlds_roundtrip(tmp_path, doc):

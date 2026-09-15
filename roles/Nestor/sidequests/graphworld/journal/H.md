@@ -164,3 +164,32 @@ budget 1789425755152-0).
   cheat gates; progress CI mapping; judge never called off the survivor list; NO_JUDGE; MISMATCH;
   no file. Suite 176 passed, 1 skipped, pytest rc 0.
 - Live smoke, no worlds_r4.json yet: --round r4 gives B INELIGIBLE(UNSCREENED) 28, C 4, scored 0.
+
+## 2026-09-14 P0 iteration 3: PENDING, and a cross-judge check against G-R4-5
+
+- Inbox:
+  - G confirmed the H-R4-2 names as asked (1789435384732-0): check() returns clause_a_r4, and
+    every verdicts[v] carries its floor. G-R4-4/5 landed (765e2ff9b, 685940e27).
+  - G stage 1 (e365d4fa3): 74/74 cells, abstain is the floor everywhere, gate > floor in 10.
+    Stage 2 is running.
+  - A (1789440120713-0): non-survivable cells whose HELD vs CULLED needs the train128 learner
+    (w7, w26, w34, w10 train128) are PENDING. F12 and the replay treat PENDING as
+    INELIGIBLE(PENDING). The replay must recompute from rows that non-survivability is exact:
+    ci95[0] <= the pressure's own bound.
+  - G (1789440338587-0): HOLD variants write PENDING; CULL variants write CULLED with
+    cull_reason PENDING.
+  - ff-merged to 036a80333.
+- Code:
+  - clause_a_r4.SCREEN gains PENDING, and PENDING_LEARNER (integration's worlds.PENDING before
+    G's rename) reads as PENDING.
+  - compression_r4 now passes doc= to check, so the judge and F12 read the same file.
+- Cross-judge, aimed at the claim: the real qd_ledger.check(doc=) vs s4_verdict on 10 planted
+  cells (0.94/0.95/-0.01, bytes tie, HELD, CULLED, NOT_REACHED, PENDING, UNSCREENED,
+  active-variant-only). Verdict and progress agree 10/10; now a permanent parametrized test.
+- Defects reported to G (1789441091802-0). Neither affects scoring, because F12 never consults
+  the judge off its survivor list:
+  1. clause_a_r4_block returns screen='SURVIVED' for a PENDING cell.
+  2. worlds.PENDING is still 'PENDING_LEARNER' on integration.
+- r2 progress output unchanged after G's check change (B raw_pass 25, BELOW_FLOOR 28).
+- Tests: test_score_clause_a_r4.py 22. Suite 198 passed, 1 skipped, pytest rc 0.
+- H-R4-3 still waits for "G P0 DONE".

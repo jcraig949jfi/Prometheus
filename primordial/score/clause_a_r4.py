@@ -6,8 +6,10 @@ H 1789433688592-0, A 1789433714703-0, G 1789433928197-0). The active variant is
 re-derives a floor or a verdict of the screen: the floor is verdicts[variant]["floor"], the baseline is
 the cell's baseline block.
 
-  screen status   SURVIVED -> judged; HELD, CULLED, NOT_REACHED, UNSCREENED (absent, or no file) ->
-                  INELIGIBLE(<status>) and never scored; the judge is not consulted for them.
+  screen status   SURVIVED -> judged; HELD, CULLED, NOT_REACHED, PENDING, UNSCREENED (absent, or no file)
+                  -> INELIGIBLE(<status>) and never scored; the judge is not consulted for them.
+                  PENDING (A 1789440120713-0, G 1789440338587-0): a non-survivable cell whose HELD vs
+                  CULLED waits for the train128 learner; it never counts as SURVIVED.
 
 Clause A, round 4 binding (SWARM_R4 s4), per candidate on a SURVIVED cell:
   progress = (median_candidate - floor) / (median_baseline - floor)
@@ -30,7 +32,8 @@ from primordial.score.round2 import ROOT
 WORLDS_R4 = ROOT / "primordial" / "ledger" / "qd" / "worlds_r4.json"
 PASS_PROGRESS = 0.95                 # SWARM_R4 s4 (operator message 12); read here, never tuned
 MIN_RUNS = 8
-SCREEN = ("SURVIVED", "HELD", "CULLED", "NOT_REACHED")
+SCREEN = ("SURVIVED", "HELD", "CULLED", "NOT_REACHED", "PENDING")
+ALIASES = {"PENDING_LEARNER": "PENDING"}      # primordial.metric.worlds.PENDING before G's rename (1789440338587-0)
 PROGRESS_TOL = 1e-9
 
 
@@ -52,7 +55,7 @@ def screen_of(doc: dict | None, world: str, pressure: str) -> dict:
     if len(hits) != 1:
         return {"status": "UNSCREENED", "variant": variant, "why": f"{len(hits)} cells for {world} {pressure}"}
     v = (hits[0].get("verdicts") or {}).get(variant) or {}
-    st = v.get("verdict")
+    st = ALIASES.get(v.get("verdict"), v.get("verdict"))
     if v.get("cull_reason") == "NOT_REACHED":
         st = "NOT_REACHED"
     if st not in SCREEN:
@@ -129,7 +132,7 @@ def compression_r4(qd: list[dict], lane: str, window, doc: dict | None, check=No
         mine_v = s4_verdict(scr, f["held64_median"], nbytes, runs, held)
         hl = list(held.values()) if isinstance(held, dict) else held
         judge = (check(qd, c["world"], c["pressure"], f["held64_median"], f.get("iqr") or 0.0, nbytes, runs,
-                       held=hl) or {}).get("clause_a_r4")
+                       held=hl, doc=doc) or {}).get("clause_a_r4")         # the judge reads the same file
         if judge is None:
             key = "NO_JUDGE"
         elif not _agrees(judge, mine_v):
