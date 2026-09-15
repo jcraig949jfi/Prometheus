@@ -246,3 +246,20 @@ Interfaces posted to G,H,E,A 06:14 (1789467306628-0).
   a non-git dir; records commit there and push from there (push_failed logged, clock continues). The
   controller worktree (e.g. nestor-epoch) is the conductor's to create. Tests: test_r5_f6_drain.py (7).
 - Combined run (all R5 + F7/F9/F14/F15/X/hygiene), db 6: 60 passed rc 0.
+
+## 2026-09-15 R5 iteration 5 -- F-R5-5 probe run: NODE_CAPACITY_PROFILE_R5 k*=2 x 8 threads (DONE)
+
+- Burst 06:33:52. Plumbing smoke (k=1, 20 gens) clean, then the probe: calibration 400 gens 4.96 s -> gens 1613.
+  k=1 thr8 9917 u/s p95 20.82 s; k=2 thr8 13260 u/s (1.34x) p95 31.14 s (limit 31.23); k=3 thr5 14855 u/s
+  (1.12x) p95 41.70 s -> fails both clauses; stopped (O9). 0 errors. Probe wall ~2 min (budget 15).
+- DEFECT (mine): the profile row's `status: OK` overwrote the row status -> ValueError after the 3 step rows
+  committed. Fixed (profile_status; row status set last) with a regression test on the measured values; the
+  profile was rebuilt from the committed rows by from_rows (rule re-applied, nothing re-measured).
+  Pushed 19de31605 / rows 7d36e0cb7 / JSON 119508e87; pm:capacity:profile sha corrected to the pushed sha.
+- DEFECT: rss_peak/ctx_switches sampled the venv python.exe launcher, not its child (near zero in these rows;
+  not used by the rule). Sampling now includes children; not re-run.
+- Review fix to F-R5-6: the job-sized final drain (<= 930 s) is capped at end_ts - now (test_r5_f6_drain_cap).
+- Open for A: admission horizon end_ts vs drain_ts (operator 19 s14); controller worktree to create.
+- A ruled 06:38 (1789468596599-0): admission horizon = drain_ts (operator 19 s14). admit() refuses
+  PROJECTED_PAST_ROUND_END when now + wall > drain_ts (name kept for H/E), checked only before no_new_work_ts;
+  past it NO_NEW_WORK alone decides (keeps the single-reason NO_NEW_WORK_REFUSAL). Tests F-R5-1/2 18 passed rc 0.

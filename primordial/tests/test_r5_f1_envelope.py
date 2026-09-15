@@ -69,8 +69,18 @@ def test_stage_pins_in_a_pilot_round():
 
 def test_projected_past_round_end():
     clock = RC.plan(0.0)
-    v = EV.admit(EV.example(wall_budget_s=700), clock=clock, now=clock["end_ts"] - 600)
-    assert "PROJECTED_PAST_ROUND_END" in v["reasons"]
+    v = EV.admit(EV.example(wall_budget_s=900), clock=clock, now=clock["no_new_work_ts"] - 1)
+    assert v["reasons"] == ["PROJECTED_PAST_ROUND_END"]
+    late = EV.admit(EV.example(wall_budget_s=700), clock=clock, now=clock["drain_ts"])   # past NNW: one reason
+    assert late["reasons"] == ["NO_NEW_WORK"] and late["event"] == EV.NO_NEW_WORK_REFUSAL
+
+
+def test_horizon_is_drain_ts_not_end_ts():
+    """A 1789468596599-0 / operator 19 s14: no job accepted if projected completion exceeds T+110 (drain_ts)."""
+    clock = RC.plan(0.0)                                                     # drain 6600, end 7200
+    inside = EV.admit(EV.example(wall_budget_s=800), clock=clock, now=5900)  # completes 6700 in (drain, end]
+    assert inside["reasons"] == ["PROJECTED_PAST_ROUND_END"] and inside["event"] == EV.STAGE_BUDGET_REFUSAL
+    assert EV.admit(EV.example(wall_budget_s=700), clock=clock, now=5900)["ok"]   # completes exactly at drain_ts
 
 
 def test_production_stage_unbounded_outside_pilot_round():

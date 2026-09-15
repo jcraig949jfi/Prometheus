@@ -101,9 +101,12 @@ def admit(env, kind: str = "cpu", clock: dict | None = None, now: float | None =
     wall = env["gpu_budget_s"] if kind == "gpu" else env["wall_budget_s"]
     event = STAGE_BUDGET_REFUSAL
     if clock:
-        if now + wall > float(clock["end_ts"]):
+        # horizon = drain_ts (T+110), operator 19 s14, A 1789468596599-0; end_ts stays the hard close.
+        # Past no_new_work_ts the NO_NEW_WORK rule alone decides (it already applies the drain fit).
+        past_nnw = now >= float(clock["no_new_work_ts"])
+        if not past_nnw and now + wall > float(clock["drain_ts"]):
             reasons.append("PROJECTED_PAST_ROUND_END")
-        if now >= float(clock["no_new_work_ts"]) and (not continuation or now + wall > float(clock["drain_ts"])):
+        if past_nnw and (not continuation or now + wall > float(clock["drain_ts"])):
             reasons.append("NO_NEW_WORK")
             if len(reasons) == 1:
                 event = NO_NEW_WORK_REFUSAL
