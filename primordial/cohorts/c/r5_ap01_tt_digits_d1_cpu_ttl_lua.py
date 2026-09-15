@@ -89,7 +89,9 @@ def tables(p, cb, cheat=False):
     obs = np.tile(R_ALL, P)[:, None].astype(np.uint16)
     gidx = np.repeat(np.arange(P), 256)
     sym = FAM.forward(p, obs, gidx, cheat).reshape(P, 256)
-    return sym, cb[np.arange(P)[:, None], sym]
+    # act = cb[sym] % 8 (the declared decoder). init/mutate hand over raw bytes 0..255; before C-R5-AP-01b the
+    # reduction happened only in unpack, so offer-time fitness scored bytes >= 8 as never right (C-R5-AP-01 oracle)
+    return sym, np.asarray(cb, np.int64)[np.arange(P)[:, None], sym] % A
 
 
 def evaluate(p, cb):
