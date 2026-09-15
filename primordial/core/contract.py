@@ -16,7 +16,8 @@ import numpy as np
 CONTRACT_VERSION = "pm-contract-v0"
 LANES = ("A", "B", "C", "D", "E",          # conductor + round 2 cohorts
          "F", "G", "H",                    # round 3 builders (fabric, metric, measurement)
-         "P", "Q", "W", "T", "U")          # round 6 MVP builders (precision, nsight, warp, tensornet, cudagraph)
+         "P", "Q", "W", "T", "U",          # round 6 MVP builders (precision, nsight, warp, tensornet, cudagraph)
+         "R")                              # round 5 PREDICTOR (sealed anti-prior ledger; SWARM_R5 O5) -- not P
 
 
 @runtime_checkable

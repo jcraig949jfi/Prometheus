@@ -60,7 +60,8 @@ F (fabric), worktree nestor-bld-f:
     expected_output_rows, checkpointable, required_controls, required_oracles, cohort, predicate_id,
     experiment_class.
   - Stage ceilings in one table (PILOT: cpu job wall <= 900 s; gpu <= 600 s; cpu_budget_s <= 1200;
-    projected completion <= round end).
+    projected completion <= drain_ts = T+110, per operator 19 s14. An earlier draft said "round end";
+    corrected after F's question 1789468523546-0).
   - Over-ceiling -> STAGE_BUDGET_REFUSAL event on the bus + a PRODUCTION_CANDIDATE stub; never an
     exception.
 - F-R5-2 ROUND CLOCK: pm:round:r5 {start_ts, epochs 4x1500 s, no_new_work_ts = +6000, drain_ts =
