@@ -250,7 +250,12 @@
   107.64/106.59 -> 107.75), so "ignore" is HELD8-local, not a brain property; odd |W| mass blind .56/.52/.56 vs caught
   .49-.65 (not zero weights, as filed).
 - Receipt D-R6-2 filed 1789488889783-0 (guard 10/10 OK, status NULL, decision MIXED), rows 9927ff9b4; ANOM-..7943 RESOLVED; child anomaly filed (HELD8 coverage).
-- Loop iteration 1 (12:15, T+76): claimed child ANOM-..5775 (HELD8 coverage). D-R6-3 code + test (4 passed rc 0), 0 QD:
+- Loop iteration 1 (12:15, T+76): claimed child ANOM-..9775 (1789488929775-0, HELD8 coverage). D-R6-3 code + test (4 passed rc 0), 0 QD:
   numpy honest vs cheat charge per HELD64 seed x any-flip census on the cheat trajectory; COVERAGE / PATH_DISAGREE /
   NOT_COVERAGE; I1 = numpy == fused (stride 1 and 2) and D-R6-2 held64 reproduced; control planted_zero_odd.
   Memory saved: stale prior-round worker steals jobs; watch pm:jobs:<L>:done.
+- D-R6-3 RECORD (job 86136d5a92eb ok, 0.13 s, 0 QD, predicate 1789489073092-0): decision COVERAGE. I1 4/4 (numpy ==
+  fused stride 1 and 2; D-R6-2 held64 reproduced); control zero-odd 0/0; PATH_DISAGREE none. Elite 0: charge differs on
+  2/64 seeds (7 flips), elite 1: 6/64 (71 flips), 0 of them in HELD8; the cheat RAISES their charge (-7, -74). Elite 2:
+  18 seeds, 2 in HELD8. Caught elites 28-54 seeds. Every charge-diff seed has >= 1 flip. The skip-odd oracle's HELD8
+  blindness on elites 0,1 is seed coverage: the cheat has power, HELD8 never reaches it.
