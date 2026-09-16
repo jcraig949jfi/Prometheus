@@ -32,9 +32,9 @@
     "repo": "github.com/mit-pdos/xv6-riscv"
   },
   "hashes": {
-    "tree_sha256": "45ba46ee61dbd6e2de6baa2193b29655e124814780f547a8d397201a8dc93298",
+    "tree_sha256": "e7e3acd85c65ecfc6cee755e184efae9b5561f9bdb1025a44aa9f08c0dbfc5ee",
     "n_files": 82,
-    "bytes": 298809,
+    "bytes": 285702,
     "artifacts": [
       {
         "filename": "https://github.com/mit-pdos/xv6-riscv",
@@ -42,7 +42,7 @@
         "commit": "9e3161a9abf5f51ea402562d1874caf6c4926597"
       }
     ],
-    "body_location": "F:\\Prometheus\\vault\\fossils\\xv6-riscv",
+    "body_location": "D:\\Prometheus\\vault\\fossils\\xv6-riscv",
     "hash_list": "techne/fossils/specimens/xv6-riscv/UPSTREAM_HASHES.txt"
   },
   "license": {
@@ -106,5 +106,33 @@
     "how_we_know_it_runs": "NOT_ATTEMPTED / NOT_ATTEMPTED ; receipt none (pinned+hashed)",
     "what_humans_used_it_for": "be a complete, readable Unix-like kernel -- schedule processes across cores, give each an isolated virtual address space, and keep a crash-recoverable filesystem -- for students to modify"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "hashes_superseded": [
+    {
+      "tree_sha256": "45ba46ee61dbd6e2de6baa2193b29655e124814780f547a8d397201a8dc93298",
+      "n_files": 82,
+      "bytes": 298809,
+      "artifacts": [
+        {
+          "filename": "https://github.com/mit-pdos/xv6-riscv",
+          "sha256": null,
+          "commit": "9e3161a9abf5f51ea402562d1874caf6c4926597"
+        }
+      ],
+      "body_location": "F:\\Prometheus\\vault\\fossils\\xv6-riscv",
+      "hash_list": "techne/fossils/specimens/xv6-riscv/UPSTREAM_HASHES.txt",
+      "superseded_utc": "20260916T135001Z",
+      "reason": "M2 rematerialize 2026-09-16: record hashed over a CRLF-converted checkout on M1 (and, where NOT_IN_ORIGIN > 0, build/interpreter residue); origin serves byte-exact upstream; see techne/fossils/REMATERIALIZE_M2_2026-09-16_run2_drift_classes.json",
+      "receipt": "techne/fossils/specimens/xv6-riscv/receipts/repin-xv6-riscv-20260916T135001Z.json",
+      "superseded_hash_list": "techne/fossils/specimens/xv6-riscv/UPSTREAM_HASHES.superseded-20260916.txt",
+      "class_counts": {
+        "SAME": 0,
+        "RECORD_IS_CRLF": 82,
+        "NOT_IN_ORIGIN": 0,
+        "FETCH_IS_CRLF": 0,
+        "OTHER": 0,
+        "ADDED": 0
+      }
+    }
+  ]
 }

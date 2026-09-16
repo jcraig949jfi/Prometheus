@@ -36,9 +36,9 @@
     "ancestry": "Dewdney's Core War / ICWS Redcode standard"
   },
   "hashes": {
-    "tree_sha256": "c1929dc0440cbac70a726aee6fd10811f9c80ebb7f347c1236f87e6b92d0a089",
-    "n_files": 50,
-    "bytes": 1196124,
+    "tree_sha256": "73122063b0992624db657416b9976090a3c5bb00687d4a628a79646013250f74",
+    "n_files": 46,
+    "bytes": 1138932,
     "artifacts": [
       {
         "filename": "https://github.com/rodrigosetti/corewar",
@@ -46,7 +46,7 @@
         "commit": "a228123a1fb6a81f1a38b4988d5c245fe022fa53"
       }
     ],
-    "body_location": "F:\\Prometheus\\vault\\fossils\\corewar-redcode",
+    "body_location": "D:\\Prometheus\\vault\\fossils\\corewar-redcode",
     "hash_list": "techne/fossils/specimens/corewar-redcode/UPSTREAM_HASHES.txt"
   },
   "license": {
@@ -152,5 +152,33 @@
     "how_we_know_it_runs": "RUNNABLE_HISTORICAL_TOOLCHAIN / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153435Z.json",
     "what_humans_used_it_for": "run competing self-modifying programs in a shared virtual memory and see which survives -- a substrate where programs copy themselves, attack rivals' code, and defend, entirely inside a tiny instruction set"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "hashes_superseded": [
+    {
+      "tree_sha256": "c1929dc0440cbac70a726aee6fd10811f9c80ebb7f347c1236f87e6b92d0a089",
+      "n_files": 50,
+      "bytes": 1196124,
+      "artifacts": [
+        {
+          "filename": "https://github.com/rodrigosetti/corewar",
+          "sha256": null,
+          "commit": "a228123a1fb6a81f1a38b4988d5c245fe022fa53"
+        }
+      ],
+      "body_location": "F:\\Prometheus\\vault\\fossils\\corewar-redcode",
+      "hash_list": "techne/fossils/specimens/corewar-redcode/UPSTREAM_HASHES.txt",
+      "superseded_utc": "20260916T134957Z",
+      "reason": "M2 rematerialize 2026-09-16: record hashed over a CRLF-converted checkout on M1 (and, where NOT_IN_ORIGIN > 0, build/interpreter residue); origin serves byte-exact upstream; see techne/fossils/REMATERIALIZE_M2_2026-09-16_run2_drift_classes.json",
+      "receipt": "techne/fossils/specimens/corewar-redcode/receipts/repin-corewar-redcode-20260916T134957Z.json",
+      "superseded_hash_list": "techne/fossils/specimens/corewar-redcode/UPSTREAM_HASHES.superseded-20260916.txt",
+      "class_counts": {
+        "SAME": 31,
+        "RECORD_IS_CRLF": 15,
+        "NOT_IN_ORIGIN": 4,
+        "FETCH_IS_CRLF": 0,
+        "OTHER": 0,
+        "ADDED": 0
+      }
+    }
+  ]
 }

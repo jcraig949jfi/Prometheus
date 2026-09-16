@@ -8,8 +8,12 @@ different lengths — while all four expose the same STOP interface. That is the
 setup charter §22 calls the critical cell: different surface, candidate-same
 mechanism.
 
-RULE PROVENANCE. Every rule here is reconstructed from memory; no rulebook was
-consulted. All four worlds carry `rules_state = "HYPOTHESIZED"`. Charter v2 §4
+RULE PROVENANCE. Every rule here was reconstructed from memory; no rulebook was
+consulted before 2026-09-16. ANNOTATION 2026-09-16 (LUDUS-01): MARTIAN_DICE is
+now audited line by line against the publisher's rule sheet and carries
+`rules_state = "AUDITED_BY_SEAT"`; two rules moved (see its docstring) and the
+old reconstruction is kept as MartianDiceRecon. The other three still carry
+`rules_state = "HYPOTHESIZED"`. Charter v2 §4
 makes the operator the instrument for this: fabricated rules, impossible moves
 and missing mechanics are cheap for a human who knows the game to spot.
 `ludus/bench/RULES_AUDIT.md` is the sheet. Rules audit blocks the PROMOTION of a
@@ -159,30 +163,48 @@ def md_roll_dist(n: int):
 
 
 class MartianDice(World):
-    """State = (tanks, rays, humans, cows, chickens) set aside.
+    """Solitaire Martian Dice, per the PUBLISHED rule sheet (LUDUS-01, 2026-09-16).
 
-    The "which symbols have already been claimed" mask is redundant with the
-    counts: a symbol can only be claimed if it was rolled, so a claimed symbol
-    always has count >= 1. That collapse is what makes the world exactly
-    solvable in a few thousand states.
+    Source: Tasty Minstrel Games rule sheet, (c) 2011 Tasty Minstrel Games LLC,
+    design Scott Almes, rules editing Josh Cappel (ludus/bench/rules_sources/
+    martian_dice_md_rules_jrsaathoff.pdf, sha256 cc8297f2...; the audit lines
+    are in ludus/bench/RULES_AUDIT.md and ludus/bench/rules_audit.json).
+
+    State = (tanks, rays, humans, cows, chickens, dead) set aside; dead is the
+    count of dice discarded when a roll offered nothing claimable, so that a
+    turn that ends that way is a forced end (dice_left == 0) that STILL
+    SCORES, as the sheet says ("If you cannot set aside any dice ... your turn
+    is over; proceed to Scoring"). The "which earthlings are claimed" mask is
+    still redundant with the counts (a claimed earthling always has count >= 1).
+
+    Two rules the 2026-08-27 reconstruction (MartianDiceRecon below) had WRONG:
+      R1  Death Rays may be chosen on ANY roll, added to rays set aside earlier
+          ("Death Rays may always be chosen"). The reconstruction allowed rays
+          once per turn like an earthling.
+      R2  A roll with nothing claimable ends the turn WITH scoring. The
+          reconstruction scored it as a bust (zero).
+    Every constant (13 dice; faces 1 tank, 2 rays, 1 human, 1 cow, 1 chicken;
+    rays >= tanks to score; 1 point per earthling; +3 for all three) was
+    confirmed against the sheet.
     """
 
     name = "MARTIAN_DICE"
     genre = "push-your-luck / dice"
     surface = "thirteen dice, flying saucers, tanks, and abducted livestock"
     interfaces = ("STOP", "SELECT")
+    rules_state = "AUDITED_BY_SEAT"      # published sheet, seat-performed (P3)
     exact = True
 
     def initial(self):
-        return (0, 0, 0, 0, 0)
+        return (0, 0, 0, 0, 0, 0)
 
     def dice_left(self, s) -> int:
         return MD_DICE - sum(s)
 
     def pot(self, s) -> float:
-        tanks, rays, h, c, ch = s
+        tanks, rays, h, c, ch, _dead = s
         if rays < tanks:
-            return 0.0                       # the death rays must beat the tanks
+            return 0.0                       # more tanks than rays: flee, score zero
         base = h + c + ch
         if h and c and ch:
             base += MD_SET_BONUS
@@ -196,13 +218,21 @@ class MartianDice(World):
 
     def options(self, s, draw):
         t, r, h, c, ch = draw
-        base = (s[0] + t, s[1], s[2], s[3], s[4])
+        base = (s[0] + t, s[1], s[2], s[3], s[4], s[5])
         out = []
         for sym, got in (("ray", r), ("human", h), ("cow", c), ("chicken", ch)):
-            if got == 0 or base[MD_IDX[sym]] > 0:
-                continue                     # never rolled, or already claimed
+            if got == 0:
+                continue                     # not rolled
+            if sym != "ray" and base[MD_IDX[sym]] > 0:
+                continue                     # earthling already claimed (R1: rays exempt)
             nxt = list(base)
             nxt[MD_IDX[sym]] += got
+            out.append(tuple(nxt))
+        if not out:
+            # R2: nothing claimable -> the turn is over and SCORES. The
+            # unclaimable dice are discarded so the state is a forced end.
+            nxt = list(base)
+            nxt[5] += r + h + c + ch
             out.append(tuple(nxt))
         return out
 
@@ -211,6 +241,41 @@ class MartianDice(World):
         dice that showed it. Expressed at the interface as fraction of the dice
         pool consumed, so a select circuit can read it without knowing the game."""
         return (sum(s2) - sum(s)) / MD_DICE
+
+
+class MartianDiceRecon(MartianDice):
+    """The 2026-08-27 reconstruction, kept VERBATIM in behaviour for the diff
+    and for the provenance of every matrix row computed before 2026-09-16.
+    Not in ALL_WORLDS. Rays claimable once per turn (R1 wrong); a roll with
+    nothing claimable is a bust scoring zero (R2 wrong). State is the old
+    5-tuple."""
+
+    name = "MARTIAN_DICE_RECON_2026-08-27"
+    rules_state = "HYPOTHESIZED"
+
+    def initial(self):
+        return (0, 0, 0, 0, 0)
+
+    def pot(self, s) -> float:
+        tanks, rays, h, c, ch = s
+        if rays < tanks:
+            return 0.0
+        base = h + c + ch
+        if h and c and ch:
+            base += MD_SET_BONUS
+        return float(base)
+
+    def options(self, s, draw):
+        t, r, h, c, ch = draw
+        base = (s[0] + t, s[1], s[2], s[3], s[4])
+        out = []
+        for sym, got in (("ray", r), ("human", h), ("cow", c), ("chicken", ch)):
+            if got == 0 or base[MD_IDX[sym]] > 0:
+                continue
+            nxt = list(base)
+            nxt[MD_IDX[sym]] += got
+            out.append(tuple(nxt))
+        return out
 
 
 # ==========================================================================

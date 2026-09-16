@@ -404,9 +404,14 @@ def test_a_declared_slot_still_requires_hydration():
 def test_a_sealed_grammar_version_that_does_not_match_is_refused():
     pl = payload(target_truth_table=AND01,
                  grammar_version="proteus.boolean_grammar.v9")
-    with pytest.raises(_cb.CegisError) as e:
+    # D2b: refused at ADMISSION through the kind's value_checker (the
+    # contract's refusal, carrying the same words) and by the executor itself.
+    with pytest.raises(_ex.ExecutorUnavailable) as e:
         _ex.run(cegis_spec(pl), seed=7, inputs=None)
     assert "new experiment" in str(e.value)
+    with pytest.raises(_cb.CegisError) as e2:
+        _cb.run(pl, seed=7, inputs={})
+    assert "new experiment" in str(e2.value)
 
 
 def test_the_result_is_bit_identical_on_re_execution():

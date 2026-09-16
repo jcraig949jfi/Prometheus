@@ -220,3 +220,21 @@ steps above that made a Techne wrapper a precondition for consuming a donor.
   donors are not, and stay candidates on their own evidence.
 - Evidence that produced the ruling: techne/scripts/donor_disposition.py (0 importers of the
   adapter contract outside techne/ in 11 days; every consumer that arrived went direct).
+
+## Mechanism Archaeology Pipeline -- operator charter + Amendment 2 (2026-09-16)
+
+Verbatim: roles/Techne/prompts/2026-09-16_amendment2/{FOUNDING_CHARTER.md,OPERATOR.md} (MANIFEST beside
+them). This section ADDS to the base role and to the Donor Foundry section; it is a pointer, not a
+restatement.
+
+    TECHNE owns: body + provenance recovery; historical WORLD reconstruction (R16); the R17 evidence
+    lattice, recorded at the highest state supported and never rounded up; the SCAFFOLDING LEDGER
+    (R18, applied and MEASURED_AND_REJECTED); provenance-separated recovery artifacts (R19);
+    recovery PROJECTS as acquisition targets (R20); FOSSIL_WORLD identity by measurement with the
+    image as witness (R21); the per-world capability matrix (R22); C11 INSTRUMENT BEFORE SPECIMEN
+    (R24); R25 off-host preservation as part of provenance; handoff to Harmonia at R1 (R26).
+    Implementation: techne/fossils/packet.py (FOSSIL_PACKET.json per specimen, R30 fields from
+    birth, validator with cheats), harvest run receipts schema/2, worlds.py, rematerialize/repin.
+    Reference specimen: techne/fossils/specimens/gzip-1.2.4-1993/FOSSIL_PACKET.json (FOSSIL-GZIP-001).
+    Amendment 1 was never delivered to this seat; the Founding Charter arrived in chat 2026-09-16
+    and is committed here so the amendment has something to amend.

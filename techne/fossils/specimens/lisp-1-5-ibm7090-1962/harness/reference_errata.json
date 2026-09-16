@@ -1,0 +1,15 @@
+{
+  "schema": "techne.fossil.listing_errata/1",
+  "what": "Words where the body's reference listing lisp15.lst (asm7090 2.1.4 + Bourguignon's patch) DISAGREES with the 1962 original listing (LISP1.5-Bonnie-sBirthdayAssembly.pdf in the body). Adjudicated 2026-09-16 by Techne against the PDF pages named, both by the scan's OCR layer (pypdf) and by eye on the rendered page (pdftoppm -r 110). The 1962 listing wins; compare_listing.py accepts the 1962 word at these locations.",
+  "pdf": "LISP1.5-Bonnie-sBirthdayAssembly.pdf",
+  "render": "pdftoppm -f N -l N -r 110 -png <pdf> out  (poppler-utils, in a throwaway container with the body mounted read-only)",
+  "errata": [
+    {"loc": "00353", "reference_2_1_4": "0770 00 0 01220", "listing_1962": "0770 00 0 01200", "pdf_page": 10, "card": 264, "line": "WEF   WEFA", "ocr": "C0353 0770 00 0 01200 264 WEF WEFA"},
+    {"loc": "00355", "reference_2_1_4": "0764 00 0 01220", "listing_1962": "0764 00 0 01200", "pdf_page": 10, "card": 266, "line": "BSR   BSRA", "ocr": "00355 0764 00 0 01200 266 BSR DSRA"},
+    {"loc": "00731", "reference_2_1_4": "0522 00 0 77666", "listing_1962": "0522 00 0 00350", "pdf_page": 16, "card": 529, "line": "XEC   $RDS   SELECT TAPE", "ocr": "00731 0522 00 0 00350 529 XEC bRDS SELECT TAPE"}
+  ],
+  "also_checked_by_eye": [
+    {"loc": "00352", "listing_1962": "0772 00 0 01200", "note": "REW REWA -- the reference printed 00000 (its cross-header limitation); this world gives 01200 = the 1962 word"},
+    {"loc": "00350", "listing_1962": "0762 00 0 01220", "note": "RDS RTBA -- unit 01220 for RDS/WRS, 01200 for REW/WEF/BSR: the 1962 listing itself distinguishes them, so 01220 at 00353/00355 in the reference was a 2.1.4 error"}
+  ]
+}

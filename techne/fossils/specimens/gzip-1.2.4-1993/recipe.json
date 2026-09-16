@@ -10,8 +10,8 @@
   ],
   "build": [
     {
-      "name": "1993 configure + make with modern-compiler accommodations (-fcommon -std=gnu89 -w; no source change)",
-      "cmd": "./configure >/dev/null 2>&1; make -s CFLAGS='-O1 -fcommon -std=gnu89 -w' 2>&1 | grep -iE '\\berror' | head -5; test -x ./gzip && echo built",
+      "name": "1993 configure + make, DEFAULT flags (scaffolding T1 removed 2026-09-16 after measurement)",
+      "cmd": "./configure >/dev/null 2>&1; make -s 2>&1 | grep -iE '\berror|multiple definition' | head -5; test -x ./gzip && echo built",
       "timeout": 600
     }
   ],
@@ -41,5 +41,6 @@
   "test_kind": "TECHNE",
   "test_classification_if_none": "TECHNE_SMOKE_HARNESS_PASS",
   "classification_if_ok": "RUNNABLE_CONTAINER",
-  "notes": "Same sample as compact-4.2bsd-1983 so the two ratios are comparable."
+  "notes": "Same sample as compact-4.2bsd-1983 so the two ratios are comparable.",
+  "note": "2026-09-16 (TECHNE-90): the batch-05 build flags -O1 -fcommon -std=gnu89 -w were MEASURED NOT REQUIRED in this world (default build succeeds, 0 warnings, compressed output byte-identical); removed. Previous command kept in FOSSIL_PACKET.json SCAFFOLDING_LEDGER."
 }

@@ -1,5 +1,11 @@
 """Cycle 002 — the stochastic-stopping family (charter v2 §17), solved exactly.
 
+ANNOTATION 2026-09-16 (LUDUS-01): the MartianDice in this module is the
+2026-08-27 reconstruction and has two rules wrong against the published sheet
+(rays claimable once per turn; unclaimable roll scored as a bust). It is kept
+unedited as the record behind CYCLE_002; the audited world is
+ludus/bench/worlds.py MartianDice and the diff is in ludus/bench/rules_audit.json.
+
 Charter v2 §17 nominates Can't Stop, Incan Gold, Martian Dice, Piraten Kapern and
 Flip 7 as the first natural family, and asks the question that matters:
 

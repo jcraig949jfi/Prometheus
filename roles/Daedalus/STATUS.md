@@ -20,7 +20,7 @@ s3 requires this file; refreshed at least every four hours of activity).
 |---|---|
 | SFE on M2 | `https://192.168.1.191:8811`, schema **8**, build `726275da` (= the held candidate) at `ccb26df01`, ledger `eng_906356f7`; relocated under D-23 2026-09-16 11:48Z (`deploy/DEPLOYED_BUILD_M2.json`, receipt `deploy/M2_RELOCATE_2026-09-16/`). LIVE_VERIFIED: unit 481, harness 12/12, isolation 7/7, Harmonia's gate CONFORMANT with the twin's instance id. Verify twin, no consumer. |
 | M2 supervisor | task `SFEngineM2Watchdog` -> pinned `D:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1`; state file beside it; bound 3, enforcement DEPLOYED |
-| SFE on M1 | **NOT ANSWERING** since the 09-14 19:55 SKULLPORT reboot (Nestor #262/#263); 8811 times out from M2; no SSH/SMB path from here. Ledger `eng_8a37a5d3` at `D:\Prometheus-data\sfe` on M1, build `5380cb90` at `d5be5ec4b` (last known). Not restarted by me: no hand on M1, and `ccb26df01` says SFE moves to M2 carrying that ledger. |
+| SFE on M1 | **RETIRING** (operator 2026-09-16: Postgres + Redis shared; every other service on ONE machine; the engine's machine is M2). Stopped ~09-15 20:15Z for the move; not to be restarted. Its ledger `eng_8a37a5d3` (`D:\Prometheus-data\sfe` on M1, last build `5380cb90`) is the production identity and comes to M2 by `adopt_m1_ledger.py`. The M1 task gets disabled by whoever next has a hand on M1. |
 
 ## Engine health, plainly
 
@@ -53,6 +53,8 @@ connect timeout; both wired consumers (Vivarium, Archaeon) point at it.
    separate, explicitly confirmed step.
 5. Watchdog: `D:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1` is a pinned
    copy; when the tracked script changes, redeploy by copy + receipt.
+6. Closed as moot by the topology ruling: D-WD-1 (M1 watchdog); F: canonical-
+   copy retirement on M1 (M1's data dir is the SOURCE of the move, then dead).
 
 ## Blocked on someone else
 

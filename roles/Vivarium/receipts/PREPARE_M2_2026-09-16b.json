@@ -1,0 +1,73 @@
+{
+  "schema": "vivarium_prepare_m2.v1",
+  "at": "2026-09-16T15:20:30Z",
+  "host": "SPECTREX5",
+  "sha": "2ca428f60",
+  "launched": false,
+  "worktree": {
+    "path": "D:\\Prometheus-worktrees\\vivarium-consumer",
+    "requested_sha": "2ca428f60",
+    "created": false,
+    "advance": {
+      "from": "3aa05e08b368dc8b16684b886a77774061bdc5be",
+      "to": "2ca428f601c846851d2d5840e4713eaf74550a7c",
+      "ok": true,
+      "stderr": "Previous HEAD position was 3aa05e08b Merge remote-tracking branch 'origin/main' into vivarium/boot-2026-09-16\nHEAD is now at 2ca428f60 Merge remote-tracking branch 'origin/main' into vivarium/boot-2026-09-16\n"
+    },
+    "head": "2ca428f601c846851d2d5840e4713eaf74550a7c",
+    "detached": true,
+    "dirty": false,
+    "not_canonical": true,
+    "ok": true
+  },
+  "launchers": {
+    "vivarium_consumer_m2.cmd": {
+      "from": "D:\\Prometheus-worktrees\\vivarium-boot-2026-09-16\\vivarium\\deploy\\vivarium_consumer_m2.cmd",
+      "to": "D:\\Prometheus-data\\vivarium\\vivarium_consumer_m2.cmd",
+      "template_sha256": "sha256:e6adfb4b1e9b2ca97655bb69b78e340d1b1396f8062e602249652f5e3c2f8b9a",
+      "written_sha256": "sha256:a3238332ca4382d22d7667b03742bf4bbb9cb23b630c6f90f8bda000ed1a7a0a"
+    },
+    "vivarium_deadman_m2.cmd": {
+      "from": "D:\\Prometheus-worktrees\\vivarium-boot-2026-09-16\\vivarium\\deploy\\vivarium_deadman_m2.cmd",
+      "to": "D:\\Prometheus-data\\vivarium\\vivarium_deadman_m2.cmd",
+      "template_sha256": "sha256:ee20cf5ac1f1ebc6853d8c2983f78aa5a0fcd3af0254b975d787dc1c67ca0116",
+      "written_sha256": "sha256:2134f5de9c6edd808272e249c87cd3fe58e4c50e4c62d4fbc7dbc2be418b3131"
+    }
+  },
+  "secrets": {
+    "path": "D:\\Prometheus-worktrees\\vivarium-consumer\\vivarium\\config.local.json",
+    "exists": false,
+    "sfe_token_present": false,
+    "pew_token_present": false,
+    "ok": false,
+    "note": "the operator carries this file from M1 with a receipt; no seat copies a token across hosts (Daedalus #270)"
+  },
+  "store": {
+    "ok": true,
+    "environment": "prometheus-canonical",
+    "queued": 5
+  },
+  "pew": {
+    "ok": true,
+    "url": "http://192.168.1.191:8377/api/v1",
+    "service": "mnemosyne-evidence-wiki",
+    "schema_version": 4,
+    "uptime_s": 10437.5
+  },
+  "engine": {
+    "ok": false,
+    "reason": "WRONG_ENGINE",
+    "expected": "eng_8a37a5d305969034d488c43e",
+    "observed": "eng_906356f7fb1da180131f9290",
+    "url": "https://192.168.1.191:8811/v2/version"
+  },
+  "preconditions": {
+    "worktree": true,
+    "secrets": false,
+    "store": true,
+    "pew": true,
+    "engine": false
+  },
+  "ready_to_launch": false,
+  "next": "fix the failed precondition(s): ['secrets', 'engine']"
+}
