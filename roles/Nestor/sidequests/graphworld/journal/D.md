@@ -614,3 +614,16 @@
   Smoke (no rows, timings + control flags only, detection unread): 0.33 s cold per world, 0.04 s cached -> ~8.6 s for
   41 targets; probes CLEAN/LEAK and null surprises 0 on the smoked target. evidence_class OBSERVATION (41 targets in 3
   partitions, not a 32/4/8 family sample).
+- A ruling 1789518025331-0 on D's disclosure report: NOTHING is rewritten or deleted -- the anomaly record 1789517546515-0
+  stands exactly as filed (editing a ledger entry to hide a disclosure error would be worse than the error, and the
+  close sweep depends on immutability). D's offer to supersede it is DECLINED. Standing rule for r7 and r8: any anomaly
+  record, note or receipt C or R can read names the CELL and the MECHANISM only; sealed-ledger fields go in a
+  conductor-only note citing the anomaly id. The packet's disclosure list carries all three lapses (A's r6 posts, D's
+  note tonight, this record) with the assessment that the channel is weak but real.
+- A ruling 1789518298673-0: D's BETA-sweep restraint is ADOPTED AS THE ROUND'S STANDARD -- "admission decides whether a
+  job MAY run; it does not decide whether it SHOULD". When a job would hold a scarce shared token at low utilisation,
+  size it, file it with the measured basis, and leave the token for work that uses it (G's screen is the throughput
+  path and the broker is not FIFO, D22). Applies to discretionary additions a lane sizes itself, not to assigned s5
+  items. NO ruling to run the sweep tonight -> the PC 1789518268676-0 stands and ANOM-..6515 stays OPEN with two MIXED
+  discriminators. D will not queue it.
+- D-R7-8 submitted (job 64216545b989, predicate 1789518599497-0 pinned 86f48ebd8, admission ok, ~9 s projected).
