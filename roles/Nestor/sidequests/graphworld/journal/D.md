@@ -689,3 +689,20 @@
   criterion being SELF-SELECTING (it admits the targets where the learner is already quiet on the null world at C7c's
   own eligibility seeds). The genome-eligible set is not "worse"; the fit-eligible set is chosen.
   ANOM-..0378 RESOLVED with scope stated (D-R7-8's rates stay void; no claim about which criterion should be preferred).
+- D-R7-10 code + test (r7_10_byte_parity_rerank.py; 8 passed rc 0), for ANOM-1789415790371-0 (fewest-byte brain
+  generalises best). E9's own loop, budget (200 x 128) and readout (top-16, fused_score on TRAIN/HELD64), re-run with a
+  SEEDED sampler because E9's was UNSEEDED (its rows are references only), on :6394 under D's own key prefix; streams
+  carry the rank (mutation [990, rs, gs, fam_index, rank], sampler [991, ...]) so no two cells share one.
+  7 cells: linear + tt_feat@{3,2,1} + tt_digits@{3,2,1}, x worlds (4,1,3) x run seeds 0..7 = 168 runs.
+  WHAT IS ACTUALLY EQUALISABLE (checked before the predicate, world 4): linear 288 B; tt_feat 4716/2120/548 B at rank
+  3/2/1; tt_digits 18540/8264/2084 B. So tt_feat@rank1 (548 B) is the matched cell at under 2x linear, while tt_digits
+  floors at ~7x because its CORE COUNT (4D) dominates, not its rank -- the anomaly's "equalise parameter count across
+  families" is executable for tt_feat and structurally impossible for tt_digits, which is run and reported but never
+  used for the verdict.
+  Rule fixed before values: I1 BINDING REPLICATION -- at rank 3 (E9's setting) med(linear) > med(tt_feat) >
+  med(tt_digits) in >= 2 of 3 worlds, else INDETERMINATE; then PARITY_REVERSES if med(tt_feat@1) >= med(linear) in
+  >= 2/3 worlds, PARITY_HOLDS if linear ahead in >= 2/3, else MIXED. Binding controls are E9's own oracles at run seed
+  0 of every cell x world (world 0 failing + skip_lin >= 14/16; brain 0 mismatched + cheat >= 14/16).
+  Smoke (no rows; timings, sizes and ORACLES only -- held64/train unread): linear 1.6 s, oracles ok (skip_lin 16/16,
+  cheat 14/16); tt_digits@3 21.4 s, oracles ok (cheat 16/16). 168 runs project to ~20-22 min, compute-bound,
+  checkpointable, inside the 2400 s segment ceiling.
