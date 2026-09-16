@@ -472,8 +472,9 @@ def run(payload: dict, *, seed: int, inputs: dict) -> dict:      # noqa: C901
         out["source_pack_digest"] = pack.digest
     if library is not None:
         out["component_library_digest"] = library.digest
-    if witness_truncated:
-        out["_truncated"] = {"witnesses": True}
+    # Declared both ways; see ca_density.py (THEO-REQ-004): a complete vector
+    # at exactly its ceiling must carry the executor's word that it is whole.
+    out["_truncated"] = {"witnesses": witness_truncated}
     return out
 
 

@@ -331,6 +331,14 @@ def run(payload: dict, *, seed: int) -> dict:
         "n_cells": int(n_cells),
         "steps": int(steps),
         "witness_truncated": truncated,
+        # THEO-REQ-004 (2). The per-IC success mask itself, under the declared
+        # criterion, so a margin-response curve can be read off the fossil
+        # instead of re-executing every IC. Encoding: numpy packbits, big bit
+        # order -- IC i is bit (7 - i % 8) of byte i // 8, zero-padded to a
+        # byte boundary, n_ic_total bits meaningful. Unpacked, its one-byte-
+        # per-IC sha256 is `mask_digest` (asserted in the tests).
+        "success_mask_hex": np.packbits(chosen.astype(np.uint8),
+                                        bitorder="big").tobytes().hex(),
         # Present on every row so a reader never has to infer which shape
         # `accuracy` has from the criterion string.
         "accuracy_is_per_cell_mean": criterion == "cellwise_majority_match",
@@ -357,6 +365,12 @@ def run(payload: dict, *, seed: int) -> dict:
             out["cellwise_" + key] = float(cellwise[key])
         out["cellwise_comparable_to_published_P"] = bool(
             cellwise["comparable_to_published_P"])
-    if truncated:
-        out["_truncated"] = {"misclassified_ic": True, "witness": True}
+    # THEO-REQ-004 (2026-09-16). The executor declares the truncation state of
+    # its bounded vectors BOTH WAYS. Declaring only when it bit left a complete
+    # witness of exactly WITNESS_LIMIT entries indistinguishable from a silently
+    # cut one, and the validator -- correctly, by its own rule -- refused it:
+    # row theo:*:rou1 FAILED after 6 of 8 repeats on a repeat with exactly 64
+    # wrong of 100. `False` here is an assertion made from the full `wrong`
+    # array, the same evidence the `True` branch uses.
+    out["_truncated"] = {"misclassified_ic": truncated, "witness": truncated}
     return out
