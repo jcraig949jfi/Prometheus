@@ -305,7 +305,8 @@ def validate_run_receipt(receipt: dict) -> list[str]:
 
 
 # --------------------------------------------------------------------------- runners
-def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | None, timeout: int) -> dict:
+def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | None, timeout: int,
+           readonly: bool = False) -> dict:
     """Run `cmd` in <body>/<rel>. $HARNESS is the body's harness/ copy (Techne's smoke inputs),
     $BODY the body root, whatever the runner; the command text in the receipt is what ran."""
     t0 = time.time()
@@ -316,8 +317,8 @@ def _shell(runner: str, cmd: str, body: pathlib.Path, rel: str, image: str | Non
     elif runner == "docker":
         pre = "export BODY=/w HARNESS=/w/harness; cd %s && " % shlex.quote("/w/" + rel)
         full = ["wsl.exe", "-e", "bash", "-lc",
-                "docker run --rm -v %s:/w -w /w %s bash -lc %s" % (
-                    shlex.quote(vault.to_wsl(body)), shlex.quote(image or "prometheus-fossil-c:bookworm"), shlex.quote(pre + cmd))]
+                "docker run --rm -v %s:/w%s -w /w %s bash -lc %s" % (
+                    shlex.quote(vault.to_wsl(body)), ":ro" if readonly else "", shlex.quote(image or "prometheus-fossil-c:bookworm"), shlex.quote(pre + cmd))]
     elif runner == "native":
         b = str(body).replace("\\", "/")
         pre = "export BODY=%s HARNESS=%s; cd %s && " % (shlex.quote(b), shlex.quote(b + "/harness"), shlex.quote(b + "/" + rel))
