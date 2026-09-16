@@ -118,11 +118,15 @@ def _tournament(scored: list, rng: SplitMix64, k: int) -> dict:
 
 def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int,
              N: int = 200, G_: int = 100, E: int = 24, elitism: int = 4, tournament: int = 4,
-             init_pop: Optional[List[dict]] = None, branch: str = "B1_naive") -> dict:
-    """Evolve one cell. Returns the elite, its ancestry chain, and the per-generation trace."""
+             init_pop: Optional[List[dict]] = None, branch: str = "B1_naive",
+             ramp: bool = False, ramp_foothold: float = 0.30, curve_every: int = 0,
+             curve_episodes: Optional[List[Episode]] = None, foundry: Optional[dict] = None) -> dict:
+    """Evolve one cell. Returns the elite, its ancestry chain, the per-generation trace and
+    (v0.2) the learning curve: held-out competence of the elite every `curve_every`
+    generations against cumulative experience (episodes and ticks the lineage evaluated)."""
     rng = SplitMix64(seed_from("wse.evolve.v0", campaign_seed, spec.world_id(), regime.name, cell_seed, branch))
     if init_pop is None:
-        fm = dict(FOUNDRY); fm["seed"] = seed_from("wse.gen0", campaign_seed, cell_seed) & MASK62; fm["n"] = N
+        fm = dict(foundry or FOUNDRY); fm["seed"] = seed_from("wse.gen0", campaign_seed, cell_seed) & MASK62; fm["n"] = N
         pop = G.generate(fm)
     else:
         pop = list(init_pop)
@@ -130,17 +134,32 @@ def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int
             pop.append(pop[rng.randbelow(len(init_pop))])
     records: Dict[str, dict] = {}
     trace: List[dict] = []
+    curve: List[dict] = []
     scored = []
+    best_so_far = 0.0
+    exp_episodes = 0
+    exp_ticks = 0
     for g in range(G_):
         eps = episodes_for(spec, campaign_seed, "train", g * 100003 + cell_seed, E)
+        m_g = min(1.0, best_so_far / ramp_foothold) if ramp else 1.0
         scored = []
         for org in pop:
             ev = evaluate(org["manifest"], eps, rng_seed=seed_from("wse.eval", campaign_seed, g, cell_seed))
-            f = regime.fitness(ev["reward"], ev["meter"], E)
+            f = regime.fitness(ev["reward"], ev["meter"], E, multiplier=m_g)
             scored.append((f, org, ev))
+        exp_episodes += N * E
+        exp_ticks += N * sum(len(e.ticks) for e in eps)
         scored.sort(key=lambda z: -z[0])
         top = scored[0]
+        best_so_far = max(best_so_far, max(z[2]["reward"] for z in scored))
+        if curve_every and curve_episodes is not None and (g % curve_every == 0 or g == G_ - 1):
+            cev = evaluate(top[1]["manifest"], curve_episodes, rng_seed=seed_from("wse.curve", campaign_seed, cell_seed))
+            curve.append({"gen": g, "experience_episodes": exp_episodes, "experience_ticks": exp_ticks,
+                          "competence": round(cev["reward"], 4), "ops_per_episode": round(cev["ops_per_episode"], 1),
+                          "persistent_words": cev["meter"].get("persistent_state_words", 0),
+                          "peak_state": cev["tape_occupancy_max"] + cev["n_regs"], "m_g": round(m_g, 3)})
         trace.append({
+            "m_g": round(m_g, 3),
             "gen": g, "best_fitness": round(top[0], 6), "best_reward": round(top[2]["reward"], 6),
             "mean_reward": round(sum(z[2]["reward"] for z in scored) / len(scored), 6),
             "mean_fitness": round(sum(z[0] for z in scored) / len(scored), 6),
@@ -175,7 +194,8 @@ def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int
         oid = r["parent_ids"][0]
     return {
         "elite": elite, "elite_fitness": elite_f, "elite_eval": elite_ev,
-        "ancestry": chain, "trace": trace, "branch": branch,
+        "ancestry": chain, "trace": trace, "branch": branch, "learning_curve": curve,
+        "experience_episodes": exp_episodes, "experience_ticks": exp_ticks,
         "final_population_ids": [z[1]["organism_id"] for z in scored[:elitism]],
         "final_elites": [z[1] for z in scored[:elitism]],
     }

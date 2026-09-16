@@ -33,7 +33,7 @@ from typing import Dict, List, Tuple
 from proteus.foundry.prng import SplitMix64, seed_from
 
 MASK32 = 0xFFFFFFFF
-K_PUT, K_ASK, K_ASKX, K_ASK2, K_ASKO, K_SETOP, K_DEF, K_NOISE = 1, 2, 3, 4, 5, 6, 7, 8
+K_PUT, K_ASK, K_ASKX, K_ASK2, K_ASKO, K_SETOP, K_DEF, K_NOISE, K_RETIRE = 1, 2, 3, 4, 5, 6, 7, 8, 9
 GRAMMAR_VERSION = "wse.event_grammar.v0.1"
 DEFAULT_OP = (1, 1, 0)      # ADD
 
@@ -72,6 +72,12 @@ class WorldSpec:
     n_defs: int = 0                  # DEF nodes when topology = dag
     noise_rate: float = 0.0          # probability of NOISE words appended to a tick
     value_bits: int = 8
+    # ---- v0.2 stream-world knobs (topology = "stream"; DESIGN_v0.2 s1)
+    Kd: int = 0                      # distractor entities (never asked)
+    retire_rate: float = 0.0         # P(a tracked tag is RETIREd after its last PUT)
+    delays: tuple = ()               # per-tag ask delay drawn from this set (random timing)
+    interfere: bool = False          # distractor tags share the top 12 bits of tracked tags
+    vocab: str = "train"             # train: tags in [1,2^15); heldout: [2^15, 2^16)
 
     def world_id(self) -> str:
         return hashlib.sha256(json.dumps({"grammar": GRAMMAR_VERSION, **asdict(self)},
@@ -118,6 +124,8 @@ def _noise(rng: SplitMix64) -> List[int]:
 def make_episode(spec: WorldSpec, rng: SplitMix64) -> Episode:
     if spec.topology == "dag":
         return _make_dag_episode(spec, rng)
+    if spec.topology == "stream":
+        return _make_ssf_episode(spec, rng)
     for _ in range(64):
         ep = _make_stream_episode(spec, rng)
         if ep is not None:
@@ -280,6 +288,122 @@ def _make_dag_episode(spec: WorldSpec, rng: SplitMix64) -> Episode:
     return Episode(ticks=ticks, expected=expected, intervention_tick=len(events),
                    meta={"inputs": inputs, "defs": defs, "target": target,
                          "ask_done": {len(ticks) - 1: True}})
+
+
+def _make_ssf_episode(spec: WorldSpec, rng: SplitMix64) -> Episode:
+    """DESIGN_v0.2 s1: K tracked + Kd distractor entities, D PUTs each (replace or add),
+    optional RETIRE of tracked tags, per-tag random ask delay, interference, vocab range."""
+    K, Kd, D = spec.K, spec.Kd, spec.D
+    vmax = 1 << spec.value_bits
+    lo, hi = (1, 1 << 15) if spec.vocab == "train" else (1 << 15, 1 << 16)
+    tracked = _distinct(rng, K, lo, hi)
+    used = set(tracked)
+    distract: List[int] = []
+    if spec.interfere:
+        while len(distract) < Kd:
+            base = tracked[rng.randbelow(K)] & ~0xF
+            cand = base | rng.randbelow(16)
+            if cand not in used and lo <= cand < hi:
+                used.add(cand); distract.append(cand)
+    else:
+        while len(distract) < Kd:
+            cand = rng.randint(lo, hi - 1)
+            if cand not in used:
+                used.add(cand); distract.append(cand)
+    replace = spec.op_mode == "replace"
+    per_tag: Dict[int, List[List[int]]] = {}
+    state: Dict[int, int] = {}
+    for t in tracked + distract:
+        evs = []
+        s = None
+        for _ in range(D):
+            v = rng.randint(0, vmax - 1)
+            evs.append([K_PUT, t, v])
+            s = v if (s is None or replace) else (s + v) & MASK32
+        if t in tracked and spec.retire_rate > 0 and rng.unit() < spec.retire_rate:
+            evs.append([K_RETIRE, t])
+            s = 0
+        per_tag[t] = evs
+        state[t] = s
+    remaining = {t: list(v) for t, v in per_tag.items()}
+    order_tags = tracked + distract
+    ticks: List[List[int]] = []
+    last_tick: Dict[int, int] = {}
+    while any(remaining.values()):
+        live = [t for t in order_tags if remaining[t]]
+        t = live[rng.randbelow(len(live))]
+        ticks.append(list(remaining[t].pop(0)))
+        last_tick[t] = len(ticks) - 1
+    delays = list(spec.delays) or [1]
+    asks = []
+    asked = _shuffle(rng, list(tracked))
+    for t in asked:
+        d = delays[rng.randbelow(len(delays))]
+        if spec.ask_kind == "ASK2":
+            others = [u for u in tracked if u != t]
+            u = others[rng.randbelow(len(others))]
+            c = rng.randbelow(4)
+            pos = max(last_tick[t], last_tick[u]) + d
+            asks.append((pos, [K_ASK2, t, u, c], combine(c, state[t], state[u]), [t, u]))
+        else:
+            asks.append((last_tick[t] + d, [K_ASK, t], state[t], [t]))
+    n_base = max(len(ticks), max(a[0] for a in asks))
+    asks.sort(key=lambda z: z[0])
+    out: List[List[int]] = []
+    expected: Dict[int, int] = {}
+    ask_done: Dict[int, bool] = {}
+    itick_ref = last_tick[asked[0]] + 1
+    itick = None
+    j = 0
+    for i in range(n_base + 1):
+        if i == itick_ref:
+            itick = len(out)
+        while j < len(asks) and asks[j][0] == i:
+            out.append(asks[j][1]); expected[len(out) - 1] = asks[j][2]
+            ask_done[len(out) - 1] = all(last_tick[u] < itick_ref for u in asks[j][3]); j += 1
+        if i < len(ticks):
+            out.append(ticks[i])
+        elif i < n_base:
+            out.append(_noise(rng))
+    while j < len(asks):
+        out.append(asks[j][1]); expected[len(out) - 1] = asks[j][2]; ask_done[len(out) - 1] = True; j += 1
+    if itick is None:
+        itick = len(out) - 1
+    if spec.noise_rate > 0:
+        for tk in out:
+            if rng.unit() < spec.noise_rate:
+                tk.extend(_noise(rng))
+    retired = sorted(ti for ti, w in enumerate(out) if ti in expected and w[0] == K_ASK
+                     and any(e[0] == K_RETIRE and e[1] == w[1] for e in per_tag[w[1]]))
+    return Episode(ticks=out, expected=expected, intervention_tick=itick,
+                   meta={"tags": tracked, "distract": distract, "asked": asked, "K": K, "D": D,
+                         "ask_done": ask_done, "retired_asks": retired})
+
+
+def null_scores(episodes: List[Episode], max_lag: int = 3) -> Dict[str, float]:
+    """Payload-reading nulls computed by the harness (DESIGN_v0.2 s3): CONST0; ECHO of word
+    position j of tick t-k for k in 0..max_lag (max over j reported per k); ECHO_FIRST (word j
+    of tick 0). A world where any of these is high leaks its answer."""
+    tot = 0
+    const0 = 0
+    first: Dict[int, int] = {}
+    echo: Dict[Tuple[int, int], int] = {}
+    for ep in episodes:
+        for ti, exp in ep.expected.items():
+            tot += 1
+            const0 += 1 if exp == 0 else 0
+            for j, w in enumerate(ep.ticks[0][:8]):
+                first[j] = first.get(j, 0) + (1 if w == exp else 0)
+            for k in range(0, max_lag + 1):
+                if ti - k < 0:
+                    continue
+                for j, w in enumerate(ep.ticks[ti - k][:8]):
+                    echo[(k, j)] = echo.get((k, j), 0) + (1 if w == exp else 0)
+    n = max(1, tot)
+    out = {"CONST0": const0 / n, "ECHO_FIRST": max(first.values(), default=0) / n}
+    for k in range(0, max_lag + 1):
+        out["ECHO_PREV_%d" % k] = max((v for (kk, _), v in echo.items() if kk == k), default=0) / n
+    return out
 
 
 def episodes_for(spec: WorldSpec, campaign_seed: int, family: str, index: int, n: int) -> List[Episode]:

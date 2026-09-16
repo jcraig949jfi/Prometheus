@@ -163,3 +163,24 @@ single organism's competence changes with its own experience -- recorded
 as a candidate substrate requirement, NOT filed yet: v0.2 first asks
 whether lineages become cheaper per unit competence); randomised update
 rules; communication costs.
+
+## Annotation v0.2.1 (2026-09-16, BEFORE any evolutionary run; after the control check only)
+
+1. SELECTIVE's tape is 512 words, not 64: the hand-written program alone
+   is ~230 words and the VM's persistent footprint counts the whole tape,
+   so at 256 the slot table held 6 entries and lost on E_bind4 (0.859).
+   The boundary organisms are therefore PESSIMISTIC about footprint
+   (FULL_LOG 2048, SELECTIVE 512, TRIVIAL 8 registers); evolved organisms
+   with 1-16 instructions carry 16-256-word tapes.
+2. The void rule uses STATELESS nulls only: CONST0 (except on retire
+   cells, where it is the retire floor and reward is also reported split
+   by retired / non-retired asks) and ECHO_PREV_0 (current tick), each
+   against chance + 0.10 where chance = 2^-value_bits = 0.0625. Lagged
+   echoes and ECHO_FIRST need a register to carry a word across ticks:
+   they are STATEFUL shortcut floors and are reported beside every cell,
+   never a void. (On A_remember ECHO_FIRST ~0.17 = the chance that the
+   tracked tag's PUT is the episode's first event; a "remember the first
+   value" organism earns that; it is a partial strategy, not a leak.)
+3. F_compose has no hand-written positive control (ASK2 with the combine
+   codes); by s3 it does not evolve in cycle 1 and is recorded as
+   NOT_EXAMINED, not as a result.

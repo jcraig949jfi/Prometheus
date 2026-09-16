@@ -1,0 +1,1367 @@
+{
+ "campaign_seed": 20260917,
+ "cells": {
+  "A_remember": {
+   "chance": 0.0625,
+   "fitness": {
+    "S0": {
+     "FULL_LOG": 1.0,
+     "SELECTIVE": 1.0,
+     "TRIVIAL": 0.125
+    },
+    "S1": {
+     "FULL_LOG": -0.6353,
+     "SELECTIVE": 0.5585,
+     "TRIVIAL": 0.1014
+    },
+    "S2": {
+     "FULL_LOG": -5.4681,
+     "SELECTIVE": -0.6743,
+     "TRIVIAL": 0.0827
+    },
+    "S3": {
+     "FULL_LOG": -0.688,
+     "SELECTIVE": 0.4809,
+     "TRIVIAL": 0.0761
+    }
+   },
+   "n_asks_mean": 1.0,
+   "n_ticks_mean": 36.0,
+   "nulls": {
+    "CONST0": 0.0938,
+    "ECHO_FIRST": 0.1562,
+    "ECHO_PREV_0": 0.0312,
+    "ECHO_PREV_1": 0.0,
+    "ECHO_PREV_2": 0.0,
+    "ECHO_PREV_3": 0.0
+   },
+   "organisms": {
+    "FULL_LOG": {
+     "meter": {
+      "in_reads": 1760,
+      "ops": 21068,
+      "out_writes": 32,
+      "persistent_state_words": 2062
+     },
+     "ops_per_episode": 658.4,
+     "persistent_words": 2062,
+     "reads_writes": 56.0,
+     "reward": 1.0
+    },
+    "SELECTIVE": {
+     "meter": {
+      "in_reads": 1760,
+      "ops": 31024,
+      "out_writes": 32,
+      "persistent_state_words": 526
+     },
+     "ops_per_episode": 969.5,
+     "persistent_words": 526,
+     "reads_writes": 56.0,
+     "reward": 1.0
+    },
+    "TRIVIAL": {
+     "meter": {
+      "in_reads": 1728,
+      "ops": 10112,
+      "out_writes": 32,
+      "persistent_state_words": 8
+     },
+     "ops_per_episode": 316.0,
+     "persistent_words": 8,
+     "reads_writes": 55.0,
+     "reward": 0.125
+    }
+   },
+   "selectivity_pays": [
+    "S1",
+    "S3"
+   ],
+   "sweep": {
+    "a0.02_b0": {
+     "SELECTIVE_margin": -0.0062,
+     "winner": "FULL_LOG"
+    },
+    "a0.02_b0.01": {
+     "SELECTIVE_margin": 0.2338,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.02": {
+     "SELECTIVE_margin": 0.4738,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.05": {
+     "SELECTIVE_margin": 0.457,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.1": {
+     "SELECTIVE_margin": 0.0524,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.2": {
+     "SELECTIVE_margin": -0.757,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.5": {
+     "SELECTIVE_margin": -3.1851,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0": {
+     "SELECTIVE_margin": -0.0311,
+     "winner": "FULL_LOG"
+    },
+    "a0.1_b0.01": {
+     "SELECTIVE_margin": 0.2089,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.02": {
+     "SELECTIVE_margin": 0.4489,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.05": {
+     "SELECTIVE_margin": 0.4048,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.1": {
+     "SELECTIVE_margin": 0.0001,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.2": {
+     "SELECTIVE_margin": -0.8093,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.5": {
+     "SELECTIVE_margin": -3.2374,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0": {
+     "SELECTIVE_margin": 0.0,
+     "winner": "FULL_LOG"
+    },
+    "a0_b0.01": {
+     "SELECTIVE_margin": 0.24,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.02": {
+     "SELECTIVE_margin": 0.48,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.05": {
+     "SELECTIVE_margin": 0.4701,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.1": {
+     "SELECTIVE_margin": 0.0654,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.2": {
+     "SELECTIVE_margin": -0.744,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.5": {
+     "SELECTIVE_margin": -3.1721,
+     "winner": "TRIVIAL"
+    }
+   },
+   "void": [],
+   "world_id": "499db721d5427f2f"
+  },
+  "B_update": {
+   "chance": 0.0625,
+   "fitness": {
+    "S0": {
+     "FULL_LOG": 1.0,
+     "SELECTIVE": 1.0,
+     "TRIVIAL": 0.3125
+    },
+    "S1": {
+     "FULL_LOG": -0.6361,
+     "SELECTIVE": 0.5568,
+     "TRIVIAL": 0.2881
+    },
+    "S2": {
+     "FULL_LOG": -5.4689,
+     "SELECTIVE": -0.676,
+     "TRIVIAL": 0.2694
+    },
+    "S3": {
+     "FULL_LOG": -0.6816,
+     "SELECTIVE": 0.4831,
+     "TRIVIAL": 0.2701
+    }
+   },
+   "n_asks_mean": 1.0,
+   "n_ticks_mean": 27.09375,
+   "nulls": {
+    "CONST0": 0.125,
+    "ECHO_FIRST": 0.0625,
+    "ECHO_PREV_0": 0.1562,
+    "ECHO_PREV_1": 0.0625,
+    "ECHO_PREV_2": 0.0625,
+    "ECHO_PREV_3": 0.0625
+   },
+   "organisms": {
+    "FULL_LOG": {
+     "meter": {
+      "in_reads": 2179,
+      "ops": 18191,
+      "out_writes": 32,
+      "persistent_state_words": 2062
+     },
+     "ops_per_episode": 568.5,
+     "persistent_words": 2062,
+     "reads_writes": 69.1,
+     "reward": 1.0
+    },
+    "SELECTIVE": {
+     "meter": {
+      "in_reads": 2179,
+      "ops": 29488,
+      "out_writes": 32,
+      "persistent_state_words": 526
+     },
+     "ops_per_episode": 921.5,
+     "persistent_words": 526,
+     "reads_writes": 69.1,
+     "reward": 1.0
+    },
+    "TRIVIAL": {
+     "meter": {
+      "in_reads": 2147,
+      "ops": 7195,
+      "out_writes": 32,
+      "persistent_state_words": 8
+     },
+     "ops_per_episode": 224.8,
+     "persistent_words": 8,
+     "reads_writes": 68.1,
+     "reward": 0.3125
+    }
+   },
+   "selectivity_pays": [
+    "S1",
+    "S3"
+   ],
+   "sweep": {
+    "a0.02_b0": {
+     "SELECTIVE_margin": -0.0071,
+     "winner": "FULL_LOG"
+    },
+    "a0.02_b0.01": {
+     "SELECTIVE_margin": 0.2329,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.02": {
+     "SELECTIVE_margin": 0.4729,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.05": {
+     "SELECTIVE_margin": 0.2687,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.1": {
+     "SELECTIVE_margin": -0.136,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.2": {
+     "SELECTIVE_margin": -0.9454,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.5": {
+     "SELECTIVE_margin": -3.3735,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0": {
+     "SELECTIVE_margin": -0.0353,
+     "winner": "FULL_LOG"
+    },
+    "a0.1_b0.01": {
+     "SELECTIVE_margin": 0.2047,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.02": {
+     "SELECTIVE_margin": 0.4447,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.05": {
+     "SELECTIVE_margin": 0.2129,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.1": {
+     "SELECTIVE_margin": -0.1917,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.2": {
+     "SELECTIVE_margin": -1.0011,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.5": {
+     "SELECTIVE_margin": -3.4292,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0": {
+     "SELECTIVE_margin": 0.0,
+     "winner": "FULL_LOG"
+    },
+    "a0_b0.01": {
+     "SELECTIVE_margin": 0.24,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.02": {
+     "SELECTIVE_margin": 0.48,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.05": {
+     "SELECTIVE_margin": 0.2826,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.1": {
+     "SELECTIVE_margin": -0.1221,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.2": {
+     "SELECTIVE_margin": -0.9315,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.5": {
+     "SELECTIVE_margin": -3.3596,
+     "winner": "TRIVIAL"
+    }
+   },
+   "void": [],
+   "world_id": "e1de95125e884485"
+  },
+  "C_forget": {
+   "chance": 0.0625,
+   "fitness": {
+    "S0": {
+     "FULL_LOG": 1.0,
+     "SELECTIVE": 1.0,
+     "TRIVIAL": 0.1875
+    },
+    "S1": {
+     "FULL_LOG": -0.6267,
+     "SELECTIVE": 0.5694,
+     "TRIVIAL": 0.1702
+    },
+    "S2": {
+     "FULL_LOG": -5.4595,
+     "SELECTIVE": -0.6634,
+     "TRIVIAL": 0.1514
+    },
+    "S3": {
+     "FULL_LOG": -0.6566,
+     "SELECTIVE": 0.5239,
+     "TRIVIAL": 0.1575
+    }
+   },
+   "n_asks_mean": 1.0,
+   "n_ticks_mean": 18.625,
+   "nulls": {
+    "CONST0": 0.5938,
+    "ECHO_FIRST": 0.0938,
+    "ECHO_PREV_0": 0.0312,
+    "ECHO_PREV_1": 0.0312,
+    "ECHO_PREV_2": 0.0312,
+    "ECHO_PREV_3": 0.0312
+   },
+   "organisms": {
+    "FULL_LOG": {
+     "meter": {
+      "in_reads": 1285,
+      "ops": 11982,
+      "out_writes": 32,
+      "persistent_state_words": 2062
+     },
+     "ops_per_episode": 374.4,
+     "persistent_words": 2062,
+     "reads_writes": 41.2,
+     "reward": 1.0
+    },
+    "SELECTIVE": {
+     "meter": {
+      "in_reads": 1285,
+      "ops": 18217,
+      "out_writes": 32,
+      "persistent_state_words": 526
+     },
+     "ops_per_episode": 569.3,
+     "persistent_words": 526,
+     "reads_writes": 41.2,
+     "reward": 1.0
+    },
+    "TRIVIAL": {
+     "meter": {
+      "in_reads": 1236,
+      "ops": 5076,
+      "out_writes": 32,
+      "persistent_state_words": 8
+     },
+     "ops_per_episode": 158.6,
+     "persistent_words": 8,
+     "reads_writes": 39.6,
+     "reward": 0.1875
+    }
+   },
+   "selectivity_pays": [
+    "S1",
+    "S3"
+   ],
+   "sweep": {
+    "a0.02_b0": {
+     "SELECTIVE_margin": -0.0039,
+     "winner": "FULL_LOG"
+    },
+    "a0.02_b0.01": {
+     "SELECTIVE_margin": 0.2361,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.02": {
+     "SELECTIVE_margin": 0.4761,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.05": {
+     "SELECTIVE_margin": 0.3993,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.1": {
+     "SELECTIVE_margin": -0.0054,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.2": {
+     "SELECTIVE_margin": -0.8148,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.5": {
+     "SELECTIVE_margin": -3.2429,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0": {
+     "SELECTIVE_margin": -0.0195,
+     "winner": "FULL_LOG"
+    },
+    "a0.1_b0.01": {
+     "SELECTIVE_margin": 0.2205,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.02": {
+     "SELECTIVE_margin": 0.4605,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.05": {
+     "SELECTIVE_margin": 0.3664,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.1": {
+     "SELECTIVE_margin": -0.0382,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.2": {
+     "SELECTIVE_margin": -0.8476,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.5": {
+     "SELECTIVE_margin": -3.2757,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0": {
+     "SELECTIVE_margin": 0.0,
+     "winner": "FULL_LOG"
+    },
+    "a0_b0.01": {
+     "SELECTIVE_margin": 0.24,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.02": {
+     "SELECTIVE_margin": 0.48,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.05": {
+     "SELECTIVE_margin": 0.4075,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.1": {
+     "SELECTIVE_margin": 0.0028,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.2": {
+     "SELECTIVE_margin": -0.8066,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.5": {
+     "SELECTIVE_margin": -3.2347,
+     "winner": "TRIVIAL"
+    }
+   },
+   "void": [],
+   "world_id": "36627ee96c66a40f"
+  },
+  "D_bind2": {
+   "chance": 0.0625,
+   "fitness": {
+    "S0": {
+     "FULL_LOG": 1.0,
+     "SELECTIVE": 1.0,
+     "TRIVIAL": 0.1875
+    },
+    "S1": {
+     "FULL_LOG": -0.6394,
+     "SELECTIVE": 0.5451,
+     "TRIVIAL": 0.1616
+    },
+    "S2": {
+     "FULL_LOG": -5.4722,
+     "SELECTIVE": -0.6877,
+     "TRIVIAL": 0.1428
+    },
+    "S3": {
+     "FULL_LOG": -0.6935,
+     "SELECTIVE": 0.429,
+     "TRIVIAL": 0.1409
+    }
+   },
+   "n_asks_mean": 2.0,
+   "n_ticks_mean": 30.65625,
+   "nulls": {
+    "CONST0": 0.1094,
+    "ECHO_FIRST": 0.0625,
+    "ECHO_PREV_0": 0.1094,
+    "ECHO_PREV_1": 0.0312,
+    "ECHO_PREV_2": 0.0156,
+    "ECHO_PREV_3": 0.0156
+   },
+   "organisms": {
+    "FULL_LOG": {
+     "meter": {
+      "in_reads": 2325,
+      "ops": 21631,
+      "out_writes": 64,
+      "persistent_state_words": 2062
+     },
+     "ops_per_episode": 676.0,
+     "persistent_words": 2062,
+     "reads_writes": 74.7,
+     "reward": 1.0
+    },
+    "SELECTIVE": {
+     "meter": {
+      "in_reads": 2325,
+      "ops": 46456,
+      "out_writes": 64,
+      "persistent_state_words": 526
+     },
+     "ops_per_episode": 1451.8,
+     "persistent_words": 526,
+     "reads_writes": 74.7,
+     "reward": 1.0
+    },
+    "TRIVIAL": {
+     "meter": {
+      "in_reads": 2261,
+      "ops": 8253,
+      "out_writes": 64,
+      "persistent_state_words": 8
+     },
+     "ops_per_episode": 257.9,
+     "persistent_words": 8,
+     "reads_writes": 72.7,
+     "reward": 0.1875
+    }
+   },
+   "selectivity_pays": [
+    "S1",
+    "S3"
+   ],
+   "sweep": {
+    "a0.02_b0": {
+     "SELECTIVE_margin": -0.0155,
+     "winner": "FULL_LOG"
+    },
+    "a0.02_b0.01": {
+     "SELECTIVE_margin": 0.2245,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.02": {
+     "SELECTIVE_margin": 0.4645,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.05": {
+     "SELECTIVE_margin": 0.3835,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.1": {
+     "SELECTIVE_margin": -0.0212,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.2": {
+     "SELECTIVE_margin": -0.8305,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.5": {
+     "SELECTIVE_margin": -3.2587,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0": {
+     "SELECTIVE_margin": -0.0776,
+     "winner": "FULL_LOG"
+    },
+    "a0.1_b0.01": {
+     "SELECTIVE_margin": 0.1624,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.02": {
+     "SELECTIVE_margin": 0.4024,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.05": {
+     "SELECTIVE_margin": 0.288,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.1": {
+     "SELECTIVE_margin": -0.1167,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.2": {
+     "SELECTIVE_margin": -0.926,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.5": {
+     "SELECTIVE_margin": -3.3542,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0": {
+     "SELECTIVE_margin": 0.0,
+     "winner": "FULL_LOG"
+    },
+    "a0_b0.01": {
+     "SELECTIVE_margin": 0.24,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.02": {
+     "SELECTIVE_margin": 0.48,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.05": {
+     "SELECTIVE_margin": 0.4074,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.1": {
+     "SELECTIVE_margin": 0.0027,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.2": {
+     "SELECTIVE_margin": -0.8067,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.5": {
+     "SELECTIVE_margin": -3.2348,
+     "winner": "TRIVIAL"
+    }
+   },
+   "void": [],
+   "world_id": "964452c7892aa066"
+  },
+  "E_bind4": {
+   "chance": 0.0625,
+   "fitness": {
+    "S0": {
+     "FULL_LOG": 1.0,
+     "SELECTIVE": 1.0,
+     "TRIVIAL": 0.1406
+    },
+    "S1": {
+     "FULL_LOG": -0.6481,
+     "SELECTIVE": 0.5299,
+     "TRIVIAL": 0.1104
+    },
+    "S2": {
+     "FULL_LOG": -5.4809,
+     "SELECTIVE": -0.7029,
+     "TRIVIAL": 0.0916
+    },
+    "S3": {
+     "FULL_LOG": -0.7222,
+     "SELECTIVE": 0.3675,
+     "TRIVIAL": 0.0854
+    }
+   },
+   "n_asks_mean": 4.0,
+   "n_ticks_mean": 36.875,
+   "nulls": {
+    "CONST0": 0.0938,
+    "ECHO_FIRST": 0.0859,
+    "ECHO_PREV_0": 0.0469,
+    "ECHO_PREV_1": 0.0469,
+    "ECHO_PREV_2": 0.0547,
+    "ECHO_PREV_3": 0.0625
+   },
+   "organisms": {
+    "FULL_LOG": {
+     "meter": {
+      "in_reads": 2844,
+      "ops": 29660,
+      "out_writes": 128,
+      "persistent_state_words": 2062
+     },
+     "ops_per_episode": 926.9,
+     "persistent_words": 2062,
+     "reads_writes": 92.9,
+     "reward": 1.0
+    },
+    "SELECTIVE": {
+     "meter": {
+      "in_reads": 2844,
+      "ops": 64960,
+      "out_writes": 128,
+      "persistent_state_words": 526
+     },
+     "ops_per_episode": 2030.0,
+     "persistent_words": 526,
+     "reads_writes": 92.9,
+     "reward": 1.0
+    },
+    "TRIVIAL": {
+     "meter": {
+      "in_reads": 2716,
+      "ops": 9980,
+      "out_writes": 128,
+      "persistent_state_words": 8
+     },
+     "ops_per_episode": 311.9,
+     "persistent_words": 8,
+     "reads_writes": 88.9,
+     "reward": 0.140625
+    }
+   },
+   "selectivity_pays": [
+    "S1",
+    "S3"
+   ],
+   "sweep": {
+    "a0.02_b0": {
+     "SELECTIVE_margin": -0.0221,
+     "winner": "FULL_LOG"
+    },
+    "a0.02_b0.01": {
+     "SELECTIVE_margin": 0.2179,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.02": {
+     "SELECTIVE_margin": 0.4579,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.05": {
+     "SELECTIVE_margin": 0.4195,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.1": {
+     "SELECTIVE_margin": 0.0148,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.2": {
+     "SELECTIVE_margin": -0.7945,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.5": {
+     "SELECTIVE_margin": -3.2227,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0": {
+     "SELECTIVE_margin": -0.1103,
+     "winner": "FULL_LOG"
+    },
+    "a0.1_b0.01": {
+     "SELECTIVE_margin": 0.1297,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.02": {
+     "SELECTIVE_margin": 0.3697,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.05": {
+     "SELECTIVE_margin": 0.2821,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.1": {
+     "SELECTIVE_margin": -0.1226,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.2": {
+     "SELECTIVE_margin": -0.932,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.5": {
+     "SELECTIVE_margin": -3.3601,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0": {
+     "SELECTIVE_margin": 0.0,
+     "winner": "FULL_LOG"
+    },
+    "a0_b0.01": {
+     "SELECTIVE_margin": 0.24,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.02": {
+     "SELECTIVE_margin": 0.48,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.05": {
+     "SELECTIVE_margin": 0.4539,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.1": {
+     "SELECTIVE_margin": 0.0492,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.2": {
+     "SELECTIVE_margin": -0.7602,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.5": {
+     "SELECTIVE_margin": -3.1883,
+     "winner": "TRIVIAL"
+    }
+   },
+   "void": [],
+   "world_id": "50b2c1f7cf1335de"
+  },
+  "F_compose": {
+   "chance": 0.0625,
+   "fitness": {
+    "S0": {
+     "FULL_LOG": 0.0,
+     "SELECTIVE": 0.0,
+     "TRIVIAL": 0.0
+    },
+    "S1": {
+     "FULL_LOG": -1.6297,
+     "SELECTIVE": -0.435,
+     "TRIVIAL": -0.0202
+    },
+    "S2": {
+     "FULL_LOG": -6.4626,
+     "SELECTIVE": -1.6678,
+     "TRIVIAL": -0.0389
+    },
+    "S3": {
+     "FULL_LOG": -1.6661,
+     "SELECTIVE": -0.4925,
+     "TRIVIAL": -0.0369
+    }
+   },
+   "n_asks_mean": 2.0,
+   "n_ticks_mean": 24.625,
+   "nulls": {
+    "CONST0": 0.0312,
+    "ECHO_FIRST": 0.0469,
+    "ECHO_PREV_0": 0.0312,
+    "ECHO_PREV_1": 0.0,
+    "ECHO_PREV_2": 0.0,
+    "ECHO_PREV_3": 0.0
+   },
+   "organisms": {
+    "FULL_LOG": {
+     "meter": {
+      "in_reads": 1556,
+      "ops": 14528,
+      "out_writes": 0,
+      "persistent_state_words": 2062
+     },
+     "ops_per_episode": 454.0,
+     "persistent_words": 2062,
+     "reads_writes": 48.6,
+     "reward": 0.0
+    },
+    "SELECTIVE": {
+     "meter": {
+      "in_reads": 1556,
+      "ops": 22976,
+      "out_writes": 0,
+      "persistent_state_words": 526
+     },
+     "ops_per_episode": 718.0,
+     "persistent_words": 526,
+     "reads_writes": 48.6,
+     "reward": 0.0
+    },
+    "TRIVIAL": {
+     "meter": {
+      "in_reads": 1556,
+      "ops": 6708,
+      "out_writes": 0,
+      "persistent_state_words": 8
+     },
+     "ops_per_episode": 209.6,
+     "persistent_words": 8,
+     "reads_writes": 48.6,
+     "reward": 0.0
+    }
+   },
+   "selectivity_pays": [],
+   "sweep": {
+    "a0.02_b0": {
+     "SELECTIVE_margin": -0.0102,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.01": {
+     "SELECTIVE_margin": -0.0911,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.02": {
+     "SELECTIVE_margin": -0.172,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.05": {
+     "SELECTIVE_margin": -0.4149,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.1": {
+     "SELECTIVE_margin": -0.8195,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.2": {
+     "SELECTIVE_margin": -1.6289,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.5": {
+     "SELECTIVE_margin": -4.057,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0": {
+     "SELECTIVE_margin": -0.0508,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.01": {
+     "SELECTIVE_margin": -0.1318,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.02": {
+     "SELECTIVE_margin": -0.2127,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.05": {
+     "SELECTIVE_margin": -0.4555,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.1": {
+     "SELECTIVE_margin": -0.8602,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.2": {
+     "SELECTIVE_margin": -1.6696,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.5": {
+     "SELECTIVE_margin": -4.0977,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0": {
+     "SELECTIVE_margin": 0.0,
+     "winner": "FULL_LOG"
+    },
+    "a0_b0.01": {
+     "SELECTIVE_margin": -0.0809,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.02": {
+     "SELECTIVE_margin": -0.1619,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.05": {
+     "SELECTIVE_margin": -0.4047,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.1": {
+     "SELECTIVE_margin": -0.8094,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.2": {
+     "SELECTIVE_margin": -1.6187,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.5": {
+     "SELECTIVE_margin": -4.0469,
+     "winner": "TRIVIAL"
+    }
+   },
+   "void": [
+    "no positive control reaches 0.9 (SELECTIVE 0.000 FULL_LOG 0.000)"
+   ],
+   "world_id": "a97d4bfb097506fd"
+  },
+  "G_interfere": {
+   "chance": 0.0625,
+   "fitness": {
+    "S0": {
+     "FULL_LOG": 1.0,
+     "SELECTIVE": 1.0,
+     "TRIVIAL": 0.1562
+    },
+    "S1": {
+     "FULL_LOG": -0.6394,
+     "SELECTIVE": 0.5452,
+     "TRIVIAL": 0.1303
+    },
+    "S2": {
+     "FULL_LOG": -5.4723,
+     "SELECTIVE": -0.6876,
+     "TRIVIAL": 0.1116
+    },
+    "S3": {
+     "FULL_LOG": -0.6938,
+     "SELECTIVE": 0.4297,
+     "TRIVIAL": 0.1097
+    }
+   },
+   "n_asks_mean": 2.0,
+   "n_ticks_mean": 30.65625,
+   "nulls": {
+    "CONST0": 0.1406,
+    "ECHO_FIRST": 0.0625,
+    "ECHO_PREV_0": 0.125,
+    "ECHO_PREV_1": 0.0469,
+    "ECHO_PREV_2": 0.0156,
+    "ECHO_PREV_3": 0.0156
+   },
+   "organisms": {
+    "FULL_LOG": {
+     "meter": {
+      "in_reads": 2325,
+      "ops": 21729,
+      "out_writes": 64,
+      "persistent_state_words": 2062
+     },
+     "ops_per_episode": 679.0,
+     "persistent_words": 2062,
+     "reads_writes": 74.7,
+     "reward": 1.0
+    },
+    "SELECTIVE": {
+     "meter": {
+      "in_reads": 2325,
+      "ops": 46224,
+      "out_writes": 64,
+      "persistent_state_words": 526
+     },
+     "ops_per_episode": 1444.5,
+     "persistent_words": 526,
+     "reads_writes": 74.7,
+     "reward": 1.0
+    },
+    "TRIVIAL": {
+     "meter": {
+      "in_reads": 2261,
+      "ops": 8253,
+      "out_writes": 64,
+      "persistent_state_words": 8
+     },
+     "ops_per_episode": 257.9,
+     "persistent_words": 8,
+     "reads_writes": 72.7,
+     "reward": 0.15625
+    }
+   },
+   "selectivity_pays": [
+    "S1",
+    "S3"
+   ],
+   "sweep": {
+    "a0.02_b0": {
+     "SELECTIVE_margin": -0.0153,
+     "winner": "FULL_LOG"
+    },
+    "a0.02_b0.01": {
+     "SELECTIVE_margin": 0.2247,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.02": {
+     "SELECTIVE_margin": 0.4647,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.05": {
+     "SELECTIVE_margin": 0.4149,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.1": {
+     "SELECTIVE_margin": 0.0102,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.2": {
+     "SELECTIVE_margin": -0.7991,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.5": {
+     "SELECTIVE_margin": -3.2273,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0": {
+     "SELECTIVE_margin": -0.0765,
+     "winner": "FULL_LOG"
+    },
+    "a0.1_b0.01": {
+     "SELECTIVE_margin": 0.1635,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.02": {
+     "SELECTIVE_margin": 0.4035,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.05": {
+     "SELECTIVE_margin": 0.32,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.1": {
+     "SELECTIVE_margin": -0.0847,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.2": {
+     "SELECTIVE_margin": -0.8941,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.5": {
+     "SELECTIVE_margin": -3.3222,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0": {
+     "SELECTIVE_margin": 0.0,
+     "winner": "FULL_LOG"
+    },
+    "a0_b0.01": {
+     "SELECTIVE_margin": 0.24,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.02": {
+     "SELECTIVE_margin": 0.48,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.05": {
+     "SELECTIVE_margin": 0.4387,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.1": {
+     "SELECTIVE_margin": 0.034,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.2": {
+     "SELECTIVE_margin": -0.7754,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.5": {
+     "SELECTIVE_margin": -3.2035,
+     "winner": "TRIVIAL"
+    }
+   },
+   "void": [],
+   "world_id": "c39a91d30c8e6b0f"
+  },
+  "H_timescale": {
+   "chance": 0.0625,
+   "fitness": {
+    "S0": {
+     "FULL_LOG": 1.0,
+     "SELECTIVE": 1.0,
+     "TRIVIAL": 0.2031
+    },
+    "S1": {
+     "FULL_LOG": -0.6484,
+     "SELECTIVE": 0.5436,
+     "TRIVIAL": 0.1706
+    },
+    "S2": {
+     "FULL_LOG": -5.4812,
+     "SELECTIVE": -0.6892,
+     "TRIVIAL": 0.1518
+    },
+    "S3": {
+     "FULL_LOG": -0.7325,
+     "SELECTIVE": 0.4273,
+     "TRIVIAL": 0.1295
+    }
+   },
+   "n_asks_mean": 2.0,
+   "n_ticks_mean": 58.0,
+   "nulls": {
+    "CONST0": 0.0781,
+    "ECHO_FIRST": 0.0781,
+    "ECHO_PREV_0": 0.0625,
+    "ECHO_PREV_1": 0.0469,
+    "ECHO_PREV_2": 0.0625,
+    "ECHO_PREV_3": 0.0625
+   },
+   "organisms": {
+    "FULL_LOG": {
+     "meter": {
+      "in_reads": 2560,
+      "ops": 33660,
+      "out_writes": 64,
+      "persistent_state_words": 2062
+     },
+     "ops_per_episode": 1051.9,
+     "persistent_words": 2062,
+     "reads_writes": 82.0,
+     "reward": 1.0
+    },
+    "SELECTIVE": {
+     "meter": {
+      "in_reads": 2560,
+      "ops": 46520,
+      "out_writes": 64,
+      "persistent_state_words": 526
+     },
+     "ops_per_episode": 1453.8,
+     "persistent_words": 526,
+     "reads_writes": 82.0,
+     "reward": 1.0
+    },
+    "TRIVIAL": {
+     "meter": {
+      "in_reads": 2496,
+      "ops": 16448,
+      "out_writes": 64,
+      "persistent_state_words": 8
+     },
+     "ops_per_episode": 514.0,
+     "persistent_words": 8,
+     "reads_writes": 80.0,
+     "reward": 0.203125
+    }
+   },
+   "selectivity_pays": [
+    "S1",
+    "S3"
+   ],
+   "sweep": {
+    "a0.02_b0": {
+     "SELECTIVE_margin": -0.008,
+     "winner": "FULL_LOG"
+    },
+    "a0.02_b0.01": {
+     "SELECTIVE_margin": 0.232,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.02": {
+     "SELECTIVE_margin": 0.472,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.05": {
+     "SELECTIVE_margin": 0.373,
+     "winner": "SELECTIVE"
+    },
+    "a0.02_b0.1": {
+     "SELECTIVE_margin": -0.0317,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.2": {
+     "SELECTIVE_margin": -0.8411,
+     "winner": "TRIVIAL"
+    },
+    "a0.02_b0.5": {
+     "SELECTIVE_margin": -3.2692,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0": {
+     "SELECTIVE_margin": -0.0402,
+     "winner": "FULL_LOG"
+    },
+    "a0.1_b0.01": {
+     "SELECTIVE_margin": 0.1998,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.02": {
+     "SELECTIVE_margin": 0.4398,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.05": {
+     "SELECTIVE_margin": 0.2978,
+     "winner": "SELECTIVE"
+    },
+    "a0.1_b0.1": {
+     "SELECTIVE_margin": -0.1069,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.2": {
+     "SELECTIVE_margin": -0.9163,
+     "winner": "TRIVIAL"
+    },
+    "a0.1_b0.5": {
+     "SELECTIVE_margin": -3.3444,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0": {
+     "SELECTIVE_margin": 0.0,
+     "winner": "FULL_LOG"
+    },
+    "a0_b0.01": {
+     "SELECTIVE_margin": 0.24,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.02": {
+     "SELECTIVE_margin": 0.48,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.05": {
+     "SELECTIVE_margin": 0.3918,
+     "winner": "SELECTIVE"
+    },
+    "a0_b0.1": {
+     "SELECTIVE_margin": -0.0129,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.2": {
+     "SELECTIVE_margin": -0.8223,
+     "winner": "TRIVIAL"
+    },
+    "a0_b0.5": {
+     "SELECTIVE_margin": -3.2504,
+     "winner": "TRIVIAL"
+    }
+   },
+   "void": [],
+   "world_id": "2e0ee3398b08f183"
+  }
+ },
+ "eligible": {
+  "A_remember": [
+   "S1",
+   "S3"
+  ],
+  "B_update": [
+   "S1"
+  ],
+  "C_forget": [
+   "S1"
+  ],
+  "D_bind2": [
+   "S1",
+   "S3"
+  ],
+  "E_bind4": [
+   "S1"
+  ],
+  "F_compose": [],
+  "G_interfere": [
+   "S1"
+  ],
+  "H_timescale": [
+   "S1"
+  ]
+ },
+ "notes": [],
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "void": {
+  "F_compose": [
+   "no positive control reaches 0.9 (SELECTIVE 0.000 FULL_LOG 0.000)"
+  ]
+ },
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "6d98c190e38d1ac9d9c9c2895f41fcb937a7fd8b",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ }
+}

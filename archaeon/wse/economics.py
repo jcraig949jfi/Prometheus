@@ -20,12 +20,16 @@ class Regime:
     gamma: float = 0.0
     delta: float = 0.0
 
-    def fitness(self, reward: float, meter: dict, n_episodes: int) -> float:
+    def cost(self, meter: dict, n_episodes: int) -> float:
         n = max(1, n_episodes)
         ops = meter["ops"] / n
         rw = (meter["in_reads"] + meter["out_writes"]) / n
         pw = meter.get("persistent_state_words", 0)
-        return reward - self.alpha * ops / 1000.0 - self.beta * pw / 64.0 - self.gamma * rw / 100.0
+        return self.alpha * ops / 1000.0 + self.beta * pw / 64.0 + self.gamma * rw / 100.0
+
+    def fitness(self, reward: float, meter: dict, n_episodes: int, multiplier: float = 1.0) -> float:
+        """multiplier = the v0.2 RAMP m_g (DESIGN_v0.2 s2); 1.0 reproduces v0.1."""
+        return reward - multiplier * self.cost(meter, n_episodes)
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -36,4 +40,10 @@ REGIMES = {
     "E1": Regime("E1", alpha=0.02, beta=0.01),
     "E2": Regime("E2", alpha=0.10, beta=0.01),
     "E3": Regime("E3", alpha=0.01, beta=0.10),
+    # v0.2 (DESIGN_v0.2 s2), used WITH the ramp
+    "S0": Regime("S0"),
+    "S1": Regime("S1", alpha=0.02, beta=0.05, gamma=0.02),
+    "S2": Regime("S2", alpha=0.02, beta=0.20, gamma=0.02),
+    "S3": Regime("S3", alpha=0.10, beta=0.05, gamma=0.02),
 }
+RAMP_FOOTHOLD = 0.30       # m_g = min(1, best_train_reward_so_far / RAMP_FOOTHOLD)

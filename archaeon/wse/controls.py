@@ -190,3 +190,64 @@ POS_TABLE = _table_manifest()
 
 POSITIVE = {"W0": POS_REGS, "W1": POS_REGS, "W2": POS_TABLE, "W3": POS_TABLE}
 NULLS = {"CONST0": CONST0, "ECHO_LAST": ECHO_LAST}
+
+# ---------------------------------------------------------------- v0.2 boundary organisms
+# SELECTIVE: one (tag, last value) slot per entity seen; PUT replaces, RETIRE stores 0.
+# FULL_LOG: appends every (tag, value) / (tag, 0) it sees; ASK scans the log BACKWARDS for
+# the tag (re-reads history). Neither is ever a seed for evolution; they map the economics.
+_SELECTIVE_LINES = [
+    ("LDC", "r7", 0), ("LDC", "r10", 1), ("LDC", "r8", 2), ("LDC", "r9", "BASE"), ("LDC", "r11", "COUNT"),
+    ("IN", "r0", "r7"),
+    ("LDC", "r5", 1), ("EQ", "r4", "r0", "r5"), ("JNZ", "r4", "PUT"),
+    ("LDC", "r5", 9), ("EQ", "r4", "r0", "r5"), ("JNZ", "r4", "RET"),
+    ("LDC", "r5", 2), ("EQ", "r4", "r0", "r5"), ("JNZ", "r4", "ASK"),
+    ("HALT",),
+    ("label", "PUT"), ("IN", "r1", "r7"), ("IN", "r2", "r7"), ("JMP", "UPSERT"),
+    ("label", "RET"), ("IN", "r1", "r7"), ("LDC", "r2", 0),
+    ("label", "UPSERT"), ("MOV", "r3", "r9"), ("LD", "r6", "r11"), ("LDC", "r4", 0),
+    ("label", "PLOOP"), ("EQ", "r12", "r4", "r6"), ("JNZ", "r12", "NOTFOUND"),
+    ("LD", "r13", "r3"), ("EQ", "r12", "r13", "r1"), ("JNZ", "r12", "FOUND"),
+    ("ADD", "r3", "r3", "r8"), ("ADD", "r4", "r4", "r10"), ("JMP", "PLOOP"),
+    ("label", "NOTFOUND"), ("ST", "r3", "r1"), ("ADD", "r3", "r3", "r10"), ("ST", "r3", "r2"),
+    ("ADD", "r6", "r6", "r10"), ("ST", "r11", "r6"), ("HALT",),
+    ("label", "FOUND"), ("ADD", "r3", "r3", "r10"), ("ST", "r3", "r2"), ("HALT",),
+    ("label", "ASK"), ("IN", "r1", "r7"), ("MOV", "r3", "r9"), ("LD", "r6", "r11"), ("LDC", "r4", 0),
+    ("label", "ALOOP"), ("EQ", "r12", "r4", "r6"), ("JNZ", "r12", "END"),
+    ("LD", "r13", "r3"), ("EQ", "r12", "r13", "r1"), ("JNZ", "r12", "OUTF"),
+    ("ADD", "r3", "r3", "r8"), ("ADD", "r4", "r4", "r10"), ("JMP", "ALOOP"),
+    ("label", "OUTF"), ("ADD", "r3", "r3", "r10"), ("LD", "r13", "r3"), ("OUT", "r13", "r7"),
+    ("label", "END"), ("HALT",),
+]
+
+_FULLLOG_LINES = [
+    ("LDC", "r7", 0), ("LDC", "r10", 1), ("LDC", "r8", 2), ("LDC", "r9", "BASE"), ("LDC", "r11", "COUNT"),
+    ("IN", "r0", "r7"),
+    ("LDC", "r5", 1), ("EQ", "r4", "r0", "r5"), ("JNZ", "r4", "PUT"),
+    ("LDC", "r5", 9), ("EQ", "r4", "r0", "r5"), ("JNZ", "r4", "RET"),
+    ("LDC", "r5", 2), ("EQ", "r4", "r0", "r5"), ("JNZ", "r4", "ASK"),
+    ("HALT",),
+    ("label", "PUT"), ("IN", "r1", "r7"), ("IN", "r2", "r7"), ("JMP", "APPEND"),
+    ("label", "RET"), ("IN", "r1", "r7"), ("LDC", "r2", 0),
+    ("label", "APPEND"), ("LD", "r6", "r11"), ("MUL", "r3", "r6", "r8"), ("ADD", "r3", "r3", "r9"),
+    ("ST", "r3", "r1"), ("ADD", "r3", "r3", "r10"), ("ST", "r3", "r2"),
+    ("ADD", "r6", "r6", "r10"), ("ST", "r11", "r6"), ("HALT",),
+    ("label", "ASK"), ("IN", "r1", "r7"), ("LD", "r6", "r11"),
+    ("label", "SLOOP"), ("JZ", "r6", "END"), ("SUB", "r6", "r6", "r10"),
+    ("MUL", "r3", "r6", "r8"), ("ADD", "r3", "r3", "r9"), ("LD", "r13", "r3"),
+    ("EQ", "r12", "r13", "r1"), ("JZ", "r12", "SLOOP"),
+    ("ADD", "r3", "r3", "r10"), ("LD", "r13", "r3"), ("OUT", "r13", "r7"), ("HALT",),
+    ("label", "END"), ("HALT",),
+]
+
+
+def _bind(lines, tape_words: int, tick_budget: int) -> dict:
+    n_instr = sum(1 for ln in lines if ln[0] != "label")
+    base = n_instr * 4 + 8
+    bound = [tuple(base if x == "BASE" else (base - 1 if x == "COUNT" else x) for x in ln) for ln in lines]
+    return manifest(asm(bound), n_regs=14, tape_words=tape_words, persist="all", tick_budget=tick_budget)
+
+
+SELECTIVE = _bind(_SELECTIVE_LINES, 512, 1024)      # code ~230 words + up to ~140 slots (v0.2.1)
+FULL_LOG = _bind(_FULLLOG_LINES, 2048, 8192)        # code ~200 words + ~900 log entries
+TRIVIAL = POS_REGS                                  # the last value seen, in a register
+BOUNDARY = {"FULL_LOG": FULL_LOG, "SELECTIVE": SELECTIVE, "TRIVIAL": TRIVIAL}
