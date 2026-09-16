@@ -1,111 +1,67 @@
-# Evidence Wiki watchdog -- M2 / SPECTREX5.
+# Evidence Wiki watchdog -- M2 / SPECTREX5 wrapper (MNE-35, 2026-09-16).
 #
-# 2026-09-04: James ruled M2 must be FULLY INDEPENDENT. PEW on M2 serves M2's
-# OWN local Postgres (config.json db_host=localhost), like M1's vanilla service
-# serves M1's. A deliberate second world; evidence does not cross machines. The
-# canonical-pointing launcher (ops\pew_serve_m2.cmd, EW_DB_HOST=192.168.1.202)
-# is intentionally NOT used here.
+# This file sets the ENVIRONMENT and the file names, then runs the one
+# watchdog, scripts\ew_watchdog.ps1, which measures the property (an
+# authenticated hybrid search answers), writes a last-success line on every
+# healthy tick, restarts a present-but-dead service after FailThreshold
+# ticks, and parks itself at the rule-10 bound. Nothing about the probe is
+# restated here (base rule 1).
 #
-# DEPLOY-AWARE (CT-SFE-1 deploy-lag fix): a bare start-if-down watchdog keeps
-# relaunching the OLD build forever -- IMPLEMENTED != DEPLOYED. This watchdog
-# also restarts the service when its attested source_commit falls BEHIND repo
-# HEAD, so a committed PEW change deploys within one interval without a human
-# killing the process. The service is launched with EW_SOURCE_COMMIT set from
-# HEAD, because the S4U task context has no `git` on PATH and the service could
-# not otherwise self-identify its commit (it would report "unknown" and loop).
+# WHAT THE M2 SERVICE FRONTS, and why (2026-09-16, Mnemosyne, journal of
+# that date): the CANONICAL store on M1. The 2026-09-04 ruling that M2
+# serves its own local fork rested on M1 being the ecosystem's home; on
+# 2026-09-15 the operator handed M1 to Nestor and moved the SFE to M2
+# carrying M1's engine.db (ccb26df01). A PEW on M2 fronting the quarantined
+# fork would verify anchors against a world the engine no longer runs, and
+# the fork had had no reader since 2026-09-05. The fork is NOT deleted; a
+# fork-serving instance is one env change (PROMETHEUS_ENV=m2-local-fork,
+# EW_DB_HOST unset) on a different port, if the operator wants one.
 #
-# Interpreter: M2's bare `python` is a dependency-less shim, so prefer .venv-m2.
+# History: 2026-09-04 fork-serving, presence probe (health only), deploy-
+# aware auto-restart on canonical HEAD; the auto-restart is dropped because
+# D-23 s6 advances a pinned worktree by an explicit logged command, never by
+# a watchdog following HEAD. 2026-09-11..14: three `restart FAILED` lines,
+# no ok line, no alarm; 2026-09-16 morning: the service it restarted ran
+# from the canonical checkout with search permanently unready
+# (sentence_transformers absent from the interpreter) and health 200.
 $ErrorActionPreference = "SilentlyContinue"
-$root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$log  = Join-Path $root "derived\watchdog_m2.log"
-function Log($m) { Add-Content -Path $log -Value ("{0}  {1}" -f (Get-Date -Format s), $m) }
+$here = Split-Path -Parent $MyInvocation.MyCommand.Path
+$root = Split-Path -Parent $here                       # evidence_wiki/
 
-$py = $env:EW_PYTHON
-if (-not $py) {
-    foreach ($cand in @("..\.venv-m2\Scripts\python.exe", "..\.venv\Scripts\python.exe")) {
-        $full = Join-Path $root $cand
-        if (Test-Path $full) { $py = (Resolve-Path $full).Path; break }
+# git for the service's workspace receipt (the S4U task context lacks it);
+# the service now REFUSES to start when it cannot determine its worktree.
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    foreach ($g in 'C:\Program Files\Git\cmd') { if (Test-Path $g) { $env:PATH = "$g;$env:PATH"; break } }
+}
+
+# Store: the canonical environment (ew.db's default) at the host named in
+# the untracked config.local.json (key canonical_db_host), else the M1
+# address every other M2 launcher uses (ops\pew_serve_m2.py).
+$dbHost = $null
+$local = Join-Path $root "config.local.json"
+if (Test-Path $local) { try { $dbHost = (Get-Content $local -Raw | ConvertFrom-Json).canonical_db_host } catch { } }
+if (-not $dbHost) { $dbHost = "192.168.1.202" }
+$env:EW_DB_HOST = $dbHost
+$env:PROMETHEUS_ENV = "prometheus-canonical"
+$env:PROMETHEUS_MACHINE = "M2"
+
+# Interpreter: the M2 venv (.venv-m2, holding torch + sentence-transformers
+# since 2026-09-16) lives beside the CANONICAL clone, not beside this pinned
+# worktree, so it is found through the repository's common git dir -- no
+# drive letter, and the same answer from every worktree. A bare `python`
+# on M2 is a shim with no dependencies (measured 2026-09-16: the first
+# pinned tick started the service "via python" and it never answered).
+if (-not $env:EW_PYTHON) {
+    $common = (& git -C $root rev-parse --path-format=absolute --git-common-dir 2>$null | Out-String).Trim()
+    $cands = @()
+    if ($common) { $cands += (Join-Path (Split-Path -Parent $common) ".venv-m2\Scripts\python.exe") }
+    $cands += (Join-Path $root "..\.venv-m2\Scripts\python.exe")
+    foreach ($cand in $cands) {
+        if (Test-Path $cand) { $env:EW_PYTHON = (Resolve-Path $cand).Path; break }
     }
 }
-if (-not $py) { $py = "python" }
 
-# Resolve git (S4U PATH often lacks it) and stamp the service's commit via env.
-$git = (Get-Command git -ErrorAction SilentlyContinue).Source
-if (-not $git) { foreach ($g in 'C:\Program Files\Git\cmd\git.exe','C:\Program Files\Git\bin\git.exe') { if (Test-Path $g) { $git = $g; break } } }
-$head = ""
-if ($git) { $head = (& $git -C $root rev-parse HEAD 2>$null | Out-String).Trim() }
-if ($head) { $env:EW_SOURCE_COMMIT = $head }
-
-# STORE IDENTITY (2026-09-11, Hermes #69 accepted): ew.db now refuses any
-# store whose pg_control_system() identity is not the expected environment.
-# This service DELIBERATELY serves the M2 local fork (operator ruling
-# 2026-09-04), so it names that environment; naming it is the visible act.
-$env:PROMETHEUS_ENV = "m2-local-fork"
-
-function Start-Service-Fresh {
-    Log "starting M2-INDEPENDENT service (M2-local Postgres) via $py (commit=$env:EW_SOURCE_COMMIT)"
-    Start-Process -FilePath $py -ArgumentList "-m","ew.service" `
-        -WorkingDirectory $root -WindowStyle Hidden `
-        -RedirectStandardOutput (Join-Path $root "derived\service_m2.out.log") `
-        -RedirectStandardError  (Join-Path $root "derived\service_m2.err.log")
-    Start-Sleep -Seconds 10
-}
-
-# 1. Down? start it. Probe 127.0.0.1: "localhost" resolves to ::1 first and
-#    the refused IPv6 attempt cost ~2 s per call on M1 (measured 2026-09-11).
-$sw = [Diagnostics.Stopwatch]::StartNew()
-$health = try { (Invoke-WebRequest -Uri "http://127.0.0.1:8377/api/v1/health" -TimeoutSec 20 -UseBasicParsing).StatusCode } catch { 0 }
-if ($health -eq 200) {
-    # LAST-SUCCESS LINE (Pronoia #121, MONITORS row): a watchdog that logs
-    # only on failure gives a healthy and a dead watchdog the same observable.
-    # Presence only for now; the M1 property probe (authenticated search,
-    # present-but-dead restart) is ported under MNE-35.
-    Log ("ok  health {0}ms  last_success {1}" -f $sw.ElapsedMilliseconds, (Get-Date -Format s))
-}
-if ($health -ne 200) {
-    Log "health check failed ($health); starting service"
-    Start-Service-Fresh
-    $health = try { (Invoke-WebRequest -Uri "http://localhost:8377/api/v1/health" -TimeoutSec 5 -UseBasicParsing).StatusCode } catch { 0 }
-    if ($health -eq 200) { Log "restart OK" } else { Log "restart FAILED" ; exit 1 }
-    exit 0
-}
-
-# 2. Up, but running an OLD commit? redeploy. Only on a real commit MISMATCH
-#    (a pre-closure build reports no /identity and is treated as behind). Never
-#    merely because the tree is dirty.
-if (-not $head) { exit 0 }   # cannot determine HEAD; do not thrash
-$running = try {
-    (Invoke-WebRequest -Uri "http://localhost:8377/api/v1/identity" -TimeoutSec 5 -UseBasicParsing).Content | ConvertFrom-Json
-} catch { $null }
-$runningCommit = if ($running) { $running.source_commit } else { $null }
-# Redeploy only when SERVICE CODE actually changed between the running commit
-# and HEAD -- not on doc/portfolio commits (the auto-portfolio commits every
-# ~15 min would otherwise restart the service every time). A pre-closure or
-# "unknown" running commit cannot be diffed, so it always redeploys.
-$codeChanged = $true
-if ($runningCommit -and $runningCommit -ne "unknown" -and $runningCommit -ne $head) {
-    # pathspecs are relative to $root (evidence_wiki/), since git runs with -C $root
-    $diff = (& $git -C $root diff --name-only $runningCommit $head -- ew migrations config.json 2>$null | Out-String).Trim()
-    $codeChanged = [bool]$diff
-}
-if ($runningCommit -ne $head -and $codeChanged) {
-    $rc = if ($runningCommit) { $runningCommit.Substring(0,[Math]::Min(12,$runningCommit.Length)) } else { "pre-closure/unknown" }
-    Log ("deploy-lag: running {0} != HEAD {1}; redeploying" -f $rc, $head.Substring(0,12))
-    $pid8377 = (Get-NetTCPConnection -LocalPort 8377 -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1 -Expand OwningProcess)
-    if ($pid8377) {
-        Stop-Process -Id $pid8377 -Force -ErrorAction SilentlyContinue
-        Start-Sleep -Seconds 1
-        if (Get-Process -Id $pid8377 -ErrorAction SilentlyContinue) {
-            $r = (Get-CimInstance Win32_Process -Filter "ProcessId=$pid8377" | Invoke-CimMethod -MethodName Terminate).ReturnValue
-            Log "Stop-Process denied on $pid8377; WMI Terminate rc=$r"
-        } else { Log "killed old service $pid8377" }
-        Start-Sleep -Seconds 2
-    }
-    Start-Service-Fresh
-    $r2 = try {
-        (Invoke-WebRequest -Uri "http://localhost:8377/api/v1/identity" -TimeoutSec 5 -UseBasicParsing).Content | ConvertFrom-Json
-    } catch { $null }
-    if ($r2 -and $r2.source_commit -eq $head) { Log "redeploy OK -> $head" ; exit 0 }
-    Log "redeploy FAILED (still not HEAD)" ; exit 1
-}
-exit 0
+& (Join-Path $here "ew_watchdog.ps1") -Machine "M2" -HostAddr "127.0.0.1" -Port 8377 `
+    -LogName "derived\watchdog_m2.log" -StateName "derived\watchdog_state_m2.json" `
+    -ParkName "derived\watchdog_park_m2.json" -Seat "Mnemosyne" -AccountableSeat "Mnemosyne"
+exit $LASTEXITCODE

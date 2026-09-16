@@ -138,6 +138,37 @@ class EvidenceWiki:
                                     substrate=substrate, source_span=source_span,
                                     agent=agent, metric_text=metric_text)
 
+    # fossil memory (pew.fossil.v2): the encounters query and the anchor
+    # registrations. Added 2026-09-16 (THEO-REQ-001 #239 and Proteus #287):
+    # until then every fossil producer hand-rolled its own HTTP.
+    def fossil_encounters(self, run_id=None, world_id=None, player_id=None,
+                          episode_id=None, namespace=None, ecology=None,
+                          limit=200):
+        """GET /fossil/encounters. At least one selector; `ecology` is a
+        dict matched by jsonb containment (@>) against the row's ecology
+        column, e.g. ecology={"world": {"n_cells": 599}}."""
+        params = {k: v for k, v in dict(run_id=run_id, world_id=world_id,
+                                        player_id=player_id, episode_id=episode_id,
+                                        namespace=namespace, limit=limit).items()
+                  if v is not None}
+        if ecology is not None:
+            params["ecology"] = json.dumps(ecology)
+        return self._get("fossil/encounters", **params)
+
+    def register_fossil_player(self, player_id, **fields):
+        """POST /fossil/players: append-only, identical-idempotent; a
+        differing re-registration is a 409. Fields are FossilPlayerIn's
+        (ew/service.py); unknown fields are rejected 422."""
+        body = {"player_id": player_id, **fields}
+        r = self.s.post(f"{self.base}/api/v1/fossil/players", json=body, timeout=60)
+        if r.status_code in (409, 422):
+            raise ValueError(f"rejected {r.status_code}: {r.json().get('detail')}")
+        r.raise_for_status()
+        return r.json()
+
+    def get_fossil_player(self, player_id):
+        return self._get(f"fossil/players/{player_id}")
+
     def query_tensor(self, op, **body):
         return self._post(f"tensor/{op}", body)
 

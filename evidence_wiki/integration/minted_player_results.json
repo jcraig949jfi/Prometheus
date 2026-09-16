@@ -1,0 +1,42 @@
+{
+ "all_pass": true,
+ "player_id": "evca:r3:d0cb5bca6e54c0b4bb536eef2604cd58",
+ "ran_at": "2026-09-16T08:27:12",
+ "gates": [
+  {
+   "gate": "W_written_as_Proteus",
+   "pass": true,
+   "detail": "{\"player_id\": \"evca:r3:d0cb5bca6e54c0b4bb536eef2604cd58\", \"status\": \"inserted\"}"
+  },
+  {
+   "gate": "P_every_mapped_column_reads_back",
+   "pass": true,
+   "detail": "diffs=[] mint_id_equal=True nulls=['runtime_hash', 'lineage_id', 'generation']"
+  },
+  {
+   "gate": "I_identical_rereg_is_duplicate",
+   "pass": true,
+   "detail": "{\"player_id\": \"evca:r3:d0cb5bca6e54c0b4bb536eef2604cd58\", \"status\": \"duplicate_identical\"}"
+  },
+  {
+   "gate": "C1_wrong_agent_header_401",
+   "pass": true,
+   "detail": "401 {\"detail\":\"token does not match claimed agent\"}"
+  },
+  {
+   "gate": "C2_differing_rereg_409",
+   "pass": true,
+   "detail": "rejected 409: conflict_existing_row_differs:mate_player(stored=evca:r3:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb submitted=evca:r3:cccccccccccccccccccccccccccccccc)"
+  },
+  {
+   "gate": "C2b_row_unchanged_after_409",
+   "pass": true,
+   "detail": "stored mate_player=evca:r3:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  {
+   "gate": "C3_unknown_field_422",
+   "pass": true,
+   "detail": "rejected 422: [{'type': 'extra_forbidden', 'loc': ['body', 'mate_playr'], 'msg': 'Extra inputs are not permitted', 'input': 'evca:r3:bbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  }
+ ]
+}

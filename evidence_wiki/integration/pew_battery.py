@@ -69,9 +69,23 @@ def gate(name, ok, detail, skipped=False):
     return bool(ok)
 
 
-# S-2: the Postgres system_identifier of each machine's PEW store. Server truth,
-# not a client claim -- these do not change for a given cluster.
-EXPECTED_DB_ID = {"M1": "7628127204585430828", "M2": "7681719240261676752"}
+# S-2: the Postgres system_identifier of the store the service under test
+# is expected to front. Server truth, not a client claim. KEYED BY
+# ENVIRONMENT, never by machine (2026-09-16): the earlier table said
+# "M2 -> the fork" and encoded the 2026-09-04 deployment as if it were a
+# property of the host; on 2026-09-16 the M2 service fronts the canonical
+# store and the gate failed for the right reason at the wrong layer. The
+# expectation now comes from comms/environments.json for the environment
+# named by --env / PROMETHEUS_ENV (default prometheus-canonical), and the
+# "other" ids for the spoof control are every other registered environment.
+def _registry_ids():
+    import sys as _s
+    root = str(HERE.parent)
+    if root not in _s.path:
+        _s.path.insert(0, root)
+    from comms import identity as _ident
+    reg = _ident.load_registry()
+    return {k: v["db_system_id"] for k, v in reg.items()}
 
 
 class C:
@@ -166,8 +180,10 @@ def main():
     ap.add_argument("--port", type=int, default=None)
     ap.add_argument("--token", default=None)
     ap.add_argument("--machine", default="M1")
+    ap.add_argument("--env", default=os.environ.get("PROMETHEUS_ENV", "prometheus-canonical"),
+                    help="S-2: the registered environment the service must front")
     ap.add_argument("--expect-db-id", default=None,
-                    help="S-2: override the expected db_system_id for --machine")
+                    help="S-2: override the expected db_system_id (else the registry's id for --env)")
     ap.add_argument("--agent", default="pew-battery")
     ap.add_argument("--no-sql", action="store_true",
                     help="skip direct-SQL legs (use when not on the DB host)")
@@ -198,8 +214,8 @@ def main():
          f"canonical_revision={v.json().get('canonical_revision')}")
 
     # S-2 ------------------- server-attested MACHINE identity (HARD gate)
-    # Assert GET /api/v1/identity's db_system_id equals the KNOWN id for the
-    # named --machine. The db_system_id is the Postgres cluster system_identifier
+    # Assert GET /api/v1/identity's db_system_id equals the registry's id for
+    # the named --env (the machine is who is asking, not what is answering). The db_system_id is the Postgres cluster system_identifier
     # -- server truth. A bearer token / X-Prometheus-Machine header must NOT be
     # able to substitute for it. Controls (all must hold):
     #   M2 as M2           -> actual == expected                  (PASS)
@@ -208,8 +224,9 @@ def main():
     idr = c.get("identity")
     idj = idr.json() if idr.status_code == 200 else {}
     actual = idj.get("db_system_id")
-    expected = a.expect_db_id or EXPECTED_DB_ID.get(a.machine)
-    other_ids = [vv for kk, vv in EXPECTED_DB_ID.items() if kk != a.machine]
+    reg_ids = _registry_ids()
+    expected = a.expect_db_id or reg_ids.get(a.env)
+    other_ids = [vv for kk, vv in reg_ids.items() if vv != expected]
     # server identity must be independent of the CLAIMED machine header:
     spoof_machine = "M1" if a.machine != "M1" else "M2"
     try:
@@ -226,7 +243,7 @@ def main():
     }
     s2_ok = idr.status_code == 200 and all(controls.values())
     gate("S2_server_machine_identity", s2_ok,
-         f"machine={a.machine} db_system_id={actual} expected={expected} "
+         f"machine={a.machine} env={a.env} db_system_id={actual} expected={expected} "
          f"controls={controls}")
 
     # anchors first (world + player version rows the evidence joins back to)

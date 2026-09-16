@@ -1,6 +1,6 @@
 """Workspace invariant guard for PEW (operator D-23, 2026-09-11).
 
-The canonical checkout F:\\Prometheus is read-mostly. No PEW entry point may
+The canonical checkout is read-mostly. No PEW entry point may
 run from it: not the service, not the backup/restore jobs, not the indexer.
 The detection carries no path assumption -- in the repository's MAIN worktree
 `git rev-parse --git-dir` and `--git-common-dir` resolve to the same
@@ -44,8 +44,19 @@ def is_main_worktree(path: Optional[Path] = None) -> bool:
     gd, cd = _git("rev-parse", "--git-dir", cwd=cwd), _git(
         "rev-parse", "--git-common-dir", cwd=cwd)
     if not gd or not cd:
-        return False                                    # not a repo: not canonical
+        return False                                    # undeterminable; see workspace_known()
     return Path(cwd, gd).resolve() == Path(cwd, cd).resolve()
+
+
+def workspace_known(path: Optional[Path] = None) -> bool:
+    """True iff git answered for this path. 2026-09-16 (Mnemosyne journal):
+    the M2 service ran from the CANONICAL checkout for a morning with
+    main_worktree=false and base_sha "" in its own health receipt, because
+    the scheduled-task context had no git on PATH and _git() returned "".
+    "Cannot tell" is not "not canonical"; the guard now fails closed."""
+    cwd = path or ROOT
+    return bool(_git("rev-parse", "--git-dir", cwd=cwd)) and bool(
+        _git("rev-parse", "HEAD", cwd=cwd))
 
 
 def receipt(path: Optional[Path] = None) -> Dict[str, Any]:
@@ -58,23 +69,31 @@ def receipt(path: Optional[Path] = None) -> Dict[str, Any]:
         "dirty": bool(_git("status", "--porcelain", "--untracked-files=no",
                            cwd=cwd)),
         "main_worktree": is_main_worktree(cwd),
+        "workspace_known": workspace_known(cwd),
         "allow_canonical_override": os.environ.get("EW_ALLOW_CANONICAL") == "1",
     }
 
 
 def assert_not_canonical(purpose: str = "work", *, path: Optional[Path] = None):
-    """Refuse to run from the canonical checkout. Returns the receipt."""
+    """Refuse to run from the canonical checkout, and refuse when that
+    cannot be determined. Returns the receipt."""
     r = receipt(path)
+    if not r["workspace_known"] and not r["allow_canonical_override"]:
+        raise CanonicalCheckoutRefused(
+            f"PEW refuses to {purpose} from {r['worktree_path']}: git did not "
+            "answer, so whether this is the canonical checkout cannot be "
+            "determined (fail closed, 2026-09-16). Put git on PATH for the "
+            "process that starts PEW (a scheduled task's S4U context usually "
+            "lacks it) and start from a linked worktree.")
     if r["main_worktree"] and not r["allow_canonical_override"]:
         raise CanonicalCheckoutRefused(
             f"PEW refuses to {purpose} from the CANONICAL checkout "
             f"({r['worktree_path']}). D-23: the canonical clone is read-mostly. "
             "Work from a worktree:\n"
-            "  git -C F:\\Prometheus fetch origin\n"
-            "  git -C F:\\Prometheus worktree add "
-            "F:\\Prometheus-worktrees\\mnemosyne-<task> -b mnemosyne/<task> "
-            "origin/main\n"
+            "  git -C <canonical> fetch origin\n"
+            "  git -C <canonical> worktree add "
+            "<worktrees>/mnemosyne-<task> -b mnemosyne/<task> origin/main\n"
             "Long-running PEW processes run from the PINNED worktree "
-            "F:\\Prometheus-worktrees\\mnemosyne-pew, detached at a recorded "
-            "SHA. Set EW_ALLOW_CANONICAL=1 only for read-only inspection.")
+            "<worktrees>/mnemosyne-pew, detached at a recorded SHA. "
+            "Set EW_ALLOW_CANONICAL=1 only for read-only inspection.")
     return r

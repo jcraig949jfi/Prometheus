@@ -43,6 +43,13 @@ CONTRACT_ENGINE = {"base_url": "http://unused/v2", "api": "v2", "schema_version"
                    "science_profile": "warn", "session_enforcement": "advisory"}
 
 
+def _now_iso():
+    # 2026-09-16: a literal 2026-09-11 stamp aged past full_gate_max_age_h (24 h) and made the
+    # cache test fail from 09-12 on -- a time-dependent test, the cadence flake class of 09-06
+    import datetime as _dt
+    return _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds")
+
+
 def _cfg(tmp_path, base, contract_engine=CONTRACT_ENGINE, **kw):
     cp = tmp_path / "contract.json"
     cp.write_text(json.dumps({"engine": contract_engine, "routes": [{"method": "GET", "path": "/v2/version", "requires_session_key": False}]}), encoding="utf-8")
@@ -60,7 +67,7 @@ def _not_production(monkeypatch):
 def test_matching_identity_runs_the_full_gate_once_then_caches(tmp_path, monkeypatch):
     calls = []
     monkeypatch.setattr(C, "full_gate", lambda cfg, contract, base, cacert: (calls.append(1) or
-                        {"exit": 0, "state": "CONFORMANT", "at": "2026-09-11T00:00:00+00:00", "elapsed_s": 0.1, "stdout_tail": "CONFORMANT -- safe to proceed"}))
+                        {"exit": 0, "state": "CONFORMANT", "at": _now_iso(), "elapsed_s": 0.1, "stdout_tail": "CONFORMANT -- safe to proceed"}))
     e = _Engine(dict(CONTRACT_ENGINE))
     try:
         cfg = _cfg(tmp_path, e.base)
@@ -97,7 +104,7 @@ def test_unreachable_retries_then_halts(tmp_path):
 
 def test_changed_build_forces_the_full_gate_and_drift_halts(tmp_path, monkeypatch):
     monkeypatch.setattr(C, "full_gate", lambda cfg, contract, base, cacert:
-                        {"exit": 1, "state": "DRIFT", "at": "2026-09-11T00:00:00+00:00", "elapsed_s": 0.1, "stdout_tail": "DRIFT -- STOP THE LOOP."})
+                        {"exit": 1, "state": "DRIFT", "at": _now_iso(), "elapsed_s": 0.1, "stdout_tail": "DRIFT -- STOP THE LOOP."})
     e = _Engine(dict(CONTRACT_ENGINE, engine_source_hash="sha256:build-B"))
     try:
         with pytest.raises(C.ConformanceHalt) as ex:
@@ -110,11 +117,11 @@ def test_changed_build_forces_the_full_gate_and_drift_halts(tmp_path, monkeypatc
 def test_incomplete_proceeds_only_when_routes_are_covered(tmp_path, monkeypatch):
     e = _Engine(dict(CONTRACT_ENGINE, engine_source_hash="sha256:build-B"))
     try:
-        monkeypatch.setattr(C, "full_gate", lambda *a: {"exit": 0, "state": "CONFORMANT", "at": "2026-09-11T00:00:00+00:00", "elapsed_s": 0.1,
+        monkeypatch.setattr(C, "full_gate", lambda *a: {"exit": 0, "state": "CONFORMANT", "at": _now_iso(), "elapsed_s": 0.1,
                                                           "stdout_tail": "Every route you declared IS in the contract, so its claims"})
         r = C.require(_cfg(tmp_path, e.base))
         assert r["state"] == "INCOMPLETE_PROCEED" and r["halted"] is False
-        monkeypatch.setattr(C, "full_gate", lambda *a: {"exit": 3, "state": "INCOMPLETE", "at": "2026-09-11T00:00:00+00:00", "elapsed_s": 0.1,
+        monkeypatch.setattr(C, "full_gate", lambda *a: {"exit": 3, "state": "INCOMPLETE", "at": _now_iso(), "elapsed_s": 0.1,
                                                           "stdout_tail": "HALT: 1 route(s) you will call are NOT in the contract"})
         with pytest.raises(C.ConformanceHalt) as ex:
             C.require(_cfg(tmp_path, e.base, cache_path=str(tmp_path / "cache2.json")))
