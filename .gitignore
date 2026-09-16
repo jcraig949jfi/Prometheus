@@ -59,6 +59,12 @@ config.local.yaml
 # reach M2 and fresh clones. Closed 2026-09-05.
 config.local.json
 *.user.json
+# evidence_wiki/derived/: watchdog logs, state and park records, service
+# stdout/stderr, and the live-qualification receipts (tests/*_results.json
+# moved here 2026-09-16, Techne #194). Untracked by construction so a watchdog
+# tick or a test run never dirties a worktree. The tracked integration/
+# battery receipts are a separate question (MNE-37).
+evidence_wiki/derived/
 
 # OS
 .DS_Store

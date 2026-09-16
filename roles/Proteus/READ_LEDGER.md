@@ -57,3 +57,19 @@ explicit operator directive, which is a departure from RESPONSIBILITIES §3 ("I 
 modify ... `SerendipityFoundry/`"). Recorded here rather than left implicit. Per James's ruling of
 2026-09-04, **PEW reverts to Mnemosyne** and this seat has stood down from it; the SFE M2 instance
 is deployment work carried out for Daedalus and committed under Daedalus's name in `53f11b286`.
+
+## 2026-09-16 — consumer-side interface reads (not world-side)
+
+- 2026-09-16 · `vivarium/viv/cegis_boolean.py` · lines 150–260 (`_size`, `_Split`,
+  `enumerate_candidates`, `_Oracle`) and 340–360 (the K-prefix seeding loop) · to state the
+  kind's size measure, leaf set and seeding rule exactly in the H1 beta sizing table
+  (`proteus/eval/BOOLEAN_UNIVERSE_TABLE.json`) rather than re-derive them · CONSUMER INTERFACE.
+  Not a world; the kind that consumes Proteus's evaluator. Read, never modified. (The same file
+  was read on 2026-09-10 for the witness-collapse finding and not ledgered then; recorded now.)
+- 2026-09-16 · `herakles/evca/derive.py` · lines 1–135 and 264–284 (module docstring, ids,
+  `_record` shape, `normalise_edits`, `verify_record`) and `core.py` lines 167–190 (the hex
+  spelling `decode_table` accepts) · to join Herakles's content id to PR-ID's `organism_ref`
+  without re-implementing or contradicting their canonicalisation · LIBRARY INTERFACE (identity
+  and record shape; the CA update rule itself was not read).
+- 2026-09-16 · `roles/Vivarium/INBOX_HERAKLES_CA_DENSITY_LIBRARY_ADDITIONS_2026-09-16.md` · whole
+  · cross-seat mail on main naming `herakles.evca.derive` as built · ROLE MAIL.

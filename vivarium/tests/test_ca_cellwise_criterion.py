@@ -150,5 +150,10 @@ def test_the_criterion_is_in_the_declared_set_and_nothing_else_is():
 
 def test_a_cellwise_row_still_satisfies_the_declared_result_schema():
     out = acc(genomes.GENOMES["GKL"]["hex"], "cellwise_majority_match")
-    meta = _kinds.get("ca_density_v0").check_result(dict(out))
+    # What executors.run does at the boundary: `_truncated` is the executor's
+    # declaration channel (now present on every row, THEO-REQ-004), not a
+    # result field.
+    out = dict(out)
+    meta = _kinds.get("ca_density_v0").check_result(
+        out, truncation=out.pop("_truncated", None))
     assert meta["validated"] is True

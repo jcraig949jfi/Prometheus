@@ -16,13 +16,14 @@ from .core import (  # noqa: F401
     require_table,
     decode_table, encode_table,
     neighbourhood_index, step, evolve, fixes_uniform_states,
-    make_ics, majority_target,
-    classify, mask_digest,
+    make_ics, majority_target, require_count,
+    classify, mask_digest, pack_mask_hex, unpack_mask_hex,
     reverse_bits, reflect_table, complement_table,
     reflect_states, complement_states,
     normalise_trajectory, trajectory_digest, selected_trajectory,
     majority_rule_table, gkl_rule_table,
     cellwise_majority_match, random_table, synchronisation_score, blinker_rule_table,
+    cellwise_synchronisation_match,
 )
 from .genomes import GENOMES, NAMES, SPECIMEN_JSON, rule_hex  # noqa: F401
 
@@ -33,12 +34,13 @@ __all__ = [
     "require_table",
     "decode_table", "encode_table",
     "neighbourhood_index", "step", "evolve", "fixes_uniform_states",
-    "make_ics", "majority_target",
-    "classify", "mask_digest",
+    "make_ics", "majority_target", "require_count",
+    "classify", "mask_digest", "pack_mask_hex", "unpack_mask_hex",
     "reverse_bits", "reflect_table", "complement_table",
     "reflect_states", "complement_states",
     "normalise_trajectory", "trajectory_digest", "selected_trajectory",
     "majority_rule_table", "gkl_rule_table",
     "cellwise_majority_match", "random_table", "synchronisation_score", "blinker_rule_table",
+    "cellwise_synchronisation_match",
     "GENOMES", "NAMES", "SPECIMEN_JSON", "rule_hex",
 ]
