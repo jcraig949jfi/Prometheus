@@ -336,6 +336,17 @@ def env_checks(round_id: str, skip_suite: bool = False, since_sha: str = "") -> 
         out.append(("planted_evidence_refusals", t.returncode == 0 and " passed" in last,
                     f"rc={t.returncode} | {last}"))
 
+    # BUILD_R8 GATE RUN item 4: G1's vocabulary lint and G4's protocol lint must RUN and PASS.
+    # The argvs come from their OWNERS on the bus -- F 1789565285343-0 and Q 1789565200695-0 -- not from me.
+    # Guessing an entrypoint is the score/signflip* error, and a lint retrofitted after the cap is not allowed.
+    # A missing module or subcommand simply returns non-zero and is recorded as a FAILED check: that is the
+    # correct fail-closed reading of "the lint did not land", and it needs no special case.
+    for cid, argv in (("G1_vocabulary_lint", [PY, "-m", "primordial.fabric.envelope", "lint"]),
+                      ("G4_protocol_lint", [PY, "-m", "primordial.ops.epoch", "lint", "--self-test"])):
+        lt = _run(argv, timeout=600)
+        ll = [x for x in ((lt.stdout or "") + (lt.stderr or "")).strip().splitlines() if x.strip()]
+        out.append((cid, lt.returncode == 0, f"rc={lt.returncode} | {ll[-1][:120] if ll else 'no output'}"))
+
     r = _run([PY, "-m", "primordial.ops.residue", "scan", "--round", round_id], timeout=300)
     try:
         scan = json.loads((r.stdout or "{}").strip().splitlines()[-1])
