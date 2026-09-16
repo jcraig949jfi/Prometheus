@@ -2,12 +2,27 @@
 service. All fixture writes are namespaced afterwards so they cannot leak
 into production retrieval (G13 discipline)."""
 import json
+import os
 import sys
 import threading
 from pathlib import Path
 
+import pytest
+
 HERE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(HERE))
+
+# LIVE-SERVICE QUALIFICATION SCRIPT, not a unit test (Techne #194, 2026-09-12;
+# fixed 2026-09-16). It writes fixture rows to WHATEVER store the resolved
+# service fronts and used to rewrite a tracked result JSON beside itself, so
+# a seat running `pytest evidence_wiki/tests` both wrote to the canonical
+# store under invented identities and dirtied its worktree. It now runs only
+# when asked, and writes its receipt under derived/ (untracked).
+if os.environ.get("EW_LIVE_QUALIFICATION") != "1":
+    pytest.skip("live-service qualification; set EW_LIVE_QUALIFICATION=1 to run "
+                "(writes fixture rows to the configured store)", allow_module_level=True)
+RESULTS_DIR = HERE / "derived" / "tests"
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 from ew.client import EvidenceWiki  # noqa: E402
 from ew import db  # noqa: E402
 
@@ -114,5 +129,5 @@ R["fixture_isolation_after_namespacing"] = {
 conn.close()
 ok = all(v["pass"] for v in R.values())
 print(json.dumps({"all_pass": ok, "checks": R}, indent=1))
-(Path(__file__).parent / "writepath_v1_results.json").write_text(
+(RESULTS_DIR / "writepath_v1_results.json").write_text(
     json.dumps({"all_pass": ok, "checks": R}, indent=1), encoding="utf-8")

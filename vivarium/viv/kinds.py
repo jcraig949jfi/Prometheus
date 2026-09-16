@@ -257,7 +257,9 @@ register(Kind(
          "chooses which mask `accuracy` is scored under; BOTH are always "
          "reported, along with the two per-rule fixed-point facts that decide "
          "whether they can differ at all. `ic_density_set` is ordered, null "
-         "meaning the unbiased ensemble; n_ic is ICs PER density.",
+         "meaning the unbiased ensemble, a float a Bernoulli(p) ensemble, "
+         "and {\"count\": k} (THEO-REQ-006) an exact-count ensemble of k "
+         "ones per IC; n_ic is ICs PER entry.",
     result_schema={
         "accuracy": R("number", finite=True,
                       note="scored under the declared success_criterion"),
@@ -297,6 +299,13 @@ register(Kind(
         "n_cells": R("integer"),
         "steps": R("integer"),
         "witness_truncated": R("boolean"),
+        "success_mask_hex": R("string",
+                              note="THEO-REQ-004: the per-IC success mask "
+                                   "under the declared criterion; numpy "
+                                   "packbits big bit order, IC i = bit "
+                                   "(7 - i % 8) of byte i // 8, zero-padded; "
+                                   "n_ic_total bits meaningful; unpacked "
+                                   "one-byte-per-IC sha256 == mask_digest"),
         "transform": R("string",
                       note="none | reflect | complement | reflect_complement; "
                            "the four EXACT symmetries, so a transformed arm is "
