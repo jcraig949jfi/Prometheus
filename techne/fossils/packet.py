@@ -22,6 +22,8 @@ Techne-owned fields (must be filled; the validator refuses a packet without them
   TECHNE_RUN_RECEIPTS    paths
   PRESERVATION           R25: independent copies with verification time/result
   REQUIRED_STATE_FOR_HANDOFF  R17: the state the next stage's experiment actually needs
+  HANDOFF_REQUESTED      true once Techne offers the packet downstream; only then is a state below
+                         the requirement a defect (a packet parked below its requirement is valid)
 Downstream-owned (present, null until the owner fills them): CUT_ID, NYX_PREDICTION_PACKET (Nyx);
 ORACLE_SOURCES, ORACLE_PROVENANCE_GRADES, HARMONIA_SURROGATE_ID, EQUIVALENCE_RESULT,
 DIVERGENCE_LEDGER (Harmonia); TEST_WORLD_ID, PRESSURE_ID, INTERVENTION_ID, TENSOR_ADMISSION_RESULT,
@@ -97,8 +99,10 @@ def validate(p: dict) -> list[str]:
     req = p["REQUIRED_STATE_FOR_HANDOFF"]
     if req not in LATTICE:
         why.append("REQUIRED_STATE_FOR_HANDOFF %r not in the R17 lattice" % req)
-    if st in LATTICE and req in LATTICE and LATTICE.index(st) < LATTICE.index(req):
+    if p.get("HANDOFF_REQUESTED") and st in LATTICE and req in LATTICE and LATTICE.index(st) < LATTICE.index(req):
         why.append("TECHNE_STATE %s is below REQUIRED_STATE_FOR_HANDOFF %s: not ready for handoff" % (st, req))
+    if p.get("HANDOFF_REQUESTED") and st in BLOCKED:
+        why.append("HANDOFF_REQUESTED while TECHNE_STATE is a blocked state %s" % st)
     if st.startswith("BEHAVIOR") and not p.get("BEHAVIOR_EVIDENCE"):
         why.append("a BEHAVIOR_* state needs BEHAVIOR_EVIDENCE (what published/contemporary behaviour was matched, by which oracle)")
     if not str(p["FOSSIL_WORLD_ID"]).startswith("fw-"):

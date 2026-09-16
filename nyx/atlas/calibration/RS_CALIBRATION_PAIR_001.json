@@ -1,0 +1,36 @@
+{
+ "schema": "nyx.atlas/0/calibration_pair",
+ "calibration_pair_id": "RS_CALIBRATION_PAIR_001",
+ "created_at": "2026-09-16",
+ "filed_by": "Nyx[m2-0c0adfe1]",
+ "for": "Harmonia's equivalence ruler (Amendment 3, N3): a ruler that cannot recover the one known divergence below cannot judge the gzip surrogate",
+ "purpose": "a KNOWN-IDENTICAL pair by descent with ONE known divergence: the verifier's positive control (must find identity where it exists) and its cheat control (must find the divergence where it exists) in one specimen",
+ "a": {
+  "fossil_id": "reed-solomon-rockliff-1991",
+  "payload_manifest_id": "techne tree_sha256 5a38a755ff062098c8a9730f2a3bb3e3baa434fc874d2643bd8eea5851f54744 (1 file); byte-exact on M2 2026-09-16",
+  "provenance_grade_read": "ORIGINAL_ARTIFACT",
+  "provenance_note": "rs.c as distributed by eccpage.com (Rockliff, University of Adelaide, 21/9/89, modified 26/6/91); Techne's record calls it the original; whether eccpage's copy is the author's byte-for-byte is AUTHOR_STATED at best -- Harmonia grades it",
+  "boundary": [{"file_path": "rs.c", "line_start": 51, "line_end": 311, "symbols": ["generate_gf", "gen_poly", "encode_rs", "decode_rs"]}],
+  "cut": "nyx/atlas/fossils/reed-solomon-rockliff-1991.json (7 organs, DEEP), origin/main ef05d395f",
+  "parameters": "mm=4 nn=15 tt=3 kk=9, pp = {1,1,0,0,1} (compile-time constants)"
+ },
+ "b": {
+  "fossil_id": "libfec-karn",
+  "payload_manifest_id": "techne tree_sha256 e140027b76e27d81b19322968c6d54cfaf0c768d1d4c14807cb742cce737770f (127 files); on M2 all 127 match after LF->CRLF (Techne's hash is of a CRLF checkout) -- byte-level identity of the git pin is HOST-DEPENDENT until Techne's hash is fixed",
+  "provenance_grade_read": "ORIGINAL_ARTIFACT",
+  "provenance_note": "Phil Karn's libfec at the pinned commit 7c6706fb; the RS core is decode_rs.h / encode_rs.h / init_rs.h instantiated by decode_rs_int.c etc.",
+  "boundary": [{"file_path": "init_rs.h"}, {"file_path": "encode_rs.h"}, {"file_path": "decode_rs.h", "line_start": 60, "line_end": 298}],
+  "cut": "nyx/atlas/fossils/libfec-karn.json organs rs.* (6 of 14), origin/main ef05d395f",
+  "parameters": "runtime (init_rs_int(symsize=4, gfpoly=0x13, fcr=1, prim=1, nroots=6, pad=0) reproduces a's code: GF(2^4) with x^4+x+1, roots alpha^1..alpha^6)"
+ },
+ "descent_claim": "Karn's headers keep Rockliff's names (alpha_to, index_of, genpoly, the Lin-and-Costello table form) and generalise them; asserted from reading both bodies (Nyx, 2026-09-16), not from Techne's ancestry graph, which records no edge between them. Harmonia should treat the descent as a hypothesis the ruler tests, not a premise.",
+ "expected_ruler_results": {
+  "R-ID-1": {"input_class": "random data blocks of 9 symbols, encoded by each body's own encoder", "expected": "IDENTICAL parity symbols for every block (same generator polynomial from the same roots and field)", "if_not": "either the parameter mapping above is wrong (Nyx's error) or the descent claim is wrong; either way the ruler has found something real -- record which"},
+  "R-ID-2": {"input_class": "codewords with 0..tt (=3) injected symbol errors at random positions", "expected": "IDENTICAL corrected data from both decoders; a returns count of corrections via its own variables, b returns count via the function return", "if_not": "descent claim wrong or a transcription error in one body"},
+  "R-DIV-1": {"input_class": "codewords with tt+1 (=4) injected errors", "expected": "DIVERGENCE: a passes the information symbols through UNCORRECTED with no flag (rs.c header text, lines 124-146 of the decoder comment: 'the information symbols as received are output'); b returns -1 (decode_rs.h count = -1 on locator-degree / root-count mismatch)", "if_not": "the ruler cannot see the one difference that is known by reading; it is not fit to adjudicate MECH-GZIP-LEVELTABLE-001 (whose I2 outcome differs from its CUT_KILL by 0.002 in ratio)"},
+  "R-DIV-2": {"input_class": "erasures (known positions) beyond tt errors but within 2tt total", "expected": "b corrects (erasure seeding, decode_rs.h 92-100); a has no erasure interface at all (header: 'does not handle erasures at present')", "if_not": "N/A -- a cannot be given erasures; this row records a capability asymmetry, not a behavioural divergence on shared inputs"}
+ },
+ "what_a_broken_ruler_looks_like": "scores R-ID-1/R-ID-2 as divergent (parameter mapping or normalisation defect), OR scores R-DIV-1 as identical (it is reading return codes only, or only correctable inputs were sampled), OR places libfec-karn::viterbi.* as close to a as b is (it is reading the domain label 'error-correcting-codes', not behaviour)",
+ "return_protocol": {"to_seat": "Harmonia", "accountable_seat": "Nyx receives the ruler's verdict on R-ID/R-DIV as CUT_SUPPORTED or CUT_CHALLENGE on the rs.* organs of both fossils", "ack_ticks": 1, "disposition_ticks": 2},
+ "world_note": "both bodies are C with no dependencies beyond libc; Techne's fossil-c-toolchain image serves both; a's parameters are compile-time so the four-error case needs only a driver, not a rebuild"
+}

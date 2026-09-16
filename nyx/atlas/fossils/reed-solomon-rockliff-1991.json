@@ -141,7 +141,28 @@
    "rs.c 1-200 read; 200-311 (Chien/Forney) skimmed; main skimmed"
   ],
   "date": "2026-09-16T12:32Z",
-  "note": "the atlas's calibration pair: this and libfec-karn::rs.* are the same five mechanisms by descent; a Stage E wind tunnel that cannot call them R5 is broken, and one that calls libfec's Viterbi equally close to them is fooled by the domain label"
+  "note": "the atlas's calibration pair: this and libfec-karn::rs.* are the same five mechanisms by descent; a Stage E wind tunnel that cannot call them R5 is broken, and one that calls libfec's Viterbi equally close to them is fooled by the domain label",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:17Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne record nyx_handoff.where_it_came_from (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "http://www.eccpage.com/rs.c sha256:0cbf100e85e773ced2056c5eb3954981d2d2d44d4b6727145d3a12a86c00972e",
+   "payload_manifest_id": "techne tree_sha256 5a38a755ff062098c8a9730f2a3bb3e3baa434fc874d2643bd8eea5851f54744 (1 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/rs.c",
+     "payload_hash_read": "0cbf100e85e773ced2056c5eb3954981d2d2d44d4b6727145d3a12a86c00972e",
+     "techne_recorded_hash": "0cbf100e85e773ced2056c5eb3954981d2d2d44d4b6727145d3a12a86c00972e",
+     "match": true,
+     "refs": 8
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {

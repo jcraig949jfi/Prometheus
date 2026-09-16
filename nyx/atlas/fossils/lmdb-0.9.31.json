@@ -142,7 +142,28 @@
    "mdb.c (forward decls; page_alloc; page_touch; find_oldest; txn_renew0 reader claim; freelist_save head; commit order; write_meta head; pick_meta)"
   ],
   "date": "2026-09-16T12:03Z",
-  "note": "a copy-on-write B+tree in one memory-mapped file; the record's oracle (kill between put and commit; the previous root comes back) is the double-meta organ"
+  "note": "a copy-on-write B+tree in one memory-mapped file; the record's oracle (kill between put and commit; the previous root comes back) is the double-meta organ",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:17Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne record nyx_handoff.where_it_came_from (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/LMDB/lmdb/archive/refs/tags/LMDB_0.9.31.tar.gz sha256:dd70a8c67807b3b8532b3e987b0a4e998962ecc28643e1af5ec77696b081c9b0",
+   "payload_manifest_id": "techne tree_sha256 c4a064d6d711367624fa19b7b57c333c0e6da891ef8da31f6b24dc012c296fe0 (29 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/lmdb-LMDB_0.9.31/libraries/liblmdb/mdb.c",
+     "payload_hash_read": "25d47ee49975808a4ef923ea711fe29dc958d111e6fa2462fc36ab95923336cc",
+     "techne_recorded_hash": "25d47ee49975808a4ef923ea711fe29dc958d111e6fa2462fc36ab95923336cc",
+     "match": true,
+     "refs": 9
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {
