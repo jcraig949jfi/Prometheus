@@ -251,3 +251,16 @@ SELECTIVE = _bind(_SELECTIVE_LINES, 512, 1024)      # code ~230 words + up to ~1
 FULL_LOG = _bind(_FULLLOG_LINES, 2048, 8192)        # code ~200 words + ~900 log entries
 TRIVIAL = POS_REGS                                  # the last value seen, in a register
 BOUNDARY = {"FULL_LOG": FULL_LOG, "SELECTIVE": SELECTIVE, "TRIVIAL": TRIVIAL}
+
+# SELECTIVE_ADD (v0.3): the same slot table, but PUT ACCUMULATES (fold) and RETIRE zeroes the
+# slot; r5 still holds the dispatched kind (1 or 9) at the FOUND branch.
+_SELECTIVE_ADD_LINES = [ln for ln in _SELECTIVE_LINES]
+_i = _SELECTIVE_ADD_LINES.index(("label", "FOUND"))
+_SELECTIVE_ADD_LINES[_i + 1:_i + 4] = [
+    ("ADD", "r3", "r3", "r10"), ("LD", "r13", "r3"), ("ADD", "r13", "r13", "r2"),
+    ("LDC", "r4", 9), ("EQ", "r4", "r5", "r4"), ("JZ", "r4", "STORE"), ("LDC", "r13", 0),
+    ("label", "STORE"), ("ST", "r3", "r13"), ("HALT",),
+]
+SELECTIVE_ADD = _bind(_SELECTIVE_ADD_LINES, 512, 1024)
+BOUNDARY_ADD = {"FULL_LOG": FULL_LOG, "SELECTIVE": SELECTIVE_ADD, "TRIVIAL": TRIVIAL}
+

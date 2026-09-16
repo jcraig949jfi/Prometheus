@@ -30,6 +30,7 @@ from archaeon import workspace as _ws                          # noqa: E402
 from archaeon.wse import controls as C                         # noqa: E402
 from archaeon.wse import interventions as I                    # noqa: E402
 from archaeon.wse.economics import RAMP_FOOTHOLD, REGIMES, Regime      # noqa: E402
+RAMP_FOOTHOLD_V03 = 0.20          # DESIGN_v0.3 W1: m_g = clip((mean - chance) / 0.20, 0, 1)
 from archaeon.wse.evolve import FOUNDRY, evaluate, run_cell    # noqa: E402
 from archaeon.wse.readout import results_digest, strip_timing  # noqa: E402
 from archaeon.wse.worlds import (GRAMMAR_VERSION, WorldSpec, episodes_for, erase_ceiling,   # noqa: E402
@@ -45,7 +46,8 @@ _S = dict(op_mode="replace", topology="stream", value_bits=4)
 CELLS: List[WorldSpec] = [
     WorldSpec("A_remember", K=1, D=1, Kd=8, delays=(4, 16, 64), **_S),
     WorldSpec("B_update", K=1, D=4, Kd=4, delays=(4, 16), **_S),
-    WorldSpec("C_forget", K=1, D=2, Kd=4, retire_rate=0.5, delays=(4, 16), **_S),
+    WorldSpec("C_forget", K=1, D=2, Kd=4, retire_rate=0.5, delays=(4, 16), op_mode="add", topology="stream",
+              value_bits=4, recycle=True),      # v0.3: RETIRE recycles the tag; ASK expects the NEW fold only
     WorldSpec("D_bind2", K=2, D=2, Kd=8, delays=(4, 16), **_S),
     WorldSpec("E_bind4", K=4, D=2, Kd=8, delays=(4, 16), **_S),
     WorldSpec("F_compose", K=2, D=2, Kd=4, delays=(4, 16), ask_kind="ASK2", op_mode="add", topology="stream", value_bits=4),
@@ -82,7 +84,7 @@ def boundary_map(campaign_seed: int, cells: List[WorldSpec], E: int = 32) -> dic
         row = {"world_id": spec.world_id(), "n_ticks_mean": sum(len(e.ticks) for e in eps) / E,
                "n_asks_mean": sum(e.n_asks() for e in eps) / E, "nulls": {k: round(v, 4) for k, v in nulls.items()},
                "chance": chance, "organisms": {}}
-        for nm, m in C.BOUNDARY.items():
+        for nm, m in (C.BOUNDARY_ADD if spec.op_mode == "add" else C.BOUNDARY).items():
             ev = evaluate(m, eps, rng_seed=1)
             row["organisms"][nm] = {"reward": ev["reward"], "ops_per_episode": round(ev["ops_per_episode"], 1),
                                     "persistent_words": ev["meter"]["persistent_state_words"],
@@ -150,11 +152,13 @@ def run_job(job: dict) -> dict:
         fm = dict(FOUNDRY_V02); fm["seed"] = 777 + seed; fm["n"] = job["N"] - len(init_pop)
         init_pop = init_pop + G.generate(fm)
     res = run_cell(spec, regime, cs, seed, N=job["N"], G_=job["G"], E=job["E"], init_pop=init_pop, branch=branch,
-                   ramp=regime.name != "S0", ramp_foothold=RAMP_FOOTHOLD, curve_every=10, curve_episodes=curve_eps,
-                   foundry=FOUNDRY_V02)
+                   ramp=regime.name != "S0", ramp_foothold=RAMP_FOOTHOLD_V03, curve_every=10, curve_episodes=curve_eps,
+                   foundry=FOUNDRY_V02, ramp_mode="mean", chance=1.0 / (1 << spec.value_bits))
     elite = res["elite"]
     m = elite["manifest"]
-    ho = evaluate(m, episodes_for(spec, cs, "heldout", seed, HELDOUT_E), rng_seed=7)
+    ho_eps = episodes_for(spec, cs, "heldout", seed, HELDOUT_E)
+    ho = evaluate(m, ho_eps, rng_seed=7)
+    split = split_competence(m, ho_eps)
     hov = evaluate(m, episodes_for(with_knobs(spec, vocab="heldout"), cs, "heldout_vocab", seed, HELDOUT_E), rng_seed=7)
     changed = {
         "Kd_x2": evaluate(m, episodes_for(with_knobs(spec, Kd=2 * spec.Kd), cs, "changed", seed, HELDOUT_E), rng_seed=7)["reward"],
@@ -186,6 +190,7 @@ def run_job(job: dict) -> dict:
     result = {
         "reward_train_last": res["elite_eval"]["reward"], "fitness_train_last": res["elite_fitness"],
         "competence_heldout": ho["reward"], "competence_heldout_vocab": hov["reward"],
+        "competence_split_retired": split,
         "competence_changed": changed, "answered_share_heldout": ho["answered_share"],
         "experience_episodes": res["experience_episodes"], "experience_ticks": res["experience_ticks"],
         "persistent_words": ho["meter"]["persistent_state_words"], "peak_state": ho["tape_occupancy_max"] + ho["n_regs"],
@@ -208,7 +213,7 @@ def run_job(job: dict) -> dict:
         "schema": "wse.experiment_record.v0.2", "campaign": job["campaign"],
         "world": {"world_id": spec.world_id(), "name": spec.name, "knobs": spec.knobs(), "grammar": GRAMMAR_VERSION,
                   "seed": seed, "campaign_seed": cs},
-        "economics": dict(regime.as_dict(), ramp=(regime.name != "S0"), ramp_foothold=RAMP_FOOTHOLD),
+        "economics": dict(regime.as_dict(), ramp=(regime.name != "S0"), ramp_foothold=RAMP_FOOTHOLD_V03, ramp_mode="mean"),
         "organism": {"organism_id": elite["organism_id"], "lineage_id": elite["lineage_id"], "generation": elite["generation"],
                      "branch": branch, "transfer_source": elite.get("transfer_source"), "ancestry_depth": len(res["ancestry"]),
                      "manifest": m, "runtime_hash": RUNTIME_HASH, "grammar_hash": GRAMMAR_HASH},
@@ -219,6 +224,27 @@ def run_job(job: dict) -> dict:
         "final_elites": [e["organism_id"] for e in res["final_elites"]],
         "final_elite_manifests": [e["manifest"] for e in res["final_elites"]],
     }
+
+
+def split_competence(m: dict, episodes) -> dict:
+    """Competence on asks about RETIREd tags vs the rest (v0.3 C_forget)."""
+    from proteus.foundry.prng import SplitMix64, seed_from
+    from proteus.foundry.vm import Player
+    p = Player(m)
+    hit = {"retired": 0, "other": 0}
+    tot = {"retired": 0, "other": 0}
+    for ei, ep in enumerate(episodes):
+        st = p.fresh_state()
+        rng = SplitMix64(seed_from("wse.vmrng", 7, ei))
+        ret = set(ep.meta.get("retired_asks", []))
+        for ti, words in enumerate(ep.ticks):
+            outs, _ = p.run_tick(st, [words], 1, rng)
+            if ti in ep.expected:
+                k = "retired" if ti in ret else "other"
+                tot[k] += 1
+                if outs[0] and outs[0][0] == ep.expected[ti]:
+                    hit[k] += 1
+    return {k: (round(hit[k] / tot[k], 4) if tot[k] else None) for k in tot} | {"n_retired": tot["retired"], "n_other": tot["other"]}
 
 
 def classify(spec: WorldSpec, r: dict, floor: float) -> dict:
@@ -268,7 +294,7 @@ def summarize(rows: List[dict]) -> str:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--campaign", default="ssf-c1")
+    ap.add_argument("--campaign", default="ssf-c2")
     ap.add_argument("--seed", type=int, default=20260917)
     ap.add_argument("--N", type=int, default=256)
     ap.add_argument("--G", type=int, default=120)

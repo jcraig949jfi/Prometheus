@@ -120,6 +120,7 @@ def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int
              N: int = 200, G_: int = 100, E: int = 24, elitism: int = 4, tournament: int = 4,
              init_pop: Optional[List[dict]] = None, branch: str = "B1_naive",
              ramp: bool = False, ramp_foothold: float = 0.30, curve_every: int = 0,
+             ramp_mode: str = "best", chance: float = 0.0,
              curve_episodes: Optional[List[Episode]] = None, foundry: Optional[dict] = None) -> dict:
     """Evolve one cell. Returns the elite, its ancestry chain, the per-generation trace and
     (v0.2) the learning curve: held-out competence of the elite every `curve_every`
@@ -137,11 +138,18 @@ def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int
     curve: List[dict] = []
     scored = []
     best_so_far = 0.0
+    mean_prev = 0.0
     exp_episodes = 0
     exp_ticks = 0
     for g in range(G_):
         eps = episodes_for(spec, campaign_seed, "train", g * 100003 + cell_seed, E)
-        m_g = min(1.0, best_so_far / ramp_foothold) if ramp else 1.0
+        if not ramp:
+            m_g = 1.0
+        elif ramp_mode == "mean":
+            # v0.3 (DESIGN_v0.3 W1): the population MEAN of the previous generation above chance
+            m_g = min(1.0, max(0.0, (mean_prev - chance) / ramp_foothold))
+        else:
+            m_g = min(1.0, best_so_far / ramp_foothold)
         scored = []
         for org in pop:
             ev = evaluate(org["manifest"], eps, rng_seed=seed_from("wse.eval", campaign_seed, g, cell_seed))
@@ -152,6 +160,7 @@ def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int
         scored.sort(key=lambda z: -z[0])
         top = scored[0]
         best_so_far = max(best_so_far, max(z[2]["reward"] for z in scored))
+        mean_prev = sum(z[2]["reward"] for z in scored) / len(scored)
         if curve_every and curve_episodes is not None and (g % curve_every == 0 or g == G_ - 1):
             cev = evaluate(top[1]["manifest"], curve_episodes, rng_seed=seed_from("wse.curve", campaign_seed, cell_seed))
             curve.append({"gen": g, "experience_episodes": exp_episodes, "experience_ticks": exp_ticks,

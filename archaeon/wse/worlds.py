@@ -78,6 +78,7 @@ class WorldSpec:
     delays: tuple = ()               # per-tag ask delay drawn from this set (random timing)
     interfere: bool = False          # distractor tags share the top 12 bits of tracked tags
     vocab: str = "train"             # train: tags in [1,2^15); heldout: [2^15, 2^16)
+    recycle: bool = False            # v0.3: after RETIRE the tag gets D NEW PUTs; ASK expects the new fold only
 
     def world_id(self) -> str:
         return hashlib.sha256(json.dumps({"grammar": GRAMMAR_VERSION, **asdict(self)},
@@ -323,6 +324,12 @@ def _make_ssf_episode(spec: WorldSpec, rng: SplitMix64) -> Episode:
         if t in tracked and spec.retire_rate > 0 and rng.unit() < spec.retire_rate:
             evs.append([K_RETIRE, t])
             s = 0
+            if spec.recycle:
+                s = None
+                for _ in range(D):
+                    v = rng.randint(0, vmax - 1)
+                    evs.append([K_PUT, t, v])
+                    s = v if (s is None or replace) else (s + v) & MASK32
         per_tag[t] = evs
         state[t] = s
     remaining = {t: list(v) for t, v in per_tag.items()}
