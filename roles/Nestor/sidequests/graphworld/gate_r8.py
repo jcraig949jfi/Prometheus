@@ -137,7 +137,13 @@ def p_g1():
     ok = t.returncode == 0 and " passed" in last
     wsrc = (ROOT / "primordial" / "fabric" / "worker.py").read_text(encoding="utf-8", errors="replace")
     wired = "prepare_row" in wsrc
-    drain_loud = "aborted" not in wsrc.split("def _drain", 1)[-1][:1200] if "def _drain" in wsrc else False
+    drain = wsrc.split("def _drain", 1)[-1][:1500] if "def _drain" in wsrc else ""
+    # My first heuristic read the presence of "aborted" in _drain as proof of the D29 defect. Wrong, and it
+    # would have published a false RESIDUAL about P's work into the permanent map: P KEEPS the aborted
+    # wrapper row on purpose (it is residue, which this round counts as product) and records the refusal
+    # separately in row_refusals, which is what turns the job status to `error`. Detect the mechanism that
+    # actually exists, not the absence of a string.
+    drain_loud = "row_refusals" in drain
     limit = ("" if (wired and drain_loud) else
              f"  RESIDUAL (P's file, F-disclosed): Ctx.emit prepare_row wired={wired}, "
              f"_drain ends job error={drain_loud} -- bare ctx.emit jobs NOT covered")
