@@ -194,13 +194,21 @@ def git_pin(url: str, commit: str, dest: pathlib.Path, timeout: int = 900,
         # converted -- otherwise text files get CRLF on a Windows checkout and (a) the tree hash
         # would not match a Linux re-fetch and (b) shell scripts like tinycc's configure break.
         subprocess.run(["git", *GITENV, "clone", "--quiet", url, str(dest)], check=True, timeout=timeout)
+    # The -c flags above bind to the CLONE only. Every later operation in this clone (the fetch
+    # and checkout of a pin that is not the default HEAD, submodule update, a re-checkout) would
+    # otherwise inherit the HOST's core.autocrlf and smudge exactly the files that differ from
+    # HEAD -- found 2026-09-16 on M2 (global autocrlf=true): lapack-reference's 70 pin-changed
+    # files came out CRLF while the index and the record were LF. Persist the settings in the
+    # clone so the working tree is byte-exact whatever the host says.
+    subprocess.run(["git", "-C", str(dest), "config", "core.autocrlf", "false"], check=True, timeout=60)
+    subprocess.run(["git", "-C", str(dest), "config", "core.eol", "lf"], check=True, timeout=60)
     if commit == "HEAD":
         # "whatever the default branch is right now" -- resolved ONCE here and written back to
         # the record as commit_resolved, so the pin becomes exact from this moment on.
         commit = subprocess.run(["git", "-C", str(dest), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
     else:
-        subprocess.run(["git", "-C", str(dest), "fetch", "--quiet", "origin", commit], timeout=timeout)
-    subprocess.run(["git", "-C", str(dest), "checkout", "--quiet", "--detach", commit], check=True, timeout=timeout)
+        subprocess.run(["git", "-C", str(dest), *GITENV, "fetch", "--quiet", "origin", commit], timeout=timeout)
+    subprocess.run(["git", "-C", str(dest), *GITENV, "checkout", "--quiet", "--detach", commit], check=True, timeout=timeout)
     head = subprocess.run(["git", "-C", str(dest), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
     if not head.startswith(commit):
         raise RuntimeError("HEAD %s != requested %s" % (head, commit))
