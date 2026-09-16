@@ -152,7 +152,56 @@
    "file sizes"
   ],
   "date": "2026-09-16T12:18Z",
-  "note": "the interesting anatomy is what is ABSENT: no AST, no IR, no optimiser; parsing emits machine code directly through a value stack; every mechanism below is a consequence of that one design decision"
+  "note": "the interesting anatomy is what is ABSENT: no AST, no IR, no optimiser; parsing emits machine code directly through a value stack; every mechanism below is a consequence of that one design decision",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://repo.or.cz/tinycc.git@0fb54300b56512754221d80adda85ddb9815bceb",
+   "payload_manifest_id": "techne tree_sha256 926f8626193eebf953c48cb590cb5d1b0bb51cbe7cd653df1557f16efb5a460c (546 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/tccgen.c",
+     "payload_hash_read": "753da8ee4fe1a346c22705ee42ff6c5710e215a862d0fcf400f5957f645634b7",
+     "techne_recorded_hash": "753da8ee4fe1a346c22705ee42ff6c5710e215a862d0fcf400f5957f645634b7",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/tccpp.c",
+     "payload_hash_read": "233c83c1087abe2c52eef23e03053bfd09dc6bcf5958aa463548ab455f016993",
+     "techne_recorded_hash": "233c83c1087abe2c52eef23e03053bfd09dc6bcf5958aa463548ab455f016993",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/tccrun.c",
+     "payload_hash_read": "68f5ad7ad0409a338a134ac5d091234598a44b5ba5d55d1397290bee0d7b8074",
+     "techne_recorded_hash": "68f5ad7ad0409a338a134ac5d091234598a44b5ba5d55d1397290bee0d7b8074",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/x86_64-gen.c",
+     "payload_hash_read": "17a55c5d873e3f522033a67b1ab019b3f5b1dfb31d1bc8654cdd75a41ef246f6",
+     "techne_recorded_hash": "17a55c5d873e3f522033a67b1ab019b3f5b1dfb31d1bc8654cdd75a41ef246f6",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/tccelf.c",
+     "payload_hash_read": "149661f8ff6dba6ddd5de599adaf8921c064f6444ed50e425673b7ca56324b75",
+     "techne_recorded_hash": "149661f8ff6dba6ddd5de599adaf8921c064f6444ed50e425673b7ca56324b75",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {

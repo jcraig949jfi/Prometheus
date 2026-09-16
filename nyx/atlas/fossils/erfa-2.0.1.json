@@ -159,7 +159,56 @@
    "routine list (247 names)"
   ],
   "date": "2026-09-16T12:14Z",
-  "note": "247 routines, but a handful of mechanism SHAPES: trigonometric series over fundamental-argument polynomials, rotation-matrix algebra, fixed correction pipelines, table lookups with validity windows, and a two-part date representation; the library keeps every superseded model side by side"
+  "note": "247 routines, but a handful of mechanism SHAPES: trigonometric series over fundamental-argument polynomials, rotation-matrix algebra, fixed correction pipelines, table lookups with validity windows, and a two-part date representation; the library keeps every superseded model side by side",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/liberfa/erfa/releases/download/v2.0.1/erfa-2.0.1.tar.xz sha256:45111f0addf6ef69345aaf093bd054705b41ac2db7541dd3f0e105362c8e20e4",
+   "payload_manifest_id": "techne tree_sha256 18f011416105d6315dd709d19a22e46265109fc93bedcdfe7756280c2b8334e7 (270 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/erfa-2.0.1/src/atciq.c",
+     "payload_hash_read": "006c76e70b33d47e2c44bd5500e19b4d5b1696c0824f2a3c50c8ddb1d552db5e",
+     "techne_recorded_hash": "006c76e70b33d47e2c44bd5500e19b4d5b1696c0824f2a3c50c8ddb1d552db5e",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/erfa-2.0.1/src/nut00a.c",
+     "payload_hash_read": "a1538ec0277745db974ab76ca4b678a7602249bccecf9474e2b0268f9c2032ef",
+     "techne_recorded_hash": "a1538ec0277745db974ab76ca4b678a7602249bccecf9474e2b0268f9c2032ef",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/erfa-2.0.1/src/dat.c",
+     "payload_hash_read": "09e3377ff0c770372c759dc16af12aadc70975d3c549d9524e5c3dd44e24fa88",
+     "techne_recorded_hash": "09e3377ff0c770372c759dc16af12aadc70975d3c549d9524e5c3dd44e24fa88",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/erfa-2.0.1/src/t_erfa_c.c",
+     "payload_hash_read": "8a92d0099c48df31ca566bea881c19497dc295dba58dba7136cc2f8443c31f15",
+     "techne_recorded_hash": "8a92d0099c48df31ca566bea881c19497dc295dba58dba7136cc2f8443c31f15",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/erfa-2.0.1/src/taitt.c",
+     "payload_hash_read": "2e235092b443057893b8cbb27cbf1bd88ab1a5f43ad42cec0ff4ae656ea3ae9a",
+     "techne_recorded_hash": "2e235092b443057893b8cbb27cbf1bd88ab1a5f43ad42cec0ff4ae656ea3ae9a",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {

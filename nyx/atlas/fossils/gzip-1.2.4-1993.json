@@ -165,7 +165,42 @@
    "file list"
   ],
   "date": "2026-09-16T12:20Z",
-  "note": "LZ77 with hash chains + lazy matching + dynamic Huffman; the record's knob (-1..-9) is a four-column table that changes NO mechanism, only four thresholds -- a clean Stage C ablation target"
+  "note": "LZ77 with hash chains + lazy matching + dynamic Huffman; the record's knob (-1..-9) is a four-column table that changes NO mechanism, only four thresholds -- a clean Stage C ablation target",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://ftp.gnu.org/gnu/gzip/gzip-1.2.4.tar.gz sha256:1ca41818a23c9c59ef1d5e1d00c0d5eaa2285d931c0fb059637d7c0cc02ad967",
+   "payload_manifest_id": "techne tree_sha256 d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719 (90 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/gzip-1.2.4/deflate.c",
+     "payload_hash_read": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4",
+     "techne_recorded_hash": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4",
+     "match": true,
+     "refs": 6
+    },
+    {
+     "path": "upstream/tree/gzip-1.2.4/trees.c",
+     "payload_hash_read": "29326baf3bd7235bba9d933694dcc506d7238a05242bf88136f972f3fac20e62",
+     "techne_recorded_hash": "29326baf3bd7235bba9d933694dcc506d7238a05242bf88136f972f3fac20e62",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/gzip-1.2.4/inflate.c",
+     "payload_hash_read": "d63333e2ec1614af06877bad89695ed192f0e75b868a9f8f9a8ccc579532ee18",
+     "techne_recorded_hash": "d63333e2ec1614af06877bad89695ed192f0e75b868a9f8f9a8ccc579532ee18",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {
@@ -551,7 +586,7 @@
    "fossil_ancestry": "gzip-1.2.4-1993",
    "human_name": "configuration_table[10]: good, lazy, nice, chain",
    "human_interpretation": "UNKNOWN",
-   "mechanism": "level 0 stores; 1-3 use deflate_fast with (lazy reinterpreted); 4-9 set good_match (when to quarter the chain), max_lazy_match, nice_match (stop searching), max_chain_length; no other code changes with the level",
+   "mechanism": "level 0 stores; 1-3 use deflate_fast with (lazy reinterpreted); 4-9 set good_match (when to quarter the chain), max_lazy_match, nice_match (stop searching), max_chain_length; no other code changes with the level [SUPERSEDED 2026-09-16 by MECH-GZIP-LEVELTABLE-001: the sentence 'no other code changes with the level' is WRONG -- two level-keyed switches exist outside the table: deflate.c:667 (compr_level <= 3 -> deflate_fast) and trees.c:987 (block-flush heuristic gated on level > 2); the original text is kept above this marker]",
    "input": "pack_level",
    "output": "four thresholds",
    "state": "none",
@@ -570,7 +605,7 @@
     "gzip-1.2.4-1993::lazy_evaluation_deferring_a_match_by_one_byte_to_see_if_a_longer_one_starts_there"
    ],
    "fitness_value_in_ancestor": "UNKNOWN",
-   "failure_landscape": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run; CORRECTION 2026-09-16: the level is consumed at three sites, not one (see MECH-GZIP-LEVELTABLE-001 consumers_of_level_outside_the_boundary); found by Nyx while writing the prediction packet, before any downstream adjudication",
    "ablation": "NOT_RUN",
    "decomposability": "UNKNOWN",
    "composability": "UNKNOWN",

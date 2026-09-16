@@ -165,7 +165,70 @@
    "file list (74 .c, 17 .s)"
   ],
   "date": "2026-09-16T11:58Z",
-  "note": "three decoders for two code families plus DSP helpers; the SIMD files are the same machinery re-expressed for four instruction sets (a preservation of the 2004 hardware pressure, not new anatomy)"
+  "note": "three decoders for two code families plus DSP helpers; the SIMD files are the same machinery re-expressed for four instruction sets (a preservation of the 2004 hardware pressure, not new anatomy)",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/ka9q/libfec@7c6706fb969c3f8fe6ec7778b2472762e0d88acc",
+   "payload_manifest_id": "techne tree_sha256 2b3fe8726f9a3ae6294e58a3899d0d52bdaeb1832a9df73e081b8d296a8506c9 (127 files)",
+   "host_tree_matches_record": false,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/viterbi27_port.c",
+     "payload_hash_read": "e408b345784ab04a7d7b6d3f5f20e34df7970b9fc769cd74716a42c0cc2a1200",
+     "techne_recorded_hash": "e408b345784ab04a7d7b6d3f5f20e34df7970b9fc769cd74716a42c0cc2a1200",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/decode_rs.h",
+     "payload_hash_read": "5de92b922f50d0b3ac78499f9b7566659b14caad703e9c1f55240b66124b68ca",
+     "techne_recorded_hash": "5de92b922f50d0b3ac78499f9b7566659b14caad703e9c1f55240b66124b68ca",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree/fano.c",
+     "payload_hash_read": "c6c206f6ebab2a6f2771d0ebaffd00cf7c9c539905c06dc8586cca34b6ea6626",
+     "techne_recorded_hash": "c6c206f6ebab2a6f2771d0ebaffd00cf7c9c539905c06dc8586cca34b6ea6626",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/init_rs.h",
+     "payload_hash_read": "5ea6094e6c755fdd077c3a3fe75997abdd7b1ee90970c2daf5e84c94d33c4eac",
+     "techne_recorded_hash": "5ea6094e6c755fdd077c3a3fe75997abdd7b1ee90970c2daf5e84c94d33c4eac",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/encode_rs.h",
+     "payload_hash_read": "43caffd40d680aabae009a38e9596f8574393bee5cdd8b79b4d8ed08244fc513",
+     "techne_recorded_hash": "43caffd40d680aabae009a38e9596f8574393bee5cdd8b79b4d8ed08244fc513",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/metrics.c",
+     "payload_hash_read": "09cee86e54e7d1d2975349a8fd670bc050817bb708d349c63fe71a3d3386e1cc",
+     "techne_recorded_hash": "09cee86e54e7d1d2975349a8fd670bc050817bb708d349c63fe71a3d3386e1cc",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/dotprod_port.c",
+     "payload_hash_read": "d84e18db26c147433e5924ee05e51293412d02bf1e0d0259240cde9b589a9a12",
+     "techne_recorded_hash": "d84e18db26c147433e5924ee05e51293412d02bf1e0d0259240cde9b589a9a12",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {

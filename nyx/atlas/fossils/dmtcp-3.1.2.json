@@ -166,7 +166,84 @@
    "plugin/ipc/socket/socketconnlist.cpp (event switch)"
   ],
   "date": "2026-09-16T12:01Z",
-  "note": "transparent distributed checkpoint/restart; a large body cut at subsystem grain -- ten mechanisms named, four plugins unread"
+  "note": "transparent distributed checkpoint/restart; a large body cut at subsystem grain -- ten mechanisms named, four plugins unread",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/dmtcp/dmtcp/archive/refs/tags/v3.1.2.tar.gz sha256:560691a4a3efa2b583af2976145fc356b2a24d78c2476c338bc85a0e1f457aee",
+   "payload_manifest_id": "techne tree_sha256 a5f1b540d86bd4d10478a3670317df05713ce75d312919e5607c514f39c3ac01 (506 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/dmtcp-3.1.2/src/dmtcp_coordinator.cpp",
+     "payload_hash_read": "17f1ee7e92aaa64f20fe7d8ed935209c0cad387f3a346513d78f4a308633ca70",
+     "techne_recorded_hash": "17f1ee7e92aaa64f20fe7d8ed935209c0cad387f3a346513d78f4a308633ca70",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/dmtcp-3.1.2/src/threadlist.cpp",
+     "payload_hash_read": "c0d388ae50f1fb3dfe232c9e62abd225373362e4efb6bd5865504fd5fafa52fa",
+     "techne_recorded_hash": "c0d388ae50f1fb3dfe232c9e62abd225373362e4efb6bd5865504fd5fafa52fa",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/dmtcp-3.1.2/src/writeckpt.cpp",
+     "payload_hash_read": "ad9206fb7964f3dc936c847d9ac5bc15d34ee6dc9c24225df4c5ec02d77bdcc2",
+     "techne_recorded_hash": "ad9206fb7964f3dc936c847d9ac5bc15d34ee6dc9c24225df4c5ec02d77bdcc2",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/dmtcp-3.1.2/src/mtcp/mtcp_restart.c",
+     "payload_hash_read": "e63900b4b7d8878877b263b10e2f169d4735c34d42f525b07edb4988fc9117f3",
+     "techne_recorded_hash": "e63900b4b7d8878877b263b10e2f169d4735c34d42f525b07edb4988fc9117f3",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/dmtcp-3.1.2/src/plugin/ipc/socket/kernelbufferdrainer.cpp",
+     "payload_hash_read": "81236b7a849babd9e0e1aeb2c65659dc48049efdc45ca00c48e6270f2883a914",
+     "techne_recorded_hash": "81236b7a849babd9e0e1aeb2c65659dc48049efdc45ca00c48e6270f2883a914",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/dmtcp-3.1.2/src/dmtcp_launch.cpp",
+     "payload_hash_read": "ed86e1b47977b250109a8df7edc6e3d53fc4c1c3ceec5fc4bf4ac6c92bc1e6bc",
+     "techne_recorded_hash": "ed86e1b47977b250109a8df7edc6e3d53fc4c1c3ceec5fc4bf4ac6c92bc1e6bc",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/dmtcp-3.1.2/src/../include/virtualidtable.h",
+     "payload_hash_read": "dcf14596716a4a22b9959b3894fa24316d10f5c82e3a9c4e4101951cfa717082",
+     "techne_recorded_hash": null,
+     "match": null,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/dmtcp-3.1.2/src/plugin/ipc/socket/connectionrewirer.cpp",
+     "payload_hash_read": "f7329a7bc5128a41ece899445d9687554cde4762ccabf327a584afd799f8880a",
+     "techne_recorded_hash": "f7329a7bc5128a41ece899445d9687554cde4762ccabf327a584afd799f8880a",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/dmtcp-3.1.2/src/plugin/ipc/socket/socketconnlist.cpp",
+     "payload_hash_read": "4b7a2e1fcc041d2ea0e6688d441b0ff0603326e96ecd0adecf2927a2e2829380",
+     "techne_recorded_hash": "4b7a2e1fcc041d2ea0e6688d441b0ff0603326e96ecd0adecf2927a2e2829380",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {
