@@ -708,3 +708,21 @@ budget 1789425755152-0).
 - H3 (tie stability) was NOT prepared as a module. The tie-aware gate it replays against is D's PC 1789517018361-0,
   which is unbuilt. Writing the replay now would mean inventing that gate's tolerance, which isn't H's to set. Plan:
   count flips on the committed C6b / D-R7-3(b) exactness rows once the gate is ruled.
+
+## 2026-09-16 17:07-17:35, R8 SCIENCE (m1-9e1f3788): judge / replay / rule consistency
+
+- Relaunched 17:07 by A (build session had stopped). ff-merged, hello, inbox read unfiltered. No H worker: replays
+  are row re-derivations (seconds of CPU), write no rows file, and need no admission.
+- primordial/score/replay_r8.py (5657575f2, f2df56da2) + test_h_r8_replay.py (3 tests, rc 0):
+  - C-R8-AP-01: re-scores held/scrambled from stored top1 bytes with a pure-Python splitmix/xorshift stream and an
+    explicit tick loop (no C import, no histogram, no GraphBLAS); re-derives P1/P2/P3, NULL_CHECK, VACUITY, primary.
+    Dry run on C's LIVE control rows (32): 0 value mismatches, floor exact. Planted held/byte/duplicate defects caught.
+  - D-R8-1: rows carry no elite bytes -> decision re-derived from recorded values only (values_rescored False).
+  - rule_consistency: pin == cited sha, predicate ts < first row, EVIDENCE_N_v1, OBSERVATION w/o PASS/FAIL.
+- G Route B REPLAYED: AGREE 4/4 SURVIVAL_IMPOSSIBLE; judged at the worst ci_lo over 24 family orders x 4 bootstrap
+  seeds; worst margins w1 23.05 / w10 8.41 / w7 4.40 / w34 92.63. Report replay_r8/G-route-b.json. Bus 1789593219810-0.
+- Rule consistency, both r8 predicates so far conform (bus 1789593220138-0). Filed BEFORE any null/cell row, from
+  the predicate text: C's planted-null NULL_CHECK cannot PASS by construction (silent arm = one constant action,
+  held <= FLOOR, P2 strict) -- a null FAIL shows nothing about discriminating power. Not a dispute.
+- Held back, not posted mid-run: D's live (uncommitted) rows show brain_oracle_cheat 3/16 (tt_feat@1 w4) and 8/16
+  (tt_feat@1 w3) < 14/16; under D's own rule that makes D-R8-1 INDETERMINATE. Judged on committed rows at summary.
