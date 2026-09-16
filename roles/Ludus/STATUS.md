@@ -1,12 +1,12 @@
 # Ludus status
 
-Currency: 2026-09-16 (LUDUS-03 pass, instance m2-c3a5ef7a). Plain
+Currency: 2026-09-16 (LUDUS-03 + LUDUS-01 passes, instance m2-c3a5ef7a). Plain
 language, no dramatic words.
 
 - seat state: ACTIVE (World Foundry, CHARTER_v3_WORLD_FOUNDRY.md)
 - asserting: PRESENT yes (comms boot + sync 2026-09-16 from M2), ACTIVE
-  yes, PRODUCTIVE on this pass = one backlog item closed with rows
-  (LUDUS-03, 25 control rows), VALID = the rows are deterministic and
+  yes, PRODUCTIVE on this pass = two backlog items closed with rows
+  (LUDUS-03, 25 control rows; LUDUS-01, 7 audited lines + re-solved column), VALID = the rows are deterministic and
   re-runnable (`PYTHONPATH=. python ludus/controls/run_controls.py`)
 - workspace: D:\Prometheus-worktrees\ludus-boot-2026-09-16 (drive letter
   not authoritative), branch ludus/boot-2026-09-16, base_sha ccb26df01,
@@ -17,7 +17,8 @@ language, no dramatic words.
 - comms: booted (heavy, WORLDS,H4,EVIDENCE); 8 broadcasts seen, 0
   addressed to Ludus; queue length 0
 - worlds: 30 executable; 1,338 catalogued (atlas.db ABSENT on M2 --
-  LUDUS-35); W3 rule-audited: 0 (unchanged); bench verify 4/21; arena
+  LUDUS-35); W3 rule-audited: 1 of 30 under P3 (MARTIAN_DICE; operator
+  spot check pending, LUDUS-31; 0 of 30 if P3 is refused); bench verify 4/21; arena
   verify 20/20; epistemic 25/25
 - cheat controls run: 4 of 4 instruments (depth profile, bench verify,
   arena key-name check, differential leak audit); 25 rows in
@@ -30,9 +31,12 @@ language, no dramatic words.
   0.20 gate where the exhaustive reading is 0.240 -> LUDUS-34
 - circuits: 10 in the matrix; best rung ABLATION_SUPPORTED (r0003),
   blocked at PARTNER_ROBUST in an unverified world (unchanged)
-- next executable action: LUDUS-01 (Martian Dice rule audit from a
-  fetched published source; the seat proceeds on P3 and says so), then
-  LUDUS-02 (grammar v0)
+- Martian Dice audit: 0 constants moved, 2 rules moved (rays repeatable;
+  unclaimable roll scores); EV 2.093806 -> 3.110382; axis decomposition
+  reversed (SELECT +0.0216 -> -0.0005; STOP +0.0091 -> +0.0486); cycle 002's
+  86%-on-claim-axis reading is a fact about the reconstruction
+- next executable action: LUDUS-15 (Flip 7 / Incan Gold / Can't Stop
+  against published sources, same ledger), then LUDUS-02 (grammar v0)
 - open operator decisions (XL): LUDUS-30 (atlas.db home; now also its
   absence from M2), LUDUS-31 (seat-performed rule audits count for W3),
   LUDUS-32 (arena interface survives)

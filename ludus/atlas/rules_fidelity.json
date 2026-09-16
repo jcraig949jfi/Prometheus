@@ -1,41 +1,346 @@
 {
   "artifact": "rules-fidelity gate",
-  "ts_utc": "2026-08-27T00:42:21+00:00",
+  "ts_utc": "2026-09-16T12:44:03+00:00",
   "worlds": {
     "FLIP7": {
       "world": "FLIP7",
-      "verified": true,
+      "verified_internally": true,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
       "n_failures": 0,
       "failures": {},
       "n_states": 5812,
-      "ts_utc": "2026-08-27T00:42:21+00:00",
+      "ts_utc": "2026-09-16T12:44:03+00:00",
       "note": "rules fidelity only; nothing here knows what a good move is"
     },
     "INCAN_GOLD": {
       "world": "INCAN_GOLD",
-      "verified": true,
+      "verified_internally": true,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
       "n_failures": 0,
       "failures": {},
       "n_states": 442368,
-      "ts_utc": "2026-08-27T00:42:52+00:00",
+      "ts_utc": "2026-09-16T12:44:13+00:00",
       "note": "rules fidelity only; nothing here knows what a good move is"
     },
     "MARTIAN_DICE": {
       "world": "MARTIAN_DICE",
-      "verified": true,
+      "verified_internally": true,
+      "rules_audited": true,
+      "rules_audit_source_sha256": "cc8297f2227183bb9e291794a744760810701a13d1df506ca3f2598242e20c37",
+      "rules_audit_protocol": "seat-performed under P3, operator spot check pending (LUDUS-31)",
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
       "n_failures": 0,
       "failures": {},
-      "n_states": 8555,
-      "ts_utc": "2026-08-27T00:42:54+00:00",
+      "n_states": 14653,
+      "ts_utc": "2026-09-16T12:44:16+00:00",
       "note": "rules fidelity only; nothing here knows what a good move is"
     },
     "CANT_STOP": {
       "world": "CANT_STOP",
-      "verified": true,
+      "verified_internally": true,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
       "n_failures": 0,
       "failures": {},
       "n_states": 69038,
-      "ts_utc": "2026-08-27T00:44:26+00:00",
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY[gate=0,decay=0,k=2,cap=2,h=6]": {
+      "world": "FOUNDRY[gate=0,decay=0,k=2,cap=2,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 58,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY[gate=0,decay=0,k=2,cap=4,h=6]": {
+      "world": "FOUNDRY[gate=0,decay=0,k=2,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 77,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY[gate=0,decay=0,k=3,cap=2,h=6]": {
+      "world": "FOUNDRY[gate=0,decay=0,k=3,cap=2,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 34,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY[gate=0,decay=0,k=3,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 65,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY[gate=1,decay=0,k=2,cap=2,h=6]": {
+      "world": "FOUNDRY[gate=1,decay=0,k=2,cap=2,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 58,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY[gate=1,decay=0,k=2,cap=4,h=6]": {
+      "world": "FOUNDRY[gate=1,decay=0,k=2,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 77,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY[gate=1,decay=0,k=3,cap=2,h=6]": {
+      "world": "FOUNDRY[gate=1,decay=0,k=3,cap=2,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 34,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY[gate=1,decay=0,k=3,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 65,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY-DECAY[gate=0,decay=0.25,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=0,decay=0.25,k=3,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 81,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY-DECAY[gate=0,decay=0.5,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=0,decay=0.5,k=3,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 88,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY-DECAY[gate=0,decay=0.75,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=0,decay=0.75,k=3,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 96,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY-DECAY[gate=1,decay=0.25,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=1,decay=0.25,k=3,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 81,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY-DECAY[gate=1,decay=0.5,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=1,decay=0.5,k=3,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 88,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY-DECAY[gate=1,decay=0.75,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=1,decay=0.75,k=3,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 96,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "FOUNDRY-DECAY[gate=0,decay=0,k=3,cap=4,h=6]": {
+      "world": "FOUNDRY-DECAY[gate=0,decay=0,k=3,cap=4,h=6]",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 74,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "LUCKY_NUMBERS": {
+      "world": "LUCKY_NUMBERS",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 3832,
+      "ts_utc": "2026-09-16T12:45:08+00:00",
+      "note": "rules fidelity only; nothing here knows what a good move is"
+    },
+    "COLORETTO": {
+      "world": "COLORETTO",
+      "verified_internally": false,
+      "rules_audited": false,
+      "rules_audit_source_sha256": null,
+      "rules_audit_protocol": null,
+      "verified_meaning": "simulator matches the rules AS WRITTEN BY THE SEAT; it does NOT establish those rules match the published game - see RULES_AUDIT.md",
+      "n_failures": 1,
+      "failures": {
+        "per_world": [
+          "NO PER-WORLD INVARIANTS WRITTEN"
+        ]
+      },
+      "n_states": 296925,
+      "ts_utc": "2026-09-16T12:45:20+00:00",
       "note": "rules fidelity only; nothing here knows what a good move is"
     }
   }

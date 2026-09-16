@@ -162,25 +162,43 @@ def _multiset_ok(a, b):
 
 
 def check_martian(cw) -> list:
+    """Written from the PUBLISHED sheet (LUDUS-01, 2026-09-16; rules_audit.json
+    carries the citation per line). State = (tanks, rays, h, c, ch, dead)."""
     from ludus.bench.worlds import MD_DICE
     fails = []
     for s in cw.pot:
-        tanks, rays, h, c, ch = s
+        if len(s) != 6:
+            fails.append(f"{s!r}: state is not the audited 6-tuple")
+            continue
+        tanks, rays, h, c, ch, dead = s
         if sum(s) > MD_DICE:
             fails.append(f"{s!r}: more than {MD_DICE} dice set aside")
         if any(x < 0 for x in s):
             fails.append(f"{s!r}: negative die count")
+        # sheet, SCORING: more tanks than rays -> zero; else 1 per earthling,
+        # +3 with at least one of all three
         expect = 0.0 if rays < tanks else float(h + c + ch + (3 if h and c and ch else 0))
         if abs(cw.pot[s] - expect) > 1e-9:
             fails.append(f"{s!r}: pot {cw.pot[s]} != rules score {expect}")
-    # a claimed symbol always has a non-zero count, which is what collapses the
-    # claim mask into the counts; if that ever fails the state is not Markov
+        # dead dice only exist in a forced-end state (the turn ended on an
+        # unclaimable roll): every state with dead > 0 has no dice left
+        if dead > 0 and sum(s) != MD_DICE:
+            fails.append(f"{s!r}: discarded dice in a state that can still roll")
     for s, rows in cw.trans.items():
         for _, opts in rows:
             for s2 in opts:
-                if sum(1 for i in range(1, 5) if s2[i] > 0) < sum(
-                        1 for i in range(1, 5) if s[i] > 0):
-                    fails.append(f"{s!r}->{s2!r}: a claimed symbol lost its count")
+                # an earthling once claimed keeps its count (the claim mask is
+                # the counts); rays and tanks only ever increase
+                if any(s2[i] < s[i] for i in range(5)):
+                    fails.append(f"{s!r}->{s2!r}: a set-aside count decreased")
+                # sheet, ON YOUR TURN: exactly one type is chosen per roll, so
+                # at most one EARTHLING count changes per transition; rays may
+                # change on any roll (R1)
+                changed = [i for i in (2, 3, 4) if s2[i] != s[i]]
+                if len(changed) > 1:
+                    fails.append(f"{s!r}->{s2!r}: two earthling types claimed in one roll")
+                if changed and s[changed[0]] > 0:
+                    fails.append(f"{s!r}->{s2!r}: an earthling type claimed twice")
     return fails
 
 
@@ -219,14 +237,28 @@ PER_WORLD = {"FLIP7": check_flip7, "INCAN_GOLD": check_incan,
 
 # ==========================================================================
 
+def _rules_audit() -> dict:
+    """ludus/bench/rules_audit.json: the W3 ledger (LUDUS-01, 2026-09-16). A
+    world is rules_audited only if an entry with a source hash exists here;
+    verify.py never decides that itself."""
+    p = ROOT / "ludus" / "bench" / "rules_audit.json"
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text(encoding="utf-8")).get("worlds", {})
+
+
 def verify(world, cw) -> dict:
     fails = {"universal": check_universal(cw), "acyclic": check_acyclic(cw)}
     fn = PER_WORLD.get(world.name)
     fails["per_world"] = fn(cw) if fn else ["NO PER-WORLD INVARIANTS WRITTEN"]
     total = sum(len(v) for v in fails.values())
+    audit = _rules_audit().get(world.name, {})
     return {"world": world.name,
             "verified_internally": total == 0,
-            "rules_audited": False,
+            "rules_audited": bool(audit.get("rules_audited", False)),
+            "rules_audit_source_sha256": audit.get("source", {}).get("sha256"),
+            "rules_audit_protocol": ("seat-performed under P3, operator spot check "
+                                     "pending (LUDUS-31)" if audit else None),
             "verified_meaning": "simulator matches the rules AS WRITTEN BY THE "
                                 "SEAT; it does NOT establish those rules match "
                                 "the published game - see RULES_AUDIT.md",
@@ -245,7 +277,8 @@ def main() -> None:
         cw = compile_world(w)
         r = verify(w, cw)
         out["worlds"][w.name] = r
-        flag = ("VERIFIED-INTERNALLY (rules unaudited)" if r["verified_internally"]
+        flag = (("VERIFIED-INTERNALLY (rules AUDITED by seat, P3)" if r["rules_audited"]
+                 else "VERIFIED-INTERNALLY (rules unaudited)") if r["verified_internally"]
                 else f"FAILED ({r['n_failures']})")
         print(f"{w.name:14s} {flag}")
         for k, v in r.get("failures", {}).items():

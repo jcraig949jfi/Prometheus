@@ -1,5 +1,22 @@
 # LUDUS Cycle 002 — the stochastic-stopping family
 
+> ANNOTATION 2026-09-16 (LUDUS-01; base role: corrections are annotations,
+> never rewrites; nothing below is edited). The Martian Dice used here
+> (`ludus/stopworlds.py`) was reconstructed from memory and the published
+> sheet (Tasty Minstrel Games 2011, sha256 cc8297f2..., quoted line by line
+> in `ludus/bench/rules_audit.json`) shows two rules wrong: Death Rays are
+> claimable on EVERY roll, and an unclaimable roll ends the turn WITH scoring
+> rather than as a bust. The doubled ray face (s2's named risk) was RIGHT.
+> On the corrected rules the bench's own axis instrument reverses this
+> document's central Martian Dice reading: the claim (SELECT) axis recovers
+> nothing (-0.0005 of a 0.0627 residual) and STOP recovers +0.0486, against
+> SELECT +0.0216 / STOP +0.0091 of 0.0344 on the reconstruction. The "86% of
+> the residual lives in the claim axis" result (s4) is therefore a fact about
+> the reconstruction, not about Martian Dice. The reconstruction is preserved
+> as `MartianDiceRecon` in `ludus/bench/worlds.py` and as matrix column
+> `MARTIAN_DICE_RECON_2026-08-27`. This document's method and its other
+> three worlds are untouched by the audit (their rules remain HYPOTHESIZED).
+
 **Date:** 2026-08-26. **Seat:** Ludus (Claude Code, Opus 5), M1 / F:\.
 **Charter:** v2 §17 — *"LUDUS must determine whether these games actually require the same underlying
 reasoning. Perhaps 'push your luck' is a genuine strategic family. Perhaps it conceals several
