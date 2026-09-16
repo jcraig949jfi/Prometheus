@@ -86,6 +86,23 @@ Each of these produced a wrong number in a real packet draft. They are not hypot
 Rule of thumb: **any number that flatters the conductor or simplifies the story gets re-derived before it
 ships.** In r7, five of the conductor's characterisations were corrected by lanes and two more by the tally.
 
+### 3a. CHECKER-INTEGRITY TRAPS -- the gate can lie about itself
+
+A counting trap gives a wrong number. These give a wrong VERDICT, which is worse, because the wrong verdict is
+"everything is fine".
+
+| trap | what happens | guard |
+|---|---|---|
+| Backtick / `$` / `!` inside a bash double-quoted `python -c` | the shell performs command substitution and DELETES part of the script; the rest runs and PASSES | write every check as a QUOTED heredoc: `python - <<'PY' ... PY` |
+| A check set that can silently shrink | 2 of 12 checks vanish, 10 pass, gate prints PASS, commit proceeds | print `checks run: N` and assert N equals the number written |
+| Reading only the verdict line | `command not found` scrolls past above a green PASS | read the lines ABOVE the verdict; an error there means the PASS describes a different script than the one you wrote |
+| Gating on a pipe's exit code | `pytest \| tail && commit` gates on tail | capture the tool's own rc before committing |
+| A matcher that matches itself | a psutil kill-by-cmdline matched its own source and its shell ancestors | exclude the whole ancestor chain; match interpreter + argv tokens |
+
+**This happened during R8 launch prep**, not hypothetically: a markdown backtick in a gate script removed the
+two checks verifying the launch preconditions, and the gate reported PASS anyway. The committed content was
+correct by luck; the claim "it was verified" was not.
+
 ---
 
 ## 4. EVIDENCE DISCIPLINE -- NEVER CONFLATE
