@@ -97,11 +97,13 @@ Retention is append-only: nothing is rotated, trimmed or deleted to save space.
 
 ## 1. CLOCK
 
-**[ADAPT-2] The round clock is CAP-ANCHORED, not start-anchored.** `end_ts` is derived from the 9 h cap
-measured from round start, not from `launch_ts + N*epoch_s`.
+**[ADAPT-2] The round clock is CAP-ANCHORED, not start-anchored.** `end_ts` is derived from the **15 h** cap
+measured from round start (prompt 25), not from `launch_ts + N*epoch_s`.
 
-Reason: the operator's suggested structure (60 + 20 + 420 + 40 minutes) sums to exactly 540 minutes, i.e.
-the entire cap with zero slack. Round 7 lost ~6 minutes at launch to a conductor script defect and had a
+Reason: prompt 24's suggested structure (60 + 20 + 420 + 40 minutes) summed to exactly 540 minutes, i.e. the
+entire 9 h cap with zero slack. Prompt 25 widened the cap to 15 h with a 12 h science clock, but the
+zero-slack hazard is unchanged in kind: build and gate still precede the clock, and any overrun has to come
+out of something. Round 7 lost ~6 minutes at launch to a conductor script defect and had a
 build-phase deadlock (D18). Under a start-anchored clock any build or launch overrun silently consumes the
 packet window or forces an extension, which section 21 prohibits. Under a cap-anchored clock an overrun
 automatically consumes SCIENCE clock, the round still ends on time, and no conductor judgement is involved.
