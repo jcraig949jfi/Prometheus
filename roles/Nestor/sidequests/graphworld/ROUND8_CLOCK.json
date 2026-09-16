@@ -2,6 +2,20 @@
  "T0_epoch": 1789564503.891,
  "T0_local": "2026-09-16 09:15:03",
  "T0_source": "min start ts across the six lane records in launch_log.jsonl (derived, not recalled)",
+ "clock_as_actually_started": {
+  "DISCREPANCY_vs_A_ruling": "A confirmed to Q (bus 1789567190457-0) reading (b): NO_NEW_WORK at T0+14h with drain+close filling the 60 min teardown reserve to T0+15h. The clock as started realises reading (a): end_ts at T0+14h with drain+close INSIDE it, so NNW lands one hour earlier than my ruling implied and the round closes an hour inside the 15 h cap. Cost: about one hour of science.",
+  "NOT_corrected_because": "round_clock.start is idempotent by design -- a second start returns the existing clock unchanged. Forcing the change means deleting the round key, and SWARM_R8 s19 prohibits extending the round. Recorded as an operations discrepancy; the round runs on the clock it has.",
+  "drain_ts": "2026-09-16 22:45:03",
+  "end_ts": "2026-09-16 23:15:03",
+  "epochs": 6,
+  "measured_from": "pm:round:r8 (live), not planned",
+  "no_new_work_ts": "2026-09-16 22:15:03",
+  "planned_science_start_was": "2026-09-16 11:35:03",
+  "slip_reason": "build, gate and conductor prep ran past the planned 11:35 science start; the controller computed the ACTUAL epoch count (6) from the remaining cap at start time, as LAUNCH_R8 s4 requires. The nominal 12 was never taken literally.",
+  "stage": "PRODUCTION",
+  "start_ts": "2026-09-16 16:51:56",
+  "working_window_minutes": 323
+ },
  "clock_start_sequence": {
   "1_run_gate": "python roles/Nestor/sidequests/graphworld/gate_r8.py --emit --since-sha 6c02b89a9",
   "2_commit_push_map": "GATE_MAP_R8.json must be COMMITTED AND PUSHED before any worker starts.",
