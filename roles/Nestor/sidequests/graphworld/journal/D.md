@@ -673,3 +673,19 @@
   C's own probe_affine CLEAN / probe_leak LEAK on every target at every base.
   Sizing smoke (timings only; the admitted set is Q2's outcome and stayed unread): eligibility ~0.07 s/world -> ~3 s
   for all 36 worlds, so the whole job projects to ~12 s. Compute-bound, well inside the ceilings.
+- D-R7-9 RECORD (job 5d04105a829a ok, 83 rows ACCEPTED 9784c5afe, 11.1 s wall, 10.9 CPU-s, 123 scoring runs, token
+  wait 0.1 s -- a slot was free, against D-R7-8's 1447 s): decision seed:SEED_INSENSITIVE|eligibility:
+  ELIGIBILITY_SEED_CONDITIONED. I1 4/4; ALL THREE binding controls clean -- determinism repeat identical on 41/41
+  (base 97000 scored twice in the same job), probe_affine CLEAN, probe_leak LEAK everywhere.
+  Q1: match 41/41 at base 97000 AND 41/41 at 98000, zero mismatching targets -> detection is seed-insensitive on three
+  independent record bases (96000/97000/98000), no longer an inference from one coincidence. World 497 j=2 reads
+  exactly 62 null surprises at ALL THREE bases, so the outlier that voided D-R7-8's binding control is a fixed
+  property of that target, not seed noise.
+  Q2: C7c's OWN eligibility rule at fresh base 99000 admits 40 targets vs its committed 34, symmetric difference 28
+  (11 dropped, 17 added) against a threshold of 6; 497 j=2 is among the DROPPED.
+  READING (marked as such, not a verdict, because the 238-vs-180 comparison comes from D-R7-8 whose control failed):
+  the anomaly's premise inverts. Detection being seed-insensitive means C7c's 238/238 vs 180/238 on the SAME 34
+  targets is not a seed effect, and its admitted set moves wholesale at a fresh base -- consistent with C7c's fit
+  criterion being SELF-SELECTING (it admits the targets where the learner is already quiet on the null world at C7c's
+  own eligibility seeds). The genome-eligible set is not "worse"; the fit-eligible set is chosen.
+  ANOM-..0378 RESOLVED with scope stated (D-R7-8's rates stay void; no claim about which criterion should be preferred).
