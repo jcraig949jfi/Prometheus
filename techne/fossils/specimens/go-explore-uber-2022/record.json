@@ -35,9 +35,9 @@
     "commit": "702fb9c7a9aeecf2872d07ced236c730d5536a8f"
   },
   "hashes": {
-    "tree_sha256": "67bfdebe5f01b0bf3b3df32e6b72e98476fbcc578f55b90b9c999ece28fba6c0",
-    "n_files": 128,
-    "bytes": 3732865,
+    "tree_sha256": "c9c7bdf06aa6fbbda5b2901bd28480ff05213bac99841a917d392223c0b3bd02",
+    "n_files": 124,
+    "bytes": 3677221,
     "artifacts": [
       {
         "filename": "https://github.com/uber-research/go-explore",
@@ -45,7 +45,7 @@
         "commit": "702fb9c7a9aeecf2872d07ced236c730d5536a8f"
       }
     ],
-    "body_location": "F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022",
+    "body_location": "D:\\Prometheus\\vault\\fossils\\go-explore-uber-2022",
     "hash_list": "techne/fossils/specimens/go-explore-uber-2022/UPSTREAM_HASHES.txt"
   },
   "license": {
@@ -150,5 +150,33 @@
     "quality-diversity",
     "archive"
   ],
-  "hardware_assumptions": ""
+  "hardware_assumptions": "",
+  "hashes_superseded": [
+    {
+      "tree_sha256": "67bfdebe5f01b0bf3b3df32e6b72e98476fbcc578f55b90b9c999ece28fba6c0",
+      "n_files": 128,
+      "bytes": 3732865,
+      "artifacts": [
+        {
+          "filename": "https://github.com/uber-research/go-explore",
+          "sha256": null,
+          "commit": "702fb9c7a9aeecf2872d07ced236c730d5536a8f"
+        }
+      ],
+      "body_location": "F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022",
+      "hash_list": "techne/fossils/specimens/go-explore-uber-2022/UPSTREAM_HASHES.txt",
+      "superseded_utc": "20260916T134958Z",
+      "reason": "M2 rematerialize 2026-09-16: record hashed over a CRLF-converted checkout on M1 (and, where NOT_IN_ORIGIN > 0, build/interpreter residue); origin serves byte-exact upstream; see techne/fossils/REMATERIALIZE_M2_2026-09-16_run2_drift_classes.json",
+      "receipt": "techne/fossils/specimens/go-explore-uber-2022/receipts/repin-go-explore-uber-2022-20260916T134958Z.json",
+      "superseded_hash_list": "techne/fossils/specimens/go-explore-uber-2022/UPSTREAM_HASHES.superseded-20260916.txt",
+      "class_counts": {
+        "SAME": 32,
+        "RECORD_IS_CRLF": 92,
+        "NOT_IN_ORIGIN": 4,
+        "FETCH_IS_CRLF": 0,
+        "OTHER": 0,
+        "ADDED": 0
+      }
+    }
+  ]
 }

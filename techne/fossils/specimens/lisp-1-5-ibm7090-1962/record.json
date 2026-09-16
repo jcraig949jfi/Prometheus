@@ -64,7 +64,7 @@
     "an IBM 7090/7094 or an emulator of one",
     "a 7090 assembler"
   ],
-  "run_classification": "SOURCE_ONLY",
+  "run_classification": "BLOCKED_DEPENDENCY",
   "test_classification": "NO_TESTS",
   "entry_points": [
     "the assembled LISP 1.5 system reads S-expressions from cards"
@@ -83,7 +83,8 @@
     "assembler": "FAP-style",
     "storage": "cards and tape",
     "input_format": "punched cards",
-    "runner": "none yet"
+    "runner": "docker prometheus-fossil-ibm709x:bookworm (Pitts asm7090 2.3.2 / lnk7090 2.2.3 / utils 1.1.15 / s709 2.4.4, MIT), built 2026-09-16 from techne/fossils/environment/fossil-ibm709x-toolchain.Dockerfile",
+    "world_status": "WORLD_RECONSTRUCTED_BODY_NOT_ASSEMBLED (2026-09-16): the current asm7090 2.3.2 rejects 741 $-prefixed cross-namespace references in the transcription (752 errors; symbol names come back shifted, ERROR->EROOR, ZERO->ZROO); the transcription was made against asm7090 2.1.4 + its own asm7090.patch and its Makefile names 2.2.2, neither served upstream any more; Wayback offline at 14:25Z 2026-09-16. Run stage written, unexercised."
   },
   "patches": [],
   "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
@@ -144,7 +145,14 @@
     "audit_note": "HISTORICAL_ONLY refers to THIS 1962 body and its 7090 world. LISP as a language lineage is emphatically still ACTIVE; no supersession is claimed. The rival IPL-V is recorded as a rival, NOT as a defeated loser: I hold no evidence establishing why the ecosystem moved."
   },
   "versions_preserved": [],
-  "receipts": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T142124Z.json",
+      "ok": false,
+      "classification": "BLOCKED_DEPENDENCY",
+      "test_classification": "NO_TESTS"
+    }
+  ],
   "nyx_handoff": {
     "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\lisp-1-5-ibm7090-1962 ; tracked techne/fossils/specimens/lisp-1-5-ibm7090-1962",
     "where_it_came_from": "https://github.com/informatimago/lisp-1-5 ; HISTORICAL_ARCHIVE_MIRROR @ fddd37ed99ed7808825455dfc9e74cb0d36eae6b",

@@ -31,9 +31,9 @@
     "repo": "github.com/radfordneal/LDPC-codes"
   },
   "hashes": {
-    "tree_sha256": "132aa1f564f37d4bfa10c1e1293b8f5b9f3f3551245545a089e645913dc2b168",
+    "tree_sha256": "a23b16652f9eabf18774d104158e918f10f44aeb973d24b1d17498545094c739",
     "n_files": 93,
-    "bytes": 792759,
+    "bytes": 777082,
     "artifacts": [
       {
         "filename": "https://github.com/radfordneal/LDPC-codes",
@@ -41,7 +41,7 @@
         "commit": "74a8e283be8259dbff7a6bab38ad7e9327825cbf"
       }
     ],
-    "body_location": "F:\\Prometheus\\vault\\fossils\\ldpc-codes-neal-2001",
+    "body_location": "D:\\Prometheus\\vault\\fossils\\ldpc-codes-neal-2001",
     "hash_list": "techne/fossils/specimens/ldpc-codes-neal-2001/UPSTREAM_HASHES.txt"
   },
   "license": {
@@ -119,5 +119,33 @@
     "belief-propagation",
     "inference"
   ],
-  "hardware_assumptions": ""
+  "hardware_assumptions": "",
+  "hashes_superseded": [
+    {
+      "tree_sha256": "132aa1f564f37d4bfa10c1e1293b8f5b9f3f3551245545a089e645913dc2b168",
+      "n_files": 93,
+      "bytes": 792759,
+      "artifacts": [
+        {
+          "filename": "https://github.com/radfordneal/LDPC-codes",
+          "sha256": null,
+          "commit": "74a8e283be8259dbff7a6bab38ad7e9327825cbf"
+        }
+      ],
+      "body_location": "F:\\Prometheus\\vault\\fossils\\ldpc-codes-neal-2001",
+      "hash_list": "techne/fossils/specimens/ldpc-codes-neal-2001/UPSTREAM_HASHES.txt",
+      "superseded_utc": "20260916T135000Z",
+      "reason": "M2 rematerialize 2026-09-16: record hashed over a CRLF-converted checkout on M1 (and, where NOT_IN_ORIGIN > 0, build/interpreter residue); origin serves byte-exact upstream; see techne/fossils/REMATERIALIZE_M2_2026-09-16_run2_drift_classes.json",
+      "receipt": "techne/fossils/specimens/ldpc-codes-neal-2001/receipts/repin-ldpc-codes-neal-2001-20260916T135000Z.json",
+      "superseded_hash_list": "techne/fossils/specimens/ldpc-codes-neal-2001/UPSTREAM_HASHES.superseded-20260916.txt",
+      "class_counts": {
+        "SAME": 2,
+        "RECORD_IS_CRLF": 91,
+        "NOT_IN_ORIGIN": 0,
+        "FETCH_IS_CRLF": 0,
+        "OTHER": 0,
+        "ADDED": 0
+      }
+    }
+  ]
 }

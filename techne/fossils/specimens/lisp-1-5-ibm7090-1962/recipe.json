@@ -1,0 +1,20 @@
+{
+  "runner": "docker",
+  "image": "prometheus-fossil-ibm709x:bookworm",
+  "workdir": "upstream/tree",
+  "probe": ["asm7090 2>&1 | head -1; s709 2>&1 | head -1; cat /usr/local/share/ibm709x/README-s709-2.4.4.txt | head -2"],
+  "build": [
+    {"name": "cards-to-src", "cmd": "make ASM7090=asm7090 lisp15.src >/dev/null && wc -l lisp15.src"},
+    {"name": "assemble", "cmd": "asm7090 -c 7090 -a -f -p -w -x -d LISP15 -t 'BONNIE-S BIRTHDAY ASSEMBLY' -l lisp15.lst.new -o lisp15.out lisp15.src 2>&1 | tail -1; grep -c '^ERROR' lisp15.lst.new; grep '^ERROR' lisp15.lst.new | awk '{print $4}' | sort | uniq -c | sort -rn | head -5; test \"$(grep -c '^ERROR' lisp15.lst.new)\" = 0",
+     "expect": {"exit": 0}}
+  ],
+  "runs": [
+    {"name": "wang-job", "cmd": "obj2bin lisp15.out lisp15.tape && txt2bcd wang.job wang.bcd && s709 -m7090 -p b7=lisp15.tape a2=wang.bcd p=print.bcd u=punch.bcd < /dev/null; bcd2txt -p print.bcd print.txt 132; cat print.txt | head -80",
+     "expect": {"exit": 0, "stdout_contains": ["THEOREM"]}}
+  ],
+  "test_kind": "TECHNE",
+  "classification_if_ok": "RUNNABLE_HISTORICAL_TOOLCHAIN",
+  "classification_if_built_only": "BUILDS_BUT_NOT_RUN",
+  "classification_if_build_fails": "BLOCKED_DEPENDENCY",
+  "note": "2026-09-16 P6 expedition. BLOCKED_DEPENDENCY here means: the deck was transcribed against asm7090 2.1.4 (+ the body's own asm7090.patch) / 2.2.2 and the CURRENT asm7090 2.3.2 rejects its $-prefixed cross-namespace references; the run stage is written for the day an assembler accepts the deck and has NOT been exercised."
+}

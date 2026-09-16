@@ -1,0 +1,178 @@
+{
+  "schema": "techne.acquisition.receipt/1",
+  "receipt_id": "installation-lock_reproduction-20260916T141431Z",
+  "stage": "INSTALLATION",
+  "does_not_establish": [
+    "FIRST_USEFUL_CHECK",
+    "PAPER_REPRODUCTION",
+    "ADAPTER_QUALIFICATION",
+    "LOCAL_SCIENTIFIC_BENEFIT",
+    "that any entry is QUALIFIED for a scientific run; this is reproduction of an INSTALLATION"
+  ],
+  "entry_id": "lock_reproduction",
+  "tool": "committed locks",
+  "design_version": "0.1",
+  "written_utc": "2026-09-16T14:14:31+00:00",
+  "seat": "Techne",
+  "repo": {
+    "commit": "afa345adb6b8041c39f6e23ef1aadcb774a3268b",
+    "branch": "techne/m2-boot-2026-09-16",
+    "dirty": true
+  },
+  "workspace": {
+    "base_sha": "afa345adb6b8041c39f6e23ef1aadcb774a3268b",
+    "branch": "techne/m2-boot-2026-09-16",
+    "worktree_path": "D:\\Prometheus-worktrees\\techne-boot-2026-09-16",
+    "dirty": true,
+    "main_worktree": false,
+    "inside_canonical_checkout": false,
+    "session_temporary_worktree": false,
+    "durable_worktree": true,
+    "allow_canonical_override": false,
+    "tool_cache": "D:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_versioned": false,
+    "tool_cache_note": "host-local and gitignored. base_sha pins this seat's CODE; it does not pin the installed tools, whose identity is the hash-pinned lock and the recorded artifact digests."
+  },
+  "runner": {
+    "python": "3.12.10",
+    "executable": "C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "tool_cache": "D:\\Prometheus\\vault\\techne_tools",
+    "tool_cache_source": "techne/config.local.json or the vault/ default",
+    "tool_cache_note": "host-local and gitignored; only its HASHES are tracked"
+  },
+  "commands_run": [],
+  "observations": {
+    "locks": [
+      {
+        "lock": "hypothesis-cp312-win-amd64.lock.txt",
+        "entry": "hypothesis",
+        "lock_sha256": "7052a2ddc29d39fac07723a2131173ba8e42b1fbf3e09f8f7d3688915a84529d",
+        "lock_tag": "cp312-win-amd64",
+        "status": "REPRODUCED",
+        "env": "h0h5_tools",
+        "env_python": "3.12.10",
+        "install_returncode": 0,
+        "install_seconds": 0.687,
+        "stderr_tail": "\n[notice] A new release of pip is available: 25.0.1 -> 26.2.1\n[notice] To update, run: D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe -m pip install --upgrade pip\n",
+        "env_created_now": false,
+        "import": {
+          "imported": true,
+          "module_file": "D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Lib\\site-packages\\hypothesis\\__init__.py",
+          "dist_version": "6.165.10"
+        },
+        "pinned_version": "6.165.10",
+        "version_matches_pin": true
+      },
+      {
+        "lock": "pyribs-cp312-win-amd64.lock.txt",
+        "entry": "pyribs",
+        "lock_sha256": "9ae940f2bc4ded34629d081ff67f0fca9282f2de5e765406e5c4519b9e7db4b4",
+        "lock_tag": "cp312-win-amd64",
+        "status": "INSTALLED_IMPORT_FAILS",
+        "env": "h0h5_tools",
+        "env_python": "3.12.10",
+        "install_returncode": 0,
+        "install_seconds": 0.672,
+        "stderr_tail": "\n[notice] A new release of pip is available: 25.0.1 -> 26.2.1\n[notice] To update, run: D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe -m pip install --upgrade pip\n",
+        "env_created_now": false,
+        "import": {
+          "imported": false,
+          "error": "ImportError: DLL load failed while importing _pcg64: An Application Control policy has blocked this file.",
+          "dist_version": "0.12.0"
+        },
+        "pinned_version": "0.12.0",
+        "version_matches_pin": true
+      },
+      {
+        "lock": "pytest-cp312-win-amd64.lock.txt",
+        "entry": "pytest",
+        "lock_sha256": "5c0ac3843ce88db6c47275cf2e4b8bca60fe5c13c314f00adde11b1c90ef57e2",
+        "lock_tag": "cp312-win-amd64",
+        "status": "REPRODUCED",
+        "env": "h0h5_tools",
+        "env_python": "3.12.10",
+        "install_returncode": 0,
+        "install_seconds": 0.672,
+        "stderr_tail": "\n[notice] A new release of pip is available: 25.0.1 -> 26.2.1\n[notice] To update, run: D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe -m pip install --upgrade pip\n",
+        "env_created_now": false,
+        "import": {
+          "imported": true,
+          "module_file": "D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Lib\\site-packages\\pytest\\__init__.py",
+          "dist_version": "9.1.1"
+        },
+        "pinned_version": "9.1.1",
+        "version_matches_pin": true
+      },
+      {
+        "lock": "stitch-cp312-win-amd64.lock.txt",
+        "entry": "stitch",
+        "lock_sha256": "2b5bd52a80923cfb165794ad4afabbb20007dee70870b45f3c0d419d0845b8fd",
+        "lock_tag": "cp312-win-amd64",
+        "status": "INSTALLED_IMPORT_FAILS",
+        "env": "h0h5_tools",
+        "env_python": "3.12.10",
+        "install_returncode": 0,
+        "install_seconds": 0.656,
+        "stderr_tail": "\n[notice] A new release of pip is available: 25.0.1 -> 26.2.1\n[notice] To update, run: D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe -m pip install --upgrade pip\n",
+        "env_created_now": false,
+        "import": {
+          "imported": false,
+          "error": "ImportError: DLL load failed while importing stitch_core: An Application Control policy has blocked this file.",
+          "dist_version": "0.1.29"
+        },
+        "pinned_version": "0.1.29",
+        "version_matches_pin": true
+      },
+      {
+        "lock": "z3-cp312-win-amd64.lock.txt",
+        "entry": "z3",
+        "lock_sha256": "d457eb67ee8cc6feb5d977d80d87763f77e594baef0a6ce099b5b8598b3b90f0",
+        "lock_tag": "cp312-win-amd64",
+        "status": "REPRODUCED",
+        "env": "h0h5_tools",
+        "env_python": "3.12.10",
+        "install_returncode": 0,
+        "install_seconds": 0.687,
+        "stderr_tail": "\n[notice] A new release of pip is available: 25.0.1 -> 26.2.1\n[notice] To update, run: D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe -m pip install --upgrade pip\n",
+        "env_created_now": false,
+        "import": {
+          "imported": true,
+          "module_file": "D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Lib\\site-packages\\z3\\__init__.py",
+          "dist_version": "5.0.0.0"
+        },
+        "pinned_version": "5.0.0.0",
+        "version_matches_pin": true
+      }
+    ],
+    "cheat_control_tampered_hash": {
+      "derived_from": "hypothesis-cp312-win-amd64.lock.txt",
+      "install_returncode": 1,
+      "status": "REFUSED_AS_EXPECTED",
+      "stderr_tail": "/74/59/6caf69dd5fe03499ada94c9cec016bffcc164511c6b93fe680f01209b9ff/hypothesis-6.165.10-cp312-cp312-win_amd64.whl (from -r D:\\Prometheus\\vault\\techne_tools\\reports\\TAMPERED-hypothesis-cp312-win-amd64.lock.txt (line 16)):\n        Expected sha256 0376f2594763aef14faa519b0fb27cae7ce9eeaab4c69efa07777499110306c9\n             Got        3376f2594763aef14faa519b0fb27cae7ce9eeaab4c69efa07777499110306c9\n\n"
+    },
+    "envs": {
+      "h0h5_tools": {
+        "env_name": "h0h5_tools",
+        "root": "D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools",
+        "python": "D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Scripts\\python.exe",
+        "created_now": false,
+        "python_version": "3.12.10",
+        "is_live_interpreter": false,
+        "pip_version": "pip 25.0.1 from D:\\Prometheus\\vault\\techne_tools\\envs\\h0h5_tools\\Lib\\site-packages\\pip (python 3.12)",
+        "pip_pinned": false,
+        "pip_note": "pip bootstrapped by ensurepip from the base interpreter's bundled wheel; its version is inherited, not pinned by this lock",
+        "pip_freeze_sha256_after": "1904d7ed8bb80bd5a2bfd936e34a6f81d7caf5223722de0e0d6581adef4b81e1",
+        "pip_freeze_n_after": 28
+      }
+    },
+    "counts": {
+      "REPRODUCED": 3,
+      "INSTALLED_IMPORT_FAILS": 2
+    }
+  },
+  "deviations": [],
+  "unrun_or_blocked": [],
+  "status": "PARTIAL",
+  "host_tag": "cp312-win-amd64"
+}
