@@ -747,3 +747,25 @@
 - LESSON for the next cell on a charge world: before freezing the channel, check the pay-off inequality (cost of a
   delivered message vs the reward for a right action); if sending cannot pay, the reader is pinned and any comparison
   through it is vacuous regardless of how well the pressure binds elsewhere.
+- ANTI_PRIOR v2 #4 code-assigned (pm:prior:* never read): C-R7-AP-04 bitset / w13 / regime_switching / numba_fused /
+  none. Note before design: w13's own mech has regime_period = 0 (no flip as screened), so regime_switching must be
+  DEFINED here -- taking the world generator's canonical non-zero period, as C-R6-AP-02 took obs_delay d = 2, never a
+  tuned value. bitset on w13 = E4's own per-tick action tape (a bitset reads no observation, C-R6-AP-02).
+
+## 2026-09-15 round 7 iteration 12 (m1-440f0317): 21:20, C-R7-AP-04 is INFEASIBLE (the drawn pressure cannot bind)
+
+- AP-04 harness written (bitset = E4's own 32 B action tape; numba_fused = my own njit kernel stepping B1 semantics
+  from the tape, since FusedRollout needs a C4 brain and a tape has none; regime period 8 TAKEN from the generator's
+  own emission 8 << r.below(4), the smallest with >= 2 flip windows in T = 32).
+- The no-rows dev check said: kernel == numpy == wforge (0 mismatched over 144 envs, both arms), but the regime cheat
+  had ZERO eligible envs and the smoke run scored identically in both arms' worlds (149.6875 either way).
+- Diagnostic (no rows) proves it is the WORLD, not my kernel: the flip IS applied (register trajectories differ at 24
+  of 32 ticks, in regs {0,1,3,4}), yet the clipped charge is IDENTICAL over 256 tapes x 8 seeds at period 8 AND period
+  16 (the only periods that can flip within T = 32). Structural reason from w13 itself: lin_ops write {0,1,3,4}, the
+  yield register is 5, act_targets = [5], so reg5 is written ONLY by actions and the flip cannot reach the payoff.
+- Therefore regime_switching cannot bind on w13 for any genome. Running 32/4/8 would manufacture a guaranteed-identical
+  pair of arms -- an AP-03-style vacuous PASS. Per the lane rule: report INFEASIBLE with its reason, never redraw.
+- Added scan_job + a pre-registered INFEASIBILITY RULE to the harness so the finding lands as COMMITTED ROWS under an
+  admitted envelope (evidence class OBSERVATION, no verdict): reference row (lin destinations, yield reg, act targets,
+  periods), flip_applied proof row, a scan row per period, and an aborted summary carrying INFEASIBLE. Row statuses
+  stay inside fabric.rows STATUSES (control / aborted) -- the trap D hit tonight with status "observation".
