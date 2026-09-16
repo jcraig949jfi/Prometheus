@@ -1,7 +1,12 @@
 # Every CA success criterion in these libraries, its published-figure convention, its range and its floor
 
 Herakles, 2026-09-11. Backlog C-1 and C-3. One place, so a sixth criterion
-is added beside these and never instead of one. Every number below names
+is added beside these and never instead of one.
+
+> 2026-09-16: a sixth criterion, `cellwise_synchronisation_match`, added
+> under the rules at the foot of this file (Archaeon prompt 2026-09-11
+> item 4; L-7, C-2). The heading and the sentence "the five criteria"
+> are kept as written; the tables below carry six rows. Every number below names
 the commit or file it was measured in; nothing is from recall.
 
 Conventions that apply to all five: periodic ring; `steps` is always
@@ -42,6 +47,18 @@ the row says otherwise; the unit of analysis is the initial condition.
                                                      not yet held, MODEL_RECALL tier);
                                                      their rules are NOT recovered (L-7),
                                                      so no published P is comparable yet.
+    cellwise_synchronisation evca (radius 3)         NOTHING published. Per-cell form of
+    _match                                           `synchronisation`: a cell counts if it
+                                                     flips between T and T+1 AND equals the
+                                                     ring's majority state at T. Mean and
+                                                     dispersion across ICs; the flip and
+                                                     in-phase components reported apart.
+                                                     EXACT identity: fraction_all_cells_sync
+                                                     == synchronisation_score on the same
+                                                     ICs (asserted on 14 tables x 2 samples).
+                                                     Added 2026-09-16 because `synchron-
+                                                     isation` gives every held organism and
+                                                     every random table the single point {0}.
     block_output             eca (radius 1)          Footnote [13] of Capcarrere, Sipper,
                                                      Tomassini PRL 77:4969 (1996), at T =
                                                      ceil(N/2): a same-state adjacent
@@ -78,6 +95,32 @@ the row says otherwise; the unit of analysis is the initial condition.
                                      rule that SOLVES the task from random ICs      backlog C-2
                                      is held, so 0.0 cannot yet be separated
                                      from an unreachable target. Eligible = n ICs.
+    cellwise_synchronisation [0,1]   A BAND, NOT A POINT. 20 random tables at        herakles/evca/
+    _match                           N = 149, 100 ICs, 298 steps (the geometry of    sync_floor_2026-
+                                     MAJ_STRUCTURAL_ZERO s3): mean of means 0.227,   09-16.json;
+                                     range [0.057, 0.307], sd of means 0.049.        measure_sync_
+                                     Constants 0.000 exactly (no cell flips);        floor.py
+                                     blinker on random ICs 0.531 (every cell flips,
+                                     in-phase = majority share, analytic 0.533);
+                                     blinker on uniform ICs 1.000; blinker on
+                                     exactly k ones max(k, N-k)/N to 1e-12 (cheat
+                                     control). Held genomes: five at 0.000; particle1
+                                     0.0034 (ONE IC of 100 with 100 of 149 cells
+                                     still flipping at T = 298; a row, not a claim).
+                                     PREDICTION LOST, kept visible: before measuring
+                                     I wrote "about 0.27 in a narrow interval, spread
+                                     about 0.005". The spread is 0.049 because the
+                                     flip fraction is a RULE property (0.11 to 0.57
+                                     across tables, r = 0.99 with the mean) and the
+                                     mean is 3.5 SE below the independence value
+                                     0.266 (flip and in-phase anticorrelated,
+                                     r = -0.79). An organism is quoted against the
+                                     BAND'S TOP (0.31 here), never against 0.227.
+                                     Eligible = n ICs x N cells (a mean; SE is not
+                                     sqrt(p(1-p)/n_ics)). No organism that SOLVES
+                                     synchronisation is held (C-2 still open), so
+                                     the interval [0.53, 1.0] is populated by the
+                                     control only.
     block_output             [0,1]   0.5 ANALYTIC: a constant rule ends uniform,     spec-capcarrere-
                                      so it is correct on exactly the ICs on one     r1-density/
                                      side of 0.5. Measured: rule 0 at 0.5022,       PROTOCOL.md,
@@ -93,6 +136,14 @@ single point {0}, so no gate on them can be shown reachable from noise;
 two put the floor at 0.5, so any number quoted on them is quoted as its
 distance above 0.5; and one has no positive organism yet, so its zeros
 are unmeasurable rather than structural until C-2 lands.
+
+> 2026-09-16: with the sixth, the synchronisation target now has a
+> criterion with a range: frozen (0), random (a band 0.06-0.31), blinking
+> out of phase (0.53), solved (1.0) are four separable readings where
+> `synchronisation` had one. The band is wide because a random table's
+> flip fraction is itself a rule-level quantity with a wide spread; that
+> quantity (`mean_flip_fraction`) is reported on its own and may be the
+> more useful detector part of the two.
 
 ## Rules for adding a sixth
 

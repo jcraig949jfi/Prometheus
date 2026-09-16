@@ -44,6 +44,16 @@ import zipfile
 REPO = pathlib.Path(__file__).resolve().parents[2]
 SPECIMENS = REPO / "techne" / "fossils" / "specimens"
 
+# Every environment variable the vault code READS goes through getenv() so a run receipt can
+# name them (Rhadamanthus #245 RQ-4: names, never values). A direct os.environ.get() here is
+# an unreceipted read; test_fossil_environment.py greps for it.
+ENV_READS: set[str] = set()
+
+
+def getenv(name: str, default=None):
+    ENV_READS.add(name)
+    return os.environ.get(name, default)
+
 
 def canonical_root() -> pathlib.Path:
     try:
@@ -57,7 +67,7 @@ def canonical_root() -> pathlib.Path:
 
 
 def vault_root() -> pathlib.Path:
-    env = os.environ.get("TECHNE_FOSSIL_VAULT")
+    env = getenv("TECHNE_FOSSIL_VAULT")
     if env:
         return pathlib.Path(env)
     local = REPO / "techne" / "config.local.json"
