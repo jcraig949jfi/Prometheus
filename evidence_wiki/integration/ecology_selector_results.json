@@ -1,0 +1,44 @@
+{
+ "all_pass": true,
+ "machine": "M2",
+ "service": "http://127.0.0.1:8379/api/v1",
+ "written": "ECOCHECK-ENC-1789561266",
+ "ran_at": "2026-09-16T08:21:07",
+ "gates": [
+  {
+   "gate": "W_row_with_ecology_written",
+   "pass": true,
+   "detail": "200 {\"encounter_id\":\"ECOCHECK-ENC-1789561266\",\"run_id\":\"ECOCHECK-RUN-1789561266\",\"inserted\":true,\"status\":\"inserted\",\"read_b"
+  },
+  {
+   "gate": "P_containment_returns_the_row",
+   "pass": true,
+   "detail": "200 n=1 contains written row=True"
+  },
+  {
+   "gate": "X_ecology_alone_is_a_selector",
+   "pass": true,
+   "detail": "200 ids=['ECOCHECK-ENC-1789561266']"
+  },
+  {
+   "gate": "N_absent_coordinate_returns_nothing",
+   "pass": true,
+   "detail": "200 n=0"
+  },
+  {
+   "gate": "C1_one_differing_value_does_not_match",
+   "pass": true,
+   "detail": "200 n=0"
+  },
+  {
+   "gate": "C2_malformed_or_empty_refused_422",
+   "pass": true,
+   "detail": "malformed=422 {\"detail\":\"ecology_not_json\"} empty=422 {\"detail\":\"ecology_must_be_nonempty_object\"}"
+  },
+  {
+   "gate": "C3_no_selector_still_refused",
+   "pass": true,
+   "detail": "400 {\"detail\":\"at_least_one_selector_required\"}"
+  }
+ ]
+}
