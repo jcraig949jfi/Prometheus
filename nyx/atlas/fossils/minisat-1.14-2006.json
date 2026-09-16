@@ -72,7 +72,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded: zchaff-2007"
+    "superseded (direction UNFIXED in Techne's vocabulary; note: 'direction: MiniSat superseded zChaff (recorded on both records)'): zchaff-2007"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -146,18 +146,1338 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.C"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/VarOrder.h"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.h"
+   }
+  ],
+  "inspected_files": [
+   "Solver.C (analyze, propagate, reduceDB, search, solve)",
+   "Solver.h (activity)",
+   "VarOrder.h"
+  ],
+  "date": "2026-09-16T12:07Z",
+  "note": "the same nine-part anatomy as zchaff at coarse grain; the differences visible by reading: per-VARIABLE activity in a heap (zchaff: per-literal score with galloping reinsertion), geometric restart growth 1.5x with a learnt-limit growth 1.1x (zchaff: backtrack-count restarts), binary clauses stored inline in the watch list, and a rescale-at-1e100 activity representation"
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+   "fossil_ancestry": "minisat-1.14-2006",
+   "human_name": "Solver::search (the CDCL loop)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "loop: propagate; on conflict at the root level -> UNSAT (analyzeFinal); else analyze -> learnt clause + backtrack level, cancelUntil, add the clause, decay both activities; on no conflict: stop after nof_conflicts (restart), simplify at level 0, reduceDB when learnts exceed the limit, then pick a variable and assume its NEGATIVE literal (line 672: always false first)",
+   "input": "a clause database",
+   "output": "l_True with a model / l_False / l_Undef (restart)",
+   "state": "trail, levels, reasons, learnts",
+   "update": "per conflict / per decision",
+   "assumptions": [
+    "polarity: the default decision is ~x"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [
+    "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers",
+    "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses",
+    "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+    "minisat-1.14-2006::variable_activity_bump_and_geometric_decay_with_rescale",
+    "minisat-1.14-2006::decide_the_top_activity_unassigned_variable_from_a_heap_with_rare_random_picks",
+    "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest",
+    "minisat-1.14-2006::restart_after_a_conflict_budget_growing_geometrically"
+   ],
+   "composition_neighbors": [
+    "minisat-1.14-2006::restart_after_a_conflict_budget_growing_geometrically"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.C:614-678"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "search()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers",
+   "fossil_ancestry": "minisat-1.14-2006",
+   "human_name": "trail / trail_lim / reason / level",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "assignments are pushed on one vector (trail) with the start index of each decision level in trail_lim; each assigned variable records the clause (or binary literal, GClause) that forced it; cancelUntil(level) pops the trail down to trail_lim[level], un-assigning and re-inserting variables in the order heap",
+   "input": "enqueue / cancelUntil calls",
+   "output": "the current partial assignment",
+   "state": "trail, trail_lim, reason[], level[], qhead",
+   "update": "per assignment",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive",
+    "minisat-1.14-2006::decide_the_top_activity_unassigned_variable_from_a_heap_with_rare_random_picks",
+    "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.C:200-216,423-446"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "assume, cancelUntil, enqueue",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "FULL_HISTORY",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses",
+   "fossil_ancestry": "minisat-1.14-2006",
+   "human_name": "propagate() / watches",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each clause is watched by its first two literals; when literal p becomes true the watch list of index(p) is scanned: a binary clause is stored AS the other literal (GClause isLit) and enqueued directly; a longer clause swaps the false literal to c[1], is satisfied if c[0] is true, else looks for a non-false literal from c[2] on to become the new watch (moving the clause to that literal's list), else is unit -> enqueue c[0] or conflict; on conflict the remaining watches are copied and qhead jumps to the end",
+   "input": "the trail from qhead",
+   "output": "new assignments or a conflicting clause",
+   "state": "watches[2*nVars], qhead",
+   "update": "per propagated literal",
+   "assumptions": [
+    "no clause of size < 2 in the watch lists"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+    "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers",
+    "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest"
+   ],
+   "fitness_value_in_ancestor": "the cost of the solver; the inline binary encoding is 1.14's specific twist (absent in zchaff's cut)",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.C:448-527"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "propagate()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+   "fossil_ancestry": "minisat-1.14-2006",
+   "human_name": "analyze()",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "walk the trail backwards from the conflict: for each literal of the current clause not yet seen and above level 0, bump its variable's activity; literals of the current decision level are counted (pathC), others are added to the learnt clause and raise the backtrack level; follow the reason of the most recent seen literal until pathC hits 0 -- that literal negated is the asserting literal (out_learnt[0]); learnt clauses touched get their activity bumped",
+   "input": "a conflicting clause, trail, reason, level",
+   "output": "learnt clause, backtrack level",
+   "state": "analyze_seen[]",
+   "update": "per conflict",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+   "child_mechanisms": [
+    "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive"
+   ],
+   "composition_neighbors": [
+    "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses",
+    "minisat-1.14-2006::variable_activity_bump_and_geometric_decay_with_rescale",
+    "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.C:239-280"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "analyze() first half",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive",
+   "fossil_ancestry": "minisat-1.14-2006",
+   "human_name": "conflict clause minimisation (expensive_ccmin)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "cheap: drop a learnt literal whose reason clause's other literals are all seen or at level 0; expensive: recursively check (analyze_removable) whether every literal in the implication cone is seen, using a 32-bit level-set abstraction to abort early; the two are selected by a flag",
+   "input": "out_learnt, reasons",
+   "output": "a shorter learnt clause",
+   "state": "analyze_toclear, the level abstraction",
+   "update": "per conflict",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+    "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers",
+    "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.C:280-325,327-366"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "analyze() second half + analyze_removable",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 3,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-1.14-2006::variable_activity_bump_and_geometric_decay_with_rescale",
+   "fossil_ancestry": "minisat-1.14-2006",
+   "human_name": "VSIDS as activity += var_inc; var_inc /= decay",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "bumping adds var_inc to a variable's activity; decaying multiplies var_inc by 1/var_decay (0.95) once per conflict, so older bumps shrink relatively; when any activity passes 1e100 all activities and var_inc are divided by 1e100; a negative var_decay disables bumping (static order); clause activities use the same scheme with 0.999",
+   "input": "bumped variables (from analyze)",
+   "output": "activity[]",
+   "state": "activity[], var_inc, cla_inc",
+   "update": "per conflict",
+   "assumptions": [
+    "relative order is all that matters; the absolute scale is free (hence the rescale)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+    "minisat-1.14-2006::decide_the_top_activity_unassigned_variable_from_a_heap_with_rare_random_picks"
+   ],
+   "fitness_value_in_ancestor": "the decision heuristic's whole input",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.h:43-62,105-110; Solver.C:692-712"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "varBumpActivity / varDecayActivity / varRescaleActivity and the cla* twins",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-1.14-2006::decide_the_top_activity_unassigned_variable_from_a_heap_with_rare_random_picks",
+   "fossil_ancestry": "minisat-1.14-2006",
+   "human_name": "VarOrder::select",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a binary heap ordered by activity holds unassigned variables; update() re-sifts a bumped variable, undo() re-inserts an unassigned one; select() with probability random_var_freq (0.02 suggested) tries a uniformly random variable, else pops the heap until an unassigned variable appears",
+   "input": "activity[], assigns[]",
+   "output": "a variable or var_Undef",
+   "state": "the heap, random_seed",
+   "update": "per decision",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-1.14-2006::variable_activity_bump_and_geometric_decay_with_rescale",
+    "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/VarOrder.h:1-80"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "VarOrder.h + Heap.h",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest",
+   "fossil_ancestry": "minisat-1.14-2006",
+   "human_name": "reduceDB",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "sort learnts by activity; delete the less active half except binary and locked (reason) clauses; from the upper half delete those below cla_inc / learnts.size(); triggered when learnts - assigned variables exceeds nof_learnts, which grows 1.1x per restart",
+   "input": "learnts, activities",
+   "output": "a smaller learnts vector",
+   "state": "none",
+   "update": "on trigger",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-1.14-2006::restart_after_a_conflict_budget_growing_geometrically",
+    "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses",
+    "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.C:528-545,735-750"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "reduceDB()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "FULL_HISTORY",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-1.14-2006::restart_after_a_conflict_budget_growing_geometrically",
+   "fossil_ancestry": "minisat-1.14-2006",
+   "human_name": "solve() schedule",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "search() returns l_Undef after nof_conflicts conflicts (initially 100); solve() multiplies the budget by 1.5 and the learnt limit by 1.1 and calls again, keeping learnt clauses and activities (only the trail is undone to root_level)",
+   "input": "search outcomes",
+   "output": "the final answer",
+   "state": "nof_conflicts, nof_learnts",
+   "update": "per restart",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+    "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.C:721-781 (lines 6-7, 48-50 of the function)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "solve()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "EPISODE",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "'CDCL' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "nine mechanisms with separate state; the same finding as on zchaff-2007",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minisat-1.14-2006"
+  },
+  {
+   "candidate": "Main.C (DIMACS parser, reporting, signal handling)",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Main.C by name; the CNF interface",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minisat-1.14-2006"
+  },
+  {
+   "candidate": "vec / Heap / Sort templates",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Global.h, Heap.h, Sort.h -- containers (the heap's ORDER is VarOrder's, recorded there)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minisat-1.14-2006"
+  },
+  {
+   "candidate": "progressEstimate()",
+   "reason": "OTHER",
+   "evidence": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.C:679-690 -- reporting only ('Not extremely reliable' per its own comment)",
+   "note": "an instrument",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minisat-1.14-2006"
+  },
+  {
+   "candidate": "simplifyDB (top-level satisfied-clause removal)",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:minisat-1.14-2006/upstream/tree/MiniSat_v1.14/Solver.C:558-612 -- removes satisfied clauses at level 0; skimmed, no state of its own beyond a propagation counter",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minisat-1.14-2006"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "minisat-1.14-2006::P.an_exponential_search_space_where_most_branches_die_for_reasons_shared_with_other_branches",
+   "source_fossil": "minisat-1.14-2006",
+   "source_evidence": "record pressure; search()",
+   "condition": "a decision tree of 2^n leaves; a failed branch's cause usually involves few variables and recurs elsewhere in the tree",
+   "resource_or_constraint": "time; memory for remembered causes",
+   "failure_condition": "re-exploring the same dead sub-space; or drowning in remembered clauses",
+   "world_punishes": "forgetting why a branch failed; keeping everything",
+   "world_rewards": "extracting a small reason, jumping back past irrelevant decisions, and forgetting reasons that stop being used",
+   "observable_consequence": "conflicts / decisions / propagations per instance (the record's cross-solver comparison)",
+   "vacuity_condition": "instances solved by pure propagation",
+   "trivial_shortcuts": "a lookup table of solved instances (the world must present unseen instances)",
+   "cheat_control": "a solver given the satisfying assignment must finish with zero conflicts; one given the refutation clauses must finish near-instantly; if the world cannot tell, it is not measuring search",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: decide propositional satisfiability",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "minisat-1.14-2006::P.the_useful_ordering_of_choices_is_only_knowable_from_recent_failures",
+   "source_fossil": "minisat-1.14-2006",
+   "source_evidence": "Solver.h var_decay comment; VarOrder.h",
+   "condition": "no static measure of a variable predicts where conflicts will come from; the search's own recent conflicts are the only signal, and it drifts",
+   "resource_or_constraint": "one heuristic evaluation per decision",
+   "failure_condition": "a stale order that keeps choosing variables irrelevant to the current conflicts",
+   "world_punishes": "static orders; orders that never forget",
+   "world_rewards": "an order driven by recent conflict participation with geometric forgetting",
+   "observable_consequence": "decisions to solution with var_decay = 0.95 vs a static order (var_decay < 0 in this body)",
+   "vacuity_condition": "instances where any order works",
+   "trivial_shortcuts": "random order with restarts",
+   "cheat_control": "a heuristic told the variables of the final refutation must beat VSIDS; if it does not, the world's instances do not reward focus",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses",
+   "to": "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "conflict clause",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+   "to": "minisat-1.14-2006::variable_activity_bump_and_geometric_decay_with_rescale",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "bumps",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+   "to": "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive",
+   "to": "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "backjump to out_btlevel",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::variable_activity_bump_and_geometric_decay_with_rescale",
+   "to": "minisat-1.14-2006::decide_the_top_activity_unassigned_variable_from_a_heap_with_rare_random_picks",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::decide_the_top_activity_unassigned_variable_from_a_heap_with_rare_random_picks",
+   "to": "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "decision pushed on the trail",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers",
+   "to": "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "qhead",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::restart_after_a_conflict_budget_growing_geometrically",
+   "to": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::restart_after_a_conflict_budget_growing_geometrically",
+   "to": "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "nof_learnts",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest",
+   "to": "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses",
+   "label": "forgets",
+   "evidence": "SOURCE_READ",
+   "note": "removed clauses leave the watch lists",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive",
+   "to": "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "learnt clause added with activity",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
+  {
+   "from": "minisat-1.14-2006",
+   "relation": "successor_of",
+   "to": "zchaff-2007",
+   "note": "Techne records the superseded edge on both records; the algorithms (two watched literals, 1UIP, activity) are Chaff's, the representation (activity heap, inline binaries, decay-by-inc) is MiniSat's",
+   "basis": "SOURCE_READ"
+  },
   {
    "from": "minisat-1.14-2006",
    "relation": "historical_version_of",
@@ -174,7 +1494,13 @@
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "newClause (clause construction, duplicate/tautology removal, learnt clause watch placement) skimmed only",
+   "analyzeFinal (the assumption-conflict path) skimmed",
+   "nothing ran here; Techne's harness (agreement with 2.2.0, picosat, zchaff) is on M1"
+  ],
+  "note": "search / propagate / analyze / reduceDB / VarOrder are read line by line; the nine organs account for them",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
