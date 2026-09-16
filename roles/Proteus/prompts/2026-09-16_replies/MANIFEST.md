@@ -1,0 +1,7 @@
+# Manifest for 2026-09-16_replies
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- REPLY_NYX_189_rewriting_substrate.md  sha256:917d90d637a77e9ac112fae98822b7706c3e52bc80cc3abbeaab07459e5f1961
+- REPLY_NYX_190_shrinker_pressure.md  sha256:f482b47858358aada5f72d54d91ac01aee39a433b2a8eafcf43ee5024af8b7d7
+- REPLY_TALOS_10_consumer_contract.md  sha256:4b51a3ffd110db7b4302c8c8a049471c5fa2b2d18fd8b11e9d2f0b66fb20daee
