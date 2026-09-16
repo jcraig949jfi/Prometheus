@@ -713,3 +713,23 @@
   matching the 11 receipts this session filed (D-R7-1, 2, 2b, 3, 3b, 4, 5, 6, 7, 8, 9). So round 7 carries ZERO
   unreceipted D rows; the 13 are inherited and out of scope. No corrective action taken or needed -- recorded so the
   FINAL post can state it precisely instead of vaguely.
+- D-R7-10 TIMED OUT (job 823a71f394fd, status timeout, limit cpu, cpu_s 2400.28 vs declared cpu_budget_s 2400, wall
+  382.6 s, 97 of 169 rows, NO summary -> no decision). Rows f39f1ebb6 on origin.
+  OWN ERROR, precisely: D sized the job in WALL time (~20-22 min, measured) and then set cpu_budget_s EQUAL to
+  wall_budget_s, ignoring that the fused rollout uses all 8 granted threads, so CPU-s accrue ~6-8x faster than wall.
+  Measured 24.7 CPU-s per run; 168 runs need ~14,000 CPU-s -- far inside PRODUCTION's 36,000 ceiling but nowhere near
+  the 2,400 declared. The wall ceiling was never the binding one.
+  Coverage (read as coverage only; NO held64/train value read): linear 24/24, tt_feat@3 24/24, tt_feat@2 24/24,
+  tt_feat@1 24/24, tt_digits@3 1/24, @2 0, @1 0. The Q cells (linear, tt_feat@1) are complete, but the BINDING I1
+  replication check needs tt_digits@3, so the run is UNDECIDABLE, not merely partial.
+  Receipt INDETERMINATE filed; ANOM-..0371 stays OPEN.
+  D-R7-10b: same module, rule, thresholds, cells and streams, full re-run with cpu_budget_s sized from the measured
+  24.7 CPU-s/run. No resume is possible (a TTL kill writes no checkpoint), and the full set is re-run rather than
+  topped up so that no verdict mixes rows from a timed-out job.
+- A 1789520995354-0 (D-only) asked for the charge/meter binding measurement on the third passing cell. D replied
+  1789521363649-0 ACCEPTING IT NARROWED: C's own receipt already establishes that cell is vacuous by construction
+  (all 64 runs identical, IQR 0.0, send cost 6 > yield 3 so signalling never pays) and that the charge DID shrink
+  programs (top1 functional bytes 14 vs 22), so D will not re-derive it; and the D-R7-7 paired half is DEGENERATE
+  there (identical held values make h = 0 by construction). D adds only the D-R7-6 quantity -- charge_share on the
+  readout's own winner -- so the three cells carry ONE comparable number. Schema confirms the rows support it.
+  Queued behind D-R7-10b; dropped rather than the re-run if the clock tightens.
