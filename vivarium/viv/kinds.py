@@ -83,6 +83,14 @@ class Kind:
     #: never be null: `artifact_probe_v1` without its artifact is not a
     #: control, it is a broken request.
     optional_artifact_slots: FrozenSet[str] = frozenset()
+    #: D2 (2026-09-16). "module:function" of a pure checker
+    #: (payload -> list of reasons) run at ADMISSION once the keys are exact,
+    #: and again by the executor at its entry, so a payload whose VALUES the
+    #: kind would refuse never reaches a claim -- Archaeon lost 24 rows of
+    #: cs-c3-1 to `"ic_density_set": null`, refused correctly by the executor
+    #: AFTER each run had created and committed a world. Named as a string
+    #: so the registry never imports an executor at import time.
+    value_checker: str = ""
 
     @property
     def retired(self) -> bool:
@@ -91,6 +99,23 @@ class Kind:
     @property
     def declares_result(self) -> bool:
         return bool(self.result_schema)
+
+    def check_values(self, payload: dict) -> list:
+        """D2: reasons the payload's VALUES do not satisfy the kind, from the
+        kind's own checker. Fails CLOSED: a checker that cannot be imported or
+        that raises is itself a reason, never a pass."""
+        if not self.value_checker:
+            return []
+        try:
+            import importlib                                 # noqa: PLC0415
+            mod, fn = self.value_checker.split(":")
+            checker = getattr(importlib.import_module(mod), fn)
+            out = checker(payload)
+        except Exception as exc:                              # noqa: BLE001
+            return ["work.payload for kind %r could not be value-checked "
+                    "(%s: %s); an unchecked value is not an admitted one"
+                    % (self.kind, type(exc).__name__, str(exc)[:200])]
+        return ["work.payload for kind %r: %s" % (self.kind, r) for r in out]
 
     def check_result(self, result, *, truncation=None) -> dict:
         """Validate an executor's OUTPUT. Raises ResultSchemaError."""
@@ -122,6 +147,8 @@ class Kind:
                 "work.payload for kind %r carries unknown parameter(s) %s; "
                 "the contract is exact, and an unread parameter in a hashed "
                 "spec is a channel, not a comment" % (self.kind, extra))
+        if not missing and not extra and self.value_checker:
+            reasons.extend(self.check_values(payload))
         # C1: the same exactness, one level down. A slot whose keys are wrong,
         # or whose digest/type/interface cannot be resolved by this build, is
         # refused at ADMISSION -- "placeholders never enter a queue".
@@ -163,6 +190,7 @@ register(Kind(
 
 register(Kind(
     kind="evaluate_bitstring",
+    value_checker="viv.executors:evaluate_bitstring_problems",
     params=frozenset({"bits", "length"}),
     implemented=True,
     owner="vivarium",
@@ -215,6 +243,7 @@ register(Kind(
 # ------------------------------------------------- primitives for `repeat`
 register(Kind(
     kind="random_walk_v0",
+    value_checker="viv.executors:random_walk_problems",
     params=frozenset({"steps", "step_scale"}),
     implemented=True,
     owner="vivarium",
@@ -245,6 +274,7 @@ register(Kind(
     kind="ca_density_v0",
     params=frozenset({"rule_hex", "radius", "n_cells", "steps", "n_ic",
                       "ic_density_set", "success_criterion", "transform"}),
+    value_checker="viv.ca_density:payload_problems",
     implemented=True,
     owner="herakles (library) / vivarium (wrapper)",
     stateful=False,
@@ -362,6 +392,7 @@ register(Kind(
 # ------------------------------------------------- the loader's own fixture
 register(Kind(
     kind="artifact_probe_v1",
+    value_checker="viv.artifact_probe:payload_problems",
     params=frozenset({"failure_inputs", "reduction"}),
     artifact_slots=frozenset({"failure_inputs"}),
     implemented=True,
@@ -409,6 +440,7 @@ register(Kind(
 # ----------------------------------------- H1/H0: the search inside the kind
 register(Kind(
     kind="cegis_boolean_v1",
+    value_checker="viv.cegis_boolean:payload_problems",
     params=frozenset({
         "target_truth_table", "grammar_version", "candidate_policy",
         "candidate_seed", "max_expr_size", "max_candidates",
@@ -490,6 +522,7 @@ register(Kind(
 # --------------------------------------------- Herakles's radius-1, wrapped
 register(Kind(
     kind="eca_rule_eval_v1",
+    value_checker="viv.eca_rule_eval:payload_problems",
     params=frozenset({"rule_number", "n_cells", "steps"}),
     implemented=True,
     owner="herakles (library) / vivarium (wrapper)",

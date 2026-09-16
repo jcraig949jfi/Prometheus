@@ -45,13 +45,22 @@ def _mutation_refused(data) -> bool:
     return False
 
 
-def run(payload: dict, *, seed: int, inputs: dict) -> dict:
-    reduction = payload["reduction"]
+def payload_problems(payload: dict) -> list:
+    """D2b (2026-09-16): the one value refusal, as a reason. The artifact
+    slot itself is checked by viv.kinds at admission and by preflight."""
+    reduction = payload.get("reduction")
     if reduction not in REDUCTIONS:
-        raise ProbeError(
-            "reduction must be one of %s, got %r; there is no default fold "
-            "because a fold nobody declared is a scientific parameter this "
-            "seat chose" % (list(REDUCTIONS), reduction))
+        return ["reduction must be one of %s, got %r; there is no default fold "
+                "because a fold nobody declared is a scientific parameter this "
+                "seat chose" % (list(REDUCTIONS), reduction)]
+    return []
+
+
+def run(payload: dict, *, seed: int, inputs: dict) -> dict:
+    problems = payload_problems(payload)             # D2b: same refusal
+    if problems:
+        raise ProbeError("; ".join(problems))
+    reduction = payload["reduction"]
     art = inputs["failure_inputs"]
     rows = art.all_items()                      # root, then closure, in order
     n_bits = art.data["n_bits"]
