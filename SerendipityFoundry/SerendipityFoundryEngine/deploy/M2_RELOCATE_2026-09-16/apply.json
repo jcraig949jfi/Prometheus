@@ -1,0 +1,141 @@
+{
+ "tool": "relocate_m2.py",
+ "mode": "apply",
+ "started_at": "2026-09-16T11:48:27Z",
+ "checks": [
+  {
+   "check": "pinned worktree exists and reproduces the candidate build",
+   "pass": true,
+   "pinned": "sha256:726275da9c8daa30ea2fff5e66e9a1df53aa5263256d342602fad25cb415d75c",
+   "expected": "sha256:726275da9c8daa30ea2fff5e66e9a1df53aa5263256d342602fad25cb415d75c",
+   "sha": "ccb26df01c9d637a0ebac0ef3612a4e116d507b7"
+  },
+  {
+   "check": "pinned worktree is clean",
+   "pass": true,
+   "status": ""
+  },
+  {
+   "check": "port 8811 on 192.168.1.191 is free",
+   "pass": true
+  },
+  {
+   "check": "source ledger identifies itself",
+   "pass": true,
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "db": "D:\\Prometheus\\SerendipityFoundry\\SerendipityFoundryEngine\\var\\engine.db",
+   "sha256": "63d59e2cab1bc03aef44ba832e97e00ec9ff55dd7b5b3328b301cfd49e86995f"
+  },
+  {
+   "check": "TLS key present in canonical deploy/",
+   "pass": true
+  },
+  {
+   "check": "watchdog task exists",
+   "pass": true,
+   "current_action_args": "-NoProfile -ExecutionPolicy Bypass -File \"D:\\Prometheus\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\sfengine_m2_watchdog.ps1\""
+  },
+  {
+   "check": "copied ledger is the SAME ledger",
+   "pass": true,
+   "source": "eng_906356f7fb1da180131f9290",
+   "copy": "eng_906356f7fb1da180131f9290"
+  },
+  {
+   "check": "watchdog task action re-pointed",
+   "pass": true,
+   "action_args": "-NoProfile -ExecutionPolicy Bypass -File \"D:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1\""
+  },
+  {
+   "check": "engine answers /v2/version",
+   "pass": true,
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "engine_source_hash": "sha256:726275da9c8daa30ea2fff5e66e9a1df53aa5263256d342602fad25cb415d75c",
+   "schema_version": 8,
+   "source_commit": "ccb26df01c9d637a0ebac0ef3612a4e116d507b7"
+  },
+  {
+   "check": "started engine reports the SAME ledger",
+   "pass": true
+  },
+  {
+   "check": "started engine reports the candidate build",
+   "pass": true
+  },
+  {
+   "check": "started engine is schema 8",
+   "pass": true
+  }
+ ],
+ "steps": [
+  {
+   "copy": "var/engine.db",
+   "to": "D:\\Prometheus-data\\sfe\\engine.db",
+   "sha256": "63d59e2cab1bc03aef44ba832e97e00ec9ff55dd7b5b3328b301cfd49e86995f",
+   "identical": true,
+   "s": 0.01
+  },
+  {
+   "copy": "var/blobs",
+   "to": "D:\\Prometheus-data\\sfe\\blobs",
+   "files": 19,
+   "s": 0.02
+  },
+  {
+   "copy": "deploy/m2.key",
+   "to": "D:\\Prometheus-data\\sfe\\m2.key",
+   "sha256": "adf66e7dbdbb51ec4975744768df10befbaf2abfb9ea72421ceed064350bd89a",
+   "identical": true,
+   "s": 0.0
+  },
+  {
+   "copy": "deploy/m2.crt",
+   "to": "D:\\Prometheus-data\\sfe\\m2.crt",
+   "sha256": "35862be77b2a96116d4c054c41718f90a8097a188f52b5f0f90470ae33635a0e",
+   "identical": true,
+   "s": 0.01
+  },
+  {
+   "copy": "var/engine.db.pre-schema4-20260904T180254.bak",
+   "to": "D:\\Prometheus-data\\sfe\\backup\\engine.db.pre-schema4-20260904T180254.bak"
+  },
+  {
+   "copy": "var/engine.db.predeploy-20260904T194451.bak",
+   "to": "D:\\Prometheus-data\\sfe\\backup\\engine.db.predeploy-20260904T194451.bak"
+  },
+  {
+   "snapshot": "D:\\Prometheus-data\\sfe\\backup\\engine.db.pre-schema8-20260916T074830.bak",
+   "sha256": "63d59e2cab1bc03aef44ba832e97e00ec9ff55dd7b5b3328b301cfd49e86995f"
+  },
+  {
+   "launcher": "D:\\Prometheus-data\\sfe\\sfengine_m2.cmd",
+   "sha256": "e738330d8f7680d949585d6f8170ac63e389d59505efe6a54c38be4e92faa77d"
+  },
+  {
+   "watchdog": "D:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1",
+   "sha256": "3e822caef1fd76c9c91b076715745e86c2b7b7e0898f270b3f5c1df341e3a50e",
+   "copied_from": "D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\sfengine_m2_watchdog.ps1",
+   "at_commit": "ccb26df01c9d637a0ebac0ef3612a4e116d507b7"
+  },
+  {
+   "watchdog_tick": "",
+   "rc": 0,
+   "s": 12.6
+  }
+ ],
+ "source_instance": "eng_906356f7fb1da180131f9290",
+ "version": {
+  "api": "v2",
+  "schema_version": 8,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "session_enforcement": "advisory",
+  "science_profile": "warn",
+  "max_artifact_bytes": 33554432,
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:726275da9c8daa30ea2fff5e66e9a1df53aa5263256d342602fad25cb415d75c",
+  "source_commit": "ccb26df01c9d637a0ebac0ef3612a4e116d507b7"
+ },
+ "finished_at": "2026-09-16T11:48:44Z",
+ "rc": 0
+}
