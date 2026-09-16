@@ -711,3 +711,13 @@ idle on the bus for 2.7 h is indistinguishable from a dead one. Beat sent 00:15:
 State verified after the gap: worker E 24596 and gpuq arbiter 27084 alive, pm:worker:reg:gpu:27084 TTL 86, heartbeat 0
 re-registrations since 19:30:02 (no lapse in ~4.75 h), lane E queue empty (0 pending, lag 0), tree clean, FINAL draft complete but
 for close-time values. Clock: NO_NEW_WORK 142 min, drain 172, close 202.
+
+Iteration 27 (00:17). Fixed the cadence gap by CODE, not by intention: a background beat loop now sends `bus beat` every 10 min and
+exits at 02:27:49 (the FINAL window), so my liveness no longer depends on someone else messaging me. First beat 00:16:34.
+FINAL alarm confirmed still armed (pids from 19:24:19) and the beat loop alive (00:16:34) -- established from process CREATION TIMES
+and the task output files, not from a cmdline grep, because:
+MY ERROR, third instance tonight: my liveness grep self-matched AGAIN. Processes stamped 00:16:55 appeared in BOTH the "alarm" and
+"beat loop" result lists -- impossible for distinct processes -- because they were the checking command's own shell wrappers, whose
+text contains both needles. My "skip my own process tree" guard failed: the Bash tool's shells are the python process's PARENTS, not
+its descendants, so children(recursive=True) never covers them. Rule for the rest of this round: do not identify processes by
+cmdline substring here; read the task output files (a live loop writes; a dead one stops) or match a pid recorded at spawn time.
