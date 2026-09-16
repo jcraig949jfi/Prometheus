@@ -191,10 +191,33 @@ def p_c2():
 
 
 def p_c3():
-    from primordial.ops import residue as R
-    src = pathlib.Path(R.__file__).read_text(encoding="utf-8", errors="replace")
-    ok = "refresh" in src and ("ttl" in src.lower() or "expire" in src.lower())
-    return ok, ("registration refresh re-creates a missing key" if ok else "no TTL refresh path (D28)")
+    """D28: a job outliving REG_TTL loses its registration, and refresh() must RE-CREATE the missing key.
+
+    The previous probe grepped residue.py for "refresh" and "ttl" -- the same source-text pattern that
+    false-greened C2 on a live defect. Measured on this tip instead: `refresh(r, key)` is exactly
+    `r.expire(key, REG_TTL)` with REG_TTL = 90, and redis EXPIRE on a MISSING key returns 0 and creates
+    nothing. So the only honest question is behavioural: after the key is gone, does refresh bring the
+    registration back?
+
+    Cleans up in a finally: a stray pm:worker:reg:* key would break the gate's own zero_registrations
+    check and be reported as residue by the scanner.
+    """
+    from primordial.bus import bus
+    from primordial.ops import residue as RS
+    r = bus.conn()
+    key = None
+    try:
+        key = RS.register(r, "H", "F:/Prometheus-worktrees/nestor-bld-h",
+                          round_id="gate-probe", tag="gate-probe-c3")
+        r.delete(key)                                   # simulate REG_TTL elapsing mid-job
+        RS.refresh(r, key)
+        revived = bool(r.exists(key))
+        return revived, ("refresh re-created the expired registration" if revived else
+                         "refresh did NOT re-create the expired key -- D28 present "
+                         "(EXPIRE on a missing key is a no-op)")
+    finally:
+        if key:
+            r.delete(key)
 
 
 def p_c1():
