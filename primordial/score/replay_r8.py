@@ -238,6 +238,57 @@ def c_resolving_power(rows: list[dict], drops=MDD_DROPS, draws=2000, seed=0, sel
             "observed_relative_median_drop": float(1 - np.median(c) / np.median(k))}
 
 
+def replay_c_ap_values(rows: list[dict], predicate_id: str, held_key: str = "held_mean_top1",
+                       hand_clean_key: str | None = "hand_held_clean",
+                       hand_pressure_key: str | None = "hand_held_corrupt") -> dict:
+    """C's AP family (AP-02/AP-03 shape) re-derived from the RECORDED per-run values: balance, oracles, P1/P2/P3,
+    NULL_CHECK, VACUITY, primary; then the MDD80 reading rule (H bus 1789595069735-0). Values are NOT re-scored from
+    bytes here (replay power limit, stated)."""
+    ref = next((r for r in rows if r.get("kind") == "reference"), {})
+    runs = [r for r in rows if r.get("kind") == "run"]
+    floor = ref.get("floor_held")
+    held = {a: [r[held_key] for r in runs if r["arm"] == a] for a in ("control", "null", "cell")}
+    low = {a: [bool(r["scramble_lowers"]) for r in runs if r["arm"] == a] for a in ("null", "cell")}
+    ok = {a: all(r.get("recount_mismatched_top16") == 0 and r.get("offers_mismatched") == 0 and
+                 (r.get("oracles") or {}).get("ok", True) for r in runs if r["arm"] == a) for a in held}
+    bal = balance(runs, ("control", "null", "cell"))
+    # the scramble flag itself is checked against the recorded values
+    flag_bad = [(r["arm"], r["family"], r["run_seed"]) for r in runs if r["arm"] != "control"
+                and bool(r["held_scrambled_top1"] < r[held_key]) != bool(r["scramble_lowers"])]
+    out = {"predicate_id": predicate_id, "values_rescored": False, "balance": bal, "scramble_flag_mismatches": flag_bad,
+           "floor_rows": floor}
+    if len(held["null"]) == 32 and len(held["control"]) == 32:
+        sc = c_score(held["null"], low["null"], held["control"], floor)
+        out["null_check_replay"] = {"null_predicate": "PASS" if sc["P1_parity"] and sc["P2_above_floor"] and
+                                    sc["P3_uses_channel"] and ok["null"] and ok["control"] else "FAIL", **sc}
+    nc_rows = next((r for r in rows if r.get("kind") == "null_check"), None)
+    out["null_check_rows"] = nc_rows and nc_rows.get("null_predicate")
+    if len(held["cell"]):
+        sc = c_score(held["cell"], low["cell"], held["control"], floor)
+        full = all(bal[a]["balanced_32_4_8"] for a in ("cell", "control"))
+        vac = sc["iqr"] == 0 and sc["control_iqr"] == 0 and sc["median"] == sc["control_median"]
+        prim = "INDETERMINATE" if not (ok["cell"] and ok["control"] and full) else "VACUOUS" if vac else \
+            ("PASS" if sc["P1_parity"] and sc["P2_above_floor"] and sc["P3_uses_channel"] else "FAIL")
+        out["cell_replay"] = {**sc, "vacuous": vac, "primary": prim}
+        summ = next((r for r in rows if r.get("kind") == "summary"), {})
+        keys = ("primary", "median", "iqr", "control_median", "control_iqr", "bar", "P1_parity", "P2_above_floor",
+                "P3_scramble_lowers_runs", "vacuous")
+        out["summary_disagreements"] = {k: {"rows": summ.get(k), "replay": out["cell_replay"][k]} for k in keys
+                                        if summ.get(k) != out["cell_replay"][k]}
+        out["verdict_agrees"] = not out["summary_disagreements"] and not flag_bad
+        if prim == "PASS":
+            rp = c_resolving_power(rows, sel=held_key)
+            c = None
+            if hand_clean_key and ref.get(hand_clean_key):
+                c = 1 - ref[hand_pressure_key] / ref[hand_clean_key]
+            rp["pressure_direct_magnitude_c"] = c
+            rp["largest_relative_drop_P1_accepts"] = rp["largest_relative_median_drop_P1_accepts"]
+            rp["reading_rule"] = ("VACUOUS" if (c is not None and c > 0 and rp["MDD80"] is not None and c < rp["MDD80"])
+                                  else "NOT_CLASSIFIED" if (c is None or c <= 0) else "RESOLVED")
+            out["mdd80_reading"] = rp
+    return out
+
+
 # ------------------------------------------------------------------ rule consistency (item 2)
 
 def rule_consistency(predicate_id: str, rows: list[dict], r=None, repo=".") -> dict:
