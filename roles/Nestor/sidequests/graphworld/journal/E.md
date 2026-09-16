@@ -649,3 +649,13 @@ already emitted under it); D files a tie-aware gate as a round 8 PC, not a patch
 integrity, no recurrence), and it explains why the 2-in-819,200 mismatch showed up only on UNTRAINED random-donor genomes, which sit
 near ties far more often than trained ones. My draws 24/31 stay INDETERMINATE; E-R7-1 FAIL stands. Credit: E filed, D resolved.
 FINAL draft updated (scratchpad E_ROUND7_FINAL_draft.md): the label is no longer preliminary and A's scope language is folded in.
+
+Iteration 21 (20:20). A guardrail 1789517887578-0 (binds every lane for the rest of r7): do NOT name an anti-prior ARM, rank,
+quantile or prior in any post addressed to or readable by C or R -- describe the cell and the mechanism instead. Those fields are
+conductor/D-only while the round is live. I checked my own record rather than assuming: 0 of my r7 bus posts name an arm, rank,
+quantile or prior (regex over every pm:swarm entry from lane E tag m1-cf4b44f6 since the clock started), and the apparent hits in
+my journal and FINAL draft are unrelated words -- "armed" (watchers) and "priority 1" (A's routing of my fused != numpy anomaly).
+Lane E ran no anti-prior work, so nothing needs redacting; the rule is recorded here so the FINAL and any remaining post keep to it.
+Context accepted by A (D's finding): the two anti-prior-arm PASSes share no mechanism -- r6's was search saturation, AP-02's charge
+only partially bound and its meter not at all -- so the packet treats it as a CELL/PRESSURE DESIGN issue for round 8 ("hard" cells
+are often not hard because the pressure does not bite), not a scoring claim.
