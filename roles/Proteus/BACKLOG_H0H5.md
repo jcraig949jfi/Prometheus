@@ -1,11 +1,11 @@
 # Proteus backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
-Currency: 2026-09-16 (first filing; instance m2-67f3bd16). Priority order. The first five are
+Currency: 2026-09-16 (first filing; instance m2-67f3bd16; PROTEUS-01 closed the same day, see journal; PROTEUS-26 added). Priority order. The first five are
 what the seat starts next. Items closed by a commit are deleted with the SHA in the journal, not
 left as green rows. `TODO.md` (2026-09-04) remains the narrative list; every T-item there has a
 row here and the two are reconciled at each session close.
 
-    PROTEUS-01 | Reply to THEO-REQ-003/005 with a provenance-carrying rule_table mint (crossover mask + edit list) as pure ops under identity.FAMILY_RULE_TABLE, lineage records per lineage_record.schema.v0 | ENGINE | beta | M | Herakles (rule_hex bit-order contract, read from the interface only) | proteus/eval/rule_table_ops.py + tests with positive/negative/cheat controls; reply files under roles/Proteus/prompts/
+    PROTEUS-01 | CLOSED 2026-09-16 (same day as filed): Herakles had already built the library half (herakles.evca.derive, dbc41fd2f); Proteus shipped only the PR-ID identity + join (proteus/eval/rule_table_identity.py) and replied to THEO-REQ-003/005 -- row kept one day so the closure is visible, then deleted | ENGINE | beta | S | none | proteus/eval/rule_table_identity.py, proteus/tests/test_rule_table_identity.py, roles/Proteus/prompts/2026-09-16_replies/REPLY_THEOPHRASTUS_REQ003_005.md
     PROTEUS-02 | Implement Retention V0 as code (reservoir, EvaluationRecord store, deterministic eviction, three guards) so RETENTION_AND_MEASUREMENT_V0.md stops being a contract nobody runs (TODO T3) | ENGINE | beta | M | none | proteus/retention/ + tests incl. an entry that MUST be evicted and an eviction that touches a pointer it must not; contract amended IMPLEMENTED with the SHA
     PROTEUS-03 | Measure the alias-differential bound width: widen the probe ensemble and re-measure the CONFOUNDED rate (1/343 today) or state acceptance at the current width with the reason (TODO T6) | EVIDENCE | beta | S | none | proteus/v0_7/RESULT_ALIAS_BOUND_WIDTH.json with the rate, the ensemble, and the decision
     PROTEUS-04 | Add still_solves_metered (verdict, ops) beside still_solves so a kind can charge the check budget in VM ops without re-implementing the predicate (Nyx #190) | H1 | beta | S | Vivarium (names the kind sketch first; the interface is drawn by its consumer) | proteus/eval/shrink.py + test asserting ops == 8 x (nodes + 6) at n=3
@@ -30,5 +30,7 @@ row here and the two are reconciled at each session close.
     PROTEUS-23 | SFE specimen content-identity gate (T11, Harmonia I-CLIENT-GATE-UNENFORCED): Proteus's side is closed (specimen_gate.py); the shared primitive is Daedalus's | ENGINE | beta | S | Daedalus | row tracks the dependency; nothing to build here
     PROTEUS-24 | PEW fossil typed identity fields (T12: registry_identity, entry_id, segment ids, composition topology, ablation relation) | EVIDENCE | 1.0 | S | Mnemosyne | row tracks the dependency; the block Proteus emits is closure packet section 12
     PROTEUS-25 | TODO.md reconciliation: fold T1-T14 into this file's rows with their SHAs and mark TODO.md as the narrative companion, so there is one queue | program | program | S | none | TODO.md header amended with the pointer; every T-item names its PROTEUS-NN row
+
+    PROTEUS-26 | Cross-family descent record (a family-agnostic successor to proteus.lineage_record.v0, whose required resource_budget/runtime_hash are VM facts): parents, operator + params, child, semantic owner's verification, one record_id -- so a CA rule derivation and a program mutation sit in one lineage space as PR-ID put them in one identity space | EVIDENCE | 1.0 | M | Mnemosyne (fossil_players row shape) and Herakles (evca_derived_rule_v1 stays the source) | proteus/contracts/descent_record.schema.v1.json + adapter from evca_derived_rule_v1 and from lineage_record.v0 + tests
 
 XL rows (the operator's queue, derivable): PROTEUS-19, -20, -21, -22.
