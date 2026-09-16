@@ -528,11 +528,98 @@ def replay_g_screen(rows: list[dict], manifest_path: str = "primordial/ledger/qd
     return out
 
 
+# ------------------------------------------------------------------ E-R8-H1 sham response curve
+
+E_LADDER = ("L0_identity", "L1_partial_featperm", "L2_full_featperm", "L3_entry_shuffle", "L4_matched_gaussian")
+E_ARMS = ("scratch",) + E_LADDER + ("X_charge_align",)
+
+
+def signflip_mc(d, draws: int = 1_000_000, seed: int = 777) -> tuple[float, float]:
+    """H's own one-sided paired sign-flip p for mean(d) > 0 (a DIFFERENT seed and 5x E's draw count, raw MC share,
+    no +1 correction); returns (p, MC standard error). Aimed at whether E's alpha decisions survive the estimator."""
+    a = np.abs(np.asarray(d, float))
+    obs = float(np.mean(d))
+    rng = np.random.default_rng(seed)
+    hits, left = 0, draws
+    while left:
+        k = min(left, 50_000)
+        s = rng.integers(0, 2, size=(k, len(a)), dtype=np.int8) * 2 - 1
+        hits += int(((s * a).mean(1) >= obs - 1e-12).sum())
+        left -= k
+    p = hits / draws
+    return p, float(np.sqrt(max(p * (1 - p), 1e-12) / draws))
+
+
+def replay_e_h1(rows: list[dict], alpha: float = 0.05) -> dict:
+    """Re-derives E-R8-H1's outcome from held_auc with independent estimators: scipy spearmanr per run, H's own
+    sign-flip MC (seed 777, 1e6 draws), H's own Holm. A decision is flagged FRAGILE when any deciding p sits within 3 MC
+    standard errors of alpha. Complete runs = run_ids with all 7 arms; balance = 4 families x run seeds 24..31."""
+    from scipy import stats
+    per = {}
+    for x in rows:
+        if x.get("condition") in E_ARMS and x.get("status") in ("record", "control"):
+            per.setdefault(x["run_id"], {}).setdefault(x["condition"], []).append(x)
+    dups = sorted(f"{k}:{a}" for k, v in per.items() for a, xs in v.items() if len(xs) > 1)
+    runs = sorted(k for k, v in per.items() if all(a in v for a in E_ARMS))
+    want = {f"{f}|{s}" for f in FAMILIES for s in range(24, 32)}
+    out = {"predicate_id": "E-R8-H1-sham-response-curve", "n_complete_runs": len(runs), "duplicates": dups,
+           "balanced_32_4_8": set(runs) == want and not dups}
+    if len(runs) < 2:
+        return {**out, "outcome_replay": "INDETERMINATE"}
+    y = {a: np.array([per[k][a][0]["held_auc"] for k in runs]) for a in E_ARMS}
+    rho = np.array([(lambda r: 0.0 if np.isnan(r) else r)(stats.spearmanr(np.arange(5), [y[a][i] for a in E_LADDER])[0])
+                    for i in range(len(runs))])
+    pd_, pi_ = signflip_mc(-rho), signflip_mc(rho)
+    ps = {}
+    for k in (1, 2, 3):
+        a = E_LADDER[k]
+        d0, d4 = y[a] - y["L0_identity"], y[a] - y["L4_matched_gaussian"]
+        ps[f"peak_{a}"] = max(signflip_mc(d0), signflip_mc(d4))
+        ps[f"trough_{a}"] = max(signflip_mc(-d0), signflip_mc(-d4))
+    order = sorted(ps, key=lambda k: ps[k][0])
+    adj, run = {}, 0.0
+    for i, k in enumerate(order):
+        run = max(run, min(1.0, (len(order) - i) * ps[k][0]))
+        adj[k] = run
+    dx = y["X_charge_align"] - y["L0_identity"]
+    xu, xd = signflip_mc(dx), signflip_mc(-dx)
+    near = lambda pse, m=1: abs(m * pse[0] - alpha) < 3 * m * pse[1]
+    fragile = [n for n, v in (("p_dec", pd_), ("p_inc", pi_), ("x_up", xu), ("x_down", xd)) if near(v)] + \
+              [k for k in ps if near(ps[k], len(ps))]
+    if len(runs) < 32 or not out["balanced_32_4_8"]:
+        oc = "INDETERMINATE"
+    elif min(adj.values()) < alpha:
+        oc = "C_NONMONOTONIC"
+    elif pd_[0] < alpha:
+        oc = "A_DECREASING_WITH_DESTRUCTION"
+    elif pi_[0] < alpha:
+        oc = "B_INCREASING_WITH_DESTRUCTION"
+    else:
+        oc = "FLAT_NO_SYSTEMATIC_RESPONSE"
+    xr = "CHARGE_ALIGNMENT_RAISES" if xu[0] < alpha else "CHARGE_ALIGNMENT_LOWERS" if xd[0] < alpha else \
+        "CHARGE_ALIGNMENT_NO_EFFECT"
+    integ = [bool(per[k][a][0].get("arm_integrity", {}).get("ok")) for k in runs for a in E_ARMS[1:]
+             if "arm_integrity" in per[k][a][0]]
+    out.update(rho_mean=float(rho.mean()), p_dec=pd_, p_inc=pi_, nonmonotone_p=ps, nonmonotone_holm=adj,
+               charge_align={"diff_mean": float(dx.mean()), "p_raises": xu, "p_lowers": xd, "reading": xr},
+               means_held_auc={a: float(y[a].mean()) for a in E_ARMS},
+               integrity_ok=f"{sum(integ)}/{len(integ)}", fragile_near_alpha=fragile,
+               outcome_replay=oc)
+    summ = [x for x in rows if x.get("kind") == "summary" or "outcome" in x]
+    if summ:
+        s = summ[-1]
+        sa = s.get("analysis") or s
+        out["outcome_rows"] = sa.get("outcome")
+        out["charge_align_rows"] = (sa.get("structural_charge_align") or {}).get("reading")
+        out["verdict_agrees"] = out["outcome_rows"] == oc and out["charge_align_rows"] == xr
+    return out
+
+
 # ------------------------------------------------------------------ CLI
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("which", choices=["c-ap01", "d-r8-1", "route-b", "g-screen"])
+    ap.add_argument("which", choices=["c-ap01", "d-r8-1", "route-b", "g-screen", "e-h1"])
     ap.add_argument("rows")
     ap.add_argument("--ref")
     ap.add_argument("--out")
@@ -545,7 +632,7 @@ def main(argv=None) -> int:
         rep["predicate_id"] = None
     else:
         rows = load_rows(a.rows, a.ref)
-        rep = {"c-ap01": replay_c_ap01, "d-r8-1": replay_d_r8_1, "g-screen": replay_g_screen}[a.which](rows)
+        rep = {"c-ap01": replay_c_ap01, "d-r8-1": replay_d_r8_1, "g-screen": replay_g_screen, "e-h1": replay_e_h1}[a.which](rows)
     if not a.no_bus and rep["predicate_id"]:
         rep["rule_consistency"] = rule_consistency(rep["predicate_id"], rows)
     rep["rows_path"], rep["rows_ref"], rep["rows_count"] = a.rows, a.ref, len(rows)

@@ -67,3 +67,21 @@ def test_d_rederivation_controls_and_decision():
     rep2 = R.replay_d_r8_1(weak)
     assert rep2["decision_replay"] == "INDETERMINATE" and rep2["failing_oracle_cells"]
     assert R.replay_d_r8_1(weak[:-1])["balance"]["complete_168"] is False
+
+
+def test_signflip_mc_agrees_with_e_estimator_on_synthetic():
+    from primordial.cohorts.e.transfer import signflip_p
+    rng = np.random.default_rng(3)
+    checks = []
+    for shift in (0.0, 0.3, 0.6):
+        d = rng.normal(shift, 1.0, 32)
+        p, se = R.signflip_mc(d, draws=200_000)
+        checks.append(abs(p - signflip_p(d)) < 5 * se + 1e-4)
+    assert len(checks) == 3 and all(checks), checks
+
+
+def test_e_h1_incomplete_is_indeterminate():
+    rows = [{"condition": a, "status": "control", "run_id": f"{f}|{s}", "held_auc": 1.0}
+            for f in R.FAMILIES for s in range(24, 31) for a in R.E_ARMS]
+    rep = R.replay_e_h1(rows)
+    assert rep["n_complete_runs"] == 28 and rep["outcome_replay"] == "INDETERMINATE"
