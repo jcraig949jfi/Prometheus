@@ -206,8 +206,11 @@ def signflip_method(n: int) -> str:
 
 def signflip_p(d) -> float:
     """One-sided paired sign-flip p for mean(d) > 0: exact over all 2^n flips when n <= SIGNFLIP_EXACT_MAX, else
-    (count(flipped mean >= observed) + 1) / (draws + 1) over SIGNFLIP_DRAWS seeded sign vectors (PCG64(SIGNFLIP_SEED))."""
-    d = np.asarray(d, float)
+    (count(flipped mean >= observed) + 1) / (draws + 1) over SIGNFLIP_DRAWS seeded sign vectors (PCG64(SIGNFLIP_SEED)).
+    D25 (r8 C2): the diffs are put in CANONICAL (ascending) order first. The MC branch pairs sign column j with
+    diff j, so without this the p depended on the ORDER of the diffs (E-R7-1: judge order .04626 vs harness order
+    .04549 on the same multiset). Sorting makes the p a function of the multiset alone, in both branches."""
+    d = np.sort(np.asarray(d, float).ravel())
     obs = d.mean()
     if len(d) <= SIGNFLIP_EXACT_MAX:
         flips = np.array(list(itertools.product((1.0, -1.0), repeat=len(d))))
