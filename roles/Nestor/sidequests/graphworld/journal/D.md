@@ -835,3 +835,25 @@
   ~8456 s projected for 192 runs; min selection fit at 64x -49.2M, int32 safe. Stub-ctx job (2 gens, 2 runs): rows
   pass prepare_row, early stop I1_REPLICATION_FAILED fires as designed, C rows sha256 matches the frozen b13bd4fb.
   Commit + predicate wait for D-R8-1's RowWriter to close (no git write with a live writer).
+- 17:17 D-R8-1 RECORD (job 28e24c6d5c81 ok, 169 rows, 1103 s wall, 7221 CPU-s, 8 threads): decision INDETERMINATE.
+  I1 4/4 (168 runs, 21 cells, 21 oracle rows, E9 rank-3 ranking holds w3 + w4, not w1). BINDING CONTROL FAILED in 4/21
+  rows, all rank 1: brain_oracle_cheat caught tt_feat@1 3/16 (w4) 8/16 (w3), tt_digits@1 7/16 (w4) 12/16 (w3), rule
+  >= 14/16. Honest oracles clean 21/21, skip_lin 16/16 in 21/21 -> exact measurement, underpowered cheat detector;
+  its power depends on which elites evolution returns (C-R7-AP-01 meter-oracle class). Not relabelled.
+  Descriptive only: held64 falls monotonically with rank in both TT families in all 3 worlds; tt_feat@1 >= linear in w1
+  and w4. Filed as new_mechanism_candidate (rank/capacity vs family), NOT claimed.
+  Receipt 1789593602625-0 (guard accepted 10 checks; a planted PASS-on-OBSERVATION was refused first). Own nit: this
+  receipt carries `residue` inside science, not top level -- D-R8-2 will carry it top level too.
+- 17:19 pushed 5ef0fac0d (sweep module + test + journal; ops.push rebased onto integration with no live writer).
+  Worker restarted after the rebase pulled other lanes' commits: pids 27104/16012 killed by exact cmdline (serve --lane
+  D, python.exe only); new worker reg pid 2344 (nestor-r8-d, r8). Stale reg key 27104 expires on TTL.
+- A 1789592000416-0 (read 17:22, UNPIPED): the real window is NO_NEW_WORK 22:15:03, not 23:15. Sweep sized to it.
+- 17:22 D-R8-2 predicate 1789593551756-0 pinned 5ef0fac0d, job 01cf0c12258e (BETA_SWEEP, VERDICT 32/4/8 per point,
+  cpu 7200, checkpointable). Admission verified to refuse GATE_NOT_LANDED:G2 on a planted not_landed map.
+- H4 survey (Explore subagent, schema only, no values read): NO PASS receipt carries committed train AND held
+  trajectories. E-T1b / E-R7-1 / E-R7-O8 carry held_curve only (train is scalar); D-R7-1 has both but is NULL.
+  -> H4 as specified cannot run at zero simulation: WHY_NOT_RUN, residue better_instrument (PASS runs should log
+  per-checkpoint train AND held for the top1).
+- H6 survey: no committed rows file stores full-archive genomes (every harness clears the archive), so every coverage
+  re-score needs simulation. Only E4b (E, PASS; coverage + qd_score > random-filled archive, 5/5; UNSEEDED sampler) is
+  an untested arm-vs-arm coverage claim. C-R2-02 already done by D-R7-5 (GAP_VANISHES).
