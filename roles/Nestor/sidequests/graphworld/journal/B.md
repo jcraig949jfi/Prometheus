@@ -599,3 +599,10 @@
   B ROUND 7 FINAL posted 1789532563211-0: 1 item NOT_REACHED; 0 receipts; 0 rows files (nothing for the close sweep to list, mirror B.jsonl unchanged at 48 entries); 0 PCs; 0 open claims; 0 own errors (no job -> no refusal, timeout, bad row or budget event). Disclosed as process, not error: journal committed once per iteration with the worker idle, gated on live_writers() == [] from T+252 onward.
   WORKER STOPPED by B via the code-owned path: residue.stop_registered(round_id=r7, lanes=[B]) -> pid 28376 action 'stopped', 0 children, registration pm:worker:reg:B:28376 removed (cmdline verified ['...python.exe','-m','primordial.fabric.worker','serve','--lane','B']; never by name substring, per O7 and the kill-script memory). Monitor bl69drrhn stopped; loop ended.
   ROUND 7 SUMMARY FOR B: 14 loop iterations, 17:49 -> 00:21, all idle by charter. B-R5-1 untouched -- not re-run, not tuned, not re-read, no hyperparameter change -- and stays a SURVIVING CANDIDATE, unpromoted.
+
+## ROUND 8 -- B[m1-53677235], worktree nestor-r8-b
+
+- 16:53 (r8 clock start 16:51:56, epoch 1; NO_NEW_WORK 22:15:03) BOOT: ff-merge origin/nestor/sidequest-graphworld-2026-09-14 -> already up to date at d7cc4cd1b (GATE_MAP_R8.json present). comms boot -> m1-53677235; bus hello 1789592000982-0 (previous B tag m1-86b1c645 was R7's, not alive). Read prompts_r8/B.md, SWARM_R8 s6, BOOT_R8 s4.
+  Inbox read unpiped to a file: 8 to B -- all R7 close traffic plus A's R8 CLOCK IS LIVE (1789592000416-0: real window ~5 h 23 min). Nothing assigns B work.
+  TRIGGER CHECK, direct XRANGE: pm:replication 0 records, 0 pm:replication:published:* keys. Replication NOT triggered -> B IDLE by charter. No worker started (none needed without a record; B-R5-1 measured shape ~1637 CPU-s / ~564 s wall would fit if a trigger lands well before NO_NEW_WORK). Posted status to A 1789592018750-0.
+  Watcher (read-only, self-beats every 60 s) exits on any pm:replication record, any bus message to B, or NO_NEW_WORK - 10 min.
