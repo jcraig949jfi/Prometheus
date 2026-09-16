@@ -43,6 +43,13 @@ ACTIVE = "ACTIVE"
 RETIRED = "RETIRED"
 
 
+#: THEO-REQ-002: the axis vocabulary. `unclassified` is what an absent
+#: entry means and may also be written explicitly.
+AXES = frozenset({"mechanism", "world", "pressure", "intervention", "budget",
+                  "unclassified"})
+UNCLASSIFIED = "unclassified"
+
+
 @dataclass(frozen=True)
 class Kind:
     kind: str
@@ -91,6 +98,28 @@ class Kind:
     #: AFTER each run had created and committed a world. Named as a string
     #: so the registry never imports an executor at import time.
     value_checker: str = ""
+    #: THEO-REQ-002 (2026-09-16). Which AXIS of the cell coordinate each
+    #: parameter moves: mechanism | world | pressure | intervention | budget.
+    #: Purely descriptive -- no hash, no validation, no executor reads it --
+    #: so two producers can agree on the coordinate of one row from the
+    #: sealed payload alone instead of each assigning axes by hand. A
+    #: parameter absent from this map is UNCLASSIFIED, which is a statement
+    #: ("the owner has not said"), never a default. Keys must be params.
+    axes: Dict[str, str] = field(default_factory=dict)
+
+    def __post_init__(self):
+        bad_keys = sorted(set(self.axes) - set(self.params))
+        if bad_keys:
+            raise ValueError("kind %r: axes name non-parameters %s"
+                             % (self.kind, bad_keys))
+        bad_vals = sorted({v for v in self.axes.values() if v not in AXES})
+        if bad_vals:
+            raise ValueError("kind %r: unknown axis value(s) %s; allowed %s"
+                             % (self.kind, bad_vals, sorted(AXES)))
+
+    def axis_of(self, param: str) -> str:
+        """The declared axis, or UNCLASSIFIED."""
+        return self.axes.get(param, UNCLASSIFIED)
 
     @property
     def retired(self) -> bool:
@@ -275,6 +304,15 @@ register(Kind(
     params=frozenset({"rule_hex", "radius", "n_cells", "steps", "n_ic",
                       "ic_density_set", "success_criterion", "transform"}),
     value_checker="viv.ca_density:payload_problems",
+    # THEO-REQ-002: the assignment Theophrastus made by hand in
+    # theophrastus/ecology.py, declared here on the contract so no second
+    # producer has to read that code. Herakles (library owner) may amend;
+    # an amendment is a contract note, not a hash change.
+    axes={"rule_hex": "mechanism",
+          "radius": "world", "n_cells": "world", "steps": "world",
+          "ic_density_set": "pressure", "n_ic": "pressure",
+          "success_criterion": "pressure",
+          "transform": "intervention"},
     implemented=True,
     owner="herakles (library) / vivarium (wrapper)",
     stateful=False,
