@@ -481,3 +481,17 @@
   fires on near-ties) left to the owning lanes as a round-8 PC; D changed nothing.
 - D-R7-4 submitted (job 0d2d60f699df, predicate 1789516049509-0 pinned 037c269ff, admission ok) after D-R7-3b's
   receipt, one job at a time.
+- A ruling 1789516925555-0 on D-R7-3b: ANOM-..7239 RESOLVED, the fused_eq_numpy gate stays EXACT-equality until round 8
+  (three verdicts were emitted under it tonight), and D files the tie-aware gate as a PC, not a patch. Packet scope per
+  A: a tie-break artifact at a ~1e-7 margin, not a logic error -- it does not impugn B-R5-1 (fused==numpy clean 32/32),
+  the R16 screen (42/42) or tonight's Clause B verdict; it explains why the 2-in-819,200 mismatch showed up only on
+  untrained random donors, which sit near ties far more often than trained genomes.
+- PC filed BY HAND (D27: no code path opens a stub without a refusal; A sanctioned hand-written stubs for r7):
+  stub 1789517018361-0 exp_id D-R7-tie-aware-fused-eq-numpy-gate, in refuse()'s record shape, source_event
+  D_ANOMALY_RESOLUTION; note 1789517018378-0 to A,E,B,G. measured_cost NULL on purpose (nothing about the FIX was
+  measured; D-R7-3b's 0.95 s was the cost of the evidence), estimates build ~1800 s / tests ~900 s.
+- F corrections accepted by A (1789515908971-0), recorded for D's FINAL: D-R7-3's refused rows were NOT lost --
+  worker._drain wrote 'aborted' rows whose `row` field holds the payload verbatim, all 3 on origin, so the analysis was
+  recoverable; the JOB reported ok (rows 3, 2.34 CPU-s) and the INDETERMINATE was D's own receipt decision; D29 is
+  recorded as F's defect with credit to D for handling and disclosure. A's D29 design ruling: refuse at emit (no alias),
+  fail loudly (any refused row -> job status error), vocabulary lint between rows.STATUSES and EVIDENCE_CLASSES.
