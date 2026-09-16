@@ -116,14 +116,53 @@ def p_g1():
 
 
 def p_ge():
-    """Gate enforcement itself: with a live clock and a planted not-landed gate, admit() refuses."""
+    """R8 GE, the fail-safe the whole gate map rests on -- probed BEHAVIOURALLY.
+
+    The first version grepped envelope.py for the two token names. That is the identical weak pattern
+    that false-greened C2 and C3 on top of live defects this morning, and a false green HERE is the worst
+    of all: the gate map would look enforced while nothing enforced it.
+
+    F's implementation takes an injectable `gates=` dict, so state is planted IN-PROCESS -- no redis
+    write, no cleanup, no contamination. The fail-closed case uses round id r99, which has no committed
+    map file, so it stays deterministic even after the real gate writes GATE_MAP_R8.json at 10:15.
+    """
     from primordial.fabric import envelope as E
-    src = (pathlib.Path(E.__file__)).read_text(encoding="utf-8", errors="replace")
-    if "GATE_NOT_LANDED" not in src:
-        return False, "envelope.py contains no GATE_NOT_LANDED -- the fail-safe is still unimplemented"
-    if "GATE_STATE_UNAVAILABLE" not in src:
-        return False, "no GATE_STATE_UNAVAILABLE -- enforcement does not fail closed"
-    return True, "GATE_NOT_LANDED and GATE_STATE_UNAVAILABLE both present in the admission path"
+    now = time.time()
+
+    def clk(rid):
+        return {"round_id": rid, "stage": "PILOT", "start_ts": now - 10.0, "epoch_s": 3600.0, "epochs": 12,
+                "no_new_work_ts": now + 10000.0, "drain_ts": now + 20000.0, "end_ts": now + 30000.0}
+
+    env = E.example(expected_output_rows=1)                      # rows > 0 -> G1 blocks it
+    ALL = {g: "landed" for g in E.GATE_BLOCKS}
+    checks = []
+
+    # 1. BUILD phase (no clock) must not refuse -- or the gate refuses the very work that lands it.
+    checks.append(("no_clock_no_refusal", E.gate_reasons(env, "cpu", None) == []))
+
+    # 2. A planted not-landed blocking gate refuses at admission, as GATE_REFUSAL, with NO candidate stub.
+    v = E.admit(env, "cpu", clock=clk("r8"), now=now, gates={**ALL, "G1": "not_landed"})
+    checks.append(("g1_refused_zero_cpu", v["ok"] is False and f"{E.GATE_NOT_LANDED}:G1" in v["reasons"]
+                   and v.get("event") == E.GATE_REFUSAL and v.get("stub") is False))
+
+    # 3. With every gate landed, nothing is refused on gate grounds.
+    v2 = E.admit(env, "cpu", clock=clk("r8"), now=now, gates=ALL)
+    checks.append(("all_landed_admits",
+                   not [x for x in v2["reasons"] if str(x).startswith(E.GATE_NOT_LANDED)]))
+
+    # 4. FAIL CLOSED: unreadable/absent state under a live campaign clock refuses, never admits.
+    checks.append(("fail_closed_when_state_absent",
+                   E.gate_reasons(env, "cpu", clk("r99")) == [E.GATE_STATE_UNAVAILABLE]))
+
+    # 5. Kind-specific topology: C1 blocks gpu work only.
+    genv = E.example(expected_output_rows=0, gpu_budget_s=60)
+    checks.append(("c1_blocks_gpu", f"{E.GATE_NOT_LANDED}:C1"
+                   in E.gate_reasons(genv, "gpu", clk("r8"), {**ALL, "C1": "not_landed"})))
+
+    bad = [n for n, ok in checks if not ok]
+    return (not bad), (f"{len(checks)}/{len(checks)} behavioural: no-clock, G1 refusal at zero CPU, "
+                       f"all-landed admits, fail-closed, C1 gpu-only" if not bad
+                       else f"BEHAVIOURAL FAILURES: {bad}")
 
 
 def p_g6():
