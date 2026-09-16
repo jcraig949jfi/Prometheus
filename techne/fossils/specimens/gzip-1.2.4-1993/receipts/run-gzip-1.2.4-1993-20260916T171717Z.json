@@ -1,0 +1,200 @@
+{
+  "schema": "techne.fossil.run_receipt/2",
+  "specimen_id": "gzip-1.2.4-1993",
+  "receipt_id": "run-gzip-1.2.4-1993-20260916T171717Z",
+  "written_utc": "20260916T171717Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-c:bookworm",
+  "workdir": "upstream/tree/gzip-1.2.4",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {},
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.4"
+  },
+  "environment": {
+    "interpreter": {
+      "implementation": "CPython",
+      "version": "3.14.4",
+      "executable_basename": "python.exe"
+    },
+    "pip_freeze_sha256": "f9f87e9e3ad66b01148d929fd03c82905030a460fd7a12dbae27ab7be70728df",
+    "pip_freeze_n": 145,
+    "env_vars_read": [
+      "TECHNE_FOSSIL_VAULT"
+    ],
+    "env_vars_exported_to_recipe": [
+      "BODY",
+      "HARNESS"
+    ]
+  },
+  "tree_sha256_before": "d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719",
+  "recipe_sha256": "f02fa1bb27db1b9f57c224891ebfa6f13049e24894c85a9c52da9c001f8adc38",
+  "patches": [],
+  "probe": [
+    {
+      "name": "gcc",
+      "cmd": "gcc --version | head -1",
+      "exit": 0,
+      "seconds": 2.77,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "1993 configure + make, DEFAULT flags (scaffolding T1 removed 2026-09-16 after measurement)",
+      "cmd": "./configure >/dev/null 2>&1; make -s 2>&1 | grep -iE '\berror|multiple definition' | head -5; test -x ./gzip && echo built",
+      "exit": 0,
+      "seconds": 1.48,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "built\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "round trip the same 200 KB sample used for compact; report the ratio",
+      "cmd": "awk 'BEGIN{for(i=0;i<4000;i++) printf(\"the quick brown fox %d jumps over the lazy dog %d\\n\", i, i*7)}' > $BODY/build/sample && ./gzip -c -9 $BODY/build/sample > $BODY/build/s.gz && ls -l $BODY/build/s.gz | awk '{print \"gzip -9 bytes:\", $5}' && ./gzip -dc $BODY/build/s.gz | cmp - $BODY/build/sample && echo ROUNDTRIP OK",
+      "exit": 0,
+      "seconds": 0.38,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gzip -9 bytes: 21267\nROUNDTRIP OK\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "version banner",
+      "cmd": "./gzip -V 2>&1 | head -2",
+      "exit": 0,
+      "seconds": 0.37,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "gzip 1.2.4 (18 Aug 93)\nCompilation options:\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [],
+  "produced": [
+    {
+      "path": "bits.o",
+      "sha256": "6eb08877f34fcfb6b31c78a29b440a1e9f528a58ece9f8c6eeb7cd591e6d885c",
+      "bytes": 4432
+    },
+    {
+      "path": "config.status",
+      "sha256": "916817131f60919376fd69b9e4c2b5fc5fbfa3da970bb96bc8434e3f2523e4e9",
+      "bytes": 1819
+    },
+    {
+      "path": "crypt.o",
+      "sha256": "5ad80e54a36fa1f91c320ee3a4869a759255c77787d9a4b7208616abc2ce2cfb",
+      "bytes": 808
+    },
+    {
+      "path": "deflate.o",
+      "sha256": "9d0b3e7d3cfd0ab1f22a0004ef4ac59c1814086ef5179e789fcb7b1c95b877e5",
+      "bytes": 8696
+    },
+    {
+      "path": "getopt.o",
+      "sha256": "24d0865bcda9c0dcd6727b1a98725320ecf11517c8c4f13882457582f7acdae1",
+      "bytes": 808
+    },
+    {
+      "path": "gunzip",
+      "sha256": "3589adf259d9672dc9da8b1d743dc2b400e3c5f82293ea936605c7418940a5ae",
+      "bytes": 75192
+    },
+    {
+      "path": "gzip",
+      "sha256": "3589adf259d9672dc9da8b1d743dc2b400e3c5f82293ea936605c7418940a5ae",
+      "bytes": 75192
+    },
+    {
+      "path": "gzip.o",
+      "sha256": "9c9b6ba72aef8794e286c5fe2616a86f2717b2781f6caca9b8437f3e300c0d81",
+      "bytes": 51840
+    },
+    {
+      "path": "inflate.o",
+      "sha256": "372634bfe78f1e8e9935cd58e385284e5b1966c0012b0b4e3084bf3cddb3ddd1",
+      "bytes": 13776
+    },
+    {
+      "path": "lzw.o",
+      "sha256": "2cb75655e48b4cbf4d06f5f1b5f8234e4829ce9d7877e609d5551e3736a912e6",
+      "bytes": 1712
+    },
+    {
+      "path": "Makefile",
+      "sha256": "d36c02826d22445cfc82b516497577dc3d0c2904c6749c1c7d71a99be282b36a",
+      "bytes": 12329
+    },
+    {
+      "path": "trees.o",
+      "sha256": "1b05535433ded21cb39a34053f94f083d73a12b67cc079dfda27aa55446e7006",
+      "bytes": 13864
+    },
+    {
+      "path": "unlzh.o",
+      "sha256": "9a3ec33216f56afbca64ee02d52a817241bb402cc61eaae3bc6b1c80086f8001",
+      "bytes": 6664
+    },
+    {
+      "path": "unlzw.o",
+      "sha256": "6a899b4b656dfe60ab61fbe306d53ec6cc68da5fe3b01f33e790877d6de688c5",
+      "bytes": 6176
+    },
+    {
+      "path": "unpack.o",
+      "sha256": "4210f988c74319e41a5aa61b31b5def1754c9c9e23b5aba7c70facdf0f050056",
+      "bytes": 5728
+    },
+    {
+      "path": "unzip.o",
+      "sha256": "3b13bb0b72b240e76d0407e08c714cf99ff890f7cd60bb4d42a090eb240e710b",
+      "bytes": 7512
+    },
+    {
+      "path": "util.o",
+      "sha256": "0653464a073c2064208d0fbe1eae0e47a8a65df7a95286c80a41746d09b875d9",
+      "bytes": 10848
+    },
+    {
+      "path": "zcat",
+      "sha256": "3589adf259d9672dc9da8b1d743dc2b400e3c5f82293ea936605c7418940a5ae",
+      "bytes": 75192
+    },
+    {
+      "path": "zip.o",
+      "sha256": "6768929a22ebb7062814f71425cc6e8c5536664eccdd44b934e85c3e59d62191",
+      "bytes": 5416
+    }
+  ],
+  "classification": "RUNNABLE_CONTAINER",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": true,
+  "tree_sha256_after": "d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719",
+  "body_preserved": true
+}
