@@ -2,8 +2,25 @@
  "T0_epoch": 1789564503.891,
  "T0_local": "2026-09-16 09:15:03",
  "T0_source": "min start ts across the six lane records in launch_log.jsonl (derived, not recalled)",
+ "clock_start_sequence": {
+  "1_run_gate": "python roles/Nestor/sidequests/graphworld/gate_r8.py --emit --since-sha 6c02b89a9",
+  "2_commit_push_map": "GATE_MAP_R8.json must be COMMITTED AND PUSHED before any worker starts.",
+  "3_every_lane_ff_merge_CRITICAL": "F 1789565285343-0: worker._admit calls admit() with NO redis handle, so admission reads the COMMITTED GATE_MAP_R8.json from the WORKER'S OWN worktree (its round_id must equal r8). A lane worktree that has not ff-merged the --emit commit is refused GATE_STATE_UNAVAILABLE for EVERYTHING -- fail closed, as ruled. So: after emit, EVERY lane ff-merges before its worker starts, or P passes r=self.r so the redis hash pm:round:r8:gates is read instead. The same holds for gpuq. Forgetting this silently refuses the whole round's science.",
+  "4_anti_prior_publish": "A draws candidates(store, round_id='r8') from frozen seed 20260921, then calls anti_prior.write_residue(record) to commit the rejected set to primordial/ledger/prior/r8-candidates-precheck.jsonl (H 1789565555885-0). H must NOT publish; A draws.",
+  "5_world_set_freeze": "python -m primordial.metric.world_set_r8 freeze <path>, then verify <path> (rc 1 on any edit). Refuses a second freeze; stamps UTC + git HEAD (G 1789565602703-0).",
+  "6_OPERATOR_RULING_NEEDED_BEFORE_FREEZE": "G's manifest CAPACITY -- L1 64, L2 72, L3 84, B 64 -> kept 37/56/75/64 = 232 worlds -- is the one builder-chosen number. R6/R11: A computes cost and brings a number, A does NOT choose stratum sizes. Needs an operator ruling. NOTE it is a manifest draw count, NOT a screen N."
+ },
  "conductor_sha_at_T0": "dbd9a127fabe76639bdbf83d977837f01aba62dc",
  "gate_command": "python roles/Nestor/sidequests/graphworld/gate_r8.py --emit --since-sha 6c02b89a9",
+ "gate_runner_state": {
+  "checks": "24 = 12 environment + 12 gate probes, count derived not hardcoded",
+  "complete_against": "all 8 BUILD_R8 GATE RUN items",
+  "lint_argvs_from_owners": {
+   "G1": "python -m primordial.fabric.envelope lint",
+   "G4": "python -m primordial.ops.epoch lint --self-test"
+  },
+  "topology_confirmed_by_A": "G3 = kind=='cpu' (an unlanded G3 refuses ALL cpu science); G2 = ANTI_PRIOR or BETA*; C2 = CLAUSE_B unless OBSERVATION"
+ },
  "invariants": {
   "cap_hours": 15,
   "rule": "SCIENCE_END = min(science_start + 12h, T0 + 15h - 60min) = T0 + 14h; R17 accepts ~11h40m",
