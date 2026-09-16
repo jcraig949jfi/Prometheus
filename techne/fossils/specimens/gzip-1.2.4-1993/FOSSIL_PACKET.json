@@ -92,6 +92,7 @@
     "SCREENSHOT": "no",
     "INJECT_INPUT": "yes",
     "EXTRACT_OUTPUT": "yes",
+    "_source": "techne/fossils/WORLDS.json",
     "_how": "harvest run: disposable copy (INSTANTIATE), recipe commands (EXECUTE), stdout/stderr/exit/produced-file hashes (OBSERVE/EXTRACT_OUTPUT), harness files mounted under $HARNESS (INJECT_INPUT); TRACE partial = strace/ltrace could be added to the world but are not; INTERVENE partial = source patches on the disposable copy and build flags, never on the body; no process snapshot/step in a container world"
   },
   "SCAFFOLDING_LEDGER": {
@@ -197,8 +198,38 @@
     ],
     "r25_status": "two VERIFIED body copies in distinct failure domains (M1, M2) plus the live origin; the world is preserved as a recipe with measured identity, not as bytes -- an off-host image tarball is TECHNE-65/NAS material"
   },
-  "CUT_ID": null,
-  "NYX_PREDICTION_PACKET": null,
+  "CUT_ID": {
+    "cut_id": "gzip-1.2.4-1993::four_threshold_table_indexed_by_level",
+    "record": "nyx/atlas/fossils/gzip-1.2.4-1993.json (cut format nyx.atlas/1-provenance; cut script nyx/atlas/cuts/gzip_1_2_4_1993.py, annotated DO NOT RE-RUN)",
+    "boundary": [
+      {
+        "file": "gzip-1.2.4/deflate.c",
+        "lines": "225-245",
+        "payload_sha256": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4"
+      },
+      {
+        "file": "gzip-1.2.4/deflate.c",
+        "lines": "286-356",
+        "payload_sha256": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4"
+      }
+    ],
+    "provenance_grade_read": "CONTEMPORARY_COPY (Techne's grade)",
+    "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308)"
+  },
+  "NYX_PREDICTION_PACKET": {
+    "id": "MECH-GZIP-LEVELTABLE-002",
+    "sha256": "a30f3348d198c12471d2bad3bc847b41e3092b0c93fb2c751ef0a30080c821f8",
+    "path": "nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-002.json",
+    "freeze": "nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-002.FREEZE",
+    "schema": "nyx.prediction_packet/1",
+    "supersedes": "MECH-GZIP-LEVELTABLE-001 (861dded070d138e35c56d5cc05cf76de7053117c3aba24aa51e350d8ebe10619; grade + Techne ids only)",
+    "cheat_control": "C-CHEAT-PRECOMPRESSED",
+    "positive_control": "C-POS-LEVEL-EXTREMES",
+    "cut_kill": "a level-dependent ratio difference > 0.002 survives I2-FLATTEN-PLUS-SWITCHES with both controls passing",
+    "decisive_intervention": "I2-FLATTEN-PLUS-SWITCHES (SOURCE level)",
+    "calibration_pair": "RS_CALIBRATION_PAIR_001 (nyx/atlas/calibration/)",
+    "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308)"
+  },
   "ORACLE_SOURCES": null,
   "ORACLE_PROVENANCE_GRADES": null,
   "HARMONIA_SURROGATE_ID": null,

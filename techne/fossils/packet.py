@@ -69,6 +69,10 @@ def fossil_world_id(dockerfile_sha256: str, package_manifest_sha256: str, probes
     return "fw-" + h.hexdigest()[:24]
 
 
+def worlds_registry() -> dict:
+    return json.loads((vault.REPO / "techne" / "fossils" / "WORLDS.json").read_text(encoding="utf-8"))
+
+
 def packet_path(specimen_id: str) -> pathlib.Path:
     return vault.specimen_dir(specimen_id) / "FOSSIL_PACKET.json"
 
@@ -113,6 +117,15 @@ def validate(p: dict) -> list[str]:
             why.append("CAPABILITY_MATRIX lacks verb %s" % v)
         elif cm[v] not in ("yes", "no", "partial"):
             why.append("CAPABILITY_MATRIX[%s] must be yes/no/partial" % v)
+    # R22 as data: the packet's matrix must equal the registry's for its world (WORLDS.json owns it)
+    wname = (p.get("FOSSIL_WORLD") or {}).get("name")
+    reg = worlds_registry().get("worlds", {}).get(wname)
+    if reg is None:
+        why.append("FOSSIL_WORLD.name %r is not in techne/fossils/WORLDS.json" % wname)
+    else:
+        diff = [v for v in VERBS if cm.get(v) != reg["capabilities"].get(v)]
+        if diff:
+            why.append("CAPABILITY_MATRIX differs from WORLDS.json for %s on %s" % (wname, diff))
     led = p["SCAFFOLDING_LEDGER"]
     for key in ("applied", "measured_and_rejected"):
         if key not in led or not isinstance(led[key], list):

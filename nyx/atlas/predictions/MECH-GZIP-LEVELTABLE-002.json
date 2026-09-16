@@ -1,0 +1,191 @@
+{
+ "schema_version": "nyx.prediction_packet/1",
+ "prediction_packet_id": "MECH-GZIP-LEVELTABLE-002",
+ "created_at": "2026-09-16",
+ "chopper_identity": "Nyx",
+ "chopper_version": "instance m2-0c0adfe1; cut format nyx.atlas/0 (cut script nyx/atlas/cuts/gzip_1_2_4_1993.py at origin/main ef05d395f)",
+ "cut_id": "gzip-1.2.4-1993::four_threshold_table_indexed_by_level @ nyx/atlas/fossils/gzip-1.2.4-1993.json, origin/main ef05d395f",
+ "fossil_raw_id": "gzip-1.2.4-1993 (Techne record; artifact gzip-1.2.4.tar.gz sha256 1ca41818a23c9c59ef1d5e1d00c0d5eaa2285d931c0fb059637d7c0cc02ad967)",
+ "payload_manifest_id": "techne tree_sha256 d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719 (90 files); bytes read on M2 verified byte-exact against it 2026-09-16",
+ "provenance_grade_read": "CONTEMPORARY_COPY",
+ "provenance_grade_note": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE: CONTEMPORARY_COPY -- 'the GNU ftp distribution tarball of the 1993 release, served by the project's own mirror; not the author's original medium'; edge PACKAGES gzip 1.2.4 source as released 1993-08",
+ "boundary": [
+  {
+   "file_path": "gzip-1.2.4/deflate.c",
+   "file_payload_hash": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4",
+   "line_start": 225,
+   "line_end": 245,
+   "symbol": "configuration_table[10]",
+   "role": "the four-column table (good, lazy, nice, chain) indexed by level"
+  },
+  {
+   "file_path": "gzip-1.2.4/deflate.c",
+   "file_payload_hash": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4",
+   "line_start": 286,
+   "line_end": 356,
+   "symbol": "lm_init",
+   "role": "reads the table into max_lazy_match / good_match / nice_match / max_chain_length; stores compr_level; sets the FAST/SLOW header flags"
+  }
+ ],
+ "consumers_of_level_outside_the_boundary": [
+  {
+   "file_path": "gzip-1.2.4/deflate.c",
+   "file_payload_hash": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4",
+   "line": 667,
+   "what": "if (compr_level <= 3) return deflate_fast(); -- the greedy/lazy switch is keyed on the LEVEL NUMBER, not on the table",
+   "found": "2026-09-16, while writing this packet; the cut file's organ text 'no other code changes with the level' was WRONG and is annotated, not rewritten (see corrections)"
+  },
+  {
+   "file_path": "gzip-1.2.4/trees.c",
+   "file_payload_hash": "29326baf3bd7235bba9d933694dcc506d7238a05242bf88136f972f3fac20e62",
+   "line": 987,
+   "what": "if (level > 2 && (last_lit & 0xfff) == 0) -- an early block-flush heuristic active only above level 2; OUTSIDE deflate.c entirely",
+   "found": "2026-09-16, same"
+  },
+  {
+   "file_path": "gzip-1.2.4/deflate.c",
+   "file_payload_hash": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4",
+   "line": 311,
+   "what": "FAST / SLOW header flag bytes (inside the boundary; affect one header byte, never the compressed stream)"
+  }
+ ],
+ "mechanism_claim": {
+  "functional_claim": "The -1..-9 level selects four search thresholds from a static table; those thresholds, plus exactly two level-keyed switches outside the table (the greedy/lazy path switch at deflate.c:667 and the block-flush heuristic at trees.c:987), account for ALL level-dependent variation in compressed size and time. No other code path reads the level.",
+  "claimed_inputs": "pack_level 1..9",
+  "claimed_outputs": "max_lazy_match, good_match, nice_match, max_chain_length (the table); the fast/lazy branch; the flush heuristic gate",
+  "claimed_internal_dependency": "longest_match reads chain/good/nice each call; deflate() reads max_lazy per byte; deflate_fast ignores lazy; the trees.c gate fires per 4096 literals",
+  "known_uncertainty": "whether the trees.c:987 heuristic changes SIZE measurably on a ~1 MB source corpus (it changes block boundaries; effect may be below 0.1%); whether timing on a small corpus is stable enough to see chain-length effects below level 6"
+ },
+ "test_world": {
+  "fossil_world": "Techne FOSSIL_WORLD_ID fw-01f8b51f479199e106bb85ed (prometheus-fossil-c: Dockerfile sha256 + dpkg manifest sha256 + toolchain probe; Debian 12, gcc 12.2.0-14+deb12u1); RUNTIME_WITNESS M2 image 5d33974496e0 (receipt 20260916T162024Z, schema/2), M1 image faeec8375055 (receipt 20260912T210109Z); SCAFFOLDING_LEDGER: build flags -O1 -fcommon -std=gnu89 -w, no source change; TECHNE_STATE BODY_EXECUTABLE; capability matrix: INTERVENE partial (patches on a disposable copy = SOURCE level), no SNAPSHOT/STEP",
+  "corpus": "CORPUS-A = concatenation, in sorted path order, of every file under gzip-1.2.4/ in the fossil's own tree (deterministic, present in every world, ~0.9 MB, mostly C and text); CORPUS-B (cheat) = CORPUS-A compressed once with the unmodified fossil at level 9",
+  "observables": "ratio = compressed bytes / input bytes, per level; time = minimum wall seconds over >= 5 runs per level (min, not mean); both from the fossil binary built in the fossil world"
+ },
+ "interventions": [
+  {
+   "intervention_id": "I0-BASELINE",
+   "intervention_level": "TESTBENCH",
+   "intervention_operation": "no code change; run levels 1..9 on CORPUS-A",
+   "measured_observable": "ratio(level), time(level)",
+   "expected_direction": "DECREASE",
+   "expected_magnitude_band": [
+    0.01,
+    0.06
+   ],
+   "units": "absolute ratio difference ratio(1) - ratio(9)",
+   "band_basis": "prior experience of gzip on source text: -1 ~0.30-0.36, -9 ~0.26-0.30; deliberately wide",
+   "test_world_scope": "CORPUS-A in the fossil world",
+   "pressure_scope": "none (baseline)",
+   "prediction_rationale": "chain 4 -> 4096, lazy 4 -> 258, nice 8 -> 258 across the table; more search finds longer matches; the step at 3->4 (deflate_fast -> lazy) is allowed to be NON_MONOTONIC in ratio because level 4 has a SHORTER chain (16) than level 3 (32)",
+   "secondary": {
+    "observable": "time(9)/time(1)",
+    "expected_direction": "INCREASE",
+    "expected_magnitude_band": [
+     1.5,
+     30.0
+    ],
+    "units": "ratio of min wall times",
+    "band_basis": "chain length 4 vs 4096 bounds the work per position; the corpus is small so the band is wide"
+   }
+  },
+  {
+   "intervention_id": "I1-TABLE-FLATTEN",
+   "intervention_level": "SOURCE",
+   "intervention_operation": "edit deflate.c:225-245 so rows 2..9 equal row 1 ({4, 4, 8, 4}); rebuild; run levels 1..9 on CORPUS-A",
+   "measured_observable": "spread of ratio within {1,2}, within {3}, within {4..9}; and the steps 2->3 and 3->4",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    0.0,
+    0.002
+   ],
+   "units": "max absolute ratio difference WITHIN each group {1,2}, {4..9}",
+   "band_basis": "with identical thresholds the only remaining level dependence is the two switches outside the table; within a group neither switch changes",
+   "test_world_scope": "CORPUS-A",
+   "pressure_scope": "none",
+   "prediction_rationale": "isolates the table: if within-group spread exceeds the band, something else reads the level (CUT_KILL)",
+   "secondary": {
+    "observable": "step 3->4 (fast -> lazy at row-1 thresholds) and step 2->3 (trees.c flush gate)",
+    "expected_direction": "REGIME_DEPENDENT",
+    "expected_magnitude_band": [
+     0.0,
+     0.02
+    ],
+    "units": "absolute ratio difference",
+    "band_basis": "lazy matching with max_lazy 4 barely defers; the flush heuristic moves block boundaries only; both effects are expected small and of unknown sign; a step above 0.02 is a surprise to record, not a kill"
+   }
+  },
+  {
+   "intervention_id": "I2-FLATTEN-PLUS-SWITCHES",
+   "intervention_level": "SOURCE",
+   "intervention_operation": "I1 plus: force deflate.c:667 to always take the lazy path (compr_level <= 3 -> 0) and force trees.c:987 gate to true for all levels (level > 2 -> 1); rebuild; run levels 1..9",
+   "measured_observable": "max absolute ratio difference across ALL nine levels; max relative time difference across levels",
+   "expected_direction": "UNCHANGED",
+   "expected_magnitude_band": [
+    0.0,
+    0.002
+   ],
+   "units": "absolute ratio difference (ratio); time within [0.8, 1.25] relative (secondary)",
+   "band_basis": "the mechanism claim says these three sites exhaust level dependence; 0.002 is the header-byte and block-boundary noise floor guessed generously",
+   "test_world_scope": "CORPUS-A",
+   "pressure_scope": "none",
+   "prediction_rationale": "THE decisive intervention for the claim: nine identical outputs (modulo the header flag byte) or the claim is false"
+  },
+  {
+   "intervention_id": "I3-CHAIN-ONLY",
+   "intervention_level": "SOURCE",
+   "intervention_operation": "unmodified table except row 6 max_chain 128 -> 4096; rebuild; run level 6 only",
+   "measured_observable": "ratio(6') - ratio(6); time(6')/time(6)",
+   "expected_direction": "DECREASE",
+   "expected_magnitude_band": [
+    0.0,
+    0.01
+   ],
+   "units": "absolute ratio (ratio decreases or stays); time ratio secondary [1.0, 10.0]",
+   "band_basis": "chain length alone buys little once nice_match (128) stops the search early; time grows with the chain walk",
+   "test_world_scope": "CORPUS-A",
+   "pressure_scope": "none",
+   "prediction_rationale": "separates the four columns: chain length is the cost knob, nice_match the ratio ceiling; if ratio improves by more than 0.01, nice is not binding as the cut assumes"
+  }
+ ],
+ "controls": {
+  "cheat": {
+   "control_id": "C-CHEAT-PRECOMPRESSED",
+   "construction": "CORPUS-B (CORPUS-A already compressed at level 9 by the unmodified fossil) run through levels 1..9 of every build (baseline, I1, I2, I3)",
+   "expected_result": "ratio >= 0.99 at every level in every build; max absolute ratio difference across levels <= 0.002",
+   "failure_interpretation": "if any level or build 'gains' on incompressible input, the measurement is reading something other than compression (a size accounting error, a header difference, a wrong file); every other row of this packet is then INDETERMINATE"
+  },
+  "positive": {
+   "control_id": "C-POS-LEVEL-EXTREMES",
+   "construction": "baseline build, CORPUS-A, level 1 vs level 9, >= 5 timed runs each",
+   "expected_result": "ratio(1) - ratio(9) >= 0.01 AND time(9) > time(1) in every run pair",
+   "failure_interpretation": "if the instrument cannot see the difference between the extreme rows on the baseline, it cannot adjudicate I1-I3; the packet is INDETERMINATE, not falsified"
+  }
+ },
+ "cut_kill": {
+  "observation": "I2-FLATTEN-PLUS-SWITCHES leaves a level-dependent ratio difference > 0.002 or a time difference outside [0.8, 1.25] on CORPUS-A, with both controls passing",
+  "consequence": "a fourth consumer of the level exists outside the three named sites; the boundary of four_threshold_table_indexed_by_level and the mechanism claim are wrong; a NEW CUT of gzip-1.2.4-1993 is required (this packet stays immutable; the new cut names the site found)"
+ },
+ "indeterminate": {
+  "observation": "any of: C-CHEAT-PRECOMPRESSED fails; C-POS-LEVEL-EXTREMES fails; the fossil does not build in the fossil world; timing min-of-5 spread exceeds 25% at any level (underpowered); a surrogate rather than the fossil binary was measured without a divergence ledger showing identical outputs on CORPUS-A",
+  "consequence": "no reading of I1-I3 is made; the packet is returned PREDICTION_INDETERMINATE with the failing item named; it is neither support nor rejection of the cut"
+ },
+ "corrections_to_the_cut_record": [
+  {
+   "date": "2026-09-16",
+   "where": "nyx/atlas/fossils/gzip-1.2.4-1993.json organ four_threshold_table_indexed_by_level, mechanism text 'no other code changes with the level'",
+   "what_was_wrong": "two level-keyed switches exist outside the table (deflate.c:667, trees.c:987)",
+   "how_recorded": "annotation appended to the organ's failure_landscape and to the cut script's docstring; the original sentence is left in place with the marker [SUPERSEDED 2026-09-16 by MECH-GZIP-LEVELTABLE-001]"
+  }
+ ],
+ "supersedes": "MECH-GZIP-LEVELTABLE-001 (frozen 861dded070d138e35c56d5cc05cf76de7053117c3aba24aa51e350d8ebe10619)",
+ "return_protocol": {
+  "to_seat": "Harmonia (R1 oracle construction; R2/R3 adjudication) -- lane currency under Amendment 2/3 not yet established by Harmonia at packet time",
+  "accountable_seat": "Nyx receives CUT_CHALLENGE / PREDICTION_FAILED / PREDICTION_INDETERMINATE / CUT_SUPPORTED; Techne receives WORLD_RECONSTRUCTION_CHALLENGE if the fossil world does not build",
+  "ack_ticks": 1,
+  "disposition_ticks": 2,
+  "required_response_on_challenge": "Nyx produces a new CUT_ID and a new packet with supersedes = MECH-GZIP-LEVELTABLE-001; this packet is never edited",
+  "preservation_status": "Techne's packet: two VERIFIED body copies (M1, M2) + origin, PRESERVATION_STATUS key null; Amendment 3 R38 (not yet in Techne's transcription) holds the lineage NON_CANONICAL / PRESERVATION_GATE_OPEN until TECHNE-65 is decided by the operator -- flagged to Techne, not adjudicated by Nyx"
+ },
+ "supersession_reason": "Techne issued FOSSIL_PACKET.json for gzip-1.2.4-1993 (comms #308) after 001 was frozen: (1) PROVENANCE_GRADE is CONTEMPORARY_COPY (the GNU ftp tarball, not the author's medium), where 001 said ORIGINAL_ARTIFACT from the older handoff string; (2) FOSSIL_WORLD_ID, RUNTIME_WITNESS and HOST_CAPS_ID now exist. No prediction, boundary, control or losing outcome changed; 001 stays immutable.",
+ "fossil_packet": "techne/fossils/specimens/gzip-1.2.4-1993/FOSSIL_PACKET.json (Techne[m2-04bd52c0], 2026-09-16); this packet's id and hash are written into its CUT_ID / NYX_PREDICTION_PACKET keys by Nyx at Techne's request (#308)"
+}

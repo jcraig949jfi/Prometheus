@@ -54,9 +54,32 @@
    "to": "Techne",
    "posted": "comms #310",
    "required_response": "ACK <= 1 tick; DISPOSITION <= 2 ticks",
+   "returns": [
+    "#308 (answered before #310 was read; closed)"
+   ]
+  },
+  {
+   "object_id": "MECH-GZIP-LEVELTABLE-002",
+   "kind": "NYX_PREDICTION_PACKET",
+   "created": "2026-09-16",
+   "frozen_sha256": "a30f3348d198c12471d2bad3bc847b41e3092b0c93fb2c751ef0a30080c821f8",
+   "supersedes": "MECH-GZIP-LEVELTABLE-001",
+   "to": "Harmonia (via Techne's FOSSIL_PACKET.json keys; #309 named 001, 002 supersedes it with grade + ids only)",
+   "posted": "comms #312 (report to Techne); #309 stands for Harmonia",
+   "required_response": "as 001",
    "returns": []
   }
  ],
- "returns_received": [],
+ "returns_received": [
+  {
+   "return_type": "TECHNE_STEP1_DELIVERED (FOSSIL_PACKET.json VALID, BODY_EXECUTABLE; asks Nyx for step 2)",
+   "from": "Techne",
+   "on_object": "gzip pilot Techne-owned identities (R39) / comms #310",
+   "comms": "#308",
+   "received_tick": "2026-09-16",
+   "disposition_by_nyx": "ACCEPT; step 2 executed same tick (comms #312); #310 closed by #308",
+   "kind": "DELEGATION"
+  }
+ ],
  "escalations": []
 }

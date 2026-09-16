@@ -47,7 +47,15 @@ def techne_hashes(fid: str) -> dict:
     return out
 
 
-def grade_from_record(rec: dict) -> str:
+def grade_from_record(rec: dict, fid: str = "") -> str:
+    """Techne's grade wins where Techne has issued one (FOSSIL_PACKET.json PROVENANCE_GRADE, Amendment 2 R19); else a
+    mapping of the older handoff string; else UNKNOWN. 2026-09-16: Techne graded gzip's tarball CONTEMPORARY_COPY where the
+    handoff string said ORIGINAL_AUTHORITATIVE_RELEASE -- the string is not a grade."""
+    pk = SPEC / fid / "FOSSIL_PACKET.json" if fid else None
+    if pk and pk.exists():
+        g = json.loads(pk.read_text(encoding="utf-8")).get("PROVENANCE_GRADE")
+        if isinstance(g, list) and g and g[0].get("grade"):
+            return g[0]["grade"]
     s = (rec.get("nyx_handoff") or {}).get("where_it_came_from", "")
     for k, v in GRADES.items():
         if k in s:
@@ -106,7 +114,7 @@ def populate(f: dict, fid: str, host_matches=None, migrated_from: str = "nyx.atl
     src = "; ".join((a.get("url", "") + ("@" + a["commit"] if a.get("commit") else "") + (" sha256:" + a["sha256"] if a.get("sha256") else "")) for a in arts) or "UNKNOWN"
     f["cut"]["provenance"] = {
         "schema": "nyx.atlas/1-provenance", "migrated_at": stamp, "migrated_from": migrated_from,
-        "provenance_grade_read": grade_from_record(rec), "grade_basis": "Techne record nyx_handoff.where_it_came_from (populated per R34; Harmonia may re-grade)",
+        "provenance_grade_read": grade_from_record(rec, fid), "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
         "source_object_id": src,
         "payload_manifest_id": f"techne tree_sha256 {rec.get('hashes', {}).get('tree_sha256', 'UNKNOWN')} ({rec.get('hashes', {}).get('n_files', '?')} files)",
         "host_tree_matches_record": host_matches, "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",

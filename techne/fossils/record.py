@@ -28,9 +28,13 @@ OBSERVABILITY_DIMS = ("EXECUTABLE", "OBSERVABLE", "ORACLE_BACKED", "INTERVENTION
 #: Provenance relations for the lineage graph (charter 2026-09-12). NOT behavioral-equivalence
 #: claims -- that is a downstream question. Each edge: {relation, to (a fossil_id or an external
 #: name), note}.
-LINEAGE_RELATIONS = ("forked_from", "derived_from", "rewrote", "superseded", "inspired_by",
+#: `superseded` was retired 2026-09-16 (Nyx #310): 17 edges used it in BOTH directions. Now
+#: `superseded_by` (subject was displaced; edge points at the displacer) and `supersedes`
+#: (subject displaced the target). migrate_superseded_20260916.py lists every decision.
+LINEAGE_RELATIONS = ("forked_from", "derived_from", "rewrote", "superseded_by", "supersedes", "inspired_by",
                      "port_of", "reimplementation_of", "historical_version_of", "algorithm_from",
                      "shares_ancestor_with")
+RETIRED_RELATIONS = ("superseded",)
 TEST_CLASSES = ("UPSTREAM_TESTS_PASS", "UPSTREAM_TESTS_FAIL", "UPSTREAM_TESTS_NOT_RUN",
                 "UPSTREAM_DRIVERS_RUN_NO_ORACLE",   # the shipped test programs ran to completion and produced their tables; no reference output exists in the vault to grade them
                 "TECHNE_SMOKE_HARNESS_PASS", "TECHNE_SMOKE_HARNESS_FAIL", "NO_TESTS", "NOT_ATTEMPTED")
@@ -164,6 +168,11 @@ def validate(rec: dict) -> list[str]:
     problems = [k for k in REQUIRED if k not in rec]
     if rec.get("run_classification") not in RUN_CLASSES:
         problems.append("run_classification %r not in RUN_CLASSES" % rec.get("run_classification"))
+    for e in rec.get("lineage_relations", []) or []:
+        if e.get("relation") in RETIRED_RELATIONS:
+            problems.append("lineage relation %r is retired (undirected); use superseded_by / supersedes" % e.get("relation"))
+        elif e.get("relation") not in LINEAGE_RELATIONS:
+            problems.append("lineage relation %r not in LINEAGE_RELATIONS" % e.get("relation"))
     if rec.get("test_classification") not in TEST_CLASSES:
         problems.append("test_classification %r not in TEST_CLASSES" % rec.get("test_classification"))
     if rec.get("source_type") not in SOURCE_TYPES:
