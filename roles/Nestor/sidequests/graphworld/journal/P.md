@@ -181,3 +181,20 @@ Carry-forward (not in the acceptance list):
 - R9 run 1 INCONCLUSIVE: production +5.64% (1 sample/job), stress 1 s -2.58%; job wall spread ~+-12% with my own
   suite loading the host. Run 2 declared BEFORE reading: same verdict metric, 8 pairs, no suite of mine running,
   plus direct per-sample cost and paired ratio as secondaries. Run 1 kept (perf/R8_TELEMETRY_OVERHEAD_run1.json).
+
+## 2026-09-16 R8 BUILD (cont.) -- F interface landed in worker.py; R9 run 2 WITHIN CEILING
+
+- F (1789564931110-0) AGREED: Ctx.emit calls EV.prepare_row(row, n_emitted, envelope) (vocabulary refused at emit,
+  predicate_id + predicate_event_id stamped from the ENVELOPE); done records carry env['predicate_event_id'].
+  D29: a RowWriter refusal in _drain keeps the aborted wrapper row AND sets job status error (never ok).
+  Tests: observation status -> error naming row 1; bypassed emit -> error, ROWS_REFUSED (1), payload kept.
+- Q (1789565148633-0) adopted P's beacon schema verbatim; Q's beacon_lint reads pm:telemetry:watch.
+- R9 run 2 (declared before reading, 8 ABBA pairs, no suite of mine running): production +1.68% (verdict metric,
+  <= 5%), paired median +1.18%, direct sample cost 10.6 ms = 0.035% of wall at 30 s; stress 1 s +2.81%.
+  Arm spread is ~+-5% per job, so the pair resolves "under 5%", not the exact size. Run 1 (+5.64%, contaminated
+  by my own concurrent suite) stays committed beside it.
+- OWN ERROR: I edited worker.py while run 2's first attempt was live; its worker respawned the child (closure
+  stale), the respawn could not import a `-m` __main__, and _child_cpu raised NoSuchProcess -> serve died, data
+  lost. Exactly BOOT_R8 s2 rule 3. Entry point changed to `python -c ... main()`. Latent defect observed (not
+  fixed, filed in STATUS): a child that dies at spawn makes run_job's _child_cpu raise and kills serve().
+- Suite on the final tree: 758 passed, 1 skipped, rc 0.

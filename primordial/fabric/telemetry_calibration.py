@@ -10,7 +10,8 @@ overhead_pct = 100 * (median ON / median OFF - 1). Queue fields and beacons are 
 records written once per grant, not samplers), so the pair isolates the sampler; their per-grant cost is timed
 separately (record_cost_ms).
 
-    PM_TEST_DB=15 python -m primordial.fabric.telemetry_calibration --out <json>
+    PM_TEST_DB=15 PM_TAG=... python -c "import sys; from primordial.fabric.telemetry_calibration import main; sys.exit(main(sys.argv[1:]))" --out <json>
+(not `-m`: spawned worker children cannot re-import a `-m` __main__ after a respawn -- run 2 died of that)
 """
 from __future__ import annotations
 
@@ -94,23 +95,16 @@ def run(pairs: int, units: int, interval_s: float, url: str) -> dict:
 def direct_cost(n: int = 200) -> dict:
     """Secondary (reported, not the verdict metric): what one sample costs, timed directly against a busy child,
     and the implied supervisor CPU fraction at the production interval."""
-    import multiprocessing as mp
     from primordial.fabric import telemetry as TM
-    c = mp.get_context("spawn").Process(target=_spin, daemon=True)
-    c.start()
+    c = subprocess.Popen([sys.executable, "-c", "while True: pass"])
     time.sleep(0.5)
     t = time.perf_counter()
-    for _ in range(n):
-        TM.sample_process(c.pid)
+    got = sum(1 for _ in range(n) if TM.sample_process(c.pid) is not None)
     per = (time.perf_counter() - t) / n
     c.kill()
+    assert got == n, f"only {got}/{n} samples succeeded"
     return {"samples": n, "ms_per_sample": round(per * 1000, 4),
             "pct_of_wall_at_30s": round(100 * per / 30.0, 5), "pct_of_wall_at_1s": round(100 * per / 1.0, 4)}
-
-
-def _spin():
-    while True:
-        pass
 
 
 def paired(run_: dict) -> float:

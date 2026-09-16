@@ -265,6 +265,7 @@ class Ctx:
         self.n_emitted = 0
         self.seg_wall_s, self.seg_t0 = None, 0.0
         self.threads = self.numba_threads = None
+        self.envelope = None                  # R8 G1/G5 (F 1789564931110-0): the job's envelope, for EV.prepare_row
 
     # F9 checkpoints
     def _ckpt(self) -> pathlib.Path:
@@ -303,6 +304,10 @@ class Ctx:
         raise JobPaused()
 
     def emit(self, row: dict) -> None:
+        from primordial.fabric import envelope as EV
+        # R8 G1 + G5 acc.3 (agreed with F): vocabulary refused LOUDLY at emit (RowRefused -> the job ends `error`),
+        # and every row is stamped with predicate_id / predicate_event_id from its envelope
+        row = EV.prepare_row(row, self.n_emitted, self.envelope)
         if self.threads is not None or self.numba_threads is not None:        # D19: every row says how it ran
             row = dict(row)
             row.setdefault("granted_threads", self.threads)
@@ -352,6 +357,10 @@ def _child_main(pipe, url: str, lane: str) -> None:
             pipe.send(_loaded_sha(job["probe"]))
             continue
         ctx.job_id, ctx.n_emitted = job["job_id"], 0
+        try:
+            ctx.envelope = json.loads(job["envelope"]) if job.get("envelope") else None
+        except ValueError:
+            ctx.envelope = None
         ctx.seg_wall_s = float(job["segment_wall_s"]) if job.get("segment_wall_s") else None
         ctx.job_key, ctx.segment = job.get("job_key") or job["job_id"], int(job.get("segment", 0))
         ctx.ckpt_dir = job.get("ckpt_dir") or CKPT_DIR
@@ -439,6 +448,8 @@ class Worker:
         return t.user + t.system
 
     def _drain(self, job_id: str, w: RowWriter) -> int:
+        """Rows of job_id into its RowWriter. D29 (R8 G1): a row the writer refuses is kept as an `aborted` wrapper
+        row (residue) AND recorded in self.row_refusals, which turns the job's status to `error` -- never `ok`."""
         n = 0
         while True:
             got = self.r.xread({ROWS.format(self.lane): self.rows_cursor}, count=500)
@@ -454,6 +465,7 @@ class Worker:
                 try:
                     w.write(row)
                 except ValueError as e:
+                    self.row_refusals.append(f"row {n}: {e}"[:300])
                     w.write({"status": "aborted", "reason": f"bad row: {e}", "job_id": job_id, "row": row})
                 n += 1
 
@@ -499,7 +511,7 @@ class Worker:
         out = {"job_id": job["job_id"], "status": "refused", "event": ev["event"], "reasons": verdict["reasons"],
                "rows": 0, "cpu_s": 0.0, "wall_s": 0.0, "job_key": job.get("job_key") or job["job_id"],
                "segment": int(job.get("segment", 0) or 0), "ended": round(time.time(), 3),
-               **{k: env.get(k) for k in DONE_ENV_FIELDS}, "predicate_event_id": env.get("predicate_id"),
+               **{k: env.get(k) for k in DONE_ENV_FIELDS}, "predicate_event_id": env.get("predicate_event_id"),
                **queue_of(job)}
         self.r.xadd(DONE.format(self.lane), {"json": json.dumps(out, sort_keys=True)})
         self.log(f"job {job['job_id']} {job.get('fn')} -> refused {ev['event']} {verdict['reasons']}")
@@ -564,6 +576,7 @@ class Worker:
         last = self.r.xrevrange(ROWS.format(self.lane), count=1)
         self.rows_cursor = last[0][0] if last else "0"
         w = RowWriter(rows_path, job["exp_id"], commit_every_s=60, repo=self.repo)
+        self.row_refusals = []
         cpu0 = self._child_cpu()
         t0, started = time.perf_counter(), time.time()
         self.pipe.send(job)
@@ -599,6 +612,10 @@ class Worker:
                 status, result = "timeout", {"ok": False, "cpu_s": cpu, "limit": "wall"}
                 break
         n += self._drain(job["job_id"], w)
+        if self.row_refusals and status in ("ok", "paused"):     # D29: refused rows never report ok
+            status = "error"
+            result = dict(result, ok=False, error=f"ROWS_REFUSED ({len(self.row_refusals)}): "
+                                                  + "; ".join(self.row_refusals[:5]))
         if status == "timeout":
             cpu_s = result["cpu_s"]
         elif status == "died":
@@ -627,7 +644,8 @@ class Worker:
                "limit": result.get("limit"), **{k: env.get(k) for k in DONE_ENV_FIELDS},
                "cpu_token": json.loads(job["cpu_token"]) if job.get("cpu_token") else None,
                "granted_threads": granted, "numba_threads": result.get("numba_threads"),
-               "predicate_event_id": env.get("predicate_id"), "resource_samples": samples,
+               "predicate_event_id": env.get("predicate_event_id"), "resource_samples": samples,
+               "row_refusals": len(self.row_refusals),
                "telemetry_sampling": sample_at is not None, **queue_of(job)}
         if status == "paused" and self.auto_requeue:
             out["next_job_id"] = submit(self.lane, job["fn"], job["exp_id"], job["rows"], float(job["ttl_cpu_s"]),

@@ -63,14 +63,17 @@ def beacons(r, L):
 def test_worker_emits_start_and_stop_beacons_and_done_telemetry(env, monkeypatch):
     r, repo, lanes = env
     L = lane(lanes)
-    W.submit(L, SLEEP, "g5", "rows/g5.jsonl", 30, {"s": 0.2}, r=r, envelope=EV.example(predicate_id="1789-0"))
+    W.submit(L, SLEEP, "g5", "rows/g5.jsonl", 30, {"s": 0.2}, r=r, envelope=EV.example(predicate_event_id="1789564787374-0"))
     (d,) = W.Worker(L, url=URL, repo=repo, log=lambda *_: None).serve(block_ms=100, max_jobs=1, deadline_s=30)
     b = beacons(r, L)
     assert [x["beacon"] for x in b][0] == "START" and b[-1]["beacon"] == "STOP"
     assert b[-1]["stop_reason"] == "max_jobs" and b[-1]["jobs"] == 1
     assert len({(x["tag"], x["pid"], x["started_ts"]) for x in b}) == 1        # START/STOP pair on one instance
     assert [x["seq"] for x in b] == list(range(len(b)))
-    assert d["predicate_event_id"] == "1789-0"
+    assert d["predicate_event_id"] == "1789564787374-0"
+    rows = [json.loads(x) for x in (repo / "rows/g5.jsonl").read_text(encoding="utf-8").splitlines()]
+    body = [x for x in rows if x.get("kind") == "sleep_rows"]
+    assert len(body) == 2 and all(x["predicate_event_id"] == "1789564787374-0" for x in body)   # acc.3: every row
     assert all(k in d for k in TM.QUEUE_FIELDS)
     assert d["telemetry_sampling"] is True and len(d["resource_samples"]) >= 1
     s = d["resource_samples"][0]
@@ -222,3 +225,42 @@ def test_adapt14_admission_ignores_queue_telemetry():
     job = {"queue": json.dumps(TM.queue_fields(0.0, 99999.0, 44, True))}
     assert W.queue_of(job)["wait_s"] == 99999.0                       # telemetry says "starved 27 h" ...
     assert EV.admit(env, now=1789600000.0) == base                    # ... and admission never sees it
+
+
+# ------------------------------------------------------------------ D29 (G1 call sites in worker.py, agreed with F)
+
+def job_observation_status(ctx):
+    ctx.emit({"status": "record", "kind": "ok_row"})
+    ctx.emit({"status": "observation", "kind": "d29"})             # round-7 D's row: refused at emit
+    ctx.emit({"status": "record", "kind": "never"})
+
+
+def job_bypass_emit(ctx):
+    """A row that reaches the stream WITHOUT Ctx.emit (a legacy path): the supervisor's RowWriter refuses it."""
+    ctx.emit({"status": "record", "kind": "ok_row"})
+    ctx.r.xadd(W.ROWS.format(ctx.lane), {"job_id": ctx.job_id, "json": json.dumps({"status": "observation"})})
+
+
+def test_d29_refused_row_at_emit_ends_job_error(env):
+    r, repo, lanes = env
+    L = lane(lanes)
+    W.submit(L, f"{__name__}:job_observation_status", "d29a", "rows/d29a.jsonl", 30, {}, r=r)
+    (d,) = W.Worker(L, url=URL, repo=repo, log=lambda *_: None).serve(block_ms=100, max_jobs=1, deadline_s=60)
+    assert d["status"] == "error"                                              # G1 acc.1: never ok
+    rows = [json.loads(x) for x in (repo / "rows/d29a.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert [x.get("kind") for x in rows if x["status"] == "record"] == ["ok_row"]
+    end = [x for x in rows if x.get("kind") == "job_end"]
+    assert len(end) == 1 and "ROW_VOCABULARY_REFUSED:row 1:status 'observation'" in end[0]["error"]   # acc.2
+
+
+def test_d29_refused_row_in_drain_ends_job_error_and_keeps_residue(env):
+    r, repo, lanes = env
+    L = lane(lanes)
+    W.submit(L, f"{__name__}:job_bypass_emit", "d29b", "rows/d29b.jsonl", 30, {}, r=r)
+    (d,) = W.Worker(L, url=URL, repo=repo, log=lambda *_: None).serve(block_ms=100, max_jobs=1, deadline_s=60)
+    assert d["status"] == "error" and d["row_refusals"] == 1
+    rows = [json.loads(x) for x in (repo / "rows/d29b.jsonl").read_text(encoding="utf-8").splitlines()]
+    wrapped = [x for x in rows if x["status"] == "aborted" and x.get("row") == {"status": "observation",
+                                                                                 "job_id": d["job_id"]}]
+    assert len(wrapped) == 1                                                  # the refused payload is residue
+    assert any(x.get("kind") == "job_end" and "ROWS_REFUSED (1)" in x["error"] for x in rows)
