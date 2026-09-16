@@ -329,6 +329,21 @@ def env_checks(round_id: str, skip_suite: bool = False, since_sha: str = "") -> 
     out.append(("conductor_worktree_clean", g.returncode == 0 and not g.stdout.strip(),
                 f"dirty_lines={len((g.stdout or '').strip().splitlines())}"))
 
+    # POST_ROUND s1: ff BEFORE every sweep. In r7 a stale checkout produced a false "zero cited" alarm,
+    # broadcast to seven lanes before the conductor discovered its own checkout was 205 commits behind.
+    # Here the cost is worse than a wrong count: gating a stale checkout reports gates NOT LANDED that DID
+    # land, and under BOOT_R8 s3 a missed gate is PERMANENT for the round -- real science refused on a
+    # bookkeeping error. Measured during the build window: builders push repeatedly, so A goes behind
+    # within minutes.
+    # The gate REFUSES rather than fast-forwarding itself. A verification step must not mutate the thing
+    # it verifies, and silently moving the branch mid-gate would hide exactly this condition.
+    _run(["git", "-C", str(ROOT), "fetch", "origin", "--quiet"], timeout=300)
+    b = _run(["git", "-C", str(ROOT), "rev-list", "--count", f"HEAD..origin/{INTEGRATION}"], timeout=120)
+    behind = (b.stdout or "").strip()
+    out.append(("worktree_current_with_origin", behind == "0",
+                f"behind_origin={behind or '?'}" + ("" if behind == "0" else
+                " -- FAST-FORWARD BEFORE GATING; gates that landed would report NOT LANDED")))
+
     t = _run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], timeout=120)
     sha = (t.stdout or "").strip()
     out.append(("tip_sha_recorded", bool(sha), sha))
