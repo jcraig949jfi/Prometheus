@@ -780,3 +780,26 @@ mirror sweep, and this one. Worth carrying into round 8: a conductor summary is 
 Nothing further owed by E. Final state: workers and gpuq arbiter down (pids 27084, 24596 absent; both registration keys expired),
 lane E queue empty, tree clean, FINAL 1789532529462-0 + close confirmation 1789532711272-0 + D31 PC 1789540397674-0 all filed.
 Ask watch stops at DRAIN 03:07:49 and is not re-armed after it.
+
+# ROUND 8 R8-BUILD -- Nestor-E[m1-089ab85f] (prompts_bld_r8/E.md; BUILD_R8 conditionals C2/C3), 09:15 -> cap 10:15
+
+Iteration 1 (09:15-09:18). C2 D25 LANDED 3bdac37cb. transfer.signflip_p sorts the diffs ascending before either branch, so p is
+a function of the multiset; score/transfer_b.signflip_p still delegates (one implementation, unchanged). Test reaches the MC
+branch (n=21/32/40 + A's gate vector), bitwise-invariant over 9 orders for impl AND judge; the claim FAILS on pre-fix code
+(A's vector .562882 vs .562772). E-R7-1 re-derived: 3/3 verdicts unchanged (live FAIL, val-neg PASS, val-pos PASS); largest
+shift 6e-4, val-neg graft_vs_sham .04915 -> .04940 (still < alpha). rederived_equals_harness stays False on live + val-neg, as in
+r7 (harness summaries were computed in harness order; historical rows untouched). A's gate p_c2 -> LANDED on this tip.
+
+Iteration 2 (09:18-09:20). C3 D28 LANDED e66885cdc (residue.py registration path only). register() keeps this process's record;
+refresh() re-creates a missing key from it -- only for a key this process registered, has not unregistered, with a live pid --
+and stamps reregistered_n/ts (disclosed). keepalive(r, key, interval_s) = daemon-thread refresh for a caller blocked > REG_TTL;
+unregister() drops the record first. Tests: delete + real PEXPIRE recovered; dead/unregistered/foreign never resurrected;
+keepalive holds a 1 s TTL through a 3 s block with a paired no-keepalive control that loses the key. A/B old vs new refresh on
+the test db: old leaves key absent, new re-creates. NOT DONE (ownership): nv/gpuq.py serve does not yet call keepalive, so the
+arbiter's key can still be absent DURING a >90 s job until the next loop turn re-creates it. gpuq.py is not in E's r8 file
+list -> asked A, no edit.
+
+Iteration 3 (09:26). Full suite rc 0 (998 passed, 9 skipped, 305 s, single process, lane-E test db). A 1789565105350-0: C2+C3
+verified LANDED by A's independent probes (deterministic over 5 runs). A did not rule on the gpuq.py keepalive wiring question
+(1789564827107-0), so it stays UNDONE and recorded as a gap: during a GPU job > 90 s the arbiter key is absent until the next loop
+turn re-creates it. C1 not touched. No worker, clock or controller started. Posting E R8 BUILD DONE.
