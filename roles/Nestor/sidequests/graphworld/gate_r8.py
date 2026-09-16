@@ -28,6 +28,13 @@ import sys
 import time
 
 ROOT = pathlib.Path(__file__).resolve().parents[4]
+# REHEARSAL FINDING (09:02 local, pre-T0, and exactly why the rehearsal exists): run as a script, python
+# puts THIS FILE's directory on sys.path -- not the repo root. So every subprocess check passed (they are
+# given cwd=ROOT) and the 4-minute suite really ran, and then the first in-process `from primordial...`
+# died with ModuleNotFoundError. At 10:15 the gate would have failed AFTER spending its whole budget.
+# Fix the path before any primordial import, not after.
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 GW = ROOT / "roles" / "Nestor" / "sidequests" / "graphworld"
 MAP_FILE = GW / "GATE_MAP_R8.json"
 PY = r"C:\Users\jcrai\lab\gw-venv\Scripts\python.exe"
