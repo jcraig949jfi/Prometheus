@@ -16,6 +16,25 @@ CREDENTIALS ARE NEVER COMMITTED HERE. Precedence, highest first:
 The schema name is likewise overridable (VIV_SCHEMA) so tests run the identical
 DDL against a throwaway schema on the same server -- SKIP LOCKED, partial
 unique indexes and plpgsql triggers cannot be honestly tested against a mock.
+
+THE CONNECTION MUST PROVE WHICH CLUSTER IT REACHED (2026-09-16). db_host is
+configuration: the tracked default is "localhost", and on M2 that is the
+QUARANTINED fork (db_system_id 7681719240261676752), which ships the same
+db_name as the canonical store on M1. Measured on the 09-16 boot: `viv.cli
+status` on M2 with no VIV_DB_HOST reached the fork and failed only because the
+fork has no viv schema; `viv.cli run` applies migrations at start and would
+have created it and ticked an empty queue, green, forever. Incident class
+c84e26826cc12217 (roles/Hermes/incidents/). connect() therefore calls
+comms.identity.require() before returning, exactly as comms does:
+
+    production schema `viv`   ALWAYS environment "prometheus-canonical";
+                              no variable or config key can re-aim it
+    any other schema          VIV_DB_ENVIRONMENT / config "db_environment",
+                              default "prometheus-canonical"; naming the
+                              fork is a visible act, never a default
+
+A guard that cannot be imported or cannot read the registry refuses: an
+expectation that does not exist is not an expectation that is satisfied.
 """
 from __future__ import annotations
 
@@ -107,11 +126,81 @@ def schema() -> str:
     return s
 
 
+PRODUCTION_SCHEMA = "viv"
+CANONICAL_ENVIRONMENT = "prometheus-canonical"
+
+
+class WrongStore(RuntimeError):
+    """connect() reached a cluster that is not the one this schema is bound
+    to, or could not prove which one it reached. Carries comms.identity's
+    verdict (`verdict`) so a caller can log the incident signature."""
+
+    def __init__(self, msg: str, verdict: dict | None = None):
+        super().__init__(msg)
+        self.verdict = verdict or {}
+
+
+def db_environment(cfg: dict | None = None) -> str:
+    """The environment name a connection for this configuration must prove.
+
+    The production schema is PINNED to the canonical store: the pin is decided
+    by the schema, not by any variable, so an exported VIV_DB_ENVIRONMENT (or a
+    config.local.json key) cannot aim the consumer at the fork. A throwaway
+    schema may name another registered environment explicitly."""
+    cfg = cfg if cfg is not None else load_config()
+    if cfg.get("schema", PRODUCTION_SCHEMA) == PRODUCTION_SCHEMA:
+        return CANONICAL_ENVIRONMENT
+    return (os.environ.get("VIV_DB_ENVIRONMENT")
+            or cfg.get("db_environment")
+            or CANONICAL_ENVIRONMENT)
+
+
+def _identity_module():
+    """comms.identity, from the repository this package lives in. Fails
+    CLOSED: without the guard there is no proof, and no proof is a refusal."""
+    import sys
+    repo = ROOT.parent
+    if str(repo) not in sys.path:
+        sys.path.insert(0, str(repo))
+    try:
+        from comms import identity  # type: ignore
+    except Exception as e:                                   # noqa: BLE001
+        raise WrongStore("REFUSED: the database identity guard (comms.identity) "
+                         "cannot be imported, so the connection cannot prove "
+                         "which cluster it reached: %s: %s"
+                         % (type(e).__name__, e)) from e
+    return identity
+
+
+def require_environment(conn, environment: str) -> dict:
+    """Prove `conn` reached `environment` or close it and raise WrongStore.
+    Returns comms.identity's verdict on success."""
+    identity = _identity_module()
+    try:
+        return identity.require(conn, environment)
+    except identity.WrongEnvironment as e:
+        try:
+            conn.close()
+        except Exception:                                    # noqa: BLE001
+            pass
+        raise WrongStore(str(e), getattr(e, "__dict__", {})) from e
+
+
 def connect(*, autocommit: bool = False):
     cfg = load_config()
     conn = psycopg2.connect(host=cfg["db_host"], dbname=cfg["db_name"],
                             user=cfg["db_user"], password=cfg["db_password"])
     conn.autocommit = autocommit
+    try:
+        require_environment(conn, db_environment(cfg))
+        if not autocommit:
+            conn.rollback()          # the identity read opened a transaction
+    except BaseException:
+        try:
+            conn.close()
+        except Exception:                                    # noqa: BLE001
+            pass
+        raise
     return conn
 
 
