@@ -642,3 +642,20 @@
   2084 B (~7x linear) because its CORE COUNT (4D = 32 cores x 16 entries) dominates, not its rank. So "equalise
   parameter count across families" is executable for tt_feat and structurally impossible for tt_digits by rank alone;
   the discriminator as written can only be run on two of the three families.
+- D-R7-8 RECORD (job 64216545b989 ok, 42 rows ACCEPTED 2965ae74f, 3.24 s wall, 3.0 CPU-s, 41 targets, token wait
+  1447 s): decision INDETERMINATE. I1 3/3 (partitions 11/23/7, all targets scored, every world has switches);
+  probe_affine CLEAN 41/41 and probe_leak LEAK 41/41, but null_world_quiet FAILED on 1 of 41 -- fit_only world 497
+  j=2 (corrupt_rate 32) with 62 null-world surprises; the other 40 read 0 (x32) or 1 (x8). The rule requires EVERY
+  target to pass, so INDETERMINATE stands and the bound was NOT relaxed after seeing the data.
+  Reported, not judged: rate_f 180/238 = 0.756 (C7c published 238/238 = 1.000 on the SAME 34 targets);
+  rate_g 73/130 = 0.5615; by partition both 55/65 = 0.846, fit_only 125/173 = 0.723, genome_only 18/65 = 0.277;
+  by corrupt_rate 0 -> 0.519, 8 -> 1.000, 16 -> 0.672, 32 -> 0.972; control-clean sensitivity figure 191/296 = 0.645
+  (explicitly not the rule).
+  KEY OBSERVATION: all 18 genome-eligible targets reproduced C7e's per-target (detected, switches) EXACTLY on a
+  DIFFERENT seed base (96000 vs 94000), including 0/3, 0/15, 0/31. Echo is ruled out STRUCTURALLY -- the job reads only
+  C7e's header eligible list and recomputes everything from make_world + trajectory(96000..). So detection looks
+  SEED-INSENSITIVE, which in turn means rate_f's drop from 1.000 to 0.756 cannot be blamed on the seed change and
+  points at C7c's own eligibility procedure (it selects targets where the learner is quiet on the null world at C7c's
+  eligibility seeds). The 62-surprise failure is that same phenomenon at a fresh base. ANOM-..0378 STAYS OPEN.
+  Next discriminators named in the receipt: repeat at 2+ more seed bases; re-derive C7c's fit-eligibility at a fresh
+  eligibility base and re-score; diagnose world 497 j=2.
