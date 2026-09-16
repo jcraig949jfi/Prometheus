@@ -304,6 +304,7 @@ def main(argv=None) -> int:
     ap.add_argument("--only", nargs="*", default=None)
     ap.add_argument("--no-transfer", action="store_true")
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--cycle3", action="store_true", help="DESIGN_v0.4 arms on A/B/D: naive S0 N=512 G=200; transfer S1p N=256 G=200")
     a = ap.parse_args(argv)
     ws = _ws.assert_not_canonical("run the SSF cycle")
     if a.quick:
@@ -335,6 +336,15 @@ def main(argv=None) -> int:
         rs = [evaluate(o["manifest"], eps, rng_seed=1)["reward"] for o in neg]
         floors[spec.name] = sum(rs) / len(rs)
     jobs = []
+    if a.cycle3:
+        for spec in cells:
+            if spec.name not in TRANSFER_CELLS:
+                continue
+            for seed in SEEDS:
+                base = {"campaign": a.campaign, "spec": spec, "campaign_seed": a.seed, "seed": seed, "E": a.E, "floor": floors[spec.name]}
+                jobs.append(dict(base, regime=REGIMES["S0"], branch="B1_naive", N=512, G=200))
+                jobs.append(dict(base, regime=REGIMES["S1p"], branch="B2_transfer", N=256, G=200))
+        cells = []
     for spec in cells:
         for rn in bm["eligible"][spec.name]:
             for seed in SEEDS:

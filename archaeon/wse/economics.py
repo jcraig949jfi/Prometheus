@@ -45,5 +45,6 @@ REGIMES = {
     "S1": Regime("S1", alpha=0.02, beta=0.05, gamma=0.02),
     "S2": Regime("S2", alpha=0.02, beta=0.20, gamma=0.02),
     "S3": Regime("S3", alpha=0.10, beta=0.05, gamma=0.02),
+    "S1p": Regime("S1p", alpha=0.002, beta=0.05, gamma=0.02),   # DESIGN_v0.4 ARM 2: compute cheap, storage dear
 }
 RAMP_FOOTHOLD = 0.30       # m_g = min(1, best_train_reward_so_far / RAMP_FOOTHOLD)
