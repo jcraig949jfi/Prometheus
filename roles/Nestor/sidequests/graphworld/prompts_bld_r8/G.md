@@ -11,7 +11,7 @@ Read, in order:
 - BUILD_R8.md (the ownership table -- you are NOT one of the four gate tracks);
 - BOOT_R8.md s2 (the seven that bit in r7), s4 (your lane block).
 
-STAGE: R8 BUILD. HARD CAP 10:00 local (T0 09:00 + 60 min). Post "G R8 BUILD STATUS" to A at 09:40.
+STAGE: R8 BUILD. HARD CAP 10:15 local (T0 09:15 + 60 min). Post "G R8 BUILD STATUS" to A at 09:55.
 You are building MACHINERY, not running science. The science clock has not started.
 
 YOU OWN: a NEW world-set module under `primordial/metric/` -- create `primordial/metric/world_set_r8.py`

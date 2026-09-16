@@ -11,7 +11,8 @@ Read, in order:
 - prompts/2026-09-14_graphworld_swarm/28_OPERATOR_R8_BUILD_RULING_FAIL_CLOSED.md;
 - REVIEW_PACKET_ROUND7_2026-09-16.txt s3 for D29 and D27 as written up.
 
-STAGE: R8 BUILD. HARD CAP 10:00 local (T0 09:00 + 60 min). Post "F R8 BUILD STATUS" to A at 09:40.
+STAGE: R8 BUILD. HARD CAP 10:15 local (T0 09:15 + 60 min). Post "F R8 BUILD STATUS" to A at 09:55.
+YOUR TRACK NOW CARRIES THREE ITEMS (G1, GE, G6). If the cap arrives first, G1 and GE outrank G6.
 At the cap, STOP. Unfinished items become PRODUCTION_CANDIDATE via envelope.file_candidate. Do not extend.
 
 YOU OWN, EXCLUSIVELY: `primordial/fabric/envelope.py` and the rows-emit path within it.
@@ -33,7 +34,43 @@ on it. A missed gate is PERMANENT for the round. Raise cross-file needs on the b
    4. The gate's vocabulary lint fails on any status/evidence_class token outside the frozen vocabulary.
    5. A regression test reproduces the round-7 shape: N rows refused, job status is NOT `ok`.
 
-2. **G6 -- `envelope.open_candidate()` (D27).** Operator prompt 26: "Yes, Do D27." This reverses the
+2. **GE -- GATE ENFORCEMENT AT ADMISSION. NEW, RULED BY THE OPERATOR AT LAUNCH PREP.**
+   **Why this exists:** A verified on this tip that `GATE_NOT_LANDED` appears ONLY in four R8 markdown
+   files and NOWHERE in `primordial/`. `admit()` has no gate check and does not even receive a round id.
+   So BOOT_R8 s3's "refused at ADMISSION at ZERO CPU" and R16's "degrades by MACHINE REFUSAL, never by
+   conductor judgement" are, today, promises with no code behind them. The operator ruled this into YOUR
+   track because you own `envelope.py`. It lands AFTER G1 and BEFORE G6.
+   **A publishes the gate state; you implement the reader.** At gate time A writes both
+   `pm:round:<round_id>:gates` (hash: gate_id -> `landed` | `not_landed`) and the committed record
+   `roles/Nestor/sidequests/graphworld/GATE_MAP_R8.json`. Which gates LANDED comes from that published
+   state -- never hardcode it. The BLOCKS topology (which gate blocks which work) may be a constant in
+   your file; take it from SWARM_R8 s3:
+
+       G1  -> every row-emitting job          (env["expected_output_rows"] > 0)
+       G2  -> env["experiment_class"] == "ANTI_PRIOR", and the BETA sweep
+       G3  -> shared-CPU multi-lane science
+       C1  -> kind == "gpu"
+       C2  -> verdicts depending on the MC signflip branch
+       G4, G5, G6, G7 block nothing at admission (record them; refuse nothing)
+
+   Key on fields that EXIST: `validate()` requires `experiment_class`, `expected_output_rows`,
+   `predicate_id`, `cohort`; `evidence_class` is optional and in `("VERDICT","OBSERVATION")`;
+   `evidence_n.VERDICT_CLASSES` enumerates the verdict-bearing classes.
+   Acceptance:
+   1. With a LIVE clock and G1 marked `not_landed`, an env with `expected_output_rows > 0` is refused,
+      `ok` False, reason EXACTLY `GATE_NOT_LANDED:G1`, before any simulation (zero CPU).
+   2. With every gate `landed`, the same env admits and carries no gate reason.
+   3. **FAIL CLOSED.** Clock active but the gate state is missing or unreadable -> refused with
+      `GATE_STATE_UNAVAILABLE`. No permissive default. Mirror the existing idiom at `envelope.py:100-104`,
+      where an unavailable EVIDENCE rule yields `EVIDENCE_RULE_UNAVAILABLE` rather than an admit.
+   4. **No clock (the BUILD phase) -> no gate reasons.** Build-phase jobs and your own tests must be
+      unaffected, or the gate refuses the very work that lands it.
+   5. G2 `not_landed` refuses `experiment_class == "ANTI_PRIOR"` and does NOT refuse `CLAUSE_B`.
+      C1 `not_landed` refuses only `kind == "gpu"`.
+   6. The refusal is RECORDED and is not a scientific FAIL (P1: nothing failing before ELIGIBILITY is a
+      hypothesis kill).
+
+3. **G6 -- `envelope.open_candidate()` (D27).** Operator prompt 26: "Yes, Do D27." This reverses the
    earlier recommendation to drop it; it is a hard gate now.
    Context, measured: `envelope.py:159` is the ONLY `xadd` to `CANDIDATES` in the entire codebase, and it
    sits inside `refuse()` behind `if not stub: return`. So a candidate currently CANNOT EXIST without a
@@ -46,7 +83,7 @@ on it. A missed gate is PERMANENT for the round. Raise cross-file needs on the b
    3. `file_candidate()` still works against a stub opened this way (measured cost can be filed onto it).
    4. A test asserts no `*_REFUSAL` event is emitted by the call.
 
-3. **INTERFACE YOU OWE P (do not skip, and do not let it slide past the cap).**
+4. **INTERFACE YOU OWE P (do not skip, and do not let it slide past the cap).**
    G5 acceptance 3 requires that **every emitted row carries the predicate event id**. The rows-emit path
    is YOURS; the telemetry module is P's. Agree the field name and the call site with P ON THE BUS before
    coding, then implement it in `envelope.py` yourself. P may not edit your file and you may not edit P's.

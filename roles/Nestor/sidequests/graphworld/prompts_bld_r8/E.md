@@ -10,7 +10,7 @@ Read, in order:
 - BOOT_R8.md s2 (the seven that bit in r7), s4 (your lane block);
 - SWARM_R8.md s7 (Clause B: investigate the sham), s17 rulings R16, R17.
 
-STAGE: R8 BUILD. HARD CAP 10:00 local (T0 09:00 + 60 min). Post "E R8 BUILD STATUS" to A at 09:40.
+STAGE: R8 BUILD. HARD CAP 10:15 local (T0 09:15 + 60 min). Post "E R8 BUILD STATUS" to A at 09:55.
 
 **CONDITIONAL WORK ALWAYS LOSES TO THE CRITICAL PATH (ruling R16).** The four gate tracks (F, P, Q, H)
 own the build window. You run C2 and C3 only where they genuinely do not threaten that path. If your work

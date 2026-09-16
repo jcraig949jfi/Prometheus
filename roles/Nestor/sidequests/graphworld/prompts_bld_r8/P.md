@@ -14,7 +14,7 @@ Read, in order:
   could not be answered);
 - prompts/2026-09-14_graphworld_swarm/28_OPERATOR_R8_BUILD_RULING_FAIL_CLOSED.md.
 
-STAGE: R8 BUILD. HARD CAP 10:00 local (T0 09:00 + 60 min). Post "P R8 BUILD STATUS" to A at 09:40.
+STAGE: R8 BUILD. HARD CAP 10:15 local (T0 09:15 + 60 min). Post "P R8 BUILD STATUS" to A at 09:55.
 At the cap, STOP. Unfinished items become PRODUCTION_CANDIDATE via envelope.file_candidate. Do not extend.
 
 YOU OWN, EXCLUSIVELY: `primordial/fabric/broker.py`, `primordial/fabric/worker.py`, and the new
