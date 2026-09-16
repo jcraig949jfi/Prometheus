@@ -800,3 +800,13 @@
 - Two mega-commands with nested heredocs died on shell quoting tonight (one truncated, one unexpected EOF). Neither
   executed anything, so no partial state. Switched to: Write the script to a file, run it as its own step, commit as
   its own step.
+- D ROUND 7 FINAL posted to A: 1789533212084-0. 15 receipts (all mirrored with campaign_stage, ts and rows path, on
+  origin at 765b595ed), ZERO unreceipted round-7 rows, 6 anomalies RESOLVED, 2 filed by D (1 still open), 2 PC stubs,
+  2 open claims, 8 classes of own error, 4 defects reported (D22, D23, D29, the row-commit-kills-worker path F filed
+  as 1789522077070-0 crediting D's analysis).
+  A's 00:32 "still uncited" diagnosis was against checkout dca09a5cc; the mirror fix landed after it at 765b595ed and
+  was verified ON ORIGIN (D-R7-11b cited True, no record missing rows/stage/ts, ahead 0 behind 0). Told A to re-read.
+  DELIBERATELY NOT STARTED: a fourth attempt at ANOM-1789415790371-0. ~2 h of wall remained, enough for the ~32 min
+  job, but three attempts had already been lost to D's own process errors and the honest call was to stop rather than
+  spend a fourth token on it. Module, tests and measured sizing are on origin; the question is round 8's, rule intact.
+- WORKER STOPPED by D at close, by verified cmdline + cwd (never a name substring). Lane D closed.
