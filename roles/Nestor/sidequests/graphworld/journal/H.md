@@ -684,3 +684,27 @@ budget 1789425755152-0).
   - The exact E-R6-1 envelope under a PRODUCTION clock is refused with zero rows.
 - H-R16-2 (replay of worlds_r4/v2 with pooled-32 CIs and the top1_train reader) waits for
   "G R16 DONE".
+
+## 2026-09-16 09:28, R8 BUILD TRACK-4: G2 cell-binding pre-check (m1-ff4b74b8)
+
+- 83837db15 (on origin): SEEDS["r8"] = (20260921, 20260922) added; unknown rounds still raise SEED_NOT_FIXED.
+  From r8 on, candidates() walks a PCG64(seed) permutation and admits a cell only if binding_precheck() passes all
+  four checks. A rejected cell is replaced by the next position and kept in record["rejected"] with its reasons.
+  residue_rows()/write_residue() turn that into committed rows (A calls it at publish). r6/r7 keep the v3 draw.
+- Rules read committed structure and cite their r7 cell. AP-04: the regime flip cannot reach the w13 yield register
+  (read from Mechanics; tape genomes only, or any genome when the flip is unobservable; no Mechanics = UNVERIFIABLE,
+  rejected). AP-01: the graphworld meter oracle can never be forced to fire. AP-03: on D1, a 3-bit send costs 6 >= 3.
+  A lane's dev-check evidence (null samples, oracle eligibility, intervention size) works in binding_precheck() only.
+  The published draw never uses it.
+- NOT covered, stated plainly: AP-02's "pressure barely bound" is a size, not a possibility, and there's no ruled
+  threshold for it, so no rule was written.
+- Dry draw of the real r8 grid, nothing published: 3744 cells, 1266 rejected in the full census. The first 48 admitted
+  come from 72 examined (24 rejected). The draw is deterministic.
+- Redaction by construction: assign() and public_assignment() build {exp_id, round, cell} from a whitelist. read()
+  denies the experimenter while round_live (defaults to True).
+- Tests: test_r8_g2_binding_precheck.py has 15 tests; the anti-prior file has 27 total, rc 0. Full suite before rebase:
+  1003 passed, 9 skipped, rc 0. On the rebased 83837db15: 1034 passed, 9 skipped, rc 0. Gate probe p_g2 True
+  (checks run: 1).
+- H3 (tie stability) was NOT prepared as a module. The tie-aware gate it replays against is D's PC 1789517018361-0,
+  which is unbuilt. Writing the replay now would mean inventing that gate's tolerance, which isn't H's to set. Plan:
+  count flips on the committed C6b / D-R7-3(b) exactness rows once the gate is ruled.
