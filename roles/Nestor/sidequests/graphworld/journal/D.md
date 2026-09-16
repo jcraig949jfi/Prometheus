@@ -706,3 +706,10 @@
   Smoke (no rows; timings, sizes and ORACLES only -- held64/train unread): linear 1.6 s, oracles ok (skip_lin 16/16,
   cheat 14/16); tt_digits@3 21.4 s, oracles ok (cheat 16/16). 168 runs project to ~20-22 min, compute-bound,
   checkpointable, inside the 2400 s segment ceiling.
+- CLOSE-SWEEP SELF-AUDIT (read-only, run early so a gap could still be fixed): 40 D rows files on origin, 13 cited by
+  no receipt in pm:results. ALL 13 are pre-round-7 -- D1c, D2, D3, D4 (rounds 1/2) and D-R4-1..4 -- and several are
+  -dev / -quick smoke artifacts never meant to carry receipts; R6's own close sweep reported "0 unreceipted D rows",
+  so the sweep scopes to the round, not to all history. ALL 11 ROUND-7 D ROWS FILES ARE CITED, one per receipt,
+  matching the 11 receipts this session filed (D-R7-1, 2, 2b, 3, 3b, 4, 5, 6, 7, 8, 9). So round 7 carries ZERO
+  unreceipted D rows; the 13 are inherited and out of scope. No corrective action taken or needed -- recorded so the
+  FINAL post can state it precisely instead of vaguely.
