@@ -1,0 +1,267 @@
+================================================================================
+REVIEW PACKET 6
+LUDUS -- THE UNRUN CONTROL HALVES OF THE QUALIFICATION INSTRUMENTS (LUDUS-03)
+================================================================================
+Prepared:        2026-09-16   frozen   Ludus[m2-c3a5ef7a], Claude Opus 5, M2
+For:             the operator (HITL) and any external reviewer; self-contained,
+                 no repository access needed
+Location/Code:   ludus/controls/{fixtures.py, run_controls.py}
+Artifacts:       ludus/controls/CONTROLS_2026-09-16.json (25 rows, carries
+                 base_sha/branch/worktree/dirty); ludus/baselines.py (own_score
+                 hook, +6 lines); ludus/arena/verify.py (predicate extracted,
+                 unchanged); roles/base-role/MONITORS.md (Ludus row migrated);
+                 roles/Ludus/{BACKLOG_H0H5.md, STATUS.md, journal/2026-09-16.md}
+Version/Hash:    base_sha ccb26df01 (origin/main at boot); commit SHA in the
+                 closing receipt, verified as an ancestor of origin/main before
+                 it is quoted anywhere else. The JSON records dirty=true at run
+                 time: the two instrument edits it depends on were uncommitted
+                 when it ran; they ship in the same commit as the rows.
+Headline:        All four qualification instruments now have a row showing they
+                 can fail, a row showing they detect real structure, and rows
+                 showing what injected success they DO and DO NOT see. Three
+                 structural blind spots confirmed with rows, none argued:
+                 (1) GATE-W1 admits Nim, which a four-line closed form solves;
+                 (2) bench verify cannot see a change to the draw law;
+                 (3) the arena key-name check is silent on 3 of 4 injected
+                 leaks while the differential audit fires on 4 of 4.
+                 W3 rule-audited worlds: still 0 of 30.
+
+--------------------------------------------------------------------------------
+1. SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+Base rule 3 (instrument self-falsification) and the reactivation directive
+both require every qualification instrument to demonstrate: (1) it can fail;
+(2) it detects known real structure; (3) it detects injected or trivial
+success; (4) it does not silently collapse on a new specimen. On 2026-09-11
+the archaeology found 0 of 4 instruments had ever run a cheat half. This
+packet reports the run.
+
+Instruments:
+  A  depth profile r0002 / GATE-W1  (ludus/depth_profile.py; admits a world
+     when gap(k=4) >= 0.20, where gap(k) = 1 - P[depth-k minimax with the
+     world's own score read early lands in the exact optimal set])
+  B  bench verify                    (ludus/bench/verify.py; universal +
+     acyclicity + per-world invariants over a compiled world)
+  C  arena verify check [7]          (ludus/arena/verify.py; a key-name
+     predicate over Kuhn's observation(0))
+  D  arena differential leak audit   (ludus/arena/audit.py probe_pair; hold
+     everything fixed, change the secret, see what moves across 12 channels)
+
+Nothing here is a bench world. No fixture enters the transfer matrix. No
+model call was made.
+
+--------------------------------------------------------------------------------
+2. WORKSPACE AND BOOT (WORKING_CONTRACT s4)
+--------------------------------------------------------------------------------
+Started in the canonical checkout; refused (git-dir == git-common-dir).
+fetch -> origin/main ccb26df01 -> worktree ludus-boot-2026-09-16 on branch
+ludus/boot-2026-09-16 (43,352 files; guard passes; clean). comms boot from
+M2 hit the known WRONG_ENVIRONMENT class (localhost is the M2 fork; incident
+c84e26826cc12217, one occurrence line appended); with EW_DB_HOST pointed at
+the canonical store: booted, synced 8 broadcasts, 0 addressed to Ludus,
+queue 0. No sibling commit touched ludus/ or roles/Ludus since 87d676058.
+
+--------------------------------------------------------------------------------
+3. FIXTURES (all readings predicted BEFORE the run; the prediction is in the
+   fixture's docstring and in the row's "expected" field)
+--------------------------------------------------------------------------------
+A  CTRL_LEDGER    each move adds 1/2/3 to own score; no interaction, no
+                  deferred effect -> optimal set == greedy set everywhere
+A  CTRL_ORCHARD   GRAB +1 now; PLANT -1 now, +3 at terminal (net +2). The
+                  score read early cannot see the +3.  12 plies.
+A  CTRL_NIM345    normal-play Nim (3,4,5); no score before the end, so the
+                  early eval is 0 everywhere. Bouton's xor rule (4 lines)
+                  is optimal.   Also (3,4,5,6).
+A  CTRL_BARE      a world with no own_score and a name no branch matches
+B  pot+1          one pot value of compiled MARTIAN_DICE off by one
+B  prob*0.5       one draw probability of the initial state halved
+                  (smallest row, then largest row -- see 5.B)
+B  cycle          a successor's option redirected to the initial state
+B  one ray face   MARTIAN_DICE recompiled with MD_W ray=1 instead of 2
+B  LUCKY_NUMBERS  a world with no per-world invariants (as committed)
+C/D KUHN_LEAK_NAMED_KEY       observation(0) gains key opponent_card
+C/D KUHN_LEAK_INNOCUOUS_KEY   observation(0) gains key tiebreak = opp card
+C/D KUHN_LEAK_ACTION_ORDER    observation clean; legal-action order flips
+                              when the opponent holds K
+C/D KUHN_LEAK_PUBLIC_STATE    observation clean; public_state carries both
+                              cards (so serialize and state_hash move)
+
+--------------------------------------------------------------------------------
+4. INSTRUMENT EDITS MADE TO RUN THE CONTROLS (both in this seat's lane)
+--------------------------------------------------------------------------------
+- ludus/baselines.py greedy_action: a world may declare own_score(state,
+  who); the three existing name branches are untouched and a world with
+  neither raises AttributeError (loud). Regression rows: LOOM, WEIR, TITHE
+  depth curves identical to the committed 2026-08-26 ledger
+  (LOOM 0/0/0/0; WEIR .144/.112/.040/.012; TITHE .156/.144/.056/.040).
+- ludus/arena/verify.py: the [7] predicate moved verbatim into
+  kuhn_keyname_leak() so the control calls the real predicate rather than a
+  copy. arena verify: ALL CHECKS PASS after the edit. test_epistemic 25/25.
+  archaeon/tests/test_base_role.py 11 passed on the merged tree.
+
+--------------------------------------------------------------------------------
+5. RESULTS (exact; the JSON carries every row)
+--------------------------------------------------------------------------------
+5.A  depth profile / GATE-W1                        gap(1) gap(2) gap(3) gap(4)
+  negative   CTRL_LEDGER   (eligible 200, exhaustive) 0.000  0.000  0.000  0.000
+  positive   CTRL_ORCHARD  (eligible 203, exhaustive) 0.793  0.616  0.468  0.345
+  cheat      CTRL_NIM345   (eligible 517, exhaustive) 0.563  0.522  0.296  0.240
+             same world, default n=250 sample        0.552  0.504  0.252  0.200
+  cheat      CTRL_NIM3456  (eligible 5607, n=250)    0.664  0.656  0.528  0.496
+  specimen   CTRL_BARE     AttributeError: 'PlyState' object has no
+                           attribute 'ta'  (loud; no number returned)
+
+  Bouton's rule on N-positions: 430/430 optimal on (3,4,5); 4847/4847 on
+  (3,4,5,6). Both Nim worlds are ADMITTED by GATE-W1.
+
+  Readings, in the failure-shape form:
+  - The instrument does not hallucinate a gap on a greedy-decidable world
+    (four zeros over all 200 eligible states).
+  - It detects deferred payoff (ORCHARD curve is monotone decreasing and
+    stays above the gate at k=4). LIMIT stated in the fixture: PLANT-always
+    is a constant policy, so ORCHARD proves detection of deferred payoff,
+    not detection of reasoning.
+  - It ADMITS a world that a four-line closed form plays perfectly. This is
+    not a bug in the code; it is the gate's predicate. GATE-W1's cheap-
+    player class is {depth-k minimax with the world's own eval}. Charter
+    v3 s2 question 2 asks about "cheaper mechanisms", and short programs
+    are the cheap class this program's organisms actually are. The gate
+    needs a second family (LUDUS-33). Until then a GATE-W1 pass reads
+    "admitted by depth", never "qualified".
+  - The default n=250 uniform sample put NIM345 at gap(4)=0.200, exactly on
+    the gate (SE at p=0.2, n=250 is about 0.025). ROLE.md s5 says item
+    sampling is stratified by plies-to-terminal, always; profile() samples
+    uniformly. The exhaustive 517-state reading (0.240) is what this packet
+    judges on, and LUDUS-34 makes exhaustive-when-small and stratification
+    the instrument's default.
+
+5.B  bench verify (MARTIAN_DICE compiled: 8,555 states)
+  positive   as committed              verified_internally=True
+  cheat      pot+1 at (11,1,0,0,0)     FAIL, per_world 1          detected
+  cheat      smallest prob*0.5         verified=True              NOT detected
+             (mass removed 3.8e-11; the universal check's tolerance is
+             1e-7 of mass). My first injection was smaller than the
+             instrument's floor: an INELIGIBLE injection, kept as a row
+             because the eligible count comes before the reading.
+  cheat      largest prob*0.5          FAIL, universal 1          detected
+             (mass removed 0.0125)
+  cheat      injected cycle            FAIL, acyclic 1            detected
+  cheat      one ray face (MD_W ray=1) verified_internally=True   NOT detected
+             8,555 states either way. Every per-world invariant recomputes
+             pots and counts from the state; none inspects the draw
+             distribution. The verify.py docstring predicted exactly this
+             ("if Martian Dice has one ray face rather than two, every
+             invariant below still holds"). The prediction is now a row.
+             The doubled ray face is the constant cycle 002's 86% SELECT-
+             axis result rests on; the only instrument that can see it is
+             W3 (a published source), which is LUDUS-01.
+  specimen   LUCKY_NUMBERS             ["NO PER-WORLD INVARIANTS WRITTEN"]
+             loud, not silent (archaeology L-1; 17 of 21 worlds sit here)
+
+5.C / 5.D  arena leak instruments
+                              key-name check [7]     differential audit
+  negative  KUHN as committed   silent (correct)       0 leaks (correct)
+  cheat     NAMED_KEY           FIRES                  3 leaks: observation
+  cheat     INNOCUOUS_KEY       silent   (MISSED)      3 leaks: observation
+  cheat     ACTION_ORDER        silent   (MISSED)      4 leaks:
+                                                        legal_actions_order,
+                                                        error_text
+  cheat     PUBLIC_STATE        silent   (MISSED)      9 leaks: public_state,
+                                                        serialize, state_hash
+  The key-name check inspects key NAMES; three of four injected leaks carry
+  no forbidden substring and it cannot see them by construction (standing
+  rule 6: substring matching cannot find a leak). The differential audit
+  fires on all four through the channel the leak actually uses, including
+  error_text, a channel nobody injected into on purpose: reversing the
+  legal-action order changes which action the illegal-action error message
+  names first. arena verify's green [7] is therefore a weak claim, and the
+  differential audit is the instrument of record for hygiene.
+
+Summary by instrument (rows / behaved as predicted / predicted-MISSED):
+  depth_profile 8/8/2   bench_verify 7/7/2   arena_keyname_check 5/5/3
+  arena_differential_audit 5/5/0.  25 rows, 25 as predicted, 0 surprises.
+  "Behaved as predicted" on a MISSED row means the blind spot was named
+  before the run and confirmed; it is not a pass.
+
+--------------------------------------------------------------------------------
+6. INCIDENTS ON THIS PASS
+--------------------------------------------------------------------------------
+- The smallest-row probability injection was below the instrument's
+  tolerance (5.B). Kept as a row, not re-run silently.
+- The n=250 uniform sample landed ON the gate for NIM345 (5.A). Judged on
+  the exhaustive reading; both readings reported.
+- comms WRONG_ENVIRONMENT from M2 (known class; one line appended to the
+  incident file; no backlog item).
+- atlas.db does not exist on M2 (searched the canonical checkout and the
+  worktree root; no F: drive). Not needed by LUDUS-01..06. LUDUS-35 records
+  the transfer procedure need; LUDUS-30 (its home) is still the operator's.
+- **/reports/ is gitignored repo-wide (.gitignore:28); LUDUS-27's planned
+  log location would be invisible. Noted on the row.
+
+--------------------------------------------------------------------------------
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+--------------------------------------------------------------------------------
+Establishes, with re-runnable rows: the four instruments' negative,
+positive and cheat behaviour on the fixtures named above; three blind spots
+as measured facts. Regression: the own_score hook moved no existing curve.
+
+Does NOT establish: that any world is qualified (W3 is still 0 of 30); that
+GATE-W1 is a sufficient gate (5.A says it is not); that the fixtures cover
+every leak channel (redacted_for's omniscient-replay leak is LUDUS-17 and
+was not run); that a stratified sample would move any committed curve
+(LUDUS-34 measures that). ORCHARD is a weak positive control (constant-
+policy solvable). The bench-verify one-ray row shows the instrument is
+blind to the draw law; it does not say which of the two ray weights is the
+published rule. That is LUDUS-01.
+
+Conflict of interest: this seat wrote every instrument and every fixture.
+The fixtures were designed to break the instruments in ways the seat
+already suspected; an independent seat could well find a fourth.
+
+--------------------------------------------------------------------------------
+8. DECISION / RECOMMENDATION
+--------------------------------------------------------------------------------
+Lean: continue. LUDUS-01 next (a fetched published source for Martian Dice,
+the one constant a cycle-002 number rests on), then LUDUS-02. LUDUS-33
+(short-program cheap family) is filed as alpha because without it GATE-W1's
+green means less than the charter needs. The seat proceeds under P3 (a seat-
+performed audit with source provenance counts for W3) and says so in the
+LUDUS-01 receipt; LUDUS-31 remains the operator's.
+
+"Not worth continuing" would look like: an external implementation or the
+published rules disagreeing with all four bench worlds at once, which would
+make the whole transfer matrix a fact about the seat's reconstructions. That
+is exactly what LUDUS-01 goes to find out, so stopping before it is the
+wrong order.
+
+--------------------------------------------------------------------------------
+9. QUESTIONS FOR THE REVIEWER
+--------------------------------------------------------------------------------
+- Is "admitted by depth, not qualified" the right reading of a GATE-W1 pass
+  now, or should the gate be withdrawn until LUDUS-33 exists?
+- Is a fixture the seat designed to break its own instrument a cheat
+  control in the base-role sense, or does the base role require the
+  injection to come from another seat?
+- Should the arena's [7] key-name check be deleted (it is now known to be
+  silent on 3 of 4 leak shapes and a green [7] invites over-reading), or
+  kept as a cheap pre-check with its scope written on it?
+- Is P3 (seat-performed rule audit from a published source, operator spot
+  check) acceptable for W3? If not, LUDUS-01 is blocked on the operator.
+
+--------------------------------------------------------------------------------
+10. REPRODUCTION
+--------------------------------------------------------------------------------
+  cd <worktree>
+  PYTHONPATH=. python ludus/controls/run_controls.py
+      -> ludus/controls/CONTROLS_2026-09-16.json; exit 0 iff every row
+         behaved as predicted (a predicted MISSED counts as behaved)
+  python ludus/arena/verify.py            -> ALL CHECKS PASS
+  python ludus/arena/test_epistemic.py    -> 25/25
+  PYTHONPATH=. python ludus/bench/verify.py -> 4 verified / 17 FAILED
+      (unchanged; revert ludus/atlas/rules_fidelity.json afterwards)
+  python -m pytest archaeon/tests/test_base_role.py -q -> 11 passed
+
+================================================================================
+END OF PACKET. The reviewer may answer "not worth continuing"; section 8
+says what that would have to look like.
+================================================================================
