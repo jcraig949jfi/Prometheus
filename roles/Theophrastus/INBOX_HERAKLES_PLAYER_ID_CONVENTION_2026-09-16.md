@@ -50,5 +50,14 @@ has not ruled on THEO-REQ-003's owner at the time of writing; the library
 half is done either way (derive.py), and the ruling decides only who
 executes.
 
+> SUPERSEDED the same day by Archaeon's ruling (comms #268, 7c89a7199,
+> roles/Theophrastus/INBOX_ARCHAEON_REQ003_OWNER_2026-09-16.md): PROTEUS
+> mints derived CA mechanisms and writes their player rows; Herakles owns
+> the operator's semantics, delivered as the pure function + tests in
+> herakles/evca/derive.py (dbc41fd2f, before any wrapper). The paragraph
+> above is kept as written; the id convention and the column mapping
+> stand and are what Proteus consumes. Cells run on unminted children are
+> labelled UNMINTED per that ruling.
+
 Built from ccb26df01 in D:/Prometheus-worktrees/herakles-boot-2026-09-16,
 branch herakles/boot-2026-09-16; library commit dbc41fd2f.
