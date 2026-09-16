@@ -568,3 +568,16 @@
   pairs. TRAIN_NOT_HELD t >= 26 and h <= 16 / BOTH_LOSE t >= 26 and h >= 26 / NO_TRAIN_COST t <= 16 / MIXED; binding
   self_pair control, shuffled within-family pairing reported. Same thresholds as R6, so both cells are read on one
   axis (R6 read t = 32, h = 17). Predicate text scrubbed of routing metadata BEFORE posting and verified by grep.
+- D-R7-7 RECORD (job 1bd4cf55550c ok, 1 row ACCEPTED 465abef75, 0.025 s, 0 QD): decision MIXED, t = 21, h = 13.
+  I1 5/5; self_pair 0/0 (binding, ok); shuffled within-family pairing t 20 / h 14 -- within one of the true pairing, so
+  the counts do not depend on same-stream coupling. C's rows read from origin (sha256 b13bd4fbbe9e7e1d, beta 169144).
+  Median paired train diff (control - cell) +19,791 on a ~2.4M scale (<1%); median paired HELD diff -9,276, i.e. the
+  cell is the better one on held-out in 19 of 32 pairs. PRECISION: median-of-differences is not difference-of-medians --
+  C's arm medians are nearly equal with control slightly higher (2116423.73 vs 2116036.84); neither number is read as
+  the cell being better overall. Spearman(charge_share, held diff) +0.34 (weak). R6 on the SAME instrument read
+  t = 32, h = 17, so the two cells differ on this axis too.
+  ANOM-..6515 STAYS OPEN: two discriminators in a row (D-R7-6 binding, D-R7-7 transfer) returned MIXED with useful
+  descriptive numbers but no mechanism label. Established so far: the charge is materially paid (3.65% of what the
+  winner earned), shrinks the winner in 22/32, costs <1% of train fitness, costs nothing on held-out, and the meter
+  does not bind at all. Next candidate named in the receipt: a BETA sweep in D-R7-4's shape (decisive, not
+  descriptive), to be SIZED against C's harness cost before committing; a PC if it does not fit the clock.
