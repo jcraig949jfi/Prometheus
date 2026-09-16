@@ -92,3 +92,17 @@ def test_broken_recipe_is_undecided_not_required(synth):
     sid = synth("synth-broken", b"this is not C\n", "gcc -w -o p p.c", "./p")
     r = sc.control(sid, timeout=300)
     assert r["recipe_build_ok"] is False and r["verdict"] == "UNDECIDED"
+
+
+def test_strip_preserves_quote_style_so_dollar_expands():
+    s, r = sc.strip_accommodations('make -s CFLAGS="-O -w -I$HARNESS" 2>&1')
+    assert s.startswith('make -s CFLAGS="-O -I$HARNESS" 2>&1') and r == ["-w"]
+    s, r = sc.strip_accommodations("make CFLAGS='-O2 -w' all")
+    assert s.startswith("make CFLAGS='-O2' all")
+
+
+@pytest.mark.skipif(not DOCKER, reason="docker not reachable through WSL")
+def test_failing_recipe_runs_are_undecided_not_required(synth):
+    sid = synth("synth-badrun", NEEDS_LM, "gcc -w -o p p.c -lm", "./p | grep NEVER_PRINTED")
+    r = sc.control(sid, timeout=300)
+    assert r["recipe_build_ok"] is True and r["recipe_runs_ok"] is False and r["verdict"] == "UNDECIDED"

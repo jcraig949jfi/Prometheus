@@ -15,7 +15,7 @@ stripped build in the world on a disposable copy, then the recipe's runs. Verdic
     NO_ACCOMMODATIONS   nothing to strip
     NOT_REQUIRED        stripped build succeeds and every run passes -> the flags are decorative
     REQUIRED            stripped build fails, or builds but a run fails -> the flags are real scaffolding
-    UNDECIDED           the recipe's own build fails too (world drift; nothing can be said)
+    UNDECIDED           the recipe's own build or its own runs fail too (nothing can be read off the flags)
 
 Nothing tracked is written; the rows go to the census and to the packet author. The recipe is
 NOT edited here -- removing a decorative accommodation is a separate, recorded act (C9).
@@ -45,10 +45,17 @@ def strip_accommodations(cmd: str) -> tuple[str, list[str]]:
 
     def _var(m):
         var = m.group(1)
-        inner = m.group(2) if m.group(2) is not None else (m.group(3) if m.group(3) is not None else m.group(4))
+        # keep the ORIGINAL quote style: '...' and "..." differ in $expansion (umdhmm's "-I$HARNESS"
+        # broke when a rewrite single-quoted it -- an instrument defect found by the census, 2026-09-16)
+        if m.group(2) is not None:
+            inner, q = m.group(2), "'"
+        elif m.group(3) is not None:
+            inner, q = m.group(3), '"'
+        else:
+            inner, q = m.group(4), ""
         kept = ACCOM.sub(lambda mm: removed.append(mm.group(0).strip()) or " ", inner)
         kept = re.sub(r"\s+", " ", kept).strip()
-        return "%s='%s'" % (var, kept) if kept else ""
+        return "%s=%s%s%s" % (var, q, kept, q) if kept else ""
 
     out = CFLAGS_VAR.sub(_var, cmd)
     out = ACCOM.sub(lambda mm: removed.append(mm.group(0).strip()) or " ", out)
@@ -83,14 +90,29 @@ def control(specimen_id: str, timeout: int = 900, dry_run: bool = False) -> dict
         return row
     rel = recipe.get("workdir", "upstream/tree")
     image = recipe.get("image")
-    # 1. the recipe's own build, so a world that no longer builds anything is UNDECIDED not REQUIRED
+    # 1. the recipe's own build AND runs -- the baseline. A recipe that does not build, or whose
+    # runs already fail, is UNDECIDED: nothing about the flags can be read off it (lisp-1-5's
+    # failing run stage read as REQUIRED before this baseline existed, 2026-09-16).
+    def _runs(work):
+        failed = []
+        for it in recipe.get("runs", []):
+            cmd = it["cmd"] if isinstance(it, dict) else it
+            res = harvest._shell("docker", cmd, work, rel, image, it.get("timeout", timeout) if isinstance(it, dict) else timeout)
+            good, why = harvest._expect_ok(res, it.get("expect") if isinstance(it, dict) else None)
+            if not good:
+                failed.append({"name": it.get("name", cmd[:40]) if isinstance(it, dict) else cmd[:40], "why": why})
+        return failed
+
     work = harvest._stage_work(body, sd)
     ok = True
     for c in builds:
         res = harvest._shell("docker", c, work, rel, image, timeout)
         ok = ok and res["exit"] == 0
     row["recipe_build_ok"] = ok
-    if not ok:
+    if ok:
+        row["recipe_runs_failed"] = _runs(work)
+        row["recipe_runs_ok"] = not row["recipe_runs_failed"]
+    if not ok or not row.get("recipe_runs_ok"):
         row["verdict"] = "UNDECIDED"
         row["seconds"] = round(time.time() - t0, 1)
         return row
@@ -105,16 +127,9 @@ def control(specimen_id: str, timeout: int = 900, dry_run: bool = False) -> dict
             break
     row["stripped_build_ok"] = ok
     if ok:
-        runs_ok = True
-        for it in recipe.get("runs", []):
-            cmd = it["cmd"] if isinstance(it, dict) else it
-            res = harvest._shell("docker", cmd, work, rel, image, it.get("timeout", timeout) if isinstance(it, dict) else timeout)
-            good, why = harvest._expect_ok(res, it.get("expect") if isinstance(it, dict) else None)
-            if not good:
-                runs_ok = False
-                row["runs_failed"].append({"name": it.get("name", cmd[:40]) if isinstance(it, dict) else cmd[:40], "why": why})
-        row["runs_ok"] = runs_ok
-        row["verdict"] = "NOT_REQUIRED" if runs_ok else "REQUIRED"
+        row["runs_failed"] = _runs(work)
+        row["runs_ok"] = not row["runs_failed"]
+        row["verdict"] = "NOT_REQUIRED" if row["runs_ok"] else "REQUIRED"
     else:
         row["verdict"] = "REQUIRED"
     row["seconds"] = round(time.time() - t0, 1)
