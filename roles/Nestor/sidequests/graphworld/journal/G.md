@@ -445,3 +445,19 @@ file_candidate / segment contract (1789479761855-0).
   evaluators; baseline_run's row tail refactored into _run_row with pre-refactor golden digests.
 - Option (b) (A 1789505640089-0, E 1789505779961-0): lockstep_oracle_job on w13 train8 before pm:r7:backend is written;
   E_REFERENCE_MISSING until E posts its measured digests and median wall.
+
+### R8-BUILD (G, 09:15-) -- world-set machinery, hard cap 10:15; builds only, nothing screened
+
+- G-R8-1 `primordial/metric/world_set_r8.py` (new file; worlds/r16/screen/sample untouched): L1/L2/L3 as ORDERED op templates
+  (L1 4, L2 16+2 structural, L3 64+20), op_seeds from PCG64(20260924).jumped(band k), prefix-stable; stratum B gen_seed
+  900000+i; mechanism dedup on `Mechanics.manifest_hash()` walking BASE,L1,L2,L3,B, lowest op_seed tuple kept, every
+  discard recorded (SILENT_MUTATION_EQUALS_BASE | MECHANISM_IDENTICAL). screen_order (PCG64 20260923): L1 first,
+  template-balanced, then B/L2/L3 interleaved; size_next = bootstrap 4 (one per L1 template) then mean MEASURED CPU-s
+  per completed world vs remaining CPU, WHY_NOT_RUN with projection for every cut world. freeze refuses overwrite;
+  verify regenerates + rebuilds each genome from its payload alone. All six measured d1 effects reproduce.
+- RESIDUE (measured, default capacity L1 64/L2 72/L3 84/B 64): L1 is FINITE per op -- REWIRE has 6 distinct non-base
+  worlds, PRIMITIVE_DELETE 4; 27/64 L1 draws are duplicates. INTERFACE_MUTATE has ONE descendant mechanism, BUDGET_MUTATE
+  ONE non-silent. 5 kept L2 and 12 kept L3 worlds contain a silent step (effective distance < band); kept, flagged
+  `silent_steps`, not dropped. L3 INTERFACE+INTERFACE == w13. CAPACITY is the one builder-chosen number (manifest, not screen).
+- Tests 21 (test_world_set_r8.py), 6/6 planted defects caught (no-dedup, structural-in-L1, highest-seed rep, fixed N,
+  wrong stream, overwrite). Full suite rc 0: 1009 passed, 9 skipped.
