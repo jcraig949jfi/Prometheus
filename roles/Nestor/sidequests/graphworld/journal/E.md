@@ -809,3 +809,30 @@ anyway); record the gap and file a PC. DONE via F's G6 envelope.open_candidate (
 PC 1789565927668-0, source_event E_RECORDED_GAP_D28_GPUQ_WIRING, depends on PC 1789514994865-0 + C1 D23; filed measured basis
 r7 job 217.6 s vs REG_TTL 90 s, r7 unregistered ~1380 s, residual absence after C3 = job_wall - REG_TTL (127.6 s for that job).
 Read back: 1 stub, filing present. gpuq.py untouched.
+
+# ROUND 8 SCIENCE -- Nestor-E[m1-ba44317c] (prompts_r8/E.md), relaunched by A at 17:07; NNW 22:15:03
+
+Iteration 1 (17:07-17:25). ff to 7f3217b4d. Lane E's registered tag was the stopped builder m1-089ab85f with no live
+heartbeat -> hello with PM_TAKEOVER=1. Inbox read unfiltered (A 1789592825696-0: relaunch, start item 1).
+FINDING before preregistration (read-only, no run): w13 obs_perm [0,1,4,2,3], w14 [1,3,2,4,0] -> the charge channel is
+column 2 in w13 and column 3 in w14, and the four register channels read world-specific registers (obs_regs 0,1,5,6 vs
+0,1,3,7) under different lin_ops. So the R7 "identity" graft is already misaligned on the only channel with shared
+meaning, and a featperm can re-align it. Added X_charge_align as a preregistered structural discriminator.
+H1 harness r8_h1_sham_ladder.py + 15 tests (rc 0) pushed b1da39604. One pre-run integrity bug of my own: L3's
+pairwise-distance check compared float32 sums exactly and failed on summation order -> sorted-term float64 sum; 20
+seeded draws then 6/6 ok. Dev 100 gens x 128: 71 CPU-s/run -> full ladder projected 18-23k CPU-s; no subset.
+Dry runs: admit ok (file gates, redis gates, continuation); receipt_guard synthetic OBSERVATION accepted, planted
+FAIL / PASS-verdict / missing control / stage mismatch refused (5 checks run). PREDICATE 1789593327107-0 pinned.
+Worker pid 29112/34276 (one process), job 075fe42077dc queued, WAITING_CPU 2nd in FIFO behind G (C, D hold tokens).
+
+Iteration 2 (17:27-18:50). Job 075fe42077dc: token 17:27; segment 0 paused 17:53 (140 rows, 12,290 CPU-s, 1562 s);
+segment 1 ok 18:49 (85 rows, 7413 CPU-s, 943 s). 225 rows @ b11aae206. Re-derived from COMMITTED rows == in-job analysis
+(outcome, trend, discriminator), integrity 192/192, donor fused == numpy 32/32, L0 bytes 32/32, world honest 0/16 +
+skip_lin 16/16, brain honest 0 + cheat 16/16; 10 guard checks, 0 bad.
+OUTCOME (preregistered rule): FLAT_NO_SYSTEMATIC_RESPONSE. rho mean +0.072 (p_dec .79, p_inc .24); all 6 peak/trough Holm
+1.0. Discriminator X_charge_align - L0 +0.17 (p .38) -> NO_EFFECT. held_auc means: scratch 154.85, L0 156.71, L1 156.35,
+L2 156.52, L3 156.36, L4 156.95, X 156.88. EVERY donor-derived arm > scratch (+1.49..+2.10, p <= .0008), including L4
+(only per-genome W mean/sd kept, plus b and C) which is the highest. R7's sham > graft did NOT recur in sign here
+(L0 - L2 +0.19 vs R7 -0.66): both inside noise. Descriptive only: zero-shot X 146.4 > L2 142.0 > L1 139.5 > L0 134.6.
+READING (not a classification, not transfer): the graft-over-scratch gain does not depend on W's feature structure at
+this N; what every donor arm shares and scratch lacks is the donor bias b, codebook C and W scale -> next discriminator.
