@@ -39,7 +39,10 @@ Headline:
     (74/74 cells: SURVIVED 1, HELD 5, CULLED 64, PENDING 4, UNSCREENED 0.)
 - 4 of those cells existed only because a conductor ruling unstuck them: an epoch requeue lands at the end of the lane
   queue (D30), so 4 nearly-finished cells sat behind 44 learner jobs that could not have decided anything tonight.
-- 10 new defects (D18-D27), 7 of them in the control plane the operator asked to close.
+- 14 new defects (D18-D31), and 13 of the 14 are in the CONTROL PLANE the operator asked to close -- scheduling,
+  cancellation, registration, candidate filing, vocabulary, and the close protocol itself. D25 (an order-sensitive
+  p-value) is the only one that is not. The instrument is now the main source of findings, which is what a hygiene
+  round is supposed to produce.
 
 --------------------------------------------------------------------------------
 1. OPERATIONS
@@ -422,16 +425,15 @@ family-aware Clause B beyond tonight's pair.
   only WHICH QUEUED WORK COULD DECIDE IN THE TIME LEFT (2 h for 4 verdicts vs 3.3-6 h for none), never which cells were
   screened; the seeded order and the cost-ascending order both survived intact, and G published and committed the
   removal list before touching its own queue.
-- O7 close kills registered pids: EXERCISED at close (audit below), and the
-  registration half was exercised all round: every lane registered pid + repo + round, the residue scan read a foreign
-  or dead worker correctly on four separate occasions (C's restart, D's crash, the gpuq lapse, the r6 leftovers), and
-  E stopped its own arbiter and heartbeat explicitly rather than relying on the close.
 - O5 no B2 Clause B, admission only: YES (refused on cost).
 - O6 count A's interventions: manual pushes 0, store edits 1.
 - O7 close kills registered pids: YES, and it found NOTHING TO KILL -- workers_stopped {"actions": []}, because every
   lane had already stopped its own workers hours earlier (0 registrations, 0 processes at close). The other two halves
   did act: flags_cleared [B,C,D,E,G] and current_unset. So the kill path is proven to RUN and to be safe when idle;
   it has still never been exercised against a live worker, and that remains untested.
+  The REGISTRATION half, by contrast, was exercised all round: every lane registered pid + repo + round, the residue
+  scan read a foreign or dead worker correctly on four separate occasions (C's restart, D's crash, the gpuq lapse,
+  the r6 leftovers), and E stopped its own arbiter and heartbeat explicitly rather than relying on the close.
 - O8 Clause B control calibration before any live pair: YES, and it changed what the verdict means.
 
 --------------------------------------------------------------------------------
