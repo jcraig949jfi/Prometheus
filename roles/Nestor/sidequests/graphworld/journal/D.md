@@ -590,3 +590,27 @@
   measured basis, the projection, the reason, and a cheaper numpy-substrate variant carrying the caveat that the
   substrate is part of the cell definition (it would answer a neighbouring question, not this one). Note to A only;
   D takes a ruling either way, and without one ANOM-..6515 stays OPEN with two MIXED discriminators.
+- Next queue item sized: ANOM-1789415790378-0 (affine plastic: 238/238 switches on fit-eligible vs 73/130 on
+  genome-eligible). Reading both mains REFRAMES it: C7c and C7e share the learner, probe, drive() and scoring outright
+  (C7e's docstring says so; the per-target blocks are line-for-line the same), so "score C7e's learner on C7c's
+  targets" is vacuous -- there is ONE learner. The two runs differ in (a) the eligibility criterion and (b) an
+  UNCONTROLLED second factor: the record seed sets are DISJOINT (C7c RECORD_SEED0 90000, C7e 94000, n=512 each). The
+  anomaly's expectation silently assumes a common scoring seed set.
+  0-QD overlap from committed rows (eligibility INPUTS only, no detection outcome read): fit-eligible 34 targets / 24
+  worlds, genome-eligible 18 / 14; BOTH 11, FIT-ONLY 23, GENOME-ONLY 7. A non-empty common set exists, so the real
+  discriminator is: score the shared learner on all three partitions under ONE record seed set, which removes the seed
+  confound. Reported-not-judged candidate: corrupt_rate spans 0/8/16/32 among genome-only targets but only 0/16/32
+  among the common ones (rate 8 appears only in genome-only).
+  Timing smoke (no rows, timings only): trajectory 0.02 s, drive affine 0.01 s, drive digitTT ~1.0 s per target at
+  n=32/64 -- the digit-TT arm is ~99% of the cost. n=512 sizing measured before fixing n in the predicate.
+- D-R7-8 code + test (r7_8_c7_eligibility_swap.py; 6 passed rc 0). Scores C7c/C7e's SHARED learner on all three
+  partitions (BOTH 11 / FIT_ONLY 23 / GENOME_ONLY 7, taken from committed rows) under ONE fresh record seed set
+  (96000.., n 512 -- disjoint from C7c's 90000/91000 and C7e's 94000/95000, so neither criterion's targets get home
+  advantage). digit_tt DROPPED with reason: it grounds C's H2 chance rate, not the detection question, and measured at
+  2.28 s of 2.39 s per target. Rule: rate_f = detected/switches over all 34 fit-eligible (C7c published 238/238),
+  rate_g over all 18 genome-eligible (C7e published 73/130 = 0.562); LEARNER_DOES_NOT_REPRODUCE rate_f < 0.95 /
+  SELECTION rate_f >= 0.95 and rate_g <= 0.80 / SEEDS both >= 0.95 / MIXED. Binding controls are C's own: probe_affine
+  CLEAN and probe_leak LEAK on every target, null-world surprises <= 2.
+  Smoke (no rows, timings + control flags only, detection unread): 0.33 s cold per world, 0.04 s cached -> ~8.6 s for
+  41 targets; probes CLEAN/LEAK and null surprises 0 on the smoked target. evidence_class OBSERVATION (41 targets in 3
+  partitions, not a 32/4/8 family sample).
