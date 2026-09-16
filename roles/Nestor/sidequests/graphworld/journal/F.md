@@ -486,3 +486,22 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
   (my recommendation) or keep refusing; any refused row ends the job status error, never ok; a lint test that
   rows.STATUSES and evidence_n.EVIDENCE_CLASSES never share a member. 1200 s build / 600 s tests.
 - Local commits held for close: 6b6c03829 (D22), f4d3a6e39 (D24), 20dd00d74 (D26+D27), this one.
+
+## 2026-09-15 ~21:28 (round 7 live) -- D24 sibling: periodic rows commit kills the supervisor. PC 1789522077070-0 filed
+
+- D 1789521893565-0 diagnosed it sharper than my D24: RowWriter.write commits the rows file every 60 s via
+  commit_path (git add/commit in the SAME worktree); commit_path raises RuntimeError (rows.py:146 non-index.lock
+  failure, rows.py:149 after 10 lock retries); that call is inside _drain, which catches only ValueError
+  (worker.py:416); nothing above catches it, so the supervisor exited 1 and orphaned D-R7-10b (29 of 169 rows).
+  ANY git write in the worktree races the writer -- my round 5 rule ("never rebase while a writer is live") was too
+  narrow, and this belongs in the fabric, not in lane discipline.
+- Not data loss: write() flushes each row; a failed commit loses the commit, not the rows; close() already retries
+  and run_job catches a close failure (commit_error). The PERIODIC commit was the unguarded path.
+- Second supervisor death tonight from outside the job's own code (C's killed child was D24). Both times the lane
+  paid: D hand-closed the job and filed INDETERMINATE. Verified after: worker D pid 30388, 0 pending, no job without
+  a done record, no stuck token.
+- Filed as a SIBLING: file_candidate refuses ALREADY_FILED, so D24's filing cannot be extended -- D26
+  (1789514839378-0) is now blocking a real filing. Design: commit degrades to deferred; _drain/run_job end the job
+  status error rows_commit_failed; serve gets a last-resort per-job guard; the rows commit takes pm:push:lock:<lane>.
+  1200 s build / 900 s tests.
+- Local commits held for close: 6b6c03829 (D22), f4d3a6e39 (D24), 20dd00d74 (D26+D27), ddf3995a7 (D29), this one.
