@@ -726,3 +726,6 @@
   segment against the 2400 s ceiling (kill + 60 s grace, no mid-arm checkpoint). Added a per-arm clause (<= 1920 s =
   80% of the ceiling) to the pre-stated rule -> GENS 25 (per-arm ~1062 s, job ~2124 s). Stated before any row.
 - Lockstep substrate: 32,768 envs per tick, 38.6 s per generation for all 32 runs of an arm (vs 215 s run-by-run).
+- AP-03 pushed 25d56f699; envelope.admit ok; predicate refs/pm/pred/C-R7-AP-03 -> 25d56f699, bus 1789518156258-0.
+  Worker restarted after the harness edits (29908 -> 26764). Job c9eb2e397ce1 queued (PRODUCTION, checkpointable,
+  wall 2400/segment, cpu 3600, GENS 25, genome 24 B). Projected ~2124 s of wall once a token is granted.
