@@ -194,11 +194,18 @@ not "grid exhausted". The round-7 packet's "the grid is exhausted" phrasing is s
 
 ### 4.1 MEASURED COST (from R16_LEARNER_PLAN_R7.json, not recalled)
 
-Cost model, committed before round 7 and a function of T and the world only:
+Cost model, committed before round 7, a function of the plan's `t_x_s` field and the world only:
 
-    cpu_s(world, 32 runs) = (12030.94 / 32) * (T*S) = 375.97 * (T*S)
+    cpu_s(cell, 32 runs) = (12030.94 / 32) * t_x_s = 375.97 * t_x_s
 
-| cell | T*S | plan estimate CPU-s | w26-measured scaling CPU-s |
+**LABEL WARNING for the future analyst (conductor correction, 2026-09-16).** `t_x_s` in
+R16_LEARNER_PLAN_R7.json is the SCREENING CELL's train size, **not** the world's `T*S` from
+`wforge.world.expand`. These are different quantities and an earlier draft of this section conflated them.
+Computed: w13's world is `T=32, S=1, W=1` so its world `T*S` is **32**, while its `train128_held64` cell
+records `t_x_s = 128`. The arithmetic below is unaffected -- it uses the plan file's own `t_x_s` values --
+but the two must never be read as the same field.
+
+| cell | t_x_s (train size) | plan estimate CPU-s | w26-measured scaling CPU-s |
 |---|---|---|---|
 | w1 train128  | 128 |  48,123.76 | 32,601.6 |
 | w10 train128 | 128 |  48,123.76 | 32,601.6 |
@@ -298,6 +305,48 @@ If w13 remains the only SURVIVED world, build a new **frozen** set in two prereg
 
 No hand-selection after generation. No deleting ugly worlds. No outcome-dependent expansion this round.
 No hand-designed worlds this round -- they encode a hypothesis and come later.
+
+### 5.1 MEASURED: HOW A w13 NEIGHBOUR IS ACTUALLY BUILT (conductor survey, read-only)
+
+A world is NOT a parameter vector. `E4.Spec(gen_seed)` calls `primordial.soup.b1.common.make_world`, which is
+`expand(de_novo(GRAMMAR_VERSION, seed))` against **wforge**, a READ-ONLY production seat that Nestor must never
+edit. GRAMMAR_VERSION = `wforge-grammar-0.1` and any frozen band rule MUST pin it.
+
+`wforge.genome` already provides the mechanism stratum L needs, as a PUBLIC API requiring no edit to the seat:
+`mutate(parent, op, op_seed)` returns a frozen DESCENDANT genome; the op is interpreted at EXPANSION time, so
+the descendant genome alone reproduces the mutated world bit-for-bit. `parent_ids` carries lineage and
+`world_id` is a content hash over the canonical serialisation including mutation history. This satisfies the
+prompt-26 rerun requirement natively.
+
+Seed adjacency is NOT world adjacency and must not be used: w13 is T=32 n=32 while w12 is T=256 n=512 and
+w14 is T=128 n=128.
+
+Measured on w13 (`Wf250db380cb2afd3`, T=32 S=1 W=1, n=32, lin_ops=4, corrupt_rate=16, obs_delay=0, SHORT):
+
+| op | effect at distance 1 | size |
+|---|---|---|
+| PARAM_PERTURB | one scalar (yield_amt 10->9/8/13; start_charge at distance 2) | n=32 |
+| PRIMITIVE_INSERT | lin_ops 4->5 | n=32 |
+| PRIMITIVE_DELETE | lin_ops 4->3 | n=32 |
+| REWIRE | act_targets [5]->[1]/[2]/[6]/[3] | n=32 |
+| BUDGET_MUTATE | horizon 32->64 on 1 of 4 seeds, else NOTHING | n=32 or 64 |
+| INTERFACE_MUTATE | corrupt_rate 16->0 AND obs_delay 0->2 AND horizon_class SHORT->MEDIUM, identical every seed | n=32 |
+
+THREE CONSTRAINTS ON ANY BAND RULE:
+1. The ops are NOT equal in magnitude. PARAM_PERTURB moves one scalar by +/-4; INTERFACE_MUTATE changes three
+   observational properties at once. A band defined as bare mutation COUNT would call these equidistant.
+2. SILENT MUTATIONS EXIST. PARAM_PERTURB seed 4 and BUDGET_MUTATE seeds 2-4 yield a DIFFERENT world_id with an
+   IDENTICAL mechanism. A band rule must expand and DEDUPLICATE ON THE MECHANISM, never trust the genome id,
+   or the same world is screened twice and counted as two points.
+3. horizon_class is DERIVED, never authored, and shifts as a side effect. It is not an independent axis.
+
+CONDUCTOR CORRECTION: an earlier conductor message reported w13 as corrupt_rate 0. It is **16** -- w13 already
+corrupts observations, so INTERFACE_MUTATE switches corruption OFF while switching delay ON. That is a trade of
+one observational difficulty for another, not a clean-to-noisy step.
+
+CONDUCTOR PROPOSAL (operator ruling required; A does not define the experiment): L1 = exactly one
+PARAM_PERTURB / REWIRE / PRIMITIVE_INSERT / PRIMITIVE_DELETE (size-preserving, single-axis); BUDGET_MUTATE and
+INTERFACE_MUTATE held to L2/L3 as LABELLED structural steps; mechanism-level dedup mandatory.
 
 **[ADAPT-6] Generation and screening are separately gated.** Generating and freezing the manifest is cheap
 and is a round-9 de-risking artifact in its own right; screening is expensive. Freeze the set as soon as
