@@ -542,3 +542,15 @@
   planted controls must read the two decisive labels. Same axis as R6's saturation answer, so the two arm PASSes are
   comparable on one question. The metered channel's delivered share is reported (C's own AP-01 lesson: a meter that
   delivers every tick cannot bind).
+- D-R7-6 RECORD (job a057c9db6f45 ok, 1 row ACCEPTED cbb257f3f, 0.03 s, 0 QD): decision MIXED. I1 6/6 (32 pairs, 8 per
+  family, beta consistent, oracles ok, both held medians reproduce C's summary); planted_bound -> PRESSURE_BOUND and
+  planted_free -> PRESSURE_DID_NOT_BIND, both ok. C's rows read from ORIGIN (sha256 b13bd4fbbe9e7e1d).
+  median charge_share 0.0365 (0.0276-0.0542) -- between my FREE 0.01 and BOUND 0.05; cell winner smaller in 22/32
+  pairs (BOUND needed 24), equal in 7; functional_bytes cell median 4 (3-6) vs control 5 (4-6).
+  Reading: AP-02's byte_charge PARTIALLY bound, so the two arm PASSes do NOT share one mechanism -- R6's AP-01 reached
+  parity for free (saturation), AP-02 pays ~3.7% of what its winner earns and still reaches parity (held 2116036.84 vs
+  control 2116423.73, bar 2102284.02). ANOM-..6515 STAYS OPEN: MIXED returns no mechanism (D-R6-8 precedent).
+  SECOND OBSERVATION (reported, not judged): the METER did not bind on the cell winners -- delivered share 1.0 at min,
+  median and max (control min 0.671875), winners reading d = 1 hex digit, so cost 8*d stays under the 128 credit. Same
+  failure mode C hit in C-R7-AP-01 (INDETERMINATE), but here in a cell that PASSED.
+  Next discriminator named in the receipt: 0-QD paired train-vs-held read, or a BETA sweep in D-R7-4's shape.
