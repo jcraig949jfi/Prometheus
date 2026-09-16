@@ -98,6 +98,7 @@ def main(argv=None) -> int:
             row["install_returncode"] = inst["returncode"]
             row["install_seconds"] = inst["wall_seconds"]
             row["stderr_tail"] = inst["stderr_tail"][-600:]
+            row["env_created_now"] = envinfo["created_now"]   # False => "already satisfied" is possible
             if inst["returncode"] != 0:
                 row["status"] = "LOCK_DOES_NOT_INSTALL"
             else:
@@ -121,7 +122,11 @@ def main(argv=None) -> int:
             tampered.parent.mkdir(parents=True, exist_ok=True)
             tampered.write_text(_flip_one_hex(src.read_text(encoding="utf-8")), encoding="utf-8")
             env_name = [r for r in rec["observations"]["locks"] if r["lock"] == src.name][0].get("env", "h0h5_tools")
-            ci = pypi.install_locked(env_name, tampered, b)
+            # --ignore-installed: the packages are already present after the real install, and pip
+            # says "already satisfied" without checking a hash -- the first run of this control on
+            # M2 passed a tampered lock for exactly that reason (CONTROL_FAILED, receipt
+            # installation-lock_reproduction-20260916T141254Z). Forcing the fetch makes it bite.
+            ci = pypi.install_locked(env_name, tampered, b, ignore_installed=True)
             ctl = {"derived_from": src.name, "install_returncode": ci["returncode"],
                    "status": "REFUSED_AS_EXPECTED" if ci["returncode"] != 0 else "CONTROL_FAILED",
                    "stderr_tail": ci["stderr_tail"][-400:]}
