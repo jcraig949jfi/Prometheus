@@ -126,20 +126,791 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:fftpack-netlib/upstream/cffti1.f"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:fftpack-netlib/upstream/cfftf1.f"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:fftpack-netlib/upstream/passf2.f"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:fftpack-netlib/upstream/cost.f"
+   }
+  ],
+  "inspected_files": [
+   "cffti1.f",
+   "cfftf1.f",
+   "passf2.f",
+   "rfftf1.f (calls)",
+   "ezfftf.f",
+   "cost.f",
+   "doc (grepped)"
+  ],
+  "date": "2026-09-16T12:06Z",
+  "note": "one mechanism family (mixed-radix passes) driven by a factorisation, wrapped by real / cosine / sine / quarter-wave pre- and post-processing; a Fortran-77 body whose control flow is arithmetic IFs and GO TOs"
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "fftpack-netlib::factor_n_into_small_primes_preferring_4_then_2_then_3_then_5_with_2_moved_first",
+   "fossil_ancestry": "fftpack-netlib",
+   "human_name": "the IFAC factorisation (cffti1 / rffti1)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "try divisors from NTRYH = (3, 4, 2, 5) then 7, 9, 11, ... (odd numbers after 5); each hit appends the factor and divides; if a 2 appears after other factors it is moved to the front (lines 105-107); the result IFAC = (N, NF, f1..fNF) drives every pass below; the doc says the transform 'is most efficient when n is a product of small primes'",
+   "input": "N",
+   "output": "IFAC",
+   "state": "none",
+   "update": "once per N",
+   "assumptions": [
+    "trial division; N with a large prime factor falls through to the general pass"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "fftpack-netlib::twiddle_table_per_factor_stage_from_cos_sin_of_multiples_of_two_pi_over_n",
+    "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:fftpack-netlib/upstream/cffti1.f:1-27; doc:60,89,363"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the factorisation loop 101-107 in cffti1 / rffti1",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "fftpack-netlib::twiddle_table_per_factor_stage_from_cos_sin_of_multiples_of_two_pi_over_n",
+   "fossil_ancestry": "fftpack-netlib",
+   "human_name": "WA (the wsave array)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each factor stage with stride L1 and IP-1 sub-blocks, tabulate (cos, sin)(FI * LD * 2pi/N) for the stage's IDO points; stored consecutively so each pass gets a pointer WA(IW) advanced by (IP-1)*IDOT per stage; computed once, reused for every transform of the same N",
+   "input": "N, IFAC",
+   "output": "WA",
+   "state": "none (a table)",
+   "update": "once per N",
+   "assumptions": [
+    "single precision (TPI = 6.28318530717959 as a REAL)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "fftpack-netlib::factor_n_into_small_primes_preferring_4_then_2_then_3_then_5_with_2_moved_first",
+    "fftpack-netlib::radix_r_butterfly_pass_with_twiddle_multiply_on_all_but_the_first_output"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:fftpack-netlib/upstream/cffti1.f:28-58"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "cffti1 lines 28-58",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+   "fossil_ancestry": "fftpack-netlib",
+   "human_name": "cfftf1 / cfftb1 / rfftf1 / rfftb1",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each factor IP in IFAC: choose the specialised pass (4, 2, 3, 5) or the general one; call it with (source, destination) = (C, CH) or (CH, C) according to a toggle NA that flips after each pass (the general pass reports via NAC whether it flipped); advance L1 *= IP and the twiddle pointer; copy CH back to C at the end if the toggle ended on CH",
+   "input": "C (data), CH (scratch), WA, IFAC",
+   "output": "C transformed in place",
+   "state": "NA toggle, L1, IW",
+   "update": "one loop per transform",
+   "assumptions": [
+    "scratch of size 2N is available"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [
+    "fftpack-netlib::radix_r_butterfly_pass_with_twiddle_multiply_on_all_but_the_first_output"
+   ],
+   "composition_neighbors": [
+    "fftpack-netlib::factor_n_into_small_primes_preferring_4_then_2_then_3_then_5_with_2_moved_first",
+    "fftpack-netlib::radix_r_butterfly_pass_with_twiddle_multiply_on_all_but_the_first_output",
+    "fftpack-netlib::real_sequence_transforms_by_pre_and_post_processing_around_a_half_length_or_real_fft"
+   ],
+   "fitness_value_in_ancestor": "no in-place bit-reversal: the alternating-buffer scheme is how FFTPACK avoids the permutation step",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:fftpack-netlib/upstream/cfftf1.f:1-60; rfftf1.f (same shape)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the four *1 drivers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "fftpack-netlib::radix_r_butterfly_pass_with_twiddle_multiply_on_all_but_the_first_output",
+   "fossil_ancestry": "fftpack-netlib",
+   "human_name": "PASSF2 / PASSF3 / PASSF4 / PASSF5 / PASSF (general), and RADF*/RADB* for real data",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "radix-2 as read: CH(i,k,1) = CC(i,1,k) + CC(i,2,k); the difference is multiplied by the twiddle (wa1) into CH(i,k,2); the array is reshaped between (IDO, IP, L1) and (IDO, L1, IP) by the argument declarations alone (the same memory, two DIMENSION statements); for IDO = 2 no twiddle multiply is needed (lines 4-10); radices 3, 4, 5 are the same shape with fixed rotation constants; the general PASSF handles any prime with an inner loop (NOT read)",
+   "input": "CC as (IDO, IP, L1)",
+   "output": "CH as (IDO, L1, IP)",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "Fortran column-major aliasing of one array under two shapes"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "fftpack-netlib::twiddle_table_per_factor_stage_from_cos_sin_of_multiples_of_two_pi_over_n",
+    "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list"
+   ],
+   "fitness_value_in_ancestor": "the butterfly is the whole arithmetic; the reshaping-by-declaration is the transposition step other FFTs do explicitly",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:fftpack-netlib/upstream/passf2.f:1-24; passf3/4/5.f by name; radf2.f by name"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "each pass* / rad* file",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "fftpack-netlib::real_sequence_transforms_by_pre_and_post_processing_around_a_half_length_or_real_fft",
+   "fossil_ancestry": "fftpack-netlib",
+   "human_name": "EZFFTF/B, COST, SINT, COSQF/B, SINQF/B",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "ezfftf: copy R to scratch, RFFTF, then scale and split the packed result into azero, a[], b[] (2/N, sign flip on b); cost: fold the sequence with its reverse using the cos table (K, N+1-K pairs), RFFTF of length N-1, then an unfolding recurrence (X(I) = X(I-2) - X(I-1), lines 33-40); sint / cosq / sinq are analogous folds (skimmed by name only)",
+   "input": "a real sequence",
+   "output": "Fourier / cosine / sine coefficients",
+   "state": "none beyond wsave",
+   "update": "none",
+   "assumptions": [
+    "the symmetry of the wanted transform lets a shorter real FFT do the work"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:fftpack-netlib/upstream/ezfftf.f:1-27; cost.f:1-42"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the wrapper files ezfft*, cost*, sint*, cosq*, sinq*",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "'FFT' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "factorisation, twiddle table, driver and passes have separate files and separate lifetimes (init once, transform many)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "fftpack-netlib"
+  },
+  {
+   "candidate": "forward vs backward (cfftf vs cfftb, passf vs passb) as separate anatomy",
+   "reason": "OTHER",
+   "evidence": "passb2.f differs from passf2.f in the sign of the twiddle products only (by name and shape; passb2 not diffed line by line)",
+   "note": "a sign parameter, recorded as one organ",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "fftpack-netlib"
+  },
+  {
+   "candidate": "test.f",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "vault:fftpack-netlib/upstream/test.f -- the shipped driver Techne ran (UPSTREAM_DRIVERS_RUN_NO_ORACLE per the record family)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "fftpack-netlib"
+  },
+  {
+   "candidate": "arithmetic IF / GO TO control flow",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "every file; Fortran 66/77 idiom, not machinery",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "fftpack-netlib"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "fftpack-netlib::P.a_dense_n_squared_transform_must_be_computed_in_near_n_log_n_on_1980s_memory",
+   "source_fossil": "fftpack-netlib",
+   "source_evidence": "doc; cffti1 factorisation",
+   "condition": "the discrete Fourier transform is an N x N matrix product; N in the thousands must run on machines where N^2 flops and an N x N table are unaffordable",
+   "resource_or_constraint": "flops and memory of the era; single precision",
+   "failure_condition": "N^2 cost; or an N restricted to powers of two",
+   "world_punishes": "direct evaluation; a transform that only accepts 2^k",
+   "world_rewards": "factoring the index set and reusing sub-transforms (the same structure whatever the factors)",
+   "observable_consequence": "runtime vs N and vs the factorisation of N (the doc's 'most efficient when n is a product of small primes')",
+   "vacuity_condition": "small N",
+   "trivial_shortcuts": "restrict N to 2^k (the world must include awkward N)",
+   "cheat_control": "a transform given a precomputed N x N matrix must match to single precision and cost N^2; if the world scores it equal, cost is not being charged",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: spectral analysis / PDE solvers (Swarztrauber's use)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "fftpack-netlib::P.the_same_arithmetic_must_serve_real_cosine_and_sine_transforms_without_new_kernels",
+   "source_fossil": "fftpack-netlib",
+   "source_evidence": "cost.f, ezfftf.f",
+   "condition": "applications need several related transforms; each written from scratch multiplies the code and the error surface",
+   "resource_or_constraint": "code size; verification effort",
+   "failure_condition": "divergent implementations of the same butterflies",
+   "world_punishes": "duplication",
+   "world_rewards": "symmetry-exploiting pre/post processing around one kernel",
+   "observable_consequence": "the wrapper files call RFFTF/RFFTB and never a pass directly",
+   "vacuity_condition": "one transform needed",
+   "trivial_shortcuts": "none",
+   "cheat_control": "N/A",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "fftpack-netlib::factor_n_into_small_primes_preferring_4_then_2_then_3_then_5_with_2_moved_first",
+   "to": "fftpack-netlib::twiddle_table_per_factor_stage_from_cos_sin_of_multiples_of_two_pi_over_n",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::factor_n_into_small_primes_preferring_4_then_2_then_3_then_5_with_2_moved_first",
+   "to": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::twiddle_table_per_factor_stage_from_cos_sin_of_multiples_of_two_pi_over_n",
+   "to": "fftpack-netlib::radix_r_butterfly_pass_with_twiddle_multiply_on_all_but_the_first_output",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+   "to": "fftpack-netlib::radix_r_butterfly_pass_with_twiddle_multiply_on_all_but_the_first_output",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::real_sequence_transforms_by_pre_and_post_processing_around_a_half_length_or_real_fft",
+   "to": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "wrappers call RFFTF/RFFTB",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+   "to": "fftpack-netlib::real_sequence_transforms_by_pre_and_post_processing_around_a_half_length_or_real_fft",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the general-radix passes passf.f / radfg.f (any prime) are unread; their inner structure may be a distinct mechanism (a DFT of prime length by direct sums)",
+   "sint / cosq / sinq folds are assumed analogous to cost from names and sizes only",
+   "single-precision accuracy vs N is not measured (Techne's run had no oracle)"
+  ],
+  "note": "the small-radix path (factor, twiddle, driver, butterfly, real wrapper) is fully read",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

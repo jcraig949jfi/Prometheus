@@ -128,20 +128,912 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cobol-programming-course-omp/upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl/CBL0006.cobol"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cobol-programming-course-omp/upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl/SRCHBIN.cobol"
+   }
+  ],
+  "inspected_files": [
+   "CBL0006.cobol",
+   "SRCHBIN.cobol (data + SEARCH)",
+   "PAYROL00.cobol (grep)",
+   "file census"
+  ],
+  "date": "2026-09-16T12:17Z",
+  "note": "a fossil of a LANGUAGE's computational stance: data described byte-exactly and declaratively, control flow by named paragraphs; the atlas records the mechanisms the programs exercise, each of which is executed by the compiler runtime rather than written in the program"
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+   "fossil_ancestry": "cobol-programming-course-omp",
+   "human_name": "DATA DIVISION: 01/05/10 levels, PIC X(n) / 9(n) / S9(7)V99 COMP-3",
+   "human_interpretation": "the shape of every record on disk and in memory is written in the program",
+   "mechanism": "a hierarchy of level-numbered items with PICTURE clauses fixes the offset, length, encoding (display vs packed decimal COMP-3), sign and implied decimal point of every field; the same 150-byte input record is read into ACCT-FIELDS and its fields addressed by name; FILLER pads; VALUE initialises",
+   "input": "a file record's bytes",
+   "output": "named fields",
+   "state": "the record areas",
+   "update": "per READ / per MOVE",
+   "assumptions": [
+    "the file's bytes match the declared layout exactly (record: EBCDIC names appear untranslated under GnuCOBOL -- the layout is byte-faithful, the character set is not)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cobol-programming-course-omp::edited_move_formats_by_picture_at_assignment",
+    "cobol-programming-course-omp::fixed_point_decimal_arithmetic_at_declared_scale",
+    "cobol-programming-course-omp::record_at_a_time_sequential_loop_with_an_at_end_flag",
+    "cobol-programming-course-omp::declared_ordered_table_searched_by_binary_or_linear_search_statement"
+   ],
+   "fitness_value_in_ancestor": "format longevity (record pressure): a 1970s file is readable today because its layout is in the program",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cobol-programming-course-omp/upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl/CBL0006.cobol:18-44 (FD / 01 / 05 / 10 lines)"
+   },
+   "confidence": "HIGH",
+   "portability": "NO",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "FILE SECTION + WORKING-STORAGE of every program",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cobol-programming-course-omp::edited_move_formats_by_picture_at_assignment",
+   "fossil_ancestry": "cobol-programming-course-omp",
+   "human_name": "MOVE ACCT-LIMIT TO ACCT-LIMIT-O where ACCT-LIMIT-O PIC $$,$$$,$$9.99",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a MOVE from a numeric packed field to an edited picture performs currency floating, comma insertion, zero suppression and decimal alignment by the picture alone; no formatting code exists in the program",
+   "input": "a packed decimal",
+   "output": "a 13-character edited string",
+   "state": "none",
+   "update": "per MOVE",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+    "cobol-programming-course-omp::record_at_a_time_sequential_loop_with_an_at_end_flag",
+    "cobol-programming-course-omp::fixed_point_decimal_arithmetic_at_declared_scale"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cobol-programming-course-omp/upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl/CBL0006.cobol:24-27,157-159"
+   },
+   "confidence": "HIGH",
+   "portability": "NO",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "edited PICTUREs and the MOVEs into them",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cobol-programming-course-omp::fixed_point_decimal_arithmetic_at_declared_scale",
+   "fossil_ancestry": "cobol-programming-course-omp",
+   "human_name": "COMPUTE GROSS-PAY = HOURS * RATE on PIC S9(n)V99 (COMP-3)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "arithmetic on pictured fields is exact decimal at the declared scale; the result is truncated (or ROUNDED if asked) to the target picture's digits; overflow past the picture is silently truncated unless ON SIZE ERROR is written -- the record's failure condition ('a truncated or mis-edited amount')",
+   "input": "pictured numerics",
+   "output": "a pictured numeric",
+   "state": "none",
+   "update": "per statement",
+   "assumptions": [
+    "money is decimal; binary floating point is never used"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+    "cobol-programming-course-omp::edited_move_formats_by_picture_at_assignment"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cobol-programming-course-omp/upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl/PAYROL00.cobol (COMPUTE GROSS-PAY = HOURS * RATE); CBL0006.cobol ADD 1 TO VIRGINIA-CLIENTS"
+   },
+   "confidence": "HIGH",
+   "portability": "NO",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "COMPUTE / ADD / MULTIPLY statements",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cobol-programming-course-omp::record_at_a_time_sequential_loop_with_an_at_end_flag",
+   "fossil_ancestry": "cobol-programming-course-omp",
+   "human_name": "PERFORM READ-RECORD; PERFORM UNTIL LASTREC = 'Y' ... END-PERFORM",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "prime the loop with one READ; loop until the AT END clause has set a flag; each iteration processes the record area in place (a conditional count, a formatted WRITE) and reads the next; headers before, totals after; files opened and closed explicitly",
+   "input": "a sequential file",
+   "output": "a report file",
+   "state": "LASTREC flag, running counters",
+   "update": "per record",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+    "cobol-programming-course-omp::edited_move_formats_by_picture_at_assignment",
+    "cobol-programming-course-omp::named_paragraph_control_flow_by_perform"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cobol-programming-course-omp/upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl/CBL0006.cobol:106-165"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "PROCEDURE DIVISION of CBL0001..CBL0014",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cobol-programming-course-omp::declared_ordered_table_searched_by_binary_or_linear_search_statement",
+   "fossil_ancestry": "cobol-programming-course-omp",
+   "human_name": "OCCURS 45 TIMES ASCENDING KEY IS ACCT-NO INDEXED BY TABLE-IDX; SEARCH ALL vs SEARCH",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a table declared with an ordering key lets SEARCH ALL perform a binary search (the runtime's), WHEN naming the key comparison and AT END the miss; plain SEARCH is a linear scan from the index; the record pairs SRCHBIN and SRCHSER as the comparison",
+   "input": "a loaded table, a key value",
+   "output": "an index or 'Not Found'",
+   "state": "TABLE-IDX",
+   "update": "per search",
+   "assumptions": [
+    "the table IS sorted as declared (the runtime does not check)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cobol-programming-course-omp/upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl/SRCHBIN.cobol (OCCURS ... ASCENDING KEY; SEARCH ALL block)"
+   },
+   "confidence": "HIGH",
+   "portability": "NO",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "SRCHBIN / SRCHSER",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cobol-programming-course-omp::named_paragraph_control_flow_by_perform",
+   "fossil_ancestry": "cobol-programming-course-omp",
+   "human_name": "PERFORM paragraph / PERFORM UNTIL / GOBACK",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the procedure is a flat sequence of named paragraphs; PERFORM calls one (or a range) and returns; PERFORM UNTIL loops; control otherwise falls through paragraphs in order; no local variables, no recursion, all state global in WORKING-STORAGE",
+   "input": "none",
+   "output": "none",
+   "state": "none beyond the perform return",
+   "update": "none",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cobol-programming-course-omp::record_at_a_time_sequential_loop_with_an_at_end_flag"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cobol-programming-course-omp/upstream/tree/COBOL Programming Course #2 - Learning COBOL/Labs/cbl/CBL0006.cobol:106-165"
+   },
+   "confidence": "HIGH",
+   "portability": "NO",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "every PROCEDURE DIVISION",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "JCL job streams (41 .jcl files)",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "Labs/jcl/*.jcl -- bind DD names (ACCTREC, PRTLINE) to datasets and run the compiled program; Techne's recipe replaces them with DD_ environment variables",
+   "note": "the file-name indirection (SELECT ... ASSIGN TO PRTLINE) is where the program meets the world; recorded here, not as an organ",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cobol-programming-course-omp"
+  },
+  {
+   "candidate": "course text, images, LaTeX, Zowe configuration",
+   "reason": "OTHER",
+   "evidence": "219 png, 44 md, 4 tex, zowe.*.json -- the course, not the machinery",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cobol-programming-course-omp"
+  },
+  {
+   "candidate": "'COBOL program' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the programs are near-identical exercises of the six mechanisms above; CBL0001..CBL0014 differ by one mechanism each",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cobol-programming-course-omp"
+  },
+  {
+   "candidate": "the 30 programs as 30 organs",
+   "reason": "OTHER",
+   "evidence": "by name and the record's entry-point list: headers, totals, conditionals, PERFORM, SEARCH, DB2 (CBLDB2x, unread), testing labs (DEPTPAY, EMPPAY, unread)",
+   "note": "Course #3 DB2 labs and Course #4 testing labs unread -- UNKNOWN",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cobol-programming-course-omp"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "cobol-programming-course-omp::P.data_formats_must_outlive_every_program_and_machine_that_touches_them",
+   "source_fossil": "cobol-programming-course-omp",
+   "source_evidence": "record pressure and example output",
+   "condition": "files written decades ago must be readable byte-for-byte by programs written today; the layout is the contract and no schema exists outside the programs",
+   "resource_or_constraint": "no runtime type information in the file",
+   "failure_condition": "a misread field (record: mis-edited amount)",
+   "world_punishes": "implicit layouts; encodings that change with the machine",
+   "world_rewards": "the layout written in the program, byte-exact, with the encoding named per field",
+   "observable_consequence": "the record's observation: packed-decimal amounts format correctly under GnuCOBOL while EBCDIC text does not -- the layout survived, the character set did not",
+   "vacuity_condition": "short-lived data",
+   "trivial_shortcuts": "a self-describing format (not available to the 1960s world)",
+   "cheat_control": "a program given the layout as data (a copybook) must read the file; if the world rewards it equally to one that guesses the layout from the bytes, format longevity is not being measured",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: business record processing",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "cobol-programming-course-omp::P.money_arithmetic_must_be_exact_to_the_cent_and_auditable_on_paper",
+   "source_fossil": "cobol-programming-course-omp",
+   "source_evidence": "record failure condition; COMPUTE / edited pictures",
+   "condition": "every amount is a decimal with a fixed scale; rounding and truncation are legally specified; the output is a printed report that an auditor reads",
+   "resource_or_constraint": "decimal exactness; fixed report columns",
+   "failure_condition": "a cent of drift; a truncated total",
+   "world_punishes": "binary floating point; silent overflow",
+   "world_rewards": "declared-scale decimal arithmetic and edited output",
+   "observable_consequence": "totals on the report vs a hand sum of the file",
+   "vacuity_condition": "approximate quantities",
+   "trivial_shortcuts": "integers in cents (correct; the world may allow it)",
+   "cheat_control": "corrupt one COMP-3 field (the record's entry point): the report must show the corruption, not hide it",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+   "to": "cobol-programming-course-omp::edited_move_formats_by_picture_at_assignment",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+   "to": "cobol-programming-course-omp::fixed_point_decimal_arithmetic_at_declared_scale",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::record_at_a_time_sequential_loop_with_an_at_end_flag",
+   "to": "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "READ fills the record area",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::record_at_a_time_sequential_loop_with_an_at_end_flag",
+   "to": "cobol-programming-course-omp::edited_move_formats_by_picture_at_assignment",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "WRITE-RECORD",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::named_paragraph_control_flow_by_perform",
+   "to": "cobol-programming-course-omp::record_at_a_time_sequential_loop_with_an_at_end_flag",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+   "to": "cobol-programming-course-omp::declared_ordered_table_searched_by_binary_or_linear_search_statement",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::fixed_point_decimal_arithmetic_at_declared_scale",
+   "to": "cobol-programming-course-omp::edited_move_formats_by_picture_at_assignment",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "totals formatted at the end",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "Course #3 DB2 labs (CBLDB21-23) and Course #4 testing labs (DEPTPAY, EMPPAY) unread",
+   "the compiler runtime that executes every mechanism above is NOT in the body (GnuCOBOL is Techne's world)",
+   "nothing ran here; Techne's CBL0001 receipt is on M1"
+  ],
+  "note": "the six mechanisms are the language's; the fossil shows humans exercising them one at a time",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

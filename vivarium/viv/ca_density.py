@@ -115,7 +115,23 @@ def _evca():
     return evca, core
 
 
-def _require_density_set(value, core):
+def _require_density_set(value, core, n_cells=None):
+    """One block spec per entry, in declared order.
+
+    Three ensembles, one list (THEO-REQ-006, 2026-09-16, library dbc41fd2f):
+
+        null            each cell iid uniform: the published ensemble
+        0.35            each cell iid Bernoulli(0.35): a biased ensemble
+        {"count": 52}   EXACTLY 52 ones in a seeded uniform arrangement,
+                        so the realised density is 52 / n_cells on every IC
+                        and the majority target is fixed by the entry alone
+
+    Returns (kind, value) pairs: ("density", float | None) or ("count", int).
+    The library refuses density and exact_count together; this contract
+    refuses a dict with any key but `count`, so the two can never be mixed
+    inside one entry. `n_cells` is passed so a count outside [0, n_cells] is
+    refused HERE, before any world is committed, not by make_ics later.
+    """
     if not isinstance(value, list) or not value:
         raise core.EvcaError(
             "ic_density_set must be a non-empty list; use [null] for the "
@@ -123,13 +139,34 @@ def _require_density_set(value, core):
     out = []
     for d in value:
         if d is None:
-            out.append(None)
+            out.append(("density", None))
+            continue
+        if isinstance(d, dict):
+            if set(d) != {"count"}:
+                raise core.EvcaError(
+                    "an ic_density_set object entry must be exactly "
+                    "{\"count\": k}, got keys %s" % sorted(d))
+            k = d["count"]
+            if isinstance(k, bool) or not isinstance(k, int):
+                raise core.EvcaError(
+                    "ic_density_set count must be an integer, got %r" % (k,))
+            if n_cells is not None:
+                core.require_count(k, n_cells)
+            out.append(("count", int(k)))
             continue
         if isinstance(d, bool) or not isinstance(d, (int, float)):
             raise core.EvcaError(
-                "ic_density_set entries must be null or a number, got %r" % (d,))
-        out.append(core.require_density(float(d)))
+                "ic_density_set entries must be null, a number or "
+                "{\"count\": k}, got %r" % (d,))
+        out.append(("density", core.require_density(float(d))))
     return out
+
+
+def _make_block(core, n_ic, n_cells, seed, block):
+    kind, v = block
+    if kind == "count":
+        return core.make_ics(n_ic, n_cells, seed, exact_count=v)
+    return core.make_ics(n_ic, n_cells, seed, density=v)
 
 
 def _reflect_table(table, np):
@@ -218,7 +255,8 @@ def run(payload: dict, *, seed: int) -> dict:
     core.require_radius(radius)          # r=3 only; the library's refusal
     core.require_lattice(n_cells)        # odd, so majority never ties
     core.require_steps(steps)
-    densities = _require_density_set(payload["ic_density_set"], core)
+    densities = _require_density_set(payload["ic_density_set"], core,
+                                     n_cells=n_cells)
     if not isinstance(n_ic, int) or isinstance(n_ic, bool) or n_ic < 1:
         raise core.EvcaError("n_ic must be a positive integer, got %r" % (n_ic,))
 
@@ -226,7 +264,7 @@ def run(payload: dict, *, seed: int) -> dict:
 
     # One block per declared density, concatenated in order, so a witness
     # index means one thing across the whole ensemble.
-    blocks = [core.make_ics(n_ic, n_cells, int(seed) + j, density=d)
+    blocks = [_make_block(core, n_ic, n_cells, int(seed) + j, d)
               for j, d in enumerate(densities)]
     ics = np.concatenate(blocks, axis=0) if len(blocks) > 1 else blocks[0]
 

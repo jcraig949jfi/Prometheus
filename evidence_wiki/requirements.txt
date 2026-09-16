@@ -1,0 +1,21 @@
+# Evidence Wiki (PEW) runtime dependencies -- written 2026-09-16 after the
+# M2 venv was found without sentence-transformers (search never ready under
+# health 200) and then without rank_bm25 (search 500). The versions are the
+# ones the M2 service was qualified with that day (.venv-m2, Python 3.12);
+# M1 was never pinned and is not asserted to match.
+#
+#   python -m pip install --index-url https://download.pytorch.org/whl/cpu \
+#       --extra-index-url https://pypi.org/simple -r evidence_wiki/requirements.txt
+#
+# (the CPU torch index keeps the wheel at ~200 MB; PEW does not use a GPU.)
+fastapi==0.141.1
+uvicorn==0.52.4
+psycopg2-binary==2.9.12
+pydantic==2.13.5
+numpy==2.5.2
+requests==2.34.2
+rank-bm25==0.2.2
+sentence-transformers==6.0.1
+torch==2.14.0
+# optional: ew/compiler.py imports tensorly inside one function (tensor
+# compilation); the service, search, fossil and closure paths do not need it.
