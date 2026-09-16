@@ -757,6 +757,18 @@ def blinker_rule_table() -> np.ndarray:
 #                         roughly independent: mean about 0.27 at N = 149, in a
 #                         narrow interval (spread of the mean about 0.005 at
 #                         100 ICs). THE FLOOR IS NOT 0 AND NOT 0.5.
+#                         [MEASURED 2026-09-16, sync_floor_2026-09-16.json,
+#                         20 tables: mean of means 0.227, range [0.057,
+#                         0.307], sd of means 0.049. TWO PARTS OF THE LINE
+#                         ABOVE WERE WRONG and stay visible: the interval is
+#                         ten times wider than predicted, because the flip
+#                         fraction is a RULE property (0.11 to 0.57 across
+#                         tables, correlation 0.99 with the mean), and the
+#                         mean sits 3.5 SE below the independence value
+#                         0.266, because flip and in-phase are anticorrelated
+#                         (r = -0.79 across tables). The floor is a BAND,
+#                         not a point, and an organism is quoted against
+#                         its top, 0.31 at this geometry.]
 #   density classifiers   the five that reach a fixed uniform state: 0.0
 #                         exactly; maj never reaches uniform and its flip
 #                         fraction is unknown before measurement.

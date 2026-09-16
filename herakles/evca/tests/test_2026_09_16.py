@@ -81,16 +81,19 @@ def test_sync_all_cells_fraction_equals_synchronisation_score_exactly():
 
 
 def test_sync_random_tables_land_on_an_interval_not_a_point():
-    """Analytic: flip about 0.5 and phase about the majority share, so the
-    mean sits near 0.27 at N = 149 and NOT at 0 or 0.5. Ten tables here;
-    the twenty-table floor with its spread is in CRITERIA.md."""
+    """Analytic, stated before measurement: flip about 0.5 and phase about
+    the majority share, so the mean sits near 0.27 at N = 149 and NOT at 0
+    or 0.5. MEASURED (sync_floor_2026-09-16.json, 20 tables): mean of
+    means 0.227, range [0.057, 0.307]. The prediction of a NARROW interval
+    was wrong (the flip fraction is a rule property and varies 0.11-0.57),
+    so the bounds below are the measured band, not the predicted point."""
     ics = evca.make_ics(100, N, seed=20260916)
     means = [evca.cellwise_synchronisation_match(evca.random_table(3000 + i),
                                                  ics, T)["mean_sync_match"]
              for i in range(10)]
     assert len(set(means)) > 1
-    assert 0.15 < min(means) and max(means) < 0.40
-    assert abs(sum(means) / len(means) - 0.27) < 0.05
+    assert 0.0 < min(means) and max(means) < 0.40
+    assert 0.15 < sum(means) / len(means) < 0.32
 
 
 def test_sync_density_classifiers_that_reach_uniform_score_zero():
