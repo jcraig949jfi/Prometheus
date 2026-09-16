@@ -495,3 +495,13 @@
   recoverable; the JOB reported ok (rows 3, 2.34 CPU-s) and the INDETERMINATE was D's own receipt decision; D29 is
   recorded as F's defect with credit to D for handling and disclosure. A's D29 design ruling: refuse at emit (no alias),
   fail loudly (any refused row -> job status error), vocabulary lint between rows.STATUSES and EVIDENCE_CLASSES.
+- D-R7-4 RECORD (job 0d2d60f699df ok, 100 rows ACCEPTED 915f833fc, 148.8 s wall, 21.3 CPU-s, 96 QD runs, token wait
+  1.8 s): decision RENT_BINDS. I1 5/5 (32 runs per LAMBDA, 8 per family, every elite recount exact, first stream of
+  each LAMBDA audited 38,400 offers 0 mismatched); controls honest 0.0 / skip_last 0.7891 / half_rent 1.0 at 16384 and
+  131072, EXEMPT at LAMBDA 0 exactly as pre-declared.
+  median best_active 7.0 (l=0) / 7.0 (l=16384, C's value) / 2.0 (l=131072); 32/32 paired streams shrank; distributions
+  6-8 / 5-8 / 1-4. Medians best_net 2.768M / 2.664M / 2.199M, raw NK 2.768M / 2.781M / 2.462M, coverage 0.947 / 0.937 /
+  0.941. Reading: rent DOES shrink programs -- C's LAMBDA was too weak relative to NK gains, not decoder_rent inert;
+  and the shrink is paid for in raw landscape fitness, so the small programs are worse, not equally good and cheaper.
+  At C's own 16384 the median is unchanged (7 vs 7) while the distribution moves (5-8 vs 6-8): real but sub-integer.
+  SCOPE: answers the anomaly's discriminator (b) only; (a) the shortcut-proof coverage descriptor was NOT run.
