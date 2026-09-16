@@ -769,3 +769,9 @@
   admitted envelope (evidence class OBSERVATION, no verdict): reference row (lin destinations, yield reg, act targets,
   periods), flip_applied proof row, a scan row per period, and an aborted summary carrying INFEASIBLE. Row statuses
   stay inside fabric.rows STATUSES (control / aborted) -- the trap D hit tonight with status "observation".
+- AP-04 scan job 4251314025db ok (5 rows, 4.6 CPU-s, 2.9 s wall). IN COMMITTED ROWS: flip applied (regs {0,1,3,4}
+  differ at 24 of 32 ticks, charge identical on those envs); charge differences vs control 0 of 4096 envs at period 8
+  AND 0 of 4096 at period 16; kernel == numpy 0 mismatched in both. Summary primary INFEASIBLE with the structural
+  reason (lin destinations {0,1,3,4}, yield reg 5, act_targets [5] -> reg5 is written only by actions).
+- C-R7-AP-04 is therefore reported INFEASIBLE and NOT redrawn. Receipt next (evidence class OBSERVATION: no verdict,
+  so EVIDENCE_N_v1 does not apply).
