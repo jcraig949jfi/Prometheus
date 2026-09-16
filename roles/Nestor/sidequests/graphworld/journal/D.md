@@ -505,3 +505,16 @@
   and the shrink is paid for in raw landscape fitness, so the small programs are worse, not equally good and cheaper.
   At C's own 16384 the median is unchanged (7 vs 7) while the distribution moves (5-8 vs 6-8): real but sub-integer.
   SCOPE: answers the anomaly's discriminator (b) only; (a) the shortcut-proof coverage descriptor was NOT run.
+- Child anomaly 1789517158930-0 filed and CLAIMED; D-R7-5 code + test (r7_5_nk_coverage_descriptor.py; 8 passed rc 0).
+  Tests the parent's discriminator (a): CONTRIBUTION-HALVES descriptor (c0/c1 = per-locus NK contributions of loci
+  0-31 / 32-63, bucketed by floor(c / (32*65535) * 32), same 33x33 grid) vs C's popcount halves, which ops 3/4
+  (set/clear 8 adjacent bits) can sweep by a fixed 8. C's EVAL_LUA forked with ONE added branch (ARGV[6] desc); the
+  fitness, rent, decode and cheat paths are untouched (test asserts the rent path is unchanged).
+  C's sampler was UNSEEDED, so D generates its OWN popcount baseline: 4 cells = {small_program (rent 16384), bitset} x
+  {popcount, contribution}, 32/4/8 each, same streams across descriptors (paired per stream).
+  Rule fixed before values: I1 BINDING REPLICATION -- D's popcount gap must reproduce C's (>= 0.10 with full
+  separation) or the contribution arm is uninterpretable (INDETERMINATE); then GAP_PERSISTS >= 0.10 with separation /
+  GAP_VANISHES <= 0.05 / MIXED. Binding controls: Lua cell == numpy cell on 1024 genomes for BOTH descriptors and BOTH
+  modes, plus C's honest / skip_last / half_rent.
+  No-rows smoke: equivalence 0 cell and 0 fit mismatches for both descriptors in both modes; cheats 0.0 / 0.789 / 1.0;
+  30-gen walls 0.14-0.23 s -> 128 runs project ~230-300 s. Only mismatch counts and timings were read; no coverage.
