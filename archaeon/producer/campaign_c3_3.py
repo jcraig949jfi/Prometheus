@@ -39,6 +39,33 @@ IC samples reuse C3-2's seed_root so the same organisms are paired across
 the two criteria; the first 120 random tables are C3-2's own.
 
 Not issued without the operator's word.
+
+AMENDED 2026-09-16 (Harmonia ruling be82cdd8b / comms #255, NO-GO on the
+preflight as printed; the constants sentences above are SUPERSEDED, kept
+for the record):
+  - The region gate was ASSERTED (regions_ge8 = N_REGIONS if mean >= 8),
+    which assumed popcount deciles hold 1/10 each. Popcount is discrete;
+    the exact Binomial(128, 1/2) masses under region_of() range from
+    0.069 (pc05, popcount 65 alone) to 0.136 (pc03), and at corpus 120
+    P(every region >= 8) = 0.123. Now COMPUTED: region_masses(),
+    p_all_regions_ge() (exact DP), expected_neighbourhoods(),
+    band_chance_floor() (seeded Monte Carlo, reps printed).
+  - Option B adopted (Harmonia's recommendation): the ten regions stand as
+    declared and only the corpus grows, CORPUS_OPTION_B = 180 random
+    tables, a DECLARED design constant; the gate probability at it is
+    computed, never assumed.
+  - 3b corrected past both versions: a constant rule's LOCATION is the IC
+    sample's majority share p_s (a property of the sample, not the rule;
+    all_zero + all_one == 1 exactly); its DISPERSION is sqrt(p_s (1 - p_s))
+    exactly, at the ceiling to within 1e-3 and never exactly 0.5 unless
+    p_s is. Constants are EXCLUDED from the location primary and are a
+    labelled BOUNDARY comparison on the dispersion primary.
+  - The six-row baseline arm is THREE distinct-behaviour classes
+    (all_zero = centre_00, all_one = centre_11, centre_01 = centre_10);
+    the classes are derived from executed outputs, never pooled as
+    replicates (HARM-28 applies to functionally identical rules).
+  - GO is the mechanical predicate G1-G6 of the ruling, printed as
+    go_predicate; Archaeon applies it without returning to Harmonia.
 """
 from __future__ import annotations
 
@@ -63,6 +90,13 @@ TARGET_NONDEGENERATE = 120           # 10 regions x 12 (Harmonia 3f)
 N_REGIONS = 10
 D3_BAND = (0.3333, 3.0)
 PREFLIGHT_RANDOM = 60
+CORPUS_OPTION = "B"                  # Harmonia #255 section 3: ten regions as declared, corpus raised
+CORPUS_OPTION_B = 180                # DECLARED design constant (random tables); the gate at it is computed
+MIN_REGION_N = 8                     # non-degenerate rules a region needs to be tested (3f)
+MIN_NEIGHBOURHOOD = 16               # expected non-degenerate rules in the other regions (3f)
+G2_THRESHOLD = 0.80                  # P(every region >= MIN_REGION_N) at the issued corpus (G2)
+BAND_FLOOR_REPS = 4000               # Monte Carlo corpora for the D3 band chance floor (G4)
+BAND_FLOOR_SEED = 20260916
 
 
 # --------------------------------------------------------------------------
@@ -95,6 +129,123 @@ def region_of(rule_hex: str) -> str:
 def centre1_ones(rule_hex: str) -> int:
     n = int(rule_hex, 16)
     return sum(1 for k in range(128) if (k >> 3) & 1 and (n >> (127 - k)) & 1)
+
+
+# --------------------------------------------------------------------------
+# Region occupancy, COMPUTED from the declared edges and assignment
+# (Harmonia #255 section 3: the gate was asserted; these functions replace it)
+# --------------------------------------------------------------------------
+def region_masses(n: int = 128) -> Dict[str, float]:
+    """Exact Binomial(n, 1/2) mass of every region under region_of()'s
+    assignment (idx = number of edges strictly below the popcount)."""
+    out: Dict[str, float] = {"pc{:02d}".format(i): 0.0 for i in range(N_REGIONS)}
+    for pc in range(n + 1):
+        idx = sum(1 for e in REGION_EDGES if pc > e)
+        out["pc{:02d}".format(idx)] += math.comb(n, pc) / 2 ** n
+    return out
+
+
+def _binom_pmf(n: int, x: int, p: float) -> float:
+    """Binomial pmf in log space (math.comb overflows float past n ~ 1000)."""
+    if p <= 0.0:
+        return 1.0 if x == 0 else 0.0
+    if p >= 1.0:
+        return 1.0 if x == n else 0.0
+    return math.exp(math.lgamma(n + 1) - math.lgamma(x + 1) - math.lgamma(n - x + 1)
+                    + x * math.log(p) + (n - x) * math.log1p(-p))
+
+
+def p_all_regions_ge(corpus: int, masses: Dict[str, float], f: float = 1.0, k: int = MIN_REGION_N) -> float:
+    """EXACT P(every region receives >= k non-degenerate tables) when `corpus`
+    tables are drawn i.i.d., each landing in region r with probability
+    masses[r] * f and being degenerate with probability 1 - f. Dynamic
+    programme over regions with the conditional-binomial factorisation of
+    the multinomial; the degenerate bin is unconstrained slack."""
+    if corpus < k * len(masses):
+        return 0.0
+    rem = 1.0
+    dp: Dict[int, float] = {0: 1.0}
+    for m in (masses[r] * f for r in sorted(masses)):
+        p = 1.0 if rem <= 1e-12 else min(1.0, m / rem)
+        nxt: Dict[int, float] = {}
+        for used, pr in dp.items():
+            M = corpus - used
+            for x in range(k, M + 1):
+                w = _binom_pmf(M, x, p)
+                if w:
+                    nxt[used + x] = nxt.get(used + x, 0.0) + pr * w
+        dp = nxt
+        rem -= m
+        if not dp:
+            return 0.0
+    return min(1.0, sum(dp.values()))
+
+
+def min_corpus_for(target: float, masses: Dict[str, float], f: float = 1.0, k: int = MIN_REGION_N, cap: int = 2000) -> Optional[int]:
+    """Smallest corpus at which p_all_regions_ge >= target (diagnostic; the
+    issued corpus is the DECLARED constant, and G2 is checked at it)."""
+    for n in range(k * len(masses), cap + 1):
+        if p_all_regions_ge(n, masses, f, k) >= target:
+            return n
+    return None
+
+
+def expected_neighbourhoods(corpus: int, masses: Dict[str, float], f: float = 1.0) -> Dict[str, float]:
+    """Expected non-degenerate tables in the OTHER regions, per region, from
+    the masses (G3) -- not (N_REGIONS - 1) x mean."""
+    tot = corpus * f
+    return {r: tot * (1.0 - masses[r]) for r in sorted(masses)}
+
+
+def band_chance_floor(corpus: int, masses: Dict[str, float], f: float = 1.0, *, reps: int = BAND_FLOOR_REPS,
+                      seed: int = BAND_FLOOR_SEED, band=D3_BAND, min_n: int = MIN_REGION_N) -> Dict[str, Any]:
+    """Monte Carlo D3-style false-fire rate at TRUE ratio 1.0 for the issued
+    geometry (G4): occupancies multinomial over (masses x f, 1 - f), values
+    i.i.d. normal, each region with n >= min_n tested as var(region) over the
+    pooled within-variance of every other region with n >= 2. Reports the
+    fraction of corpora with ANY region outside the band and with >= 2."""
+    import numpy as np
+    rng = np.random.default_rng(seed)
+    names = sorted(masses)
+    probs = [masses[r] * f for r in names] + [max(0.0, 1.0 - f)]
+    any_out = two_out = 0
+    tested_total = 0
+    for _ in range(reps):
+        occ = rng.multinomial(corpus, probs)[:len(names)]
+        vals = [rng.standard_normal(int(n)) for n in occ]
+        v = [(float(x.var(ddof=1)) if len(x) >= 2 else None) for x in vals]
+        out = 0
+        for i, n in enumerate(occ):
+            if n < min_n:
+                continue
+            num = sum((len(vals[j]) - 1) * v[j] for j in range(len(names)) if j != i and v[j] is not None)
+            df = sum(len(vals[j]) - 1 for j in range(len(names)) if j != i and v[j] is not None)
+            if df <= 0 or num <= 0:
+                continue
+            tested_total += 1
+            ratio = v[i] / (num / df)
+            if ratio < band[0] or ratio > band[1]:
+                out += 1
+        any_out += out >= 1
+        two_out += out >= 2
+    return {"corpus": corpus, "reps": reps, "seed": seed, "band": list(band), "min_region_n": min_n,
+            "p_any_region_outside": any_out / reps, "p_two_or_more_outside": two_out / reps,
+            "mean_regions_tested_per_corpus": tested_total / reps}
+
+
+def baseline_classes(named: Dict[str, Dict[str, Any]]) -> Dict[str, List[str]]:
+    """Distinct-behaviour classes of the baseline arm, DERIVED from executed
+    outputs: rules whose location, dispersion, n_incorrect_at_T and
+    mask_digest_at_T are all identical share a class (G5)."""
+    keyf = ("location", "dispersion", "n_incorrect_at_T", "mask_digest_at_T")
+    classes: Dict[tuple, List[str]] = {}
+    for name in {**C3.CONSTANT_RULES, **C3.CENTRE_RULES}:
+        o = named[name]
+        classes.setdefault(tuple(o.get(k) for k in keyf), []).append(name)
+    return {"+".join(sorted(v)): sorted(v) for v in classes.values()}
+
+
+BASELINE_CLASSES_EXPECTED = {"all_zero+centre_00", "all_one+centre_11", "centre_01+centre_10"}   # Harmonia #255 F3
 
 
 # --------------------------------------------------------------------------
@@ -162,7 +313,7 @@ def _run(rule_hex: str, transform: str = "none", seed: int = 0) -> Dict[str, Any
     return X.run(_spec(rule_hex, transform, "preflight"), seed=seed)
 
 
-def preflight(n_random: int = PREFLIGHT_RANDOM, seed: int = 0) -> Dict[str, Any]:
+def preflight(n_random: int = PREFLIGHT_RANDOM, seed: int = 0, band_reps: int = BAND_FLOOR_REPS) -> Dict[str, Any]:
     """Everything Harmonia requires printed BEFORE any gate. Offline, one IC
     sample (the seed) per rule, through the registered executor."""
     randoms = []
@@ -175,7 +326,8 @@ def preflight(n_random: int = PREFLIGHT_RANDOM, seed: int = 0) -> Dict[str, Any]
     named = {}
     for name, rh in {**C3.historical_rules(), **C3.CONSTANT_RULES, **C3.CENTRE_RULES}.items():
         o = _run(rh, seed=seed)
-        named[name] = {"location": o.get(LOCATION_FIELD), "dispersion": o.get(DISPERSION_FIELD)}
+        named[name] = {"location": o.get(LOCATION_FIELD), "dispersion": o.get(DISPERSION_FIELD),
+                       "n_incorrect_at_T": o.get("n_incorrect_at_T"), "mask_digest_at_T": o.get("mask_digest_at_T")}
     # the null under the third criterion, one genome x three transforms
     g0 = next(iter(C3.historical_rules().items()))
     base = _run(g0[1], seed=seed)
@@ -217,10 +369,39 @@ def preflight(n_random: int = PREFLIGHT_RANDOM, seed: int = 0) -> Dict[str, Any]
     expected_true_ratio = 1.0
     inside = D3_BAND[0] <= expected_true_ratio <= D3_BAND[1]
     observed_inside = (sum(1 for x in ratio_vals if D3_BAND[0] <= x <= D3_BAND[1]), len(ratio_vals))
-    # expected region occupancy at the corpus size (analytic deciles -> ~1/10 each)
-    expected_per_region = (corpus * f / N_REGIONS) if corpus else None
-    regions_ge8 = N_REGIONS if expected_per_region and expected_per_region >= 8 else 0
-    neighbourhood_ge16 = (N_REGIONS - 1) * expected_per_region if expected_per_region else 0
+    # region occupancy at the ISSUED corpus, COMPUTED from the masses (G1-G4).
+    # `corpus_for_120` is the old ceil(120 / f) figure, kept as a diagnostic;
+    # the issued corpus is the declared option-B constant.
+    corpus_for_120 = corpus
+    corpus = CORPUS_OPTION_B
+    masses = region_masses()
+    expected_per_region = {r: corpus * f * m for r, m in masses.items()}
+    p_ge_k_per_region = {r: sum(_binom_pmf(corpus, x, m * f) for x in range(MIN_REGION_N, corpus + 1)) for r, m in masses.items()}
+    p_all = p_all_regions_ge(corpus, masses, f)
+    p_all_at_120 = p_all_regions_ge(120, masses, f)
+    min_corpus = min_corpus_for(G2_THRESHOLD, masses, f)
+    neigh = expected_neighbourhoods(corpus, masses, f)
+    floor = {"eligible_regions_only": band_chance_floor(corpus, masses, f, reps=band_reps, seed=BAND_FLOOR_SEED),
+             "every_region_n_ge_2_harmonia_convention": band_chance_floor(corpus, masses, f, reps=band_reps, seed=BAND_FLOOR_SEED, min_n=2),
+             "note": "Harmonia #255 s3 quoted the floor over every region with n >= 2 (0.136 at 180); the readout tests only regions with n >= MIN_REGION_N, whose floor is the first entry"}
+    classes = baseline_classes(named)
+    executor_ran_every_arm = all(v.get("location") is not None for v in named.values()) and len(randoms) == n_random
+    go = {
+        "G1 region masses computed from the declared edges and assignment": {"masses": masses, "pass": abs(sum(masses.values()) - 1.0) < 1e-9},
+        "G2 P(every region >= {} non-degenerate) at corpus {} >= {}".format(MIN_REGION_N, corpus, G2_THRESHOLD):
+            {"value": p_all, "method": "exact DP over the multinomial", "pass": p_all >= G2_THRESHOLD,
+             "at_120_for_the_record": p_all_at_120, "min_corpus_reaching_threshold": min_corpus},
+        "G3 expected neighbourhood >= {} for every region, from the masses".format(MIN_NEIGHBOURHOOD):
+            {"value": neigh, "pass": all(v >= MIN_NEIGHBOURHOOD for v in neigh.values())},
+        "G4 D3 band chance floor at the issued geometry printed in the h2 block": {"value": floor, "pass": True},
+        "G5 baseline arm listed as distinct-behaviour classes": {"value": classes, "expected": sorted(BASELINE_CLASSES_EXPECTED),
+                                                                   "pass": set(classes) == BASELINE_CLASSES_EXPECTED},
+        "G6 unchanged: R-C3-1 PASS, f printed, executor ran every arm, null identical":
+            {"R-C3-1": p_mode <= 0.50, "f": f, "executor_ran_every_arm": executor_ran_every_arm,
+             "null_identical": all(v["identical"] for v in null.values()),
+             "pass": p_mode <= 0.50 and executor_ran_every_arm and all(v["identical"] for v in null.values())},
+    }
+    go_all = all(v["pass"] for v in go.values())
     return {
         "schema": "archaeon.c3_3.preflight.v0",
         "written": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
@@ -240,18 +421,28 @@ def preflight(n_random: int = PREFLIGHT_RANDOM, seed: int = 0) -> Dict[str, Any]
                     "note": "one generating distribution for every random table => true ratio 1.0; the observed spread at ~6 per region is F noise"},
         "gates_printed_before_any_gate": {
             "R-C3-1 p_mode <= 0.50": p_mode <= 0.50,
+            "corpus_option": CORPUS_OPTION,
             "corpus_random_tables": corpus,
+            "corpus_ceil_120_over_f_for_the_record": corpus_for_120,
             "expected_nondegenerate_per_region": expected_per_region,
-            "regions_with_>=8_nondegenerate_expected": regions_ge8,
-            "expected_neighbourhood_size": neighbourhood_ge16,
-            "neighbourhood_>=16": bool(neighbourhood_ge16 and neighbourhood_ge16 >= 16)},
+            "p_region_>=_{}_per_region".format(MIN_REGION_N): p_ge_k_per_region,
+            "p_every_region_>=_{}_at_corpus".format(MIN_REGION_N): p_all,
+            "p_every_region_>=_{}_at_120_for_the_record".format(MIN_REGION_N): p_all_at_120,
+            "expected_neighbourhood_per_region": neigh,
+            "neighbourhood_>=16_every_region": all(v >= MIN_NEIGHBOURHOOD for v in neigh.values()),
+            "superseded_2026-09-16": "regions_with_>=8_nondegenerate_expected was asserted as N_REGIONS whenever the mean >= 8 (Harmonia #255 s3); now computed above"},
+        "go_predicate": {"items": go, "GO": go_all, "ruling": "Harmonia #255 section 6 (be82cdd8b); mechanical, applied by Archaeon"},
         "h2_instrument": ("X1 variance-ratio test across descriptor regions (unit = region); D3 is a LEAD GENERATOR only"
                           if inside else "D3 band may discriminate; report both -- Harmonia rules"),
+        "h2_band_chance_floor": floor,
         "primaries": {"location": "per-rule mean of " + LOCATION_FIELD + " over the four IC samples",
                       "dispersion": "per-rule " + DISPERSION_FIELD + " (within-rule spread across ICs)",
                       "multiplicity": "Bonferroni across the two primaries",
-                      "constants": "structural BOUNDARY on the dispersion axis: sd_across_ics = 0.5 exactly (the ceiling for a "
-                                   "0/1 per-IC value), random ~0.10; a boundary comparison, labelled (Harmonia 3b says zero; direction filed)"},
+                      "constants": "EXCLUDED from the location primary (a constant's location is the IC sample's majority share p_s, "
+                                   "a property of the sample; all_zero + all_one == 1 exactly); on the dispersion primary a labelled "
+                                   "BOUNDARY comparison at the ceiling sqrt(p_s (1 - p_s)), within 1e-3 of 0.5 and never exactly 0.5 "
+                                   "unless p_s is; random ~0.10 (Harmonia #255 s4, superseding 3a/3b and the 2026-09-11 wording)",
+                      "baseline_arm": "three distinct-behaviour classes, never pooled as replicates (HARM-28 on functionally identical rules)"},
     }
 
 
@@ -297,10 +488,12 @@ def main(argv=None) -> int:
     _ws.assert_not_canonical("run a campaign CLI")               # D-23
     ap = argparse.ArgumentParser(prog="archaeon.producer.campaign_c3_3")
     ap.add_argument("--preflight", action="store_true"); ap.add_argument("--n-random", type=int, default=PREFLIGHT_RANDOM)
-    ap.add_argument("--out", default="archaeon/docs/h0h5/C3_3_PREFLIGHT.json")
+    ap.add_argument("--out", default="archaeon/docs/h0h5/C3_3_PREFLIGHT_B_2026-09-16.json")
+    ap.add_argument("--band-reps", type=int, default=BAND_FLOOR_REPS)
     a = ap.parse_args(argv)
     if a.preflight:
-        pf = preflight(a.n_random)
+        pf = preflight(a.n_random, band_reps=a.band_reps)
+        pf["workspace"] = _ws.receipt()
         corpus = pf["gates_printed_before_any_gate"]["corpus_random_tables"]
         rows = plan(corpus) if corpus else []
         pf["plan"] = {"rows": len(rows), "arms": {k: sum(1 for r in rows if r["arm_id"] == k) for k in ("C3-hist", "C3-base", "C3-null", "C3-acq")},
@@ -308,6 +501,7 @@ def main(argv=None) -> int:
         with open(a.out, "w", encoding="utf-8") as f:
             json.dump(pf, f, indent=1, sort_keys=True, default=str)
         print(json.dumps({"random": pf["random"], "gates": pf["gates_printed_before_any_gate"], "inside_band": pf["regions"]["expected_ratio_inside_band"],
+                          "GO": pf["go_predicate"]["GO"], "go_items": {k: v["pass"] for k, v in pf["go_predicate"]["items"].items()},
                           "null": pf["null_under_third_criterion"], "plan": pf["plan"]["arms"] if rows else None,
                           "ok_to_issue": pf["plan"]["check"]["ok_to_issue"] if rows else None}, default=str))
         return 0
