@@ -518,3 +518,27 @@
   modes, plus C's honest / skip_last / half_rent.
   No-rows smoke: equivalence 0 cell and 0 fit mismatches for both descriptors in both modes; cheats 0.0 / 0.789 / 1.0;
   30-gen walls 0.14-0.23 s -> 128 runs project ~230-300 s. Only mismatch counts and timings were read; no coverage.
+- D-R7-5 RECORD (job 3b714568cbd5 ok, 131 rows ACCEPTED 2991be550, 177.8 s wall, 24.5 CPU-s, 128 QD runs, token wait
+  0.1 s): decision GAP_VANISHES. I1 4/4; descriptor_equivalence exact for BOTH descriptors in BOTH modes (0 cell and 0
+  fit mismatches on 1024 genomes each); cheats 0.0 / 0.7891 / 1.0.
+  BINDING REPLICATION held: D's own seeded popcount baseline reproduces C's gap -- program 0.9371 vs bitset 0.7773,
+  gap +0.1598, min program 0.9128 > max bitset 0.8283 (separated). Under CONTRIBUTION halves the gap REVERSES:
+  program 0.16395 vs bitset 0.24105, gap -0.0771, not separated. Paired popcount-minus-contribution on the program arm
+  median +0.7741. Medians: popcount|program cells 1020.5 best_active 7, contribution|program cells 178.5 best_active 6,
+  popcount|bitset 846.5, contribution|bitset 262.5.
+  Reading: C-R2-02's coverage advantage is a DESCRIPTOR ARTIFACT -- ops 3/4 (set/clear 8 adjacent bits) sweep popcount
+  halves; under a descriptor they cannot shortcut the program arm does not lead. CAVEAT recorded: both arms cover far
+  less of the contribution grid (0.16-0.24 vs 0.78-0.94), so only within-descriptor comparisons were made.
+  Receipt filed; child ANOM-..8930 RESOLVED. C-R2-02's verdict not revisited (UNSEEDED sampler -> references only).
+- A's D-only note 1789517336358-0 (repeat anti-prior-arm PASS: C-R6-AP-01 prior 0.10 rank 39/48, C-R7-AP-02 prior 0.08
+  rank 46/48, both PASS; the calibration-arm draw C-R7-AP-01 was INDETERMINATE). D replied 1789517490105-0 with the
+  framing fixed before any read: the COUNT is not the finding (n = 2 cannot separate a well-aimed arm from an ordinary
+  draw; no hit rate, pm:prior:* never read), the answerable question is MECHANISM. Anomaly filed 1789517546515-0.
+- D-R7-6 code + test (r7_6_ap02_pressure_binding.py; 6 passed rc 0 after I fixed my own test arithmetic -- I wrote
+  "~0.063%" for 169144*6/(2e6*8), which is 6.3%; the module was correct). Zero QD over C's committed AP-02 rows from
+  ORIGIN: does the byte_charge pressure BIND ON THE READOUT'S OWN WINNER? charge_share = beta * functional_bytes /
+  (train_nk_per_landscape_top1 * 8), paired within (family, run seed) against the uncharged control's winner, 32 pairs.
+  PRESSURE_DID_NOT_BIND (s <= 0.01 and >= 24 pairs equal) / PRESSURE_BOUND (s >= 0.05 and >= 24 pairs smaller) / MIXED;
+  planted controls must read the two decisive labels. Same axis as R6's saturation answer, so the two arm PASSes are
+  comparable on one question. The metered channel's delivered share is reported (C's own AP-01 lesson: a meter that
+  delivers every tick cannot bind).
