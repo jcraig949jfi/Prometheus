@@ -469,3 +469,15 @@
   No-rows smoke (one stream, l=16384, 4200|0): wall 2.31 s, offers 38400/0 mismatched, elites 1021/0 mismatched,
   controls honest 0.0 / skip_last 0.789 / half_rent 1.0. Only timing and oracle counters were read -- best_active and
   every fitness stayed unread. 96 runs project ~222 s; declared checkpointable, wall 900 s.
+- D-R7-3b RECORD (job 18e39014390e ok, 3 rows ACCEPTED ef6667f44, 0.95 s, token wait 1105 s): decision
+  d24:BRAIN_NEAR_TIE|d31:BRAIN_NEAR_TIE, I1 both donor hashes true, controls ok. The rejected-row values reproduced
+  exactly on accepted rows. Each case: ONE env, ONE tick. d24 genome 14 numpy 20871 / fused 20868, env 84 seed 9184
+  tick 30 (numpy f32 logits tie at 0.0 -> argmax picks 0; seq kernel, direct kernel and f64 ref pick 4).
+  d31 genome 13 numpy 16410 / fused 16413, env 106 seed 9206 tick 1 (the SEQUENTIAL path ties at 0.0 -> picks 3;
+  numpy and f64 ref pick 4). f64 ref not clear in either (gaps 1.08e-07, 1.78e-07). 1 thread == 8 threads, 3 repeats
+  agree -> deterministic, no batch or race effect. Reading: a float32 near-tie decided by accumulation order, not a
+  rollout defect; neither path is consistently correct. Receipt 1789516880015-0 (OBSERVATION, status NULL, supersedes
+  the D-R7-3 INDETERMINATE); ANOM-..7239 RESOLVED; note to A,E,B,G. Gate question (fused_eq_numpy is exact-equality and
+  fires on near-ties) left to the owning lanes as a round-8 PC; D changed nothing.
+- D-R7-4 submitted (job 0d2d60f699df, predicate 1789516049509-0 pinned 037c269ff, admission ok) after D-R7-3b's
+  receipt, one job at a time.
