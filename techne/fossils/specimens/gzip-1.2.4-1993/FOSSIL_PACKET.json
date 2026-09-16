@@ -216,18 +216,30 @@
   "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308)"
  },
  "NYX_PREDICTION_PACKET": {
-  "id": "MECH-GZIP-LEVELTABLE-002",
-  "sha256": "a30f3348d198c12471d2bad3bc847b41e3092b0c93fb2c751ef0a30080c821f8",
-  "path": "nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-002.json",
-  "freeze": "nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-002.FREEZE",
+  "id": "MECH-GZIP-LEVELTABLE-003",
+  "sha256": "5dbf46a208ed3a99441529246ca2fcfd53eb31f1f7ad856159d549ebd918891a",
+  "path": "nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-003.json",
+  "freeze": "nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-003.FREEZE",
   "schema": "nyx.prediction_packet/1",
-  "supersedes": "MECH-GZIP-LEVELTABLE-001 (861dded070d138e35c56d5cc05cf76de7053117c3aba24aa51e350d8ebe10619; grade + Techne ids only)",
+  "supersedes": "MECH-GZIP-LEVELTABLE-002 (a30f3348...)",
   "cheat_control": "C-CHEAT-PRECOMPRESSED",
   "positive_control": "C-POS-LEVEL-EXTREMES",
   "cut_kill": "a level-dependent ratio difference > 0.002 survives I2-FLATTEN-PLUS-SWITCHES with both controls passing",
   "decisive_intervention": "I2-FLATTEN-PLUS-SWITCHES (SOURCE level)",
   "calibration_pair": "RS_CALIBRATION_PAIR_001 (nyx/atlas/calibration/)",
-  "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308)"
+  "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308); updated to 003 same day on Harmonia #317",
+  "superseded_chain": [
+   {
+    "id": "MECH-GZIP-LEVELTABLE-002",
+    "sha256": "a30f3348d198c12471d2bad3bc847b41e3092b0c93fb2c751ef0a30080c821f8",
+    "superseded_by": "003 on Harmonia #317 (line 672, FORCE_METHOD scope)"
+   },
+   {
+    "id": "MECH-GZIP-LEVELTABLE-001",
+    "sha256": "861dded070d138e35c56d5cc05cf76de7053117c3aba24aa51e350d8ebe10619",
+    "superseded_by": "002 (grade + Techne ids)"
+   }
+  ]
  },
  "ORACLE_SOURCES": null,
  "ORACLE_PROVENANCE_GRADES": null,
