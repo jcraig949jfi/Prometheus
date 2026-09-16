@@ -50,6 +50,7 @@ import time
 import numpy as np
 
 from primordial.cohorts.d import r7_6_ap02_pressure_binding as B6
+from primordial.cohorts.d import r7_8_c7_eligibility_swap as S8   # path-first source_text; B6's takes `root` first
 
 EXP = "D-R7-11-ap03-pressure-binding"
 PREDICATE_ID = EXP
@@ -96,7 +97,7 @@ def counts(pp) -> tuple[int, int]:
 
 def job(ctx, status: str = "record", exp: str = EXP, predicate_id: str = PREDICATE_ID):
     t0 = time.perf_counter()
-    text, provenance = B6.source_text(SRC_ROWS)
+    text, provenance = S8.source_text(SRC_ROWS)
     runs, ref, summ = load(text)
     pp = B6.pairs_of(runs)
     beta = float(ref.get("beta", summ.get("beta", 0)))

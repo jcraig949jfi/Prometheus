@@ -55,6 +55,35 @@ def test_cross_cell_table_carries_the_two_prior_cells():
     assert t["C-R7-AP-03"]["measured_here"] is True
 
 
+def test_loader_is_path_first_and_reads_the_committed_ap03_rows():
+    """D-R7-11 aborted because B6.source_text takes `root` first, not a path; S8.source_text is the path-first one."""
+    text, provenance = D.S8.source_text(D.SRC_ROWS)
+    assert "C-R7-AP-03" in text and provenance in (D.S8.INTEGRATION, "worktree")
+    runs, ref, summ = D.load(text)
+    assert len(runs) == 64 and float(ref.get("beta", summ.get("beta", 0))) > 0
+
+
+def test_job_runs_end_to_end_against_a_stub_ctx():
+    """The check that would have caught the abort: exercise job()'s real I/O path, not just its science functions."""
+    class Ctx:
+        def __init__(self):
+            self.rows = []
+
+        def emit(self, row):
+            self.rows.append(row)
+
+        def load_checkpoint(self):
+            return None
+
+    ctx = Ctx()
+    D.job(ctx, status="dev")
+    assert len(ctx.rows) == 1
+    s = ctx.rows[0]
+    assert s["kind"] == "summary" and s["status"] == "dev"
+    assert s["decision"] in ("PRESSURE_DID_NOT_BIND", "PRESSURE_BOUND", "MIXED", "INDETERMINATE")
+    assert s["runs_total"] == 32 and s["checks"]["controls_ok"] is True
+
+
 def test_emitted_status_is_writable_by_the_rowwriter():
     import inspect
     assert inspect.signature(D.job).parameters["status"].default in R.STATUSES

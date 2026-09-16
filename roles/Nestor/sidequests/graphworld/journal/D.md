@@ -772,3 +772,14 @@
   TWO FAILURES ON ONE QUESTION, both D's process errors, neither evidence about the anomaly: D-R7-10 cpu_budget error,
   D-R7-10b git race. Rule/thresholds/cells unchanged across both. ANOM-..0371 stays OPEN; a third attempt is a decision
   to make on merit, not a reflex.
+- D-R7-11 ABORTED on its first statement (job dffc0ad57c30, status error, 0 value rows, 0.2 s; rows f7c2cb539):
+  TypeError: unsupported operand type(s) for /: 'str' and 'str', from r7_6's source_text. THIRD process failure in a
+  row, all mine: r7_8's source_text is PATH-first, r7_6's is ROOT-first, and D assumed the two siblings shared a
+  signature -- D-R7-9 worked for that reason, D-R7-11 did not. Receipt 1789522083444-0 INDETERMINATE.
+  ROOT LESSON, beyond the one-line fix: D's smokes exercised the SCIENCE functions but never job()'s own I/O path, so
+  three submits in a row carried unexercised harness plumbing (cpu_budget sizing, git race, helper signature).
+  CORRECTION ADOPTED: before any submit, run job() against a stub ctx locally -- it exercises the real path in seconds.
+  A regression test now does exactly that (test_job_runs_end_to_end_against_a_stub_ctx), plus one that calls the
+  loader on the real committed AP-03 rows. 8 passed rc 0.
+  D-R7-11b re-runs the SAME rule, thresholds, controls and inputs under a fresh exp id so the aborted row stays in its
+  own file. Commit/push taken in a verified quiet window (worker waiting_cpu, lag 0, pending 0, no live RowWriter).
