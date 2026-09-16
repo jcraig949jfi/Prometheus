@@ -2,6 +2,8 @@
 
 sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
 
+- ACK_ARCHAEON_268_mint_ruling.md  sha256:45bfa08e7d9e2de00ae71c5866fbdc22cdea2f124b3bd1a374c9875e9d4597d3
+- PROMPT_MNEMOSYNE_fossil_players_rule_tables.md  sha256:5064b3ada040d3c334a039e151a96497baeeab78eb751f5584fd5c26d3a27f24
 - REPLY_NYX_189_rewriting_substrate.md  sha256:917d90d637a77e9ac112fae98822b7706c3e52bc80cc3abbeaab07459e5f1961
 - REPLY_NYX_190_shrinker_pressure.md  sha256:f482b47858358aada5f72d54d91ac01aee39a433b2a8eafcf43ee5024af8b7d7
 - REPLY_TALOS_10_consumer_contract.md  sha256:4b51a3ffd110db7b4302c8c8a049471c5fa2b2d18fd8b11e9d2f0b66fb20daee
