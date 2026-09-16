@@ -66,8 +66,8 @@ build commits land after this document is written.
 
 | allocation | duration |
 |---|---|
-| SCIENCE clock | 12 h, code-owned |
-| setup + teardown | 2 h |
+| SCIENCE clock | **~11 h 40 min** (nominal 12 h; see ruling R17) |
+| setup + teardown | 2 h (build 60 + gate 20, then drain/close/packet 60) |
 | iterative refinement | 1 h, interactive, closes before any result exists |
 | END-TO-END CAP | 15 h, hard |
 
@@ -75,8 +75,16 @@ Clock is CAP-ANCHORED (ADAPT-2):
 
     SCIENCE_END_TS = min(science_start + 12 h, T0 + 15 h - teardown_reserve),  teardown_reserve = 60 min
 
-Epochs: 12 x 3600 s. No conductor extension under any circumstance. A build or gate overrun consumes SCIENCE
-time automatically; it never consumes the teardown window and never moves the cap.
+**The science clock is ~11 h 40 min, not 12 h, and this is RULED AND ACCEPTED (R17).** Computed: build 60 +
+gate 20 + refine 60 = 2 h 20 m, so `science_start = T0 + 2h20m` and the cap binds first at `T0 + 14 h`,
+leaving 42,000 s = **11.67 epochs of 3600 s**. Build and gate are NOT compressed and verification is NOT
+weakened to recover the difference: twenty minutes of science is irrelevant against eleven-plus hours run
+behind a falsely green gate, and gate integrity is currently part of the experiment.
+
+Epochs: nominal 12 x 3600 s in the ROUNDS row, but **the launcher passes the ACTUAL epoch count computed from
+the remaining cap at start time** (`plan()` accepts `epochs` as an override). Taking the nominal 12 literally
+would run past the cap. No conductor extension under any circumstance. A build or gate overrun consumes
+SCIENCE time automatically; it never consumes the teardown window and never moves the cap.
 
 ## 5. SEEDS AND START VALUES (FROZEN BEFORE ANY OUTCOME)
 
@@ -188,10 +196,12 @@ Preconditions, each verified not assumed:
 3. Conductor worktree fast-forwarded; `git status --porcelain` empty.
 4. No worker processes alive (verified by pid scan, excluding the scanner's own ancestor chain -- the whole
    ancestor chain carries the pattern text, not just pid and ppid).
-5. **`ROUNDS["r8"]` EXISTS** (gate G8). Verify by computation, not by reading the file:
-   `RC.plan(t, round_id="r8")["epochs"] == 12`. Measured before the fix: an absent r8 row makes `plan()` fall
-   back to `DEFAULT_ROUND = "r7"` and silently return **8 epochs / 9.00 h**, raising nothing. A round started
-   in that state runs two thirds of the ruled science clock with another round's lane_repos.
+5. **`ROUNDS["r8"]` EXISTS and unknown round ids FAIL CLOSED** (gate G8, ruling R18). Verify by computation,
+   not by reading the file: `RC.plan(t, round_id="r8")["epochs"] == 12` (nominal), AND
+   `RC.plan(t, round_id="r9")` RAISES. Measured before the fix: an absent r8 row made `plan()` fall back to
+   `DEFAULT_ROUND = "r7"` and silently return **8 epochs / 9.00 h**, raising nothing -- a round started in that
+   state runs two thirds of the ruled science clock with another round's lane_repos. A warning is not
+   sufficient: a production campaign clock never infers its identity.
 6. **r8 worktrees prepared.** None exist yet; only `nestor-r7-*` and the `nestor-bld-*` set.
    `prepare_worktrees` defaults to `--round r2`, so r8 MUST pass it explicitly:
 

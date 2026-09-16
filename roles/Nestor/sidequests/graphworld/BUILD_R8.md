@@ -34,20 +34,39 @@ So the parallel-safe grouping is four independent tracks, not seven:
     TRACK-3  ops/            G8 -> G7 -> G4                  50 min
     TRACK-4  anti_prior.py   G2                              25 min
 
-**PHASE BUDGET OVERRUN, stated rather than hidden.** Build 60 + gate 20 + teardown 60 = 140 min against the
-operator's 2 h (120 min) setup/teardown allocation, with the refinement hour separate. Under the cap-anchored
-rule (ADAPT-2) that ~20 min comes out of SCIENCE automatically -- no conductor decision, no extension, and the
-round still ends inside the 15 h cap. Either build+gate compresses to ~60 min total, or the science clock is
-~11.7 h rather than 12. The conductor will not quietly reallocate; the operator should know which it is.
+**PHASE BUDGET: RULED (operator prompt 28).** Build 60 + gate 20 + teardown 60 = 140 min against a 120 min
+setup/teardown allocation. **The ~20 min comes out of SCIENCE. The science clock is approximately 11 h 40 min
+rather than 12 h, and this is ACCEPTED.**
+
+**Do NOT shorten, overlap or weaken gate verification to preserve a nominal 12.0 h clock.** Twenty minutes of
+science is almost irrelevant against the possibility of running eleven-plus hours behind a falsely green gate
+-- and gate integrity is currently part of the experiment, having just failed in exactly that way during
+launch prep (a shell quoting error silently deleted 2 of 12 checks and the gate still printed PASS).
+
+No cap extension follows from a build overrun. No hard gate is dropped to recover science time.
+**Gate output must report the NUMBER OF CHECKS ACTUALLY EXECUTED, not merely PASS/FAIL.**
 
 Four tracks at ~40 min worst case fits the 60 min window **only if four builders run concurrently and each
 owns its files exclusively**. Round 7 ran four builders (F, G, H, E) and its build took 52 minutes for a
 smaller list.
 
-**OPERATOR DECISION REQUIRED:** either (a) run four build tracks with strict file ownership as assigned below,
-accepting that G5's telemetry work is the likeliest item to overrun; or (b) accept that an overrun consumes
-science clock via the cap-anchored rule and let the gate map refuse whatever did not land. The conductor will
-not silently drop a gate to make the window fit.
+## R8 BUILD RULING (operator prompt 28) -- IN FORCE
+
+**Run the four build tracks CONCURRENTLY under the exclusive file ownership specified below. G8 is first
+priority on Track 3.**
+
+- **Builders may not cross ownership boundaries to rescue another track.** No conductor heroics, no
+  cross-track emergency editing, no "just make this one fix".
+- **Missing hard gates cause MACHINE REFUSAL of dependent work.** They are not waived, and they are not
+  repaired ad hoc after launch.
+- **The gate map is the FAIL-SAFE, not the build strategy.** Do not plan around it. Attempt the build.
+- **G** may prepare the frozen world-set machinery in its non-colliding files, but must not interfere with the
+  four tracks. **E's conditionals run only where they genuinely do not threaten the critical path.**
+- **Conditional work loses to the critical path**, always.
+
+Rationale, in the operator's terms: parallelism is safe when interfaces are shared but WRITABLE STATE is not.
+The tracks are drawn on file ownership rather than task size for that reason, and it is the architectural
+principle being adopted across the wider ecosystem -- not merely a scheduling convenience for this round.
 
 ---
 
@@ -85,6 +104,16 @@ This is the D18 shape exactly: a stale round definition producing confident, wro
            "drain_s": 1800.0, "close_s": 1800.0,          # SWARM_R8 s1, operator prompt 25
            "lane_repos": {...}}                            # see below
 
+**RECONCILE `epochs` WITH THE CAP -- do not leave this to inference.** Ruling R17 makes the science clock
+approximately 11 h 40 min, not 12 h, but `plan()` computes `nnw = start_ts + epochs*epoch_s` and knows nothing
+about the cap. Computed: build 60 + gate 20 + refine 60 = 2 h 20 m, so `science_start = T0 + 2h20m`, and
+`min(science_start + 12 h, T0 + 15 h - 60 min) = T0 + 14 h`, i.e. **42,000 s = 11.67 epochs of 3600 s**.
+
+Taking the row's `epochs: 12` literally would run the round PAST the cap. The row therefore holds the NOMINAL
+value, and **the launcher computes the actual epoch count from the remaining cap at start time and passes it
+explicitly** -- `plan()` already accepts `epochs` as an override. Acceptance: a test asserts that a launch at
+`T0 + 2h20m` yields an `end_ts` at or before `T0 + 14 h`, and that no epoch boundary falls after it.
+
 **`lane_repos` must be complete this time.** r7 declared only `B,C,D,E,G,R,gpu`; `A,F,H,P,Q` had none. Any
 lane running a WORKER from an undeclared repo is FOREIGN_REPO residue (D14). Round 8 adds build lanes P and Q,
 whose worktrees `nestor-bld-p` and `nestor-bld-q` already exist. Declare every lane that will run a worker --
@@ -96,8 +125,12 @@ including `gpu` if the arbiter starts at all.
 3. `residue.allowed_repos(r, "r8")` resolves from `ROUNDS["r8"]["lane_repos"]`, source string names r8.
 4. A test asserts every lane that will run a worker has a declared repo, so FOREIGN_REPO cannot fire on a
    legitimate lane.
-5. **Regression for the class:** `plan()` on an unknown round id is either an error or logs a loud warning --
-   a silent fallback to another round's parameters is the defect, not just the missing row.
+5. **UNKNOWN ROUND IDS FAIL CLOSED (operator prompt 28, ruling R18).** A warning is NOT sufficient.
+   `RC.plan(..., round_id="r9")` must RAISE/REFUSE until r9 is explicitly defined. A convenience fallback may
+   remain for DEVELOPMENT utilities, but **a production campaign clock never infers its identity.** Silently
+   substituting another round's clock and lane_repos is the defect; the missing row was only how it surfaced.
+   A test asserts that an undefined round id raises, and that `DEFAULT_ROUND` cannot supply a live round's
+   parameters.
 
 **Assigned:** Q (owns `primordial/ops/`; `round_clock.py` does not collide with `epoch.py`/`bus_export.py`).
 **Est:** 10 min. Build it FIRST -- gate numbering is historical, not priority.

@@ -73,6 +73,12 @@ Each of these cost real time or real work. They are not style preferences.
 If a gate did not land, its dependent work is refused at ZERO CPU for the whole round. That is a legitimate
 outcome, not a conductor decision, and it is recorded.
 
+**A MISSED GATE IS PERMANENT FOR THE ROUND (ruling R16).** It is not waived, and it is not repaired ad hoc
+after launch. No conductor heroics, no cross-track emergency editing, no "just make this one fix". Builders
+may not cross file-ownership boundaries to rescue another track. If your science is refused because a gate you
+depend on did not land, that refusal IS the result -- record it, file a WHY_NOT_RUN, and do not work around
+it. The gate map is the fail-safe, not a negotiation.
+
 | gate | if it did not land |
 |---|---|
 | G8 r8 ROUNDS row | the clock itself is wrong -- nothing runs |
