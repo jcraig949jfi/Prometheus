@@ -1,0 +1,130 @@
+REVIEW PACKET -- VIVARIUM, FIRST BOOT ON M2, 2026-09-16 (instance m2-fce3fe0b)
+================================================================================
+For an external reviewer with no repository access. Every number below is
+measured or counted unless marked (claimed). Built from ccb26df01 in
+D:\Prometheus-worktrees\vivarium-boot-2026-09-16; landed on main by fast-
+forward through 0041eba8e; every SHA quoted was verified an ancestor of
+origin/main after its push.
+
+1. WHAT THIS SEAT IS
+   Vivarium is the execution service between the seat that decides what to
+   run (Archaeon) and the records that say what was run (SFE ledger, PEW
+   fossils). It has no scientific opinion by construction. This packet is
+   about its INSTRUMENTS, not about any experiment.
+
+2. WHAT WAS FOUND (measured, canonical PostgreSQL on M1, UTC)
+   consumer vivarium@m1   last heartbeat 2026-09-14 23:53:44Z, pid 13460 gone
+   cause                  operator-ordered M1 reboot ~23:55Z (comms #262/#263)
+   detection              09-16 11:46Z by this seat booting: 35.9 h later;
+                          second unobserved death in three days
+   stranded               0 (the consumer was IDLE at the reboot)
+   queued                 5 Archaeon rows since 09-15 03:27Z; HELD
+   M1 SFE 8811 / PEW 8377 connect times out from M2; no shell to M1
+   M2 SFE 8811            live, engine eng_906356f7 (twin), NOT production
+   ruling (Daedalus #270; operator in chat): production is the LEDGER
+   eng_8a37a5d3 wherever it runs; it is carried to M2; both tokens are
+   copied as a file; no replacement identity is minted. Copies are the
+   operator's hand: from M2, \\192.168.1.202\F$ and D$ are access-denied.
+
+3. WHAT WAS BUILT (all with positive / negative / cheat controls; suite on
+   the merged tree at the last push: 640 passed, 42 skipped, 54.6 s; skips
+   are the live SFE/PEW tiers, no engine being reachable)
+
+   a6d1ba114  STORE IDENTITY GUARD. On M2 an unset VIV_DB_HOST resolved
+              db_host=localhost to the QUARANTINED fork (db_system_id
+              7681719240261676752); `viv.cli status` failed only because the
+              fork has no viv schema; `run` applies migrations at start and
+              would have created it and ticked green. viv.db.connect() now
+              proves the cluster (comms.identity); schema `viv` is pinned to
+              prometheus-canonical and no variable or config key can re-aim
+              it. 7 controls. Consequence found later (#294): Archaeon's
+              test conftest had been silently migrating throwaway schemas
+              onto the fork on every run; now refused; reported, not edited.
+   6d21bd5ef  THEO-REQ-004. A complete witness of exactly 64 entries was
+   a9f81c7d6  refused as "at its ceiling, undeclared"; the executor only
+              declared truncation when the bound bit. It now declares both
+              ways; neither the library's `>` nor the validator's rule moved.
+              success_mask_hex added in the library's encoding with a
+              wrapper-vs-classify parity refusal; pinned fixture 4f211943 ->
+              3655c564 with the arithmetic byte-identical. 12 controls.
+   6358acea9  THEO-REQ-006. {"count": k} ic_density_set entries (exact-count
+              ensemble); refused at the executor's entry with n_cells; the
+              exact-count block is asserted NOT to be the Bernoulli(k/N)
+              block under the same seed. 15 controls.
+   f249ae21c  C11b DEAD-MAN. A scheduler-fired one-shot reading the
+              heartbeat on the canonical store. BUSY-not-DEAD via the pid on
+              this host (C2's false-dead can never start a second consumer);
+              rule-9 engine-identity precondition (a twin that answers is
+              WRONG_ENGINE, measured live: it refused to relaunch twice);
+              rule-10 bound 3 -> park, self-disable, one comms report. 13
+              controls + 2 live probes. Registered on M2 DISABLED: enabling
+              it IS the launch.
+   f249ae21c  M2 DEPLOYMENT PREPARED, NOT LAUNCHED. prepare_m2.py: pinned
+   5c7c9a9e9  detached worktree at a SHA (advanced by an explicit, receipted
+              command only), launchers with sha256s, secrets PRESENCE by key
+              name (never a value), store/PEW/engine preconditions measured,
+              exit 0 only when all green. Receipts: store OK, PEW OK, engine
+              WRONG_ENGINE, secrets ABSENT -> not ready, by construction.
+   318d1e1bd  D2 / D2b. Payload VALUES are refused at ADMISSION through
+   3c2d79b9f  Kind.value_checker, the same function each executor calls at
+              its entry (asserted by identity: a spy replaces the registered
+              checker and each executor must hit that object). The
+              {"ic_density_set": null} shape that lost 24 rows in September
+              is refused by enqueue with no row and by loop stage 2 before
+              any world. 44 controls across the two.
+   2ca428f60  C2. The heartbeat advances DURING a row (own connection,
+              last_seen only; a pulse is never a productive tick; a failing
+              pulse stops itself and is reported on the next heartbeat).
+              7 controls incl. end-to-end through the tick.
+   660a8de1d  THEO-REQ-002. Kind.axes (mechanism/world/pressure/
+              intervention/budget/unclassified) on the contract; absent =
+              UNCLASSIFIED said aloud; no hash change (asserted). 6 controls.
+   cdb7d3850  THEO-REQ-005, Vivarium's half: nothing to build; asserted that
+              a derived rule runs unchanged and its provenance travels in
+              pew.players / pew.producer. 3 controls.
+
+4. WHAT IS NOT DONE, AND ON WHOM
+   - The consumer is not running anywhere. Blocked on: the M1 sfe data dir
+     landing on M2 (operator) -> Daedalus swap/restart (#270 steps 1-2) ->
+     Harmonia promotes the contract (#305: precheck passed, waits on the
+     ledger) -> the token file landing in the pinned worktree (operator).
+     A watch fires on both preconditions; the launch is then
+     prepare_m2.py green -> enable VivariumDeadmanM2.
+   - Every fix above is CODE_FIXED, not DEPLOYED: none reaches a row until
+     that launch. The pinned worktree is at 2ca428f60, which contains all
+     of them except REQ-002/REQ-005 (descriptive; nothing executes them).
+   - The five held rows execute on the first productive ticks; each will
+     carry the M2 build's conformance stamp.
+   - Not mine and open: 7 + 2 ledger orphans nobody can adjudicate (D7);
+     C1 (a status endpoint); logoff/reboot still kills an interactive task
+     (C11a; a stored-credential task is the operator's call).
+
+5. WHAT WOULD FALSIFY THIS PACKET
+   - a consumer on M2 that connects to the fork despite the guard: the pin
+     is by schema name; a production schema renamed away from `viv` would
+     escape it (known; the schema name is a constant nobody sets)
+   - the dead-man relaunching over a live row: it trusts `tasklist` on the
+     recorded pid; pid reuse by an unrelated python on this host within the
+     staleness window would read BUSY (safe direction) -- the unsafe
+     direction (a live consumer read DEAD) needs the pid to be gone
+   - a value checker that passes admission and fails execution: the
+     identity cheat covers the call, not the arguments; an executor that
+     mutates the payload before checking would diverge (none does today)
+   - the C2 pulse masking a hung executor: a hung row now looks alive to
+     `health`; the stall detector (viv.cli stalls) is the instrument for
+     that, unchanged
+
+6. CONFLICTS OF INTEREST
+   This seat measured its own consumer's death and built its own detector;
+   the two live probes were run by the same seat that wrote the detector.
+   An independent check: from any M2 shell, enable VivariumDeadmanM2 with
+   the engine still the twin and read var\deadman-vivarium@m2.state.json
+   after two ticks -- it must say WRONG_ENGINE, consecutive_failures 2-3,
+   and NOT have started a consumer (no vivarium@m2 heartbeat row).
+
+7. WHAT TO STOP
+   Nothing in this seat is worth stopping; the seat is idle by necessity
+   until the move. If the ledger move is not going to happen this week,
+   say so: the five held rows would then be Archaeon's to re-issue, and
+   ruling (b) -- a fresh ledger -- becomes the cheaper path. That is a
+   decision, not a recommendation; the recommendation stands at (a).
