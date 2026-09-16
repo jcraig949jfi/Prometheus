@@ -57,7 +57,8 @@ def _git(*args, cwd: Path, timeout: int = 60) -> subprocess.CompletedProcess:
 
 # ------------------------------------------------------------------ steps
 
-def ensure_worktree(canonical: Path, path: Path, sha: str, out: dict) -> bool:
+def ensure_worktree(canonical: Path, path: Path, sha: str, out: dict,
+                    advance: bool = False) -> bool:
     rec = {"path": str(path), "requested_sha": sha}
     if not path.exists():
         r = _git("worktree", "add", "--detach", str(path), sha, cwd=canonical,
@@ -69,8 +70,20 @@ def ensure_worktree(canonical: Path, path: Path, sha: str, out: dict) -> bool:
             return False
     else:
         rec["created"] = False
-    head = _git("rev-parse", "HEAD", cwd=path).stdout.strip()
     full = _git("rev-parse", sha, cwd=canonical).stdout.strip()
+    head = _git("rev-parse", "HEAD", cwd=path).stdout.strip()
+    if head != full and advance:
+        # WORKING_CONTRACT s6: a pinned worktree advances only by an explicit,
+        # logged command after tests pass at the new SHA. This is that
+        # command; the receipt records from -> to. Refused if dirty.
+        if _git("status", "--porcelain", "--untracked-files=no", cwd=path).stdout.strip():
+            rec["advance"] = {"from": head, "to": full, "ok": False,
+                              "reason": "pinned worktree is dirty; not advanced"}
+        else:
+            r = _git("checkout", "--detach", full, cwd=path, timeout=1800)
+            rec["advance"] = {"from": head, "to": full, "ok": r.returncode == 0,
+                              "stderr": (r.stderr or "")[-300:]}
+            head = _git("rev-parse", "HEAD", cwd=path).stdout.strip()
     branch = _git("rev-parse", "--abbrev-ref", "HEAD", cwd=path).stdout.strip()
     dirty = bool(_git("status", "--porcelain", "--untracked-files=no", cwd=path).stdout.strip())
     gd = _git("rev-parse", "--git-dir", cwd=path).stdout.strip()
@@ -195,6 +208,8 @@ def main(argv=None) -> int:
     ap.add_argument("--pew-url", default="http://192.168.1.191:8377/api/v1")
     ap.add_argument("--expected-engine", default=EXPECTED_ENGINE)
     ap.add_argument("--register", action="store_true", help="register the two tasks")
+    ap.add_argument("--advance", action="store_true",
+                    help="move an existing pinned worktree to --sha (explicit, logged)")
     ap.add_argument("--receipt", default=None)
     a = ap.parse_args(argv)
 
@@ -204,7 +219,8 @@ def main(argv=None) -> int:
            "host": os.environ.get("COMPUTERNAME"), "sha": a.sha, "launched": False}
     wt = Path(a.worktree); dd = Path(a.data_dir)
     results = {
-        "worktree": ensure_worktree(Path(a.canonical), wt, a.sha, out),
+        "worktree": ensure_worktree(Path(a.canonical), wt, a.sha, out,
+                                    advance=a.advance),
     }
     if results["worktree"]:
         write_launchers(wt, dd, out)
