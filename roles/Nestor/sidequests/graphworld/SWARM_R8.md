@@ -4,9 +4,25 @@ Adopted from operator prompt 24
 (`roles/Nestor/prompts/2026-09-14_graphworld_swarm/24_OPERATOR_R8_BOUNDARY_REPLICATION_INSTRUMENT_DISCIPLINE.md`,
 sha256 e3bfff54b10d45b6b406e36d1714a81e7ecac6a1ffe24ece85716c186453d5c8).
 
-Stage: PRODUCTION. Hard end-to-end cap: 9 hours. The active science clock is code-owned.
-No conductor extension. Conductor (A) is logistics only: A does not score, does not set or move a
-threshold, does not authorise compute, and does not fill idle lanes with invented work.
+Stage: PRODUCTION.
+
+**TIME BUDGET SUPERSEDED BY OPERATOR PROMPT 25** (sha256 in MANIFEST). Prompt 24's 9 h cap is replaced by:
+
+| allocation | duration | owner |
+|---|---|---|
+| SCIENCE clock | **12 h** | code-owned, no conductor extension |
+| setup + teardown | **2 h** | build + gate, then drain + close + packet |
+| iterative refinement | **1 h** | interactive with the operator, in the originating conversation |
+| **end-to-end cap** | **15 h** | hard |
+
+The active science clock is code-owned. No conductor extension. Conductor (A) is logistics only: A does not
+score, does not set or move a threshold, does not authorise compute, and does not fill idle lanes with
+invented work.
+
+**[ADAPT-12] The refinement hour is scoped, because an unscoped one violates P3.** It covers instruments,
+logistics and sizing only; it CLOSES before any scientific result exists; and it may never move a threshold,
+redefine success, or re-size an experiment because partial results look interesting. Design changes after
+data exist are not refinement, they are the failure mode P3 names.
 
 Everything below marked **[ADAPT-n]** is a conductor adaptation under the operator's "adapt as you see
 fit", with its reason stated. Adaptations that would change a SCIENTIFIC rule are not taken -- they are
@@ -49,14 +65,19 @@ build-phase deadlock (D18). Under a start-anchored clock any build or launch ove
 packet window or forces an extension, which section 21 prohibits. Under a cap-anchored clock an overrun
 automatically consumes SCIENCE clock, the round still ends on time, and no conductor judgement is involved.
 
+Formally: `SCIENCE_END_TS = min(science_start + 12 h, T0 + 15 h - teardown_reserve)` with
+`teardown_reserve = 60 min`. A build or gate overrun therefore consumes SCIENCE time automatically and the
+round still ends inside the cap, with no conductor decision and no extension.
+
 Targets (science clock shrinks if build/gate overrun; the cap does not move):
 
 | phase | target | notes |
 |---|---|---|
 | BUILD / hygiene | <= 60 min | see section 3 triage |
 | gate | <= 20 min | includes gate->blocked-work map |
-| active clock | <= 7 h, code-owned | epochs sized so the last boundary precedes drain |
-| drain + close + packet | <= 40 min | close is code-owned |
+| REFINE (interactive) | <= 60 min | ADAPT-12; closes before any result exists |
+| active clock | **12 h**, code-owned | 12 x 3600 s epochs; last boundary precedes drain |
+| drain + close + packet | <= 60 min | close is code-owned |
 
 ---
 
@@ -140,17 +161,24 @@ Structure per cell: 8 chunks x 4 runs + 1 assembly = 9 jobs, checkpointable, `wa
 
 ### 4.2 AGAINST ROUND-8 CAPACITY
 
-Round-8 total CPU capacity for a 7 h science clock:
+Round-8 total CPU capacity for the **12 h** science clock (43,200 s), per prompt 25:
 
-    at round 7's REALIZED sustained concurrency (7.25 threads):  182,700 CPU-s
-    at a perfect 16 threads:                                     403,200 CPU-s
+    at round 7's REALIZED sustained concurrency (7.25 threads):  313,200 CPU-s
+    at a perfect 16 threads:                                     691,200 CPU-s
 
-The four cells at plan estimate (288,743) are **158% of the realized-capacity budget** and 72% of the
-perfect-parallelism budget. At the measured scaling (195,610) they are still 107% of realized capacity.
+The four cells at plan estimate (288,743 CPU-s) are **92% of the realized-capacity budget** and 42% of the
+perfect-parallelism budget. At the measured scaling (195,610) they are 62% and 28%.
 
-**Conclusion (arithmetic, not preference): Route A for all four does not fit round 8 unless sustained
-concurrency roughly doubles.** This is reported as a finding, per operator section 0: establishing that a
-larger experiment is warranted is a valid result and is not authorisation to run it.
+Wall-clock for Route A on all four, if nothing else ran:
+
+    at 16 threads:    18,046 s = 5.01 h  (plan est) | 12,226 s = 3.40 h (measured scaling)
+    at 7.25 threads:  39,827 s = 11.06 h (plan est) | 26,981 s = 7.50 h (measured scaling)
+
+**Conclusion (arithmetic, not preference): under the 12 h clock Route A for all four is now POSSIBLE but
+not AFFORDABLE.** At round 7's realized concurrency it would consume 11.06 of the 12 science hours and leave
+nothing for sections 5-11. The Route-B-first ordering below is therefore retained for scheduling reasons
+rather than for impossibility. Establishing that a larger experiment is warranted remains a valid result and
+is not authorisation to run it (operator section 0).
 
 ### 4.3 ORDER OF OPERATIONS [ADAPT-4]
 
@@ -368,7 +396,42 @@ Scheduler engineering must not consume the science window.
 
 ---
 
-## 17. QUESTIONS REQUIRING OPERATOR RULING (before launch where marked)
+## 17. OPERATOR RULINGS (prompt 25) AND THE QUESTIONS THEY ANSWER
+
+Prompt 25: "Go with all recommendations you suggest. Allocate 12 hours of science. 2 hours of setup teardown
+and 1 hour of iterative refinement. This conversation."
+
+**RULINGS IN FORCE:**
+
+| # | ruling |
+|---|---|
+| R1 | GPU adoption bar is **">= 1.25x"** measured speedup over the best practical CPU path. |
+| R2 | **Route B first** for all four PENDING cells, then Route A in ascending cost behind the feasibility precommit (ADAPT-4, ADAPT-5). Sections 5-11 are preserved. |
+| R3 | **Cap-anchored clock APPROVED** (ADAPT-2), now against the 15 h cap with a 12 h science clock. |
+| R4 | **O-RESIDUE ADOPTED** at receipt time. `residue: NONE` is COUNTED in the close packet, NOT flagged for review -- flagging would invite lanes to write residue claims to avoid attention. |
+| R5 | Perturbation bands L1/L2/L3 are chosen by **CODE, from a frozen rule published before generation**. No hand-picked coordinates. |
+| R6 | **STILL OPEN** -- stratum sizes. The recommendation was "operator gives a number, or the conductor computes cost first". With R5 settled, A computes screening cost per world under the frozen rule and brings a number. A does not choose the sizes. |
+| R7 | The new world set is **frozen regardless** of how section 4 resolves; only screening is clock-gated (ADAPT-6). |
+| R8 | With no second host, the five-element instrumentation displacement is sufficient for a **CANDIDATE -> REPLICATED** step but **NOT for promotion**. Promotion waits for genuinely independent hardware. |
+| R9 | Telemetry overhead ceiling **5%**, measured, with the measurement itself reported (ADAPT-11). |
+| R10 | D26/D27 dropped for round 8 -- **BUT SEE THE CONDUCTOR'S RETRACTION BELOW.** |
+
+**[ADAPT-13] A RETRACTS ITS OWN D26/D27 RECOMMENDATION.** The advice to drop them was reasoned from a
+60-minute build window and a round whose product was verdicts. Under prompt 24's mission -- residue, failure
+gradients, WHY_NOT_RUN records, measured costs attached to everything -- both are mission-relevant:
+D26 is "attach the measured cost to the residue you left" (it blocked E from superseding a Clause B estimate
+with the measured 8.61 h actual) and D27 is "file a record deliberately rather than as a side-effect of a
+refusal" (it forced two hand-written stubs in round 7, and D27 is itself a candidate filed via the workaround
+it describes). A recommends promoting **D27** into the build as gate G6, and leaving D26 conditional.
+This requires an operator ruling because it reverses an approved recommendation; until ruled, R10 stands.
+
+**QUESTIONS AS ORIGINALLY PUT (retained as the record):**
+
+> NOTE: the figures inside Q2 below (a 182,700 CPU-s round budget, "158% of the round") were computed against
+> prompt 24's **7 h** science clock and are SUPERSEDED by prompt 25's 12 h clock -- see section 4.2 for the
+> current arithmetic (313,200 CPU-s realized-capacity budget; the four cells are 92% of it, not 158%). The
+> question text is preserved unedited because it is the record of what was asked and answered, not a live
+> statement of capacity.
 
 Q1 **[BEFORE LAUNCH]** Section 13 adoption bar reads "= 1.25x". Confirm ">= 1.25x measured speedup over the
    best practical CPU path"? The conductor will not interpret a threshold.
