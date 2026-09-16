@@ -1,0 +1,196 @@
+{
+  "schema": "techne.fossil.run_receipt/2",
+  "specimen_id": "lisp-1-5-ibm7090-1962",
+  "receipt_id": "run-lisp-1-5-ibm7090-1962-20260916T152519Z",
+  "written_utc": "20260916T152519Z",
+  "runner": "docker",
+  "image": "prometheus-fossil-ibm709x:bookworm",
+  "workdir": "upstream/tree",
+  "isolation": "disposable_copy",
+  "exec_root": "work",
+  "harness_sha256": {
+    "compare_listing.py": "33461feba71fca64f2b031da1a22387e43b2abb506de3eef0a0a01be1edac5cf",
+    "reference_errata.json": "27a5165240e873510c1d3dd2c7e58d746f75fe5edc509b062498164084617631",
+    "s709_boot.sh": "1086bd437feda50307a50ddc27525af4664721b92d0105ea38849c760e5c4e25"
+  },
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.4"
+  },
+  "environment": {
+    "interpreter": {
+      "implementation": "CPython",
+      "version": "3.14.4",
+      "executable_basename": "python.exe"
+    },
+    "pip_freeze_sha256": "f9f87e9e3ad66b01148d929fd03c82905030a460fd7a12dbae27ab7be70728df",
+    "pip_freeze_n": 145,
+    "env_vars_read": [
+      "TECHNE_FOSSIL_VAULT"
+    ],
+    "env_vars_exported_to_recipe": [
+      "BODY",
+      "HARNESS"
+    ]
+  },
+  "tree_sha256_before": "36e31960ceddb8666282b20ac7274dd16b722db2d3998fbaa111ee679883a076",
+  "recipe_sha256": "56148700df0e041ac3abf9b0fc4772d07ae5a7bfb306c8aa42cd6a8ffd4462f0",
+  "patches": [],
+  "probe": [
+    {
+      "name": "asm7090 2>&1 | head -1; s709 2>&1 | head",
+      "cmd": "asm7090 2>&1 | head -1; s709 2>&1 | head -1; cat /usr/local/share/ibm709x/README-s709-2.4.4.txt | head -2",
+      "exit": 0,
+      "seconds": 2.73,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "asm7090 - version 2.3.2\nIBM 7090 Simulator 2.4.4\nVersion: 2.4.4\nDate: 2025/05/20\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "build": [
+    {
+      "name": "cards-to-src",
+      "cmd": "make ASM7090=asm7090 lisp15.src >/dev/null && wc -l lisp15.src",
+      "exit": 0,
+      "seconds": 0.51,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "11114 lisp15.src\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    },
+    {
+      "name": "assemble",
+      "cmd": "asm7090 -c 7090 -a -f -p -w -x -d LISP15 -t 'BONNIE-S BIRTHDAY ASSEMBLY' -l lisp15.lst.new -o lisp15.out lisp15.src 2>&1 | tail -1; n=$(grep -c '^ERROR' lisp15.lst.new); echo \"assembler_errors=$n\"; test -s lisp15.out && test \"$n\" = 0 && echo ASSEMBLED_0_ERRORS && sha256sum lisp15.out",
+      "exit": 0,
+      "seconds": 0.62,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "assembler_errors=0\nASSEMBLED_0_ERRORS\nad5357fcf303dea0b47dc1b96918e4db8292c2b930e00041fab5f594d7ccc5c5  lisp15.out\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "name": "s709-boot-wang-job",
+      "cmd": "bash $HARNESS/s709_boot.sh",
+      "exit": 0,
+      "seconds": 0.37,
+      "ok": false,
+      "why_not": [
+        "stdout lacks 'JOB_PRODUCED_OUTPUT'"
+      ],
+      "stdout": {
+        "text": "IBM 7090 Simulator 2.4.4\nPC: 01002\nAC: +000000000000\npc_after_load=01002\nTAPE_LOADED_AND_TRANSFERRED\nprinter_lines=0\nNO_PRINTER_OUTPUT\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "tests": [
+    {
+      "name": "words-vs-reference-listing",
+      "cmd": "python3 $HARNESS/compare_listing.py lisp15.lst lisp15.lst.new",
+      "exit": 0,
+      "seconds": 0.44,
+      "ok": true,
+      "why_not": [],
+      "stdout": {
+        "text": "reference words=5793 generated words=5793 identical=5752 completed_ref_zero=38 agree_via_1962_errata=3 differ=0 only_in_reference=0 only_in_new=0 (duplicate locations ref=0 new=0)\nLISTING_WORDS_MATCH\n"
+      },
+      "stderr": {
+        "text": ""
+      }
+    }
+  ],
+  "produced": [
+    {
+      "path": "cmds.txt",
+      "sha256": "093a8ff1512c5f7eb8a384f603e17ea04dfce1c256e7aa499be70eb6c0302bb2",
+      "bytes": 14
+    },
+    {
+      "path": "io/pot.tape",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "io/ppt.tape",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "io/print.bcd",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "io/print.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "io/punch.bcd",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "io/tmp.tape",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "lisp15.lst.new",
+      "sha256": "ea4d347868fa202b5589fad08c885f046da3f995e1c061608813937861618dbf",
+      "bytes": 1430496
+    },
+    {
+      "path": "lisp15.out",
+      "sha256": "ad5357fcf303dea0b47dc1b96918e4db8292c2b930e00041fab5f594d7ccc5c5",
+      "bytes": 153900
+    },
+    {
+      "path": "lisp15.src",
+      "sha256": "856c1db77d8952f53b8b8df7ee23129e42403d6cdd7b265cf8445aa45e64ec0b",
+      "bytes": 900234
+    },
+    {
+      "path": "lisp15.tape",
+      "sha256": "de8e7d1e174b08710e2f0864764b368b034a72fd482024c7c905e3e199715be2",
+      "bytes": 56598
+    },
+    {
+      "path": "printlog.lst",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    {
+      "path": "s709.out",
+      "sha256": "87841b77d7464b1f4c8b425f3e0bb426389b4442efa9bdd3fea9191357bb997d",
+      "bytes": 53
+    },
+    {
+      "path": "wang.bcd",
+      "sha256": "e14aaa2dfff6323e1099002b1168ff0a3a800017daea7d31f545508eea0faa47",
+      "bytes": 8066
+    }
+  ],
+  "classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_PASS",
+  "ok": false,
+  "tree_sha256_after": "36e31960ceddb8666282b20ac7274dd16b722db2d3998fbaa111ee679883a076",
+  "body_preserved": true
+}

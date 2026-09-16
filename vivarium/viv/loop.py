@@ -33,6 +33,7 @@ from __future__ import annotations
 
 import os
 import socket
+import threading
 import time
 import traceback
 from dataclasses import asdict, dataclass, field
@@ -49,7 +50,7 @@ from . import selection as _selection
 from . import spec as _spec
 from . import vardir as _vardir
 from . import workspace as _workspace
-from .request import ExecutionRequest
+from .request import ClaimGrant, ExecutionRequest
 from .runner import ExecutionFailure, RunResult, SfeRunner
 
 __all__ = ["Vivarium", "TickReport", "Recovery", "default_worker_id",
@@ -115,6 +116,81 @@ class Recovery:
                              for r in self.stranded]}
 
 
+def _utcnow() -> str:
+    import datetime
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+class _RowPulse:
+    """C2 (backlog, opened 2026-09-10; closed 2026-09-16): a heartbeat DURING
+    a row, not only between stages.
+
+    The heartbeat fired only between stages, so a healthy consumer 190 s into
+    a normal 160-630 s row read `alive: false` to `viv.cli health`, to
+    Archaeon's liveness inference and to the MONITORS.md threshold -- a
+    working consumer indistinguishable from a dead one for the length of
+    every row (reproduced 2026-09-11; the dead-man's BUSY verdict was built
+    around it). This thread advances `last_seen` every `interval` seconds
+    while a row is claimed, on its OWN connection (the tick's connection is
+    mid-transaction), through queue.touch_heartbeat, which moves last_seen
+    and nothing else: not `build`, not `current_experiment`, not a counter.
+    A pulse is therefore never a productive tick (rule 10) and never clears
+    a current row.
+
+    Failure is contained and visible: a pulse that cannot connect or write
+    stops itself, records the error, and the row proceeds unaffected -- the
+    consequence of a dead pulse is exactly the pre-C2 observable (a stale
+    heartbeat during a long row), never a failed experiment.
+    """
+
+    def __init__(self, *, worker_id: str, pid: int, schema: str,
+                 interval_s: float, connect=None, log=None):
+        self.worker_id, self.pid, self.schema = worker_id, pid, schema
+        self.interval = max(0.2, float(interval_s))
+        self.connect = connect or _db.connect
+        self.log = log
+        self.pulses = 0
+        self.error: Optional[str] = None
+        self._stop = threading.Event()
+        self._thread: Optional[threading.Thread] = None
+
+    def _run(self):
+        conn = None
+        try:
+            conn = self.connect()
+            while not self._stop.wait(self.interval):
+                n = _q.touch_heartbeat(conn, self.worker_id, pid=self.pid,
+                                       schema=self.schema)
+                conn.commit()
+                if n == 0:
+                    self.error = "heartbeat row no longer owned by pid %d" % self.pid
+                    return
+                self.pulses += 1
+        except Exception as exc:                        # noqa: BLE001
+            self.error = "%s: %s" % (type(exc).__name__, str(exc)[:200])
+            if self.log:
+                self.log("[viv] row pulse stopped after %d pulse(s): %s"
+                         % (self.pulses, self.error))
+        finally:
+            if conn is not None:
+                try:
+                    conn.close()
+                except Exception:                       # noqa: BLE001
+                    pass
+
+    def __enter__(self):
+        self._thread = threading.Thread(target=self._run, daemon=True,
+                                        name="viv-pulse-%s" % self.worker_id)
+        self._thread.start()
+        return self
+
+    def __exit__(self, *exc):
+        self._stop.set()
+        if self._thread is not None:
+            self._thread.join(timeout=self.interval + 5.0)
+        return False
+
+
 class Vivarium:
     """The machine. `runner` and `pew_client` are injectable so every stage is
     testable without an engine or a fossil service."""
@@ -130,6 +206,9 @@ class Vivarium:
         #: become a way to run the real consumer ungated.
         self.conformance = conformance
         self.conformance_record: Optional[dict] = None
+        #: C2: what the last row's in-row pulse did (pulses, error), on the
+        #: heartbeat that follows the row so a stopped pulse is readable.
+        self.last_pulse: Optional[dict] = None
         # `config or load_config()` was a trap: {} is FALSY, so a caller
         # passing an EMPTY config -- the obvious way to say "no engine, do not
         # go anywhere" -- silently got the PRODUCTION configuration instead.
@@ -172,6 +251,10 @@ class Vivarium:
                 base_url=self.cfg["sfe_base_url"], cafile=cacert,
                 token=_identity.token_for(role),
                 client_id=_identity.client_id_for(role),
+                client_name=_identity._ROLES[role][2],
+                # D7: the loop always issues a grant, so requiring it costs
+                # the queue path nothing; it is the direct path it refuses.
+                require_grant=True,
                 # "0"/"false"/"" all mean NO. bool("0") is True, and a flag
                 # that disables certificate verification must not be armed by
                 # someone typing the word for off.
@@ -279,7 +362,11 @@ class Vivarium:
             conn.commit()
             self.log("[viv] stage=dispatch experiment_id=%s -> running sfe=%s"
                      % (eid, sfe_exp_id))
-        return self.runner().run(request, on_running=on_running)
+        # D7: the grant is issued HERE and only here -- for the row this tick
+        # claimed (eid), by this worker. The runner refuses without it.
+        grant = ClaimGrant(experiment_id=eid, worker_id=self.worker_id,
+                           claimed_at=_utcnow())
+        return self.runner().run(request, on_running=on_running, grant=grant)
 
     # =====================================================================
     # STAGE 5 -- COLLECT.  Assemble what was observed. Invent nothing.
@@ -547,9 +634,15 @@ class Vivarium:
         self.heartbeat(conn, current=eid)
         self.log("[viv] stage=claim experiment_id=%s spec=%s"
                  % (eid, row["spec_hash"][7:19]))
+        pulse = _RowPulse(worker_id=self.worker_id, pid=os.getpid(),
+                          schema=self.schema, log=self.log,
+                          interval_s=float(self.cfg.get("heartbeat_interval_s")
+                                           or 15.0))
         try:
-            return self._done(self._run_claimed(conn, row, eid, t0), conn)
+            with pulse:                                   # C2
+                return self._done(self._run_claimed(conn, row, eid, t0), conn)
         finally:
+            self.last_pulse = {"pulses": pulse.pulses, "error": pulse.error}
             self.heartbeat(conn, current=None)
 
     def _run_claimed(self, conn, row, eid, t0) -> TickReport:
@@ -724,7 +817,8 @@ class Vivarium:
                  "code": self.code,
                  "instance": self.instance,
                  "var_dir": self.var_dir,
-                 "started_at": self.started_at}
+                 "started_at": self.started_at,
+                 "last_pulse": self.last_pulse}
         if extra:
             build.update(extra)
         _q.heartbeat(conn, self.worker_id, host=socket.gethostname(),

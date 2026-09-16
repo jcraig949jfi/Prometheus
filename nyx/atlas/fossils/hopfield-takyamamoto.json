@@ -141,8 +141,34 @@
    "network.py (all)",
    "train.py, train_mnist.py (skimmed)"
   ],
-  "date": "2026-09-16T12:22Z",
-  "note": "four mechanisms in sixty lines; the interesting anatomy is the stopping rule (energy unchanged after a sweep) and the mean-subtracted Hebb rule, both of which the human name 'Hopfield network' does not mention"
+  "date": "2026-09-16T17:17Z",
+  "note": "four mechanisms in sixty lines; the interesting anatomy is the stopping rule (energy unchanged after a sweep) and the mean-subtracted Hebb rule, both of which the human name 'Hopfield network' does not mention",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/takyamamoto/Hopfield-Network@18655d51765720315f02543a9c2dd3d3f5042f2c",
+   "payload_manifest_id": "techne tree_sha256 52d091ff7e6e6f5d96b7edd674bf6900a5c027323d1fe194e48f7373df11abc2 (10 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/network.py",
+     "payload_hash_read": "e5b2f8894f9f633598486dbf1c088d84cf25bbcf4be43052c2744a6846cf4f99",
+     "techne_recorded_hash": "e5b2f8894f9f633598486dbf1c088d84cf25bbcf4be43052c2744a6846cf4f99",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": [
+    "vault:hopfield-takyamamoto/upstream/tree/network.py:train_weights",
+    "vault:hopfield-takyamamoto/upstream/tree/network.py:_run synchronous branch",
+    "vault:hopfield-takyamamoto/upstream/tree/network.py:_run asynchronous branch",
+    "vault:hopfield-takyamamoto/upstream/tree/network.py:energy and the e == e_new tests"
+   ]
+  }
  },
  "organs": [
   {
@@ -740,6 +766,13 @@
   }
  ],
  "ancestry_edges": [
+  {
+   "from": "hopfield-takyamamoto",
+   "relation": "algorithm_from",
+   "to": "Hopfield 1982 (with a mean-subtraction variant of the Hebb rule)",
+   "note": "from the code; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
   {
    "from": "hopfield-takyamamoto",
    "relation": "algorithm_from",

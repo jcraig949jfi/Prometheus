@@ -1,9 +1,9 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-16T12:35Z",
- "n": 130,
+ "built": "2026-09-16T17:26Z",
+ "n": 131,
  "by_relation": {
-  "algorithm_from": 41,
+  "algorithm_from": 42,
   "derived_from": 7,
   "shares_ancestor_with": 42,
   "historical_version_of": 8,
@@ -195,6 +195,13 @@
   },
   {
    "from": "eliza-anthay-1966",
+   "relation": "reimplementation_of",
+   "to": "Weizenbaum's MAD-SLIP ELIZA (1966), from the source recovered in 2021 (the reconstructor's README, not read here)",
+   "note": "human prior",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "eliza-anthay-1966",
    "relation": "algorithm_from",
    "to": "Weizenbaum 1966 (keyword decomposition/reassembly)",
    "note": "first conversational-AI fossil; a pre-1970 program recovered via a faithful reconstruction, not the original MAD-SLIP binary (which runs only under CTSS emulation)",
@@ -206,13 +213,6 @@
    "to": "gnu-apl-2.0",
    "note": "both are interpreters of a small formal notation, but ELIZA transforms text by rules and APL evaluates array expressions -- Techne records the shared machinery domain, not equivalence",
    "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "eliza-anthay-1966",
-   "relation": "reimplementation_of",
-   "to": "Weizenbaum's MAD-SLIP ELIZA (1966), from the source recovered in 2021 (the reconstructor's README, not read here)",
-   "note": "human prior",
-   "basis": "SOURCE_READ"
   },
   {
    "from": "eliza-weizenbaum-mad-slip-1965",
@@ -251,17 +251,17 @@
   },
   {
    "from": "erfa-2.0.1",
-   "relation": "derived_from",
-   "to": "IAU SOFA (Wallace et al.)",
-   "note": "relicensed derivative",
-   "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "erfa-2.0.1",
    "relation": "forked_from",
    "to": "IAU SOFA (the code's own headers)",
    "note": "not re-read from the record",
    "basis": "SOURCE_READ"
+  },
+  {
+   "from": "erfa-2.0.1",
+   "relation": "derived_from",
+   "to": "IAU SOFA (Wallace et al.)",
+   "note": "relicensed derivative",
+   "basis": "TECHNE_RECORD"
   },
   {
    "from": "ff-planner-2.3",
@@ -316,6 +316,13 @@
    "from": "gzip-1.2.4-1993",
    "relation": "superseded",
    "to": "ncompress-5.0-lzw-1985",
+   "note": "Techne records this edge with direction 'gzip displaced compress'; the atlas keeps it as recorded",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "gzip-1.2.4-1993",
+   "relation": "superseded",
+   "to": "ncompress-5.0-lzw-1985",
    "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress)",
    "basis": "TECHNE_RECORD"
   },
@@ -327,10 +334,10 @@
    "basis": "TECHNE_RECORD"
   },
   {
-   "from": "gzip-1.2.4-1993",
-   "relation": "superseded",
-   "to": "ncompress-5.0-lzw-1985",
-   "note": "Techne records this edge with direction 'gzip displaced compress'; the atlas keeps it as recorded",
+   "from": "hashicorp-memberlist-0.5.4",
+   "relation": "algorithm_from",
+   "to": "SWIM (Das, Gupta, Motivala 2002) + Lifeguard (Dadgar, Phillips, Currey 2018) -- named in the package's README, not re-read",
+   "note": "human prior",
    "basis": "SOURCE_READ"
   },
   {
@@ -348,10 +355,10 @@
    "basis": "TECHNE_RECORD"
   },
   {
-   "from": "hashicorp-memberlist-0.5.4",
+   "from": "hopfield-takyamamoto",
    "relation": "algorithm_from",
-   "to": "SWIM (Das, Gupta, Motivala 2002) + Lifeguard (Dadgar, Phillips, Currey 2018) -- named in the package's README, not re-read",
-   "note": "human prior",
+   "to": "Hopfield 1982 (with a mean-subtraction variant of the Hebb rule)",
+   "note": "from the code; the record's lineage not re-read",
    "basis": "SOURCE_READ"
   },
   {
@@ -405,6 +412,13 @@
   },
   {
    "from": "leveldb-1.23",
+   "relation": "superseded",
+   "to": "RocksDB (Facebook fork 2012)",
+   "note": "Techne's edge with its note",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "leveldb-1.23",
    "relation": "algorithm_from",
    "to": "O'Neil et al. 1996 LSM-tree",
    "note": "",
@@ -416,13 +430,6 @@
    "to": "RocksDB (Facebook fork 2012)",
    "note": "human history: the fork became the mainstream LSM engine; LevelDB continues",
    "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "leveldb-1.23",
-   "relation": "superseded",
-   "to": "RocksDB (Facebook fork 2012)",
-   "note": "Techne's edge with its note",
-   "basis": "SOURCE_READ"
   },
   {
    "from": "libcorrect-quiet",
@@ -482,20 +489,6 @@
   },
   {
    "from": "linux-tcp-congestion",
-   "relation": "superseded",
-   "to": "TCP Reno/NewReno",
-   "note": "CUBIC replaced Reno-family as Linux default",
-   "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "linux-tcp-congestion",
-   "relation": "algorithm_from",
-   "to": "Jacobson 1988",
-   "note": "the congestion-avoidance lineage all descend from",
-   "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "linux-tcp-congestion",
    "relation": "rival_of",
    "to": "linux-tcp-congestion",
    "note": "INTRA-RECORD: bbr.* rival_of cubic.* (both live Linux modules; the record packs them as before/after)",
@@ -509,6 +502,20 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "linux-tcp-congestion",
+   "relation": "superseded",
+   "to": "TCP Reno/NewReno",
+   "note": "CUBIC replaced Reno-family as Linux default",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linux-tcp-congestion",
+   "relation": "algorithm_from",
+   "to": "Jacobson 1988",
+   "note": "the congestion-avoidance lineage all descend from",
+   "basis": "TECHNE_RECORD"
+  },
+  {
    "from": "lisp-1-5-ibm7090-1962",
    "relation": "shares_ancestor_with",
    "to": "femtolisp",
@@ -517,17 +524,17 @@
   },
   {
    "from": "lmdb-0.9.31",
-   "relation": "shares_ancestor_with",
-   "to": "leveldb-1.23",
-   "note": "rival designs for the same problem: copy-on-write B+tree vs log-structured merge",
-   "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "lmdb-0.9.31",
    "relation": "algorithm_from",
    "to": "shadow paging (Lorie 1977) and append-only B-trees (the code's own doc references not read)",
    "note": "human prior, not from the body",
    "basis": "SOURCE_READ"
+  },
+  {
+   "from": "lmdb-0.9.31",
+   "relation": "shares_ancestor_with",
+   "to": "leveldb-1.23",
+   "note": "rival designs for the same problem: copy-on-write B+tree vs log-structured merge",
+   "basis": "TECHNE_RECORD"
   },
   {
    "from": "md5-rfc1321",
@@ -552,6 +559,13 @@
   },
   {
    "from": "minisat-1.14-2006",
+   "relation": "successor_of",
+   "to": "zchaff-2007",
+   "note": "Techne records the superseded edge on both records; the algorithms (two watched literals, 1UIP, activity) are Chaff's, the representation (activity heap, inline binaries, decay-by-inc) is MiniSat's",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "minisat-1.14-2006",
    "relation": "historical_version_of",
    "to": "minisat-2.2.0",
    "note": "1.14 (2006) -> 2.2.0 (2010)",
@@ -563,13 +577,6 @@
    "to": "zchaff-2007",
    "note": "direction: MiniSat superseded zChaff (recorded on both records)",
    "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "minisat-1.14-2006",
-   "relation": "successor_of",
-   "to": "zchaff-2007",
-   "note": "Techne records the superseded edge on both records; the algorithms (two watched literals, 1UIP, activity) are Chaff's, the representation (activity heap, inline binaries, decay-by-inc) is MiniSat's",
-   "basis": "SOURCE_READ"
   },
   {
    "from": "minisom",
@@ -734,17 +741,17 @@
   },
   {
    "from": "reed-solomon-rockliff-1991",
-   "relation": "shares_ancestor_with",
-   "to": "ldpc-codes-neal-2001",
-   "note": "both error-correcting codes; algebraic block code vs sparse-graph code",
-   "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "reed-solomon-rockliff-1991",
    "relation": "predecessor_of",
    "to": "libfec-karn",
    "note": "Karn's decode_rs.h / encode_rs.h / init_rs.h keep Rockliff's variable names (alpha_to, index_of, genpoly, the Lin and Costello table) and add erasures, parametrisation and Horner syndromes; asserted from reading both bodies, not from Techne's record",
    "basis": "SOURCE_READ"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991",
+   "relation": "shares_ancestor_with",
+   "to": "ldpc-codes-neal-2001",
+   "note": "both error-correcting codes; algebraic block code vs sparse-graph code",
+   "basis": "TECHNE_RECORD"
   },
   {
    "from": "souffle-2.4.1",
@@ -784,22 +791,15 @@
   {
    "from": "ssw-smith-waterman",
    "relation": "algorithm_from",
-   "to": "Smith-Waterman 1981; Farrar 2007 (striped SIMD)",
-   "note": "first bioinformatics fossil; the global/local DP pair (EMBOSS needle/water or seq-align) is a later add -- its build needs submodules/heavy autotools, deferred honestly",
-   "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "ssw-smith-waterman",
-   "relation": "algorithm_from",
    "to": "Smith & Waterman 1981; Farrar 2007 (striped); SWPS3 (the lazy-F fix, named in the comment at 281)",
    "note": "from the code's comments",
    "basis": "SOURCE_READ"
   },
   {
-   "from": "tiny-aes-c",
-   "relation": "superseded",
-   "to": "des-reference",
-   "note": "AES replaced DES as the US standard",
+   "from": "ssw-smith-waterman",
+   "relation": "algorithm_from",
+   "to": "Smith-Waterman 1981; Farrar 2007 (striped SIMD)",
+   "note": "first bioinformatics fossil; the global/local DP pair (EMBOSS needle/water or seq-align) is a later add -- its build needs submodules/heavy autotools, deferred honestly",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -808,6 +808,13 @@
    "to": "des-reference",
    "note": "Techne records 'AES replaced DES as the US standard' on both records (direction fixed by the note)",
    "basis": "SOURCE_READ"
+  },
+  {
+   "from": "tiny-aes-c",
+   "relation": "superseded",
+   "to": "des-reference",
+   "note": "AES replaced DES as the US standard",
+   "basis": "TECHNE_RECORD"
   },
   {
    "from": "tinycc",

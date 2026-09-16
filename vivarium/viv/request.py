@@ -38,6 +38,40 @@ class SpecIntegrityError(RuntimeError):
 
 
 @dataclass(frozen=True)
+class ClaimGrant:
+    """D7 (backlog, opened 2026-09-10; closed 2026-09-16): the proof that an
+    execution is happening ON A CLAIMED ROW.
+
+    Seven ledger commits from 2026-09-06 (and two from a test on 09-11)
+    carry this seat's derived world name and match no register row: a run
+    entered through a direct call instead of the queue, so an experiment
+    exists that nobody -- not Daedalus, not this seat -- can ever adjudicate.
+    Worse than a lost row: a lost row at least leaves a row.
+
+    A grant is issued in exactly one place, the loop, immediately after
+    `claim` succeeds, and names the row and the worker that claimed it. The
+    runner, when it runs as the PRODUCTION client, refuses to create a world
+    without a grant for the request in hand. A one-off that legitimately
+    bypasses the queue runs as the marked `vivarium-test` identity, whose
+    worlds are distinguishable in the ledger, and says so at construction
+    (SfeRunner(require_grant=False), refused for the production client).
+
+    Carries NO provenance: experiment_id and worker_id are already on the
+    request and the runner; nothing crosses the blinding boundary that did
+    not cross before. This is a capability, not a secret -- the property
+    is that the SUPPORTED path cannot commit an unregistered world by
+    drift, the same standard tests/test_blinding.py holds provenance to.
+    """
+    experiment_id: str
+    worker_id: str
+    claimed_at: str
+
+    def covers(self, request: "ExecutionRequest", worker_id: str) -> bool:
+        return (self.experiment_id == request.experiment_id
+                and self.worker_id == worker_id)
+
+
+@dataclass(frozen=True)
 class ExecutionRequest:
     experiment_id: str
     spec_json: bytes

@@ -142,7 +142,28 @@
    "function anchors: sqlite3PagerCommitPhaseOne 63767, sqlite3WalFrames 69364, walCheckpoint 67320, balance_nonroot 78941, sqlite3VdbeExec 94350 (188 OP_ cases)"
   ],
   "date": "2026-09-16T12:29Z",
-  "note": "a layered engine whose layers are the atlas organs at this grain: tokenizer+parser -> code generator -> planner -> bytecode VM -> b-tree -> pager/wal -> VFS; the cut is confident about the layer boundaries (they are the amalgamation's own file boundaries) and says nothing about the inside of any layer except the planner's beam search"
+  "note": "a layered engine whose layers are the atlas organs at this grain: tokenizer+parser -> code generator -> planner -> bytecode VM -> b-tree -> pager/wal -> VFS; the cut is confident about the layer boundaries (they are the amalgamation's own file boundaries) and says nothing about the inside of any layer except the planner's beam search",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://sqlite.org/2025/sqlite-amalgamation-3490100.zip sha256:6cebd1d8403fc58c30e93939b246f3e6e58d0765a5cd50546f16c00fd805d2c3",
+   "payload_manifest_id": "techne tree_sha256 5028c95217712699af046f2ea520fc4173bf17191a0c45789191bcd69656a0eb (5 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/sqlite-amalgamation-3490100/sqlite3.c",
+     "payload_hash_read": "ff80c36ef1bb44eb357c7ff1d15be77540d41c28fb671088215a6cd12785c5d3",
+     "techne_recorded_hash": "ff80c36ef1bb44eb357c7ff1d15be77540d41c28fb671088215a6cd12785c5d3",
+     "match": true,
+     "refs": 8
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {

@@ -1,7 +1,7 @@
 {
   "artifact": "LUDUS-03 qualification-instrument controls",
-  "ts_utc": "2026-09-16T11:57:16+00:00",
-  "base_sha": "ccb26df01c9d637a0ebac0ef3612a4e116d507b7",
+  "ts_utc": "2026-09-16T12:46:11+00:00",
+  "base_sha": "755d8a8dd05ef315e1517baa1ada08126b48bc90",
   "branch": "ludus/boot-2026-09-16",
   "worktree_path": "D:\\Prometheus-worktrees\\ludus-boot-2026-09-16",
   "dirty": true,
@@ -198,12 +198,12 @@
       "expected": "verified_internally=True",
       "observed": true,
       "instrument_behaved_as_expected": true,
-      "note": "n_states=8555"
+      "note": "n_states=14653"
     },
     {
       "instrument": "bench_verify",
       "kind": "cheat",
-      "fixture": "MARTIAN_DICE pot+1 at (11, 1, 0, 0, 0)",
+      "fixture": "MARTIAN_DICE pot+1 at (11, 1, 0, 0, 0, 0)",
       "injected": "one pot value off by 1",
       "expected": "FAIL via per_world",
       "observed": {
@@ -242,7 +242,7 @@
     {
       "instrument": "bench_verify",
       "kind": "cheat",
-      "fixture": "MARTIAN_DICE cycle via (0, 0, 0, 1, 0)",
+      "fixture": "MARTIAN_DICE cycle via (0, 0, 0, 1, 0, 0)",
       "injected": "an option of a successor points back at the initial state",
       "expected": "FAIL via acyclic",
       "observed": {
@@ -260,8 +260,8 @@
       "expected": "verified_internally=True (instrument blind to the draw law)",
       "observed": {
         "verified": true,
-        "n_states": 8555,
-        "n_states_committed": 8555
+        "n_states": 14653,
+        "n_states_committed": 14653
       },
       "instrument_behaved_as_expected": true,
       "note": "MISSED by construction: VERIFIED means internally consistent, never faithful (verify.py docstring). Only W3 (LUDUS-01) can see this."

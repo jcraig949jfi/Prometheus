@@ -62,6 +62,32 @@ class WalkState:
         return {"position": self.position, "repeats": self.repeats}
 
 
+def random_walk_problems(payload: dict) -> list:
+    """D2b value checker for random_walk_v0 (registry + executor entry)."""
+    r = []
+    steps, scale = payload.get("steps"), payload.get("step_scale")
+    if not isinstance(steps, int) or isinstance(steps, bool) or steps < 1:
+        r.append("steps must be a positive integer, got %r" % (steps,))
+    if not isinstance(scale, (int, float)) or isinstance(scale, bool):
+        r.append("step_scale must be a number, got %r" % (scale,))
+    return r
+
+
+def evaluate_bitstring_problems(payload: dict) -> list:
+    """D2b value checker for evaluate_bitstring (registry + executor entry)."""
+    r = []
+    length, bits = payload.get("length"), payload.get("bits")
+    if not isinstance(length, int) or isinstance(length, bool) or length <= 0:
+        r.append("length must be a positive integer, got %r" % (length,))
+    if not isinstance(bits, str) or any(c not in "01" for c in bits):
+        r.append("bits must be a string of '0'/'1', got %r" % (bits,))
+    elif isinstance(length, int) and not isinstance(length, bool) \
+            and length > 0 and len(bits) != length:
+        r.append("bits has %d characters but length declares %d"
+                 % (len(bits), length))
+    return r
+
+
 def _random_walk_v0(spec: dict, *, seed: int, state) -> dict:
     """A deterministic 1-D walk. `steps` increments from the derived seed.
 
@@ -72,13 +98,10 @@ def _random_walk_v0(spec: dict, *, seed: int, state) -> dict:
     exists; it makes no claim about anything."""
     import random as _random
     p = _params("random_walk_v0", spec)
+    problems = random_walk_problems(p)                # D2b: same refusals
+    if problems:
+        raise ExecutorUnavailable("; ".join(problems))
     steps, scale = p["steps"], p["step_scale"]
-    if not isinstance(steps, int) or isinstance(steps, bool) or steps < 1:
-        raise ExecutorUnavailable("steps must be a positive integer, got %r"
-                                  % (steps,))
-    if not isinstance(scale, (int, float)) or isinstance(scale, bool):
-        raise ExecutorUnavailable("step_scale must be a number, got %r"
-                                  % (scale,))
     if state is None:
         state = WalkState()
     start = state.position
@@ -113,10 +136,10 @@ def _evaluate_bitstring(spec: dict, *, seed: int) -> dict:
             "reimplementation: %s" % exc) from exc
     p = _params("evaluate_bitstring", spec)
     seed_root = seed          # the REPEAT's derived seed, not the world's
+    problems = evaluate_bitstring_problems(p)         # D2b: same refusals
+    if problems:
+        raise ExecutorUnavailable("; ".join(problems))
     length = p["length"]
-    if not isinstance(length, int) or isinstance(length, bool) or length <= 0:
-        raise ExecutorUnavailable("length must be a positive integer, got %r"
-                                  % (length,))
     ex = BitStringExecutor(length=length)
     wp = WorkPackage(work_id="viv", world_id="viv", kind=ex.kind,
                      payload={"bits": p["bits"]}, seed_root=seed_root)

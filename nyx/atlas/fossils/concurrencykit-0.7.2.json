@@ -159,7 +159,70 @@
    "header list"
   ],
   "date": "2026-09-16T12:22Z",
-  "note": "every primitive is built from three atomic operations (load/store with fences, fetch-and-add, compare-and-swap) plus a stall; the anatomy is in HOW waiting is organised (where each waiter spins) and HOW freed memory waits for readers"
+  "note": "every primitive is built from three atomic operations (load/store with fences, fetch-and-add, compare-and-swap) plus a stall; the anatomy is in HOW waiting is organised (where each waiter spins) and HOW freed memory waits for readers",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/concurrencykit/ck/archive/refs/tags/0.7.2.tar.gz sha256:568ebe0bc1988a23843fce6426602e555b7840bf6714edcdf0ed530214977f1b",
+   "payload_manifest_id": "techne tree_sha256 594921ff1c45e0f8e122f1c0e0fc0b7a963f70f59c9524b491842e1db027de52 (504 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/ck-0.7.2/include/ck_backoff.h",
+     "payload_hash_read": "675cff922473a1ebe76c1d40fafc227634962c684ba493ef1d23ce9e57acbef8",
+     "techne_recorded_hash": "675cff922473a1ebe76c1d40fafc227634962c684ba493ef1d23ce9e57acbef8",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/ck-0.7.2/include/spinlock/ticket.h",
+     "payload_hash_read": "5bb30ee71e7bfb8c7aa8c628ba634d711270cded33e6f46d99ca807004733223",
+     "techne_recorded_hash": "5bb30ee71e7bfb8c7aa8c628ba634d711270cded33e6f46d99ca807004733223",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/ck-0.7.2/include/spinlock/mcs.h",
+     "payload_hash_read": "1a34ed6f466b3a59c5f61566db1002b7dcfa2799934b17dcbf4e81639db76bee",
+     "techne_recorded_hash": "1a34ed6f466b3a59c5f61566db1002b7dcfa2799934b17dcbf4e81639db76bee",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/ck-0.7.2/src/ck_epoch.c",
+     "payload_hash_read": "1f03be069f5c114495a346aecffa28b6363bdd399495d71e932f7a3a6178a455",
+     "techne_recorded_hash": "1f03be069f5c114495a346aecffa28b6363bdd399495d71e932f7a3a6178a455",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/ck-0.7.2/include/spinlock/cas.h",
+     "payload_hash_read": "a52545e27a2da0cb7fa913cbdc26adbb8615a06db3764fe2bd31dac05f3c9942",
+     "techne_recorded_hash": "a52545e27a2da0cb7fa913cbdc26adbb8615a06db3764fe2bd31dac05f3c9942",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/ck-0.7.2/include/ck_hp.h",
+     "payload_hash_read": "031b09037e6f7250661cd8a44c4e62dc9600cd0b93e604f806f267ec6ae1ab06",
+     "techne_recorded_hash": "031b09037e6f7250661cd8a44c4e62dc9600cd0b93e604f806f267ec6ae1ab06",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/ck-0.7.2/include/ck_ring.h",
+     "payload_hash_read": "9b15a389706af30d35a0cdfd85bd750bac19b50bae34a06f4db3e79fe7520b7c",
+     "techne_recorded_hash": "9b15a389706af30d35a0cdfd85bd750bac19b50bae34a06f4db3e79fe7520b7c",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {

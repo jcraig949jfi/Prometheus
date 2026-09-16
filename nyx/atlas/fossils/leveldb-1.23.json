@@ -155,7 +155,51 @@
    "file list"
   ],
   "date": "2026-09-16T12:28Z",
-  "note": "where LMDB never overwrites a page and reclaims by reader epoch, LevelDB never overwrites a FILE and reclaims by compaction; both keep old versions alive for readers by reference counting -- the same pressure, two disciplines; a Stage E pair"
+  "note": "where LMDB never overwrites a page and reclaims by reader epoch, LevelDB never overwrites a FILE and reclaims by compaction; both keep old versions alive for readers by reference counting -- the same pressure, two disciplines; a Stage E pair",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/google/leveldb/archive/refs/tags/1.23.tar.gz sha256:9a37f8a6174f09bd622bc723b55881dc541cd50747cbd08831c2a82d620f6d76",
+   "payload_manifest_id": "techne tree_sha256 9f24633cc601cdeb2bc7ee6edf135b093c305da050cd88f47681a7871debc983 (153 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/leveldb-1.23/db/db_impl.cc",
+     "payload_hash_read": "52453d1fb693010797cf299b76d204e53ebbd80568b5fd6a95727f787c4ef2cd",
+     "techne_recorded_hash": "52453d1fb693010797cf299b76d204e53ebbd80568b5fd6a95727f787c4ef2cd",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/leveldb-1.23/db/version_set.cc",
+     "payload_hash_read": "4a3029cca815fe176d716fd86461aa65083d9baceae1a878000e6ca7bc27d03b",
+     "techne_recorded_hash": "4a3029cca815fe176d716fd86461aa65083d9baceae1a878000e6ca7bc27d03b",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/leveldb-1.23/db/log_writer.cc",
+     "payload_hash_read": "987154bb04f6867d9c8bec49e92d49e8d62711e2af6bfe1c6c353fcdf482705b",
+     "techne_recorded_hash": "987154bb04f6867d9c8bec49e92d49e8d62711e2af6bfe1c6c353fcdf482705b",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/leveldb-1.23/db/memtable.cc",
+     "payload_hash_read": "a8c3d1b7ffe8c27d9e220f3891e1a21607c1afe8f3ce8b9f9aa77fdeb6b131a4",
+     "techne_recorded_hash": "a8c3d1b7ffe8c27d9e220f3891e1a21607c1afe8f3ce8b9f9aa77fdeb6b131a4",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": [
+    "vault:leveldb-1.23/upstream/tree/leveldb-1.23/table/*.cc, util/cache.cc (names)"
+   ]
+  }
  },
  "organs": [
   {
