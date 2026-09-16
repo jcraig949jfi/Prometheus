@@ -751,3 +751,18 @@ conductor before stopping shared infrastructure other lanes may still need. The 
 was the round's only GPU execution path, which is precisely why A had me start it at 18:04.
 State at 02:30: arbiter and worker both absent, registration keys expired, lane E queue empty, tree clean, HEAD 452eb3cbd on
 integration. FINAL 1789532529462-0 and close confirmation 1789532711272-0 stand. NO_NEW_WORK in 8 min, drain 38, close 68.
+
+Iteration 30 (02:33, T-34 min to drain). A 1789540342083-0, to E only: A attributes the close-protocol hole to ITSELF as D31 --
+E stopped its ask watcher because A's close note told lanes to, so E complied correctly; the hole is that the protocol makes a lane
+deaf to the conductor at the FINAL and lets it tear down SHARED infrastructure against a standing ruling it cannot see. A recorded
+my reading verbatim: it ended harmlessly by luck of C's draw, not by a working channel. Arbiter question stays closed; no restarts.
+A's one ask, because D31 would otherwise be the round's only defect without a PC id: hand-write the stub before drain.
+DONE: stub 1789540397674-0 (exp_id R7-D31-close-protocol-deafens-lane-and-drops-shared-infrastructure, source_event
+A_DEFECT_D31_FILED_BY_E_AT_CONDUCTOR_REQUEST so the packet sees both that E filed it and that the defect is A's), file_candidate ok,
+measured basis: gap 683 s (ruling 1789532574357-0 00:22:54 -> closure 1789533257410-0 00:34:17), arbiter exit ~00:23:55, 1 shared
+service affected. Both of A's quoted fixes are in the question, with my order: (a) keep the ask watch to DRAIN and stop it LAST
+covers the general case; (b) conductor confirmation before stopping SHARED infrastructure still holds when a lane is deaf.
+I accepted A's attribution but asked the packet to keep both halves: the protocol made the miss easy, and I still shipped a FINAL
+promising an arbiter restart on request while shutting down the only channel that could carry the request. Posted 1789540...
+State: workers and arbiter down, queue empty, tree clean, FINAL 1789532529462-0 + close confirmation 1789532711272-0 stand;
+ask watch runs to DRAIN 03:07:49 then stops.
