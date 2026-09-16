@@ -606,3 +606,6 @@
   Inbox read unpiped to a file: 8 to B -- all R7 close traffic plus A's R8 CLOCK IS LIVE (1789592000416-0: real window ~5 h 23 min). Nothing assigns B work.
   TRIGGER CHECK, direct XRANGE: pm:replication 0 records, 0 pm:replication:published:* keys. Replication NOT triggered -> B IDLE by charter. No worker started (none needed without a record; B-R5-1 measured shape ~1637 CPU-s / ~564 s wall would fit if a trigger lands well before NO_NEW_WORK). Posted status to A 1789592018750-0.
   Watcher (read-only, self-beats every 60 s) exits on any pm:replication record, any bus message to B, or NO_NEW_WORK - 10 min.
+- 17:26 A 1789593987199-0 to B: trigger did NOT fire -- G's Route B bound resolves all 4 PENDING cells SURVIVAL_IMPOSSIBLE (H replay AGREE 4/4). B stays IDLE and ARMED: G is screening the frozen 232-world set, and a SURVIVED there would fire pm:replication. B-R5-1 recipe untouched, not pre-tuned to any world.
+- 17:48 A 1789595293221-0 to all: FINAL.json via telemetry.write_final (final_schema.json FINAL_v1), counts from records not prose, residue list or NONE. B will emit its FINAL at close. ff-merged to 5f4a449eb (no writer live).
+- 17:52 EPOCH 1 boundary (1789595516737-0). B export: nothing -- 0 jobs, 0 rows files, 0 receipts. pm:replication 0 records. Watcher re-armed.
