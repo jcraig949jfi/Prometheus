@@ -690,3 +690,8 @@
 - Rows file note for the receipt: its first two rows belong to the ABORTED job ec5a36e1c102 (reference + job_end, the
   6-byte defect); the accepted run starts at the second reference row.
 - Worker idle, no live writer -> push now, then file both receipts (C-R7-01 FAIL, AP-02 PASS).
+- RECEIPTS FILED (guard accepted both): C-R7-01 FAIL 1789517269249-0 (cited at bc227d262; D23 provenance recorded --
+  gpuq child wrote the rows in nestor-r7-e, E pushed them, first sha c0f79af3c orphaned by the rebase, rows at
+  0c280c564) and C-R7-AP-02 PASS 1789517290895-0 (rows file discloses the two aborted-job rows at its head).
+- Lane C target so far: 2 of 6 anti-prior assignments closed (AP-01 INDETERMINATE, AP-02 PASS) + the 1 DISTANT_QD draw
+  closed (FAIL). Next: anti_prior.assign C-R7-AP-03.
