@@ -191,3 +191,5 @@ real mirror STOPPED (techne/fossils/mirror/TECHNE65_Z_INDEPENDENCE_2026-09-13.md
   disk or a faster host -- TECHNE-69b, the single biggest open depth item.
 - FAILURE PATHOLOGIES now have runnable executing examples (Go, helgrind, glibc); deadlock via model
   (spin) + execution (Go/helgrind lock-order) both present.
+
+- 2026-09-16 (Techne, P6): **Pitts LISPTAPE.BIN** (s709-2.4.4 tarball, 195,992 B, 2008, provenance unstated) -- a bootable LISP 1.5 system image that RUNS (FACTORIAL, Wang calculus) in the prometheus-fossil-ibm709x world; candidate LATER_PORT/redistribution pair for lisp-1-5-ibm7090-1962 once its build path is known. Evidence: techne/fossils/specimens/lisp-1-5-ibm7090-1962/harness/world_control_pitts_lisp.sh.
