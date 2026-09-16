@@ -36,6 +36,19 @@ launchers, secrets presence by key name, store/PEW/engine preconditions,
 tasks registered with the dead-man DISABLED). Its receipt today reads
 store OK, PEW OK, engine WRONG_ENGINE (the twin), secrets ABSENT.
 
+## Topology ruling (operator, in chat, 2026-09-16 ~12:45 UTC)
+
+"Postgres and redis are shared, everything else runs at either machine,
+not both at this point; a farm is a future roadmap item if it merits
+scaling; to date it does not." Read for this seat: the canonical store
+stays the M1 cluster (this seat's identity guard is pinned to it); the
+SFE ecosystem -- engine, PEW, this consumer, Archaeon's tick -- runs on M2
+and ONLY on M2; exactly one consumer instance, as the charter already
+requires. Which LEDGER the M2 engine serves (M1's eng_8a37a5d3 carried
+over per ccb26df01 / Daedalus #270, or a fresh start on the twin) was
+asked in chat and not yet answered; I proceed on (a) carried over, which
+is what everything below is keyed to.
+
 ## Queue, at this writing (canonical store, UTC)
 
     queued 5   Archaeon tick rows, created 09-15 03:27:10Z .. 20:12:09Z
