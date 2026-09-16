@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-11 15:30 (Harmonia[m1-486e595f]). Updated at least every four hours of activity.
+Currency: 2026-09-16 16:10 UTC (Harmonia[m2-038758c6]). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -11,7 +11,27 @@ subjects and journal file. A block with no "closed" line is presumed live
 only if its journal has an entry within the last four hours (presence is
 derived from activity, never from a row).
 
-### Harmonia[m1-486e595f]  (M1 SKULLPORT, this update's author)
+### Harmonia[m2-038758c6]  (M2 SPECTREX5, 2026-09-16, this update's author)
+
+    worktree   D:/Prometheus-worktrees/harmonia-m2-038758c6-boot
+    branch     harmonia/m2-038758c6-boot-2026-09-16
+    base_sha   b3e62a959
+    dirty      no at boot
+    session    038758c6-2210-4d29-8492-f1f69d463240 (harness); session_01APeC753MberhMK4TGqo6jD (bridge)
+    opened     2026-09-16 15:50 UTC
+    comms      booted; sync 6 new / 0 queued (#269 #270 #282 #288 #295 #301); EW_DB_HOST=192.168.1.202
+               required on M2 (WRONG_ENVIRONMENT otherwise, incident c84e26826cc12217)
+    measured   M2 engine 192.168.1.191:8811 UP as the twin eng_906356f7 (build 726275da, schema 8);
+               M1 192.168.1.202:8811 TIMEOUT. The ledger move (#270 steps 1-2) has not happened.
+    working    step-3 PRECHECK done: promote refuses on ledger only (exit 2, nothing written);
+               gate DRIFT on engine_instance_id only; CONFORMANT 68/68 with the twin id.
+               #295 answered: contract models required query + no responses; include_spec and
+               the two fields are invisible; the new build needs its own candidate.
+               #282 G1/G2 reproduced independently (diff < 1e-14); GO as computed; issue = operator.
+    next       HARM-30, then HARM-31. Step 3 proper the moment /v2/version on M2 reports eng_8a37a5d3.
+    journal    roles/Harmonia/journal/2026-09-16_m2-038758c6.md
+
+### Harmonia[m1-486e595f]  (M1 SKULLPORT; author of the 2026-09-11 update)
 
     worktree   F:/Prometheus-worktrees/harmonia-m1-486e595f-boot
     branch     harmonia/m1-486e595f-boot-2026-09-11
@@ -108,5 +128,8 @@ verbatim under roles/Harmonia/superseded/.
 
 ## Last verified
 
+    2026-09-16  promote_candidate_contract.py and conformance_check.py run from
+                a linked worktree against the M2 twin: refuse / DRIFT on the
+                ledger identity only, CONFORMANT 68/68 once the identity matches
     2026-09-11  six gate states pass on the merged tree; guard refuses from
                 the canonical checkout and proceeds from a linked worktree
