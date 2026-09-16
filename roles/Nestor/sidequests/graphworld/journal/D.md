@@ -627,3 +627,18 @@
   items. NO ruling to run the sweep tonight -> the PC 1789518268676-0 stands and ANOM-..6515 stays OPEN with two MIXED
   discriminators. D will not queue it.
 - D-R7-8 submitted (job 64216545b989, predicate 1789518599497-0 pinned 86f48ebd8, admission ok, ~9 s projected).
+- ANOM-1789415790371-0 (fewest-byte brain generalises best) SIZED while D-R7-8 is in flight; not started.
+  E9 committed rows give the existing ranking free (24 runs per family x 3 worlds x 8 seeds, param_bytes +
+  held64_per_seed), but the anomaly's discriminator ("equalise parameter count and re-rank") needs NEW QD: no committed
+  run has a shrunk-rank TT. E9's archive is UNSEEDED, so its rows are references only and D would generate its own
+  seeded baseline (the D-R7-5 pattern). Redis :6394 up.
+  Cost from E9's own rows: linear 0.90 s/run, tt_feat 5.40, tt_digits 19.65; a full 72-run re-rank ~596 s. A rank
+  sweep {1,2,3} over both TT families ~30 min, COMPUTE-bound (fused rollout), so it is honest token use under A's
+  1789518298673-0 standard rather than a low-utilisation hold.
+  Feasibility smoke (no rows; sizes, shapes and wall only -- no held-out score computed): _TT.rank is a class attribute
+  read by shapes(), so setting g7.fam.rank and recomputing pb/glen works, and FusedRollout accepts every rank
+  unchanged. World 4 (D=8): linear 288 B; tt_feat 4716 / 2120 / 548 B at rank 3/2/1; tt_digits 18540 / 8264 / 2084 B.
+  LIMIT WORTH REPORTING EITHER WAY: tt_feat at rank 1 (548 B) reaches ~2x linear (288 B), but tt_digits bottoms out at
+  2084 B (~7x linear) because its CORE COUNT (4D = 32 cores x 16 entries) dominates, not its rank. So "equalise
+  parameter count across families" is executable for tt_feat and structurally impossible for tt_digits by rank alone;
+  the discriminator as written can only be run on two of the three families.
