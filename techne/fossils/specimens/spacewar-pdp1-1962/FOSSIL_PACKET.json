@@ -1,0 +1,339 @@
+{
+  "schema": "techne.fossil.packet/1",
+  "specimen_id": "spacewar-pdp1-1962",
+  "pipeline_id": "FOSSIL-SPACEWAR-001",
+  "written_utc": "2026-09-16T17:30:00Z",
+  "written_by": "Techne[m2-04bd52c0]",
+  "amendment": "roles/Techne/prompts/2026-09-16_amendment2/OPERATOR.md sha256:815e84b3c8ea387af348b2f1ca96220f6fee87ece3dbd136e32b04df19428b85",
+  "PAYLOAD_MANIFEST_ID": "c7a60d14e83ae9d08247e4b9604cd814a345baf9921f8b29dd813db3eb20c82b",
+  "downstream_owners": {
+    "CUT_ID": "Nyx",
+    "NYX_PREDICTION_PACKET": "Nyx",
+    "ORACLE_SOURCES": "Harmonia",
+    "ORACLE_PROVENANCE_GRADES": "Harmonia",
+    "HARMONIA_SURROGATE_ID": "Harmonia",
+    "EQUIVALENCE_RESULT": "Harmonia",
+    "DIVERGENCE_LEDGER": "Harmonia",
+    "TEST_WORLD_ID": "Theophrastus",
+    "PRESSURE_ID": "Theophrastus",
+    "INTERVENTION_ID": "Theophrastus",
+    "TENSOR_ADMISSION_RESULT": "Theophrastus",
+    "PAYLOAD_READING_NULL": "Theophrastus",
+    "FINAL_DISPOSITION": "operator"
+  },
+  "CUT_ID": null,
+  "NYX_PREDICTION_PACKET": null,
+  "ORACLE_SOURCES": null,
+  "ORACLE_PROVENANCE_GRADES": null,
+  "HARMONIA_SURROGATE_ID": null,
+  "EQUIVALENCE_RESULT": null,
+  "DIVERGENCE_LEDGER": null,
+  "TEST_WORLD_ID": null,
+  "PRESSURE_ID": null,
+  "INTERVENTION_ID": null,
+  "TENSOR_ADMISSION_RESULT": null,
+  "PAYLOAD_READING_NULL": null,
+  "FINAL_DISPOSITION": null,
+  "FOSSIL_RAW_ID": {
+    "tree_sha256": "66d682d8313e7afe0129b1b1183d87ecbf4861f5f8b5f17c6c6dfbdb6b8d5bc2",
+    "n_files": 1,
+    "bytes": 12976,
+    "artifact": {
+      "filename": "spacewar_2b_25mar62.txt",
+      "origin": "https://www.masswerk.at/spacewar/sources/spacewar_2b_25mar62.txt",
+      "sha256": "cc11e0e8939f190862c6cb64735006cf00c1293c0e96d145b17628bd4b9b5179"
+    },
+    "hash_list": "techne/fossils/specimens/spacewar-pdp1-1962/UPSTREAM_HASHES.txt",
+    "host_stability": "acquired and hashed on M1 2026-09-14 (batch 12); re-fetched from origin on M2 2026-09-16 and MATCHed the same tree hash (REMATERIALIZE_M2_2026-09-16.json; VAULT_INTEGRITY_M2_2026-09-16.json)"
+  },
+  "PROVENANCE_GRADE": [
+    {
+      "artifact": "spacewar_2b_25mar62.txt (the body)",
+      "grade": "AUTHENTIC_TRANSCRIPTION",
+      "basis": "masswerk.at's transcription of the 25 Mar 1962 MACRO source listing (Steve Russell et al., MIT); the page calls it the authentic source",
+      "edges": [
+        "TRANSCRIBES Spacewar! 2B source, 25 Mar 1962"
+      ]
+    },
+    {
+      "artifact": "harness/macro_fiodec_jun63.txt",
+      "grade": "LATER_TRANSCRIPTION",
+      "basis": "the MACRO FIO-DEC system macro definitions as of June 1963 (masswerk); the assembler's system tape the 1962 program assumed; a year later than the body",
+      "sha256": "8ff117912fd13ace8659c3b4fcfd57b66fb340bd5b832a6375adc27b6e7fef8e",
+      "edges": [
+        "DERIVES_FROM the 1962 MACRO system tape (not preserved)"
+      ]
+    },
+    {
+      "artifact": "harness/spacewar_2b_2apr62.txt",
+      "grade": "RECONSTRUCTION",
+      "basis": "Landsteiner 2014, 'reconstructed from disassembly ... not an authentic source code' (its own header); used ONLY for the star-field tables (T7)",
+      "sha256": "8e60bd3a950f0e05b570b79af1665488cdeb1f848b8b961d710f4fd4ae5f3349",
+      "edges": [
+        "RECONSTRUCTS Spacewar! 2B 2 Apr 1962 incl. Samson's star tables"
+      ]
+    }
+  ],
+  "FOSSIL_WORLD_ID": "fw-45bcdd1e9380bc91e8ee23c1",
+  "FOSSIL_WORLD": {
+    "name": "prometheus-fossil-pdp1:display",
+    "dockerfile": "techne/fossils/environment/fossil-pdp1-display.Dockerfile",
+    "dockerfile_sha256": "44cc55a93e2e70ab82fcdc178c218c72b80d80e4e4816a724d2b2da17e045e57",
+    "architecture": "DEC PDP-1 (18-bit) emulated by open-simh on linux/amd64",
+    "guest": "Debian 12 bookworm-slim + open-simh pdp1 @ a1f57fa3 built with libsdl2 (Type 30 DPY device) + simtools macro1 @ 2d9a2d96 + xvfb + python3",
+    "package_manifest_sha256": "a2e862fb5432eba22a3cf296d7b20cfe0b2896e3a9105554f148cf9eeec0594c",
+    "n_packages": 381,
+    "toolchain_probes": [
+      "PDP-1 simulator Open SIMH V4.1-0 Current git commit id: a1f57fa3",
+      "macro1 (simtools 2d9a2d96)"
+    ],
+    "headless_sibling": {
+      "name": "prometheus-fossil-pdp1:bookworm",
+      "dockerfile_sha256": "6e4d4c09cdb5392a7d629699a8948bd2120aa5f406429d695ddc2f67ff39e4cf",
+      "package_manifest_sha256": "1fb1b3dc25dd6794ca913cddb0761b6fabd77c5f17326364ffa6b30a29afb92e",
+      "n_packages": 192,
+      "role": "negative control (no scope: the program stops at IOH)"
+    },
+    "environment_variable_schema": [
+      "BODY",
+      "HARNESS"
+    ],
+    "note": "R21: identity by Dockerfile + dpkg manifest + pinned simulator/assembler commits; image ids are witnesses"
+  },
+  "RUNTIME_WITNESS": [
+    {
+      "receipt": "techne/fossils/specimens/spacewar-pdp1-1962/receipts/run-spacewar-pdp1-1962-20260916T150305Z.json",
+      "host": "SPECTREX5 (M2)",
+      "image": "prometheus-fossil-pdp1:bookworm",
+      "image_id": "sha256:f3fd77d680f58391fc2c7717e2c595f0008d452a3536fdd1e3a92a7117ad6f95",
+      "schema": "techne.fossil.run_receipt/2",
+      "note": "headless: RUNNABLE_EMULATED, stops at IOH"
+    },
+    {
+      "receipt": "techne/fossils/specimens/spacewar-pdp1-1962/receipts/run-spacewar-pdp1-1962-20260916T151039Z.json",
+      "host": "SPECTREX5 (M2)",
+      "image": "prometheus-fossil-pdp1:display",
+      "image_id": "sha256:ca04506abb2aaf3ce0ff37d4a8bac84de60250778817e6e895de0a09edf9c156",
+      "schema": "techne.fossil.run_receipt/2",
+      "note": "display under xvfb: draws; frames kept under behaviour/"
+    }
+  ],
+  "HOST_CAPS_ID": {
+    "host": "SPECTREX5",
+    "cpus": 28,
+    "ram_gb": 15,
+    "container_runtime": "docker 29.1.3 (WSL2)",
+    "kernel": "6.18.33.2-microsoft-standard-WSL2"
+  },
+  "CAPABILITY_MATRIX": {
+    "INSTANTIATE": "yes",
+    "EXECUTE": "yes",
+    "OBSERVE": "yes",
+    "SNAPSHOT": "no",
+    "RESTORE": "no",
+    "STEP": "yes",
+    "TRACE": "partial",
+    "EXAMINE": "yes",
+    "WATCH": "partial",
+    "INTERVENE": "yes",
+    "SCREENSHOT": "yes",
+    "INJECT_INPUT": "yes",
+    "EXTRACT_OUTPUT": "yes",
+    "_how": "simh pdp1: step N, examine/deposit memory and registers (EXAMINE/INTERVENE), breakpoints (WATCH partial), history (TRACE partial), screenshot with the display build; no simulator state save/restore used (SNAPSHOT no; simh has SAVE/RESTORE but it is not exercised in a receipt, so it is not claimed)"
+  },
+  "SCAFFOLDING_LEDGER": {
+    "applied": [
+      {
+        "transformation_id": "T3",
+        "source_object": "spacewar_2b_25mar62.txt",
+        "derived_object": "sw2.mac (disposable copy)",
+        "reason": "macro1's defineMacro swallows every line after a one-line `define ... term` until the next `term`",
+        "sites_affected": "1 (source line 90, macro mult)",
+        "exact_operation": "expand the one-line define into the multi-line form the rest of the source uses",
+        "tool": "harness/prep_macro1.py",
+        "evidence_requiring_it": "151 errors before, 111 after; the listing showed lines 92-291 without addresses",
+        "provenance_grade": "not applicable",
+        "applied": true,
+        "reversible": true,
+        "effect_on_execution": "required for assembly"
+      },
+      {
+        "transformation_id": "T4",
+        "source_object": "macro_fiodec_jun63.txt",
+        "derived_object": "sw2.mac",
+        "reason": "swap/ioh/spq/count/index/setup/init lived on the assembler's system tape, not in the program text",
+        "sites_affected": "61 library lines inserted after the title line (its own `start` dropped, its title commented)",
+        "exact_operation": "prepend the June 1963 MACRO FIO-DEC system macros",
+        "tool": "harness/prep_macro1.py",
+        "evidence_requiring_it": "111 -> 21 errors",
+        "provenance_grade": "LATER_TRANSCRIPTION (1963 library for a 1962 program; the 1962 tape is not preserved)",
+        "applied": true,
+        "reversible": true,
+        "effect_on_execution": "required for assembly"
+      },
+      {
+        "transformation_id": "T5",
+        "source_object": "sw2.mac",
+        "derived_object": "sw2.mac",
+        "reason": "the library spells `initialize`, the program `init`; the 1962 MACRO folded symbols",
+        "sites_affected": "1 alias macro",
+        "exact_operation": "define init A,B as initialize A,B",
+        "tool": "harness/prep_macro1.py",
+        "evidence_requiring_it": "2 undefined `init`; later found macro1 would also have folded by 3-char prefix -- kept, exact match is cleaner",
+        "provenance_grade": "not applicable",
+        "applied": true,
+        "reversible": true,
+        "effect_on_execution": "resolves 2 references"
+      },
+      {
+        "transformation_id": "T6",
+        "source_object": "sw2.mac",
+        "derived_object": "sw2.mac",
+        "reason": "macro1 splits macro arguments on spaces; `sar 9s` cannot be passed",
+        "sites_affected": "1 call (ranct \\ran, sar 9s, sar 4s, \\src)",
+        "exact_operation": "expand the call by hand from the macro body the source defines (lines 74-81)",
+        "tool": "harness/prep_macro1.py",
+        "evidence_requiring_it": "5 'misplaced symbol ranct' -> resolved with T8",
+        "provenance_grade": "not applicable",
+        "applied": true,
+        "reversible": true,
+        "effect_on_execution": "required for assembly"
+      },
+      {
+        "transformation_id": "T7",
+        "source_object": "spacewar_2b_2apr62.txt (RECONSTRUCTION)",
+        "derived_object": "sw2.mac",
+        "reason": "the star-field tables (labels 1j..4q, Samson's 'expensive planetarium') were a separate tape, absent from the 25 Mar text",
+        "sites_affected": "495 lines appended (block 'stars by prs' .. 'start 4'); the body's own `start` dropped",
+        "exact_operation": "append the star tables and their `mark` macro from the reconstruction",
+        "tool": "harness/prep_macro1.py",
+        "evidence_requiring_it": "8 undefined 1j..4q",
+        "provenance_grade": "RECONSTRUCTION -- a second provenance grade inside one tape, named",
+        "applied": true,
+        "reversible": true,
+        "effect_on_execution": "required for assembly; the star display is reconstruction data"
+      },
+      {
+        "transformation_id": "T8",
+        "source_object": "sw2.mac",
+        "derived_object": "sw2.mac",
+        "reason": "macro1 resolves an UNDEFINED symbol to any macro sharing its first 3 chars (lookup(): 'MACRO returns last defined n-x match'); a \\variable is undefined until `variables`",
+        "sites_affected": "every occurrence of \\ran",
+        "exact_operation": "rename \\ran -> \\qran (a variable's name is only its identity)",
+        "tool": "harness/prep_macro1.py",
+        "evidence_requiring_it": "reproduced in a 6-line isolate: `random \\ran` -> 'misplaced symbol ranct'",
+        "provenance_grade": "not applicable",
+        "applied": true,
+        "reversible": true,
+        "effect_on_execution": "required for assembly; no semantic change"
+      },
+      {
+        "transformation_id": "T9",
+        "source_object": "world",
+        "derived_object": "prometheus-fossil-pdp1:display",
+        "reason": "the headless simulator has no Type 30, so the program waits forever on the display pulse",
+        "sites_affected": "world build",
+        "exact_operation": "build open-simh with libsdl2 present (DPY device) and run under xvfb",
+        "tool": "fossil-pdp1-display.Dockerfile",
+        "evidence_requiring_it": "headless receipt: 'Infinite I/O wait state (IOH)'",
+        "provenance_grade": "not applicable",
+        "applied": true,
+        "reversible": true,
+        "effect_on_execution": "required for BEHAVIOR_*; the headless world stays as negative control"
+      }
+    ],
+    "measured_and_rejected": [
+      {
+        "transformation_id": "T0",
+        "exact_operation": "tab-indent column-1 `define`",
+        "result": "error count unchanged (151); macro1 accepts both",
+        "measured_utc": "2026-09-16T14:5xZ"
+      },
+      {
+        "transformation_id": "T1",
+        "exact_operation": "un-indent the macro name after `define`",
+        "result": "error count unchanged; macro1 accepts both",
+        "measured_utc": "2026-09-16T14:5xZ"
+      },
+      {
+        "transformation_id": "T2",
+        "exact_operation": "`terminate` -> `term`",
+        "result": "error count unchanged; macro1 matches `term` as a prefix",
+        "measured_utc": "2026-09-16T14:5xZ"
+      }
+    ],
+    "note": "6 source-side transformations + 1 world-side, each counted per run by the harness (T3=1, T6=1, T7=495 lines, T8=ran->qran); 3 measured and rejected. The 1962 body is untouched."
+  },
+  "INSTRUMENT_CONTROLS": [
+    {
+      "instrument": "macro1 (simtools 2d9a2d96)",
+      "control": "each parser behaviour that produced an error class was reproduced in a minimal isolate before a transformation was written (one-line define; 3-char macro folding in a 6-line file); T0-T2 measured as no-ops",
+      "artifact": "roles/Techne/journal/2026-09-16.md tick 5"
+    },
+    {
+      "instrument": "simh pdp1 build (headless vs display)",
+      "control": "the headless build stops at IOH (negative); the display build proceeds and draws (positive); the truncated-source cheat yields '1 detected error', no tape, load error",
+      "artifact": "receipts 150305Z and 151039Z; journal tick 5"
+    },
+    {
+      "instrument": "harvest run isolation",
+      "control": "body_preserved true on both receipts",
+      "artifact": "receipts"
+    }
+  ],
+  "TECHNE_STATE": "BEHAVIOR_PARTIALLY_REPRODUCED",
+  "TECHNE_STATE_BASIS": "the assembled tape (sha256 ddca90afda897a9675cf0fd8926dc68adc926fb48cfe7e2e2a06ecf2c9723b86) loads (word 6 = 720004 = tyi, PDP-1 manual), runs, compiles its outline programs at run time, and with the Type 30 draws the heavy star and both ships (frames 300k steps apart: 85 and 120 lit pixels of 512x512, frames differ). PARTIALLY: no contemporary recording, controller input, or documented frame was compared; the frame content matches the game's documented objects and masswerk's reconstruction emulator qualitatively (by eye), not a measured oracle. Frame bytes vary run to run (random walk)",
+  "BEHAVIOR_EVIDENCE": {
+    "oracle_source": "documented behaviour of Spacewar! (two ships, central heavy star, Type 30 display) + inspection of frame2 by the seat",
+    "oracle_grade": "AUTHOR_STATED / LATER_RECONSTRUCTION (masswerk emulator) -- qualitative",
+    "measured": "lit-pixel band [20, 20000] and frame-to-frame change, declared before the run (harness/frame_metrics.sh)",
+    "artifacts": [
+      "techne/fossils/specimens/spacewar-pdp1-1962/behaviour/frame1_20260916T151039Z.png",
+      "techne/fossils/specimens/spacewar-pdp1-1962/behaviour/frame2_20260916T151039Z.png"
+    ]
+  },
+  "REQUIRED_STATE_FOR_HANDOFF": "BODY_EXECUTABLE",
+  "REQUIRED_STATE_BASIS": "no downstream consumer has asked yet; a Nyx cut on the outline compiler or the collision/gravity routines would need STEP/EXAMINE, which this world has",
+  "HANDOFF_REQUESTED": false,
+  "TECHNE_RUN_RECEIPTS": [
+    "techne/fossils/specimens/spacewar-pdp1-1962/receipts/run-spacewar-pdp1-1962-20260916T150305Z.json",
+    "techne/fossils/specimens/spacewar-pdp1-1962/receipts/run-spacewar-pdp1-1962-20260916T151039Z.json"
+  ],
+  "PRESERVATION": {
+    "copies": [
+      {
+        "object": "body tree 66d682d8313e",
+        "location_class": "host-local vault (F:/Prometheus/vault/fossils, SKULLPORT)",
+        "failure_domain": "M1",
+        "verification_time": "2026-09-14",
+        "verification_result": "VERIFIED",
+        "artifact": "record.json hashes computed at acquisition (batch 12, M1)"
+      },
+      {
+        "object": "body tree 66d682d8313e",
+        "location_class": "host-local vault (SPECTREX5), re-fetched from origin",
+        "failure_domain": "M2",
+        "verification_time": "2026-09-16T13:50:22Z",
+        "verification_result": "VERIFIED",
+        "artifact": "techne/fossils/VAULT_INTEGRITY_M2_2026-09-16.json"
+      },
+      {
+        "object": "recovery artifacts macro_fiodec_jun63.txt, spacewar_2b_2apr62.txt",
+        "location_class": "git (harness/)",
+        "failure_domain": "git (M1, M2, origin)",
+        "verification_time": "2026-09-16",
+        "verification_result": "VERIFIED (sha256 in this packet)",
+        "artifact": "harness/"
+      },
+      {
+        "object": "FOSSIL_WORLD pdp1 (Dockerfile; simh + simtools pinned commits on GitHub)",
+        "location_class": "git + rebuilt image on M2",
+        "failure_domain": "M2 image / git / GitHub",
+        "verification_time": "2026-09-16",
+        "verification_result": "REBUILDABLE (pinned commits); not preserved as bytes",
+        "artifact": "techne/fossils/environment/fossil-pdp1-*.Dockerfile"
+      }
+    ],
+    "r25_status": "two VERIFIED body copies in distinct failure domains (M1, M2) + origin (masswerk.at, a single personal site -- the unique-recovery-artifact risk R25 names); the world depends on GitHub for simh/simtools"
+  }
+}

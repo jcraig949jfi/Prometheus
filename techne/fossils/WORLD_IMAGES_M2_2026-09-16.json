@@ -1,6 +1,6 @@
 {
  "schema": "techne.fossil.world_images/1",
- "written_utc": "2026-09-16T14:22:45Z",
+ "written_utc": "2026-09-16T17:19:09Z",
  "note": "An image ID pins WHICH bytes ran. It does not make them reconstructible: the prometheus-fossil-* images are built locally and exist in no registry, so their identity is pinned and their availability is single-host.",
  "images": {
   "gcc:4.9": {
@@ -68,11 +68,11 @@
   },
   "prometheus-fossil-ibm709x:bookworm": {
    "present": true,
-   "id": "sha256:f52d66cb24fff6b87a0a865f40638fca201d799c16a9f6a6f105f8da648d567e",
+   "id": "sha256:946a0fd5e65a62dfff0de8fb2de2dc3c241ec71ca48098410f0ecb9e7228f494",
    "repo_digests": [
-    "prometheus-fossil-ibm709x@sha256:f52d66cb24fff6b87a0a865f40638fca201d799c16a9f6a6f105f8da648d567e"
+    "prometheus-fossil-ibm709x@sha256:946a0fd5e65a62dfff0de8fb2de2dc3c241ec71ca48098410f0ecb9e7228f494"
    ],
-   "created": "2026-09-16T10:19:18.854600462-04:00",
+   "created": "2026-09-16T11:32:30.166056258-04:00",
    "origin": "LOCAL_BUILD_NO_UPSTREAM"
   },
   "prometheus-fossil-lang:bookworm": {
@@ -100,6 +100,15 @@
     "prometheus-fossil-octave@sha256:43392f8e2789b84c2dac7317e7e9e2314b5c9da7766536ff49c55ec887f0e522"
    ],
    "created": "2026-09-16T09:58:51.826833476-04:00",
+   "origin": "LOCAL_BUILD_NO_UPSTREAM"
+  },
+  "prometheus-fossil-pdp1:display": {
+   "present": true,
+   "id": "sha256:ca04506abb2aaf3ce0ff37d4a8bac84de60250778817e6e895de0a09edf9c156",
+   "repo_digests": [
+    "prometheus-fossil-pdp1@sha256:ca04506abb2aaf3ce0ff37d4a8bac84de60250778817e6e895de0a09edf9c156"
+   ],
+   "created": "2026-09-16T11:09:50.784302594-04:00",
    "origin": "LOCAL_BUILD_NO_UPSTREAM"
   },
   "prometheus-fossil-simh:bookworm": {

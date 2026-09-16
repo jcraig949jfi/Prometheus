@@ -24,9 +24,12 @@ def test_cheat_round_up_state_without_evidence_fails():
     assert any("BEHAVIOR_EVIDENCE" in w for w in packet.validate(p))
 
 
-def test_state_below_handoff_requirement_fails():
+def test_state_below_handoff_requirement_fails_only_when_handoff_requested():
     p = copy.deepcopy(GZ); p["TECHNE_STATE"] = "WORLD_EXECUTABLE"
+    assert p["HANDOFF_REQUESTED"] is True
     assert any("below REQUIRED_STATE_FOR_HANDOFF" in w for w in packet.validate(p))
+    p["HANDOFF_REQUESTED"] = False
+    assert packet.validate(p) == [], "parked below its requirement is a valid packet"
 
 
 def test_image_digest_is_not_a_world_id():
