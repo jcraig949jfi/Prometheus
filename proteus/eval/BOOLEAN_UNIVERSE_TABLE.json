@@ -1,0 +1,1194 @@
+{
+ "grammar_version": "proteus.boolean_grammar.v0",
+ "interface_version": "proteus.boolean3.v0",
+ "leaves": "inputs x0..x(n-1), constants 0 and 1; no components",
+ "method": "exact dynamic programming over MINIMAL sizes; cross-checked in the test suite against brute-force expression enumeration through size 7",
+ "operators": [
+  "not",
+  "and",
+  "or",
+  "xor"
+ ],
+ "per_n": {
+  "3": {
+   "asked": [
+    {
+     "expressions_enumerated_through": 3025,
+     "fraction": 0.23046875,
+     "max_expr_size": 5,
+     "solvable": 59
+    },
+    {
+     "expressions_enumerated_through": 15030,
+     "fraction": 0.546875,
+     "max_expr_size": 6,
+     "solvable": 140
+    },
+    {
+     "expressions_enumerated_through": 134285,
+     "fraction": 0.71484375,
+     "max_expr_size": 7,
+     "solvable": 183
+    }
+   ],
+   "cases": 8,
+   "expression_counts_through_7": [
+    {
+     "cumulative": 5,
+     "expressions": 5,
+     "size": 1
+    },
+    {
+     "cumulative": 10,
+     "expressions": 5,
+     "size": 2
+    },
+    {
+     "cumulative": 90,
+     "expressions": 80,
+     "size": 3
+    },
+    {
+     "cumulative": 320,
+     "expressions": 230,
+     "size": 4
+    },
+    {
+     "cumulative": 3025,
+     "expressions": 2705,
+     "size": 5
+    },
+    {
+     "cumulative": 15030,
+     "expressions": 12005,
+     "size": 6
+    },
+    {
+     "cumulative": 134285,
+     "expressions": 119255,
+     "size": 7
+    }
+   ],
+   "n_inputs": 3,
+   "solvable_by_size": {
+    "components_injected": 0,
+    "max_size": 12,
+    "n_inputs": 3,
+    "rows": [
+     {
+      "cumulative": 5,
+      "first_reached": 5,
+      "fraction": 0.01953125,
+      "size": 1
+     },
+     {
+      "cumulative": 8,
+      "first_reached": 3,
+      "fraction": 0.03125,
+      "size": 2
+     },
+     {
+      "cumulative": 17,
+      "first_reached": 9,
+      "fraction": 0.06640625,
+      "size": 3
+     },
+     {
+      "cumulative": 38,
+      "first_reached": 21,
+      "fraction": 0.1484375,
+      "size": 4
+     },
+     {
+      "cumulative": 59,
+      "first_reached": 21,
+      "fraction": 0.23046875,
+      "size": 5
+     },
+     {
+      "cumulative": 140,
+      "first_reached": 81,
+      "fraction": 0.546875,
+      "size": 6
+     },
+     {
+      "cumulative": 183,
+      "first_reached": 43,
+      "fraction": 0.71484375,
+      "size": 7
+     },
+     {
+      "cumulative": 226,
+      "first_reached": 43,
+      "fraction": 0.8828125,
+      "size": 8
+     },
+     {
+      "cumulative": 244,
+      "first_reached": 18,
+      "fraction": 0.953125,
+      "size": 9
+     },
+     {
+      "cumulative": 256,
+      "first_reached": 12,
+      "fraction": 1.0,
+      "size": 10
+     },
+     {
+      "cumulative": 256,
+      "first_reached": 0,
+      "fraction": 1.0,
+      "size": 11
+     },
+     {
+      "cumulative": 256,
+      "first_reached": 0,
+      "fraction": 1.0,
+      "size": 12
+     }
+    ],
+    "saturated_at": 10,
+    "universe": 256
+   },
+   "universe": 256,
+   "verification_cost": [
+    {
+     "all_passed": true,
+     "cases": 8,
+     "genome_words": 28,
+     "n_inputs": 3,
+     "node_count": 1,
+     "ops_per_case_measured": [
+      7
+     ],
+     "ops_per_case_predicted": 7,
+     "ops_total_measured": 56,
+     "ops_total_predicted": 56,
+     "steps_total": 8
+    },
+    {
+     "all_passed": true,
+     "cases": 8,
+     "genome_words": 32,
+     "n_inputs": 3,
+     "node_count": 2,
+     "ops_per_case_measured": [
+      8
+     ],
+     "ops_per_case_predicted": 8,
+     "ops_total_measured": 64,
+     "ops_total_predicted": 64,
+     "steps_total": 8
+    },
+    {
+     "all_passed": true,
+     "cases": 8,
+     "genome_words": 36,
+     "n_inputs": 3,
+     "node_count": 3,
+     "ops_per_case_measured": [
+      9
+     ],
+     "ops_per_case_predicted": 9,
+     "ops_total_measured": 72,
+     "ops_total_predicted": 72,
+     "steps_total": 8
+    },
+    {
+     "all_passed": true,
+     "cases": 8,
+     "genome_words": 40,
+     "n_inputs": 3,
+     "node_count": 4,
+     "ops_per_case_measured": [
+      10
+     ],
+     "ops_per_case_predicted": 10,
+     "ops_total_measured": 80,
+     "ops_total_predicted": 80,
+     "steps_total": 8
+    },
+    {
+     "all_passed": true,
+     "cases": 8,
+     "genome_words": 44,
+     "n_inputs": 3,
+     "node_count": 5,
+     "ops_per_case_measured": [
+      11
+     ],
+     "ops_per_case_predicted": 11,
+     "ops_total_measured": 88,
+     "ops_total_predicted": 88,
+     "steps_total": 8
+    },
+    {
+     "all_passed": true,
+     "cases": 8,
+     "genome_words": 48,
+     "n_inputs": 3,
+     "node_count": 6,
+     "ops_per_case_measured": [
+      12
+     ],
+     "ops_per_case_predicted": 12,
+     "ops_total_measured": 96,
+     "ops_total_predicted": 96,
+     "steps_total": 8
+    },
+    {
+     "all_passed": true,
+     "cases": 8,
+     "genome_words": 52,
+     "n_inputs": 3,
+     "node_count": 7,
+     "ops_per_case_measured": [
+      13
+     ],
+     "ops_per_case_predicted": 13,
+     "ops_total_measured": 104,
+     "ops_total_predicted": 104,
+     "steps_total": 8
+    }
+   ],
+   "witness_pool": {
+    "4": {
+     "K": 4,
+     "all_tasks_seed_is_table": {
+      "K": 4,
+      "n_inputs": 3,
+      "n_seeds": 256,
+      "pool_per_task": [
+       4
+      ],
+      "reach_count_per_input": [
+       133,
+       125,
+       122,
+       116,
+       131,
+       134,
+       123,
+       140
+      ],
+      "union_distinct_inputs": 8,
+      "union_of_2n": "8/8"
+     },
+     "constant_seed": {
+      "K": 4,
+      "n_inputs": 3,
+      "n_seeds": 1,
+      "pool_per_task": [
+       4
+      ],
+      "reach_count_per_input": [
+       0,
+       1,
+       0,
+       0,
+       1,
+       0,
+       1,
+       1
+      ],
+      "union_distinct_inputs": 4,
+      "union_of_2n": "4/8"
+     },
+     "coverage_curve": {
+      "K": 4,
+      "curve": [
+       4,
+       6,
+       7,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8,
+       8
+      ],
+      "n_inputs": 3,
+      "tasks": 64,
+      "tasks_to_full_coverage": 4
+     },
+     "per_task_seed": {
+      "24": {
+       "K": 4,
+       "n_inputs": 3,
+       "n_seeds": 24,
+       "pool_per_task": [
+        4
+       ],
+       "reach_count_per_input": [
+        11,
+        12,
+        12,
+        10,
+        11,
+        11,
+        16,
+        13
+       ],
+       "union_distinct_inputs": 8,
+       "union_of_2n": "8/8"
+      },
+      "64": {
+       "K": 4,
+       "n_inputs": 3,
+       "n_seeds": 64,
+       "pool_per_task": [
+        4
+       ],
+       "reach_count_per_input": [
+        33,
+        29,
+        29,
+        29,
+        32,
+        32,
+        32,
+        40
+       ],
+       "union_distinct_inputs": 8,
+       "union_of_2n": "8/8"
+      }
+     }
+    },
+    "8": {
+     "K": 8,
+     "all_tasks_seed_is_table": {
+      "K": 8,
+      "n_inputs": 3,
+      "n_seeds": 256,
+      "pool_per_task": [
+       0
+      ],
+      "reach_count_per_input": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "union_distinct_inputs": 0,
+      "union_of_2n": "0/8"
+     },
+     "constant_seed": {
+      "K": 8,
+      "n_inputs": 3,
+      "n_seeds": 1,
+      "pool_per_task": [
+       0
+      ],
+      "reach_count_per_input": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "union_distinct_inputs": 0,
+      "union_of_2n": "0/8"
+     },
+     "coverage_curve": {
+      "K": 8,
+      "curve": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "n_inputs": 3,
+      "tasks": 64,
+      "tasks_to_full_coverage": null
+     },
+     "per_task_seed": {
+      "24": {
+       "K": 8,
+       "n_inputs": 3,
+       "n_seeds": 24,
+       "pool_per_task": [
+        0
+       ],
+       "reach_count_per_input": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "union_distinct_inputs": 0,
+       "union_of_2n": "0/8"
+      },
+      "64": {
+       "K": 8,
+       "n_inputs": 3,
+       "n_seeds": 64,
+       "pool_per_task": [
+        0
+       ],
+       "reach_count_per_input": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "union_distinct_inputs": 0,
+       "union_of_2n": "0/8"
+      }
+     }
+    }
+   }
+  },
+  "4": {
+   "asked": [
+    {
+     "expressions_enumerated_through": 4998,
+     "fraction": 0.002349853515625,
+     "max_expr_size": 5,
+     "solvable": 154
+    },
+    {
+     "expressions_enumerated_through": 25524,
+     "fraction": 0.007293701171875,
+     "max_expr_size": 6,
+     "solvable": 478
+    },
+    {
+     "expressions_enumerated_through": 260430,
+     "fraction": 0.0136260986328125,
+     "max_expr_size": 7,
+     "solvable": 893
+    }
+   ],
+   "cases": 16,
+   "expression_counts_through_7": [
+    {
+     "cumulative": 6,
+     "expressions": 6,
+     "size": 1
+    },
+    {
+     "cumulative": 12,
+     "expressions": 6,
+     "size": 2
+    },
+    {
+     "cumulative": 126,
+     "expressions": 114,
+     "size": 3
+    },
+    {
+     "cumulative": 456,
+     "expressions": 330,
+     "size": 4
+    },
+    {
+     "cumulative": 4998,
+     "expressions": 4542,
+     "size": 5
+    },
+    {
+     "cumulative": 25524,
+     "expressions": 20526,
+     "size": 6
+    },
+    {
+     "cumulative": 260430,
+     "expressions": 234906,
+     "size": 7
+    }
+   ],
+   "n_inputs": 4,
+   "solvable_by_size": {
+    "components_injected": 0,
+    "max_size": 20,
+    "n_inputs": 4,
+    "rows": [
+     {
+      "cumulative": 6,
+      "first_reached": 6,
+      "fraction": 9.1552734375e-05,
+      "size": 1
+     },
+     {
+      "cumulative": 10,
+      "first_reached": 4,
+      "fraction": 0.000152587890625,
+      "size": 2
+     },
+     {
+      "cumulative": 28,
+      "first_reached": 18,
+      "fraction": 0.00042724609375,
+      "size": 3
+     },
+     {
+      "cumulative": 70,
+      "first_reached": 42,
+      "fraction": 0.001068115234375,
+      "size": 4
+     },
+     {
+      "cumulative": 154,
+      "first_reached": 84,
+      "fraction": 0.002349853515625,
+      "size": 5
+     },
+     {
+      "cumulative": 478,
+      "first_reached": 324,
+      "fraction": 0.007293701171875,
+      "size": 6
+     },
+     {
+      "cumulative": 893,
+      "first_reached": 415,
+      "fraction": 0.0136260986328125,
+      "size": 7
+     },
+     {
+      "cumulative": 2376,
+      "first_reached": 1483,
+      "fraction": 0.0362548828125,
+      "size": 8
+     },
+     {
+      "cumulative": 4500,
+      "first_reached": 2124,
+      "fraction": 0.06866455078125,
+      "size": 9
+     },
+     {
+      "cumulative": 10264,
+      "first_reached": 5764,
+      "fraction": 0.1566162109375,
+      "size": 10
+     },
+     {
+      "cumulative": 17481,
+      "first_reached": 7217,
+      "fraction": 0.2667388916015625,
+      "size": 11
+     },
+     {
+      "cumulative": 30748,
+      "first_reached": 13267,
+      "fraction": 0.46917724609375,
+      "size": 12
+     },
+     {
+      "cumulative": 42923,
+      "first_reached": 12175,
+      "fraction": 0.6549530029296875,
+      "size": 13
+     },
+     {
+      "cumulative": 58118,
+      "first_reached": 15195,
+      "fraction": 0.886810302734375,
+      "size": 14
+     },
+     {
+      "cumulative": 63582,
+      "first_reached": 5464,
+      "fraction": 0.970184326171875,
+      "size": 15
+     },
+     {
+      "cumulative": 65492,
+      "first_reached": 1910,
+      "fraction": 0.99932861328125,
+      "size": 16
+     },
+     {
+      "cumulative": 65536,
+      "first_reached": 44,
+      "fraction": 1.0,
+      "size": 17
+     },
+     {
+      "cumulative": 65536,
+      "first_reached": 0,
+      "fraction": 1.0,
+      "size": 18
+     },
+     {
+      "cumulative": 65536,
+      "first_reached": 0,
+      "fraction": 1.0,
+      "size": 19
+     },
+     {
+      "cumulative": 65536,
+      "first_reached": 0,
+      "fraction": 1.0,
+      "size": 20
+     }
+    ],
+    "saturated_at": 17,
+    "universe": 65536
+   },
+   "universe": 65536,
+   "verification_cost": [
+    {
+     "all_passed": true,
+     "cases": 16,
+     "genome_words": 32,
+     "n_inputs": 4,
+     "node_count": 1,
+     "ops_per_case_measured": [
+      8
+     ],
+     "ops_per_case_predicted": 8,
+     "ops_total_measured": 128,
+     "ops_total_predicted": 128,
+     "steps_total": 16
+    },
+    {
+     "all_passed": true,
+     "cases": 16,
+     "genome_words": 36,
+     "n_inputs": 4,
+     "node_count": 2,
+     "ops_per_case_measured": [
+      9
+     ],
+     "ops_per_case_predicted": 9,
+     "ops_total_measured": 144,
+     "ops_total_predicted": 144,
+     "steps_total": 16
+    },
+    {
+     "all_passed": true,
+     "cases": 16,
+     "genome_words": 40,
+     "n_inputs": 4,
+     "node_count": 3,
+     "ops_per_case_measured": [
+      10
+     ],
+     "ops_per_case_predicted": 10,
+     "ops_total_measured": 160,
+     "ops_total_predicted": 160,
+     "steps_total": 16
+    },
+    {
+     "all_passed": true,
+     "cases": 16,
+     "genome_words": 44,
+     "n_inputs": 4,
+     "node_count": 4,
+     "ops_per_case_measured": [
+      11
+     ],
+     "ops_per_case_predicted": 11,
+     "ops_total_measured": 176,
+     "ops_total_predicted": 176,
+     "steps_total": 16
+    },
+    {
+     "all_passed": true,
+     "cases": 16,
+     "genome_words": 48,
+     "n_inputs": 4,
+     "node_count": 5,
+     "ops_per_case_measured": [
+      12
+     ],
+     "ops_per_case_predicted": 12,
+     "ops_total_measured": 192,
+     "ops_total_predicted": 192,
+     "steps_total": 16
+    },
+    {
+     "all_passed": true,
+     "cases": 16,
+     "genome_words": 52,
+     "n_inputs": 4,
+     "node_count": 6,
+     "ops_per_case_measured": [
+      13
+     ],
+     "ops_per_case_predicted": 13,
+     "ops_total_measured": 208,
+     "ops_total_predicted": 208,
+     "steps_total": 16
+    },
+    {
+     "all_passed": true,
+     "cases": 16,
+     "genome_words": 56,
+     "n_inputs": 4,
+     "node_count": 7,
+     "ops_per_case_measured": [
+      14
+     ],
+     "ops_per_case_predicted": 14,
+     "ops_total_measured": 224,
+     "ops_total_predicted": 224,
+     "steps_total": 16
+    }
+   ],
+   "witness_pool": {
+    "4": {
+     "K": 4,
+     "all_tasks_seed_is_table": null,
+     "constant_seed": {
+      "K": 4,
+      "n_inputs": 4,
+      "n_seeds": 1,
+      "pool_per_task": [
+       12
+      ],
+      "reach_count_per_input": [
+       1,
+       1,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       0,
+       0,
+       1,
+       1,
+       0,
+       1
+      ],
+      "union_distinct_inputs": 12,
+      "union_of_2n": "12/16"
+     },
+     "coverage_curve": {
+      "K": 4,
+      "curve": [
+       12,
+       13,
+       15,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16
+      ],
+      "n_inputs": 4,
+      "tasks": 64,
+      "tasks_to_full_coverage": 4
+     },
+     "per_task_seed": {
+      "24": {
+       "K": 4,
+       "n_inputs": 4,
+       "n_seeds": 24,
+       "pool_per_task": [
+        12
+       ],
+       "reach_count_per_input": [
+        18,
+        16,
+        15,
+        18,
+        20,
+        19,
+        18,
+        14,
+        20,
+        19,
+        19,
+        15,
+        18,
+        21,
+        22,
+        16
+       ],
+       "union_distinct_inputs": 16,
+       "union_of_2n": "16/16"
+      },
+      "64": {
+       "K": 4,
+       "n_inputs": 4,
+       "n_seeds": 64,
+       "pool_per_task": [
+        12
+       ],
+       "reach_count_per_input": [
+        47,
+        45,
+        45,
+        46,
+        51,
+        47,
+        51,
+        43,
+        50,
+        47,
+        49,
+        43,
+        46,
+        52,
+        55,
+        51
+       ],
+       "union_distinct_inputs": 16,
+       "union_of_2n": "16/16"
+      }
+     }
+    },
+    "8": {
+     "K": 8,
+     "all_tasks_seed_is_table": null,
+     "constant_seed": {
+      "K": 8,
+      "n_inputs": 4,
+      "n_seeds": 1,
+      "pool_per_task": [
+       8
+      ],
+      "reach_count_per_input": [
+       1,
+       0,
+       0,
+       1,
+       1,
+       0,
+       0,
+       1,
+       1,
+       1,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1
+      ],
+      "union_distinct_inputs": 8,
+      "union_of_2n": "8/16"
+     },
+     "coverage_curve": {
+      "K": 8,
+      "curve": [
+       8,
+       10,
+       13,
+       15,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16
+      ],
+      "n_inputs": 4,
+      "tasks": 64,
+      "tasks_to_full_coverage": 5
+     },
+     "per_task_seed": {
+      "24": {
+       "K": 8,
+       "n_inputs": 4,
+       "n_seeds": 24,
+       "pool_per_task": [
+        8
+       ],
+       "reach_count_per_input": [
+        9,
+        10,
+        12,
+        10,
+        15,
+        14,
+        13,
+        11,
+        9,
+        13,
+        17,
+        10,
+        14,
+        11,
+        14,
+        10
+       ],
+       "union_distinct_inputs": 16,
+       "union_of_2n": "16/16"
+      },
+      "64": {
+       "K": 8,
+       "n_inputs": 4,
+       "n_seeds": 64,
+       "pool_per_task": [
+        8
+       ],
+       "reach_count_per_input": [
+        26,
+        30,
+        32,
+        30,
+        35,
+        36,
+        33,
+        26,
+        33,
+        31,
+        37,
+        32,
+        30,
+        29,
+        34,
+        38
+       ],
+       "union_distinct_inputs": 16,
+       "union_of_2n": "16/16"
+      }
+     }
+    }
+   }
+  }
+ },
+ "schema": "proteus.boolean_universe_table/1",
+ "size_measure": "node count: leaf 1, NOT 1 + child, binary 1 + both (vivarium/viv/cegis_boolean.py::_size)",
+ "table_id": "sha256:750fe32eca1b52b2b8e38a2fd131e21ed8eeaedafe5aecf2734d11d487e70bc2",
+ "universe_version": "proteus.boolean_universe.v0"
+}

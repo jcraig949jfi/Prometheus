@@ -1,0 +1,43 @@
+{
+ "tool": "relocate_m2.py",
+ "mode": "check",
+ "started_at": "2026-09-16T11:48:18Z",
+ "checks": [
+  {
+   "check": "pinned worktree exists and reproduces the candidate build",
+   "pass": true,
+   "pinned": "sha256:726275da9c8daa30ea2fff5e66e9a1df53aa5263256d342602fad25cb415d75c",
+   "expected": "sha256:726275da9c8daa30ea2fff5e66e9a1df53aa5263256d342602fad25cb415d75c",
+   "sha": "ccb26df01c9d637a0ebac0ef3612a4e116d507b7"
+  },
+  {
+   "check": "pinned worktree is clean",
+   "pass": true,
+   "status": ""
+  },
+  {
+   "check": "port 8811 on 192.168.1.191 is free",
+   "pass": true
+  },
+  {
+   "check": "source ledger identifies itself",
+   "pass": true,
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "db": "D:\\Prometheus\\SerendipityFoundry\\SerendipityFoundryEngine\\var\\engine.db",
+   "sha256": "63d59e2cab1bc03aef44ba832e97e00ec9ff55dd7b5b3328b301cfd49e86995f"
+  },
+  {
+   "check": "TLS key present in canonical deploy/",
+   "pass": true
+  },
+  {
+   "check": "watchdog task exists",
+   "pass": true,
+   "current_action_args": "-NoProfile -ExecutionPolicy Bypass -File \"D:\\Prometheus\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\sfengine_m2_watchdog.ps1\""
+  }
+ ],
+ "steps": [],
+ "source_instance": "eng_906356f7fb1da180131f9290",
+ "finished_at": "2026-09-16T11:48:22Z",
+ "rc": 0
+}

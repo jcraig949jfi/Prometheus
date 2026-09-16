@@ -1,0 +1,237 @@
++==============================================================================+
+|  REVIEW PACKET -- TECHNE, M2 BOOT PASS 2026-09-16                            |
+|  Author: Techne[m2-04bd52c0] (toolsmith seat), host SPECTREX5 (m2)           |
+|  Date:   2026-09-16                                                          |
+|  For:    the operator (HITL) and any external reviewer                        |
+|  Status: three units landed on main at 2894750cb (merge of e6fab5e29);       |
+|          one operator decision reduced to one line; nothing outward changed  |
+|  Self-contained: every load-bearing number is inline. No repo access needed. |
++==============================================================================+
+
+0. SUMMARY / VERDICT
+-----------------------------------------------------------------------------
+Three small units, each provable from committed files:
+
+  U1  The off-host fossil mirror (TECHNE-65) has been blocked since 09-13 on
+      "the share cannot be reached from the vault host". This pass ran ON the
+      share's host and measured the other end: the share exists, is served,
+      is independent storage, and admits exactly ONE identity. That single
+      fact reproduces every symptom seen from the vault host. Nothing was
+      changed. The operator decision shrinks to one line.
+  U2  Run receipts in the fossil vault now carry Rhadamanthus's RQ-4 fields
+      (interpreter, package-state hash, env-var NAMES). The writer refuses to
+      emit a receipt that fails its own check. 12 tests including three cheat
+      controls. Baseline census: 263 receipts, 0 carry it, 263 predate it.
+  U3  Four charter directories that had a journal-stamped hash but no
+      MANIFEST.md now have one; all four verify by tool and equal the git
+      blob and the journal stamp.
+
+Recommendation: accept U2 and U3 as done; for U1 the operator picks (a) or
+(b) in section 8, after which the mirror runs from the vault host. Not
+recommended: any more mirror engineering -- the mechanism has been ready
+since 09-13 and the block is access, not code.
+
+1. WHAT WAS BUILT / MEASURED, AND IN WHAT ORDER
+-----------------------------------------------------------------------------
+Boot: fetch-only in the canonical checkout; worktree from ccb26df01; comms
+boot recorded (first attempt refused by the identity guard because this
+host's default resolves to the M2 fork -- known incident class
+c84e26826cc12217; second attempt against the canonical store succeeded).
+Inbox 0 new at open and at close. No prompt newer than batch 12.
+
+Then, in this order:
+  U1 measurement (read-only PowerShell, no state changed)
+  U3 manifests (write, then verify, then cross-check against blob + journal)
+  U2 code + tests, tests run BEFORE commit on the merged tree
+  commit e6fab5e29 by explicit paths, merge of 2b21acf76, fast-forward push
+
+2. THE CLAIMS AND WHY THEY MATTER
+-----------------------------------------------------------------------------
+C1 (U1)  The 09-13 failure to reach \\SPECTREX5\prometheus_share from the
+         vault host is explained by share-level access control, not by name
+         resolution or firewall. Matters because 121 preserved bodies sit on
+         ONE host and the mirror has been "ready but blocked" for three days.
+C2 (U2)  Every NEW run receipt records the driver's interpreter, a hash of
+         its installed distributions, and the names of env vars read, and a
+         receipt lacking these cannot be written. Matters because #245 RQ-4
+         found package/interpreter state "almost never recorded" at claim
+         time across the program; this is the vault's share of the fix.
+C3 (U3)  Charter hashes for batches 09-12 verify by tool.
+
+3. U1 -- DESIGN AS EXECUTED (destination-side measurement)
+-----------------------------------------------------------------------------
+All read-only, on SPECTREX5, ~11:50Z, as user spectrex5\james:
+
+  Get-SmbShare                 prometheus_share -> C:\prometheus_share
+  Get-ChildItem (recursive)    31,880 files: cartography/ (2026-04-12),
+                               lmfdb_local/ (2026-04-13); no fossil_mirror/
+  Get-Service LanmanServer     Running, Automatic
+  Get-SmbServerConfiguration   SMB2 True, SMB1 False, RequireSecuritySignature
+                               True, EncryptData False
+  Get-NetFirewallRule SMB-In   Public True, Private False, Domain False
+  Get-NetConnectionProfile     active profile = Public  (so SMB-In IS open)
+  Get-NetIPAddress             192.168.1.191
+  Get-SmbShareAccess           SPECTREX5\prometheus  Allow  Full   (ONLY entry)
+  Get-Acl C:\prometheus_share  prometheus Full; Administrators; SYSTEM;
+                               Authenticated Users Modify; Users ReadExecute
+  Get-LocalUser prometheus     Enabled True, PasswordRequired True,
+                               LastLogon 2026-05-15
+  Test-Path \\SPECTREX5\...    Access is denied
+  Test-Path \\192.168.1.191\.. Access is denied
+  Test-Path \\localhost\...    Access is denied
+  Get-SmbSession/Connection    none
+  Free space, C:               756 GB  (vault ~1 GB)
+  Bodies on this host          0 (the vault directory does not exist here)
+
+Reading. The share is real and physically independent of the vault (other
+machine, other volume). Its share ACL admits one local account. An
+unauthenticated or differently-authenticated probe from another host gets
+"does not exist" / 1702 / a stale mapping that will not reconnect -- exactly
+the 09-13 list -- while port 445 answers. No second defect is needed.
+
+What this does NOT show: that the operator knows that account's password
+(a credential fact, not probed); anything from the vault host's side today;
+wire throughput.
+
+4. U2 -- DESIGN AS EXECUTED (RQ-4 on run receipts)
+-----------------------------------------------------------------------------
+Files: techne/fossils/vault.py, techne/fossils/harvest.py,
+       techne/tests/test_fossil_environment.py,
+       techne/fossils/RECEIPT_CENSUS_2026-09-16.json
+
+Mechanism:
+  - vault.getenv(name) is the only way the package reads the environment;
+    it records the NAME. One pre-existing read (TECHNE_FOSSIL_VAULT) now
+    goes through it. A test greps the package for any other os.environ read.
+  - environment_fingerprint() -> {interpreter: {implementation, version,
+    executable_basename}, pip_freeze_sha256, pip_freeze_n, env_vars_read,
+    env_vars_exported_to_recipe}. The package list comes from
+    importlib.metadata (sorted, de-duplicated "name==version"), hashed as
+    LF-joined text. No subprocess, no shell.
+  - Receipt schema bumped to techne.fossil.run_receipt/2. run() fills the
+    block AFTER the recipe executes (so every read during the run is in the
+    list) and calls validate_run_receipt(); a defect raises and NO receipt
+    is written.
+  - `harvest receipt-check [--out F]` censuses every tracked receipt:
+    CARRIES_RQ4 / PREDATES_RQ4 (schema/1) / DEFECTIVE / UNREADABLE.
+
+Controls (12 tests, all pass):
+  positive   a planted distribution in the list MOVES the hash
+  negative   two fingerprints of an unchanged environment are equal
+  cheat 1    schema/2 receipt with the block deleted -> "environment block
+             missing"
+  cheat 2    env_vars_read carrying "TECHNE_FOSSIL_VAULT=D:/somewhere" ->
+             refused ("not a bare name")
+  cheat 3    pip_freeze_sha256 = "deadbeef" -> refused
+  plus       interpreter missing -> refused; unknown schema -> refused;
+             schema/1 -> reported as predating, NOT failed; census of the
+             263 tracked receipts has 0 defects; end-to-end native run on a
+             synthetic specimen writes /2, names TECHNE_FOSSIL_VAULT, and
+             the temp vault PATH VALUE does not appear in the written file.
+
+Baseline census (committed): n=263  carries_rq4=0  predates_rq4=263
+defective=0. This number rises only when bodies are re-run on the vault
+host; nothing in this pass re-ran a body.
+
+Sample fingerprint on this host: CPython 3.14.4, 145 distributions, hash
+f9f87e9e3ad6..., env_vars_read = [TECHNE_FOSSIL_VAULT].
+
+5. U3 -- MANIFESTS
+-----------------------------------------------------------------------------
+  batch09  b7e70d4fdfc90f1234094edfada65ca4bbdb326c639b0236f538e85fdf28a505
+  batch10  2c28f471c33abc5216ef50a2fafb080e401c26fbd482905749dd8f76de7a46c6
+  batch11  8b7ae29148d82a5b6d149d65ed07a0c2cd55e66e437bffd2cdcf30434bf3e3bb
+  batch12  773121688fa1f0f15c540e1221387092ebde34d375d706745082ac6d61198369
+Each: `comms.manifest verify` RC 0; equals `git show origin/main:<path> |
+sha256sum`; equals the stamp in roles/Techne/journal/2026-09-13.md at lines
+186 / 284 / 385 / 464. Each MANIFEST.md states it was issued three days
+after the charter. The charters were never unverifiable (the journal held
+the stamps); the tool path now works without reading the journal.
+
+6. TESTS, INCIDENTS, DEFECTS
+-----------------------------------------------------------------------------
+  Fossil suites on the merged tree: 391 passed in 5.2 s.
+  Whole techne/tests minus slow: 701 passed / 8 failed / 10 skipped / 5
+  collection errors. All 13 non-passes are this host lacking the modules
+  hypothesis, chipfiring and python-sat; verified identical with my change
+  stashed (8 failed in 0.11 s). Not repaired: installing into a shared
+  interpreter is not a boot-pass act. Recorded as M2 environment debt.
+
+  Incident: comms boot refused once (M2 fork, class c84e26826cc12217).
+  Recorded in my journal; the incident file is Hermes's lane and was not
+  edited.
+
+  Defect of mine, caught before commit: a heredoc-written edit produced a
+  literal newline inside a string (the shell unescapes backslashes); the
+  module failed to import; fixed via a script file. Known tool behaviour.
+
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----------------------------------------------------------------------------
+Established:
+  - The share is reachable in principle and gated to one identity (C1).
+  - New run receipts cannot be written without the RQ-4 block (C2). The
+    "names never values" property is asserted by a cheat control AND by an
+    end-to-end check that the real path value is absent from the file.
+  - Four charters verify by tool (C3).
+NOT established:
+  - That the mirror will succeed once access is granted (not run; no
+    bodies here). The same-volume guard, drift refusal and destructive
+    control were exercised on 09-13, not today.
+  - That the pip-freeze hash identifies the WORLD a fossil ran in. It
+    identifies the DRIVER's interpreter; the recipe's world (docker image,
+    toolchain) remains in the probe section and in WORLD_IMAGES.json. A
+    reviewer should not read pip_freeze_sha256 as a world pin.
+  - Any change in the 263 legacy receipts. They are labelled, not upgraded.
+Claim ceiling: instrument-level. No scientific claim is made or moved.
+
+8. THE DECISION (operator's call) -- ONE LINE
+-----------------------------------------------------------------------------
+Either:
+  (a) on the vault host (SKULLPORT), map the share AS the admitted account,
+      by IP so NetBIOS is not in the path:
+        net use Z: \\192.168.1.191\prometheus_share /user:SPECTREX5\prometheus
+      (password typed at the prompt; never in a file or a commit)
+or
+  (b) on SPECTREX5, admit the vault host's user:
+        Grant-SmbShareAccess -Name prometheus_share -AccountName <user>
+                             -AccessRight Change
+Then, from a SKULLPORT worktree: harvest mirror --dest Z:\fossil_mirror
+(--dry-run first), harvest mirror-verify, and set fossil_mirror in
+techne/config.local.json there. My lean: (a) -- it changes nothing on the
+server and uses the identity the share was evidently built for.
+
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----------------------------------------------------------------------------
+  Q1  Is "share ACL admits one identity" SUFFICIENT to explain net view
+      error 1702 from the vault host, or is 1702 (RPC binding) evidence of a
+      second, independent fault I have not measured?
+  Q2  Should env_vars_read include the names of every variable in the
+      INHERITED environment of the recipe subprocess (dozens), rather than
+      only those the driver read? I chose the narrow reading of "read".
+  Q3  The pip-freeze hash is over importlib.metadata, not `pip freeze`.
+      Editable installs and direct-URL installs show as name==version
+      without the URL. Is that a hole a reviewer would want closed?
+  Q4  Is issuing a MANIFEST three days after the charter, annotated as
+      such, acceptable provenance, or should late manifests be refused?
+  Q5  "Not worth continuing" remains available: should this seat stop
+      spending passes on the mirror until the operator acts, and go to
+      batch 12 P6 (executing a 1962 body on simh) instead?
+
+10. ARTIFACTS
+-----------------------------------------------------------------------------
+  main 2894750cb (merge of e6fab5e29 with 2b21acf76); e6fab5e29 verified an
+  ancestor of origin/main after push.
+  techne/fossils/mirror/TECHNE65_DESTINATION_SIDE_2026-09-16.md
+  techne/fossils/harvest.py, techne/fossils/vault.py
+  techne/tests/test_fossil_environment.py
+  techne/fossils/RECEIPT_CENSUS_2026-09-16.json
+  roles/Techne/prompts/2026-09-13_batch{09,10,11,12}/MANIFEST.md
+  roles/Techne/BACKLOG_H0H5.md (rows TECHNE-65 annotation, -76, -77)
+  roles/Techne/journal/2026-09-16.md
+  Prior context: techne/fossils/mirror/TECHNE65_Z_INDEPENDENCE_2026-09-13.md;
+  roles/Rhadamanthus/prompts/2026-09-14_court/REQUIREMENTS_to_Techne.md (RQ-4)
+
++==============================================================================+
+|  Reviewer: "not worth continuing" is a first-class answer. If the mirror   |
+|  should wait for the operator and this seat should go elsewhere, say so.   |
++==============================================================================+

@@ -39,7 +39,7 @@ status.** The full inventory L-1..L-5 are the first entries of. Seed from the
 reference lists of the thirteen PDFs already held; those are primary sources
 we own and have not exhausted.
 
-**L-7 OPEN. A synchronising rule.** The task is implemented and EVERY organism
+**L-7 OPEN, instrument side advanced 2026-09-16: `cellwise_synchronisation_match` gives the target a criterion with a range (frozen 0 / random band 0.06-0.31 / out-of-phase blink 0.53 / solved 1.0; herakles/evca/sync_floor_2026-09-16.json). The RULE is still not held. A synchronising rule.** The task is implemented and EVERY organism
 we hold scores 0.0. An empty cell with an instrument already built.
 
 **L-8 OPEN. Particle catalogue (Hordijk, Crutchfield, Mitchell) as an
@@ -61,7 +61,7 @@ convention.** Four now exist: `at_T`, `stable`, `cellwise_majority_match`,
 `synchronisation`. Only `at_T` is comparable to a published P. That sentence
 needs to live in one place before a fifth is added.
 
-**C-2 OPEN. A positive control for the synchronisation task that SOLVES it.**
+**C-2 OPEN, narrowed 2026-09-16: the per-cell criterion separates a 0.0 that is frozen from one that is random, so the zeros are now readable; what is still missing is a rule above the band, which needs L-7. A positive control for the synchronisation task that SOLVES it.**
 `blinker_rule_table` proves the detector fires; it does not solve the task from
 arbitrary initial conditions. Until something does, a score of 0.0 cannot be
 separated from an unreachable target. Depends on L-7.
@@ -118,6 +118,10 @@ N=149 only. C1-e also has 599 and 999 and C3-2 did not exercise them.
 **X-2 OPEN. Re-run C1-e's particle2 cell if the original EvEmComp bytes are
 ever recovered.** The only surviving suspect is transcription and it is
 untestable without them. HELD until then.
+
+**X-5 OPEN 2026-09-16. Handover of three library additions to the ca_density_v0 kind (Vivarium):** `{"count": k}` in ic_density_set -> make_ics(exact_count=k); `success_mask_hex` from classify's correct_mask_hex; the validator's witness boundary compared against n_incorrect rather than refused at == 64. Filed roles/Vivarium/INBOX_HERAKLES_CA_DENSITY_LIBRARY_ADDITIONS_2026-09-16.md. BLOCKED ON: Vivarium.
+
+**X-6 OPEN 2026-09-16. Who executes derived-rule cells and writes their PEW player rows** (THEO-REQ-003/-005). Library done (herakles/evca/derive.py); the player-id convention is ruled (roles/Theophrastus/INBOX_HERAKLES_PLAYER_ID_CONVENTION_2026-09-16.md); minting ownership is Archaeon's ruling on Theophrastus's 09-14 routing question. Not mine to decide. BLOCKED ON: Archaeon.
 
 **X-3 OPEN. The F-20 recording gap.** The live null rows carry no
 `ic_transformed` flag, so `c3_null_check` correctly returns INDETERMINATE on
