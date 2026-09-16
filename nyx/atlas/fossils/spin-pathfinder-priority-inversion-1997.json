@@ -167,7 +167,33 @@
    "run/20260912T211155Z/runs-*.stdout.txt"
   ],
   "date": "2026-09-14T00:06Z",
-  "note": "two processes, three shared variables, one guard clause: the whole body is smaller than this note"
+  "note": "two processes, three shared variables, one guard clause: the whole body is smaller than this note",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:17Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne record nyx_handoff.where_it_came_from (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/nimble-code/Spin/archive/refs/tags/version-6.5.2.tar.gz sha256:e46a3bd308c4cd213cc466a8aaecfd5cedc02241190f3cb9a1d1b87e5f37080a",
+   "payload_manifest_id": "techne tree_sha256 30afd80d875d786f950a59d0ccbac8b19eebc1e2c5c4138f678fc3139cd15de5 (171 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/Spin-version-6.5.2/Examples/pathfinder.pml",
+     "payload_hash_read": "e033056e36b0da6ec0872ddd7ef33ef827fadbf01f38c66689e9cbd9727ba317",
+     "techne_recorded_hash": "e033056e36b0da6ec0872ddd7ef33ef827fadbf01f38c66689e9cbd9727ba317",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": [
+    "nyx/atlas/fingerprints/spin-pathfinder-priority-inversion-1997/ablate_rule_vs_mutex.json baseline: errors 1 at depth 4 (Nyx run, matches Techne)",
+    "nyx/atlas/fingerprints/spin-pathfinder-priority-inversion-1997/ablate_rule_vs_mutex.json A1-A4 + control",
+    "nyx/atlas/fingerprints/spin-pathfinder-priority-inversion-1997/ablate_rule_vs_mutex.json",
+    "nyx/atlas/fingerprints/spin-pathfinder-priority-inversion-1997/ablate_rule_vs_mutex.json"
+   ]
+  }
  },
  "organs": [
   {

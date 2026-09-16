@@ -159,7 +159,31 @@
    "run/20260913T054149Z/runs-*.stdout.txt"
   ],
   "date": "2026-09-14T00:02Z",
-  "note": "small fossil (3 files, 1034 lines); the pathology is the specimen; the anti-starvation gate is one flag path"
+  "note": "small fossil (3 files, 1034 lines); the pathology is the specimen; the anti-starvation gate is one flag path",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:17Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne record nyx_handoff.where_it_came_from (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=nptl/pthread_rwlock_common.c;hb=glibc-2.36 sha256:7ae9727e8e66785d23ccaabb43fb860830ecde992df2d96ba7a3d5ebf55555b6; https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=nptl/pthread_rwlock_wrlock.c;hb=glibc-2.36 sha256:f7701020e3784df59afafae21d21d49781e247c30a5dcea512e623c81742343e; https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=nptl/pthread_rwlock_rdlock.c;hb=glibc-2.36 sha256:a0914192854192c68e32848b8b3e9e3baca4d5ce3a04e140e2ff91941491bf1a",
+   "payload_manifest_id": "techne tree_sha256 f9659af1515526b55f6fba4735cc6c3b9a48d979b36aebe55c8c1ef003a80d96 (3 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/pthread_rwlock_common.c",
+     "payload_hash_read": "7ae9727e8e66785d23ccaabb43fb860830ecde992df2d96ba7a3d5ebf55555b6",
+     "techne_recorded_hash": "7ae9727e8e66785d23ccaabb43fb860830ecde992df2d96ba7a3d5ebf55555b6",
+     "match": true,
+     "refs": 9
+    }
+   ],
+   "unresolved_refs": [
+    "techne receipt run/20260913T054149Z: PREFER_READER 8 readers 3 s -> writer 1 acquisition (0.3/s); PREFER_WRITER_NONRECURSIVE -> 1.65e6/s (Techne's run, not Nyx'",
+    "run/20260913T054149Z: kind=PREFER_READER writer_acquisitions=1; kind=PREFER_WRITER_NONRECURSIVE writer_acquisitions=4950536 (Techne)"
+   ]
+  }
  },
  "organs": [
   {

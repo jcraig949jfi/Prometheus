@@ -1,4 +1,9 @@
-"""Cut: gzip-1.2.4-1993 (ancestry-aware, Stage A COARSE; SOURCE_READ deflate.c 154-290 (state, config table, hash macros), 357-420
+"""CORRECTION 2026-09-16 (annotation; nothing below is edited): the cut note 'a four-column table that changes NO mechanism' is WRONG
+in one respect -- the level is ALSO consumed at deflate.c:667 (compr_level <= 3 selects deflate_fast) and trees.c:987 (block-flush
+heuristic gated on level > 2). Recorded in nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-001.json; the organ record carries the marker.
+DO NOT RE-RUN THIS SCRIPT: it would reproduce the uncorrected text and drop the marker. A new cut, if needed, is a new script.
+
+Cut: gzip-1.2.4-1993 (ancestry-aware, Stage A COARSE; SOURCE_READ deflate.c 154-290 (state, config table, hash macros), 357-420
 (longest_match head), 516-560 (fill_window), 661-763 (deflate) in full; trees.c 94-274 (state) and function index; inflate.c 132-280
 (index, huft_build signature); unlzw.c / bits.c / gzip.c by name). The 1993 DEFLATE implementation."""
 from nyx.atlas.author import Cut

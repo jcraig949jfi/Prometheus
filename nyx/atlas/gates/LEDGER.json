@@ -1,0 +1,62 @@
+{
+ "schema": "nyx.atlas/1/gate_ledger",
+ "purpose": "Amendment 3 R31/R32: every handoff out of Nyx and every typed return into Nyx, with dates, so cuts_created vs cuts_returned_with_verdict and gate latency are computable. build.py reports them. A row is appended when an object leaves or a return arrives; rows are never edited.",
+ "tick": "1 pipeline tick = 1 calendar day until a seat defines otherwise",
+ "handoffs": [
+  {
+   "object_id": "CUT batch: 5 fossils (glibc rwlock, SPIN Pathfinder, zchaff, DES, EISPACK)",
+   "kind": "CUT",
+   "created": "2026-09-13",
+   "to": "none (atlas only; no adjudicator existed)",
+   "posted": null,
+   "returns": []
+  },
+  {
+   "object_id": "CUT batch: 25 fossils (Stage A sample, this session)",
+   "kind": "CUT",
+   "created": "2026-09-16",
+   "to": "none (atlas only; Harmonia lane currency not yet established)",
+   "posted": null,
+   "returns": []
+  },
+  {
+   "object_id": "MECH-GZIP-LEVELTABLE-001",
+   "kind": "NYX_PREDICTION_PACKET",
+   "created": "2026-09-16",
+   "frozen_sha256": "861dded070d138e35c56d5cc05cf76de7053117c3aba24aa51e350d8ebe10619",
+   "to": "Harmonia",
+   "posted": "comms #309 (2026-09-16, delegation to Harmonia; Harmonia lane currency under the pipeline not yet established)",
+   "required_response": "ACK <= 1 tick, DISPOSITION <= 2 ticks: CUT_SUPPORTED | CUT_CHALLENGE | PREDICTION_FAILED | PREDICTION_INDETERMINATE",
+   "returns": []
+  },
+  {
+   "object_id": "RS_CALIBRATION_PAIR_001",
+   "kind": "CALIBRATION_PAIR",
+   "created": "2026-09-16",
+   "to": "Harmonia",
+   "posted": "comms #309 (same message)",
+   "required_response": "ruler results R-ID-1, R-ID-2, R-DIV-1, R-DIV-2",
+   "returns": []
+  },
+  {
+   "object_id": "ATLAS PASS 01 first-pass return (Techne feedback 9a-9h)",
+   "kind": "REPORT",
+   "created": "2026-09-16",
+   "to": "Techne",
+   "posted": "comms #296",
+   "required_response": "record defects 9a-9d: ACCEPT/REJECT/DEFER; dig targets 9e-9h: acknowledgement",
+   "returns": []
+  },
+  {
+   "object_id": "gzip pilot Techne-owned identities (R39)",
+   "kind": "DELEGATION",
+   "created": "2026-09-16",
+   "to": "Techne",
+   "posted": "comms #310",
+   "required_response": "ACK <= 1 tick; DISPOSITION <= 2 ticks",
+   "returns": []
+  }
+ ],
+ "returns_received": [],
+ "escalations": []
+}

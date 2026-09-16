@@ -147,7 +147,56 @@
    "module list"
   ],
   "date": "2026-09-16T12:24Z",
-  "note": "the record's entry point (LQR) is a thin organ over an external Riccati solver; the body's own machinery is representation (state-space / transfer-function / frequency-response objects), interconnection, and analysis wrappers -- most of the 17k lines are argument processing"
+  "note": "the record's entry point (LQR) is a thin organ over an external Riccati solver; the body's own machinery is representation (state-space / transfer-function / frequency-response objects), interconnection, and analysis wrappers -- most of the 17k lines are argument processing",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:17Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne record nyx_handoff.where_it_came_from (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/python-control/python-control@a7754794dcc9d3ef2060cc1b2486bd42b73395cc",
+   "payload_manifest_id": "techne tree_sha256 63a1737525ab96f4f176896cd3ae3a1115aa92d6c75de1db62cfb3fdd725a723 (339 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/control/statefbk.py",
+     "payload_hash_read": "f7549aa9bedd04c12cc9dcf726d70ca42ce29e5be6efa7edf7d5e1ef284afb85",
+     "techne_recorded_hash": "f7549aa9bedd04c12cc9dcf726d70ca42ce29e5be6efa7edf7d5e1ef284afb85",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/control/mateqn.py",
+     "payload_hash_read": "2c1e849d57dd1e8b1a5674c1552890e3ed17909f4222eba3660aedf4ad452402",
+     "techne_recorded_hash": "2c1e849d57dd1e8b1a5674c1552890e3ed17909f4222eba3660aedf4ad452402",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/control/iosys.py",
+     "payload_hash_read": "e4497c25083f0f07ad959d2c72af41433ccac3eb028df60e0f736ca067d185de",
+     "techne_recorded_hash": "e4497c25083f0f07ad959d2c72af41433ccac3eb028df60e0f736ca067d185de",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/control/bdalg.py",
+     "payload_hash_read": "a495a48e5e8d38e3dd6abadc93f72f8ab41c46a711a1f4fa01a40fb6e42f0773",
+     "techne_recorded_hash": "a495a48e5e8d38e3dd6abadc93f72f8ab41c46a711a1f4fa01a40fb6e42f0773",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/control/timeresp.py",
+     "payload_hash_read": "f1ccef391974feed16d7daf33133a80c6652603550aa76006f01ed17dc351452",
+     "techne_recorded_hash": "f1ccef391974feed16d7daf33133a80c6652603550aa76006f01ed17dc351452",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {

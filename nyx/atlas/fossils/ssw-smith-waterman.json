@@ -142,7 +142,28 @@
    "src/ssw.c 163-387, 860-960"
   ],
   "date": "2026-09-16T12:16Z",
-  "note": "a 1981 dynamic programme re-cut for 16-lane 8-bit SIMD: the anatomy is the striping, the lazy-F correction, the saturating-arithmetic bias trick and the overflow fallback; the DP recurrence itself is unchanged"
+  "note": "a 1981 dynamic programme re-cut for 16-lane 8-bit SIMD: the anatomy is the striping, the lazy-F correction, the saturating-arithmetic bias trick and the overflow fallback; the DP recurrence itself is unchanged",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:17Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne record nyx_handoff.where_it_came_from (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library@a66636b79ef36ac178122437053be0d8ef345271",
+   "payload_manifest_id": "techne tree_sha256 3d5056fdb387b085dce770a5e7b708c0401368793d2187dc74f3a2889830f5fb (42 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/src/ssw.c",
+     "payload_hash_read": "17ab788a1c4c011c98c26e10ba51fa8e6cde0e7c41a98c3d1ef6aefdf8dc9779",
+     "techne_recorded_hash": "17ab788a1c4c011c98c26e10ba51fa8e6cde0e7c41a98c3d1ef6aefdf8dc9779",
+     "match": true,
+     "refs": 8
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
  "organs": [
   {
