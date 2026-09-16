@@ -1,37 +1,38 @@
 {
- "ran_at": "2026-09-11T14:49:43",
+ "ran_at": "2026-09-16T08:27:57",
  "host": "127.0.0.1",
- "machine": "M1",
+ "machine": "M2",
  "service": {
   "service": "mnemosyne-evidence-wiki",
   "status": "ok",
   "schema_version": 4,
   "ontology_version": 2,
   "fossil_contract": "pew.fossil.v2",
-  "uptime_s": 306.8,
+  "uptime_s": 82.7,
   "search": {
    "ready": true,
    "loading": false,
    "error": null,
-   "load_seconds": 4.59,
-   "loaded_at": "2026-09-11T14:44:41"
+   "load_seconds": 3.58,
+   "loaded_at": "2026-09-16T08:26:37"
   },
   "workspace": {
-   "base_sha": "e301547dd32d083903a4a727944daac663ea06a5",
+   "base_sha": "569a675f7b7dbd09fb1bcc8838efe26a17a9d701",
    "branch": "HEAD",
-   "worktree_path": "F:\\Prometheus-worktrees\\mnemosyne-pew\\evidence_wiki",
+   "worktree_path": "D:\\Prometheus-worktrees\\mnemosyne-pew\\evidence_wiki",
    "dirty": false,
-   "main_worktree": false
+   "main_worktree": false,
+   "workspace_known": true
   }
  },
  "n_scored": 12,
  "n_pass": 12,
  "skipped": [],
  "all_pass": true,
- "bound_evidence_id": "E-6f1fd58b5a5a",
+ "bound_evidence_id": "E-2d82a59f70f4",
  "fixture_encounter": "TESTFIX-HARMONIA-ENC-0002",
  "fixture_run": "TESTFIX-RUN-0002",
- "real_sfe_encounter": "SEAM-evt_690daf98a741067be25d9641",
+ "real_sfe_encounter": "SEAM-evt_b0c876bd220fd9f402699a19",
  "gates": [
   {
    "gate": "I_live_migration_state",
@@ -49,13 +50,13 @@
    "gate": "B_evidence_to_fossil_traversal",
    "pass": true,
    "skipped": false,
-   "detail": "evidence=E-6f1fd58b5a5a -> {\"encounter_id\": \"TESTFIX-HARMONIA-ENC-0002\", \"run_id\": \"TESTFIX-RUN-0002\", \"world_id\": \"TESTFIX-WORLD-0002\", \"players\": [\"TESTFIX-PLAYER-0002\"], \"sfe_entry_hash\": \"sha256:7c44ef40bee6775773ea1c365f238e056dadb864747f03ab692b831a73067d60\", \"sfe_event_id\": \"evt_d1c585e3133da4f58554cf24\", \"sfe_event_seq\": 1}"
+   "detail": "evidence=E-2d82a59f70f4 -> {\"encounter_id\": \"TESTFIX-HARMONIA-ENC-0002\", \"run_id\": \"TESTFIX-RUN-0002\", \"world_id\": \"TESTFIX-WORLD-0002\", \"players\": [\"TESTFIX-PLAYER-0002\"], \"sfe_entry_hash\": \"sha256:7c44ef40bee6775773ea1c365f238e056dadb864747f03ab692b831a73067d60\", \"sfe_event_id\": \"evt_d1c585e3133da4f58554cf24\", \"sfe_event_seq\": 1}"
   },
   {
    "gate": "C_reverse_query",
    "pass": true,
    "skipped": false,
-   "detail": "encounter -> 4 evidence row(s); contains E-6f1fd58b5a5a: True"
+   "detail": "encounter -> 5 evidence row(s); contains E-2d82a59f70f4: True"
   },
   {
    "gate": "D_unsupported_field_fails_closed",
@@ -85,7 +86,7 @@
    "gate": "G_namespace_firewall",
    "pass": true,
    "skipped": false,
-   "detail": "test/seam rows in prod fossil namespace: 0; prod encounters still 5978; seam evidence rows visible in ew.evidence_prod: 0 (must be 0); classification=['test']"
+   "detail": "test/seam rows in prod fossil namespace: 0; prod encounters still 6046; seam evidence rows visible in ew.evidence_prod: 0 (must be 0); classification=['test']"
   },
   {
    "gate": "G2_unknown_namespace_refused",
@@ -97,7 +98,7 @@
    "gate": "H_independent_read_back",
    "pass": true,
    "skipped": false,
-   "detail": "direct SQL (never through the writing function): [{'evidence_id': 'E-6f1fd58b5a5a', 'encounter_id': 'TESTFIX-HARMONIA-ENC-0002', 'encounter_run_id': 'TESTFIX-RUN-0002', 'encounter_run_key': 'TESTFIX-RUN-0002'}]"
+   "detail": "direct SQL (never through the writing function): [{'evidence_id': 'E-2d82a59f70f4', 'encounter_id': 'TESTFIX-HARMONIA-ENC-0002', 'encounter_run_id': 'TESTFIX-RUN-0002', 'encounter_run_key': 'TESTFIX-RUN-0002'}]"
   },
   {
    "gate": "J_contract_is_self_describing",

@@ -4,107 +4,110 @@
 > (operator, D-23, 2026-09-11); this file adds to them and may not
 > contradict them.
 
-**Currency: 2026-09-14 06:1x local (10:1x UTC).** Updated at least every four
-hours of activity, per base role s3. Instance for this pass: `m1-1bb9a189`.
+**Currency: 2026-09-16 12:3x UTC (08:3x local).** Updated at least every four
+hours of activity, per base role s3. Instance for this pass: `m2-fce3fe0b`,
+the first boot of this seat on M2 (SPECTREX5), worktree
+`D:\Prometheus-worktrees\vivarium-boot-2026-09-16` from `ccb26df01`.
 
 ## Is Vivarium alive
 
-Yes, again. Consumer `vivarium@m1`, **pid 13460**, launched 2026-09-14
-06:05:29 local by the Task Scheduler task `VivariumConsumer`, whose action is
-now `conhost.exe F:\Prometheus-data\vivarium\vivarium_consumer.cmd`
-(process tree python <- cmd <- conhost; no Windows Terminal). Heartbeat
-base_sha `fb7aa5bed` verified live.
+**No consumer is running anywhere.** `vivarium@m1` (pid 13460, build
+fb7aa5bed, pinned `F:\Prometheus-worktrees\vivarium-consumer`) last
+heartbeated **2026-09-14 23:53:44Z** and died with the operator-ordered M1
+reboot (~23:55Z; Nestor comms #262/#263). Found at this boot, 09-16 11:46Z,
+**35.9 h later** -- the second unobserved death in three days (receipt
+`receipts/CONSUMER_DEATH_2026-09-14_M1_REBOOT.md`; backlog C11). Stranded 0
+(IDLE at the reboot); no park record (a dead process cannot park).
 
-**The previous consumer (pid 26164) DIED 2026-09-13 18:12 local, unobserved
-for 11.9 h**: last heartbeat in the same minute as a WindowsTerminal.exe
-crash; task exit 0xC000013A; no park, no stranded row. 3 Archaeon rows
-waited up to 15.6 h and executed on relaunch (10:05:33-34Z, all EXECUTED).
-Receipt: receipts/CONSUMER_DEATH_2026-09-13_WT_CRASH.md; backlog C11.
+**Not relaunched, and not relaunchable today** (base rule 9):
 
-Pinned detached
-worktree `F:/Prometheus-worktrees/vivarium-consumer` at **`fb7aa5bed`**
-(no commits under vivarium/ since, through origin/main 6d72d1d19). Heartbeat carries build.code.base_sha, build.instance.tag,
-build.var_dir; state dir `F:\Prometheus-dataivariumar`; own flushed
-log there. Engine `eng_8a37a5d305969034d488c43e`, schema 8, hash
-sha256:5380cb90...; ledger at D:\Prometheus-data\sfe\engine.db since
-2026-09-12 11:58 (Daedalus's move, identity unchanged).
+    M1 SFE 8811 / M1 PEW 8377   do not answer from M2 (connect times out)
+    M1 shell                    none from M2 (22, 5985, 5986 closed)
+    M2 SFE 192.168.1.191:8811   LIVE, but it is the twin eng_906356f7
+                                (build 726275da), not the production ledger
+    production ledger           eng_8a37a5d3, "wherever it runs; today:
+                                nowhere" (Daedalus RULING, comms #270)
+    M2 PEW 192.168.1.191:8377   LIVE (Mnemosyne)
+    tokens on M2                none: no config.local.json here
 
-## B1 read scope (owner-side, recurrent since fb7aa5bed)
+The consumer follows the production ledger to M2. Prepared this pass, NOT
+launched: `vivarium/deploy/prepare_m2.py` (pinned detached worktree, two
+launchers, secrets presence by key name, store/PEW/engine preconditions,
+tasks registered with the dead-man DISABLED). Its receipt today reads
+store OK, PEW OK, engine WRONG_ENGINE (the twin), secrets ABSENT.
 
-Scope `scp_1be32ffbe7c9bf3b29ec8d85` "archaeon-campaigns", grant
-`gnt_1ecdeae69f800240e03221ed` to `cli_1029e9255a074157a1b3ba1e` (archaeon),
-read-only. 617 worlds = every owner world named viv-*; the consumer extends
-it at start and at every batch boundary (viv/scope.py; add-only,
-idempotent; "added N" / "no-op: scope complete" in the log; receipts in the
-state dir); `viv.cli scope-reconcile` by hand. Archaeon cut over to the
-grant 2026-09-12 13:44 (#223); raw-ledger read retired on their side.
+## Queue, at this writing (canonical store, UTC)
 
-## Seasons
+    queued 5   Archaeon tick rows, created 09-15 03:27:10Z .. 20:12:09Z
+               (oldest waiting 33 h); HELD, never cancelled by inference
+               (Daedalus #270: "hold the 5 rows"; Archaeon #267: "late,
+               not lost")
+    stranded 0   completed 579   failed 79   cancelled 492
+    last row done   8bc6b162 completed 2026-09-14 23:27:07Z
 
-S1 (fossil-directed F vs uniform C, 12 pairs, 24 rows): executed
-2026-09-12 12:56:57-12:57:06, EXECUTION_CLEAN
-(roles/Vivarium/ledgers/S1_SEASON_RECEIPT_2026-09-12.md). Archaeon's
-readout: NO_DETECTABLE_ADVANTAGE (theirs). S2: Archaeon's census says
-NOT_LICENSED (archaeon/docs/h0h5/S2_CENSUS_2026-09-12.md, a4695a518);
-nothing run, nothing queued for it.
+## What has to happen before the relaunch (not mine; in order)
 
-## Rule 10 (D-27): declared, enforced, registered
+1. Operator lands M1's `D:\Prometheus-data\sfe` (engine.db ~640 MB, blobs,
+   backup) on M2; Daedalus verifies identity, swaps the twin's data dir,
+   starts build 726275da on the ledger -> `/v2/version` reports
+   eng_8a37a5d3 at 192.168.1.191:8811 (#270 steps 1-2).
+2. Harmonia promotes the staged contract against M2 (#256/#270 step 3);
+   `roles/Harmonia/contracts/sfe_contract.json` base_url becomes
+   192.168.1.191.
+3. **Operator gate (mine to ask):** carry `vivarium/config.local.json` (the
+   two tokens, nothing else needed -- every other key is set by the
+   launcher's environment) from M1's pinned worktree to
+   `D:\Prometheus-worktrees\vivarium-consumer\vivarium\` on M2, with a
+   receipt. No seat copies a token across hosts (#270).
+4. Then: `python vivarium/deploy/prepare_m2.py --sha <SHA> --register`
+   reads green -> `schtasks /Change /TN VivariumDeadmanM2 /ENABLE` is the
+   launch (its first tick relaunches the consumer once the engine identity
+   holds); Archaeon's grant on the migrated ledger is Daedalus's route.
 
-    bound             17280 consecutive non-productive ticks (24 h at 5 s)
-    productive        a row EXECUTED, FAILED or REJECTED; never a heartbeat
-    accountable seat  Archaeon (accepted, comms #177)
-    halt class        ENGINE_TRANSPORT -> park on the FIRST such row,
-                      accountable Daedalus (rider in #136)
-    on park           <var_dir>/park-vivarium@m1.json, one comms report
-                      (--task-ref the record), exit 3; start refused until
-                      `viv.cli unpark --by --reason`
-    registry          roles/base-role/MONITORS.md row "Vivarium consumer"
-                      (UNDECLARED count 12 -> 11)
+## Landed this pass (main, fast-forward; all tested on the merged tree)
 
-Controls: tests/test_rule10_park.py (16) -- positive, negative, cheat (every
-idle tick emits a file; the loop still parks), halt positive/negative/cheat;
-a mutant counter that never counts turns 3 tests red.
+* **viv/db.py identity guard** (a6d1ba114): `connect()` proves the cluster
+  via comms.identity; production schema `viv` is PINNED to
+  prometheus-canonical and no variable can re-aim it; refusal closes the
+  connection and carries the incident signature. Found because on M2 an
+  unset VIV_DB_HOST reached the quarantined fork (c84e26826cc12217) and
+  `run` would have created viv.* there and ticked green. 7 controls.
+* **THEO-REQ-004** (6d21bd5ef, a9f81c7d6): executors declare witness
+  truncation BOTH WAYS (a complete vector at exactly 64 was refused as
+  undeclared; no bound moved); `success_mask_hex` on ca_density_v0 in the
+  library's encoding with a wrapper-vs-classify parity refusal; pinned
+  fixture 4f211943 -> 3655c564 with the arithmetic byte-identical. 12
+  controls. Replied #280; task #246 done.
+* **THEO-REQ-006** (6358acea9): `{"count": k}` entries in
+  `ic_density_set` (exact-count ensemble, library dbc41fd2f); refused at
+  the executor's entry with n_cells; null/float paths byte-identical. 15
+  controls.
+* **C11b dead-man** (f249ae21c): `viv/deadman.py`, a scheduler-fired
+  one-shot reading the heartbeat on the canonical store; BUSY-not-DEAD via
+  pid (C2's false-dead can never relaunch a second consumer); rule-9
+  engine-identity precondition (the twin is WRONG_ENGINE); rule-10 bound
+  3 -> park, self-disable, one comms report; state file every tick. 13
+  controls plus two live probes on the real dead row. Registry rows
+  VivariumConsumerM2 and VivariumDeadmanM2 in MONITORS.md.
+* `VIV_PEW_BASE_URL` env override (PEW is on M2).
 
-## Queue, at this writing
-
-**2026-09-14 10:05Z:** queued 0, stranded 0, completed 575, failed 79,
-cancelled 492. Archaeon's autonomous tick rows arrive about every 4 h 15 m.
-The paragraph below is the 09-11/09-12 reading, kept for the record.
-
-**cs-h5-1-r1 is DONE: 24 of 24 completed**, 17:13:44 to 17:18:58 local,
-mean 13.3 s per row, max 31.5 s, 0 failed, 0 ENGINE_TRANSPORT, no halt, no
-park; every row stamped `conformance: CONFORMANT`. Then one Archaeon tick row
-(cs-c1fb2785584b4074, created 16:57) completed at 17:19:01. Queue after:
-completed 536, failed 79, cancelled 492, queued 0. `stranded: []`. The
-consumer is idle and ticking (non-productive count rising toward the bound
-by design; an empty queue for 24 h parks it and tells Archaeon).
-
-## Closed today
-
-* **C6** running code revision on the heartbeat -- DONE (fa14903d7).
-* **C7** stop flag per checkout; `stop` reported success on a flag nothing
-  read -- DONE: state dir from config (`var_dir`), reported on the heartbeat,
-  `stop` writes there and REFUSES with no live heartbeat.
-* **C5** durable home for the consumer -- DONE: pinned worktree outside the
-  canonical checkout, launched by the scheduler, state outside any worktree.
-* Rule 10 bound + halt-on-first-transport -- DONE.
+CODE_FIXED is not DEPLOYED: none of the above reaches a row until the
+consumer is relaunched at or after these SHAs.
 
 ## Known live defects in this seat
 
-* **C2 / C1** -- no heartbeat during a row, so `health` reports
-  `alive: false` for a working consumer on a long row. The dormancy threshold
-  in MONITORS.md is written around it (15 min while no row is current).
-* **D7** -- the runner can commit to the SFE ledger with no register row
-  behind it. Seven such orphans from 2026-09-06, two more from my own test on
-  09-11; nobody can adjudicate them.
-* **D2** -- payload VALUES are validated at execution, after the world is
-  committed; 24 rows of cs-c3-1 were lost that way.
-* Selection binding on a reissue set: each executing r1 row binds the
-  candidate set as `selected=1 alternatives=23`, i.e. a set where every
-  member executes is recorded in the one-chosen-over-many shape. Pre-existing
-  behaviour (cs-h5-1 did the same); flagged to Archaeon, whose contract it is.
+* **C11 (a)** -- a logoff or reboot still kills an interactive task; the M2
+  registration keeps that shape (stored-credential tasks are the
+  operator's call). C11 (b) is closed by the dead-man once ENABLED.
+* **C2 / C1** -- no heartbeat during a row; the dead-man's BUSY verdict
+  covers the relaunch decision, `health` still says `alive: false`.
+* **D7** -- ledger commits with no register row behind them (7 + 2
+  orphans); nobody can adjudicate them.
+* **D2** -- payload VALUES validated at execution, after the world is
+  committed (24 rows of cs-c3-1 lost that way); REQ-006's count check sits
+  at the same point.
 
 ## Nothing stranded
 
-`stranded: []` at last reading. A stranded row is never resolved by
-inference in this seat.
+`stranded: []` at 12:1x UTC. A stranded row is never resolved by inference
+in this seat.

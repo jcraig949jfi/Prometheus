@@ -113,7 +113,12 @@ def load_config() -> dict:
                      # committed by accident.
                      ("sfe_base_url", "VIV_SFE_BASE_URL"),
                      ("sfe_cacert", "VIV_SFE_CACERT"),
-                     ("sfe_insecure", "VIV_SFE_INSECURE")):
+                     ("sfe_insecure", "VIV_SFE_INSECURE"),
+                     # M2 deployment (2026-09-16): PEW moved to M2 with the
+                     # fleet; the launcher names it in the environment so the
+                     # only keys a carried config.local.json must hold are
+                     # the two tokens.
+                     ("pew_base_url", "VIV_PEW_BASE_URL")):
         if os.environ.get(env):
             cfg[key] = os.environ[env]
     return cfg

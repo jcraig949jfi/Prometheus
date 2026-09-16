@@ -1391,12 +1391,31 @@ def query_fossil_encounters(request: Request, run_id: str | None = None,
                             player_id: str | None = None,
                             episode_id: str | None = None,
                             namespace: str | None = None,
+                            ecology: str | None = None,
                             limit: int = 200, conn=Depends(get_conn)):
     """Query the evidence of one run/world/player. At least one selector is
-    required -- an unfiltered dump is not a query."""
+    required -- an unfiltered dump is not a query.
+
+    `ecology` (THEO-REQ-001, Theophrastus #239, 2026-09-16) is a JSON object
+    matched by jsonb containment against the row's ecology column, so a
+    consumer selects by ecological COORDINATE across every producer without
+    reading any producer's ledger: ecology={"world":{"n_cells":599}} returns
+    every encounter whose ecology contains that sub-object. Rows whose
+    producer never wrote ecology (Vivarium's writer does not) are simply not
+    matched; the selector reports nothing about them. The shape inside the
+    column is the producer's; the column and the containment are PEW's."""
     t0 = time.time()
     ident = identity(request)
     where, args = [], []
+    if ecology is not None:
+        try:
+            eco = json.loads(ecology)
+        except ValueError:
+            raise HTTPException(422, "ecology_not_json")
+        if not isinstance(eco, dict) or not eco:
+            raise HTTPException(422, "ecology_must_be_nonempty_object")
+        where.append("ecology @> %s::jsonb")
+        args.append(json.dumps(eco))
     for col, val in (("run_id", run_id), ("world_id", world_id),
                      ("episode_id", episode_id), ("namespace", namespace)):
         if val is not None:
@@ -1409,7 +1428,8 @@ def query_fossil_encounters(request: Request, run_id: str | None = None,
         raise HTTPException(400, "at_least_one_selector_required")
     rows = _enc_rows(conn, " AND ".join(where), args, min(limit, 1000))
     log_read(conn, "fossil.encounters.query", ident,
-             {"run_id": run_id, "world_id": world_id, "player_id": player_id},
+             {"run_id": run_id, "world_id": world_id, "player_id": player_id,
+              "ecology": ecology},
              len(rows), t0)
     return {"n": len(rows), "encounters": rows}
 
@@ -1447,6 +1467,11 @@ class FossilPlayerIn(BaseModel):
     phenotype: dict | None = None
     producer: dict | None = None
     namespace: str = "prod"
+    # migration 013 (2026-09-16, Proteus #287 / ruling #268): minted players
+    mate_player: str | None = None            # second parent of a crossover child
+    family: str | None = None                 # e.g. rule_table
+    representation_version: str | None = None # e.g. herakles.evca.rule_hex.r3.v1
+    semantic_version: str | None = None       # e.g. herakles.evca.core.v1
 
 
 def _upsert_anchor(conn, ident, table, key, body, endpoint):
