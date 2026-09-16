@@ -810,3 +810,28 @@
   job, but three attempts had already been lost to D's own process errors and the honest call was to stop rather than
   spend a fourth token on it. Module, tests and measured sizing are on origin; the question is round 8's, rule intact.
 - WORKER STOPPED by D at close, by verified cmdline + cwd (never a name substring). Lane D closed.
+
+## ROUND 8 -- Nestor-D[m1-6f8c8d56], worktree nestor-r8-d, science clock r8 (start 16:45, NO_NEW_WORK 23:15)
+
+- 16:51 BOOT. ff-merge: already at d7cc4cd1b (GATE_MAP_R8.json committed). comms boot m1-6f8c8d56; `bus hello`
+  re-registered lane D from the r7 tag m1-188fc46f (no live heartbeat held it). inbox read UNPIPED: only r7 traffic
+  addressed to D, no r8 assignment. warmup rc 0; pytest rc 0 (759 passed, 1 skipped). No stale D worker (checked by
+  cmdline). Worker serve --lane D started: reg pid 27104, repo nestor-r8-d, round r8, tag m1-6f8c8d56.
+  Gate state read (not relied on from prose): pm:round:r8:gates G1 G2 G3 landed, C1 not_landed -> no GPU work.
+- ITEM 1 (cheap minimum discriminator) = D-R8-1: ANOM-1789415790371-0 (fewest-byte brain) executed under r8 with the
+  D-R7-10 rule, thresholds, cells, streams and module UNCHANGED (module untouched since 7173baca0). Two r7 attempts died
+  on D's own process errors (cpu budget; git race); no held/train value from either partial file was read. BOOT rule
+  from r7 applied: job() run end-to-end against a stub ctx through EV.prepare_row first (1 world x 1 seed x 2 gens:
+  8 rows, summary emitted; only kind/status/walls read). Predicate 1789592362632-0 pinned d7cc4cd1b; envelope.admit dry
+  run ok (no reasons) with and without predicate_event_id; job 28e24c6d5c81, OBSERVATION, cpu 20000, checkpointable.
+- ITEM 2 BETA sweep (PC 1789518268676-0) BUILT, NOT YET POSTED: primordial/cohorts/d/r8_2_ap02_beta_sweep.py +
+  test (12 passed rc 0). Calls C's AP-02 run()/oracles()/score() UNCHANGED with BETA as the only parameter, on D's own
+  FalkorDB :6393 (same module ver 42004 as C's :6392). Points m x 169144, m in {0,1,4,16,64}, control once; order
+  control -> m1 -> I1 -> m0 -> m4 -> m16 -> m64; early stop on I1 or oracle failure; no point ever added. Decision
+  labels and binding rule in the docstring, fixed before any value. The PC proposed {0, 1x, 4x, 16x}; D ADDS 64x
+  before any value as the bytes-first saturation end (one byte = 64% of the train NK sum), so CHARGE_NEVER_BINDS is
+  decidable, and ADDS the null arm m0 as a BINDING control (parity(0) must hold or nothing is readable).
+  Dev (no rows): BETA recomputed 169144; C's oracles ok at all 5 BETAs on random genomes; 0.88 s/gen on :6393 ->
+  ~8456 s projected for 192 runs; min selection fit at 64x -49.2M, int32 safe. Stub-ctx job (2 gens, 2 runs): rows
+  pass prepare_row, early stop I1_REPLICATION_FAILED fires as designed, C rows sha256 matches the frozen b13bd4fb.
+  Commit + predicate wait for D-R8-1's RowWriter to close (no git write with a live writer).
