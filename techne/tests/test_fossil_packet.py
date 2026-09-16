@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import copy
 import json
+import pathlib
 
 from techne.fossils import packet, vault
 
@@ -58,3 +59,20 @@ def test_world_id_stable_under_witness_change_and_moves_under_manifest_change():
     assert a == packet.fossil_world_id("d" * 64, "m" * 64, ["gcc 12"])      # image digest is not an input at all
     assert a != packet.fossil_world_id("d" * 64, "n" * 64, ["gcc 12"])
     assert a != packet.fossil_world_id("d" * 64, "m" * 64, ["gcc 13"])
+
+
+def test_capability_matrix_must_match_worlds_registry():
+    p = copy.deepcopy(GZ); p["CAPABILITY_MATRIX"]["STEP"] = "yes"
+    assert any("differs from WORLDS.json" in w for w in packet.validate(p))
+    p = copy.deepcopy(GZ); p["FOSSIL_WORLD"]["name"] = "prometheus-fossil-nonexistent:bookworm"
+    assert any("not in techne/fossils/WORLDS.json" in w for w in packet.validate(p))
+
+
+def test_worlds_registry_covers_every_dockerfile_and_every_verb():
+    reg = packet.worlds_registry()["worlds"]
+    import glob
+    dfs = {pathlib.Path(x).as_posix() for x in glob.glob("techne/fossils/environment/*.Dockerfile")} | {"techne/fossils/specimens/go-explore-uber-2022/environment/go-explore-min.Dockerfile"}
+    assert {w["dockerfile"] for w in reg.values()} == dfs
+    for name, w in reg.items():
+        assert set(w["capabilities"]) == set(packet.VERBS), name
+        assert set(w["capabilities"].values()) <= {"yes", "no", "partial"}, name
