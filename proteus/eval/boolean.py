@@ -72,9 +72,9 @@ def C(v):
     return (CONST, v)
 
 
-def I(i):
-    if not isinstance(i, int) or isinstance(i, bool) or not 0 <= i < N_INPUTS:
-        raise BooleanError(f"input index must be an int in [0,{N_INPUTS}), got {i!r}")
+def I(i, n_inputs=N_INPUTS):
+    if not isinstance(i, int) or isinstance(i, bool) or not 0 <= i < n_inputs:
+        raise BooleanError(f"input index must be an int in [0,{n_inputs}), got {i!r}")
     return (INPUT, i)
 
 
@@ -94,8 +94,12 @@ def Xor(x, y):
     return (XOR, x, y)
 
 
-def check(expr, _depth=0):
-    """Type/arity/depth check. Returns the depth. Fails closed on anything malformed."""
+def check(expr, n_inputs=N_INPUTS, _depth=0):
+    """Type/arity/depth check. Returns the depth. Fails closed on anything malformed.
+
+    `n_inputs` defaults to the alpha's 3 and is a BETA facility (2026-09-16): a wider arity is
+    checked against ITS declared width. Every existing caller passes nothing and is unchanged.
+    """
     if not isinstance(expr, tuple) or not expr:
         raise BooleanError(f"expression must be a non-empty tuple, got {expr!r}")
     op = expr[0]
@@ -107,12 +111,12 @@ def check(expr, _depth=0):
             raise BooleanError(f"{op} takes exactly one payload")
         if op == CONST and expr[1] not in (0, 1):
             raise BooleanError("constant must be 0 or 1")
-        if op == INPUT and not (isinstance(expr[1], int) and 0 <= expr[1] < N_INPUTS):
+        if op == INPUT and not (isinstance(expr[1], int) and 0 <= expr[1] < n_inputs):
             raise BooleanError("input index out of range")
         return _depth
     if len(expr) != n + 1:
         raise BooleanError(f"{op} takes exactly {n} operand(s), got {len(expr) - 1}")
-    return max(check(a, _depth + 1) for a in expr[1:])
+    return max(check(a, n_inputs, _depth + 1) for a in expr[1:])
 
 
 def truth_table(expr, n_inputs=N_INPUTS):
@@ -121,7 +125,7 @@ def truth_table(expr, n_inputs=N_INPUTS):
     Assignment order is declared and fixed: index k of the returned list corresponds to the
     assignment whose bit j is (k >> (n_inputs - 1 - j)) & 1, i.e. input 0 is the most significant.
     """
-    check(expr)
+    check(expr, n_inputs)
     out = []
     for k in range(2 ** n_inputs):
         env = [(k >> (n_inputs - 1 - j)) & 1 for j in range(n_inputs)]
@@ -204,8 +208,17 @@ def ordered_assignments(ordering=ORDERING_DECLARED, seed=0, n_inputs=N_INPUTS):
 # --------------------------------------------------------------------------- compiler
 
 def compile_boolean(expr, n_inputs=N_INPUTS):
-    """Compile to a player manifest using only the DECLARED opcode subset."""
-    depth = check(expr)
+    """Compile to a player manifest using only the DECLARED opcode subset.
+
+    `n_inputs` other than 3 is BETA (2026-09-16). The inputs occupy r0..r(n-1) and the temporary
+    stack starts at r(n), so for n = 3 the emitted words are byte-identical to the alpha's
+    (pinned by a golden hash in test_boolean_universe.py); wider arities pay one temporary per
+    extra input. Nothing about the opcode subset, NOT-as-XOR, or the register roles changes.
+    """
+    depth = check(expr, n_inputs)
+    temp_lo = R_INPUT_BASE + n_inputs
+    if temp_lo > TEMP_HI:
+        raise BooleanError(f"{n_inputs} inputs leave no temporaries below r{TEMP_HI}")
     words = []
 
     def emit(op, a=0, b=0, c=0):
@@ -216,7 +229,7 @@ def compile_boolean(expr, n_inputs=N_INPUTS):
     for i in range(n_inputs):
         emit(OP_IN, R_INPUT_BASE + i, R_CHANNEL, 0)
 
-    n_temps = TEMP_HI - TEMP_LO + 1
+    n_temps = TEMP_HI - temp_lo + 1
 
     def gen(e, t):
         """Emit code leaving the value of `e` in register `t`. Temporaries above t are free."""
@@ -238,8 +251,8 @@ def compile_boolean(expr, n_inputs=N_INPUTS):
             gen(e[2], t + 1)
             emit({AND: OP_AND, OR: OP_OR, XOR: OP_XOR}[op], t, t, t + 1)
 
-    gen(expr, TEMP_LO)
-    emit(OP_OUT, TEMP_LO, R_CHANNEL, 0)
+    gen(expr, temp_lo)
+    emit(OP_OUT, temp_lo, R_CHANNEL, 0)
     emit(OP_HALT)
 
     for w in words[::4]:
@@ -279,7 +292,7 @@ def oracle_labels(expr, inputs_list, n_inputs=N_INPUTS):
     oracle recomputes truth here. A transferred source label is never trusted, so a wrong source
     label cannot corrupt a target result -- it can only waste a probe.
     """
-    check(expr)
+    check(expr, n_inputs)
     out = []
     for inputs in inputs_list:
         if len(inputs) != n_inputs or any(v not in (0, 1) for v in inputs):
@@ -301,6 +314,10 @@ def correctness_scope():
         "not_is_compiled_as": "XOR x, 1 -- the VM's NOT is bitwise complement and leaves {0,1}",
         "max_temporaries": TEMP_HI - TEMP_LO + 1,
         "verified_beyond_3_inputs": False,
+        "beta_arity_note": ("2026-09-16: 4-input compile/evaluate parity is exercised by "
+                            "proteus/tests/test_boolean_universe.py over all 16 assignments for "
+                            "the expression set stated there; the alpha interface and this "
+                            "scope statement are unchanged"),
         "note": ("Exhaustive means all 8 assignments for every task tested, not all tasks. The "
                  "set of expressions checked is stated by the test that checks them."),
     }
