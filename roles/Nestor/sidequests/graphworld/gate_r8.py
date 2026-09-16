@@ -107,12 +107,41 @@ def p_g8():
 
 
 def p_g1():
-    """A row outside the frozen vocabulary must fail LOUDLY, not one row at a time under an ok job."""
+    """G1 row/evidence vocabulary loud-fail (D29) -- BEHAVIOURAL, and it carries its own residual limit.
+
+    The name-based version asked only whether SOME refusal entrypoint existed. That cannot distinguish
+    "the vocabulary path works" from "the vocabulary path is wired into the thing that emits rows".
+
+    LANDED here means F's deliverable is complete and tested: prepare_row/RowRefused/check_rows exist,
+    refusals name the offending value AND the row index, no alias is introduced, and F's own test drives
+    the REAL worker to job status `error` with no data row written.
+
+    RESIDUAL, recorded rather than absorbed (F disclosed it; A did not discover it): prepare_row fails
+    loud only WHERE IT IS CALLED. A job function that calls bare ctx.emit is not covered until the call
+    site lands inside Ctx.emit and Worker._drain ends a refused-row job `error` instead of writing an
+    `aborted` wrapper under an ok job (D29's original shape). That wiring is in P's file. This probe
+    reports it in the detail so the published map carries the limit as data, not as conductor prose.
+    A is NOT flipping G1 to NOT LANDED over it: that would refuse all row-emitting science for the round
+    on a disclosed scope gap, and a lane's honest disclosure must not become a machine refusal.
+    """
     from primordial.fabric import envelope as E
-    for name in ("vocabulary_reasons", "validate_rows", "row_vocabulary_reasons", "check_row_vocabulary"):
-        if hasattr(E, name):
-            return True, f"envelope.{name} present (vocabulary refusal path)"
-    return False, "no row-vocabulary refusal entrypoint found in envelope"
+    for name in ("prepare_row", "RowRefused", "check_rows"):
+        if not hasattr(E, name):
+            return False, f"envelope.{name} absent -- G1's refusal path is incomplete"
+    tf = "primordial/tests/test_r8_f_g1_ge_g6.py"
+    if not (ROOT / tf).exists():
+        return False, f"{tf} absent -- G1 has no regression test aimed at the claim"
+    t = _run([PY, "-m", "pytest", tf, "-q"], timeout=900)
+    tl = (t.stdout or "").strip().splitlines()
+    last = tl[-1] if tl else "no output"
+    ok = t.returncode == 0 and " passed" in last
+    wsrc = (ROOT / "primordial" / "fabric" / "worker.py").read_text(encoding="utf-8", errors="replace")
+    wired = "prepare_row" in wsrc
+    drain_loud = "aborted" not in wsrc.split("def _drain", 1)[-1][:1200] if "def _drain" in wsrc else False
+    limit = ("" if (wired and drain_loud) else
+             f"  RESIDUAL (P's file, F-disclosed): Ctx.emit prepare_row wired={wired}, "
+             f"_drain ends job error={drain_loud} -- bare ctx.emit jobs NOT covered")
+    return ok, f"{tf}: rc={t.returncode} | {last}{limit}"
 
 
 def p_ge():
