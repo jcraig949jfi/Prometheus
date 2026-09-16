@@ -45,12 +45,19 @@ $env:EW_DB_HOST = $dbHost
 $env:PROMETHEUS_ENV = "prometheus-canonical"
 $env:PROMETHEUS_MACHINE = "M2"
 
-# Interpreter: the M2 venv beside the repository root that holds the
-# search model's dependencies; a bare `python` on M2 is a shim.
+# Interpreter: the M2 venv (.venv-m2, holding torch + sentence-transformers
+# since 2026-09-16) lives beside the CANONICAL clone, not beside this pinned
+# worktree, so it is found through the repository's common git dir -- no
+# drive letter, and the same answer from every worktree. A bare `python`
+# on M2 is a shim with no dependencies (measured 2026-09-16: the first
+# pinned tick started the service "via python" and it never answered).
 if (-not $env:EW_PYTHON) {
-    foreach ($cand in @("..\.venv-m2\Scripts\python.exe")) {
-        $full = Join-Path $root $cand
-        if (Test-Path $full) { $env:EW_PYTHON = (Resolve-Path $full).Path; break }
+    $common = (& git -C $root rev-parse --path-format=absolute --git-common-dir 2>$null | Out-String).Trim()
+    $cands = @()
+    if ($common) { $cands += (Join-Path (Split-Path -Parent $common) ".venv-m2\Scripts\python.exe") }
+    $cands += (Join-Path $root "..\.venv-m2\Scripts\python.exe")
+    foreach ($cand in $cands) {
+        if (Test-Path $cand) { $env:EW_PYTHON = (Resolve-Path $cand).Path; break }
     }
 }
 
