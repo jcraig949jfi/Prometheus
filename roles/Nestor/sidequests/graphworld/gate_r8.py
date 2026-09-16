@@ -36,7 +36,12 @@ ROOT = pathlib.Path(__file__).resolve().parents[4]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 GW = ROOT / "roles" / "Nestor" / "sidequests" / "graphworld"
-MAP_FILE = GW / "GATE_MAP_R8.json"
+def map_file(round_id: str) -> pathlib.Path:
+    """Per-round path. A hardcoded GATE_MAP_R8.json meant a run with any other --round silently
+    overwrote r8's map -- the same 'round id not honoured' family as G8, in my own runner. It also
+    made it unsafe to rehearse --emit, which is the one path that would otherwise execute for the
+    first time at the real gate."""
+    return GW / f"GATE_MAP_{round_id.upper()}.json"
 PY = r"C:\Users\jcrai\lab\gw-venv\Scripts\python.exe"
 INTEGRATION = "nestor/sidequest-graphworld-2026-09-14"
 
@@ -306,8 +311,19 @@ def env_checks(round_id: str, skip_suite: bool = False, since_sha: str = "") -> 
     out.append(("zero_registrations", regs == 0, f"registrations={regs}"))
     out.append(("zero_stop_flags", stops == 0, f"stop_flags={stops}"))
 
+    # GATE RUN item 6: present AND readable. Truthiness alone would pass a malformed profile. The broker
+    # itself cannot be probed here -- broker.py is P's file and is being edited right now -- so validate the
+    # DATA the broker depends on: it must parse, and carry k_star and threads_per_worker as numbers.
     prof = c.get("pm:capacity:profile")
-    out.append(("capacity_profile", bool(prof), (prof or "")[:120]))
+    try:
+        pj = json.loads(prof) if prof else {}
+        need = ("k_star", "threads_per_worker")
+        miss = [k for k in need if not isinstance(pj.get(k), (int, float)) or isinstance(pj.get(k), bool)]
+        ok_prof, why = (not miss), (f"{pj.get('exp')} k*={pj.get('k_star')} threads={pj.get('threads_per_worker')}"
+                                    if not miss else f"profile parsed but missing/non-numeric {miss}")
+    except Exception as e:                              # noqa: BLE001 -- unparseable is a failed check, not a crash
+        ok_prof, why = False, f"profile does not parse as JSON ({type(e).__name__}): {(prof or '')[:80]}"
+    out.append(("capacity_profile", ok_prof, why))
 
     g = _run(["git", "-C", str(ROOT), "status", "--porcelain"], timeout=120)
     out.append(("conductor_worktree_clean", g.returncode == 0 and not g.stdout.strip(),
@@ -375,8 +391,9 @@ def main(argv=None) -> int:
         c = bus.conn()
         c.hset(f"pm:round:{a.round}:gates", mapping={k: ("landed" if v["landed"] else "not_landed")
                                                      for k, v in gates.items()})
-        MAP_FILE.write_text(json.dumps(record, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
-        print(f"\npublished pm:round:{a.round}:gates and {MAP_FILE.relative_to(ROOT).as_posix()}")
+        mf = map_file(a.round)
+        mf.write_text(json.dumps(record, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+        print(f"\npublished pm:round:{a.round}:gates and {mf.relative_to(ROOT).as_posix()}")
     else:
         print("\nREHEARSAL: nothing published")
     return 0 if env_ok else 1
