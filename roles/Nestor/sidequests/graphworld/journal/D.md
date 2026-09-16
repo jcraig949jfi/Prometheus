@@ -581,3 +581,12 @@
   winner earned), shrinks the winner in 22/32, costs <1% of train fitness, costs nothing on held-out, and the meter
   does not bind at all. Next candidate named in the receipt: a BETA sweep in D-R7-4's shape (decisive, not
   descriptive), to be SIZED against C's harness cost before committing; a PC if it does not fit the clock.
+- BETA sweep SIZED from C's committed rows before committing to it (promised to A): per run wall_s median 38.36 but
+  cpu_s median only 1.47 -- the wall is FalkorDB round trips, not compute. One BETA point (64 runs) ~2456 s wall /
+  ~94 CPU-s; a 4-point sweep reusing the single BETA-independent control ~4914 s wall (~82 min) / ~280 CPU-s,
+  checkpointable over ~3 segments. It FITS the clock and the budget. NOT RUN anyway: it would hold one of the two
+  shared CPU tokens for ~82 min at ~4% utilisation while another lane waits -- the D22 starvation D itself reported,
+  with D as the cause -- and it would contend with C's live FalkorDB on :6392. Filed as a PRODUCTION_CANDIDATE with the
+  measured basis, the projection, the reason, and a cheaper numpy-substrate variant carrying the caveat that the
+  substrate is part of the cell definition (it would answer a neighbouring question, not this one). Note to A only;
+  D takes a ruling either way, and without one ANOM-..6515 stays OPEN with two MIXED discriminators.
