@@ -77,14 +77,51 @@ def register(r, lane: str, repo, round_id: str | None = None, pid: int | None = 
                          "started_ts": f"{time.time():.3f}",
                          "tag": os.environ.get("PM_TAG", "") if tag is None else tag})
     r.expire(key, REG_TTL)
+    _RECORDS[key] = r.hgetall(key)
     return key
 
 
-def refresh(r, key: str) -> None:
+# D28 (r8 C3): registrations made by THIS process, so refresh() can re-create one whose key expired while the
+# process was blocked in a job longer than REG_TTL. r7: C-R7-01's GPU job ran 217.6 s > 90 s, the arbiter's key
+# expired mid-job, and every later refresh was `EXPIRE missing-key` -- a silent no-op -- for ~23 min.
+_RECORDS: dict[str, dict] = {}
+
+
+def refresh(r, key: str) -> bool:
+    """Extend the registration TTL; if the key is GONE, re-create it from this process's register() record.
+    Re-creation happens only for a key this process registered (and has not unregistered) whose pid is still
+    alive, so a refresh can never resurrect a dead or foreign registration. -> True iff the key exists after."""
+    if r.expire(key, REG_TTL):
+        return True
+    rec = _RECORDS.get(key)
+    if not rec or not _live(int(rec.get("pid") or 0))[0]:
+        return False
+    n = int(rec.get("reregistered_n") or 0) + 1
+    rec.update(reregistered_n=str(n), reregistered_ts=f"{time.time():.3f}")   # disclosed on the record, never silent
+    r.hset(key, mapping=rec)
     r.expire(key, REG_TTL)
+    return True
+
+
+def keepalive(r, key: str, interval_s: float = REG_TTL / 3):
+    """Refresh `key` from a daemon thread every interval_s, so a caller that blocks for longer than REG_TTL (the
+    GPU arbiter inside run_job) stays registered. -> a threading.Event; set() it (or unregister) to stop."""
+    import threading
+    stop = threading.Event()
+
+    def loop():
+        while not stop.wait(interval_s) and key in _RECORDS:
+            try:
+                refresh(r, key)
+            except Exception:                     # noqa: BLE001 -- a bus hiccup must not kill the serving process
+                pass
+
+    threading.Thread(target=loop, name=f"reg-keepalive:{key}", daemon=True).start()
+    return stop
 
 
 def unregister(r, key: str) -> None:
+    _RECORDS.pop(key, None)                        # first, so a concurrent keepalive cannot re-create it
     r.delete(key)
 
 
