@@ -523,3 +523,22 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
 - Also observed: G's resumable objects carry no progress units (the cell job never calls ctx.progress), so a stranded
   continuation is invisible in the object until a boundary; the filing adds those calls.
 - Local commits held for close: 6b6c03829, f4d3a6e39, 20dd00d74, ddf3995a7, d021a3efd, this one.
+
+# Round 8 R8-BUILD TRACK-1 -- Nestor-F[m1-8c85d063], T0 09:15, cap 10:15 (synced ff 6c02b89a9)
+
+## 2026-09-16 09:25 -- G1 + GE + G6 in envelope.py, one iteration (tests 30/30)
+
+- G1 (D29): frozen ROW_STATUSES / ROW_EVIDENCE_CLASSES; vocabulary_reasons(row, index) names value AND index;
+  prepare_row(row, index, env) raises RowRefused at EMIT (no alias: 'observation' in any case is refused) and stamps
+  predicate_id + predicate_event_id; lint_vocabulary + `python -m primordial.fabric.envelope lint` (tables agree
+  with rows.STATUSES and evidence_n; AST over primordial/**/*.py minus tests; optional --rows JSONL). Tree: 281 checks, 0.
+- Real-worker regression: a job emitting 4 'observation' rows ends `error`, data rows 0. HONEST LIMIT: that job
+  calls prepare_row itself -- a job calling bare ctx.emit is covered only once P puts prepare_row in Ctx.emit and
+  makes _drain's refused row end the job `error` (worker.py is P's). Asked on the bus 1789564627164-0 / 1789564931110-0.
+- GE: admit(..., gates=None, r=None) -> gate_reasons() BEFORE evidence/ceilings, event GATE_REFUSAL, stub False.
+  State = gates arg, else redis pm:round:<rid>:gates, else committed GATE_MAP_<RID>.json (round_id must match).
+  Missing/unreadable/bad value -> GATE_STATE_UNAVAILABLE. No clock -> nothing. Enforced for campaign ids rN, N >= 8
+  (r5-r7 and test clock ids 't-r7-1' are pre-gate; without that every existing clock test refuses). Topology
+  constant: G1 rows>0, G2 ANTI_PRIOR|BETA*, G3 kind cpu, C1 kind gpu, C2 CLAUSE_B non-OBSERVATION (n=32 = MC branch).
+- G6 (D27): open_candidate(r, lane, question, basis, requested_cost, dependencies, experiment_class, source_event)
+  -> stub + one CANDIDATE_OPENED lineage event, never *_REFUSAL; refuse() now shares _stub(); file_candidate works on it.
