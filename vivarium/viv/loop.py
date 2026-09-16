@@ -50,7 +50,7 @@ from . import selection as _selection
 from . import spec as _spec
 from . import vardir as _vardir
 from . import workspace as _workspace
-from .request import ExecutionRequest
+from .request import ClaimGrant, ExecutionRequest
 from .runner import ExecutionFailure, RunResult, SfeRunner
 
 __all__ = ["Vivarium", "TickReport", "Recovery", "default_worker_id",
@@ -114,6 +114,11 @@ class Recovery:
                               "sfe_experiment_id": r["sfe_experiment_id"],
                               "claimed_by": r["claimed_by"]}
                              for r in self.stranded]}
+
+
+def _utcnow() -> str:
+    import datetime
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 class _RowPulse:
@@ -246,6 +251,10 @@ class Vivarium:
                 base_url=self.cfg["sfe_base_url"], cafile=cacert,
                 token=_identity.token_for(role),
                 client_id=_identity.client_id_for(role),
+                client_name=_identity._ROLES[role][2],
+                # D7: the loop always issues a grant, so requiring it costs
+                # the queue path nothing; it is the direct path it refuses.
+                require_grant=True,
                 # "0"/"false"/"" all mean NO. bool("0") is True, and a flag
                 # that disables certificate verification must not be armed by
                 # someone typing the word for off.
@@ -353,7 +362,11 @@ class Vivarium:
             conn.commit()
             self.log("[viv] stage=dispatch experiment_id=%s -> running sfe=%s"
                      % (eid, sfe_exp_id))
-        return self.runner().run(request, on_running=on_running)
+        # D7: the grant is issued HERE and only here -- for the row this tick
+        # claimed (eid), by this worker. The runner refuses without it.
+        grant = ClaimGrant(experiment_id=eid, worker_id=self.worker_id,
+                           claimed_at=_utcnow())
+        return self.runner().run(request, on_running=on_running, grant=grant)
 
     # =====================================================================
     # STAGE 5 -- COLLECT.  Assemble what was observed. Invent nothing.
