@@ -1,21 +1,69 @@
 {
   "runner": "docker",
-  "image": "prometheus-fossil-pdp1:bookworm",
+  "image": "prometheus-fossil-pdp1:display",
   "workdir": "upstream",
-  "probe": ["pdp1 --version 2>&1 | head -1; cat /usr/local/share/pdp1/simh-commit.txt /usr/local/share/pdp1/simtools-commit.txt; macro1 2>&1 | head -1"],
+  "probe": [
+    "pdp1 --version 2>&1 | head -1; cat /usr/local/share/pdp1/simh-commit.txt /usr/local/share/pdp1/simtools-commit.txt; macro1 2>&1 | head -1; printf 'show dpy\nexit\n' > /tmp/p.ini; xvfb-run -a pdp1 /tmp/p.ini 2>&1 | grep -i dpy"
+  ],
   "build": [
-    {"name": "prep-declared-scaffolding", "cmd": "python3 $HARNESS/prep_macro1.py spacewar_2b_25mar62.txt sw2.mac",
-     "expect": {"exit": 0, "stdout_contains": ["T3 one-line defines expanded=1", "T6 ranct calls expanded=1", "T8 variable renames=ran->qran"]}},
-    {"name": "assemble-macro1", "cmd": "macro1 -r sw2.mac 2>&1 | tail -3; test -s sw2.rim && sha256sum sw2.rim",
-     "expect": {"exit": 0, "stdout_not_contains": ["detected errors"], "stdout_contains": ["sw2.rim"]}}
+    {
+      "name": "prep-declared-scaffolding",
+      "cmd": "python3 $HARNESS/prep_macro1.py spacewar_2b_25mar62.txt sw2.mac",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "T3 one-line defines expanded=1",
+          "T6 ranct calls expanded=1",
+          "T8 variable renames=ran->qran"
+        ]
+      }
+    },
+    {
+      "name": "assemble-macro1",
+      "cmd": "macro1 -r sw2.mac 2>&1 | tail -3; test -s sw2.rim && sha256sum sw2.rim",
+      "expect": {
+        "exit": 0,
+        "stdout_not_contains": [
+          "detected errors"
+        ],
+        "stdout_contains": [
+          "sw2.rim"
+        ]
+      }
+    }
   ],
   "runs": [
-    {"name": "simh-pdp1-headless", "cmd": "pdp1 $HARNESS/run.ini 2>&1",
-     "expect": {"exit": 0, "stdout_contains": ["720004", "Infinite I/O wait state", "(IOH)"]}}
+    {
+      "name": "headless-no-scope-stops-at-IOH",
+      "cmd": "pdp1 $HARNESS/run.ini 2>&1",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "720004",
+          "Infinite I/O wait state",
+          "(IOH)"
+        ]
+      }
+    },
+    {
+      "name": "type30-display-under-xvfb",
+      "cmd": "xvfb-run -a -s '-screen 0 1024x1024x24' pdp1 $HARNESS/run_display.ini 2>&1 | grep -v ALSA; bash $HARNESS/frame_metrics.sh",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "Screenshot saved to frame2.png.bmp",
+          "FRAME_HAS_CONTENT",
+          "FRAMES_DIFFER"
+        ],
+        "stdout_not_contains": [
+          "Infinite I/O wait"
+        ]
+      }
+    }
   ],
   "test_kind": "TECHNE",
   "classification_if_ok": "RUNNABLE_EMULATED",
   "classification_if_built_only": "BUILDS_BUT_NOT_RUN",
   "classification_if_build_fails": "BLOCKED_DEPENDENCY",
-  "note": "2026-09-16 P6. The 25 Mar 62 source assembles under macro1 with EIGHT declared transformations (harness/prep_macro1.py T3-T8; the star tables come from Landsteiner's 2014 RECONSTRUCTION, a different provenance grade, named there). Headless simh has no Type 30 display: the program loads (word 6 = 720004 = tyi, from the PDP-1 manual), runs ~2000 instructions, compiles its outline programs at runtime and stops in an infinite I/O wait on the IOH that follows its first display instruction -- the historically correct behaviour for a machine with no scope. RUNNABLE_EMULATED means exactly that; BEHAVIOR_REPRODUCED needs a display build."
+  "note": "2026-09-16 P6. The 25 Mar 62 source assembles under macro1 with EIGHT declared transformations (harness/prep_macro1.py T3-T8; the star tables come from Landsteiner's 2014 RECONSTRUCTION, a different provenance grade, named there). Headless simh has no Type 30 display: the program loads (word 6 = 720004 = tyi, from the PDP-1 manual), runs ~2000 instructions, compiles its outline programs at runtime and stops in an infinite I/O wait on the IOH that follows its first display instruction -- the historically correct behaviour for a machine with no scope. RUNNABLE_EMULATED means exactly that; BEHAVIOR_REPRODUCED needs a display build. TECHNE-87b (2026-09-16): image switched to the :display variant (same pinned simh + SDL2 + xvfb). Run 1 is the NEGATIVE control (DPY disabled -> IOH wait, as before); run 2 enables the Type 30, screenshots two frames 300k steps apart and requires lit pixels in [20, 20000] and differing frames -- BEHAVIOR_REPRODUCED: the 1962 program draws the heavy star and both ships."
 }
