@@ -775,3 +775,8 @@
   reason (lin destinations {0,1,3,4}, yield reg 5, act_targets [5] -> reg5 is written only by actions).
 - C-R7-AP-04 is therefore reported INFEASIBLE and NOT redrawn. Receipt next (evidence class OBSERVATION: no verdict,
   so EVIDENCE_N_v1 does not apply).
+- RECEIPT C-R7-AP-04 1789522877790-0 (guard accepted). Filed status NULL because primordial.core.contract STATUSES has
+  no INFEASIBLE -- NULL is the determinate negative, INDETERMINATE would claim C could not tell; science.verdict is
+  INFEASIBLE with the structural proof and both period scans. Cited rows at 3afea0453.
+- Lane C target: 4 of 6 anti-prior assignments closed (AP-01 INDETERMINATE, AP-02 PASS, AP-03 PASS-but-vacuous,
+  AP-04 INFEASIBLE) + the 1 DISTANT_QD draw closed (FAIL). Next: anti_prior.assign C-R7-AP-05.
