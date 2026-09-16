@@ -61,7 +61,7 @@
   "dependencies": [
     "a DEC PDP-1 with Type 30 CRT, or an emulator of one"
   ],
-  "run_classification": "SOURCE_ONLY",
+  "run_classification": "RUNNABLE_EMULATED",
   "test_classification": "NO_TESTS",
   "entry_points": [
     "the assembled tape is loaded and started from the PDP-1 console"
@@ -80,7 +80,9 @@
     "os": "none -- the program owns the machine",
     "display": "Type 30 point-plotting CRT",
     "storage": "paper tape",
-    "runner": "none yet"
+    "runner": "docker prometheus-fossil-pdp1:display (open-simh pdp1 a1f57fa3 with SDL2 video + xvfb; simtools macro1 2d9a2d96), 2026-09-16; the headless :bookworm world is the negative control",
+    "world_status": "BEHAVIOR_REPRODUCED (2026-09-16, TECHNE-87b): with the Type 30 DPY device enabled under xvfb the 1962 program runs past its display I/O and draws -- frames 300k steps apart show the heavy star and both ships (85 and 120 lit pixels of 512x512, frames differ); with DPY disabled it stops at the IOH after its first display instruction. Frames kept under behaviour/ with their sha256 in the receipt. Run-to-run frame bytes vary (the program's random walk); the coordinate is the lit-pixel band and frame difference, not a fixed image.",
+    "scaffolding": "techne/fossils/specimens/spacewar-pdp1-1962/harness/prep_macro1.py (T3-T8, counted per run), macro_fiodec_jun63.txt (masswerk, sha256 8ff117912fd13ace8659c3b4fcfd57b66fb340bd5b832a6375adc27b6e7fef8e), spacewar_2b_2apr62.txt (masswerk, Landsteiner 2014 reconstruction, sha256 8e60bd3a950f0e05b570b79af1665488cdeb1f848b8b961d710f4fd4ae5f3349), run.ini"
   },
   "patches": [],
   "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
@@ -141,7 +143,20 @@
     "audit_note": "HISTORICAL_ONLY refers to the WORLD, not to a defeat: Spacewar was not out-competed, its machine simply ceased to exist. Old is not loser; this is recorded as extinction of an environment."
   },
   "versions_preserved": [],
-  "receipts": [],
+  "receipts": [
+    {
+      "receipt": "techne/fossils/specimens/spacewar-pdp1-1962/receipts/run-spacewar-pdp1-1962-20260916T150305Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_EMULATED",
+      "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/spacewar-pdp1-1962/receipts/run-spacewar-pdp1-1962-20260916T151039Z.json",
+      "ok": true,
+      "classification": "RUNNABLE_EMULATED",
+      "test_classification": "NO_TESTS"
+    }
+  ],
   "nyx_handoff": {
     "here_is_the_machine": "vault body F:\\Prometheus\\vault\\fossils\\spacewar-pdp1-1962 ; tracked techne/fossils/specimens/spacewar-pdp1-1962",
     "where_it_came_from": "https://www.masswerk.at/spacewar/sources/spacewar_2b_25mar62.txt ; HISTORICAL_ARCHIVE_MIRROR",

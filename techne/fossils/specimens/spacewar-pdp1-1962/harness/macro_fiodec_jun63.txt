@@ -1,0 +1,62 @@
+macro fio-dec system . june 1963
+
+	szm=sza sma-szf
+	spq=szm i
+	clc=cma+cla-opr
+	ioh=iot i
+
+define senseswitch A
+	repeat 3, A=A+A
+	szs A
+	term
+
+define initialize A,B
+	law B
+	dap A
+	term
+
+define index A,B,C
+	idx A
+	sas B
+	jmp C
+	term
+
+define listen
+	cla+cli+clf 1-opr-opr
+	szf i 1
+	jmp .-1
+	tyi
+	term
+
+define swap
+	rcl 9s
+	rcl 9s
+	term
+
+define load A,B
+	lio (B
+	dio A
+	term
+
+define setup A,B
+	law i B
+	dac A
+	term
+
+define count A,B
+	isp A
+	jmp B
+	term
+
+define move A,B
+	lio A
+	dio B
+	term
+
+define clear A,B
+	init .+2, A
+	dzm
+	index .-1, (dzm B+1, .-1
+	term
+
+start
