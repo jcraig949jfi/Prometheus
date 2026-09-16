@@ -17,6 +17,10 @@ REPLAYS = [
     ("C-R8-AP-01", "1789592531410-0", "primordial/ledger/rows/C/C-R8-AP-01-pairwise-d1-corruption-graphblas.jsonl",
      "replay_r8/C-R8-AP-01.json", "ARITHMETIC AGREE (PASS, 96 runs re-scored, 0 mismatches); READING DISPUTED: "
      "pressure claim VACUOUS (post hoc power analysis, disclosed)", "bus 1789594234509-0; R8_DISPUTES.json"),
+    ("E-R8-H1-sham-response-curve", "1789593327107-0", "primordial/ledger/rows/E/E-R8-H1-sham-response-curve.jsonl",
+     "replay_r8/E-R8-H1.json", "AGREE: FLAT_NO_SYSTEMATIC_RESPONSE + CHARGE_ALIGNMENT_NO_EFFECT (independent estimators, "
+     "no fragile p); bounded null L0-L4 [-1.31, 0.87]; scale-only L4 beats scratch +2.10 [1.19, 2.98] (descriptive)",
+     "bus 1789599171523-0"),
 ]
 
 doc = {
