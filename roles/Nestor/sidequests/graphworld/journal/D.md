@@ -744,3 +744,31 @@
   send cost 6 > yield 3 so signalling never pays; and the charge did shrink programs (14 vs 22 functional bytes).
   NOT run because degenerate here: D-R7-7's paired train-vs-held instrument -- identical held values make h = 0 by
   construction. Queued behind D-R7-10b (one job at a time); dropped rather than the re-run if the clock tightens.
+- WORKER DIED ~21:20 mid-D-R7-10b (job d94957e05371), and the cause was MINE. worker_D3.log:
+  RuntimeError: commit of .../D-R7-10b-....jsonl failed: fatal: cannot lock ref 'HEAD': is at 18da20a07 -- which is
+  exactly the sha MY `git commit` (D-R7-11 code + test) created at that moment. fabric.rows.commit_path does a periodic
+  `git commit` of the rows file from the SAME worktree; my concurrent commit won the HEAD ref-lock race, commit_path
+  raised, _drain does not catch it and serve propagated, so the worker exited 1 (empty task output, traceback only in
+  its own log). I knew "never push while a RowWriter is live" and applied too NARROW a version: ANY git write in the
+  worktree races the row writer, not just a push. DISCIPLINE ADOPTED for the rest of the round: commit and push ONLY in
+  windows with no live RowWriter; append to the journal freely, commit it later.
+  STATE LEFT: 29 of 169 rows, no summary, NO done record, job message stranded in the worker-D PEL.
+  CLOSED BY HAND per A's ruling to C (1789511323172-0: the lane closes its own job, A does not touch it): done record
+  1789521762100-0 status died with the full reason, then XACK of 1789521541521-0 -> PEL empty, so a restarted worker
+  cannot silently re-run it. No other lane's queue and no residue touched. Note to A,F 1789521762115-0.
+  DEFECT REPORTED (F's area, no PC stub filed since it is F's component): a transient ref-lock failure on a ROW COMMIT
+  kills the whole worker and orphans the job instead of being retried -- same family as D29 (die-and-orphan where
+  fail-and-continue would do). Suggested r8 fix: commit_path retries on a lock failure; a row-commit failure ends the
+  JOB with a status, never the worker.
+  Push taken in the quiet window after the death: 2c8d760a0 on origin (D-R7-11 code + test, and D-R7-10b's 29 rows).
+- RECOVERY CONFIRMED (A asked at 21:23 via cross-session message): worker restarted pid 30388 (nestor-r7-d, r7,
+  m1-188fc46f, waiting_cpu); group worker-D 1 consumer / 0 pending / lag 0, so the DEAD_CONSUMER cleared itself on
+  re-attach and D cleared no residue by hand. `residue scan --round r7` rc 0, ok true, residue [], notes [].
+  A confirmed the crash pinned NO CPU token (slot 0 B polling, slot 1 G's screen cell). Confirmation posted to A.
+  D-R7-10b receipt 1789521833663-0 INDETERMINATE (29/169 rows, no summary, no decision, no held64 read).
+  DISCLOSED, not fixed (records are immutable per A 1789518025331-0): the hand-written done record 1789521762100-0 has
+  mangled separators in its rows_path (\n and \r consumed as escapes when D built the string); substance is correct and
+  the authoritative repo-relative path is in the receipt.
+  TWO FAILURES ON ONE QUESTION, both D's process errors, neither evidence about the anomaly: D-R7-10 cpu_budget error,
+  D-R7-10b git race. Rule/thresholds/cells unchanged across both. ANOM-..0371 stays OPEN; a third attempt is a decision
+  to make on merit, not a reflex.
