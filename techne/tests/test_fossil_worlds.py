@@ -77,7 +77,8 @@ def test_probe_compare_cheat_and_positive(tmp_path, monkeypatch):
     sid = "synthetic-probe"
     (vault.body_dir(sid) / "upstream" / "tree").mkdir(parents=True)
     sd = vault.specimen_dir(sid); (sd / "receipts").mkdir(parents=True)
-    (sd / "recipe.json").write_text(json.dumps({"runner": "docker", "image": "debian:bookworm-slim", "workdir": "upstream/tree",
+    # workdir "build" exists only in the staged copy -- the bsd-4.3 shape, so the staging is exercised
+    (sd / "recipe.json").write_text(json.dumps({"runner": "docker", "image": "debian:bookworm-slim", "workdir": "build",
                                                "probe": ["cat /etc/os-release | head -1"]}), encoding="utf-8")
     real = worlds.harvest._shell("docker", "cat /etc/os-release | head -1", vault.body_dir(sid), "upstream/tree", "debian:bookworm-slim", 120, readonly=True)["stdout"]
     assert "Debian" in real

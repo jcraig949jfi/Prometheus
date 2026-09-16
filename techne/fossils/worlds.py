@@ -8,7 +8,8 @@ the rebuilt world is from the one the receipts ran in (batch 12 P8 done for real
         sha256 and package count inside the image, seconds, BUILT / BUILD_FAILED (stderr tail).
     python -m techne.fossils.worlds probe-compare [--only SPECIMEN ...] [--out F]
         for every docker-runner specimen with a run receipt: its probe commands (the ones that
-        print toolchain versions) are re-run in the rebuilt image, read-only mount, and compared
+        print toolchain versions) are re-run in the rebuilt image, in a disposable copy of the body
+        exactly as `harvest run` stages it, and compared
         to the latest receipt's probe stdout. PROBE_IDENTICAL / PROBE_DIFFERS (which commands, and
         the two outputs) / NO_PROBE_IN_RECEIPT / IMAGE_MISSING_HERE / BODY_MISSING_HERE.
 
@@ -184,12 +185,16 @@ def probe_compare_one(specimen_id: str, timeout: int = 300) -> dict:
         row["status"] = "IMAGE_MISSING_HERE"
         return row
     rel = recipe.get("workdir", "upstream/tree")
+    # the receipts ran in a disposable copy (upstream/ + harness/ + an empty build/); a recipe
+    # whose workdir is build/ cannot cd in the raw body, and `cd X && first; rest` then skips
+    # exactly the first probe command (found on bsd-4.3's simh probe). Stage the same copy.
+    exec_body = harvest._stage_work(body, sd)
     for entry in rcpt["probe"]:
         then = _receipt_probe_text(entry)
         if then is None:
             row["differs"].append({"cmd": entry["cmd"], "reason": "receipt output truncated; not comparable"})
             continue
-        now = harvest._shell("docker", entry["cmd"], body, rel, row["image"], timeout, readonly=True)
+        now = harvest._shell("docker", entry["cmd"], exec_body, rel, row["image"], timeout)
         row["n_probes"] += 1
         if _norm(now["stdout"]) == _norm(then):
             row["identical"] += 1
