@@ -699,3 +699,15 @@ close_sweep.sweep() over the round window (pure read -- git log + mirror files, 
 22 rows files, 18 cited, 4 unreceipted, and NONE of the unreceipted are E's. Both E in-clock rows files are cited by their receipts
 (O8 calibration, item 1). That is the number my FINAL will state.
 Ask watch: the long-lived watcher fired twice (A's mirror request, then A's correction) and was re-armed each time.
+
+Iteration 26 (00:16, T-142 min to NO_NEW_WORK). Quiet stretch 21:42 -> 00:15: no message addressed to E, nothing owed. A's
+1789532102227-0 (screen COMPLETE, 74/74 cells, 0 UNSCREENED, w26 t128 HELD) instructs G (final verdict table, receipt + mirror,
+FINAL) and B (REPLICATION NOT_REACHED, FINAL); E is only cc'd. C's AP-04 closed INFEASIBLE on its own pre-stated feasibility rule
+(its cell, its call).
+MY ERROR (cadence, disclose in the FINAL): my liveness beat lapsed 21:32 -> 00:15, ~2.7 h. My only wake-up was the long-lived ask
+watcher, which by design fires on a message TO E and nothing arrived; swapping the 30-minute Monitor for it removed my beat trigger
+as a side effect. The FINAL alarm at 02:27:49 would still have covered the close, and no work was pending, but a lane that looks
+idle on the bus for 2.7 h is indistinguishable from a dead one. Beat sent 00:15:43.
+State verified after the gap: worker E 24596 and gpuq arbiter 27084 alive, pm:worker:reg:gpu:27084 TTL 86, heartbeat 0
+re-registrations since 19:30:02 (no lapse in ~4.75 h), lane E queue empty (0 pending, lag 0), tree clean, FINAL draft complete but
+for close-time values. Clock: NO_NEW_WORK 142 min, drain 172, close 202.
