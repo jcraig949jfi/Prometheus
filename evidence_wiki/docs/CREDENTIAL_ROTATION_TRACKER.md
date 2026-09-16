@@ -1,6 +1,6 @@
 # Credential rotation tracker (Mnemosyne)
 
-Opened 2026-09-08. Standing register of credential exposures Mnemosyne is
+Opened 2026-09-08; currency 2026-09-16 (R-5, R-6 added). Standing register of credential exposures Mnemosyne is
 aware of, their verified status, and who must act. Rotation itself is operator
 action: nothing here can rotate a secret that other hosts and clients hold.
 
@@ -15,6 +15,8 @@ second copy of the leak.
 | R-2 | `config.local.json` (documented credential override) was not gitignored until 2026-09-05 | closed preventively at the tracked repo root; any secret placed in that filename **before** 2026-09-05 was committable and should be treated as exposed | Mnemosyne (rule) / operator (any pre-date secret) | PREVENTED, residual unknown |
 | R-3 | key-shaped strings in an untracked archive report (Archaeon assets audit §13) | see below | operator | OPEN, low urgency |
 | R-4 | per-agent READ-ONLY identity `Kairos` (KAIROS-02, comms #33): token issued 2026-09-11 on M1, value held outside every repository on the issuing host; the committed `config.json` `agent_identities` carries only its sha256 and scopes `[read]` | issued; not in git; not in the queue | Mnemosyne (issuer) / Kairos (holder) | ISSUED 2026-09-11 |
+| R-5 | per-agent READ+WRITE identity `Proteus` (Proteus #287, ruling #268): token issued 2026-09-16 on M2, value held outside every repository on the issuing host (~/.prometheus/ew_agent_tokens.json); the committed `config.json` `agent_identities` carries only its sha256 and scopes `[read, write]` | issued; not in git; not in the queue; round trip 7/7 (integration/minted_player_results.json) | Mnemosyne (issuer) / Proteus (holder) | ISSUED 2026-09-16 |
+| R-6 | cleartext service credentials in committed April seat files and a package README (Agora #258, 2026-09-14; redacted report: 7 lines across 3 files, classes = 2 database-role credentials on the local cluster + 1 message-broker credential for a broker retired 2026-06-24); a table `agora.temp_secrets` exists in prometheus_fire, contents unread by anyone | REPORTED, NOT VERIFIED by Mnemosyne: whether the database-role credentials are the ones in service is an operator check (this seat does not test credentials); in git history on origin/main; every clone | operator (rotation) / Agora (schema owner of `agora`, historical, per mnemosyne/STATE.md; `temp_secrets` ownership unknown) | OPEN 2026-09-16 |
 
 ---
 

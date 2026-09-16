@@ -1,0 +1,419 @@
+{
+ "criterion": "cellwise_majority_match",
+ "dispersion_field": "cellwise_sd_across_ics",
+ "gates_printed_before_any_gate": {
+  "R-C3-1 p_mode <= 0.50": true,
+  "corpus_ceil_120_over_f_for_the_record": 120,
+  "corpus_option": "B",
+  "corpus_random_tables": 180,
+  "expected_neighbourhood_per_region": {
+   "pc00": 157.46041074426665,
+   "pc01": 164.16003457577116,
+   "pc02": 159.0964390713046,
+   "pc03": 155.61786390395895,
+   "pc04": 167.33050340939727,
+   "pc05": 167.5254187415604,
+   "pc06": 157.0735138201405,
+   "pc07": 161.5200403383997,
+   "pc08": 166.83721183057042,
+   "pc09": 163.37856356463035
+  },
+  "expected_nondegenerate_per_region": {
+   "pc00": 22.539589255733347,
+   "pc01": 15.839965424228826,
+   "pc02": 20.903560928695416,
+   "pc03": 24.382136096041044,
+   "pc04": 12.669496590602725,
+   "pc05": 12.474581258439606,
+   "pc06": 22.926486179859488,
+   "pc07": 18.479959661600297,
+   "pc08": 13.162788169429588,
+   "pc09": 16.621436435369645
+  },
+  "neighbourhood_>=16_every_region": true,
+  "p_every_region_>=_8_at_120_for_the_record": 0.11841843512980468,
+  "p_every_region_>=_8_at_corpus": 0.8277184844225445,
+  "p_region_>=_8_per_region": {
+   "pc00": 0.9999368674871636,
+   "pc01": 0.9914208934384787,
+   "pc02": 0.9997703028424554,
+   "pc03": 0.9999861302699663,
+   "pc04": 0.942481372507267,
+   "pc05": 0.9360781150386268,
+   "pc06": 0.9999538360906355,
+   "pc07": 0.9985966839259808,
+   "pc08": 0.9562465931468223,
+   "pc09": 0.9948827043674614
+  },
+  "superseded_2026-09-16": "regions_with_>=8_nondegenerate_expected was asserted as N_REGIONS whenever the mean >= 8 (Harmonia #255 s3); now computed above"
+ },
+ "go_predicate": {
+  "GO": true,
+  "items": {
+   "G1 region masses computed from the declared edges and assignment": {
+    "masses": {
+     "pc00": 0.1252199403096297,
+     "pc01": 0.08799980791238236,
+     "pc02": 0.11613089404830787,
+     "pc03": 0.13545631164467248,
+     "pc04": 0.07038609217001514,
+     "pc05": 0.06930322921355336,
+     "pc06": 0.12736936766588605,
+     "pc07": 0.1026664425644461,
+     "pc08": 0.07312660094127549,
+     "pc09": 0.09234131352983137
+    },
+    "pass": true
+   },
+   "G2 P(every region >= 8 non-degenerate) at corpus 180 >= 0.8": {
+    "at_120_for_the_record": 0.11841843512980468,
+    "method": "exact DP over the multinomial",
+    "min_corpus_reaching_threshold": 176,
+    "pass": true,
+    "value": 0.8277184844225445
+   },
+   "G3 expected neighbourhood >= 16 for every region, from the masses": {
+    "pass": true,
+    "value": {
+     "pc00": 157.46041074426665,
+     "pc01": 164.16003457577116,
+     "pc02": 159.0964390713046,
+     "pc03": 155.61786390395895,
+     "pc04": 167.33050340939727,
+     "pc05": 167.5254187415604,
+     "pc06": 157.0735138201405,
+     "pc07": 161.5200403383997,
+     "pc08": 166.83721183057042,
+     "pc09": 163.37856356463035
+    }
+   },
+   "G4 D3 band chance floor at the issued geometry printed in the h2 block": {
+    "pass": true,
+    "value": {
+     "eligible_regions_only": {
+      "band": [
+       0.3333,
+       3.0
+      ],
+      "corpus": 180,
+      "mean_regions_tested_per_corpus": 9.81475,
+      "min_region_n": 8,
+      "p_any_region_outside": 0.10925,
+      "p_two_or_more_outside": 0.0065,
+      "reps": 4000,
+      "seed": 20260916
+     },
+     "every_region_n_ge_2_harmonia_convention": {
+      "band": [
+       0.3333,
+       3.0
+      ],
+      "corpus": 180,
+      "mean_regions_tested_per_corpus": 10.0,
+      "min_region_n": 2,
+      "p_any_region_outside": 0.13075,
+      "p_two_or_more_outside": 0.0075,
+      "reps": 4000,
+      "seed": 20260916
+     },
+     "note": "Harmonia #255 s3 quoted the floor over every region with n >= 2 (0.136 at 180); the readout tests only regions with n >= MIN_REGION_N, whose floor is the first entry"
+    }
+   },
+   "G5 baseline arm listed as distinct-behaviour classes": {
+    "expected": [
+     "all_one+centre_11",
+     "all_zero+centre_00",
+     "centre_01+centre_10"
+    ],
+    "pass": true,
+    "value": {
+     "all_one+centre_11": [
+      "all_one",
+      "centre_11"
+     ],
+     "all_zero+centre_00": [
+      "all_zero",
+      "centre_00"
+     ],
+     "centre_01+centre_10": [
+      "centre_01",
+      "centre_10"
+     ]
+    }
+   },
+   "G6 unchanged: R-C3-1 PASS, f printed, executor ran every arm, null identical": {
+    "R-C3-1": true,
+    "executor_ran_every_arm": true,
+    "f": 1.0,
+    "null_identical": true,
+    "pass": true
+   }
+  },
+  "ruling": "Harmonia #255 section 6 (be82cdd8b); mechanical, applied by Archaeon"
+ },
+ "h2_band_chance_floor": {
+  "eligible_regions_only": {
+   "band": [
+    0.3333,
+    3.0
+   ],
+   "corpus": 180,
+   "mean_regions_tested_per_corpus": 9.81475,
+   "min_region_n": 8,
+   "p_any_region_outside": 0.10925,
+   "p_two_or_more_outside": 0.0065,
+   "reps": 4000,
+   "seed": 20260916
+  },
+  "every_region_n_ge_2_harmonia_convention": {
+   "band": [
+    0.3333,
+    3.0
+   ],
+   "corpus": 180,
+   "mean_regions_tested_per_corpus": 10.0,
+   "min_region_n": 2,
+   "p_any_region_outside": 0.13075,
+   "p_two_or_more_outside": 0.0075,
+   "reps": 4000,
+   "seed": 20260916
+  },
+  "note": "Harmonia #255 s3 quoted the floor over every region with n >= 2 (0.136 at 180); the readout tests only regions with n >= MIN_REGION_N, whose floor is the first entry"
+ },
+ "h2_instrument": "X1 variance-ratio test across descriptor regions (unit = region); D3 is a LEAD GENERATOR only",
+ "location_field": "accuracy",
+ "n_random_preflighted": 60,
+ "named": {
+  "GKL": {
+   "dispersion": 0.3570714214271425,
+   "location": 0.85,
+   "mask_digest_at_T": "sha256:2c8f48f4f2bd27d7ac854b64eefd32a5",
+   "n_incorrect_at_T": 15
+  },
+  "all_one": {
+   "dispersion": 0.4995998398718718,
+   "location": 0.48,
+   "mask_digest_at_T": "sha256:f9fb0ed056954a613d662fe039e2629d",
+   "n_incorrect_at_T": 52
+  },
+  "all_zero": {
+   "dispersion": 0.4995998398718718,
+   "location": 0.52,
+   "mask_digest_at_T": "sha256:071f8f38da411571865a8927bd7b8f9f",
+   "n_incorrect_at_T": 48
+  },
+  "centre_00": {
+   "dispersion": 0.4995998398718718,
+   "location": 0.52,
+   "mask_digest_at_T": "sha256:071f8f38da411571865a8927bd7b8f9f",
+   "n_incorrect_at_T": 48
+  },
+  "centre_01": {
+   "dispersion": 0.027449172145698062,
+   "location": 0.5365771812080538,
+   "mask_digest_at_T": "sha256:cd00e292c5970d3c5e2f0ffa5171e555",
+   "n_incorrect_at_T": 100
+  },
+  "centre_10": {
+   "dispersion": 0.027449172145698062,
+   "location": 0.5365771812080538,
+   "mask_digest_at_T": "sha256:cd00e292c5970d3c5e2f0ffa5171e555",
+   "n_incorrect_at_T": 100
+  },
+  "centre_11": {
+   "dispersion": 0.4995998398718718,
+   "location": 0.48,
+   "mask_digest_at_T": "sha256:f9fb0ed056954a613d662fe039e2629d",
+   "n_incorrect_at_T": 52
+  },
+  "exp": {
+   "dispersion": 0.48,
+   "location": 0.64,
+   "mask_digest_at_T": "sha256:a1fb5839181be4f09c4b13d857a2493f",
+   "n_incorrect_at_T": 36
+  },
+  "maj": {
+   "dispersion": 0.0784688618560148,
+   "location": 0.5971812080536912,
+   "mask_digest_at_T": "sha256:cd00e292c5970d3c5e2f0ffa5171e555",
+   "n_incorrect_at_T": 100
+  },
+  "par": {
+   "dispersion": 0.4073082370883261,
+   "location": 0.79,
+   "mask_digest_at_T": "sha256:228a820e9f0d4e787a84fce86af68c39",
+   "n_incorrect_at_T": 21
+  },
+  "particle1": {
+   "dispersion": 0.4330127018922193,
+   "location": 0.75,
+   "mask_digest_at_T": "sha256:042f3b5f841d5fc9b581cd598aa3220c",
+   "n_incorrect_at_T": 25
+  },
+  "particle2": {
+   "dispersion": 0.4439594576084623,
+   "location": 0.73,
+   "mask_digest_at_T": "sha256:72dec25f9a2d449e522b6099fb3dd4b9",
+   "n_incorrect_at_T": 27
+  }
+ },
+ "null_under_third_criterion": {
+  "genome": "maj",
+  "transforms": {
+   "complement": {
+    "identical": true,
+    "location": 0.5971812080536912
+   },
+   "reflect": {
+    "identical": true,
+    "location": 0.5971812080536912
+   },
+   "reflect_complement": {
+    "identical": true,
+    "location": 0.5971812080536912
+   }
+  }
+ },
+ "plan": {
+  "arms": {
+   "C3-acq": 180,
+   "C3-base": 6,
+   "C3-hist": 6,
+   "C3-null": 18
+  },
+  "check": {
+   "arms": {
+    "C3-acq": 180,
+    "C3-base": 6,
+    "C3-hist": 6,
+    "C3-null": 18
+   },
+   "blockers": [],
+   "campaign": "C3-3",
+   "executor_preflight": {
+    "ran": {
+     "C3-acq": {
+      "dispersion": 0.07965046269406129,
+      "label": "random_000",
+      "location": 0.5003355704697987,
+      "per_cell_mean": true
+     },
+     "C3-base": {
+      "dispersion": 0.4995998398718718,
+      "label": "all_zero",
+      "location": 0.52,
+      "per_cell_mean": true
+     },
+     "C3-hist": {
+      "dispersion": 0.0784688618560148,
+      "label": "maj",
+      "location": 0.5971812080536912,
+      "per_cell_mean": true
+     },
+     "C3-null": {
+      "dispersion": 0.0784688618560148,
+      "label": "maj:reflect",
+      "location": 0.5971812080536912,
+      "per_cell_mean": true
+     }
+    },
+    "refused": {}
+   },
+   "invalid": [],
+   "kind_registered": true,
+   "ok_to_issue": true
+  },
+  "rows": 210
+ },
+ "primaries": {
+  "baseline_arm": "three distinct-behaviour classes, never pooled as replicates (HARM-28 on functionally identical rules)",
+  "constants": "EXCLUDED from the location primary (a constant's location is the IC sample's majority share p_s, a property of the sample; all_zero + all_one == 1 exactly); on the dispersion primary a labelled BOUNDARY comparison at the ceiling sqrt(p_s (1 - p_s)), within 1e-3 of 0.5 and never exactly 0.5 unless p_s is; random ~0.10 (Harmonia #255 s4, superseding 3a/3b and the 2026-09-11 wording)",
+  "dispersion": "per-rule cellwise_sd_across_ics (within-rule spread across ICs)",
+  "location": "per-rule mean of accuracy over the four IC samples",
+  "multiplicity": "Bonferroni across the two primaries"
+ },
+ "random": {
+  "dispersion_mean": 0.07155733619621953,
+  "f_nondegenerate": 1.0,
+  "granularity": 6.711409395973154e-05,
+  "granules_in_range": 347.9999999999986,
+  "location_max": 0.5126174496644295,
+  "location_mean": 0.49983557046979865,
+  "location_min": 0.489261744966443,
+  "location_sd": 0.004901464782179442,
+  "p_mode": 0.03333333333333333,
+  "support_size": 58
+ },
+ "regions": {
+  "band": [
+   0.3333,
+   3.0
+  ],
+  "d3_style_ratio_observed": {
+   "pc00": 1.2054294406595605,
+   "pc01": 1.1150165294053276,
+   "pc02": 0.6909743920206948,
+   "pc03": 0.28177155161518147,
+   "pc05": 1.133910547824846,
+   "pc06": 5.338902150969322,
+   "pc07": 0.6544146716987417,
+   "pc08": 1.1370309206293572,
+   "pc09": 1.1663392375551556
+  },
+  "edges_popcount": [
+   57,
+   59,
+   61,
+   63,
+   64,
+   65,
+   67,
+   69,
+   71
+  ],
+  "expected_ratio_inside_band": true,
+  "expected_true_ratio": 1.0,
+  "n_regions": 10,
+  "note": "one generating distribution for every random table => true ratio 1.0; the observed spread at ~6 per region is F noise",
+  "observed_ratios_inside_band": [
+   7,
+   9
+  ],
+  "occupied_in_preflight": {
+   "pc00": 8,
+   "pc01": 4,
+   "pc02": 9,
+   "pc03": 9,
+   "pc04": 1,
+   "pc05": 4,
+   "pc06": 3,
+   "pc07": 10,
+   "pc08": 5,
+   "pc09": 7
+  },
+  "within_variance": {
+   "pc00": 2.2093921123243984e-05,
+   "pc01": 2.088044082098392e-05,
+   "pc02": 1.3706589793252327e-05,
+   "pc03": 6.0028577291313105e-06,
+   "pc04": null,
+   "pc05": 2.1210380913772982e-05,
+   "pc06": 8.578142125730001e-05,
+   "pc07": 1.3158015905189438e-05,
+   "pc08": 2.120715283095312e-05,
+   "pc09": 2.1561877307114216e-05
+  }
+ },
+ "schema": "archaeon.c3_3.preflight.v0",
+ "seed": 0,
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "7c89a719960e7d3822643d27c4d1ea4fcc068391",
+  "branch": "archaeon/boot-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-boot-2026-09-16"
+ },
+ "written": "2026-09-16T11:59:25+00:00"
+}

@@ -1,0 +1,353 @@
++============================================================================+
+|  REVIEW PACKET -- THE EVIDENCE SUBSTRATE MOVES TO M2                       |
+|  The canonical PEW service went silent on M1; it was restored on M2,      |
+|  qualified from M2, and two consumer requests shipped on the way.         |
+|                                                                            |
+|  Author : Mnemosyne (memory and evidence substrate), instance m2-9c10ae00, |
+|           host SPECTREX5 (M2)                                              |
+|  Date   : 2026-09-16 (pass 07:40-08:40 local, -0400)                       |
+|  For    : the operator (HITL) and external reviewers                       |
+|  Status : DEPLOYED and VERIFIED on M2; two operator decisions open         |
+|  Self-contained: every load-bearing number is inline; no repo access      |
+|  needed. Paths and SHAs are given for anyone who has it.                  |
++============================================================================+
+
+0. SUMMARY, MANDATE, VERDICT
+-----------------------------------------------------------------------------
+Mandate. Mnemosyne owns the Evidence Wiki (PEW): the REST service every seat
+writes fossils, claims and evidence through, its PostgreSQL store, its
+watchdogs, backup and restore. It does not adjudicate what is written.
+
+What happened. On 2026-09-15 the operator handed machine M1 to a different
+ecosystem and moved the SFE (engine) ecosystem to M2. The PEW service on
+M1 stopped serving at 17:11:01 -0400 that day. Nobody was told: the
+monitor row's alarm route read "none yet". The M2 PEW service, meanwhile,
+was answering HTTP 200 while (a) running from the canonical checkout the
+constitution forbids, with a receipt that said it was not, (b) unable to
+search at all (embedding library absent), and (c) fronting a quarantined
+fork database nobody had read since 09-05.
+
+Verdict. The substrate is back, on M2, fronting the canonical store, with
+the property (an authenticated hybrid search) measured every 5 minutes and
+a self-parking bound on the watchdog. Outage of the canonical service:
+14 h 59 min (17:11:01 on 09-15 to 08:10:30 on 09-16). Qualification from
+M2 against the deployed service: 17/17, 12/12, 19/19, 14/14 + 1 SKIP,
+16/16, plus two new 7/7 checks. Three latent defects in my own instrument
+were found by running it and are fixed; one is also in the program's
+reference guard and is reported to its owner.
+
+What this packet cannot claim: anything about M1. No process, task, log or
+backup on M1 can be attested from M2. The backup and restore-verify jobs
+of the CANONICAL store are on that machine and are UNLOCATED as of today.
+
+1. WHAT WAS FOUND BEFORE ANYTHING WAS TOUCHED (measured, in order)
+-----------------------------------------------------------------------------
+    M1 PEW :8377      HTTP health times out from M2 (15 s); TCP 8377 does
+                      not connect; TCP 5432 (PostgreSQL) does. From M2 a
+                      dead service and a firewalled one look identical.
+    Independent       The store's own ew.read_log: the M1 watchdog wrote
+    oracle            one authenticated search row every 5 min -- 400 rows
+                      in the preceding 48 h -- and the LAST is
+                      2026-09-15 17:11:01.917 -0400. Then none. This is
+                      22 min after the operator's commit 985a3f760 whose
+                      message says M1 is being handed over, and Daedalus
+                      independently dates the M1 engine stop to ~20:15Z
+                      the same evening (2b21acf76).
+    M2 PEW :8377      HTTP 200, uptime 336 s, worktree_path
+                      D:\Prometheus\evidence_wiki (the canonical checkout),
+                      base_sha "", main_worktree false, search.ready false
+                      with error "No module named sentence_transformers".
+    M2 watchdog log   48 lines total. 2026-09-11 12:41 -> 2026-09-14 05:34:
+                      three "restart FAILED" lines and nothing else. No ok
+                      line had ever been written on M2. At 07:40 on 09-16
+                      the old script's deploy-follows-HEAD branch killed
+                      one service and started the one above.
+    M2 fork store     last read 2026-09-05 02:45; last write 2026-09-11
+                      06:31 (a test-namespace triage write). Zero readers
+                      for 11 days.
+    Interpreters      no Python on M2 had sentence_transformers; the venv
+                      also lacked rank_bm25 (surfaced later as HTTP 500).
+
+Failure shapes, not verdicts:
+  - "health 200" was PRESENT, not PRODUCTIVE. The M2 watchdog measured
+    presence, so a service that could never answer a search was healthy
+    to it for five days.
+  - "main_worktree false" was UNKNOWN, not FALSE. The scheduled task's
+    context has no git on PATH; the guard's git calls returned "" and the
+    code treated "" as "not canonical". The receipt lied by implication.
+  - "no alarm" was the absence of a route, not the absence of a fault.
+
+2. THE DECISION TAKEN, AND ITS AUTHORITY
+-----------------------------------------------------------------------------
+The M2 PEW service now fronts the CANONICAL store (on M1's PostgreSQL,
+db_system_id 7628127204585430828) instead of the M2 fork
+(7681719240261676752). Reasoning at the time: the 2026-09-04 ruling that
+M2 serves an independent fork rested on M1 being the ecosystem's home;
+the operator's 09-15 move of SFE to M2 "carrying M1's engine.db" removed
+that premise; a PEW on M2 fronting a stale fork would verify engine
+anchors against a world the engine no longer runs; the fork had no
+reader. The fork database is untouched; a fork-serving instance is one
+environment variable on another port.
+
+Mid-pass the operator wrote, verbatim: "Probably noticed that we started
+up on M2.  M1 is running a different ecosystem for now.  We are going to
+run thenSFE ecosystem on M2 now." Recorded in the journal and backlog as
+confirmation (MNE-D2). The canonical STORE's location is still open
+(MNE-D1, section 8).
+
+3. WHAT WAS BUILT (each shipped with tests on the merged tree, pushed,
+   SHA verified as an ancestor of origin/main before being quoted)
+-----------------------------------------------------------------------------
+    33af26c1c  ew/workspace.py fails CLOSED: a new receipt field
+               workspace_known; the service refuses to start when git
+               did not answer. Tests (4): positive (this linked worktree
+               is known and admitted), negative (git absent -> refused
+               with "git did not answer"), cheat (the read-only override
+               admits AND records itself), canonical (main worktree still
+               refused). Also exercised for real against
+               D:\Prometheus\evidence_wiki with git on PATH (REFUSED:
+               canonical) and without (REFUSED: unknown), and against the
+               task worktree without git (REFUSED: unknown -- the case the
+               old code ADMITTED).
+               One watchdog on both machines: the M2 script is now a
+               wrapper that sets EW_DB_HOST, PROMETHEUS_ENV, the machine,
+               the interpreter and file names, then runs the M1 property-
+               probing script unchanged (base rule 1). The old M2
+               deploy-follows-HEAD restart is dropped: a pinned worktree
+               is advanced by an explicit logged command (D-23 s6), not
+               by a watchdog reading someone else's pull.
+               Rule-10 bound (D-27): nonproductive_ticks counts consecutive
+               ticks without an "ok" line and is reset in exactly one
+               place (on ok). At 12 the loop writes a park record, posts
+               one comms report to the accountable seat, and every later
+               tick logs "parked" until the file is removed by hand.
+               Tests (3 new, 9/9 total): positive (a hung service parks
+               the loop at bound 2 with threshold 99, so the restart path
+               is not what stops it; the parked tick mutates no state;
+               clearance resumes), cheat (two failures, one ok, one
+               failure -> count 1, no park), and "a start is not
+               productive" (the restart path resets its own counter, not
+               the bound's).
+               Techne #194: two "tests" were live-service scripts that
+               wrote fixture rows to the canonical store under invented
+               machine identities and rewrote tracked receipts. Now
+               opt-in (EW_LIVE_QUALIFICATION=1) and their receipts live
+               under derived/, which is gitignored.
+    2ba8825b9  The watchdog creates derived/. Measured: the first tick
+               from a fresh pinned worktree exited 0 in 2.7 s and wrote
+               NOTHING (log and state absent) because Add-Content into a
+               missing directory fails silently. The test fixture no
+               longer pre-creates the directory, so the suite covers it.
+    6b4aee022  The wrapper resolves the venv through the repository's
+               common git dir. Measured: the first pinned tick started
+               the service "via python", the Windows Store shim, because
+               the venv sits beside the canonical clone, not the worktree.
+    1e0708472  Qualification from M2 (section 5). Battery gate S2 keyed by
+               ENVIRONMENT (the comms/environments.json registry) instead
+               of by machine: the old table said "M2 -> the fork" and
+               encoded a deployment as a property of a host. Cheat run:
+               --env m2-local-fork against this service FAILS S2.
+               requirements.txt written with the versions qualified.
+    ed74db21c  THEO-REQ-001 (section 6a).
+    3fed05954  Proteus #287 (section 6b).
+    829151a3d  Journal, status, monitor registry rows, backlog, comms
+               bodies, deployed-service receipts.
+
+4. DEPLOYMENT AS EXECUTED (D-23 s6)
+-----------------------------------------------------------------------------
+    pinned worktree   D:\Prometheus-worktrees\mnemosyne-pew, detached;
+                      advanced 33af26c1c -> 2ba8825b9 -> 6b4aee022 ->
+                      2b874bbc4 -> 569a675f7, clean at every step
+    scheduled task    MnemosyneEvidenceWikiWatchdogM2, every 5 min, action
+                      re-pointed at 08:06 from the canonical checkout's
+                      script to the pinned wrapper
+    interpreter       D:\Prometheus\.venv-m2 + torch 2.14.0 (cpu),
+                      sentence-transformers 6.0.1, rank-bm25 0.2.2
+    untracked config  canonical_db_host; sfe_db_path; sfe_verify_url /
+                      cacert / token for the M2 engine (a client token
+                      minted on the engine for "pew-m2-service"; sha256
+                      prefix 854b3f974fa1d2c7; never displayed)
+    first ok line     2026-09-16 08:10:30 -- "ok  health 317ms  hybrid
+                      search 1622ms"
+    proof of store    canonical ew.read_log carries machine=M2
+                      agent=watchdog at 08:10:30.835; the fork has 0 reads
+                      on 09-16
+    final             569a675f7; workspace_known true; search ready 4.6 s
+                      after start; live tick "ok  health 23ms  hybrid
+                      search 1223ms"
+
+Incident during deployment, kept: I stopped the fork service BEFORE
+re-pointing the task; the old task relaunched it 90 s later from the
+canonical checkout. Order is re-point, then stop. Recorded in the
+journal's calibration section.
+
+5. QUALIFICATION FROM M2 (the first that actually originated on M2)
+-----------------------------------------------------------------------------
+Run from the task worktree, PROMETHEUS_MACHINE=M2, against the DEPLOYED
+service at 569a675f7 fronting the canonical store, anchors against the M2
+engine at 192.168.1.191:8811.
+
+    pew_battery       17/17   E14 "productive not present": hybrid search
+                              HTTP 200 in 1910 ms (budget 15000)
+    seam_battery      12/12   namespace firewall: 0 test rows in prod
+                              views; prod encounters 6046
+    closure_battery   19/19   C4a/b/c anchor verification passed ONLY after
+                              the engine verify config was set; before
+                              that all three FAILED "verify_not_configured"
+                              -- recorded, and it is a defect to think
+                              about (section 7, MNE-43)
+    lineage_battery   14/14   + 1 SKIP: no peer engine reachable (M1 8811
+                              times out from M2). SKIP is excluded from
+                              all_pass and is not counted as a pass.
+    h0h5_refs         16/16
+    S2 cheat          naming the fork environment FAILS S2: expected
+                      7681719240261676752, observed 7628127204585430828
+
+6. TWO CONSUMER REQUESTS SHIPPED ON THE WAY
+-----------------------------------------------------------------------------
+6a. THEO-REQ-001 (Theophrastus #239): one selector, no schema change.
+    GET /api/v1/fossil/encounters?ecology=<json object>, jsonb containment
+    (@>). It alone is a selector; malformed JSON and {} are 422, never
+    silently "no selector". Client method fossil_encounters(ecology=dict).
+    Check, 7/7 against the deployed service: positive (a sub-object of a
+    written ecology returns the row), cross (the selector alone selects),
+    negative (an absent coordinate returns n=0), cheats (one differing
+    value does not match; malformed/empty -> 422; no selector still 400).
+    Measured first: 0 of 12,858 encounters in the canonical store carry an
+    ecology value (prod 6046, synthetic 6432, theophrastus 67, test 313).
+    The selector's population is EMPTY until producers write the column.
+    That is the honest state of the feature: correct and currently inert.
+
+6b. Proteus #287 (under Archaeon ruling #268): minted rule-table players
+    land in ew.fossil_players. Four things had no typed column (a second
+    parent, the family, two version strings); putting them in the
+    freeform producer jsonb would have manufactured the coordinate-
+    nobody-can-select-on that 6a is about. Migration 013 adds them
+    (nullable, indexed, no back-fill), applied to the canonical store:
+    6009 rows before and after. The mapping from the mint record to the
+    columns is stated in a contract document, including what stays NULL
+    and why. A per-agent write identity "Proteus" was issued: sha256 and
+    scopes in the committed config, the value out of band on M2 (tracker
+    R-5). Round trip 7/7 against the deployed service: written as Proteus;
+    every mapped column and producer.mint_id read back equal; identical
+    re-registration -> duplicate_identical; cheats: the token with a wrong
+    agent header -> 401; one differing stored value -> 409 with the row
+    unchanged; a typo'd field -> 422, not dropped.
+
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----------------------------------------------------------------------------
+Established (measured today):
+  - The canonical PEW service is served from M2 and answers an
+    authenticated hybrid search every 5 minutes; the store it writes to
+    is server-attested on every battery run.
+  - The M2 watchdog will now park itself after one hour of non-productive
+    ticks and say so to a named seat.
+  - A PEW process that cannot determine its worktree refuses to start.
+
+NOT established, and stated as such:
+  - Anything about M1: whether its PEW task still fires, whether the
+    nightly backup of the canonical store ran on 09-15 or 09-16, whether
+    the weekly restore-verify will run on 09-20. The last evidence is a
+    restore receipt dated 2026-09-13 04:30. The registry rows say
+    UNLOCATED with that date, not "ACTIVE".
+  - The M1 pin still runs the pre-bound script (no rule-10 enforcement
+    there); advancing it needs someone on M1.
+  - Closure verification: today "engine not configured" and "engine
+    unreachable" both yield an UNVERIFIED anchor and the fossil write
+    succeeds. For a canonical-fronting service that is a warning that
+    reads like success from the outside. Filed as MNE-43 (XL): should a
+    missing verify config be a startup refusal?
+  - The reference guard archaeon/workspace.py has the same fail-open as
+    my copy had (is_main_worktree returns False when git yields nothing).
+    Reported to Archaeon (comms #290) as a WORKING_CONTRACT s10 defect;
+    every seat that copied the check inherits the hole until it is fixed
+    centrally.
+  - Test rows were written to the canonical store today (namespace test:
+    the batteries, one encounter, one player). Namespace test is
+    firewalled from the prod views (seam gate G); history is append-only
+    and they are not cleaned.
+
+Conflicts of interest: I am reporting on my own instrument and my own
+deployment. Every number above is from a committed receipt or a query
+whose text is in the journal; the reviewer should prefer those to this
+prose. The one judgment call that was mine alone -- fronting the
+canonical store from M2 before the operator confirmed -- is in section 2
+with its reasoning and its reversal path.
+
+8. DECISIONS FOR THE OPERATOR (backlog XL rows; my lean stated)
+-----------------------------------------------------------------------------
+MNE-D1  Where the canonical STORE and its backup/restore jobs live now
+        that M1 belongs to a different ecosystem. The store also holds
+        comms, which BOTH ecosystems read, so it is shared infrastructure
+        on a machine that is no longer this ecosystem's.
+        (a) keep prometheus_fire on M1; someone on M1 confirms the backup
+            task fires and the dump is readable off-host;
+        (b) migrate prometheus_fire to M2 (pg_dump/restore, ~minutes) and
+            re-point every client -- every seat's EW_DB_HOST, both
+            ecosystems' comms -- in one window.
+        Lean: (a) immediately with a confirmed backup; (b) as a planned
+        cutover with a date, because (b) is a one-step change to every
+        seat and should not happen as a side effect of an outage.
+MNE-D2  CONFIRMED in chat (section 2). Residue: dispose of the M2 fork
+        database (keep quarantined / drop). Lean: keep quarantined until
+        D1 resolves; it costs nothing and is the only copy of 439 post-
+        split writes that nobody has classified.
+R-1/R-6 Credential rotation (in git history; Agora's April files).
+        Unchanged; the operator's.
+
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----------------------------------------------------------------------------
+1. Was fronting the canonical store from M2 before an explicit ruling an
+   overreach? The 09-04 ruling said "fully independent". I read the
+   09-15 commit as superseding its premise. If you would have waited,
+   what would the consumers have used in the meantime?
+2. The rule-10 bound counts a warm-up tick as non-productive. A cold
+   start after a reboot measured ~4 min on M1. With bound 12 (60 min)
+   that is safe; with a smaller bound it would park a healthy restart.
+   Is 12 the right number, or should warm-up ticks inside grace be
+   excluded from the count?
+3. Migration 013 adds four columns rather than one jsonb "provenance"
+   column. Schema-is-contract says typed; every future producer with a
+   new provenance field will want a migration. Is that the right
+   tradeoff for fossil_players, or is a typed-but-extensible
+   representation (a registered vocabulary table) better?
+4. The closure battery passed only after I minted an engine token for
+   the service. Before that, writes succeeded with anchors unverified
+   and the only sign was a battery gate. Should a canonical-fronting PEW
+   refuse to START without verify config (MNE-43)?
+5. Is the honest answer to MNE-D1 "the store should never have been on
+   a machine that could be handed to someone else", i.e. migrate now?
+6. Not worth continuing? If PEW on M2 duplicates something the SFE
+   ecosystem already has (Daedalus's engine ledger IS an append-only
+   provenance store), say so; the batteries would then be measuring an
+   instrument nobody needs.
+
+10. ARTIFACTS
+-----------------------------------------------------------------------------
+    journal      roles/Mnemosyne/journal/2026-09-16_m2-9c10ae00.md
+    status       roles/Mnemosyne/STATUS.md
+    registry     roles/base-role/MONITORS.md rows 15-17, 20
+    backlog      roles/Mnemosyne/BACKLOG_H0H5.md (MNE-35/36/39..45, D1, D2)
+    guard        evidence_wiki/ew/workspace.py; tests/test_workspace_guard.py
+    watchdog     evidence_wiki/scripts/ew_watchdog.ps1, ew_watchdog_m2.ps1;
+                 tests/test_watchdog.py (9)
+    batteries    evidence_wiki/integration/{battery,seam,closure,lineage,
+                 h0h5}_results.json; pew_battery.py (S2 by environment)
+    checks       evidence_wiki/integration/ecology_selector_check.py +
+                 _results.json; minted_player_check.py + _results.json
+    schema       evidence_wiki/migrations/013_minted_players.sql
+    contract     evidence_wiki/docs/PROTEUS_MINT_WRITE_CONTRACT.md
+    tracker      evidence_wiki/docs/CREDENTIAL_ROTATION_TRACKER.md (R-5, R-6)
+    deps         evidence_wiki/requirements.txt
+    comms        #290 Archaeon, #291 Theophrastus, #292 Proteus,
+                 #293 Techne+Agora; bodies under roles/Mnemosyne/comms_out/
+    commits      33af26c1c 2ba8825b9 6b4aee022 1e0708472 ed74db21c
+                 3fed05954 829151a3d (all on origin/main)
+    deployed     pin 569a675f7 in D:\Prometheus-worktrees\mnemosyne-pew
+
++============================================================================+
+|  END. "Not worth continuing" is a first-class answer: if the evidence     |
+|  substrate on M2 is redundant with the engine's own ledger, or if a       |
+|  store on a handed-over machine should be migrated before anything else   |
+|  is built on it, say so and that is what happens next.                    |
++============================================================================+

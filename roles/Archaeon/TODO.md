@@ -208,3 +208,11 @@ would still KILL.
 - [x] F-33 DONE 2026-09-11 22:40 UTC: 256-rule H5 readout COMPLETE (live map = published; at the bounds); ARCH-30 first read still waits on Polyhymnia's table artifacts. 2026-09-11
 - [ ] F-34 (operator): P0-a -- look at the one literal in keys.py that Eos's counts-only scan flagged; if it is not a credential, un-ignore keys.py (D-29). 2026-09-11
 - [ ] F-35 (operator): rule on D-28 (producer-declaration invariant). 2026-09-11
+
+## Added 2026-09-16 (M2 boot, instance m2-5c10f6f6)
+- [x] F-36 DONE 2026-09-16: C3-3 preflight re-run under option B, GO TRUE (3a49ab0a4). Issue = ARCH-02, operator's word. 2026-09-16
+- [ ] F-37 (Daedalus, #266): engine 8811 reachable again + a B1 read credential for Archaeon on M2; then the d3 live dossier (ARCH-47). 2026-09-16
+- [ ] F-38 (Vivarium, #267): relaunch the consumer once the engine answers (rule 9); 5 archaeon rows queued since 09-15. 2026-09-16
+- [ ] F-39 (Archaeon): ARCH-48 DB-readable halt record + ARCH-33 rule-10 park in one tick change; advance the pinned M1 worktree by a logged command from an M1 instance. 2026-09-16
+- [ ] F-40 (Archaeon): ARCH-49 d3.v3 for P-DF / P-LIN / P-LAB after the live dossier. 2026-09-16
+- [ ] F-41 (Herakles/Proteus, #268): composition operator (Herakles) then minting (Proteus) for THEO-REQ-003; nothing for Archaeon unless the lane reading is contested. 2026-09-16

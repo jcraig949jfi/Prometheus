@@ -129,20 +129,812 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-rr-arbiter/upstream/tree/round_robin_arbiter.v"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-rr-arbiter/upstream/tree/round_robin_arbiter2.v"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-rr-arbiter/upstream/tree/round_robin_arbiter3.v"
+   }
+  ],
+  "inspected_files": [
+   "round_robin_arbiter.v",
+   "round_robin_arbiter2.v",
+   "round_robin_arbiter3.v",
+   "readme.txt",
+   "tb.v (skimmed)"
+  ],
+  "date": "2026-09-16T12:04Z",
+  "note": "the smallest fossil in the sample: 4 mechanisms, 2 compositions of them claimed behaviourally identical by the author -- a ready-made human-different / behaviour-near test pair for Stage D"
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+   "fossil_ancestry": "verilog-rr-arbiter",
+   "human_name": "simple priority arbiter",
+   "human_interpretation": "requester 0 always beats 1 beats 2 ...",
+   "mechanism": "one-hot output: grant[i] = req[i] & ~|req[i-1:0]; written as an if/else-if chain (arbiter 1, 2) and as a generate loop (arbiter 3); appears FIVE times across the three files (once in arbiter 1, twice each in 2 and 3)",
+   "input": "req[N-1:0]",
+   "output": "one-hot grant or zero",
+   "state": "none (combinational)",
+   "update": "none",
+   "assumptions": [
+    "N >= 1"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+    "verilog-rr-arbiter::masked_priority_with_unmasked_fallback"
+   ],
+   "fitness_value_in_ancestor": "the only decision element; everything else re-labels its inputs and outputs",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-rr-arbiter/upstream/tree/round_robin_arbiter.v:33-40; round_robin_arbiter3.v:53-64"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "each always @(*) priority block / generate block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "INSTANT",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+   "fossil_ancestry": "verilog-rr-arbiter",
+   "human_name": "rotate_ptr",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a register updated on the clock edge from the CURRENT grant: arbiter 1 stores the index after the granted line (2 bits); arbiters 2 and 3 store a thermometer mask with ones from that index upward (N bits; 1111 after grant[N-1] or reset); arbiter 3 updates only when some grant is high (update_ptr), arbiters 1 and 2 hold when no grant matches",
+   "input": "grant[N-1:0]",
+   "output": "a priority origin",
+   "state": "rotate_ptr (2 bits or N bits)",
+   "update": "per clock",
+   "assumptions": [
+    "the granted line is the one to demote"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+    "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+    "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle"
+   ],
+   "fitness_value_in_ancestor": "fairness: the just-served requester becomes lowest priority",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-rr-arbiter/upstream/tree/round_robin_arbiter.v:61-73; round_robin_arbiter2.v:24-36; round_robin_arbiter3.v:27-49"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the rotate_ptr always blocks",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "fossil_ancestry": "verilog-rr-arbiter",
+   "human_name": "arbiter 1 composition (rotate -> priority -> rotate)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "shift_req = req rotated right by rotate_ptr (a 4-way case), priority-pick on shift_req, grant_comb = shift_grant rotated left by rotate_ptr",
+   "input": "req, rotate_ptr",
+   "output": "grant_comb",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "N = 4 (the case statements are written out)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+    "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+    "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+    "verilog-rr-arbiter::masked_priority_with_unmasked_fallback"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-rr-arbiter/upstream/tree/round_robin_arbiter.v:22-51"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two case blocks around the priority block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "fossil_ancestry": "verilog-rr-arbiter",
+   "human_name": "arbiter 2/3 composition (two priority arbiters and a mask)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "mask_req = req & rotate_ptr (only requesters at or above the pointer); grant = priority(mask_req), or if mask_req is zero, priority(req) (wrap-around); arbiter 3 is the same with generate loops for any N",
+   "input": "req, rotate_ptr",
+   "output": "grant_comb",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "N >= 2 (arbiter 3 comment line 35)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+    "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+    "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+    "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-rr-arbiter/upstream/tree/round_robin_arbiter2.v:38-59; round_robin_arbiter3.v:51-69"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "mask_req / mask_grant / nomask_grant / grant_comb assigns",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "fossil_ancestry": "verilog-rr-arbiter",
+   "human_name": "grant <= grant_comb & ~grant",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the grant register takes the combinational grant AND NOT the current grant: a line granted this cycle cannot be granted next cycle even if it is the only requester; identical in all three files",
+   "input": "grant_comb, grant",
+   "output": "grant",
+   "state": "grant[N-1:0]",
+   "update": "per clock",
+   "assumptions": [
+    "a one-cycle grant pulse is what the consumer wants (a bus that needs a hold time would need a different rule)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+    "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+    "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+    "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN -- the readme does not say; by reading it enforces a release cycle between consecutive grants to the same requester, and also means a sole continuous requester is served at most every other cycle",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-rr-arbiter/upstream/tree/round_robin_arbiter.v:53-57; round_robin_arbiter2.v:61-65; round_robin_arbiter3.v:71-75"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the grant always block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "tb.v testbench",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "vault:verilog-rr-arbiter/upstream/tree/tb.v -- drives req and prints grant; Techne's harness replaces it",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "verilog-rr-arbiter"
+  },
+  {
+   "candidate": "'round-robin arbiter' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "two different circuits (1 vs 2/3) with a shared decision element and a shared state register",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "verilog-rr-arbiter"
+  },
+  {
+   "candidate": "arbiter 2 vs arbiter 3 as separate anatomy",
+   "reason": "OTHER",
+   "evidence": "arbiter 3 is arbiter 2 with N parameterised and update_ptr gating; the readme says so and the code agrees",
+   "note": "recorded as one composition with a scalability variant",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "verilog-rr-arbiter"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "verilog-rr-arbiter::P.several_requesters_contend_every_cycle_for_one_grant_and_none_may_starve",
+   "source_fossil": "verilog-rr-arbiter",
+   "source_evidence": "record pressure / failure condition; all three files",
+   "condition": "N lines may request in any combination each clock; exactly zero or one may be granted; a line that keeps requesting must be served within a bounded number of cycles",
+   "resource_or_constraint": "one shared resource; one decision per clock; bounded logic depth",
+   "failure_condition": "starvation, or two grants at once (record)",
+   "world_punishes": "fixed priority (starves high indices); unregistered state (glitches)",
+   "world_rewards": "a priority origin that moves past the served requester",
+   "observable_consequence": "the grant sequence under all-lines-high (rotation) and under one-line-always-high (others still served)",
+   "vacuity_condition": "at most one requester at a time",
+   "trivial_shortcuts": "a free-running counter that grants line (t mod N) whether or not it requests (fair, wastes cycles; the world must reward utilisation)",
+   "cheat_control": "an arbiter given the request schedule in advance must achieve zero idle grants and zero starvation; if the world scores the counter equally, it is not charging idle cycles",
+   "cost_class": "CPU-scale (exhaustive: 2^N requests x N pointer states)",
+   "purpose_separated_from_pressure": "PURPOSE: share a bus among masters",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+   "to": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+   "to": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "to": "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "to": "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "twice: masked and unmasked",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+   "to": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+   "to": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "to": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "to": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "to": "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "pointer follows the registered grant",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "to": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "self-deassert",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "to": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "two compositions claimed equivalent (readme); not measured",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "verilog-rr-arbiter",
+   "relation": "algorithm_from",
+   "to": "Matt Weber, 'Arbiters: Design Ideas and Coding Styles' (readme reference [1])",
+   "note": "from readme.txt",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "the equivalence of composition 1 and composition 2/3 is the author's claim; exhaustively checkable (64 cases at N=4) and NOT checked here",
+   "the self-deassert rule's purpose is unstated in the body"
+  ],
+  "note": "every line of the three modules is accounted for by five mechanisms",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

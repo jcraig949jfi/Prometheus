@@ -1383,16 +1383,19 @@ def create_app(db_path: str, *, registration_open: bool = True,
                           evidence_class: Optional[str] = None,
                           measurement: Optional[str] = None,
                           limit: int = 1000,
+                          include_spec: bool = False,
                           _sess: dict = Depends(session_ctx),
                           cid: str = Depends(auth),
                           f: Foundry = Depends(get_foundry)):
         """Observations from granted groups, WITH the corpus census beside
-        them. An archaeologist's first obligation is to say what population it
+        them, and each row's experiment anchors (spec_hash, committed_seq;
+        the spec itself on include_spec=true). An archaeologist's first obligation is to say what population it
         drew from; the engine cannot stop a bad analysis but it can refuse to
         hand over rows without their provenance."""
         return f.read_observations(cid, group_id=scope, world_id=world_id,
                                    evidence_class=evidence_class,
-                                   measurement_id=measurement, limit=limit)
+                                   measurement_id=measurement, limit=limit,
+                                   include_spec=include_spec)
 
     @app.post("/v2/claims/{clm}/retract")
     def retract_claim(clm: str, body: ClaimRetract,

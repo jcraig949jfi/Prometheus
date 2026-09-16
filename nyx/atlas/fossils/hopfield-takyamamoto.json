@@ -129,20 +129,632 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hopfield-takyamamoto/upstream/tree/network.py"
+   }
+  ],
+  "inspected_files": [
+   "network.py (all)",
+   "train.py, train_mnist.py (skimmed)"
+  ],
+  "date": "2026-09-16T12:22Z",
+  "note": "four mechanisms in sixty lines; the interesting anatomy is the stopping rule (energy unchanged after a sweep) and the mean-subtracted Hebb rule, both of which the human name 'Hopfield network' does not mention"
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "hopfield-takyamamoto::hebbian_outer_product_weights_from_mean_subtracted_patterns_with_zero_diagonal",
+   "fossil_ancestry": "hopfield-takyamamoto",
+   "human_name": "train_weights",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "rho = the mean activation over all patterns and neurons; W = sum over patterns of outer(t - rho, t - rho); the diagonal is zeroed; W is divided by the number of patterns; symmetric by construction",
+   "input": "a list of +/-1 (or binary) vectors",
+   "output": "W (N x N)",
+   "state": "W",
+   "update": "once (batch)",
+   "assumptions": [
+    "patterns are uncorrelated enough (record: capacity ~0.14 N); the mean subtraction is the author's deviation from the textbook rule"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+    "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100"
+   ],
+   "fitness_value_in_ancestor": "the only learning; capacity and spurious attractors are properties of this rule",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hopfield-takyamamoto/upstream/tree/network.py:train_weights"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "train_weights",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+   "fossil_ancestry": "hopfield-takyamamoto",
+   "human_name": "_run (asyn=False): s = sign(W s - threshold)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "all units update at once from the previous state; up to num_iter sweeps",
+   "input": "a state vector",
+   "output": "a state vector",
+   "state": "s",
+   "update": "per sweep",
+   "assumptions": [
+    "sign(0) = 0 in numpy: a unit can be silenced (an implementation quirk of this body, not of the model)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "hopfield-takyamamoto::hebbian_outer_product_weights_from_mean_subtracted_patterns_with_zero_diagonal",
+    "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+    "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN by run; by reading: synchronous updates can oscillate between two states (a known property of the parallel rule), which the stopping rule below would not detect as convergence -- it compares energy, and a 2-cycle has constant energy: the loop would return the first state of the cycle",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hopfield-takyamamoto/upstream/tree/network.py:_run synchronous branch"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the asyn=False branch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "INVARIANT",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "OSCILLATES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100",
+   "fossil_ancestry": "hopfield-takyamamoto",
+   "human_name": "_run (asyn=True)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "100 times: pick a random unit index and set it to sign(W[idx] . s - threshold); then check energy; up to num_iter such batches",
+   "input": "a state vector",
+   "output": "a state vector",
+   "state": "s",
+   "update": "per unit",
+   "assumptions": [
+    "100 random picks approximate a sweep (with N > 100 many units are untouched per batch)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "hopfield-takyamamoto::hebbian_outer_product_weights_from_mean_subtracted_patterns_with_zero_diagonal",
+    "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+    "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units"
+   ],
+   "fitness_value_in_ancestor": "the update order for which energy is non-increasing (Hopfield 1982)",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hopfield-takyamamoto/upstream/tree/network.py:_run asynchronous branch"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the asyn=True branch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+   "fossil_ancestry": "hopfield-takyamamoto",
+   "human_name": "energy = -1/2 s W s + threshold . s; stop when unchanged",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after every sweep (or batch) compute the quadratic energy; if it equals the previous value exactly, return; else continue to num_iter",
+   "input": "s, W",
+   "output": "a scalar; a stop decision",
+   "state": "e (last energy)",
+   "update": "per sweep",
+   "assumptions": [
+    "equal energy means a fixed point (false for synchronous 2-cycles and for asynchronous batches that changed nothing by chance)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+    "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:hopfield-takyamamoto/upstream/tree/network.py:energy and the e == e_new tests"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "energy() + the two comparisons",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "plot_weights, tqdm progress, the image demos (train.py: skimage binarisation and corruption)",
+   "reason": "OTHER",
+   "evidence": "instruments and drivers; the corruption routine is the WORLD's noise, recorded as environment",
+   "note": "train.py's np.random.seed(1) is the only seed; network.py's asynchronous branch is unseeded",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "hopfield-takyamamoto"
+  },
+  {
+   "candidate": "'Hopfield network' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "learning and recall share only W; the two recall rules and the stopping rule are separately replaceable",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "hopfield-takyamamoto"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "hopfield-takyamamoto::P.a_corrupted_cue_must_recover_the_nearest_stored_pattern_with_no_index_and_no_search",
+   "source_fossil": "hopfield-takyamamoto",
+   "source_evidence": "record pressure / failure; network.py",
+   "condition": "memories are addressed by content: a partial or noisy pattern must fall to the complete one by local dynamics alone",
+   "resource_or_constraint": "N^2 weights for ~0.14 N patterns; no external comparison",
+   "failure_condition": "convergence to a spurious attractor (record)",
+   "world_punishes": "storing correlated or too many patterns; cues beyond the basin",
+   "world_rewards": "a dynamics whose fixed points are the stored patterns and whose basins are wide",
+   "observable_consequence": "recall accuracy vs corruption level and vs pattern count (the record's entry point)",
+   "vacuity_condition": "one pattern",
+   "trivial_shortcuts": "nearest-neighbour lookup over the stored list (exact, uses an index the pressure forbids)",
+   "cheat_control": "a recaller given the stored list must recover every pattern within its Hamming basin; if the world does not distinguish it from Hebbian recall above capacity, capacity is not being tested",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: associative memory (Hopfield 1982)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "hopfield-takyamamoto::hebbian_outer_product_weights_from_mean_subtracted_patterns_with_zero_diagonal",
+   "to": "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::hebbian_outer_product_weights_from_mean_subtracted_patterns_with_zero_diagonal",
+   "to": "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+   "to": "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100",
+   "to": "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+   "to": "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "stop",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+   "to": "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+   "to": "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "hopfield-takyamamoto",
+   "relation": "algorithm_from",
+   "to": "Hopfield 1982 (with a mean-subtraction variant of the Hebb rule)",
+   "note": "from the code; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "nothing ran here; the record's entry point (corruption level, pattern count past 0.14 N) is a ready Stage C experiment",
+   "sign(0) = 0 and the 2-cycle blind spot of the energy stop are reading-level claims, unmeasured"
+  ],
+  "note": "every line of network.py is accounted for",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
