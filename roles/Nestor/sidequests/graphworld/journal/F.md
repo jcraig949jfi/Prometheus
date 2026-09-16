@@ -542,3 +542,13 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
   constant: G1 rows>0, G2 ANTI_PRIOR|BETA*, G3 kind cpu, C1 kind gpu, C2 CLAUSE_B non-OBSERVATION (n=32 = MC branch).
 - G6 (D27): open_candidate(r, lane, question, basis, requested_cost, dependencies, experiment_class, source_event)
   -> stub + one CANDIDATE_OPENED lineage event, never *_REFUSAL; refuse() now shares _stub(); file_candidate works on it.
+
+## 2026-09-16 09:59 -- P interface agreed; the disclosed G1 limit is closed (tests 31/31)
+
+- Pushed ea3d56cd5 (G1/GE/G6). A confirmed the topology readings (G3 = every cpu job, G2 = ANTI_PRIOR|BETA*,
+  C2 = CLAUSE_B unless OBSERVATION) and the rN >= 8 scope, and took ownership of the state source (lanes ff-merge
+  GATE_MAP_R8.json before their workers start).
+- P agreed in full (1789565860490-0) and pushed e0601f0bf: Ctx.emit calls EV.prepare_row; a refused row in _drain ends the job `error`.
+- New real-worker test on that tip, using the ACTUAL D29 shape: a bare ctx.emit job with 4 'observation' rows ends
+  `error` with no data row, and a good bare job's rows carry predicate_id + predicate_event_id from the envelope.
+- Suite on the synced tip 0ebb3c6ca + this test: 1131 passed, 9 skipped, pytest rc 0.

@@ -31,6 +31,17 @@ def emit_r7_shape(ctx, n: int = 4):
         ctx.emit(EV.prepare_row({"status": "observation", "evidence_class": "OBSERVATION", "i": i}, i))
 
 
+def emit_bare_r7_shape(ctx, n: int = 4):
+    """The ACTUAL D29 shape: bare ctx.emit, no prepare_row in the job. Covered only by the worker's emit hook."""
+    for i in range(n):
+        ctx.emit({"status": "observation", "evidence_class": "OBSERVATION", "i": i})
+
+
+def emit_bare_good(ctx, n: int = 3):
+    for i in range(n):
+        ctx.emit({"status": "record", "i": i})
+
+
 def emit_good(ctx, n: int = 3):
     for i in range(n):
         ctx.emit(EV.prepare_row({"status": "record", "evidence_class": "OBSERVATION", "i": i}, i))
@@ -143,6 +154,24 @@ def test_g1_round7_shape_n_rows_refused_job_is_not_ok(live):
     assert all(x.get("kind") == "job_end" for x in rows)
     assert "ROW_VOCABULARY_REFUSED:row 0:status 'observation'" in rows[-1]["error"]
     assert good["status"] == "ok" and good["rows"] == 3
+
+
+def test_g1_bare_ctx_emit_round7_shape_job_is_not_ok_and_rows_carry_predicate_event_id(live):
+    r, repo = live
+    env = EV.example(predicate_id="P-d29", predicate_event_id="1789564627164-0")
+    W.submit(LANE, f"{__name__}:emit_bare_r7_shape", "F-R8-D29-bare", "rows/bare.jsonl", 60, {"n": 4}, r=r,
+             envelope=env)
+    W.submit(LANE, f"{__name__}:emit_bare_good", "F-R8-bare-ok", "rows/bare_ok.jsonl", 60, {"n": 3}, r=r,
+             envelope=env)
+    bad, good = W.Worker(LANE, url=URL, repo=repo, log=lambda *_: None).serve(max_jobs=2, block_ms=500)
+    assert bad["status"] == "error"
+    rows = [json.loads(x) for x in (repo / "rows" / "bare.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert not any(x.get("i") is not None and x.get("status") == "observation" for x in rows)   # no data row survived
+    assert "ROW_VOCABULARY_REFUSED:row 0:status 'observation'" in json.dumps(rows)
+    assert good["status"] == "ok" and good["rows"] == 3
+    ok_rows = [json.loads(x) for x in (repo / "rows" / "bare_ok.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert len(ok_rows) == 3 and all(x["predicate_event_id"] == "1789564627164-0" and x["predicate_id"] == "P-d29"
+                                     for x in ok_rows)
 
 
 # ------------------------------------------------------------------ GE: gate enforcement at admission
