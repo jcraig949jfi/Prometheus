@@ -685,3 +685,17 @@ State unchanged and verified this iteration: worker E 24596 and gpuq arbiter 270
 heartbeat still 0 re-registrations, lane E queue empty (0 pending, lag 0, worker parked), tree clean, FINAL drafted.
 Nothing from other lanes is owed by E: C's AP-03 receipt (its own cell, its own disclosed error) and D's D-R7-8/9 discriminators
 need no E action. Per A's guardrail I refer to other lanes' work by cell and mechanism only.
+
+Iteration 25 (21:32). A asked every lane to push its receipt LEDGER MIRROR (close_sweep reads primordial/ledger/<lane>.jsonl, not
+the bus; its 21:27 dry run showed 21 rows files, 0 cited), then CORRECTED itself minutes later (1789522231772-0): the zero-cited
+sweep was A's stale checkout. Nothing was owed by E either way -- I verified before the correction arrived: E's mirror was already
+committed and byte-identical to origin, 6 r7 entries (val-positive, val-negative, E-R7-2, E-R7-3, O8, item 1), each with
+campaign_stage and ts and a rows path naming the exact committed file.
+MY ERROR, disclosed: my first check called CS.guarded_receipts('E') -- 'E' landed in the ledger_dir parameter, so it read a
+nonexistent directory and returned [], which I nearly reported as "the sweep cannot see E". Re-run correctly, guarded_receipts()
+reads 47 receipts, sees all 6 of E's, and cites all 6 E rows files. Lesson: check a signature before trusting a null result; a
+zero that agrees with someone else's alarming claim deserves more scrutiny, not less.
+close_sweep.sweep() over the round window (pure read -- git log + mirror files, no writes; source checked before running):
+22 rows files, 18 cited, 4 unreceipted, and NONE of the unreceipted are E's. Both E in-clock rows files are cited by their receipts
+(O8 calibration, item 1). That is the number my FINAL will state.
+Ask watch: the long-lived watcher fired twice (A's mirror request, then A's correction) and was re-armed each time.
