@@ -19,6 +19,7 @@ PCG64 uniforms), which the predicate does not define and which is therefore re-d
 
     python -m primordial.score.replay_r8 c-ap01 ROWS.jsonl [--ref origin/<branch>] [--out REPORT.json]
     python -m primordial.score.replay_r8 d-r8-1 ROWS.jsonl [--ref ...] [--out ...]
+    python -m primordial.score.replay_r8 g-screen primordial/ledger/rows/G/G-R8-screen.jsonl [--ref ...] [--out ...]
     python -m primordial.score.replay_r8 route-b primordial/ledger/qd/r8_route_b.json --no-bus [--out ...]
 """
 from __future__ import annotations
@@ -436,11 +437,102 @@ def replay_route_b(doc: dict, rows_dir: str = "primordial/ledger/rows/G") -> dic
     return out
 
 
+# ------------------------------------------------------------------ G-R8-SCREEN
+
+def _dict(v):
+    import ast
+    return ast.literal_eval(v) if isinstance(v, str) else v
+
+
+def replay_g_screen(rows: list[dict], manifest_path: str = "primordial/ledger/qd/world_set_r8.json") -> dict:
+    """Per r8_cell: re-derive every input from the cell's own rows and the verdict by the predicate TEXT (gate_in|HOLD:
+    SURVIVED iff ci95_lo > max(floor, gate); HELD iff gate > floor and not SURVIVED; else CULLED), not via screen.py.
+      floor parts   abstain/best_constant from r16_det; uniform_random_median = median of r16_random.held64_by_run;
+                    input_invariant_learner = median of floor_invariant_r16.held64_by_run (absent -> bound)
+      baseline      median_ci over held64_by_run in the canonical order (4200, 2101, 3303, 5501; run seed), plus the
+                    worst ci_lo over 24 family orders (verdict judged robust only if it holds at both ends)
+      sample        every 32-run block is 4 families x run seeds 0..7, no duplicate
+      world key     world_id and mech_hash equal the frozen manifest entry (resolved by entry_index or gen_seed)
+    A cell whose inputs are incomplete is UNSCREENED, never CULLED."""
+    import itertools
+    import statistics
+    from primordial.metric.ci import median_ci
+    man = json.load(open(manifest_path, encoding="utf-8"))
+    out = {"predicate_id": "G-R8-SCREEN", "cells": [], "disagreements": []}
+    by = {}
+    for x in rows:
+        p = x.get("pressure") or (str(x.get("cell_job") or "").rsplit("-", 1)[-1] if x.get("cell_job") else None)
+        if x.get("gen_seed") is not None and p:
+            by.setdefault((int(x["gen_seed"]), p), []).append(x)
+    for key, xs in sorted(by.items()):
+        cell = [x for x in xs if x.get("kind") == "r8_cell"]
+        if not cell:
+            continue
+        c = cell[-1]
+        one = lambda k: [x for x in xs if x.get("kind") == k]
+        det, rnd, lrn, base, wk = one("r16_det"), one("r16_random"), one("floor_invariant_r16"), \
+            one("baseline_r16"), one("r8_world_key")
+        rec = {"world": c.get("world"), "pressure": key[1], "band": c.get("band"), "rows_verdict": c.get("verdict"),
+               "counts": {k: len(v) for k, v in (("det", det), ("random", rnd), ("learner", lrn), ("baseline", base),
+                                                 ("world_key", wk))}}
+        probs = []
+        for name, blk in (("random", rnd), ("learner", lrn), ("baseline", base)):
+            for b in blk:
+                hb = _dict(b["held64_by_run"])
+                ks = sorted((int(k.split("|")[0]), int(k.split("|")[1])) for k in hb)
+                if ks != sorted((f, s) for f in FAMILIES for s in range(8)):
+                    probs.append(f"{name} block not 32/4/8: {len(ks)} runs")
+        if len(det) != 1 or len(rnd) != 1 or len(base) != 1 or len(lrn) > 1:
+            probs.append("incomplete or duplicated cell inputs")
+            rec.update(problems=probs, replay_verdict="UNSCREENED")
+            out["cells"].append(rec)
+            out["disagreements"].append(rec)
+            continue
+        med = lambda b: float(statistics.median(_dict(b["held64_by_run"]).values()))
+        parts = {"abstain": float(det[0]["abstain"]), "best_constant": float(det[0]["best_constant"]),
+                 "uniform_random_median": med(rnd[0]),
+                 "input_invariant_learner": med(lrn[0]) if lrn else None}
+        floor = max(v for v in parts.values() if v is not None)
+        gate = float(det[0]["gate_held64"])
+        hb = _dict(base[0]["held64_by_run"])
+        lo = median_ci([hb[f"{f}|{s}"] for f in FAMILIES for s in range(8)])[0]
+        los = [median_ci([hb[f"{f}|{s}"] for f in order for s in range(8)])[0]
+               for order in itertools.permutations(FAMILIES)]
+
+        def verdict(ci_lo):
+            if ci_lo > max(floor, gate):
+                return "SURVIVED"
+            return "HELD" if gate > floor else "CULLED"
+        v, v_lo, v_hi = verdict(lo), verdict(min(los)), verdict(max(los))
+        bound = parts["input_invariant_learner"] is None
+        if bound and (lo > floor or gate > floor):
+            v = "PENDING(bound)"
+        ent = None
+        for e in (man.get("body") or man).get("entries") or []:
+            if wk and (e.get("world_id") == wk[0].get("world_id")):
+                ent = e
+        wk_ok = bool(wk) and ent is not None and ent.get("mech_hash") == wk[0].get("mech_hash")
+        rec.update(parts=parts, floor=floor, gate=gate, ci_lo_canonical=lo, ci_lo_recorded=c["baseline_ci95"][0],
+                   ci_lo_order_range=[min(los), max(los)], replay_verdict=v,
+                   order_robust=v_lo == v_hi == v, world_key_matches_manifest=wk_ok, problems=probs)
+        if (v != c.get("verdict") or floor != c.get("floor") or gate != c.get("gate_held64")
+                or lo != c["baseline_ci95"][0] or probs or not wk_ok):
+            out["disagreements"].append({k: rec.get(k) for k in ("world", "pressure", "rows_verdict",
+                                                                "replay_verdict", "floor", "gate", "ci_lo_canonical",
+                                                                "ci_lo_recorded", "world_key_matches_manifest",
+                                                                "problems")} | {"rows_floor": c.get("floor")})
+        out["cells"].append(rec)
+    out["verdict_counts_replay"] = {k: sum(1 for c in out["cells"] if c.get("replay_verdict") == k)
+                                    for k in ("SURVIVED", "HELD", "CULLED", "UNSCREENED", "PENDING(bound)")}
+    out["verdict_agrees"] = not out["disagreements"]
+    return out
+
+
 # ------------------------------------------------------------------ CLI
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("which", choices=["c-ap01", "d-r8-1", "route-b"])
+    ap.add_argument("which", choices=["c-ap01", "d-r8-1", "route-b", "g-screen"])
     ap.add_argument("rows")
     ap.add_argument("--ref")
     ap.add_argument("--out")
@@ -453,7 +545,7 @@ def main(argv=None) -> int:
         rep["predicate_id"] = None
     else:
         rows = load_rows(a.rows, a.ref)
-        rep = {"c-ap01": replay_c_ap01, "d-r8-1": replay_d_r8_1}[a.which](rows)
+        rep = {"c-ap01": replay_c_ap01, "d-r8-1": replay_d_r8_1, "g-screen": replay_g_screen}[a.which](rows)
     if not a.no_bus and rep["predicate_id"]:
         rep["rule_consistency"] = rule_consistency(rep["predicate_id"], rows)
     rep["rows_path"], rep["rows_ref"], rep["rows_count"] = a.rows, a.ref, len(rows)
