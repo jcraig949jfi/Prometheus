@@ -99,7 +99,14 @@ clear() is not round-gated -- and deliberately did not: it would have spent the 
 A hand-cleared nothing.
 Jobs: G 58 (52 ok, 6 paused) 145,855 CPU-s; E 42 (41 ok, 1 paused) 22,690; D 15 (11 ok, 2 error, 1 timeout,
       1 died) 3,230; C 7 (3 ok, 2 paused, 1 error, 1 died) 2,301; B 0; R 0.
-      Total 174,075 CPU-s = 48.4 CPU-hours on a 4-core host over a 10 h clock.
+      Total 174,075 job-reported CPU-s = 48.4 CPU-hours.
+CORRECTION (A's error, found post-close while gathering hardware facts): an earlier version of this line called this
+"a 4-core host". It is not. HOST: 8 physical cores / 16 logical threads (AMD Zen 4, 4.5 GHz max), 31.6 GB RAM,
+NVIDIA RTX 5060 Ti 16 GB (compute capability 12.0, driver 576.88). capacity.py sets HOST_THREADS=16, THREAD_CAP=8,
+so k*=2 x 8 threads = 16 = the host's FULL logical width, not an oversubscribed small box.
+UTILISATION (computed from job cpu_s over wall windows): 174,075 / 36,000 s clock = 4.83 logical threads busy on
+average; over the ~24,000 s in which any lane was actually running (17:55 -> 00:35) = 7.25. Against 16 available.
+The round was not CPU-bound in aggregate; see section 8 for what that does and does not imply.
 Admission: 1 STAGE_BUDGET_REFUSAL (B2 v2, reasons CPU_WALL_OVER_CEILING + PROJECTED_PAST_ROUND_END);
       0 EVIDENCE_N_v1 / SAMPLE_RULE refusals.
 CPU grants 122, every one of the 122 at 8 threads (the D19 fix, verified on each grant); CHECKPOINTED 9;
