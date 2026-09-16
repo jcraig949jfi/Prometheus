@@ -659,3 +659,12 @@ Lane E ran no anti-prior work, so nothing needs redacting; the rule is recorded 
 Context accepted by A (D's finding): the two anti-prior-arm PASSes share no mechanism -- r6's was search saturation, AP-02's charge
 only partially bound and its meter not at all -- so the packet treats it as a CELL/PRESSURE DESIGN issue for round 8 ("hard" cells
 are often not hard because the pressure does not bite), not a scoring claim.
+
+Iteration 22 (20:22). A rule 1789518025331-0 (rest of r7 + round 8): an anomaly record, bus note or receipt readable by C or R names
+the CELL and the MECHANISM only; sealed-ledger fields (arm, rank, quantile, prior_p_pass) belong in a conductor-only note citing the
+anomaly id. Nothing is rewritten or deleted -- records are immutable and the close sweep depends on that; the packet carries all
+three lapses (A's r6 posts, D's note tonight, D's record) with the assessment that the channel is weak (assign() returns only the
+cell) but real.
+Checked my own record instead of assuming: anomaly 1789512027239-0 and all four related E posts (the record, the draw 31 addendum,
+the O8 result, the item 1 verdict) carry ZERO sealed-ledger fields. My anomaly names only the cell and the mechanism -- the two runs
+2101|2192 and 2101|2255, the family, and the fused-vs-numpy exact-equality comparison. No disclosure owed by E under this rule.
