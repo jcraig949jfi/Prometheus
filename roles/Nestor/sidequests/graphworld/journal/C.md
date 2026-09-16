@@ -729,3 +729,21 @@
 - AP-03 pushed 25d56f699; envelope.admit ok; predicate refs/pm/pred/C-R7-AP-03 -> 25d56f699, bus 1789518156258-0.
   Worker restarted after the harness edits (29908 -> 26764). Job c9eb2e397ce1 queued (PRODUCTION, checkpointable,
   wall 2400/segment, cpu 3600, GENS 25, genome 24 B). Projected ~2124 s of wall once a token is granted.
+
+## 2026-09-15 round 7 loop iteration 11 (m1-440f0317): 21:05, C-R7-AP-03 PASS but VACUOUS
+
+- AP-03 finished in two segments (c9eb2e397ce1 control arm -> 440ba2b77fbf cell arm, both ok; 921.6 s and 937.1 s wall,
+  605.8 s and 614.0 s CPU). Oracles clean in both arms; 25,600 audited offers per arm, 0 Cypher-vs-numpy mismatches.
+- PRIMARY PASS (31.71875 >= bar 31.71875) and VACUOUS: all 64 runs in BOTH arms returned exactly 31.71875 held charge
+  per episode, IQR 0.0 both sides. Zero resolving power; receipt 1789520952417-0 states that as prominently as the verdict.
+- CAUSE (mine, structural): at k = 3 a send costs alpha_int*3 = 6 while a right action earns y_int = 3, so signalling
+  never pays on D1 and every top1 lands on the silent constant-action attractor (~7.9 rights per episode = chance on one
+  bucket). C-R5-01 recorded this exact pay-off inequality in round 5; I reused the D1 constants at k = 3 without
+  re-checking it. Own error, counted.
+- WHAT DID BIND (report only): byte_charge shrank programs -- cell functional bytes median 14 (non-nop 3) vs control 22
+  (non-nop 7); control train fitness pinned at 28900, cell 27740-28320. The pressure worked; the READER could not see it.
+- Not retuned tonight: changing y_int or the symbol width after seeing these rows would be fishing. Filed as an OPEN
+  item for round 8 in the receipt.
+- LESSON for the next cell on a charge world: before freezing the channel, check the pay-off inequality (cost of a
+  delivered message vs the reward for a right action); if sending cannot pay, the reader is pinned and any comparison
+  through it is vacuous regardless of how well the pressure binds elsewhere.
