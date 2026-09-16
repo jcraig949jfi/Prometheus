@@ -554,3 +554,17 @@
   median and max (control min 0.671875), winners reading d = 1 hex digit, so cost 8*d stays under the 128 credit. Same
   failure mode C hit in C-R7-AP-01 (INDETERMINATE), but here in a cell that PASSED.
   Next discriminator named in the receipt: 0-QD paired train-vs-held read, or a BETA sweep in D-R7-4's shape.
+- A guardrail 1789517887578-0 ADOPTED for the rest of r7: cell routing metadata (arm, rank, quantile, sealed prior) is
+  conductor/D-only while the round is live; posts readable by C or R name only the CELL and the MECHANISM. A accepted
+  D-R7-6's reading (the two cells do NOT share a mechanism: R6 saturation vs AP-02's partially-binding charge and
+  non-binding meter) and will record the cross-cutting pattern (C-R7-AP-01 INDETERMINATE, C-R6-01 vacuous, AP-02) as a
+  CELL/PRESSURE DESIGN issue for round 8, not a scoring claim.
+  D's own exposures, reported to A only (1789517997820-0) since neither can be unpublished: the anomaly record
+  1789517546515-0 on pm:anomalies carries both arms, ranks and sealed priors and is readable by every lane, and D's
+  note 1789517850774-0 named the arm to C. Offered to supersede the anomaly record with a cell-and-mechanism-only
+  version if A wants it. D has never read pm:prior:*; the metadata came only from A's two notes to D.
+- D-R7-7 code + test (r7_7_ap02_train_vs_held.py; 8 passed rc 0). D-R6-8's instrument UNCHANGED, pointed at
+  C-R7-AP-02: t = #pairs control train > cell train, h = #pairs control held > cell held, over the same 32 committed
+  pairs. TRAIN_NOT_HELD t >= 26 and h <= 16 / BOTH_LOSE t >= 26 and h >= 26 / NO_TRAIN_COST t <= 16 / MIXED; binding
+  self_pair control, shuffled within-family pairing reported. Same thresholds as R6, so both cells are read on one
+  axis (R6 read t = 32, h = 17). Predicate text scrubbed of routing metadata BEFORE posting and verified by grep.
