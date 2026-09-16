@@ -12,6 +12,20 @@
  },
  "conductor_sha_at_T0": "dbd9a127fabe76639bdbf83d977837f01aba62dc",
  "gate_command": "python roles/Nestor/sidequests/graphworld/gate_r8.py --emit --since-sha 6c02b89a9",
+ "gate_map_interop_verified": {
+  "how": "emitted a throwaway map, then read it back with F's OWN envelope.read_gate_state -- both the FILE path (no redis handle, which is what worker._admit actually uses) and the redis path",
+  "result": {
+   "cleanup": "clean",
+   "file_entries": 12,
+   "gate_reasons_on_emitted_state": "[] (admission accepts it; does NOT fail closed)",
+   "r8_key_and_map": "untouched",
+   "redis_entries": 12,
+   "views_agree": true
+  },
+  "still_required": "verification does NOT remove clock_start_sequence step 3: after --emit, GATE_MAP_R8.json must be COMMITTED, PUSHED, and ff-merged into every lane worktree before its worker starts.",
+  "when_local": "2026-09-16 09:51",
+  "why_it_matters": "F 1789565285343-0 warned that a map a worker cannot read yields GATE_STATE_UNAVAILABLE for EVERYTHING, refusing the whole round's science at clock start. That path is now tested end to end rather than reasoned about."
+ },
  "gate_runner_state": {
   "checks": "24 = 12 environment + 12 gate probes, count derived not hardcoded",
   "complete_against": "all 8 BUILD_R8 GATE RUN items",
