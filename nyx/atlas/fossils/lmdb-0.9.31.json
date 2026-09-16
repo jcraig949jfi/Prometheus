@@ -1330,17 +1330,17 @@
  "ancestry_edges": [
   {
    "from": "lmdb-0.9.31",
-   "relation": "shares_ancestor_with",
-   "to": "leveldb-1.23",
-   "note": "rival designs for the same problem: copy-on-write B+tree vs log-structured merge",
-   "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "lmdb-0.9.31",
    "relation": "algorithm_from",
    "to": "shadow paging (Lorie 1977) and append-only B-trees (the code's own doc references not read)",
    "note": "human prior, not from the body",
    "basis": "SOURCE_READ"
+  },
+  {
+   "from": "lmdb-0.9.31",
+   "relation": "shares_ancestor_with",
+   "to": "leveldb-1.23",
+   "note": "rival designs for the same problem: copy-on-write B+tree vs log-structured merge",
+   "basis": "TECHNE_RECORD"
   }
  ],
  "residue": {

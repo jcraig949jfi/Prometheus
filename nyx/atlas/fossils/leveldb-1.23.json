@@ -73,7 +73,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded: RocksDB (Facebook fork 2012)"
+    "superseded (direction UNFIXED in Techne's vocabulary; note: 'human history: the fork became the mainstream LSM engine; LevelDB continues'): RocksDB (Facebook fork 2012)"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -1213,6 +1213,13 @@
  "ancestry_edges": [
   {
    "from": "leveldb-1.23",
+   "relation": "superseded",
+   "to": "RocksDB (Facebook fork 2012)",
+   "note": "Techne's edge with its note",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "leveldb-1.23",
    "relation": "algorithm_from",
    "to": "O'Neil et al. 1996 LSM-tree",
    "note": "",
@@ -1224,13 +1231,6 @@
    "to": "RocksDB (Facebook fork 2012)",
    "note": "human history: the fork became the mainstream LSM engine; LevelDB continues",
    "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "leveldb-1.23",
-   "relation": "superseded",
-   "to": "RocksDB (Facebook fork 2012)",
-   "note": "Techne's edge with its note",
-   "basis": "SOURCE_READ"
   }
  ],
  "residue": {

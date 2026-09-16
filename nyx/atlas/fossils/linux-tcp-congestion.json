@@ -73,7 +73,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded: TCP Reno/NewReno"
+    "superseded (direction UNFIXED in Techne's vocabulary; note: 'CUBIC replaced Reno-family as Linux default'): TCP Reno/NewReno"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -2350,20 +2350,6 @@
  "ancestry_edges": [
   {
    "from": "linux-tcp-congestion",
-   "relation": "superseded",
-   "to": "TCP Reno/NewReno",
-   "note": "CUBIC replaced Reno-family as Linux default",
-   "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "linux-tcp-congestion",
-   "relation": "algorithm_from",
-   "to": "Jacobson 1988",
-   "note": "the congestion-avoidance lineage all descend from",
-   "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "linux-tcp-congestion",
    "relation": "rival_of",
    "to": "linux-tcp-congestion",
    "note": "INTRA-RECORD: bbr.* rival_of cubic.* (both live Linux modules; the record packs them as before/after)",
@@ -2375,6 +2361,20 @@
    "to": "bsd-tcp-4.3-reno-1990",
    "note": "NewReno -> CUBIC per Techne's record of the reno fossil (superseded edge there)",
    "basis": "SOURCE_READ"
+  },
+  {
+   "from": "linux-tcp-congestion",
+   "relation": "superseded",
+   "to": "TCP Reno/NewReno",
+   "note": "CUBIC replaced Reno-family as Linux default",
+   "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "linux-tcp-congestion",
+   "relation": "algorithm_from",
+   "to": "Jacobson 1988",
+   "note": "the congestion-avoidance lineage all descend from",
+   "basis": "TECHNE_RECORD"
   }
  ],
  "residue": {

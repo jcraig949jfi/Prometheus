@@ -1133,17 +1133,17 @@
  "ancestry_edges": [
   {
    "from": "reed-solomon-rockliff-1991",
-   "relation": "shares_ancestor_with",
-   "to": "ldpc-codes-neal-2001",
-   "note": "both error-correcting codes; algebraic block code vs sparse-graph code",
-   "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "reed-solomon-rockliff-1991",
    "relation": "predecessor_of",
    "to": "libfec-karn",
    "note": "Karn's decode_rs.h / encode_rs.h / init_rs.h keep Rockliff's variable names (alpha_to, index_of, genpoly, the Lin and Costello table) and add erasures, parametrisation and Horner syndromes; asserted from reading both bodies, not from Techne's record",
    "basis": "SOURCE_READ"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991",
+   "relation": "shares_ancestor_with",
+   "to": "ldpc-codes-neal-2001",
+   "note": "both error-correcting codes; algebraic block code vs sparse-graph code",
+   "basis": "TECHNE_RECORD"
   }
  ],
  "residue": {

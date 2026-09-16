@@ -1,0 +1,285 @@
+{
+ "schema": "nyx.atlas/0",
+ "built": "2026-09-16T12:35Z",
+ "n": 15,
+ "files": [
+  {
+   "schema": "nyx.atlas/0/recurrence",
+   "written": "2026-09-16",
+   "basis": "SOURCE_READ only. Nothing here has run. By the directive's ladder, reading can support at most R2 (input/state/update resemblance); R3+ needs the wind tunnel. Every row names the two organ ids and the level CLAIMED, the level a wind-tunnel test could reach, and which of the directive's two interesting cases it might be (HUMAN_SEPARATED_BEHAVIOURALLY_NEAR / HUMAN_SIMILAR_BEHAVIOURALLY_FAR). These are hypotheses; the directive forbids reading them as equivalence.",
+   "calibration": "row 1 is a KNOWN-IDENTICAL pair by descent (Karn's RS derives from Rockliff's); a Stage E instrument that does not place it at R5 is broken; an instrument that places libfec's Viterbi as close to them as they are to each other is fooled by the domain label. Row 2 (Feistel vs SPN) is the KNOWN-DIFFERENT pair with the same human label.",
+   "candidates": [
+    {
+     "id": "RC-01",
+     "a": "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+     "b": "libfec-karn::rs.iterative_locator_polynomial_from_syndromes_with_erasure_seed",
+     "claimed": "R2",
+     "reachable": "R5",
+     "kind": "CALIBRATION_IDENTICAL",
+     "human_domains": [
+      "error-correcting-codes",
+      "error-correcting-codes"
+     ],
+     "note": "same table algorithm; Karn adds erasure seeding and a -1 return on failure where Rockliff passes data through silently -- the wind tunnel should find them identical on errors-only inputs and different on tt+1 errors (flag vs silent)"
+    },
+    {
+     "id": "RC-02",
+     "a": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+     "b": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+     "claimed": "R1",
+     "reachable": "R3",
+     "kind": "HUMAN_SIMILAR_BEHAVIOURALLY_FAR",
+     "human_domains": [
+      "cryptography",
+      "cryptography"
+     ],
+     "note": "both 'block cipher rounds'; DES inverts by structure (same code, reversed keys), AES needs a second function; an intervention that deletes the inverse code kills AES decryption and leaves DES intact"
+    },
+    {
+     "id": "RC-03",
+     "a": "libfec-karn::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
+     "b": "tiny-aes-c::column_mixing_by_a_fixed_matrix_over_gf_2_8_using_shift_and_conditional_reduce",
+     "claimed": "R1",
+     "reachable": "R3",
+     "kind": "HUMAN_SEPARATED_BEHAVIOURALLY_NEAR",
+     "human_domains": [
+      "error-correcting-codes",
+      "cryptography"
+     ],
+     "note": "GF(2^8) multiplication by log/antilog tables vs by shift-and-reduce (xtime); identical function, different representation; an identifier/representation-permutation test should show invariance of the product and divergence of the cost"
+    },
+    {
+     "id": "RC-04",
+     "a": "linux-tcp-congestion::cubic.running_minimum_of_rtt_samples",
+     "b": "linux-tcp-congestion::bbr.windowed_minimum_of_rtt_with_forced_low_inflight_probe",
+     "claimed": "R2",
+     "reachable": "R4",
+     "kind": "HUMAN_SIMILAR_BEHAVIOURALLY_FAR",
+     "human_domains": [
+      "networks",
+      "networks"
+     ],
+     "note": "same input (RTT samples), same output (a minimum), different memory (unbounded vs 10 s window with a forced re-measurement); a history-truncation / delayed-feedback intervention separates them"
+    },
+    {
+     "id": "RC-05",
+     "a": "lmdb-0.9.31::freed_pages_keyed_by_the_freeing_transaction_and_reused_only_below_the_oldest_reader",
+     "b": "concurrencykit-0.7.2::epoch_based_reclamation_deferring_frees_until_every_active_reader_has_left_the_epoch",
+     "claimed": "R2",
+     "reachable": "R4",
+     "kind": "HUMAN_SEPARATED_BEHAVIOURALLY_NEAR",
+     "human_domains": [
+      "database",
+      "concurrency"
+     ],
+     "note": "both: a monotone counter per version, readers register the version they entered, reclamation gated on the minimum over active readers; both stall under one stuck reader; leveldb-1.23::immutable_versions... (refcounts) and sqlite WAL read marks are the same pressure with a third and fourth discipline -- a CONVERGENT PRESSURE SET 'reclaim under live readers' with four members in three human domains"
+    },
+    {
+     "id": "RC-06",
+     "a": "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+     "b": "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo",
+     "claimed": "R1",
+     "reachable": "R3",
+     "kind": "HUMAN_SEPARATED_BEHAVIOURALLY_NEAR",
+     "human_domains": [
+      "hardware",
+      "artificial-life"
+     ],
+     "note": "both serve each contender once per round in a fixed cyclic order; the arbiter skips non-requesters, MARS skips dead warriors; input permutation should show the same order-invariance signature"
+    },
+    {
+     "id": "RC-07",
+     "a": "concurrencykit-0.7.2::exponential_backoff_by_spinning_a_doubling_count_of_barriers_up_to_a_ceiling",
+     "b": "minisat-1.14-2006::restart_after_a_conflict_budget_growing_geometrically",
+     "claimed": "R1",
+     "reachable": "R3",
+     "kind": "HUMAN_SEPARATED_BEHAVIOURALLY_NEAR",
+     "human_domains": [
+      "concurrency",
+      "SAT"
+     ],
+     "note": "a budget that grows geometrically on each failure (x2 with a ceiling; x1.5 unbounded); linux-tcp cubic's Wmax decay is the DEcreasing twin; backoff-2.2.1 (in the vault, unsampled) is the named ancestor of the shape"
+    },
+    {
+     "id": "RC-08",
+     "a": "padasip-1.2.2::step_size_adapted_from_the_correlation_of_successive_errors_and_inputs",
+     "b": "minisom::time_indexed_decay_of_step_and_radius",
+     "claimed": "R0",
+     "reachable": "R3",
+     "kind": "HUMAN_SIMILAR_BEHAVIOURALLY_FAR",
+     "human_domains": [
+      "adaptation",
+      "connectionist"
+     ],
+     "note": "both called 'learning rate'; one is a closed-loop function of the error sequence, the other an open-loop function of the clock; minisat's activity decay (geometric forgetting per conflict) is a third; a delayed-feedback intervention should leave the SOM schedule unchanged and move the VSLMS step"
+    },
+    {
+     "id": "RC-09",
+     "a": "libfec-karn::fano.depth_first_tree_search_with_a_running_threshold_and_backtracking",
+     "b": "libfec-karn::viterbi.add_compare_select_butterfly_over_ping_pong_metric_buffers",
+     "claimed": "R1",
+     "reachable": "R4",
+     "kind": "HUMAN_SIMILAR_BEHAVIOURALLY_FAR",
+     "human_domains": [
+      "error-correcting-codes",
+      "error-correcting-codes"
+     ],
+     "note": "same objective (max-likelihood path through the same trellis), same input; one is breadth-first with fixed cost, the other depth-first with variable cost and a timeout failure; a compute-limit intervention separates them sharply"
+    },
+    {
+     "id": "RC-10",
+     "a": "dmtcp-3.1.2::worker.checkpoint_thread_loop_anchored_by_a_saved_context",
+     "b": "go-explore-uber-2022 (specimen cut, nyx/specimens/go_explore: return-to-state organ c07)",
+     "claimed": "R0",
+     "reachable": "R2",
+     "kind": "HUMAN_SEPARATED_BEHAVIOURALLY_NEAR",
+     "human_domains": [
+      "distributed-systems",
+      "reinforcement learning"
+     ],
+     "note": "'resume from a saved state and continue' in a process checkpointer and in an exploration algorithm; lmdb's double meta page is a third (resume from the last consistent root); lexical only until a state-reset intervention is run on each"
+    },
+    {
+     "id": "RC-11",
+     "a": "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+     "b": "linux-tcp-congestion::bbr.mode_machine_with_bandwidth_plateau_detector",
+     "claimed": "R0",
+     "reachable": "R3",
+     "kind": "HUMAN_SEPARATED_BEHAVIOURALLY_NEAR",
+     "human_domains": [
+      "distributed-systems",
+      "networks"
+     ],
+     "note": "both declare a state after k consistent observations (k confirmers; 3 rounds without growth); weak: the observation types differ; a duplicated-observation intervention (the same confirmer twice) is what memberlist dedups and BBR does not need"
+    },
+    {
+     "id": "RC-12",
+     "a": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+     "b": "minisat-1.14-2006::variable_activity_bump_and_geometric_decay_with_rescale",
+     "claimed": "R1",
+     "reachable": "R4",
+     "kind": "HUMAN_SIMILAR_BEHAVIOURALLY_FAR",
+     "human_domains": [
+      "adversarial",
+      "SAT"
+     ],
+     "note": "both: a per-alternative score updated on use that biases the next choice; radamsa's delta is a biased random walk clamped to [2,10] with no external signal; VSIDS's bump is conflict-driven with geometric decay; expected to diverge under a noise intervention (radamsa's scores are already noise)"
+    },
+    {
+     "id": "RC-13",
+     "a": "lmdb-0.9.31::two_meta_pages_alternating_by_transaction_id_parity",
+     "b": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+     "claimed": "R1",
+     "reachable": "R2",
+     "kind": "HUMAN_SEPARATED_BEHAVIOURALLY_NEAR",
+     "human_domains": [
+      "database",
+      "scientific-computing"
+     ],
+     "note": "double buffering by parity: also libfec viterbi metrics1/metrics2, bbr extra_acked[2], leveldb mem_/imm_, ssw pvHStore/pvHLoad -- SIX fossils in five domains; a structural recurrence that is probably behaviourally trivial (it is how one avoids in-place update); recorded so the wind tunnel can show it is trivial rather than the atlas assuming so"
+    },
+    {
+     "id": "RC-14",
+     "a": "gzip-1.2.4-1993::lazy_evaluation_deferring_a_match_by_one_byte_to_see_if_a_longer_one_starts_there",
+     "b": "sqlite-3.49.1-amalgamation::cost_based_join_planner_by_beam_search_over_loop_orders_in_log2_cost_units",
+     "claimed": "R0",
+     "reachable": "R2",
+     "kind": "HUMAN_SEPARATED_BEHAVIOURALLY_NEAR",
+     "human_domains": [
+      "compression",
+      "databases"
+     ],
+     "note": "both keep a bounded set of alternatives one step ahead before committing (1 alternative; mxChoice); lexical until a branching intervention is defined for both"
+    },
+    {
+     "id": "RC-15",
+     "a": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+     "b": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+     "claimed": "R2",
+     "reachable": "R5",
+     "kind": "CALIBRATION_CLAIMED_IDENTICAL",
+     "human_domains": [
+      "hardware",
+      "hardware"
+     ],
+     "note": "two circuits the author claims equivalent; 64 input/state cases at N=4 decide it exhaustively; the cheapest possible Stage D experiment in the atlas (needs iverilog)"
+    }
+   ],
+   "convergent_pressure_sets": [
+    {
+     "name": "reclaim_under_live_readers",
+     "members": [
+      "lmdb-0.9.31",
+      "concurrencykit-0.7.2",
+      "leveldb-1.23",
+      "sqlite-3.49.1-amalgamation (wal)"
+     ],
+     "pressure_ids": [
+      "lmdb-0.9.31::P.space_freed_by_new_versions_must_be_reclaimed_while_old_versions_may_still_be_read",
+      "concurrencykit-0.7.2::P.memory_may_be_freed_while_another_thread_still_holds_a_pointer_it_read_without_a_lock"
+     ],
+     "status": "TEST_SET, not a claim of shared mechanism"
+    },
+    {
+     "name": "bounded_shared_resource_contention",
+     "members": [
+      "verilog-rr-arbiter",
+      "concurrencykit-0.7.2",
+      "corewar-redcode",
+      "linux-tcp-congestion",
+      "hashicorp-memberlist-0.5.4 (gossip bandwidth)"
+     ],
+     "status": "TEST_SET"
+    },
+    {
+     "name": "crash_at_any_instant_must_leave_a_consistent_state",
+     "members": [
+      "lmdb-0.9.31",
+      "leveldb-1.23",
+      "sqlite-3.49.1-amalgamation",
+      "dmtcp-3.1.2"
+     ],
+     "status": "TEST_SET"
+    },
+    {
+     "name": "independent_symbol_corruption_with_fixed_redundancy",
+     "members": [
+      "libfec-karn",
+      "reed-solomon-rockliff-1991",
+      "hopfield-takyamamoto (content-addressable recovery)",
+      "tiny-aes-c (the adversarial inverse: corruption must NOT be recoverable without the key)"
+     ],
+     "status": "TEST_SET; hopfield and aes are deliberately provocative members"
+    },
+    {
+     "name": "a_budget_that_must_be_split_between_exploring_and_committing",
+     "members": [
+      "minisom (ordering vs convergence)",
+      "gzip (chain length vs ratio)",
+      "minisat-1.14-2006 (restarts)",
+      "linux-tcp-congestion (bbr gain cycle)",
+      "radamsa (mutator scores)"
+     ],
+     "status": "TEST_SET"
+    }
+   ],
+   "semantic_similar_behaviour_far_by_reading": [
+    "RC-02",
+    "RC-04",
+    "RC-08",
+    "RC-09",
+    "RC-12"
+   ],
+   "cross_domain_candidates_by_reading": [
+    "RC-03",
+    "RC-05",
+    "RC-06",
+    "RC-07",
+    "RC-10",
+    "RC-11",
+    "RC-13",
+    "RC-14"
+   ]
+  }
+ ]
+}

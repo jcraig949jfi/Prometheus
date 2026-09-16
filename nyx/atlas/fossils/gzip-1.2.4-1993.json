@@ -73,7 +73,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded: ncompress-5.0-lzw-1985"
+    "superseded (direction UNFIXED in Techne's vocabulary; note: 'gzip displaced compress under patent pressure (direction: gzip superseded compress)'): ncompress-5.0-lzw-1985"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -1207,6 +1207,13 @@
    "from": "gzip-1.2.4-1993",
    "relation": "superseded",
    "to": "ncompress-5.0-lzw-1985",
+   "note": "Techne records this edge with direction 'gzip displaced compress'; the atlas keeps it as recorded",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "gzip-1.2.4-1993",
+   "relation": "superseded",
+   "to": "ncompress-5.0-lzw-1985",
    "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress)",
    "basis": "TECHNE_RECORD"
   },
@@ -1216,13 +1223,6 @@
    "to": "zlib-1.3.1",
    "note": "same author (Gailly) and algorithm; the library form",
    "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "gzip-1.2.4-1993",
-   "relation": "superseded",
-   "to": "ncompress-5.0-lzw-1985",
-   "note": "Techne records this edge with direction 'gzip displaced compress'; the atlas keeps it as recorded",
-   "basis": "SOURCE_READ"
   }
  ],
  "residue": {

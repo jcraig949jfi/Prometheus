@@ -72,7 +72,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded: zchaff-2007"
+    "superseded (direction UNFIXED in Techne's vocabulary; note: 'direction: MiniSat superseded zChaff (recorded on both records)'): zchaff-2007"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -1473,6 +1473,13 @@
  "ancestry_edges": [
   {
    "from": "minisat-1.14-2006",
+   "relation": "successor_of",
+   "to": "zchaff-2007",
+   "note": "Techne records the superseded edge on both records; the algorithms (two watched literals, 1UIP, activity) are Chaff's, the representation (activity heap, inline binaries, decay-by-inc) is MiniSat's",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "minisat-1.14-2006",
    "relation": "historical_version_of",
    "to": "minisat-2.2.0",
    "note": "1.14 (2006) -> 2.2.0 (2010)",
@@ -1484,13 +1491,6 @@
    "to": "zchaff-2007",
    "note": "direction: MiniSat superseded zChaff (recorded on both records)",
    "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "minisat-1.14-2006",
-   "relation": "successor_of",
-   "to": "zchaff-2007",
-   "note": "Techne records the superseded edge on both records; the algorithms (two watched literals, 1UIP, activity) are Chaff's, the representation (activity heap, inline binaries, decay-by-inc) is MiniSat's",
-   "basis": "SOURCE_READ"
   }
  ],
  "residue": {

@@ -1022,6 +1022,13 @@
  "ancestry_edges": [
   {
    "from": "eliza-anthay-1966",
+   "relation": "reimplementation_of",
+   "to": "Weizenbaum's MAD-SLIP ELIZA (1966), from the source recovered in 2021 (the reconstructor's README, not read here)",
+   "note": "human prior",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "eliza-anthay-1966",
    "relation": "algorithm_from",
    "to": "Weizenbaum 1966 (keyword decomposition/reassembly)",
    "note": "first conversational-AI fossil; a pre-1970 program recovered via a faithful reconstruction, not the original MAD-SLIP binary (which runs only under CTSS emulation)",
@@ -1033,13 +1040,6 @@
    "to": "gnu-apl-2.0",
    "note": "both are interpreters of a small formal notation, but ELIZA transforms text by rules and APL evaluates array expressions -- Techne records the shared machinery domain, not equivalence",
    "basis": "TECHNE_RECORD"
-  },
-  {
-   "from": "eliza-anthay-1966",
-   "relation": "reimplementation_of",
-   "to": "Weizenbaum's MAD-SLIP ELIZA (1966), from the source recovered in 2021 (the reconstructor's README, not read here)",
-   "note": "human prior",
-   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
