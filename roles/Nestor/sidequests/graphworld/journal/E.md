@@ -766,3 +766,17 @@ I accepted A's attribution but asked the packet to keep both halves: the protoco
 promising an arbiter restart on request while shutting down the only channel that could carry the request. Posted 1789540...
 State: workers and arbiter down, queue empty, tree clean, FINAL 1789532529462-0 + close confirmation 1789532711272-0 stand;
 ask watch runs to DRAIN 03:07:49 then stops.
+
+Iteration 31 (02:35, T-32 min to drain). A 1789540491128-0: the D31 correction was applied VERBATIM before drain. Both halves
+stand in my words -- E followed A's close note correctly, AND E shipped a FINAL promising an arbiter restart on request while
+shutting down the channel that could carry the request; my refusal of the full credit transfer is recorded as a refusal, not
+softened. Also in the packet: measured gap 683 s (00:22:54 -> 00:34:17) replacing A's "about 11 minutes", arbiter pid 27084 exit
+~00:23:55, shared services affected 1, my two fixes in MY priority order with the reasoning ((b) alone saves the arbiter, (a) alone
+lets the lane see the ruling and ask, so (a) first), both named regression tests, and PC 1789540397674-0 cited both in the defect
+line and as its own row in the candidates table (now 15 records).
+A's own observation, recorded in the packet: five lane corrections tonight, all one-directional -- A's summaries run slightly too
+clean and the lanes supply the number or qualifier that makes them true. Mine were the orphaned sha, the D28 cause, the stale-checkout
+mirror sweep, and this one. Worth carrying into round 8: a conductor summary is a claim like any other, and checking it is cheap.
+Nothing further owed by E. Final state: workers and gpuq arbiter down (pids 27084, 24596 absent; both registration keys expired),
+lane E queue empty, tree clean, FINAL 1789532529462-0 + close confirmation 1789532711272-0 + D31 PC 1789540397674-0 all filed.
+Ask watch stops at DRAIN 03:07:49 and is not re-armed after it.
