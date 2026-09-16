@@ -1,0 +1,40 @@
+{
+  "artifact": "rules audit ledger (W3): one entry per world audited against a published source; read by ludus/bench/verify.py to set rules_audited",
+  "protocol": "P3 (CHARTER_v3_WORLD_FOUNDRY.md s9): the seat fetches the published rules, records the source hash and quotes the sentence behind every line; the operator's HITL tick is a spot check on this record. LUDUS-31 (does a seat-performed audit count for W3) is an open operator decision; every entry says which assumption it was written under.",
+  "worlds": {
+    "MARTIAN_DICE": {
+      "rules_audited": true,
+      "audited_utc": "2026-09-16",
+      "auditor": "Ludus[m2-c3a5ef7a], seat-performed under P3; operator spot check PENDING (LUDUS-31)",
+      "source": {
+        "title": "Martian Dice rule sheet (2 pages)",
+        "publisher": "Tasty Minstrel Games LLC, (c) 2011",
+        "credits": "Game design Scott Almes; graphics & rules editing Josh Cappel; game development Seth Jaffee (from the sheet's credit block)",
+        "fetched_from": "http://jrsaathoff.com/files/md_rules.pdf",
+        "fetched_utc": "2026-09-16T12:37Z",
+        "pdf_creation_date_in_metadata": "2011-05-25T17:12:50-04:00",
+        "sha256": "cc8297f2227183bb9e291794a744760810701a13d1df506ca3f2598242e20c37",
+        "local_copy": "ludus/bench/rules_sources/martian_dice_md_rules_jrsaathoff.pdf (NOT committed: a publisher's copyrighted sheet; re-fetch and compare the sha256)",
+        "second_source_attempted": "https://tesera.ru/images/items/92611/Martian_Dice_webrules.pdf returned a DDoS-Guard challenge page (902 bytes), not the file; no second independent source on this pass",
+        "independence": "one published source; an independent implementation (LUDUS-16, OpenSpiel via Herakles) is the second admissible instrument and has not run"
+      },
+      "lines": [
+        {"id": "MD-1", "rule_as_reconstructed": "each die has faces tank, ray, ray, human, cow, chicken (13 dice)", "verdict": "OK", "citation": "COMPONENTS: '13 Martian Dice. Each die features 1 Tank, 2 Death Rays, 1 Human, 1 Cow, and 1 Chicken.'", "code": "MD_DICE = 13; MD_W = {tank 1, ray 2, human 1, cow 1, chicken 1}"},
+        {"id": "MD-2", "rule_as_reconstructed": "scoring requires rays >= tanks, else the turn scores zero", "verdict": "OK", "citation": "SCORING: 'If there are more Tanks than Death Rays, you must flee without any abductees; you score zero points for the round ... If you set aside at least as many Death Rays as Tanks, then you ... will score points'", "code": "pot(): if rays < tanks: return 0.0"},
+        {"id": "MD-3", "rule_as_reconstructed": "score is humans + cows + chickens, plus 3 for holding at least one of each", "verdict": "OK", "citation": "SCORING: '1 Point for each Human, each Cow, and each Chicken that you set aside. 3 bonus points if you set aside at least one of all three Earthling types.'", "code": "pot(): h + c + ch (+ MD_SET_BONUS = 3 if h and c and ch)"},
+        {"id": "MD-4", "rule_as_reconstructed": "all tanks rolled are set aside compulsorily", "verdict": "OK", "citation": "ON YOUR TURN: 'Set aside all Tanks, adding them to any Tanks set aside earlier this turn.' Sidebar: 'ALL TANKS ARE SET ASIDE EVERY TURN.'", "code": "options(): base = (s[0] + t, ...) before any choice"},
+        {"id": "MD-5", "rule_as_reconstructed": "you must then claim ALL dice of exactly one symbol you have not claimed before this turn; if you cannot, the turn ends scoring zero", "verdict": "WRONG (two parts)", "citation": "ON YOUR TURN: 'From the remaining dice, choose one type (Chickens, Cows, Humans, or Death Rays) and set aside all dice of that type. Chickens, Cows, or Humans may not be chosen if you have already set that type aside this turn. Death Rays may always be chosen, and are added to any Death Rays set aside earlier this turn. If you cannot set aside any dice based on these restrictions, your turn is over; proceed to Scoring.' Sidebar: 'DEATH RAYS CAN BE CHOSEN MULTIPLE TIMES PER TURN.'", "correction": "R1: Death Rays are claimable on every roll, not once per turn. R2: an unclaimable roll ends the turn WITH scoring (rays >= tanks still applies), not as a zero-scoring bust.", "code_before": "options(): 'if got == 0 or base[MD_IDX[sym]] > 0: continue' applied to ray as well; an empty option set was a death (value 0) in compiled.solve", "code_after": "options(): the already-claimed test skips 'ray'; an empty option set becomes one forced-end option with the unclaimable dice moved to the 6th 'dead' count so forced_end(s) is true and pot(s) is scored"},
+        {"id": "MD-6", "rule_as_reconstructed": "after claiming you may stop or reroll the remaining dice", "verdict": "OK", "citation": "ON YOUR TURN: 'You may choose to end your turn and proceed to Scoring, or return to step 1 to continue rolling.' and 'If there are no available dice, proceed to Scoring.'", "code": "W(s) = max(pot(s), V(s)); forced_end when dice_left == 0"},
+        {"id": "MD-7", "rule_as_reconstructed": "(scope cut) solitaire; one turn from 13 dice", "verdict": "SCOPE, not a rule claim", "citation": "GAME END: 'The game end is triggered when one player reaches a total score of 25 points or more ... the player with the most points wins' -- the multi-turn race to 25 and the death-ray-duel tiebreak are not modelled", "code": "n/a"}
+      ],
+      "constants_moved": 0,
+      "rules_moved": 2,
+      "resolve_diff": {
+        "reconstruction_2026-08-27": {"n_states": 8555, "optimal_ev": 2.093806, "axis_decomposition": {"cheap_pair": "r0012+r0003", "cheap_pair_retention": 0.9656, "recovered_by_upgrading_SELECT_only": 0.0216, "recovered_by_upgrading_STOP_only": 0.0091, "total_residual": 0.0344}},
+        "audited_2026-09-16": {"n_states": 14653, "optimal_ev": 3.110382, "axis_decomposition": {"cheap_pair": "r0012+r0003", "cheap_pair_retention": 0.9373, "recovered_by_upgrading_SELECT_only": -0.0005, "recovered_by_upgrading_STOP_only": 0.0486, "total_residual": 0.0627}},
+        "ranking_stability": {"stop_axis_kendall_tau": 0.429, "stop_axis_pairs": 14, "select_axis_kendall_tau": 0.733, "select_axis_pairs": 15},
+        "reading": "The reconstruction's difficulty sat on the claim (SELECT) axis; on the published rules the claim axis recovers nothing and the residual is on STOP. Cycle 002's '86% on the claim axis' (CYCLE_002_stochastic_stopping.md s4, a different instrument on the same wrong rules, ludus/stopworlds.py) is therefore a fact about the reconstruction, not about Martian Dice. Both matrix columns are kept: MARTIAN_DICE (audited) and MARTIAN_DICE_RECON_2026-08-27 (superseded, verbatim)."
+      }
+    }
+  }
+}

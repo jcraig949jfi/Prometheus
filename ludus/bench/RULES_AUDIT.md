@@ -1,5 +1,18 @@
 # RULES AUDIT — the HITL sheet
 
+> ANNOTATION 2026-09-16 (LUDUS-01, Ludus[m2-c3a5ef7a]). The first published
+> source has been consulted: the Tasty Minstrel Games Martian Dice rule sheet
+> ((c) 2011; sha256 cc8297f2...; `ludus/bench/rules_audit.json` quotes the
+> sentence behind every Martian Dice line). The seat marked the lines below
+> under P3 (seat-performed audit, operator spot check); LUDUS-31 asks whether
+> that counts for W3. Result: 0 constants moved, 2 RULES moved (MD-5 below),
+> and the world, its per-world invariants and its matrix column were
+> re-solved: 8,555 -> 14,653 states, optimal EV 2.093806 -> 3.110382, and the
+> axis decomposition REVERSED (SELECT +0.0216/STOP +0.0091 of 0.0344 on the
+> reconstruction; SELECT -0.0005/STOP +0.0486 of 0.0627 on the published
+> rules). The old column is kept as MARTIAN_DICE_RECON_2026-08-27. Nothing
+> below is edited; marks are added in brackets.
+
 **What this is.** Every world in the bench is reconstructed from memory. **No rulebook has been
 consulted for any of them.** Under charter v1 §8's epistemic states every rule below is
 `HYPOTHESIZED`. Charter v2 §4 names the operator as the instrument for exactly this: fabricated
@@ -20,21 +33,24 @@ marked wrong gets fixed and the affected worlds re-solved; the matrix rebuild is
 
 These are load-bearing. If one is wrong, a stated finding moves.
 
-- [ ] **MARTIAN DICE — each die has faces: tank, ray, ray, human, cow, chicken.**
+- [x] **MARTIAN DICE — each die has faces: tank, ray, ray, human, cow, chicken.** [OK 2026-09-16, MD-1: sheet COMPONENTS "1 Tank, 2 Death Rays, 1 Human, 1 Cow, and 1 Chicken"]
   The *doubled ray face* is the single highest-leverage constant in the bench. It sets how often the
   ray-vs-tank constraint binds, which is the mechanism cycle 002 credited with putting 86% of the
   world's difficulty on the SELECT axis. If rays are a single face, that result moves.
-- [ ] **MARTIAN DICE — scoring requires rays >= tanks, else the turn scores zero.**
-- [ ] **MARTIAN DICE — score is humans + cows + chickens, plus 3 for holding at least one of each.**
+- [x] **MARTIAN DICE — scoring requires rays >= tanks, else the turn scores zero.** [OK 2026-09-16, MD-2]
+- [x] **MARTIAN DICE — score is humans + cows + chickens, plus 3 for holding at least one of each.** [OK 2026-09-16, MD-3]
 - [ ] **FLIP 7 — rank r appears r times in the deck; rank 0 appears once (79 number cards).**
 - [ ] **FLIP 7 — collecting 7 distinct ranks scores +15 and ends your round immediately.**
 
 ## Priority 2 — rules that shape the decision, not just the score
 
-- [ ] **MARTIAN DICE** — all tanks rolled are set aside compulsorily.
-- [ ] **MARTIAN DICE** — you must then claim *all* dice of exactly one symbol you have not claimed
-  before this turn; if you cannot, the turn ends scoring zero.
-- [ ] **MARTIAN DICE** — after claiming you may stop or reroll the remaining dice.
+- [x] **MARTIAN DICE** — all tanks rolled are set aside compulsorily. [OK 2026-09-16, MD-4]
+- [x] **MARTIAN DICE** — you must then claim *all* dice of exactly one symbol you have not claimed
+  before this turn; if you cannot, the turn ends scoring zero. [WRONG 2026-09-16, MD-5: Death Rays
+  "may always be chosen" (repeatable within a turn); an unclaimable roll ends the turn "proceed to
+  Scoring", i.e. it SCORES, it is not a bust. Both fixed in `worlds.py`; the reconstruction is kept as
+  `MartianDiceRecon`.]
+- [x] **MARTIAN DICE** — after claiming you may stop or reroll the remaining dice. [OK 2026-09-16, MD-6]
 - [ ] **FLIP 7** — flipping a rank you already hold busts you; the round scores zero.
 - [ ] **INCAN GOLD** — five hazard types, three copies of each; the *second* revealed copy of a type
   ends the round and everyone still in loses their unbanked take.
