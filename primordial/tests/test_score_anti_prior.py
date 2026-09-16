@@ -179,7 +179,7 @@ def test_r_is_never_told_the_arms_and_the_experimenter_waits_for_its_receipt(sto
     with pytest.raises(AP.PriorLedgerError) as e:
         AP.read(store, pid, "experimenter", receipt_filed=lambda x: False, round_id="r7")
     assert e.value.reason == "EXPERIMENTER_READ_DENIED"
-    assert AP.read(store, pid, "experimenter", receipt_filed=lambda x: True, round_id="r7")["cell"]
+    assert AP.read(store, pid, "experimenter", receipt_filed=lambda x: True, round_id="r7", round_live=False)["cell"]
 
 
 def test_calibration_accumulates_across_rounds_by_arm():

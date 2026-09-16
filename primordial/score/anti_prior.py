@@ -27,6 +27,23 @@ the round 5 archive pm:prior:r5:* is untouched.
   calibration(store, outcomes, rounds=[...]) descriptive: by arm accumulated across the rounds, per round, by rank
                                             quartile, by absolute p bucket (H-R7-3)
 
+R8 G2 (PC 1789523009420-0): the CELL-BINDING PRE-CHECK. All four round 7 assignments failed for cell-construction
+reasons (AP-01 oracle could never fire, AP-02 pressure barely bound, AP-03 zero resolving power, AP-04 pressure cannot
+bind), so the predictor's confident-failure calls were never at risk. From r8 on (rounds not in LEGACY_DRAW) candidates()
+walks a seeded PCG64 permutation of the whole grid and admits a cell only if binding_precheck() passes all four checks
+(pressure_binds, discriminator_resolves, oracle_fires, control_differs); a rejected cell is replaced by the NEXT cell of
+the same permutation, so the list -- replacements included -- is a function of the seed and this code alone. No LLM
+chooses a replacement. Every rejection is kept in the record (`rejected`, with draw position and reasons) and
+residue_rows()/write_residue() turn it into committed rows. r6/r7 keep the v3 draw byte-identical (already published).
+
+  binding_precheck(cell, rules=RULES, evidence=None)
+                                            -> {ok, cell, checks: {check: {ok, reasons, basis}}, reasons}; every rule runs
+                                            (no short-circuit) so the residue names every defect, not just the first
+
+REDACTION BY CONSTRUCTION: arm, rank, quantile, prior and the draw internals are conductor-only while a round is live.
+assign() returns public_view() of the assignment, and public_assignment() is the only experimenter-facing reader of the
+assign hash; both build the record from the PUBLIC_FIELDS whitelist, so a new conductor field cannot leak by default.
+
 Sealing is API-level plus the commitment (round 5 PC D8), not cryptographic against direct Redis reads.
 Store: any object with hget/hset/hgetall/hsetnx (+ exists/renamenx for the migration): redis.Redis(decode_responses=True).
 """
@@ -42,7 +59,8 @@ import numpy as np
 NAMES = ("sealed", "commit", "assign", "candidates", "ranks")
 ROUND_RE = re.compile(r"r\d{1,3}")
 SEEDS = {"r6": (20260917, 20260918),              # SWARM_R6 s0 (candidates, arm)
-         "r7": (20260919, 20260920)}              # SWARM_R7 s0
+         "r7": (20260919, 20260920),              # SWARM_R7 s0
+         "r8": (20260921, 20260922)}              # LAUNCH_R8 s5.2 (FROZEN): candidates, arm
 FIELDS = ("prior_p_pass", "prior_expected_direction", "prior_expected_mechanism", "predictor_id", "prediction_ts")
 N_CANDIDATES = 48
 ARM_P = 0.25
@@ -80,13 +98,169 @@ def cell_key(cell) -> str:
     return _canon(cell)
 
 
+# ---------------------------------------------------------------------------------------------------------------------
+# G2: the cell-binding pre-check. Rules are CODE over the cell and committed world structure; a rule returns the list of
+# defects it proves (empty = it proves none). Each rule carries its round-7 evidence so a rejection is traceable.
+# Measured `evidence` (a dev check's no-rows sample) is accepted by binding_precheck() for a lane's own pre-run check,
+# but candidates() never passes it: the published list must be a function of the seed and this code alone.
+
+PRECHECK_VERSION = "G2-v1"
+LEGACY_DRAW = ("r6", "r7")                         # published with the v3 draw before G2; kept byte-identical
+CHECKS = ("pressure_binds", "discriminator_resolves", "oracle_fires", "control_differs")
+NO_OBSERVATION_READERS = frozenset({"bitset"})     # a bitset genome is a per-tick action tape (C-R6-AP-02, C-R7-AP-04)
+GW_OBSERVATION_PRESSURES = frozenset({"obs_delay", "corruption"})   # graphworld Mechanics obs_delay / corrupt_rate
+# graphworld metered_stream as the lanes built it (C-R6-01, C-R7-AP-01): ALPHA 2 per bit, 4 bits per digit,
+# CREDIT = ALPHA*4*2 = 16 per tick; the cheapest non-empty read is one digit = 8.
+GW_METERED = {"alpha": 2, "bits_per_unit": 4, "credit": 16}
+# signal_world_d1 metered_stream settlement (lingua.signal.NpChannel, C-R5-01, C-R7-AP-03): alpha_int 2 per delivered
+# bit, y_int 3 per right action; naming one of N_ACT = 8 actions needs 3 bits.
+D1_METERED = {"alpha_int": 2, "y_int": 3, "symbol_bits": 3}
+_MECH_CACHE: dict = {}
+
+
+def _is_graphworld(world) -> bool:
+    return bool(re.fullmatch(r"w\d+", str(world)))
+
+
+def graphworld_mechanics(world: str):
+    """The world's own Mechanics (qd.e4_run.Spec(gen_seed).mech), cached; None if it cannot be built."""
+    if world not in _MECH_CACHE:
+        try:
+            from primordial.qd import e4_run as E4
+            _MECH_CACHE[world] = E4.Spec(int(str(world)[1:])).mech
+        except Exception:                                        # noqa: BLE001 -- unverifiable, reported as such
+            _MECH_CACHE[world] = None
+    return _MECH_CACHE[world]
+
+
+def _r_regime_reaches_payoff(cell, evidence, mechanics):
+    if cell.get("pressure") != "regime_switching" or not _is_graphworld(cell.get("world")):
+        return None
+    m = mechanics(cell["world"])
+    if m is None:
+        return [f"UNVERIFIABLE: no Mechanics for {cell['world']}, cannot show regime_switching reaches its payoff"]
+    dests = sorted({int(op[0]) for op in m.lin_ops})
+    if int(m.yield_reg) in dests:
+        return []
+    seen = sorted(set(int(x) for x in (m.obs_regs or ())) & set(dests))
+    if seen and cell.get("representation") not in NO_OBSERVATION_READERS:
+        return []                                  # the flip is observable, so actions (and reg yield) can depend on it
+    return [f"PRESSURE_CANNOT_BIND: regime_switching on {cell['world']}: the flip negates lin_ops that write {dests}; "
+            f"yield reg {int(m.yield_reg)} is written only by actions {list(m.act_targets)}"
+            + ("" if not seen else f" and {cell.get('representation')} reads no observation")
+            + " -- no genome's charge can differ (C-R7-AP-04)"]
+
+
+def _r_observation_pressure_needs_reader(cell, evidence, mechanics):
+    if cell.get("pressure") not in GW_OBSERVATION_PRESSURES or not _is_graphworld(cell.get("world")):
+        return None
+    if cell.get("representation") in NO_OBSERVATION_READERS:
+        return [f"CONTROL_IDENTICAL: {cell['pressure']} acts on observations and {cell['representation']} reads none; "
+                "the arm and its control are the same experiment (C-R6-AP-02)"]
+    return []
+
+
+def _r_intervention_nonzero(cell, evidence, mechanics):
+    if not evidence or "intervention_magnitude" not in evidence:
+        return None
+    mag = evidence["intervention_magnitude"]
+    return [] if mag else [f"CONTROL_IDENTICAL: measured intervention magnitude {mag!r} (C-R7-AP-03 dev check: BETA "
+                           "rounded to 0)"]
+
+
+def _r_gw_meter_eligibility(cell, evidence, mechanics):
+    if cell.get("channel") != "metered_stream" or not _is_graphworld(cell.get("world")):
+        return None
+    g = GW_METERED
+    cheapest = g["alpha"] * g["bits_per_unit"]
+    if cheapest <= g["credit"]:
+        return [f"ORACLE_CANNOT_FIRE: the meter oracle needs a free-stream eligible episode, but the cheapest read costs "
+                f"{cheapest} <= credit {g['credit']} per tick, so a winner can make the meter never bind and the oracle "
+                "never fire (C-R7-AP-01, C-R6-01)"]
+    return []
+
+
+def _r_oracle_measured(cell, evidence, mechanics):
+    if not evidence or "oracle_eligible" not in evidence:
+        return None
+    n = int(evidence["oracle_eligible"])
+    return [] if n > 0 else [f"ORACLE_CANNOT_FIRE: measured oracle eligibility {n}"]
+
+
+def _r_d1_signal_pays(cell, evidence, mechanics):
+    if cell.get("channel") != "metered_stream" or cell.get("world") != "signal_world_d1":
+        return None
+    d = D1_METERED
+    cost = d["alpha_int"] * d["symbol_bits"]
+    if cost >= d["y_int"]:
+        return [f"ZERO_RESOLVING_POWER: on signal_world_d1 a {d['symbol_bits']}-bit send costs {cost} >= the {d['y_int']} a "
+                "right action earns, so signalling never pays, every winner settles on the silent attractor and the "
+                "reader is pinned in both arms (C-R7-AP-03: 64/64 runs = 31.71875, IQR 0)"]
+    return []
+
+
+def _r_null_sample_resolves(cell, evidence, mechanics):
+    if not evidence or "null_samples" not in evidence:
+        return None
+    arms = evidence["null_samples"]
+    values = [float(v) for vs in arms.values() for v in vs]
+    if not values:
+        return ["ZERO_RESOLVING_POWER: empty null sample"]
+    if len(set(values)) == 1:
+        return [f"ZERO_RESOLVING_POWER: all {len(values)} null-sample values in {sorted(arms)} equal {values[0]!r} "
+                "(IQR 0): a PASS here is vacuous (C-R7-AP-03)"]
+    return []
+
+
+RULES = (("pressure_binds", "regime_reaches_payoff", _r_regime_reaches_payoff),
+         ("discriminator_resolves", "d1_signal_pays", _r_d1_signal_pays),
+         ("discriminator_resolves", "null_sample_resolves", _r_null_sample_resolves),
+         ("oracle_fires", "gw_meter_eligibility", _r_gw_meter_eligibility),
+         ("oracle_fires", "oracle_measured", _r_oracle_measured),
+         ("control_differs", "observation_pressure_needs_reader", _r_observation_pressure_needs_reader),
+         ("control_differs", "intervention_nonzero", _r_intervention_nonzero))
+
+
+def binding_precheck(cell: dict, *, rules=RULES, evidence: dict | None = None, mechanics=None) -> dict:
+    """Run EVERY rule (no short-circuit). A check fails if any of its rules proves a defect; `basis` names the rules that
+    applied to this cell (empty = no rule applies, recorded as such, never silently read as proof)."""
+    mechanics = graphworld_mechanics if mechanics is None else mechanics
+    checks = {c: {"ok": True, "reasons": [], "basis": []} for c in CHECKS}
+    for check, name, fn in rules:
+        if check not in checks:
+            raise PriorLedgerError("PRECHECK_UNKNOWN_CHECK", f"{name}: {check!r}")
+        out = fn(cell, evidence, mechanics)
+        if out is None:
+            continue
+        checks[check]["basis"].append(name)
+        if out:
+            checks[check]["ok"] = False
+            checks[check]["reasons"].extend(out)
+    reasons = [f"{c}:{x}" for c in CHECKS for x in checks[c]["reasons"]]
+    return {"ok": not reasons, "cell": cell, "version": PRECHECK_VERSION, "checks": checks, "reasons": reasons}
+
+
 def candidates(store, *, round_id: str, seed: int | None = None, n: int = N_CANDIDATES, now: float | None = None,
-               grid: dict | None = None, doc=_FROM_FILE) -> dict:
-    """Publish the round's candidate cell list once, by seeded draw over the draw grid."""
+               grid: dict | None = None, doc=_FROM_FILE, rules=RULES, mechanics=None) -> dict:
+    """Publish the round's candidate cell list once, by seeded draw over the draw grid. From r8 on every cell passes
+    binding_precheck() before it enters the list; a rejected cell is replaced by the next cell of the seeded
+    permutation and kept, with its reasons, in record["rejected"]."""
     k = keys(round_id)
     seed = seeds(round_id)[0] if seed is None else int(seed)
     if store.hget(k["candidates"], "record") is not None:
         raise PriorLedgerError("CANDIDATES_ALREADY_PUBLISHED", f"the {round_id} candidate list is drawn once")
+    record = draw_candidates(round_id=round_id, seed=seed, n=n, now=now, grid=grid, doc=doc, rules=rules,
+                             mechanics=mechanics)
+    if not store.hsetnx(k["candidates"], "record", _canon(record)):
+        raise PriorLedgerError("CANDIDATES_ALREADY_PUBLISHED", f"the {round_id} candidate list is drawn once")
+    return record
+
+
+def draw_candidates(*, round_id: str, seed: int | None = None, n: int = N_CANDIDATES, now: float | None = None,
+                    grid: dict | None = None, doc=_FROM_FILE, rules=RULES, mechanics=None) -> dict:
+    """The pure draw behind candidates(): no store, no write. Same seed + same code -> the same record (bar `ts`)."""
+    keys(round_id)
+    seed = seeds(round_id)[0] if seed is None else int(seed)
     if grid is None:
         from primordial.ops import draw_cell as DC
         grid = DC.axes() if doc is _FROM_FILE else DC.axes(doc)
@@ -96,13 +270,64 @@ def candidates(store, *, round_id: str, seed: int | None = None, n: int = N_CAND
     if n_cells == 0:
         raise PriorLedgerError("EMPTY_GRID", "the draw grid has no cells")
     rng = np.random.Generator(np.random.PCG64(seed))
-    flats = sorted(rng.choice(n_cells, size=min(int(n), n_cells), replace=False).tolist())
-    cells = [{x: grid[x][int(i)] for x, i in zip(names, np.unravel_index(f, sizes))} for f in flats]
-    record = {"round": round_id, "seed": seed, "ts": round(time.time() if now is None else float(now), 3),
-              "n": len(cells), "grid_cells": n_cells, "cells": cells}
-    if not store.hsetnx(k["candidates"], "record", _canon(record)):
-        raise PriorLedgerError("CANDIDATES_ALREADY_PUBLISHED", f"the {round_id} candidate list is drawn once")
-    return record
+    ts = round(time.time() if now is None else float(now), 3)
+
+    def at(f):
+        return {x: grid[x][int(i)] for x, i in zip(names, np.unravel_index(int(f), sizes))}
+
+    if round_id in LEGACY_DRAW:
+        flats = sorted(rng.choice(n_cells, size=min(int(n), n_cells), replace=False).tolist())
+        cells = [at(f) for f in flats]
+        return {"round": round_id, "seed": seed, "ts": ts, "n": len(cells), "grid_cells": n_cells, "cells": cells}
+    want = min(int(n), n_cells)
+    cells, positions, rejected, examined = [], [], [], 0
+    for pos, f in enumerate(rng.permutation(n_cells).tolist()):
+        if len(cells) >= want:
+            break
+        examined = pos + 1
+        c = at(f)
+        pc = binding_precheck(c, rules=rules, mechanics=mechanics)
+        if pc["ok"]:
+            cells.append(c)
+            positions.append(pos)
+        else:
+            rejected.append({"draw_position": pos, "flat": int(f), "cell": c, "reasons": pc["reasons"],
+                             "failed_checks": [x for x in CHECKS if not pc["checks"][x]["ok"]]})
+    if not cells:
+        raise PriorLedgerError("EMPTY_POOL", f"all {examined} cells of the grid failed the binding pre-check")
+    return {"round": round_id, "seed": seed, "ts": ts, "n": len(cells), "grid_cells": n_cells, "cells": cells,
+            "draw": "pcg64_permutation_with_binding_precheck", "precheck": PRECHECK_VERSION,
+            "rules": [name for _, name, _ in rules], "positions": positions, "examined": examined,
+            "short": len(cells) < want, "rejected": rejected}
+
+
+RESIDUE_DIR = ("primordial", "ledger", "prior")
+
+
+def residue_rows(record: dict) -> list[dict]:
+    """The rejected set as analysable rows: one summary row, then one row per rejected cell. No prior, arm, rank or
+    quantile exists at publication time, so nothing here needs redaction."""
+    if record.get("precheck") is None:
+        raise PriorLedgerError("NO_PRECHECK", f"{record.get('round')} was drawn without the binding pre-check")
+    head = {"kind": "anti_prior_precheck_summary", "round": record["round"], "seed": record["seed"],
+            "precheck": record["precheck"], "rules": record["rules"], "grid_cells": record["grid_cells"],
+            "examined": record["examined"], "admitted": record["n"], "rejected": len(record["rejected"]),
+            "short": record["short"], "by_check": {c: sum(c in r["failed_checks"] for r in record["rejected"])
+                                                   for c in CHECKS}}
+    return [head] + [{"kind": "anti_prior_precheck_rejection", "round": record["round"], **r}
+                     for r in record["rejected"]]
+
+
+def write_residue(record: dict, path=None) -> str:
+    """Commit the rejected set (RowWriter commits on close). Called by the conductor at publication."""
+    import pathlib
+    from primordial.fabric.rows import RowWriter
+    root = pathlib.Path(__file__).resolve().parents[2]
+    path = root.joinpath(*RESIDUE_DIR, f"{record['round']}-candidates-precheck.jsonl") if path is None else path
+    with RowWriter(path, f"anti-prior-precheck-{record['round']}", commit_every_s=10**9) as w:
+        for row in residue_rows(record):
+            w.write(row)
+    return str(path)
 
 
 def published(store, *, round_id: str) -> dict | None:
@@ -195,10 +420,33 @@ def assign(store, exp_id: str, now: float, *, round_id: str, arm_seed: int | Non
     pick = pool[int(np.random.Generator(np.random.PCG64([arm_seed, index, 1])).integers(len(pool)))]
     pred = json.loads(store.hget(k["sealed"], pick))
     rk = ranks["ranks"][pick]
-    store.hset(k["assign"], exp_id, _canon({"round": round_id, "prediction_id": pick, "cell": pred["cell"],
-                                            "assignment_ts": float(now), "arm_seed": arm_seed, "index": index, "u": u,
-                                            "arm": arm, "rank": rk["rank"], "quantile": rk["quantile"]}))
-    return [{"exp_id": exp_id, "cell": pred["cell"]}]
+    full = {"round": round_id, "prediction_id": pick, "cell": pred["cell"], "assignment_ts": float(now),
+            "arm_seed": arm_seed, "index": index, "u": u, "arm": arm, "rank": rk["rank"], "quantile": rk["quantile"]}
+    store.hset(k["assign"], exp_id, _canon(full))
+    return [public_view({"exp_id": exp_id, **full})]
+
+
+# Redaction by construction: experimenter-readable assignment records are BUILT from this whitelist, never filtered from
+# the conductor record, so a field added to the conductor record later stays conductor-only unless listed here.
+PUBLIC_FIELDS = ("exp_id", "round", "cell")
+CONDUCTOR_ONLY = ("arm", "rank", "quantile", "prior_p_pass", "u", "index", "arm_seed", "tie_break", "prediction_id",
+                  "prior_expected_direction", "prior_expected_mechanism")
+
+
+def public_view(rec: dict) -> dict:
+    out = {f: rec[f] for f in PUBLIC_FIELDS if f in rec}
+    leaked = sorted(set(out.get("cell") or {}) & set(CONDUCTOR_ONLY))
+    if leaked:
+        raise PriorLedgerError("REDACTION_LEAK", f"cell carries conductor-only fields {leaked}")
+    return out
+
+
+def public_assignment(store, exp_id: str, *, round_id: str) -> dict:
+    """The experimenter-facing read of an assignment: exp_id, round and cell only."""
+    body = store.hget(keys(round_id)["assign"], exp_id)
+    if body is None:
+        raise PriorLedgerError("NOT_FOUND", exp_id)
+    return public_view({"exp_id": exp_id, **json.loads(body)})
 
 
 def eligible_at(prediction: dict, assignment_ts: float) -> None:
@@ -207,13 +455,18 @@ def eligible_at(prediction: dict, assignment_ts: float) -> None:
                                f"{prediction['prediction_ts']} >= {assignment_ts}")
 
 
-def read(store, prediction_id: str, reader_role: str, receipt_filed=lambda exp_id: False, *, round_id: str) -> dict:
+def read(store, prediction_id: str, reader_role: str, receipt_filed=lambda exp_id: False, *, round_id: str,
+         round_live: bool = True) -> dict:
+    """The sealed prior. The experimenter is denied while the round is live (R8: prior is conductor-only while live) and,
+    after close, until every assignment on the prediction has a filed receipt. round_live defaults to True: fail closed."""
     k = keys(round_id)
     if reader_role not in ROLES:
         raise PriorLedgerError("READ_DENIED", f"unknown role {reader_role!r}")
     body = store.hget(k["sealed"], prediction_id)
     if body is None:
         raise PriorLedgerError("NOT_FOUND", prediction_id)
+    if reader_role == "experimenter" and round_live:
+        raise PriorLedgerError("EXPERIMENTER_READ_DENIED", f"{round_id} is live: the prior is conductor-only")
     if reader_role == "experimenter":
         exps = [e for e, v in store.hgetall(k["assign"]).items() if json.loads(v)["prediction_id"] == prediction_id]
         if not exps or not all(receipt_filed(e) for e in exps):
