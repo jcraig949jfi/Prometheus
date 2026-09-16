@@ -1,0 +1,454 @@
+================================================================================
+EXTERNAL REVIEW PACKET -- ROUND 7, TWELVE-HOUR OVERNIGHT ROUND
+THE PRIMORDIAL MACHINE: CANDIDATE_N AT ADMISSION, GPU MEASURED AND REJECTED
+================================================================================
+Prepared:      2026-09-16 03:45 EDT, after round close (03:37:49)
+Author:        Nestor-A[m1-449a9e76], conductor (logistics only)
+Branch:        nestor/sidequest-graphworld-2026-09-14 (never main)
+Plan:          roles/Nestor/sidequests/graphworld/SWARM_R7.md (s1 rules O1-O7, build addendum O2', O8)
+Operator msgs: prompts/2026-09-14_graphworld_swarm/23 (12 h overnight, GPU expansion, dedicated host,
+               and the RULING: CANDIDATE_N binds Clause B, prospectively) -- verbatim, sha256 in MANIFEST
+Cap:           12 h end to end, 16:30 -> 04:30. Build 16:35-17:27, gate 17:28-17:37, clock 17:37:49-03:37:49
+Clock (code):  pm:round:r7, 9 x 3600 s epochs | no_new_work 02:37:49 | drain 03:07:49 | closed 03:37:49
+Gate tip:      7da5e86fd (61 rows GREEN; 1 RED was A's own gate-script JSON parse, re-checked GREEN)
+Close record:  {"closed_ts": 1789544269.228, "round_id": "r7", "sha": "8d2359e8b"} -- ROUND_r7.json + EPOCH_8/9
+               committed and pushed BY CODE at close; pm:round:current unset, stop flags cleared, 0 registrations.
+               (The launch wrapper printed "controller rc 2" -- that is A's own r7_launch.sh line 93 quoting bug,
+               not the clock: the controller process itself ran all 9 epochs and exited 0.)
+Tally source:  scratchpad r7_close_tally.py + close_sweep --round r7 + residue scan (code-owned streams)
+
+Headline:
+- The operator's ruling is enforced BEFORE simulation: EVIDENCE_N_v1 (32 runs / 4 families / 8 per family,
+  structurally balanced) is checked by envelope.admit for every verdict class, so a malformed Clause B request
+  is refused at zero CPU. In-round SAMPLE_RULE refusals: 0 -- nothing malformed was ever submitted, so the rule
+  bound at design time rather than at runtime, which is where a rule of this kind should bind.
+- FIRST ADMISSIBLE CLAUSE B VERDICT: FAIL (E-R7-1, receipt 1789514378793-0, guard 10/10).
+  - graft - scratch +0.738 (p .046); graft - sham -0.662 (p .852); Holm .852.
+  - The SHAM beat the graft: sham - scratch +1.400. Judged against scratch alone this pair would have read PASS.
+  - The control's own false-PASS rate was measured FIRST: 0/40 (O8, INSTRUMENT_ADMISSIBLE).
+- GPU expansion was measured and REJECTED by code on the real workload: gpu_lockstep failed exactness
+  (6 fitness + 3 cells in 819,200 evaluations) and ran ~7x slower than CPU; the exact cpu_lockstep reached only
+  1.024x, under the 1.25x bar. Tonight's throughput gain came from the thread fix instead (D19).
+- Throughput: k* = 2 x 8 threads on the dedicated host, but 1.74x at k=2 (r5: 1.34x) with every job now running
+  its granted threads.
+- THE R16 SCREEN IS COMPLETE: 74/74 cells, 0 UNSCREENED, and w13 train128_held64 is still the ONLY SURVIVED cell.
+  - That converts round 6's "replication NOT_REACHED, we ran out of clock" into a positive result: under the corrected
+    top1_train reader and the 32/4/8 sample rule, this 74-cell grid contains exactly ONE surviving world.
+  - So B-R5-1 cannot be replicated by spending more compute here. Replication needs a DIFFERENT world set, and that is
+    now a design question for round 8, not a scheduling one.
+    (74/74 cells: SURVIVED 1, HELD 5, CULLED 64, PENDING 4, UNSCREENED 0.)
+- 4 of those cells existed only because a conductor ruling unstuck them: an epoch requeue lands at the end of the lane
+  queue (D30), so 4 nearly-finished cells sat behind 44 learner jobs that could not have decided anything tonight.
+- 10 new defects (D18-D27), 7 of them in the control plane the operator asked to close.
+
+--------------------------------------------------------------------------------
+1. OPERATIONS
+--------------------------------------------------------------------------------
+R7-BUILD 16:35 -> 17:27 (cap 18:35): F, G, H, E all DONE early; no item cut to a PC.
+- F: residue scan/clear + pid-verified close kill (D12/D14), 900 s non-checkpointable ceiling (D15),
+  import-closure fingerprint (D4 rest), r7 ceilings/clock, capacity re-probe.
+- H: EVIDENCE_N_v1 as ONE rule module used by admit, post_predicate and the receipt guard; round-namespaced
+  prior keys (D11); calibration by round.
+- E: Clause B family axis; the GPU evaluator + code-computed adoption decision; B2 search overhead.
+- G: PENDING learner plan (cost-ascending), cell_job backend param, B2 admission rule v2.
+
+Pre-clock hygiene (all code-owned except one counted A intervention):
+- D11 r6 prior keys migrated to pm:prior:r6:* (48 sealed verified, r5 archive untouched).
+- D12/D14 residue: `residue clear --prior-round r6` removed 16 dead consumers, refused nothing; scan rc 0.
+- A INTERVENTION (counted): at 16:47 the build deadlocked -- r6 stop flags plus pm:round:current still naming the
+  closed r6 made admission refuse every job (D18). A deleted exactly 5 stop flags (value = r6's final epoch) and
+  the round pointer, after verifying r6 closed and past end_ts; event RESIDUE_CLEARED_MANUAL_A.
+
+Gate 17:37 at 7da5e86fd: full suite 912 passed; 27 discovered build test files; planted EVIDENCE_N_v1 refusals
+(16/1/16, 32/4/(16,8,4,4), 32/4/(29,1,1,1)) all refused at admit with zero rows; live residue scan clean.
+
+Launch 17:37:49 -> 17:55 (~6 min lost, not compensated):
+- D21: the predictor (R) sealed 48 priors and posted notes but never posted `hello`, so the chain sat waiting.
+- A's own launch script had no `launch`/`hello` subcommands and its usage path exited 0, so a relaunch loop
+  "succeeded" while launching nothing. Fixed (usage now exits 2, and the loop requires the schtask's launched line).
+
+Epochs (code; A announced nothing and pushed nothing):
+  E1 18:37:49  0 stragglers, committed 3be92ea79, pushed, resumed
+  E2 19:37:49  0 stragglers, committed 7e92982e4, pushed, resumed
+  E3 20:37:49  0 stragglers, committed 4e783afd0, pushed, resumed
+  E4 21:37:49  0 stragglers (C mid-restart, verified healthy 60 s later), committed b3f62bb34, pushed, resumed
+  E5 22:37:49  0 stragglers, committed 1c0a886c9, pushed, resumed
+  E6 23:37:49  0 stragglers (G's learner chunk checkpointed), committed ac9cd6662, pushed, resumed
+  E7 00:37:49  0 stragglers, 0 workers, committed 9c075cf3f, pushed, resumed
+  E8 01:37:49  0 stragglers, 0 workers, committed f853777ca, pushed, resumed
+  NNW 02:37:49 no_new_work set by code (phase transition verified, not just announced)
+  E9 03:07:49  drain boundary: 0 stragglers, 0 workers, committed cd23afb4d, pushed, drain_hold
+  CLOSE 03:37:49  round_closed -> round_committed 8d2359e8b -> pushed -> workers_stopped {"actions": []}
+                  -> flags_cleared [B,C,D,E,G] -> current_unset
+NINE of nine boundaries drained clean, committed, pushed and resumed with no conductor action, and the close itself
+ran unattended: it committed the round record, pushed, found no worker to stop, cleared every stop flag and unset the
+round pointer. The D3 fix from round 6 has now run 15 consecutive boundaries across two rounds without a manual push.
+
+All five lanes posted ROUND 7 FINAL by 00:35, roughly two hours before NO_NEW_WORK, and every worker process was gone
+by then. That is not idle waste: by 00:13 the screen was complete, Clause B had its verdict, the GPU was decided, and
+nothing parked could decide anything in the time left (the learner cells needed 3.3-6 h each, B2 8.61 h). The lanes
+sized what remained, declined it, and closed. The residue scan therefore ends the round at rc 1, and that is the
+EXPECTED end state, not a transient: 6 DEAD_CONSUMER entries (the B/C/D/E/G workers plus the gpu-arbiter), every one
+with pending 0 and idle 3.0-3.3 h at the close scan, i.e. far past residue.ACTIVE_IDLE_S (120 s). A round whose workers have all exited
+leaves exactly this, and `residue clear` is specified to remove precisely it (pending 0, idle >= ACTIVE_IDLE_S) at
+round 8's build, as round 7's build cleared round 6's 16. A could have cleared them tonight -- the consumer half of
+clear() is not round-gated -- and deliberately did not: it would have spent the round's clean O6 count on cosmetics.
+A hand-cleared nothing.
+Jobs: G 58 (52 ok, 6 paused) 145,855 CPU-s; E 42 (41 ok, 1 paused) 22,690; D 15 (11 ok, 2 error, 1 timeout,
+      1 died) 3,230; C 7 (3 ok, 2 paused, 1 error, 1 died) 2,301; B 0; R 0.
+      Total 174,075 CPU-s = 48.4 CPU-hours on a 4-core host over a 10 h clock.
+Admission: 1 STAGE_BUDGET_REFUSAL (B2 v2, reasons CPU_WALL_OVER_CEILING + PROJECTED_PAST_ROUND_END);
+      0 EVIDENCE_N_v1 / SAMPLE_RULE refusals.
+CPU grants 122, every one of the 122 at 8 threads (the D19 fix, verified on each grant); CHECKPOINTED 9;
+CODE_RELOADED 1. Job count per lane equals grant count per lane, so no job ran without a broker grant.
+A interventions (O6): manual pushes 0; manual store edits 1 (the D18 deadlock);
+conductor bus posts 36. (Lane A carried 45 posts; 9 of those are the CONTROLLER's own "EPOCH n boundary" notes,
+posted by code as lane A, and are NOT conductor action. Counting the raw 45 would have credited A with the code's
+work in the very section arguing the conductor did almost nothing.)
+
+--------------------------------------------------------------------------------
+2. SCIENCE (OBSERVATION / ELIGIBILITY / VERDICT / INTERPRETATION)
+--------------------------------------------------------------------------------
+2.1 E-R7-1 Clause B live pair w14 -> w13 (the operator's ruling in force)
+- OBSERVATION: 32 runs, 4 families (4200/2101/3303/5501) x run seeds 16..23, paired within family; control
+  clauseB_ctrl_v2_featperm; 1560 s wall / 11,709 CPU-s; 98 rows @ e7d095a19.
+  graft - scratch +0.738 (p .046); graft - sham -0.662 (p .852); sham - scratch +1.400.
+  Integrity 32/32 graft and sham (bytes + fused == numpy); world and brain oracles clean.
+- ELIGIBILITY: EVIDENCE_N_v1 met; predicate 1789512700124-0 pinned 3b59f0a66 before the run; O8 calibration
+  INSTRUMENT_ADMISSIBLE first (receipt 1789512697580-0).
+- VERDICT: check_b v2 FAIL, gates clean, receipt 1789514378793-0 (guard 10/10).
+- INTERPRETATION: the graft beats equal-budget scratch but LOSES to a donor whose feature mapping was destroyed,
+  so the gain is not transferred structure. Against scratch alone this would have read PASS at p .046.
+  No mechanism is claimed for the sham advantage. E-R6-1 (16/1/16) stays an untouched OBSERVATION, not pooled.
+
+2.2 O8 Clause B control calibration (the reason the verdict is trustworthy)
+- OBSERVATION: 40 independent planted-negative draws at 32/4/8, fresh disjoint donor streams committed in the
+  predicate; false_pass 0/40; 2 draws INDETERMINATE (2.5).
+- VERDICT (code): INSTRUMENT_ADMISSIBLE (rule: <= 5/40, ~Binomial(40,.05) 95th pct, power ~0.84 vs a 20% rate).
+- INTERPRETATION: the R7-BUILD planted-negative PASS (p_max .049) was a chance event, not a biased control.
+  Round 6's 16/1/16 pair would have been judged on an instrument whose false-PASS behaviour was unmeasured.
+
+2.3 GPU expansion (operator ask; code decision, rows d1c35d04b)
+- OBSERVATION on a REAL R16 cell (w13 train8, 32 runs x 200 gens x 128, numba t8, 3 reps):
+  gpu_lockstep oracle FAIL (6 fitness + 3 cells mismatched in 819,200 evaluations; elites 32/32 identical),
+  stage wall 166.9 / 155.4 / 159.8 s; cpu_lockstep oracle PASS, 21.8 / 27.1 / 21.7 s; cpu_sequential 21.7 / 23.2
+  / 22.3 s. w13 train128 not measured (projected_over_lease: GPU 13.0 s vs numba 0.78 s per generation).
+- VERDICT (code): ratio 1.024 < 1.25 -> CHOSEN cpu_sequential, GPU_REJECT; pm:r7:backend written from rows.
+- INTERPRETATION: on this workload the GPU is both inexact and slower; the exact batched-CPU path is not fast
+  enough to adopt. The measured throughput win came from D19 instead. GPU exactness is an OPEN anomaly.
+
+2.4 R16 re-screen -- COMPLETE (G, receipt 1789532808777-0 G-R16-SCREEN-R7, guarded and accepted, all 10 checks OK,
+    campaign_stage PRODUCTION, status INDETERMINATE, 32/4/8 top-level, under predicate G-R16-SCREEN
+    (refs/pm/pred -> 398894fc6); rows primordial/ledger/rows/G/G-R16-cells.jsonl, cited at 243eda156)
+- OBSERVATION: 74/74 cells screened, 0 UNSCREENED, in the seeded order published before T+0 (PCG64 20260916 over
+  R16_ORDER_R6.json). Final verdict table, from committed rows at 243eda156:
+      SURVIVED 1   w13 train128_held64 -- the origin cell, unchanged; no new SURVIVED, so pm:replication has 0 records
+      HELD     5   w1 t8, w7 t8, w13 t8, w34 t8, and w26 train128 (new tonight, decided by its learner)
+      CULLED  64
+      PENDING  4   w1, w7, w10, w34 train128, each still needing its 32-run input-invariant learner
+      UNSCREENED 0
+- The 5 PENDING train128 learner cells from round 6 were planned cost-ascending (O4). w26 completed all 32 learner runs
+  (families 4200/2101/3303/5501, 8 each) and returned HELD, so its earlier PENDING stub is superseded. w1, w7, w10 and
+  w34 stay PENDING with ZERO learner runs committed: their chunk jobs never ran, and their 36 queued chunk+assembly
+  entries were removed from G's own queue at 22:52 under an A ruling, after G published the list and committed the full
+  audit (R7_QUEUE_REMOVED_2026-09-15.json, every stream id, job_key, kwargs and envelope). Remaining cost, measured at
+  509.4 CPU-s per learner run: ~48,124 CPU-s each for w1 and w10, ~96,248 for w7 and w34.
+- 4 cells were rescued from D30: w19 t128 (30/32 runs done), w23 t128 (13/32), w12 t128 (1/32) and w16 t8 sat behind 44
+  learner jobs because an epoch requeue lands at the queue tail. Freeing them cost ~2 h and all four finished and were
+  DECIDED -- w19, w23, w12 and w16 all CULLED. The value was the decisions, not the verdicts' direction: without the
+  ruling, four cells at 90%, 40%, 3% and 0% run would have expired UNSCREENED and the screen would have closed at 70/74.
+- ELIGIBILITY: every cell at runs_total 32 / rng_family_count 4 / runs_per_family 8, readout top1_train, under the
+  gate_in|HOLD variant rules; oracles 107/107 clean (elites_failing 0, hash 0, charge 0) and controls 74/74
+  det_matches_stage1. Run totals tonight: 44 cells screened, 8 learner chunk rows, 0 refusals, 0 SAMPLE_RULE_MISMATCH,
+  0 TIMEOUT, 0 spurious stubs.
+- VERDICT: w13 train128_held64 remains the ONLY SURVIVED cell in the grid.
+- INTERPRETATION: this is the round's most consequential science result and it is negative in a useful way. Round 6
+  reported "replication NOT_REACHED" with 43 cells unscreened, which left open that a second world was waiting in the
+  unscreened remainder. It was not. Under the corrected reader and the 32/4/8 rule the grid holds exactly one
+  survivor, so B-R5-1 has no replication target here at any compute budget. Replicating it requires building or
+  screening a DIFFERENT world set -- a design decision for the operator, not a scheduling one. B-R5-1 itself is
+  untouched by this: it keeps its equal-search-budget accounting, its leave-one-family-out robustness (4/4) and its
+  cross-lane replay, and it remains a CANDIDATE, not promoted.
+2.5 Anti-prior v2 -- the ledger surfaced instrument defects, not calibration evidence
+- SETUP: R sealed 48 priors on the code-published r7 list (seed 20260919) before T+15; A verified every commitment,
+  list membership, a single predictor and that every prediction_ts followed publication. Priors spanned 0.06-0.40
+  (median 0.18, 15 distinct values), so ranks could discriminate, unlike round 5's 12/12 at <= 0.2.
+- OBSERVATION, 5 assignments drawn by code:
+  - C-R7-AP-01, CALIBRATION arm (rank 11/48, prior 0.28): INDETERMINATE. Its meter oracle needed >= 1 free-stream
+    eligible episode; the winners evolved k=1, so it could never fire. C stopped the job at 12/64 runs rather than
+    hold a token for a fixed outcome.
+  - C-R7-AP-02, ANTI_PRIOR arm (rank 46/48, prior 0.08, predicted "infeasible or too slow"): PASS. D then measured it
+    twice: the charge costs <1% of train fitness and nothing on held-out (D-R7-7), and 3.65% of charge is actually paid
+    with the winner smaller in 22/32 runs while the meter never binds (D-R7-11b). Either way the cell was not under
+    pressure that the verdict could see.
+  - C-R7-AP-03, ANTI_PRIOR arm (rank 48/48 -- the most confidently doomed cell in the pool, prior 0.06): PASS and
+    VACUOUS, disclosed by C. All 64 runs in both arms returned exactly 31.71875 (IQR 0.0): at a 3-bit symbol a send
+    costs 6 while a right action earns 3, so signalling can never pay on D1 and every top1 settles on a silent
+    constant-action attractor. C named it its own error (it had recorded the same pay-off inequality in round 5 and
+    reused the constants) and did not retune after seeing rows.
+  - C-R7-AP-04, CALIBRATION arm: INFEASIBLE -- regime_switching cannot bind on w13 for ANY genome. Filed NULL, no redraw.
+  - C-R7-AP-05 (tt_digits / nk_stub / obs_delay / falkordb_cypher), assigned 21:42: DRAWN AND NOT RUN. No predicate,
+    no rows, nothing to receipt. C's stated reason is the clock -- not infrastructure, not infeasibility: "a tt_digits
+    harness on nk_stub inside the remaining time would be a rush, and rushing is what produced AP-03's vacuity."
+    A lane declining to start work it cannot do properly, and saying so plainly, is the behaviour this round was for.
+- DISCIPLINE, verified by C and consistent with the ledger: pm:prior:* was never read at any point in the round; every
+  cell C ran was code-assigned or code-drawn; every generation count and budget came from a rule stated before its dev
+  check. C also caught three defects in its own no-rows dev check BEFORE posting AP-03's predicate (a BETA rounding to
+  zero that would itself have made the pressure vacuous, a cheat-eligibility check measuring the codebook instead of
+  the meter, and a scale error in its own oracle).
+- BOTH of C's non-ok jobs are accounted for, so no `error` row in the jobs table is unexplained. ec5a36e1c102 was
+  AP-02's FIRST submit (18:52, error at 18:55, 2.602 s, 1 row): C stored a 6-byte genome, violating qd.archive
+  order_key's contract that its Python rank matches the Lua comparison only at genome lengths that are a MULTIPLE
+  OF 4 (the Lua reads 4-byte words), which raised a ResponseError from INSERT_LUA. C reproduced it with the
+  COMMITTED pre-fix module on the real control path. Its single reference row was written before any run row, is
+  NOT unreceipted -- it heads the AP-02 rows file cited by receipt 1789517290895-0, whose engineering block names
+  those rows as the aborted job's -- and C amended the fix (8-byte stored genome, decode and byte_charge semantics
+  unchanged) on the bus at 1789513882027-0 BEFORE any run row existed; the re-run completed 32/32 per arm with
+  oracles clean. C's harness, not the fabric, so no PC. The second (eca39ef50161) was closed as died under an A
+  ruling. Counted among C's own errors in its FINAL.
+- VERDICT: three anti-prior-arm PASSes now stand across rounds 6 and 7 (ranks 39, 46, 48; priors 0.10, 0.08, 0.06),
+  and the calibration arm has no confirmed PASS. D established that they share NO mechanism: round 6's was search
+  saturation, AP-02's was a pressure that barely bound, AP-03's was a predicate with no resolving power.
+- INTERPRETATION: the honest reading is NOT that the predictor is mis-calibrated. Every r7 assignment failed for a
+  CELL-CONSTRUCTION reason, so the predictor's confident-failure calls were never actually put at risk. The ledger is
+  doing real work -- it keeps finding cells that cannot discriminate anything -- but the calibration question it was
+  built to answer remains untested after two rounds. H filed the fix as PC 1789523009420-0: candidates() admits a cell
+  only if its pressure can bind and its oracle can fire on that world, with rejected cells replaced by the next seeded
+  draw so the list stays code-chosen and reproducible.
+- DISCLOSURE (contamination): arm, rank, quantile and prior are conductor-and-D-only while a round is live. Three
+  lapses are on record: A posted arms to C and R in round 6; D named an arm to C tonight; and D's anomaly record
+  1789517546515-0 is bus-readable and carries those fields. Nothing was rewritten -- immutable records are what the
+  sweep and this packet rest on. The channel is weak (assign() returns only the cell, so no lane can infer a future
+  draw's arm) but real, and the rule now is that readable records name the cell and mechanism only.
+2.6 D anomaly work -- 15 receipts over 11 rows files (all cited), the round's highest throughput per CPU-second
+- RESOLVED:
+  - The O8 fused-vs-numpy mismatch (E's find): BRAIN_NEAR_TIE on both loci. Each case is ONE env at ONE tick where the
+    float32 logits sit ~1e-07 apart; numpy's einsum-then-bias and linear_act_row's bias-then-features straddle an exact
+    tie and argmax breaks it to the lower action. Deterministic (1 thread == 8), neither path more correct. SCOPE: a
+    tie-break artifact, not a logic error -- B-R5-1's own oracle was 32/32 clean, the screen 42/42, and tonight's Clause
+    B run had 32/32 graft and sham integrity with no recurrence. It appeared only on untrained random-donor genomes,
+    which sit near ties far more often. D filed a tie-aware gate as PC 1789517018361-0; the strict gate stayed in force
+    tonight because three verdicts had already been emitted under it.
+  - ANOM-1789417958280-0 clause (b): rent DOES shrink programs; C's earlier LAMBDA was too weak.
+  - ANOM-1789415790378-0: C7 detection is seed-INSENSITIVE while C7c's fit-eligibility is seed-CONDITIONED, which
+    explains C7c's 238/238 failing to reproduce under D's swap.
+  - Its own ~0.94 coverage-gap anomaly, filed and then killed within 10 minutes: a DESCRIPTOR ARTIFACT (the gap reverses
+    under a descriptor whose axes the fill/clear ops cannot sweep).
+- RESOLVED, and it matters for B-R5-1: the 3/32 below-floor runs are CANDIDATE-SPECIFIC, not unlucky streams. Their
+  same-stream float baselines rank 15th, 16th and 23rd of 32 and all sit above the floor, every one reads observations
+  (W-zeroed 159.0 like every run), and family 3303's own baseline median is second of four. B-R5-1's PASS is untouched
+  and the "one family carried it" reading is now excluded from both directions (leave-one-family-out in round 6, and
+  same-stream baselines here).
+- Also resolved: decoder_rent DOES shrink programs, but only past C's setting -- median best_active 7 at LAMBDA 0 and
+  at C's 16384, 2 at 131072, with 32/32 paired streams shrinking, and the shrink is paid for (best_net 2.768M ->
+  2.199M). C-R2-02's coverage gap is a DESCRIPTOR ARTIFACT: D reproduced it with a seeded popcount baseline (+0.1598,
+  fully separated) and it REVERSES to -0.0771 under contribution halves, which the fill/clear ops cannot sweep.
+  C7's detection is seed-insensitive while C7c's eligibility is seed-conditioned and self-selecting.
+- OPEN, carried forward: the repeated anti-prior-arm PASS (2.5) -- two discriminators returned MIXED with informative
+  numbers but no mechanism, and the decisive BETA sweep is PC 1789518268676-0, which the conductor did NOT authorise
+  tonight; the fewest-byte-brain anomaly, CLAIMED by D, where three attempts were lost to D's own process errors and D
+  stopped rather than spend a third token (module, tests and sizing are committed, the question is round 8's); and GPU
+  exactness, NOT claimed by D because gpuq runs children in the arbiter lane's tree (D23).
+- RESTRAINT: D sized a BETA sweep that FIT the clock and filed it as a PC anyway, because it would have held 1 of only
+  2 shared tokens for ~82 min at ~4% utilisation. A made that the standard: admission decides whether a job MAY run,
+  not whether it SHOULD.
+- D's own disclosed errors: a wait loop watching pm:events rather than the done stream (which let the stale r5 worker
+  eat a job unseen, ~44 min); wrong times in its first incident note, corrected; a false journal claim about
+  fingerprint coverage; a run-index bug; and the worker death at 21:22 (see D30/D24 and section 3).
+
+2.7 B2 admission v2: REFUSED by code -- rollout 30,340 s + search 641 s = 8.61 h single worker vs 7.80 h to
+    drain; STAGE_BUDGET_REFUSAL [CPU_WALL_OVER_CEILING, PROJECTED_PAST_ROUND_END]; stub 1789514379229-0 filed
+    with the projection; nothing trimmed, no spec dropped. No B2 v2 screen job fn exists in the repo, so
+    admission was the only gate that could have run tonight.
+
+2.8 B replication -- NOT_REACHED, and now determinate
+- B's ONLY round 7 item was replication, and it reported exactly that: 1 item NOT_REACHED, 0 receipts, 0 rows, 0 PCs,
+  0 open claims, 0 own errors. (B's search-budget accounting and the equal-budget finding belong to ROUND 6, not to
+  this round; they are carried context for B-R5-1, not r7 work.)
+- No pm:replication record was ever published, because no new SURVIVED cell appeared in 74/74 screened cells.
+- A lane that correctly does almost nothing is a result, not a gap: B was told to run the frozen recipe if and only if
+  code published a trigger, and to stay idle otherwise. It did not invent work to fill the clock.
+- INTERPRETATION: NOT_REACHED is not evidence against B-R5-1, and it is no longer a statement about the clock. The grid
+  holds exactly one surviving world, so there was nothing to replicate on at any budget. B-R5-1 stays a CANDIDATE with
+  equal search budget, leave-one-family-out ROBUST 4/4 and a cross-lane replay, and promotion still requires a second
+  world plus an independent failure mode.
+
+--------------------------------------------------------------------------------
+3. INSTRUMENTATION DEFECTS
+--------------------------------------------------------------------------------
+Closed this round (the operator's R6 hygiene list, now live):
+  D4  stale imported code ............. CLOSED: round 6 stamped code_file_sha256 on every submit (mismatch ->
+      done refused, CODE_FINGERPRINT_MISMATCH; a paused segment keeps its ORIGINAL sha by design, and a warm
+      child respawns as CODE_RELOADED). Round 7's F-R7-3 widened it to the transitive primordial.* IMPORT
+      CLOSURE of the job fn, plus a code_repo guard, at 19e34af1e -- an unchanged closure means no respawn,
+      so a stale dependency can no longer ride in behind an unchanged job module. 1 CODE_RELOADED tonight.
+  D11 prior keys not namespaced ....... CLOSED: pm:prior:<round>:*, r6 migrated, r5 archive intact
+  D12 stop flags survive a close ...... CLOSED in code (close kills registered pids, then clears flags)
+  D14 worker from a foreign worktree ... CLOSED: registration + declared lane_repos + residue scan
+  D15 drain held by a long job ........ CLOSED: non-checkpointable wall <= 900 s
+New in round 7:
+  #    defect                                                                  status
+  D18  a CLOSED round's clock kept refusing every job (pm:round:current)        FIXED (F) + one A intervention
+  D19  worker/gpuq children ran numba at 3 threads under an 8-thread grant      FIXED (F); k=2 scaling 1.34x -> 1.74x
+  D20  lane R's registered tag was still the r6 predictor's                     OPEN, NONBLOCKING
+  D21  a lane that never posts `hello` stalls the launch chain                  OPEN (A's script fixed)
+  D22  the CPU broker is not FIFO: a short-job burst starved lane D ~7 min      OPEN, PC 1789510034347-0
+  D23  the gpuq arbiter runs AND writes rows inside ONE lane's worktree         OPEN, PC-worthy: blocked D's
+       (D could not run its GPU probe; C's receipt waited on E's push; the      item 3 and delayed C
+        sha C was given was orphaned by that push)
+  D24  killing a job child kills the supervisor; no sanctioned cancel path      OPEN, PC 1789511386497-0
+  D25  signflip_p is order-sensitive in its MC branch (E disclosed)             OPEN, PC 1789514596470-0
+  D26  a PC stub takes only ONE filing, so measured cost cannot supersede       OPEN, PC 1789514839378-0
+       (demonstrated twice: E could not file the Clause B measured cost over its
+        estimate, and F could not extend D24 for the commit race)
+  D27  no code path opens a PC without a refusal (E hand-wrote the D25 stub)    OPEN, PC 1789514839383-0
+  D28  a registered service loses its registration during a job longer than the
+       90 s TTL: refresh is expire-only, so a missing key is never re-created,
+       and the gpuq arbiter cannot refresh while blocked in run_job (C's 217.6 s
+       GPU job; registration absent ~23 min)                                    OPEN, PC 1789514994865-0;
+       E ran a guarded 30 s re-register helper to close, disclosed
+  D29  the row-status vocabulary has no 'observation', while EVIDENCE_N_v1 added
+       evidence_class OBSERVATION: D's rows were refused one by one and the JOB
+       still reported ok (rows recoverable as captured payloads)                OPEN, PC 1789515839791-0.
+       A ruled: fail loudly, NO alias, refuse earlier at emit/submit, add a
+       vocabulary lint. F's defect, not D's
+  D30  an epoch requeue lands at the END of the lane queue, so paused work loses
+       its place to later submissions (4 nearly-finished screen cells sat behind
+       44 learner jobs that could not decide anything tonight)                  OPEN, PC 1789524989582-0;
+       resolved for the round by an A ruling + G's audited queue surgery
+  D31  a lane's close stops its ask watcher WITH its workers, so the lane stops
+       hearing the conductor at exactly the moment the conductor may still be
+       issuing instructions -- and it can tear down SHARED infrastructure against
+       a standing ruling it cannot see                                          OPEN, PC 1789540397674-0
+       (filed by E at A's request, source_event A_DEFECT_D31_FILED_BY_E_AT_CONDUCTOR_REQUEST, with A's own
+       attribution note among its dependencies). This one is A's, not E's: A's own close-sequence note 1789532297309-0 told the
+       lanes to stop their watchers. E complied; its gpuq arbiter (pid 27084) exited ~00:23:55, about a minute
+       AFTER A's ruling 1789532574357-0 (00:22:54) said keep the arbiter until C declares. From 00:22 nothing was
+       watching lane E mail. MEASURED GAP 683 s (ruling 00:22:54 -> closure 00:34:17), shared services affected 1.
+       It ended harmlessly by luck of the draw, not by a working channel: C declared done drawing at 00:33:48
+       (AP-05 was CPU-only) and A closed the question at 00:34:17 with no restart needed.
+       E disclosed it unprompted at 02:29, after its own close, and filed the PC at A's request before drain.
+       E's fixes, in its own priority order: (a) a lane ask watch stays alive until DRAIN and is stopped LAST,
+       after the workers -- cheap, and it covers the general case of a conductor needing to reach a closed lane;
+       (b) stopping SHARED infrastructure requires conductor confirmation AT THE MOMENT OF THE STOP, not only when
+       it was started. E would land (a) first: (b) alone would have saved the arbiter, (a) alone would have let E
+       see the ruling and ask. Named regression tests: a close sequence that stops the watch before the workers
+       fails a protocol lint; a lane that stops a service listed as shared without a confirmation record is
+       flagged by the residue or close sweep.
+       E ACCEPTS THE ATTRIBUTION BUT NOT ALL OF THE CREDIT TRANSFER, and asked that both halves stand: it followed
+       A's close note correctly, AND it shipped a FINAL carrying a standing offer to restart the arbiter on request
+       while the channel that could carry that request was one of the things it was shutting down. The protocol
+       made that easy to miss; E still shipped the promise. Recorded here as E asked, not as A first wrote it.
+Scheduling cluster for round 8: D15 (drain sized to the max job wall), D22 (the broker is not FIFO across lanes) and
+D30 (continuations lose queue position) are one family -- the round lost real work to queue position three times.
+A's own errors: the gate-script JSON parse (1 false RED); a test run that contaminated F's first capacity probe
+(discarded, re-run clean); the launch script missing its subcommands (~6 min); a blanket mirror request sent to seven
+lanes when the zero-cited sweep was A's own 205-commit-stale checkout; crediting B's round 6 search-budget receipt to
+round 7 in this draft; and telling the lanes the four PENDING cells kept partial learner runs when their chunks never
+ran at all (G caught it).
+Cross-lane process errors worth recording, because each was self-disclosed rather than found by audit: D ran an item A
+had CANCELLED, because the cancellation arrived just after its inbox read (D filed the result anyway rather than let it
+vanish); G's bus filters matched epoch-boundary notes and silently dropped three of A's direct asks, which is why its
+mirror sat open 3 h; E's liveness beat lapsed 2.7 h after it replaced periodic re-arms with an event-only watcher; and
+E nearly confirmed A's false zero-cited alarm by passing a lane letter into a directory parameter. The common shape is
+a filter or a watcher that fails silent -- the same class as A's own monitor gaps.
+
+--------------------------------------------------------------------------------
+4. PRODUCTION CANDIDATES (not run)
+--------------------------------------------------------------------------------
+15 records: the 14 listed below, plus one grouped G r16-cell screen stub. Every one carries a measured or estimated
+basis; two were HAND-WRITTEN because no code path opens a candidate without a refusal (D27), which is itself one of
+the entries. (D31's stub went through file_candidate, so it is not a third.)
+
+| id | lane | what it buys |
+|---|---|---|
+| 1789510034347-0 | F | fair CPU broker: grant to the longest-waiting job, per-job wait stamp, starvation test (D22) |
+| 1789511386497-0 | F | job cancellation + child-death handling: a dead child ends the JOB, not the supervisor (D24) |
+| 1789522077070-0 | F | sibling of the above: the periodic rows commit must not kill the supervisor (filed separately only because a stub takes one filing) |
+| 1789514839378-0 | F | supersede a PC filing with measured actuals, keeping both (D26) |
+| 1789514839383-0 | F | open_candidate(): file a candidate with no refusal event (D27) |
+| 1789515839791-0 | F | reconcile the row-status and evidence-class vocabularies; fail loudly on refused rows (D29) |
+| 1789524989582-0 | F | continuations keep their queue position across an epoch requeue (D30) |
+| 1789514994865-0 | E | registration survives a job longer than its TTL: refresh must re-create a missing key (D28) |
+| 1789514596470-0 | E | canonical ordering in signflip_p, so a p-value cannot depend on diff order (D25) |
+| 1789514379229-0 | E | the B2 v2 admission screen at 32/4/8: 8.61 h against 7.80 h of clock, refused by code, nothing trimmed |
+| 1789517018361-0 | D | tie-aware fused-vs-numpy gate, so a ~1e-7 near-tie stops reading as an exactness failure |
+| 1789523009420-0 | H | candidate-cell binding pre-check before publication -- the fix for 4 of 4 undiscriminating anti-prior draws |
+| 1789540397674-0 | E | close protocol: keep a lane's ask watch alive until DRAIN (stop it LAST, not with the workers), and/or require conductor confirmation before a lane tears down SHARED infrastructure -- D31, A's own defect, filed by E at A's request after every lane had already closed |
+| 1789518268676-0 | D | the decisive BETA charge sweep on C-R7-AP-02's cell -- sized to FIT the clock, filed anyway because it would hold 1 of 2 shared tokens at ~4% utilisation; NOT authorised tonight, and the open question in 2.6 |
+
+The three F scheduling entries (D22, D30, and D15 from the ceilings work) are one family and should land together: this
+round lost real work to queue position three times.
+
+--------------------------------------------------------------------------------
+5. EPISTEMIC STATE
+--------------------------------------------------------------------------------
+Promoted mechanisms: NONE.
+Clause B: FIRST ADMISSIBLE VERDICT = FAIL on w14 -> w13. The graft beat equal-budget scratch (+0.738, p .046) but LOST
+to the structure-preserving sham (-0.662, p .852), and the sham beat scratch by MORE than the graft did (+1.400). So
+the gain is not transferred structure. Judged against scratch alone this pair would have read PASS at p .046, which is
+what the hardened control exists to catch. The control's own false-PASS rate was measured FIRST: 0/40.
+Surviving candidates: B-R5-1 (w13 train128_held64, 16 B int4a4). Equal search budget (102,400 evals/run on both sides),
+leave-one-family-out ROBUST 4/4, cross-lane replay AGREE. Replication NOT_REACHED and now DETERMINATE: 74/74 cells
+screened and w13 is the only SURVIVED cell, so there is no replication target in this grid at any compute budget.
+Promotion still requires a second world AND an independent failure mode.
+Unresolved:
+- family 3303's 3 below-floor runs in B-R5-1 (narrowed by D: not a stream artifact; still OPEN);
+- the repeated anti-prior-arm PASS (3 across r6+r7), which tests cell construction rather than the predictor;
+- GPU exactness on the R16 workload (gpu_lockstep failed 6 fitness + 3 cells in 819,200 evaluations; OPEN, and D could
+  not probe it because gpuq runs code from E's worktree, D23);
+- whether the predictor is calibrated at all -- untested after two rounds, because every assignment hit a cell that
+  could not discriminate;
+- B2 search overhead at scale (measured per generation, never run at screen scale).
+Parked (with measured cost, not run): the B2 v2 admission screen (8.61 h vs 7.80 h to drain, refused by code); the 4
+PENDING learner cells w1/w7/w10/w34 (3.3-6 h each, no verdict without all 8 chunks + assembly); GPU-3; a
+family-aware Clause B beyond tonight's pair.
+
+--------------------------------------------------------------------------------
+6. RULE AUDIT (SWARM_R7 s1 + build addendum)
+--------------------------------------------------------------------------------
+- O1 EVIDENCE_N_v1 at admission: YES, and it is the operator's ruling made mechanical. The gate proved the three
+  malformed shapes (16/1/16, 32/4/(16,8,4,4), 32/4/(29,1,1,1)) are refused before any simulation, and the round's one
+  Clause B pair ran at 32/4/8 and produced the first admissible Clause B verdict. No in-round SAMPLE_RULE refusal was
+  needed, because nothing malformed was submitted: the rule bound at design time, which is where it should bind.
+  A's own loophole fix (only verdict classes may carry PASS/FAIL) closed the obvious dodge.
+- O2/O2' GPU + best-exact-backend: YES -- decided by code from rows; the widening let cpu_lockstep compete and it
+  still lost on measurement, not on preference.
+- O3 k* re-probe on the dedicated host: YES (k* = 2, and the D19 fix changed the scaling).
+- O4 order rules (seeded screen order, cost-ascending learners): YES, and they were tested by a conflict. The seeded
+  order held for all 74 cells and was never re-ordered by outcome. The cost-ascending learner plan put w26 first, and
+  w26 was the only PENDING cell that could finish -- so the rule chose correctly without anyone judging which cell
+  looked promising. When D30 stranded 4 nearly-finished cells behind 44 learner jobs, the conductor ruling changed
+  only WHICH QUEUED WORK COULD DECIDE IN THE TIME LEFT (2 h for 4 verdicts vs 3.3-6 h for none), never which cells were
+  screened; the seeded order and the cost-ascending order both survived intact, and G published and committed the
+  removal list before touching its own queue.
+- O7 close kills registered pids: EXERCISED at close (audit below), and the
+  registration half was exercised all round: every lane registered pid + repo + round, the residue scan read a foreign
+  or dead worker correctly on four separate occasions (C's restart, D's crash, the gpuq lapse, the r6 leftovers), and
+  E stopped its own arbiter and heartbeat explicitly rather than relying on the close.
+- O5 no B2 Clause B, admission only: YES (refused on cost).
+- O6 count A's interventions: manual pushes 0, store edits 1.
+- O7 close kills registered pids: YES, and it found NOTHING TO KILL -- workers_stopped {"actions": []}, because every
+  lane had already stopped its own workers hours earlier (0 registrations, 0 processes at close). The other two halves
+  did act: flags_cleared [B,C,D,E,G] and current_unset. So the kill path is proven to RUN and to be safe when idle;
+  it has still never been exercised against a live worker, and that remains untested.
+- O8 Clause B control calibration before any live pair: YES, and it changed what the verdict means.
+
+--------------------------------------------------------------------------------
+7. SUCCESS CONDITIONS
+--------------------------------------------------------------------------------
+ 1 12 h end-to-end cap held ............................... YES -- build 16:35, clock 17:37:49-03:37:49, packet 03:45
+ 2 CANDIDATE_N binds Clause B, enforced at admission ...... YES -- refused before simulation, proved on 3 planted shapes
+ 3 first admissible Clause B verdict ...................... YES (FAIL; the sham out-transfers the graft)
+ 4 GPU expansion measured, adopted only on the rule ....... YES (REJECT: inexact on a real cell AND ~7x slower)
+ 5 zero manual controller pushes .......................... YES -- 9/9 boundaries + the close, all by code
+ 6 every row path receipted or UNRECEIPTED_OBSERVATION .... YES -- 23 rows files, 23 CITED, 0 unreceipted; the
+                                                           --emit sweep at close emitted NOTHING (emitted [], rc 0)
+ 7 replication on a second SURVIVED world ................. NO, and now DETERMINATE: 74/74 screened, exactly one
+                                                           SURVIVED cell, so no target exists in this grid
+ 8 no babysitting of clocks/budgets/admission ............. YES for the clock (9/9 + close unattended) and for
+                                                           budgets/admission (every refusal by code). ONE exception,
+                                                           counted: the D18 build deadlock, before the clock started
+================================================================================
+END OF PACKET
+================================================================================
