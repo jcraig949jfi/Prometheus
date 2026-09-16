@@ -43,6 +43,18 @@ def sweep(world, plist, n=400, seed0=0, validate=True):
             viols, statistics.fmean(steps), dead)
 
 
+def kuhn_keyname_leak(o0, st):
+    """The [7] observation-hygiene predicate, exactly as it has always been
+    written: a leak is a key naming the opponent, a key called 'cards', or
+    my_card equal to the opponent's card. It inspects KEY NAMES, so a leak
+    under an innocuous key is invisible to it by construction; the
+    differential audit (audit.probe_pair) is the instrument for that. Made a
+    function on 2026-09-16 so the LUDUS-03 controls call the real predicate
+    rather than a copy of it."""
+    return (o0.get("my_card") == st.cards[1] and st.cards[0] != st.cards[1]) \
+        or "cards" in o0 or any(k for k in o0 if "opponent" in k.lower())
+
+
 def check(label, ok, detail=""):
     print("  %-46s %s  %s" % (label, "PASS" if ok else "FAIL", detail))
     return bool(ok)
@@ -160,8 +172,7 @@ def main():
     while st.current_player() == core.CHANCE:
         st.apply_action(st.chance_outcomes()[0][0])
     o0, o1 = st.observation(0), st.observation(1)
-    leak = (o0.get("my_card") == st.cards[1] and st.cards[0] != st.cards[1]) \
-        or "cards" in o0 or any(k for k in o0 if "opponent" in k.lower())
+    leak = kuhn_keyname_leak(o0, st)
     allok &= check("observation(0) does not expose opponent card", not leak,
                    "o0 keys=%s" % sorted(o0))
     m, v, _, _ = sweep(w, [P.KuhnEquilibriumPlayer(1 / 3.0),
