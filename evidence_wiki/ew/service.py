@@ -1467,6 +1467,11 @@ class FossilPlayerIn(BaseModel):
     phenotype: dict | None = None
     producer: dict | None = None
     namespace: str = "prod"
+    # migration 013 (2026-09-16, Proteus #287 / ruling #268): minted players
+    mate_player: str | None = None            # second parent of a crossover child
+    family: str | None = None                 # e.g. rule_table
+    representation_version: str | None = None # e.g. herakles.evca.rule_hex.r3.v1
+    semantic_version: str | None = None       # e.g. herakles.evca.core.v1
 
 
 def _upsert_anchor(conn, ident, table, key, body, endpoint):

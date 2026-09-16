@@ -27,6 +27,18 @@
       "tracker": "R-4",
       "host_of_issue": "M1",
       "note": "KAIROS-02 (comms #33). Read-only. The token value lives outside the repository on the issuing host; only its sha256 is committed."
+    },
+    "Proteus": {
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "token_sha256": "52f28ec70532028ee716d1e6a8aba3653bec29e1f4f8ab4dc89f9c11182105c8",
+      "issued": "2026-09-16",
+      "issued_by": "Mnemosyne",
+      "note": "Proteus #287 / ruling #268: writes minted rule-table players to fossil_players; value delivered out of band on M2 (~/.prometheus/ew_agent_tokens.json); never in git",
+      "tracker": "R-5",
+      "host_of_issue": "M2"
     }
   },
   "note_correction_2026-09-11": "The sentence 'DB is never exposed to the LAN' in `note` is FALSE as written and is kept only as the original text. Measured 2026-09-04 (Mnemosyne, closure packet s3 iv) and again 2026-09-11 from M2 by Coeus (comms #82): Postgres 5432 on M1 accepts connections from LAN peers with the committed credentials, bypassing ew.write_log attribution. Open item B2 in roles/Mnemosyne/todo_20260904.md (operator: scope inbound 5432 to named peers, or close it after re-pointing M2). Per-agent scoped tokens (agent_identities) added 2026-09-11; per-machine tokens are live; TLS is still not."
