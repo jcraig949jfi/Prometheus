@@ -635,3 +635,17 @@ registration heartbeat (19:30:02) now run. Inbox gap check between the two watch
 MY ERROR (diagnostic, harmless here): the psutil check matched ITSELF -- the process list entries at 19:47:43 were the checking
 process, whose own `python -c` source text contains the very substrings it greps for. Same class as the kill-script-matching-itself
 lesson: match argv TOKENS and skip your own pid; a substring search over cmdline text always finds the searcher.
+
+Iteration 20 (19:55). MY ANOMALY IS RESOLVED INSIDE THE ROUND. D-R7-3b receipt 1789516880015-0 (rows ef6667f44, OBSERVATION):
+both O8 mismatches are BRAIN_NEAR_TIE -- ONE env at ONE tick each (d24 genome 14, env 84 seed 9184, tick 30; d31 genome 13,
+env 106 seed 9206, tick 1), float64 reference NOT clear (top-2 gaps 1.08e-07 / 1.78e-07). numpy Linear.logits is
+einsum-then-bias, linear_act_row is bias-then-features; one order hits an EXACT float32 tie (gap 0.0) and argmax breaks it to the
+lower action. NEITHER path is consistently right (d24: numpy ties, picks 0, kernel+f64 pick 4; d31: sequential ties, picks 3,
+numpy+f64 pick 4). Deterministic: 1 thread == 8 threads, 3 repeats agree, no batch effect. Both rebuilt donor sets hash to my
+committed donor_sha256.
+A rulings 1789516925555-0: the exact-equality fused_eq_numpy gate STAYS unchanged tonight (B, G and E depend on it; three verdicts
+already emitted under it); D files a tie-aware gate as a round 8 PC, not a patch; for the packet this is a tie-break artifact at a
+~1e-7 margin, NOT a logic error, so it does not impugn B-R5-1 (32/32 clean), the R16 screen (42/42) or my Clause B verdict (32/32
+integrity, no recurrence), and it explains why the 2-in-819,200 mismatch showed up only on UNTRAINED random-donor genomes, which sit
+near ties far more often than trained ones. My draws 24/31 stay INDETERMINATE; E-R7-1 FAIL stands. Credit: E filed, D resolved.
+FINAL draft updated (scratchpad E_ROUND7_FINAL_draft.md): the label is no longer preliminary and A's scope language is folded in.
