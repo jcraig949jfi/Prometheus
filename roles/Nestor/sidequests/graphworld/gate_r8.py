@@ -265,6 +265,31 @@ def env_checks(round_id: str, skip_suite: bool = False, since_sha: str = "") -> 
                     "no --since-sha given, so GATE RUN item 2 did NOT execute; counted as a failed check "
                     "rather than silently omitted"))
 
+    # BUILD_R8 GATE RUN item 3: the planted EVIDENCE_N_v1 refusals -- 16/1/16, 32/4/(16,8,4,4),
+    # 32/4/(29,1,1,1) -- refused at ADMISSION with ZERO rows.
+    #
+    # Deliberately NOT reimplemented here. primordial/tests/test_r7_h1_evidence_admission.py already
+    # drives the REAL worker and asserts zero rows AND no PRODUCTION_CANDIDATE stub (D16); an in-process
+    # admit() call in this file could assert neither. A weaker duplicate that looked reassuring while
+    # testing less is exactly the "verification not aimed at the claim" failure this gate exists to stop.
+    #
+    # The residual risk is a builder DELETING or SKIPPING those tests, which "full suite green" would
+    # report as success -- the shrinking-check-set trap (POST_ROUND s3a). So: run them BY NAME, require
+    # that tests actually passed (rc 5 means nothing was collected; an all-skipped run is a vacuous
+    # green), and fail loudly if a required file has vanished.
+    planted = ["primordial/tests/test_r7_h1_evidence_admission.py",
+               "primordial/tests/test_score_evidence_n.py"]
+    gone = [p for p in planted if not (ROOT / p).exists()]
+    if gone:
+        out.append(("planted_evidence_refusals", False,
+                    f"REQUIRED TEST FILE(S) MISSING -- a hard gate check was deleted: {gone}"))
+    else:
+        t = _run([PY, "-m", "pytest", *planted, "-q"], timeout=900)
+        tl = (t.stdout or "").strip().splitlines()
+        last = tl[-1] if tl else "no output"
+        out.append(("planted_evidence_refusals", t.returncode == 0 and " passed" in last,
+                    f"rc={t.returncode} | {last}"))
+
     r = _run([PY, "-m", "primordial.ops.residue", "scan", "--round", round_id], timeout=300)
     try:
         scan = json.loads((r.stdout or "{}").strip().splitlines()[-1])
