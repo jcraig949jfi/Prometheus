@@ -2,19 +2,53 @@
   "runner": "docker",
   "image": "prometheus-fossil-ibm709x:bookworm",
   "workdir": "upstream/tree",
-  "probe": ["asm7090 2>&1 | head -1; s709 2>&1 | head -1; cat /usr/local/share/ibm709x/README-s709-2.4.4.txt | head -2"],
+  "probe": [
+    "asm7090 2>&1 | head -1; s709 2>&1 | head -1; cat /usr/local/share/ibm709x/README-s709-2.4.4.txt | head -2"
+  ],
   "build": [
-    {"name": "cards-to-src", "cmd": "make ASM7090=asm7090 lisp15.src >/dev/null && wc -l lisp15.src"},
-    {"name": "assemble", "cmd": "asm7090 -c 7090 -a -f -p -w -x -d LISP15 -t 'BONNIE-S BIRTHDAY ASSEMBLY' -l lisp15.lst.new -o lisp15.out lisp15.src 2>&1 | tail -1; grep -c '^ERROR' lisp15.lst.new; grep '^ERROR' lisp15.lst.new | awk '{print $4}' | sort | uniq -c | sort -rn | head -5; test \"$(grep -c '^ERROR' lisp15.lst.new)\" = 0",
-     "expect": {"exit": 0}}
+    {
+      "name": "cards-to-src",
+      "cmd": "make ASM7090=asm7090 lisp15.src >/dev/null && wc -l lisp15.src"
+    },
+    {
+      "name": "assemble",
+      "cmd": "asm7090 -c 7090 -a -f -p -w -x -d LISP15 -t 'BONNIE-S BIRTHDAY ASSEMBLY' -l lisp15.lst.new -o lisp15.out lisp15.src 2>&1 | tail -1; n=$(grep -c '^ERROR' lisp15.lst.new); echo \"assembler_errors=$n\"; test -s lisp15.out && test \"$n\" = 0 && echo ASSEMBLED_0_ERRORS && sha256sum lisp15.out",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "ASSEMBLED_0_ERRORS"
+        ]
+      }
+    }
   ],
   "runs": [
-    {"name": "wang-job", "cmd": "obj2bin lisp15.out lisp15.tape && txt2bcd wang.job wang.bcd && s709 -m7090 -p b7=lisp15.tape a2=wang.bcd p=print.bcd u=punch.bcd < /dev/null; bcd2txt -p print.bcd print.txt 132; cat print.txt | head -80",
-     "expect": {"exit": 0, "stdout_contains": ["THEOREM"]}}
+    {
+      "name": "s709-boot-wang-job",
+      "cmd": "bash $HARNESS/s709_boot.sh",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "TAPE_LOADED_AND_TRANSFERRED",
+          "JOB_PRODUCED_OUTPUT"
+        ]
+      }
+    }
   ],
   "test_kind": "TECHNE",
   "classification_if_ok": "RUNNABLE_HISTORICAL_TOOLCHAIN",
   "classification_if_built_only": "BUILDS_BUT_NOT_RUN",
   "classification_if_build_fails": "BLOCKED_DEPENDENCY",
-  "note": "2026-09-16 P6 expedition. BLOCKED_DEPENDENCY here means: the deck was transcribed against asm7090 2.1.4 (+ the body's own asm7090.patch) / 2.2.2 and the CURRENT asm7090 2.3.2 rejects its $-prefixed cross-namespace references; the run stage is written for the day an assembler accepts the deck and has NOT been exercised."
+  "note": "2026-09-16 P6 (TECHNE-86). WORLD PATCH: asm7090 2.3.2's overlapping strcpy (scanner.h) replaced by memmove in the world Dockerfile -- the 752 'undefined' $-symbols were a glibc-2.36 artefact of undefined behaviour, not a deck problem. The deck now assembles with 0 errors. TEST: generated words vs the body's own reference listing (2.1.4 + Bourguignon's patch): 5752 identical, 38 where the reference printed 00000 for a cross-header symbol (its documented limitation) and this world resolved it, 3 that DISAGREE (00353/00355 WEFA/BSRA 01220 vs 01200, 00731 XEC $RDS 77666 vs 00350) -- unresolved against the 1962 listing PDF, so the test gate FAILS by design until they are. RUN: the tape loads and the loader transfers into the program (PC 01002, card-reading routine); no printer output yet -- s709 2.4.4 operating conventions for a 1962 FMS-era self-loading tape are the open question.",
+  "tests": [
+    {
+      "name": "words-vs-reference-listing",
+      "cmd": "python3 $HARNESS/compare_listing.py lisp15.lst lisp15.lst.new",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "LISTING_WORDS_MATCH"
+        ]
+      }
+    }
+  ]
 }

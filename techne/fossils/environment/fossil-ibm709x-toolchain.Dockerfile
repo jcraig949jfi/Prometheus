@@ -2,13 +2,16 @@
 # David G. Pitts' toolchain -- asm7090 (assembler), lnk7090 (linker), utils (obj2bin, txt2bcd,
 # bcd2txt ...) and the s709 emulator (709/7090/7094/CTSS modes, IBSYS-capable). MIT licensed
 # (LICENSE.txt in each tarball, (c) 2024 David G. Pitts). Origin https://www.cozx.com/dpitts/ibm7090.html
+# WORLD PATCH (2026-09-16): asm7090 2.3.2's qualified-symbol scanner does an overlapping strcpy
+# (undefined; glibc 2.36 shifts the tail, $ERROR -> EROOR); replaced by memmove. The patch text
+# and the evidence are in patches/asm7090-2.3.2-overlapping-strcpy.patch; the sed below applies it.
 # First consumer: lisp-1-5-ibm7090-1962 (a card deck whose Makefile names asm7090 2.2.2 /
 # lnk7090 2.1.3 / utils 1.0.5 / s709; those versions are no longer served, so the CURRENT
 # releases are pinned by sha256 here and any difference is measured, not assumed).
 #   docker build -t prometheus-fossil-ibm709x:bookworm -f fossil-ibm709x-toolchain.Dockerfile .
 FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        build-essential make curl ca-certificates file \
+        build-essential make curl ca-certificates file python3 \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /tmp/build
 RUN set -e; \
@@ -22,7 +25,9 @@ RUN set -e; \
       echo "$2  $1.tar.gz" | sha256sum -c -; \
       tar xzf "$1.tar.gz"; \
     done; \
-    (cd asm7090 && make) && install -m755 asm7090/asm7090 /usr/local/bin/; \
+    sed -i 's/^\t strcpy (symbol, iiicp);$/\t memmove (symbol, iiicp, strlen (iiicp) + 1);/' asm7090/scanner.h \
+    && grep -q 'memmove (symbol, iiicp' asm7090/scanner.h \
+    && (cd asm7090 && make) && install -m755 asm7090/asm7090 /usr/local/bin/; \
     (cd lnk7090 && make) && install -m755 lnk7090/lnk7090 /usr/local/bin/; \
     (cd utils && make) && for f in obj2bin obj2img bcd2txt txt2bcd bincmp disasm bd bsplit; do install -m755 utils/$f /usr/local/bin/; done; \
     (cd s709-2.4.4 && make) && install -m755 s709-2.4.4/s709 /usr/local/bin/; \

@@ -64,8 +64,8 @@
     "an IBM 7090/7094 or an emulator of one",
     "a 7090 assembler"
   ],
-  "run_classification": "BLOCKED_DEPENDENCY",
-  "test_classification": "NO_TESTS",
+  "run_classification": "BUILDS_BUT_NOT_RUN",
+  "test_classification": "TECHNE_SMOKE_HARNESS_FAIL",
   "entry_points": [
     "the assembled LISP 1.5 system reads S-expressions from cards"
   ],
@@ -84,7 +84,8 @@
     "storage": "cards and tape",
     "input_format": "punched cards",
     "runner": "docker prometheus-fossil-ibm709x:bookworm (Pitts asm7090 2.3.2 / lnk7090 2.2.3 / utils 1.1.15 / s709 2.4.4, MIT), built 2026-09-16 from techne/fossils/environment/fossil-ibm709x-toolchain.Dockerfile",
-    "world_status": "WORLD_RECONSTRUCTED_BODY_NOT_ASSEMBLED (2026-09-16): the current asm7090 2.3.2 rejects 741 $-prefixed cross-namespace references in the transcription (752 errors; symbol names come back shifted, ERROR->EROOR, ZERO->ZROO); the transcription was made against asm7090 2.1.4 + its own asm7090.patch and its Makefile names 2.2.2, neither served upstream any more; Wayback offline at 14:25Z 2026-09-16. Run stage written, unexercised."
+    "world_status": "WORLD_EXECUTABLE, BODY ASSEMBLES, JOB NOT YET RUN (2026-09-16, TECHNE-86): the 752 'undefined $-symbols' were asm7090 2.3.2's overlapping strcpy (undefined behaviour; glibc 2.36 shifts the tail) -- patched to memmove in the WORLD (Dockerfile + patches/asm7090-2.3.2-overlapping-strcpy.patch); the deck assembles with 0 errors. Words vs the body's reference listing: 5752 identical, 38 completed where 2.1.4 printed 00000, 3 disagree (00353, 00355, 00731) -- unresolved against the 1962 listing PDF, test gate fails by design. s709: the tape loads and the loader transfers into the card-reading routine (PC 01002); no printer output from wang.job yet.",
+    "scaffolding": "world patch (memmove), harness/compare_listing.py (oracle = the body's own lisp15.lst), harness/s709_boot.sh"
   },
   "patches": [],
   "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
@@ -151,6 +152,12 @@
       "ok": false,
       "classification": "BLOCKED_DEPENDENCY",
       "test_classification": "NO_TESTS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T151959Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_FAIL"
     }
   ],
   "nyx_handoff": {
