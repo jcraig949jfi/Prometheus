@@ -172,11 +172,28 @@ def p_g6():
 
 
 def p_g5():
-    from primordial.fabric import worker as W
-    src = pathlib.Path(W.__file__).read_text(encoding="utf-8", errors="replace")
-    need = ("queue_enter_ts", "grant_ts", "wait_s", "queue_position", "continuation")
-    missing = [f for f in need if f not in src]
-    return (not missing), ("all five queue fields emitted" if not missing else f"missing queue fields {missing}")
+    """G5 telemetry minimum -- BEHAVIOURAL.
+
+    The source-text version grepped worker.py for the five queue fields and reported NOT LANDED. False red:
+    P owns a telemetry MODULE as well as worker.py, and QUEUE_FIELDS is defined in
+    primordial/fabric/telemetry.py, which the probe never opened. grant_ts and wait_s live there by design.
+    Assert the real interface, then run P's own regression test by name.
+    """
+    from primordial.fabric import telemetry as TM
+    need = ("queue_enter_ts", "grant_ts", "wait_s", "queue_position", "continuation")   # operator s2.2
+    missing = [f for f in need if f not in tuple(getattr(TM, "QUEUE_FIELDS", ()))]
+    if missing:
+        return False, f"telemetry.QUEUE_FIELDS missing {missing}"
+    if not getattr(TM, "STREAMS", None):
+        return False, "telemetry.STREAMS absent -- G7's export has nothing to enumerate"
+    tf = "primordial/tests/test_r8_p_g5_telemetry.py"
+    if not (ROOT / tf).exists():
+        return False, f"{tf} absent -- G5 has no regression test aimed at the claim"
+    t = _run([PY, "-m", "pytest", tf, "-q"], timeout=900)
+    tl = (t.stdout or "").strip().splitlines()
+    last = tl[-1] if tl else "no output"
+    ok = t.returncode == 0 and " passed" in last                 # rc 5 = collected nothing; all-skipped = vacuous
+    return ok, f"QUEUE_FIELDS complete, STREAMS present, {tf}: rc={t.returncode} | {last}"
 
 
 def p_g7():
@@ -198,11 +215,23 @@ def p_g2():
 
 
 def p_g3():
-    from primordial.fabric import broker as B
-    src = pathlib.Path(B.__file__).read_text(encoding="utf-8", errors="replace")
-    has_cont = "continuation" in src
-    has_wait = "queue_enter_ts" in src or "wait_s" in src
-    return (has_cont and has_wait), f"continuation_priority={has_cont} queue_telemetry={has_wait}"
+    """G3 scheduling cluster (D15+D22+D30) -- BEHAVIOURAL.
+
+    Same false red as G5: this grepped broker.py for queue-telemetry field names that by design live in
+    P's telemetry module, not in the broker. G3 is the most dangerous gate to get wrong -- _blocks_g3 is
+    kind == 'cpu', so a false NOT LANDED refuses ALL cpu science for the whole round, permanently
+    (BOOT_R8 s3). Run P's own regression test, which covers continuation priority across an epoch requeue,
+    the starvation bound, and the 900 s non-checkpointable cap.
+    """
+    from primordial.fabric import broker as B                    # must import at all
+    tf = "primordial/tests/test_r8_p_g3_scheduling.py"
+    if not (ROOT / tf).exists():
+        return False, f"{tf} absent -- G3 has no regression test aimed at the claim"
+    t = _run([PY, "-m", "pytest", tf, "-q"], timeout=900)
+    tl = (t.stdout or "").strip().splitlines()
+    last = tl[-1] if tl else "no output"
+    ok = t.returncode == 0 and " passed" in last
+    return ok, f"broker imports, {tf}: rc={t.returncode} | {last}"
 
 
 def p_g4():
