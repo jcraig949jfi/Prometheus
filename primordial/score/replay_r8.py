@@ -205,6 +205,33 @@ def replay_c_ap01(rows: list[dict]) -> dict:
     return out
 
 
+def c_resolving_power(rows: list[dict], drops=(0.05, 0.10, 0.15, 0.20), draws=2000, seed=0) -> dict:
+    """POST HOC, descriptive (not preregistered): can P1 fail for a degradation of the pressure's own size?
+    A planted cell arm = a bootstrap draw of the CONTROL held values x (1 - d); P1 fail rate = share of draws whose
+    median < the control draw's median - 0.5 IQR. Also: rank tests cell vs control, and the largest relative median
+    drop P1 accepts on the observed control."""
+    from scipy import stats
+    runs = [r for r in rows if r.get("kind") == "run"]
+    ref = next((r for r in rows if r.get("kind") == "reference"), {})
+    c = np.array([r["held_yield_top1"] for r in runs if r["arm"] == "cell"])
+    k = np.array([r["held_yield_top1"] for r in runs if r["arm"] == "control"])
+    rng = np.random.default_rng(seed)
+    fail = {}
+    for d in drops:
+        n = 0
+        for _ in range(draws):
+            kk, cc = rng.choice(k, len(k)), rng.choice(k, len(k)) * (1 - d)
+            n += np.median(cc) < np.median(kk) - 0.5 * (np.percentile(kk, 75) - np.percentile(kk, 25))
+        fail[str(d)] = n / draws
+    bar = np.median(k) - 0.5 * (np.percentile(k, 75) - np.percentile(k, 25))
+    return {"post_hoc": True, "pressure_direct_magnitude_train_flipped_tick_share": ref.get("train_flipped_tick_share"),
+            "hand_code_yield_loss_under_pressure": 1 - (ref.get("hand_yield") or {}).get("train_corrupt", float("nan")),
+            "median_cell_minus_control": float(np.median(c) - np.median(k)),
+            "mannwhitney_p": float(stats.mannwhitneyu(c, k).pvalue), "ks_p": float(stats.ks_2samp(c, k).pvalue),
+            "largest_relative_median_drop_P1_accepts": float(1 - bar / np.median(k)),
+            "P1_fail_rate_for_planted_relative_drop": fail, "draws": draws, "seed": seed}
+
+
 # ------------------------------------------------------------------ rule consistency (item 2)
 
 def rule_consistency(predicate_id: str, rows: list[dict], r=None, repo=".") -> dict:
