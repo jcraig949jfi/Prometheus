@@ -72,7 +72,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded (direction UNFIXED in Techne's vocabulary; note: 'compress (LZW, 1984) displaced compact in BSD'): ncompress-5.0-lzw-1985"
+    "superseded_by: ncompress-5.0-lzw-1985"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -162,9 +162,9 @@
  "ancestry_edges": [
   {
    "from": "compact-4.2bsd-1983",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "ncompress-5.0-lzw-1985",
-   "note": "compress (LZW, 1984) displaced compact in BSD",
+   "note": "compress (LZW, 1984) displaced compact in BSD [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {

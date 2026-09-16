@@ -67,15 +67,14 @@
   },
   "KNOWN_PREDECESSORS": {
    "value": [
+    "supersedes: TCP Reno/NewReno",
     "algorithm_from: Jacobson 1988"
    ],
    "basis": "NYX_DERIVED"
   },
   "KNOWN_SUCCESSORS": {
-   "value": [
-    "superseded (direction UNFIXED in Techne's vocabulary; note: 'CUBIC replaced Reno-family as Linux default'): TCP Reno/NewReno"
-   ],
-   "basis": "NYX_DERIVED"
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
   },
   "KNOWN_RIVALS": {
    "value": "UNKNOWN",
@@ -2392,9 +2391,9 @@
   },
   {
    "from": "linux-tcp-congestion",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "TCP Reno/NewReno",
-   "note": "CUBIC replaced Reno-family as Linux default",
+   "note": "CUBIC replaced Reno-family as Linux default [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {

@@ -71,7 +71,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded (direction UNFIXED in Techne's vocabulary; note: 'SPDY was the basis of the standard that replaced it'): HTTP/2 (RFC 7540)"
+    "superseded_by: HTTP/2 (RFC 7540)"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -161,9 +161,9 @@
  "ancestry_edges": [
   {
    "from": "spdylay",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "HTTP/2 (RFC 7540)",
-   "note": "SPDY was the basis of the standard that replaced it",
+   "note": "SPDY was the basis of the standard that replaced it [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   }
  ],

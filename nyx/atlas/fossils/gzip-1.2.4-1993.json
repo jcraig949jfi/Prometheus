@@ -67,15 +67,14 @@
   },
   "KNOWN_PREDECESSORS": {
    "value": [
+    "supersedes: ncompress-5.0-lzw-1985",
     "historical_version_of: zlib-1.3.1"
    ],
    "basis": "NYX_DERIVED"
   },
   "KNOWN_SUCCESSORS": {
-   "value": [
-    "superseded (direction UNFIXED in Techne's vocabulary; note: 'gzip displaced compress under patent pressure (direction: gzip superseded compress)'): ncompress-5.0-lzw-1985"
-   ],
-   "basis": "NYX_DERIVED"
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
   },
   "KNOWN_RIVALS": {
    "value": "UNKNOWN",
@@ -1240,16 +1239,16 @@
  "ancestry_edges": [
   {
    "from": "gzip-1.2.4-1993",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "ncompress-5.0-lzw-1985",
-   "note": "Techne records this edge with direction 'gzip displaced compress'; the atlas keeps it as recorded",
+   "note": "Techne records this edge with direction 'gzip displaced compress'; the atlas keeps it as recorded [relation migrated superseded -> supersedes 2026-09-16 after Techne 1bb9965b4; direction from the note: gzip displaced compress]",
    "basis": "SOURCE_READ"
   },
   {
    "from": "gzip-1.2.4-1993",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "ncompress-5.0-lzw-1985",
-   "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress)",
+   "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress) [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {

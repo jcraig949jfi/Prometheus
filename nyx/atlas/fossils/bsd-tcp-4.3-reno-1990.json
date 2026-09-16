@@ -73,7 +73,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded (direction UNFIXED in Techne's vocabulary; note: 'NewReno -> CUBIC -> BBR'): linux-tcp-congestion"
+    "superseded_by: linux-tcp-congestion"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -170,9 +170,9 @@
   },
   {
    "from": "bsd-tcp-4.3-reno-1990",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "linux-tcp-congestion",
-   "note": "NewReno -> CUBIC -> BBR",
+   "note": "NewReno -> CUBIC -> BBR [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   }
  ],
