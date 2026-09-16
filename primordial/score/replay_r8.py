@@ -19,6 +19,7 @@ PCG64 uniforms), which the predicate does not define and which is therefore re-d
 
     python -m primordial.score.replay_r8 c-ap01 ROWS.jsonl [--ref origin/<branch>] [--out REPORT.json]
     python -m primordial.score.replay_r8 d-r8-1 ROWS.jsonl [--ref ...] [--out ...]
+    python -m primordial.score.replay_r8 route-b primordial/ledger/qd/r8_route_b.json --no-bus [--out ...]
 """
 from __future__ import annotations
 
@@ -335,19 +336,93 @@ def replay_d_r8_1(rows: list[dict]) -> dict:
     return out
 
 
+# ------------------------------------------------------------------ G Route B (SURVIVAL_IMPOSSIBLE bound)
+
+def replay_route_b(doc: dict, rows_dir: str = "primordial/ledger/rows/G") -> dict:
+    """Re-derives G's r8_route_b.json claim from the committed R16 rows, aimed at the claim itself:
+    b = max over the run floor parts (read here, not via suite.floor_of_parts), gate from the suite row;
+    min_x f(x) = b (four_policy) / max(b, gate) (gate_in); SURVIVAL_IMPOSSIBLE iff ci_lo <= min_x f for every variant.
+    ci_lo is re-computed from held64_by_run under all 24 family orders x 4 bootstrap seeds (the pooled CI is known to
+    be order-sensitive), so the verdict is judged against the WORST ci_lo, not the one recorded; no learner row for the
+    cell may exist anywhere under rows_dir."""
+    import ast
+    import glob
+    import itertools
+    from primordial.metric.ci import median_ci
+    allrows = []
+    for f in sorted(glob.glob(f"{rows_dir}/*.jsonl")):
+        for line in open(f, encoding="utf-8"):
+            if line.strip():
+                try:
+                    allrows.append(json.loads(line))
+                except ValueError:
+                    pass
+    out = {"cells": [], "disagreements": []}
+    for c in doc["cells"]:
+        key = (int(c["gen_seed"]), c["pressure"])
+        fl = [x for x in allrows if x.get("kind") == "floor_suite_r16" and (int(x["gen_seed"]), x["pressure"]) == key]
+        ba = [x for x in allrows if x.get("kind") == "baseline_r16" and (int(x["gen_seed"]), x["pressure"]) == key]
+        lr = [x for x in allrows if x.get("kind") == "floor_invariant_r16" and
+              (int(x.get("gen_seed", -1)), x.get("pressure")) == key]
+        fl_vals = {json.dumps(x["floor_parts"], sort_keys=True) for x in fl}
+        rec = {"world": c["world"], "pressure": c["pressure"], "suite_rows": len(fl), "suite_rows_distinct": len(fl_vals),
+               "baseline_rows": len(ba), "learner_rows": len(lr)}
+        if len(fl_vals) != 1 or len(ba) != 1:
+            rec["status"] = "UNREPLAYABLE"
+            out["cells"].append(rec)
+            out["disagreements"].append(rec)
+            continue
+        parts = fl[0]["floor_parts"]
+        b = max(v for v in parts.values() if v is not None)
+        gate = float(fl[0]["gate_held64"])
+        hb = ba[0]["held64_by_run"]
+        hb = ast.literal_eval(hb) if isinstance(hb, str) else hb
+        fams = sorted({int(k.split("|")[0]) for k in hb})
+        per_fam = {f: sorted(int(k.split("|")[1]) for k in hb if int(k.split("|")[0]) == f) for f in fams}
+        balanced = len(fams) == 4 and all(v == list(range(8)) for v in per_fam.values())
+        los = []
+        for order in itertools.permutations(fams):
+            xs = [hb[f"{f}|{s}"] for f in order for s in range(8)]
+            for seed in (20260914, 1, 2, 3):
+                los.append(median_ci(xs, seed=seed)[0])
+        canon = [hb[f"{f}|{s}"] for f in (4200, 2101, 3303, 5501) for s in range(8)]
+        lo_canon = median_ci(canon)[0]
+        min_f = {"four_policy": b, "gate_in": max(b, gate)}
+        worst = max(los)
+        imp = all(worst <= v for v in min_f.values())
+        rec.update(b=b, gate=gate, ci_lo_recorded=float(ba[0]["ci95"][0]), ci_lo_canonical_replay=lo_canon,
+                   ci_lo_min_over_orders_seeds=min(los), ci_lo_max_over_orders_seeds=worst, balanced_32_4_8=balanced,
+                   min_over_learner_floor=min_f, smallest_margin_vs_worst_ci_lo=min(min_f.values()) - worst,
+                   status="SURVIVAL_IMPOSSIBLE" if imp and balanced and not lr else
+                   ("NOT_PENDING" if lr else "UNRESOLVED"))
+        if (rec["status"] != c["status"] or lo_canon != rec["ci_lo_recorded"] or b != c["b_floor_bound"]
+                or gate != c["gate_held64"]):
+            out["disagreements"].append({k: rec[k] for k in ("world", "status", "b", "gate", "ci_lo_recorded",
+                                                            "ci_lo_canonical_replay")} | {"g_status": c["status"]})
+        out["cells"].append(rec)
+    out["verdict_agrees"] = not out["disagreements"]
+    return out
+
+
 # ------------------------------------------------------------------ CLI
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("which", choices=["c-ap01", "d-r8-1"])
+    ap.add_argument("which", choices=["c-ap01", "d-r8-1", "route-b"])
     ap.add_argument("rows")
     ap.add_argument("--ref")
     ap.add_argument("--out")
     ap.add_argument("--no-bus", action="store_true")
     a = ap.parse_args(argv)
-    rows = load_rows(a.rows, a.ref)
-    rep = {"c-ap01": replay_c_ap01, "d-r8-1": replay_d_r8_1}[a.which](rows)
-    if not a.no_bus:
+    if a.which == "route-b":
+        doc = json.loads(subprocess.run(["git", "show", f"{a.ref}:{a.rows}"], capture_output=True, text=True,
+                                        check=True).stdout) if a.ref else json.load(open(a.rows, encoding="utf-8"))
+        rows, rep = [], replay_route_b(doc)
+        rep["predicate_id"] = None
+    else:
+        rows = load_rows(a.rows, a.ref)
+        rep = {"c-ap01": replay_c_ap01, "d-r8-1": replay_d_r8_1}[a.which](rows)
+    if not a.no_bus and rep["predicate_id"]:
         rep["rule_consistency"] = rule_consistency(rep["predicate_id"], rows)
     rep["rows_path"], rep["rows_ref"], rep["rows_count"] = a.rows, a.ref, len(rows)
     txt = json.dumps(rep, indent=1, default=str)
