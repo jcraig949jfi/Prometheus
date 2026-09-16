@@ -71,13 +71,15 @@ class Gate:
     """One check. .ok is False unless the probe explicitly returns True."""
 
     def __init__(self, gid, fn):
-        self.gid, self.fn, self.ok, self.detail = gid, fn, False, ""
+        self.gid, self.fn, self.ok, self.detail, self.secs = gid, fn, False, "", 0.0
 
     def probe(self):
+        t0 = time.time()
         try:
             self.ok, self.detail = self.fn()
         except Exception as e:                       # noqa: BLE001 -- fail closed, never land on an exception
             self.ok, self.detail = False, f"probe raised {type(e).__name__}: {e}"
+        self.secs = round(time.time() - t0, 2)
         return self
 
 
@@ -369,19 +371,30 @@ def main(argv=None) -> int:
     print(f"=== R8 LAUNCH GATE ({'EMIT' if a.emit else 'REHEARSAL'}) round={a.round} ===")
     print(f"    {time.strftime('%Y-%m-%d %H:%M:%S')}")
 
+    # The gate has a HARD 20 min budget and the clock is cap-anchored, so every second it overruns is
+    # charged to SCIENCE. POST_ROUND s3: that number gets DERIVED, never recalled -- so time it here.
+    t_start = time.time()
+
     print("\n-- environment --")
+    t_env0 = time.time()
     env = env_checks(a.round, skip_suite=a.skip_suite, since_sha=a.since_sha)
+    env_secs = round(time.time() - t_env0, 2)
     for name, ok, detail in env:
         checks += 1
         print(f"  [{'PASS' if ok else 'FAIL'}] {name}: {detail}")
+    print(f"  (environment phase: {env_secs}s)")
 
     print("\n-- gate landed-probes (fail closed) --")
+    t_probe0 = time.time()
     gates = {}
     for gid, fn in PROBES:
         g = Gate(gid, fn).probe()
         checks += 1
-        gates[gid] = {"landed": g.ok, "detail": g.detail, "blocks": BLOCKED_WORK.get(gid, "")}
-        print(f"  [{'LANDED    ' if g.ok else 'NOT LANDED'}] {gid}: {g.detail}")
+        gates[gid] = {"landed": g.ok, "detail": g.detail, "blocks": BLOCKED_WORK.get(gid, ""),
+                      "secs": g.secs}
+        print(f"  [{'LANDED    ' if g.ok else 'NOT LANDED'}] {gid}: {g.detail}  ({g.secs}s)")
+    probe_secs = round(time.time() - t_probe0, 2)
+    print(f"  (probe phase: {probe_secs}s)")
 
     print("\n-- gate -> blocked work map --")
     not_landed = [k for k, v in gates.items() if not v["landed"]]
@@ -396,7 +409,13 @@ def main(argv=None) -> int:
     print(f"environment: {'PASS' if env_ok else 'FAIL'} | gates landed: "
           f"{len(gates) - len(not_landed)}/{len(gates)} | not landed: {not_landed or 'none'}")
 
+    total_secs = round(time.time() - t_start, 2)
+    print(f"elapsed: {total_secs}s total ({env_secs}s environment + {probe_secs}s probes) "
+          f"against the 20 min = 1200s gate budget")
+
     record = {"round_id": a.round, "ts": time.time(), "generated": time.strftime("%Y-%m-%d %H:%M:%S"),
+              "timings": {"total_secs": total_secs, "environment_secs": env_secs, "probe_secs": probe_secs,
+                          "gate_budget_secs": 1200, "within_budget": total_secs <= 1200},
               "tip_sha": dict((n, d) for n, _, d in env).get("tip_sha_recorded", ""),
               "environment": [{"check": n, "ok": ok, "detail": d} for n, ok, d in env],
               "gates": gates, "checks_run": checks, "environment_ok": env_ok}
