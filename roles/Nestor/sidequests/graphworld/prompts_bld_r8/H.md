@@ -39,6 +39,19 @@ on it. A missed gate is PERMANENT for the round. Raise cross-file needs on the b
    4. The published list is reproducible from seed `20260921` ALONE, including replacements.
    5. Rejection reasons are committed, so the rejected set is itself analysable residue.
 
+   **PREREQUISITE A FOUND AT LAUNCH PREP -- `anti_prior.SEEDS` HAS NO r8 ROW.** Measured on this tip:
+   `SEEDS = {"r6": (20260917, 20260918), "r7": (20260919, 20260920)}`, and `seeds()` raises
+   `PriorLedgerError("SEED_NOT_FIXED")` for any round not listed. So `candidates(store, round_id="r8", ...)`
+   REFUSES today, and your own acceptance 4 above -- "reproducible from seed `20260921` alone" -- cannot
+   hold until the row exists. Add it, from the values already FROZEN in `LAUNCH_R8.md` s5.2:
+
+       "r8": (20260921, 20260922)      # candidates, arm
+
+   Credit where due: unlike `round_clock.ROUNDS`, this table already FAILS CLOSED -- it raises rather than
+   silently reusing r7's seeds, which is exactly the behaviour R18 demands elsewhere. Do not weaken that
+   guard while adding the row. It is your file; A did not touch it.
+   **Do NOT publish r8 candidates.** A does that at clock start. You make the draw possible; A draws.
+
 2. **Redaction discipline is part of the gate, not a manner.** Arm, rank, quantile and prior are
    conductor-only while the round is live. Round 7 had three disclosure lapses, one of them A's own. Build
    redaction BY CONSTRUCTION -- experimenter-readable records must not contain these fields at all, rather

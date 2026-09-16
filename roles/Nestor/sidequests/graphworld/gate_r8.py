@@ -185,13 +185,18 @@ PROBES = [("G8", p_g8), ("G1", p_g1), ("GE", p_ge), ("G6", p_g6), ("G5", p_g5), 
 
 # ------------------------------------------------------- environment checks
 
-def env_checks(round_id: str) -> list[tuple[str, bool, str]]:
+def env_checks(round_id: str, skip_suite: bool = False) -> list[tuple[str, bool, str]]:
     """The non-gate half of BUILD_R8's GATE RUN: suite, residue, registrations, capacity, tip sha."""
     out = []
 
-    s = _run([PY, "-m", "pytest", "primordial", "-q"], timeout=1800)
-    tail = (s.stdout or "").strip().splitlines()
-    out.append(("full_suite", s.returncode == 0, f"rc={s.returncode} | {tail[-1] if tail else 'no output'}"))
+    if skip_suite:
+        # Deliberately counted as a FAILED check, never a silent omission: a gate that quietly
+        # drops a check is exactly the failure mode R17 and POST_ROUND s3a name.
+        out.append(("full_suite", False, "SKIPPED via --skip-suite (not a pass; never use at the real gate)"))
+    else:
+        s = _run([PY, "-m", "pytest", "primordial", "-q"], timeout=1800)
+        tail = (s.stdout or "").strip().splitlines()
+        out.append(("full_suite", s.returncode == 0, f"rc={s.returncode} | {tail[-1] if tail else 'no output'}"))
 
     r = _run([PY, "-m", "primordial.ops.residue", "scan", "--round", round_id], timeout=300)
     try:
@@ -227,6 +232,9 @@ def main(argv=None) -> int:
     ap.add_argument("--round", default="r8")
     ap.add_argument("--emit", action="store_true", help="publish the map to redis + GATE_MAP_R8.json")
     ap.add_argument("--rehearse", action="store_true", help="run everything, publish nothing")
+    ap.add_argument("--skip-suite", action="store_true",
+                    help="skip the 4-minute full suite while builders hold the CPU; counted as a FAILED "
+                         "check, so a run using it can never report a clean environment. NEVER at the real gate.")
     a = ap.parse_args(argv)
     if not (a.emit or a.rehearse):
         ap.error("pass --rehearse or --emit")
@@ -236,7 +244,7 @@ def main(argv=None) -> int:
     print(f"    {time.strftime('%Y-%m-%d %H:%M:%S')}")
 
     print("\n-- environment --")
-    env = env_checks(a.round)
+    env = env_checks(a.round, skip_suite=a.skip_suite)
     for name, ok, detail in env:
         checks += 1
         print(f"  [{'PASS' if ok else 'FAIL'}] {name}: {detail}")

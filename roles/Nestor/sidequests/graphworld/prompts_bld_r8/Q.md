@@ -65,6 +65,19 @@ YOUR TRACK IS THE CRITICAL PATH. G8 blocks the clock itself, therefore everythin
       60min) = T0 + 14h`; 42,000 s = 11.67 epochs of 3600 s. The science clock is ~11 h 40 min and that
       is RULED AND ACCEPTED (R17). Do not "fix" it back to 12.
 
+   **EXISTING TESTS PIN `DEFAULT_ROUND == "r7"` -- A grepped the tip so you do not meet them cold:**
+
+       primordial/tests/test_r7_ceilings_clock.py:75   RC.DEFAULT_ROUND == "r7"  AND  RC.plan(0.0) == RC.plan(0.0, "r7")
+       primordial/tests/test_r7_f1_residue.py:395      a.round == "r7" == RC.DEFAULT_ROUND
+
+   Your R18 work runs straight into these. R18 explicitly permits a convenience fallback for DEVELOPMENT
+   utilities, so KEEPING `DEFAULT_ROUND` is legitimate -- what must fail closed is a PRODUCTION round id.
+   These tests may therefore survive unchanged. Resolve them DELIBERATELY and say in your DONE post exactly
+   what you changed and why. **Do not delete or weaken a test to make your gate green.** A check set that
+   silently shrinks is the precise failure POST_ROUND s3a names -- 2 of 12 checks vanished during this
+   prep, the remaining 10 passed, and the gate printed PASS -- and it is why gate output must report
+   `checks run: N`.
+
 2. **G7 -- export + cursor.** `bus_export.py`, `epoch.py`.
    Measured: `export()` calls `r.xrange(bus.SWARM)` with NO start argument and opens each file with `"w"`,
    so every boundary re-dumps each stream from the beginning (r7 wrote nine near-identical swarm copies,
