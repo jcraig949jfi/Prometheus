@@ -297,6 +297,13 @@ register(Kind(
         "n_cells": R("integer"),
         "steps": R("integer"),
         "witness_truncated": R("boolean"),
+        "success_mask_hex": R("string",
+                              note="THEO-REQ-004: the per-IC success mask "
+                                   "under the declared criterion; numpy "
+                                   "packbits big bit order, IC i = bit "
+                                   "(7 - i % 8) of byte i // 8, zero-padded; "
+                                   "n_ic_total bits meaningful; unpacked "
+                                   "one-byte-per-IC sha256 == mask_digest"),
         "transform": R("string",
                       note="none | reflect | complement | reflect_complement; "
                            "the four EXACT symmetries, so a transformed arm is "

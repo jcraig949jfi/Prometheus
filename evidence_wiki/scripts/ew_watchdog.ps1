@@ -67,6 +67,13 @@ if (-not $Root) { $Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.M
 $log = Join-Path $Root $LogName
 $stateFile = Join-Path $Root $StateName
 $parkFile = Join-Path $Root $ParkName
+# derived\ is untracked: a fresh pinned worktree has none, and Add-Content
+# into a missing directory fails silently under SilentlyContinue (measured
+# 2026-09-16: the first tick from a new worktree wrote nothing at all).
+foreach ($f in @($log, $stateFile, $parkFile)) {
+    $d = Split-Path -Parent $f
+    if ($d -and -not (Test-Path $d)) { New-Item -ItemType Directory -Force -Path $d | Out-Null }
+}
 function Log($m) { Add-Content -Path $log -Value ("{0}  {1}" -f (Get-Date -Format s), $m) }
 
 # Log cap: 288 lines a day at 5-minute ticks; roll at 2 MB, keep one.

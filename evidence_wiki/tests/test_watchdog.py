@@ -38,7 +38,9 @@ pytestmark = pytest.mark.skipif(sys.platform != "win32", reason="PowerShell watc
 
 def _root(tmp_path):
     root = tmp_path / "evidence_wiki"
-    (root / "derived").mkdir(parents=True)
+    # derived/ is NOT created here: a fresh pinned worktree has none, and
+    # the script must create it (2026-09-16: a tick that wrote nothing).
+    root.mkdir(parents=True)
     (root / "config.json").write_text(json.dumps(
         {"auth_token": TOKEN, "machine_tokens": {"M1": TOKEN}}), encoding="utf-8")
     return root
