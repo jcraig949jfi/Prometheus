@@ -659,3 +659,17 @@
   eligibility seeds). The 62-surprise failure is that same phenomenon at a fresh base. ANOM-..0378 STAYS OPEN.
   Next discriminators named in the receipt: repeat at 2+ more seed bases; re-derive C7c's fit-eligibility at a fresh
   eligibility base and re-score; diagnose world 497 j=2.
+- D-R7-9 code + test (r7_9_c7_seed_stability.py; 6 passed rc 0), the first two discriminators D-R7-8's own receipt
+  named. Q1 SEED STABILITY: re-score the same 41 targets at fresh bases 97000 and 98000 and compare per-target
+  (detected, switches) against D-R7-8's committed 96000 values -- SEED_INSENSITIVE iff 41/41 match at both,
+  SEED_SENSITIVE iff <= 37 at either, else MIXED_SEED. Q2 ELIGIBILITY CONDITIONING: re-run C7c's OWN fit-eligibility
+  rule at fresh base 99000 over C7c's own world list and compare with its committed 34 -- ELIGIBILITY_SEED_CONDITIONED
+  iff the symmetric difference >= 6, ELIGIBILITY_STABLE iff <= 2, else MIXED. Every base is disjoint from C7c's
+  90000/91000, C7e's 94000/95000 and D-R7-8's 96000 (test asserts it).
+  CONTROL CHANGE, stated before running: D-R7-8's binding null_world_quiet is RETIRED from the binding set here (not
+  relaxed) -- whether that count is itself seed-dependent is part of what Q1 measures, so binding on it would be
+  circular. It is reported per target per base instead, including world 497 j=2 (62 at base 96000). The binding
+  controls become a determinism repeat (base 97000 scored twice in the same job must reproduce itself exactly) plus
+  C's own probe_affine CLEAN / probe_leak LEAK on every target at every base.
+  Sizing smoke (timings only; the admitted set is Q2's outcome and stayed unread): eligibility ~0.07 s/world -> ~3 s
+  for all 36 worlds, so the whole job projects to ~12 s. Compute-bound, well inside the ceilings.
