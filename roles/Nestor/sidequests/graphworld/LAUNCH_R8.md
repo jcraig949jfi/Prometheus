@@ -186,7 +186,22 @@ Preconditions, each verified not assumed:
 1. Round 7 is closed: `pm:epoch:state` phase `closed`, `pm:round:current` unset, 0 registrations, 0 stop flags.
 2. Prior-round residue cleared: `residue clear --prior-round r7` (expected: 6 DEAD_CONSUMER, pending 0).
 3. Conductor worktree fast-forwarded; `git status --porcelain` empty.
-4. No worker processes alive (verified by pid scan, excluding the scanner's own ancestor chain).
+4. No worker processes alive (verified by pid scan, excluding the scanner's own ancestor chain -- the whole
+   ancestor chain carries the pattern text, not just pid and ppid).
+5. **`ROUNDS["r8"]` EXISTS** (gate G8). Verify by computation, not by reading the file:
+   `RC.plan(t, round_id="r8")["epochs"] == 12`. Measured before the fix: an absent r8 row makes `plan()` fall
+   back to `DEFAULT_ROUND = "r7"` and silently return **8 epochs / 9.00 h**, raising nothing. A round started
+   in that state runs two thirds of the ruled science clock with another round's lane_repos.
+6. **r8 worktrees prepared.** None exist yet; only `nestor-r7-*` and the `nestor-bld-*` set.
+   `prepare_worktrees` defaults to `--round r2`, so r8 MUST pass it explicitly:
+
+       python -m primordial.ops.prepare_worktrees --round r8 --lanes b,c,d,e,r [--dry]
+
+   Worktrees are built ONE AT A TIME (round-1 lesson: four concurrent `git worktree add` calls on the F: HDD
+   failed two lanes). The sparse set already includes `SerendipityFoundry/worldfoundry`, which stratum L
+   requires in every lane that expands a genome.
+7. **`lane_repos` complete for r8.** Every lane that runs a worker has a declared repo, or the residue scanner
+   reports it as FOREIGN_REPO (D14). r7 declared only B, C, D, E, G, R and gpu.
 
 Then, in order:
 

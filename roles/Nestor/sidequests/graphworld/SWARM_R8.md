@@ -156,6 +156,7 @@ blocks only its dependent science, and ADMISSION enforces it.
 
 | gate | operator ref | blocks |
 |---|---|---|
+| G8 the `ROUNDS["r8"]` row + complete `lane_repos` | launch prep | **THE CLOCK ITSELF, therefore everything.** Measured: with no r8 row, `plan()` falls back to `DEFAULT_ROUND="r7"` and silently returns 8 epochs / 9.00 h, raising nothing |
 | G1 row/evidence vocabulary loud-fail + lint (D29) | 2.3 | ALL row-emitting science |
 | G2 anti-prior cell-binding pre-check (PC 1789523009420-0) | 2.1 | all new anti-prior draws; BETA sweep |
 | G3 scheduling cluster D15+D22+D30 + queue telemetry | 2.2 | shared-CPU multi-lane science |
@@ -167,7 +168,8 @@ blocks only its dependent science, and ADMISSION enforces it.
 | C2 D25 signflip_p ordering | 2.5 | any verdict depending on the MC signflip branch |
 | C3 D28 registration TTL | 2.5 | long-lived registered services |
 
-Build order is **G1, G6, G5, G7, G2, G3, G4**, then conditionals. Rationale, by what each unblocks:
+Build order is **G8, G1, G6, G5, G7, G2, G3, G4**, then conditionals. G8 first because without an `r8` row the
+clock silently runs r7's 8 epochs instead of the ruled 12 -- see `BUILD_R8.md`. Rationale, by what each unblocks:
 
 - **G1 first** because a silently refused row corrupts every downstream count -- the failure that produced D29.
 - **G6 next** because section 4 is the first scientific obligation and its feasibility precommit emits

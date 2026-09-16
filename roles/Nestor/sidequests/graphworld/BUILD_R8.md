@@ -29,10 +29,16 @@ only fits if the work runs in parallel AND no two builders edit the same file.
 **Collisions:** G1+G6 both edit `envelope.py`. G5+G3 both touch `worker.py`. G7+G4 both touch `epoch.py`.
 So the parallel-safe grouping is four independent tracks, not seven:
 
-    TRACK-1  envelope.py     G1 -> G6                     25 min
-    TRACK-2  broker/worker   G3, then G5's worker hooks    30-40 min
-    TRACK-3  epoch/export    G7 -> G4                     40 min
-    TRACK-4  anti_prior.py   G2                           25 min
+    TRACK-1  envelope.py     G1 -> G6                       25 min
+    TRACK-2  broker/worker   G3, then G5's worker hooks      30-40 min
+    TRACK-3  ops/            G8 -> G7 -> G4                  50 min
+    TRACK-4  anti_prior.py   G2                              25 min
+
+**PHASE BUDGET OVERRUN, stated rather than hidden.** Build 60 + gate 20 + teardown 60 = 140 min against the
+operator's 2 h (120 min) setup/teardown allocation, with the refinement hour separate. Under the cap-anchored
+rule (ADAPT-2) that ~20 min comes out of SCIENCE automatically -- no conductor decision, no extension, and the
+round still ends inside the 15 h cap. Either build+gate compresses to ~60 min total, or the science clock is
+~11.7 h rather than 12. The conductor will not quietly reallocate; the operator should know which it is.
 
 Four tracks at ~40 min worst case fits the 60 min window **only if four builders run concurrently and each
 owns its files exclusively**. Round 7 ran four builders (F, G, H, E) and its build took 52 minutes for a
@@ -51,7 +57,7 @@ not silently drop a gate to make the window fit.
 |---|---|---|---|
 | **F** | TRACK-1 | G1, G6 | `primordial/fabric/envelope.py` |
 | **P** | TRACK-2 | G3, G5 | `primordial/fabric/broker.py`, `primordial/fabric/worker.py`, telemetry module |
-| **Q** | TRACK-3 | G7, G4 | `primordial/ops/bus_export.py`, `primordial/ops/epoch.py` |
+| **Q** | TRACK-3 | **G8**, G7, G4 | `primordial/ops/round_clock.py`, `primordial/ops/bus_export.py`, `primordial/ops/epoch.py` |
 | **H** | TRACK-4 | G2 | `primordial/score/anti_prior.py` |
 | **G** | (science prep) | L-band generator + frozen manifests | `primordial/metric/` world-set module |
 | **E** | conditionals | C2, C3 | `score/signflip*`, `ops/residue.py` registration path |
@@ -60,6 +66,41 @@ G builds the world-set generator during the build window because stratum L is a 
 science, not a gate. E takes the conditionals because its round-7 work already touched both.
 
 ---
+
+## G8 -- THE r8 ROUNDS ROW. HARD GATE. BLOCKS THE CLOCK ITSELF, THEREFORE EVERYTHING.
+
+**Found during launch prep, not planned: this is a SILENT failure and it would not have announced itself.**
+
+`primordial/ops/round_clock.py` has rows for r5, r6, r7 only, with `DEFAULT_ROUND = "r7"`, and `plan()` does
+`ROUNDS.get(round_id, ROUNDS[DEFAULT_ROUND])`. Measured:
+
+    RC.plan(start, round_id="r8")  ->  epochs 8, epoch_s 3600, total span 32400 s = 9.00 h
+
+So starting r8 today runs **8 science hours, not the ruled 12**, with r7's `lane_repos`, and raises NOTHING.
+This is the D18 shape exactly: a stale round definition producing confident, wrong behaviour.
+
+**Lands:** an explicit `ROUNDS["r8"]` row.
+
+    "r8": {"stage": "PRODUCTION", "epoch_s": 3600.0, "epochs": 12,
+           "drain_s": 1800.0, "close_s": 1800.0,          # SWARM_R8 s1, operator prompt 25
+           "lane_repos": {...}}                            # see below
+
+**`lane_repos` must be complete this time.** r7 declared only `B,C,D,E,G,R,gpu`; `A,F,H,P,Q` had none. Any
+lane running a WORKER from an undeclared repo is FOREIGN_REPO residue (D14). Round 8 adds build lanes P and Q,
+whose worktrees `nestor-bld-p` and `nestor-bld-q` already exist. Declare every lane that will run a worker --
+including `gpu` if the arbiter starts at all.
+
+**Acceptance:**
+1. `RC.plan(t, round_id="r8")` returns `epochs == 12`, `epoch_s == 3600.0`, span `12*3600 + drain + close`.
+2. A test asserts `"r8" in ROUNDS` -- i.e. the fallback is never what defines a live round.
+3. `residue.allowed_repos(r, "r8")` resolves from `ROUNDS["r8"]["lane_repos"]`, source string names r8.
+4. A test asserts every lane that will run a worker has a declared repo, so FOREIGN_REPO cannot fire on a
+   legitimate lane.
+5. **Regression for the class:** `plan()` on an unknown round id is either an error or logs a loud warning --
+   a silent fallback to another round's parameters is the defect, not just the missing row.
+
+**Assigned:** Q (owns `primordial/ops/`; `round_clock.py` does not collide with `epoch.py`/`bus_export.py`).
+**Est:** 10 min. Build it FIRST -- gate numbering is historical, not priority.
 
 ## G1 -- ROW/EVIDENCE VOCABULARY LOUD-FAIL (D29). HARD GATE. BLOCKS ALL ROW-EMITTING SCIENCE.
 
