@@ -31,7 +31,22 @@ def tool_cache() -> pathlib.Path:
             return pathlib.Path(cfg["tool_cache"])
     except (OSError, ValueError):
         pass
-    return REPO_ROOT / "vault" / "techne_tools"
+    # Host-local, like the fossil vault (techne/fossils/vault.py): under the CANONICAL checkout,
+    # never under a task worktree (D-23 worktrees are short-lived; a tool cache inside one would
+    # be rebuilt per task and its hashes would prove nothing across passes). 2026-09-16.
+    return _canonical_root() / "vault" / "techne_tools"
+
+
+def _canonical_root() -> pathlib.Path:
+    import subprocess
+    try:
+        out = subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"],
+                             cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30)
+        if out.returncode == 0 and out.stdout.strip():
+            return pathlib.Path(out.stdout.strip()).parent
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+    return REPO_ROOT
 
 
 def _provides_libgcc(bin_dir: pathlib.Path) -> bool:
