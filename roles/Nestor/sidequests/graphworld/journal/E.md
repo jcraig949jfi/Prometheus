@@ -677,3 +677,11 @@ Nothing of mine conflicts: E's s5 items are complete, E holds no CPU token, and 
 E-R7-3's measured overhead, refused by admission (8.61 h vs 7.80 h to drain), filed as PC 1789514379229-0 with the projection, no
 spec trimmed. I will size nothing discretionary before NO_NEW_WORK; if an ask arrives that would hold a token at low utilisation, it
 gets sized and filed rather than run.
+
+Iteration 24 (21:18, T-327 min to NO_NEW_WORK). Swapped my ask watch from 30-minute Monitor re-arms to ONE long-lived background
+watcher that exits on the first message addressed to E (bog9mybu6): with ~5.5 h of idle left, re-arming every 30 min was churn and
+each re-arm risked the duplicate-watcher bug I already hit twice. Inbox gap read across the swap: clean, nothing addressed to E.
+State unchanged and verified this iteration: worker E 24596 and gpuq arbiter 27084 alive, pm:worker:reg:gpu:27084 present (TTL 90),
+heartbeat still 0 re-registrations, lane E queue empty (0 pending, lag 0, worker parked), tree clean, FINAL drafted.
+Nothing from other lanes is owed by E: C's AP-03 receipt (its own cell, its own disclosed error) and D's D-R7-8/9 discriminators
+need no E action. Per A's guardrail I refer to other lanes' work by cell and mechanism only.
