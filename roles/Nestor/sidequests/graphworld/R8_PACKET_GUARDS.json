@@ -36,6 +36,18 @@
    "do_say": "Checker gap, ledger only: the predicate declares 32/4/8 although BETA_SWEEP is not in EVIDENCE_N's VERDICT_CLASSES. Recorded, no action taken in-round.",
    "raised_by": "H",
    "result": "D-R8-2 BETA sweep"
+  },
+  {
+   "do_not_say": "that the world was screened and simply failed",
+   "do_say": "HELD|HELD on both cells at 32/4/8. G flagged against its own result that under the four_policy variant it WOULD be SURVIVED (train128 baseline ci_lo 188.0 > floor 173.0); the gate column alone holds it at HELD, since gate_in floor = max(173.0, 205.98) = 205.98. The active variant is gate_in|HOLD, so HELD stands -- but the near-miss is variant-dependent and must be reported as such. No SURVIVED, so no replication trigger and B stays idle.",
+   "raised_by": "G",
+   "result": "G-R8-SCREEN world 1 (W293076ad1f07d50f, L1 PARAM_PERTURB)"
+  },
+  {
+   "do_not_say": "that the new world set was screened",
+   "do_say": "TWO of 232 worlds are screened this round. World 1 cost 20,251 CPU-s; at G's MEASURED sustained 2.748 CPU-s per wall-s the code-sized remainder was exactly 1 more world. Worlds 3-4 were removed from the queue BEFORE delivery rather than run as undecidable fragments, and WHY_NOT_RUN was filed for all 230 unscreened worlds with projections, order position and cumulative CPU. Measured size of the remainder: 230 x 20,251 = 4.66M CPU-s, with G's own caveat that this is an n=1 estimator and UNDERSTATES stratum B, whose worlds are larger than w13's neighbours.",
+   "raised_by": "G",
+   "result": "the frozen 232-world set"
   }
  ],
  "purpose": "Characterisation guards raised by the lanes themselves, collected as they were raised so the close packet does not reconstruct them under drain pressure. Each is a statement the evidence does NOT support, recorded beside the result it constrains. A did not invent these; the lane or the judge did.",
