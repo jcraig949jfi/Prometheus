@@ -65,6 +65,13 @@ Each of these cost real time or real work. They are not style preferences.
 6. **Your ask watch stays alive until DRAIN and stops AFTER your workers** (G4/D31). Do not stop shared
    infrastructure without a current conductor confirmation record.
 7. **Check your own worker's cwd at boot.** A live worker from a previous round's worktree ate a job unseen.
+8. **The venv is frozen: never `pip install` into `gw-venv`, and never pass a pytest flag whose plugin is
+   absent.** Measured by A on this tip during R8 launch prep: `pytest --timeout=900` exits **rc 4 as a
+   USAGE ERROR and runs ZERO tests**. `pytest-timeout`, `pytest-xdist` and `pytest-cov` are ALL ABSENT
+   (pytest 9.1.1). A run that collected nothing reports no failures, and "no failures" from a suite that
+   never ran is the same class of lie as a gate printing PASS after its checks were deleted. Read the rc,
+   not the last line. A missing package is a FINDING, not a fix -- the environment is part of the
+   experiment's identity and changing it invalidates reproduction.
 
 ---
 
