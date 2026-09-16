@@ -264,3 +264,21 @@ data in reserve), SFE worlds (engine on HOLD, #315), Theophrastus hand-off
 (after the first cells classify), any substrate requirement to
 Proteus/Daedalus (none needed for v0.1; the VM already expresses every
 pressure above -- that is a claim this survey tests).
+
+## Annotation v0.1.1 (2026-09-16, BEFORE any evolutionary run; after the control battery only)
+
+The first control run (campaign `smoke`, quick) passed POS 1.000 on W0-W3,
+NULLs 0.000 everywhere, NEG floor 0.000-0.002, and FAILED the s5 CHEAT bar
+for POS_TABLE: ERASE_TAPE cost 0.4375, not the >= 0.5 the bar asked. The
+cause is the s6 timing rule, not the battery: the intervention fires at
+the tick after the FIRST-ASKED stream's last PUT, so on an all-asked K=4
+world only the streams already stored can be lost; the attainable drop of
+a fully state-dependent solver is the share of asks whose dependencies
+completed before that tick (0.4375 on that episode family). The rule is
+kept (it is what W4's "work in progress" needs). Two changes:
+  1. every intervention vector is reported beside its ERASE CEILING
+     (worlds.erase_ceiling), the attainable range of an erase-type drop;
+  2. the CHEAT bar is >= 80 % of that ceiling on the store the POS uses
+     and < 0.05 on the store it does not use.
+The s9 thresholds (0.05 / 0.10 absolute) are unchanged; readers compare
+them with the printed ceiling. No evolutionary run had been made.
