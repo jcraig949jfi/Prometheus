@@ -808,3 +808,20 @@
   by a receipt (zero unreceipted), no new C PCs (only the pre-existing R4 C-R4-05 stub), zero open claims, 4 own errors.
 - pm:prior:* was never read at any point this round.
 - Worker C (pid 27492) stopped immediately after the FINAL, per BOOT_R7.
+
+## 2026-09-16 round 8 boot + C-R8-AP-01 harness (m1-23be3a04)
+
+- Booted 16:51 in nestor-r8-c (already at d7cc4cd1b = integration tip, GATE_MAP_R8.json present). Lane C's bus tag was
+  the dead R7 holder m1-440f0317; `bus hello` re-registered C. Worker C pid 11376, repo nestor-r8-c, round r8.
+- R8 window per A 1789592000416-0: NO_NEW_WORK 22:15:03, not 11 h 40 min. R posted PRIORS SEALED n=48 (1789592028952-0)
+  BEFORE C's first assign. pm:prior:* never read directly; only anti_prior.assign(round_id="r8") was called.
+- ASSIGNED C-R8-AP-01: pairwise / signal_world_d1 / corruption / graphblas / none.
+- G2 DISCLOSURE: none of the G2-v1 rules has a basis on this cell (corruption rule is graphworld-only, d1 pay-off rule is
+  metered_stream-only), so "binding-eligible" here means no rule proved a defect. The job re-runs binding_precheck with
+  MEASURED evidence (intervention magnitude, oracle eligibility) in committed rows before any run; pressure_binds and
+  discriminator_resolves still have no applicable rule even with that evidence -> residue for G2.
+- Harness r8_ap01_pairwise_d1_corruption_graphblas.py: R7-01's control -> planted null -> NULL_CHECK -> cell order,
+  C-R5-01's corruption rule unchanged, both arms scored on the CLEAN HELD channel (common reference), VACUITY rule fixed
+  before any row. Dev check (no rows, no held values computed): GraphBLAS == reference, tick loop 0 mismatched on clean /
+  corrupt / silent, cheats 100% caught, evidence intervention 249/258 genomes, GENS by rule 1600 (projected 3501 CPU-s).
+  Test file 3 passed rc 0 (includes job() end to end on a stub ctx with the G1 emit check).
