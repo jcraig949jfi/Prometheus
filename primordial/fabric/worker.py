@@ -22,6 +22,15 @@ F14: while pm:jobs:<L>:stop exists the worker takes no job and reports
 `stopped` in pm:worker:<L>; a job received before it saw the flag runs to
 completion first, so no job spans an epoch's export and commit.
 
+G3 (round 8, D30 + D22): a continuation (segment > 0: an epoch requeue, a segment-wall pause, resume()) is
+queued on pm:jobs:<L>:cont, not at the END of pm:jobs:<L> behind later submissions. It carries priority_ts, the
+ORIGINAL queue entry time of segment 0. The worker peeks the head of both streams and takes the one with the
+lower priority_ts, so a requeued continuation runs before any job submitted after it, and never ahead of a job
+that was queued before it (queue position cannot silently convert priority). A shadow copy of the spec
+(shadow=cont) stays on pm:jobs:<L> so every job_id lookup there (drain sizing, budget, receipt guard) still
+resolves; the worker acks shadows without running them. Brokered, the head's priority_ts is also the worker's
+place in the cross-lane FIFO wait queue (broker.py). Every done record carries the five queue fields (G5).
+
 F9: a long job checkpoints across epochs. It polls ctx.should_pause() (the
 stop flag) at safe points and calls ctx.pause(state): the state is pickled
 atomically to <ckpt_dir>/<lane>/<job_key>.pkl, the segment ends `paused`,
@@ -49,9 +58,11 @@ import traceback
 import uuid
 
 from primordial.fabric import broker
+from primordial.fabric import telemetry as TM
 from primordial.fabric.rows import RowWriter
 
 JOBS, ROWS, DONE = "pm:jobs:{}", "pm:rows:{}", "pm:jobs:{}:done"
+CONT = "pm:jobs:{}:cont"            # G3 (D30): continuation class, taken by original queue entry time
 STOP = "pm:jobs:{}:stop"            # F14: set by the epoch controller; the worker takes no job while it exists
 PUSH_LOCK = "pm:push:lock:{}"       # ops.push holds it during a rebase; the worker takes no job while it exists.
                                     # Separate from STOP: the epoch controller clears STOP at resume (E, 09-15).
@@ -81,11 +92,14 @@ def _redis(url):
 
 def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs: dict | None = None,
            url: str | None = None, r=None, job_key: str = "", segment: int = 0, cpu_prior: float = 0.0,
-           envelope: dict | None = None, wall_prior: float = 0.0, code_file_sha256: str | None = None) -> str:
+           envelope: dict | None = None, wall_prior: float = 0.0, code_file_sha256: str | None = None,
+           continuation: bool | None = None, priority_ts: float | None = None) -> str:
     """Queue a job (or the next segment of a checkpointed one). -> job_id.
     envelope (F-R5-1): the job envelope; the worker admits or refuses it (fabric/envelope.py).
     code_file_sha256 (F-R6-2): the fn module's source fingerprint; computed here when not given (a later
-    segment passes the original, so a mid-job edit is caught)."""
+    segment passes the original, so a mid-job edit is caught).
+    continuation (G3): None = segment > 0. A continuation goes to pm:jobs:<L>:cont with priority_ts = the original
+    segment's queue entry time (pass it on; defaults to now), plus a shadow spec on pm:jobs:<L> for lookups."""
     from primordial.bus import bus
     r = r or _redis(url or bus.URL)
     job_id = uuid.uuid4().hex[:12]
@@ -94,6 +108,10 @@ def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs:
             "job_key": job_key or job_id, "segment": str(int(segment)),
             "cpu_prior": f"{float(cpu_prior):.6f}", "wall_prior": f"{float(wall_prior):.6f}",
             "ts": f"{time.time():.3f}"}
+    cont = int(segment) > 0 if continuation is None else bool(continuation)
+    spec["queue_enter_ts"] = spec["ts"]
+    spec["priority_ts"] = f"{float(priority_ts):.3f}" if (cont and priority_ts is not None) else spec["ts"]
+    spec["continuation"] = "1" if cont else "0"
     if envelope is not None:
         spec["envelope"] = json.dumps(envelope, sort_keys=True)
     fp = code_file_sha256 or code_file_sha256_of(fn)
@@ -102,7 +120,11 @@ def submit(lane: str, fn: str, exp_id: str, rows_path, ttl_cpu_s: float, kwargs:
     repo = code_repo_of(fn)                  # F-R7-3 (D14 guard): where the submitter's code lives
     if repo:
         spec["code_repo"] = repo
-    r.xadd(JOBS.format(lane), spec)
+    if cont:
+        r.xadd(CONT.format(lane), spec)
+        r.xadd(JOBS.format(lane), dict(spec, shadow="cont"))     # lookups by job_id; never run from here
+    else:
+        r.xadd(JOBS.format(lane), spec)
     return job_id
 
 
@@ -189,6 +211,22 @@ def _closure_prefixes() -> tuple:
     return tuple(x for x in os.environ.get("PM_CLOSURE_PREFIXES", "primordial.").split(",") if x)
 
 
+def _f(x) -> float | None:
+    return None if x in (None, "") else float(x)
+
+
+def is_continuation(job: dict) -> bool:
+    return job.get("continuation") == "1" or int(job.get("segment", 0) or 0) > 0
+
+
+def queue_of(job: dict) -> dict:
+    """G5: the five queue fields of a job, stamped at grant by serve(); a job run outside serve() is granted now."""
+    if job.get("queue"):
+        return json.loads(job["queue"])
+    enter = _f(job.get("queue_enter_ts") or job.get("ts")) or time.time()
+    return TM.queue_fields(enter, time.time(), None, is_continuation(job))
+
+
 def resumables(r) -> dict:
     return {k: json.loads(v) for k, v in r.hgetall(RESUMABLE).items()}
 
@@ -210,7 +248,8 @@ def resume(r, job_key: str, force: bool = False) -> dict:
     job_id = submit(o["lane"], o["function"], o["exp_id"], o["rows"], o["ttl_cpu_s"], o["kwargs"], r=r,
                     job_key=o["job_key"], segment=o["segment"], cpu_prior=o["budget_consumed"]["cpu_s"],
                     envelope=o.get("envelope"), wall_prior=o["budget_consumed"]["wall_s"],
-                    code_file_sha256=o.get("code_file_sha256"))
+                    code_file_sha256=o.get("code_file_sha256"), continuation=True,
+                    priority_ts=o.get("priority_ts"))
     r.hset(RESUMABLE, job_key, json.dumps(dict(o, queued_job_id=job_id), sort_keys=True))
     return {"ok": True, "job_id": job_id}
 
@@ -352,11 +391,12 @@ class Worker:
         self.exit_requested = False             # set from another thread: serve() returns after the current job
         self.rows_cursor = "$"
         self.group = f"worker-{lane}"
-        try:
-            self.r.xgroup_create(JOBS.format(lane), self.group, id="0", mkstream=True)
-        except Exception as e:
-            if "BUSYGROUP" not in str(e):
-                raise
+        for stream in (JOBS.format(lane), CONT.format(lane)):
+            try:
+                self.r.xgroup_create(stream, self.group, id="0", mkstream=True)
+            except Exception as e:
+                if "BUSYGROUP" not in str(e):
+                    raise
 
     def _spawn(self, threads: int | None = None) -> None:
         """D19: the child's thread pools are sized at import from the environment it is spawned with, so a granted
@@ -459,7 +499,8 @@ class Worker:
         out = {"job_id": job["job_id"], "status": "refused", "event": ev["event"], "reasons": verdict["reasons"],
                "rows": 0, "cpu_s": 0.0, "wall_s": 0.0, "job_key": job.get("job_key") or job["job_id"],
                "segment": int(job.get("segment", 0) or 0), "ended": round(time.time(), 3),
-               **{k: env.get(k) for k in DONE_ENV_FIELDS}}
+               **{k: env.get(k) for k in DONE_ENV_FIELDS}, "predicate_event_id": env.get("predicate_id"),
+               **queue_of(job)}
         self.r.xadd(DONE.format(self.lane), {"json": json.dumps(out, sort_keys=True)})
         self.log(f"job {job['job_id']} {job.get('fn')} -> refused {ev['event']} {verdict['reasons']}")
         return out
@@ -529,7 +570,13 @@ class Worker:
         result, status = None, "ok"
         n = 0
         beat = time.monotonic()
+        samples, sample_at = [], (time.monotonic() if TM.sampling_on() else None)
         while result is None:
+            if sample_at is not None and time.monotonic() >= sample_at:   # G5: RSS/CPU%/threads every 30 s
+                s = TM.sample_process(self.child.pid)
+                if s is not None:
+                    samples.append(s)
+                sample_at = time.monotonic() + TM.SAMPLE_EVERY_S
             if time.monotonic() - beat >= WSTATE_TTL / 3:  # a long job must not look dead (pm:worker TTL)
                 self._state("busy", job["job_id"])
                 beat = time.monotonic()
@@ -579,13 +626,16 @@ class Worker:
                "cpu_prior": cpu_prior, "wall_prior": wall_prior, "commit_error": commit_error,
                "limit": result.get("limit"), **{k: env.get(k) for k in DONE_ENV_FIELDS},
                "cpu_token": json.loads(job["cpu_token"]) if job.get("cpu_token") else None,
-               "granted_threads": granted, "numba_threads": result.get("numba_threads")}
+               "granted_threads": granted, "numba_threads": result.get("numba_threads"),
+               "predicate_event_id": env.get("predicate_id"), "resource_samples": samples,
+               "telemetry_sampling": sample_at is not None, **queue_of(job)}
         if status == "paused" and self.auto_requeue:
             out["next_job_id"] = submit(self.lane, job["fn"], job["exp_id"], job["rows"], float(job["ttl_cpu_s"]),
                                         json.loads(job["kwargs"]), r=self.r, job_key=out["job_key"],
                                         segment=out["segment"] + 1, cpu_prior=cpu_prior + (cpu_s or 0),
                                         envelope=env or None, wall_prior=wall_prior + wall_s,
-                                        code_file_sha256=job.get("code_file_sha256"))
+                                        code_file_sha256=job.get("code_file_sha256"), continuation=True,
+                                        priority_ts=_f(job.get("priority_ts") or job.get("ts")))
         ckpt = pathlib.Path(self.ckpt_dir) / self.lane / f"{out['job_key']}.pkl"
         if status == "ok":
             self.r.hdel(RESUMABLE, out["job_key"])
@@ -616,7 +666,8 @@ class Worker:
                "code_sha": code_sha(self.repo), "code_file_sha256": code_file_sha256(job["fn"]),
                "lane": self.lane, "exp_id": job["exp_id"], "envelope": env or None,
                "ttl_cpu_s": float(job["ttl_cpu_s"]), "segment": out["segment"] + 1, "reason": out["status"],
-               "queued_job_id": out.get("next_job_id"), "ts": round(time.time(), 3)}
+               "queued_job_id": out.get("next_job_id"), "ts": round(time.time(), 3),
+               "priority_ts": _f(job.get("priority_ts") or job.get("ts"))}
         self.r.hset(RESUMABLE, out["job_key"], json.dumps(obj, sort_keys=True))
         return obj
 
@@ -650,42 +701,135 @@ class Worker:
             "tag": os.environ.get("PM_TAG", "")})
         self.r.expire(self._reg_key, REG_TTL)
 
+    def _stream_head(self, stream: str) -> tuple | None:
+        """G3: the next undelivered entry of `stream` for this lane's group -> (entry_id, fields) or None."""
+        last = "0-0"
+        for g in self.r.xinfo_groups(stream):
+            if g.get("name") == self.group:
+                last = g.get("last-delivered-id") or "0-0"
+        got = self.r.xrange(stream, min="(" + last, max="+", count=1)
+        return got[0] if got else None
+
+    def peek(self, consumer: str) -> dict | None:
+        """G3: the job this worker should take next -> {stream, priority_ts, job_id} or None. Continuations and fresh
+        jobs compete on priority_ts (original queue entry); a tie goes to the continuation. Shadow specs at the
+        head of pm:jobs:<L> are consumed and acked here (they exist only for job_id lookups)."""
+        main, cont = JOBS.format(self.lane), CONT.format(self.lane)
+        heads = []
+        for stream in (cont, main):
+            for _ in range(1000):
+                h = self._stream_head(stream)
+                if h is None or not h[1].get("shadow"):
+                    break
+                got = self.r.xreadgroup(self.group, consumer, {stream: ">"}, count=1)
+                for _, ms in got or []:
+                    for mid, _f_ in ms:
+                        self.r.xack(stream, self.group, mid)
+            if h is not None and not h[1].get("shadow"):
+                pts = _f(h[1].get("priority_ts") or h[1].get("ts")) or 0.0
+                heads.append((pts, 0 if stream == cont else 1, stream, h[1].get("job_id")))
+        if not heads:
+            return None
+        pts, _, stream, job_id = min(heads)
+        return {"stream": stream, "priority_ts": pts, "job_id": job_id}
+
+    def depth(self) -> dict:
+        """G5: undelivered queue depth of this lane (fresh + continuation; shadows not counted)."""
+        out = {}
+        for name, stream in (("depth_main", JOBS.format(self.lane)), ("depth_cont", CONT.format(self.lane))):
+            last = "0-0"
+            for g in self.r.xinfo_groups(stream):
+                if g.get("name") == self.group:
+                    last = g.get("last-delivered-id") or "0-0"
+            out[name] = sum(1 for _, f in self.r.xrange(stream, min="(" + last, max="+") if not f.get("shadow"))
+        return out
+
+    def _beacon(self, kind: str, **extra) -> None:
+        self._beacon_seq = getattr(self, "_beacon_seq", -1) + 1
+        info = dict(self._beacon_info, seq=self._beacon_seq, **extra)
+        try:
+            TM.beacon(self.r, self.lane, kind, info)
+        except Exception as e:                                     # telemetry never kills the worker
+            self.log(f"beacon {kind} failed: {e}")
+
     def serve(self, max_jobs: int | None = None, block_ms: int = 5000, idle_exit_s: float | None = None,
               deadline_s: float | None = None) -> list:
         consumer = os.environ.get("PM_TAG", "worker")
         self._register()
+        waiter = f"{self.lane}:{consumer}:{os.getpid()}:{id(self)}"
+        self._beacon_info = {"watcher": "worker", "tag": consumer, "pid": os.getpid(),
+                             "repo": str(self.repo.resolve()).replace("\\", "/"),
+                             "round_id": self.r.get("pm:round:current") or "", "started_ts": round(time.time(), 3)}
+        self._beacon_seq = -1                                     # seq restarts per watcher instance (START = 0)
+        self._beacon("START", beat_interval_s=TM.BEAT_EVERY_S)
+        beat_at = time.monotonic() + TM.BEAT_EVERY_S
+        depth_at = time.monotonic()
+        stop_reason = "exception"
         done, idle0 = [], time.monotonic()
         end = None if deadline_s is None else time.monotonic() + deadline_s
+        poll = min(block_ms / 1000, 0.1)
         try:
             while ((max_jobs is None or len(done) < max_jobs) and (end is None or time.monotonic() < end)
                    and not self.exit_requested):
+                if time.monotonic() >= beat_at:
+                    self._beacon("BEAT")
+                    beat_at = time.monotonic() + TM.BEAT_EVERY_S
+                if time.monotonic() >= depth_at:
+                    try:
+                        TM.depth_sample(self.r, self.lane, self.depth())
+                    except Exception as e:
+                        self.log(f"depth sample failed: {e}")
+                    depth_at = time.monotonic() + TM.DEPTH_EVERY_S
                 if self.r.exists(STOP.format(self.lane)) or self.r.exists(PUSH_LOCK.format(self.lane)):
+                    broker.leave(self.r, waiter)
                     self._state("stopped")
-                    time.sleep(min(block_ms / 1000, 0.1))
+                    time.sleep(poll)
                     idle0 = time.monotonic()
                     continue
+                # non-consuming XREADGROUP at id 0: keeps this consumer visible (and its idle time fresh) in the group
+                # while it peeks instead of blocking on ">" -- the residue scan finds live and foreign workers by it
+                self.r.xreadgroup(self.group, consumer, {JOBS.format(self.lane): "0"}, count=1)
+                head = self.peek(consumer)
+                if head is None:
+                    broker.leave(self.r, waiter)
+                    self._state("idle")
+                    if idle_exit_s is not None and time.monotonic() - idle0 > idle_exit_s:
+                        stop_reason = "idle_exit"
+                        break
+                    time.sleep(poll)
+                    continue
                 tok = None
-                if self._brokered():                           # F-R5-5: no free CPU token -> take no job
-                    tok = broker.acquire(self.r, self.lane, ttl_s=60)
+                if self._brokered():                           # F-R5-5 + G3: FIFO by the head job's priority_ts
+                    tok = broker.acquire(self.r, self.lane, ttl_s=60, waiter=waiter, priority_ts=head["priority_ts"])
                     if tok is None:
                         self._state("waiting_cpu")
-                        time.sleep(min(block_ms / 1000, 0.1))
+                        time.sleep(min(poll, 0.05))
                         continue
                 self._state("idle")
-                got = self.r.xreadgroup(self.group, consumer, {JOBS.format(self.lane): ">"}, count=1,
-                                        block=min(block_ms, 200) if tok else block_ms)
+                stream = head["stream"]
+                got = self.r.xreadgroup(self.group, consumer, {stream: ">"}, count=1)
                 msgs = [m for _, ms in (got or []) for m in ms]
                 if not msgs:
                     broker.release(self.r, tok)
-                    if idle_exit_s is not None and time.monotonic() - idle0 > idle_exit_s:
-                        break
                     continue
                 mid, job = msgs[0]
+                if job.get("shadow"):                          # raced past peek: a lookup copy, never run
+                    broker.release(self.r, tok)
+                    self.r.xack(stream, self.group, mid)
+                    continue
+                qf = TM.queue_fields(_f(job.get("queue_enter_ts") or job.get("ts")) or time.time(), time.time(),
+                                     tok.get("_queue_position") if tok else self._lane_position(job),
+                                     is_continuation(job))
+                job = dict(job, queue=json.dumps(qf, sort_keys=True))
+                try:
+                    TM.grant(self.r, self.lane, job, qf, self.depth())
+                except Exception as e:
+                    self.log(f"grant record failed: {e}")
                 verdict = self._admit(job)
                 if verdict is not None and not verdict["ok"]:
                     broker.release(self.r, tok)
                     done.append(self._refuse(job, verdict, stub=verdict.get("stub", True)))   # R7: no stub for sample refusals
-                    self.r.xack(JOBS.format(self.lane), self.group, mid)
+                    self.r.xack(stream, self.group, mid)
                     continue
                 if tok is not None:
                     env = self._envelope(job)
@@ -699,11 +843,29 @@ class Worker:
                     done.append(self.run_job(job))
                 finally:
                     broker.release(self.r, tok)
-                self.r.xack(JOBS.format(self.lane), self.group, mid)
+                self.r.xack(stream, self.group, mid)
                 idle0 = time.monotonic()
+            else:
+                stop_reason = ("exit_requested" if self.exit_requested else
+                               "max_jobs" if (max_jobs is not None and len(done) >= max_jobs) else "deadline")
         finally:
+            broker.leave(self.r, waiter)
+            self._beacon("STOP", stop_reason=stop_reason, jobs=len(done))
             self.stop()
         return done
+
+    def _lane_position(self, job: dict) -> int:
+        """Unbrokered queue_position: undelivered jobs of this lane with an earlier priority_ts than this one."""
+        pts = _f(job.get("priority_ts") or job.get("ts")) or 0.0
+        n = 0
+        for stream in (JOBS.format(self.lane), CONT.format(self.lane)):
+            last = "0-0"
+            for g in self.r.xinfo_groups(stream):
+                if g.get("name") == self.group:
+                    last = g.get("last-delivered-id") or "0-0"
+            n += sum(1 for _, f in self.r.xrange(stream, min="(" + last, max="+")
+                     if not f.get("shadow") and (_f(f.get("priority_ts") or f.get("ts")) or 0.0) < pts)
+        return n
 
     def stop(self) -> None:
         self.r.delete(WSTATE.format(self.lane))

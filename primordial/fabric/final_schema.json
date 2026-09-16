@@ -1,0 +1,58 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "primordial/fabric/final_schema.json",
+ "title": "Nestor lane FINAL.json (round 8, G5)",
+ "description": "Machine-readable lane FINAL. A's packet counts are generated from these documents; prose may explain, never be the source of counts. Every list may be empty; no key may be absent.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": ["schema_version", "round_id", "lane", "generated_ts", "code_sha", "receipts", "row_files",
+              "candidates", "why_not_run", "unresolved_claims", "self_disclosed_errors", "disputes_with_A",
+              "interventions_received", "job_status_counts"],
+ "properties": {
+  "schema_version": {"const": "FINAL_v1"},
+  "round_id": {"type": "string", "pattern": "^r[0-9]+$"},
+  "lane": {"type": "string", "minLength": 1},
+  "generated_ts": {"type": "number"},
+  "code_sha": {"type": "string", "minLength": 7},
+  "receipts": {"type": "array", "items": {
+   "type": "object", "required": ["event_id", "exp_id", "verdict", "residue"],
+   "properties": {
+    "event_id": {"type": "string", "minLength": 1},
+    "exp_id": {"type": "string", "minLength": 1},
+    "verdict": {"type": "string", "minLength": 1},
+    "predicate_event_id": {"type": ["string", "null"]},
+    "residue": {"oneOf": [{"const": "NONE"},
+                          {"type": "array", "minItems": 1, "items": {"enum": [
+                           "narrower_boundary", "better_instrument", "repaired_eligibility_rule",
+                           "new_mechanism_candidate", "new_world_generation_requirement", "cheaper_discriminator",
+                           "better_next_experiment"]}}]}}}},
+  "row_files": {"type": "array", "items": {
+   "type": "object", "required": ["path", "rows"],
+   "properties": {"path": {"type": "string", "minLength": 1}, "rows": {"type": "integer", "minimum": 0},
+                  "sha": {"type": ["string", "null"]}}}},
+  "candidates": {"type": "array", "items": {
+   "type": "object", "required": ["stub_id", "question"],
+   "properties": {"stub_id": {"type": "string", "minLength": 1}, "question": {"type": "string"},
+                  "status": {"type": "string"}}}},
+  "why_not_run": {"type": "array", "items": {
+   "type": "object", "required": ["item", "reason", "projection"],
+   "properties": {"event_id": {"type": ["string", "null"]}, "item": {"type": "string", "minLength": 1},
+                  "reason": {"type": "string", "minLength": 1}, "projection": {"type": "object"}}}},
+  "unresolved_claims": {"type": "array", "items": {
+   "type": "object", "required": ["claim"], "properties": {"claim": {"type": "string", "minLength": 1},
+                                                          "ref": {"type": ["string", "null"]}}}},
+  "self_disclosed_errors": {"type": "array", "items": {
+   "type": "object", "required": ["error"], "properties": {"error": {"type": "string", "minLength": 1},
+                                                          "ref": {"type": ["string", "null"]},
+                                                          "repaired": {"type": "boolean"}}}},
+  "disputes_with_A": {"type": "array", "items": {
+   "type": "object", "required": ["lane_statement", "a_statement"],
+   "properties": {"lane_statement": {"type": "string", "minLength": 1}, "a_statement": {"type": "string"},
+                  "ref": {"type": ["string", "null"]}}}},
+  "interventions_received": {"type": "array", "items": {
+   "type": "object", "required": ["event_id", "summary"],
+   "properties": {"event_id": {"type": "string", "minLength": 1}, "summary": {"type": "string", "minLength": 1}}}},
+  "job_status_counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+  "notes": {"type": "string"}
+ }
+}

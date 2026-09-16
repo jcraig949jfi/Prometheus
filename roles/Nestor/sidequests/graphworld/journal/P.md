@@ -160,3 +160,24 @@ Carry-forward (not in the acceptance list):
   not separate the linear seed-4 cheat (P3 CONTROL 15/16).
 - A real fp8 kernel needs torch cu129+ or Linux.
 - The resident-GPU path (weights prepared once on device) is untimed.
+
+## 2026-09-16 R8 BUILD (T0 09:15, cap 10:15) -- G3 scheduling cluster + G5 telemetry hooks
+
+- G3 (D30): continuations (segment > 0, pause requeue, resume) go to pm:jobs:<L>:cont carrying priority_ts = the
+  ORIGINAL queue entry; the worker peeks both heads and takes the lower priority_ts. A shadow spec stays on
+  pm:jobs:<L> so epoch drain sizing / budget / receipt guard still resolve the job_id. Test: the round-7 shape
+  (pause at a real EpochController boundary with 4 later jobs queued) runs the continuation second, before all 4.
+- G3 (D22): broker.acquire(waiter, priority_ts) is FIFO across lanes via pm:cpu:waiters (stale waiters pruned).
+  The starvation test FAILS on the round-7 first-poller broker (15 of 24 burst jobs jumped D) and passes on G3.
+  Disclosed limit: a busy lane holds no queue place, so another lane may run ahead of its older backlog.
+- D15: 900 s non-checkpointable ceiling asserted; a stop flag holds back the :cont class too.
+- Self-found regression, fixed before commit: peek-before-read meant an idle worker never XREADGROUPed, so the
+  residue scan could not see live/foreign idle consumers (2 residue tests failed). Fixed with a non-consuming
+  XREADGROUP at id 0 each loop. Suite after: 669 passed, 1 skipped, rc 0.
+- G5 hooks: telemetry.py (queue fields on every done record + QUEUE_GRANT/QUEUE_DEPTH, WATCH_BEACON
+  START/BEAT/STOP, per-job resource_samples every 30 s, WHY_NOT_RUN, FINAL.json + committed final_schema.json),
+  ADAPT-14 AST test over score/metric/cohorts/qd/envelope/residue. predicate_event_id in rows = F's (proposed on
+  the bus); beacon field names proposed to Q; no reply yet at commit.
+- R9 run 1 INCONCLUSIVE: production +5.64% (1 sample/job), stress 1 s -2.58%; job wall spread ~+-12% with my own
+  suite loading the host. Run 2 declared BEFORE reading: same verdict metric, 8 pairs, no suite of mine running,
+  plus direct per-sample cost and paired ratio as secondaries. Run 1 kept (perf/R8_TELEMETRY_OVERHEAD_run1.json).
