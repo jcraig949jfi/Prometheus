@@ -1,0 +1,1 @@
+go with your proposal for L-band and confirm export + cursor.  Finalize preparation for R8.  Document in detail such that the launch could be reproduced given same hardware and software versions and start values / seeds

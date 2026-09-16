@@ -346,9 +346,11 @@ CONDUCTOR CORRECTION: an earlier conductor message reported w13 as corrupt_rate 
 corrupts observations, so INTERFACE_MUTATE switches corruption OFF while switching delay ON. That is a trade of
 one observational difficulty for another, not a clean-to-noisy step.
 
-CONDUCTOR PROPOSAL (operator ruling required; A does not define the experiment): L1 = exactly one
+**RULED BY THE OPERATOR (prompt 27) -- this is now ruling R13, not a proposal.** L1 = exactly one
 PARAM_PERTURB / REWIRE / PRIMITIVE_INSERT / PRIMITIVE_DELETE (size-preserving, single-axis); BUDGET_MUTATE and
-INTERFACE_MUTATE held to L2/L3 as LABELLED structural steps; mechanism-level dedup mandatory.
+INTERFACE_MUTATE held to L2/L3 as LABELLED structural steps; mechanism-level dedup mandatory. The frozen,
+reproduction-grade statement of the rule -- with w13's base mechanism, the per-op measured effects and the
+dedup requirement -- is `LAUNCH_R8.md` section 6, which is the authoritative version for the builders.
 
 **[ADAPT-6] Generation and screening are separately gated.** Generating and freezing the manifest is cheap
 and is a round-9 de-risking artifact in its own right; screening is expensive. Freeze the set as soon as
@@ -547,13 +549,16 @@ and 1 hour of iterative refinement. This conversation."
 | R3 | **Cap-anchored clock APPROVED** (ADAPT-2), now against the 15 h cap with a 12 h science clock. |
 | R4 | **O-RESIDUE ADOPTED** at receipt time. `residue: NONE` is COUNTED in the close packet, NOT flagged for review -- flagging would invite lanes to write residue claims to avoid attention. |
 | R5 | Perturbation bands L1/L2/L3 are chosen by **CODE, from a frozen rule published before generation**. No hand-picked coordinates. |
-| R6 | **STILL OPEN** -- stratum sizes. The recommendation was "operator gives a number, or the conductor computes cost first". With R5 settled, A computes screening cost per world under the frozen rule and brings a number. A does not choose the sizes. |
+| R6 | **ANSWERED by R11 (measure-then-size); no fixed N is set.** Stratum sizes. The recommendation was "operator gives a number, or the conductor computes cost first". With R5 settled, A computes screening cost per world under the frozen rule and brings a number. A does not choose the sizes. |
 | R7 | The new world set is **frozen regardless** of how section 4 resolves; only screening is clock-gated (ADAPT-6). |
 | R8 | With no second host, the five-element instrumentation displacement is sufficient for a **CANDIDATE -> REPLICATED** step but **NOT for promotion**. Promotion waits for genuinely independent hardware. |
 | R9 | Telemetry overhead ceiling **5%**, measured, with the measurement itself reported (ADAPT-11). |
 | R10 | **SUPERSEDED by prompt 26: "Yes, Do D27."** D27 is promoted into the build as gate **G6**. D26 remains dropped/conditional. The conductor's retraction (ADAPT-13) is accepted. |
 | R11 | **Q6 answered by computation (prompt 26 "Compute cost"), and the answer is that a fixed N cannot be costed in advance -- see section 4.4.** Stratum sizing uses the measure-then-size rule: freeze the L1 band, screen it, measure actual cost, let CODE size the remainder against remaining clock. |
 | R12 | Archival sufficiency adopted (section 0.1): telemetry is write-only with respect to science (ADAPT-14), and the export gap is gate G7 (ADAPT-15). |
+| R13 | **L-BAND RULED (prompt 27).** L1 = exactly one size-preserving single-axis op {PARAM_PERTURB, REWIRE, PRIMITIVE_INSERT, PRIMITIVE_DELETE}. BUDGET_MUTATE and INTERFACE_MUTATE are held to L2/L3 as LABELLED structural steps. **Mechanism-level deduplication is mandatory** -- silent mutations are measured and real. Full frozen rule in `LAUNCH_R8.md` section 6. |
+| R14 | **G7 CONFIRMED (prompt 27) as export PLUS cursor.** The per-epoch export gains the job done stream and every telemetry stream, AND a per-stream cursor so each boundary writes only rows since the last one. Without the cursor, 12 boundaries x full re-dumps of growing telemetry is quadratic write amplification -- spending the authorised disk-IO budget on redundant copies instead of breadcrumbs. One full authoritative dump is still taken at close. |
+| R15 | Launch is specified for REPRODUCTION in `LAUNCH_R8.md` (prompt 27): measured hardware, measured software versions, frozen seeds and start values, the launch sequence, the archival contract, and an explicit statement of what will NOT reproduce. |
 
 **[ADAPT-13] A RETRACTS ITS OWN D26/D27 RECOMMENDATION.** The advice to drop them was reasoned from a
 60-minute build window and a round whose product was verdicts. Under prompt 24's mission -- residue, failure
