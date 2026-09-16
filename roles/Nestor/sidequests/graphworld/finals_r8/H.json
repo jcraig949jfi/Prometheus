@@ -1,8 +1,8 @@
 {
  "candidates": [],
- "code_sha": "d1dfeb34933947455029228a1d2285d30a1e8437",
+ "code_sha": "f81464458fb08275eb39f452f475298a05563e13",
  "disputes_with_A": [],
- "generated_ts": 1789599185.372,
+ "generated_ts": 1789601377.429,
  "interventions_received": [
   {
    "event_id": "1789592825696-0",
@@ -38,6 +38,11 @@
    "error": "Judge preregistration post cited 90458d47b for the MDD80 code; it is at 42dad4c7f.",
    "ref": "1789595101906-0",
    "repaired": true
+  },
+  {
+   "error": "H's preregistered MDD80 grid starts at 5%, coarser than C-R8-AP-02's P1 resolution (0.74%): the rule alone would call any sub-5% pressure vacuous. Disclosed with a substantive post hoc check (no power at d=(c)); grid not changed mid-round.",
+   "ref": "1789601365307-0",
+   "repaired": false
   }
  ],
  "unresolved_claims": [
@@ -56,6 +61,10 @@
   {
    "claim": "JUDGE REPLAY E-R8-H1-sham-response-curve -> AGREE: FLAT_NO_SYSTEMATIC_RESPONSE + CHARGE_ALIGNMENT_NO_EFFECT (independent estimators, no fragile p); bounded null L0-L4 [-1.31, 0.87]; scale-only L4 beats scratch +2.10 [1.19, 2.98] (descriptive) [record primordial/ledger/rows/E/E-R8-H1-sham-response-curve.jsonl; report replay_r8/E-R8-H1.json; bus 1789599171523-0]",
    "ref": "1789593327107-0"
+  },
+  {
+   "claim": "JUDGE REPLAY C-R8-AP-02 -> ARITHMETIC AGREE (PASS, from recorded values, not bytes); READING DISPUTED: pressure claim VACUOUS by preregistered MDD80 rule and on substance; post hoc: cell ABOVE control, MWU p 0.0035 [record primordial/ledger/rows/C/C-R8-AP-02-affine-plastic-nk-corruption-numpy.jsonl; report replay_r8/C-R8-AP-02.json; bus 1789601365307-0]",
+   "ref": "1789594102998-0"
   },
   {
    "claim": "DISPUTE vs C (not vs A): C-R8-AP-01 PASS reproduced; its pressure claim read VACUOUS by H. Both positions preserved in R8_DISPUTES.json; A accepted the packet guards (1789595248255-0).",

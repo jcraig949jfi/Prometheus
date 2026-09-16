@@ -21,6 +21,10 @@ REPLAYS = [
      "replay_r8/E-R8-H1.json", "AGREE: FLAT_NO_SYSTEMATIC_RESPONSE + CHARGE_ALIGNMENT_NO_EFFECT (independent estimators, "
      "no fragile p); bounded null L0-L4 [-1.31, 0.87]; scale-only L4 beats scratch +2.10 [1.19, 2.98] (descriptive)",
      "bus 1789599171523-0"),
+    ("C-R8-AP-02", "1789594102998-0", "primordial/ledger/rows/C/C-R8-AP-02-affine-plastic-nk-corruption-numpy.jsonl",
+     "replay_r8/C-R8-AP-02.json", "ARITHMETIC AGREE (PASS, from recorded values, not bytes); READING DISPUTED: pressure "
+     "claim VACUOUS by preregistered MDD80 rule and on substance; post hoc: cell ABOVE control, MWU p 0.0035",
+     "bus 1789601365307-0"),
 ]
 
 doc = {
@@ -58,6 +62,9 @@ doc = {
                   "power from defect. Downgraded to a hypothesis.", "ref": "1789593632354-0", "repaired": True},
         {"error": "Judge preregistration post cited 90458d47b for the MDD80 code; it is at 42dad4c7f.",
          "ref": "1789595101906-0", "repaired": True},
+        {"error": "H's preregistered MDD80 grid starts at 5%, coarser than C-R8-AP-02's P1 resolution (0.74%): the rule "
+                  "alone would call any sub-5% pressure vacuous. Disclosed with a substantive post hoc check (no power at "
+                  "d=(c)); grid not changed mid-round.", "ref": "1789601365307-0", "repaired": False},
     ],
     "disputes_with_A": [],
     "interventions_received": [
