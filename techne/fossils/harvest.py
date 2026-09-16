@@ -10,6 +10,7 @@
     python -m techne.fossils.harvest status                       one line per specimen
     python -m techne.fossils.harvest summary                      the directive's success measures, computed
     python -m techne.fossils.harvest rematerialize <id> | --all [--out F]  second host: fetch from origin, verify by hash, never write tracked files
+    python -m techne.fossils.harvest repin <id> --reason R     repair a CRLF/residue-defective record from upstream.drifted/ (old list kept as superseded)
     python -m techne.fossils.harvest receipt-check [--out F]      RQ-4 census: receipts carrying / predating the environment block
 
 A RECIPE (techne/fossils/specimens/<id>/recipe.json) is the executable statement of "how to
@@ -533,6 +534,119 @@ def rematerialize_all(out=None, specimen_ids=None, timeout: int = 900) -> dict:
     return census
 
 
+
+# --------------------------------------------------------------------------- repin (record repair)
+REPIN_SCHEMA = "techne.fossil.repin_receipt/1"
+
+
+def classify_drift(specimen_id: str, fetched_root: pathlib.Path) -> dict:
+    """Explain a DRIFT file by file against a hash-verified fetch. Classes:
+    SAME; RECORD_IS_CRLF (recorded hash == sha256 of the fetched bytes with LF->CRLF, i.e. the
+    record was taken over a Windows-converted checkout); NOT_IN_ORIGIN (recorded, absent from
+    the pinned fetch -- by construction not upstream content: a build product or interpreter
+    residue hashed into the record); FETCH_IS_CRLF (the reverse smudge, a fetch-side defect);
+    OTHER (real content difference); plus ADDED (in the fetch, not in the record)."""
+    import hashlib
+    want = _want_rows(specimen_id)
+    got = {rel: (h, n) for rel, h, n in vault.hash_tree(fetched_root)}
+    classes = {"SAME": [], "RECORD_IS_CRLF": [], "NOT_IN_ORIGIN": [], "FETCH_IS_CRLF": [], "OTHER": [],
+               "ADDED": sorted(set(got) - set(want))}
+    for rel, (h, n) in want.items():
+        p = fetched_root / rel
+        if rel not in got:
+            classes["NOT_IN_ORIGIN"].append(rel)
+            continue
+        if got[rel][0] == h:
+            classes["SAME"].append(rel)
+            continue
+        b = p.read_bytes()
+        lf = b.replace(b"\r\n", b"\n")
+        if hashlib.sha256(lf.replace(b"\n", b"\r\n")).hexdigest() == h:
+            classes["RECORD_IS_CRLF"].append(rel)
+        elif hashlib.sha256(lf).hexdigest() == h:
+            classes["FETCH_IS_CRLF"].append(rel)
+        else:
+            classes["OTHER"].append(rel)
+    return classes
+
+
+def repin(specimen_id: str, reason: str) -> dict:
+    """Repair a record whose hash list was taken over a Windows-converted and/or build-dirtied
+    body, using the byte-exact fetch that `rematerialize` kept at upstream.drifted/.
+
+    REFUSES unless the drift is FULLY explained by RECORD_IS_CRLF and NOT_IN_ORIGIN: any
+    ADDED, FETCH_IS_CRLF or OTHER file means this is not a record defect and nothing is
+    touched. On success: UPSTREAM_HASHES.txt is renamed UPSTREAM_HASHES.superseded-<date>.txt
+    (kept, tracked), a new list is written from the fetch, record.hashes is replaced and the
+    old block appended to record.hashes_superseded with the reason and the receipt path, the
+    fetch becomes upstream/, and a tracked repin receipt carries every classified path.
+    Any host still holding the old body will now fail `verify` for it -- that is correct and
+    the receipt says so."""
+    rec = record.load(specimen_id)
+    sd = vault.specimen_dir(specimen_id)
+    body = vault.body_dir(specimen_id)
+    drifted = body / "upstream.drifted"
+    ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    out = {"schema": REPIN_SCHEMA, "specimen_id": specimen_id, "receipt_id": "repin-%s-%s" % (specimen_id, ts),
+           "written_utc": ts, "host": platform.node(), "reason": reason, "status": None,
+           "tree_sha256_old": rec["hashes"].get("tree_sha256"), "tree_sha256_new": None,
+           "classes": None, "refused_because": []}
+    if (body / "upstream").exists():
+        out["refused_because"].append("upstream/ already present on this host; nothing to repin from")
+    if not drifted.exists():
+        out["refused_because"].append("no upstream.drifted/ (run rematerialize first; it keeps the fetch there on DRIFT)")
+    if out["refused_because"]:
+        out["status"] = "REFUSED"
+        print("REPIN", specimen_id, "REFUSED:", "; ".join(out["refused_because"]))
+        return out
+    classes = classify_drift(specimen_id, drifted)
+    out["classes"] = {k: sorted(v) for k, v in classes.items()}
+    out["class_counts"] = {k: len(v) for k, v in classes.items()}
+    for k in ("ADDED", "FETCH_IS_CRLF", "OTHER"):
+        if classes[k]:
+            out["refused_because"].append("%d file(s) %s -- not a record defect: %s" % (len(classes[k]), k, classes[k][:5]))
+    if not (classes["RECORD_IS_CRLF"] or classes["NOT_IN_ORIGIN"]):
+        out["refused_because"].append("nothing to repair (no RECORD_IS_CRLF or NOT_IN_ORIGIN files)")
+    if out["refused_because"]:
+        out["status"] = "REFUSED"
+        print("REPIN", specimen_id, "REFUSED:", "; ".join(out["refused_because"]))
+        return out
+    # --- repair, in the order that leaves a recoverable state at every step
+    rows = vault.hash_tree(drifted)
+    old_list = sd / "UPSTREAM_HASHES.txt"
+    superseded = sd / ("UPSTREAM_HASHES.superseded-%s.txt" % ts[:8])
+    if superseded.exists():
+        superseded = sd / ("UPSTREAM_HASHES.superseded-%s.txt" % ts)
+    old_text = old_list.read_text(encoding="utf-8")
+    superseded.write_text("# SUPERSEDED %s by %s -- %s\n" % (ts, out["receipt_id"], reason) + old_text,
+                          encoding="utf-8", newline="\n")
+    vault.write_hashes(specimen_id, rows)
+    new_hashes = {"tree_sha256": vault.tree_hash_of(rows), "n_files": len(rows), "bytes": sum(r[2] for r in rows),
+                  "artifacts": rec["hashes"].get("artifacts"), "body_location": str(body),
+                  "hash_list": "techne/fossils/specimens/%s/UPSTREAM_HASHES.txt" % specimen_id}
+    rp = sd / "receipts" / (out["receipt_id"] + ".json")
+    rp_rel = "techne/fossils/specimens/%s/receipts/%s.json" % (specimen_id, out["receipt_id"])
+    old_block = dict(rec["hashes"])
+    old_block.update({"superseded_utc": ts, "reason": reason, "receipt": rp_rel,
+                      "superseded_hash_list": "techne/fossils/specimens/%s/%s" % (specimen_id, superseded.name),
+                      "class_counts": out["class_counts"]})
+    rec.setdefault("hashes_superseded", []).append(old_block)
+    rec["hashes"] = new_hashes
+    record.save(rec)
+    shutil.move(str(drifted), str(body / "upstream"))
+    out["tree_sha256_new"] = new_hashes["tree_sha256"]
+    out["n_files_old"] = old_block.get("n_files")
+    out["n_files_new"] = len(rows)
+    out["superseded_hash_list"] = old_block["superseded_hash_list"]
+    out["consequence"] = ("any host whose body was hashed into the old list now fails verify for this specimen; "
+                          "receipts before %s were run on that body (tree %s)" % (ts, out["tree_sha256_old"]))
+    out["status"] = "REPINNED"
+    rp.parent.mkdir(parents=True, exist_ok=True)
+    rp.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8", newline="\n")
+    print("REPIN", specimen_id, "REPINNED", out["tree_sha256_old"][:12], "->", out["tree_sha256_new"][:12],
+          json.dumps(out["class_counts"], sort_keys=True))
+    return out
+
 # --------------------------------------------------------------------------- mirror
 def mirror(dest: str, specimen_ids=None, dry_run: bool = False, allow_same_volume: bool = False) -> dict:
     """Copy preserved bodies to an off-host store keyed by their immutable tree hash.
@@ -996,6 +1110,7 @@ def main(argv=None) -> int:
     mv = sub.add_parser("mirror-verify"); mv.add_argument("--dest", required=True); mv.add_argument("--specimen", action="append")
     sub.add_parser("status"); sub.add_parser("summary")
     rm = sub.add_parser("rematerialize", help="bring bodies onto THIS host from their recorded origins and verify by hash; tracked files untouched"); rm.add_argument("specimen_id", nargs="?"); rm.add_argument("--all", action="store_true"); rm.add_argument("--out"); rm.add_argument("--timeout", type=int, default=900)
+    rpn = sub.add_parser("repin", help="repair a record whose hash list was CRLF-converted / build-dirtied, from the byte-exact fetch at upstream.drifted/; refuses any real content difference"); rpn.add_argument("specimen_id"); rpn.add_argument("--reason", required=True)
     rc_ = sub.add_parser("receipt-check", help="RQ-4 census: every tracked run receipt by schema, defects listed"); rc_.add_argument("--out")
     pr = sub.add_parser("preservation"); pr.add_argument("specimen_id", nargs="?"); pr.add_argument("--all", action="store_true"); pr.add_argument("--out")
     args = ap.parse_args(argv)
@@ -1033,6 +1148,8 @@ def main(argv=None) -> int:
             return 0 if bad == 0 else 1
         r = rematerialize(args.specimen_id, timeout=args.timeout)
         return 0 if r["status"] in ("MATCH", "ALREADY_PRESENT_VERIFIED") else 1
+    elif args.cmd == "repin":
+        return 0 if repin(args.specimen_id, args.reason)["status"] == "REPINNED" else 1
     elif args.cmd == "receipt-check":
         c = receipt_census(args.out)
         return 0 if c["defective"] == 0 else 1
