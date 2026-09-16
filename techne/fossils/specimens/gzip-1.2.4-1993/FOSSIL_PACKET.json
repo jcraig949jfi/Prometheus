@@ -92,6 +92,7 @@
   "SCREENSHOT": "no",
   "INJECT_INPUT": "yes",
   "EXTRACT_OUTPUT": "yes",
+  "_source": "techne/fossils/WORLDS.json",
   "_how": "harvest run: disposable copy (INSTANTIATE), recipe commands (EXECUTE), stdout/stderr/exit/produced-file hashes (OBSERVE/EXTRACT_OUTPUT), harness files mounted under $HARNESS (INJECT_INPUT); TRACE partial = strace/ltrace could be added to the world but are not; INTERVENE partial = source patches on the disposable copy and build flags, never on the body; no process snapshot/step in a container world"
  },
  "SCAFFOLDING_LEDGER": {
@@ -227,7 +228,7 @@
   "cut_kill": "a level-dependent ratio difference > 0.002 survives I2-FLATTEN-PLUS-SWITCHES with both controls passing",
   "decisive_intervention": "I2-FLATTEN-PLUS-SWITCHES (SOURCE level)",
   "calibration_pair": "RS_CALIBRATION_PAIR_001 (nyx/atlas/calibration/)",
-  "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308); updated to 003 same day on Harmonia #317",
+  "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308); updated to 003 same day on Harmonia #317 (re-applied over Techne dd9a395b3 after a merge conflict)",
   "superseded_chain": [
    {
     "id": "MECH-GZIP-LEVELTABLE-002",

@@ -1,23 +1,30 @@
 {
-  "_what_this_is": "The exact source constituting the SFE build deployed on M2 (the verify twin). Sibling of DEPLOYED_BUILD.json (M1). Recovery record independent of any worktree's git state.",
-  "engine": "M2 / SPECTREX5",
-  "endpoint": "https://192.168.1.191:8811",
-  "pinned_at": "2026-09-16T11:48:31Z",
-  "pinned_by": "Daedalus[m2-d6ecd70b]",
-  "schema_version": 8,
-  "source_commit_containing_build": "ccb26df01c9d637a0ebac0ef3612a4e116d507b7",
-  "engine_source_hash": "sha256:726275da9c8daa30ea2fff5e66e9a1df53aa5263256d342602fad25cb415d75c",
-  "same_build_as": "CANDIDATE_BUILD.json candidate_commit 8c53d04e6 (sfe/*.py unchanged between 8c53d04e6 and ccb26df01; only deploy/ and tests/ differ)",
-  "engine_instance_id": "eng_906356f7fb1da180131f9290",
-  "code_from": "D:\Prometheus-worktrees\daedalus-sfengine (detached)",
-  "data_dir": "D:\Prometheus-data\sfe",
-  "supervisor": "scheduled task SFEngineM2Watchdog -> D:\Prometheus-data\sfe\sfengine_m2_watchdog.ps1 (pinned copy)",
-  "receipt": "deploy/M2_RELOCATE_2026-09-16/apply.json",
-  "live_verified_2026-09-16": {
-    "unit_tests": "481 passed (.venv-m2, Python 3.12.10)",
-    "harness": "12/12 capabilities PASS against https://192.168.1.191:8811",
-    "isolation": "7/7 properties hold against https://192.168.1.191:8811",
-    "conformance_gate": "roles/Harmonia/contracts/candidates/726275da9c8d/sfe_contract.json: unmodified -> DRIFT on engine_instance_id only (contract pins M1's ledger eng_8a37a5d3; designed); with instance id rewritten to M2's -> CONFORMANT, 68/68 routes, 30/30 GET scoping. Outputs: M2_RELOCATE_2026-09-16/gate_arm1_unmodified.txt, gate_arm2_m2_instance.txt"
+ "_what_this_is": "The exact source constituting the SFE build deployed on M2 -- THE PRODUCTION ENGINE from 2026-09-16 (operator: the SFE ecosystem runs on M2; M1's ledger stays on M1 as an archive). Recovery record independent of any worktree's git state.",
+ "engine": "M2 / SPECTREX5 -- PRODUCTION",
+ "endpoint": "https://192.168.1.191:8811",
+ "pinned_at": "2026-09-16T17:25:41Z",
+ "pinned_by": "Daedalus[m2-d6ecd70b]",
+ "schema_version": 8,
+ "source_commit_containing_build": "dd10c90748228fd99f994c068748379de0d474bc",
+ "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+ "engine_instance_id": "eng_906356f7fb1da180131f9290",
+ "code_from": "D:\\Prometheus-worktrees\\daedalus-sfengine (detached)",
+ "data_dir": "D:\\Prometheus-data\\sfe",
+ "supervisor": "scheduled task SFEngineM2Watchdog -> D:\\Prometheus-data\\sfe\\sfengine_m2_watchdog.ps1 (pinned copy)",
+ "contract": "roles/Harmonia/contracts/sfe_contract.json (generated against this engine 2026-09-16; gate 0)",
+ "history": [
+  {
+   "2026-09-16T11:48Z": "relocated under D-23 at ccb26df01 / 726275da (twin)"
   },
-  "not_shown": "M1 production is NOT on this build; this pin says nothing about M1. POST scoping is not re-probed by the gate (its stated limit)."
+  {
+   "2026-09-16T17:22Z": "advanced to dd10c9074 / 4dbcd3fd (#223 fields); declared PRODUCTION"
+  }
+ ],
+ "live_verified_2026-09-16T17:2xZ": {
+  "harness": "12/12",
+  "isolation": "7/7",
+  "unit": "483 (tree at adb7952ff)",
+  "gate": "CONFORMANT, and 0 with both consumers' 25 declared routes"
+ },
+ "not_shown": "scoped reads (/v2/read/*) are not exercised by the harness; they are covered by unit tests and gate-probed for scoping only. POST scoping is the gate's stated limit."
 }
