@@ -665,3 +665,28 @@
   Reading: 8 training episodes leave 32 of 256 register values unseen, and the table cannot generalise to them; the
   channel IS used (P3 32/32) and the code clears the input-invariant floor by far.
 - AP-02 amendment posted before any run row: 1789513882027-0 (stored genome 6 -> 8 bytes, sha f61dd3168).
+
+## 2026-09-15 round 7 loop iteration 6 (m1-440f0317): 19:33, AP-02 running on the fix; GPU rows on origin
+
+- AP-02 resubmit 9b4e452f4f1f RUNNING on C's token (23/64 runs at 19:33, held ~2.09-2.11M per landscape, functional
+  bytes 4-6). The 6-byte defect is gone.
+- C-R7-01 rows ARE on origin, but NOT at the sha E first gave: ops.push rebased E's commits, so c0f79af3c is orphaned;
+  A 1789514676365-0 + E 1789514625654-0 say cite 0c280c564 (or the path at origin tip). Receipt waits until AP-02's
+  RowWriter is idle -- ops.push must not rebase under a live writer -- then C ff's and files citing the post-push sha.
+- A 1789514058390-0: account for error job ec5a36e1c102 in the FINAL (it is the 6-byte INSERT_LUA abort, amendment
+  1789513882027-0; 1 reference row, no verdict row, no receipt needed, no PC -- the defect was C's own harness).
+- Cross-lane lesson recorded by A/E for the packet (D23): gpuq writes the requesting lane's rows into the ARBITER's
+  repo, and the sha is only stable after that repo pushes.
+
+## 2026-09-15 round 7 loop iteration 8 (m1-440f0317): 20:06, C-R7-AP-02 COMPLETE -- PASS
+
+- AP-02 finished across two segments (9b4e452f4f1f paused at the epoch 2 boundary -> e51d924a5093 ok; 66 new rows,
+  94.5 CPU-s client, 2456.9 s wall -- the wall is FalkorDB server time, the client CPU is small).
+- PRIMARY PASS: cell (byte-charged selection) held median 2,116,036.84 >= bar 2,102,284.02 (control median
+  2,116,423.73, IQR 28,279.43); cell IQR 46,364.08; 32 runs per arm, 4 families x 8. Oracles clean in both arms
+  (world 0/144, k3 1.0, brain 0, free_stream 1.0 of 8 / 24 eligible, charge 0), recount 0 and offers 0 over all 64 runs.
+  BETA 169,144 per functional byte; top1 functional bytes 3-6.
+  Reading (not a mechanism claim): charging ~1% of a landscape's random-bits NK per byte did not cost held-out NK.
+- Rows file note for the receipt: its first two rows belong to the ABORTED job ec5a36e1c102 (reference + job_end, the
+  6-byte defect); the accepted run starts at the second reference row.
+- Worker idle, no live writer -> push now, then file both receipts (C-R7-01 FAIL, AP-02 PASS).
