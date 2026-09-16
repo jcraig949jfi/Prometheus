@@ -721,3 +721,19 @@ MY ERROR, third instance tonight: my liveness grep self-matched AGAIN. Processes
 text contains both needles. My "skip my own process tree" guard failed: the Bash tool's shells are the python process's PARENTS, not
 its descendants, so children(recursive=True) never covers them. Rule for the rest of this round: do not identify processes by
 cmdline substring here; read the task output files (a live loop writes; a dead one stops) or match a pid recorded at spawn time.
+
+Iteration 28 (00:24) -- CLOSE. A 1789532297309-0 set E's closing artifact: post E ROUND 7 FINAL, then stop the gpuq arbiter and its
+heartbeat explicitly, due before drain 03:07. All E items had been closed since 19:20, so I closed at 00:22 rather than waiting for
+my 02:27 alarm.
+E ROUND 7 FINAL posted to A: 1789532529462-0, 8850 chars, read back from pm:swarm and verified intact (all 10 sections present,
+tail complete). Body written to a file and posted from the file after a heredoc broke on quotes -- the same shell-quoting class as
+the earlier backtick loss, now avoided by construction.
+Stop order per A's conditions: registration heartbeat FIRST (0 re-registrations in 4.8 h; the registration never lapsed again after
+19:29), then the beat loop, then the gpuq arbiter (pid 27084), then worker E (pid 24596), then the ask watcher.
+LESSON, and it cost a verification round: TaskStop ends the TASK, not necessarily the process. Worker E was gone immediately;
+the arbiter was still alive 20 s later and only exited by ~00:23:55. Confirm a stop by the spawn-time pid, never by the task result.
+Close state at 00:24: both pids absent, both registration keys expired (ttl -2), lane E queue empty (0 pending, lag 0).
+residue scan rc 1 with my two consumer entries reading UNREGISTERED_ACTIVE_CONSUMER at ~91 s idle -- a timing artifact of a
+just-stopped lane (residue.ACTIVE_IDLE_S is 120 s), not live residue; they convert to DEAD_CONSUMER on their own. Dead consumers are
+cleared by F's code-owned residue clear, which A runs at the close; E does not hand-delete Redis keys. Re-scanned past the threshold
+and reported the honest result to A.
