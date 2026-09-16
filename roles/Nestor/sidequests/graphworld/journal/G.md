@@ -461,3 +461,10 @@ file_candidate / segment contract (1789479761855-0).
   `silent_steps`, not dropped. L3 INTERFACE+INTERFACE == w13. CAPACITY is the one builder-chosen number (manifest, not screen).
 - Tests 21 (test_world_set_r8.py), 6/6 planted defects caught (no-dedup, structural-in-L1, highest-seed rep, fixed N,
   wrong stream, overwrite). Full suite rc 0: 1009 passed, 9 skipped.
+- G-R8-2 reproduction anchors: the manifest's wforge sha256 pin hashed RAW bytes, and this checkout holds wforge LF in the
+  index / CRLF on disk (`git ls-files --eol`), so a reproduction under a different autocrlf would have read
+  REGENERATION_DIFFERS with the grammar unchanged. Pin is now CRLF->LF normalised == the committed blob (test compares to
+  `git show HEAD:`). CLI: `python -m primordial.metric.world_set_r8 [freeze <path> | verify <path>]`; freeze stamps UTC +
+  git HEAD, refuses a second freeze; verify rc 1 on any edit (incl. deleting one recorded duplicate). 23 tests; planted
+  raw-bytes pin caught. Suite rc 0: 1021 passed, 9 skipped. Self-disclosed: a mutation-check heredoc lost its backslashes
+  and aborted before editing -- its "23 passed" was an unmutated run, redone with chr(92) (1 failed as intended).

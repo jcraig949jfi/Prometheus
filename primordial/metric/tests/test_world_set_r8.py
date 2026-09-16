@@ -279,3 +279,32 @@ def test_verify_catches_a_tampered_manifest(tmp_path):
     bad = WS.verify_manifest(out)
     assert "BODY_SHA_MISMATCH" in bad and "REGENERATION_DIFFERS" in bad
     assert any(b.startswith("GENOME_DOES_NOT_REPRODUCE") for b in bad)
+
+
+# --- reproduction anchors (G-R8-2) ------------------------------------------------------------------------------------
+
+def test_wforge_pin_is_the_committed_blob_not_the_hosts_line_endings(tmp_path, body):
+    for name, pin in body["wforge_sha256"].items():
+        blob = subprocess.run(["git", "show", f"HEAD:SerendipityFoundry/worldfoundry/wforge/{name}"], cwd=ROOT,
+                              capture_output=True).stdout
+        assert blob and pin == __import__("hashlib").sha256(blob).hexdigest()
+        lf, crlf = tmp_path / f"lf_{name}", tmp_path / f"crlf_{name}"
+        lf.write_bytes(blob)
+        crlf.write_bytes(blob.replace(b"\n", b"\r\n"))
+        assert WS._file_sha(lf) == WS._file_sha(crlf) == pin
+
+
+def test_cli_freeze_stamps_head_and_verify_rc_follows_the_file(tmp_path):
+    out, env = tmp_path / "frozen.json", {**__import__("os").environ, "PYTHONPATH": str(ROOT)}
+    cli = [sys.executable, "-m", "primordial.metric.world_set_r8"]
+    f = subprocess.run(cli + ["freeze", str(out)], cwd=ROOT, capture_output=True, text=True, env=env)
+    assert f.returncode == 0, f.stderr
+    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    doc = json.loads(out.read_text())
+    assert doc["git_head"] == head and doc["frozen_at_utc"].endswith("Z") and doc["body"]["rule"]["capacity"] == WS.CAPACITY
+    assert subprocess.run(cli + ["verify", str(out)], cwd=ROOT, capture_output=True, env=env).returncode == 0
+    again = subprocess.run(cli + ["freeze", str(out)], cwd=ROOT, capture_output=True, text=True, env=env)
+    assert again.returncode != 0 and "MANIFEST_ALREADY_FROZEN" in again.stderr
+    doc["body"]["duplicates"] = doc["body"]["duplicates"][1:]            # "deleting an ugly world" is detected
+    out.write_text(json.dumps(doc))
+    assert subprocess.run(cli + ["verify", str(out)], cwd=ROOT, capture_output=True, env=env).returncode == 1

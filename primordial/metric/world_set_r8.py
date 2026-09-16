@@ -212,7 +212,9 @@ def dedup(draws_by_band: dict) -> tuple[list[dict], list[dict]]:
 
 
 def _file_sha(p: pathlib.Path) -> str:
-    return hashlib.sha256(p.read_bytes()).hexdigest()
+    """sha256 of the file with CRLF normalised to LF -- the committed blob content. This checkout stores wforge LF in
+    the index and CRLF on disk, so a raw-bytes pin would change with a host's autocrlf, not with the grammar."""
+    return hashlib.sha256(p.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def build_manifest(capacity: dict | None = None) -> dict:
@@ -314,6 +316,30 @@ def verify_manifest(path: str | pathlib.Path) -> list[str]:
     return bad
 
 
-if __name__ == "__main__":
+def main(argv: list[str]) -> int:
+    """python -m primordial.metric.world_set_r8                 preview counts (writes nothing)
+       python -m primordial.metric.world_set_r8 freeze <path>   freeze ONCE, stamped with UTC time and git HEAD
+       python -m primordial.metric.world_set_r8 verify <path>   rc 0 only if regeneration + every genome reproduce"""
+    if argv[:1] == ["freeze"] and len(argv) == 2:
+        import datetime
+        import subprocess
+        head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+        now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        doc = freeze_manifest(argv[1], frozen_at_utc=now, git_head=head)
+        print(json.dumps({"frozen": argv[1], "body_sha256": doc["body_sha256"], "git_head": head,
+                          "counts": doc["body"]["counts"]}))
+        return 0
+    if argv[:1] == ["verify"] and len(argv) == 2:
+        bad = verify_manifest(argv[1])
+        print(json.dumps({"verified": not bad, "problems": bad}))
+        return 1 if bad else 0
+    if argv:
+        print(main.__doc__)
+        return 2
     b = build_manifest()
     print(json.dumps({"counts": b["counts"], "rule_sha256": b["rule_sha256"], "n_order": len(b["screen_order"])}))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))
