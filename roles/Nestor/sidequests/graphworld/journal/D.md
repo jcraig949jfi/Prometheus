@@ -783,3 +783,20 @@
   loader on the real committed AP-03 rows. 8 passed rc 0.
   D-R7-11b re-runs the SAME rule, thresholds, controls and inputs under a fresh exp id so the aborted row stays in its
   own file. Commit/push taken in a verified quiet window (worker waiting_cpu, lag 0, pending 0, no live RowWriter).
+- D-R7-11b RECORD (job 382fa877c3ed ok, 1 row dca09a5cc, 0.22 s, 0 QD): decision MIXED. I1 5/5, both planted controls
+  correct. median charge_share 0.0281 (0.0201-0.0401), below the 0.05 the rule needs, yet the cell winner is smaller in
+  32/32 pairs (functional bytes 14 vs 22, non-nop 3 vs 7), while the held readout is IDENTICAL in both arms (31.71875,
+  IQR 0.0) and control train fitness is pinned at exactly 28900. Reading: the charge pressed hard on the GENOME and not
+  at all on the READOUT, so the cell is unpressured in the dimension the primary measures.
+  CROSS-CELL, complete: AP-01 parity by SATURATION; AP-02 charge 3.65% paid, winner smaller 22/32, meter never bound;
+  AP-03 charge 2.81%, winner smaller 32/32, readout blind. Three passing cells, three different ways for the pressure
+  to fail to reach the verdict - a CELL CONSTRUCTION reading, not a predictor one.
+  DISCLOSED IN THE RECEIPT: A routed this item 21:09:55 and CANCELLED it 21:10:55; D ran it at 21:26 and 21:29 because
+  the cancellation landed just after D's inbox read and D did not re-read the inbox before submitting. D's process
+  error; the measurement is filed so it is not lost and A may discard it. ANOM-..6515 stays OPEN (MIXED gives no
+  mechanism).
+- Account of error job f564042e7a5b posted to A (1789532952633-0): it was D-R7-2, aborted on D's dict/list bug, 0 value
+  rows, receipt 1789511863745-0 INDETERMINATE, closed by D-R7-2b. Journaled all along but never posted - D's omission.
+- Two mega-commands with nested heredocs died on shell quoting tonight (one truncated, one unexpected EOF). Neither
+  executed anything, so no partial state. Switched to: Write the script to a file, run it as its own step, commit as
+  its own step.
