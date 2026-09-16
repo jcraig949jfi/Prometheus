@@ -733,3 +733,14 @@
   there (identical held values make h = 0 by construction). D adds only the D-R7-6 quantity -- charge_share on the
   readout's own winner -- so the three cells carry ONE comparable number. Schema confirms the rows support it.
   Queued behind D-R7-10b; dropped rather than the re-run if the clock tightens.
+- D-R7-10b submitted (job d94957e05371, predicate 1789521541505-0, code 7173baca0 unchanged, cpu_budget_s 20000 sized
+  from the measured 24.7 CPU-s/run, wall 2400/segment, checkpointable). Predicate discloses the 97 partial rows at
+  f39f1ebb6, their coverage, and that no held64/train value was read from them.
+- D-R7-11 code + test (r7_11_ap03_pressure_binding.py; 6 passed rc 0), the narrowed AP-03 read A asked for. Reuses
+  D-R7-6's rule, thresholds and planted controls UNCHANGED so AP-01/AP-02/AP-03 carry one comparable number; 0 QD over
+  C's committed AP-03 rows from origin; 32 pairs, 4 families x 8. Arithmetic difference handled and stated: C's
+  train_fit_top1 is NET of the charge, so earned = net + beta*bytes and charge_share = beta*bytes / (net + beta*bytes).
+  NOT re-derived (C already published it): the cell is vacuous by construction, all 64 runs identical with IQR 0.0,
+  send cost 6 > yield 3 so signalling never pays; and the charge did shrink programs (14 vs 22 functional bytes).
+  NOT run because degenerate here: D-R7-7's paired train-vs-held instrument -- identical held values make h = 0 by
+  construction. Queued behind D-R7-10b (one job at a time); dropped rather than the re-run if the clock tightens.
