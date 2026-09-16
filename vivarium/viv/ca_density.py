@@ -267,6 +267,11 @@ def run(payload: dict, *, seed: int) -> dict:
             "the wrapper's recomputed at_T mask disagrees with "
             "core.classify's; refusing to report a number from a wrapper that "
             "has drifted from its library")
+    if core.pack_mask_hex(correct_at_t) != at_t["correct_mask_hex"]:
+        raise core.EvcaError(
+            "the wrapper's packed at_T mask disagrees with core.classify's "
+            "correct_mask_hex; refusing to report a mask from a wrapper that "
+            "has drifted from its library")
 
     # stable: correct at T AND one further update leaves the lattice there.
     # Measured, not inferred from the fixed-point bits.
@@ -333,12 +338,14 @@ def run(payload: dict, *, seed: int) -> dict:
         "witness_truncated": truncated,
         # THEO-REQ-004 (2). The per-IC success mask itself, under the declared
         # criterion, so a margin-response curve can be read off the fossil
-        # instead of re-executing every IC. Encoding: numpy packbits, big bit
-        # order -- IC i is bit (7 - i % 8) of byte i // 8, zero-padded to a
-        # byte boundary, n_ic_total bits meaningful. Unpacked, its one-byte-
+        # instead of re-executing every IC. The LIBRARY's encoding
+        # (core.pack_mask_hex, dbc41fd2f): numpy packbits, big bit order -- IC
+        # i is bit (7 - i % 8) of byte i // 8, zero-padded to a byte boundary,
+        # n_ic_total bits meaningful; core.unpack_mask_hex inverts it. Under
+        # at_T this is byte-identical to the library's own correct_mask_hex
+        # (checked below, the same way the digest is). Unpacked, its one-byte-
         # per-IC sha256 is `mask_digest` (asserted in the tests).
-        "success_mask_hex": np.packbits(chosen.astype(np.uint8),
-                                        bitorder="big").tobytes().hex(),
+        "success_mask_hex": core.pack_mask_hex(chosen),
         # Present on every row so a reader never has to infer which shape
         # `accuracy` has from the criterion string.
         "accuracy_is_per_cell_mean": criterion == "cellwise_majority_match",

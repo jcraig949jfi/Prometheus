@@ -188,3 +188,20 @@ def test_mask_cheat_a_padding_bit_cannot_pose_as_an_ic():
     assert raw.size == 24 and not raw[17:].any()
     mask = _unpack(out["success_mask_hex"], 17)
     assert np.flatnonzero(~mask).tolist() == out["misclassified_ic"]
+
+
+def test_mask_is_the_librarys_encoding_under_at_T():
+    """One encoding, one owner: under at_T the kind's field is byte-identical
+    to core.classify's correct_mask_hex, and core.unpack_mask_hex inverts it."""
+    import numpy as np
+    from viv.ca_density import _evca
+    core = _evca()[1]
+    out = _ex.run(_spec(), seed=20260908, state=None)
+    p = _spec()["work"]["payload"]
+    table = core.decode_table(p["rule_hex"]) if hasattr(core, "decode_table") \
+        else core.require_table(core.parse_table(p["rule_hex"]))
+    ics = core.make_ics(p["n_ic"], p["n_cells"], 20260908)
+    lib = core.classify(table, ics, p["steps"])
+    assert out["success_mask_hex"] == lib["correct_mask_hex"]
+    mask = core.unpack_mask_hex(out["success_mask_hex"], out["n_ic_total"])
+    assert np.flatnonzero(~mask.astype(bool)).tolist() == out["misclassified_ic"]

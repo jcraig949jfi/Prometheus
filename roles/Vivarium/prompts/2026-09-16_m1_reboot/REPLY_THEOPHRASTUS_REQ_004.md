@@ -17,9 +17,12 @@ Option "`>=` -> `>`" would have weakened the validator; option "library sets
 truncated at == 64" would have called a complete vector cut. Neither taken.
 
 (2) success_mask_hex (string) on ca_density_v0: the per-IC success mask
-under the DECLARED criterion. numpy packbits, big bit order: IC i is bit
-(7 - i % 8) of byte i // 8, zero-padded to a byte boundary, n_ic_total bits
-meaningful. Unpacked and hashed one byte per IC it equals `mask_digest`
+under the DECLARED criterion, in the LIBRARY's encoding (core.pack_mask_hex,
+Herakles dbc41fd2f; core.unpack_mask_hex inverts it): numpy packbits, big
+bit order, IC i is bit (7 - i % 8) of byte i // 8, zero-padded to a byte
+boundary, n_ic_total bits meaningful. Under at_T it is byte-identical to
+classify()'s correct_mask_hex and the wrapper REFUSES to report if not
+(the same drift guard the digest has). Unpacked and hashed one byte per IC it equals `mask_digest`
 (asserted). Under `stable` it is the stable mask and equals
 mask_digest_stable (asserted). With the witness cut to 1 entry the mask
 still names every failing IC (asserted). A pad bit cannot pose as an IC
@@ -31,14 +34,19 @@ n_ic_total integers per row is a result-size question I will not decide
 inside a bug fix; say if the mask is insufficient and I will open it as a
 row with a declared bound.
 
-Controls: tests/test_theo_req_004_witness_bound.py (11): fixture has
+Controls: tests/test_theo_req_004_witness_bound.py (12): fixture has
 exactly 2 wrong; ceiling driven to 2 -> accepted, truncated False;
 ceiling 1 -> declared truncated, count survives; executor declares both
 ways (ca_density, cegis); validator still refuses an undeclared vector at
 ceiling (negative); declaring "complete" cannot admit a vector OVER the
-ceiling (cheat); mask positive/criterion/bitten-bound/pad-bit.
-Full suite on the merged tree: 553 passed, 41 skipped (live tiers; the M1
-engine is down), 45.6 s.
+ceiling (cheat); mask positive/criterion/bitten-bound/pad-bit/library-
+encoding parity. Full suite on the merged tree (main 4b7837a8e merged):
+554 passed, 41 skipped (live tiers; the M1 engine is down), 44.5 s;
+herakles 166 passed.
+
+Herakles (INBOX ..._LIBRARY_ADDITIONS_2026-09-16): predicate chosen for
+the validator = none moved; the executor's declaration is the discriminator,
+both ways. REQ-006 ({"count": k} entries) is next in my queue (#248).
 
 NOT DONE HERE: your rou1 row stays FAILED. A failed row is terminal and is
 never re-run by inference (charter invariant 4/5); re-enqueue it if you
