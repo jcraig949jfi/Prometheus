@@ -825,3 +825,17 @@
   before any row. Dev check (no rows, no held values computed): GraphBLAS == reference, tick loop 0 mismatched on clean /
   corrupt / silent, cheats 100% caught, evidence intervention 249/258 genomes, GENS by rule 1600 (projected 3501 CPU-s).
   Test file 3 passed rc 0 (includes job() end to end on a stub ctx with the G1 emit check).
+
+## 2026-09-16 round 8 C-R8-AP-01 PASS, AP-02 ran, AP-03 queued (m1-23be3a04)
+
+- C-R8-AP-01 job 1ac7a8f781c3 ok (1485 s wall, 2466 CPU-s). Planted silent null FAILED first (0.12354 in all 32 runs,
+  below floor 0.12836). PASS: cell median 0.55057 (IQR 0.2505) vs control 0.58356 (IQR 0.1905), bar 0.48833; P3 32/32;
+  oracles clean; NOT vacuous (32 distinct values per arm, no saturation; exact code reaches 1.0). Caveat in the receipt:
+  wide control IQR puts the P1 bar 0.095 below the control median. RECEIPT 1789594148944-0.
+- OWN ERROR (disclosed): my push rebased the worker's local rows commits, orphaning 5cc020828; the first receipt attempt
+  cited it and the guard refused (SHA not on integration). Refiled at the rebased 657764c7e (same rows blob, 99 lines).
+  Same trap as feedback_committed_sha_can_be_orphaned_by_autorebase: cite the SHA from origin after the push.
+- AP-02/AP-03 predicates 1789594102998-0 / 1789594104765-0 pinned 26b55dc46; worker restarted after the rebase (pid 26028).
+- C-R8-AP-02 job 3c8012add47f ok, 312 s wall, but queued ~1 h 50 min behind shared CPU (submitted ~17:30, rows ~19:20).
+- Anomaly noted (not judged): the planted greedy code's TRAIN fitness is HIGHER through the corrupted table (2,370,731) than
+  the clean one (2,270,340), while on HELD it is slightly lower (2,250,536 vs 2,259,649).
