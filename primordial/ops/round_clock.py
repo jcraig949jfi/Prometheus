@@ -13,20 +13,29 @@ drain to T+6600, close at T+7200. Phases, from the timestamps alone:
   DRAINING      drain_ts <= now < end_ts           stop flags set; checkpointable jobs pause
   CLOSED        now >= end_ts
 
-    python -m primordial.ops.round_clock start [--round r5] [--stage PILOT]
+G8 (round 8, ruling R18): UNKNOWN PRODUCTION ROUND IDS FAIL CLOSED. A production-shaped id (r<digit>...) that has
+no ROUNDS row raises UnknownRound from plan()/start() -- no other round's clock or lane_repos is ever substituted
+(before G8, plan(t, "r8") silently returned r7's 8 x 3600 s). DEFAULT_ROUND survives only as a DEVELOPMENT
+convenience for non-production ids (test ids such as t-r7-1); the CLIs refuse to start a clock without an explicit
+--round. The r8 row holds the NOMINAL 12 epochs; the launcher passes science_end_ts (cap_end_ts below) and plan()
+ends WORKING there, with a short final epoch, so end_ts never passes the cap (R17: ~11 h 40 min, accepted).
+
+    python -m primordial.ops.round_clock start --round r8 [--stage PILOT] [--t0-ts T0]
     python -m primordial.ops.round_clock show
 """
 from __future__ import annotations
 
 import argparse
 import json
+import math
+import re
 import time
 
 CURRENT = "pm:round:current"
 KEY = "pm:round:{}"
 # One row per round, frozen by its SWARM file: r5 = SWARM_R5 O7; r6 = SWARM_R6 s0 (5 x 40 min, NNW T+200 min,
-# drain to T+220, close T+240; stage PRODUCTION per operator 22). An unknown round id takes DEFAULT_ROUND's row
-# for every parameter not passed explicitly.
+# drain to T+220, close T+240; stage PRODUCTION per operator 22). G8/R18: an unknown PRODUCTION id raises; only a
+# development id (not r<digit>...) takes DEFAULT_ROUND's row for the parameters not passed explicitly.
 ROUNDS = {
     "r5": {"stage": "PILOT", "epoch_s": 1500.0, "epochs": 4, "drain_s": 600.0, "close_s": 600.0},
     "r6": {"stage": "PRODUCTION", "epoch_s": 2400.0, "epochs": 5, "drain_s": 1200.0, "close_s": 1200.0},
@@ -36,21 +45,68 @@ ROUNDS = {
            "lane_repos": {**{L: [f"F:/Prometheus-worktrees/nestor-r7-{L.lower()}"] for L in "BCDER"},
                           "G": ["F:/Prometheus-worktrees/nestor-bld-g"],
                           "gpu": ["F:/Prometheus-worktrees/nestor-r7-e", "F:/Prometheus-worktrees/nestor-r6-e"]}},
+    # G8 (BUILD_R8, SWARM_R8 s1, operator 25): nominal 12 x 3600 s; the launcher caps it (science_end_ts, R17).
+    # lane_repos COMPLETE: every lane that may run a worker (r7 left A,F,H,P,Q undeclared -> FOREIGN_REPO, D14).
+    "r8": {"stage": "PRODUCTION", "epoch_s": 3600.0, "epochs": 12, "drain_s": 1800.0, "close_s": 1800.0,
+           "lane_repos": {**{L: [f"F:/Prometheus-worktrees/nestor-r8-{L.lower()}"] for L in "BCDER"},
+                          **{L: [f"F:/Prometheus-worktrees/nestor-bld-{L.lower()}"] for L in "GHFPQ"},
+                          "A": ["F:/Prometheus-worktrees/nestor-sidequest-graphworld"],
+                          "gpu": ["F:/Prometheus-worktrees/nestor-r8-e"]}},
 }
-DEFAULT_ROUND = "r7"
+DEFAULT_ROUND = "r7"                # DEVELOPMENT convenience only (R18): never supplies a production id's row
+PRODUCTION_ID = re.compile(r"[rR]\d")   # r8, r9, R10, r8b ... : a campaign clock id, which must have its own row
+# LAUNCH_R8 s4 (ADAPT-2): SCIENCE_END_TS = min(science_start + 12 h, T0 + 15 h - teardown_reserve)
+CAP_S = 15 * 3600.0
+TEARDOWN_RESERVE_S = 3600.0
+NOMINAL_SCIENCE_S = 12 * 3600.0
+
+
+class UnknownRound(KeyError):
+    """R18: a production round id with no ROUNDS row. Never inferred from DEFAULT_ROUND."""
+
+
+def is_production_id(round_id) -> bool:
+    return bool(round_id) and bool(PRODUCTION_ID.match(str(round_id)))
+
+
+def row_for(round_id: str) -> dict:
+    """The ROUNDS row of round_id. A production id without a row RAISES (R18); a development id (e.g. t-r7-1)
+    may borrow DEFAULT_ROUND's row as a convenience."""
+    if round_id in ROUNDS:
+        return ROUNDS[round_id]
+    if not round_id or is_production_id(round_id):
+        raise UnknownRound(f"UNKNOWN_ROUND:{round_id!r} has no round_clock.ROUNDS row; a production campaign clock "
+                           f"never infers its identity (R18) -- define ROUNDS[{round_id!r}] explicitly")
+    return ROUNDS[DEFAULT_ROUND]
+
+
+def cap_end_ts(t0_ts: float, science_start_ts: float, nominal_s: float = NOMINAL_SCIENCE_S, cap_s: float = CAP_S,
+               teardown_reserve_s: float = TEARDOWN_RESERVE_S) -> float:
+    """LAUNCH_R8 s4: the latest end_ts the round may have. r8 at T0+2h20m -> T0+14h (42,000 s)."""
+    return min(science_start_ts + nominal_s, t0_ts + cap_s - teardown_reserve_s)
 R5 = ROUNDS["r5"]
 FLOATS = ("start_ts", "epoch_s", "no_new_work_ts", "drain_ts", "end_ts")
 
 
 def plan(start_ts: float, round_id: str = DEFAULT_ROUND, stage: str | None = None, epoch_s: float | None = None,
-         epochs: int | None = None, drain_s: float | None = None, close_s: float | None = None) -> dict:
-    row = ROUNDS.get(round_id, ROUNDS[DEFAULT_ROUND])
+         epochs: int | None = None, drain_s: float | None = None, close_s: float | None = None,
+         science_end_ts: float | None = None) -> dict:
+    """science_end_ts (G8/R17): the cap-anchored latest end_ts (cap_end_ts). WORKING then ends at
+    min(start + epochs*epoch_s, science_end_ts - drain_s - close_s); epochs becomes the count of (possibly short
+    final) epochs, so no boundary and no end_ts falls after the cap. A cap that leaves no working time raises."""
+    row = row_for(round_id)
     stage = row["stage"] if stage is None else stage
     epoch_s = row["epoch_s"] if epoch_s is None else epoch_s
     epochs = row["epochs"] if epochs is None else epochs
     drain_s = row["drain_s"] if drain_s is None else drain_s
     close_s = row["close_s"] if close_s is None else close_s
     nnw = start_ts + epochs * epoch_s
+    if science_end_ts is not None:
+        nnw = min(nnw, float(science_end_ts) - drain_s - close_s)
+        if nnw <= start_ts:
+            raise ValueError(f"CAP_EXHAUSTED: science_end_ts {science_end_ts} leaves no working time after drain "
+                             f"{drain_s} + close {close_s} from start {start_ts}")
+        epochs = math.ceil(round((nnw - start_ts) / epoch_s, 9))
     return {"round_id": round_id, "stage": stage, "start_ts": round(start_ts, 3), "epoch_s": float(epoch_s),
             "epochs": int(epochs), "no_new_work_ts": round(nnw, 3), "drain_ts": round(nnw + drain_s, 3),
             "end_ts": round(nnw + drain_s + close_s, 3)}
@@ -58,6 +114,7 @@ def plan(start_ts: float, round_id: str = DEFAULT_ROUND, stage: str | None = Non
 
 def start(r, round_id: str = DEFAULT_ROUND, start_ts: float | None = None, **kw) -> dict:
     """Start the round once. A second start returns the existing clock unchanged (no restart, no extension)."""
+    row_for(round_id)                                           # R18: an unknown production id writes nothing
     existing = read(r, round_id)
     if existing is not None:
         return existing
@@ -125,12 +182,24 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("start")
-    s.add_argument("--round", default=DEFAULT_ROUND)
+    s.add_argument("--round", required=True, help="R18: explicit; a campaign clock never infers its identity")
     s.add_argument("--stage", default=None, help="default: the round's ROUNDS row")
+    s.add_argument("--t0-ts", type=float, default=None, help="G8: round T0; caps end_ts at cap_end_ts(T0, now)")
     sub.add_parser("show")
     a = ap.parse_args(argv)
+    if a.cmd == "start":
+        try:
+            row_for(a.round)
+        except UnknownRound as e:
+            print(f"refused: {e}")
+            return 2
     r = bus.conn()
-    clock = start(r, a.round, stage=a.stage) if a.cmd == "start" else read(r)
+    if a.cmd == "start":
+        now = time.time()
+        cap = None if a.t0_ts is None else cap_end_ts(a.t0_ts, now)
+        clock = start(r, a.round, start_ts=now, stage=a.stage, science_end_ts=cap)
+    else:
+        clock = read(r)
     print(json.dumps({"clock": clock, **phase(clock)}, sort_keys=True))
     return 0
 

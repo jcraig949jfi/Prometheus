@@ -7,7 +7,10 @@ At T + n x epoch_s the controller:
   3. waits until every live worker reports `stopped` (pm:worker:<L>, refreshed
      by the worker; a lane with no live worker is not waited for), or
      drain_timeout_s, recording stragglers;
-  4. exports the bus (ops/bus_export) into <out>/epoch_<n>/;
+  4. exports the bus (ops/bus_export) into <out>/epoch_<n>/; G7 (round 8): only rows after each stream's cursor,
+     every pm:jobs:<L>:done and telemetry stream included, cursor + partition in <out>/export_cursor.json
+     (committed with the epoch); at close a last delta (<out>/close/), one full dump per stream
+     (<out>/close_full/) and a byte-identity check of full vs concatenated deltas, recorded in ROUND_<id>.json;
   4b. (bootpack=True, F15) writes one boot pack per lane into
      <out>/epoch_<n>/bootpack/<L>.md;
   5. writes the conductor record <out>/EPOCH_<n>.json and commits the
@@ -34,6 +37,18 @@ never waits on it.
 
     python -m primordial.ops.epoch run --lanes B,C,D,E [--epoch-min 30] [--epochs N]
     python -m primordial.ops.epoch boundary N --lanes B,C,D,E      # one boundary now
+    python -m primordial.ops.epoch lint --sequence FILE [--beacons] # G4 close/watch protocol lint (rc 1 = FAIL)
+
+G4 (round 8, D31) CLOSE/WATCH PROTOCOL. D31 was the conductor's: A's close note told lanes to stop their watchers, a
+lane complied, its gpuq arbiter exited ~1 min after a ruling said to keep it -- 683 s deaf. The protocol:
+  * a lane's ASK WATCH stays alive until DRAIN and stops only AFTER that lane's workers and after every SHARED
+    service stop (a lane must be able to hear a "keep it" ruling until the last thing it could affect is down);
+  * a SHARED service (SHARED_SERVICES, e.g. the gpuq arbiter) is stopped only with a current conductor
+    confirmation record pm:close:confirm:<service> (hash: by, ts, ref) written before the stop;
+  * watchers emit start/stop BEACONS (emitted by P in fabric/worker.py; field names agreed on the bus) to
+    BEACONS; this module owns only the LINT over them.
+protocol_lint() checks a written close SEQUENCE (json steps or a numbered prose note, parse_close_text) before it
+is sent; beacon_lint() checks what actually happened; close_sweep() flags unconfirmed shared stops at close.
 """
 from __future__ import annotations
 
@@ -92,6 +107,7 @@ class EpochController:
         self.push_branch = push_branch
         self.repo = repo
         self.export = export or bus_export.export
+        self.cursor_path = self.out / bus_export.CURSOR_NAME     # G7: committed with every epoch
         self.drain_timeout_s = drain_timeout_s
         self.post, self.log = post, log
         self.events: list[dict] = []
@@ -155,6 +171,28 @@ class EpochController:
         self.log(f"[epoch] {name} {json.dumps(kw, sort_keys=True)}")
         return e
 
+    def _cursored(self) -> bool:
+        from primordial.ops import bus_export
+        return self.export is bus_export.export
+
+    def _export(self, out, stamp: str) -> dict:
+        """G7: the real exporter runs with the committed cursor (deltas only); an injected one keeps its signature."""
+        if self._cursored():
+            return self.export(out=out, stamp=stamp, r=self.r, cursor_path=self.cursor_path, lanes=self.lanes)
+        return self.export(out=out, stamp=stamp, r=self.r)
+
+    def close_export(self) -> dict | None:
+        """G7 close: last delta, one full dump per stream, and full == concatenated deltas byte for byte."""
+        if not self._cursored():
+            return None
+        from primordial.ops import bus_export
+        last = self._export(self.out / "close", "close")
+        keys = sorted({s for part in bus_export.load_cursor(self.cursor_path)["partitions"] for s in part["streams"]})
+        bus_export.full_dump(self.out / "close_full", r=self.r, stream_keys=keys)
+        v = bus_export.verify_full(self.out, self.out / "close_full", self.cursor_path)
+        self._event("export_full", ok=v["ok"], mismatched=v["mismatched"], close_rows={k: c[1] for k, c in last.items()})
+        return v
+
     def _live_workers(self) -> dict:
         return {L: self.r.hgetall(WSTATE.format(L)) for L in self.lanes if self.r.exists(WSTATE.format(L))}
 
@@ -200,8 +238,13 @@ class EpochController:
         self._wait_until(clock["drain_ts"])
         out.append(self.boundary(int(clock["epochs"]), resume=False, max_drain_s=clock["end_ts"] - time.time()))
         self._wait_until(clock["end_ts"])
+        full = self.close_export()
+        # G4: unconfirmed shared stops / deaf watchers up to end_ts, committed in the close record (the event tail
+        # round_closed .. current_unset is a pinned contract, so the sweep runs before it)
+        sweep = close_sweep(self.r)
+        self._event("close_sweep", ok=sweep["ok"], checks_run=sweep["checks_run"], violations=sweep["violations"])
         rec = {"round_id": rid, "clock": clock, "closed_ts": round(time.time(), 3), "epochs": out,
-               "budget": self._budget()}
+               "budget": self._budget(), "export_full": full, "close_sweep": sweep}
         (self.out / f"ROUND_{rid}.json").write_text(json.dumps(rec, indent=1, sort_keys=True, default=str) + "\n",
                                                    encoding="utf-8")
         self.r.hset(STATE, mapping={"phase": "closed", "ts": rec["closed_ts"]})
@@ -250,7 +293,7 @@ class EpochController:
             time.sleep(0.05)
         drained = self._event("drained", workers=sorted(live), stragglers=waiting, drain_timeout_s=drain_s)
         epoch_dir = self.out / f"epoch_{n}"
-        counts = self.export(out=epoch_dir, stamp=f"e{n}", r=self.r)
+        counts = self._export(epoch_dir, f"e{n}")
         self._event("exported", counts={k: v[1] for k, v in counts.items()})
         if self.bootpack:
             from primordial.ops import bootpack
@@ -289,6 +332,174 @@ class EpochController:
         return out
 
 
+# ---------------------------------------------------------------- G4: close/watch protocol lint (D31)
+
+BEACONS = "pm:telemetry:watch"               # XADD by P (worker.py), field json = WATCH_BEACON record (P 1789564787642-0)
+WATCH_START, WATCH_STOP = "WATCH_START", "WATCH_STOP"
+ASK_WATCH, WORKER = "ask_watch", "worker"
+SHARED_SERVICES = ("gpuq",)                  # stopping one needs a conductor confirmation record
+CONFIRM = "pm:close:confirm:{}"             # hash {by, ts, ref}; written by the conductor BEFORE the stop
+CONFIRM_MAX_AGE_S = 3600.0                   # "current": no older than this at the stop
+# The controller's own close order (run_round): drain boundary -> close record -> stop registered workers -> clear
+# flags. It stops no watcher and no shared service; the suite lints it so a reorder cannot slip in unseen.
+CONTROLLER_CLOSE_SEQUENCE = [{"action": "drain"}, {"action": "stop", "target": "worker", "lane": "*"}]
+
+
+def _norm_step(st) -> dict:
+    st = dict(st)
+    st["action"] = str(st.get("action", "")).lower()
+    st["target"] = str(st.get("target", "")).lower()
+    st["lane"] = st.get("lane") or "*"
+    return st
+
+
+def _same_lane(a, b) -> bool:
+    return a == "*" or b == "*" or a == b
+
+
+def protocol_lint(sequence, shared=SHARED_SERVICES) -> dict:
+    """-> {ok, checks_run, violations}. Steps, in execution order: {"action": "drain"} | {"action": "confirm",
+    "target": <service>} | {"action": "stop", "target": ask_watch | worker | <service>, "lane": L or "*"}.
+    FAIL on an ask-watch stop before DRAIN, before (or without) its lane's worker stop, or before any shared-service
+    stop; and on a shared-service stop with no preceding confirm step."""
+    steps = [_norm_step(x) for x in sequence]
+    shared = {x.lower() for x in shared}
+    violations, checks = [], 0
+    drain_at = next((i for i, x in enumerate(steps) if x["action"] == "drain"), None)
+    for i, st in enumerate(steps):
+        if st["action"] != "stop":
+            continue
+        if st["target"] in shared:
+            checks += 1
+            if not any(x["action"] == "confirm" and x["target"] == st["target"] for x in steps[:i]):
+                violations.append({"step": i, "kind": "SHARED_STOP_UNCONFIRMED", "service": st["target"]})
+        if st["target"] != ASK_WATCH:
+            continue
+        L = st["lane"]
+        checks += 1
+        if drain_at is None or drain_at > i:
+            violations.append({"step": i, "kind": "ASK_WATCH_STOP_BEFORE_DRAIN", "lane": L})
+        checks += 1
+        workers = [j for j, x in enumerate(steps) if x["action"] == "stop" and x["target"] == WORKER
+                   and _same_lane(x["lane"], L)]
+        if not workers or max(workers) > i:
+            violations.append({"step": i, "kind": "ASK_WATCH_STOP_BEFORE_WORKERS", "lane": L,
+                               "worker_stop_steps": workers})
+        checks += 1
+        later_shared = [j for j, x in enumerate(steps) if j > i and x["action"] == "stop" and x["target"] in shared]
+        if later_shared:
+            violations.append({"step": i, "kind": "ASK_WATCH_STOP_BEFORE_SHARED_SERVICE", "lane": L,
+                               "shared_stop_steps": later_shared})
+    return {"ok": not violations, "checks_run": checks, "violations": violations}
+
+
+def parse_close_text(text: str, shared=SHARED_SERVICES) -> list[dict]:
+    """A close NOTE in prose -> steps, one line at a time in order (the D31 note was prose). Per line: 'drain'
+    (without a stop verb); 'confirm ... <service>'; 'stop|kill|exit ... watch/watcher/ask-watch'; '... worker(s)';
+    '... <service>' (gpuq also matches 'arbiter'). 'lane X' scopes a line to X. Unrecognised lines yield nothing."""
+    import re
+    stop_verb = r"\b(stop|stopping|kill|exit|end|shut)"
+    steps = []
+    for line in text.splitlines():
+        low = line.lower()
+        m = re.search(r"\blane\s+([A-Z])\b", line)
+        lane = m.group(1) if m else "*"
+        has_stop = re.search(stop_verb, low)
+        if re.search(r"\bdrain", low) and not has_stop:
+            steps.append({"action": "drain"})
+        for svc in shared:
+            names = (svc, "arbiter") if svc == "gpuq" else (svc,)
+            if any(n in low for n in names):
+                if re.search(r"\bconfirm", low):
+                    steps.append({"action": "confirm", "target": svc})
+                elif has_stop:
+                    steps.append({"action": "stop", "target": svc})
+        if has_stop:
+            if re.search(r"\bworkers?\b", low):
+                steps.append({"action": "stop", "target": WORKER, "lane": lane})
+            if re.search(r"\bwatch(er|ers|es)?\b|\bask[- ]?watch", low):
+                steps.append({"action": "stop", "target": ASK_WATCH, "lane": lane})
+    return steps
+
+
+def _kind(b) -> str:
+    return str(b.get("kind", "")).lower()
+
+
+def _ts(b) -> float:
+    return float(b.get("ts") or 0)
+
+
+def normalize_beacons(entries) -> list[dict]:
+    """Beacon rows -> the lint's shape {event, lane, kind, ts, pid, shared, tag, started_ts}. Accepts P's agreed record
+    (a stream entry {"json": "..."} or its decoded dict, G7-exported rows included: {record: WATCH_BEACON, beacon:
+    START|BEAT|STOP, lane, watcher, tag, pid, ts, started_ts, ...}; BEAT dropped) and the lint's own shape as is."""
+    out = []
+    for e in entries:
+        e = dict(e)
+        if "json" in e:
+            j = e["json"]
+            e = json.loads(j) if isinstance(j, str) else dict(j)
+        if e.get("record") == "WATCH_BEACON" or "beacon" in e:
+            b = str(e.get("beacon", "")).upper()
+            if b not in ("START", "STOP"):
+                continue
+            e = {**e, "event": WATCH_START if b == "START" else WATCH_STOP, "kind": e.get("watcher", "")}
+        if e.get("event") in (WATCH_START, WATCH_STOP):
+            out.append(e)
+    return out
+
+
+def beacon_lint(beacons, confirmations: dict | None = None, shared=SHARED_SERVICES) -> dict:
+    """What ACTUALLY happened, from watcher beacons (live BEACONS rows or their G7 export). Fields: event
+    (WATCH_START | WATCH_STOP), lane, kind (ask_watch | worker | <service>), ts, shared (0|1), pid, tag, round_id,
+    reason. FAIL when a lane's ask_watch WATCH_STOP precedes a WATCH_STOP of that lane's worker or of any shared
+    service (deaf_s = the gap), or when a started worker of that lane had not stopped; flag a shared WATCH_STOP with
+    no current confirmation (confirmations: service -> {ts, by, ref}, ts within CONFIRM_MAX_AGE_S before the stop)."""
+    rows = sorted(normalize_beacons(beacons), key=_ts)
+    shared = {x.lower() for x in shared}
+    confirmations = confirmations or {}
+    stops = [b for b in rows if b.get("event") == WATCH_STOP]
+
+    def is_shared(b):
+        return _kind(b) in shared or str(b.get("shared", "0")).lower() in ("1", "true")
+
+    violations, checks = [], 0
+    for b in stops:
+        ts = _ts(b)
+        if is_shared(b):
+            checks += 1
+            c = confirmations.get(_kind(b)) or {}
+            if not c or not (ts - CONFIRM_MAX_AGE_S <= float(c.get("ts") or -1e18) <= ts):
+                violations.append({"kind": "SHARED_STOP_UNCONFIRMED", "service": _kind(b), "lane": b.get("lane"),
+                                   "ts": ts, "confirmation": c or None})
+        if _kind(b) != ASK_WATCH:
+            continue
+        L = b.get("lane")
+        checks += 1
+        late_w = [_ts(x) for x in stops if _kind(x) == WORKER and x.get("lane") == L and _ts(x) > ts]
+        started = [x for x in rows if x.get("event") == WATCH_START and _kind(x) == WORKER and x.get("lane") == L
+                   and _ts(x) <= ts]
+        unstopped = [x.get("pid") for x in started
+                     if not any(_kind(y) == WORKER and y.get("pid") == x.get("pid") and _ts(y) <= ts for y in stops)]
+        if late_w or unstopped:
+            violations.append({"kind": "ASK_WATCH_STOP_BEFORE_WORKERS", "lane": L, "ts": ts,
+                               "deaf_s": round(max(late_w or [ts]) - ts, 3), "unstopped_worker_pids": unstopped})
+        checks += 1
+        late_s = [_ts(x) for x in stops if is_shared(x) and _ts(x) > ts]
+        if late_s:
+            violations.append({"kind": "ASK_WATCH_STOP_BEFORE_SHARED_SERVICE", "lane": L, "ts": ts,
+                               "deaf_s": round(max(late_s) - ts, 3)})
+    return {"ok": not violations, "checks_run": checks, "violations": violations}
+
+
+def close_sweep(r, since_id: str = "-", shared=SHARED_SERVICES) -> dict:
+    """G4 acceptance 2, at close: beacon_lint over the live BEACONS stream with the pm:close:confirm:* records."""
+    beacons = [f for _, f in r.xrange(BEACONS, min=since_id)] if r.exists(BEACONS) else []
+    conf = {svc: r.hgetall(CONFIRM.format(svc)) for svc in shared}
+    return beacon_lint(beacons, {k: v for k, v in conf.items() if v}, shared)
+
+
 def parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -299,6 +510,11 @@ def parser() -> argparse.ArgumentParser:
     bo = sub.add_parser("boundary")
     bo.add_argument("n", type=int)
     bo.add_argument("--lanes", required=True)
+    li = sub.add_parser("lint", help="G4: lint a close sequence (json steps or a prose note) and/or live beacons")
+    li.add_argument("--sequence", help="file: a json list of steps, or a close note in prose")
+    li.add_argument("--beacons", action="store_true", help="also lint the live pm:telemetry:watch beacons")
+    li.add_argument("--self-test", action="store_true",
+                    help="G4 gate argv: canonical close sequences must PASS and the planted D31 shapes must FAIL")
     rd = sub.add_parser("round", help="F-R5-2: start (or join) the round clock and run it to close")
     rd.add_argument("--lanes", required=True)
     from primordial.ops import round_clock as RC
@@ -309,6 +525,8 @@ def parser() -> argparse.ArgumentParser:
     rd.add_argument("--epochs", type=int, default=None)
     rd.add_argument("--drain-s", type=float, default=None)
     rd.add_argument("--close-s", type=float, default=None)
+    rd.add_argument("--t0-ts", type=float, default=None,
+                    help="G8/R17: round T0; end_ts is capped at round_clock.cap_end_ts(T0, clock start)")
     rd.add_argument("--allow-repos", "--allowed-repos", dest="allowed_repos", default=None,
                     help="F-R7-1: G=F:/x;B=F:/y or a flat comma list (default: ROUNDS lane_repos)")
     for p in (ru, bo, rd):
@@ -322,8 +540,83 @@ def round_shape(a) -> dict:
     return {"stage": a.stage, "epoch_s": a.epoch_s, "epochs": a.epochs, "drain_s": a.drain_s, "close_s": a.close_s}
 
 
+def explicit_round(argv) -> bool:
+    """G8/R18: the `round` command names its round. The parser default (DEFAULT_ROUND) is a development
+    convenience only; a production clock never starts from it."""
+    return any(x == "--round" or x.startswith("--round=") for x in (sys.argv[1:] if argv is None else argv))
+
+
+# Canonical close order for a lane (G4 protocol): drain; workers down; shared service down only after a conductor
+# confirmation; the ask watch LAST.
+LANE_CLOSE_SEQUENCE = [{"action": "drain"}, {"action": "stop", "target": WORKER, "lane": "*"},
+                       {"action": "confirm", "target": "gpuq"}, {"action": "stop", "target": "gpuq"},
+                       {"action": "stop", "target": ASK_WATCH, "lane": "*"}]
+# Planted: A's r7 close note shape (D31) -- watchers stopped before workers and the arbiter, no confirmation.
+PLANTED_D31_NOTE = """1. Drain has begun; no new jobs.
+2. Lanes: stop your ask watchers now.
+3. Then stop workers.
+4. Stop the gpuq arbiter when your last GPU job ends."""
+PLANTED_D31_BEACONS = [
+    {"record": "WATCH_BEACON", "beacon": "START", "lane": "E", "watcher": "worker", "pid": 11, "ts": 1.0},
+    {"record": "WATCH_BEACON", "beacon": "STOP", "lane": "E", "watcher": "worker", "pid": 11, "ts": 100.0},
+    {"record": "WATCH_BEACON", "beacon": "STOP", "lane": "E", "watcher": "ask_watch", "pid": 10, "ts": 200.0},
+    {"record": "WATCH_BEACON", "beacon": "STOP", "lane": "E", "watcher": "gpuq", "pid": 12, "ts": 883.0}]
+
+
+def self_test() -> list[tuple[str, bool, dict]]:
+    """G4 gate: (name, passed, report). A lint that cannot FAIL is not a lint, so the planted shapes must fail."""
+    out = []
+    for name, rep_, want_ok in (("controller_close_sequence", protocol_lint(CONTROLLER_CLOSE_SEQUENCE), True),
+                                ("lane_close_sequence", protocol_lint(LANE_CLOSE_SEQUENCE), True),
+                                ("planted_d31_note", protocol_lint(parse_close_text(PLANTED_D31_NOTE)), False),
+                                ("planted_d31_beacons", beacon_lint(PLANTED_D31_BEACONS), False)):
+        # the controller stops no watcher and no shared service, so 0 checks is its correct result; every other
+        # case must actually exercise the lint
+        vacuous_ok = name == "controller_close_sequence"
+        out.append((name, rep_["ok"] is want_ok and (rep_["checks_run"] > 0 or vacuous_ok), rep_))
+    return out
+
+
+def lint_main(a) -> int:
+    """G4 CLI: rc 0 only when at least one lint ran and every lint passed; prints `checks run: N`."""
+    reps = []
+    if a.self_test:
+        for name, passed, x in self_test():
+            reps.append((name, {"ok": passed, "checks_run": 1, "violations": [] if passed else [{"kind": "SELF_TEST_FAILED",
+                                                                                            "report": x}]}))
+    if a.sequence:
+        text = pathlib.Path(a.sequence).read_text(encoding="utf-8")
+        try:
+            steps = json.loads(text)
+        except ValueError:
+            steps = parse_close_text(text)
+        reps.append(("sequence", protocol_lint(steps)))
+    if a.beacons:
+        from primordial.bus import bus
+        reps.append(("beacons", close_sweep(bus.conn())))
+    for name, x in reps:
+        print(json.dumps({"lint": name, **x}, sort_keys=True))
+    ok = bool(reps) and all(x["ok"] for _, x in reps)
+    print(f"checks run: {sum(x['checks_run'] for _, x in reps)}")
+    print("PROTOCOL LINT " + ("PASS" if ok else "FAIL"))
+    return 0 if ok else 1
+
+
 def main(argv=None) -> int:
     a = parser().parse_args(argv)
+    if a.cmd == "lint":
+        return lint_main(a)
+    if a.cmd == "round":
+        from primordial.ops import round_clock as RC
+        if not explicit_round(argv):
+            print("refused: `round` needs an explicit --round (R18: a campaign clock never infers its identity)",
+                  file=sys.stderr)
+            return 2
+        try:
+            RC.row_for(a.round)
+        except RC.UnknownRound as e:
+            print(f"refused: {e}", file=sys.stderr)
+            return 2
     ok, why = controller_repo(a.repo)
     if not ok:
         print(f"refused: {why}", file=sys.stderr)
@@ -341,7 +634,9 @@ def main(argv=None) -> int:
             print(json.dumps(rep, sort_keys=True, default=str))
             print(f"refused: residue in the live store ({len(rep['residue'])} items)", file=sys.stderr)
             return 3
-        rec = ec.run_round(RC.start(ec.r, a.round, **round_shape(a)))
+        now = time.time()
+        cap = None if a.t0_ts is None else RC.cap_end_ts(a.t0_ts, now)
+        rec = ec.run_round(RC.start(ec.r, a.round, start_ts=now, science_end_ts=cap, **round_shape(a)))
         print(json.dumps({k: rec[k] for k in ("round_id", "closed_ts", "sha")}, sort_keys=True))
         return 0
     if a.cmd == "boundary":

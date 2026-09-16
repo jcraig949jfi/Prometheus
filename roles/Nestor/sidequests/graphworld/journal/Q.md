@@ -132,3 +132,23 @@ Package Q: capture DONE (Q2d), parser DONE unprivileged (Q3b/Q4) with ncu counte
 GREEN -> pause. Reopen only on an operator ask: a newer driver (ncu 2026.2 needs one), or nsys elevated.
 Lane branch origin/nestor/bld-q-2026-09-14 is stale (6b7e771e4). A non-ff push was rejected and not forced;
 integration holds all work.
+
+## 2026-09-16 09:15-09:40 -- R8 BUILD TRACK-3: G8 -> G7 -> G4 (one commit, suite-gated)
+
+- G8: ROUNDS["r8"] nominal 12 x 3600, drain/close 1800, lane_repos for B,C,D,E,R (nestor-r8-*), G,H,F,P,Q (nestor-bld-*),
+  A (sidequest), gpu (nestor-r8-e). R18: row_for() raises UnknownRound for any production-shaped id (r<digit>...)
+  without a row, even fully specified; start() refuses before touching Redis. DEFAULT_ROUND="r7" KEPT as a dev
+  convenience for non-production ids (t-r7-1 etc.), so the two pinned tests survive unchanged and still pass.
+  Both CLIs (round_clock start, epoch round) refuse a clock without an explicit --round. plan(science_end_ts=)
+  caps WORKING at cap - drain - close with a short last epoch: launch at T0+2h20m -> 11 epochs, NNW T0+13h, end T0+14h.
+- G7: bus_export cursor deltas per stream (done + pm:telemetry:* + pm:why_not_run*), export_cursor.json committed
+  with each epoch, close = last delta + full dump + byte-identity verify (names trimmed streams); done_cost() replays
+  r7's cost analysis from committed rows with Redis deleted.
+- G4: protocol_lint / parse_close_text / beacon_lint (P's agreed pm:telemetry:watch WATCH_BEACON) / close_sweep
+  (pm:close:confirm:<svc>); gate argv `python -m primordial.ops.epoch lint --self-test` (checks run: 4) sent to A.
+- Own test tripped test_fabric_hygiene (a class named NoRedis matched its regex) -- renamed, caught by the full suite.
+- First full run with G4 wiring: test_r5_f2_round_clock pins the close event tail (round_closed..current_unset); my
+  close_sweep event sat inside it. Moved the sweep BEFORE the close record (now committed in ROUND_<id>.json); the
+  pinned test is unchanged. Suite rc 0: 1025 passed, 9 skipped.
+- OPEN for A: the brief's acceptance (end_ts <= T0+14h) puts drain+close INSIDE the 42,000 s, so WORKING ends T0+13h
+  (11 epochs, last short). If A meant NNW at T0+14h, the launcher passes science_end_ts = cap + drain + close.
