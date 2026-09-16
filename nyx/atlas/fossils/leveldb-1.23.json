@@ -158,10 +158,10 @@
   "note": "where LMDB never overwrites a page and reclaims by reader epoch, LevelDB never overwrites a FILE and reclaims by compaction; both keep old versions alive for readers by reference counting -- the same pressure, two disciplines; a Stage E pair",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-16T17:17Z",
+   "migrated_at": "2026-09-16T17:24Z",
    "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
    "provenance_grade_read": "ORIGINAL_ARTIFACT",
-   "grade_basis": "Techne record nyx_handoff.where_it_came_from (populated per R34; Harmonia may re-grade)",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
    "source_object_id": "https://github.com/google/leveldb/archive/refs/tags/1.23.tar.gz sha256:9a37f8a6174f09bd622bc723b55881dc541cd50747cbd08831c2a82d620f6d76",
    "payload_manifest_id": "techne tree_sha256 9f24633cc601cdeb2bc7ee6edf135b093c305da050cd88f47681a7871debc983 (153 files)",
    "host_tree_matches_record": true,
