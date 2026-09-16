@@ -94,6 +94,14 @@
    "worktree": "F:\\Prometheus-worktrees\\nestor-bld-q"
   }
  },
+ "operational_finding_bus_cannot_wake_a_stopped_session": {
+  "cost": "About 16 minutes of G and E -- the round's two main scientific threads. G owns the first scientific obligation (Route B bound on the four PENDING cells); E owns the H1 sham response curve.",
+  "repair": "Minimum repair per the operator's execute order: relaunched G, E and H at 17:07 on prompts_r8 via the same launcher path that worked for C/D/R/B. The old sessions were left alone rather than killed -- they hold no workers (only C and D were registered), and kill-by-pattern is the matcher that once matched its own ancestors.",
+  "rule_for_next_round": "A lane that has posted DONE and stopped is NOT reachable by bus. To give a stopped lane new work, RELAUNCH it with the new prompt dir. Treat 'notified' and 'running' as different states and verify the second, not the first.",
+  "what": "A posted the science-start notice (16:51) and the live-clock notice (16:53) to E, G and H over the bus. All three were running BUILD sessions that finished at ~10:00 and stopped. Neither notice woke them: at 17:06, 15 minutes into a 323-minute window, all three had produced no hello, no worker registration, no job and no post.",
+  "when_local": "2026-09-16 16:51 -> 17:07",
+  "why": "A bus message cannot restart a Claude session that has stopped working. C, D, R and B started only because they were LAUNCHED with a boot prompt (schtask_launch + launch_lane -BootPrompt). Posting to an inbox nobody is reading is not a wake-up."
+ },
  "pre_build_gate_state": "0/12 landed (rehearsed 09:15:40); C2 and C3 probes were false greens on live defects D25/D28 until strengthened",
  "pre_build_sha": "6c02b89a9",
  "round_id": "r8",
