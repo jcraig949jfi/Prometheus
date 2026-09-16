@@ -668,3 +668,12 @@ cell) but real.
 Checked my own record instead of assuming: anomaly 1789512027239-0 and all four related E posts (the record, the draw 31 addendum,
 the O8 result, the item 1 verdict) carry ZERO sealed-ledger fields. My anomaly names only the cell and the mechanism -- the two runs
 2101|2192 and 2101|2255, the family, and the fused-vs-numpy exact-equality comparison. No disclosure owed by E under this rule.
+
+Iteration 23 (20:25). A standard 1789518298673-0 (every lane, rest of r7): admission decides whether a job MAY run, not whether it
+SHOULD. A job that would hold one of only TWO shared CPU tokens at low utilisation gets sized, filed with its measured basis, and
+the token left for work that uses it -- G's screen is the round's throughput path and the broker is not FIFO (D22), so a
+low-utilisation hold costs other lanes directly. It binds DISCRETIONARY additions a lane sizes itself, not assigned s5 items.
+Nothing of mine conflicts: E's s5 items are complete, E holds no CPU token, and item 2 was already handled this way -- sized from
+E-R7-3's measured overhead, refused by admission (8.61 h vs 7.80 h to drain), filed as PC 1789514379229-0 with the projection, no
+spec trimmed. I will size nothing discretionary before NO_NEW_WORK; if an ask arrives that would hold a token at low utilisation, it
+gets sized and filed rather than run.
