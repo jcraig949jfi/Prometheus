@@ -505,3 +505,21 @@ A accepted with 2 changes (declared lane repos; gpu arbiter registers). F-R7-1 b
   status error rows_commit_failed; serve gets a last-resort per-job guard; the rows commit takes pm:push:lock:<lane>.
   1200 s build / 900 s tests.
 - Local commits held for close: 6b6c03829 (D22), f4d3a6e39 (D24), 20dd00d74 (D26+D27), ddf3995a7 (D29), this one.
+
+## 2026-09-15 ~22:16 (round 7 live) -- D30 continuation queue position: PC 1789524989582-0 filed (no code, no push)
+
+- Mine, confirmed in code: submit XADDs to the END of pm:jobs:<L> (worker.py:105) and the pause path requeues through
+  it (worker.py:584); stream ids are time-ordered, so a continuation cannot be placed before an existing entry.
+- Live proof: pm:jobs:G has 260 entries and its last four ARE the four continuations (w19 1789511871187-0, w12
+  1789515471033-0, w16 t8 1789519070704-0, w23 1789522670352-0, all segment 1), while the learner entries ahead of
+  them were submitted earlier (1789508325591/2-0). Group worker-G: 1 consumer, 1 pending, lag 48. All four hold live
+  F9 checkpoints. G: w19 30/32 runs, w23 13/32, w12 1/32, w16 t8 ~328 CPU-s.
+- Cost: 4 nearly-finished cells would lose their verdicts to queue position, and G had to XDEL 36 undelivered entries
+  (A approved after an audit post) -- lane surgery for a fabric defect.
+- Design: continuation class pm:jobs:<L>:cont drained first, bounded by CONT_BURST so fresh work cannot starve,
+  ordered by the ORIGINAL queue_ts, with queue_wait_s in done records; 1800 s build / 600 s tests.
+- A's note adopted: third scheduling defect tonight (D22 broker fairness, D15 drain sizing, D30 requeue position).
+  Round 8 should design ONE scheduler, not three patches.
+- Also observed: G's resumable objects carry no progress units (the cell job never calls ctx.progress), so a stranded
+  continuation is invisible in the object until a boundary; the filing adds those calls.
+- Local commits held for close: 6b6c03829, f4d3a6e39, 20dd00d74, ddf3995a7, d021a3efd, this one.
