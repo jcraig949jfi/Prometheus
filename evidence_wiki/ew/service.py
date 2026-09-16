@@ -161,7 +161,7 @@ async def health():
             "search": dict(MODEL_STATE),
             "workspace": {k: WORKSPACE[k] for k in
                           ("base_sha", "branch", "worktree_path",
-                           "dirty", "main_worktree")}}
+                           "dirty", "main_worktree", "workspace_known")}}
 
 
 @app.get("/api/v1/fossil/contract")
