@@ -1,5 +1,18 @@
-# Mnemosyne Evidence Wiki watchdog (M1). Runs every 5 minutes from Task
-# Scheduler out of the PINNED worktree (D-23 s6).
+# Mnemosyne Evidence Wiki watchdog. Runs every 5 minutes from Task
+# Scheduler out of the PINNED worktree (D-23 s6). M1 runs it directly;
+# M2 runs it through scripts\ew_watchdog_m2.ps1, a wrapper that only sets
+# the environment (store host, machine, interpreter) and the file names, so
+# the probe is ONE script on both machines (base rule 1, inheritance over
+# duplication; MNE-35, 2026-09-16).
+#
+# RULE-10 BOUND (D-27; MNE-36, 2026-09-16): the loop counts CONSECUTIVE
+# NON-PRODUCTIVE ticks, where productive is exactly one thing: an `ok` line
+# (an authenticated hybrid search answered). Nothing else counts -- not a
+# start, not a warm-up, not a well-formed failure line. At -Bound the loop
+# PARKS ITSELF: it writes derived\watchdog_park.json, posts one comms
+# message to -AccountableSeat, and from then on every tick logs `parked`
+# and does nothing until the park file is removed by hand (explicit
+# clearance; a restart of the task does not clear it).
 #
 # It measures the PROPERTY, not presence (base rule: verify the property,
 # never the label). History of this file, kept because each fix opened the
@@ -42,12 +55,18 @@ param(
     [int]$FailThreshold = 3,
     [int]$StartGraceSec = 300,
     [int]$HealthTimeoutSec = 20,
-    [int]$SearchTimeoutSec = 30
+    [int]$SearchTimeoutSec = 30,
+    [int]$Bound = 12,                          # rule 10: consecutive non-productive ticks before parking (12 = one hour)
+    [string]$Seat = "Mnemosyne",               # who posts the park message
+    [string]$AccountableSeat = "Mnemosyne",    # who must answer it
+    [string]$ParkName = "derived\watchdog_park.json",
+    [switch]$NoCommsPost                       # tests: park without reaching the comms store
 )
 $ErrorActionPreference = "SilentlyContinue"
 if (-not $Root) { $Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path) }
 $log = Join-Path $Root $LogName
 $stateFile = Join-Path $Root $StateName
+$parkFile = Join-Path $Root $ParkName
 function Log($m) { Add-Content -Path $log -Value ("{0}  {1}" -f (Get-Date -Format s), $m) }
 
 # Log cap: 288 lines a day at 5-minute ticks; roll at 2 MB, keep one.
@@ -55,17 +74,54 @@ if ((Test-Path $log) -and ((Get-Item $log).Length -gt 2MB)) {
     Move-Item -Force $log ($log + ".1")
 }
 
+# ---------------------------------------------------------------- parked?
+# A parked loop resumes on explicit clearance only: remove the park file.
+if (Test-Path $parkFile) {
+    $pk = $null
+    try { $pk = Get-Content $parkFile -Raw | ConvertFrom-Json } catch { }
+    $since = if ($pk) { $pk.parked_at } else { "unknown" }
+    Log ("parked since {0}; no probe, no action (clear by removing {1})" -f $since, $ParkName)
+    exit 0
+}
+
 # ---------------------------------------------------------------- state
-$state = @{ consecutive_failures = 0; last_success = $null; last_start_at = $null; last_start_pid = $null }
+$state = @{ consecutive_failures = 0; nonproductive_ticks = 0; last_success = $null; last_start_at = $null; last_start_pid = $null }
 if (Test-Path $stateFile) {
     try {
         $j = Get-Content $stateFile -Raw | ConvertFrom-Json
-        foreach ($k in @("consecutive_failures", "last_success", "last_start_at", "last_start_pid")) {
+        foreach ($k in @("consecutive_failures", "nonproductive_ticks", "last_success", "last_start_at", "last_start_pid")) {
             if ($null -ne $j.$k) { $state[$k] = $j.$k }
         }
     } catch { }
 }
 function Save-State { ($state | ConvertTo-Json -Compress) | Set-Content -Path $stateFile }
+
+# Every tick that does not end in an `ok` line is non-productive; the
+# counter is reset in exactly one place, on `ok`.
+$state.nonproductive_ticks = [int]$state.nonproductive_ticks + 1
+
+function Park($why) {
+    $rec = [ordered]@{
+        parked_at = (Get-Date -Format s); seat = $Seat; accountable_seat = $AccountableSeat
+        monitor = "MnemosyneEvidenceWikiWatchdog"; machine = $Machine; port = $Port
+        bound = $Bound; nonproductive_ticks = $state.nonproductive_ticks
+        last_success = $state.last_success; last_reason = $why
+        clear_by = "remove " + $ParkName + " after the cause is fixed; the task keeps firing and logs parked until then"
+    }
+    ($rec | ConvertTo-Json) | Set-Content -Path $parkFile
+    Save-State
+    Log ("PARKED (rule 10): {0} consecutive non-productive ticks reached bound {1}; last reason: {2}; last_success {3}; park record {4}" -f $state.nonproductive_ticks, $Bound, $why, $state.last_success, $ParkName)
+    if ($NoCommsPost) { Log "park message not posted (-NoCommsPost)"; return }
+    $repo = Split-Path -Parent $Root
+    $pyc = $env:EW_PYTHON; if (-not $pyc) { $pyc = "python" }
+    $subj = "WATCHDOG PARKED: Evidence Wiki on {0}:{1} -- {2} non-productive ticks; last_success {3}" -f $Machine, $Port, $state.nonproductive_ticks, $state.last_success
+    try {
+        $p = Start-Process -FilePath $pyc -ArgumentList @("-m","comms","post","--from",$Seat,"--to",$AccountableSeat,"--kind","report","--subject",('"{0}"' -f $subj),"--body-file",('"{0}"' -f $parkFile)) `
+            -WorkingDirectory $repo -WindowStyle Hidden -PassThru -Wait
+        if ($p -and $p.ExitCode -eq 0) { Log ("park message posted to {0}" -f $AccountableSeat) }
+        else { Log ("park message NOT posted (comms post exit {0}); the park record on disk is the alarm" -f $(if ($p) { $p.ExitCode } else { "?" })) }
+    } catch { Log "park message NOT posted (comms post could not start); the park record on disk is the alarm" }
+}
 
 # ---------------------------------------------------------------- token
 function Get-Token {
@@ -132,6 +188,7 @@ if (-not $reason) {
 
 if (-not $reason) {
     $state.consecutive_failures = 0
+    $state.nonproductive_ticks = 0          # the ONLY reset (rule 10)
     $state.last_success = (Get-Date -Format s)
     Save-State
     Log ("ok  health {0}ms  hybrid search {1}ms  last_success {2}" -f $healthMs, $searchMs, $state.last_success)
@@ -141,6 +198,14 @@ if (-not $reason) {
 # ---------------------------------------------------------------- failure
 $state.consecutive_failures = [int]$state.consecutive_failures + 1
 $n = $state.consecutive_failures
+
+# Rule 10 first: at the bound the loop parks instead of acting again. A
+# warm-up tick above exited before this point and still counted (it is not
+# an `ok`), so a service that never becomes ready parks after Bound ticks too.
+if ($state.nonproductive_ticks -ge $Bound) {
+    Park $reason
+    exit 0
+}
 
 $listeners = @(Get-NetTCPConnection -State Listen -LocalPort $Port -ErrorAction SilentlyContinue)
 $listenerPids = @($listeners | Select-Object -ExpandProperty OwningProcess -Unique)

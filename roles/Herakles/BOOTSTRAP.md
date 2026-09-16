@@ -46,6 +46,11 @@ wasted time rediscovering. Add to this list rather than re-exploring.
 - **Deep research decks fired from this seat** live in
   `roles/Herakles/deep_research/`, one directory per dispatch, each holding
   the deck, the returned reports and the dispatch summary.
+- **comms from M2 (SPECTREX5).** `python -m comms boot|sync|who` REFUSES
+  with WRONG_ENVIRONMENT on M2 unless `EW_DB_HOST=192.168.1.202` is set: the
+  queue lives in M1's prometheus_fire and M2's local Postgres has the same
+  db_name (comms/README.md "Host"; incident class c84e26826cc12217).
+  Verified 2026-09-16. Set it in the shell before the first comms call.
 
 ---
 

@@ -251,24 +251,61 @@ def fixes_uniform_states(table: np.ndarray) -> Dict[str, bool]:
 # Initial conditions
 # ---------------------------------------------------------------------------
 
+def require_count(exact_count: int, n_cells: int) -> int:
+    """An exact number of ones for a lattice of `n_cells`. Refuses, never clips."""
+    if not isinstance(exact_count, (int, np.integer)) \
+            or isinstance(exact_count, bool):
+        raise EvcaError("exact_count must be an integer, got %r"
+                        % (exact_count,))
+    if not (0 <= exact_count <= n_cells):
+        raise EvcaError("exact_count %d is outside [0, %d]"
+                        % (exact_count, n_cells))
+    return int(exact_count)
+
+
 def make_ics(n_ics: int, n_cells: int, seed: int,
-             density: Optional[float] = None) -> np.ndarray:
+             density: Optional[float] = None,
+             exact_count: Optional[int] = None) -> np.ndarray:
     """Seeded initial conditions. No global RNG is touched.
 
     density=None draws each cell iid uniform, which is the unbiased ensemble
     the published performance figures are defined over. A float instead draws
     each cell iid Bernoulli(density), which is a DIFFERENT ensemble and must
     not be compared with published numbers.
+
+    exact_count=k (2026-09-16, THEO-REQ-006) draws each initial condition as
+    a uniformly random arrangement of EXACTLY k ones among `n_cells` cells (a
+    seeded permutation of a fixed-count vector), so the realised density is
+    k / n_cells on every row and the majority target is fixed by k alone.
+    This is a THIRD ensemble: it is not the Bernoulli one (whose realised
+    count has sd sqrt(p (1 - p) / N)) and it must not be compared with
+    published numbers either. `density` and `exact_count` are mutually
+    exclusive; passing both is refused rather than resolved.
+
+    The three ensembles do not share a random stream: exact_count=k under a
+    seed is unrelated to density=k/N under the same seed. Nothing here
+    claims otherwise.
     """
     if not isinstance(n_ics, (int, np.integer)) or isinstance(n_ics, bool) \
             or n_ics < 1:
         raise EvcaError("n_ics must be a positive integer, got %r" % (n_ics,))
-    require_lattice(n_cells)
+    n = require_lattice(n_cells)
     if not isinstance(seed, (int, np.integer)) or isinstance(seed, bool):
         raise EvcaError("seed must be an integer, got %r" % (seed,))
-    p = 0.5 if density is None else require_density(density)
+    if density is not None and exact_count is not None:
+        raise EvcaError(
+            "density and exact_count are two different ensembles; pass one")
     rng = np.random.default_rng(int(seed))
-    return (rng.random((int(n_ics), int(n_cells))) < p).astype(np.uint8)
+    if exact_count is not None:
+        k = require_count(exact_count, n)
+        base = np.zeros(n, dtype=np.uint8)
+        base[:k] = 1
+        rows = np.empty((int(n_ics), n), dtype=np.uint8)
+        for i in range(int(n_ics)):
+            rows[i] = base[rng.permutation(n)]
+        return rows
+    p = 0.5 if density is None else require_density(density)
+    return (rng.random((int(n_ics), n)) < p).astype(np.uint8)
 
 
 def majority_target(states: np.ndarray) -> np.ndarray:
@@ -317,9 +354,19 @@ def classify(table: np.ndarray, ics: np.ndarray, steps: int,
         "n_incorrect": int(wrong.size),
         "witness": [int(i) for i in witness],
         "witness_limit": int(witness_limit),
+        # `witness_truncated` means "the witness OMITS at least one index".
+        # A witness of length exactly `witness_limit` with this False is a
+        # COMPLETE vector, and n_incorrect == len(witness) says so. The bound
+        # is `>` deliberately and stays `>` (THEO-REQ-004, 2026-09-16): a
+        # validator that wants to tell a full vector from a cut one compares
+        # len(witness) with n_incorrect, which is always present.
         "witness_truncated": bool(wrong.size > witness_limit),
         "uniform_fixed_points": fixes_uniform_states(t),
         "correct_mask_digest": mask_digest(correct),
+        # The whole per-IC outcome, not a bounded witness of it, so a reader
+        # never has to re-execute to learn which ICs succeeded above the
+        # witness bound (THEO-REQ-004 capability half).
+        "correct_mask_hex": pack_mask_hex(correct),
     }
 
 
@@ -327,6 +374,39 @@ def mask_digest(mask: np.ndarray) -> str:
     """Digest of a boolean per-IC mask. Orientation-free by construction."""
     m = np.asarray(mask).astype(np.uint8).ravel()
     return "sha256:" + hashlib.sha256(m.tobytes()).hexdigest()[:32]
+
+
+def pack_mask_hex(mask: np.ndarray) -> str:
+    """A boolean per-IC mask as hex. IC i is bit (7 - i % 8) of byte i // 8.
+
+    `numpy.packbits` big-endian order; the last byte is zero-padded on the
+    right. The mask's length is NOT recoverable from the string alone, so
+    `unpack_mask_hex` takes it, and every result that carries this field
+    carries `n_ics` beside it.
+    """
+    m = np.asarray(mask).astype(np.uint8).ravel()
+    if m.size and not np.isin(m, (0, 1)).all():
+        raise EvcaError("mask must contain only 0 and 1")
+    return np.packbits(m, bitorder="big").tobytes().hex()
+
+
+def unpack_mask_hex(hex_string: str, n_ics: int) -> np.ndarray:
+    """Exact inverse of `pack_mask_hex` given the mask length."""
+    if not isinstance(n_ics, (int, np.integer)) or isinstance(n_ics, bool) \
+            or n_ics < 0:
+        raise EvcaError("n_ics must be a non-negative integer, got %r"
+                        % (n_ics,))
+    if not isinstance(hex_string, str) or len(hex_string) % 2:
+        raise EvcaError("mask hex must be a string of whole bytes")
+    raw = np.frombuffer(bytes.fromhex(hex_string), dtype=np.uint8)
+    if raw.size != (int(n_ics) + 7) // 8:
+        raise EvcaError("mask hex holds %d byte(s); %d IC(s) need %d"
+                        % (raw.size, n_ics, (int(n_ics) + 7) // 8))
+    bits = np.unpackbits(raw, bitorder="big")[:int(n_ics)]
+    if bits.size < raw.size * 8 and np.unpackbits(raw, bitorder="big")[
+            int(n_ics):].any():
+        raise EvcaError("mask hex has non-zero padding bits")
+    return bits.astype(bool)
 
 
 # ---------------------------------------------------------------------------
@@ -636,3 +716,99 @@ def blinker_rule_table() -> np.ndarray:
         centre = (idx >> (RADIUS)) & 1
         t[idx] = 1 - centre
     return t
+
+
+# ---------------------------------------------------------------------------
+# The synchronisation analogue of `cellwise_majority_match` (2026-09-16,
+# Archaeon prompt of 2026-09-11 item 4, backlog L-7 / C-2).
+#
+# WHY. `synchronisation_score` is all-or-nothing per initial condition, and
+# every organism held scores exactly 0.0 on it (CRITERIA.md). Like `at_T` it
+# gives a random table the single point {0}, so no gate on it can be shown
+# reachable from noise and a 0.0 cannot be separated from an unreachable
+# target. This criterion is per CELL, so a random table lands on an interval
+# and a rule that is PARTLY synchronising is separable from one that is not.
+#
+# DEFINITION. Two consecutive frames, a at `steps` and b at `steps + 1`. The
+# ring's PHASE at `steps` is the majority state of a (odd N, never a tie). A
+# cell is COUNTED if it flips between a and b (locally period 2) AND its state
+# in a equals the phase (it is blinking in step with the majority). The per-IC
+# value is the fraction of counted cells; the criterion reports its mean and
+# dispersion across initial conditions, and the two components separately.
+#
+# EXACT IDENTITY. A per-IC value of 1.0 holds iff every cell flips and every
+# cell equals the phase at `steps`, i.e. iff a is uniform, b is uniform and
+# a != b, which is precisely `synchronisation_score`'s success predicate. So
+# `fraction_all_cells_sync` EQUALS `synchronisation_score["score"]` exactly,
+# on the same ICs and steps, and a test asserts it.
+#
+# ANALYTIC EXPECTATIONS, stated before any measurement (committed before the
+# floor is measured; the measured floor goes in CRITERIA.md in a later commit):
+#   constant rules        uniform and fixed at T, so no cell flips: 0.0 EXACTLY,
+#                         dispersion 0.
+#   blinker, uniform ICs  every cell flips in phase: 1.0 EXACTLY.
+#   blinker, k ones of N  every cell flips; the in-phase share is the majority
+#                         share, so the per-IC value is max(k, N-k)/N EXACTLY.
+#                         This is the CHEAT control: an injected success level
+#                         the channel must read to the digit.
+#   blinker, random ICs   flip 1.0; mean about 0.5 + sqrt(1/(2 pi N)), which
+#                         is the expected majority share (0.533 at N = 149).
+#   random table          flip about 0.5, in-phase about the majority share,
+#                         roughly independent: mean about 0.27 at N = 149, in a
+#                         narrow interval (spread of the mean about 0.005 at
+#                         100 ICs). THE FLOOR IS NOT 0 AND NOT 0.5.
+#                         [MEASURED 2026-09-16, sync_floor_2026-09-16.json,
+#                         20 tables: mean of means 0.227, range [0.057,
+#                         0.307], sd of means 0.049. TWO PARTS OF THE LINE
+#                         ABOVE WERE WRONG and stay visible: the interval is
+#                         ten times wider than predicted, because the flip
+#                         fraction is a RULE property (0.11 to 0.57 across
+#                         tables, correlation 0.99 with the mean), and the
+#                         mean sits 3.5 SE below the independence value
+#                         0.266, because flip and in-phase are anticorrelated
+#                         (r = -0.79 across tables). The floor is a BAND,
+#                         not a point, and an organism is quoted against
+#                         its top, 0.31 at this geometry.]
+#   density classifiers   the five that reach a fixed uniform state: 0.0
+#                         exactly; maj never reaches uniform and its flip
+#                         fraction is unknown before measurement.
+# ---------------------------------------------------------------------------
+
+def cellwise_synchronisation_match(table: np.ndarray, ics: np.ndarray,
+                                   steps: int) -> Dict[str, object]:
+    """Mean fraction of cells blinking in phase with the ring at `steps`.
+
+    See the block comment above for the definition, the exact identity with
+    `synchronisation_score`, and the expectations stated before measurement.
+    NOT comparable to any published figure; `synchronisation_score` is the
+    all-or-nothing form and no published P is held for it either (L-7).
+    """
+    t = require_table(table)
+    require_steps(steps)
+    s = np.asarray(ics).astype(np.uint8)
+    if s.ndim != 2:
+        raise EvcaError("ics must be 2-D (n_ics, n_cells), got %r" % (s.shape,))
+    n_cells = require_lattice(s.shape[1])
+    a = evolve(s, t, steps)
+    b = step(a, t)
+    phase = majority_target(a)                     # (n,) majority state of a
+    flips = a != b                                 # locally period 2
+    in_phase = a == phase[:, None]                 # in step with the ring
+    counted = flips & in_phase
+    per_ic = counted.mean(axis=1)
+    return {
+        "criterion": "cellwise_synchronisation_match",
+        "mean_sync_match": float(per_ic.mean()),
+        "sd_across_ics": float(per_ic.std()),
+        "min_sync_match": float(per_ic.min()),
+        "max_sync_match": float(per_ic.max()),
+        "fraction_all_cells_sync": float((per_ic == 1.0).mean()),
+        "fraction_no_cells_sync": float((per_ic == 0.0).mean()),
+        "mean_flip_fraction": float(flips.mean(axis=1).mean()),
+        "mean_phase_match": float(in_phase.mean(axis=1).mean()),
+        "n_ics": int(s.shape[0]), "n_cells": n_cells, "steps": int(steps),
+        "comparable_to_published_P": False,
+        "note": ("per-cell form of the synchronisation task; "
+                 "fraction_all_cells_sync equals synchronisation_score "
+                 "exactly on the same ICs and steps"),
+    }
