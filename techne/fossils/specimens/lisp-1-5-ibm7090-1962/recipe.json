@@ -38,8 +38,20 @@
   "classification_if_ok": "RUNNABLE_HISTORICAL_TOOLCHAIN",
   "classification_if_built_only": "BUILDS_BUT_NOT_RUN",
   "classification_if_build_fails": "BLOCKED_DEPENDENCY",
-  "note": "2026-09-16 P6 (TECHNE-86). WORLD PATCH: asm7090 2.3.2's overlapping strcpy (scanner.h) replaced by memmove in the world Dockerfile -- the 752 'undefined' $-symbols were a glibc-2.36 artefact of undefined behaviour, not a deck problem. The deck now assembles with 0 errors. TEST: generated words vs the body's own reference listing (2.1.4 + Bourguignon's patch): 5752 identical, 38 where the reference printed 00000 for a cross-header symbol (its documented limitation) and this world resolved it, 3 that DISAGREE (00353/00355 WEFA/BSRA 01220 vs 01200, 00731 XEC $RDS 77666 vs 00350) -- unresolved against the 1962 listing PDF, so the test gate FAILS by design until they are. RUN: the tape loads and the loader transfers into the program (PC 01002, card-reading routine); no printer output yet -- s709 2.4.4 operating conventions for a 1962 FMS-era self-loading tape are the open question.",
+  "note": "2026-09-16 P6 (TECHNE-86). WORLD PATCH: asm7090 2.3.2's overlapping strcpy (scanner.h) replaced by memmove in the world Dockerfile -- the 752 'undefined' $-symbols were a glibc-2.36 artefact of undefined behaviour, not a deck problem. The deck now assembles with 0 errors. TEST: generated words vs the body's own reference listing (2.1.4 + Bourguignon's patch): 5752 identical, 38 where the reference printed 00000 for a cross-header symbol (its documented limitation) and this world resolved it, 3 that DISAGREE (00353/00355 WEFA/BSRA 01220 vs 01200, 00731 XEC $RDS 77666 vs 00350) -- unresolved against the 1962 listing PDF, so the test gate FAILS by design until they are. RUN: the tape loads and the loader transfers into the program (PC 01002, card-reading routine); no printer output yet -- s709 2.4.4 operating conventions for a 1962 FMS-era self-loading tape are the open question. 2026-09-16 tick 9: s709 2.4.4 ships Pitts' own LISP 1.5 system tape + runlisp conventions; as the WORLD control it runs FACTORIAL(10)=3628800 and the Wang propositional calculus (propcal.lsp, traced TH1/TH2 *TRUE*). His tape is [1482-byte bootstrap record][194,508-byte core image][2 tape marks]; obj2bin's tape from the 1962 deck is ONE 56,598-byte scatter-load record, which `lt a4` does not boot (PC stays 00001). The missing step is the historical SETUP that turns the assembled deck into a bootable system image -- how LISPTAPE.BIN was made is not documented in the tarball.",
   "tests": [
+    {
+      "name": "world-positive-control-pitts-lisp-tape",
+      "cmd": "bash $HARNESS/world_control_pitts_lisp.sh",
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "BANNER_1961",
+          "END_OF_LISP_RUN"
+        ],
+        "stdout_regex": "traced_theorem_steps=[1-9]"
+      }
+    },
     {
       "name": "words-vs-reference-listing",
       "cmd": "python3 $HARNESS/compare_listing.py lisp15.lst lisp15.lst.new",

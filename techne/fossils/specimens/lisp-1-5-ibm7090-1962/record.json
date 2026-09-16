@@ -84,7 +84,7 @@
     "storage": "cards and tape",
     "input_format": "punched cards",
     "runner": "docker prometheus-fossil-ibm709x:bookworm (Pitts asm7090 2.3.2 / lnk7090 2.2.3 / utils 1.1.15 / s709 2.4.4, MIT), built 2026-09-16 from techne/fossils/environment/fossil-ibm709x-toolchain.Dockerfile",
-    "world_status": "WORLD_EXECUTABLE, BODY ASSEMBLES WORD-EXACT TO THE 1962 LISTING, JOB NOT YET RUN (2026-09-16, TECHNE-86): asm7090 2.3.2's overlapping strcpy patched to memmove in the world; 0 errors; every one of the 5,793 generated words agrees with the 1962 original listing -- 5,752 identical to the body's 2.1.4 reference listing, 38 where 2.1.4 printed 00000, 3 where 2.1.4 was WRONG (00353, 00355, 00731; adjudicated against LISP1.5-Bonnie-sBirthdayAssembly.pdf pages 10 and 16, harness/reference_errata.json). s709: the tape loads and the loader transfers into the card-reading routine (PC 01002); wang.job prints nothing yet.",
+    "world_status": "WORLD_EXECUTABLE, BODY ASSEMBLES WORD-EXACT TO THE 1962 LISTING, JOB NOT YET RUN (2026-09-16, TECHNE-86): asm7090 2.3.2's overlapping strcpy patched to memmove in the world; 0 errors; every one of the 5,793 generated words agrees with the 1962 original listing -- 5,752 identical to the body's 2.1.4 reference listing, 38 where 2.1.4 printed 00000, 3 where 2.1.4 was WRONG (00353, 00355, 00731; adjudicated against LISP1.5-Bonnie-sBirthdayAssembly.pdf pages 10 and 16, harness/reference_errata.json). s709: the tape loads and the loader transfers into the card-reading routine (PC 01002); wang.job prints nothing yet. tick 9: the WORLD runs LISP 1.5 -- Pitts' own system tape (shipped in s709-2.4.4) prints FACTORIAL(10)=3628800, the 1 MARCH 1961 EVALQUOTE banner and runs the Wang propositional calculus under runlisp's conventions (world positive control in the recipe). His tape is [bootstrap record 1482 B][core image 194,508 B]; obj2bin's tape from this deck is one 56,598 B scatter-load record and `lt` does not boot it. The missing step is the historical SETUP from assembled deck to bootable system image.",
     "scaffolding": "world patch (memmove), harness/compare_listing.py (oracle = the body's own lisp15.lst), harness/s709_boot.sh"
   },
   "patches": [],
@@ -161,6 +161,12 @@
     },
     {
       "receipt": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T152519Z.json",
+      "ok": false,
+      "classification": "BUILDS_BUT_NOT_RUN",
+      "test_classification": "TECHNE_SMOKE_HARNESS_PASS"
+    },
+    {
+      "receipt": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T153230Z.json",
       "ok": false,
       "classification": "BUILDS_BUT_NOT_RUN",
       "test_classification": "TECHNE_SMOKE_HARNESS_PASS"

@@ -5,6 +5,10 @@
 # WORLD PATCH (2026-09-16): asm7090 2.3.2's qualified-symbol scanner does an overlapping strcpy
 # (undefined; glibc 2.36 shifts the tail, $ERROR -> EROOR); replaced by memmove. The patch text
 # and the evidence are in patches/asm7090-2.3.2-overlapping-strcpy.patch; the sed below applies it.
+# The s709 tarball also ships a LISP 1.5 SYSTEM TAPE (LISPTAPE.BIN, 2008, provenance not stated) with runlisp /
+# lisp.cmd / fact.lsp / propcal.lsp; kept under /usr/local/share/ibm709x/lisp/ as the WORLD's positive control
+# (it prints FACTORIAL(10) = 3628800 and runs the Wang propositional calculus) and as the operating
+# convention (unit layout, job format) the 1962 deck's own tape has yet to meet.
 # First consumer: lisp-1-5-ibm7090-1962 (a card deck whose Makefile names asm7090 2.2.2 /
 # lnk7090 2.1.3 / utils 1.0.5 / s709; those versions are no longer served, so the CURRENT
 # releases are pinned by sha256 here and any difference is measured, not assumed).
@@ -31,7 +35,8 @@ RUN set -e; \
     (cd lnk7090 && make) && install -m755 lnk7090/lnk7090 /usr/local/bin/; \
     (cd utils && make) && for f in obj2bin obj2img bcd2txt txt2bcd bincmp disasm bd bsplit; do install -m755 utils/$f /usr/local/bin/; done; \
     (cd s709-2.4.4 && make) && install -m755 s709-2.4.4/s709 /usr/local/bin/; \
-    mkdir -p /usr/local/share/ibm709x && cp asm7090/LICENSE.txt /usr/local/share/ibm709x/LICENSE-pitts.txt \
+    mkdir -p /usr/local/share/ibm709x/lisp && cp s709-2.4.4/LISPTAPE.BIN s709-2.4.4/lisp.cmd s709-2.4.4/runlisp s709-2.4.4/fact.lsp s709-2.4.4/ffact.lsp s709-2.4.4/propcal.lsp /usr/local/share/ibm709x/lisp/ \
+    && cp asm7090/LICENSE.txt /usr/local/share/ibm709x/LICENSE-pitts.txt \
     && for d in asm7090 lnk7090 utils s709-2.4.4; do cp $d/README.txt /usr/local/share/ibm709x/README-$d.txt; done; \
     cd / && rm -rf /tmp/build
 ENV LANG=C.UTF-8
