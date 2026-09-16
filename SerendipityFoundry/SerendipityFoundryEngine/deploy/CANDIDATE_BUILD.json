@@ -21,5 +21,6 @@
  },
  "held_because": "the restart trips both wired consumers' gates into state 3 until roles/Harmonia/contracts/sfe_contract.json is regenerated for this hash (Harmonia's lane; asked on comms). Deploy in one window after that, per the operator's bundle instruction.",
  "tests": "469 passed, 0 xfailed on the merged tree",
- "prepared_at": "2026-09-12T16:24:04Z"
+ "prepared_at": "2026-09-12T16:24:04Z",
+ "live_verified_on_m2_twin": "2026-09-16: deployed on the M2 verify twin (DEPLOYED_BUILD_M2.json) -- 481 unit, harness 12/12, isolation 7/7, Harmonia's gate CONFORMANT with the twin's instance id. Still NOT deployed on M1 production; the M1 window (Harmonia #256 sequence: restart, then promote_candidate_contract.py, then commit the contract) is unchanged."
 }

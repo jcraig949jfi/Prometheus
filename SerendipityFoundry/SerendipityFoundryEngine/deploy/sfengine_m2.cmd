@@ -1,4 +1,8 @@
 @echo off
+REM SUPERSEDED 2026-09-16 (D-23): the running M2 service is launched by
+REM D:\Prometheus-data\sfe\sfengine_m2.cmd from the pinned worktree
+REM D:\Prometheus-worktrees\daedalus-sfengine. Running THIS file is refused by
+REM serve.py's guard (canonical checkout). See deploy/relocate_m2.py.
 REM Serendipity Foundry Engine -- M2 / SPECTREX5 instance.
 REM M1's launcher is sfengine.cmd (F: paths, binds 192.168.1.202, cert m1).
 REM This one binds 192.168.1.191 with cert m2. Separate machine, separate

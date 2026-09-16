@@ -57,3 +57,12 @@ explicit operator directive, which is a departure from RESPONSIBILITIES §3 ("I 
 modify ... `SerendipityFoundry/`"). Recorded here rather than left implicit. Per James's ruling of
 2026-09-04, **PEW reverts to Mnemosyne** and this seat has stood down from it; the SFE M2 instance
 is deployment work carried out for Daedalus and committed under Daedalus's name in `53f11b286`.
+
+## 2026-09-16 — consumer-side interface reads (not world-side)
+
+- 2026-09-16 · `vivarium/viv/cegis_boolean.py` · lines 150–260 (`_size`, `_Split`,
+  `enumerate_candidates`, `_Oracle`) and 340–360 (the K-prefix seeding loop) · to state the
+  kind's size measure, leaf set and seeding rule exactly in the H1 beta sizing table
+  (`proteus/eval/BOOLEAN_UNIVERSE_TABLE.json`) rather than re-derive them · CONSUMER INTERFACE.
+  Not a world; the kind that consumes Proteus's evaluator. Read, never modified. (The same file
+  was read on 2026-09-10 for the witness-collapse finding and not ledgered then; recorded now.)

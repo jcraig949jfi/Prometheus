@@ -9,6 +9,7 @@
     python -m techne.fossils.harvest mirror-verify --dest D      re-hash every mirrored body against the records (a corrupted mirror file MUST fail this)
     python -m techne.fossils.harvest status                       one line per specimen
     python -m techne.fossils.harvest summary                      the directive's success measures, computed
+    python -m techne.fossils.harvest receipt-check [--out F]      RQ-4 census: receipts carrying / predating the environment block
 
 A RECIPE (techne/fossils/specimens/<id>/recipe.json) is the executable statement of "how to
 run it": {"runner": "wsl"|"native"|"docker", "image": ..., "workdir": <relative to the body>,
@@ -27,6 +28,12 @@ body_preserved into the receipt -- the property, not a promise. Before this rule
 bodies had been dirtied by in-place builds (techne/fossils/VAULT_INTEGRITY_2026-09-12.json).
 A recipe may set "in_place": true to opt out (archaeology of the old behaviour, and the
 positive control for the detector); the receipt then says isolation "in_place".
+
+ENVIRONMENT (2026-09-16, Rhadamanthus #245 RQ-4). Receipt schema /2 carries an "environment"
+block: interpreter implementation + version, sha256 over the sorted `name==version` list of every
+installed distribution, and the NAMES of the environment variables the vault code read (through
+vault.getenv; never a value) plus the names it exports into recipe commands. run() validates its
+own receipt (validate_run_receipt) before writing it; `receipt-check` censuses the tracked ones.
 """
 from __future__ import annotations
 
@@ -228,6 +235,71 @@ def restore(specimen_id: str) -> dict:
         specimen_id, len(rep["deleted"]), len(rep["restored_from_git"]), len(rep["restored_from_archive"]),
         len(rep["unrecoverable"]), "VERIFIED" if rep["verified"] else "STILL DIFFERS", rp))
     return rep
+
+
+# --------------------------------------------------------------------------- environment (RQ-4)
+RUN_RECEIPT_SCHEMA = "techne.fossil.run_receipt/2"
+# names the runner EXPORTS into every recipe command (see _shell); values are paths, so names only
+ENV_EXPORTED_TO_RECIPE = ("BODY", "HARNESS")
+_HEX64 = re.compile(r"^[0-9a-f]{64}$")
+
+
+def pip_freeze_lines() -> list[str]:
+    """`name==version` for every installed distribution visible to THIS interpreter, sorted and
+    de-duplicated, from importlib.metadata rather than a pip subprocess (same answer, no shell)."""
+    from importlib import metadata
+    seen = set()
+    for d in metadata.distributions():
+        name = (d.metadata["Name"] or "").strip()
+        if name:
+            seen.add("%s==%s" % (name.lower(), (d.version or "").strip()))
+    return sorted(seen)
+
+
+def environment_fingerprint(env_reads=None) -> dict:
+    """What the harvest driver ran under (Rhadamanthus #245 RQ-4): interpreter version, a hash of
+    the package state, and the NAMES of the environment variables read -- never a value. The
+    recipe's own world (image, toolchain) is a separate fact and stays in the receipt's probe."""
+    import hashlib
+    lines = pip_freeze_lines()
+    reads = sorted(set(vault.ENV_READS if env_reads is None else env_reads))
+    return {"interpreter": {"implementation": platform.python_implementation(),
+                            "version": platform.python_version(),
+                            "executable_basename": pathlib.Path(sys.executable).name},
+            "pip_freeze_sha256": hashlib.sha256(("\n".join(lines) + "\n").encode("utf-8")).hexdigest(),
+            "pip_freeze_n": len(lines),
+            "env_vars_read": reads,
+            "env_vars_exported_to_recipe": list(ENV_EXPORTED_TO_RECIPE)}
+
+
+def validate_run_receipt(receipt: dict) -> list[str]:
+    """Defects in a run receipt's environment block, as strings; [] means it carries RQ-4.
+    Schema /1 receipts predate the field and are reported as such rather than failed."""
+    why = []
+    schema = receipt.get("schema")
+    if schema == "techne.fossil.run_receipt/1":
+        return ["schema/1 receipt: predates the environment block (not a defect of the receipt)"]
+    if schema != RUN_RECEIPT_SCHEMA:
+        return ["unknown receipt schema %r" % (schema,)]
+    env = receipt.get("environment")
+    if not isinstance(env, dict):
+        return ["environment block missing"]
+    it = env.get("interpreter")
+    if not isinstance(it, dict) or not it.get("version") or not it.get("implementation"):
+        why.append("interpreter version/implementation missing")
+    if not _HEX64.match(str(env.get("pip_freeze_sha256", ""))):
+        why.append("pip_freeze_sha256 is not a sha256 hex digest")
+    reads = env.get("env_vars_read")
+    if not isinstance(reads, list) or not all(isinstance(n, str) for n in reads):
+        why.append("env_vars_read is not a list of names")
+    else:
+        for n in reads:
+            if "=" in n or not re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", n):
+                why.append("env_vars_read carries something that is not a bare name: %r" % n[:40])
+    for key in ("host", "tree_sha256_before", "recipe_sha256"):
+        if key not in receipt:
+            why.append("%s missing" % key)
+    return why
 
 
 # --------------------------------------------------------------------------- runners
@@ -494,12 +566,15 @@ def run(specimen_id: str, timeout: int = 1800, image=None, persist=None) -> dict
     ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
     rundir = body / "run" / ts
     rundir.mkdir(parents=True, exist_ok=True)
-    receipt = {"schema": "techne.fossil.run_receipt/1", "specimen_id": specimen_id, "receipt_id": "run-%s-%s" % (specimen_id, ts),
+    receipt = {"schema": RUN_RECEIPT_SCHEMA, "specimen_id": specimen_id, "receipt_id": "run-%s-%s" % (specimen_id, ts),
                "written_utc": ts, "runner": runner, "image": image, "workdir": rel,
                "isolation": "in_place" if in_place else "disposable_copy",
                "exec_root": str(exec_body.relative_to(body)).replace("\\", "/") if exec_body != body else ".",
                "harness_sha256": {str(p.relative_to(sd / "harness")).replace("\\", "/"): vault.sha256_file(p) for p in sorted((sd / "harness").rglob("*")) if p.is_file()} if (sd / "harness").exists() else {},
                "host": {"platform": platform.platform(), "python": sys.version.split()[0]},
+               # schema/2 (2026-09-16, RQ-4): interpreter, package-state hash, env-var NAMES read;
+               # filled in AFTER the run so every read the run made is in the list
+               "environment": None,
                "tree_sha256_before": rec["hashes"].get("tree_sha256"),
                "recipe_sha256": vault.sha256_file(sd / "recipe.json"),
                "patches": [], "probe": [], "build": [], "runs": [], "tests": [],
@@ -552,6 +627,10 @@ def run(specimen_id: str, timeout: int = 1800, image=None, persist=None) -> dict
     after_rows = vault.hash_tree(body / "upstream")
     receipt["tree_sha256_after"] = vault.tree_hash_of(after_rows)
     receipt["body_preserved"] = receipt["tree_sha256_after"] == receipt["tree_sha256_before"]
+    receipt["environment"] = environment_fingerprint()
+    defects = validate_run_receipt(receipt)
+    if defects:
+        raise RuntimeError("run receipt fails its own environment check: " + "; ".join(defects))
     if not persist:
         receipt["persisted"] = False
         receipt["world_override_image"] = recipe.get("image")
@@ -760,6 +839,35 @@ def preservation_census(out=None):
     return doc
 
 
+def receipt_census(out=None) -> dict:
+    """Every tracked run receipt, validated; the RQ-4 coverage count is derived, not asserted."""
+    rows = []
+    for rp in sorted(vault.SPECIMENS.glob("*/receipts/run-*.json")):
+        try:
+            rcpt = json.loads(rp.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as e:
+            rows.append({"receipt": rp.name, "specimen_id": rp.parent.parent.name, "schema": None,
+                         "status": "UNREADABLE", "defects": [str(e)[:120]]})
+            continue
+        why = validate_run_receipt(rcpt)
+        legacy = rcpt.get("schema") == "techne.fossil.run_receipt/1"
+        rows.append({"receipt": rp.name, "specimen_id": rp.parent.parent.name, "schema": rcpt.get("schema"),
+                     "status": "PREDATES_RQ4" if legacy else ("CARRIES_RQ4" if not why else "DEFECTIVE"),
+                     "defects": [] if legacy else why})
+    c = {"n": len(rows), "carries_rq4": sum(r["status"] == "CARRIES_RQ4" for r in rows),
+         "predates_rq4": sum(r["status"] == "PREDATES_RQ4" for r in rows),
+         "defective": sum(r["status"] in ("DEFECTIVE", "UNREADABLE") for r in rows)}
+    print("RECEIPT-CHECK n=%(n)d carries_rq4=%(carries_rq4)d predates_rq4=%(predates_rq4)d defective=%(defective)d" % c)
+    for r in rows:
+        if r["status"] in ("DEFECTIVE", "UNREADABLE"):
+            print("  ", r["specimen_id"], r["receipt"], r["status"], "; ".join(r["defects"]))
+    if out:
+        pathlib.Path(out).write_text(json.dumps({"schema": "techne.fossil.receipt_census/1",
+                                                 "written_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                                                 "counts": c, "rows": rows}, indent=1) + "\n", encoding="utf-8", newline="\n")
+    return c
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -770,6 +878,7 @@ def main(argv=None) -> int:
     mi = sub.add_parser("mirror"); mi.add_argument("--dest", required=True); mi.add_argument("--specimen", action="append"); mi.add_argument("--dry-run", action="store_true"); mi.add_argument("--allow-same-volume", action="store_true", help="disposable controls only")
     mv = sub.add_parser("mirror-verify"); mv.add_argument("--dest", required=True); mv.add_argument("--specimen", action="append")
     sub.add_parser("status"); sub.add_parser("summary")
+    rc_ = sub.add_parser("receipt-check", help="RQ-4 census: every tracked run receipt by schema, defects listed"); rc_.add_argument("--out")
     pr = sub.add_parser("preservation"); pr.add_argument("specimen_id", nargs="?"); pr.add_argument("--all", action="store_true"); pr.add_argument("--out")
     args = ap.parse_args(argv)
     if args.cmd == "acquire":
@@ -799,6 +908,9 @@ def main(argv=None) -> int:
             print(json.dumps(preservation_of(args.specimen_id), indent=1))
             print("PRESERVATION", args.specimen_id, "OK" if ok else "FAIL", *probs)
             return 0 if ok else 1
+    elif args.cmd == "receipt-check":
+        c = receipt_census(args.out)
+        return 0 if c["defective"] == 0 else 1
     elif args.cmd == "status":
         status()
     elif args.cmd == "summary":
