@@ -230,7 +230,7 @@ PROBES = [("G8", p_g8), ("G1", p_g1), ("GE", p_ge), ("G6", p_g6), ("G5", p_g5), 
 
 # ------------------------------------------------------- environment checks
 
-def env_checks(round_id: str, skip_suite: bool = False) -> list[tuple[str, bool, str]]:
+def env_checks(round_id: str, skip_suite: bool = False, since_sha: str = "") -> list[tuple[str, bool, str]]:
     """The non-gate half of BUILD_R8's GATE RUN: suite, residue, registrations, capacity, tip sha."""
     out = []
 
@@ -242,6 +242,28 @@ def env_checks(round_id: str, skip_suite: bool = False) -> list[tuple[str, bool,
         s = _run([PY, "-m", "pytest", "primordial", "-q"], timeout=1800)
         tail = (s.stdout or "").strip().splitlines()
         out.append(("full_suite", s.returncode == 0, f"rc={s.returncode} | {tail[-1] if tail else 'no output'}"))
+
+    # BUILD_R8 GATE RUN item 2: every test file added or modified in the build window RUNS.
+    # This is the answer to the remaining source-text probes (G1/G3/G4/G5/G7): a grep can be fooled by a
+    # builder writing a field name in a comment -- two such probes already false-greened live defects
+    # (D25, D28) during this prep. The builders' own regression tests are what actually exercise those gates.
+    if since_sha:
+        d = _run(["git", "-C", str(ROOT), "diff", "--name-only", f"{since_sha}..HEAD"], timeout=120)
+        changed = sorted(x for x in (d.stdout or "").split()
+                         if x.endswith(".py") and "test" in x.rsplit("/", 1)[-1].lower())
+        if not changed:
+            out.append(("discovered_build_tests", False,
+                        f"NO test file changed since {since_sha[:9]} -- a build that shipped no regression "
+                        f"test is itself a finding (every brief required one per item)"))
+        else:
+            t = _run([PY, "-m", "pytest", *changed, "-q"], timeout=1800)
+            tl = (t.stdout or "").strip().splitlines()
+            out.append(("discovered_build_tests", t.returncode == 0,
+                        f"{len(changed)} file(s) rc={t.returncode} | {tl[-1] if tl else 'no output'} | {changed}"))
+    else:
+        out.append(("discovered_build_tests", False,
+                    "no --since-sha given, so GATE RUN item 2 did NOT execute; counted as a failed check "
+                    "rather than silently omitted"))
 
     r = _run([PY, "-m", "primordial.ops.residue", "scan", "--round", round_id], timeout=300)
     try:
@@ -277,6 +299,9 @@ def main(argv=None) -> int:
     ap.add_argument("--round", default="r8")
     ap.add_argument("--emit", action="store_true", help="publish the map to redis + GATE_MAP_R8.json")
     ap.add_argument("--rehearse", action="store_true", help="run everything, publish nothing")
+    ap.add_argument("--since-sha", default="",
+                    help="pre-build tip; every test file changed since it is RUN (GATE RUN item 2). "
+                         "R8 build started at 6c02b89a9.")
     ap.add_argument("--skip-suite", action="store_true",
                     help="skip the 4-minute full suite while builders hold the CPU; counted as a FAILED "
                          "check, so a run using it can never report a clean environment. NEVER at the real gate.")
@@ -289,7 +314,7 @@ def main(argv=None) -> int:
     print(f"    {time.strftime('%Y-%m-%d %H:%M:%S')}")
 
     print("\n-- environment --")
-    env = env_checks(a.round, skip_suite=a.skip_suite)
+    env = env_checks(a.round, skip_suite=a.skip_suite, since_sha=a.since_sha)
     for name, ok, detail in env:
         checks += 1
         print(f"  [{'PASS' if ok else 'FAIL'}] {name}: {detail}")
