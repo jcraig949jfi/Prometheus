@@ -803,3 +803,9 @@ Iteration 3 (09:26). Full suite rc 0 (998 passed, 9 skipped, 305 s, single proce
 verified LANDED by A's independent probes (deterministic over 5 runs). A did not rule on the gpuq.py keepalive wiring question
 (1789564827107-0), so it stays UNDONE and recorded as a gap: during a GPU job > 90 s the arbiter key is absent until the next loop
 turn re-creates it. C1 not touched. No worker, clock or controller started. Posting E R8 BUILD DONE.
+
+Iteration 4 (09:40). A ruling 1789565905972-0: do NOT edit nv/gpuq.py (unowned, C1 NOT LANDED so cross-lane GPU is refused
+anyway); record the gap and file a PC. DONE via F's G6 envelope.open_candidate (no hand-written stub this round):
+PC 1789565927668-0, source_event E_RECORDED_GAP_D28_GPUQ_WIRING, depends on PC 1789514994865-0 + C1 D23; filed measured basis
+r7 job 217.6 s vs REG_TTL 90 s, r7 unregistered ~1380 s, residual absence after C3 = job_wall - REG_TTL (127.6 s for that job).
+Read back: 1 stub, filing present. gpuq.py untouched.
