@@ -256,6 +256,7 @@ def verify(world, cw) -> dict:
     return {"world": world.name,
             "verified_internally": total == 0,
             "rules_audited": bool(audit.get("rules_audited", False)),
+            "rules_audit_state": audit.get("audit_state", "NONE"),
             "rules_audit_source_sha256": audit.get("source", {}).get("sha256"),
             "rules_audit_protocol": ("seat-performed under P3, operator spot check "
                                      "pending (LUDUS-31)" if audit else None),
@@ -278,8 +279,8 @@ def main() -> None:
         r = verify(w, cw)
         out["worlds"][w.name] = r
         flag = (("VERIFIED-INTERNALLY (rules AUDITED by seat, P3)" if r["rules_audited"]
-                 else "VERIFIED-INTERNALLY (rules unaudited)") if r["verified_internally"]
-                else f"FAILED ({r['n_failures']})")
+                 else "VERIFIED-INTERNALLY (rules audit %s)" % r["rules_audit_state"])
+                if r["verified_internally"] else f"FAILED ({r['n_failures']})")
         print(f"{w.name:14s} {flag}")
         for k, v in r.get("failures", {}).items():
             for line in v[:4]:

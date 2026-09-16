@@ -1,6 +1,6 @@
 {
   "artifact": "rules audit ledger (W3): one entry per world audited against a published source; read by ludus/bench/verify.py to set rules_audited",
-  "protocol": "P3 (CHARTER_v3_WORLD_FOUNDRY.md s9): the seat fetches the published rules, records the source hash and quotes the sentence behind every line; the operator's HITL tick is a spot check on this record. LUDUS-31 (does a seat-performed audit count for W3) is an open operator decision; every entry says which assumption it was written under.",
+  "protocol": "P3 (CHARTER_v3_WORLD_FOUNDRY.md s9): the seat fetches the published rules, records the source hash and quotes the sentence behind every line; the operator's HITL tick is a spot check on this record. LUDUS-31 (does a seat-performed audit count for W3) is an open operator decision; every entry says which assumption it was written under. A world is rules_audited=true only when EVERY rule line (not scope lines) is OK or CORRECTED against a PUBLISHER source; a world with any UNSURE line is audit_state=PARTIAL and rules_audited=false, whatever secondary sources say.",
   "worlds": {
     "MARTIAN_DICE": {
       "rules_audited": true,
@@ -19,22 +19,285 @@
         "independence": "one published source; an independent implementation (LUDUS-16, OpenSpiel via Herakles) is the second admissible instrument and has not run"
       },
       "lines": [
-        {"id": "MD-1", "rule_as_reconstructed": "each die has faces tank, ray, ray, human, cow, chicken (13 dice)", "verdict": "OK", "citation": "COMPONENTS: '13 Martian Dice. Each die features 1 Tank, 2 Death Rays, 1 Human, 1 Cow, and 1 Chicken.'", "code": "MD_DICE = 13; MD_W = {tank 1, ray 2, human 1, cow 1, chicken 1}"},
-        {"id": "MD-2", "rule_as_reconstructed": "scoring requires rays >= tanks, else the turn scores zero", "verdict": "OK", "citation": "SCORING: 'If there are more Tanks than Death Rays, you must flee without any abductees; you score zero points for the round ... If you set aside at least as many Death Rays as Tanks, then you ... will score points'", "code": "pot(): if rays < tanks: return 0.0"},
-        {"id": "MD-3", "rule_as_reconstructed": "score is humans + cows + chickens, plus 3 for holding at least one of each", "verdict": "OK", "citation": "SCORING: '1 Point for each Human, each Cow, and each Chicken that you set aside. 3 bonus points if you set aside at least one of all three Earthling types.'", "code": "pot(): h + c + ch (+ MD_SET_BONUS = 3 if h and c and ch)"},
-        {"id": "MD-4", "rule_as_reconstructed": "all tanks rolled are set aside compulsorily", "verdict": "OK", "citation": "ON YOUR TURN: 'Set aside all Tanks, adding them to any Tanks set aside earlier this turn.' Sidebar: 'ALL TANKS ARE SET ASIDE EVERY TURN.'", "code": "options(): base = (s[0] + t, ...) before any choice"},
-        {"id": "MD-5", "rule_as_reconstructed": "you must then claim ALL dice of exactly one symbol you have not claimed before this turn; if you cannot, the turn ends scoring zero", "verdict": "WRONG (two parts)", "citation": "ON YOUR TURN: 'From the remaining dice, choose one type (Chickens, Cows, Humans, or Death Rays) and set aside all dice of that type. Chickens, Cows, or Humans may not be chosen if you have already set that type aside this turn. Death Rays may always be chosen, and are added to any Death Rays set aside earlier this turn. If you cannot set aside any dice based on these restrictions, your turn is over; proceed to Scoring.' Sidebar: 'DEATH RAYS CAN BE CHOSEN MULTIPLE TIMES PER TURN.'", "correction": "R1: Death Rays are claimable on every roll, not once per turn. R2: an unclaimable roll ends the turn WITH scoring (rays >= tanks still applies), not as a zero-scoring bust.", "code_before": "options(): 'if got == 0 or base[MD_IDX[sym]] > 0: continue' applied to ray as well; an empty option set was a death (value 0) in compiled.solve", "code_after": "options(): the already-claimed test skips 'ray'; an empty option set becomes one forced-end option with the unclaimable dice moved to the 6th 'dead' count so forced_end(s) is true and pot(s) is scored"},
-        {"id": "MD-6", "rule_as_reconstructed": "after claiming you may stop or reroll the remaining dice", "verdict": "OK", "citation": "ON YOUR TURN: 'You may choose to end your turn and proceed to Scoring, or return to step 1 to continue rolling.' and 'If there are no available dice, proceed to Scoring.'", "code": "W(s) = max(pot(s), V(s)); forced_end when dice_left == 0"},
-        {"id": "MD-7", "rule_as_reconstructed": "(scope cut) solitaire; one turn from 13 dice", "verdict": "SCOPE, not a rule claim", "citation": "GAME END: 'The game end is triggered when one player reaches a total score of 25 points or more ... the player with the most points wins' -- the multi-turn race to 25 and the death-ray-duel tiebreak are not modelled", "code": "n/a"}
+        {
+          "id": "MD-1",
+          "rule_as_reconstructed": "each die has faces tank, ray, ray, human, cow, chicken (13 dice)",
+          "verdict": "OK",
+          "citation": "COMPONENTS: '13 Martian Dice. Each die features 1 Tank, 2 Death Rays, 1 Human, 1 Cow, and 1 Chicken.'",
+          "code": "MD_DICE = 13; MD_W = {tank 1, ray 2, human 1, cow 1, chicken 1}"
+        },
+        {
+          "id": "MD-2",
+          "rule_as_reconstructed": "scoring requires rays >= tanks, else the turn scores zero",
+          "verdict": "OK",
+          "citation": "SCORING: 'If there are more Tanks than Death Rays, you must flee without any abductees; you score zero points for the round ... If you set aside at least as many Death Rays as Tanks, then you ... will score points'",
+          "code": "pot(): if rays < tanks: return 0.0"
+        },
+        {
+          "id": "MD-3",
+          "rule_as_reconstructed": "score is humans + cows + chickens, plus 3 for holding at least one of each",
+          "verdict": "OK",
+          "citation": "SCORING: '1 Point for each Human, each Cow, and each Chicken that you set aside. 3 bonus points if you set aside at least one of all three Earthling types.'",
+          "code": "pot(): h + c + ch (+ MD_SET_BONUS = 3 if h and c and ch)"
+        },
+        {
+          "id": "MD-4",
+          "rule_as_reconstructed": "all tanks rolled are set aside compulsorily",
+          "verdict": "OK",
+          "citation": "ON YOUR TURN: 'Set aside all Tanks, adding them to any Tanks set aside earlier this turn.' Sidebar: 'ALL TANKS ARE SET ASIDE EVERY TURN.'",
+          "code": "options(): base = (s[0] + t, ...) before any choice"
+        },
+        {
+          "id": "MD-5",
+          "rule_as_reconstructed": "you must then claim ALL dice of exactly one symbol you have not claimed before this turn; if you cannot, the turn ends scoring zero",
+          "verdict": "WRONG (two parts)",
+          "citation": "ON YOUR TURN: 'From the remaining dice, choose one type (Chickens, Cows, Humans, or Death Rays) and set aside all dice of that type. Chickens, Cows, or Humans may not be chosen if you have already set that type aside this turn. Death Rays may always be chosen, and are added to any Death Rays set aside earlier this turn. If you cannot set aside any dice based on these restrictions, your turn is over; proceed to Scoring.' Sidebar: 'DEATH RAYS CAN BE CHOSEN MULTIPLE TIMES PER TURN.'",
+          "correction": "R1: Death Rays are claimable on every roll, not once per turn. R2: an unclaimable roll ends the turn WITH scoring (rays >= tanks still applies), not as a zero-scoring bust.",
+          "code_before": "options(): 'if got == 0 or base[MD_IDX[sym]] > 0: continue' applied to ray as well; an empty option set was a death (value 0) in compiled.solve",
+          "code_after": "options(): the already-claimed test skips 'ray'; an empty option set becomes one forced-end option with the unclaimable dice moved to the 6th 'dead' count so forced_end(s) is true and pot(s) is scored"
+        },
+        {
+          "id": "MD-6",
+          "rule_as_reconstructed": "after claiming you may stop or reroll the remaining dice",
+          "verdict": "OK",
+          "citation": "ON YOUR TURN: 'You may choose to end your turn and proceed to Scoring, or return to step 1 to continue rolling.' and 'If there are no available dice, proceed to Scoring.'",
+          "code": "W(s) = max(pot(s), V(s)); forced_end when dice_left == 0"
+        },
+        {
+          "id": "MD-7",
+          "rule_as_reconstructed": "(scope cut) solitaire; one turn from 13 dice",
+          "verdict": "SCOPE, not a rule claim",
+          "citation": "GAME END: 'The game end is triggered when one player reaches a total score of 25 points or more ... the player with the most points wins' -- the multi-turn race to 25 and the death-ray-duel tiebreak are not modelled",
+          "code": "n/a"
+        }
       ],
       "constants_moved": 0,
       "rules_moved": 2,
       "resolve_diff": {
-        "reconstruction_2026-08-27": {"n_states": 8555, "optimal_ev": 2.093806, "axis_decomposition": {"cheap_pair": "r0012+r0003", "cheap_pair_retention": 0.9656, "recovered_by_upgrading_SELECT_only": 0.0216, "recovered_by_upgrading_STOP_only": 0.0091, "total_residual": 0.0344}},
-        "audited_2026-09-16": {"n_states": 14653, "optimal_ev": 3.110382, "axis_decomposition": {"cheap_pair": "r0012+r0003", "cheap_pair_retention": 0.9373, "recovered_by_upgrading_SELECT_only": -0.0005, "recovered_by_upgrading_STOP_only": 0.0486, "total_residual": 0.0627}},
-        "ranking_stability": {"stop_axis_kendall_tau": 0.429, "stop_axis_pairs": 14, "select_axis_kendall_tau": 0.733, "select_axis_pairs": 15},
+        "reconstruction_2026-08-27": {
+          "n_states": 8555,
+          "optimal_ev": 2.093806,
+          "axis_decomposition": {
+            "cheap_pair": "r0012+r0003",
+            "cheap_pair_retention": 0.9656,
+            "recovered_by_upgrading_SELECT_only": 0.0216,
+            "recovered_by_upgrading_STOP_only": 0.0091,
+            "total_residual": 0.0344
+          }
+        },
+        "audited_2026-09-16": {
+          "n_states": 14653,
+          "optimal_ev": 3.110382,
+          "axis_decomposition": {
+            "cheap_pair": "r0012+r0003",
+            "cheap_pair_retention": 0.9373,
+            "recovered_by_upgrading_SELECT_only": -0.0005,
+            "recovered_by_upgrading_STOP_only": 0.0486,
+            "total_residual": 0.0627
+          }
+        },
+        "ranking_stability": {
+          "stop_axis_kendall_tau": 0.429,
+          "stop_axis_pairs": 14,
+          "select_axis_kendall_tau": 0.733,
+          "select_axis_pairs": 15
+        },
         "reading": "The reconstruction's difficulty sat on the claim (SELECT) axis; on the published rules the claim axis recovers nothing and the residual is on STOP. Cycle 002's '86% on the claim axis' (CYCLE_002_stochastic_stopping.md s4, a different instrument on the same wrong rules, ludus/stopworlds.py) is therefore a fact about the reconstruction, not about Martian Dice. Both matrix columns are kept: MARTIAN_DICE (audited) and MARTIAN_DICE_RECON_2026-08-27 (superseded, verbatim)."
-      }
+      },
+      "audit_state": "COMPLETE"
+    },
+    "FLIP7": {
+      "rules_audited": true,
+      "audit_state": "COMPLETE",
+      "audited_utc": "2026-09-16",
+      "auditor": "Ludus[m2-c3a5ef7a], seat-performed under P3; operator spot check PENDING (LUDUS-31)",
+      "source": {
+        "title": "Flip 7 rules, RULESET EDITION 3.1 (2 pages)",
+        "publisher": "The Op / USAopoly, Inc., (c) 2025",
+        "fetched_from": "https://cdn.shopify.com/s/files/1/0611/3958/3198/files/25_FLIP_7_TB_RULES_C_Rev_9_2_25_ND.pdf?v=1756935535 (linked from https://theop.games/pages/flip-7)",
+        "fetched_utc": "2026-09-16T14:0xZ",
+        "pdf_creation_date_in_metadata": "2025-09-03",
+        "sha256": "c17884d1cde5317ba3e67fae27e06b071a60134788fe0950d2712f8a078394f9",
+        "local_copy": "ludus/bench/rules_sources/flip7_rules_theop.pdf (NOT committed)",
+        "independence": "one publisher source; no independent implementation"
+      },
+      "lines": [
+        {
+          "id": "F7-1",
+          "rule_as_reconstructed": "rank r appears r times; rank 0 once (79 number cards)",
+          "verdict": "OK",
+          "citation": "IMPORTANT: 'It has twelve 12's, eleven 11's, ten 10's... until you get to one 1; there is even one 0.' Also 'THE ZERO IS A NUMBER CARD WORTH NO POINTS.' and 'The more valuable a card is, the more copies of that card there are in the deck.'",
+          "code": "F7_COUNTS = {0: 1, r: r for r in 1..12}; F7_TOTAL = 79"
+        },
+        {
+          "id": "F7-2",
+          "rule_as_reconstructed": "collecting 7 distinct ranks scores +15 and ends your round immediately",
+          "verdict": "OK",
+          "citation": "OBJECTIVE: 'If you can successfully Flip 7 unique Number cards into your line, you automatically end the round for everyone and score 15 bonus points.' CALCULATE SCORES 4: 'If you Flip 7 Number cards, score an additional 15 points.'",
+          "code": "BONUS, BONUS_AT = 15, 7; forced_end at len(s) >= 7; pot adds 15"
+        },
+        {
+          "id": "F7-3",
+          "rule_as_reconstructed": "flipping a rank you already hold busts you; the round scores zero",
+          "verdict": "OK",
+          "citation": "OBJECTIVE: 'if you ever draw a second card with the same number as one already in your line, you bust and are out of the round, scoring nothing.'",
+          "code": "options(): if draw in s: return []"
+        },
+        {
+          "id": "F7-4",
+          "rule_as_reconstructed": "(implicit) the first card is dealt, not chosen; you may stay only with a card in front of you",
+          "verdict": "OK",
+          "citation": "HOW TO PLAY: 'the Dealer, deals one card face up to each player' ... 'You may \"Stay\" as long as you have a card in front of you.'",
+          "code": "compiled.solve/evaluate start at V(initial) (about-to-draw), so no stop is offered on the empty line"
+        },
+        {
+          "id": "F7-S1",
+          "rule_as_reconstructed": "(scope) action cards (Freeze, Flip Three, Second Chance) and modifier cards not implemented",
+          "verdict": "SCOPE",
+          "citation": "sheet lists 94 cards: 79 Number, Score Modifier (+2,+4,+6,+8,+10,x2) and Action (Freeze, Flip Three, Second Chance) cards; 'Action or Modifier cards do not count toward the seven card bonus'",
+          "note": "the bench draws from the 79 number cards only; in the real game the 15 non-number cards are in the same draw pile, so per-flip number probabilities are conditional on drawing a number card"
+        },
+        {
+          "id": "F7-S2",
+          "rule_as_reconstructed": "(scope, NEW 2026-09-16) one round from a full deck",
+          "verdict": "SCOPE",
+          "citation": "STARTING THE NEXT ROUND: 'Set all cards from the round to the side. Do not shuffle them back into the deck ... When the deck runs out, shuffle all the discarded cards to form a new deck.'",
+          "note": "later rounds draw from a depleted deck; the bench models the first round only"
+        },
+        {
+          "id": "F7-S3",
+          "rule_as_reconstructed": "(scope) solitaire",
+          "verdict": "SCOPE",
+          "citation": "3+ players; 'be the first player to score 200 points'"
+        }
+      ],
+      "constants_moved": 0,
+      "rules_moved": 0,
+      "resolve_diff": "none needed; the world is unchanged"
+    },
+    "INCAN_GOLD": {
+      "rules_audited": false,
+      "audit_state": "PARTIAL",
+      "audited_utc": "2026-09-16",
+      "auditor": "Ludus[m2-c3a5ef7a], seat-performed under P3",
+      "source": {
+        "title": "Incan Gold rulebook (Eagle-Gryphon, 2018 edition PDF; 4 pages) and INCAN GOLD RULES 2023 v7 (2024 edition; 4 pages)",
+        "publisher": "Eagle-Gryphon Games (designers Alan R. Moon and Bruno Faidutti)",
+        "fetched_from": "Google Drive folder linked from https://www.eagle-gryphon.com/products/incan-gold-2018 (ids 1dUqSh-rCYACXEGvL4Hn-wKSthLfwzzks, 1g9iStN6y5m0VZFrQFYN3a2RFztps4W6s)",
+        "fetched_utc": "2026-09-16T14:1xZ",
+        "sha256": "50d0f6a1142ee5232457fcb94a4648acd6e6bcb8246274ed96b9a2e93607bdae (2018 ed. rulebook, PDF date 2020-05-20); bfcb3cf9bce73631ef1dfe107efdf99c1f0895f694b8ea130c7c1c6b5a03793a (2023 v7)",
+        "local_copy": "ludus/bench/rules_sources/incan_gold_rulebook_eagle_gryphon_2020.pdf, incan_gold_rules_2023_v7_eagle_gryphon.pdf (NOT committed)",
+        "secondary": "Universal Head player aid v1 2008 (65f4563e...; Sunriver 2006 edition) confirms the second-hazard rule but lists no values; Board Game Arena help page lists '14 Treasure cards (1, 2, 3, 4, 5, 5, 7, 7, 9, 11, 11, 13, 14, and 15 gems)' -- FOURTEEN, no 17; a GitHub reimplementation (Katze2664/Incan_Gold) lists the seat's fifteen. The two secondary sources DISAGREE on the 17.",
+        "independence": "publisher text confirms counts and rules; NO publisher text lists the per-card treasure values (they are printed on the cards)"
+      },
+      "lines": [
+        {
+          "id": "IG-1",
+          "rule_as_reconstructed": "five hazard types, three copies of each; the SECOND revealed copy of a type ends the round and everyone still in loses their unbanked take",
+          "verdict": "OK",
+          "citation": "2018 ed. COMPONENTS: '30 Quest cards: 15 Treasure cards and 15 Hazard cards (3 each of the 5 different Hazards)'; 3) 2): 'If this is the second Hazard card of the same type, the players have been scared away from the Temple and the round is over. All players still in the Temple give back all the Treasures they took during the round'. 2023 v7 agrees ('If the card DOES match one of the previous Hazards in the temple, disaster strikes! ... drop all treasure they gathered this round').",
+          "code": "IG_HAZARD_TYPES = 5; IG_HAZARD_COPIES = 3; second copy -> options [] (bust)"
+        },
+        {
+          "id": "IG-2",
+          "rule_as_reconstructed": "treasure card values 1 2 3 4 5 5 7 7 9 11 11 13 14 15 17 (15 cards)",
+          "verdict": "UNSURE",
+          "citation": "publisher text confirms '15 Treasure cards' (both editions) and nothing more; BGA lists 14 values without the 17; a GitHub reimplementation lists all 15 with the 17",
+          "residual": "a publisher components list or card images; until then IG_TREASURES is a reconstruction whose COUNT matches the publisher and whose VALUES are corroborated by one secondary source and contradicted by another",
+          "code": "IG_TREASURES = (1, 2, 3, 4, 5, 5, 7, 7, 9, 11, 11, 13, 14, 15, 17); IG_TOTAL = 124"
+        },
+        {
+          "id": "IG-3",
+          "rule_as_reconstructed": "(implicit) treasure is divided among those still in, rounded down; leftovers stay on the card",
+          "verdict": "OK for solitaire",
+          "citation": "2018 ed. 3): 'The Treasure value on the card is divided among these players, rounded down ... left over ... are left on the Quest card.' In solitaire the divisor is 1.",
+          "code": "pot = IG_TOTAL - sum(remaining)"
+        },
+        {
+          "id": "IG-4",
+          "rule_as_reconstructed": "(implicit) the first card is drawn before any leave decision",
+          "verdict": "OK",
+          "citation": "2018 ed. 1) Note: 'When the first Quest card is turned over, there's no reason to leave, so you may skip this step and assume all players enter the Temple.'",
+          "code": "solve/evaluate start at V(initial)"
+        },
+        {
+          "id": "IG-S1",
+          "rule_as_reconstructed": "(scope) solitaire; one round; no artifacts",
+          "verdict": "SCOPE",
+          "citation": "3-8 players; five rounds; '5 Artifact cards (numbered 5, 7, 8, 10 and 12)', one shuffled into each round's deck and claimable only by a lone leaver; the second matching hazard is 'removed from the game' for later rounds",
+          "note": "in SOLITAIRE the player is always the lone leaver, so the omitted artifact card would be claimable on every exit -- a materially different value than the multiplayer cut suggests; recorded as a scope statement, not a rule error"
+        }
+      ],
+      "constants_moved": 0,
+      "rules_moved": 0,
+      "resolve_diff": "none; world unchanged; IG-2 open"
+    },
+    "CANT_STOP": {
+      "rules_audited": false,
+      "audit_state": "PARTIAL",
+      "audited_utc": "2026-09-16",
+      "auditor": "Ludus[m2-c3a5ef7a], seat-performed under P3",
+      "source": {
+        "title": "Sid Sackson's CAN'T STOP rulesheet EN (CSrulesv15, 2 pages)",
+        "publisher": "Eagle-Gryphon Games / FRED Distribution, 2021 (design Sid Sackson; development Rick Soued)",
+        "fetched_from": "Google Drive folder linked from https://www.eagle-gryphon.com/products/cant-stop-1 (id 1bzwXHpoMOzAZGH21uEbFCSc5yjT9bDkC)",
+        "fetched_utc": "2026-09-16T14:2xZ",
+        "pdf_creation_date_in_metadata": "2021-06-23 (modified 2022-07-05)",
+        "sha256": "9d7b6caa8f6205b981bd1326ca236b41d225763735e0d8b943efe2967379e24b",
+        "local_copy": "ludus/bench/rules_sources/cant_stop_rulesheet_eagle_gryphon.pdf (NOT committed)",
+        "secondary": "Wikipedia, Can't Stop (board game): 'The columns (respectively) have 3, 5, 7, 9, 11, 13, 11, 9, 7, 5 and 3 spaces each.'",
+        "independence": "publisher text confirms runners, pairing and bust rules; the column heights are printed on the board, not in the text"
+      },
+      "lines": [
+        {
+          "id": "CS-1",
+          "rule_as_reconstructed": "column heights 2:3 3:5 4:7 5:9 6:11 7:13 8:11 9:9 10:7 11:5 12:3",
+          "verdict": "UNSURE (corroborated by a secondary source)",
+          "citation": "rulesheet: 'The board has 11 columns, numbered from 2 to 12. The columns consist of a varying number of squares. The fewer squares a column has, the more difficult it is to roll this number' -- no numbers in the text; Wikipedia gives exactly the seat's heights",
+          "residual": "a publisher board image or components list",
+          "code": "CS_HEIGHTS"
+        },
+        {
+          "id": "CS-2",
+          "rule_as_reconstructed": "three runners",
+          "verdict": "OK",
+          "citation": "COMPONENTS '3 white runner markers'; 'Note: You may have only a total of 3 runners active on any given turn.'",
+          "code": "CS_RUNNERS = 3"
+        },
+        {
+          "id": "CS-3",
+          "rule_as_reconstructed": "a roll of 4d6 is split into two pairs; you must use both sums if any pairing allows it, otherwise one, otherwise you bust",
+          "verdict": "OK in code; the SHEET WORDING was wrong",
+          "citation": "'They must form two pairs of numbers ... If a player forms two dice pairs that allow them to introduce (or move) two runners, they must do so.' AND 'a player may deliberately form the two dice pairs so that they are able to introduce or move only one runner (Example 1, option C).' AND 'If, after rolling the dice, a player is unable to do so, their turn ends immediately and they lose everything that they achieved during that turn.'",
+          "correction": "the obligation is PER CHOSEN PAIRING (both sums of the pairing you pick, if both are playable), not 'if ANY pairing allows both'. The code already enumerates every pairing and, within a pairing, forces both when both are playable and allows the single otherwise, so a one-runner pairing is available even when another pairing would move two. The RULES_AUDIT.md sentence described a stricter rule than the code implements; annotated, code unchanged.",
+          "code": "options(): per pairing, both-if-both-playable else singles; union over pairings"
+        },
+        {
+          "id": "CS-4",
+          "rule_as_reconstructed": "(implicit) a runner on the top square cannot move; that sum is unplayable",
+          "verdict": "OK",
+          "citation": "'they cannot move that runner anymore -- even if they roll this number on the dice again'",
+          "code": "_advance returns None when d[col] >= CS_HEIGHTS[col]"
+        },
+        {
+          "id": "CS-5",
+          "rule_as_reconstructed": "(implicit) with all three runners topped the turn is a forced end that scores",
+          "verdict": "OK by dominance, not by text",
+          "citation": "sheet: a player 'may continue to roll the dice or stop voluntarily' with a topped runner; with all three topped every roll busts",
+          "note": "the bench's forced_end removes a strictly dominated option (rolling into a certain bust); optimal and every stop circuit's value are unchanged; recorded so the difference is visible",
+          "code": "forced_end when all runners topped"
+        },
+        {
+          "id": "CS-S1",
+          "rule_as_reconstructed": "(scope) single turn from an empty board; banked progress valued as summed column fractions (a modelling choice)",
+          "verdict": "SCOPE",
+          "citation": "'Players try to be the first to occupy three of the numbered (top) squares'; markers persist across turns and won columns close for everyone",
+          "note": "RULES_AUDIT.md priority-3 entries stand"
+        }
+      ],
+      "constants_moved": 0,
+      "rules_moved": 0,
+      "resolve_diff": "none; world unchanged; CS-1 open"
     }
   }
 }
