@@ -45,7 +45,10 @@ def whole_system(rec: dict) -> dict:
     cap = rec.get("human_capability_summary") or {}
     obs = rec.get("observability") or {}
     preds = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") in PRED]
-    succs = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") == "superseded"]
+    # 2026-09-16: Techne's 'superseded' edge has NO fixed direction across its records (17 edges read: bsd-tcp-4.2 ->
+    # tahoe means 'superseded BY', linux-tcp-congestion -> Reno means 'superseded Reno'); the census can only say the two
+    # are related by supersession and point at the note. It is projected here, not into predecessors, and marked.
+    succs = [f"superseded (direction UNFIXED in Techne's vocabulary; note: {r.get('note', '')!r}): {r['to']}" for r in rels if r.get("relation") == "superseded"]
     rivals = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") == "shares_ancestor_with"]
     disp = hd.get("state") if hd else None
     if disp and disp != "UNKNOWN":

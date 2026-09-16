@@ -133,18 +133,900 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-anthay-1966/upstream/tree/src/eliza.cpp"
+   }
+  ],
+  "inspected_files": [
+   "src/eliza.cpp response() 3369-3490",
+   "hash() 2403-2440",
+   "rule_memory 2798-2900",
+   "class index"
+  ],
+  "date": "2026-09-16T12:25Z",
+  "note": "a reconstruction faithful enough to reproduce the CACM 1966 dialogue including the memory-recall quirk (LIMIT == 4) and the 7094 sign-magnitude hash; the anatomy below is Weizenbaum's, with the reconstructor's page references preserved in the code"
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "fossil_ancestry": "eliza-anthay-1966",
+   "human_name": "eliza::response first loop [CACM page 39]",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "uppercase and split the input; walk the words: at a delimiter (comma/period), discard the text so far if no keyword was found yet, else cut the text there; for each word that is a script keyword, push it to the FRONT of the keystack if its precedence exceeds the best so far, else to the back; apply the keyword's word substitution in place (I -> YOU, MY -> YOUR); LIMIT cycles 1..4 per turn",
+   "input": "a line of text",
+   "output": "a trimmed word list and an ordered keystack",
+   "state": "limit_ (1..4 counter)",
+   "update": "per turn",
+   "assumptions": [
+    "the script's precedences encode which keyword should be answered first"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-anthay-1966::script_as_data_with_keywords_precedences_substitutions_tags_and_rules",
+    "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+    "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four",
+    "eliza-anthay-1966::no_match_fallbacks_cycled_by_the_same_counter"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-anthay-1966/upstream/tree/src/eliza.cpp:3369-3410"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the first loop of response()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+   "fossil_ancestry": "eliza-anthay-1966",
+   "human_name": "rule_keyword::apply_transformation -> match() / reassemble() [pages 39-40]",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a keyword's rule holds decomposition patterns (a sequence of literal words, integers meaning 'any n words' (0 = any number), and (/TAG) class references resolved through the DLIST tags); match() binds the pattern to the words into components; the rule's reassembly rules (cycled in turn per decomposition) name components by index to build the reply; a rule may instead say NEWKEY (drop this keyword) or link to another keyword (= OTHERKEY)",
+   "input": "words, a keyword rule, the tag map",
+   "output": "a reply, or an action (linkkey / newkey / inapplicable)",
+   "state": "per-rule cursor over reassembly rules (round robin)",
+   "update": "per application",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-anthay-1966::script_as_data_with_keywords_precedences_substitutions_tags_and_rules",
+    "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+    "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four"
+   ],
+   "fitness_value_in_ancestor": "the entire 'understanding'; the record's failure condition is a pattern that does not cover the turn",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-anthay-1966/upstream/tree/src/eliza.cpp:1081-1340 (match family, index), 2120-2200 (reassemble), 2900-3050 (rule_keyword)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "match / xmatch / reassemble / rule_keyword",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four",
+   "fossil_ancestry": "eliza-anthay-1966",
+   "human_name": "rule_memory [page 41 (f)]; the LIMIT quirk",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "whenever the MEMORY keyword (MY) is applied, a transformed version of the sentence is pushed on a FIFO, the transformation chosen by the mid-square hash of the last word's BCD encoding (4 alternatives); when a later input has NO keyword and LIMIT == 4 and the queue is non-empty, the oldest memory is popped and returned ('Does that have anything to do with the fact that your ...')",
+   "input": "keyworded sentences; keyword-free turns",
+   "output": "a delayed reply",
+   "state": "memories_ (FIFO), limit_",
+   "update": "per turn",
+   "assumptions": [
+    "the 1966 code's 'certain counting mechanism' is exactly LIMIT == 4 -- the reconstructor's finding from the recovered source"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+    "eliza-anthay-1966::mid_square_hash_of_a_35_bit_sign_magnitude_word",
+    "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+    "eliza-anthay-1966::no_match_fallbacks_cycled_by_the_same_counter"
+   ],
+   "fitness_value_in_ancestor": "the only cross-turn state; what made ELIZA seem to remember",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-anthay-1966/upstream/tree/src/eliza.cpp:2798-2900,3411-3420"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "rule_memory + the keystack.empty() branch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "EPISODE",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eliza-anthay-1966::mid_square_hash_of_a_35_bit_sign_magnitude_word",
+   "fossil_ancestry": "eliza-anthay-1966",
+   "human_name": "SLIP HASH (FAP) reconstruction",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "mask to 35 bits, square, take the middle n bits of the 70-bit product (n = 2 for the memory choice); the 7094's sign-magnitude representation is reproduced so the same word hashes to the same 1966 bucket",
+   "input": "a 6-character BCD word",
+   "output": "n bits",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "the reconstruction of the FAP code is right (tests compare against known 1966 outputs)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four"
+   ],
+   "fitness_value_in_ancestor": "decides which of 4 memory transformations fires; part of why the CACM dialogue is reproduced exactly",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-anthay-1966/upstream/tree/src/eliza.cpp:2403-2440"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "hash()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eliza-anthay-1966::no_match_fallbacks_cycled_by_the_same_counter",
+   "fossil_ancestry": "eliza-anthay-1966",
+   "human_name": "nomatch_msgs_[limit_ - 1] / NONE rule",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when no keyword applies and no memory is due, one of four canned deflections indexed by LIMIT is returned (or the script's NONE rule); the same counter thus governs both deflection variety and memory timing",
+   "input": "a keyword-free turn",
+   "output": "a deflection",
+   "state": "limit_",
+   "update": "per turn",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+    "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-anthay-1966/upstream/tree/src/eliza.cpp:3372-3374,3434-3470"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the nomatch branches",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eliza-anthay-1966::script_as_data_with_keywords_precedences_substitutions_tags_and_rules",
+   "fossil_ancestry": "eliza-anthay-1966",
+   "human_name": "elizascript reader / the DOCTOR script (embedded)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "an S-expression script defines every keyword, its precedence, substitution, decomposition/reassembly rules, DLIST tag classes and the MEMORY rule; the engine has no English in it (the record: swap the script, change the personality) -- reader read by index",
+   "input": "script text",
+   "output": "rulemap, tagmap",
+   "state": "none",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+    "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eliza-anthay-1966/upstream/tree/src/eliza.cpp:3778-4860 (tokenizer, eliza_script_reader; index)"
+   },
+   "confidence": "LOW",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "elizascript namespace",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the micro test library, tracers, Hollerith/BCD conversion tables, serial I/O for a period terminal",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:eliza-anthay-1966/upstream/tree/src/eliza.cpp:108-160 (tests), 3148-3320 (tracers), 305-330 (hollerith); posix/win_serial_io.cpp",
+   "note": "the tracers are the reconstructor's instrument; BCD encoding is needed by the hash organ and recorded there",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eliza-anthay-1966"
+  },
+  {
+   "candidate": "'ELIZA' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the engine is five mechanisms and the script is data; the record's entry point relies on that split",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eliza-anthay-1966"
+  },
+  {
+   "candidate": "the DOCTOR script's content as machinery",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "the script is the WORLD the engine runs in; its rules are data",
+   "note": "a second script would be a second world for the same organs",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eliza-anthay-1966"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "eliza-anthay-1966::P.a_believable_reply_must_come_from_surface_transformation_alone_with_no_model_of_meaning",
+   "source_fossil": "eliza-anthay-1966",
+   "source_evidence": "record pressure / failure; response()",
+   "condition": "the machine has a word list and patterns; the human supplies all meaning; the reply must reflect the input back in a form that invites the next turn",
+   "resource_or_constraint": "1966 memory (a few hundred rules); no parsing beyond keywords",
+   "failure_condition": "a turn no rule covers -> canned deflection; the illusion breaks (record)",
+   "world_punishes": "rules that do not cover the input distribution",
+   "world_rewards": "reflection (pronoun swap + echo), a precedence that answers the most specific keyword, and a delayed memory that simulates continuity",
+   "observable_consequence": "the CACM 1966 conversation reproduced exactly (the record's oracle); the rate of fallback replies on new inputs",
+   "vacuity_condition": "a cooperative human who only uses scripted keywords",
+   "trivial_shortcuts": "a fixed list of open questions (no reflection; a world that measures only turn-taking rewards it)",
+   "cheat_control": "an engine that echoes the input verbatim with pronouns swapped must score below the scripted one on any measure of believability; if the world cannot tell them apart, it measures echo, not the script",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: demonstrate (and, per Weizenbaum, debunk) natural-language understanding",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "eliza-anthay-1966::script_as_data_with_keywords_precedences_substitutions_tags_and_rules",
+   "to": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::script_as_data_with_keywords_precedences_substitutions_tags_and_rules",
+   "to": "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "to": "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "keystack order",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+   "to": "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "MY -> create_memory",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::mid_square_hash_of_a_35_bit_sign_magnitude_word",
+   "to": "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "which transformation",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "to": "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "empty keystack + LIMIT == 4",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "to": "eliza-anthay-1966::no_match_fallbacks_cycled_by_the_same_counter",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+   "to": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "linkkey pushes a new keyword",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four",
+   "to": "eliza-anthay-1966::no_match_fallbacks_cycled_by_the_same_counter",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "both answer a keyword-free turn",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
+  {
+   "from": "eliza-anthay-1966",
+   "relation": "reimplementation_of",
+   "to": "Weizenbaum's MAD-SLIP ELIZA (1966), from the source recovered in 2021 (the reconstructor's README, not read here)",
+   "note": "human prior",
+   "basis": "SOURCE_READ"
+  },
   {
    "from": "eliza-anthay-1966",
    "relation": "algorithm_from",
@@ -161,7 +1043,13 @@
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the matcher and the script reader read by index only",
+   "the embedded DOCTOR script not read",
+   "nothing ran here; Techne's CACM-line oracle is on M1"
+  ],
+  "note": "the response algorithm is read line by line; five mechanisms account for it",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

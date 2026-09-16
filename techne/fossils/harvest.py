@@ -9,6 +9,7 @@
     python -m techne.fossils.harvest mirror-verify --dest D      re-hash every mirrored body against the records (a corrupted mirror file MUST fail this)
     python -m techne.fossils.harvest status                       one line per specimen
     python -m techne.fossils.harvest summary                      the directive's success measures, computed
+    python -m techne.fossils.harvest rematerialize <id> | --all [--out F]  second host: fetch from origin, verify by hash, never write tracked files
     python -m techne.fossils.harvest receipt-check [--out F]      RQ-4 census: receipts carrying / predating the environment block
 
 A RECIPE (techne/fossils/specimens/<id>/recipe.json) is the executable statement of "how to
@@ -359,14 +360,13 @@ def _expect_ok(res: dict, expect: dict | None) -> tuple[bool, list[str]]:
 
 
 # --------------------------------------------------------------------------- acquire
-def acquire(specimen_id: str) -> dict:
-    rec = record.load(specimen_id)
-    origin = rec["source_origin"]
-    body = vault.body_dir(specimen_id)
-    up = body / "upstream"
-    up.mkdir(parents=True, exist_ok=True)
-    out = {"specimen_id": specimen_id, "fetched": [], "body": str(body)}
-    for art in origin.get("artifacts", []):
+def _fetch_artifacts(artifacts: list, up: pathlib.Path, body: pathlib.Path) -> list:
+    """Fetch every artifact of a source_origin into <up>/ exactly as acquire() always has.
+    MUTATES the artifact dicts it is given (sha256 / bytes / extracted_to / commit_resolved):
+    acquire() passes the record's own list so the pins are written back; rematerialize()
+    passes a deep copy so the record is never touched."""
+    fetched = []
+    for art in artifacts:
         kind = art["kind"]
         if kind == "url":
             dest = up / art["filename"]
@@ -381,7 +381,7 @@ def acquire(specimen_id: str) -> dict:
             if art.get("extract", True) and dest.name.lower().endswith((".gz", ".tgz", ".zip", ".bz2", ".xz", ".tar")):
                 root = vault.extract(dest, up / "tree")
                 art["extracted_to"] = str(root.relative_to(body)).replace("\\", "/")
-            out["fetched"].append(f)
+            fetched.append(f)
         elif kind == "git":
             dest = up / "tree"
             # Submodules are fetched only when the record DECLARES them ("submodules": "required"),
@@ -394,9 +394,20 @@ def acquire(specimen_id: str) -> dict:
             if g.get("submodules") is not None:
                 art["submodules_pinned"] = [{"path": x["path"], "url": x["url"],
                                              "commit": x["pinned_commit"]} for x in g["submodules"]]
-            out["fetched"].append(g)
+            fetched.append(g)
         else:
             raise ValueError("unknown artifact kind " + kind)
+    return fetched
+
+
+def acquire(specimen_id: str) -> dict:
+    rec = record.load(specimen_id)
+    origin = rec["source_origin"]
+    body = vault.body_dir(specimen_id)
+    up = body / "upstream"
+    up.mkdir(parents=True, exist_ok=True)
+    out = {"specimen_id": specimen_id, "fetched": [], "body": str(body)}
+    out["fetched"] = _fetch_artifacts(origin.get("artifacts", []), up, body)
     # hash EVERYTHING under upstream/: the immutable archive(s) as fetched plus the extracted
     # tree plus any loose files, so one tree hash covers the whole body
     rows = vault.hash_tree(up)
@@ -414,6 +425,112 @@ def acquire(specimen_id: str) -> dict:
     out["n_files"] = len(rows)
     print(json.dumps({k: v for k, v in out.items() if k != "fetched"}, indent=1))
     return out
+
+
+# --------------------------------------------------------------------------- rematerialize (second host)
+REMAT_SCHEMA = "techne.fossil.rematerialize/1"
+
+
+def rematerialize(specimen_id: str, timeout: int = 900) -> dict:
+    """Bring a preserved body onto THIS host from its recorded origin and prove it is the same
+    body -- without touching anything tracked. The test of PRESERVATION.md's guarantee
+    ("reconstructible from the recorded origin + verifiable by hash"), one specimen at a time.
+
+        ALREADY_PRESENT_VERIFIED  a body is here and matches the record; nothing fetched
+        ALREADY_PRESENT_DRIFTED   a body is here and does NOT match; left alone (see restore)
+        MATCH                     fetched to a staging dir, tree hash == record; installed as upstream/
+        DRIFT                     fetched, tree hash != record; kept at upstream.drifted/, NOT installed
+        ORIGIN_UNREACHABLE        a fetch failed (network, 404, gone, sha256 mismatch on an archive);
+                                  staging removed, nothing installed
+        NO_ORIGIN                 the record names no artifacts
+
+    record.json and UPSTREAM_HASHES.txt are never written. A DRIFT or ORIGIN_UNREACHABLE row is
+    the finding: that body exists only where it was first acquired and must be copied by hash."""
+    import copy
+    t0 = time.time()
+    rec = record.load(specimen_id)
+    body = vault.body_dir(specimen_id)
+    row = {"specimen_id": specimen_id, "tree_sha256_recorded": rec["hashes"].get("tree_sha256"),
+           "n_files_recorded": rec["hashes"].get("n_files"), "status": None, "tree_sha256_fetched": None,
+           "n_files_fetched": None, "bytes_fetched": None, "added": [], "removed": [], "modified": [],
+           "error": None, "seconds": None}
+    try:
+        if (body / "upstream").exists():
+            d = drift(specimen_id)
+            row["status"] = "ALREADY_PRESENT_VERIFIED" if d["matches"] else "ALREADY_PRESENT_DRIFTED"
+            row["tree_sha256_fetched"] = d["tree_sha256_now"]
+            row["n_files_fetched"] = d["n_now"]
+            row.update({k: d[k] for k in ("added", "removed", "modified")})
+            return row
+        arts = copy.deepcopy(rec["source_origin"].get("artifacts", []))
+        if not arts:
+            row["status"] = "NO_ORIGIN"
+            return row
+        stage = body / "rematerialize.tmp"
+        if stage.exists():
+            _rmtree(stage)
+        up = stage / "upstream"
+        up.mkdir(parents=True)
+        try:
+            _fetch_artifacts(arts, up, stage)
+        except Exception as e:  # noqa: BLE001 -- the origin's failure IS the row
+            row["status"] = "ORIGIN_UNREACHABLE"
+            row["error"] = "%s: %s" % (type(e).__name__, str(e)[:300])
+            _rmtree(stage)
+            return row
+        rows = vault.hash_tree(up)
+        got = {rel: (h, n) for rel, h, n in rows}
+        want = _want_rows(specimen_id)
+        row["tree_sha256_fetched"] = vault.tree_hash_of(rows)
+        row["n_files_fetched"] = len(rows)
+        row["bytes_fetched"] = sum(r[2] for r in rows)
+        row["added"] = sorted(set(got) - set(want))
+        row["removed"] = sorted(set(want) - set(got))
+        row["modified"] = sorted(r for r in want if r in got and got[r][0] != want[r][0])
+        if row["tree_sha256_fetched"] == row["tree_sha256_recorded"]:
+            body.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(up), str(body / "upstream"))
+            _rmtree(stage)
+            row["status"] = "MATCH"
+        else:
+            drifted = body / "upstream.drifted"
+            if drifted.exists():
+                _rmtree(drifted)
+            body.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(up), str(drifted))
+            _rmtree(stage)
+            row["status"] = "DRIFT"
+        return row
+    finally:
+        row["seconds"] = round(time.time() - t0, 1)
+        print("%-32s %-26s %s" % (specimen_id, row["status"], row["error"] or (
+            "+%d -%d ~%d" % (len(row["added"]), len(row["removed"]), len(row["modified"])) if row["status"] == "DRIFT" else "")), flush=True)
+
+
+def rematerialize_all(out=None, specimen_ids=None, timeout: int = 900) -> dict:
+    """Every specimen through rematerialize(); the census is written after EVERY row so a killed
+    run leaves a readable partial file."""
+    ids = sorted(specimen_ids or (p.parent.name for p in vault.SPECIMENS.glob("*/record.json")))
+    census = {"schema": REMAT_SCHEMA, "written_utc": None, "host": platform.node(),
+              "vault_root": str(vault.vault_root()), "specimens": len(ids), "complete": False,
+              "counts": {}, "rows": []}
+
+    def flush():
+        census["written_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        c = {}
+        for r in census["rows"]:
+            c[r["status"]] = c.get(r["status"], 0) + 1
+        census["counts"] = c
+        if out:
+            pathlib.Path(out).write_text(json.dumps(census, indent=1) + "\n", encoding="utf-8", newline="\n")
+
+    for sid in ids:
+        census["rows"].append(rematerialize(sid, timeout=timeout))
+        flush()
+    census["complete"] = True
+    flush()
+    print("REMATERIALIZE", census["specimens"], "specimens", json.dumps(census["counts"], sort_keys=True))
+    return census
 
 
 # --------------------------------------------------------------------------- mirror
@@ -878,6 +995,7 @@ def main(argv=None) -> int:
     mi = sub.add_parser("mirror"); mi.add_argument("--dest", required=True); mi.add_argument("--specimen", action="append"); mi.add_argument("--dry-run", action="store_true"); mi.add_argument("--allow-same-volume", action="store_true", help="disposable controls only")
     mv = sub.add_parser("mirror-verify"); mv.add_argument("--dest", required=True); mv.add_argument("--specimen", action="append")
     sub.add_parser("status"); sub.add_parser("summary")
+    rm = sub.add_parser("rematerialize", help="bring bodies onto THIS host from their recorded origins and verify by hash; tracked files untouched"); rm.add_argument("specimen_id", nargs="?"); rm.add_argument("--all", action="store_true"); rm.add_argument("--out"); rm.add_argument("--timeout", type=int, default=900)
     rc_ = sub.add_parser("receipt-check", help="RQ-4 census: every tracked run receipt by schema, defects listed"); rc_.add_argument("--out")
     pr = sub.add_parser("preservation"); pr.add_argument("specimen_id", nargs="?"); pr.add_argument("--all", action="store_true"); pr.add_argument("--out")
     args = ap.parse_args(argv)
@@ -908,6 +1026,13 @@ def main(argv=None) -> int:
             print(json.dumps(preservation_of(args.specimen_id), indent=1))
             print("PRESERVATION", args.specimen_id, "OK" if ok else "FAIL", *probs)
             return 0 if ok else 1
+    elif args.cmd == "rematerialize":
+        if args.all or not args.specimen_id:
+            c = rematerialize_all(args.out, timeout=args.timeout)
+            bad = sum(v for k, v in c["counts"].items() if k not in ("MATCH", "ALREADY_PRESENT_VERIFIED"))
+            return 0 if bad == 0 else 1
+        r = rematerialize(args.specimen_id, timeout=args.timeout)
+        return 0 if r["status"] in ("MATCH", "ALREADY_PRESENT_VERIFIED") else 1
     elif args.cmd == "receipt-check":
         c = receipt_census(args.out)
         return 0 if c["defective"] == 0 else 1

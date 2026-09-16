@@ -128,7 +128,7 @@ class Cut:
 def show(fossil_id: str) -> None:
     """Print what Techne recorded that bears on WHERE to look (entry points, harness), plus the body tree."""
     rec = json.loads((ROOT.parent.parent / "techne/fossils/specimens" / fossil_id / "record.json").read_text(encoding="utf-8"))
-    body = Path((rec.get("nyx_handoff") or {}).get("here_is_the_machine", "").split(" ;")[0].replace("vault body ", "").strip())
+    from techne.fossils.vault import body_dir as _bd; body = _bd(fossil_id)
     for k in ("behavioral_entry_point", "entry_points", "example", "build_system", "human_environmental_pressure", "human_failure_condition"):
         print(f"{k}: {json.dumps(rec.get(k), ensure_ascii=False)[:400]}")
     tree = body / "upstream" / "tree"

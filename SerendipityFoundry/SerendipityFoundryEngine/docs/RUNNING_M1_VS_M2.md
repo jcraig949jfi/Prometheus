@@ -1,5 +1,18 @@
 # Running the Engine on M1 vs M2
 
+> **TOPOLOGY RULING (operator, 2026-09-16).** Postgres and Redis are the
+> shared substrate (on M1, the canonical store); **every other service runs
+> on exactly one machine, never both**. A farm is a future roadmap item and
+> to date does not merit it. The Serendipity Foundry Engine's machine is
+> **M2** from 2026-09-16. The M1 engine was stopped ~2026-09-15 20:15Z for the
+> move and is not coming back; its ledger (eng_8a37a5d3, the production
+> identity) is adopted on M2 by `deploy/adopt_m1_ledger.py` once the operator
+> lands the data dir here. Until that swap, the engine on M2 serves the twin
+> ledger eng_906356f7 and is NOT production (Daedalus ruling, comms #270).
+> Everything below that describes "two engines" is history from 2026-09-04
+> to 2026-09-15, kept so the shape of the move can be explained; the M1
+> column no longer describes a running service.
+
 Two Serendipity Foundry Engines are live as of 2026-09-04, one per machine.
 They are **separate engines with separate substrates** — not a cluster, not a
 replica pair, and not a failover. Nothing is shared between them.

@@ -1,5 +1,5 @@
 {
- "ran_at": "2026-09-16T08:17:47",
+ "ran_at": "2026-09-16T08:27:56",
  "n_gates": 17,
  "n_scored": 17,
  "n_pass": 17,
@@ -11,13 +11,13 @@
    "gate": "E0_service_reachable",
    "pass": true,
    "skipped": false,
-   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 4, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2', 'uptime_s': 39.1, 'search': {'ready': True, 'loading': False, 'error': None, 'load_seconds': 3.71, 'loaded_at': '2026-09-16T08:16:27'}, 'workspace': {'base_sha': '6b4aee022bdbd21bacb78307ee41ab3da418f3a4', 'branch': 'HEAD', 'worktree_path': 'D:\\\\Prometheus-worktrees\\\\mnemosyne-pew\\\\evidence_wiki', 'dirty': False, 'main_worktree': False, 'workspace_known': True}} in 395ms"
+   "detail": "200 {'service': 'mnemosyne-evidence-wiki', 'status': 'ok', 'schema_version': 4, 'ontology_version': 2, 'fossil_contract': 'pew.fossil.v2', 'uptime_s': 38.6, 'search': {'ready': True, 'loading': False, 'error': None, 'load_seconds': 3.58, 'loaded_at': '2026-09-16T08:26:37'}, 'workspace': {'base_sha': '569a675f7b7dbd09fb1bcc8838efe26a17a9d701', 'branch': 'HEAD', 'worktree_path': 'D:\\\\Prometheus-worktrees\\\\mnemosyne-pew\\\\evidence_wiki', 'dirty': False, 'main_worktree': False, 'workspace_known': True}} in 3ms"
   },
   {
    "gate": "E1_version_schema_identity",
    "pass": true,
    "skipped": false,
-   "detail": "schema_version=4 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=21150"
+   "detail": "schema_version=4 ontology_version=2 fossil_contract=pew.fossil.v2 canonical_revision=21197"
   },
   {
    "gate": "S2_server_machine_identity",
@@ -59,7 +59,7 @@
    "gate": "E6_query_by_run_world_player",
    "pass": true,
    "skipped": false,
-   "detail": "run=1 world=7 player=16 unfiltered=400"
+   "detail": "run=1 world=10 player=20 unfiltered=400"
   },
   {
    "gate": "E7_duplicate_and_conflict_semantics",
@@ -83,7 +83,7 @@
    "gate": "E10_no_silent_success",
    "pass": true,
    "skipped": false,
-   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 57 kinds"
+   "detail": "rejected writes that left rows: none; row count across conflict attempt 1->1; refusals recorded in write_log: 61 kinds"
   },
   {
    "gate": "E13_batch_idempotent_and_atomic",
@@ -107,7 +107,7 @@
    "gate": "E14_productive_not_present",
    "pass": true,
    "skipped": false,
-   "detail": "search.ready=True loading=False error=None load_s=3.71 hybrid_search http=200 in 1200ms (budget 15000)"
+   "detail": "search.ready=True loading=False error=None load_s=3.58 hybrid_search http=200 in 1130ms (budget 15000)"
   }
  ],
  "real_id": "SFEREAL-exp_046013883ce65aa82eacf7d8",
