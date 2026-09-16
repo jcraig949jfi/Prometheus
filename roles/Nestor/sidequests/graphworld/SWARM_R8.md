@@ -52,6 +52,47 @@ threshold and decides no verdict.
 verdict alone is no longer a complete deliverable: a receipt with `residue: NONE` is admissible, recorded,
 and visible as such at close.
 
+### 0.1 ARCHIVAL SUFFICIENCY (operator prompt 26)
+
+The program explores terrain for which no LLM has priors. Telemetry exists so that anomalies and ripples
+that nobody can currently interpret remain recoverable later: a model in 2028 may separate signal from noise
+where a model in September 2026 cannot. The standard for round 8 is therefore not "did we log a lot" but:
+
+> **A future analyst with no access to this session can (a) re-derive every verdict, (b) RE-RUN the
+> experiment, and (c) mine the record for anomalies nobody thought to look for at the time.**
+
+Two rules make this safe, and they are in tension unless stated explicitly:
+
+**[ADAPT-14] TELEMETRY IS WRITE-ONLY WITH RESPECT TO SCIENCE.** No telemetry field may enter an eligibility
+check, an admission decision, a control, a discriminator or a verdict. Instrumentation is additive and
+observational, never a modifier. Operator prompt 26: "we don't adjust the science to this but rather ensure
+we can comb over the data long after the experiment." Hard PASS/FAIL stays exactly as frozen -- it will
+produce false positives and false negatives on alien terrain, and the answer to that is a richer RECORD, not
+a softer rule. A lane that finds an anomaly in telemetry files it as an anomaly or a candidate; it does not
+relabel a verdict.
+
+**[ADAPT-15] THE BUS IS NOT AN ARCHIVE -- and today the richest telemetry is not archived at all.**
+Measured, not assumed:
+- `primordial/bus/bus.py:126` posts with `maxlen=100_000, approximate=True`. Every bus stream ages out.
+- The epoch export commits `pm_swarm`, `pm_results`, `pm_anomalies` and `pm_boards_claims` only.
+- **There is NO export of the job done stream.** `epoch.py` reads `DONE` solely to aggregate `cpu_s` into
+  per-cohort summaries. So `cpu_s`, `wall_s`, `granted_threads`, `numba_threads`, `segment`, `sha`,
+  `predicate_id`, `rows_path` -- and every section-12 telemetry field -- exist ONLY in a capped Redis stream
+  and are never committed.
+- Proof of the gap: the conductor's own round-8 cost analysis (section 4.4) reads `pm:jobs:G:done` from
+  Redis and therefore **cannot be reproduced by a future analyst from the repository**.
+
+Required before the clock (gate G7): the per-epoch export covers the job done stream and every telemetry
+stream, committed as row files. Anything that must survive the round must land in a committed file, never
+only on the bus.
+
+**RERUN SUFFICIENCY.** Beyond metrics, the archive must carry what is needed to re-execute: seed manifests
+and RNG family assignments, genome bytes for every candidate and control arm, per-generation trajectories
+(not only endpoints), raw oracle outputs, the code sha plus the transitive import-closure fingerprint, the
+env fingerprint (python / numba / driver / GPU), the host spec, the predicate refs, and the captured payloads
+of ABORTED runs (D29 showed those payloads are recoverable and they are exactly the "ripples" worth keeping).
+Retention is append-only: nothing is rotated, trimmed or deleted to save space.
+
 ---
 
 ## 1. CLOCK
@@ -118,13 +159,25 @@ blocks only its dependent science, and ADMISSION enforces it.
 | G3 scheduling cluster D15+D22+D30 + queue telemetry | 2.2 | shared-CPU multi-lane science |
 | G4 close/watch protocol + protocol lint (D31) | 2.4 | nothing in-round; blocks CLOSE correctness |
 | G5 telemetry minimum (section 12) | 3 | nothing; but a round without it fails its own mission |
+| G6 `envelope.open_candidate()` -- file a candidate with no refusal event (D27) | prompt 26 | nothing directly; without it every WHY_NOT_RUN and residue record needs a hand-written stub |
+| G7 per-epoch export of the job done stream + telemetry streams to COMMITTED rows (ADAPT-15) | prompt 26 | nothing directly; without it the round's telemetry does not survive the round |
 | C1 D23 gpuq worktree isolation | 2.5 | cross-lane GPU work |
 | C2 D25 signflip_p ordering | 2.5 | any verdict depending on the MC signflip branch |
 | C3 D28 registration TTL | 2.5 | long-lived registered services |
 
-Build order is G1, G2, G5, G3, G4, then conditionals. G1 first because a silently refused row corrupts every
-downstream count, which is the failure that produced D29. D26/D27 are explicitly allowed to be dropped
-(operator 2.5) and are not scheduled.
+Build order is **G1, G6, G5, G7, G2, G3, G4**, then conditionals. Rationale, by what each unblocks:
+
+- **G1 first** because a silently refused row corrupts every downstream count -- the failure that produced D29.
+- **G6 next** because section 4 is the first scientific obligation and its feasibility precommit emits
+  WHY_NOT_RUN records; without `open_candidate()` every one of those needs a hand-written stub.
+- **G5 then G7 together**: G5 captures the telemetry, G7 makes it durable. Either alone is close to useless --
+  telemetry that ages out of a capped bus stream is not a breadcrumb.
+- **G2** gates the anti-prior draws and the BETA sweep; **G3** covers shared-CPU fairness; **G4** is needed only
+  at close.
+
+**D27 is NO LONGER dropped** -- operator prompt 26 ("Yes, Do D27") promotes it to gate G6, superseding
+prompt 24 section 2.5's permission to drop it and the conductor's own earlier recommendation (ADAPT-13).
+**D26 remains dropped/conditional** and is not scheduled.
 
 If a gate has not landed at gate time, its dependent science is refused at admission at zero CPU and the
 refusal is recorded. That is a legitimate round-8 outcome, not a conductor decision.
@@ -197,6 +250,39 @@ is not authorisation to run it (operator section 0).
 
 If any cell becomes SURVIVED, the replication trigger publishes immediately (code, not conductor). Never
 reorder because a cell looks promising.
+
+---
+
+### 4.4 SCREENING COST IS NOT PREDICTABLE FROM WORLD PARAMETERS (computed for Q6/R11)
+
+Measured over the 30 worlds that have BOTH a committed screening cost (48 `g-r16-cell-*` jobs, 130,307
+CPU-s) and committed gate features. Learner chunks were excluded; folding them in inflates per-cell cost
+by ~12%.
+
+| candidate driver | pearson r | r (log-log) |
+|---|---|---|
+| n_gates | **-0.168** | -0.320 |
+| T | 0.255 | 0.380 |
+| gens / genomes | -0.178 | -0.217 |
+| cells | -0.305 | -0.409 |
+| qd_wall_s | 0.095 | 0.028 |
+| screen_k | n/a (constant 64) | n/a |
+
+No parameter explains cost, and `n_gates` -- the natural hypothesis -- is NEGATIVELY correlated. The
+per-unit view shows why: w16 spends 10,664 CPU-s over 1,092 gates (9,766 CPU-s per 1k gates) while w31
+spends 5,479 over 86,870 gates (63 per 1k). That is a **~500x spread in cost per gate, inversely related to
+search size**: cheap-per-gate worlds are ones where search moves freely; expensive ones are where each gate
+evaluation is itself costly. Cost is an emergent property of a world's difficulty and is discoverable only
+by running it.
+
+    cpu_s per 1k gates:  median 612.22  mean 2671.81  min 19.48  max 9765.93  (n=30)
+
+**Therefore a fixed stratum N cannot be honestly costed before generation.** Sizing uses R11's
+measure-then-size rule. Quoting the 2,222 CPU-s median per cell as a planning constant would be a real
+number answering a different question -- the same class of error as the round-7 "4-core host".
+
+CAVEAT recorded for the future analyst: **w13 was never screened in round 7** (it is the carried-over origin
+cell), so there is no measured screening cost for the very world stratum L perturbs around.
 
 ---
 
@@ -414,7 +500,9 @@ and 1 hour of iterative refinement. This conversation."
 | R7 | The new world set is **frozen regardless** of how section 4 resolves; only screening is clock-gated (ADAPT-6). |
 | R8 | With no second host, the five-element instrumentation displacement is sufficient for a **CANDIDATE -> REPLICATED** step but **NOT for promotion**. Promotion waits for genuinely independent hardware. |
 | R9 | Telemetry overhead ceiling **5%**, measured, with the measurement itself reported (ADAPT-11). |
-| R10 | D26/D27 dropped for round 8 -- **BUT SEE THE CONDUCTOR'S RETRACTION BELOW.** |
+| R10 | **SUPERSEDED by prompt 26: "Yes, Do D27."** D27 is promoted into the build as gate **G6**. D26 remains dropped/conditional. The conductor's retraction (ADAPT-13) is accepted. |
+| R11 | **Q6 answered by computation (prompt 26 "Compute cost"), and the answer is that a fixed N cannot be costed in advance -- see section 4.4.** Stratum sizing uses the measure-then-size rule: freeze the L1 band, screen it, measure actual cost, let CODE size the remainder against remaining clock. |
+| R12 | Archival sufficiency adopted (section 0.1): telemetry is write-only with respect to science (ADAPT-14), and the export gap is gate G7 (ADAPT-15). |
 
 **[ADAPT-13] A RETRACTS ITS OWN D26/D27 RECOMMENDATION.** The advice to drop them was reasoned from a
 60-minute build window and a round whose product was verdicts. Under prompt 24's mission -- residue, failure
