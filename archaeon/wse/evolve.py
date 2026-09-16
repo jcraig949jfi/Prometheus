@@ -157,13 +157,18 @@ def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int
             parent = _tournament(scored, rng, tournament)
             mate = _tournament(scored, rng, tournament)
             child, rec = descend(parent, rng.next_u64() & MASK62, mate=mate if mate is not parent else None)
-            records[child["organism_id"]] = rec
+            # A no-op mutation yields child_id == parent_id; recording it made the ancestry walk
+            # a self-loop (v01 rows carry ancestry_depth 10000 = the cap, INVALID; results unaffected).
+            if child["organism_id"] != parent["organism_id"] and child["organism_id"] not in records:
+                records[child["organism_id"]] = rec
             new_pop.append(child)
         pop = new_pop
     elite_f, elite, elite_ev = scored[0]
     chain = []
     oid = elite["organism_id"]
-    while oid in records and len(chain) < 10000:
+    seen = set()
+    while oid in records and oid not in seen and len(chain) < 10000:
+        seen.add(oid)
         r = records[oid]
         chain.append({"organism_id": oid, "parent_ids": r["parent_ids"],
                       "operators": [o["operator"] for o in r["operators"]], "generation": r["generation"]})

@@ -282,3 +282,37 @@ kept (it is what W4's "work in progress" needs). Two changes:
      and < 0.05 on the store it does not use.
 The s9 thresholds (0.05 / 0.10 absolute) are unchanged; readers compare
 them with the printed ceiling. No evolutionary run had been made.
+
+## Annotation v0.1.2 (2026-09-16, AFTER the v01 rows; readout only, rows untouched)
+
+The s9 TRIVIAL_RECURRENCE predicate keyed on the manifest LABEL
+(persist == "regs"). Three register-only solvers (W1_d1 s1, W1_d16 s1,
+W2_K2 s2, plus W2_K4 s1/s2 and W3_K4 s3 at lower reward) carry
+persist=all with a tape that is never load-bearing (ERASE_TAPE 0.000) and
+therefore read UNRESOLVED. "Verify the property, never the label": the
+readout reports a property-keyed class (readout.class_v012: UNRESOLVED
+with ERASE_REGS >= 0.10 and ERASE_TAPE < 0.05 -> TRIVIAL_RECURRENCE*)
+BESIDE the s9 class. The s9 class stays in every row as written. v0.2's
+s9 uses the property form from the start.
+
+## Annotation v0.1.3 (2026-09-16, AFTER the v01 rows): W8 is VOID -- the world leaked
+
+W8_K2_D3 E0 rewards 0.24-0.375 with an EMPTY intervention vector. The
+elite echoes the previous tick's second word; the permutation constraint
+(perm[0] != base[0], perm[-1] != base[-1]) leaves perm[-1] == base[0] in
+two of three legal permutations at D=3, so on the second ASKO the first
+ASKO's origin value IS the expected answer ~1/3 of the time. The s5 null
+battery (CONST0, ECHO_LAST of the CURRENT tick) cannot see a lagged echo.
+  - W8 v0.1 rows carry no evidence about provenance; their class is void.
+  - v0.2 construction: no cross-stream first/last coincidence of any kind
+    (base[0], base[-1], perm[0], perm[-1] pairwise distinct).
+  - v0.2 null battery adds ECHO_PREV_k (k = 1..3: the words of the previous
+    k ticks, each position tried) and ECHO_FIRST; a cell where any null
+    scores >= 0.10 is void before it runs (was 0.5 for the current-tick
+    echo; the bar is now the lowest of the family).
+Also recorded here: the ancestry field of every v01 row is INVALID
+(self-loop at no-op mutations; ancestry_depth 10000 = the cap); traces,
+results, manifests and lineage ids are unaffected; evolve.py fixed for
+v0.2; the v01 rows are not rewritten. RUN.json's results_digest of v01 is
+timing-bound; the reproducible digest is readout.results_digest =
+fe1142bf30484f15ff090eb2e55fb8e6f8a69e900019a06fa1b01797dce49257.
