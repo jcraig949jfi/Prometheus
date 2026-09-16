@@ -129,17 +129,1007 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:reed-solomon-rockliff-1991/upstream/rs.c"
+   }
+  ],
+  "inspected_files": [
+   "rs.c 1-200 read; 200-311 (Chien/Forney) skimmed; main skimmed"
+  ],
+  "date": "2026-09-16T12:32Z",
+  "note": "the atlas's calibration pair: this and libfec-karn::rs.* are the same five mechanisms by descent; a Stage E wind tunnel that cannot call them R5 is broken, and one that calls libfec's Viterbi equally close to them is fooled by the domain label"
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "reed-solomon-rockliff-1991::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
+   "fossil_ancestry": "reed-solomon-rockliff-1991",
+   "human_name": "generate_gf (GF(2^4) here; mm/nn/tt/kk compile-time)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a shift register seeded from the polynomial coefficients pp[] builds alpha_to[] and index_of[] with -1 as the log of zero (Karn: A0 = nn); elements are carried in INDEX form (recd[] holds logs) so multiplication is an add mod nn",
+   "input": "pp[mm+1]",
+   "output": "alpha_to[], index_of[]",
+   "state": "global tables",
+   "update": "once",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "reed-solomon-rockliff-1991::rs.generator_polynomial_from_consecutive_roots",
+    "reed-solomon-rockliff-1991::rs.syndrome_evaluation_by_horner_at_consecutive_roots"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:reed-solomon-rockliff-1991/upstream/rs.c:44-77"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "generate_gf",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "reed-solomon-rockliff-1991::rs.generator_polynomial_from_consecutive_roots",
+   "fossil_ancestry": "reed-solomon-rockliff-1991",
+   "human_name": "gen_poly",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "gg = prod_{i=1..2tt} (x + alpha^i) built by repeated multiplication in index form (Karn: fcr and prim parameters generalise the root sequence; here fixed at 1, 1)",
+   "input": "the tables",
+   "output": "gg[nn-kk+1]",
+   "state": "global",
+   "update": "once",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "reed-solomon-rockliff-1991::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
+    "reed-solomon-rockliff-1991::rs.systematic_encoding_by_lfsr_division_by_the_generator"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:reed-solomon-rockliff-1991/upstream/rs.c:78-95"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "gen_poly",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "reed-solomon-rockliff-1991::rs.systematic_encoding_by_lfsr_division_by_the_generator",
+   "fossil_ancestry": "reed-solomon-rockliff-1991",
+   "human_name": "encode_rs",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each data symbol from the top: feedback = log(data ^ bb[top]); shift bb up one, XOR in alpha^(gg[j] + feedback) at each tap; identical in shape to libfec's encode_rs.h (which adds the memmove and the UNNORMALIZED branch)",
+   "input": "data[kk]",
+   "output": "bb[nn-kk]",
+   "state": "bb",
+   "update": "per symbol",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "reed-solomon-rockliff-1991::rs.generator_polynomial_from_consecutive_roots"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:reed-solomon-rockliff-1991/upstream/rs.c:96-123"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "encode_rs",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "reed-solomon-rockliff-1991::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+   "fossil_ancestry": "reed-solomon-rockliff-1991",
+   "human_name": "decode_rs syndromes",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "s[i] = sum_j recd[j] * alpha^(i*j) for i = 1..2tt by direct summation in index form (Karn: Horner's rule); a non-zero syndrome sets syn_error",
+   "input": "recd[nn] (index form)",
+   "output": "s[1..2tt]",
+   "state": "none",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "reed-solomon-rockliff-1991::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
+    "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:reed-solomon-rockliff-1991/upstream/rs.c:150-160"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the syndrome loop",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+   "fossil_ancestry": "reed-solomon-rockliff-1991",
+   "human_name": "decode_rs Berlekamp iteration (Lin and Costello's table form)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the textbook table: for each step u keep the elp, its degree l[u], the discrepancy d[u] and u - l[u]; when the discrepancy is non-zero find the earlier row q maximising u_lu and form the new elp from the old plus a shifted, scaled copy; NO erasure seeding (the header says erasures are 'not hard to adapt'); if deg(elp) > tt the block is declared uncorrectable and the information symbols are output as received",
+   "input": "s[]",
+   "output": "elp, its degree",
+   "state": "the elp table (2tt+2 rows)",
+   "update": "2tt steps",
+   "assumptions": [
+    "errors only; at most tt of them"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "reed-solomon-rockliff-1991::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+    "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "by the header: beyond tt errors the data is passed through uncorrected with NO flag ('can be returned as error flags ... if desired') -- Karn returns count = -1",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:reed-solomon-rockliff-1991/upstream/rs.c:161-230"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the Berlekamp block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field",
+   "fossil_ancestry": "reed-solomon-rockliff-1991",
+   "human_name": "decode_rs Chien search",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "substitute alpha^i for i = 1..nn into the elp with a running register per coefficient; roots give inverse locations; a root count different from deg(elp) means more than tt errors -> pass through uncorrected",
+   "input": "elp",
+   "output": "root[], loc[], count",
+   "state": "reg[]",
+   "update": "nn steps",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+    "reed-solomon-rockliff-1991::rs.error_magnitudes_from_evaluator_over_locator_derivative"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:reed-solomon-rockliff-1991/upstream/rs.c:231-270 (skimmed)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the root-search loop",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "reed-solomon-rockliff-1991::rs.error_magnitudes_from_evaluator_over_locator_derivative",
+   "fossil_ancestry": "reed-solomon-rockliff-1991",
+   "human_name": "decode_rs error values (z polynomial)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "form z(x) from the syndromes and the elp, evaluate at each inverse root, divide by the product of (1 + root_i * root_j) terms (the derivative in product form, as in Lin and Costello; Karn uses omega and the odd-power derivative), and XOR the value into recd",
+   "input": "s[], elp, roots",
+   "output": "corrected recd[]",
+   "state": "z[], err[]",
+   "update": "per root",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:reed-solomon-rockliff-1991/upstream/rs.c:271-311 (skimmed)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the error-value loop",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "main() (build a codeword, inject errors, decode, print)",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "vault:reed-solomon-rockliff-1991/upstream/rs.c:312-406 -- Techne's harness runs it; the error injection is the world",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "reed-solomon-rockliff-1991"
+  },
+  {
+   "candidate": "global variables / index-form bookkeeping (-1 for zero)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "the header's own apology; Karn's rewrite localised them",
+   "note": "the -1 sentinel vs Karn's A0 = nn is a representation difference with identical behaviour -- a Stage D identifier-permutation test can confirm",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "reed-solomon-rockliff-1991"
+  },
+  {
+   "candidate": "'Reed-Solomon codec' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "six functions with separate state; the same finding as libfec-karn",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "reed-solomon-rockliff-1991"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "reed-solomon-rockliff-1991::P.independent_symbol_corruption_with_a_fixed_redundancy_budget",
+   "source_fossil": "reed-solomon-rockliff-1991",
+   "source_evidence": "the header; main",
+   "condition": "the same pressure recorded on libfec-karn: symbols are corrupted independently; 2tt parity symbols buy tt corrections; the receiver knows the code",
+   "resource_or_constraint": "parity fraction; decoder arithmetic in a small field",
+   "failure_condition": "more than tt errors -> uncorrected output passed through silently (this body) or flagged (Karn)",
+   "world_punishes": "ignoring the algebraic structure",
+   "world_rewards": "syndrome -> locator -> roots -> values",
+   "observable_consequence": "corrected symbols vs injected errors (main's own demo)",
+   "vacuity_condition": "a noiseless channel",
+   "trivial_shortcuts": "repetition",
+   "cheat_control": "a decoder given the error positions (erasures) must correct 2tt of them; this body cannot use them -- the erasure capability is exactly what Karn added",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a teaching/reference codec (Rockliff 1989)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "reed-solomon-rockliff-1991::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
+   "to": "reed-solomon-rockliff-1991::rs.generator_polynomial_from_consecutive_roots",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.generator_polynomial_from_consecutive_roots",
+   "to": "reed-solomon-rockliff-1991::rs.systematic_encoding_by_lfsr_division_by_the_generator",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
+   "to": "reed-solomon-rockliff-1991::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+   "to": "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+   "to": "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "syn_error",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+   "to": "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+   "to": "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "deg > tt -> give up",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field",
+   "to": "reed-solomon-rockliff-1991::rs.error_magnitudes_from_evaluator_over_locator_derivative",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field",
+   "to": "reed-solomon-rockliff-1991::rs.error_magnitudes_from_evaluator_over_locator_derivative",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "count != degree -> give up",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "reed-solomon-rockliff-1991",
@@ -147,10 +1137,22 @@
    "to": "ldpc-codes-neal-2001",
    "note": "both error-correcting codes; algebraic block code vs sparse-graph code",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991",
+   "relation": "predecessor_of",
+   "to": "libfec-karn",
+   "note": "Karn's decode_rs.h / encode_rs.h / init_rs.h keep Rockliff's variable names (alpha_to, index_of, genpoly, the Lin and Costello table) and add erasures, parametrisation and Horner syndromes; asserted from reading both bodies, not from Techne's record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "the Chien and error-value blocks are skimmed, not read line by line",
+   "the silent pass-through on decoding failure is a reading claim; a Stage C run with tt + 1 injected errors would show it directly"
+  ],
+  "note": "every function of rs.c is assigned",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
