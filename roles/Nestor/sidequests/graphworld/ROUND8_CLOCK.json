@@ -1,4 +1,14 @@
 {
+ "A_defect_relaunched_two_live_lanes": {
+  "adopted_fix": "B will post one line at each epoch boundary. An idle lane must emit a liveness beat, or the conductor cannot distinguish it from a dead one -- and the conductor must check git and pm:alive:* before concluding a lane is stopped, not the bus alone.",
+  "cost": "no science lost; B blocked on A's ruling for ~24 minutes and held its FINAL during that window.",
+  "detected_by": "B itself, which reported the duplicate and then HELD every git write and its FINAL so the two could not race.",
+  "repair": "A ruled the ORIGINAL keeps the lane in both cases and terminated the two relaunched sessions by EXACT pid, never by pattern (the matcher that once matched its own ancestor chain). The relaunches held no worker, no rows and no receipts, so nothing was handed over. R's FINAL at c66552db0 stands.",
+  "the_real_distinction": "E/G/H at 17:06 genuinely had stopped: they had queued obligations and were not acting on them. B and R were idle BY CHARTER with nothing to say. 'Idle and reachable' and 'stopped' look identical from the bus stream unless the lane emits a beat.",
+  "what": "A relaunched B and R on the theory that they had stopped. Both were ALIVE. The relaunch created a SECOND claude session in each lane's worktree (B pids 26504 original / 28164 relaunch; R 30580 / 6928), which risks racing git writes and two claimants of the lane tag.",
+  "when_local": "2026-09-16 18:14",
+  "why_A_was_wrong": "A inferred 'stopped' from bus silence alone. B had a pm:alive:B heartbeat every 60 s since 16:57 and had COMMITTED 936f3961c at 17:52 recording A's own 17:48 note. The second signal was in git and A did not look. Silence on one channel is not absence."
+ },
  "T0_epoch": 1789564503.891,
  "T0_local": "2026-09-16 09:15:03",
  "T0_source": "min start ts across the six lane records in launch_log.jsonl (derived, not recalled)",
