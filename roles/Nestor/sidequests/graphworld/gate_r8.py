@@ -167,12 +167,27 @@ def p_g4():
 
 
 def p_c2():
+    """D25 is canonical ordering in the MONTE CARLO branch, so the probe MUST reach that branch.
+
+    The first version of this probe used an 8-element vector and reported LANDED. That was a false
+    green: r7's own tests pin `signflip_method(20) == "exact"`, and the exact branch enumerates all
+    2^n sign assignments, so it is order-invariant for free. The probe passed without ever executing
+    the code D25 is about. Use n=32, where the r7 tests show the MC floor 1/(SIGNFLIP_DRAWS+1) is
+    used, and require the SEEDED result to survive a permutation of its input -- which is what
+    canonical ordering means. If the MC branch cannot be reached, REFUSE rather than pass.
+    """
+    import random
     from primordial.cohorts.e import transfer as T
     from primordial.score import transfer_b as TB
-    d = [1.0, -1.0, 0.5, -0.25, 2.0, -0.5, 0.75, -1.5]
-    a, b = T.signflip_p(list(d)), T.signflip_p(list(reversed(d)))
-    same_judge = abs(TB.signflip_p(list(d)) - a) < 1e-12
-    return (abs(a - b) < 1e-12 and same_judge), f"order_invariant={abs(a-b)<1e-12} judge_agrees={same_judge}"
+    if T.signflip_method(32) == "exact":
+        return False, "probe cannot reach the MC branch at n=32 (signflip_method reports exact) -- D25 untested"
+    d = [((-1) ** i) * (0.25 + 0.5 * i) for i in range(32)]
+    s = list(d)
+    random.Random(20260916).shuffle(s)
+    a, b = T.signflip_p(list(d)), T.signflip_p(s)
+    order_ok = abs(a - b) < 1e-12
+    judge_ok = abs(TB.signflip_p(list(d)) - a) < 1e-12
+    return (order_ok and judge_ok), f"MC n=32 order_invariant={order_ok} judge_agrees={judge_ok} p={a:.6g}"
 
 
 def p_c3():
