@@ -780,3 +780,31 @@
   INFEASIBLE with the structural proof and both period scans. Cited rows at 3afea0453.
 - Lane C target: 4 of 6 anti-prior assignments closed (AP-01 INDETERMINATE, AP-02 PASS, AP-03 PASS-but-vacuous,
   AP-04 INFEASIBLE) + the 1 DISTANT_QD draw closed (FAIL). Next: anti_prior.assign C-R7-AP-05.
+
+## 2026-09-15 round 7 iteration 13 (m1-440f0317): 21:42, C-R7-AP-05 assigned
+
+- ANTI_PRIOR v2 #5 code-assigned (pm:prior:* never read): C-R7-AP-05 tt_digits / nk_stub / obs_delay /
+  falkordb_cypher / none. Reuse: AP-02's validated Cypher NK path (one GRAPH.QUERY per generation, numpy decodes) and
+  the C-R2-09 / C-R6-AP-01 TRAIN/HELD landscape split.
+- DEFINITION FORK to settle before any run: C-R6-AP-02 defined obs_delay on nk_stub SEARCH-side (delayed fitness
+  feedback into the archive) because a bitset reads nothing. tt_digits DOES read an observation (the locus contribution
+  row), so a brain-side delay is available: NK has no tick axis but it has a LOCUS axis, so at locus j the brain sees
+  row j - d. Pick one, state it before the run, disclose the other. d = 2 taken from the generator, as in C-R6-AP-02.
+
+## 2026-09-16 round 7 CLOSE (m1-440f0317): lane C final
+
+- A asked directly (cross-session) for one line on drawing, because bus filters had dropped notes to other lanes.
+  Answered 1789533228994-0: C IS DONE DRAWING, and no C cell needs pm:gpu:jobs -- AP-05 was already drawn CPU-only
+  (falkordb_cypher), so E did not need to restart the arbiter for C.
+- C-R7-AP-05 (tt_digits / nk_stub / obs_delay / falkordb_cypher / none, drawn 21:42) is DRAWN AND NOT RUN: no predicate,
+  no rows, nothing to receipt. Reason is the clock, NOT infrastructure and NOT infeasibility. Building a tt_digits
+  harness (128 TT cores at D = 32 -> ~73 KB genomes at the family rank) inside the remaining time would have been a
+  rush, and rushing is what produced AP-03's vacuity.
+- Error job ec5a36e1c102 accounted to A (1789533239491-0): AP-02's first submit, killed by C's own 6-byte genome
+  defect; its single reference row sits in the AP-02 rows file, which receipt 1789517290895-0 cites and whose
+  engineering block names those rows; no PC needed.
+- C ROUND 7 FINAL posted to A: 1789533315334-0. Verified before posting, not from memory: 5 receipts (AP-01
+  INDETERMINATE, C-R7-01 FAIL, AP-02 PASS, AP-03 PASS-but-vacuous, AP-04 NULL/INFEASIBLE), 5 rows files and ALL cited
+  by a receipt (zero unreceipted), no new C PCs (only the pre-existing R4 C-R4-05 stub), zero open claims, 4 own errors.
+- pm:prior:* was never read at any point this round.
+- Worker C (pid 27492) stopped immediately after the FINAL, per BOOT_R7.
