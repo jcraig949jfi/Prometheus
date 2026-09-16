@@ -1,0 +1,63 @@
+{
+ "T0_epoch": 1789564503.891,
+ "T0_local": "2026-09-16 09:15:03",
+ "T0_source": "min start ts across the six lane records in launch_log.jsonl (derived, not recalled)",
+ "conductor_sha_at_T0": "dbd9a127fabe76639bdbf83d977837f01aba62dc",
+ "gate_command": "python roles/Nestor/sidequests/graphworld/gate_r8.py --emit --since-sha 6c02b89a9",
+ "invariants": {
+  "cap_hours": 15,
+  "rule": "SCIENCE_END = min(science_start + 12h, T0 + 15h - 60min) = T0 + 14h; R17 accepts ~11h40m",
+  "science_hours": 11.67,
+  "science_minutes": 700,
+  "teardown_reserve_min": 60
+ },
+ "lanes": {
+  "E": {
+   "pid": 32368,
+   "session_id": "089ab85f-32ff-4dd9-bdb3-1f3de522c1d8",
+   "ts": "2026-09-16T09:15:04.9634811-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-r8-e"
+  },
+  "F": {
+   "pid": 30916,
+   "session_id": "8c85d063-6dea-4daf-81fa-bae62a552d39",
+   "ts": "2026-09-16T09:15:04.0019973-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-bld-f"
+  },
+  "G": {
+   "pid": 29932,
+   "session_id": "059c1197-9688-4d6b-95eb-168080123d63",
+   "ts": "2026-09-16T09:15:04.7534943-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-bld-g"
+  },
+  "H": {
+   "pid": 28588,
+   "session_id": "7120069d-18b7-4e35-9664-2e56ff11705e",
+   "ts": "2026-09-16T09:15:04.4820209-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-bld-h"
+  },
+  "P": {
+   "pid": 22576,
+   "session_id": "219700ce-99ad-48bf-bac3-5913e0985f18",
+   "ts": "2026-09-16T09:15:04.2328664-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-bld-p"
+  },
+  "Q": {
+   "pid": 10736,
+   "session_id": "d84dc5b2-416e-487a-a304-fa3167a6e52a",
+   "ts": "2026-09-16T09:15:03.8910289-04:00",
+   "worktree": "F:\\Prometheus-worktrees\\nestor-bld-q"
+  }
+ },
+ "pre_build_gate_state": "0/12 landed (rehearsed 09:15:40); C2 and C3 probes were false greens on live defects D25/D28 until strengthened",
+ "pre_build_sha": "6c02b89a9",
+ "round_id": "r8",
+ "schedule": {
+  "build_cap": "2026-09-16 10:15:03",
+  "gate_end": "2026-09-16 10:35:03",
+  "refine_end": "2026-09-16 11:35:03",
+  "round_end": "2026-09-17 00:15:03",
+  "science_end": "2026-09-16 23:15:03",
+  "science_start": "2026-09-16 11:35:03"
+ }
+}
