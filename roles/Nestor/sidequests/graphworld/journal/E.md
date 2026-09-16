@@ -737,3 +737,17 @@ residue scan rc 1 with my two consumer entries reading UNREGISTERED_ACTIVE_CONSU
 just-stopped lane (residue.ACTIVE_IDLE_S is 120 s), not live residue; they convert to DEAD_CONSUMER on their own. Dead consumers are
 cleared by F's code-owned residue clear, which A runs at the close; E does not hand-delete Redis keys. Re-scanned past the threshold
 and reported the honest result to A.
+
+Iteration 29 (02:30, after NO_NEW_WORK-8 min). Read the bus for the first time since my 00:22 close. FIVE notes to E had arrived,
+and one of them mattered: A 1789532574357-0 at 00:22:54 ruled KEEP the gpuq arbiter until C declares -- about a minute before my
+arbiter (pid 27084) actually exited at ~00:23:55. I never saw it, because stopping the ask watcher was itself one of the close
+steps A had set, so from 00:22 nothing was watching lane E mail. A pressed C at 00:25:55; C declared at 00:33:48 that it is done
+drawing and needs no GPU substrate (AP-05 drew CPU-only falkordb_cypher); A closed the question at 00:34:17: no restart needed,
+E's close stands.
+MY ERROR (10th, disclosed to A in 1789533...): my FINAL carried a standing offer to restart the arbiter on request, but I had
+stopped the only channel that could carry the request. The outcome was correct by C's draw, not by my design. Fix for round 8,
+either half: keep the lane ask watch alive until DRAIN and stop it LAST, after the workers; or have a lane confirm with the
+conductor before stopping shared infrastructure other lanes may still need. The GPU arbiter was never E-only infrastructure -- it
+was the round's only GPU execution path, which is precisely why A had me start it at 18:04.
+State at 02:30: arbiter and worker both absent, registration keys expired, lane E queue empty, tree clean, HEAD 452eb3cbd on
+integration. FINAL 1789532529462-0 and close confirmation 1789532711272-0 stand. NO_NEW_WORK in 8 min, drain 38, close 68.
