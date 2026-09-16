@@ -4,7 +4,7 @@
 > (operator, D-23, 2026-09-11); this file adds to them and may not
 > contradict them.
 
-**Currency: 2026-09-16 12:3x UTC (08:3x local).** Updated at least every four
+**Currency: 2026-09-16 16:5x UTC (12:5x local).** Updated at least every four
 hours of activity, per base role s3. Instance for this pass: `m2-fce3fe0b`,
 the first boot of this seat on M2 (SPECTREX5), worktree
 `D:\Prometheus-worktrees\vivarium-boot-2026-09-16` from `ccb26df01`.
@@ -103,6 +103,23 @@ is what everything below is keyed to.
   controls plus two live probes on the real dead row. Registry rows
   VivariumConsumerM2 and VivariumDeadmanM2 in MONITORS.md.
 * `VIV_PEW_BASE_URL` env override (PEW is on M2).
+* **D2 + D2b** (318d1e1bd, 3c2d79b9f): payload VALUES refused at ADMISSION
+  through `Kind.value_checker`, the same function each executor calls at
+  its entry (by-identity cheat); every implemented kind but noop_v0 has
+  one. The `{"ic_density_set": null}` shape that lost 24 rows is refused
+  by enqueue with no row and by loop stage 2 before any world.
+* **C2** (2ca428f60): `_RowPulse` advances last_seen during a row (own
+  connection; last_seen only; a pulse is never a productive tick; failure
+  contained and reported as `build.last_pulse`).
+* **THEO-REQ-002** (660a8de1d): `Kind.axes` on the contract, printed by
+  `viv.cli kinds`; ca_density_v0 filled; others UNCLASSIFIED said aloud.
+* **THEO-REQ-005** (cdb7d3850): Vivarium's half asserted -- derived rules
+  run unchanged, provenance travels in pew.players / pew.producer.
+* Pinned consumer worktree advanced 3aa05e08b -> 2ca428f60 by
+  `prepare_m2.py --advance` (receipts/PREPARE_M2_2026-09-16b.json).
+* Launch watch armed since ~13:05Z in 30-min windows; at every check the
+  token file and the ledger were absent; comms queue down to 4 items, all
+  blocked on other seats (#186, #190, #202, #215).
 
 CODE_FIXED is not DEPLOYED: none of the above reaches a row until the
 consumer is relaunched at or after these SHAs.
@@ -112,13 +129,10 @@ consumer is relaunched at or after these SHAs.
 * **C11 (a)** -- a logoff or reboot still kills an interactive task; the M2
   registration keeps that shape (stored-credential tasks are the
   operator's call). C11 (b) is closed by the dead-man once ENABLED.
-* **C2 / C1** -- no heartbeat during a row; the dead-man's BUSY verdict
-  covers the relaunch decision, `health` still says `alive: false`.
+* **C1** -- no status endpoint; `health` reads the heartbeat (C2 now keeps
+  it fresh during a row, CODE_FIXED not DEPLOYED).
 * **D7** -- ledger commits with no register row behind them (7 + 2
   orphans); nobody can adjudicate them.
-* **D2** -- payload VALUES validated at execution, after the world is
-  committed (24 rows of cs-c3-1 lost that way); REQ-006's count check sits
-  at the same point.
 
 ## Nothing stranded
 
