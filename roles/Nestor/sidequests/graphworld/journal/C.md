@@ -695,3 +695,34 @@
   0c280c564) and C-R7-AP-02 PASS 1789517290895-0 (rows file discloses the two aborted-job rows at its head).
 - Lane C target so far: 2 of 6 anti-prior assignments closed (AP-01 INDETERMINATE, AP-02 PASS) + the 1 DISTANT_QD draw
   closed (FAIL). Next: anti_prior.assign C-R7-AP-03.
+
+## 2026-09-15 round 7 iteration 9 (m1-440f0317): 20:09, C-R7-AP-03 assigned
+
+- ANTI_PRIOR v2 #3 code-assigned (pm:prior:* never read): C-R7-AP-03 small_program / signal_world_d1 / byte_charge /
+  falkordb_cypher / metered_stream. Reusing lane precedent where it exists: small_program from C-R2-02, D1's own
+  settlement as metered_stream from C-R5-01 (alpha_int 2, y_int 3, start 8), byte_charge in AP-02's form (BETA from the
+  world's own random baseline, charged on FUNCTIONAL bytes), Cypher for the world arithmetic as in AP-02.
+- Oracle eligibility will be structural from the first draft (planted genomes), per the AP-01 lesson.
+- AP-03 substrate probe: D1's metered settlement is SEQUENTIAL in the ledger, so Cypher cannot score it as a pure
+  function of R (the AP-02 pattern). One GRAPH.QUERY per tick (the b1/falkor_world pattern) is EXACT against the numpy
+  NpChannel reference, but costs 6.73 s per generation at 128 genomes x 8 episodes x 64 ticks -- 64 runs x GENS 25 would
+  be ~3 h of wall while holding a CPU token, and GENS is the only lever (32 runs per arm is EVIDENCE_N_v1, T = 64 is
+  D1's own definition).
+- Decision before any design is frozen: the per-tick cost is round-trip dominated, so advance all 32 runs of an arm in
+  LOCKSTEP inside the same tick queries (runs keep their own populations and streams, so it is exact, not an
+  approximation -- E's cpu_lockstep in the R7 GPU track is the precedent). Probing 32,768 envs per tick now; the GENS
+  rule follows from that measurement.
+- AP-03 harness written; the no-rows dev check caught THREE design defects before any predicate or row (all fixed and
+  disclosed in the docstring, no amendment needed since nothing was posted):
+  (1) BETA = 0 -- AP-02's "1% of the world's random baseline per byte" rounds to zero at D1's scale (7.29 charge per
+      episode), so byte_charge would have been VACUOUS (cell identical to control, the R5 D1 trap). Fix: keep the 1%
+      rule and scale the selection fitness x100 so it is integral -> BETA 58.
+  (2) the free_unaffordable cheat was "caught" on only 49 of 112 envs because I had called an env eligible when it
+      merely had an unaffordable send; a codebook can map the symbol to the same action as silence, so the gate would
+      have measured the codebook, not the meter. Fix: eligible = envs where the numpy REFERENCE itself differs under
+      free delivery (C-R7-01 / AP-02's form) -> 49/49.
+  (3) charge oracle mismatched 16/16 -- my own oracle reference lacked the new x100 scale. Fix in the oracle.
+- GENS: the wall clause alone allows 50, but the job checkpoints BETWEEN ARMS, so one arm is one uninterruptible
+  segment against the 2400 s ceiling (kill + 60 s grace, no mid-arm checkpoint). Added a per-arm clause (<= 1920 s =
+  80% of the ceiling) to the pre-stated rule -> GENS 25 (per-arm ~1062 s, job ~2124 s). Stated before any row.
+- Lockstep substrate: 32,768 envs per tick, 38.6 s per generation for all 32 runs of an arm (vs 215 s run-by-run).
