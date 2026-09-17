@@ -42,6 +42,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Optional
 
 from . import attempts as _att
+from . import stepkey as _sk
 from . import bundle as _bundle
 from . import conformance as _conf
 from . import db as _db
@@ -401,6 +402,16 @@ class Vivarium:
                 return None
             return self.attempts.prior_result(ctx, kind, list(parts))
         record.prior = prior
+
+        def key(kind, parts=()):
+            """The step's idempotency key (None when attempts are off). The
+            runner hands it to the engine as Idempotency-Key on the posts
+            that mint ids, so a transport retry or a NEW ATTEMPT re-post
+            answers with the SAME id (Daedalus #354; the D16 routes)."""
+            if ctx is None or not ctx.enabled:
+                return None
+            return _sk.step_key(ctx.design_digest, kind, list(parts))
+        record.key = key
         return record
 
     def _evaluate_gates(self, conn, row, phase: str) -> Optional[dict]:
