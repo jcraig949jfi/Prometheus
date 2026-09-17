@@ -131,13 +131,29 @@
         envelope coordinates; logical_time on every observation (NULL = NOT_SUPPLIED, never 0).
 
     What breaks first at 10x Campaign 3 scale?
-        [filled from SFE_LONG_RUN_REPORT.md]
+        Not throughput, not storage, not restart (medians/p95 flat across 83K events;
+        102 MB per 100K events; 1 s relaunch). What a consumer sees first is a server-
+        wide stall class: 150 of ~115K calls (0.13%) took 5-13 s, reads and writes
+        alike, starting ~14 min in -- NOT the SQLite write lock (max wait 1.77 s).
+        Candidate mechanism: one shared sqlite3 connection serves every read and
+        write with no Python-level lock; a control run without the reader thread is
+        in progress. A consumer with a 10 s timeout trips on it; idempotency keys
+        make the retry safe. SFE_LONG_RUN_REPORT.md s4.
 
     Is SQLite still justified by measurement?
-        [filled from SFE_LONG_RUN_REPORT.md]
+        Yes. Flat medians with history, 0 5xx, 0 lock failures, 1 s restart, 102 MB
+        per 100K events. The stall class is a connection-handling defect in the
+        engine (one shared handle), not a storage-engine limit; the fix is ~40 lines
+        (separate read connections in WAL mode) and is the first item of the next
+        point release. Retention: NONE; the numbers that would change it are stated.
 
     Is the engine ready for unattended multi-hour campaigns?
-        [filled from SFE_LONG_RUN_REPORT.md]
+        Attended, hour-scale: yes, with consumer timeouts >= 30 s on engine calls.
+        Unattended, multi-hour, with a 10 s-timeout consumer: NO until the read-
+        connection fix lands and this tool measures 0 calls over 5 s at this shape --
+        0.13% spurious transport errors is ~50 halts/hour for a consumer that halts
+        on the first. Said plainly because the alternative is a Campaign 4 that
+        parks at 2 a.m. for a reason this packet already knew.
 
     What became slower or more complex?
         - one JOIN more on /v2/read/observations (experiments) since 4dbcd3fd; measured in the
