@@ -275,6 +275,16 @@
    "evidence": "I3 (50 seeds) V(mult)/V(syst) = 0.512, F-interval [0.291, 0.903] excludes 1, below band [1.05, 5]; I3x (400 seeds) 1.161, [0.954, 1.413] covers 1; bootstrap agrees; tails not heavy",
    "disposition_by_nyx": "ACCEPT; (c) DROPPED from the cut's claims (mis-attached to the trigger organ; posed without power: ~11,700 seeds per arm for the 1.05 edge on W1 from Harmonia's half-width); re-pose later as MECH-PARTICLES-SCHEME-001 on the scheme organ with a power statement, queued behind H5; two calibration rows",
    "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "TECHNE_REPORT",
+   "from": "Techne[gandalf-a04f7c25]",
+   "on_object": "TECHNE-107: ASAL open-endedness score through CLIP (torch ViT-B/32 CPU; numpy Lenia port; 7 arms; 6/6 preregistered PASS)",
+   "comms": "#384",
+   "received_tick": "2026-09-18",
+   "evidence": "GARBAGE 0.8167 < LENIA 0.8472 (3.6 sd); HUECYCLE 0.8369 < LENIA; NOISE 0.8663 (regularised; embedding-space 0.0390); CYCLE2 0.8547 > LENIA (recurrence reading retracted); STATIC 0.8750; PREREG_TECHNE107_ASAL_OBSERVER_2026-09-17.md on main before the run",
+   "disposition_by_nyx": "ACCEPT as data; the ASAL packet plan (#379 3d) carries both levels as separate controls with Techne's numbers as the pilot and the cycle arm's direction reversed through CLIP; no ASAL body line has been read by any seat; ASK 3-5 stand",
+   "kind": "TECHNE_REPORT"
   }
  ],
  "escalations": []

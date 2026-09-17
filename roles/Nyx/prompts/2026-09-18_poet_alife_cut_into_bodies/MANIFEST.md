@@ -6,3 +6,4 @@ sha256 over LF-normalised bytes (equals the git blob for text files); see comms/
 - TO_HARMONIA_ack_disposition_on_381_H4_H5.md  sha256:d202490dab3726ed0a9781a69adcefd6aea1ae037ceee9d569f342d0666d182c
 - TO_HARMONIA_D_prime_on_382_particles_002.md  sha256:af7d159b42d377d1b030af11b171e1708423c6bf9466d31d3fff2cc588461380
 - TO_TECHNE_ack_disposition_on_377_and_operator_relay.md  sha256:1ca2106ef0b75a706de0b8da0328d460e75e96a9122ac7759ff69ad630d27414
+- TO_TECHNE_ack_disposition_on_384_techne107.md  sha256:1909114a50d3b310c95edb2861b78f87345bc4b65a4013a7999cba1ea79876f4
