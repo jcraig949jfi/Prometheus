@@ -1,0 +1,244 @@
+================================================================================
+REVIEW PACKET -- Harmonia F boots on M3; first packet adjudicated on M3
+                 (MECH-PARTICLES-ESSTRIGGER-001) -- Harmonia seat, 2026-09-17
+Commit(s) of record: 3c89a1e04 (boot), 72b4df71c (ACK), 8921e73fa (plan +
+ruler, unexecuted), 8b060e369 (run, ruling, scout), merges f36e1a658,
+303089a70, d945b2ffd.   Author: Harmonia[gandalf-6cd1348b], claude-fable-5-1
+Invoked by: the operator, in chat: "bootstrap and then help out with a new,
+emerging pipeline: Techne -> Nyx -> Harmonia -> ? ... Can you reach the
+Redis comms channel?"
+================================================================================
+
+0. WHAT THIS PACKET IS
+
+A new instance of the Harmonia seat ("Harmonia F") was started on machine
+M3, joined the inter-seat message queue, and within the same session
+received, ran and returned the first Mechanism Archaeology prediction packet
+that can execute on M3. The run stopped at a control and returned
+INDETERMINATE plus a challenge to the packet's control specification.
+CONFLICT OF INTEREST: the author wrote the analysis plan, the measuring
+program (the "ruler"), and the ruling reviewed here. The plan copied a
+control band from the packet without questioning it; the author's own
+slowness to flag that band is recorded in section 7.
+
+1. CONTEXT
+
+Prometheus is a multi-seat program in which named roles (seats) run as
+separate AI sessions on several machines and talk through a shared queue.
+The Mechanism Archaeology Pipeline recovers old computational artifacts
+("fossils"), decomposes them into candidate mechanisms with falsifiable
+predictions (Nyx), and has Harmonia execute those predictions against an
+oracle before anything moves downstream. A prediction packet fixes, before
+any run, the code boundary, the interventions, their expected magnitude
+bands, and three controls (cheat, positive, negative). By rule, a failed
+mandatory control makes every row of the packet INDETERMINATE.
+M3 (hostname GANDALF, Windows 10 Home) cannot run Docker, WSL2 or a C
+compiler (virtualization is off in firmware), so only pure-Python fossils
+can be executed there. The specimen is "particles" v0.4, a Python
+sequential-Monte-Carlo library; the mechanism under test is its resampling
+trigger: resample when the effective sample size (ESS) drops below a
+fraction ESSrmin of the particle count N.
+
+2. THE QUESTIONS THE WORK WAS ANSWERING
+
+(a) Operator: "Can you reach the Redis comms channel?" and "You need to be
+    able to communicate with Nyx and Techne."
+(b) Nyx (#357): "R31 return required ... one of CUT_SUPPORTED /
+    CUT_CHALLENGE / PREDICTION_FAILED / PREDICTION_INDETERMINATE ... If you
+    run it: the ruler and its receipt in your lane, the RUNTIME_WITNESS
+    ... and the typed return."
+(c) The packet's claim: resampling is gated by exactly one predicate
+    (ESS < N * ESSrmin at core.py lines 181-183, consumed at 326-338); with
+    ESSrmin = 0 the loop never resamples; with ESSrmin = 1 it resamples at
+    every step; multinomial resampling has higher likelihood-estimate
+    variance than systematic.
+
+3. WHAT WAS DONE, STEP BY STEP
+
+ 1. Measured the channel. There is no Redis channel: the April "Agora"
+    Redis streams died in May; the live queue is a Postgres schema on M1
+    reached from M3 with EW_DB_HOST=192.168.1.202. `comms who` listed Nyx
+    and Techne online (E3). AGORA_* variables on M3 point at a dead host.
+ 2. Booted per the base-role sequence: worktree from origin/main 3a671820b,
+    guard passes, `comms boot` -> Harmonia[gandalf-6cd1348b] (E3). Journal,
+    registry row, status block committed; boot notice posted (#359).
+ 3. Received delegation #357 (packet MECH-PARTICLES-ESSTRIGGER-001, frozen
+    sha256 5b8d6ae4...). Claimed it. Re-derived the freeze hash from the
+    JSON (sorted keys, compact separators, one trailing LF) and got the
+    same value (E3). Verified the two boundary files on the M3 vault body
+    hash to the packet's values, core.py 1c99eb98... and resampling.py
+    6657f40f... (E3). Noted 11 compiled .pyc files added under the vault
+    body by Nyx's earlier import; 0 payload files modified (E3). ACK #360.
+ 4. Committed an analysis plan (8921e73fa) BEFORE any run: bands copied
+    verbatim from the packet, controls first with abort on failure, the
+    third intervention additionally at 400 seeds beside the 50-seed
+    reading, the negative control on the same observation series.
+ 5. Wrote the ruler: stages a disposable copy of the fossil body (no .pyc
+    written to the vault), imports from the copy, re-hashes the imported
+    files, records a RUNTIME_WITNESS (interpreter 3.11.9, numpy 1.26.4,
+    scipy 1.16.3, numba 0.65.1 with JIT confirmed active, joblib 1.5.3,
+    pip-freeze sha256 52eb6284..., 232 lines), simulates one 100-step
+    linear-Gaussian dataset (seed 20260917), runs the exact Kalman filter
+    as oracle (exact log-likelihood -146.7227, E3).
+ 6. Smoke run at 3 seeds into scratch, labelled NON_ADJUDICATIVE_SMOKE:
+    wiring correct, no decision taken from it.
+ 7. Adjudicative run (50 seeds per arm, 19.2 s, E3): cheat control PASS,
+    negative control PASS, POSITIVE CONTROL FAIL -- it stopped there.
+ 8. A labelled SCOUT (no intervention arm run) characterised the positive
+    control's variance-versus-N curve at 7 values of N (E3).
+ 9. Ruling written; disposition posted to Nyx with copies to Techne,
+    Theophrastus, Archaeon (#363); item 357 marked done; pushed to main.
+
+4. RESULTS
+
+All numbers E3 (executed this session; rows in
+roles/Harmonia/science/particles_ruler/out/20260917T152855Z/rows.jsonl,
+220 rows, sha256 0de319da...). V = sample variance of the log-likelihood
+estimate over seeds; B = mean bias against the exact value; RMSE = root
+mean square error of filtering means against the exact Kalman means;
+R = number of resampling steps out of 99 eligible.
+
+  control                        result  numbers
+  -----------------------------  ------  --------------------------------------
+  C-CHEAT-ORACLE-IN-THE-LOOP     PASS    RMSE = V = B = 0.0 exactly on all four
+                                         arm code paths (oracle injected)
+  C-POS-N-SCALING                FAIL    V(N=10) = 4973.76  V(N=1000) = 0.9105
+                                         ratio 5463; packet band [10, 1000]
+                                         RMSE(10) 0.3787 > RMSE(1000) 0.0146
+  C-NEG-UNINFORMATIVE (sigmaY    PASS    R = 0 in every seed; V(never)/V(adaptive)
+    = 1000)                              = 1.000 (identical trajectories)
+
+  intervention arms I0..I3       NOT READ (aborted by the control failure)
+
+  SCOUT (non-adjudicative), baseline settings, 50 seeds per N:
+  N      V         V/V(1000)  B        RMSE    R median  seeds > 20 nats low
+  10     4974      5463       -174.1   0.3787  98        50 of 50
+  20     752.4     826        -63.5    0.2247  99        47
+  50     96.6      106        -18.0    0.1137  99        21
+  100    41.49     45.6       -8.92    0.0740  99        3
+  200    9.121     10.0       -2.96    0.0426  99        0
+  500    1.779     1.95       -0.69    0.0215  99        0
+  1000   0.9105    1          -0.40    0.0146  99        0
+
+Reading. The positive control asked the instrument to see the 1/N scaling
+of the estimator's variance. It saw a 5463-fold change, larger than the
+band's ceiling of 1000. At N = 10 every seed's estimate sits more than 20
+nats below the exact value: the variance there is weight degeneracy, not
+sampling noise, and the 1/N picture the band assumed begins only near
+N = 200 on this world. Two coordinates are kept apart: (i) by the packet's
+own rule the reading is INDETERMINATE; (ii) by the seat's charter the band
+is a constant computed from a model that does not hold, so it is the
+control specification that is defective. Both were returned.
+
+Typed returns: RETURN 1 PREDICTION_INDETERMINATE (failing item named).
+RETURN 2 PREDICTION_PACKET_CHALLENGE on the positive control's band;
+required response is a superseding packet 002 with interventions I1-I3
+and the mechanism claim unchanged.
+
+Two design observations from the SEEN scout rows, offered for 002's world
+choice only: the trigger is saturated on this world (R median 98-99 of 99
+at every N), so the "adaptive" and "always resample" arms will coincide
+seed for seed and the baseline's R band [10, 90] cannot be met; and the
+baseline's bias band |B| <= 2 at N = 100 will not be met (B = -8.92).
+
+5. WHAT CHANGED IN THE REPOSITORY
+
+  roles/Harmonia/journal/2026-09-17_gandalf-6cd1348b.md      new
+  roles/Harmonia/INSTANCES.md, STATUS.md, BACKLOG_H0H5.md    row / block /
+                                                             HARM-45, HARM-46
+  roles/Harmonia/prompts/2026-09-17_gandalf-6cd1348b_boot/   boot notice
+  roles/Harmonia/prompts/2026-09-17_particles_packet/        ACK, disposition
+  roles/Harmonia/science/particles_ruler/PLAN_2026-09-17.md  plan (pre-run)
+  roles/Harmonia/science/particles_ruler/ruler.py            the instrument
+  roles/Harmonia/science/particles_ruler/scout_pos_control.py
+  roles/Harmonia/science/particles_ruler/out/20260917T152855Z/   rows,
+        results, receipt, ledger, data.npz (force-added; 2 KB)
+  roles/Harmonia/science/particles_ruler/out/SCOUT_pos_control_20260917T153048Z/
+  roles/Harmonia/rulings/RULING_PARTICLES_ESSTRIGGER_001_2026-09-17.md
+  Queue: #357 CLAIMED then DONE; posts #359, #360, #363. No scheduled jobs.
+  Cost: about 40 s of CPU on M3 for all runs; no external services.
+
+6. WHAT THIS DID NOT ESTABLISH
+
+- Nothing about the mechanism claim. I0-I3 were not read; the boundary is
+  neither supported nor rejected.
+- Whether the 5463 ratio is stable across seed sets (falsifier in s.9).
+- Any result for the gzip pilot (packet 003): its world is a C build in
+  Docker, which no host in the pipeline can now run after the operator
+  moved Techne, Nyx and Harmonia to M3; HARM-39..42 are blocked program-wide.
+- No R36 world identity exists for the M3-native Python world; the
+  RUNTIME_WITNESS is recorded so Techne can mint one.
+- The "?" after Harmonia in the operator's pipeline sketch is already
+  answered by the pipeline's founding charter (Theophrastus, then
+  Archaeon/Vivarium, then the Soup); the two consumers the operator named
+  were mapped (the SFE engine's experiment queue via Archaeon; Nestor's
+  primordial receipt contract, which lives only on unmerged branches). No
+  triage of the 39 existing cuts for experimental opportunity was written
+  yet (HARM-46).
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+
+- The positive-control band was questionable on reading (a 1/N band with
+  N = 10 at 100 steps on a very informative observation model) and the
+  author copied it into the plan without flagging it. Cost: one aborted
+  adjudicative run and a full packet round-trip to Nyx instead of a
+  challenge before the run. The plan was right to copy it; the flag should
+  have accompanied it.
+- The smoke run executed the intervention arms once at 3 seeds before the
+  adjudicative run. No decision used those numbers and they are withheld,
+  but the arms have been SEEN by the author; disclosed in the ruling.
+- The scout's N = 100 row is identical in configuration to the baseline
+  arm, so the baseline's reading is now SEEN before 002 exists. Disclosed;
+  the packet calls that row informative, not a kill row.
+- The first attempt to write the boot files used a shell heredoc that
+  failed to parse; nothing was written and the files were written by a
+  script instead. No cost beyond minutes.
+
+8. WHAT IS OWED, AND BY WHOM
+
+  Nyx       packet MECH-PARTICLES-ESSTRIGGER-002, supersedes 001, positive
+            control re-specified, I1-I3 unchanged (required response).
+  Techne    (asked, not required) an R36 manifest for the M3-native Python
+            world; a FOSSIL_PACKET.json for particles-chopin-0.4.
+  Harmonia  adjudicate 002 within one tick of its freeze (HARM-45); the
+            Stage-A opportunity triage (HARM-46); gzip oracle-source
+            grading (HARM-38, reading only).
+  Operator  a host that can run Docker/compiled fossil worlds (the gzip
+            pilot and 8 of the 9 new cuts are stuck without one).
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+
+ 1. Is it right to return BOTH "indeterminate by the packet's rule" and
+    "the control band is the defect", or should a challenge to a control
+    band be raised before running, with the run deferred?
+ 2. What would falsify RETURN 2? Our stated falsifier: 50 fresh seeds
+    (51..100) at N = 10 vs 1000 giving a ratio inside [10, 1000]. Is that
+    the right test, and is 50 seeds enough given that all 50 original seeds
+    at N = 10 were more than 20 nats low?
+ 3. Should the author have withheld the scout's N = 100 row rather than
+    publishing it, given it equals the baseline arm? Is disclosure plus an
+    unchanged-band requirement sufficient protection for packet 002?
+ 4. What should we stop? Candidate: control bands derived from an
+    asymptotic regime (1/N, Gaussian noise) without a stated regime check.
+    Is that the right rule, or too broad?
+ 5. The trigger is saturated on this world (resampling at 98-99 of 99
+    steps). Should 002 change the world (less informative observations) so
+    "adaptive" and "always" differ, or keep the world and accept that I2
+    cannot be a contrast?
+
+10. HOW TO REPRODUCE
+
+  On a host with CPython 3.11, numpy, scipy, numba, joblib, and the
+  particles v0.4 source tree at the path below (tarball sha256
+  67809fce...; tree sha256 e27cbce2...):
+
+    cd roles/Harmonia/science/particles_ruler
+    python ruler.py --seeds 50 --x-seeds 400 --vault <path to particles-0.4>
+    python scout_pos_control.py        (edit VAULT at the top if needed)
+
+  Expected: ledger.txt reports payload hashes MATCH, numba jit_active True,
+  logL_exact -146.7227, C-POS-N-SCALING FAIL with ratio 5463 (seeds 1..50
+  set via numpy's global RNG; the body uses numpy.random, so results are
+  deterministic per seed on the same numpy version), return_type
+  PREDICTION_INDETERMINATE. Elapsed about 20 s and about 60 s respectively.
+================================================================================
