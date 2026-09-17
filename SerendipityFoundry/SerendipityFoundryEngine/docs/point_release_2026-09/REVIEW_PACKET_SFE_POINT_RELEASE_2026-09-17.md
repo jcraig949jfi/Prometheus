@@ -354,3 +354,27 @@ test fails the build if they ever do.
  roles/Harmonia/contracts/sfe_contract.json (landed, provenance block `landed`)
  main: 1b9286292 (release) .. bef42b7df (deployed receipts); comms #343 (deploy receipt)
 =======================================================================
+
+-----------------------------------------------------------------------
+9. CORRECTION 12:2xZ -- the control run falsified section 5's mechanism
+-----------------------------------------------------------------------
+
+ The no-reader control did not finish: two 500s ("database is locked" at
+ connection open) with NO reader at all. The reader was never the cause.
+ The real one: the API opens a NEW SQLite connection PER REQUEST and
+ closes it after (get_foundry); the Store's own docstring says one per
+ worker. ~115,000 open/close pairs in the main run. When the last
+ connection closes, SQLite checkpoints and truncates the whole WAL of an
+ 80 MB ledger -- the multi-second window every new request's open waits
+ in (the stalls, on every route), and the open can fail outright on a
+ lock path the busy handler does not retry (the 500s). Campaigns 1-3
+ never hit it: one sequential producer. Campaign 4 with a concurrent
+ reader is exactly the regime that does.
+
+ Fix: one Store per worker thread, never closed per request -- ~25 lines
+ in api.py, no schema, no route. Being implemented and measured on the
+ branch now with the same load tool (acceptance: 0 calls over 5 s AND
+ 0 5xx at 20 x 1,000, with and without the reader). Deploy only on an
+ operator-opened window. Section 5's SQLite/retention decisions stand;
+ its mechanism paragraph is retracted. Consumer guidance (>= 30 s
+ timeouts + idempotent retries) stands until the fix is measured.

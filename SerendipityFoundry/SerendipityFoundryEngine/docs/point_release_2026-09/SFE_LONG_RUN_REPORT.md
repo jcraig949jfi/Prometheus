@@ -159,3 +159,66 @@
     - behaviour with the M1-era ledger size (129K events) as a starting
       point rather than an empty one
     - concurrent clients from another host (this run was loopback)
+
+=======================================================================
+7. CORRECTION 2026-09-17 12:2xZ -- the control run overturned section 4's mechanism
+=======================================================================
+
+    control    the identical 20 x 1,000 run with NO reader thread (2 producers
+               only) did not finish: at ~13,100 successful calls the engine
+               answered 500 "unhandled server error" twice within 100 ms on
+               two different worlds (POST .../events and POST .../commit).
+               Receipt: deploy/LONG_RUN_2026-09-17/w20g1000_noreader/engine.log
+               lines 13138-13307.
+    traceback  sfe/api.py get_foundry -> Foundry(app.state.db_path, ...) ->
+               Store.__init__ -> `PRAGMA journal_mode=WAL` ->
+               sqlite3.OperationalError: database is locked
+    what that  The API constructs a NEW Foundry -- a new Store, a new sqlite3
+    shows      connection, PRAGMA journal_mode=WAL -- ON EVERY REQUEST, and
+               closes it after (api.py: `def get_foundry(): f = Foundry(...);
+               yield f; f.close()`). Store's docstring says "a per-thread
+               connection; open one per worker"; the API opens one per
+               request. Section 4's "one shared connection with no lock" was
+               WRONG: I read Store.read() and did not read who constructs the
+               Store. Retracted.
+    mechanism  Per-request connection churn (~115,000 open/close pairs in the
+    (revised)  main run). When the LAST open connection closes, SQLite
+               checkpoints the whole WAL into the main file and truncates it;
+               on an 80 MB ledger under two writers that is the multi-second
+               window in which every new request's open blocks -- the stall on
+               EVERY route, reads included, exactly the observed shape. The
+               next open can also fail outright: `database is locked` on
+               journal-mode/WAL-index recovery is one of the SQLite lock paths
+               the busy handler does not retry -> the 500. The main run never
+               hit that path (reader thread kept a connection open almost
+               always, so the "last close" was rare); the control, with only
+               two producers pausing between requests, did.
+    evidence   - stalls in the main run began at ~868 s and never before: the
+      that fits  WAL/ledger had to be large enough for checkpoint-on-close
+                 to take seconds (DB ~25 MB at that point)
+               - stalls hit reads and writes in proportion to volume
+               - write-lock waits (BEGIN IMMEDIATE) stayed tiny: the wait is
+                 at CONNECT, before any transaction, where B3 does not measure
+               - "WAL 0.0 MB" at every inspection: it was being truncated on
+                 every last-close, not autocheckpointed at 1000 pages
+               - 0 errors in Campaigns 1-3: single sequential producers, so a
+                 close-then-open of the same request stream never raced
+                 another connection's open
+    why it     Campaign 4 with a concurrent reader (PEW ingestion walking
+    matters    cursors) or two runners is exactly the two-connection regime.
+    the fix    one Store per worker THREAD (thread-local; uvicorn's sync
+    (bounded)  handlers run in a pool of ~40), never closed per request; the
+               boot-time Store already runs the migration. ~25 lines in
+               api.py; store.py untouched; the write path and B3 untouched.
+               CODE ONLY, no schema, no route: a 9.0.1 with the load tool as
+               acceptance (0 calls over 5 s AND 0 5xx at 20 x 1,000 with 2
+               producers + reader, and with 2 producers alone).
+    status     being implemented on the branch now; measured before it is
+               offered; deployed only on an operator-opened window (freeze
+               rule s11; the fix is a candidate "critical defect" exception
+               and is stated as such, but production has 0 consumers today).
+
+    Sections 4 and 5 above stand as the record of what I believed at 11:4xZ
+    and are not rewritten; this section supersedes their mechanism and
+    recommendation. Consumer guidance (>= 30 s timeouts, idempotent retries)
+    stands until 9.0.1 is measured.
