@@ -212,23 +212,52 @@
    "blocks_launch": true,
    "evidence": {
     "archaeon_declaration_present": true,
-    "declaration_digest": "sha256:3c2ebfd9de7bd14409bda6a1417ca9ebc8fdc1521eea6301450863f0df9199b1",
-    "minted_by_proteus": false,
+    "checks": {
+     "archaeon_declaration_present": true,
+     "declaration_digest_reproducible": true,
+     "declaration_has_canonical_rule": true,
+     "every_organism_has_ancestry": true,
+     "mint_binds_canonical_digest": false,
+     "mint_count_matches": true,
+     "organisms_present": true,
+     "proteus_catalog_present": true,
+     "proteus_mint_present": true
+    },
+    "mint_binds_digest": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4",
+    "mint_count": 57,
+    "mint_schema": "proteus.c4_starting_population_mint.v1",
+    "minted_by": "Proteus[m2-7d051790]",
+    "missing": [
+     "mint_binds_canonical_digest"
+    ],
+    "next_action": "Proteus remints over the canonical digest sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1 (the content is unchanged: same 57 organisms, same collapsed duplicate). The raw-byte digest it currently binds is a checkout artifact, not a population identity.",
     "organisms_declared": 57,
-    "organisms_without_ancestry": 57,
+    "organisms_without_ancestry": 0,
+    "population_digest_declared": "sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1",
+    "population_digest_recomputed_here": "sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1",
+    "population_digest_rule_published": true,
     "proteus_catalog_present": true,
-    "proteus_registry_present": true
+    "proteus_mint_present": true,
+    "superseded_raw_byte_digests": {
+     "crlf_worktree": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4",
+     "lf_worktree": "sha256:3c2ebfd9de7bd14409bda6a1417ca9ebc8fdc1521eea6301450863f0df9199b1",
+     "note": "same 57-organism content, two checkouts. Preserved as evidence of the identity-definition defect that this canonical rule repairs.",
+     "proteus_minted_over": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4"
+    }
    },
    "id": "G5",
+   "missing": [
+    "mint_binds_canonical_digest"
+   ],
    "owner": "Proteus + Archaeon",
    "requirement": "manifests + structural descriptors for the exact C4 starting organisms; no organism of unknown ancestry",
    "status": "RED"
   }
  ],
  "gate": "RED",
- "generated_at": "2026-09-17T22:36:19Z",
+ "generated_at": "2026-09-17T22:52:51Z",
  "generated_by": "Archaeon[m2-411504ab]",
- "read_at_commit": "f5f760883cd2bed72a1570ef76c2fdab1053cecd",
+ "read_at_commit": "15424485a72360636a7aa3deec40534685b5cbbe",
  "read_at_ref": "origin/main",
  "rule": "an item whose evidence cannot be READ is UNVERIFIED or CLAIMED_NOT_PROVEN and still blocks; a message is a claim, not proof."
 }
