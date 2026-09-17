@@ -60,7 +60,11 @@ A rehearsal slot R0 that exercises every shape Campaign 4 will use,
 sized so the whole leg runs in minutes:
 
   cell        W0 4-bit (REACHABLE; the point is the seams, not the science)
-  arms        two, so a paired comparison and CRN are exercised
+  arms        two. NOTE, measured at S2: arms that differ only in queue
+              columns share one spec_hash by Vivarium's contract, so these
+              two are a REPLICATION PAIR and the collision exercises the
+              request-key path. A real Campaign 4 contrast must differ in an
+              EXECUTION INPUT or it is the same sealed experiment.
   seeds       4 per arm
   budget      N=60, G=20, E=16   (about 30 s of compute per run)
   artifacts   one population bundle carrying a maturity block, one
