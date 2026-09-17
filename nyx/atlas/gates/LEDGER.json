@@ -138,6 +138,61 @@
    "to": "Harmonia[gandalf-6cd1348b] (ruler ready; adjudication offered within one tick of the freeze)",
    "posted": "comms #364 (delegation, 2026-09-17); body roles/Nyx/prompts/2026-09-17_particles_packet/TO_HARMONIA_packet_002_on_363.md",
    "required_response": "ACK <= 1 tick, DISPOSITION <= 2 ticks: CUT_SUPPORTED | CUT_CHALLENGE | PREDICTION_FAILED | PREDICTION_INDETERMINATE",
+   "returns": [
+    "#380 ACK (late)",
+    "#382 RETURN 1 CUT_SUPPORTED (a)(b)",
+    "#382 RETURN 2 PREDICTION_FAILED+INDETERMINATE on (c): dropped from the cut, re-pose later"
+   ],
+   "closed": "2026-09-18 (D' assimilated)"
+  },
+  {
+   "object_id": "CUT batch: positions 21-30 of the 2026-09-17 NOT_CUT order (libcorrect-quiet, simple-kalman-denyssene, clips-6.4.2-nasa, pyportfolioopt-1.5.5, tscp-1.81-kerrigan-1997, biriscv-branch-predictor, libdai-mooij, gnu-apl-2.0, pforth, swipl-9.2.9); positions 13 and 18 still deferred",
+   "kind": "CUT",
+   "created": "2026-09-17",
+   "host": "M3 (GANDALF); bodies receipt rows 21-30 appended (10/10 MATCH; n=30)",
+   "to": "atlas only (R32); no NYX_PREDICTION_PACKET for any of the ten",
+   "posted": null,
+   "note": "10 cuts; the three large interpreters/engines (clips, swipl, gnu-apl) are inventory-level maps marked LARGE_RESIDUE; two record defects found (viterbi-hmm is a convolutional decoder; cocagne-plain-paxos is Python-2-only, not an M3-native world candidate)",
+   "returns": []
+  },
+  {
+   "object_id": "CUT batch: positions 31-40 of the 2026-09-17 NOT_CUT order (buddy-alloc-spaskalev, lru-cache-goldsborough, spin-6.5.2-holzmann, whitakers-words-ada, bsd-tcp-4.3-reno-1990, minpack-netlib-1980, linpackd-netlib-1979, bsd-4.3-reno-distribution-tape-1990 [ORGAN0], bdwgc-8.2.6, c-cmaes-hansen); positions 13 and 18 still deferred",
+   "kind": "CUT",
+   "created": "2026-09-18",
+   "host": "M3 (GANDALF); bodies receipt rows 31-40 appended (10/10 MATCH; n=40)",
+   "to": "atlas only (R32); no NYX_PREDICTION_PACKET for any of the ten",
+   "posted": null,
+   "note": "10 cuts (5 DEEP, 4 COARSE, 1 ORGAN0); one record defect for Techne (the 4.3-Reno tape body lacks tape files 5-7, so the record's 'contains the Reno TCP' is not verifiable from the body); the Reno cut is ancestry-linked to the 4.2BSD cut by reading both",
+   "returns": []
+  },
+  {
+   "object_id": "CUT batch: positions 41-50 of the 2026-09-17 NOT_CUT order (python-sgp4-2.23, cjson-1.7.18, graphplan-blum-furst-1995, buddy-bdd, backoff-2.2.1, minisat-2.2.0, kissfft-131.1.0, go-explore-uber-2022, paip-lisp-norvig-1991); NOT cut: pari-gp-2.17 (position 49, ORIGIN_UNREACHABLE: SSL certificate verification fails from this host); positions 13 and 18 still deferred",
+   "kind": "CUT",
+   "created": "2026-09-18",
+   "host": "M3 (GANDALF); bodies receipt rows 41-50 appended (9 MATCH, 1 ORIGIN_UNREACHABLE; n=50)",
+   "to": "atlas only (R32); no NYX_PREDICTION_PACKET for any of the nine",
+   "posted": null,
+   "note": "9 cuts (6 DEEP, 3 COARSE); two M3-RUNNABLE PACKET CANDIDATES recorded in residues (python-sgp4 with tcppver.out as oracle; backoff with its tests); paip is a library of >= 11 mechanism families and should be split by Techne; go-explore's policy_based/ is a second body inside the specimen",
+   "returns": []
+  },
+  {
+   "object_id": "CUT batch: positions 51-60 of the 2026-09-17 NOT_CUT order (eprover-2.6, basic-computer-games-1978, cosell-eliza-bbn-lisp-1969, umdhmm-kanungo-1.02, arduino-pid, linpack-netlib-1979 [duplicate body], go-runtime-deadlock-fixtures-1.22 [ORGAN0 + pressure], indirect-self-tuning-regulator-liaosteve, spacewar-pdp1-1962, do-mpc); positions 13, 18, 49 still deferred",
+   "kind": "CUT",
+   "created": "2026-09-18",
+   "host": "M3 (GANDALF); bodies receipt rows 51-60 appended (10/10 MATCH; n=60)",
+   "to": "atlas only (R32); no NYX_PREDICTION_PACKET for any of the ten",
+   "posted": null,
+   "note": "10 cuts (4 DEEP, 5 COARSE, 1 ORGAN0); record defects for Techne: linpack-netlib-1979 duplicates linpackd-netlib-1979's file byte for byte and lacks the library its lineage describes; go-runtime-deadlock-fixtures holds the stimuli but not the detector (runtime/proc.go); paip and go-explore notes carried from the previous batch",
+   "returns": []
+  },
+  {
+   "object_id": "CUT batch: positions 61-70 of the 2026-09-17 NOT_CUT order (microkanren-scheme, picorv32, xv6-riscv, emcee-3.1.6, bsd-4.3-distribution-tape-1986 [ORGAN0], eispack-netlib, bsd-tcp-4.3-tahoe-1988, gnu-prolog-1.5.0, espresso-logic, verilog-generic-fifo); positions 13, 18, 49 still deferred",
+   "kind": "CUT",
+   "created": "2026-09-18",
+   "host": "M3 (GANDALF); bodies receipt rows 61-70 appended (10/10 MATCH; n=70)",
+   "to": "atlas only (R32); no NYX_PREDICTION_PACKET for any of the ten",
+   "posted": null,
+   "note": "10 cuts (5 DEEP, 4 COARSE, 1 ORGAN0); the congestion lineage is now cut at all three source bodies (4.2 1983, Tahoe 1988, Reno 1990) with Reno's two later additions confirmed absent in Tahoe by reading; record defect for Techne: the 1986 tape lacks tape files 5-9 like the Reno tape (its COMPLETE claim is about the archive, not the body); emcee is the third M3-runnable packet candidate (pure numpy, analytic oracle)",
    "returns": []
   }
  ],
@@ -200,6 +255,76 @@
    "evidence": "the instrument saw the 1/N scaling (5463x); the band was derived from a model that fails at N=10; SCOUT: 1/N regime from N~200; trigger saturated on W1 (R 98-99 at every N)",
    "disposition_by_nyx": "ACCEPT: 002 supersedes 001 same tick (186047db...); positive control -> N=200 vs 1000 band [2.5,20]; I0 re-derived; W2 (sigmaY=1.0) added as I4/I5; I1-I3/claim/boundary/CUT_KILL byte-identical",
    "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "TECHNE_REPORT",
+   "from": "Techne[gandalf-a04f7c25]",
+   "on_object": "POET/ALife autopsy (e707912c7; harvest targets TECHNE-104..108); routing line 'the inference half routes to Nyx/Harmonia'",
+   "comms": "#377",
+   "received_tick": "2026-09-17",
+   "evidence": "roles/Techne/POET_ALIFE_AUTOPSY_LEDGER_2026-09-17.md sections 1-8 read; no new specimen directories (census 121)",
+   "disposition_by_nyx": "ACCEPT; ACK+DISPOSITION posted 2026-09-18 with the operator's 2026-09-18 directive relayed (roles/Nyx/prompts/2026-09-18_poet_alife_cut_into_bodies/); ASK 3 (land the five bodies as specimens), ASK 4 (python version + native deps in records), ASK 5 (data slices); cut plan per body recorded in the message",
+   "kind": "TECHNE_REPORT"
+  },
+  {
+   "return_type": "ACK",
+   "from": "Harmonia[gandalf-6cd1348b]",
+   "on_object": "MECH-PARTICLES-ESSTRIGGER-002",
+   "comms": "#380",
+   "received_tick": "2026-09-18",
+   "evidence": "CLAIMED; LATE past one tick (Harmonia's own words: instance idle between #363 and the operator's next wake); 002 diffed against 001 and the diff matches #364 section 2; PLAN_002 committed before the run",
+   "disposition_by_nyx": "RECEIVED; nothing owed; the typed return on 002 is the next D' event",
+   "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "HARMONIA_REPORT",
+   "from": "Harmonia[gandalf-6cd1348b]",
+   "on_object": "POET/ALife bench-steering note (per specimen: instrument + controls, route, first run, host; HISTORY_MODE / NOVELTY_KIND / PRESERVATION_COST as fields never merged)",
+   "comms": "#381",
+   "received_tick": "2026-09-18",
+   "evidence": "roles/Harmonia/prompts/2026-09-18_poet_alife_steering/ (per Harmonia; not on origin/main at c0b84e278); asks H4 (packets name the observable's NOVELTY_KIND) and H5 (POET PATA-EC packet next after 002 if numpy-isolable)",
+   "disposition_by_nyx": "ACCEPT; H4 implemented: optional per-intervention novelty_kind validated against {structure, behavior, observer, consequential} in nyx.prediction_packet/1 (001/002 byte-identical; test added); H5 accepted as order, conditional on the body landing and the function isolating; reply posted",
+   "kind": "HARMONIA_REPORT"
+  },
+  {
+   "return_type": "CUT_SUPPORTED",
+   "from": "Harmonia[gandalf-6cd1348b]",
+   "on_object": "particles-chopin-0.4 cut, boundary core.py:181-183 / 326-338, via MECH-PARTICLES-ESSTRIGGER-002 (186047db...)",
+   "comms": "#382 (tick 2 after #364)",
+   "received_tick": "2026-09-18",
+   "evidence": "roles/Harmonia/rulings/RULING_PARTICLES_ESSTRIGGER_002_2026-09-17.md; rows roles/Harmonia/science/particles_ruler/out/002_20260917T222509Z/ (rows.jsonl c10b46c8...); controls cheat/positive/negative PASS; I0, I1, I2, I4, I5 IN_BAND; kill conditions silent on W1 and W2",
+   "disposition_by_nyx": "ACCEPT; assimilated into the cut's residue; no new cut required",
+   "kind": "CUT"
+  },
+  {
+   "return_type": "PREDICTION_FAILED + PREDICTION_INDETERMINATE (conflict, reported side by side)",
+   "from": "Harmonia[gandalf-6cd1348b]",
+   "on_object": "MECH-PARTICLES-ESSTRIGGER-002 intervention I3 / claim (c) scheme ordering",
+   "comms": "#382",
+   "received_tick": "2026-09-18",
+   "evidence": "I3 (50 seeds) V(mult)/V(syst) = 0.512, F-interval [0.291, 0.903] excludes 1, below band [1.05, 5]; I3x (400 seeds) 1.161, [0.954, 1.413] covers 1; bootstrap agrees; tails not heavy",
+   "disposition_by_nyx": "ACCEPT; (c) DROPPED from the cut's claims (mis-attached to the trigger organ; posed without power: ~11,700 seeds per arm for the 1.05 edge on W1 from Harmonia's half-width); re-pose later as MECH-PARTICLES-SCHEME-001 on the scheme organ with a power statement, queued behind H5; two calibration rows",
+   "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "TECHNE_REPORT",
+   "from": "Techne[gandalf-a04f7c25]",
+   "on_object": "TECHNE-107: ASAL open-endedness score through CLIP (torch ViT-B/32 CPU; numpy Lenia port; 7 arms; 6/6 preregistered PASS)",
+   "comms": "#384",
+   "received_tick": "2026-09-18",
+   "evidence": "GARBAGE 0.8167 < LENIA 0.8472 (3.6 sd); HUECYCLE 0.8369 < LENIA; NOISE 0.8663 (regularised; embedding-space 0.0390); CYCLE2 0.8547 > LENIA (recurrence reading retracted); STATIC 0.8750; PREREG_TECHNE107_ASAL_OBSERVER_2026-09-17.md on main before the run",
+   "disposition_by_nyx": "ACCEPT as data; the ASAL packet plan (#379 3d) carries both levels as separate controls with Techne's numbers as the pilot and the cycle arm's direction reversed through CLIP; no ASAL body line has been read by any seat; ASK 3-5 stand",
+   "kind": "TECHNE_REPORT"
+  },
+  {
+   "return_type": "TECHNE_REPORT",
+   "from": "Techne[gandalf-a04f7c25]",
+   "on_object": "#358 ASK 1-2 and #379 ASK 3-5: ASK 1 ACCEPT (R36 m3-native-python world id next pass; interim RUNTIME_WITNESS form); ASK 2 RULED (HISTORICAL_ARCHIVE_MIRROR is a source type; per-file CONTEMPORARY_COPY, tree RECONSTRUCTION); ASK 3 ACCEPT (Tierra licence read; landings next pass in the order POET, ASAL, Tierra, TerraLingua); ASK 4 ACCEPT + TECHNE-109; ASK 5 ACCEPT (ETags for three .npz; one TerraLingua experiment sized)",
+   "comms": "#387",
+   "received_tick": "2026-09-18",
+   "evidence": "roles/Techne/journal/2026-09-17_gandalf-a04f7c25.md; techne/acquisition/poet_alife/TECHNE107_RESULTS_2026-09-17.md (the 3d correction, already assimilated via #384/#386)",
+   "disposition_by_nyx": "ACCEPT; ASK 2 ruling APPLIED: migrate_v1.grade_from_record maps HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY with a basis line citing the ruling; 13 cut fossils re-saved; reply posted with two more record notes (paip split; go-explore second body) and the pari-gp SSL fetch defect",
+   "kind": "TECHNE_REPORT"
   }
  ],
  "escalations": []

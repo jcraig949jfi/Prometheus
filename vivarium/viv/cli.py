@@ -33,6 +33,7 @@ from . import kinds as _kinds
 from . import daemon as _daemon
 from . import loop as _loop
 from . import queue as _q
+from . import scope as _scope
 from . import spec as _spec
 from . import vardir as _vardir
 
@@ -612,6 +613,28 @@ def cmd_unpark(args, conn) -> int:
     return 0
 
 
+def cmd_grant_reader(args, conn) -> int:
+    """Bind a read scope's GRANTEE (an engine client id; not a secret) host-
+    locally and extend the scope now. Idempotent: re-running with the same id
+    re-binds nothing and adds only new owner worlds. This is how Archaeon's
+    Campaign-4 client gets B1 read access to every viv-* world without a
+    commit or a pin advance (the config.json value named the M1 client)."""
+    conn.close()
+    _workspace.assert_not_canonical("grant a read scope", allow_override=False)
+    var = _vardir.resolve(_db.load_config())
+    try:
+        path = _scope.set_local_grantee(var, args.scope, args.grantee, set_by=args.by, reason=args.reason)
+    except ValueError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+    print("grantee for %s -> %s (recorded at %s)" % (args.scope, args.grantee, path))
+    v = _loop.Vivarium(schema=args.schema, log=print)
+    rec = v.reconcile_scopes(trigger="grant-reader")
+    print(_j(rec))
+    mine = [r for r in rec.get("scopes", []) if r.get("scope_name") == args.scope]
+    return 0 if mine and not any("error" in r for r in mine) else 1
+
+
 def cmd_scope_reconcile(args, conn) -> int:
     """B1 recurrence by hand: extend the declared read scopes with this
     owner's newly eligible worlds (add-only, idempotent). Prints the record;
@@ -879,6 +902,13 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--interval", type=float, default=None)
     s.add_argument("--worker-id", default=None)
     s.set_defaults(fn=cmd_run)
+
+    s = sub.add_parser("grant-reader", help="bind a read scope's grantee (engine client id) host-locally and extend the scope now")
+    s.add_argument("--scope", default="archaeon-campaigns")
+    s.add_argument("--grantee", required=True, help="cli_<24 hex> of the reader on THIS ledger")
+    s.add_argument("--by", required=True)
+    s.add_argument("--reason", required=True)
+    s.set_defaults(fn=cmd_grant_reader)
 
     s = sub.add_parser("scope-reconcile", help="B1 recurrence: extend the "
                        "declared read scopes with newly eligible owner worlds")

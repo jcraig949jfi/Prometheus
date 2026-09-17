@@ -151,11 +151,11 @@
    "paxos/essential.py, paxos/functional.py (all)",
    "paxos/practical.py (class/def structure, recv_prepare)"
   ],
-  "date": "2026-09-17T15:40Z",
+  "date": "2026-09-17T21:53Z",
   "note": "single-decree Paxos in three classes of a few lines each, with the messaging externalised; the 'practical' and 'functional' layers add NACKs, durability hooks and a heartbeat-based leader without touching the three safety rules",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T15:40Z",
+   "migrated_at": "2026-09-17T21:53Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
    "provenance_grade_read": "UNKNOWN",
    "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
@@ -947,6 +947,13 @@
    "to": "Lamport 1998 (The Part-Time Parliament) / 2001 (Paxos Made Simple); the heartbeat layer is the author's",
    "note": "from the docstrings; the record's lineage not re-read",
    "basis": "SOURCE_READ"
+  },
+  {
+   "from": "cocagne-plain-paxos",
+   "relation": "algorithm_from",
+   "to": "Lamport 1998 (The Part-Time Parliament) / 2001 (Paxos Made Simple); the heartbeat layer is the author's",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
@@ -954,6 +961,7 @@
   "unexplained": [
    "durable.py and external.py not read; practical.py read by structure only",
    "nothing ran; pure Python -> M3-native world candidate (ASK 1 to Techne in #358); the tests are the oracle",
+   "ANNOTATION 2026-09-17 ~22:00Z (SCOUT, NON-ADJUDICATIVE; the line above is kept): the body is PYTHON 2 ONLY. Under CPython 3.11 Acceptor.recv_prepare, Proposer.recv_promise and Learner.recv_accepted each raise TypeError on the first message because they compare a ProposalID with None ('>' unsupported); the tests use itertools.izip/assertEquals. It is NOT an M3-native world candidate as it stands; running it needs Python 2 or a SOURCE-level shim (a derived body). Reported to Techne with the record defect",
    "the paxos-vs-raft recurrence (willemt-raft cut 09-17) is a reading-level claim"
   ],
   "note": "the three essential classes are accounted for line by line",

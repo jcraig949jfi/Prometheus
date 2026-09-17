@@ -127,20 +127,653 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:do-mpc/upstream/tree/do_mpc/controller/_mpc.py:975-1060"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:do-mpc/upstream/tree/do_mpc/controller/_mpc.py:1097-1300"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:do-mpc/upstream/tree/do_mpc/optimizer.py:789-890"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:do-mpc/upstream/tree/do_mpc/estimator/_mhe.py:36-1213"
+   }
+  ],
+  "inspected_files": [
+   "controller/_mpc.py 975-1300",
+   "optimizer.py 789-890",
+   "estimator/_mhe.py (inventory)"
+  ],
+  "date": "2026-09-17T23:01Z",
+  "note": "receding-horizon control as a symbolic NLP built once and solved every step: the model's ODE/DAE is discretised over the horizon by orthogonal collocation (or a discrete-time map), uncertain parameters branch into a scenario tree whose leaves are weighted equally at each stage (robust multi-stage MPC), the objective sums stage, terminal and input-move costs over scenarios, and at run time only the parameters (x0, previous u, time-varying parameters) change while the solver warm-starts from the last solution; the moving-horizon estimator is the same optimizer class with an arrival cost",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:01Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/do-mpc/do-mpc@6ec14cb70daa189d7eb70c0e6f6d90442db01c92",
+   "payload_manifest_id": "techne tree_sha256 df82e517cdf342d17261d5adea8272c7e5cc27f4fdad4194906ed8bff71804b6 (271 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/do_mpc/controller/_mpc.py",
+     "payload_hash_read": "23c2af161d55b6b7cbe12f7b95e7bc6eb8347b870cc9ebd9a6b21a04e167033a",
+     "techne_recorded_hash": "23c2af161d55b6b7cbe12f7b95e7bc6eb8347b870cc9ebd9a6b21a04e167033a",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/do_mpc/optimizer.py",
+     "payload_hash_read": "3032f9ed2597bec1d534db0a3ac9ee0019deeb39a8f242d0037162199fcae216",
+     "techne_recorded_hash": "3032f9ed2597bec1d534db0a3ac9ee0019deeb39a8f242d0037162199fcae216",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/do_mpc/estimator/_mhe.py",
+     "payload_hash_read": "6d0f845e8274ee878a21e67bb4c0ec76359c58b076e254e788c1ca8e8f267fea",
+     "techne_recorded_hash": "6d0f845e8274ee878a21e67bb4c0ec76359c58b076e254e788c1ca8e8f267fea",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "fossil_ancestry": "do-mpc",
+   "human_name": "make_step (975-1060): opt_p_num['_x0'], ['_u_prev'], ['_tvp'], ['_p'] set; solve(); u0 = opt_x_num['_u', 0, 0] * scaling; data.update; _x0/_u0 masters updated; _prepare_nlp / _create_nlp build the CasADi problem at setup",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at setup the whole horizon problem (variables for states, algebraic states, inputs and slacks over N steps and all scenarios; constraints; objective) is assembled as a CasADi expression and handed to a solver (IPOPT by default); at each step the numeric parameter vector is filled with the measured state, the previous input and the time-varying parameters, the NLP is solved starting from the previous solution (warm start), the first input of the first scenario is returned (unscaled), and everything is logged",
+   "input": "x0 per step",
+   "output": "u0",
+   "state": "the last solution (warm start), the data log",
+   "update": "per control interval",
+   "assumptions": [
+    "re-solving with a shifted horizon is close to the previous solution, so warm starting keeps the solve fast; the first input is the only one applied (receding horizon)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "do-mpc::continuous_model_discretised_by_orthogonal_collocation_on_finite_elements_with_legendre_or_radau_points_as_equality_constraints_of_the_nlp",
+    "do-mpc::robust_multi_stage_mpc_by_a_scenario_tree_over_uncertain_parameter_combinations_branching_for_n_robust_stages_with_equal_weights_per_stage_and_optional_shared_inputs",
+    "do-mpc::moving_horizon_estimation_as_the_same_optimizer_with_a_stage_cost_on_measurement_and_model_residuals_plus_an_arrival_cost_on_the_window_start"
+   ],
+   "fitness_value_in_ancestor": "nonlinear constrained control at interactive rates; the same object serves simulation and estimation",
+   "failure_landscape": "by reading: an infeasible NLP at a step returns whatever the solver stopped at (solver_stats are logged for that reason); the initial guess must be set before the first step or the solve is 'likely to fail' (the warning at 1023)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "MPC (Richalet 1978; Rawlings & Mayne 2009); the CasADi symbolic-NLP route (Andersson et al.)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:do-mpc/upstream/tree/do_mpc/controller/_mpc.py:975-1060, 1307"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "make_step and the NLP construction entry points",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "COMPUTE",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "do-mpc::continuous_model_discretised_by_orthogonal_collocation_on_finite_elements_with_legendre_or_radau_points_as_equality_constraints_of_the_nlp",
+   "fossil_ancestry": "do-mpc",
+   "human_name": "_setup_discretization (optimizer.py 789-890): collocation_type legendre/radau, degree, ni finite elements; tau_root, the Lagrange polynomial coefficients C, D; the integrator function ifcn; 'discrete' as the alternative",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each control interval is split into ni finite elements; on each, the state trajectory is a polynomial of the chosen degree interpolating at Legendre or Radau points; the ODE is imposed as equalities at the collocation points (the polynomial's derivative equals the model's f) and continuity at element boundaries; the resulting equations are returned as one CasADi function used per interval and scenario, so the discretised dynamics are constraints of the NLP rather than an integrator called inside it (simultaneous approach)",
+   "input": "the model's f; the settings",
+   "output": "ifcn and the number of collocation points",
+   "state": "none",
+   "update": "at setup",
+   "assumptions": [
+    "a low-degree polynomial per element resolves the dynamics at the control rate; the simultaneous formulation exposes the dynamics' structure to the NLP solver (sparse Jacobians) instead of hiding it in an integrator"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution"
+   ],
+   "fitness_value_in_ancestor": "stiff nonlinear models handled by the NLP solver's own Newton iterations; exact derivatives by automatic differentiation",
+   "failure_landscape": "by reading: the NLP size grows with degree times elements times scenarios; dummy collocation points exist for the initial state of each branch (the NOTE at 1141)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Biegler's simultaneous collocation (2010); the CasADi collocation tutorial",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:do-mpc/upstream/tree/do_mpc/optimizer.py:789-890"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "_setup_discretization",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "do-mpc::robust_multi_stage_mpc_by_a_scenario_tree_over_uncertain_parameter_combinations_branching_for_n_robust_stages_with_equal_weights_per_stage_and_optional_shared_inputs",
+   "fossil_ancestry": "do-mpc",
+   "human_name": "_prepare_nlp (1105-1220): _setup_scenario_tree; n_max_scenarios = n_combinations ** n_robust; open_loop -> n_u_scenarios = 1; omega = 1/n_scenarios[k+1]; the k (stage) / s (scenario) / b (branch) loops; set_uncertainty_values",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each uncertain parameter takes values from a user-supplied set; every combination is a branch; the tree branches at each of the first n_robust stages and then stays constant, so the number of scenarios is combinations to the power n_robust; each stage's scenarios are weighted equally in the objective; inputs are per scenario (the controller may react after the uncertainty reveals itself) unless open_loop is set, in which case all scenarios at a stage share the input; the child-scenario bookkeeping lets constraints be imposed on every branch",
+   "input": "the uncertainty sets, n_robust",
+   "output": "the tree indices and the weights",
+   "state": "none",
+   "update": "at setup",
+   "assumptions": [
+    "a finite set of parameter realisations spans the uncertainty; branching only for a few stages bounds the exponential growth (the multi-stage compromise)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution"
+   ],
+   "fitness_value_in_ancestor": "constraint satisfaction under parametric uncertainty without the conservatism of min-max over the whole horizon (Lucia et al. 2013)",
+   "failure_landscape": "by reading: exponential in n_robust; the equal weights are a NOTE in the code ('could be set from outside')",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Lucia, Finkler & Engell 2013 (multi-stage NMPC); Scokaert & Mayne 1998 for the closed-loop min-max idea",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:do-mpc/upstream/tree/do_mpc/controller/_mpc.py:1105-1220"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the scenario-tree set-up and the loops that use it",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "SAMPLE",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "do-mpc::moving_horizon_estimation_as_the_same_optimizer_with_a_stage_cost_on_measurement_and_model_residuals_plus_an_arrival_cost_on_the_window_start",
+   "fossil_ancestry": "do-mpc",
+   "human_name": "class MHE(Optimizer, Estimator) (_mhe.py 36-1213): set_objective(stage_cost, arrival_cost), set_default_objective, p_est0, set_y_fun, make_step(y0)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "over a window of past measurements, the state trajectory and optionally some parameters are decision variables of an NLP whose objective penalises measurement residuals and model residuals per stage plus an arrival cost tying the window's first state to the previous estimate; solving it and taking the last state gives the estimate; the discretisation, scaling and solver machinery are inherited from the same Optimizer base as the controller",
+   "input": "a window of y",
+   "output": "x estimate (and p estimate)",
+   "state": "the window; the previous estimate",
+   "update": "per measurement",
+   "assumptions": [
+    "constrained nonlinear estimation is worth an NLP per step; the arrival cost summarises the discarded past"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution"
+   ],
+   "fitness_value_in_ancestor": "one code path for estimation and control",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Rao, Rawlings & Mayne 2003 (MHE)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:do-mpc/upstream/tree/do_mpc/estimator/_mhe.py:36-1213 (inventory; set_objective and make_step signatures read)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "class MHE; CANDIDATE because the objective assembly was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "model/_model.py (the symbolic model class), simulator.py, the differentiator (NLP sensitivities), approximateMPC (a learned surrogate of the MPC), sampling, graphics, the data class, the examples",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "approximateMPC (a neural surrogate trained on MPC samples) is a mechanism of interest to the resurrection benches: 'replace the solver by a learned map' with the solver as oracle",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "do-mpc"
+  },
+  {
+   "candidate": "'MPC' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the receding-horizon loop, the discretisation, the scenario tree and the estimator are separable classes and settings",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "do-mpc"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "do-mpc::P.a_nonlinear_constrained_process_with_uncertain_parameters_must_be_driven_to_a_target_while_never_violating_constraints_when_the_uncertainty_resolves_only_as_the_process_runs_and_the_compute_per_step_is_bounded",
+   "source_fossil": "do-mpc",
+   "source_evidence": "_mpc.py _prepare_nlp scenario tree; make_step; optimizer.py collocation",
+   "condition": "an organism controls a nonlinear plant with hard state and input constraints; some parameters are unknown within a finite set; measurements arrive each step; the score is cost over a run, constraint violations (fatal) and compute per step",
+   "resource_or_constraint": "one NLP solve per step; a scenario budget",
+   "failure_condition": "a constraint violation under a realised parameter, or a solve that does not finish within the step",
+   "world_punishes": "nominal MPC (violates under the wrong parameter); full min-max over the horizon (too conservative or too big)",
+   "world_rewards": "a shallow scenario tree with recourse (inputs per branch) and warm-started re-solves",
+   "observable_consequence": "violations and cost over parameter draws for nominal (n_robust = 0), multi-stage (n_robust = 1, 2) and open-loop robust; solve time per step vs tree size",
+   "vacuity_condition": "known parameters and no active constraints",
+   "trivial_shortcuts": "the true parameter revealed at t = 0 (the cheat control)",
+   "cheat_control": "an organism given the true parameter must achieve the nominal cost with zero violations; nominal MPC on the worst draw must violate; multi-stage with n_robust = 1 must not, at higher cost: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: robust nonlinear MPC (Lucia et al. 2013; do-mpc 2016-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "do-mpc::continuous_model_discretised_by_orthogonal_collocation_on_finite_elements_with_legendre_or_radau_points_as_equality_constraints_of_the_nlp",
+   "to": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the dynamics as constraints",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "do-mpc::robust_multi_stage_mpc_by_a_scenario_tree_over_uncertain_parameter_combinations_branching_for_n_robust_stages_with_equal_weights_per_stage_and_optional_shared_inputs",
+   "to": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the scenario structure",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "do-mpc::moving_horizon_estimation_as_the_same_optimizer_with_a_stage_cost_on_measurement_and_model_residuals_plus_an_arrival_cost_on_the_window_start",
+   "to": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "x0 estimates",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "to": "do-mpc::moving_horizon_estimation_as_the_same_optimizer_with_a_stage_cost_on_measurement_and_model_residuals_plus_an_arrival_cost_on_the_window_start",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "shared Optimizer base",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "do-mpc",
+   "relation": "algorithm_from",
+   "to": "Richalet 1978 / Rawlings & Mayne 2009 (MPC); Biegler 2010 (collocation); Lucia, Finkler & Engell 2013 (multi-stage); Rao, Rawlings & Mayne 2003 (MHE)",
+   "note": "from the docstrings and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "the model class, simulator, differentiator and approximateMPC unread",
+   "the MHE objective assembly unread (CANDIDATE)",
+   "nothing ran (CasADi/IPOPT absent)"
+  ],
+  "note": "the four defining mechanisms are located; approximateMPC is flagged for the benches",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

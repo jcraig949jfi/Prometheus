@@ -30,6 +30,9 @@ INTERVENTION = ("intervention_id", "intervention_level", "intervention_operation
                 "expected_direction", "expected_magnitude_band", "units", "band_basis", "test_world_scope",
                 "pressure_scope", "prediction_rationale")
 CONTROL = ("control_id", "construction", "expected_result", "failure_interpretation")
+# Harmonia #381 (2026-09-18) ASK H4: the observable's kind of novelty, one value per intervention, never per packet;
+# optional so frozen packets 001/002 stay byte-identical; Nyx policy from 2026-09-18: every later packet carries it.
+NOVELTY_KINDS = ("structure", "behavior", "observer", "consequential")
 
 
 def canonical_bytes(obj) -> bytes:
@@ -69,6 +72,8 @@ def validate(p: dict) -> List[str]:
             e.append(f"interventions[{i}] level not in {LEVELS}")
         if iv.get("expected_direction") not in DIRECTIONS:
             e.append(f"interventions[{i}] direction not in {DIRECTIONS}")
+        if "novelty_kind" in iv and iv.get("novelty_kind") not in NOVELTY_KINDS:
+            e.append(f"interventions[{i}] novelty_kind not in {NOVELTY_KINDS}")
         band = iv.get("expected_magnitude_band")
         if not (isinstance(band, list) and len(band) == 2 and all(isinstance(x, (int, float)) for x in band) and band[0] <= band[1]):
             e.append(f"interventions[{i}] expected_magnitude_band must be [low, high] numbers")

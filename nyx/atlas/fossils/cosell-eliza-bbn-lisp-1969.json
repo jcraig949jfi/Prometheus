@@ -147,17 +147,484 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cosell-eliza-bbn-lisp-1969/upstream/coselleliza1969and1972.lisp:1-345"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cosell-eliza-bbn-lisp-1969/upstream/coselleliza1969and1972.lisp:382-500"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cosell-eliza-bbn-lisp-1969/upstream/coselleliza1969and1972.lisp:500-751"
+   }
+  ],
+  "inspected_files": [
+   "coselleliza1969and1972.lisp 1-345 (compatibility layer), 382-500 (DOCTOR, MAKESENTENCE), function inventory 382-751"
+  ],
+  "date": "2026-09-17T23:01Z",
+  "note": "an ELIZA written from the CACM paper, not the code: the reader splits input into sentences and keeps a KEYSTACK of keywords ranked by a PRIORITY property; the sentence with the highest-priority keyword is the one analysed; a MEMORY stack holds transformations to use when no keyword fires; the body is the 1969 printout plus a 1972 revision, wrapped in a compatibility package that re-creates BBN-LISP's semantics (optional arguments filled with NIL, CDR of a symbol as its property list, TCONC) so the original text runs unaltered",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:01Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1966_Cosell_BBNLISP/coselleliza1969and1972.lisp sha256:3f7004d603cf828c9fbe030b0363be16cc3dbccb223c101e67e09b24ed374987; https://raw.githubusercontent.com/jeffshrager/elizagen.org/master/1966_Cosell_BBNLISP/coselleliza1969and1972.transcript sha256:5aff013107d26e0cb4e59984462cad2a4ea9109ff71752e83b3fb5e05dc1ca93",
+   "payload_manifest_id": "techne tree_sha256 5d5a33159ddfafebbfcc8239a98c6c07cfbe566442a8c6bf0c5115f1c01986cf (2 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/coselleliza1969and1972.lisp",
+     "payload_hash_read": "3f7004d603cf828c9fbe030b0363be16cc3dbccb223c101e67e09b24ed374987",
+     "techne_recorded_hash": "3f7004d603cf828c9fbe030b0363be16cc3dbccb223c101e67e09b24ed374987",
+     "match": true,
+     "refs": 6
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "cosell-eliza-bbn-lisp-1969::input_split_into_sentences_with_a_keyword_stack_ordered_by_a_priority_property_so_that_the_sentence_carrying_the_top_keyword_is_the_one_analysed",
+   "fossil_ancestry": "cosell-eliza-bbn-lisp-1969",
+   "human_name": "MAKESENTENCE (441-500): RATOM word loop; TRMLIS ends input; PCTLIS starts a new sentence; on a new sentence the KEYSTACKs are compared by (GETP ... PRIORITY) and the higher one wins; DOCTOR (395-440): the loop, GOODBYE, the elapsed-time sign-off",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "words are read one at a time; numbers are packed with a marker; a terminal symbol ends the input; punctuation ends a sentence and recursively reads the next; when two sentences exist the one whose keyword stack's top has the greater PRIORITY property survives (the other is dropped), which is the paper's rule that only one sentence is answered; the doctor loop prints a prompt, builds a sentence, exits on GOODBYE with the session length in minutes, else calls ANALYZE",
+   "input": "typed text",
+   "output": "one sentence and its keyword stack",
+   "state": "FLIPFLOP, the clock",
+   "update": "per input line",
+   "assumptions": [
+    "keywords carry a numeric priority on their property list (the script sets it); one sentence per turn is enough"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cosell-eliza-bbn-lisp-1969::decomposition_rules_tried_per_keyword_with_a_cyclic_choice_among_reassembly_rules_and_a_memory_stack_consulted_when_no_keyword_matches",
+    "cosell-eliza-bbn-lisp-1969::host_language_semantics_re_created_by_a_compatibility_package_so_a_1969_listing_runs_unaltered"
+   ],
+   "fitness_value_in_ancestor": "the selection of WHICH sentence to answer is done at read time, before any matching",
+   "failure_landscape": "by reading: priority ties resolve to the earlier sentence; a sentence with no keyword is answered from MEMORY or with a none-response (SETNONE)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Weizenbaum 1966 CACM (the keyword ranking); this is an independent implementation of the paper's description",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cosell-eliza-bbn-lisp-1969/upstream/coselleliza1969and1972.lisp:395-500"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "DOCTOR and MAKESENTENCE",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cosell-eliza-bbn-lisp-1969::decomposition_rules_tried_per_keyword_with_a_cyclic_choice_among_reassembly_rules_and_a_memory_stack_consulted_when_no_keyword_matches",
+   "fossil_ancestry": "cosell-eliza-bbn-lisp-1969",
+   "human_name": "ANALYZE (503-545), TEST / TEST4 / ADVANCE (546-620: the decomposition matcher over the keyword's rule list), RECONSTRUCT (620-670: reassembly and printing), MEMORY (669-688), SETNONE (715-751)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for the top keyword, its rules are tried in order; a decomposition pattern is matched against the sentence by a segment matcher (TEST/TEST4 advance through the sentence, ADVANCE moves the pattern); on success one reassembly rule is chosen by rotating a pointer (RPLQQ rotates the rule list in place so successive uses cycle) and RECONSTRUCT substitutes the captured segments and prints; certain keywords also push a transformed sentence onto MEMORY; when no keyword matches, a memory entry is popped, else a content-free response is given",
+   "input": "a sentence, a keyword",
+   "output": "a printed response",
+   "state": "the rotated rule lists (destructive), MEMSTACK",
+   "update": "per turn",
+   "assumptions": [
+    "the paper's decomposition/reassembly scheme; rotation of the rule list is the cheapest way to avoid repeating a response"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cosell-eliza-bbn-lisp-1969::input_split_into_sentences_with_a_keyword_stack_ordered_by_a_priority_property_so_that_the_sentence_carrying_the_top_keyword_is_the_one_analysed"
+   ],
+   "fitness_value_in_ancestor": "the second, independent ELIZA; behaviour reproduced from prose alone",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cosell-eliza-bbn-lisp-1969/upstream/coselleliza1969and1972.lisp:503-751 (names and structure; bodies skimmed)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the 1969 DOCFNS beyond MAKESENTENCE; CANDIDATE because bodies were skimmed",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cosell-eliza-bbn-lisp-1969::host_language_semantics_re_created_by_a_compatibility_package_so_a_1969_listing_runs_unaltered",
+   "fossil_ancestry": "cosell-eliza-bbn-lisp-1969",
+   "human_name": "package :bbn-lisp (70-345): DEFINEQ with optional arguments filled with NIL, CDR of a symbol as its plist, TCONC, PUT/GETP, the readtables for the patient's input; the transcription notes (1-65)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "rather than editing the printout, the transcribers wrote a package that shadows the Common Lisp symbols whose 1969 semantics differ (CONS with no arguments, CDR/RPLACD on symbols, NLAMBDA as a macro, optional arguments) and a reader for the patient's punctuation; the 1969 and 1972 codes are loaded into separate packages with separate scripts",
+   "input": "the 1969 text",
+   "output": "a running program",
+   "state": "none",
+   "update": "at load",
+   "assumptions": [
+    "preserving the artifact matters more than idiomatic code; the differences between dialects are enumerable"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cosell-eliza-bbn-lisp-1969::input_split_into_sentences_with_a_keyword_stack_ordered_by_a_priority_property_so_that_the_sentence_carrying_the_top_keyword_is_the_one_analysed"
+   ],
+   "fitness_value_in_ancestor": "the original bytes are the body; every deviation is in one place and documented",
+   "failure_landscape": "by reading: the TODO list names three unresolved semantics (CLOCK in 1972, nlistp, MEMB vs member)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the same discipline this atlas calls C9 (faithful branch first)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cosell-eliza-bbn-lisp-1969/upstream/coselleliza1969and1972.lisp:1-345"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the :bbn-lisp package",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the 1969 script (752-1834) and the 1972 script (2246-2922): the keyword / decomposition / reassembly data",
+   "reason": "OTHER",
+   "evidence": "NOT READ; data, not mechanism",
+   "note": "the script is where the behaviour lives; a Stage C comparison against the 1965 MAD-SLIP script (in this atlas) would be a data diff",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cosell-eliza-bbn-lisp-1969"
+  },
+  {
+   "candidate": "the 1972 DOCTOR (1871-2245)",
+   "reason": "OTHER",
+   "evidence": "NOT READ",
+   "note": "a second body; the record says the two are separate and complete",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cosell-eliza-bbn-lisp-1969"
+  },
+  {
+   "candidate": "'ELIZA' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "reading/selection, matching/reassembly and the memory are separable, and the compatibility layer is a fourth thing",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cosell-eliza-bbn-lisp-1969"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "cosell-eliza-bbn-lisp-1969::P.a_conversational_responder_must_choose_which_of_several_input_sentences_to_answer_and_avoid_repeating_itself_with_only_a_keyword_table_and_a_bounded_memory",
+   "source_fossil": "cosell-eliza-bbn-lisp-1969",
+   "source_evidence": "MAKESENTENCE's priority comparison; RPLQQ; MEMORY; the transcript file",
+   "condition": "an organism receives multi-sentence input; it has a table of keywords with priorities and rules; the score is a human's willingness to continue and the absence of verbatim repetition; the organism has no model of meaning",
+   "resource_or_constraint": "a small script; a memory stack",
+   "failure_condition": "answering the wrong sentence, repeating a response, or silence when no keyword fires",
+   "world_punishes": "first-sentence-always; a fixed reassembly per rule; no memory",
+   "world_rewards": "priority selection at read time, rotation of reassembly rules, a memory stack",
+   "observable_consequence": "transcript length and repetition count with human subjects (the body ships a 1969 transcript) for the priority rule vs first-sentence and rotation vs fixed",
+   "vacuity_condition": "single-sentence, single-keyword input",
+   "trivial_shortcuts": "a scripted human",
+   "cheat_control": "an organism given the human's next line must be indistinguishable from the transcript; first-sentence-always must answer the wrong sentence on the transcript's multi-sentence inputs; rotation off must repeat within the transcript's length: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: conversational program (Cosell 1966-1972 after Weizenbaum 1966)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "cosell-eliza-bbn-lisp-1969::input_split_into_sentences_with_a_keyword_stack_ordered_by_a_priority_property_so_that_the_sentence_carrying_the_top_keyword_is_the_one_analysed",
+   "to": "cosell-eliza-bbn-lisp-1969::decomposition_rules_tried_per_keyword_with_a_cyclic_choice_among_reassembly_rules_and_a_memory_stack_consulted_when_no_keyword_matches",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cosell-eliza-bbn-lisp-1969::host_language_semantics_re_created_by_a_compatibility_package_so_a_1969_listing_runs_unaltered",
+   "to": "cosell-eliza-bbn-lisp-1969::input_split_into_sentences_with_a_keyword_stack_ordered_by_a_priority_property_so_that_the_sentence_carrying_the_top_keyword_is_the_one_analysed",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the runtime",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "cosell-eliza-bbn-lisp-1969",
@@ -165,10 +632,23 @@
    "to": "eliza-weizenbaum-mad-slip-1965",
    "note": "independent, from the published description rather than from the code",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "cosell-eliza-bbn-lisp-1969",
+   "relation": "reimplementation_of",
+   "to": "Weizenbaum 1966 (from the paper, not the code); the atlas's eliza-weizenbaum-mad-slip-1965 is the original",
+   "note": "from the record and the file header",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "ANALYZE / TEST / RECONSTRUCT bodies skimmed (one CANDIDATE organ)",
+   "both scripts and the 1972 version unread",
+   "nothing ran"
+  ],
+  "note": "the reading/selection mechanism and the compatibility layer are located; a recurrence candidate against the 1965 cut and PAIP's patmatch",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

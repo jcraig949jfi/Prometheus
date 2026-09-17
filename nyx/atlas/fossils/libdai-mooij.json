@@ -132,17 +132,486 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libdai-mooij/upstream/tree/src/bp.cpp:207-353"
+   }
+  ],
+  "inspected_files": [
+   "src/bp.cpp: run, calcNewMessage, beliefV, function list"
+  ],
+  "date": "2026-09-17T22:50Z",
+  "note": "loopy belief propagation on a factor graph, cut where libDAI differs from the LDPC decoder in the vault: three message schedules (parallel, sequential random, sequential by maximum residual), a log-domain option, sum-product vs max-product in one code path, and convergence measured on beliefs, not messages",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:50Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://github.com/dbtsai/libDAI@6df66a8ce7eb6f669bae933ab6ec35bbba56182f",
+   "payload_manifest_id": "techne tree_sha256 fd4b4581b1f3a3ed9ee757fc0e18e03c1a6280b0d51af2971335c249a40e1b96 (176 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/src/bp.cpp",
+     "payload_hash_read": "13bf1925d43b9a2794f69d98151d65474a38782ad1022e77d70467832726e7fd",
+     "techne_recorded_hash": "13bf1925d43b9a2794f69d98151d65474a38782ad1022e77d70467832726e7fd",
+     "match": true,
+     "refs": 4
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "fossil_ancestry": "libdai-mooij",
+   "human_name": "BP::calcNewMessage / calcIncomingMessageProduct (bp.cpp 164-259)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for edge (variable i, factor I): multiply the factor by every message into I except the one from i (extrinsic), then sum out (SUMPROD) or max out (MAXPROD) every variable but i, normalise, store as the NEW message (not yet applied); in log domain the product is a sum with the max subtracted before exponentiation; a unary factor short-circuits to its own table",
+   "input": "the factor table; incoming messages",
+   "output": "a new message (a distribution over i's states)",
+   "state": "new-message buffer per edge",
+   "update": "per edge visit",
+   "assumptions": [
+    "the graph is a tree, or close enough that extrinsic products approximate marginals (the 'loopy' assumption)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+    "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message"
+   ],
+   "fitness_value_in_ancestor": "the sum-product rule in its general form, one code path for MAP (max) and marginals (sum)",
+   "failure_landscape": "by reading: on loopy graphs messages can oscillate or converge to wrong marginals; libDAI's damping (not read) and the schedules exist because of that",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Pearl 1988 / Kschischang, Frey & Loeliger 2001 sum-product",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libdai-mooij/upstream/tree/src/bp.cpp:164-259"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "ESTIMATES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "DISTRIBUTION",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "fossil_ancestry": "libdai-mooij",
+   "human_name": "BP::run (bp.cpp 261-353): PARALL, SEQRND, SEQMAX; findMaxResidual / updateResidual",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "PARALL: compute every new message from the old ones, then apply all (Jacobi); SEQRND: shuffle the edge list each iteration and compute-and-apply edge by edge (Gauss-Seidel in random order); SEQMAX: keep a priority queue of residuals (L-inf distance between a computed new message and the current one), always apply the edge with the largest residual, then recompute the residuals of the messages it influences",
+   "input": "the schedule setting; residuals",
+   "output": "the order of updates",
+   "state": "the residual heap (SEQMAX); the edge permutation",
+   "update": "per iteration",
+   "assumptions": [
+    "on loopy graphs the schedule changes both speed and WHETHER convergence happens; residual scheduling (Elidan, McGraw & Koller 2006) converges where parallel does not"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+    "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message"
+   ],
+   "fitness_value_in_ancestor": "the same messages under three orders, selectable at run time; the residual schedule is the library's edge over a textbook BP",
+   "failure_landscape": "by reading: SEQMAX's queue makes each update O(log E); the parallel schedule can oscillate with period 2 on bipartite structures",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libdai-mooij/upstream/tree/src/bp.cpp:261-353, 155-163, 463-472"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the schedule branches in run() and the residual helpers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "OSCILLATES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message",
+   "fossil_ancestry": "libdai-mooij",
+   "human_name": "BP::run: maxDiff over beliefV/beliefF vs _oldBeliefs; props.tol, maxiter, maxtime",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after each iteration every variable and factor belief is recomputed and compared (L-inf) with the previous iteration's; the largest change is the convergence measure; the loop stops when it falls below tol, or at maxiter, or at maxtime seconds; the final maxDiff is reported (and warned about) either way",
+   "input": "beliefs per iteration",
+   "output": "maxDiff; a stop decision",
+   "state": "_oldBeliefsV/F",
+   "update": "per iteration",
+   "assumptions": [
+    "belief stability is what the user cares about; messages may keep changing in ways that cancel"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+    "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual"
+   ],
+   "fitness_value_in_ancestor": "a stopping rule on the observable quantity, with three independent budgets",
+   "failure_landscape": "by reading: recomputing all beliefs per iteration costs as much as an iteration; on oscillation maxDiff never falls and the run ends by budget with a warning, not an error",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libdai-mooij/upstream/tree/src/bp.cpp:304-352"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the tail of run()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the other inference algorithms in libDAI (exact junction tree, mean field, TRW-BP, generalised BP, Gibbs, LC, ...), the factor graph / region graph data structures, the MATLAB/Python bindings, the tests",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~30,000 lines); residue",
+   "note": "the junction tree (exact) is the oracle for a Stage C world on small graphs, in the same body",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "libdai-mooij"
+  },
+  {
+   "candidate": "'belief propagation' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the message rule, the schedule and the stopping rule are separately replaceable; the vault's ldpc-codes-neal-2001 (cut 09-17) holds the same message rule with a fixed parallel schedule and a parity-check stopping rule",
+   "note": "RECURRENCE candidate R1: the sum-product message rule in ldpc dec.c iterprp vs bp.cpp calcNewMessage",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "libdai-mooij"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "libdai-mooij::P.beliefs_on_a_cyclic_constraint_graph_must_be_refined_by_local_messages_whose_order_of_application_decides_whether_they_settle_at_all",
+   "source_fossil": "libdai-mooij",
+   "source_evidence": "bp.cpp run(); record tags approximate-inference / factor-graphs",
+   "condition": "the same local message rule as on a tree, but the graph has cycles; the organism chooses the order in which edges are updated; some orders oscillate",
+   "resource_or_constraint": "updates per iteration; a residual heap or a random permutation",
+   "failure_condition": "no convergence within the budget, or convergence to beliefs far from the exact marginals",
+   "world_punishes": "parallel updates on bipartite-like structure; wasted updates on edges that are already settled",
+   "world_rewards": "updating where the residual is largest",
+   "observable_consequence": "iterations to tol and final belief error vs the junction-tree oracle, per schedule, on graphs with increasing cycle count",
+   "vacuity_condition": "a tree (any order converges in one sweep)",
+   "trivial_shortcuts": "exact inference on small graphs",
+   "cheat_control": "the exact junction tree (in the body) is the ceiling; the parallel schedule on a 4-cycle with strong couplings must oscillate: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: approximate inference on factor graphs (libDAI, Mooij 2010)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "to": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "to": "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message",
+   "to": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "stop",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "to": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "residuals",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "libdai-mooij",
@@ -157,10 +626,29 @@
    "to": "ldpc-codes-neal-2001",
    "note": "BP as a decoder vs BP as a general inference engine",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "libdai-mooij",
+   "relation": "algorithm_from",
+   "to": "Pearl 1988; Kschischang et al. 2001; residual BP (Elidan et al. 2006)",
+   "note": "from the code's schedule names; not verified against the record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "libdai-mooij",
+   "relation": "algorithm_from",
+   "to": "Pearl 1988; Kschischang et al. 2001; residual BP (Elidan et al. 2006)",
+   "note": "from the code's schedule names; not verified against the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "only bp.cpp read; damping, the log-domain details and the belief computations for factors read by name",
+   "nothing ran; the body's junction tree is the oracle"
+  ],
+  "note": "the BP core's three mechanisms are accounted for",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

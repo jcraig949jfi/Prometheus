@@ -121,8 +121,39 @@ def main(argv=None) -> int:
         "organisms": orgs,
         "wall_s": round(time.time() - t0, 1),
     }
+    # CANONICAL POPULATION DIGEST -- identity-definition repair, 2026-09-17.
+    #
+    # The first rule was "sha256 of the declaration file's raw bytes". That is NOT invariant to
+    # checkout: this repo sets core.autocrlf=true, so Proteus's worktree read CRLF where this one
+    # writes LF, and the two seats computed different digests for IDENTICAL content
+    # (a3f9816f vs 3c2ebfd9). The population content was never in dispute; the identity rule was.
+    #
+    # The digest is now taken over a canonical semantic representation, excluding the keys that
+    # change on every regeneration without changing the population (generated_at, wall_s) and the
+    # digest fields themselves. No platform, checkout setting, indentation or key order can move
+    # it, and any seat reproduces it in one line.
+    VOLATILE = ("generated_at", "wall_s", "population_digest", "population_digest_rule",
+                "superseded_raw_byte_digests")
+    RULE = ("population_digest = 'sha256:' + sha256( json.dumps(D, sort_keys=True, "
+            "separators=(',',':'), ensure_ascii=False).encode('utf-8') ).hexdigest() where D is "
+            "this object WITHOUT the keys %s. Invariant to line endings, indentation, key order "
+            "and regeneration time. A raw-byte digest of this file is NOT an identity of the "
+            "population." % (list(VOLATILE),))
+    D = {k: v for k, v in doc.items() if k not in VOLATILE}
+    canon = "sha256:" + hashlib.sha256(
+        json.dumps(D, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()
+    doc["population_digest"] = canon
+    doc["population_digest_rule"] = RULE
+    doc["superseded_raw_byte_digests"] = {
+        "lf_worktree": "sha256:3c2ebfd9de7bd14409bda6a1417ca9ebc8fdc1521eea6301450863f0df9199b1",
+        "crlf_worktree": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4",
+        "proteus_minted_over": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4",
+        "note": "same 57-organism content, two checkouts. Preserved as evidence of the "
+                "identity-definition defect that this canonical rule repairs.",
+    }
     OUT.write_text(json.dumps(doc, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     digest = hashlib.sha256(OUT.read_bytes()).hexdigest()
+    print("population_digest (canonical, checkout-invariant):", canon)
     print(json.dumps({k: doc[k] for k in ("campaign_seed", "strata", "n_organisms", "n_distinct_organism_ids",
                                           "collapsed_duplicates", "all_have_ancestry", "minted_by_proteus", "wall_s")},
                      indent=1, sort_keys=True))

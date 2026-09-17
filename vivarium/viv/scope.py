@@ -58,13 +58,60 @@ def _ensure_grant():
     return ensure_grant
 
 
-def declared(cfg: dict) -> List[Dict[str, Any]]:
+LOCAL_FILE = "read_scopes.local.json"
+
+
+def local_overrides(var: Optional[Path]) -> Dict[str, Dict[str, Any]]:
+    """Grantee overrides set by `viv.cli grant-reader`: {scope_name: {grantee,
+    set_by, at, reason}} in <var_dir>/read_scopes.local.json -- host-local,
+    durable, NOT a secret (a client id), and outside the pinned worktree so
+    re-binding a grantee needs no commit and no pin advance (Campaign 4:
+    Archaeon's engine client changed ledgers; the config.json value named the
+    M1 client)."""
+    if not var:
+        return {}
+    p = Path(var) / LOCAL_FILE
+    if not p.exists():
+        return {}
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+        return d if isinstance(d, dict) else {}
+    except Exception:                                              # noqa: BLE001
+        return {}
+
+
+def declared(cfg: dict, var: Optional[Path] = None) -> List[Dict[str, Any]]:
+    over = local_overrides(var)
     out = []
     for s in cfg.get(CONFIG_KEY) or ():
         if not s.get("scope_name") or not s.get("grantee"):
             raise ValueError("read_scopes entries need scope_name and grantee: %r" % (s,))
-        out.append(dict(s))
+        e = dict(s)
+        o = over.get(e["scope_name"])
+        if o and o.get("grantee"):
+            e["grantee_config"] = e["grantee"]
+            e["grantee"] = o["grantee"]
+            e["grantee_source"] = "%s (set by %s at %s)" % (LOCAL_FILE, o.get("set_by"), o.get("at"))
+        else:
+            e["grantee_source"] = "config.json"
+        out.append(e)
     return out
+
+
+def set_local_grantee(var: Path, scope_name: str, grantee: str, *, set_by: str, reason: str) -> Path:
+    """Bind a scope's grantee host-locally (idempotent; the file is the state)."""
+    import re
+    if not re.match(r"^cli_[0-9a-f]{24}$", grantee or ""):
+        raise ValueError("grantee must be an engine client id (cli_ + 24 hex), got %r" % (grantee,))
+    var = Path(var); var.mkdir(parents=True, exist_ok=True)
+    p = var / LOCAL_FILE
+    cur = local_overrides(var)
+    prev = cur.get(scope_name)
+    cur[scope_name] = {"grantee": grantee, "set_by": set_by, "reason": reason,
+                       "at": _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                       "previous": prev}
+    p.write_text(json.dumps(cur, indent=2) + "\n", encoding="utf-8")
+    return p
 
 
 def reconcile(client, scopes: List[Dict[str, Any]], *, dry_run: bool = False,

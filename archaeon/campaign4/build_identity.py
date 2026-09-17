@@ -118,6 +118,14 @@ def pew(ref: str) -> dict:
     d = json.loads(b)
     computed = sha(b)
     declared = d.get("surface_digest")
+    rule = d.get("surface_digest_rule")
+    # Q1 (asked in comms #370) was answered by publishing the derivation rule INSIDE the pinned
+    # file. Recompute it here rather than trusting the answer: the digest is only an identity if a
+    # third party can reproduce it.
+    recomputed = None
+    if rule:
+        D = {k: v for k, v in d.items() if k not in ("surface_digest", "surface_digest_rule")}
+        recomputed = sha(json.dumps(D, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8"))
     return {
         "surface": "evidence / projections (PEW)",
         "owner": "Mnemosyne",
@@ -132,10 +140,18 @@ def pew(ref: str) -> dict:
         "surface_path": p,
         "surface_file_digest_computed_here": computed,
         "surface_digest_declared_in_file": declared,
+        "surface_digest_rule_published": bool(rule),
+        "surface_digest_recomputed_by_rule": recomputed,
+        "surface_digest_reproducible": (recomputed == declared) if (rule and declared) else False,
         "DIGEST_NOTE": (
-            "the file's self-declared surface_digest is not the sha256 of the file; its derivation rule is not "
-            "stated in the file, so a third party cannot reproduce it. Asked of Mnemosyne before the tuple freezes."
-        ) if declared and declared != computed else None,
+            "REPRODUCED: the derivation rule is published inside the pinned file and recomputing it here yields "
+            "the declared digest. Both the declared surface_digest and the file's own sha256 are valid identities "
+            "of this pin (Q1 closed, comms #371/#375)."
+            if rule and recomputed == declared else
+            "NOT REPRODUCIBLE: the declared surface_digest cannot be recomputed from the file by the stated rule."
+            if rule else
+            "the file's self-declared surface_digest is not the sha256 of the file and no derivation rule is "
+            "stated, so a third party cannot reproduce it."),
     }
 
 
