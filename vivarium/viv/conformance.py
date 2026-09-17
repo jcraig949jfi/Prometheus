@@ -98,6 +98,13 @@ PRODUCTION_SCHEMA = "viv"
 #: declared and not called is a false claim about my own surface.
 CONSUMER_ROUTES: Tuple[str, ...] = (
     "GET /v2/version",
+    # point release (2026-09-17): the three READ routes the step verifiers
+    # use to decide REPLAYED vs RECOMPUTED on a NEW ATTEMPT (world alive,
+    # experiment readable, observation present). All three are in the
+    # promoted contract (campaign-1 L-001; sfclient wrappers since C3 group E).
+    "GET /v2/worlds/{wid}",
+    "GET /v2/worlds/{wid}/experiments/{eid}",
+    "GET /v2/worlds/{wid}/observations",
     "GET /v2/worlds/{wid}/artifacts/{aid}/content",
     "GET /v2/worlds/{wid}/events",
     "GET /v2/worlds/{wid}/experiments/{eid}/audit-envelope",

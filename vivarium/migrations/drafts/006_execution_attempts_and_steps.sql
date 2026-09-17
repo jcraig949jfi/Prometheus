@@ -123,8 +123,10 @@ CREATE TABLE IF NOT EXISTS {schema}.execution_step (
 -- attempt's own design_digest and refused if it differs. The producer-side
 -- derivation (viv/stepkey.py, shared with Archaeon's runner) is:
 --     'idem:' || left(encode(sha256(convert_to(design_digest || '|' || step_kind || '|' || canonical(parts), 'UTF8')), 'hex'), 32)
--- canonical(parts) = the JSON text of `parts` with sorted keys and no whitespace
--- (jsonb::text is canonical for arrays of scalars, which is what parts are).
+-- canonical(parts) = jsonb::text of `parts`, which for a FLAT ARRAY OF SCALARS
+-- (the only shape viv/stepkey.py admits) equals Python json.dumps with default
+-- separators: [1, "a", true, null]. tests/test_stepkey_and_bundle.py asserts
+-- the parity on the server.
 CREATE OR REPLACE FUNCTION {schema}.execution_step_key_check() RETURNS trigger AS $$
 DECLARE
     dd text;
@@ -169,3 +171,91 @@ CREATE TABLE IF NOT EXISTS {schema}.provenance_envelope (
     factors          jsonb NOT NULL DEFAULT '{}'::jsonb,
     recorded_at      timestamptz NOT NULL DEFAULT now()
 );
+
+-- NEW ATTEMPT on the SAME row (EXPERIMENT_TRANSACTION_MODEL.md s3/s5). Today
+-- a released stranded row goes to `failed` and a rerun is a NEW ROW. With
+-- attempts, `viv.cli release --new-attempt` closes the open attempt as
+-- STRANDED and returns the row to `queued`; the next claim opens attempt n+1
+-- with parent = the stranded one. The transition claimed|running -> queued
+-- is legal ONLY inside a transaction that declared itself the release path
+-- (SET LOCAL viv.release = 'new_attempt') AND whose row has no OPEN attempt
+-- left. Every other writer still meets the original rule.
+-- The body below is migration 004's CURRENT function (002's relation freeze
+-- and 004's locator freeze included) plus the one clause; keep it in step
+-- with the newest migration that redefines the function.
+CREATE OR REPLACE FUNCTION {schema}.enforce_queue_transition()
+RETURNS trigger AS $fn$
+DECLARE
+    legal boolean;
+BEGIN
+    IF OLD.status IN ('completed', 'failed', 'cancelled') THEN
+        RAISE EXCEPTION
+            'vivarium: experiment % is terminal (%) and is frozen; refusing UPDATE',
+            OLD.experiment_id, OLD.status
+            USING ERRCODE = 'raise_exception';
+    END IF;
+
+    IF NEW.experiment_spec IS DISTINCT FROM OLD.experiment_spec
+       OR NEW.spec_hash IS DISTINCT FROM OLD.spec_hash
+       OR NEW.created_at IS DISTINCT FROM OLD.created_at
+       OR NEW.created_by IS DISTINCT FROM OLD.created_by
+       OR NEW.source_reason IS DISTINCT FROM OLD.source_reason
+       OR NEW.source_evidence IS DISTINCT FROM OLD.source_evidence THEN
+        RAISE EXCEPTION
+            'vivarium: the sealed request (spec, spec_hash, provenance) of % is immutable',
+            OLD.experiment_id
+            USING ERRCODE = 'raise_exception';
+    END IF;
+
+    -- added 2026-09-06 (archaeon/003): the experimental-relation declaration
+    IF NEW.family_id IS DISTINCT FROM OLD.family_id
+       OR NEW.arm_id IS DISTINCT FROM OLD.arm_id
+       OR NEW.replication_of IS DISTINCT FROM OLD.replication_of
+       OR NEW.candidate_set_id IS DISTINCT FROM OLD.candidate_set_id
+       OR NEW.request_key IS DISTINCT FROM OLD.request_key
+       OR NEW.cadence_lane IS DISTINCT FROM OLD.cadence_lane
+       OR NEW.cadence_day_ordinal IS DISTINCT FROM OLD.cadence_day_ordinal THEN
+        RAISE EXCEPTION
+            'vivarium: the experimental-relation declaration (family, arm, '
+            'replication_of, candidate set, cadence) of % is immutable; a '
+            'comparison may not be re-drawn after execution', OLD.experiment_id
+            USING ERRCODE = 'raise_exception';
+    END IF;
+
+    -- added 2026-09-09 (vivarium/004): the address book
+    IF NEW.artifact_locators IS DISTINCT FROM OLD.artifact_locators THEN
+        RAISE EXCEPTION
+            'vivarium: the artifact address book of % is immutable; an '
+            'experiment may not be re-addressed after admission',
+            OLD.experiment_id
+            USING ERRCODE = 'raise_exception';
+    END IF;
+
+    IF NEW.status = OLD.status THEN
+        RETURN NEW;                       -- annotation, not a transition
+    END IF;
+
+    legal := (OLD.status = 'queued'  AND NEW.status IN ('claimed', 'cancelled'))
+          OR (OLD.status = 'claimed' AND NEW.status IN ('running', 'failed'))
+          OR (OLD.status = 'running' AND NEW.status IN ('completed', 'failed'));
+
+    -- point release (006): claimed|running -> queued is legal ONLY inside the
+    -- release path (SET LOCAL viv.release = 'new_attempt') once the row has
+    -- no OPEN attempt left; every other writer meets the rule above.
+    IF NOT legal AND OLD.status IN ('claimed', 'running') AND NEW.status = 'queued'
+       AND current_setting('viv.release', true) = 'new_attempt' THEN
+        IF (SELECT count(*) FROM {schema}.execution_attempt
+             WHERE experiment_id = OLD.experiment_id AND terminal_state IS NULL) = 0 THEN
+            legal := true;
+        END IF;
+    END IF;
+
+    IF NOT legal THEN
+        RAISE EXCEPTION 'vivarium: illegal transition % -> % on %',
+            OLD.status, NEW.status, OLD.experiment_id
+            USING ERRCODE = 'raise_exception';
+    END IF;
+
+    RETURN NEW;
+END;
+$fn$ LANGUAGE plpgsql;
