@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-17 17:57:22",
+ "updated_local": "2026-09-17 18:13:47",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "TEN-EXPERIMENT AUTONOMOUS WARMUP; no HITL; attempt all ten; timebox 24h each",
  "phase_model": [
@@ -87,13 +87,34 @@
   {
    "id": "cw01-e03",
    "title": "Micro-MoE / sparse computational coalitions",
-   "status": "ACTIVE",
-   "attempts": []
+   "status": "COMPLETE",
+   "attempts": [
+    {
+     "attempt_id": "cw01-e03-a01",
+     "phase": "PACKAGE",
+     "disposition": "COMPLETE",
+     "ended_local": "2026-09-17 18:13:47",
+     "rows": 726
+    }
+   ],
+   "disposition": "COMPLETE",
+   "headline": {
+    "ancestor_relative_pct_mean": 159.59622057662966,
+    "sparsity": 0.2427001953125,
+    "conditionality_mi_excess": 1.1939714393018785,
+    "I1_collapses": "4/4",
+    "key_control": "non-conditional evolved arm MI 0.0000 with 1 distinct pattern - maximally sparse and completely blind; the estimator separates sparsity from coalition on EVOLVED populations"
+   },
+   "limitations": [
+    "Sparsity and conditionality are separate quantities. A sparse, blind population is a NEGATIVE for the coalition claim however elegant it looks.",
+    "MI is biased upward at this sample size (raw MI ~0.14 bits on independent data); only the excess over the shuffled null is evidence.",
+    "An 82-parameter linear activation policy, not a rich program."
+   ]
   },
   {
    "id": "cw01-e04",
    "title": "Queue / TTL ecology",
-   "status": "PENDING",
+   "status": "NEXT",
    "attempts": []
   },
   {
@@ -134,14 +155,11 @@
   }
  ],
  "active": {
-  "experiment_id": "cw01-e03",
-  "attempt_id": "cw01-e03-a01",
-  "phase": "RECONCILE_DONE",
-  "phase_completed": [
-   "RECONCILE"
-  ],
-  "title": "Micro-MoE / sparse computational coalitions",
-  "reconcile": "34 streams, 0 consumers, 0 scan errors, pm:cw01:* = 0 keys, 272 procs scanned 0 matched"
+  "experiment_id": "cw01-e04",
+  "attempt_id": "cw01-e04-a01",
+  "phase": "PENDING_RECONCILE",
+  "phase_completed": [],
+  "title": "Queue / TTL ecology"
  },
  "owned_runtime_resources": [],
  "_owned_resources_note": "Every resource created for an attempt is registered here with {kind, id, owner_attempt, created_local}. VERIFY ABSENCE asserts this list empties.",
@@ -180,7 +198,10 @@
   "experiments/cw01-e02/WORLD.json - declarative; 12 predicates incl. 4 standing gates promoted from e01",
   "experiments/cw01-e02/world_e02.py - REUSES Region/Refused from world_e01 rather than copying",
   "experiments/cw01-e02/PACKAGE.md - XIII ledger; the predicted cost curve has NOT appeared yet",
-  "lib/lineage.py - TestLog/decide (D024), ancestor-seeded detect_gains (D025), emit_generations (D026), fixation_order"
+  "lib/lineage.py - TestLog/decide (D024), ancestor-seeded detect_gains (D025), emit_generations (D026), fixation_order",
+  "experiments/cw01-e03/PACKAGE.md - XIII ledger; the cost curve appeared (8 -> 12 -> 3 defects)",
+  "lib/infometrics.py - MI with a shuffled-label null (the bias is measured, not assumed away)",
+  "lib/learnability.py - prove the effect COULD be found before spending budget; fails closed"
  ],
  "reconcile_result": {
   "processes": "3 claude.exe (self + Aporia + Techne), 0 stray workers",
@@ -223,18 +244,25 @@
   "note": "e01 ran in-process and owned 0 runtime resources. 53 pm:swarm ghost consumers (r8 residue, NOT created by this campaign, pending=0, idle 69.4h) were found and removed; my RECONCILE had scanned only pm:jobs:* (CW01-D017)."
  },
  "campaign_totals": {
-  "experiments_attempted": 2,
-  "complete": 1,
+  "experiments_attempted": 3,
+  "complete": 2,
   "null": 1,
   "negative": 0,
   "inconclusive": 0,
-  "defects_logged": 28,
-  "science_defects": 11,
+  "defects_logged": 31,
+  "science_defects": 15,
+  "defects_per_experiment": {
+   "e01": 8,
+   "e02": 12,
+   "e03": 3
+  },
   "reusable_components_landed": [
    "lib/seeds.py",
    "lib/localrun.py",
    "lib/residue.py",
    "lib/lineage.py",
+   "lib/infometrics.py",
+   "lib/learnability.py",
    "MACHINE_PROFILE.json"
   ]
  }

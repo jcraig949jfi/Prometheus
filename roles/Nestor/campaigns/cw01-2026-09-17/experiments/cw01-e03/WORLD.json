@@ -1,0 +1,103 @@
+{
+ "_doc": "Declarative world spec for cw01-e03 (sparse computational coalitions). Written during PREFLIGHT, before implementation. Activation is PRICED; nothing rewards sparsity, specialisation or teaming. The STATIC solution (ignore the input, always fire the same subset) is deliberately inside the search space, so 'sparse but blind' is reachable and is the honest null outcome.",
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e03",
+ "attempt_id": "cw01-e03-a01",
+ "world_family": "activation-economics-v1",
+
+ "affordances": {
+  "K": 16,
+  "activation_cost": 0.5,
+  "_note": "Per affordance, per item. Activating everything is always POSSIBLE and always expensive. Nothing forbids it. Affordances carry no metadata about what they are good at.",
+  "base_process_cost": 1.0
+ },
+
+ "items": {
+  "M_classes": 4,
+  "needs_per_class": 3,
+  "_needs": "Each latent class requires a specific subset of 3 of the 16 affordances. Subsets may overlap between classes, so the partition is not trivially separable.",
+  "size_distribution": {"kind": "lognormal_discrete", "median": 60, "sigma": 0.7, "clip": [8, 400]},
+  "observable_features": 4,
+  "feature_overlap": 0.35,
+  "_observable": "Items carry an observable feature vector drawn from a class-dependent distribution WITH OVERLAP. The class itself is LATENT and never readable. Conditional routing is therefore possible but must be inferred, not looked up.",
+  "items_per_episode": 120
+ },
+
+ "info_model": {
+  "coverage": "fraction of the item's 3 needs met by activated affordances",
+  "info": "log2(1 + size) * coverage",
+  "_note": "Activating an affordance the item does not need costs full price and yields nothing. Redundant activation is pure waste, but is never forbidden."
+ },
+
+ "genome": {
+  "_shape": "per affordance a: bias b_a plus a weight vector w_a over the 4 observable features. Activation when sigmoid(b_a + w_a . x) exceeds 0.5. 16 x 5 = 80 real parameters, plus 2 neutral genes.",
+  "bias_bounds": [-4.0, 4.0],
+  "weight_bounds": [-3.0, 3.0],
+  "neutral_genes": ["neutral_a", "neutral_b"],
+  "_neutral": "No phenotype by construction; they are the cost-matched sham for knockout interventions and the drift floor for any ordering claim (CW01-D027). Verified inert by Q6.",
+  "_static_is_reachable": "Setting all w_a to 0 yields a fixed activation set regardless of input. That is the NULL outcome and it must remain reachable; engineering it away would rig the experiment."
+ },
+
+ "arms": {
+  "_critical": "Arms differ ONLY in affordances. The item stream is drawn from a stream_seed that never sees the arm, and ALL policy draws are hoisted and drawn unconditionally (CW01-D019/D021). Q10 asserts bit-identical metrics when the mechanism is disabled.",
+  "treatment": {"conditional_enabled": true, "activation_enabled": true},
+  "control_no_conditionality": {"conditional_enabled": false, "activation_enabled": true,
+                                "_tests": "weights forced to zero: the organism may be sparse but cannot be conditional"},
+  "control_activate_all": {"conditional_enabled": false, "activation_enabled": true, "force_all": true,
+                           "_tests": "full coverage at maximum cost; the expensive baseline"}
+ },
+
+ "population": {"organisms": 64, "generations_minimal_form": 60, "generations_full": 200,
+                "elite_fraction": 0.25, "mutation_sigma": 0.10},
+
+ "measurements": {
+  "primary": "delta(useful_information_transformed / resource_cost) vs ancestor, matched world+budget",
+  "sparsity": "mean fraction of the 16 affordances activated per item",
+  "conditionality": "mutual information I(latent_class ; activation_pattern), in bits",
+  "routing_precision": "fraction of activations that were actually needed by the item",
+  "per_organism": ["activations_per_item", "distinct_affordances_used", "sparsity", "mi_bits",
+                   "routing_precision", "coverage_mean", "compute_used", "info", "cost", "score"],
+  "_separation": "Sparsity and conditionality are reported as TWO INDEPENDENT quantities. Low sparsity with zero conditionality is cheapness without coalition, and is a NEGATIVE for the coalition claim however elegant it looks."
+ },
+
+ "interventions_post_hoc": {
+  "I1_scramble_structure": {"effect": "permute which affordance is useful for which class; all costs identical",
+                            "sham": "identity permutation at the same cost",
+                            "in_minimal_form": true,
+                            "_decisive": "a coalition matched to real structure must collapse; static sparsity should not care"},
+  "I2_force_all": {"effect": "every affordance fires on every item, costs paid",
+                   "sham": "force-activate the same NUMBER the organism would have chosen",
+                   "in_minimal_form": false},
+  "I3_knockout": {"effect": "disable the most-activated affordance",
+                  "sham": "disable a RANDOM affordance",
+                  "in_minimal_form": false,
+                  "_note": "the random control is what makes this informative; named so it cannot be dropped"},
+  "I4_transplant": {"effect": "move an evolved population to a world with different hidden structure, identical costs",
+                    "in_minimal_form": false}
+ },
+
+ "qualify_predicates": {
+  "_rule": "ALL must pass before science budget is spent. Most are STANDING GATES promoted from e01/e02 failures.",
+  "Q1_prices_positive": "activation_cost > 0 and base_process_cost > 0",
+  "Q2_activation_is_a_real_trade": "measured: cost(activate all 16) materially exceeds cost(activate the 3 needed), and full coverage is worth more than partial",
+  "Q3_shams_are_cost_matched": "I1's sham applies the identity permutation at identical cost; permuting structure costs no resources",
+  "Q4_seeds_reconstructible": "lib/seeds.py, already verified cross-process",
+  "Q5_durable_without_redis": "at least one row written and interpretable with the redis import blocked",
+  "Q6_neutral_genes_are_inert": "perturbing neutral_a/neutral_b changes no metric",
+  "Q7_pressure_actually_binds": "activate-all is measurably worse than selective activation; the budget makes the choice matter",
+  "Q8_not_a_free_lunch": "REACHABILITY PROBE: hand-built ROUTER must beat hand-built STATIC-SPARSE and ACTIVATE-ALL, and a badly-configured router must LOSE. Probe genomes asserted pairwise DISTINCT (CW01-D023).",
+  "Q9_mechanism_fires": "in the hand-built best case, conditionality (MI) is materially above zero and routing_precision is high",
+  "Q10_matched_arms": "with conditionality disabled, treatment and control_no_conditionality produce BIT-IDENTICAL metrics from the same stream seed",
+  "Q11_MI_calibrated_against_shuffled_null": "STANDING GATE, e03-specific: mutual information is biased UPWARD on small samples. Compute MI on shuffled class labels; the real MI must exceed the shuffled null's 99th percentile. A detector that reports conditionality on noise will manufacture coalitions exactly as e02's gain detector manufactured ratchets (CW01-D022).",
+  "Q12_disposition_rule_is_executable": "disposition computed by lib/lineage.decide from PREREGISTRATION.md, including replication; a branch is UNREACHABLE unless its tests ran (CW01-D024)",
+  "Q13_latent_class_is_not_free": "the class label must be unreadable by the organism; only the overlapping feature vector is observable. If class were free, routing would be trivial and the result meaningless."
+ },
+
+ "backend_counterfactual": {
+  "requirement_IX": "organism-visible physics reproducible on a second backend",
+  "primary_backend": "in-process arrays",
+  "secondary_backend": "redis-backed activation ledger, namespace pm:cw01:e03:",
+  "equivalence_test": "same seeds + same arm on both backends must produce identical per-organism metric vectors",
+  "cap_rule": "if not exercised within timebox, disposition is capped at INCONCLUSIVE and may NOT be COMPLETE"
+ }
+}
