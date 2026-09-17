@@ -27,6 +27,7 @@
   {
    "blocks_launch": true,
    "evidence": {
+    "acceptance_regime_selected_by": "longest campaign_rate regime (order-independent)",
     "campaign_rate_regime": {
      "calls_over_5s": 0,
      "http_5xx": 0,
@@ -35,6 +36,16 @@
      "seconds": 331.8,
      "wal_max_mb": 8
     },
+    "campaign_rate_regimes": [
+     {
+      "calls_over_5s": 0,
+      "http_5xx": 0,
+      "regime": "R0_campaign_rate_writer_paced_reader",
+      "restart_s": 1.05,
+      "seconds": 331.8,
+      "wal_max_mb": 8
+     }
+    ],
     "checks": {
      "campaign_rate_run_outlasts_prior_defect_onset": false,
      "crash_restart_recovery_measured": true,
@@ -215,9 +226,9 @@
   }
  ],
  "gate": "RED",
- "generated_at": "2026-09-17T19:11:08Z",
+ "generated_at": "2026-09-17T22:36:19Z",
  "generated_by": "Archaeon[m2-411504ab]",
- "read_at_commit": "161bf5a995796b9cf64807949f352c8aeba98eb8",
+ "read_at_commit": "f5f760883cd2bed72a1570ef76c2fdab1053cecd",
  "read_at_ref": "origin/main",
  "rule": "an item whose evidence cannot be READ is UNVERIFIED or CLAIMED_NOT_PROVEN and still blocks; a message is a claim, not proof."
 }
