@@ -356,6 +356,24 @@ def cmd_cancel(args, conn) -> int:
     return 0
 
 
+def cmd_hold(args, conn) -> int:
+    until = None if args.lift else datetime.fromisoformat(args.until)
+    if until is not None and until.tzinfo is None:
+        print("--until must carry a timezone (e.g. 2026-12-31T00:00:00+00:00)", file=sys.stderr)
+        return 2
+    try:
+        _q.hold(conn, args.experiment_id, until=until, actor=args.by, reason=args.reason,
+                schema=args.schema)
+    except RuntimeError as exc:
+        conn.rollback()
+        print(str(exc), file=sys.stderr)
+        return 1
+    conn.commit()
+    print("%s %s%s" % ("lifted hold on" if until is None else "held", args.experiment_id,
+                       "" if until is None else " until %s" % until.isoformat()))
+    return 0
+
+
 def cmd_stranded(args, conn) -> int:
     rows = _q.stranded(conn, stale_after_s=args.stale_after, schema=args.schema)
     if not rows:
@@ -826,6 +844,14 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--by", required=True)
     s.add_argument("--reason", required=True)
     s.set_defaults(fn=cmd_cancel)
+
+    s = sub.add_parser("hold", help="hold a QUEUED row (not_before) or --lift it; relations untouched")
+    s.add_argument("experiment_id")
+    s.add_argument("--until", default=None, help="tz-aware ISO-8601; required unless --lift")
+    s.add_argument("--lift", action="store_true")
+    s.add_argument("--by", required=True)
+    s.add_argument("--reason", required=True)
+    s.set_defaults(fn=cmd_hold)
 
     s = sub.add_parser("stranded")
     s.add_argument("--stale-after", type=float, default=900.0)
