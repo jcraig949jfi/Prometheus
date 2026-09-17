@@ -58,7 +58,7 @@ class ClampedCA(rv.NonUniformResetCaSubstrate):
 
     def step(self, bit: int) -> np.ndarray:
         f = super().step(bit)
-        sites = self.clamps.get(self.t) | self.clamps.get(-1, set()) if (self.t in self.clamps or -1 in self.clamps) else None
+        sites = self.clamps.get(self.t, set()) | self.clamps.get(-1, set())
         if sites:
             idx = sorted(sites)
             self.state[0, idx] = 0; f[idx] = 0.0

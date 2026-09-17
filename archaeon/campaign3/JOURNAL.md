@@ -40,3 +40,18 @@ Prior: archaeon/campaign2/CAMPAIGN_REPORT.md (main 4d80d4b1d).
   6/12, last-value 4/12, mixed 2; useful children 1/4800; second-stream gains
   all trade the first (58/58); basin 0/480. E5 6/12, E2 7/12, E3 5/12, E1 0.
   Ledger L3-005..L3-007. Next: C3-SFE-03 (running).
+
+## 08:10-09:05 -- C3-SFE-03 (dry a01; engine a02 POSITIVE_CONTROL_FAILED; machine change; dry a03/a04; engine a05 of record; WEAK_POSITIVE: the corridor is W0 -> d1, then free)
+
+- a02 (fixed 25-generation rungs): rung 0 climbed within its rung in 5/12; the
+  ladder moved on before there was anything to carry (L3-008, L3-011).
+  Machine change: ladder.rung0_max holds rung 0 until best >= 0.5, then the
+  fixed schedule; timings relative to the release. Re-preregistered.
+- a05: 233 s; 12 records, 12 reach rows, 12 corridor rows, 0 errors. Hold
+  12-97 generations (all by competence); delay-general 11/12 (held-out 1.0 on
+  d0/1/2/4), minted at rung 1 in 7/11, abrupt (rise 0 in 8/11), adapt d2/d4
+  = 0 in 11/11; in 5/12 the first delay-1 battery promoted an already-general
+  organism from the W0 population. Comparator caveat: direct W1_d4 measured
+  at G60 only (L3-013 -> C3-SFE-04 runs it at matched budget). L3-011..013.
+- C3-SFE-09 dry run fixed (ClampedCA clamp-set bug). C3-SFE-10 harness
+  written (dose x quality x cap on W1_d4; permuted-block matched control).
