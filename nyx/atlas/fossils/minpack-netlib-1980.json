@@ -126,20 +126,667 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minpack-netlib-1980/upstream/lmpar.f:1-264"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minpack-netlib-1980/upstream/lmder.f:330-440"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minpack-netlib-1980/upstream/dogleg.f:60-175"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minpack-netlib-1980/upstream/hybrd.f:208-440"
+   }
+  ],
+  "inspected_files": [
+   "lmpar.f 1-264",
+   "lmder.f 330-440",
+   "dogleg.f 60-175",
+   "hybrd.f 208-440"
+  ],
+  "date": "2026-09-17T22:25Z",
+  "note": "two trust-region methods over a shared QR: least squares (LM: the step solves a damped system whose damping is chosen so the scaled step has length ~delta) and nonlinear equations (Powell hybrid: a dogleg between the Gauss-Newton and steepest-descent steps, with the Jacobian updated by Broyden rank-one and re-evaluated only when progress stalls); both accept a step by the ratio of actual to predicted reduction and move delta by fixed factors; the ancestor of scipy's leastsq and fsolve",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:25Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://www.netlib.org/minpack/readme sha256:40f44fb6c83158329c65a904673dc2cf2badc983415ddcfd16d5845f0e4f45e0; https://www.netlib.org/minpack/disclaimer sha256:f5b330efdad110cdd84d585ec61220b0650461fa599e36b13e1726c9346dcfb9; https://www.netlib.org/minpack/chkder.f sha256:6a71d2df5e75a800b42386d1096d4a55c32cdcd1e930a8957bed845dc77e5ef1; https://www.netlib.org/minpack/dogleg.f sha256:5d29950bfbfa6415b4e07ce536b0388edd3ceb4d6b260b23eb11d9c3b6f135ba; https://www.netlib.org/minpack/dpmpar.f sha256:5c56b40119ddb0d00f60730a2f6ad8ceaac70422172b51af8dbde3944b324e7e; https://www.netlib.org/minpack/enorm.f sha256:c8ec66eeb809e5a1a8c896037597c73bd8966511a3b028fcc1f8be0e47310dd7; https://www.netlib.org/minpack/fdjac1.f sha256:b87bc037c7b1f728d1ec6417bc228a7cdb7a37c85627e8730f6c40267ef53009; https://www.netlib.org/minpack/fdjac2.f sha256:30ca8685efeab6f47bb40fb7c6f20f84d8467f39308bf10a54c9dac41c061391; https://www.netlib.org/minpack/hybrd.f sha256:dae9685deaf24a3625ab65fc25c896cf0416aee1e09c93be17204273a381f521; https://www.netlib.org/minpack/hybrd1.f sha256:427ee1ab96f8583ccb661e76173758b8a98ae06af710bdce1acf8022ed27ac7b; https://www.netlib.org/minpack/hybrj.f sha256:f1f5994dba9b9e2a392bbc08ae1b1b74075dd0f8f6339531011fdedeb4654f96; https://www.netlib.org/minpack/hybrj1.f sha256:8cdb1da05e2bc9c2356c966136bef0f452f8d8a74ff0ff8d44988ef9a46da5c6; https://www.netlib.org/minpack/lmder.f sha256:bcb863d4e71751e9c2e8bc163f3606823b206d4ded525645704238694d4b2cca; https://www.netlib.org/minpack/lmder1.f sha256:bd9bec43c803c20ab523410cd55476833bec63c96b10088c0d87c2a7c1df6ec4; https://www.netlib.org/minpack/lmdif.f sha256:5e59e7d18e53bb588411f411d108851f8b3e24221c5983afe718dbf897874856; https://www.netlib.org/minpack/lmdif1.f sha256:bc6fac1d9b45d0331587705b47c0bc403b485883bcd8c9af9b1a2a858f57c1f7; https://www.netlib.org/minpack/lmpar.f sha256:01495a05ec1c0ba4ec3ace1f8f5e0db0eb5a2b8cc38991213792083005d73b3a; https://www.netlib.org/minpack/lmstr.f sha256:d2a59ac39a1d5c1dc6ff69a3dcc317509df89ef7775ce53f30ca44e184e03503; https://www.netlib.org/minpack/lmstr1.f sha256:1371ac7d94b943a647bc81bdf2df5826114c744a016a6ce78fe559c4205f1e61; https://www.netlib.org/minpack/qform.f sha256:2663c845eaefcbd398f13525f33e090b8dfe005fa4b4a3157caa8c06599f1bc5; https://www.netlib.org/minpack/qrfac.f sha256:8183b99d4550d2f20b1ffc7456d0afa756e9d0ac3d8976148628416632b3aa42; https://www.netlib.org/minpack/qrsolv.f sha256:768eb92e2d4d257f81202b8de83d30e390ca92a0763e96b59175aee02bf45e7f; https://www.netlib.org/minpack/r1mpyq.f sha256:a8e8e5038e60823c273898b8c723f423bb9abbb5da377a73c33bce8f152b5b12; https://www.netlib.org/minpack/r1updt.f sha256:33924ea50382e1c74b7f8b0662bea19c7f6772468b5d07e3250384c7c18d1666; https://www.netlib.org/minpack/rwupdt.f sha256:d5a5c0a934368be75905c0620898d6061970f4553f4045f8f19be25e492043c3; https://www.netlib.org/minpack/ex/file01 sha256:e355fc469bf081538542d46010542b573cbe48cd9061c151d4f349d2df8b7486; https://www.netlib.org/minpack/ex/file02 sha256:4422023091ad4026e93f9c19987f11b14f049e6dd09f2c1429ea878015f63feb; https://www.netlib.org/minpack/ex/file03 sha256:379a7a69e5c9270893c08b877a79c1cc1c3666d0674374c7ad82eda379e12acc; https://www.netlib.org/minpack/ex/file04 sha256:6e67616089962cb023db4922d4e57bcaa6a7a605df61637da011620ae4b5e649; https://www.netlib.org/minpack/ex/file05 sha256:6cd0ffa413e708e058be9f23a2b26ee14b8c19e354cb1a66755740953c61bfa4; https://www.netlib.org/minpack/ex/file06 sha256:659f7a584aaaf446bb708b322abd5cc077a6fde1a0d6a45e7be01a4e049e3fb1; https://www.netlib.org/minpack/ex/file07 sha256:4e6908e03505bacba04c4e332a2e59fbb28b33eb389d7134bfce30d110ab2dc5; https://www.netlib.org/minpack/ex/file08 sha256:c112072e63241fcbe5cfc9084584ccf6d6099b80aadce6a46a0eba425a833e02; https://www.netlib.org/minpack/ex/file09 sha256:2de7255b3228385d3e35ac4ecc48315b9959114f315d98b6980d795690789ff1; https://www.netlib.org/minpack/ex/file10 sha256:e637d44c3e07f7edc742e96acbde37a4b4b154d8cf9fd7a4690d0cd47012b862; https://www.netlib.org/minpack/ex/file11 sha256:bc353012f38c62a01acb09785b00988c534b191de9860fb1140be5b978aff8e5; https://www.netlib.org/minpack/ex/file12 sha256:ccbed333b3732a2e008072c31263b809c843847a5c99800b022b2ccbedbbba46; https://www.netlib.org/minpack/ex/file13 sha256:95e416af2007af4506d4d0ea32febbb1fc6c6d343644e1bbe51445f2eeddd431; https://www.netlib.org/minpack/ex/file14 sha256:eebf8fa2f192ed71151a81247fee5cbe16d093c8fc33d05f8434d28b30c61484; https://www.netlib.org/minpack/ex/file15 sha256:3ffaf4d8350ccacf114065ea942fec3baaad71f19d7c98a7d97ed12aa5ca27f0; https://www.netlib.org/minpack/ex/file16 sha256:1bfc2863f30dee826e2cc2b3f30ad6536cad05225f8149789c277de35e5ee5eb; https://www.netlib.org/minpack/ex/file17 sha256:d14d48a50c0028aaa2c12fd5e77974c10e5483e49702b966d638ecdab6d9eb92; https://www.netlib.org/minpack/ex/file18 sha256:cd28b7c34a8cbe04554c30addf04fdd01d8dbe5a3a8197164b0c8c746760a124; https://www.netlib.org/minpack/ex/file19 sha256:d52b1f90c3f9f4d7fb54e31eb2fed5bd8c19fc86a852f204a873ab52d4e80394; https://www.netlib.org/minpack/ex/file20 sha256:9642f3d2ad9d3553f2d05c94de0f2ef64fda5d2868c0482f4ae3a276cfcfaf59; https://www.netlib.org/minpack/ex/file21 sha256:b780f6c021b114f85f8a05ad741637bfdf1cc14a076cdb13046b66f982e02ff0; https://www.netlib.org/minpack/ex/file22 sha256:4486706a38af157667b9c2523a4c037d904cb9f0dc4828d01b78183c978d0392; https://www.netlib.org/minpack/ex/file23 sha256:c4fe6f700b881f3df3b0b0b1e71945e3cc31a7796bb1c2f94fd4a96afc7149cd",
+   "payload_manifest_id": "techne tree_sha256 bb2a1c77c73713408975f150c1f146fc388767165fe7ea6876d975df5d689de1 (48 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/lmpar.f",
+     "payload_hash_read": "01495a05ec1c0ba4ec3ace1f8f5e0db0eb5a2b8cc38991213792083005d73b3a",
+     "techne_recorded_hash": "01495a05ec1c0ba4ec3ace1f8f5e0db0eb5a2b8cc38991213792083005d73b3a",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/lmder.f",
+     "payload_hash_read": "bcb863d4e71751e9c2e8bc163f3606823b206d4ded525645704238694d4b2cca",
+     "techne_recorded_hash": "bcb863d4e71751e9c2e8bc163f3606823b206d4ded525645704238694d4b2cca",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/dogleg.f",
+     "payload_hash_read": "5d29950bfbfa6415b4e07ce536b0388edd3ceb4d6b260b23eb11d9c3b6f135ba",
+     "techne_recorded_hash": "5d29950bfbfa6415b4e07ce536b0388edd3ceb4d6b260b23eb11d9c3b6f135ba",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/hybrd.f",
+     "payload_hash_read": "dae9685deaf24a3625ab65fc25c896cf0416aee1e09c93be17204273a381f521",
+     "techne_recorded_hash": "dae9685deaf24a3625ab65fc25c896cf0416aee1e09c93be17204273a381f521",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "minpack-netlib-1980::damping_parameter_found_by_a_safeguarded_newton_iteration_on_the_scaled_step_length_minus_the_trust_radius_with_bracketing_bounds",
+   "fossil_ancestry": "minpack-netlib-1980",
+   "human_name": "lmpar (1-264): parl / paru from the Gauss-Newton step and the gradient; the qrsolv iteration; 'abs(dxnorm-delta) .le. 0.1*delta' or 10 iterations",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "first solve the undamped (par = 0) least-squares step from the QR; if its scaled norm is within delta (10 percent slack) accept par = 0; else bracket par: a lower bound from the derivative of the step norm (parl, zero if the Jacobian is rank deficient) and an upper bound from the gradient norm over delta (paru); iterate at most 10 times: solve the damped system by qrsolv (a sequence of Givens rotations on R with sqrt(par) D appended), evaluate fp = ||D x|| - delta, stop if |fp| <= 0.1 delta, else take a Newton correction on 1/||D x||, update the bracket by the sign of fp, and set par = max(parl, par + parc)",
+   "input": "R, the permutation, Q'b, the scaling D, delta, the previous par",
+   "output": "par, x(par), and the Cholesky factor S",
+   "state": "none across calls except par as a warm start",
+   "update": "per outer iteration",
+   "assumptions": [
+    "||D x(par)|| is decreasing and convex in par (Hebden / More: so the Newton iteration on its reciprocal converges monotonically); 10 iterations and a 10 percent tolerance suffice because the outer loop tolerates an inexact radius"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minpack-netlib-1980::step_accepted_by_the_ratio_of_actual_to_predicted_reduction_with_the_radius_shrunk_by_an_interpolated_factor_or_doubled"
+   ],
+   "fitness_value_in_ancestor": "the trust-region subproblem for least squares solved to 10 percent in a handful of cheap rotations rather than by an eigen-decomposition",
+   "failure_landscape": "by reading: rank-deficient Jacobians set parl = 0 and the exceptional-case exit accepts a step inside the region; the 10-iteration cap returns 'the best value obtained so far'",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hebden 1973; More 1978 'The Levenberg-Marquardt algorithm: implementation and theory' (the paper this code implements)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minpack-netlib-1980/upstream/lmpar.f:60-264"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "lmpar",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minpack-netlib-1980::step_accepted_by_the_ratio_of_actual_to_predicted_reduction_with_the_radius_shrunk_by_an_interpolated_factor_or_doubled",
+   "fossil_ancestry": "minpack-netlib-1980",
+   "human_name": "lmder (330-440): actred, prered, dirder, ratio; 'if (ratio .gt. p25) go to 240'; temp = p5*dirder/(dirder + p5*actred); delta = pnorm/p5 on ratio >= 0.75; the info 1-8 tests",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after a step p of scaled length pnorm: actual reduction = 1 - (fnorm1/fnorm)^2 (or -1 if the residual grew tenfold); predicted reduction from the linear model = ||J p||^2/fnorm^2 + 2 par pnorm^2/fnorm^2, directional derivative likewise; ratio = actual/predicted; if ratio <= 0.25 shrink delta to temp * min(delta, 10 pnorm) with temp from a quadratic interpolation of the residual along p (clamped to [0.1, 0.5]) and divide par by temp; if ratio >= 0.75 (or par = 0) set delta = 2 pnorm and halve par; accept the step only if ratio >= 1e-4; convergence tests on |actred| and prered (ftol), delta vs xtol ||D x||, and the scaled gradient (gtol); the first iteration caps delta at pnorm",
+   "input": "the step, the residual norms, par",
+   "output": "accept/reject; new delta and par",
+   "state": "delta, par",
+   "update": "per iteration",
+   "assumptions": [
+    "the quadratic model predicts the reduction well within delta; the actual/predicted ratio is a reliable measure of model quality (the trust-region premise)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minpack-netlib-1980::damping_parameter_found_by_a_safeguarded_newton_iteration_on_the_scaled_step_length_minus_the_trust_radius_with_bracketing_bounds"
+   ],
+   "fitness_value_in_ancestor": "global convergence without a line search; the radius adapts to the model's local accuracy",
+   "failure_landscape": "by reading: constants (0.25, 0.75, 1e-4, factor 100 for the initial delta) are the paper's; a bad scaling D (mode 1 uses the Jacobian column norms) changes the geometry of delta",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "More 1978 section 4; the same acceptance rule is in every later trust-region code",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minpack-netlib-1980/upstream/lmder.f:330-440"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the inner loop of lmder (shared verbatim by lmdif and lmstr)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minpack-netlib-1980::dogleg_step_that_takes_the_gauss_newton_point_if_inside_the_region_else_the_cauchy_point_or_a_convex_combination_on_the_boundary",
+   "fossil_ancestry": "minpack-netlib-1980",
+   "human_name": "dogleg (60-175): the Gauss-Newton solve from R packed by rows with a diagonal repair; qnorm <= delta -> return; sgnorm (the Cauchy step length); alpha from the boundary quadratic",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "solve R x = Q'b for the Gauss-Newton step (a zero diagonal entry is replaced by eps times the largest entry in its row: a cheap rank repair); if its scaled norm is within delta take it; else compute the scaled gradient and the Cauchy (steepest-descent minimiser) step length sgnorm; if sgnorm >= delta take the gradient step scaled to delta; else take the point on the segment from the Cauchy point to the Gauss-Newton point that lies on the boundary (alpha from a closed-form quadratic)",
+   "input": "R, Q'b, D, delta",
+   "output": "a step within the region",
+   "state": "none",
+   "update": "per iteration",
+   "assumptions": [
+    "the piecewise-linear dogleg path approximates the true trust-region minimiser well enough for the ratio test to accept most steps"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minpack-netlib-1980::jacobian_kept_by_broyden_rank_one_updates_and_re_evaluated_by_finite_differences_only_after_two_consecutive_failures_or_stalled_progress"
+   ],
+   "fitness_value_in_ancestor": "one triangular solve and a few norms per step; no damping parameter search",
+   "failure_landscape": "by reading: the diagonal repair silently changes a singular system; the path is not the exact subproblem minimiser (Powell 1970 argued it need not be)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Powell 1970 'A hybrid method for nonlinear equations'",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minpack-netlib-1980/upstream/dogleg.f:60-175"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "dogleg",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minpack-netlib-1980::jacobian_kept_by_broyden_rank_one_updates_and_re_evaluated_by_finite_differences_only_after_two_consecutive_failures_or_stalled_progress",
+   "fossil_ancestry": "minpack-netlib-1980",
+   "human_name": "hybrd (208-440): jeval, ncsuc / ncfail, nslow1 / nslow2, 'if (ncfail .eq. 2) go to 290', r1updt / r1mpyq; delta halved on ratio < 0.1, raised to 2 pnorm on ratio >= 0.5 or two successes",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the Jacobian is formed by forward differences (fdjac1, banded if ml/mu say so) and QR-factored once per outer iteration; inside, each accepted step updates the factored Jacobian by the Broyden secant correction (a rank-one update of R carried through Q by Givens rotations, r1updt/r1mpyq) rather than re-evaluating; the outer loop re-evaluates only when two consecutive steps failed (ncfail = 2); progress monitors count iterations with actual reduction below 0.001 (nslow1, ten -> info 5) and Jacobian evaluations with reduction below 0.1 (nslow2, five -> info 4); delta is halved on ratio < 0.1 and raised on ratio >= 0.5 or after two successes",
+   "input": "function values; the previous factorisation",
+   "output": "an updated R and Q",
+   "state": "R, Q, the counters",
+   "update": "per iteration",
+   "assumptions": [
+    "secant information from accepted steps is good enough to avoid n function evaluations per iteration; failure to reduce the residual twice means the secant Jacobian has drifted"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minpack-netlib-1980::dogleg_step_that_takes_the_gauss_newton_point_if_inside_the_region_else_the_cauchy_point_or_a_convex_combination_on_the_boundary"
+   ],
+   "fitness_value_in_ancestor": "n-fold fewer function evaluations per iteration than a finite-difference Newton",
+   "failure_landscape": "by reading: the monitors terminate with 'not making good progress' rather than diverging; the secant update can make R singular (r1updt reports sing; the dogleg's diagonal repair copes)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Broyden 1965; Powell 1970's re-evaluation strategy",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minpack-netlib-1980/upstream/hybrd.f:208-440"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "hybrd's outer/inner loops (hybrj is the analytic-Jacobian twin)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "qrfac (Householder QR with column pivoting), qrsolv, r1updt, r1mpyq, qform, enorm (the overflow-safe norm), dpmpar (machine constants)",
+   "reason": "OTHER",
+   "evidence": "NOT READ; the linear-algebra substrate; enorm's three-accumulator scaling is a small mechanism of its own, unread",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minpack-netlib-1980"
+  },
+  {
+   "candidate": "lmdif (finite-difference LM), lmstr (row-wise storage), the *1 driver wrappers, chkder (Jacobian check), fdjac1/fdjac2, the ex/ drivers and file01-23 outputs",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "ex/ holds the test problems and reference outputs: an oracle for a Stage C run",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minpack-netlib-1980"
+  },
+  {
+   "candidate": "'Levenberg-Marquardt' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the damping search (lmpar) and the acceptance/radius logic (lmder) are separable; the latter is shared with the hybrid method",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minpack-netlib-1980"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "minpack-netlib-1980::P.a_nonlinear_residual_must_be_minimised_from_a_poor_start_with_a_bounded_number_of_expensive_function_evaluations_and_no_line_search_oracle",
+   "source_fossil": "minpack-netlib-1980",
+   "source_evidence": "lmpar.f; lmder.f 330-440; hybrd.f 208-440; ex/ file01-23",
+   "condition": "an organism minimises ||F(x)|| (or solves F(x) = 0) where each F is expensive; the linear model is good only locally; the start may be far from the solution; the score is evaluations to a tolerance and robustness to bad starts",
+   "resource_or_constraint": "function evaluations; a fixed QR per Jacobian",
+   "failure_condition": "divergence from a poor start (pure Gauss-Newton), or evaluations wasted on a Jacobian that has not changed",
+   "world_punishes": "full steps regardless of model quality; re-evaluating the Jacobian every iteration",
+   "world_rewards": "a trust radius adapted by actual/predicted reduction; secant updates with a failure-triggered refresh",
+   "observable_consequence": "function evaluations and success rate over the More-Garbow-Hillstrom problem set (the ex/ drivers) for LM vs Gauss-Newton, and hybrid vs finite-difference Newton, from the standard and 10x starts",
+   "vacuity_condition": "a linear residual",
+   "trivial_shortcuts": "a start within the Newton basin",
+   "cheat_control": "an organism given the exact Hessian must reach the tolerance in the fewest iterations; Gauss-Newton without a region must diverge on some 10x starts; the hybrid with re-evaluation every step must use ~n times more evaluations at the same success: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: nonlinear least squares and equations (More, Garbow, Hillstrom 1980)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "minpack-netlib-1980::damping_parameter_found_by_a_safeguarded_newton_iteration_on_the_scaled_step_length_minus_the_trust_radius_with_bracketing_bounds",
+   "to": "minpack-netlib-1980::step_accepted_by_the_ratio_of_actual_to_predicted_reduction_with_the_radius_shrunk_by_an_interpolated_factor_or_doubled",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::step_accepted_by_the_ratio_of_actual_to_predicted_reduction_with_the_radius_shrunk_by_an_interpolated_factor_or_doubled",
+   "to": "minpack-netlib-1980::damping_parameter_found_by_a_safeguarded_newton_iteration_on_the_scaled_step_length_minus_the_trust_radius_with_bracketing_bounds",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "delta and par back",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::dogleg_step_that_takes_the_gauss_newton_point_if_inside_the_region_else_the_cauchy_point_or_a_convex_combination_on_the_boundary",
+   "to": "minpack-netlib-1980::jacobian_kept_by_broyden_rank_one_updates_and_re_evaluated_by_finite_differences_only_after_two_consecutive_failures_or_stalled_progress",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::jacobian_kept_by_broyden_rank_one_updates_and_re_evaluated_by_finite_differences_only_after_two_consecutive_failures_or_stalled_progress",
+   "to": "minpack-netlib-1980::dogleg_step_that_takes_the_gauss_newton_point_if_inside_the_region_else_the_cauchy_point_or_a_convex_combination_on_the_boundary",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the secant R",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "minpack-netlib-1980",
+   "relation": "algorithm_from",
+   "to": "More 1978 (LM implementation); Hebden 1973 (the par iteration); Powell 1970 (hybrid dogleg); Broyden 1965",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the QR/rotation substrate unread",
+   "lmdif/lmstr/chkder/fdjac unread",
+   "nothing ran; ex/ is the oracle"
+  ],
+  "note": "the four mechanisms that make the two methods robust are located and separated from the linear algebra",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

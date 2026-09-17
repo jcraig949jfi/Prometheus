@@ -1,0 +1,107 @@
+{
+ "schema": "techne.acquisition.discard_ledger/1",
+ "written_utc": "2026-09-17T20:30:00Z",
+ "instance": "Techne[gandalf-a04f7c25]",
+ "directive": "OPERATOR_3_emphasis.md: make the cost of preservation explicit so a lost datum is not read as a design mistake",
+ "cost_classes": {
+  "CHEAP": "one extra write of a value already in memory at that moment",
+  "MODERATE": "a new record type or a schema change, no new computation",
+  "EXPENSIVE": "new computation or storage that scales with population x time",
+  "STRUCTURALLY_DIFFICULT": "the information is not present at any single point in the code path (would need re-architecture or instrumentation of another component)"
+ },
+ "rows": [
+  {
+   "system": "Enhanced POET",
+   "datum": "parent_optim_id of each admitted environment",
+   "where_lost": "poet_algo.py get_child_list() returns it in a tuple; adjust_envs_niches() creates the optimizer without writing it; only logger.info text survives",
+   "cost": "CHEAP",
+   "why": "the id is in hand at add_optimizer(); one field in the CSV header or the best.json",
+   "evidence_grade": "VERIFIED_SOURCE"
+  },
+  {
+   "system": "Enhanced POET",
+   "datum": "PATA-EC vector at admission time",
+   "where_lost": "es.py update_pata_ec() overwrites self.pata_ec each adjustment; never serialised",
+   "cost": "MODERATE",
+   "why": "a per-adjustment snapshot file keyed by (iteration, optim_id); the basis (which optimizers, in what order) must be written with it or the vector is meaningless later",
+   "evidence_grade": "VERIFIED_SOURCE"
+  },
+  {
+   "system": "Enhanced POET",
+   "datum": "rejected children and their novelty scores",
+   "where_lost": "get_child_list() sorts and truncates to max_admitted; the rest are dropped with a debug line",
+   "cost": "CHEAP",
+   "why": "the list exists; write it",
+   "evidence_grade": "VERIFIED_SOURCE"
+  },
+  {
+   "system": "Enhanced POET",
+   "datum": "transfer provenance beyond the source id string",
+   "where_lost": "pick_proposal() logs accept_theta_in_<id>=<source>; the proposed theta after the ES step and the direct-vs-proposed choice are not kept",
+   "cost": "MODERATE",
+   "why": "theta is a large vector; keeping every proposal scales with pairs, but keeping the ACCEPTED one and a flag is one write",
+   "evidence_grade": "VERIFIED_SOURCE"
+  },
+  {
+   "system": "Enhanced POET",
+   "datum": "why a transfer improved (mechanism)",
+   "where_lost": "never computed",
+   "cost": "STRUCTURALLY_DIFFICULT",
+   "why": "needs an intervention/ablation apparatus the optimizer does not have; this is the causal fossil the directive names",
+   "evidence_grade": "VERIFIED_SOURCE (absence)"
+  },
+  {
+   "system": "TerraLingua",
+   "datum": "which artifact an agent read or copied when writing a new one",
+   "where_lost": "the environment logs observation text and the action, not a provenance edge; 006_artifact_philogeny.py reconstructs by text match or LLM",
+   "cost": "MODERATE",
+   "why": "the agent's tool call that read an artifact is an event the environment sees; recording (reader, artifact_id, tick) at read time is a schema addition, not new computation; attributing INFLUENCE from it is still inference",
+   "evidence_grade": "MEASURED"
+  },
+  {
+   "system": "TerraLingua",
+   "datum": "deterministic confidence for an ancestry edge",
+   "where_lost": "the confidence is the model's self-report",
+   "cost": "STRUCTURALLY_DIFFICULT",
+   "why": "no ground truth exists inside the system; only an independent interaction history (TECHNE-108) can grade it",
+   "evidence_grade": "MEASURED"
+  },
+  {
+   "system": "Avida (our recipe)",
+   "datum": "population with ancestry at the end of the run",
+   "where_lost": "stock events.cfg never calls SavePopulation; the smoke reads count.dat",
+   "cost": "CHEAP",
+   "why": "one event line; Avida already tracks the genotypes",
+   "evidence_grade": "VERIFIED_SOURCE"
+  },
+  {
+   "system": "ASAL",
+   "datum": "simulation state behind each embedded frame",
+   "where_lost": "rollout.py return_state=False by default; published .npz carry params/embeddings",
+   "cost": "EXPENSIVE",
+   "why": "state per frame scales with grid x time; the metric never consumes it, so nothing in the pipeline asks for it",
+   "evidence_grade": "VERIFIED_SOURCE"
+  },
+  {
+   "system": "ASAL",
+   "datum": "what the observer discarded (image -> 512 floats)",
+   "where_lost": "by construction of the observer",
+   "cost": "STRUCTURALLY_DIFFICULT",
+   "why": "the compression IS the method; TECHNE-107 measures what survives it",
+   "evidence_grade": "VERIFIED_SOURCE"
+  },
+  {
+   "system": "Tierra",
+   "datum": "organisms that never earned a permanent name",
+   "where_lost": "gene bank admission (to be read in rambank.c/diskbank.c, TECHNE-106)",
+   "cost": "UNKNOWN_UNTIL_READ",
+   "why": "the admission rule is the object of TECHNE-106",
+   "evidence_grade": "NOT_VERIFIED"
+  }
+ ],
+ "constraints_from_directive_3": [
+  "PATA-EC is a phenotype of (world x contemporary population), not of the world: P_t(E) != P_{t+k}(E) for a byte-identical E. VERIFIED_SOURCE: poet_algo.py:296-299 recomputes update_pata_ec() for every active AND archived optimizer at each adjust_envs_niches(), against the optimizers present at that moment; the basis grows as the archive grows (hence the padded distance in novelty.py). Any reuse of PATA-EC for 'persistent pressure' must record the basis with the vector.",
+  "Do NOT collapse novelty of structure / novelty of behaviour / novelty to an observer / historically consequential novelty into one field in any mechanism catalog. No MECHANISM_CATALOG.json exists in the repository today (git ls-files, 2026-09-17); the constraint binds whoever creates one and is posted to Nyx.",
+  "Keep organism ancestry (recorded reproduction provenance, Avida) and conceptual ancestry (inferred cultural descent, TerraLingua) as two graph types; an edge A -> B has different epistemic status in each."
+ ]
+}

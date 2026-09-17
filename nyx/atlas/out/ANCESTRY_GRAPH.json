@@ -1,14 +1,14 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:05Z",
- "n": 165,
+ "built": "2026-09-17T22:26Z",
+ "n": 175,
  "by_relation": {
-  "algorithm_from": 69,
-  "derived_from": 8,
-  "shares_ancestor_with": 42,
-  "historical_version_of": 11,
+  "algorithm_from": 73,
+  "derived_from": 10,
+  "shares_ancestor_with": 43,
+  "historical_version_of": 12,
   "superseded_by": 14,
-  "reimplementation_of": 5,
+  "reimplementation_of": 7,
   "port_of": 1,
   "forked_from": 1,
   "supersedes": 6,
@@ -39,6 +39,13 @@
    "to": "DEC 'The Sumer Game' (Dyment 1968) / Ahl's HAMURABI (1973)",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bdwgc-8.2.6",
+   "relation": "algorithm_from",
+   "to": "Boehm & Weiser 1988; black lists Boehm 1993; parallel and incremental extensions later (Boehm, Demers, Shenker 1991 for the incremental scheme)",
+   "note": "from the source headers and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "biriscv-branch-predictor",
@@ -90,6 +97,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "bsd-4.3-reno-distribution-tape-1990",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.3-reno-1990 (in this atlas): the tape is the system that shipped that TCP (the atlas has no CONTAINS relation; Techne owns the vocabulary); the vault's copy of the tape omits the source tape files",
+   "note": "by FORMAT and the tar listing",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-tcp-4.2-1983",
    "relation": "superseded_by",
    "to": "bsd-tcp-4.3-tahoe-1988",
@@ -125,6 +139,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "bsd-tcp-4.3-reno-1990",
+   "relation": "derived_from",
+   "to": "bsd-tcp-4.2-1983 (in this atlas) via 4.3BSD-Tahoe (1988, Jacobson's slow start / congestion avoidance / fast retransmit; body not in the vault); Reno adds fast recovery",
+   "note": "by reading both bodies; the Tahoe step is inferred from the record and Jacobson 1988",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-tcp-4.3-tahoe-1988",
    "relation": "historical_version_of",
    "to": "bsd-tcp-4.2-1983",
@@ -137,6 +158,20 @@
    "to": "bsd-tcp-4.3-reno-1990",
    "note": "fast recovery added [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "buddy-alloc-spaskalev",
+   "relation": "reimplementation_of",
+   "to": "Knowlton 1965 / Knuth TAOCP 1 (buddy system); the packed summary tree is the author's own encoding",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "c-cmaes-hansen",
+   "relation": "algorithm_from",
+   "to": "Hansen & Ostermeier 1996/2001; Hansen, Muller, Koumoutsakos 2003; this C code is the author's and the ancestor of pycma",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "cjson-1.7.18",
@@ -622,6 +657,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "linpackd-netlib-1979",
+   "relation": "historical_version_of",
+   "to": "LINPACK (Dongarra, Bunch, Moler, Stewart 1979); this driver's revisions 1992 (RNG) and 2003 (HP: anti-elision)",
+   "note": "from the header comments",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "linux-tcp-congestion",
    "relation": "rival_of",
    "to": "linux-tcp-congestion",
@@ -678,6 +720,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "lru-cache-goldsborough",
+   "relation": "reimplementation_of",
+   "to": "the LRU policy (Belady 1966 for the framing; the map+list structure is folklore)",
+   "note": "from the README",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "md5-rfc1321",
    "relation": "superseded_by",
    "to": "the SHA-2 family",
@@ -731,6 +780,13 @@
    "relation": "algorithm_from",
    "to": "Kohonen 1982 / Kohonen 2013 (batch)",
    "note": "named in the code's own docstring 724-727; Techne's record ancestry not re-read here",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "minpack-netlib-1980",
+   "relation": "algorithm_from",
+   "to": "More 1978 (LM implementation); Hebden 1973 (the par iteration); Powell 1970 (hybrid dogleg); Broyden 1965",
+   "note": "from the source comments and the record",
    "basis": "SOURCE_READ"
   },
   {
@@ -972,6 +1028,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "spin-6.5.2-holzmann",
+   "relation": "derived_from",
+   "to": "Holzmann's earlier Pan / supertrace (1980s); nested DFS from Courcoubetis et al. 1992; static POR Holzmann-Peled 1994; bitstate hashing revised by Dillinger 2004",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "spin-pathfinder-priority-inversion-1997",
    "relation": "derived_from",
    "to": "spin-6.5.2-holzmann",
@@ -1145,6 +1208,13 @@
    "to": "GSAT (Selman/Levesque/Mitchell 1992)",
    "note": "WalkSAT is the random-walk successor to GSAT",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "whitakers-words-ada",
+   "relation": "algorithm_from",
+   "to": "Whitaker's own design (1993-); the Ada 2012 port and test corpus by the mk270 maintainers",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "willemt-raft",
