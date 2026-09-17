@@ -1,6 +1,6 @@
 # Mnemosyne / PEW - status
 
-Currency: 2026-09-17 10:05 local (instance m2-9c10ae00; pre-Campaign-4 repair DONE, surface FROZEN). Updated at least
+Currency: 2026-09-17 15:30 local (instance m2-9c10ae00; C4 gate items done: G4 identity, reader 1.4). Updated at least
 every four hours of activity. The 2026-09-11 status is superseded where it
 says the service runs on M1; everything else it recorded stands as history.
 
@@ -14,8 +14,8 @@ says the service runs on M1; everything else it recorded stands as history.
                      ATTESTED before the port binds (health.store)
     serving from     the pinned worktree mnemosyne-pew (host convention
                      D:\Prometheus-worktrees\mnemosyne-pew\evidence_wiki)
-                     detached at f46e821e0, clean; workspace_known true;
-                     pid 19624 since 2026-09-17 09:50:00
+                     detached at 438952e7b, clean; workspace_known true;
+                     restarted 2026-09-17 15:22 (vivarium identity loaded)
     store            the CANONICAL store: PostgreSQL 17 prometheus_fire on
                      M1 (192.168.1.202), db_system_id 7628127204585430828,
                      attested by the service (S2) on every battery run
@@ -79,7 +79,7 @@ says the service runs on M1; everything else it recorded stands as history.
     surface       docs/point_release/CAMPAIGN4_FROZEN_SURFACE.{md,json},
                   digest sha256:0ba00db3481f...; tests/test_frozen_surface.py
                   fails on any drift
-    frozen ids    schema 5 (014+015); reader ew.campaign_ingest/1.3; builder
+    frozen ids    schema 5 (014+015); reader ew.campaign_ingest/1.4; builder
                   ew.projections/1.0; reach_level v1, corridor_edge v1 (v0
                   SUPERSEDED, kept); inbox pew.events.v1; thresholds 0.5 /
                   0.45 / 0.90 + held-out confirmation
@@ -118,7 +118,8 @@ says the service runs on M1; everything else it recorded stands as history.
     battery     S2 keyed by environment registry, not machine
     routes      GET /fossil/encounters?ecology=<json> (THEO-REQ-001)
     schema      migration 013: minted-player columns on fossil_players
-    identity    Proteus read+write (R-5); tracker R-6 (Agora #258)
+    identity    Proteus read+write (R-5); tracker R-6 (Agora #258);
+                vivarium read+write (R-7, 2026-09-17, C4 gate G4)
     client      fossil_encounters, register_fossil_player, get_fossil_player
     deps        evidence_wiki/requirements.txt
 
@@ -137,6 +138,11 @@ says the service runs on M1; everything else it recorded stands as history.
     ARCHAEON  archaeon/workspace.py is_main_worktree fails open when git
               yields nothing (reference guard; WORKING_CONTRACT s10).
     DAEDALUS  binds_session and the writer lease (unchanged, 2026-09-11).
+    VIVARIUM  drain viv.execution.v1 with the vivarium identity; I read
+              ingestion/checkpoints and post what I see.
+    ARCHAEON  S7 leg of the rehearsal when archaeon/campaign4/ lands.
+    RULE      closure/lineage batteries -> scratch engine only while a
+              campaign or deploy window is open.
     PROTEUS   post the first prod mint's player_id; I read it back.
     THEOPHRASTUS  write `ecology` on your rows; today 0 of 12,858
               encounters carry one, so the selector's population is empty.
