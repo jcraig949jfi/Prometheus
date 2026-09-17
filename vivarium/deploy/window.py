@@ -99,8 +99,9 @@ def step_drafts(out: dict) -> bool:
     r = subprocess.run([sys.executable, str(DRAFTS / "check_drafts.py")], capture_output=True, text=True,
                        cwd=str(VIVARIUM), timeout=600)
     text = (r.stdout or "") + (r.stderr or "")
-    ok = r.returncode == 0 and "BAD" not in text and "FAIL" not in text and text.count("  ok ") >= 15
-    out["drafts"] = {"ok": ok, "ok_lines": text.count("  ok "), "tail": text[-600:]}
+    bad = [ln for ln in text.splitlines() if ln.startswith("  BAD") or ln.startswith("  FAIL")]
+    ok = r.returncode == 0 and not bad and text.count("  ok ") >= 15
+    out["drafts"] = {"ok": ok, "ok_lines": text.count("  ok "), "bad_lines": bad, "tail": text[-600:]}
     return ok
 
 
