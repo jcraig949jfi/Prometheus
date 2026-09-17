@@ -1,6 +1,6 @@
 # Mnemosyne / PEW - status
 
-Currency: 2026-09-17 06:15 local (instance m2-9c10ae00; O2 shipped). Updated at least
+Currency: 2026-09-17 10:05 local (instance m2-9c10ae00; pre-Campaign-4 repair DONE, surface FROZEN). Updated at least
 every four hours of activity. The 2026-09-11 status is superseded where it
 says the service runs on M1; everything else it recorded stands as history.
 
@@ -8,12 +8,14 @@ says the service runs on M1; everything else it recorded stands as history.
 
     PEW service      http://127.0.0.1:8377 on M2 (SPECTREX5), bound 0.0.0.0
                      so M2 seats use 127.0.0.1 and LAN peers 192.168.1.191
-                     schema 4, ontology 7 in the registry (code constant
-                     still 2, MNE-19), contract pew.fossil.v2, closure
-                     pew.closure.v0, migrations through 013
+                     schema 5 (migrations 014, 015, 2026-09-17), ontology 7 in
+                     the registry (code constant still 2, MNE-19), contract
+                     pew.fossil.v2, closure pew.closure.v0; the store is
+                     ATTESTED before the port binds (health.store)
     serving from     the pinned worktree mnemosyne-pew (host convention
                      D:\Prometheus-worktrees\mnemosyne-pew\evidence_wiki)
-                     detached at c46a882e9, clean; workspace_known true
+                     detached at f46e821e0, clean; workspace_known true;
+                     pid 19624 since 2026-09-17 09:50:00
     store            the CANONICAL store: PostgreSQL 17 prometheus_fire on
                      M1 (192.168.1.202), db_system_id 7628127204585430828,
                      attested by the service (S2) on every battery run
@@ -61,17 +63,52 @@ says the service runs on M1; everything else it recorded stands as history.
                               rehearsed); destination: M2 unless a
                               central-services host is imminent
 
-## Last verified (2026-09-16, from the task worktree, against the
-## deployed service at 569a675f7)
+## Last verified (2026-09-17 07:1x, from the task worktree, against the
+## deployed service at 8665b1bdf)
 
     pew_battery 17/17, seam 12/12, closure 19/19, lineage 14/14 + 1 SKIP
-    (no peer engine reachable), h0h5_refs 16/16, ecology selector 7/7,
-    minted player round trip 7/7; unit tests 13 passed 2 skipped (the two
-    live-qualification scripts, opt-in since today), watchdog 9/9.
-    Watchdog live tick: `ok  health 23ms  hybrid search 1223ms`.
-    S2 cheat: naming the fork environment against this service FAILS.
+    (no peer engine reachable), h0h5_refs 16/16, campaign release check
+    15/15, ecology selector 7/7, minted player 7/7; projections
+    rebuild-check equal x3; unit tests 30 passed 2 skipped, watchdog 9/9,
+    base-role 11/11. Watchdog live tick: `ok  health 31ms  hybrid search
+    83ms`. S2 cheat: naming the fork FAILS. Wrong-store startup: REFUSED
+    (exit 1 before bind).
 
-## Changed today
+## Pre-Campaign-4 repair (2026-09-17 09:xx; order s4) -- FROZEN
+
+    surface       docs/point_release/CAMPAIGN4_FROZEN_SURFACE.{md,json},
+                  digest sha256:0ba00db3481f...; tests/test_frozen_surface.py
+                  fails on any drift
+    frozen ids    schema 5 (014+015); reader ew.campaign_ingest/1.3; builder
+                  ew.projections/1.0; reach_level v1, corridor_edge v1 (v0
+                  SUPERSEDED, kept); inbox pew.events.v1; thresholds 0.5 /
+                  0.45 / 0.90 + held-out confirmation
+    repairs       closure verify timeout 6 s -> 30 s + one retry (Daedalus
+                  #345; a stall wrote UNVERIFIED silently); content-duplicate
+                  sequences recorded (Vivarium #335, migration 015);
+                  foundry_profile scheme tag (Proteus #339)
+    acceptance    batteries green after restart; release check 16/16;
+                  second ingest 0 new (C3/C2/C1); rebuild digests identical
+                  to the point-release build; post-015 restore qualified
+    receipt       docs/point_release/PEW_REPAIR_RECEIPT_2026-09-17.json;
+                  dispositions PEW_STAGE3_DISPOSITIONS.md
+
+## Point release (2026-09-17; docs/point_release/PEW_RELEASE_PACKET.md)
+
+    ingested      campaigns 1-3 -> 26,636 campaign_observations (cmp3
+                  19,436; cmp2 5,629; cmp1 1,352; other producers 219);
+                  second pass 0 new; 278 checkpoints; 0 conflicts
+    projections   reach_level v1 (agrees with producer 1265/1265),
+                  reach_level v0 SUPERSEDED (156 rows differ; 126 = D3-006
+                  class), corridor_edge v1; rebuild equal
+    routes        campaign/observations, campaign/summary, projections,
+                  ingestion/*, events (outbox inbox), release
+    migration     014 at 06:50:07 against backup pewbk-20260917T064348;
+                  post-migration backup pewbk-20260917T070006 restored
+                  RESTORE_VERIFIED 171/171
+    gate (s22)    PEW: deployed, restarted, qualified -- reported #33x
+
+## Changed 2026-09-16
 
     guard       ew.workspace fails closed when git does not answer
     watchdog    one script, both machines; rule-10 bound enforced on M2;

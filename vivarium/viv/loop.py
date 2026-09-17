@@ -299,7 +299,9 @@ class Vivarium:
                 insecure=str(self.cfg.get("sfe_insecure", "")).strip().lower()
                          in ("1", "true", "yes", "on"),
                 worker_id=self.worker_id, log=self.log,
-                lease_s=float(self.cfg.get("sfe_lease_s", 120.0)))
+                lease_s=float(self.cfg.get("sfe_lease_s", 120.0)),
+                # session affinity keys, host-local, outside the repo (s14 canary)
+                session_store=os.path.join(self.var_dir, "sessions"))
         return self._runner
 
     def pew(self):
@@ -391,6 +393,14 @@ class Vivarium:
                 return fn()
             return self.attempts.step(conn, ctx, kind, fn, parts=list(parts),
                                       replayable=replayable, verify=verify)
+
+        def prior(kind, parts=()):
+            """A prior attempt's result for this key, or None (a READ; the
+            runner uses it to adopt the session a prior world lives in)."""
+            if ctx is None or not ctx.enabled:
+                return None
+            return self.attempts.prior_result(ctx, kind, list(parts))
+        record.prior = prior
         return record
 
     def _evaluate_gates(self, conn, row, phase: str) -> Optional[dict]:
@@ -452,8 +462,13 @@ class Vivarium:
         if ctx is None or not ctx.enabled:
             return
         for item in getattr(result, "interventions", None) or []:
+            # one application per repeat is one receipt: the producer's id is
+            # suffixed with the repeat it was applied in (#r<n>), so two repeats
+            # of one declared intervention are two rows, never a collision
+            base = str(item.get("intervention_id") or item.get("kind") or _bundle.UNKNOWN)
+            rid = "%s#r%s" % (base, item.get("repeat_index")) if item.get("repeat_index") is not None else base
             self.attempts.intervention_receipt(
-                conn, ctx, intervention_id=str(item.get("intervention_id") or "repeat%s:%s" % (item.get("repeat_index"), item.get("kind"))),
+                conn, ctx, intervention_id=rid,
                 kind=str(item.get("kind") or _bundle.UNKNOWN), writer="executor",
                 intended=item.get("intended") or {}, realised=item.get("realised") or {},
                 target={"world_id": result.world_id, "repeat_index": item.get("repeat_index")},
@@ -595,8 +610,13 @@ class Vivarium:
         # keyed step row (NEW / REUSED / REPLAYED / RECOMPUTED / FAILED).
         grant = self._grant or ClaimGrant(experiment_id=eid, worker_id=self.worker_id,
                                           claimed_at=_utcnow())
+        labels = None
+        if self._ctx is not None and self._ctx.enabled:
+            # Stage 3 D7: the engine carries an OPAQUE coordinate for this
+            # seat's execution/attempt ids (schema 9 `labels`); no meaning
+            labels = {"vivarium.execution_id": eid, "vivarium.attempt": str(self._ctx.attempt_number)}
         return self.runner().run(request, on_running=on_running, grant=grant,
-                                 steps=self._recorder(conn))
+                                 steps=self._recorder(conn), labels=labels)
 
     # =====================================================================
     # STAGE 5 -- COLLECT.  Assemble what was observed. Invent nothing.
@@ -932,7 +952,9 @@ class Vivarium:
 
         # --- validate (still CLAIMED: a refusal never became `running`) ---
         try:
-            spec = record("validate", lambda: self.validate(row))
+            # validate is PURE in the row (spec + hash): a prior attempt's
+            # result is REUSED without a verifier; nothing engine-side depends on it
+            spec = record("validate", lambda: self.validate(row), replayable=True)
         except Exception as exc:                    # noqa: BLE001
             self._close_attempt(conn, "INSTRUMENT_INVALID", extra={"reason": str(exc)[:400]})
             self.finalize_failure(conn, eid, kind="spec_rejected",
@@ -1002,6 +1024,7 @@ class Vivarium:
         eid = str(row["experiment_id"])
         partial = exc.partial
         reason = {"ENGINE_TRANSPORT": "ENGINE_TRANSPORT", "LEASE_LOST": "ENGINE_TRANSPORT",
+                  "ENGINE_REJECTED": "EXECUTOR_ERROR",            # the engine refused OUR request (4xx)
                   "EXECUTOR_ERROR": "EXECUTOR_ERROR", "EXECUTOR_NOT_IMPLEMENTED": "INSTRUMENT_INVALID",
                   "PREFLIGHT_REJECTED": "INSTRUMENT_INVALID", "UNCLAIMED_EXECUTION": "INSTRUMENT_INVALID",
                   "BUDGET_EXCEEDED": "BUDGET_EXHAUSTED"}.get(exc.failure_class or "", "EXECUTOR_ERROR")

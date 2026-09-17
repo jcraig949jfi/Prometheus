@@ -105,6 +105,9 @@ CONSUMER_ROUTES: Tuple[str, ...] = (
     "GET /v2/worlds/{wid}",
     "GET /v2/worlds/{wid}/experiments/{eid}",
     "GET /v2/worlds/{wid}/observations",
+    "GET /v2/work/{work_id}/attestation",      # NEW ATTEMPT: is the prior work item COMPLETED (s14 canary)
+    "GET /v2/worlds",                          # NEW ATTEMPT: recover an unrecorded world by name (s14 canary D)
+    "GET /v2/worlds/{wid}/experiments",        # NEW ATTEMPT: recover an unrecorded experiment by spec_hash
     "GET /v2/worlds/{wid}/artifacts/{aid}/content",
     "GET /v2/worlds/{wid}/events",
     "GET /v2/worlds/{wid}/experiments/{eid}/audit-envelope",

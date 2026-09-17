@@ -15,10 +15,12 @@ import base64
 import binascii
 import hashlib
 import logging
+import queue
 import secrets
 from typing import Any, Literal, Optional
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query
+from starlette.concurrency import run_in_threadpool
 from pydantic import BaseModel, ConfigDict, Field
 
 from sfe import release
@@ -454,6 +456,7 @@ class WorkFail(_Body):
 
 
 def create_app(db_path: str, *, registration_open: bool = True,
+               checkpoint_interval_s: float = 2.0,
                session_enforcement: str = "advisory",
                science_profile: str = "warn",
                max_artifact_bytes: Optional[int] = None,
@@ -517,9 +520,16 @@ def create_app(db_path: str, *, registration_open: bool = True,
             # the session key's fingerprint (never a credential); the idem key
             # is what a later reader joins to the ledger on.
             sk = request.headers.get("X-SFE-Session")
-            rid = journal.intent(route="%s %s" % (request.method, request.url.path),
-                                 client=("sfp:" + key_fingerprint(sk)) if sk else None,
-                                 idem_key=request.headers.get("Idempotency-Key"))
+            # 9.0.1: the journal append is a synchronous file write; it used
+            # to run ON the event loop (py-spy caught the loop thread inside
+            # attestation._append during a stall), where a slow disk stalls
+            # EVERY route. run_in_threadpool keeps the ordering guarantee
+            # (the intent is on disk before the handler runs) and frees the
+            # loop.
+            rid = await run_in_threadpool(
+                journal.intent, route="%s %s" % (request.method, request.url.path),
+                client=("sfp:" + key_fingerprint(sk)) if sk else None,
+                idem_key=request.headers.get("Idempotency-Key"))
         app.state.counters["requests"] += 1
         try:
             response = await call_next(request)
@@ -527,7 +537,7 @@ def create_app(db_path: str, *, registration_open: bool = True,
             if rid is not None:
                 # a lock timeout arrives here as sqlite3.OperationalError; the
                 # refusal is recorded where the lock cannot block it
-                journal.refused(rid, reason="unhandled:%s:%s" % (
+                await run_in_threadpool(journal.refused, rid, reason="unhandled:%s:%s" % (
                     type(exc).__name__, str(exc)[:80]))
             app.state.counters["responses_5xx"] += 1
             # The RESPONSE stays deliberately opaque -- it must not leak
@@ -549,9 +559,11 @@ def create_app(db_path: str, *, registration_open: bool = True,
                 if response.status_code < 400:
                     # the handler's ledger COMMIT has returned by now: this
                     # relays the ledger's answer, it does not guess
-                    journal.effected(rid, kind="%s %s" % (request.method, request.url.path))
+                    await run_in_threadpool(journal.effected, rid,
+                                            kind="%s %s" % (request.method, request.url.path))
                 else:
-                    journal.refused(rid, reason="http_%d" % response.status_code)
+                    await run_in_threadpool(journal.refused, rid,
+                                            reason="http_%d" % response.status_code)
         if rid is not None:
             response.headers["X-SFE-Request-Id"] = rid
         response.headers["X-SFE-Engine-Source-Hash"] = release.ENGINE_SOURCE_HASH
@@ -562,15 +574,59 @@ def create_app(db_path: str, *, registration_open: bool = True,
     boot = Foundry(db_path, science_profile=science_profile,
                    max_artifact_bytes=max_artifact_bytes)
     boot.close()
+    # 9.0.1: WAL checkpoints happen HERE and nowhere else -- a daemon thread on
+    # its own connection, PASSIVE every ~2 s, TRUNCATE only when clean; state
+    # on /v2/health. Request-path handles have wal_autocheckpoint=0.
+    from sfe.store import Checkpointer
+    app.state.checkpointer = Checkpointer(db_path, interval_s=checkpoint_interval_s).start()
+
+    # 9.0.1 (2026-09-17, SFE_LONG_RUN_REPORT.md s7). Before this, get_foundry
+    # constructed a NEW Foundry -- a new Store, a new SQLite connection,
+    # PRAGMA journal_mode=WAL -- on EVERY request and closed it after. Store's
+    # own docstring says "one per worker". Measured at 20 worlds x 1,000
+    # generations: ~115,000 open/close pairs; when the LAST connection closed,
+    # SQLite checkpointed and truncated the whole WAL of an 80 MB ledger, and
+    # every request arriving in that window stalled 5-13 s (0.13% of calls,
+    # reads and writes alike); the next open could also fail outright with
+    # "database is locked" on a lock path the busy handler does not retry
+    # (two 500s in the no-reader control).
+    #
+    # Shape of the fix: a CHECKOUT/CHECKIN POOL, not a thread-local. FastAPI
+    # runs a sync dependency and a sync endpoint on DIFFERENT threadpool
+    # threads, so a thread-local keyed on the dependency's thread handed one
+    # connection to two concurrent requests ("cannot start a transaction
+    # within a transaction" at request 1,751 of the first measurement of the
+    # thread-local version). A request holds a Foundry exclusively from
+    # dependency entry to response, then returns it; nothing is closed per
+    # request; the pool grows to the concurrency actually seen (bounded by
+    # the threadpool, ~40) and no further. The boot-time Foundry above still
+    # runs the migration once, before any request.
+    pool: "queue.LifoQueue[Foundry]" = queue.LifoQueue()
+    # bump app.state.foundry_generation to retire every pooled handle on its
+    # next checkout (a ledger swap, or a test that needs a fresh Store with a
+    # patched timeout); nothing is closed under a request's feet.
+    app.state.foundry_generation = 0
 
     def get_foundry():
-        f = Foundry(app.state.db_path,
-                    science_profile=app.state.science_profile,
-                    max_artifact_bytes=app.state.max_artifact_bytes)
+        gen = app.state.foundry_generation
+        f = None
+        while f is None:
+            try:
+                f = pool.get_nowait()
+            except queue.Empty:
+                break
+            if getattr(f, "_generation", None) != gen                     or f.store.db_path != str(app.state.db_path):
+                f.close()
+                f = None
+        if f is None:
+            f = Foundry(app.state.db_path,
+                        science_profile=app.state.science_profile,
+                        max_artifact_bytes=app.state.max_artifact_bytes)
+            f._generation = gen
         try:
             yield f
         finally:
-            f.close()
+            pool.put(f)
 
     def auth(authorization: Optional[str] = Header(default=None),
              f: Foundry = Depends(get_foundry)) -> str:
@@ -824,6 +880,7 @@ def create_app(db_path: str, *, registration_open: bool = True,
                        "observations_last_hour": obs_h,
                        "work_items": work},
             "write_lock": WRITE_LOCK_STATS.snapshot(),
+            "checkpointer": app.state.checkpointer.snapshot(),
             "attestation": {"dir": j.directory, "degraded": j.degraded,
                             "degraded_reason": j.degraded_reason,
                             "counts": dict(j.counts),
@@ -1271,9 +1328,12 @@ def create_app(db_path: str, *, registration_open: bool = True,
 
     @app.post("/v2/worlds/{wid}/import")
     def import_artifact(wid: str, body: ImportArtifact, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),
-                        f: Foundry = Depends(get_foundry)):
+                        f: Foundry = Depends(get_foundry),
+                        idem: Optional[str] = Header(default=None,
+                                                     alias="Idempotency-Key")):
         return f.import_artifact(wid, body.source_world, body.source_artifact,
-                                 client_id=cid)
+                                 client_id=cid, idem_key=idem,
+                                 request_hash=_req_hash("import", wid, body))
 
     @app.post("/v2/worlds/{wid}/budget/consume")
     def consume(wid: str, body: ConsumeBudget, _sess: dict = Depends(session_ctx), cid: str = Depends(auth),

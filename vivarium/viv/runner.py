@@ -164,6 +164,27 @@ class _LeaseKeeper:
                 "error": self.error}
 
 
+class _NotClaimable(Exception):
+    """Raised inside the claim step; typed by the caller."""
+
+
+class _NoLease:
+    """Stands in for the lease keeper when a prior attempt already completed
+    the work item: there is no live claim to renew."""
+    renewals = 0
+    error = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+    def status(self) -> dict:
+        return {"renewals": 0, "interval_s": None, "lease_s": None, "lost": False,
+                "error": None, "note": "work item completed by a prior attempt; no lease held"}
+
+
 @dataclass
 class RunResult:
     world_id: Optional[str] = None
@@ -265,7 +286,8 @@ class SfeRunner:
                  client_id: Optional[str] = None,
                  limits: Optional[_artifacts.Limits] = None,
                  log=lambda *_a: None,
-                 require_grant: bool = True):
+                 require_grant: bool = True,
+                 session_store: Optional[str] = None):
         from sfclient import EngineClient          # noqa: PLC0415
         # D7: the production client commits worlds ONLY for claimed rows.
         # A caller may waive the grant for a marked identity only; waiving it
@@ -305,6 +327,19 @@ class SfeRunner:
                 "sfe-identity --ensure")
         self.version = self.c.version()
         self._session_id: Optional[str] = None
+        # s14 canary (2026-09-17): the engine binds a world to the SESSION that
+        # created it (403 SESSION_MISMATCH from any other session, reads
+        # included). A relaunched consumer opened a new session, so every
+        # replay verifier failed and attempt 2 RECOMPUTED the world -- a
+        # duplicate world on the ledger with the first attempt's observations
+        # orphaned in the old one. The affinity key is a bearer capability the
+        # client API says to "hand to another process"; it is held HERE, on
+        # this host, outside the repo and outside the queue tables (never in a
+        # step result, never in a receipt), keyed by session id, so the next
+        # process of this worker can adopt the session its predecessor's
+        # worlds live in. Absent the key, a prior world is honestly unreachable
+        # and the step is RECOMPUTED with the reason logged.
+        self.session_store = Path(session_store) if session_store else None
 
     # -- identity ---------------------------------------------------------
     @property
@@ -317,7 +352,57 @@ class SfeRunner:
     def session(self, name: str) -> str:
         if self._session_id is None:
             self._session_id = self.c.create_session(name)
+            self._store_session_key(self._session_id)
         return self._session_id
+
+    def _store_session_key(self, session_id: str) -> None:
+        store = getattr(self, "session_store", None)          # doubles built without __init__
+        key = getattr(self.c, "session_key", None)
+        if not (store and session_id and key):
+            return
+        try:
+            store.mkdir(parents=True, exist_ok=True)
+            (store / (session_id + ".key")).write_text(key, encoding="utf-8")
+        except OSError as exc:
+            self.log("[viv] could not persist the session key for %s: %s "
+                     "(a relaunch will not be able to adopt this session)" % (session_id, exc))
+
+    def _held_session_key(self, session_id: Optional[str]) -> Optional[str]:
+        store = getattr(self, "session_store", None)
+        if not (store and session_id):
+            return None
+        try:
+            return (store / (session_id + ".key")).read_text(encoding="utf-8").strip() or None
+        except OSError:
+            return None
+
+    def adopt_prior_session(self, prior_world: Optional[dict]) -> Optional[dict]:
+        """Before a run: if a prior attempt's world names a session whose key
+        this host holds, ADOPT that session (the client sends its key from now
+        on) so the world/experiment/observations verifiers can read it and the
+        run continues in it. Returns a record of what happened, for the log."""
+        sid = (prior_world or {}).get("session_id") if isinstance(prior_world, dict) else None
+        if not sid:
+            return None
+        if sid == getattr(self, "_session_id", None):
+            return {"session_id": sid, "adopted": False, "reason": "already this session"}
+        key = self._held_session_key(sid)
+        if not key:
+            return {"session_id": sid, "adopted": False,
+                    "reason": "no key held on this host; the prior world is unreachable (SESSION_MISMATCH) and will be recomputed"}
+        prev_key, prev_sid = getattr(self.c, "session_key", None), getattr(self, "_session_id", None)
+        self.c.session_key = key
+        self._session_id = sid
+        # a held key is adopted only if the engine accepts it for THAT world;
+        # a stale or wrong key would otherwise 403 every later write
+        try:
+            self.c.get_world(prior_world["world_id"])
+        except Exception as exc:                                     # noqa: BLE001
+            self.c.session_key, self._session_id = prev_key, prev_sid
+            return {"session_id": sid, "adopted": False,
+                    "reason": "held key rejected by the engine for %s (%s); the prior world will be recomputed"
+                              % (prior_world.get("world_id"), str(exc)[:80])}
+        return {"session_id": sid, "adopted": True}
 
     @property
     def session_lineage(self) -> dict:
@@ -334,30 +419,94 @@ class SfeRunner:
     # noqa: C901 -- the repeat loop is linear and reads top-to-bottom
     # -- step bodies and verifiers (point release) ---------------------------
     @staticmethod
-    def _create_world(c, sid, name, seed_root) -> dict:
-        w = c.create_world(sid, name, seed_root=seed_root)
+    def _create_world(c, sid, name, seed_root, labels=None) -> dict:
+        """Create + start. `labels` is the OPAQUE coordinate the engine carries
+        for this seat since schema 9 ({"vivarium.execution_id", "vivarium.attempt"};
+        Stage 3 D7). Passed only when the client's create_world accepts it;
+        otherwise recorded as not applied, never silently dropped."""
+        import inspect
+        applied = False
+        try:
+            accepts = labels and "labels" in inspect.signature(c.create_world).parameters
+        except (TypeError, ValueError):
+            accepts = False
+        if accepts:
+            w = c.create_world(sid, name, seed_root=seed_root, labels=labels)
+            applied = True
+        else:
+            w = c.create_world(sid, name, seed_root=seed_root)
         c.start(w["world_id"])
-        return {"world_id": w["world_id"]}
+        return {"world_id": w["world_id"], "labels": labels or {}, "labels_applied": applied,
+                "session_id": sid}
 
     @staticmethod
-    def _world_alive(c, prior) -> bool:
+    def _world_alive(c, prior, *, name=None, sid=None):
+        """Alive by id; with NO recorded result, by NAME among this session's
+        worlds (the name is derived from the sealed spec), returning the
+        recovered world record so no second world is minted."""
         try:
-            return str(c.get_world(prior["world_id"]).get("state")) not in ("TERMINATED", "None")
+            if prior is not None:
+                return str(c.get_world(prior["world_id"]).get("state")) not in ("TERMINATED", "None")
+            if not name:
+                return False
+            for w in c.list_worlds():
+                if w.get("name") == name and str(w.get("state")) not in ("TERMINATED", "None") \
+                        and (sid is None or w.get("session_id") == sid):
+                    return {"world_id": w["world_id"], "labels": {}, "labels_applied": False,
+                            "session_id": w.get("session_id"), "recovered_by": "name"}
+            return False
         except Exception:                                    # noqa: BLE001
             return False
 
     @staticmethod
-    def _experiment_readable(c, wid, prior) -> bool:
+    def _experiment_readable(c, wid, prior, *, spec_hash=None):
+        """Readable by id; with NO recorded result, by spec_hash among the
+        world's experiments (one design commits one experiment per world),
+        returning the recovered ids so no second experiment is committed."""
         try:
-            return bool(c.get_experiment(wid, prior["exp_id"]))
+            if prior is not None:
+                return bool(c.get_experiment(wid, prior["exp_id"]))
+            if not spec_hash:
+                return False
+            for e in c.list_experiments(wid):
+                if e.get("spec_hash") == spec_hash:
+                    return {"hyp_id": e.get("hyp_id"), "pred_id": e.get("pred_id"), "exp_id": e["exp_id"],
+                            "recovered_by": "spec_hash"}
+            return False
         except Exception:                                    # noqa: BLE001
             return False
 
     @staticmethod
-    def _observation_present(c, wid, prior_obs_id) -> bool:
+    def _work_completed(c, prior) -> bool:
+        """The prior attempt's work item is COMPLETED on the engine: its claim
+        is replayed (no second claim exists for a completed item; the
+        trajectory it holds is what the remaining observations cite). Any
+        other status (RETRYABLE after a lease expiry, FAILED, EXPIRED,
+        unknown) -> not replayable -> a fresh claim is attempted."""
         try:
-            return any((o.get("obs_id") or o.get("id")) == prior_obs_id
-                       for o in c.list_observations(wid))
+            a = c.work_attestation(prior["work_id"])
+            return str(a.get("status")) == "COMPLETED"
+        except Exception:                                    # noqa: BLE001
+            return False
+
+    @staticmethod
+    def _observation_present(c, wid, prior_obs_id, *, exp_id=None, repeat_index=None):
+        """Is the prior observation on the engine? With a recorded id: by id.
+        With NO recorded id (the worker died after the engine committed the
+        observation and before the step's result landed -- s14 canary D): by
+        CONTENT, (exp_id, content.repeat_index), returning the recovered obs_id
+        so the step is REPLAYED rather than re-posted (which the engine
+        refuses: one ORIGINAL per experiment, 409)."""
+        try:
+            obs = c.list_observations(wid)
+            if prior_obs_id is not None:
+                return any((o.get("obs_id") or o.get("id")) == prior_obs_id for o in obs)
+            if exp_id is None or repeat_index is None:
+                return False
+            for o in obs:
+                if o.get("exp_id") == exp_id and (o.get("content") or {}).get("repeat_index") == repeat_index:
+                    return o.get("obs_id") or o.get("id") or False
+            return False
         except Exception:                                    # noqa: BLE001
             return False
 
@@ -365,7 +514,8 @@ class SfeRunner:
             on_running: Optional[Callable[[str, dict], None]] = None,
             claim_attempts: int = 40, claim_pause_s: float = 0.25,
             grant: Optional[ClaimGrant] = None,
-            steps: Optional[Callable] = None) -> RunResult:
+            steps: Optional[Callable] = None,
+            labels: Optional[dict] = None) -> RunResult:
         """Execute one request. Accepts ONLY an ExecutionRequest.
 
         The type check is the boundary. A queue row passed here would carry
@@ -422,6 +572,12 @@ class SfeRunner:
         out.attempt_id = request.experiment_id
         meter = _res.Meter(label=sealed).start()
         c = self.c
+        peek = getattr(record, "prior", None)
+        if peek is not None:
+            adopted = self.adopt_prior_session(peek("world", ["plain"]))
+            if adopted:
+                self.log("[viv] prior world's session %s: %s" % (adopted["session_id"],
+                         "ADOPTED (key held on this host)" if adopted["adopted"] else adopted["reason"]))
         sid = self.session("vivarium-%s" % self.worker_id)
 
         # THE WORLD'S SHAPE IS DERIVED FROM THE SEALED SPEC, never supplied.
@@ -442,8 +598,9 @@ class SfeRunner:
                     "enforcement": "enforceable"}})
         else:
             world = record("world", lambda: self._create_world(
-                c, sid, _spec.world_name(sealed), spec["world"]["seed_root"]),
-                parts=["plain"], replayable=True, verify=lambda r: self._world_alive(c, r))
+                c, sid, _spec.world_name(sealed), spec["world"]["seed_root"], labels=labels),
+                parts=["plain"], replayable=True,
+                verify=lambda r: self._world_alive(c, r, name=_spec.world_name(sealed), sid=sid))
         wid = world["world_id"]
         out.world_id = wid
 
@@ -494,7 +651,7 @@ class SfeRunner:
 
         committed = record("experiment", _commit_experiment, parts=[wid],
                            replayable=True,
-                           verify=lambda r: self._experiment_readable(c, wid, r))
+                           verify=lambda r: self._experiment_readable(c, wid, r, spec_hash=sealed))
         hyp_id, pred_id, exp_id = committed["hyp_id"], committed["pred_id"], committed["exp_id"]
         out.sfe_experiment_id = exp_id
 
@@ -559,10 +716,18 @@ class SfeRunner:
                 out.anchor = self._failure_anchor(wid, exp_id)
             except Exception:                       # noqa: BLE001, S110
                 pass
+            # A 4xx is the ENGINE'S ANSWER to a request of ours, not a
+            # transport failure: the s14 canary's 409 (one ORIGINAL observation
+            # per experiment) was classed ENGINE_TRANSPORT, which is the
+            # consumer's declared HALT class -- it parked and paged Daedalus
+            # for a defect that was Vivarium's. ENGINE_REJECTED fails the row,
+            # typed, and parks nothing. 5xx and socket errors stay transport.
+            status = getattr(exc, "status", None)
+            rejected = isinstance(status, int) and 400 <= status < 500
             raise ExecutionFailure(
                 "%s after the experiment was committed: %s"
                 % (type(exc).__name__, exc), partial=out,
-                failure_class="ENGINE_TRANSPORT") from exc
+                failure_class="ENGINE_REJECTED" if rejected else "ENGINE_TRANSPORT") from exc
 
     # -- preflight ---------------------------------------------------------
     def _release(self, c, reservations) -> list:
@@ -768,19 +933,48 @@ class SfeRunner:
         """Everything past the irreversible commit. Split out so a single
         try/except can guarantee that no failure here escapes unclassified."""
         plan = _spec.repeat_plan(spec)
-        claim = None
-        for _ in range(claim_attempts):
-            claim = c.claim(self.worker_id, world_id=wid,
-                            lease_s=self.lease_s)
-            if claim is not None:
-                break
-            time.sleep(claim_pause_s)
-        if claim is None:
+        # THE CLAIM IS A KEYED STEP (s14 canary, 2026-09-17). ONE work item
+        # carries the whole trajectory and the engine completes it ONCE; a
+        # prior attempt that already completed it leaves nothing claimable, so
+        # a NEW ATTEMPT that re-claimed blindly failed WORK_NOT_CLAIMABLE on
+        # production. Replayed when the prior item is COMPLETED (then the
+        # lease keeper and complete() are skipped and the observations cite
+        # that item); recomputed (a fresh claim) when the prior lease expired
+        # into RETRYABLE; refused, typed, when nothing is claimable.
+        peek = getattr(record, "prior", None)
+        prior_claim = peek("claim", ["plain"]) if peek is not None else None
+        # a dead attempt's lease may still be live for up to lease_s: wait it out
+        attempts_n = claim_attempts
+        pause = claim_pause_s
+        if prior_claim and not prior_claim.get("completed"):
+            attempts_n = max(claim_attempts, int((self.lease_s + 30.0) / 2.0))
+            pause = max(claim_pause_s, 2.0)
+
+        def _claim():
+            claim = None
+            for _ in range(attempts_n):
+                claim = c.claim(self.worker_id, world_id=wid, lease_s=self.lease_s)
+                if claim is not None:
+                    break
+                time.sleep(pause)
+            if claim is None:
+                raise _NotClaimable()
+            return {"work_id": claim["work_id"], "claim_id": claim["claim_id"], "completed": False}
+
+        try:
+            claim = record("claim", _claim, parts=["plain"], replayable=True,
+                           verify=lambda r: self._work_completed(c, r))
+        except _NotClaimable:
             out.anchor = self._failure_anchor(wid, exp_id)
             raise ExecutionFailure(
                 "no work item became claimable for exp %s in world %s"
                 % (exp_id, wid), partial=out, failure_class="WORK_NOT_CLAIMABLE")
         work_id, claim_id = claim["work_id"], claim["claim_id"]
+        # replayed from a prior attempt => the engine already holds the
+        # completed trajectory; runs below are RECOMPUTED locally (same seeds)
+        # for the observations not yet posted, and nothing is completed twice
+        work_done_before = (bool(prior_claim) and claim.get("work_id") == prior_claim.get("work_id")
+                            and self._work_completed(c, claim))
         out.work_id = work_id
         out.run_id = "%s:%s" % (exp_id, work_id)
 
@@ -789,7 +983,7 @@ class SfeRunner:
         # refused by the engine -- a correct computation with no fossil.
         keeper = _LeaseKeeper(c, work_id=work_id, worker_id=self.worker_id,
                               claim_id=claim_id, lease_s=self.lease_s,
-                              log=self.log)
+                              log=self.log) if not work_done_before else _NoLease()
         # ONE state object for the whole run under `persist`; a fresh one per
         # repeat under `reset`. Which of those happens is declared, never
         # inferred from whether the kind happens to have state.
@@ -837,8 +1031,9 @@ class SfeRunner:
             # Tell the engine before telling the queue: the ledger must not
             # believe a work item is still in flight after Vivarium gave up.
             try:
-                c.fail(work_id, self.worker_id, claim_id,
-                       "vivarium executor error: %s" % exc, retry=False)
+                if not work_done_before:
+                    c.fail(work_id, self.worker_id, claim_id,
+                           "vivarium executor error: %s" % exc, retry=False)
             except Exception:                       # noqa: BLE001, S110
                 pass
             out.anchor = self._failure_anchor(wid, exp_id)
@@ -900,8 +1095,13 @@ class SfeRunner:
         if out.resources:
             result["resources"] = out.resources
         out.work_result = result
-        completed = c.complete(work_id, self.worker_id, claim_id, result,
-                               attestation={"executed_config": spec})
+        if work_done_before:
+            completed = {"science": {"replayed_work": True, "profile_findings": []}}
+            self.log("[viv] work item %s was COMPLETED by a prior attempt; not completed "
+                     "again (runs recomputed locally for the observations still to post)" % work_id)
+        else:
+            completed = c.complete(work_id, self.worker_id, claim_id, result,
+                                   attestation={"executed_config": spec})
         out.science = (completed or {}).get("science") or {}
         for f in (out.science.get("profile_findings") or []):
             self.log("[viv] SFE SCIENCE FINDING %s work=%s exp=%s: %s"
@@ -931,7 +1131,8 @@ class SfeRunner:
                     replication=rep["repeat_index"] > 0)
 
             oid = record("observe", _post, parts=[rep["repeat_index"]], replayable=True,
-                         verify=lambda r, w=wid: self._observation_present(c, w, r))
+                         verify=lambda r, w=wid, i=rep["repeat_index"]: self._observation_present(
+                             c, w, r, exp_id=exp_id, repeat_index=i))
             obs_ids.append(oid)
         out.obs_ids = obs_ids
         obs_id = obs_ids[0] if obs_ids else None
@@ -952,8 +1153,16 @@ class SfeRunner:
         out.outcome = outcome
         out.order_check = self._verify_order(wid, obs_ids) if obs_ids else {"checked": False}
 
-        out.anchor = self._anchor(wid, work_id=work_id, obs_id=obs_id,
-                                  exp_id=exp_id)
+        if obs_ids:
+            out.anchor = self._anchor(wid, work_id=work_id, obs_id=obs_id,
+                                      exp_id=exp_id)
+        else:
+            # COMPLETED + CENSORED with zero observations (the budget stopped
+            # the loop before the first repeat): the fossil anchors on the
+            # committed EXPERIMENT, the same anchor a boundary-crossing failure
+            # uses -- an attested attempt, and nothing invented about a
+            # measurement that never happened.
+            out.anchor = self._failure_anchor(wid, exp_id)
         try:
             final_env = self.audit_envelope(wid, exp_id)
             envelope = {"envelope_hash": final_env.get("envelope_hash"),

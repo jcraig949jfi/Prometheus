@@ -1,0 +1,96 @@
+{
+  "schema": "vivarium_deploy_window.v1",
+  "window": "C4-20260917-W1",
+  "at": "2026-09-17T13:46:37Z",
+  "sha": "891fee427",
+  "host": "SPECTREX5",
+  "steps": {
+    "drafts": "OK",
+    "promote": "OK",
+    "migrate": "OK",
+    "verify": "OK"
+  },
+  "drafts": {
+    "ok": true,
+    "ok_lines": 16,
+    "bad_lines": [],
+    "tail": " REPLAYED step pointing at the same key in attempt 1\n  ok  VIV22 -> VIV22: replay_of_step must name a prior step with the same key in the same row (never another design)\n  ok  sequences [('e1', 1), ('e2', 2)]\n  ok  VIV42 -> VIV42: 1 lower sequence(s) of this stream are still PENDING; delivery is in order\n  ok  in-order delivery\n  ok  VIV40 -> VIV40: outbox rows are never deleted (a dropped event is a lost fossil)\n  ok  VIV15 -> VIV15: attempts are never deleted\n  ok  backfill [(1, 'FAILED', 'UNKNOWN', '007')] (reason UNKNOWN although error text says BUDGET_EXCEEDED)\ndropped viv_draft_7bbe84cb\n"
+  },
+  "promote": {
+    "ok": true,
+    "files": {
+      "006_execution_attempts_and_steps.sql": {
+        "sha256": "sha256:cc3d7401befaa77ea5c10598e314b89be9c0f150ac52fafd31cf8e18caee9a47",
+        "same_as_draft": true
+      },
+      "007_backfill_attempts_reversible.sql": {
+        "sha256": "sha256:d877f86d73779a3ab4bf98d3320e9daa51be818b17e7c690fbd03f694d64bdbb",
+        "same_as_draft": true
+      },
+      "008_bundles_receipts_gates.sql": {
+        "sha256": "sha256:14f8fe38c05b58dc52db5f723de02191426322d5e8df4e91524f36e24d0f13f9",
+        "same_as_draft": true
+      },
+      "009_pew_outbox.sql": {
+        "sha256": "sha256:6caa39d4bdb2cada272d0709bf69b44204522d13282f04438f1192c98ed462d0",
+        "same_as_draft": true
+      }
+    }
+  },
+  "migrate": {
+    "ok": true,
+    "applied": [
+      "001_vivarium_queue.sql",
+      "002_relations_cadence_idempotency.sql",
+      "003_register_errata.sql",
+      "004_artifact_locators.sql",
+      "005_candidate_set_append_refused.sql",
+      "006_execution_attempts_and_steps.sql",
+      "007_backfill_attempts_reversible.sql",
+      "008_bundles_receipts_gates.sql",
+      "009_pew_outbox.sql"
+    ],
+    "rows_before": 1155,
+    "rows_after": 1155,
+    "terminal_rows": 1150,
+    "attempts_backfilled": 1150,
+    "attempts_unknown_reason": 1150,
+    "steps_fabricated": 0,
+    "old_rows_changed_over_old_columns": [],
+    "old_columns": 28
+  },
+  "verify_old_rows": {
+    "ok": true,
+    "rows": {
+      "8bc6b162-a31b-4ccd-86a8-ef729fc9900c": {
+        "same": true,
+        "captured": true
+      },
+      "fe4dd6e1-96cf-44a4-a079-b5d9768ea699": {
+        "same": true,
+        "captured": true
+      },
+      "fef5fbe0-4f37-426e-bc8b-7ba4872f4ca5": {
+        "same": true,
+        "captured": true
+      },
+      "123ca172-990f-4fcc-a75a-6ba95a0d259b": {
+        "same": true,
+        "captured": true
+      },
+      "1446056a-dfa0-4d61-b611-aedd78c02785": {
+        "same": true,
+        "captured": true
+      },
+      "164b604b-22ab-49db-b84b-b8d3ad78c9a0": {
+        "same": true,
+        "captured": true
+      },
+      "9343f4ea-6699-4b18-94a7-5602b199f940": {
+        "same": true,
+        "captured": true
+      }
+    }
+  },
+  "ok": true
+}
