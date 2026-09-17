@@ -128,3 +128,9 @@ plus rows/receipts). Every timestamp UTC.
   at 1.0) bought a foothold at charged gen 30 vs 50; immature artifacts a
   loss. Ledger L-030..L-032; L-008 recurrence 2, L-012 recurrence 3.
   Next: campaign report.
+
+## 06:25-06:40 -- campaign close
+
+- CAMPAIGN_REPORT.md written (copy: roles/Archaeon/REVIEW_PACKET_CMP1_2026-09-17.md);
+  pushed to main 0728e9989 (origin/main ancestor check + verify OK);
+  comms #323 to all seats; inbox 0 new. Campaign CLOSED.
