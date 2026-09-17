@@ -1,12 +1,12 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:51Z",
- "n": 256,
+ "built": "2026-09-17T23:02Z",
+ "n": 278,
  "by_reason": {
-  "OTHER": 96,
-  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 72,
+  "GENERIC_LANGUAGE_MECHANICS": 43,
+  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 80,
+  "OTHER": 106,
   "BELOW_MEANINGFUL_GRAIN": 14,
-  "GENERIC_LANGUAGE_MECHANICS": 39,
   "DUPLICATES_A_CONTROL": 2,
   "EFFECT_FROM_ENVIRONMENT": 18,
   "INHERITED_FROM_RUNTIME_OR_LIBRARY": 11,
@@ -14,6 +14,22 @@
   "CANNOT_BE_ISOLATED": 2
  },
  "rejected": [
+  {
+   "candidate": "the getters, the two constructors, the Arduino include guard",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:arduino-pid/upstream/tree/PID_v1.cpp:1-27, 117-124",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "arduino-pid"
+  },
+  {
+   "candidate": "'PID' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the four decisions are separable and each has its own history (anti-windup, derivative kick, bumpless transfer, sample-time scaling)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "arduino-pid"
+  },
   {
    "candidate": "demes and deme competition, predator/prey, mating types and sexual birth handlers, tolerance/groups, the energy model, HGT genome fragments, promoters/regulation, resource bins, avatars, multi-process worlds",
    "reason": "OTHER",
@@ -69,6 +85,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "backoff-2.2.1"
+  },
+  {
+   "candidate": "the text of the reports, the input validation subroutines (710, 720), the galaxy setup and display code of Star Trek",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:basic-computer-games-1978/upstream/hammurabi.bas:710-730; vault:basic-computer-games-1978/upstream/superstartrek.bas:820-1300",
+   "note": "presentation",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "basic-computer-games-1978"
+  },
+  {
+   "candidate": "'game' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the loop, the random draws and the grading rule are separable constants and could be varied independently",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "basic-computer-games-1978"
   },
   {
    "candidate": "incremental and generational collection (dirty-page tracking in os_dep.c, GC_collect_a_little), the parallel marker (mark.c 807-1140: work stealing from a shared mark stack), finalisation (finalize.c), thread stop-the-world (pthread_stop_world.c, win32_threads.c), typed and gcj allocation, the malloc/realloc front ends, leak detection, dyn_load",
@@ -463,6 +495,30 @@
    "fossil": "corewar-redcode"
   },
   {
+   "candidate": "the 1969 script (752-1834) and the 1972 script (2246-2922): the keyword / decomposition / reassembly data",
+   "reason": "OTHER",
+   "evidence": "NOT READ; data, not mechanism",
+   "note": "the script is where the behaviour lives; a Stage C comparison against the 1965 MAD-SLIP script (in this atlas) would be a data diff",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cosell-eliza-bbn-lisp-1969"
+  },
+  {
+   "candidate": "the 1972 DOCTOR (1871-2245)",
+   "reason": "OTHER",
+   "evidence": "NOT READ",
+   "note": "a second body; the record says the two are separate and complete",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cosell-eliza-bbn-lisp-1969"
+  },
+  {
+   "candidate": "'ELIZA' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "reading/selection, matching/reassembly and the memory are separable, and the compatibility layer is a fourth thing",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "cosell-eliza-bbn-lisp-1969"
+  },
+  {
    "candidate": "'DES' as one organ",
    "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
    "evidence": "four mechanisms with distinct data/state (above); the Feistel structure and the S-boxes are independently replaceable (later ciphers kept one and changed the other)",
@@ -567,6 +623,22 @@
    "fossil": "dmtcp-3.1.2"
   },
   {
+   "candidate": "model/_model.py (the symbolic model class), simulator.py, the differentiator (NLP sensitivities), approximateMPC (a learned surrogate of the MPC), sampling, graphics, the data class, the examples",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "approximateMPC (a neural surrogate trained on MPC samples) is a mechanism of interest to the resurrection benches: 'replace the solver by a learned map' with the solver as oracle",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "do-mpc"
+  },
+  {
+   "candidate": "'MPC' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the receding-horizon loop, the discretisation, the scenario tree and the estimator are separable classes and settings",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "do-mpc"
+  },
+  {
    "candidate": "tqlrat (rational QL variant)",
    "reason": "EFFECT_FROM_ENVIRONMENT",
    "evidence": "F:/Prometheus/vault/fossils/eispack-netlib-1976/upstream/rs.f: '*  tqlrat encounters catastrophic underflow on the Vax' -- the call is commented out and tql1 substituted; the file tqlrat.f is still in the body, unreachable",
@@ -645,6 +717,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "eliza-weizenbaum-mad-slip-1965"
+  },
+  {
+   "candidate": "the inference rules and their indexing (superposition / paramodulation / equality resolution and factoring, CLAUSES/ and CONTROL/cco_*), term orderings (ORDERINGS/: KBO, LPO), the shared term bank and rewriting (TERMS/), literal selection strategies (che_litselection.c), clause-set features and the auto schedule (che_new_autoschedule.c), the PicoSAT-based SAT check, proof object extraction (PCL2/), the TPTP/CNF front end, the learning modules (LEARN/)",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~290,000 lines); residue",
+   "note": "orderings + superposition are the calculus (Bachmair & Ganzinger 1994) and deserve a DEEP pass of their own; the term bank (perfect sharing) is a representation mechanism worth a cut",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eprover-2.6"
+  },
+  {
+   "candidate": "'theorem prover' / 'saturation' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the loop, the selection heuristic, the calculus, the orderings and the indexing are separable and separately switchable by options",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eprover-2.6"
   },
   {
    "candidate": "t_erfa_c.c / vvd / viv (the validation program)",
@@ -831,6 +919,30 @@
    "fossil": "go-explore-uber-2022"
   },
   {
+   "candidate": "checkdead() and the scheduler bookkeeping it reads (sched.nmidle, nmspinning, locked M counts, timers)",
+   "reason": "OTHER",
+   "evidence": "NOT IN THE BODY (runtime/proc.go); the fixtures name its outputs only",
+   "note": "record note for Techne: the mechanism this specimen is preserved for is not in the vault; the fixtures are the world, the runtime is the organism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "go-runtime-deadlock-fixtures-1.22"
+  },
+  {
+   "candidate": "the crash-handler, panic-traceback and Goexit-ordering programs (RecursivePanic*, GoexitInPanic, PanicAfterGoexit, PanicTraceback, GoschedInPanic, SyscallInPanic, PanicLoop)",
+   "reason": "OTHER",
+   "evidence": "vault:go-runtime-deadlock-fixtures-1.22/upstream/deadlock.go:24-41 (names)",
+   "note": "stimuli for other runtime properties (panic ordering, traceback format), not deadlock",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "go-runtime-deadlock-fixtures-1.22"
+  },
+  {
+   "candidate": "main.go's name -> function registry",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "main.go 1-35",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "go-runtime-deadlock-fixtures-1.22"
+  },
+  {
    "candidate": "do_operator_rec (matching operator parameters against facts and types), the lex/yacc operator and fact readers, useful_facts / delete_useless (irrelevance pruning), the X viewer, constrict (greedy) and build_up_to_plan",
    "reason": "OTHER",
    "evidence": "NOT READ; residue",
@@ -925,6 +1037,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "hopfield-takyamamoto"
+  },
+  {
+   "candidate": "the simulated plant y(t+1) = 1.6065 y(t) - 0.6065 y(t-1) + 0.1065 u(t) + 0.0902 u(t-1) (a discretised first-order-plus-integrator), the square-wave reference, the plotting",
+   "reason": "OTHER",
+   "evidence": "vault:indirect-self-tuning-regulator-liaosteve/upstream/tree/main_code.m:34-45, 60-118",
+   "note": "the WORLD of the script; its constants are the cheat control (the true theta)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "indirect-self-tuning-regulator-liaosteve"
+  },
+  {
+   "candidate": "'self-tuning regulator' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the estimator and the design are separable (direct STRs replace the second; other estimators replace the first)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "indirect-self-tuning-regulator-liaosteve"
   },
   {
    "candidate": "kiss_fftr.c (real-input transform by a half-length complex FFT and a post-twiddle), kiss_fftnd.c (multi-dimensional by row-column), the fixed-point and SIMD macros, the tools (fastfir, psdpng)",
@@ -1093,6 +1221,22 @@
    "note": "the interleaver/concatenation that CCSDS specifies is NOT in the body: only the RS half",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "libfec-karn"
+  },
+  {
+   "candidate": "linpackd.f (the benchmark driver, dgefa, dgesl, matgen, epslon, dmxpy)",
+   "reason": "OTHER",
+   "evidence": "byte-identical to linpackd-netlib-1979's body (md5 e43e84f43cb4997c0c3996c7d673cb3c); cut there (DEEP, two organs)",
+   "note": "DUPLICATE BODY: record defect for Techne -- two specimens carry the same file; the record's lineage describes the library (dgeco, dpofa, dqrdc, dsvdc) which is absent from the body",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "linpack-netlib-1979"
+  },
+  {
+   "candidate": "'LINPACK the library' as described by the record",
+   "reason": "OTHER",
+   "evidence": "not in the body: only dgefa/dgesl of the ~40 LINPACK routines are present",
+   "note": "the cut records the body, not the record",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "linpack-netlib-1979"
   },
   {
    "candidate": "daxpy / ddot / dscal / idamax with their 'clean-up loop' unrolling by 4 and 5, epslon, dmxpy (a 16-way unrolled matrix-vector product)",
@@ -1687,6 +1831,22 @@
    "fossil": "simple-kalman-denyssene"
   },
   {
+   "candidate": "the outline compiler (295-345: compiles a ship's outline into display instructions), the background starfield (464-521, 'Expensive Planetarium'), the display and console I/O, the random number routine (65-84), the divide subroutine (243-292)",
+   "reason": "OTHER",
+   "evidence": "NOT READ beyond comments; the display substrate and utilities",
+   "note": "the outline compiler is a small code-generation mechanism of its own (it compiles data to code at run time)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spacewar-pdp1-1962"
+  },
+  {
+   "candidate": "'Spacewar' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the entity tables, the frame loop and the physics are separable; hyperspace and gravity were added to the same loop by different people",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spacewar-pdp1-1962"
+  },
+  {
    "candidate": "the Promela front end (spin.y, spinlex.c, sym.c, structs.c, vars.c), the simulator (run.c, sched.c, dstep.c), guided/replay, the MSC/Tcl GUI",
    "reason": "OTHER",
    "evidence": "NOT READ; residue",
@@ -1901,6 +2061,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "tscp-1.81-kerrigan-1997"
+  },
+  {
+   "candidate": "hmmutils.c (reading and printing models), sequence.c, genseq.c (sampling a sequence from a model), nrutil.c (Numerical Recipes allocation), backward.c (the mirror of forward.c), the test drivers",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "NOT READ in full; I/O and allocation",
+   "note": "genseq is the natural cheat-control generator for a Stage C world (sample from a known model, re-estimate, compare)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "umdhmm-kanungo-1.02"
+  },
+  {
+   "candidate": "'HMM' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "scaling, re-estimation and decoding are three files with three separable algorithms; the atlas's viterbi-hmm-xukmin turned out to hold only a convolutional decoder, so this is the atlas's first true Viterbi-over-HMM",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "umdhmm-kanungo-1.02"
   },
   {
    "candidate": "tb.v testbench",

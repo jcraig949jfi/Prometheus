@@ -1,13 +1,23 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:51Z",
+ "built": "2026-09-17T23:02Z",
  "by_state": {
-  "LARGE_RESIDUE": 13,
-  "EXPLAINED_BY_CURRENT_CUT": 19,
-  "CUT_INSTRUMENT_INSUFFICIENT": 2,
-  "PARTIALLY_EXPLAINED": 43
+  "EXPLAINED_BY_CURRENT_CUT": 23,
+  "LARGE_RESIDUE": 16,
+  "PARTIALLY_EXPLAINED": 45,
+  "CUT_INSTRUMENT_INSUFFICIENT": 3
  },
  "residue": [
+  {
+   "fossil_id": "arduino-pid",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "nothing unread of substance",
+    "nothing ran"
+   ],
+   "note": "224 lines; five decisions, four organs, all located",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
   {
    "fossil_id": "avida",
    "state": "LARGE_RESIDUE",
@@ -28,6 +38,16 @@
     "M3-RUNNABLE PACKET CANDIDATE: pure Python, no dependency; a packet on full jitter vs no jitter under N simulated clients is preregistrable with the tests as the cheat control"
    ],
    "note": "a small body fully accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "basic-computer-games-1978",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "Star Trek read by grep only",
+    "nothing ran (no BASIC interpreter on M3; the vault's bwbasic would be the world)"
+   ],
+   "note": "both programs are WORLDS in this atlas's sense; recorded so a bench can lift HAMURABI's constants as a pressure definition",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -205,6 +225,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "cosell-eliza-bbn-lisp-1969",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "ANALYZE / TEST / RECONSTRUCT bodies skimmed (one CANDIDATE organ)",
+    "both scripts and the 1972 version unread",
+    "nothing ran"
+   ],
+   "note": "the reading/selection mechanism and the compatibility layer are located; a recurrence candidate against the 1965 cut and PAIP's patmatch",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "des-reference",
    "state": "EXPLAINED_BY_CURRENT_CUT",
    "unexplained": [
@@ -238,6 +269,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "do-mpc",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "the model class, simulator, differentiator and approximateMPC unread",
+    "the MHE objective assembly unread (CANDIDATE)",
+    "nothing ran (CasADi/IPOPT absent)"
+   ],
+   "note": "the four defining mechanisms are located; approximateMPC is flagged for the benches",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "eispack-netlib-1976",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -267,6 +309,17 @@
     "nothing ran (MAD on IBM 7094; the vault's lisp-1-5 record names simh i7094 as a reachable world for the same era)"
    ],
    "note": "the interpreter's control flow is accounted for line by line; the matcher is the residue",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "eprover-2.6",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "the calculus, orderings, indexing, term bank and auto-schedule unread (~97 percent of the body)",
+    "the two organs read are the control loop and its selector",
+    "nothing ran"
+   ],
+   "note": "a map with two mechanisms located; the prover's substance is in the residue",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -350,6 +403,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "go-runtime-deadlock-fixtures-1.22",
+   "state": "CUT_INSTRUMENT_INSUFFICIENT",
+   "unexplained": [
+    "the mechanism under test is outside the body",
+    "the fixtures were read; nothing ran (no Go toolchain on M3)",
+    "record note: preserve runtime/proc.go beside the fixtures if the detector is the object of interest"
+   ],
+   "note": "ORGAN0 with one PRESSURE: the fixtures are a precise world definition (seven deadlock topologies and the exact expected message), which is what the atlas can keep from them",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "graphplan-blum-furst-1995",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -390,6 +454,16 @@
     "sign(0) = 0 and the 2-cycle blind spot of the energy stop are reading-level claims, unmeasured"
    ],
    "note": "every line of network.py is accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "indirect-self-tuning-regulator-liaosteve",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "nothing unread",
+    "nothing ran; a numpy port of the 20 arithmetic lines would make this an M3-runnable world with the true theta as oracle (candidate, not done)"
+   ],
+   "note": "both mechanisms and the world's constants are located",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -464,6 +538,17 @@
     "the interleaver the CCSDS standard needs is absent: the body is half of a concatenated system"
    ],
    "note": "the portable decoders are fully accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "linpack-netlib-1979",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "nothing further to read: the body is the other cut's file plus six kernel files",
+    "record defect: duplicate body and a lineage describing an absent library",
+    "nothing ran"
+   ],
+   "note": "one organ (the interface) that the benchmark cut had folded into its rejects; recorded here so the census counts the specimen without double-counting the factorisation",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -698,6 +783,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "spacewar-pdp1-1962",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "instruction bodies unread (assembly read at comment level; the physics organ is CANDIDATE)",
+    "the outline compiler and starfield unread",
+    "nothing ran (needs a PDP-1 emulator, an M2 world)"
+   ],
+   "note": "the two structural mechanisms (entity tables with routine pointers; the fixed-budget frame) are located from comments and labels, which the listing carries generously",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "spin-6.5.2-holzmann",
    "state": "LARGE_RESIDUE",
    "unexplained": [
@@ -782,6 +878,16 @@
     "nothing ran"
    ],
    "note": "search.c is accounted for line by line",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "umdhmm-kanungo-1.02",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "backward.c and the I/O unread (mirrors and plumbing)",
+    "nothing ran; the body ships test models and sequences (test.hmm, t2.*.seq) as an oracle"
+   ],
+   "note": "a small body fully accounted for; the record's 'complements the vault's viterbi-hmm-xukmin' is corrected: that body is a convolutional decoder, this one is the HMM",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
