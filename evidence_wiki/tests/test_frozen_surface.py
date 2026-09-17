@@ -19,7 +19,8 @@ from ew import frozen_surface as fs  # noqa: E402
 def test_pinned_surface_equals_live_code():
     pinned = json.loads(fs.PINNED.read_text(encoding="utf-8"))
     live = fs.live()
-    live["surface_digest"] = fs.digest(live)
+    live["surface_digest"] = fs.digest(live)          # the rule text is not part of the digest
+    live["surface_digest_rule"] = fs.DIGEST_RULE
     diffs = {k: (pinned.get(k), live.get(k)) for k in set(pinned) | set(live) if pinned.get(k) != live.get(k)}
     assert not diffs, f"frozen surface drifted: {json.dumps(diffs, default=str)[:800]}"
 
