@@ -42,11 +42,24 @@ import urllib.error
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def http_client_exceptions():
+    import http.client
+    return (http.client.HTTPException,)
+
+
 DEFAULT_ENGINE = os.path.normpath(os.path.join(HERE, "..", "..", "SerendipityFoundryEngine"))
 HDR = "X-SFE-Session"
 
 
 class Api:
+    """One KEEP-ALIVE connection per Api instance (one per thread). A new TCP
+    connection per request exhausted Windows' ephemeral ports at ~117 req/s
+    (WinError 10048 after 8 min in the first 9.0.1 acceptance run) -- a
+    defect of the measurement, not of the engine. Reconnects on a dropped
+    connection (the restart fixture kills the engine on purpose)."""
+
     def __init__(self, base, token=None, cafile=None):
         self.base = base.rstrip("/")
         self.token = token
@@ -55,21 +68,44 @@ class Api:
         if cafile:
             import ssl
             self.ctx = ssl.create_default_context(cafile=cafile)
+        import urllib.parse
+        u = urllib.parse.urlparse(self.base)
+        self._https = (u.scheme == "https")
+        self._host, self._port = u.hostname, u.port or (443 if self._https else 80)
+        self._conn = None
+
+    def _connect(self, timeout):
+        import http.client
+        if self._https:
+            self._conn = http.client.HTTPSConnection(self._host, self._port, context=self.ctx, timeout=timeout)
+        else:
+            self._conn = http.client.HTTPConnection(self._host, self._port, timeout=timeout)
 
     def req(self, method, path, body=None, headers=None, timeout=20):
-        h = {"content-type": "application/json"}
+        h = {"content-type": "application/json", "connection": "keep-alive"}
         if self.token:
             h["authorization"] = "Bearer " + self.token
         if self.session_key:
             h[HDR] = self.session_key
         h.update(headers or {})
         data = json.dumps(body).encode() if body is not None else None
-        r = urllib.request.Request(self.base + path, data=data, method=method, headers=h)
-        try:
-            with urllib.request.urlopen(r, context=self.ctx, timeout=timeout) as z:
-                return z.status, json.loads(z.read().decode() or "null")
-        except urllib.error.HTTPError as e:
-            return e.code, json.loads(e.read().decode() or "null")
+        for attempt in (1, 2):
+            if self._conn is None:
+                self._connect(timeout)
+            try:
+                self._conn.request(method, path, body=data, headers=h)
+                resp = self._conn.getresponse()
+                raw = resp.read()
+                return resp.status, json.loads(raw.decode() or "null")
+            except (ConnectionError, OSError, *http_client_exceptions()) as e:
+                # dropped/stale keep-alive (or the engine restarted): reconnect once
+                try:
+                    self._conn.close()
+                except Exception:                                    # noqa: BLE001
+                    pass
+                self._conn = None
+                if attempt == 2:
+                    raise
 
     def ok(self, method, path, body=None, headers=None):
         st, out = self.req(method, path, body, headers)
@@ -206,7 +242,9 @@ def main():
         # ---- duplicate posts: same key, three threads, one row
         results = []
         def dup():
-            results.append(api.req("POST", "/v2/worlds/%s/observations" % wid,
+            # a keep-alive connection is per thread: clone the client
+            mine = Api(api.base, api.token, None); mine.ctx = api.ctx; mine.session_key = api.session_key
+            results.append(mine.req("POST", "/v2/worlds/%s/observations" % wid,
                                    {"exp_id": exp_ids[0], "content": {"dup": True}, "outcome": "SURVIVED",
                                     "replication": True, "logical_time": 1},
                                    headers={"Idempotency-Key": "idem:dup:1"}))
