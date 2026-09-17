@@ -1,13 +1,24 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-16T17:26Z",
+ "built": "2026-09-17T11:04Z",
  "by_state": {
-  "PARTIALLY_EXPLAINED": 16,
+  "PARTIALLY_EXPLAINED": 23,
+  "EXPLAINED_BY_CURRENT_CUT": 11,
   "LARGE_RESIDUE": 4,
-  "EXPLAINED_BY_CURRENT_CUT": 9,
   "CUT_INSTRUMENT_INSUFFICIENT": 1
  },
  "residue": [
+  {
+   "fossil_id": "bsd-tcp-4.2-1983",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "tcp_input.c outside 480-700 (state transitions, SYN/RST handling, reassembly, option parsing) not read",
+    "tcp_subr.c (template, respond, drop, close) and tcp_usrreq.c not read",
+    "the Karn ambiguity (RTT sample spanning a retransmission) is a reading-level claim: t_rtt is not cleared at TCPT_REXMT in tcp_timer.c and tcp_output.c only starts a timer on new data; not run"
+   ],
+   "note": "the sender's rate-governing machinery is fully accounted for: window, retransmit timer, persist, SWS thresholds; the finding is what is NOT there",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
   {
    "fossil_id": "cobol-programming-course-omp",
    "state": "PARTIALLY_EXPLAINED",
@@ -17,6 +28,16 @@
     "nothing ran here; Techne's CBL0001 receipt is on M1"
    ],
    "note": "the six mechanisms are the language's; the fossil shows humans exercising them one at a time",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "compact-4.2bsd-1983",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "uncompact.c not read line by line (skimmed: the same tree code driven by input bits)",
+    "no claim about optimality or about the LZW comparison was run"
+   ],
+   "note": "every line of compact.c and tree.c is accounted for",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -50,6 +71,16 @@
     "the 8 S-box tables are data whose design criteria are not in the fossil (published later by IBM); the atlas cannot say why these tables"
    ],
    "note": "4 mechanisms account for every operation in process_message and generate_sub_keys",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "dlmalloc",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "system-memory acquisition and segment management not read (about 400 lines); realloc/memalign/mspaces not read; the bin-index arithmetic (compute_tree_index) read as a macro only",
+    "nothing ran; the body's own debug checkers (DEBUG/FOOTERS) are an oracle for a Stage C run"
+   ],
+   "note": "the allocate/free core is accounted for; the boundary of the cut is the malloc_state and the two exported entry points",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -96,6 +127,18 @@
     "nothing ran here; Techne's make check (t_erfa_c) is the executed evidence on M1"
    ],
    "note": "seven shapes cover the 247 names; the claim that each name belongs to a shape is by name for ~230 of them",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "ff-planner-2.3",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "extract_1P body and initialize_goals (662-770) not read: the heuristic value's exact accounting is inferred from achieve_goals",
+    "best-first search body not read (bfs organ is CANDIDATE)",
+    "the grounding pipeline (~10,000 lines) not read",
+    "nothing ran; a STRIPS benchmark domain is a ready Stage C world"
+   ],
+   "note": "the heuristic-and-search core is located; the relation to graphplan-blum-furst-1995 is the first recurrence candidate this pass produces",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -189,6 +232,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "lisp-1-5-ibm7090-1962",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "~9,000 of 11,092 cards unread: compiler/LAP, reader/printer, arithmetic, arrays, RELOC, overlord",
+    "provenance: the body is a 2014 transcription of a 1962 listing (README); Techne's grade is what Harmonia should read, not the record's handoff string",
+    "no claim was executed; simh i7094 is the record's named world (REACHABLE, untried)"
+   ],
+   "note": "the storage control program and the interpreter core are accounted for at mechanism level; everything else is named as unread",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "lmdb-0.9.31",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -222,6 +276,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "odepack-netlib",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the sparse-Jacobian core (DPRJS/DSOLSS with the Yale sparse package), the Krylov cores (DSPIOM/DSPIGMR/DPCG), the implicit-form cores (DSTODI, DAINVG) and the root finder (DRCHEK/DROOTS) were not read: ~7,500 of 10,136 lines of opkda1.f",
+    "the DLSODA switch was read for its decision rule only; its rescaling and order reset on switch were not traced",
+    "no constant (MAXCOR, CCMAX, MSBP, 1.1, 0.2, RATIO=5) was tested; every tuning claim is SOURCE_READ"
+   ],
+   "note": "the DLSODE path is accounted for line by line; the body is one integrator with many front ends and this cut covers the common core plus one front end",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "padasip-1.2.2",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -231,6 +296,17 @@
     "nothing ran; Techne's 4-tap plant harness is on M1"
    ],
    "note": "the filter family is fully accounted for by one loop and four rule modifications plus two second-order alternatives",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "particles-chopin-0.4",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the model library and the QMC/Hilbert machinery were not read (sqmc is CANDIDATE)",
+    "the default resampling trigger (ESS < N/2 by convention) lives in the model classes, not read; the cut names the measure, not the threshold",
+    "nothing ran; kalman.py in the body is the exact oracle for a Stage C world"
+   ],
+   "note": "the loop and the resampling schemes are accounted for; the vault's filterpy-labbe and simple-kalman fossils are recurrence candidates against kalman.py",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -328,6 +404,27 @@
     "the self-deassert rule's purpose is unstated in the body"
    ],
    "note": "every line of the three modules is accounted for by five mechanisms",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "verilog-uart2bus",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "uart_top.v not read (wiring only, by its size and role)",
+    "nothing ran; the bench/ directory holds a ready iverilog world (tb_txt / tb_bin) for a SCOUT or Stage C run",
+    "the two reading-level defects (length-0 binary count wrap; no stop-bit check) are unmeasured"
+   ],
+   "note": "every always block in the five RTL files is accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "willemt-raft",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "snapshotting, membership change and the vote request/response bodies were not read (about 700 of 1435 lines of raft_server.c); raft_log.c and raft_node.c not opened",
+    "no claim was executed; tests/virtraft2.py is a ready world (a Python network simulator with partitions) for a SCOUT run"
+   ],
+   "note": "the paper's five rules are each located at a line range; the library-specific choices (range [T,2T), length-based backoff, lazy apply, aggressive resend) are named",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

@@ -1,33 +1,32 @@
 # Nyx status
 
-Currency: 2026-09-16 ~14:10 UTC (instance m2-0c0adfe1 on M2; Mechanism Archaeology Pipeline Amendment 3 N1-N4 executed).
+Currency: 2026-09-17 ~11:10 UTC (instance gandalf-9e21f277 on M3/GANDALF; Stage A continuation under Amendment 3 N1).
 
-seat state: ACTIVE. Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3;
-  roles/Nyx/prompts/2026-09-16_mechanism_archaeology_pipeline/, Amendment 1 NOT received) over the ATLAS PASS 01 charter
-  (roles/Nyx/prompts/2026-09-13_atlas_pass_01/), whose Stage C/D adjudication by Nyx is SUPERSEDED (R32). Nyx owns
-  Stage A/B (dissection, cuts), C' (prediction packets), D' (assimilating typed returns).
-what it asserts (atlas, python -m nyx.atlas.build):
-  census 121; sample n=30 all cut (COARSE 21, DEEP 9); NOT_CUT 91; 224 fragments (192 ACCEPTED); 121 rejected; 69 pressures;
-  298 composition edges; recurrence candidates 15 by reading (R3+ 0); blind cuts 0; fingerprints 0; measured cells 0.
-  R34 provenance on all 30 cuts: 98 files hashed on M2, 87 match Techne's recorded hashes, 10 mismatch (all the known
-  CRLF class: libfec-karn 7, corewar 3), 12 refs unresolved (receipts / prose, listed per fossil).
-gates (nyx/atlas/gates/LEDGER.json): cuts_created 30; cuts_returned_with_verdict 0; handoffs open 3 (max age 0 ticks).
-pipeline objects (this session):
-  MECH-GZIP-LEVELTABLE-001  frozen sha256 861dded070d138e3... (nyx/atlas/predictions/); boundary deflate.c:225-245, 286-356
-    bound to payload hashes; 4 interventions (I0 baseline, I1 table-flatten, I2 flatten+switches [decisive], I3 chain-only);
-    cheat control C-CHEAT-PRECOMPRESSED; positive control C-POS-LEVEL-EXTREMES; CUT_KILL and INDETERMINATE defined.
-    SELF-FOUND CORRECTION before adjudication: the level is consumed at THREE sites, not one (deflate.c:667 fast/lazy switch;
-    trees.c:987 flush heuristic); the cut record and script carry the annotation; the original sentence is preserved.
-  RS_CALIBRATION_PAIR_001  (nyx/atlas/calibration/): Rockliff 1991 -> Karn; ruler must find R-ID-1/2 identical, R-DIV-1
-    divergent (tt+1: silent pass-through vs -1).
-  Preservation status of the gzip lineage: NON_CANONICAL / PRESERVATION_GATE_OPEN (R38; TECHNE-65 undecided).
-first-pass return (ATLAS): nyx/atlas/FIRST_PASS_RETURN_2026-09-16.md; comms #296 to Techne (queued; Techne offline at post).
-NYX-44 (go-explore c04): UNCHANGED, PENDING RULING. Older holds unchanged (c07 / c03 / c01; Proteus/Diomedes halves).
-own defects open: 12/69 pressure cost_class free text (NYX-47); five 09-13 cut scripts carry F:/ paths (NYX-48; their
-  provenance is now hashed regardless); tunnel.py hardcodes WSL distro "Ubuntu" (M2 has Ubuntu-24.04) -- irrelevant to Nyx
-  under R32 unless a SCOUT run is wanted.
+seat state: ACTIVE. Governing directives unchanged from 2026-09-16: Mechanism Archaeology Pipeline (Founding Charter +
+  Amendments 2, 3; Amendment 1 NOT received) over the ATLAS PASS 01 charter; Nyx owns Stage A/B, C' (packets), D' (returns).
+what it asserts (atlas, python -m nyx.atlas.build, built 2026-09-17T11:04Z):
+  census 121; cut 39 (COARSE 28, DEEP 11); NOT_CUT 82; 294 fragments (259 ACCEPTED, 35 CANDIDATE); 156 rejected; 88 pressures;
+  403 composition edges; 141 ancestry edges; blind cuts 0; fingerprints 0; measured cells 0. Every organ is SOURCE_READ except
+  4 METADATA and the 3 EXECUTED/INTERVENED from 09-13..16. Nothing has run since 09-16.
+  Stage A order for the NOT_CUT population PREREGISTERED (samples/stageA_not_cut_seed20260917_n91.json, committed before any
+  body was fetched); positions 1-10 processed this session: 9 cut, avida (position 7) materialised and deferred.
+  R34 provenance on the 9 new cuts: 28/28 files byte-exact against Techne's hashes on M3; bodies 10/10 MATCH
+  (samples/stageA_bodies_m3_2026-09-17.json).
+gates (nyx/atlas/gates/LEDGER.json): cuts_created 39; cuts_returned_with_verdict 0; handoffs open 2 (max age 1 tick);
+  returns received 3 (all 09-16). No return on MECH-GZIP-LEVELTABLE-003 (Harmonia R1) as of this currency.
+  NONE of the 39 cuts except gzip has a NYX_PREDICTION_PACKET: the pipeline's falsification side is starved by Nyx, not by
+  Harmonia (whose lane currency exists since #316/#317). Atlas growth is reported beside this, not instead of it.
+own defects: NYX-47 (12/88 pressure cost_class free text -- the 09-13/16 ones; the nine new cuts use the vocabulary) and
+  NYX-48 (F:/ paths in five 09-13 cut scripts) still open; migrate_v1 host string fixed this session (was hardcoded M2).
+incident (calibration ledger 2026-09-17): boot-time `git pull` moved the canonical checkout on M3; Hephaestus WIP on
+  hephaestus/src/closure_q045.py is in stash@{0} of C:\Prometheus, intact, and must be popped in a worktree.
 lane: nyx/ and roles/Nyx/ only.
 
-next executable action: Stage A/B on the 91 NOT_CUT under nyx.atlas/1-provenance (N1), in the census's stratified order,
-  reporting cuts_created beside cuts_returned_with_verdict (0 until Harmonia's lane currency exists). Assimilate the first
-  typed return (CUT_SUPPORTED / CUT_CHALLENGE / PREDICTION_*) on MECH-GZIP-LEVELTABLE-001 when it arrives (D').
+next executable action: write NYX_PREDICTION_PACKETs (schema/1) for the two cuts whose bodies already have a runnable world
+  (verilog-uart2bus: bench/ under iverilog; willemt-raft: tests/virtraft2.py) so Harmonia has something to adjudicate
+  besides gzip; then Stage A on avida and positions 11-20 of the order. Assimilate the R1 return on packet 003 when it
+  arrives.
+
+instance note (2026-09-17 ~14:45Z): m2-0c0adfe1 (M2) CLOSED DOWN by the operator; its handoff is the appended section of
+  roles/Nyx/journal/2026-09-17.md. The live instance is gandalf-9e21f277 (M3). M2 host residue: D:/Prometheus-vault/fossils
+  (Nyx's 30-body re-fetch; deletable; Techne has its own M2 vault).

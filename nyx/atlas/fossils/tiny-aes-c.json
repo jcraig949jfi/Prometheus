@@ -66,14 +66,14 @@
    "basis": "TECHNE_RECORD"
   },
   "KNOWN_PREDECESSORS": {
-   "value": "UNKNOWN",
-   "basis": "UNKNOWN"
-  },
-  "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded (direction UNFIXED in Techne's vocabulary; note: 'AES replaced DES as the US standard'): des-reference"
+    "supersedes: des-reference"
    ],
    "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
   },
   "KNOWN_RIVALS": {
    "value": "UNKNOWN",
@@ -1056,16 +1056,16 @@
  "ancestry_edges": [
   {
    "from": "tiny-aes-c",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "des-reference",
-   "note": "Techne records 'AES replaced DES as the US standard' on both records (direction fixed by the note)",
+   "note": "Techne records 'AES replaced DES as the US standard' on both records (direction fixed by the note) [relation migrated superseded -> supersedes 2026-09-16 after Techne 1bb9965b4; direction from the note: AES replaced DES as the US standard]",
    "basis": "SOURCE_READ"
   },
   {
    "from": "tiny-aes-c",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "des-reference",
-   "note": "AES replaced DES as the US standard",
+   "note": "AES replaced DES as the US standard [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   }
  ],

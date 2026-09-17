@@ -1,0 +1,322 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C2-SFE-04/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "decisions": [
+  "D2-012: assay capability = ANY arm reaches (target baseline_arm '*'); the premise of a transport-unlocks-an-unreachable-cell design is that the baseline may not reach"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "negative at this budget/envelope",
+  "disposition": "CAPABLE_NEGATIVE",
+  "evidence": {
+   "control_mean": 0.0278,
+   "effect": 0.0069,
+   "min_effect": 0.1,
+   "n_control": 3,
+   "n_treatment": 3,
+   "paired": 3,
+   "paired_wins": 1,
+   "treatment_mean": 0.0347
+  },
+  "reason": "assay capable and effect < min_effect",
+  "states": []
+ },
+ "effects": {
+  "battery": [
+   {
+    "failed_A_minus": -0.0069,
+    "name": "failed_shuffled",
+    "passed": false,
+    "type": "kill"
+   },
+   {
+    "failed_A_minus": -0.0278,
+    "name": "failed_opcodes",
+    "passed": false,
+    "type": "kill"
+   },
+   {
+    "failed_A_minus": 0.0,
+    "name": "length_matched",
+    "passed": false,
+    "type": "kill"
+   },
+   {
+    "failed_A_minus": -0.0486,
+    "name": "evolved_unrelated",
+    "passed": false,
+    "type": "kill"
+   }
+  ],
+  "direct_best_mean": {
+   "evolved_solved": 0.0833,
+   "evolved_unrelated": 0.0556,
+   "failed_A": 0.0556,
+   "failed_opcodes": 0.0833,
+   "failed_shuffled": 0.0903,
+   "length_matched": 0.0556,
+   "random": null
+  },
+  "failed_A_minus_random": 0.0069,
+  "footholds": {
+   "evolved_solved": 0,
+   "evolved_unrelated": 0,
+   "failed_A": 0,
+   "failed_opcodes": 1,
+   "failed_shuffled": 0,
+   "length_matched": 0,
+   "random": 0
+  },
+  "means": {
+   "evolved_solved": 0.0556,
+   "evolved_unrelated": 0.0833,
+   "failed_A": 0.0347,
+   "failed_opcodes": 0.0625,
+   "failed_shuffled": 0.0417,
+   "length_matched": 0.0347,
+   "random": 0.0278
+  },
+  "n": {
+   "evolved_solved": 3,
+   "evolved_unrelated": 3,
+   "failed_A": 3,
+   "failed_opcodes": 3,
+   "failed_shuffled": 3,
+   "length_matched": 3,
+   "random": 3
+  },
+  "probes": {
+   "evolved_solved": {
+    "footholds": 0,
+    "mean": 0.05555555555555555,
+    "n": 3
+   }
+  }
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C2-SFE-04",
+ "failed_A_fetch": {
+  "dry_run": true,
+  "n_genomes": 100,
+  "note": "random genomes stand in for failed_A in a dry run"
+ },
+ "finished_at": "2026-09-17T03:38:50Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:6a9f20570ed2bb68c6ad1024a18c60ac1a8810d1afa9c99d004a1987e8a6f833",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "set_summaries": {
+  "evolved_solved": {
+   "category_shares_mean": {
+    "arithmetic": 0.1327,
+    "comparison": 0.0677,
+    "control": 0.0942,
+    "halt_yield": 0.1019,
+    "indirection": 0.0592,
+    "logical": 0.1977,
+    "opaque_io": 0.2935,
+    "randomness": 0.0069,
+    "read_write": 0.0461
+   },
+   "instr_max": 18,
+   "instr_mean": 6.28,
+   "instr_median": 5,
+   "instr_min": 1,
+   "n": 100
+  },
+  "evolved_unrelated": {
+   "category_shares_mean": {
+    "arithmetic": 0.1572,
+    "comparison": 0.1241,
+    "control": 0.0774,
+    "halt_yield": 0.0975,
+    "indirection": 0.0595,
+    "logical": 0.2402,
+    "opaque_io": 0.1614,
+    "randomness": 0.0284,
+    "read_write": 0.0542
+   },
+   "instr_max": 21,
+   "instr_mean": 4.15,
+   "instr_median": 4,
+   "instr_min": 1,
+   "n": 92
+  },
+  "failed_A": {
+   "category_shares_mean": {
+    "arithmetic": 0.081,
+    "comparison": 0.1294,
+    "control": 0.106,
+    "halt_yield": 0.0848,
+    "indirection": 0.0691,
+    "logical": 0.2512,
+    "opaque_io": 0.1628,
+    "randomness": 0.0266,
+    "read_write": 0.089
+   },
+   "instr_max": 15,
+   "instr_mean": 6.75,
+   "instr_median": 5,
+   "instr_min": 1,
+   "n": 24
+  },
+  "failed_opcodes": {
+   "category_shares_mean": {
+    "arithmetic": 0.081,
+    "comparison": 0.1294,
+    "control": 0.106,
+    "halt_yield": 0.0848,
+    "indirection": 0.0691,
+    "logical": 0.2512,
+    "opaque_io": 0.1628,
+    "randomness": 0.0266,
+    "read_write": 0.089
+   },
+   "instr_max": 15,
+   "instr_mean": 6.75,
+   "instr_median": 5,
+   "instr_min": 1,
+   "n": 24
+  },
+  "failed_shuffled": {
+   "category_shares_mean": {
+    "arithmetic": 0.081,
+    "comparison": 0.1294,
+    "control": 0.106,
+    "halt_yield": 0.0848,
+    "indirection": 0.0691,
+    "logical": 0.2512,
+    "opaque_io": 0.1628,
+    "randomness": 0.0266,
+    "read_write": 0.089
+   },
+   "instr_max": 15,
+   "instr_mean": 6.75,
+   "instr_median": 5,
+   "instr_min": 1,
+   "n": 24
+  },
+  "length_matched": {
+   "category_shares_mean": {
+    "arithmetic": 0.1243,
+    "comparison": 0.032,
+    "control": 0.1565,
+    "halt_yield": 0.0879,
+    "indirection": 0.1156,
+    "logical": 0.2751,
+    "opaque_io": 0.1163,
+    "randomness": 0.056,
+    "read_write": 0.0364
+   },
+   "instr_max": 15,
+   "instr_mean": 6.75,
+   "instr_median": 5,
+   "instr_min": 1,
+   "n": 24
+  },
+  "random_gen0": {
+   "category_shares_mean": {
+    "arithmetic": 0.1,
+    "comparison": 0.0875,
+    "control": 0.1174,
+    "halt_yield": 0.118,
+    "indirection": 0.1146,
+    "logical": 0.2049,
+    "opaque_io": 0.142,
+    "randomness": 0.0233,
+    "read_write": 0.0922
+   },
+   "instr_max": 16,
+   "instr_mean": 5.89,
+   "instr_median": 4,
+   "instr_min": 1,
+   "n": 100
+  }
+ },
+ "sources": {
+  "solved": {
+   "1": {
+    "elite": 0.0,
+    "first_solved_gen": 6,
+    "generations": 8,
+    "n": 100,
+    "n_floor": 200,
+    "solved": false
+   },
+   "2": {
+    "elite": 0.25,
+    "first_solved_gen": null,
+    "generations": 8,
+    "n": 100,
+    "n_floor": 195,
+    "solved": false
+   },
+   "3": {
+    "elite": 0.25,
+    "first_solved_gen": null,
+    "generations": 8,
+    "n": 100,
+    "n_floor": 191,
+    "solved": false
+   }
+  },
+  "unrelated": {
+   "1": {
+    "elite": 0.25,
+    "first_solved_gen": null,
+    "generations": 8,
+    "n": 92,
+    "n_floor": 92,
+    "solved": false
+   },
+   "2": {
+    "elite": 0.125,
+    "first_solved_gen": null,
+    "generations": 8,
+    "n": 100,
+    "n_floor": 194,
+    "solved": false
+   },
+   "3": {
+    "elite": 0.25,
+    "first_solved_gen": null,
+    "generations": 8,
+    "n": 100,
+    "n_floor": 131,
+    "solved": false
+   }
+  }
+ },
+ "started_at": "2026-09-17T03:38:48Z",
+ "steps": {},
+ "teardown": {},
+ "timings": {
+  "exchange_s": 0.0,
+  "fetch_s": 0.0,
+  "records_s": 0.0,
+  "sources_s": 1.2,
+  "targets_s": 0.52,
+  "total_s": 1.9
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "8d6e71eab047e112a32e3604f9a7f1bad7679537",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

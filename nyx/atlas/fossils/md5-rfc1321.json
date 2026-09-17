@@ -72,7 +72,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded (direction UNFIXED in Techne's vocabulary; note: 'deployment moved to SHA-256 after the collision results'): the SHA-2 family"
+    "superseded_by: the SHA-2 family"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -163,9 +163,9 @@
  "ancestry_edges": [
   {
    "from": "md5-rfc1321",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "the SHA-2 family",
-   "note": "deployment moved to SHA-256 after the collision results",
+   "note": "deployment moved to SHA-256 after the collision results [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   }
  ],

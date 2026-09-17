@@ -21,7 +21,7 @@ from nyx.atlas.schema import SCHEMA, ROOT
 
 REPO = ROOT.parent.parent
 SPECIMENS = REPO / "techne" / "fossils" / "specimens"
-PRED = {"algorithm_from", "derived_from", "historical_version_of", "port_of", "reimplementation_of", "rewrote"}
+PRED = {"algorithm_from", "derived_from", "historical_version_of", "port_of", "reimplementation_of", "rewrote", "supersedes"}  # supersedes X => X is a predecessor (Techne 1bb9965b4, 2026-09-16)
 
 
 def _v(value, basis="TECHNE_RECORD"):
@@ -45,10 +45,9 @@ def whole_system(rec: dict) -> dict:
     cap = rec.get("human_capability_summary") or {}
     obs = rec.get("observability") or {}
     preds = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") in PRED]
-    # 2026-09-16: Techne's 'superseded' edge has NO fixed direction across its records (17 edges read: bsd-tcp-4.2 ->
-    # tahoe means 'superseded BY', linux-tcp-congestion -> Reno means 'superseded Reno'); the census can only say the two
-    # are related by supersession and point at the note. It is projected here, not into predecessors, and marked.
-    succs = [f"superseded (direction UNFIXED in Techne's vocabulary; note: {r.get('note', '')!r}): {r['to']}" for r in rels if r.get("relation") == "superseded"]
+    # 2026-09-16 (later the same day): Techne replaced the undirected 'superseded' with superseded_by / supersedes and
+    # migrated every edge (1bb9965b4). superseded_by X => X is a successor; supersedes X => X is a predecessor (PRED).
+    succs = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") == "superseded_by"]
     rivals = [f"{r['relation']}: {r['to']}" for r in rels if r.get("relation") == "shares_ancestor_with"]
     disp = hd.get("state") if hd else None
     if disp and disp != "UNKNOWN":
@@ -124,8 +123,17 @@ def _strata(rec: dict) -> dict:
     return {"decade": decade, "language": lang, "domain": dom, "run": run, "disposition": disp, "size": size, "stochastic": stoch}
 
 
-def sample(n: int, seed: int = 20260913) -> list:
+def sample(n: int, seed: int = 20260913, pool: str = "all") -> list:
+    """pool="all": every specimen (the 2026-09-13 n=30 draw). pool="not_cut" (2026-09-17, Stage A continuation, N1):
+    only specimens whose atlas file is NOT_CUT, so the remaining population gets its own preregistered order instead of
+    an alphabetical or convenience one; the universe changed since 09-13 (117 -> 121 records) so the original draw
+    cannot simply be extended -- a new seed is used and written into the file name."""
     recs = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(SPECIMENS.glob("*/record.json"))]
+    if pool == "not_cut":
+        def _state(sid):
+            f = ROOT / "fossils" / f"{sid}.json"
+            return json.loads(f.read_text(encoding="utf-8"))["cut"]["state"] if f.exists() else "NOT_CUT"
+        recs = [r for r in recs if _state(r["specimen_id"]) == "NOT_CUT"]
     rows = [{"fossil_id": r["specimen_id"], **_strata(r)} for r in recs]
     rng = random.Random(seed)
     chosen, used = [], set()
@@ -143,15 +151,20 @@ def sample(n: int, seed: int = 20260913) -> list:
         cands = [r for r in rows if r["fossil_id"] not in used]
         pick = rng.choice(cands); chosen.append({**pick, "stratum": "fill"}); used.add(pick["fossil_id"])
     (ROOT / "samples").mkdir(exist_ok=True)
-    out = {"schema": SCHEMA + "/sample", "seed": seed, "n": n, "universe": len(rows), "keys": keys, "rows": chosen[:n],
+    out = {"schema": SCHEMA + "/sample", "seed": seed, "n": n, "pool": pool, "universe": len(rows), "keys": keys, "rows": chosen[:n],
            "universe_strata": {k: dict(Counter(r[k] for r in rows)) for k in keys}}
-    (ROOT / "samples" / f"stageA_seed{seed}_n{n}.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+    name = f"stageA_seed{seed}_n{n}.json" if pool == "all" else f"stageA_{pool}_seed{seed}_n{n}.json"
+    (ROOT / "samples" / name).write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
     return chosen[:n]
 
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "sample":
-        for r in sample(int(sys.argv[2]) if len(sys.argv) > 2 else 30):
+        # python -m nyx.atlas.census sample <n> [<seed>] [all|not_cut]
+        n = int(sys.argv[2]) if len(sys.argv) > 2 else 30
+        seed = int(sys.argv[3]) if len(sys.argv) > 3 else 20260913
+        pool = sys.argv[4] if len(sys.argv) > 4 else "all"
+        for r in sample(n, seed, pool):
             print(f"{r['fossil_id']:40s} {r['stratum']:28s} {r['decade']:8s} {r['language']:10s} {r['run']:26s} {r['disposition']:10s} {r['size']:6s} {r['stochastic']}")
         sys.exit(0)
     sys.exit(run())

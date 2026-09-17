@@ -158,7 +158,8 @@ def new_state(kind_name: str):
     return None
 
 
-def run(spec: dict, *, seed: int = None, state=None, inputs=None) -> dict:
+def run(spec: dict, *, seed: int = None, state=None, inputs=None,
+        interventions: list = None) -> dict:
     """Execute the spec's declared kind against its declared parameters.
 
     Takes the SPEC, not a queue row and not an engine payload: everything an
@@ -235,5 +236,18 @@ def run(spec: dict, *, seed: int = None, state=None, inputs=None) -> dict:
     # reaches an observation. A result that does not match its own contract is
     # not a weak measurement -- it is not this kind's measurement at all.
     if kind.declares_result:
+        # INTERVENTION_RECEIPT_SCHEMA.md s2: a kind that applied an
+        # intervention inside run() reports it on the `_interventions`
+        # channel (a list of {intervention_id, kind, intended, realised,
+        # ...}); it is popped here, never a result field, and handed to
+        # the caller's sink so the loop can write the receipt.
+        applied = out.pop("_interventions", None)
+        if applied:
+            if interventions is None:
+                raise ExecutorUnavailable(
+                    "kind %r reported %d intervention(s) but the caller supplied no "
+                    "sink; an applied intervention with no receipt is refused"
+                    % (kind_name, len(applied)))
+            interventions.extend(applied)
         kind.check_result(out, truncation=out.pop("_truncated", None))
     return out

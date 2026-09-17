@@ -479,6 +479,17 @@ register(Kind(
 register(Kind(
     kind="cegis_boolean_v1",
     value_checker="viv.cegis_boolean:payload_problems",
+    # THEO-REQ-002 axes as Proteus assigned them (#338, 2026-09-17), mapped
+    # onto the printed contract's parameter names: the task (target table)
+    # is pressure; size/count caps are budget; the ordering seed policy is
+    # the intervention; grammar_version is the mechanism; the rest
+    # UNCLASSIFIED on purpose. n_inputs is not a parameter here (fixed by
+    # the kind), so Proteus's "n_inputs=world" has no slot and is recorded
+    # in this comment only.
+    axes={"target_truth_table": "pressure", "grammar_version": "mechanism",
+          "max_expr_size": "budget", "max_candidates": "budget",
+          "oracle_call_cap": "budget", "vm_op_cap": "budget",
+          "case_ordering": "intervention", "candidate_seed": "intervention"},
     params=frozenset({
         "target_truth_table", "grammar_version", "candidate_policy",
         "candidate_seed", "max_expr_size", "max_candidates",

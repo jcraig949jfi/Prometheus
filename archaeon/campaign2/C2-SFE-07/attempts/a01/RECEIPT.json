@@ -1,0 +1,240 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C2-SFE-07/a01",
+ "break_even": {
+  "1": {
+   "mono_exit": null,
+   "producer_gens": 6,
+   "producer_solve": null
+  },
+  "2": {
+   "mono_exit": null,
+   "producer_gens": 6,
+   "producer_solve": null
+  },
+  "3": {
+   "mono_exit": null,
+   "producer_gens": 6,
+   "producer_solve": null
+  }
+ },
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "decisions": [
+  "D2-015: the maturity gate is the artifact's `solved` flag; an unsolved producer publishes nothing and the consumer still pays its cap (the cost of a closed gate is a measurement, not a failure)"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "TARGET_UNREACHABLE",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "TARGET_UNREACHABLE"
+  ]
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C2-SFE-07",
+ "finished_at": "2026-09-17T03:58:32Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:ca2ab0088b16c2f835eb17521f6f8f00bd98eca7286d3de224b7d44b1b1e9970",
+ "producers": {
+  "1": {
+   "elite": 0.0,
+   "first_solved_gen": null,
+   "generations": 6,
+   "solved": false
+  },
+  "2": {
+   "elite": 0.0,
+   "first_solved_gen": null,
+   "generations": 6,
+   "solved": false
+  },
+  "3": {
+   "elite": 0.0,
+   "first_solved_gen": null,
+   "generations": 6,
+   "solved": false
+  }
+ },
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "started_at": "2026-09-17T03:58:31Z",
+ "steps": {},
+ "summary": {
+  "gated_serial": {
+   "charged_at_foothold": [
+    null,
+    null,
+    null
+   ],
+   "consumer_G": [
+    2,
+    2,
+    2
+   ],
+   "first": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0,
+   "full": 0,
+   "heldout": [
+    0.073,
+    0.083,
+    0.021
+   ],
+   "import_share_final": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "imported": [
+    false,
+    false,
+    false
+   ]
+  },
+  "gated_serial_noex": {
+   "charged_at_foothold": [
+    null,
+    null,
+    null
+   ],
+   "consumer_G": [
+    2,
+    2,
+    2
+   ],
+   "first": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0,
+   "full": 0,
+   "heldout": [
+    0.073,
+    0.083,
+    0.021
+   ],
+   "import_share_final": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "imported": [
+    false,
+    false,
+    false
+   ]
+  },
+  "mono": {
+   "charged_at_foothold": [
+    null,
+    null,
+    null
+   ],
+   "consumer_G": [
+    8,
+    8,
+    8
+   ],
+   "first": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0,
+   "full": 0,
+   "heldout": [
+    0.073,
+    0.042,
+    0.031
+   ],
+   "import_share_final": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "imported": [
+    false,
+    false,
+    false
+   ]
+  },
+  "parallel": {
+   "charged_at_foothold": [
+    null,
+    null,
+    null
+   ],
+   "consumer_G": [
+    8,
+    8,
+    8
+   ],
+   "first": [
+    null,
+    null,
+    null
+   ],
+   "footholds": 0,
+   "full": 0,
+   "heldout": [
+    0.073,
+    0.042,
+    0.031
+   ],
+   "import_share_final": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "imported": [
+    false,
+    false,
+    false
+   ]
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "consumers_s": 0.26,
+  "exchange_s": 0.0,
+  "producers_s": 0.11,
+  "records_s": 0.0,
+  "total_s": 0.6
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "band95_upper": 0.5615,
+    "baseline_arm": "mono",
+    "reached": 0,
+    "rows": 3,
+    "table_class": "UNESTABLISHED"
+   },
+   "state": "TARGET_UNREACHABLE"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "e7a2330391c7bdb59e91a54916a7fbbdb4ff5161",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

@@ -79,10 +79,29 @@ def split_ref(ref: str, fid: str):
     return rel.rstrip("/").strip()
 
 
+def _host_string() -> str:
+    """Where the payload hashes were read (2026-09-17: was the literal 'M2 (SPECTREX5), bodies receipt ...' for every cut;
+    a cut saved on another host would have carried the wrong host). platform.node() plus the bodies receipt named in
+    NYX_BODIES_RECEIPT when the author sets it, else 'receipt not named'."""
+    import os, platform
+    rc = os.environ.get("NYX_BODIES_RECEIPT", "").strip()
+    return f"{platform.node()} (hostname), bodies receipt {rc or 'not named'}"
+
+
 def populate(f: dict, fid: str, host_matches=None, migrated_from: str = "nyx.atlas/0 (record at origin/main ef05d395f)") -> dict:
     """Fill f['cut']['provenance'] from Techne's record and the bytes on this host."""
     stamp = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
     rec = json.loads((SPEC / fid / "record.json").read_text(encoding="utf-8"))
+    if host_matches is None:
+        # 2026-09-17: a cut saved through author.Cut.save() passes None; read the bodies receipt the author named
+        # (NYX_BODIES_RECEIPT, repository-relative) so host_tree_matches_record is a measurement, not a blank.
+        import os
+        rc = os.environ.get("NYX_BODIES_RECEIPT", "").strip()
+        rp = REPO / rc if rc else None
+        if rp and rp.is_file():
+            rows = {r["fossil_id"]: r for r in json.loads(rp.read_text(encoding="utf-8")).get("rows", [])}
+            if fid in rows:
+                host_matches = rows[fid].get("verify_matches")
     th = techne_hashes(fid)
     body = vault.body_dir(fid)
     refs = [e["ref"] for e in f["cut"]["evidence"]] + [o["evidence"]["ref"] for o in f["organs"]]
@@ -117,7 +136,7 @@ def populate(f: dict, fid: str, host_matches=None, migrated_from: str = "nyx.atl
         "provenance_grade_read": grade_from_record(rec, fid), "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
         "source_object_id": src,
         "payload_manifest_id": f"techne tree_sha256 {rec.get('hashes', {}).get('tree_sha256', 'UNKNOWN')} ({rec.get('hashes', {}).get('n_files', '?')} files)",
-        "host_tree_matches_record": host_matches, "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+        "host_tree_matches_record": host_matches, "host": _host_string(),
         "files_read": files, "unresolved_refs": unresolved,
     }
     return f["cut"]["provenance"]

@@ -1,0 +1,518 @@
+{
+ "tool": "longrun_load",
+ "started_at": "2026-09-17T13:59:43Z",
+ "config": {
+  "worlds": 20,
+  "gens": 1000,
+  "producers": 1,
+  "port": 8961,
+  "out": "deploy/LONG_RUN_2026-09-17/accept901/R1_seq_writer_paced_reader",
+  "db_dir": "D:/Prometheus-data/sfe-scratch",
+  "no_reader": false,
+  "reader_pause": 0.2,
+  "label": "R1 sequential writer + paced reader"
+ },
+ "db_dir": "D:\\Prometheus-data\\sfe-scratch\\sfe_load__7m4qmow",
+ "checkpoint_s": [
+  0.0,
+  0.0,
+  0.003,
+  0.0072,
+  0.0031,
+  0.0054,
+  0.0,
+  0.003,
+  0.0046,
+  0.004,
+  0.0,
+  0.0,
+  0.001,
+  0.002,
+  0.002,
+  0.0032,
+  0.0,
+  0.0,
+  0.002,
+  0.0015,
+  0.013,
+  0.0,
+  0.0021,
+  0.0062,
+  0.0,
+  0.0,
+  0.0,
+  0.0015,
+  0.0,
+  0.0035,
+  0.007,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0035,
+  0.0,
+  0.0017,
+  0.0,
+  0.0061,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0021,
+  0.0066,
+  0.0043,
+  0.0,
+  0.0025,
+  0.0015,
+  0.0021,
+  0.0025,
+  0.0036,
+  0.0,
+  0.0,
+  0.0018,
+  0.001,
+  0.005,
+  0.0,
+  0.0037,
+  0.0,
+  0.0015,
+  0.0,
+  0.0,
+  0.0015,
+  0.0,
+  0.0,
+  0.0005,
+  0.0033,
+  0.0095,
+  0.0,
+  0.0015,
+  0.0036,
+  0.0559,
+  0.0,
+  0.001,
+  0.0,
+  0.0041,
+  0.0066,
+  0.006,
+  0.0114,
+  0.0016,
+  0.0122,
+  0.0,
+  0.0036,
+  0.0017,
+  0.0016,
+  0.0,
+  0.0,
+  0.0015,
+  0.0015,
+  0.0015,
+  0.0,
+  0.0017,
+  0.0015,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0027,
+  0.0017,
+  0.003,
+  0.0054,
+  0.0,
+  0.0,
+  0.0016,
+  0.0025,
+  0.0,
+  0.0,
+  0.0054,
+  0.0015,
+  0.0053,
+  0.0,
+  0.0186,
+  0.0005,
+  0.0016,
+  0.0,
+  0.005,
+  0.0,
+  0.0,
+  0.0015,
+  0.0032,
+  0.0067,
+  0.0063,
+  0.0088,
+  0.0015,
+  0.002,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0015,
+  0.0,
+  0.0022,
+  0.0,
+  0.0,
+  0.0,
+  0.0025,
+  0.0
+ ],
+ "phases": {
+  "write_s": 65.8
+ },
+ "engine": {
+  "schema_version": 9,
+  "engine_instance_id": "eng_cc853e1abb5db55570365ec1",
+  "engine_source_hash": "sha256:1e81fe000d345b1ae49a7fcf4e10dd148c7aaebd7fb023979048e8c80eb0400d"
+ },
+ "reader_pages": 252,
+ "wal_samples": [
+  {
+   "t": 1789653585.1,
+   "wal_bytes": 53592,
+   "db_bytes": 397312,
+   "ck_runs": 0,
+   "ck_alive": true,
+   "ck_truncates": 0,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653590.1,
+   "wal_bytes": 47829112,
+   "db_bytes": 1523712,
+   "ck_runs": 1,
+   "ck_alive": true,
+   "ck_truncates": 1,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653595.1,
+   "wal_bytes": 56621216,
+   "db_bytes": 4116480,
+   "ck_runs": 2,
+   "ck_alive": true,
+   "ck_truncates": 2,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653600.2,
+   "wal_bytes": 112537832,
+   "db_bytes": 5955584,
+   "ck_runs": 4,
+   "ck_alive": true,
+   "ck_truncates": 3,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653605.2,
+   "wal_bytes": 65784072,
+   "db_bytes": 9265152,
+   "ck_runs": 6,
+   "ck_alive": true,
+   "ck_truncates": 4,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653610.2,
+   "wal_bytes": 194950192,
+   "db_bytes": 11030528,
+   "ck_runs": 7,
+   "ck_alive": true,
+   "ck_truncates": 4,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653615.2,
+   "wal_bytes": 31892952,
+   "db_bytes": 14446592,
+   "ck_runs": 9,
+   "ck_alive": true,
+   "ck_truncates": 6,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653620.2,
+   "wal_bytes": 135412072,
+   "db_bytes": 15941632,
+   "ck_runs": 10,
+   "ck_alive": true,
+   "ck_truncates": 6,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653625.3,
+   "wal_bytes": 86585952,
+   "db_bytes": 19881984,
+   "ck_runs": 12,
+   "ck_alive": true,
+   "ck_truncates": 7,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653630.3,
+   "wal_bytes": 39065872,
+   "db_bytes": 21491712,
+   "ck_runs": 13,
+   "ck_alive": true,
+   "ck_truncates": 8,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653635.4,
+   "wal_bytes": 64478032,
+   "db_bytes": 23273472,
+   "ck_runs": 14,
+   "ck_alive": true,
+   "ck_truncates": 9,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653640.4,
+   "wal_bytes": 38456112,
+   "db_bytes": 26533888,
+   "ck_runs": 16,
+   "ck_alive": true,
+   "ck_truncates": 11,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653645.4,
+   "wal_bytes": 14906192,
+   "db_bytes": 29687808,
+   "ck_runs": 18,
+   "ck_alive": true,
+   "ck_truncates": 13,
+   "ck_errors": 0
+  },
+  {
+   "t": 1789653650.5,
+   "wal_bytes": 65878832,
+   "db_bytes": 31215616,
+   "ck_runs": 19,
+   "ck_alive": true,
+   "ck_truncates": 14,
+   "ck_errors": 0
+  }
+ ],
+ "wal_max_bytes": 194950192,
+ "producer_failures": [
+  "RuntimeError('POST /v2/worlds/wld_b6b198c1468b067b0d08d4a4/artifacts -> 500 {\"detail\": {\"error\": \"internal_error\", \"message\": \"unhandled server error\"}}')"
+ ],
+ "health_after_write": {
+  "api": "v2",
+  "schema_version": 9,
+  "measured_at": 1789653650.9478788,
+  "process": {
+   "started_at": 1789653584.334457,
+   "uptime_s": 66.6,
+   "requests": 23461,
+   "responses_5xx": 1,
+   "responses_4xx": 0
+  },
+  "ledger": {
+   "path": "D:\\Prometheus-data\\sfe-scratch\\sfe_load__7m4qmow\\load.db",
+   "volume": "D:",
+   "last_event_ts": 1789653650.7578304,
+   "last_event_age_s": 0.2,
+   "events_last_hour": 30590,
+   "experiments_committed_last_hour": 7401,
+   "observations_last_hour": 7401,
+   "work_items": {}
+  },
+  "write_lock": {
+   "acquisitions": 23194,
+   "failures": 0,
+   "max_wait_s": 0.64,
+   "waits_over_1s": 0,
+   "last_wait_s": 0.0,
+   "last_at": 1789653650.7578304
+  },
+  "checkpointer": {
+   "alive": true,
+   "interval_s": 2.0,
+   "started_at": 1789653584.6150641,
+   "runs": 20,
+   "last_run_at": 1789653650.6424913,
+   "last_run_age_s": 0.3,
+   "last_passive": [
+    0,
+    12494,
+    12479
+   ],
+   "last_truncate": [
+    0,
+    0,
+    0
+   ],
+   "truncates": 14,
+   "errors": 0,
+   "last_error": null,
+   "last_tick_s": 0.797,
+   "wal_bytes": 67877032,
+   "db_bytes": 32505856,
+   "max_wal_bytes_seen": 123929632,
+   "wal_size_limit_bytes": 67108864,
+   "request_path_autocheckpoint": 0
+  },
+  "attestation": {
+   "dir": "D:\\Prometheus-data\\sfe-scratch\\sfe_load__7m4qmow\\incidents",
+   "degraded": false,
+   "degraded_reason": null,
+   "counts": {
+    "intent": 23192,
+    "effected": 23191,
+    "refused": 1,
+    "write_failures": 0
+   },
+   "open_intents_over_60s": 0
+  },
+  "engine_instance_id": "eng_cc853e1abb5db55570365ec1",
+  "engine_source_hash": "sha256:1e81fe000d345b1ae49a7fcf4e10dd148c7aaebd7fb023979048e8c80eb0400d",
+  "source_commit": "8345520a5b1098e78339b7b45b6759b81ace4dee"
+ },
+ "ABORTED": true,
+ "latency_by_quarter": {
+  "GET /v2/version": {
+   "n": 2,
+   "all": {
+    "n": 2,
+    "p50_ms": 554.7,
+    "p95_ms": 1108.3,
+    "max_ms": 1108.3
+   }
+  },
+  "POST /v2/clients": {
+   "n": 1,
+   "all": {
+    "n": 1,
+    "p50_ms": 2.6,
+    "p95_ms": 2.6,
+    "max_ms": 2.6
+   }
+  },
+  "POST /v2/sessions": {
+   "n": 1,
+   "all": {
+    "n": 1,
+    "p50_ms": 2.6,
+    "p95_ms": 2.6,
+    "max_ms": 2.6
+   }
+  },
+  "POST /v2/worlds": {
+   "n": 8,
+   "all": {
+    "n": 8,
+    "p50_ms": 4.8,
+    "p95_ms": 8.3,
+    "max_ms": 8.3
+   }
+  },
+  "POST /v2/worlds/{id}/start": {
+   "n": 8,
+   "all": {
+    "n": 8,
+    "p50_ms": 2.3,
+    "p95_ms": 7.4,
+    "max_ms": 7.4
+   }
+  },
+  "POST /v2/worlds/{id}/experiments": {
+   "n": 7401,
+   "all": {
+    "n": 7401,
+    "p50_ms": 1.6,
+    "p95_ms": 8.5,
+    "max_ms": 581.0
+   }
+  },
+  "POST /v2/worlds/{id}/experiments/{id}/commit": {
+   "n": 7401,
+   "all": {
+    "n": 7401,
+    "p50_ms": 1.5,
+    "p95_ms": 7.6,
+    "max_ms": 1237.1
+   }
+  },
+  "POST /v2/worlds/{id}/observations": {
+   "n": 7401,
+   "all": {
+    "n": 7401,
+    "p50_ms": 1.5,
+    "p95_ms": 8.1,
+    "max_ms": 1607.9
+   }
+  },
+  "POST /v2/worlds/{id}/events": {
+   "n": 741,
+   "all": {
+    "n": 741,
+    "p50_ms": 1.5,
+    "p95_ms": 7.7,
+    "max_ms": 21.9
+   }
+  },
+  "POST /v2/worlds/{id}/artifacts": {
+   "n": 75,
+   "all": {
+    "n": 75,
+    "p50_ms": 2.4,
+    "p95_ms": 11.6,
+    "max_ms": 966.5
+   }
+  },
+  "POST /v2/worlds/{id}/checkpoint": {
+   "n": 141,
+   "all": {
+    "n": 141,
+    "p50_ms": 1.5,
+    "p95_ms": 7.2,
+    "max_ms": 55.9
+   }
+  },
+  "POST /v2/worlds/{id}/fork": {
+   "n": 7,
+   "all": {
+    "n": 7,
+    "p50_ms": 3.0,
+    "p95_ms": 7.1,
+    "max_ms": 7.1
+   }
+  },
+  "POST /v2/worlds/{id}/terminate": {
+   "n": 7,
+   "all": {
+    "n": 7,
+    "p50_ms": 2.0,
+    "p95_ms": 5.1,
+    "max_ms": 5.1
+   }
+  },
+  "GET /v2/worlds/{id}/observations": {
+   "n": 252,
+   "all": {
+    "n": 252,
+    "p50_ms": 6.3,
+    "p95_ms": 16.1,
+    "max_ms": 1171.3
+   }
+  },
+  "GET /v2/health": {
+   "n": 1,
+   "all": {
+    "n": 1,
+    "p50_ms": 43.4,
+    "p95_ms": 43.4,
+    "max_ms": 43.4
+   }
+  }
+ },
+ "http_5xx": [
+  [
+   "POST /v2/worlds/{id}/artifacts",
+   500,
+   66.79162120819092
+  ]
+ ],
+ "stalls_over_5s": []
+}

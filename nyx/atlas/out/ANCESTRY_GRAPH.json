@@ -1,16 +1,17 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-16T17:26Z",
- "n": 131,
+ "built": "2026-09-17T11:04Z",
+ "n": 141,
  "by_relation": {
-  "algorithm_from": 42,
+  "algorithm_from": 51,
   "derived_from": 7,
   "shares_ancestor_with": 42,
-  "historical_version_of": 8,
-  "superseded": 20,
+  "historical_version_of": 9,
+  "superseded_by": 14,
   "reimplementation_of": 3,
   "port_of": 1,
   "forked_from": 1,
+  "supersedes": 6,
   "rewrote": 2,
   "rival_of": 1,
   "successor_of": 2,
@@ -62,9 +63,9 @@
   },
   {
    "from": "bsd-4.3-distribution-tape-1986",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "bsd-tcp-4.3-tahoe-1988",
-   "note": "Tahoe added slow start / congestion avoidance",
+   "note": "Tahoe added slow start / congestion avoidance [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -76,9 +77,9 @@
   },
   {
    "from": "bsd-tcp-4.2-1983",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "bsd-tcp-4.3-tahoe-1988",
-   "note": "the redesign forced by the 1986 collapse",
+   "note": "the redesign forced by the 1986 collapse [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -89,6 +90,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "bsd-tcp-4.2-1983",
+   "relation": "historical_version_of",
+   "to": "4.3BSD Tahoe TCP (1988) adds cwnd/ssthresh/slow start (the record's lineage; bsd-tcp-4.3-tahoe-1988 is in the vault)",
+   "note": "lineage per the record; the Tahoe body was not opened this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "bsd-tcp-4.3-reno-1990",
    "relation": "historical_version_of",
    "to": "bsd-tcp-4.3-tahoe-1988",
@@ -97,9 +105,9 @@
   },
   {
    "from": "bsd-tcp-4.3-reno-1990",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "linux-tcp-congestion",
-   "note": "NewReno -> CUBIC -> BBR",
+   "note": "NewReno -> CUBIC -> BBR [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -111,9 +119,9 @@
   },
   {
    "from": "bsd-tcp-4.3-tahoe-1988",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "bsd-tcp-4.3-reno-1990",
-   "note": "fast recovery added",
+   "note": "fast recovery added [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -132,9 +140,9 @@
   },
   {
    "from": "compact-4.2bsd-1983",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "ncompress-5.0-lzw-1985",
-   "note": "compress (LZW, 1984) displaced compact in BSD",
+   "note": "compress (LZW, 1984) displaced compact in BSD [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -143,6 +151,13 @@
    "to": "Gallager 1978 (adaptive Huffman)",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Faller 1973 / Gallager 1978 sibling-property adaptive Huffman",
+   "note": "from the source header ('Adaptive Huffman code ... On-line algorithm ... Colin L. McMaster 1979'); the record's lineage not re-read this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "compress-4.2.4-lzw",
@@ -174,10 +189,17 @@
   },
   {
    "from": "des-reference",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "tiny-aes-c",
-   "note": "AES (Rijndael) replaced DES by NIST competition",
+   "note": "AES (Rijndael) replaced DES by NIST competition [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "dlmalloc",
+   "relation": "algorithm_from",
+   "to": "Knuth boundary tags; Lea's malloc lineage 1987-2012 (the file's own history); the glibc ptmalloc family derives from earlier versions (the comment at 27-30)",
+   "note": "from the source comments; not verified against the record this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "eispack-netlib-1976",
@@ -188,9 +210,9 @@
   },
   {
    "from": "eispack-netlib-1976",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "lapack-reference",
-   "note": "",
+   "note": "[relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -278,6 +300,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "ff-planner-2.3",
+   "relation": "algorithm_from",
+   "to": "Graphplan (Blum & Furst 1995) planning graph without mutexes; HSP (Bonet & Geffner) heuristic search; Hoffmann & Nebel 2001 JAIR",
+   "note": "from the file headers; the vault's graphplan-blum-furst-1995 is a sibling fossil for a recurrence test",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "glibc-rwlock-writer-starvation-2.36",
    "relation": "shares_ancestor_with",
    "to": "concurrencykit-0.7.2",
@@ -314,16 +343,16 @@
   },
   {
    "from": "gzip-1.2.4-1993",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "ncompress-5.0-lzw-1985",
-   "note": "Techne records this edge with direction 'gzip displaced compress'; the atlas keeps it as recorded",
+   "note": "Techne records this edge with direction 'gzip displaced compress'; the atlas keeps it as recorded [relation migrated superseded -> supersedes 2026-09-16 after Techne 1bb9965b4; direction from the note: gzip displaced compress]",
    "basis": "SOURCE_READ"
   },
   {
    "from": "gzip-1.2.4-1993",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "ncompress-5.0-lzw-1985",
-   "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress)",
+   "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress) [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -412,9 +441,9 @@
   },
   {
    "from": "leveldb-1.23",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "RocksDB (Facebook fork 2012)",
-   "note": "Techne's edge with its note",
+   "note": "Techne's edge with its note [migrated superseded -> superseded_by 2026-09-16 after Techne 1bb9965b4; direction from Techne's record note: the fork became the mainstream LSM engine]",
    "basis": "SOURCE_READ"
   },
   {
@@ -426,9 +455,9 @@
   },
   {
    "from": "leveldb-1.23",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "RocksDB (Facebook fork 2012)",
-   "note": "human history: the fork became the mainstream LSM engine; LevelDB continues",
+   "note": "human history: the fork became the mainstream LSM engine; LevelDB continues [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -475,9 +504,9 @@
   },
   {
    "from": "linpack-netlib-1979",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "lapack-reference",
-   "note": "same problems, restructured for memory hierarchy; the human record states the reason",
+   "note": "same problems, restructured for memory hierarchy; the human record states the reason [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -503,9 +532,9 @@
   },
   {
    "from": "linux-tcp-congestion",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "TCP Reno/NewReno",
-   "note": "CUBIC replaced Reno-family as Linux default",
+   "note": "CUBIC replaced Reno-family as Linux default [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -523,6 +552,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "lisp-1-5-ibm7090-1962",
+   "relation": "algorithm_from",
+   "to": "McCarthy 1960 (Recursive functions of symbolic expressions); Hart, Levin et al., LISP 1.5 Programmer's Manual 1962",
+   "note": "from the README and the REM comments (M-expressions); not verified against the manual PDF this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "lmdb-0.9.31",
    "relation": "algorithm_from",
    "to": "shadow paging (Lorie 1977) and append-only B-trees (the code's own doc references not read)",
@@ -538,9 +574,9 @@
   },
   {
    "from": "md5-rfc1321",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "the SHA-2 family",
-   "note": "deployment moved to SHA-256 after the collision results",
+   "note": "deployment moved to SHA-256 after the collision results [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -573,9 +609,9 @@
   },
   {
    "from": "minisat-1.14-2006",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "zchaff-2007",
-   "note": "direction: MiniSat superseded zChaff (recorded on both records)",
+   "note": "direction: MiniSat superseded zChaff (recorded on both records) [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -601,10 +637,24 @@
   },
   {
    "from": "odepack-netlib",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "scipy.integrate.odeint / LSODA",
-   "note": "LSODA (in this same package) auto-switches; wrapped by SciPy",
+   "note": "LSODA (in this same package) auto-switches; wrapped by SciPy [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "algorithm_from",
+   "to": "Gear (1971) DIFSUB; Hindmarsh GEAR (1974) -> LSODE (1983); the Nordsieck (1962) representation",
+   "note": "from the prologues (revision history 791129) and the record's lineage; not independently verified this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "odepack-netlib",
+   "relation": "algorithm_from",
+   "to": "Gear (1971) DIFSUB; Hindmarsh GEAR (1974) -> LSODE (1983); the Nordsieck (1962) representation",
+   "note": "from the prologues (revision history 791129) and the record's lineage; not independently verified this pass",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "openssl-1.0.1f-heartbleed",
@@ -668,6 +718,13 @@
    "to": "libdai-mooij",
    "note": "particle MCMC (PMMH) and belief propagation: two inference lineages; PMMH added to this specimen in batch 06 phase 5",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "algorithm_from",
+   "to": "Gordon, Salmond & Smith 1993 (bootstrap filter); Del Moral 2004 (Feynman-Kac); Chopin & Papaspiliopoulos 2020 (the book this library accompanies)",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "picosat-965",
@@ -769,9 +826,9 @@
   },
   {
    "from": "spdylay",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "HTTP/2 (RFC 7540)",
-   "note": "SPDY was the basis of the standard that replaced it",
+   "note": "SPDY was the basis of the standard that replaced it [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -804,16 +861,16 @@
   },
   {
    "from": "tiny-aes-c",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "des-reference",
-   "note": "Techne records 'AES replaced DES as the US standard' on both records (direction fixed by the note)",
+   "note": "Techne records 'AES replaced DES as the US standard' on both records (direction fixed by the note) [relation migrated superseded -> supersedes 2026-09-16 after Techne 1bb9965b4; direction from the note: AES replaced DES as the US standard]",
    "basis": "SOURCE_READ"
   },
   {
    "from": "tiny-aes-c",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "des-reference",
-   "note": "AES replaced DES as the US standard",
+   "note": "AES replaced DES as the US standard [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -901,6 +958,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "verilog-uart2bus",
+   "relation": "algorithm_from",
+   "to": "the 16x-oversampling UART convention (8250-class devices); the 'uart2bus' OpenCores project (record lineage not re-read)",
+   "note": "from the module headers",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "walksat-v56",
    "relation": "shares_ancestor_with",
    "to": "picosat-965",
@@ -922,10 +986,17 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "willemt-raft",
+   "relation": "algorithm_from",
+   "to": "Ongaro & Ousterhout 2014, In Search of an Understandable Consensus Algorithm (the code cites the paper's section numbers in comments)",
+   "note": "from the source comments; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "zchaff-2007",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "minisat-2.2.0",
-   "note": "MiniSat (2003) reimplemented Chaff's ideas and displaced it",
+   "note": "MiniSat (2003) reimplemented Chaff's ideas and displaced it [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {

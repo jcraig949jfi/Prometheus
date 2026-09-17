@@ -1,0 +1,39 @@
+{
+ "attempts": {
+  "1": {
+   "dir": "attempts/a01",
+   "disposition_candidate": "INSTRUMENT_FAILURE",
+   "engine_path": false,
+   "errors": 0,
+   "finished_at": "2026-09-17T05:40:08Z",
+   "purpose": "dry run",
+   "replayed_steps": 0,
+   "resumed_from": null,
+   "started_at": "2026-09-17T05:40:06Z"
+  },
+  "2": {
+   "dir": "attempts/a02",
+   "disposition_candidate": "INSTRUMENT_FAILURE",
+   "engine_path": false,
+   "errors": 0,
+   "finished_at": "2026-09-17T05:49:37Z",
+   "purpose": "dry run",
+   "replayed_steps": 0,
+   "resumed_from": 1,
+   "started_at": "2026-09-17T05:49:36Z"
+  },
+  "3": {
+   "dir": "attempts/a03",
+   "disposition_candidate": "CAPABLE_NEGATIVE",
+   "engine_path": true,
+   "errors": 0,
+   "finished_at": "2026-09-17T05:50:38Z",
+   "purpose": "engine",
+   "replayed_steps": 0,
+   "resumed_from": null,
+   "started_at": "2026-09-17T05:50:16Z"
+  }
+ },
+ "experiment": "C3-SFE-02",
+ "of_record": 3
+}

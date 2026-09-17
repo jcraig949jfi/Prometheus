@@ -1,260 +1,272 @@
 {
-  "schema": "techne.fossil.packet/1",
-  "specimen_id": "gzip-1.2.4-1993",
-  "pipeline_id": "FOSSIL-GZIP-001",
-  "written_utc": "2026-09-16T17:20:00Z",
-  "written_by": "Techne[m2-04bd52c0]",
-  "amendment": "roles/Techne/prompts/2026-09-16_amendment2/OPERATOR.md sha256:815e84b3c8ea387af348b2f1ca96220f6fee87ece3dbd136e32b04df19428b85",
-  "FOSSIL_RAW_ID": {
-    "tree_sha256": "d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719",
-    "n_files": 90,
-    "bytes": 942686,
-    "archive": {
-      "filename": "gzip-1.2.4.tar.gz",
-      "sha256": "1ca41818a23c9c59ef1d5e1d00c0d5eaa2285d931c0fb059637d7c0cc02ad967",
-      "origin": "https://ftp.gnu.org/gnu/gzip/gzip-1.2.4.tar.gz"
-    },
-    "hash_list": "techne/fossils/specimens/gzip-1.2.4-1993/UPSTREAM_HASHES.txt",
-    "host_stability": "M1 body verified 2026-09-13T06:54:39Z (VAULT_INTEGRITY_2026-09-13_close.json); M2 body re-fetched from origin and verified MATCH 2026-09-16 (REMATERIALIZE_M2_2026-09-16.json, VAULT_INTEGRITY_M2_2026-09-16.json 13:50:22Z): the same tree hash on two hosts from two fetches"
+ "schema": "techne.fossil.packet/1",
+ "specimen_id": "gzip-1.2.4-1993",
+ "pipeline_id": "FOSSIL-GZIP-001",
+ "written_utc": "2026-09-16T17:20:00Z",
+ "written_by": "Techne[m2-04bd52c0]",
+ "amendment": "roles/Techne/prompts/2026-09-16_amendment2/OPERATOR.md sha256:815e84b3c8ea387af348b2f1ca96220f6fee87ece3dbd136e32b04df19428b85",
+ "FOSSIL_RAW_ID": {
+  "tree_sha256": "d89ed3f8c3083e99847253fd0f53576da67754eee54241e1362e747f1c721719",
+  "n_files": 90,
+  "bytes": 942686,
+  "archive": {
+   "filename": "gzip-1.2.4.tar.gz",
+   "sha256": "1ca41818a23c9c59ef1d5e1d00c0d5eaa2285d931c0fb059637d7c0cc02ad967",
+   "origin": "https://ftp.gnu.org/gnu/gzip/gzip-1.2.4.tar.gz"
   },
-  "PAYLOAD_MANIFEST_ID": "d36d57f28f65f823bd5ab3c6a42b91228c999f13047ac3b3ef394784bf8427c1",
-  "PROVENANCE_GRADE": [
-    {
-      "artifact": "gzip-1.2.4.tar.gz",
-      "grade": "CONTEMPORARY_COPY",
-      "basis": "the GNU ftp distribution tarball of the 1993 release, served by the project's own mirror; not the author's original medium, so not ORIGINAL_ARTIFACT",
-      "edges": [
-        "PACKAGES gzip 1.2.4 source as released 1993-08"
-      ]
-    }
+  "hash_list": "techne/fossils/specimens/gzip-1.2.4-1993/UPSTREAM_HASHES.txt",
+  "host_stability": "M1 body verified 2026-09-13T06:54:39Z (VAULT_INTEGRITY_2026-09-13_close.json); M2 body re-fetched from origin and verified MATCH 2026-09-16 (REMATERIALIZE_M2_2026-09-16.json, VAULT_INTEGRITY_M2_2026-09-16.json 13:50:22Z): the same tree hash on two hosts from two fetches"
+ },
+ "PAYLOAD_MANIFEST_ID": "d36d57f28f65f823bd5ab3c6a42b91228c999f13047ac3b3ef394784bf8427c1",
+ "PROVENANCE_GRADE": [
+  {
+   "artifact": "gzip-1.2.4.tar.gz",
+   "grade": "CONTEMPORARY_COPY",
+   "basis": "the GNU ftp distribution tarball of the 1993 release, served by the project's own mirror; not the author's original medium, so not ORIGINAL_ARTIFACT",
+   "edges": [
+    "PACKAGES gzip 1.2.4 source as released 1993-08"
+   ]
+  }
+ ],
+ "FOSSIL_WORLD_ID": "fw-01f8b51f479199e106bb85ed",
+ "FOSSIL_WORLD": {
+  "name": "prometheus-fossil-c:bookworm",
+  "dockerfile": "techne/fossils/environment/fossil-c-toolchain.Dockerfile",
+  "dockerfile_sha256": "0bd81b6032ff690298d1bf9c0eb7ff807783060a1e347dfdc3fe4d165f468683",
+  "architecture": "x86_64 (linux/amd64 container)",
+  "guest": "Debian 12 bookworm-slim, base repo digest today debian@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171",
+  "package_manifest_sha256": "b903c0cc6a8811320d575e27995deda9a6941b8bd3c2a2fd91c3bef76fac077c",
+  "n_packages": 191,
+  "toolchain_probes": [
+   "gcc (Debian 12.2.0-14+deb12u1) 12.2.0"
   ],
-  "FOSSIL_WORLD_ID": "fw-01f8b51f479199e106bb85ed",
-  "FOSSIL_WORLD": {
-    "name": "prometheus-fossil-c:bookworm",
-    "dockerfile": "techne/fossils/environment/fossil-c-toolchain.Dockerfile",
-    "dockerfile_sha256": "0bd81b6032ff690298d1bf9c0eb7ff807783060a1e347dfdc3fe4d165f468683",
-    "architecture": "x86_64 (linux/amd64 container)",
-    "guest": "Debian 12 bookworm-slim, base repo digest today debian@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171",
-    "package_manifest_sha256": "b903c0cc6a8811320d575e27995deda9a6941b8bd3c2a2fd91c3bef76fac077c",
-    "n_packages": 191,
-    "toolchain_probes": [
-      "gcc (Debian 12.2.0-14+deb12u1) 12.2.0"
-    ],
-    "toolchain_identity_across_hosts": "M1 receipt 2026-09-12 and M2 receipt 2026-09-16 print the same gcc string; WORLD_PROBE_COMPARE_M2_2026-09-16.json: 89/93 probes identical across all fossil-c specimens, differences are host facts (nproc, kernel)",
-    "environment_variable_schema": [
-      "BODY",
-      "HARNESS"
-    ],
-    "note": "R21: identity is the manifest; the image id is a witness. M1 image faeec8375055 and M2 image 5d33974496e0 are two witnesses of one FOSSIL_WORLD"
-  },
-  "RUNTIME_WITNESS": [
-    {
-      "receipt": "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260912T210109Z.json",
-      "host": "SKULLPORT (M1)",
-      "image_id": "sha256:faeec8375055",
-      "schema": "techne.fossil.run_receipt/1"
-    },
-    {
-      "receipt": "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260916T162024Z.json",
-      "host": "SPECTREX5 (M2)",
-      "image_id": "sha256:5d33974496e0e2b5222025cfc9bdf79f2e0444ecac71db272be35335935f7878",
-      "docker": "29.1.3 in WSL2 Ubuntu 24.04.5, kernel 6.18.33.2-microsoft-standard-WSL2",
-      "schema": "techne.fossil.run_receipt/2",
-      "driver_environment": "in the receipt: CPython 3.14.4, pip-freeze sha256, env-var names read"
-    },
-    {
-      "receipt": "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260916T171717Z.json",
-      "host": "SPECTREX5 (M2)",
-      "image_id": "sha256:5d33974496e0e2b5222025cfc9bdf79f2e0444ecac71db272be35335935f7878",
-      "schema": "techne.fossil.run_receipt/2",
-      "note": "first receipt of the DEFAULT-flag build (0 scaffolding)"
-    }
+  "toolchain_identity_across_hosts": "M1 receipt 2026-09-12 and M2 receipt 2026-09-16 print the same gcc string; WORLD_PROBE_COMPARE_M2_2026-09-16.json: 89/93 probes identical across all fossil-c specimens, differences are host facts (nproc, kernel)",
+  "environment_variable_schema": [
+   "BODY",
+   "HARNESS"
   ],
-  "HOST_CAPS_ID": {
-    "host": "SPECTREX5",
-    "cpus": 28,
-    "ram_gb": 15,
-    "container_runtime": "docker 29.1.3 (WSL2)",
-    "kernel": "6.18.33.2-microsoft-standard-WSL2",
-    "note": "M1 witness: 16 CPUs, kernel 6.6.87.2 (from the 2026-09-12 receipts' probes)"
+  "note": "R21: identity is the manifest; the image id is a witness. M1 image faeec8375055 and M2 image 5d33974496e0 are two witnesses of one FOSSIL_WORLD"
+ },
+ "RUNTIME_WITNESS": [
+  {
+   "receipt": "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260912T210109Z.json",
+   "host": "SKULLPORT (M1)",
+   "image_id": "sha256:faeec8375055",
+   "schema": "techne.fossil.run_receipt/1"
   },
-  "CAPABILITY_MATRIX": {
-    "INSTANTIATE": "yes",
-    "EXECUTE": "yes",
-    "OBSERVE": "yes",
-    "SNAPSHOT": "no",
-    "RESTORE": "no",
-    "STEP": "no",
-    "TRACE": "partial",
-    "EXAMINE": "no",
-    "WATCH": "no",
-    "INTERVENE": "partial",
-    "SCREENSHOT": "no",
-    "INJECT_INPUT": "yes",
-    "EXTRACT_OUTPUT": "yes",
-    "_source": "techne/fossils/WORLDS.json",
-    "_how": "harvest run: disposable copy (INSTANTIATE), recipe commands (EXECUTE), stdout/stderr/exit/produced-file hashes (OBSERVE/EXTRACT_OUTPUT), harness files mounted under $HARNESS (INJECT_INPUT); TRACE partial = strace/ltrace could be added to the world but are not; INTERVENE partial = source patches on the disposable copy and build flags, never on the body; no process snapshot/step in a container world"
+  {
+   "receipt": "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260916T162024Z.json",
+   "host": "SPECTREX5 (M2)",
+   "image_id": "sha256:5d33974496e0e2b5222025cfc9bdf79f2e0444ecac71db272be35335935f7878",
+   "docker": "29.1.3 in WSL2 Ubuntu 24.04.5, kernel 6.18.33.2-microsoft-standard-WSL2",
+   "schema": "techne.fossil.run_receipt/2",
+   "driver_environment": "in the receipt: CPython 3.14.4, pip-freeze sha256, env-var names read"
   },
-  "SCAFFOLDING_LEDGER": {
-    "applied": [],
-    "measured_and_rejected": [
-      {
-        "transformation_id": "T1 (as re-measured)",
-        "exact_operation": "make CFLAGS='-O1 -fcommon -std=gnu89 -w'",
-        "reason_tested": "was the applied scaffolding since batch 05",
-        "result": "NOT NEEDED: default build equivalent in output; rejected from the recipe",
-        "measured_utc": "2026-09-16T17:17Z",
-        "tool": "gcc 12.2.0-14+deb12u1 / GNU make in fossil-c"
-      }
-    ],
-    "note": "0 transformations applied as of 2026-09-16; the faithful build is the default one. T1 was carried for four days on an unreproduced justification -- R18's rejected-list control caught it.",
-    "removed_after_measurement": [
-      {
-        "transformation_id": "T1",
-        "source_object": "gzip-1.2.4 source tree (unchanged)",
-        "derived_object": "./gzip binary in the disposable copy",
-        "reason": "1993 K&R/C89 code with tentative definitions and pre-ANSI constructs; GCC 10+ defaults to -fno-common and a newer C standard, and warnings-as-noise hide the one error that matters",
-        "sites_affected": "every compilation unit (build flags, not source)",
-        "exact_operation": "make -s CFLAGS='-O1 -fcommon -std=gnu89 -w' after ./configure",
-        "tool": "GNU make + gcc 12.2.0",
-        "evidence_requiring_it": "batch 05 (2026-09-12): the default build fails on multiple-definition errors under -fno-common",
-        "provenance_grade": "not applicable (no imported material)",
-        "applied": false,
-        "reversible": true,
-        "effect_on_execution": "builds; behaviour of the produced binary is the fossil's own code under a modern compiler",
-        "status": "APPLIED 2026-09-12 .. 2026-09-16, MEASURED NOT REQUIRED, REMOVED 2026-09-16",
-        "measurement": "in FOSSIL_WORLD fw-01f8b51f479199e106bb85ed the default `make` builds gzip 1.2.4 (0 errors, 0 warnings in make -s output); -fcommon alone and -std=gnu89 alone also build; the default-built binary round-trips the 200 KB sample and its -9 output is byte-identical to the flagged build (21,267 B, sha256 691fbc13a180b0a9..); binaries differ (optimisation level), outputs do not",
-        "evidence_requiring_it_status": "NOT REPRODUCED -- the batch-05 statement about -fno-common multiple-definition errors does not hold for gzip 1.2.4 in this world; it may have been true of another K&R specimen in the same batch (compact-4.2bsd) and generalised",
-        "previous_recipe_build_cmd": "./configure >/dev/null 2>&1; make -s CFLAGS='-O1 -fcommon -std=gnu89 -w' 2>&1 | grep -iE '\\berror' | head -5; test -x ./gzip && echo built"
-      }
-    ]
-  },
-  "INSTRUMENT_CONTROLS": [
-    {
-      "instrument": "gcc 12.2.0-14+deb12u1 in fossil-c",
-      "control": "toolchain probe identical on M1 (2026-09-12) and M2 (2026-09-16) receipts; 89/93 probes identical across 92 specimens after the M2 rebuild",
-      "artifact": "techne/fossils/WORLD_PROBE_COMPARE_M2_2026-09-16.json"
-    },
-    {
-      "instrument": "the world build (Dockerfile -> image)",
-      "control": "rebuild census 8/8 BUILT; dpkg manifest recorded for the first time (191 packages) so the next rebuild is compared at package level",
-      "artifact": "techne/fossils/WORLD_BUILD_M2_2026-09-16.json"
-    },
-    {
-      "instrument": "harvest run isolation",
-      "control": "body_preserved true on both receipts (tree hash re-checked after the run); negative/positive/cheat controls in techne/tests/test_fossil_isolation.py",
-      "artifact": "receipts above"
-    },
-    {
-      "instrument": "round-trip check itself",
-      "control": "cmp of decompressed output against the input is a self-consistency oracle (EXECUTION grade); it cannot detect a compressor that is internally consistent but not gzip-1.2.4-faithful -- that is Harmonia R1's job with a contemporary oracle",
-      "artifact": "recipe.json runs[0]"
-    }
+  {
+   "receipt": "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260916T171717Z.json",
+   "host": "SPECTREX5 (M2)",
+   "image_id": "sha256:5d33974496e0e2b5222025cfc9bdf79f2e0444ecac71db272be35335935f7878",
+   "schema": "techne.fossil.run_receipt/2",
+   "note": "first receipt of the DEFAULT-flag build (0 scaffolding)"
+  }
+ ],
+ "HOST_CAPS_ID": {
+  "host": "SPECTREX5",
+  "cpus": 28,
+  "ram_gb": 15,
+  "container_runtime": "docker 29.1.3 (WSL2)",
+  "kernel": "6.18.33.2-microsoft-standard-WSL2",
+  "note": "M1 witness: 16 CPUs, kernel 6.6.87.2 (from the 2026-09-12 receipts' probes)"
+ },
+ "CAPABILITY_MATRIX": {
+  "INSTANTIATE": "yes",
+  "EXECUTE": "yes",
+  "OBSERVE": "yes",
+  "SNAPSHOT": "no",
+  "RESTORE": "no",
+  "STEP": "no",
+  "TRACE": "partial",
+  "EXAMINE": "no",
+  "WATCH": "no",
+  "INTERVENE": "partial",
+  "SCREENSHOT": "no",
+  "INJECT_INPUT": "yes",
+  "EXTRACT_OUTPUT": "yes",
+  "_source": "techne/fossils/WORLDS.json",
+  "_how": "harvest run: disposable copy (INSTANTIATE), recipe commands (EXECUTE), stdout/stderr/exit/produced-file hashes (OBSERVE/EXTRACT_OUTPUT), harness files mounted under $HARNESS (INJECT_INPUT); TRACE partial = strace/ltrace could be added to the world but are not; INTERVENE partial = source patches on the disposable copy and build flags, never on the body; no process snapshot/step in a container world"
+ },
+ "SCAFFOLDING_LEDGER": {
+  "applied": [],
+  "measured_and_rejected": [
+   {
+    "transformation_id": "T1 (as re-measured)",
+    "exact_operation": "make CFLAGS='-O1 -fcommon -std=gnu89 -w'",
+    "reason_tested": "was the applied scaffolding since batch 05",
+    "result": "NOT NEEDED: default build equivalent in output; rejected from the recipe",
+    "measured_utc": "2026-09-16T17:17Z",
+    "tool": "gcc 12.2.0-14+deb12u1 / GNU make in fossil-c"
+   }
   ],
-  "TECHNE_STATE": "BODY_EXECUTABLE",
-  "TECHNE_STATE_BASIS": "builds and runs in its FOSSIL_WORLD on two hosts; round-trips a 200 KB synthetic sample (gzip -9 -> 21,267 bytes) and prints its 1.2.4 banner. NOT BEHAVIOR_PARTIALLY_REPRODUCED: no contemporary oracle (a 1993-era .gz with known bytes, a published ratio table, a test vector) has been attached; the round trip is self-consistency, not reproduction of published behaviour",
-  "BEHAVIOR_EVIDENCE": null,
-  "REQUIRED_STATE_FOR_HANDOFF": "BODY_EXECUTABLE",
-  "REQUIRED_STATE_BASIS": "Nyx's Stage C level-table ablation and Harmonia R1 both need an executing body with intervenable build; a contemporary behavioural oracle is what Harmonia R1 constructs, so BEHAVIOR_* is not a precondition of the handoff (R17)",
-  "TECHNE_RUN_RECEIPTS": [
-    "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260912T210109Z.json",
-    "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260916T162024Z.json",
-    "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260916T171717Z.json"
+  "note": "0 transformations applied as of 2026-09-16; the faithful build is the default one. T1 was carried for four days on an unreproduced justification -- R18's rejected-list control caught it.",
+  "removed_after_measurement": [
+   {
+    "transformation_id": "T1",
+    "source_object": "gzip-1.2.4 source tree (unchanged)",
+    "derived_object": "./gzip binary in the disposable copy",
+    "reason": "1993 K&R/C89 code with tentative definitions and pre-ANSI constructs; GCC 10+ defaults to -fno-common and a newer C standard, and warnings-as-noise hide the one error that matters",
+    "sites_affected": "every compilation unit (build flags, not source)",
+    "exact_operation": "make -s CFLAGS='-O1 -fcommon -std=gnu89 -w' after ./configure",
+    "tool": "GNU make + gcc 12.2.0",
+    "evidence_requiring_it": "batch 05 (2026-09-12): the default build fails on multiple-definition errors under -fno-common",
+    "provenance_grade": "not applicable (no imported material)",
+    "applied": false,
+    "reversible": true,
+    "effect_on_execution": "builds; behaviour of the produced binary is the fossil's own code under a modern compiler",
+    "status": "APPLIED 2026-09-12 .. 2026-09-16, MEASURED NOT REQUIRED, REMOVED 2026-09-16",
+    "measurement": "in FOSSIL_WORLD fw-01f8b51f479199e106bb85ed the default `make` builds gzip 1.2.4 (0 errors, 0 warnings in make -s output); -fcommon alone and -std=gnu89 alone also build; the default-built binary round-trips the 200 KB sample and its -9 output is byte-identical to the flagged build (21,267 B, sha256 691fbc13a180b0a9..); binaries differ (optimisation level), outputs do not",
+    "evidence_requiring_it_status": "NOT REPRODUCED -- the batch-05 statement about -fno-common multiple-definition errors does not hold for gzip 1.2.4 in this world; it may have been true of another K&R specimen in the same batch (compact-4.2bsd) and generalised",
+    "previous_recipe_build_cmd": "./configure >/dev/null 2>&1; make -s CFLAGS='-O1 -fcommon -std=gnu89 -w' 2>&1 | grep -iE '\\berror' | head -5; test -x ./gzip && echo built"
+   }
+  ]
+ },
+ "INSTRUMENT_CONTROLS": [
+  {
+   "instrument": "gcc 12.2.0-14+deb12u1 in fossil-c",
+   "control": "toolchain probe identical on M1 (2026-09-12) and M2 (2026-09-16) receipts; 89/93 probes identical across 92 specimens after the M2 rebuild",
+   "artifact": "techne/fossils/WORLD_PROBE_COMPARE_M2_2026-09-16.json"
+  },
+  {
+   "instrument": "the world build (Dockerfile -> image)",
+   "control": "rebuild census 8/8 BUILT; dpkg manifest recorded for the first time (191 packages) so the next rebuild is compared at package level",
+   "artifact": "techne/fossils/WORLD_BUILD_M2_2026-09-16.json"
+  },
+  {
+   "instrument": "harvest run isolation",
+   "control": "body_preserved true on both receipts (tree hash re-checked after the run); negative/positive/cheat controls in techne/tests/test_fossil_isolation.py",
+   "artifact": "receipts above"
+  },
+  {
+   "instrument": "round-trip check itself",
+   "control": "cmp of decompressed output against the input is a self-consistency oracle (EXECUTION grade); it cannot detect a compressor that is internally consistent but not gzip-1.2.4-faithful -- that is Harmonia R1's job with a contemporary oracle",
+   "artifact": "recipe.json runs[0]"
+  }
+ ],
+ "TECHNE_STATE": "BODY_EXECUTABLE",
+ "TECHNE_STATE_BASIS": "builds and runs in its FOSSIL_WORLD on two hosts; round-trips a 200 KB synthetic sample (gzip -9 -> 21,267 bytes) and prints its 1.2.4 banner. NOT BEHAVIOR_PARTIALLY_REPRODUCED: no contemporary oracle (a 1993-era .gz with known bytes, a published ratio table, a test vector) has been attached; the round trip is self-consistency, not reproduction of published behaviour",
+ "BEHAVIOR_EVIDENCE": null,
+ "REQUIRED_STATE_FOR_HANDOFF": "BODY_EXECUTABLE",
+ "REQUIRED_STATE_BASIS": "Nyx's Stage C level-table ablation and Harmonia R1 both need an executing body with intervenable build; a contemporary behavioural oracle is what Harmonia R1 constructs, so BEHAVIOR_* is not a precondition of the handoff (R17)",
+ "TECHNE_RUN_RECEIPTS": [
+  "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260912T210109Z.json",
+  "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260916T162024Z.json",
+  "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260916T171717Z.json"
+ ],
+ "PRESERVATION": {
+  "copies": [
+   {
+    "object": "body tree d89ed3f8...",
+    "location_class": "host-local vault (F:/Prometheus/vault/fossils, SKULLPORT)",
+    "failure_domain": "M1",
+    "verification_time": "2026-09-13T06:54:39Z",
+    "verification_result": "VERIFIED",
+    "artifact": "techne/fossils/VAULT_INTEGRITY_2026-09-13_close.json"
+   },
+   {
+    "object": "body tree d89ed3f8...",
+    "location_class": "host-local vault (canonical checkout/vault/fossils, SPECTREX5), re-fetched from origin",
+    "failure_domain": "M2",
+    "verification_time": "2026-09-16T13:50:22Z",
+    "verification_result": "VERIFIED",
+    "artifact": "techne/fossils/VAULT_INTEGRITY_M2_2026-09-16.json"
+   },
+   {
+    "object": "archive gzip-1.2.4.tar.gz 1ca41818...",
+    "location_class": "origin (ftp.gnu.org)",
+    "failure_domain": "GNU mirrors",
+    "verification_time": "2026-09-16",
+    "verification_result": "VERIFIED (sha256 matched the record on fetch)",
+    "artifact": "techne/fossils/REMATERIALIZE_M2_2026-09-16.json"
+   },
+   {
+    "object": "FOSSIL_WORLD prometheus-fossil-c (Dockerfile + manifest)",
+    "location_class": "git (Dockerfile) + rebuilt image on each host",
+    "failure_domain": "M1 image / M2 image / git",
+    "verification_time": "2026-09-16",
+    "verification_result": "REBUILDABLE_NOT_BIT_EXACT, toolchain-identical (89/93 probes)",
+    "artifact": "techne/fossils/WORLD_BUILD_M2_2026-09-16.json"
+   }
   ],
-  "PRESERVATION": {
-    "copies": [
-      {
-        "object": "body tree d89ed3f8...",
-        "location_class": "host-local vault (F:/Prometheus/vault/fossils, SKULLPORT)",
-        "failure_domain": "M1",
-        "verification_time": "2026-09-13T06:54:39Z",
-        "verification_result": "VERIFIED",
-        "artifact": "techne/fossils/VAULT_INTEGRITY_2026-09-13_close.json"
-      },
-      {
-        "object": "body tree d89ed3f8...",
-        "location_class": "host-local vault (canonical checkout/vault/fossils, SPECTREX5), re-fetched from origin",
-        "failure_domain": "M2",
-        "verification_time": "2026-09-16T13:50:22Z",
-        "verification_result": "VERIFIED",
-        "artifact": "techne/fossils/VAULT_INTEGRITY_M2_2026-09-16.json"
-      },
-      {
-        "object": "archive gzip-1.2.4.tar.gz 1ca41818...",
-        "location_class": "origin (ftp.gnu.org)",
-        "failure_domain": "GNU mirrors",
-        "verification_time": "2026-09-16",
-        "verification_result": "VERIFIED (sha256 matched the record on fetch)",
-        "artifact": "techne/fossils/REMATERIALIZE_M2_2026-09-16.json"
-      },
-      {
-        "object": "FOSSIL_WORLD prometheus-fossil-c (Dockerfile + manifest)",
-        "location_class": "git (Dockerfile) + rebuilt image on each host",
-        "failure_domain": "M1 image / M2 image / git",
-        "verification_time": "2026-09-16",
-        "verification_result": "REBUILDABLE_NOT_BIT_EXACT, toolchain-identical (89/93 probes)",
-        "artifact": "techne/fossils/WORLD_BUILD_M2_2026-09-16.json"
-      }
-    ],
-    "r25_status": "two VERIFIED body copies in distinct failure domains (M1, M2) plus the live origin; the world is preserved as a recipe with measured identity, not as bytes -- an off-host image tarball is TECHNE-65/NAS material"
-  },
-  "CUT_ID": {
-    "cut_id": "gzip-1.2.4-1993::four_threshold_table_indexed_by_level",
-    "record": "nyx/atlas/fossils/gzip-1.2.4-1993.json (cut format nyx.atlas/1-provenance; cut script nyx/atlas/cuts/gzip_1_2_4_1993.py, annotated DO NOT RE-RUN)",
-    "boundary": [
-      {
-        "file": "gzip-1.2.4/deflate.c",
-        "lines": "225-245",
-        "payload_sha256": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4"
-      },
-      {
-        "file": "gzip-1.2.4/deflate.c",
-        "lines": "286-356",
-        "payload_sha256": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4"
-      }
-    ],
-    "provenance_grade_read": "CONTEMPORARY_COPY (Techne's grade)",
-    "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308)"
-  },
-  "NYX_PREDICTION_PACKET": {
+  "r25_status": "two VERIFIED body copies in distinct failure domains (M1, M2) plus the live origin; the world is preserved as a recipe with measured identity, not as bytes -- an off-host image tarball is TECHNE-65/NAS material"
+ },
+ "CUT_ID": {
+  "cut_id": "gzip-1.2.4-1993::four_threshold_table_indexed_by_level",
+  "record": "nyx/atlas/fossils/gzip-1.2.4-1993.json (cut format nyx.atlas/1-provenance; cut script nyx/atlas/cuts/gzip_1_2_4_1993.py, annotated DO NOT RE-RUN)",
+  "boundary": [
+   {
+    "file": "gzip-1.2.4/deflate.c",
+    "lines": "225-245",
+    "payload_sha256": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4"
+   },
+   {
+    "file": "gzip-1.2.4/deflate.c",
+    "lines": "286-356",
+    "payload_sha256": "b0ba92b03c7abbb93b090eb1046a60913e7983dce3031ac4453ab7311635d7f4"
+   }
+  ],
+  "provenance_grade_read": "CONTEMPORARY_COPY (Techne's grade)",
+  "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308)"
+ },
+ "NYX_PREDICTION_PACKET": {
+  "id": "MECH-GZIP-LEVELTABLE-003",
+  "sha256": "5dbf46a208ed3a99441529246ca2fcfd53eb31f1f7ad856159d549ebd918891a",
+  "path": "nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-003.json",
+  "freeze": "nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-003.FREEZE",
+  "schema": "nyx.prediction_packet/1",
+  "supersedes": "MECH-GZIP-LEVELTABLE-002 (a30f3348...)",
+  "cheat_control": "C-CHEAT-PRECOMPRESSED",
+  "positive_control": "C-POS-LEVEL-EXTREMES",
+  "cut_kill": "a level-dependent ratio difference > 0.002 survives I2-FLATTEN-PLUS-SWITCHES with both controls passing",
+  "decisive_intervention": "I2-FLATTEN-PLUS-SWITCHES (SOURCE level)",
+  "calibration_pair": "RS_CALIBRATION_PAIR_001 (nyx/atlas/calibration/)",
+  "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308); updated to 003 same day on Harmonia #317 (re-applied over Techne dd9a395b3 after a merge conflict)",
+  "superseded_chain": [
+   {
     "id": "MECH-GZIP-LEVELTABLE-002",
     "sha256": "a30f3348d198c12471d2bad3bc847b41e3092b0c93fb2c751ef0a30080c821f8",
-    "path": "nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-002.json",
-    "freeze": "nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-002.FREEZE",
-    "schema": "nyx.prediction_packet/1",
-    "supersedes": "MECH-GZIP-LEVELTABLE-001 (861dded070d138e35c56d5cc05cf76de7053117c3aba24aa51e350d8ebe10619; grade + Techne ids only)",
-    "cheat_control": "C-CHEAT-PRECOMPRESSED",
-    "positive_control": "C-POS-LEVEL-EXTREMES",
-    "cut_kill": "a level-dependent ratio difference > 0.002 survives I2-FLATTEN-PLUS-SWITCHES with both controls passing",
-    "decisive_intervention": "I2-FLATTEN-PLUS-SWITCHES (SOURCE level)",
-    "calibration_pair": "RS_CALIBRATION_PAIR_001 (nyx/atlas/calibration/)",
-    "written_by": "Nyx[m2-0c0adfe1] 2026-09-16 at Techne's request (comms #308)"
-  },
-  "ORACLE_SOURCES": null,
-  "ORACLE_PROVENANCE_GRADES": null,
-  "HARMONIA_SURROGATE_ID": null,
-  "EQUIVALENCE_RESULT": null,
-  "DIVERGENCE_LEDGER": null,
-  "TEST_WORLD_ID": null,
-  "PRESSURE_ID": null,
-  "INTERVENTION_ID": null,
-  "TENSOR_ADMISSION_RESULT": null,
-  "PAYLOAD_READING_NULL": null,
-  "FINAL_DISPOSITION": null,
-  "downstream_owners": {
-    "CUT_ID": "Nyx",
-    "NYX_PREDICTION_PACKET": "Nyx",
-    "ORACLE_SOURCES": "Harmonia",
-    "ORACLE_PROVENANCE_GRADES": "Harmonia",
-    "HARMONIA_SURROGATE_ID": "Harmonia",
-    "EQUIVALENCE_RESULT": "Harmonia",
-    "DIVERGENCE_LEDGER": "Harmonia",
-    "TEST_WORLD_ID": "Theophrastus",
-    "PRESSURE_ID": "Theophrastus",
-    "INTERVENTION_ID": "Theophrastus",
-    "TENSOR_ADMISSION_RESULT": "Theophrastus",
-    "PAYLOAD_READING_NULL": "Theophrastus",
-    "FINAL_DISPOSITION": "operator"
-  },
-  "HANDOFF_REQUESTED": true
+    "superseded_by": "003 on Harmonia #317 (line 672, FORCE_METHOD scope)"
+   },
+   {
+    "id": "MECH-GZIP-LEVELTABLE-001",
+    "sha256": "861dded070d138e35c56d5cc05cf76de7053117c3aba24aa51e350d8ebe10619",
+    "superseded_by": "002 (grade + Techne ids)"
+   }
+  ]
+ },
+ "ORACLE_SOURCES": null,
+ "ORACLE_PROVENANCE_GRADES": null,
+ "HARMONIA_SURROGATE_ID": null,
+ "EQUIVALENCE_RESULT": null,
+ "DIVERGENCE_LEDGER": null,
+ "TEST_WORLD_ID": null,
+ "PRESSURE_ID": null,
+ "INTERVENTION_ID": null,
+ "TENSOR_ADMISSION_RESULT": null,
+ "PAYLOAD_READING_NULL": null,
+ "FINAL_DISPOSITION": null,
+ "downstream_owners": {
+  "CUT_ID": "Nyx",
+  "NYX_PREDICTION_PACKET": "Nyx",
+  "ORACLE_SOURCES": "Harmonia",
+  "ORACLE_PROVENANCE_GRADES": "Harmonia",
+  "HARMONIA_SURROGATE_ID": "Harmonia",
+  "EQUIVALENCE_RESULT": "Harmonia",
+  "DIVERGENCE_LEDGER": "Harmonia",
+  "TEST_WORLD_ID": "Theophrastus",
+  "PRESSURE_ID": "Theophrastus",
+  "INTERVENTION_ID": "Theophrastus",
+  "TENSOR_ADMISSION_RESULT": "Theophrastus",
+  "PAYLOAD_READING_NULL": "Theophrastus",
+  "FINAL_DISPOSITION": "operator"
+ },
+ "HANDOFF_REQUESTED": true
 }

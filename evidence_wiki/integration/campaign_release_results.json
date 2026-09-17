@@ -1,0 +1,99 @@
+{
+ "all_pass": true,
+ "machine": "M2",
+ "service": "http://127.0.0.1:8377/api/v1",
+ "ran_at": "2026-09-17T10:02:34",
+ "release": {
+  "schema_version_constant": 5,
+  "ontology_registry_version": 7,
+  "fossil_contract": "pew.fossil.v2",
+  "reader_version": "ew.campaign_ingest/1.3",
+  "ingestion_contract": "PEW_CAMPAIGN_INGESTION_CONTRACT v0.1 (2026-09-17)",
+  "projection_builder": "ew.projections/1.0",
+  "projection_registry_digest": "sha256:29623b7e19af2b897d1f13ef6463875a9f7636942146e4aa3523507e7dd39330",
+  "route_digest": "sha256:b08f68a27c5e0ce8677855def5115f5b570c84a68a2c543543f100278ff4f46e",
+  "db_system_id": "7628127204585430828"
+ },
+ "gates": [
+  {
+   "gate": "R0_release_identity",
+   "pass": true,
+   "detail": "schema=5 migrations=['014', '015'] db=7628127204585430828 routes=69"
+  },
+  {
+   "gate": "E1_accepted",
+   "pass": true,
+   "detail": "{\"event_id\": \"rc-1789653753-1\", \"status\": \"accepted\", \"duplicate\": false, \"gap\": false, \"checkpoint_seq\": 1, \"contiguous_seq\": 1, \"late\": false}"
+  },
+  {
+   "gate": "E2_duplicate_noop",
+   "pass": true,
+   "detail": "{\"event_id\": \"rc-1789653753-1\", \"status\": \"duplicate\", \"duplicate\": true, \"gap\": false, \"checkpoint_seq\": 1, \"contiguous_seq\": 1, \"seq_recorded\": false}"
+  },
+  {
+   "gate": "E3_checkpoint_mismatch_refused_and_recorded",
+   "pass": true,
+   "detail": "{\"event_id\": \"rc-1789653753-1b\", \"status\": \"checkpoint_mismatch\", \"duplicate\": false, \"gap\": false, \"checkpoint_seq\": 1, \"contiguous_seq\": 1, \"stored_digest\": \"sha256:5041bf1f713df204784353e82f6a4a535931cb64f1f4b4a5aeaffcb720918b22\", \"offered_digest\": \"sha256:fa7b55af06b1e0f93f5019f0cd5ffd2ce28317839304584089d2fcf345fd66c4\"}"
+  },
+  {
+   "gate": "E4_gap_visible",
+   "pass": true,
+   "detail": "{\"event_id\": \"rc-1789653753-3\", \"status\": \"accepted\", \"duplicate\": false, \"gap\": true, \"checkpoint_seq\": 3, \"contiguous_seq\": 1, \"late\": false} gaps=[{\"to\": 2, \"from\": 2, \"seen_at\": \"2026-09-17T10:02:33\"}]"
+  },
+  {
+   "gate": "E5_late_delivery_accepted_checkpoint_kept",
+   "pass": true,
+   "detail": "{\"event_id\": \"rc-1789653753-2\", \"status\": \"accepted\", \"duplicate\": false, \"gap\": false, \"checkpoint_seq\": 3, \"contiguous_seq\": 3, \"late\": true}"
+  },
+  {
+   "gate": "E6_malformed_422_nothing_stored",
+   "pass": true,
+   "detail": "422 stored_seqs=[1, 2, 3]"
+  },
+  {
+   "gate": "E7_unregistered_identity_cannot_post",
+   "pass": true,
+   "detail": "401 stored=3 (read-only scope refusal is tests/test_agent_identity.py cheat control)"
+  },
+  {
+   "gate": "E8_replayed_fact_new_seq_is_duplicate_and_seq_recorded",
+   "pass": true,
+   "detail": "{\"event_id\": \"rc-1789653753-3\", \"status\": \"duplicate\", \"duplicate\": true, \"gap\": false, \"checkpoint_seq\": 4, \"contiguous_seq\": 4, \"seq_recorded\": true} dup_seqs=[4] rows=3"
+  },
+  {
+   "gate": "Q1_selector_required_and_stratum_validated",
+   "pass": true,
+   "detail": "400 422"
+  },
+  {
+   "gate": "Q2_query_by_campaign_harness_attempt",
+   "pass": true,
+   "detail": "cmp3 receipts=45 C3-SFE-03 runs=29 a05 generations=2000"
+  },
+  {
+   "gate": "Q3_query_by_stratum",
+   "pass": true,
+   "detail": "n=65 all W2_K2 G60"
+  },
+  {
+   "gate": "Q4_unknown_survives",
+   "pass": true,
+   "detail": "{\"harness_id\": 0, \"attempt_id\": 0, \"design_id\": 3, \"engine_instance_id\": 21, \"foundry_profile\": 45, \"world_id\": 0, \"rng_identity\": 199}"
+  },
+  {
+   "gate": "P1_registry",
+   "pass": true,
+   "detail": "projections=[('corridor_edge', 'v1'), ('reach_level', 'v0'), ('reach_level', 'v1')] owner=Archaeon code=archaeon.wse.reachability@09558e0cbbc1a294e168aed30e49f5aeeb"
+  },
+  {
+   "gate": "P2_pooled_row_reads_like_the_report",
+   "pass": true,
+   "detail": "W2_K2 4-bit N200G60E16 pools=4 {\"n\": 272, \"SHELF\": 147, \"SUMMIT\": 0, \"confirmed_summits\": 0} (the reports' 0-summit reading at this budget; the producer's monotone budget lookup is not reproduced, so n differs from the report's 27)"
+  },
+  {
+   "gate": "P3_projection_evidence_resolves",
+   "pass": true,
+   "detail": "first evidence id of pool:W2_K2|4|N200G60E16|instr1-16:6528b9dc|E0|cmp1|baseline resolves"
+  }
+ ]
+}

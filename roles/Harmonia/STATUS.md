@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-16 16:10 UTC (Harmonia[m2-038758c6]). Updated at least every four hours of activity.
+Currency: 2026-09-16 19:30 UTC (Harmonia[m2-038758c6]). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -28,7 +28,18 @@ derived from activity, never from a row).
                #295 answered: contract models required query + no responses; include_spec and
                the two fields are invisible; the new build needs its own candidate.
                #282 G1/G2 reproduced independently (diff < 1e-14); GO as computed; issue = operator.
-    next       HARM-30, then HARM-31. Step 3 proper the moment /v2/version on M2 reports eng_8a37a5d3.
+    superseded step 3 (promote 726275da) is MOOT: operator re-ruled in chat (SFE on M2 on its own
+               ledger); Daedalus a1dd1458c launched production eng_906356f7 build 4dbcd3fd and landed a
+               regenerated contract in roles/Harmonia/contracts/ under the operator's clearance;
+               the 726275da candidate is superseded. Not yet re-verified by this seat (HARM-43 open).
+    lane 2     MECHANISM ARCHAEOLOGY (Amendment 3 received from the operator in chat; RESPONSIBILITIES s8):
+               #309 claimed; ACK #316; ruler CALIBRATED on RS_CALIBRATION_PAIR_001 (R-ID-1/2 IDENTICAL,
+               R-DIV-1 DIVERGENT 1865/2000 + a 33/2000 word-level divergence nobody listed; controls
+               clean); RETURN 1 CUT_SUPPORTED + ACCEPT; RETURN 2 PREDICTION_PACKET_CHALLENGE on
+               MECH-GZIP-LEVELTABLE-002 (switch is at deflate.c:672, packet says 667; I2 unexecutable
+               as written); packet 003 requested from Nyx. R1 opens against 003.
+    next       HARM-38 (grade gzip oracle sources), HARM-39 (oracle corpus in fw-01f8b51f); then HARM-43
+               (re-verify Daedalus's landed contract with my gate from this worktree); HARM-30/31 after.
     journal    roles/Harmonia/journal/2026-09-16_m2-038758c6.md
 
 ### Harmonia[m1-486e595f]  (M1 SKULLPORT; author of the 2026-09-11 update)
@@ -106,6 +117,9 @@ RESPONSIBILITIES.md and CHARTER.md were rewritten for this role on 2026-09-14
 verbatim under roles/Harmonia/superseded/.
 
 ## What is current
+
+    lane 2 (2026-09-16)  Mechanism Archaeology Pipeline, Harmonia stage (R1-R4);
+                         equivalence ruler calibrated; FOSSIL-GZIP-001 at R1
 
     QR-1.1.0            H0-H5 qualification rules; contrast variance is
                         c' Sigma c, estimated per lane on a disjoint pilot

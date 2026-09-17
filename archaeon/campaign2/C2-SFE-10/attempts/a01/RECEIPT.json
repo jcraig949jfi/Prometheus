@@ -1,0 +1,215 @@
+{
+ "artifacts": {},
+ "attempt": 1,
+ "attempt_id": "C2-SFE-10/a01",
+ "campaign": "cmp2",
+ "campaign_seed": 20260918,
+ "decisions": [
+  "D2-018: an organ is FUNCTIONAL iff its instructions are load-bearing under single-instruction knockout on the SOURCE cell's probe episodes; the target is never consulted"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "none",
+  "disposition": "TARGET_UNREACHABLE",
+  "reason": "assay precondition failed; the scientific question was not posed",
+  "states": [
+   "TARGET_UNREACHABLE"
+  ]
+ },
+ "effects": {
+  "battery": [
+   {
+    "functional_minus": 0.0139,
+    "name": "shuffled_functional",
+    "passed": false,
+    "type": "kill"
+   }
+  ],
+  "direct_best_mean": {
+   "chimera_functional": 0.066,
+   "chimera_length": 0.066,
+   "random": null,
+   "shuffled_functional": 0.066,
+   "whole_ancestors": 0.066
+  },
+  "footholds": {
+   "chimera_functional": 0,
+   "chimera_length": 0,
+   "random": 0,
+   "shuffled_functional": 0,
+   "whole_ancestors": 0
+  },
+  "functional_minus_length": 0.0035,
+  "import_share_final_mean": {
+   "chimera_functional": 1.0,
+   "chimera_length": 1.0,
+   "random": null,
+   "shuffled_functional": 1.0,
+   "whole_ancestors": 1.0
+  },
+  "means": {
+   "chimera_functional": 0.0556,
+   "chimera_length": 0.0521,
+   "random": 0.0625,
+   "shuffled_functional": 0.0417,
+   "whole_ancestors": 0.0417
+  },
+  "n": {
+   "chimera_functional": 3,
+   "chimera_length": 3,
+   "random": 3,
+   "shuffled_functional": 3,
+   "whole_ancestors": 3
+  }
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C2-SFE-10",
+ "failed_fetch": {
+  "dry_run": true
+ },
+ "fallback_share": {
+  "functional": 1.0
+ },
+ "finished_at": "2026-09-17T04:11:35Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "load_stats": {
+  "1": {
+   "genomes_with_organ": 0,
+   "load_share_mean": 0.056,
+   "n_genomes": 20,
+   "n_organs": 0,
+   "organ_len_mean": 0.0
+  },
+  "2": {
+   "genomes_with_organ": 0,
+   "load_share_mean": 0.0338,
+   "n_genomes": 20,
+   "n_organs": 0,
+   "organ_len_mean": 0.0
+  },
+  "3": {
+   "genomes_with_organ": 1,
+   "load_share_mean": 0.0396,
+   "n_genomes": 20,
+   "n_organs": 1,
+   "organ_len_mean": 2.0
+  }
+ },
+ "prereg_digest": "sha256:a3db39aca45f430ab2055f2c26dfc5977ada036c5e43bf14b928707861956b84",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": null,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "set_summaries": {
+  "chimera_functional": {
+   "category_shares_mean": {
+    "arithmetic": 0.0506,
+    "comparison": 0.0596,
+    "control": 0.1125,
+    "halt_yield": 0.3708,
+    "indirection": 0.0526,
+    "logical": 0.1736,
+    "opaque_io": 0.0842,
+    "randomness": 0.0174,
+    "read_write": 0.0786
+   },
+   "instr_max": 8,
+   "instr_mean": 5.18,
+   "instr_median": 5,
+   "instr_min": 3,
+   "n": 100
+  },
+  "chimera_length": {
+   "category_shares_mean": {
+    "arithmetic": 0.0729,
+    "comparison": 0.0787,
+    "control": 0.1572,
+    "halt_yield": 0.0949,
+    "indirection": 0.069,
+    "logical": 0.2549,
+    "opaque_io": 0.1071,
+    "randomness": 0.0467,
+    "read_write": 0.1186
+   },
+   "instr_max": 8,
+   "instr_mean": 5.42,
+   "instr_median": 5,
+   "instr_min": 3,
+   "n": 100
+  },
+  "shuffled_functional": {
+   "category_shares_mean": {
+    "arithmetic": 0.0476,
+    "comparison": 0.0529,
+    "control": 0.1188,
+    "halt_yield": 0.3546,
+    "indirection": 0.0537,
+    "logical": 0.1974,
+    "opaque_io": 0.0854,
+    "randomness": 0.0112,
+    "read_write": 0.0784
+   },
+   "instr_max": 8,
+   "instr_mean": 4.9,
+   "instr_median": 5,
+   "instr_min": 3,
+   "n": 100
+  },
+  "whole_ancestors": {
+   "category_shares_mean": {
+    "arithmetic": 0.0829,
+    "comparison": 0.0726,
+    "control": 0.1445,
+    "halt_yield": 0.1316,
+    "indirection": 0.0741,
+    "logical": 0.248,
+    "opaque_io": 0.1091,
+    "randomness": 0.0363,
+    "read_write": 0.1008
+   },
+   "instr_max": 16,
+   "instr_mean": 7.65,
+   "instr_median": 8,
+   "instr_min": 1,
+   "n": 60
+  }
+ },
+ "started_at": "2026-09-17T04:11:34Z",
+ "steps": {},
+ "teardown": {},
+ "timings": {
+  "exchange_s": 0.01,
+  "fetch_s": 0.0,
+  "load_maps_s": 0.25,
+  "records_s": 0.0,
+  "targets_s": 0.98,
+  "total_s": 1.4
+ },
+ "typed_states": [
+  {
+   "evidence": {
+    "band95_upper": 0.2039,
+    "baseline_arm": "*",
+    "reached": 0,
+    "rows": 15,
+    "table_class": "UNESTABLISHED"
+   },
+   "state": "TARGET_UNREACHABLE"
+  }
+ ],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "597140ca16474a38b4005bc04b199fbecb416272",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

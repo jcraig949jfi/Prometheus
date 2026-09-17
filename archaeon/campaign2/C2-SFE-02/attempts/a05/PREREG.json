@@ -1,0 +1,259 @@
+{
+ "arms": [
+  "A_words/control",
+  "A_words/stuck",
+  "B_fields/control",
+  "B_fields/stuck",
+  "C_fields_class/control",
+  "C_fields_class/stuck"
+ ],
+ "assay_capability_requirement": "A_words/control reached in >= 2 of 8 seeds (else POSITIVE_CONTROL_FAILED and no comparison is run); B and C must have applied >= 1 opcode-field rewrite per row",
+ "attempt": 5,
+ "budget": {
+  "E": 16,
+  "G": 60,
+  "N": 200,
+  "control": {
+   "D": 1,
+   "K": 2,
+   "Kd": 0,
+   "ask_kind": "ASK",
+   "ask_mode": "all",
+   "ask_timing": "end",
+   "delay": 0,
+   "delays": [],
+   "expensive": 0,
+   "fanout": 1,
+   "interfere": false,
+   "interleave": "sequential",
+   "n_defs": 0,
+   "name": "W2_K2",
+   "noise_rate": 0.0,
+   "op_mode": "fixed",
+   "recycle": false,
+   "retire_rate": 0.0,
+   "topology": "streams",
+   "value_bits": 4,
+   "vocab": "train"
+  },
+  "foundry": "c2",
+  "foundry_id": "instr1-16:6528b9dc",
+  "gate_min": 2,
+  "heldout_episodes": 48,
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "stuck": {
+   "D": 1,
+   "K": 1,
+   "Kd": 0,
+   "ask_kind": "ASK",
+   "ask_mode": "all",
+   "ask_timing": "end",
+   "delay": 4,
+   "delays": [],
+   "expensive": 0,
+   "fanout": 1,
+   "interfere": false,
+   "interleave": "sequential",
+   "n_defs": 0,
+   "name": "W1_d4",
+   "noise_rate": 0.0,
+   "op_mode": "fixed",
+   "recycle": false,
+   "retire_rate": 0.0,
+   "topology": "streams",
+   "value_bits": 4,
+   "vocab": "train"
+  }
+ },
+ "claim_ceiling": "weak positive at best (n=8, one stuck cell); a capable negative = no unlock at this budget for these two neighbourhoods",
+ "crn_policy": "default (rng_label=crn): identical generation 0 and identical selection/mutation random stream for every representation in a cell; the opcode redraw uses its own derived stream so A's stream is untouched",
+ "decl": {
+  "interventions": [
+   {
+    "arm": "B_fields/stuck",
+    "counter": "opfield_rewrites"
+   },
+   {
+    "arm": "C_fields_class/stuck",
+    "counter": "opfield_rewrites"
+   },
+   {
+    "arm": "B_fields/control",
+    "counter": "opfield_rewrites"
+   },
+   {
+    "arm": "C_fields_class/control",
+    "counter": "opfield_rewrites"
+   }
+  ],
+  "n_min": 8,
+  "positive_control": {
+   "arm": "A_words/control",
+   "metric": "reached",
+   "min": 1,
+   "min_rows": 2
+  },
+  "primary": {
+   "control": "A_words/stuck",
+   "metric": "competence_heldout",
+   "min_effect": 0.1,
+   "treatment": "B_fields/stuck"
+  },
+  "representations": {
+   "A_words": "grammar as is: operand_perturbation on an opcode word moves the opcode by +-delta mod 25 (index-adjacent neighbours)",
+   "B_fields": "same grammar, same masses; when operand_perturbation lands on an opcode word the opcode is redrawn UNIFORMLY over 25",
+   "C_fields_class": "as B, but the redraw stays inside the opcode's affordance class with p=0.75 (uniform otherwise)"
+  }
+ },
+ "expected_machine_telemetry": [
+  "op_mass_realized per row (the mass check)",
+  "opfield_rewrites per row",
+  "first_solved_gen",
+  "elite genome summary",
+  "reachability rows (A_words baseline; B/C treated)"
+ ],
+ "experiment": "C2-SFE-02",
+ "falsification_condition": "B_fields/stuck - A_words/stuck < 0.10 held-out (and C likewise) with the gate passed => CAPABLE_NEGATIVE for the unlock",
+ "machine_changes_exercised": [
+  "A",
+  "B (gate as a typed state)",
+  "C",
+  "D",
+  "G (descend_fn hook)",
+  "H (operator histograms)",
+  "I"
+ ],
+ "parent_evidence": "SFE-09: positive control (A on W1_d1 4-bit G60) 0/3, INCONCLUSIVE; L-029 operator mass unmatched. Table: W1_d1 8-bit N200 G100 E24 2/3 REACHABLE (49, 79); W1_d4 8-bit same budget 0/3 OBSERVED_UNREACHABLE_AT_BUDGET.",
+ "parents": [
+  "SFE-09"
+ ],
+ "positive_control": "A_words on W2_K2 4-bit N200 G60 E16; table class REACHABLE (0.4)",
+ "prereg_digest": "sha256:066758be299ac5161c87144f82dcb8fbb4c44bf749111c4b846e7c22a9db5ff8",
+ "primary_observable": "competence_heldout on the stuck cell (B_fields/stuck vs A_words/stuck); footholds and first_solved_gen on both cells secondary",
+ "question": "Gate: does the baseline representation (A_words) reach W2_K2 4-bit at N200 G60 E16 in >= 2 of 8 seeds? Science (only if the gate passes): with operator mass matched by construction, do representations whose opcode-field neighbourhood is uniform (B) or class-confined (C) reach the stuck cell W1_d4 4-bit that A does not, or reach the control cell faster?",
+ "reachability_estimate": {
+  "W1_d4": {
+   "at_budget": {
+    "band95": [
+     0.0301,
+     0.5635
+    ],
+    "class": "RARE",
+    "first_solved_gens": [
+     52
+    ],
+    "freq": 0.1667,
+    "k": 1,
+    "n": 6
+   },
+   "at_budget_any_foundry": {
+    "band95": [
+     0.0301,
+     0.5635
+    ],
+    "class": "RARE",
+    "foundries": [
+     "instr1-16:6528b9dc"
+    ],
+    "freq": 0.1667,
+    "k": 1,
+    "n": 6
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "band95": [
+     0.0301,
+     0.5635
+    ],
+    "budgets": [
+     [
+      200,
+      60,
+      16
+     ]
+    ],
+    "class": "RARE",
+    "freq": 0.1667,
+    "k": 1,
+    "n": 6
+   }
+  },
+  "W2_K2": {
+   "at_budget": {
+    "band95": [
+     0.1982,
+     0.6425
+    ],
+    "class": "REACHABLE",
+    "first_solved_gens": [
+     35,
+     48,
+     49,
+     50,
+     54,
+     59
+    ],
+    "freq": 0.4,
+    "k": 6,
+    "n": 15
+   },
+   "at_budget_any_foundry": {
+    "band95": [
+     0.1982,
+     0.6425
+    ],
+    "class": "REACHABLE",
+    "foundries": [
+     "instr1-16:6528b9dc"
+    ],
+    "freq": 0.4,
+    "k": 6,
+    "n": 15
+   },
+   "foundry": "instr1-16:6528b9dc",
+   "pooled_any_budget": {
+    "band95": [
+     0.1381,
+     0.4996
+    ],
+    "budgets": [
+     [
+      200,
+      36,
+      16
+     ],
+     [
+      200,
+      48,
+      16
+     ],
+     [
+      200,
+      60,
+      16
+     ]
+    ],
+    "class": "REACHABLE",
+    "freq": 0.2857,
+    "k": 6,
+    "n": 21
+   }
+  }
+ },
+ "title": "representation: positive control first, operator mass matched",
+ "typed_failure_conditions": [
+  "POSITIVE_CONTROL_FAILED (A_words/control < 2/8)",
+  "INTERVENTION_NOT_APPLIED (opfield_rewrites == 0 on a B/C arm)",
+  "UNDERPOWERED",
+  "ENGINE_FAILURE / INSTRUMENT_FAILURE"
+ ]
+}

@@ -1,4 +1,5 @@
-"""CORRECTION 2026-09-16 (annotation; nothing below is edited): the cut note 'a four-column table that changes NO mechanism' is WRONG
+"""CORRECTION 2 2026-09-16 (Harmonia #317): the switch named below as deflate.c:667 is at deflate.c:672; 667 is match_length.
+CORRECTION 2026-09-16 (annotation; nothing below is edited): the cut note 'a four-column table that changes NO mechanism' is WRONG
 in one respect -- the level is ALSO consumed at deflate.c:667 (compr_level <= 3 selects deflate_fast) and trees.c:987 (block-flush
 heuristic gated on level > 2). Recorded in nyx/atlas/predictions/MECH-GZIP-LEVELTABLE-001.json; the organ record carries the marker.
 DO NOT RE-RUN THIS SCRIPT: it would reproduce the uncorrected text and drop the marker. A new cut, if needed, is a new script.
