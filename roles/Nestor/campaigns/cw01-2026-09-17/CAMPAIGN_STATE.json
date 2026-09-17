@@ -1,7 +1,7 @@
 {
  "campaign_id": "cw01-2026-09-17",
  "started_local": "2026-09-17 16:54:06",
- "updated_local": "2026-09-17 17:24:43",
+ "updated_local": "2026-09-17 17:57:22",
  "lead_session_provenance": "Nestor A, claude session 449a9e76 (provenance only - recovery MUST NOT depend on it)",
  "campaign_order": "TEN-EXPERIMENT AUTONOMOUS WARMUP; no HITL; attempt all ten; timebox 24h each",
  "phase_model": [
@@ -58,13 +58,36 @@
   {
    "id": "cw01-e02",
    "title": "Ancestral efficiency ratchet",
-   "status": "NEXT",
-   "attempts": []
+   "status": "COMPLETE",
+   "attempts": [
+    {
+     "attempt_id": "cw01-e02-a01",
+     "phase": "PACKAGE",
+     "disposition": "NULL",
+     "started_local": "2026-09-17 17:27:05",
+     "ended_local": "2026-09-17 17:57:22",
+     "rows": 6
+    }
+   ],
+   "disposition": "NULL",
+   "headline": {
+    "ancestor_relative_pct_mean": 174.12722105419493,
+    "mechanism": "ordered transformations 26.3 to 134.9 per episode",
+    "ratchet": "NO - p_factor fixes before p_norm in 6/6 runs across 3 selection strengths",
+    "mechanism_of_null": "T2 profitable without T1, so the foundation is an enhancement not a precondition"
+   },
+   "limitations": [
+    "NEUTRAL HITCHHIKING: the neutral control genes are not flat in trajectories (neutral_a +0.111 mean, neutral_b -0.082) because elites are copied wholesale and drag neutral genes along. Q6 still holds (they have no PHENOTYPE), but their drift bounds how finely gene-ordering can be read.",
+    "DESIGN: the population converges in under 10 generations (+203.2% within gens 0-9, then -1.6% to +3.0% for 70 generations). A ratchet requires time-separated discoveries; this world yields everything at once. That is the finding that most constrains e02.",
+    "The detection floor and the ordering bar remain: a ratchet below 12.3% lift would be invisible regardless.",
+    "RESOLUTION (updated): largely discharged by the selection-strength probe -- at the weakest setting the p_factor/p_norm gap is 12-13 generations, an order of magnitude beyond the original ~1-2 generation ambiguity. Neutral drift remains substantial (up to -0.399) and is reported alongside.",
+    "DESIGN CONSEQUENCE: to test a ratchet, the foundation must be USELESS alone AND REQUIRED for the later gain. Here it is merely cheaper-together. A future design must make T2 impossible (not just expensive) without T1 -- that is a change to the ECONOMICS and belongs in a new pre-registration, not an amendment to this one."
+   ]
   },
   {
    "id": "cw01-e03",
    "title": "Micro-MoE / sparse computational coalitions",
-   "status": "PENDING",
+   "status": "ACTIVE",
    "attempts": []
   },
   {
@@ -111,16 +134,14 @@
   }
  ],
  "active": {
-  "experiment_id": "cw01-e02",
-  "attempt_id": "cw01-e02-a01",
-  "phase": "PENDING_RECONCILE",
-  "phase_completed": [],
-  "blocked_on": "e01 artifacts must be COMMITTED before continuing (XVI: 'artifacts are durable' precedes 'continue')",
-  "timebox": {
-   "rule": "24h per experiment",
-   "started_local": null,
-   "deadline_local": null
-  }
+  "experiment_id": "cw01-e03",
+  "attempt_id": "cw01-e03-a01",
+  "phase": "RECONCILE_DONE",
+  "phase_completed": [
+   "RECONCILE"
+  ],
+  "title": "Micro-MoE / sparse computational coalitions",
+  "reconcile": "34 streams, 0 consumers, 0 scan errors, pm:cw01:* = 0 keys, 272 procs scanned 0 matched"
  },
  "owned_runtime_resources": [],
  "_owned_resources_note": "Every resource created for an attempt is registered here with {kind, id, owner_attempt, created_local}. VERIFY ABSENCE asserts this list empties.",
@@ -153,7 +174,13 @@
   "experiments/cw01-e01/RESULT.json - disposition COMPLETE + 5 stated limitations",
   "experiments/cw01-e01/REPLICATION.json - 5/5 replicates, determinism verified",
   "experiments/cw01-e01/PACKAGE.md - XIII engineering ledger",
-  "experiments/cw01-e01/rows/cw01-e01-a01.jsonl - 128 rows, committed 5b75da967"
+  "experiments/cw01-e01/rows/cw01-e01-a01.jsonl - 128 rows, committed 5b75da967",
+  "lib/residue.py - ONE scanner for substrate AND process residue (CW01-D017/D018 fixes)",
+  "experiments/cw01-e02/PREREGISTRATION.md - ratchet defined by 3 conditions, fixed before implementation",
+  "experiments/cw01-e02/WORLD.json - declarative; 12 predicates incl. 4 standing gates promoted from e01",
+  "experiments/cw01-e02/world_e02.py - REUSES Region/Refused from world_e01 rather than copying",
+  "experiments/cw01-e02/PACKAGE.md - XIII ledger; the predicted cost curve has NOT appeared yet",
+  "lib/lineage.py - TestLog/decide (D024), ancestor-seeded detect_gains (D025), emit_generations (D026), fixation_order"
  ],
  "reconcile_result": {
   "processes": "3 claude.exe (self + Aporia + Techne), 0 stray workers",
@@ -196,16 +223,18 @@
   "note": "e01 ran in-process and owned 0 runtime resources. 53 pm:swarm ghost consumers (r8 residue, NOT created by this campaign, pending=0, idle 69.4h) were found and removed; my RECONCILE had scanned only pm:jobs:* (CW01-D017)."
  },
  "campaign_totals": {
-  "experiments_attempted": 1,
+  "experiments_attempted": 2,
   "complete": 1,
+  "null": 1,
   "negative": 0,
-  "null": 0,
   "inconclusive": 0,
-  "defects_logged": 17,
-  "science_defects": 5,
+  "defects_logged": 28,
+  "science_defects": 11,
   "reusable_components_landed": [
    "lib/seeds.py",
    "lib/localrun.py",
+   "lib/residue.py",
+   "lib/lineage.py",
    "MACHINE_PROFILE.json"
   ]
  }
