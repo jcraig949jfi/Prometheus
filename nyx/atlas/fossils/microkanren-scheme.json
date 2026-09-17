@@ -132,17 +132,468 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:microkanren-scheme/upstream/microKanren.scm:1-50"
+   }
+  ],
+  "inspected_files": [
+   "microKanren.scm 1-50"
+  ],
+  "date": "2026-09-17T23:13Z",
+  "note": "relational programming reduced to four ideas in fifty lines: a substitution is an association list walked lazily (triangular, no occurs check); a goal is a function from a state (substitution, counter) to a STREAM of states; disjunction and conjunction are stream merge and stream bind; and completeness comes from immature streams (thunks) that mplus interleaves, so a diverging branch cannot starve its sibling",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:13Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://raw.githubusercontent.com/jasonhemann/microKanren/master/microKanren.scm sha256:cea37f80e16312b58c3cd4f764d32f10bf07c7e425b9dda731ecdfd05a8fb7f9",
+   "payload_manifest_id": "techne tree_sha256 64938449ab18672f65a6f1d9bb10c4547d2a90b4f525ce99b21a6eaafc1627de (1 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/microKanren.scm",
+     "payload_hash_read": "cea37f80e16312b58c3cd4f764d32f10bf07c7e425b9dda731ecdfd05a8fb7f9",
+     "techne_recorded_hash": "cea37f80e16312b58c3cd4f764d32f10bf07c7e425b9dda731ecdfd05a8fb7f9",
+     "match": true,
+     "refs": 4
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "microkanren-scheme::triangular_substitution_as_an_association_list_walked_on_demand_with_a_structural_unifier_and_no_occurs_check",
+   "fossil_ancestry": "microkanren-scheme",
+   "human_name": "var / var? / var=? (vectors holding a counter); walk (5-7); ext-s (9); unify (18-27)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a logic variable is a one-element vector holding its creation index; a substitution maps variables to terms; walk follows bindings until a non-variable or an unbound variable is reached (bindings are never composed, hence 'triangular'); unify walks both sides, binds a variable to the other side (ext-s conses a new pair), recurses on pairs, and otherwise requires eqv?; there is no occurs check, so a cyclic binding is possible",
+   "input": "two terms and a substitution",
+   "output": "an extended substitution or #f",
+   "state": "none (persistent lists)",
+   "update": "per ==",
+   "assumptions": [
+    "walking on demand is cheaper than composing substitutions; the user accepts the occurs-check omission (as Prolog does)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "microkanren-scheme::goals_as_functions_from_a_state_to_a_stream_with_disjunction_as_stream_merge_conjunction_as_stream_bind_and_fresh_as_a_counter_increment"
+   ],
+   "fitness_value_in_ancestor": "unification and substitution in nine lines; every extension is a cons",
+   "failure_landscape": "by reading: walk is linear in the substitution length; a self-referential binding loops forever in walk",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Robinson 1965; the triangular form is from the miniKanren lineage (Byrd 2009)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:microkanren-scheme/upstream/microKanren.scm:5-27"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "lines 5-27",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "microkanren-scheme::goals_as_functions_from_a_state_to_a_stream_with_disjunction_as_stream_merge_conjunction_as_stream_bind_and_fresh_as_a_counter_increment",
+   "fossil_ancestry": "microkanren-scheme",
+   "human_name": "== (12-16: unit / mzero); call/fresh (29-32: the counter in the state); disj (34) = mplus; conj (35) = bind",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a state is a pair of substitution and a fresh-variable counter; == returns a one-element stream on success or the empty stream; call/fresh applies its body to a new variable made from the counter and increments it; disj runs both goals on the same state and merges their streams; conj runs the first goal and binds the second over every resulting state; goals therefore compose without any global search state",
+   "input": "goals and a state",
+   "output": "a stream of states",
+   "state": "the counter inside each state",
+   "update": "per goal application",
+   "assumptions": [
+    "monadic structure (unit, mzero, mplus, bind) is the whole of search; the counter makes fresh variables without side effects"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "microkanren-scheme::triangular_substitution_as_an_association_list_walked_on_demand_with_a_structural_unifier_and_no_occurs_check",
+    "microkanren-scheme::interleaving_search_by_immature_streams_where_mplus_swaps_its_arguments_when_the_first_is_a_thunk"
+   ],
+   "fitness_value_in_ancestor": "a complete logic language whose interpreter is the host's function application",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the list monad reading of logic programming (Wadler 1985; Spivey & Seres 2000)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:microkanren-scheme/upstream/microKanren.scm:12-35"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "lines 12-35",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "microkanren-scheme::interleaving_search_by_immature_streams_where_mplus_swaps_its_arguments_when_the_first_is_a_thunk",
+   "fossil_ancestry": "microkanren-scheme",
+   "human_name": "mplus (37-41): (procedure? $1) -> (lambda () (mplus $2 ($1))); bind (43-47): (procedure? $) -> (lambda () (bind ($) g))",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a stream is either empty, a pair (a mature answer and the rest), or a thunk (an immature stream: work not yet done); mplus of an immature first stream returns a thunk that, when forced, merges the SECOND stream with the forced first, so the two branches take turns; bind of an immature stream defers likewise; a recursive relation wrapped in a thunk (the paper's Zzz / snooze) therefore yields answers from every branch even when one branch is infinite",
+   "input": "two streams",
+   "output": "a merged stream",
+   "state": "none",
+   "update": "per force",
+   "assumptions": [
+    "swapping the arguments at every immature step is enough for fairness (breadth-like interleaving of depth-first branches)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "microkanren-scheme::goals_as_functions_from_a_state_to_a_stream_with_disjunction_as_stream_merge_conjunction_as_stream_bind_and_fresh_as_a_counter_increment"
+   ],
+   "fitness_value_in_ancestor": "completeness (every answer is eventually produced) that Prolog's depth-first search lacks, in five lines",
+   "failure_landscape": "by reading: interleaving is fair between two branches at a time; deeply nested disjunctions are fair only asymptotically; the cost is a thunk per step",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Kiselyov, Shan, Friedman & Sabry 2005 (backtracking, interleaving, and terminating monad transformers)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:microkanren-scheme/upstream/microKanren.scm:37-47"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "mplus and bind",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "'logic programming' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "substitution, goal combinators and the interleaving are separable; the paper's whole point is that each is a few lines",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "microkanren-scheme"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "microkanren-scheme::P.a_search_over_relations_with_infinitely_many_solutions_in_some_branches_must_still_produce_the_solutions_of_every_branch_using_only_function_application_and_persistent_data",
+   "source_fossil": "microkanren-scheme",
+   "source_evidence": "microKanren.scm 37-47",
+   "condition": "an organism answers queries over relations defined recursively; some branches have infinitely many answers; the score is which answers appear in the first n and whether the organism terminates when asked for n; the organism may use only pure functions and persistent lists",
+   "resource_or_constraint": "thunks; no mutable search state",
+   "failure_condition": "starvation of a finite branch by an infinite one (Prolog's failure), or a diverging query for a finite n",
+   "world_punishes": "depth-first streams; eager conjunction",
+   "world_rewards": "immature streams with argument-swapping merge",
+   "observable_consequence": "the set of answers among the first n for a query with one infinite and one finite branch, for the interleaving mplus vs an append-based mplus",
+   "vacuity_condition": "finite relations",
+   "trivial_shortcuts": "breadth-first with a queue (which needs mutable state or a much larger kernel)",
+   "cheat_control": "an organism given the finite branch's answers must return them first; append-based mplus must never reach the finite branch when the infinite one is first; the interleaving mplus must reach it within 2 k steps: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a minimal complete relational language (Hemann & Friedman 2013)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "microkanren-scheme::triangular_substitution_as_an_association_list_walked_on_demand_with_a_structural_unifier_and_no_occurs_check",
+   "to": "microkanren-scheme::goals_as_functions_from_a_state_to_a_stream_with_disjunction_as_stream_merge_conjunction_as_stream_bind_and_fresh_as_a_counter_increment",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "== calls unify",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "microkanren-scheme::goals_as_functions_from_a_state_to_a_stream_with_disjunction_as_stream_merge_conjunction_as_stream_bind_and_fresh_as_a_counter_increment",
+   "to": "microkanren-scheme::interleaving_search_by_immature_streams_where_mplus_swaps_its_arguments_when_the_first_is_a_thunk",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "disj/conj call mplus/bind",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "microkanren-scheme::interleaving_search_by_immature_streams_where_mplus_swaps_its_arguments_when_the_first_is_a_thunk",
+   "to": "microkanren-scheme::goals_as_functions_from_a_state_to_a_stream_with_disjunction_as_stream_merge_conjunction_as_stream_bind_and_fresh_as_a_counter_increment",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "thunks decide when a goal runs",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "microkanren-scheme",
@@ -157,10 +608,22 @@
    "to": "miniKanren (Byrd 2009)",
    "note": "microKanren is the minimal core beneath miniKanren",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "microkanren-scheme",
+   "relation": "derived_from",
+   "to": "miniKanren (Friedman, Byrd, Kiselyov 2005) and the interleaving monad (Kiselyov et al. 2005); a functional cousin of Prolog (the atlas's gnu-prolog and swipl cuts hold the WAM route)",
+   "note": "from the record and the paper",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "nothing unread",
+   "nothing ran; a Python transcription would make it an M3 world (SCOUT candidate)"
+  ],
+  "note": "fifty lines, three mechanisms, all located",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
