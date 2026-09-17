@@ -1,15 +1,15 @@
 {
- "dump": "D:\\PrometheusBackups\\pew\\prometheus_fire_20260917T055050.dump",
- "backup_id": "pewbk-20260917T055050-fea46038fa3c",
- "dump_sha256_recorded": "fea46038fa3c7cef0c2f966234ed893ccdf9d112af79940e9fcb6229495a9d7f",
- "dump_sha256_now": "fea46038fa3c7cef0c2f966234ed893ccdf9d112af79940e9fcb6229495a9d7f",
+ "dump": "D:\\PrometheusBackups\\pew\\prometheus_fire_20260917T095257.dump",
+ "backup_id": "pewbk-20260917T095257-3cd39c9aeab7",
+ "dump_sha256_recorded": "3cd39c9aeab743cd753a4ec63a224bb09e1b04e94380af0eb9807301bbcc30a5",
+ "dump_sha256_now": "3cd39c9aeab743cd753a4ec63a224bb09e1b04e94380af0eb9807301bbcc30a5",
  "source_host": "192.168.1.202",
  "target_host": "127.0.0.1",
- "scratch_db": "pew_restore_check_20260917055336",
- "started": "2026-09-17T05:53:36",
+ "scratch_db": "pew_restore_check_20260917095536",
+ "started": "2026-09-17T09:55:36",
  "pg_restore_version": "pg_restore (PostgreSQL) 17.11",
  "workspace": {
-  "base_sha": "298d6ea03e58241718a3caa81d2d59ea84077103",
+  "base_sha": "f46e821e0f2eddd12b31565eac78772af2d952df",
   "branch": "mnemosyne/m2-boot-2026-09-16",
   "worktree_path": "D:\\Prometheus-worktrees\\mnemosyne-boot-2026-09-16\\evidence_wiki",
   "dirty": true,
@@ -20,7 +20,7 @@
  "dump_intact": true,
  "pg_restore_rc": 0,
  "pg_restore_stderr_tail": "",
- "restore_seconds": 199.0,
+ "restore_seconds": 207.7,
  "source_identity": {
   "db_system_id": "7628127204585430828",
   "server_version": "PostgreSQL 17.9 on x86_64-windows, compiled by msvc-19.44.35223, 64-bit",
@@ -29,36 +29,72 @@
  "target_identity": {
   "db_system_id": "7681719240261676752",
   "server_version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit",
-  "db_name": "pew_restore_check_20260917055336"
+  "db_name": "pew_restore_check_20260917095536"
  },
  "restored_copy_is_canonical_by_identity": false,
- "tables_live": 164,
- "tables_restored": 164,
+ "tables_live": 178,
+ "tables_restored": 178,
  "tables_missing_in_restore": [],
  "tables_with_differing_counts": {
+  "agora.intelligence_outputs": {
+   "live": 16662,
+   "restored": 16660
+  },
   "agora.machine_probes": {
-   "live": 131635,
-   "restored": 131629
+   "live": 131867,
+   "restored": 131861
   },
   "comms.messages": {
-   "live": 330,
-   "restored": 327
+   "live": 349,
+   "restored": 348
   },
   "comms.receipt_instances": {
-   "live": 589,
-   "restored": 587
+   "live": 653,
+   "restored": 650
   },
   "comms.receipts": {
-   "live": 595,
-   "restored": 593
+   "live": 659,
+   "restored": 656
+  },
+  "ew.derived_artifacts": {
+   "live": 68,
+   "restored": 67
   },
   "ew.read_log": {
-   "live": 3014,
-   "restored": 3013
+   "live": 3225,
+   "restored": 3224
+  },
+  "viv.execution_attempt": {
+   "live": 1154,
+   "restored": 1150
+  },
+  "viv.execution_step": {
+   "live": 20,
+   "restored": 0
+  },
+  "viv.gate_receipt": {
+   "live": 4,
+   "restored": 0
+  },
+  "viv.pew_outbox": {
+   "live": 12,
+   "restored": 0
+  },
+  "viv.research_experiment_events": {
+   "live": 3305,
+   "restored": 3286
+  },
+  "viv.research_experiment_queue": {
+   "live": 1160,
+   "restored": 1155
+  },
+  "viv.start_bundle": {
+   "live": 4,
+   "restored": 0
   }
  },
- "total_rows_live": 5765473,
- "total_rows_restored": 5765459,
+ "total_rows_live": 5797643,
+ "total_rows_restored": 5797558,
  "schemas_live": [
   "agora",
   "analysis",
@@ -251,7 +287,7 @@
    },
    {
     "namespace": "test",
-    "n": 329
+    "n": 383
    },
    {
     "namespace": "theophrastus",
@@ -274,7 +310,7 @@
   ],
   "canonical_revision": [
    {
-    "last_value": 21239
+    "last_value": 170699
    }
   ],
   "ontology_registry": [
@@ -297,7 +333,7 @@
    {
     "object_type": "claim",
     "namespace": "test",
-    "n": 19
+    "n": 23
    },
    {
     "object_type": "evidence",
@@ -307,7 +343,7 @@
    {
     "object_type": "evidence",
     "namespace": "test",
-    "n": 10
+    "n": 11
    },
    {
     "object_type": "relation",
@@ -322,7 +358,7 @@
   ],
   "evidence_bindings": [
    {
-    "n": 6
+    "n": 7
    }
   ],
   "fossil_pk": [
@@ -337,7 +373,7 @@
   ],
   "comms_last_message": [
    {
-    "id": 330
+    "id": 349
    }
   ]
  },
@@ -353,7 +389,7 @@
    },
    {
     "namespace": "test",
-    "n": 329
+    "n": 383
    },
    {
     "namespace": "theophrastus",
@@ -376,7 +412,7 @@
   ],
   "canonical_revision": [
    {
-    "last_value": 21239
+    "last_value": 170699
    }
   ],
   "ontology_registry": [
@@ -399,7 +435,7 @@
    {
     "object_type": "claim",
     "namespace": "test",
-    "n": 19
+    "n": 23
    },
    {
     "object_type": "evidence",
@@ -409,7 +445,7 @@
    {
     "object_type": "evidence",
     "namespace": "test",
-    "n": 10
+    "n": 11
    },
    {
     "object_type": "relation",
@@ -424,7 +460,7 @@
   ],
   "evidence_bindings": [
    {
-    "n": 6
+    "n": 7
    }
   ],
   "fossil_pk": [
@@ -439,36 +475,72 @@
   ],
   "comms_last_message": [
    {
-    "id": 327
+    "id": 348
    }
   ]
  },
  "samples_identical": false,
  "count_drift_append_only": {
+  "agora.intelligence_outputs": {
+   "live": 16662,
+   "restored": 16660
+  },
   "agora.machine_probes": {
-   "live": 131635,
-   "restored": 131629
+   "live": 131867,
+   "restored": 131861
   },
   "comms.messages": {
-   "live": 330,
-   "restored": 327
+   "live": 349,
+   "restored": 348
   },
   "comms.receipt_instances": {
-   "live": 589,
-   "restored": 587
+   "live": 653,
+   "restored": 650
   },
   "comms.receipts": {
-   "live": 595,
-   "restored": 593
+   "live": 659,
+   "restored": 656
+  },
+  "ew.derived_artifacts": {
+   "live": 68,
+   "restored": 67
   },
   "ew.read_log": {
-   "live": 3014,
-   "restored": 3013
+   "live": 3225,
+   "restored": 3224
+  },
+  "viv.execution_attempt": {
+   "live": 1154,
+   "restored": 1150
+  },
+  "viv.execution_step": {
+   "live": 20,
+   "restored": 0
+  },
+  "viv.gate_receipt": {
+   "live": 4,
+   "restored": 0
+  },
+  "viv.pew_outbox": {
+   "live": 12,
+   "restored": 0
+  },
+  "viv.research_experiment_events": {
+   "live": 3305,
+   "restored": 3286
+  },
+  "viv.research_experiment_queue": {
+   "live": 1160,
+   "restored": 1155
+  },
+  "viv.start_bundle": {
+   "live": 4,
+   "restored": 0
   }
  },
  "count_loss": {},
  "VERDICT": "RESTORE_VERIFIED",
  "verdict_note": "samples differ (see samples_live/samples_restored; live-source drift on append-only counters is expected)",
  "scratch_disposition": "dropped",
- "finished": "2026-09-17T05:57:00"
+ "finished": "2026-09-17T09:59:06"
 }

@@ -1,0 +1,39 @@
+{
+  "schema": "vivarium_deploy_window.v1",
+  "window": "C4-20260917-W1",
+  "at": "2026-09-17T13:46:20Z",
+  "sha": "891fee427",
+  "host": "SPECTREX5",
+  "steps": {
+    "backup": "OK",
+    "drafts": "FAILED",
+    "promote": "SKIPPED (an earlier step failed)",
+    "migrate": "SKIPPED (an earlier step failed)",
+    "verify": "SKIPPED (an earlier step failed)"
+  },
+  "backup": {
+    "ok": true,
+    "path": "D:\\Prometheus-data\\vivarium\\backups\\viv-2026-09-17T134620Z.dump",
+    "bytes": 24041802,
+    "sha256": "sha256:ee23aa7f6ea303a37c930935c9f25d5c77f3d4a90e8d40681e999be02b813ba1",
+    "stderr": "",
+    "verify": {
+      "ok": true,
+      "tables": [
+        "postgres",
+        "register_errata",
+        "register_errata_rows",
+        "research_experiment_events",
+        "research_experiment_queue",
+        "worker_heartbeat"
+      ],
+      "data_entries": 5
+    }
+  },
+  "drafts": {
+    "ok": false,
+    "ok_lines": 16,
+    "tail": " REPLAYED step pointing at the same key in attempt 1\n  ok  VIV22 -> VIV22: replay_of_step must name a prior step with the same key in the same row (never another design)\n  ok  sequences [('e1', 1), ('e2', 2)]\n  ok  VIV42 -> VIV42: 1 lower sequence(s) of this stream are still PENDING; delivery is in order\n  ok  in-order delivery\n  ok  VIV40 -> VIV40: outbox rows are never deleted (a dropped event is a lost fossil)\n  ok  VIV15 -> VIV15: attempts are never deleted\n  ok  backfill [(1, 'FAILED', 'UNKNOWN', '007')] (reason UNKNOWN although error text says BUDGET_EXCEEDED)\ndropped viv_draft_96b365a6\n"
+  },
+  "ok": false
+}

@@ -1,0 +1,66 @@
+{
+  "_what_this_is": "DRAFT of the production descriptor (roles/Vivarium/point_release/PRODUCTION_DESCRIPTOR.md). Vivarium's reader (viv/production.py) prefers <repo>/deploy/PRODUCTION.json when Daedalus/Hermes/Vivarium land the shared file; until then this draft is read. No secrets: credential entries name FILES and KEYS only.",
+  "descriptor_version": "prometheus.production.v1",
+  "ruled_by": "operator",
+  "ruled_at": "2026-09-17T00:00:00Z",
+  "ruling_ref": "operator Stage 3 / implementation order 2026-09-17 s9 ('Campaigns 1-3 established the M2 production ledger in actual use'); Daedalus #329",
+  "hold": null,
+  "engine": {
+    "descriptor_ref": "SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOYED_BUILD_M2.json",
+    "endpoint": "https://192.168.1.191:8811",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "schema_floor": 9,
+    "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
+    "cacert": "SerendipityFoundry/SerendipityFoundryClient/config/m2.crt",
+    "contract": "roles/Harmonia/contracts/sfe_contract.json",
+    "note": "observed 2026-09-17 ~11:0xZ after Daedalus's schema-9 window (#334): schema 9, source hash bc8d3a0c. schema_floor is the gate; the hash is informational until Daedalus pins the build in the shared descriptor."
+  },
+  "store": {
+    "environment": "prometheus-canonical",
+    "db_system_id": "7628127204585430828",
+    "db_name": "prometheus_fire",
+    "host_hint": "192.168.1.202",
+    "schemas": {
+      "queue": "viv",
+      "comms": "comms",
+      "ew": "ew"
+    },
+    "note": "shared cluster on M1 (operator topology ruling 2026-09-16); identity, not host, is the check (comms/environments.json)"
+  },
+  "pew": {
+    "endpoint": "http://192.168.1.191:8377/api/v1",
+    "namespace": "prod",
+    "fossil_contract": "pew.fossil.v2"
+  },
+  "consumers": {
+    "vivarium": {
+      "client_name": "vivarium",
+      "worker_id": "vivarium@m2",
+      "credential_file": "D:/Prometheus-worktrees/vivarium-consumer/vivarium/config.local.json",
+      "keys": [
+        "sfe_token"
+      ],
+      "optional_keys": [
+        "pew_token"
+      ],
+      "optional_note": "pew_token gates the DELIVERER (VivariumOutboxDelivererM2; the outbox holds without it), not the consumer; issued by Mnemosyne out of band (evidence_wiki agent_identities: sha256 committed, value delivered)",
+      "bootstrap": "python -m viv.cli sfe-identity --ensure  (registers the production client on the engine above if absent; refused if a client of that name already exists on this ledger)",
+      "dead_man_task": "VivariumDeadmanM2",
+      "deliverer_task": "VivariumOutboxDelivererM2"
+    },
+    "archaeon": {
+      "client_name": "cmp<N>-archaeon",
+      "credential_file": "archaeon/campaign<N>/config.local.json",
+      "keys": [
+        "token",
+        "client_id"
+      ],
+      "note": "Archaeon registers per campaign (archaeon/campaign2/runner.py Engine.__init__)"
+    }
+  },
+  "machine": {
+    "role": "sfe-ecosystem",
+    "host": "SPECTREX5",
+    "note": "Postgres/Redis shared on M1; every other service on M2; no farm (operator 2026-09-16)"
+  }
+}

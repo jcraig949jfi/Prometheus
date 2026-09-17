@@ -39,9 +39,14 @@ sys.path.insert(0, str(HERE))
 from ew import db as ewdb                              # noqa: E402
 from ew import workspace                               # noqa: E402
 
-READER_VERSION = "ew.campaign_ingest/1.0"
+READER_VERSION = "ew.campaign_ingest/1.3"   # 1.1: design factors in run strata; 1.2: foundry_profile_scheme (Proteus #339); 1.3: campaign 4 directory, seed UNKNOWN until Archaeon names it
 CONTRACT_VERSION = "PEW_CAMPAIGN_INGESTION_CONTRACT v0.1 (2026-09-17)"
 UNKNOWN = "UNKNOWN"
+# Proteus #339: "instr1-16:6528b9dc" is ARCHAEON's rendering of a Proteus
+# foundry_manifest.v0 regime (minus seed/n) hashed by
+# archaeon.wse.reachability.foundry_id; kept VERBATIM as the identity, tagged
+# with the scheme so the P1 catalog can join it to the full profile.
+FOUNDRY_SCHEME = "archaeon.wse.reachability.foundry_id.v1"
 
 # T1: campaign identity comes from the committed PATH, cross-checked against
 # the campaign seed the producer stamped; RECEIPT.campaign is NOT trusted
@@ -55,8 +60,13 @@ CAMPAIGNS = {
     1: {"campaign_id": "cmp1", "seed": 20260917, "dir": "archaeon/campaign1"},
     2: {"campaign_id": "cmp2", "seed": 20260918, "dir": "archaeon/campaign2"},
     3: {"campaign_id": "cmp3", "seed": 20260920, "dir": "archaeon/campaign3"},
+    # Campaign 4: the directory is known, the seed is not yet (MNE-53). T1 then
+    # identifies a row by the producer's stamp, else the path; when Archaeon
+    # names the seed it is added here as reader 1.4 by explicit version
+    # transition (the frozen surface pins this map).
+    4: {"campaign_id": "cmp4", "seed": None, "dir": "archaeon/campaign4"},
 }
-SEED_TO_CAMPAIGN = {v["seed"]: v["campaign_id"] for v in CAMPAIGNS.values()}
+SEED_TO_CAMPAIGN = {v["seed"]: v["campaign_id"] for v in CAMPAIGNS.values() if v["seed"] is not None}
 DEFINITION_FILES = {
     "reachability": "archaeon/wse/reachability.py",
     "corridor": "archaeon/wse/corridor.py",
@@ -126,6 +136,13 @@ def campaign_from(seed, path_campaign, notes, stamp=None):
         return stamp
     return path_campaign
 
+
+# Producer-defined design factors a run row may carry (Archaeon's names, not
+# PEW's): stratification must survive ingestion without parsing experiment
+# names (order s7). Copied into strata verbatim when present.
+DESIGN_FACTOR_KEYS = ("family", "target", "table", "climber", "encoding", "quality", "dose", "dose_frac", "cap",
+                      "n_imported", "site", "cell", "regime", "rung", "delay", "schedule_name", "readout", "world",
+                      "budget_evals", "G", "N", "E")
 
 BOOL_COLS = {"stopped_on_solve", "summit_censored", "reached", "censored"}
 INT_COLS = {"attempt_number", "resumed_from_attempt", "seed", "generation", "n_pop", "g_budget", "e_episodes",
@@ -246,6 +263,7 @@ class Ingest:
                     censored=bool(row.get("summit_censored")) if row.get("summit_censored") is not None else None,
                     censoring_reason=("horizon G reached before summit" if row.get("summit_censored") else None),
                     strata={"cell": row.get("cell"), "value_bits": row.get("value_bits"), "foundry_profile": row.get("foundry"),
+                            "foundry_profile_scheme": FOUNDRY_SCHEME if row.get("foundry") else None,
                             "regime": row.get("regime"), "row_kind": row.get("kind"), "arm": src.get("arm"),
                             "budget_class": f"N{row.get('N')}G{row.get('G')}E{row.get('E')}",
                             "rng_label": row.get("rng_label"), "solve_threshold": row.get("solve_threshold"),
@@ -264,6 +282,7 @@ class Ingest:
                     first_summit_gen=init.get("first_summit_gen"), summit_candidate_gen=init.get("summit_candidate_gen"),
                     strata={"source_cell": row.get("source_cell"), "target_cell": row.get("target_cell"),
                             "edge_kind": row.get("kind"), "source_foundry": row.get("source_foundry"),
+                            "foundry_profile_scheme": FOUNDRY_SCHEME if row.get("source_foundry") else None,
                             "target_foundry": row.get("target_foundry"), "regime": row.get("regime"),
                             "source_budget": row.get("source_budget"), "target_budget": row.get("target_budget"),
                             "source_maturity": row.get("source_maturity")},
@@ -345,7 +364,7 @@ class Ingest:
                                          "reachability_rows_appended", "corridor_rows_appended", "summary", "timings",
                                          "teardown", "workspace") if k in r}
         summary["errors_count"] = len(r.get("errors") or [])
-        summary["records_count"] = len(r.get("records") or {})
+        summary["records_count"] = len(r.get("records") or r.get("engine_records") or {})
         summary["steps_count"] = len(r.get("steps") or {})
         summary["replayed_count"] = len(r.get("replayed") or [])
         summary["artifacts_count"] = len(r.get("artifacts") or {})
@@ -367,14 +386,18 @@ class Ingest:
         self.base("receipt", summary, path, None, cid, **env)
         n = 1
         # engine records: (label -> exp_id, obs_id)
-        for label, ids in (r.get("records") or {}).items():
-            row = {"label": label, "exp_id": (ids or {}).get("exp_id"), "obs_id": (ids or {}).get("obs_id"), "receipt": path}
+        # campaign 1 wrote engine_records; campaigns 2-3 write records
+        for label, ids in (r.get("records") or r.get("engine_records") or {}).items():
+            ids = ids if isinstance(ids, dict) else {"id": ids}
+            row = {"label": label, "exp_id": ids.get("exp_id"), "obs_id": ids.get("obs_id"), "receipt": path,
+                   **({"raw": ids} if "exp_id" not in ids else {})}
             self.base("engine_record", row, path, None, cid, harness_id=harness, attempt_id=attempt_id,
                       world_id=world_id, engine_instance_id=env["engine_instance_id"], origin_kind=origin,
                       arm=label.split("/")[0] if "/" in label else None)
             n += 1
         for name, art in (r.get("artifacts") or {}).items():
-            row = {"name": name, **(art or {}), "receipt": path}
+            art = art if isinstance(art, dict) else {"artifact_id": art}     # campaign 1: bare id strings
+            row = {"name": name, **art, "receipt": path}
             self.base("artifact_ref", row, path, None, cid, harness_id=harness, attempt_id=attempt_id,
                       engine_instance_id=env["engine_instance_id"], origin_kind=origin)
             n += 1
@@ -466,7 +489,9 @@ class Ingest:
                        heldout=row.get("competence_heldout") if isinstance(row.get("competence_heldout"), (int, float)) else row.get("general_heldout"),
                        strata={"arm": row.get("arm"), "seed": row.get("seed"), "gen0_fill": g0.get("fill"),
                                "n_substituted": g0.get("n_substituted"), "verified_common": g0.get("verified_common"),
-                               "imported": row.get("imported"), "persist": row.get("persist"), "p": row.get("p")},
+                               "imported": row.get("imported"), "persist": row.get("persist"), "p": row.get("p"),
+                               # producer-named design factors, carried verbatim when present (order s7):
+                               **{k: row.get(k) for k in DESIGN_FACTOR_KEYS if k in row and not isinstance(row.get(k), (dict, list))}},
                        definition_version=f"archaeon.wse.evolve@{self.defs['run']}")
             self.base("run", run, path, i, self.c["campaign_id"], **env)
             n += 1
@@ -519,7 +544,7 @@ class Ingest:
         prior = {}
         for sp, sl, dg, oid, sc, kd in cur.fetchall():
             prior.setdefault((sp, sl, kd), []).append((dg, oid, sc))
-        new = seen = conflicts = 0
+        new = seen = conflicts = refreshed = 0
         by_stream_new = {p: 0 for p in paths}
         for d in self.rows:
             seen += 1
@@ -535,11 +560,22 @@ class Ingest:
             cur.execute("SELECT nextval('ew.canonical_revision_seq')")
             rev = cur.fetchone()[0]
             vals = [_typed(c, json.dumps(d[c], default=str) if c in ("strata", "measured") and d[c] is not None else d[c]) for c in cols]
+            # Envelope columns (everything PEW derived from the row) refresh when
+            # the READER version moved; measured/producer_row_digest never change.
+            env_cols = [c for c in cols if c not in ("observation_id", "kind", "measured", "producer_row_digest",
+                                                     "source_commit", "source_path", "source_line", "source_blob_sha",
+                                                     "ingest_run_id", "recorded_at")]
+            set_clause = ", ".join(f"{c}=EXCLUDED.{c}" for c in env_cols)      # reader_version is in env_cols
             cur.execute(f"INSERT INTO ew.campaign_observations({','.join(cols)}, revision) VALUES "
-                        f"({','.join(['%s'] * len(cols))}, %s) ON CONFLICT (observation_id) DO NOTHING", vals + [rev])
-            if cur.rowcount == 1:
+                        f"({','.join(['%s'] * len(cols))}, %s) ON CONFLICT (observation_id) DO UPDATE SET {set_clause} "
+                        f"WHERE ew.campaign_observations.reader_version <> EXCLUDED.reader_version "
+                        f"RETURNING (xmax = 0) AS inserted", vals + [rev])
+            got = cur.fetchone()
+            if got is not None and got[0]:
                 new += 1
                 by_stream_new[d["source_path"]] += 1
+            elif got is not None:
+                refreshed += 1
         for p in paths:
             st = self.streams[p]
             cur.execute("INSERT INTO ew.ingestion_checkpoints(producer, stream, last_seq, last_digest, source_commit, "
@@ -554,7 +590,7 @@ class Ingest:
                     "VALUES ('campaign.ingest', %s, %s, %s, true, %s)",
                     (os.environ.get("PROMETHEUS_MACHINE") or "M2", "campaign-ingest", payload_sha, self.run_id))
         conn.commit()
-        return {"seen": seen, "new": new, "conflicts": conflicts, "streams": {p: {**self.streams[p], "new": by_stream_new[p]} for p in paths},
+        return {"seen": seen, "new": new, "envelope_refreshed": refreshed, "conflicts": conflicts, "streams": {p: {**self.streams[p], "new": by_stream_new[p]} for p in paths},
                 "write_log_payload_sha256": payload_sha}
 
 

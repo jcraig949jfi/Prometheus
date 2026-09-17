@@ -199,6 +199,14 @@ class EngineClient:
     def list_observations(self, wid: str) -> list:
         return self._req("GET", f"/v2/worlds/{wid}/observations")
 
+    def work_attestation(self, work_id: str) -> dict:
+        """GET /v2/work/{work_id}/attestation: the item's status, result_hash
+        and the executed-vs-sealed config hashes. Vivarium's NEW ATTEMPT reads
+        it to learn whether a prior attempt already COMPLETED the work item
+        (s14 canary, 2026-09-17): a completed item is not claimable again, and
+        its trajectory is the one the remaining observations cite."""
+        return self._req("GET", f"/v2/work/{work_id}/attestation")
+
     def start(self, wid): return self._req("POST", f"/v2/worlds/{wid}/start")
     def pause(self, wid): return self._req("POST", f"/v2/worlds/{wid}/pause")
     def resume(self, wid): return self._req("POST", f"/v2/worlds/{wid}/resume")

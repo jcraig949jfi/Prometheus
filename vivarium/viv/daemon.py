@@ -342,6 +342,63 @@ class Daemon:
                 pass
         return rec
 
+    def _production_gate(self, conn) -> Optional[int]:
+        """Verify the descriptor and write the RESTART RECEIPT (s12). Returns
+        an exit code to refuse with, or None to proceed."""
+        from . import production as _prod                    # noqa: PLC0415
+        production_schema = (getattr(self.viv, "schema", None) == "viv")
+        try:
+            d = _prod.load()
+            v = _prod.verify(d, role="vivarium", probe=production_schema)
+        except Exception as exc:                              # noqa: BLE001
+            v = {"ok": False, "refuse": ["descriptor unreadable: %s" % str(exc)[:200]], "descriptor": None}
+            d = {}
+        receipt = {
+            "schema": "vivarium_restart_receipt.v1",
+            "at": _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "process": {"pid": os.getpid(), "host": socket.gethostname(), "worker_id": self.viv.worker_id,
+                        "instance": getattr(self.viv, "instance", None), "started_at": getattr(self.viv, "started_at", None)},
+            "code": getattr(self.viv, "code", None), "schema": self.viv.schema,
+            "migrations": self._migration_state(conn),
+            "descriptor": v.get("descriptor"), "store": v.get("store"), "engine": v.get("engine"),
+            "credential": v.get("credential"), "hold": v.get("hold"),
+            "dead_man_target": ((d.get("engine") or {}).get("engine_instance_id")),
+            "outbox": self._outbox_state(conn),
+            "refuse": v.get("refuse", []), "ok": v.get("ok"),
+        }
+        path = self._var() / ("restart-%s.json" % _safe(self.viv.worker_id))
+        try:
+            path.write_text(json.dumps(receipt, indent=2, default=str), encoding="utf-8")
+        except OSError:
+            pass
+        self.log("[viv] restart receipt: %s (descriptor %s, engine %s, store %s, credential %s, hold %s)"
+                 % (path, v.get("descriptor"), (v.get("engine") or {}).get("reason"),
+                    (v.get("store") or {}).get("environment"), (v.get("credential") or {}).get("ok"),
+                    "LIVE" if v.get("hold") else "none"))
+        if production_schema and not v.get("ok"):
+            for r in v.get("refuse", []):
+                self.log("[viv] REFUSING TO START: production identity differs from the descriptor: %s" % r)
+            return EXIT_BLOCKED
+        return None
+
+    def _migration_state(self, conn) -> dict:
+        try:
+            with conn.cursor() as cur:
+                cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = %s ORDER BY 1",
+                            (self.viv.schema,))
+                tables = [r[0] for r in cur.fetchall()]
+            conn.rollback()
+            return {"tables": tables,
+                    "point_release_tables": all(t in tables for t in ("execution_attempt", "execution_step", "pew_outbox"))}
+        except Exception as exc:                              # noqa: BLE001
+            return {"error": str(exc)[:200]}
+
+    def _outbox_state(self, conn) -> dict:
+        try:
+            return self.viv.outbox.stats(conn)
+        except Exception as exc:                              # noqa: BLE001
+            return {"error": str(exc)[:200]}
+
     def run(self, *, max_ticks: Optional[int] = None,
             stop_when_idle: bool = False,
             install_signals: bool = True) -> int:
@@ -371,6 +428,14 @@ class Daemon:
                 self.log("[viv] " + rec.note)
                 return EXIT_BLOCKED
 
+            # Point release (operator s12): start FROM the production
+            # descriptor, never from an inherited assumption. A production
+            # schema refuses work if any identity differs; a test schema
+            # records the check and proceeds (no descriptor gates a
+            # throwaway). The restart receipt is written either way.
+            gate = self._production_gate(conn)
+            if gate is not None:
+                return gate
             self._clear_stop_file()
             self.log("[viv] daemon up worker=%s schema=%s idle_interval=%ss"
                      % (self.viv.worker_id, self.viv.schema,

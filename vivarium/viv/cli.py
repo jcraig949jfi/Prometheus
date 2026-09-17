@@ -356,6 +356,24 @@ def cmd_cancel(args, conn) -> int:
     return 0
 
 
+def cmd_hold(args, conn) -> int:
+    until = None if args.lift else datetime.fromisoformat(args.until)
+    if until is not None and until.tzinfo is None:
+        print("--until must carry a timezone (e.g. 2026-12-31T00:00:00+00:00)", file=sys.stderr)
+        return 2
+    try:
+        _q.hold(conn, args.experiment_id, until=until, actor=args.by, reason=args.reason,
+                schema=args.schema)
+    except RuntimeError as exc:
+        conn.rollback()
+        print(str(exc), file=sys.stderr)
+        return 1
+    conn.commit()
+    print("%s %s%s" % ("lifted hold on" if until is None else "held", args.experiment_id,
+                       "" if until is None else " until %s" % until.isoformat()))
+    return 0
+
+
 def cmd_stranded(args, conn) -> int:
     rows = _q.stranded(conn, stale_after_s=args.stale_after, schema=args.schema)
     if not rows:
@@ -366,20 +384,31 @@ def cmd_stranded(args, conn) -> int:
     return 1
 
 
+def cmd_production(args, _conn) -> int:
+    """The production descriptor, verified: hold, engine identity, store
+    identity, credential presence by key name. Exit 0 iff a consumer may
+    launch against it."""
+    from . import production as _prod
+    v = _prod.verify(role=args.role, probe=not args.no_probe)
+    print(json.dumps(v, indent=2, default=str))
+    return 0 if v["ok"] else 1
+
+
 def cmd_release(args, conn) -> int:
     """Resolve a stranded row to `failed`. It never returns to `queued`:
     requeueing asserts the experiment did not run, and the queue cannot know
     that -- check SFE and PEW, then enqueue a fresh item if appropriate."""
     try:
         row = _q.release_stranded(conn, args.experiment_id, actor=args.by,
-                                  reason=args.reason, schema=args.schema)
+                                  reason=args.reason, schema=args.schema,
+                                  new_attempt=bool(getattr(args, "new_attempt", False)))
     except RuntimeError as exc:
         conn.rollback()
         print(str(exc), file=sys.stderr)
         return 1
     conn.commit()
-    print("released %s -> failed (was %s). SFE experiment: %s"
-          % (row["experiment_id"], "claimed/running",
+    print("released %s -> %s (was %s). SFE experiment: %s"
+          % (row["experiment_id"], row["status"], "claimed/running",
              row["sfe_experiment_id"] or "none recorded"))
     return 0
 
@@ -816,14 +845,30 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--reason", required=True)
     s.set_defaults(fn=cmd_cancel)
 
+    s = sub.add_parser("hold", help="hold a QUEUED row (not_before) or --lift it; relations untouched")
+    s.add_argument("experiment_id")
+    s.add_argument("--until", default=None, help="tz-aware ISO-8601; required unless --lift")
+    s.add_argument("--lift", action="store_true")
+    s.add_argument("--by", required=True)
+    s.add_argument("--reason", required=True)
+    s.set_defaults(fn=cmd_hold)
+
     s = sub.add_parser("stranded")
     s.add_argument("--stale-after", type=float, default=900.0)
     s.set_defaults(fn=cmd_stranded)
+
+    s = sub.add_parser("production", help="verify the production descriptor (hold, engine, store, credential)")
+    s.add_argument("--role", default="vivarium")
+    s.add_argument("--no-probe", action="store_true")
+    s.set_defaults(fn=cmd_production)
 
     s = sub.add_parser("release")
     s.add_argument("experiment_id")
     s.add_argument("--by", required=True)
     s.add_argument("--reason", required=True)
+    s.add_argument("--new-attempt", action="store_true",
+                   help="close the open attempt STRANDED and requeue the row for attempt n+1 "
+                        "(point release; needs migration 006)")
     s.set_defaults(fn=cmd_release)
 
     s = sub.add_parser("run", help="the daemon: a thin loop around tick()")

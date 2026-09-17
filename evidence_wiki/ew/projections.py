@@ -83,6 +83,21 @@ DEFINITIONS = {
                         "monotone budget lookup (rows that inform budget G) is NOT reproduced here -- pooling is by the "
                         "row's own N/G/E."),
     },
+    ("reach_level", "v0"): {
+        "definition": ("the campaign 1-2 reading, SUPERSEDED by v1 (D3-006): foothold := training best >= 0.5 "
+                       "(solve_threshold); full solve := training best >= 0.90 with NO held-out confirmation. "
+                       "Levels: FLOOR (<0.5), FOOTHOLD (0.5..0.90), FULL_SOLVE_TRAINING (>=0.90). Kept so the two "
+                       "readings can be compared row for row: a row that is FULL_SOLVE_TRAINING here and not a confirmed "
+                       "SUMMIT in v1 is exactly the class D3-006 invalidated."),
+        "source_kinds": ["reachability"],
+        "thresholds": {"FOOTHOLD_MIN": 0.5, "FULL_SOLVE_TRAINING_MIN": 0.90, "heldout_confirmation": "none"},
+        "owner_seat": "Archaeon",
+        "limitations": ("Pinned to the pre-campaign-3 reachability code (archaeon/wse/reachability.py at blob "
+                        "bae94c23205a355d05e4bde27c2c9c96ca65ae22), which carried no level field; the levels here are "
+                        "the report-level reading of that era applied to the stored numbers. Superseded, not deleted."),
+        "status": "SUPERSEDED",
+        "source_code_identity_override": "archaeon.wse.reachability@bae94c23205a355d05e4bde27c2c9c96ca65ae22 (pre-C3, no level field)",
+    },
     ("corridor_edge", "v1"): {
         "definition": ("one row per (source_cell, target_cell, edge_kind, source_foundry, target_foundry, regime, "
                        "campaign): n, best and median direct_reuse.best, best inherited heldout, levels reached at "
@@ -200,7 +215,39 @@ def build_corridor_edge(cur):
     return out
 
 
-BUILDERS = {("reach_level", "v1"): build_reach_level, ("corridor_edge", "v1"): build_corridor_edge}
+def build_reach_level_v0(cur):
+    rows = q(cur, "SELECT observation_id, campaign_id, harness_id, attempt_id, cell, foundry_profile, regime, "
+                  "best_train_max, heldout, first_solved_gen, summit_candidate_gen, first_summit_gen, strata "
+                  "FROM ew.campaign_observations WHERE kind='reachability' ORDER BY observation_id")
+    out = []
+    pools = defaultdict(lambda: {"n": 0, "levels": defaultdict(int), "evidence_ids": [], "training_only_full_solves": 0})
+    for r in rows:
+        b = r["best_train_max"]
+        lvl = "FLOOR" if (b is None or b < 0.5) else ("FULL_SOLVE_TRAINING" if b >= 0.90 else "FOOTHOLD")
+        training_only = lvl == "FULL_SOLVE_TRAINING" and r["first_summit_gen"] is None
+        st = r["strata"] or {}
+        out.append(("obs:" + r["observation_id"],
+                    {"level_v0": lvl, "training_only_full_solve_not_confirmed_in_v1": training_only,
+                     "measurements": {"best_train_max": b, "heldout": r["heldout"]},
+                     "source": {"campaign_id": r["campaign_id"], "harness_id": r["harness_id"], "attempt_id": r["attempt_id"]},
+                     "stratum": {"cell": r["cell"], "foundry_profile": r["foundry_profile"], "regime": r["regime"],
+                                 "budget_class": st.get("budget_class"), "row_kind": st.get("row_kind")}},
+                    [r["observation_id"]]))
+        pk = "pool:" + "|".join(str(x) for x in (r["cell"], st.get("value_bits"), st.get("budget_class"), r["foundry_profile"],
+                                                  r["regime"], r["campaign_id"], st.get("row_kind")))
+        p = pools[pk]; p["n"] += 1; p["levels"][lvl] += 1; p["evidence_ids"].append(r["observation_id"])
+        p["training_only_full_solves"] += 1 if training_only else 0
+        p.setdefault("stratum", {"cell": r["cell"], "value_bits": st.get("value_bits"), "budget_class": st.get("budget_class"),
+                                 "foundry_profile": r["foundry_profile"], "regime": r["regime"], "campaign_id": r["campaign_id"],
+                                 "row_kind": st.get("row_kind")})
+    for pk, p in pools.items():
+        out.append((pk, {"stratum": p["stratum"], "n": p["n"], "levels": dict(p["levels"]),
+                         "training_only_full_solves": p["training_only_full_solves"]}, sorted(p["evidence_ids"])))
+    return out
+
+
+BUILDERS = {("reach_level", "v1"): build_reach_level, ("reach_level", "v0"): build_reach_level_v0,
+            ("corridor_edge", "v1"): build_corridor_edge}
 
 
 def rows_digest(rows):
@@ -216,17 +263,17 @@ def build(name, version, conn=None, write=True):
     cur = conn.cursor()
     rows = BUILDERS[(name, version)](cur)
     dig = rows_digest(rows)
-    src_ident = _source_identity(cur, d["source_kinds"])
+    src_ident = d.get("source_code_identity_override") or _source_identity(cur, d["source_kinds"])
     evidence = len({e for _, _, ev in rows for e in ev})
     if write:
         cur.execute("INSERT INTO ew.projections(projection_name, projection_version, definition, source_kinds, "
                     "source_code_identity, thresholds, owner_seat, builder_version, built_at, evidence_count, "
-                    "rebuild_digest, limitations, status) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,now(),%s,%s,%s,'BUILT') "
+                    "rebuild_digest, limitations, status) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,now(),%s,%s,%s,%s) "
                     "ON CONFLICT (projection_name, projection_version) DO UPDATE SET built_at=now(), "
                     "evidence_count=EXCLUDED.evidence_count, rebuild_digest=EXCLUDED.rebuild_digest, "
                     "source_code_identity=EXCLUDED.source_code_identity, builder_version=EXCLUDED.builder_version",
                     (name, version, d["definition"], d["source_kinds"], src_ident, json.dumps(d["thresholds"]),
-                     d["owner_seat"], BUILDER_VERSION, evidence, dig, d["limitations"]))
+                     d["owner_seat"], BUILDER_VERSION, evidence, dig, d["limitations"], d.get("status", "BUILT")))
         cur.execute("DELETE FROM ew.projection_rows WHERE projection_name=%s AND projection_version=%s", (name, version))
         for key, payload, ev in rows:
             cur.execute("INSERT INTO ew.projection_rows(projection_name, projection_version, row_key, payload, evidence_ids, "
