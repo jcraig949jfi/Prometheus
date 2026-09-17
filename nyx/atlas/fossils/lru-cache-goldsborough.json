@@ -128,20 +128,521 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lru-cache-goldsborough/upstream/tree/include/lru/internal/base-cache.hpp:784-923"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lru-cache-goldsborough/upstream/tree/include/lru/internal/base-cache.hpp:1394-1455"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lru-cache-goldsborough/upstream/tree/include/lru/cache.hpp:152-177"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lru-cache-goldsborough/upstream/tree/include/lru/internal/last-accessed.hpp:60-130"
+   }
+  ],
+  "inspected_files": [
+   "base-cache.hpp 784-850, 900-923, 1394-1455",
+   "cache.hpp 152-177",
+   "last-accessed.hpp 60-130",
+   "timed-cache.hpp 200-240"
+  ],
+  "date": "2026-09-17T22:25Z",
+  "note": "the textbook LRU (hash map + recency list, move-to-front on hit, pop-front on overflow) plus one mechanism of the author's: a one-entry 'last accessed' pointer checked before the hash lookup, so contains()-then-lookup() on the same key costs one hash; and a timed variant that expires entries by age on access",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:25Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/goldsborough/lru-cache@13f30ad33a227a3e9682578c450777380ecddfcf",
+   "payload_manifest_id": "techne tree_sha256 57d253398e4498a746f52b6a88a4894cb1edce6e63979b0a678db98211f100b9 (376 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/include/lru/internal/base-cache.hpp",
+     "payload_hash_read": "4292f513f42d39baeb227f98e8f2edbb8f25278a396a0ad5c7ebe602f44cbd1a",
+     "techne_recorded_hash": "4292f513f42d39baeb227f98e8f2edbb8f25278a396a0ad5c7ebe602f44cbd1a",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/include/lru/cache.hpp",
+     "payload_hash_read": "5dab6ee2263cd5690aff40d0116b707a38f984383e7bc5b36f753e81eccf964d",
+     "techne_recorded_hash": "5dab6ee2263cd5690aff40d0116b707a38f984383e7bc5b36f753e81eccf964d",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/include/lru/internal/last-accessed.hpp",
+     "payload_hash_read": "74e536d774b81b56274f35bf18d46f98cec44684ce42af0bde8618ade6133c51",
+     "techne_recorded_hash": "74e536d774b81b56274f35bf18d46f98cec44684ce42af0bde8618ade6133c51",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/include/lru/timed-cache.hpp",
+     "payload_hash_read": "0e81dab2f622cdd60d7210671a792840b4af758f1ea55702d141669457a8aa99",
+     "techne_recorded_hash": "0e81dab2f622cdd60d7210671a792840b4af758f1ea55702d141669457a8aa99",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "lru-cache-goldsborough::hash_map_plus_recency_list_with_move_to_front_on_hit_and_evict_front_on_overflow",
+   "fossil_ancestry": "lru-cache-goldsborough",
+   "human_name": "BaseCache::insert (900-923), Cache::find (cache.hpp 152-177), _move_to_front / _erase_lru (1394-1420)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a std::unordered_map from key to (value, list iterator) and a std::list of keys in access order; find: map lookup, on hit splice the key's node to the back (most recent) and count a hit, on miss count a miss; insert: if present update and move to front, else emplace and append, evicting the list's front key when size exceeds capacity",
+   "input": "keys",
+   "output": "values or misses",
+   "state": "the map and the list (capacity entries)",
+   "update": "per access",
+   "assumptions": [
+    "recency predicts reuse (the LRU premise); the map's iterator and the list's node are both stable so the cross-references survive"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lru-cache-goldsborough::one_entry_last_accessed_pointer_checked_before_the_hash_lookup",
+    "lru-cache-goldsborough::expiry_by_age_checked_lazily_on_access_with_a_time_to_live_per_cache"
+   ],
+   "fitness_value_in_ancestor": "O(1) expected hit, insert and evict",
+   "failure_landscape": "by reading: a scan larger than the capacity evicts everything (LRU's known failure against sequential scans); no adaptivity (ARC, LIRS) anywhere in the body",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the standard textbook structure (e.g. Java's LinkedHashMap access order)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lru-cache-goldsborough/upstream/tree/include/lru/internal/base-cache.hpp:900-923; vault:lru-cache-goldsborough/upstream/tree/include/lru/cache.hpp:152-177"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "BaseCache + Cache",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lru-cache-goldsborough::one_entry_last_accessed_pointer_checked_before_the_hash_lookup",
+   "fossil_ancestry": "lru-cache-goldsborough",
+   "human_name": "Internal::LastAccessed (last-accessed.hpp); BaseCache::contains / lookup (784-850)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every hit or insert records a raw pointer pair (key, information) of the touched map entry; contains() and lookup() first compare the requested key with that pointer by the cache's key_equal and, if equal and still valid, return without touching the map (registering a hit); erase and rehash invalidate it; the class comment explains it exists so that contains()-then-lookup() idioms pay one hash, not two",
+   "input": "a key",
+   "output": "a value or a fall-through to the map",
+   "state": "two pointers and a validity flag",
+   "update": "per access",
+   "assumptions": [
+    "callers repeat the same key back to back (contains then lookup, or a loop over one key)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lru-cache-goldsborough::hash_map_plus_recency_list_with_move_to_front_on_hit_and_evict_front_on_overflow"
+   ],
+   "fitness_value_in_ancestor": "halves the hash cost of the common two-call idiom",
+   "failure_landscape": "by reading: a stale pointer after erase/rehash is the risk the validity flag exists for; the TimedCache overrides _last_accessed_is_ok to add the expiry check",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lru-cache-goldsborough/upstream/tree/include/lru/internal/last-accessed.hpp:60-130; vault:lru-cache-goldsborough/upstream/tree/include/lru/internal/base-cache.hpp:784-850"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "LastAccessed + the two front doors",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "lru-cache-goldsborough::expiry_by_age_checked_lazily_on_access_with_a_time_to_live_per_cache",
+   "fossil_ancestry": "lru-cache-goldsborough",
+   "human_name": "TimedCache::find / all_expired (timed-cache.hpp 200-240)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each entry stores its insertion time; find checks the entry's age against a per-cache time_to_live before returning a hit, treating an expired entry as a miss (and erasing it); no timer or sweep: expiry is enforced only when the entry is touched",
+   "input": "a key; the clock",
+   "output": "a hit or a miss",
+   "state": "one timestamp per entry",
+   "update": "per access",
+   "assumptions": [
+    "expired entries are cheap to leave in place until touched"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "lru-cache-goldsborough::hash_map_plus_recency_list_with_move_to_front_on_hit_and_evict_front_on_overflow"
+   ],
+   "fitness_value_in_ancestor": "TTL semantics with no background work",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:lru-cache-goldsborough/upstream/tree/include/lru/timed-cache.hpp:200-240 (names and the two checks; bodies not read in full)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "TimedCache; CANDIDATE because only the check sites were read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the ordered/unordered iterator classes, statistics.hpp (hit/miss counters), the callback manager, the Doxygen tree",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "lru-cache-goldsborough"
+  },
+  {
+   "candidate": "'LRU cache' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the recency structure, the last-accessed shortcut and the timed expiry are separable; the first is the textbook, the second is the author's",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "lru-cache-goldsborough"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "lru-cache-goldsborough::P.a_bounded_memory_must_answer_a_stream_of_key_lookups_with_a_hit_rate_close_to_the_offline_optimum_at_constant_cost_per_access",
+   "source_fossil": "lru-cache-goldsborough",
+   "source_evidence": "cache.hpp find; base-cache.hpp insert/_erase_lru",
+   "condition": "an organism holds C entries; keys arrive in a stream with temporal locality; a miss costs a fetch; per-access time must not grow with C or with the stream length",
+   "resource_or_constraint": "C slots; O(1) per access",
+   "failure_condition": "hit rate far below Belady's offline optimum on locality-bearing streams, or per-access cost growing with C",
+   "world_punishes": "FIFO and random eviction on reuse-heavy streams; LRU on scans larger than C",
+   "world_rewards": "recency ordering; scan resistance if the world includes scans",
+   "observable_consequence": "hit rate vs Belady's MIN on a Zipf stream, on a cyclic scan of length > C, and on their interleaving",
+   "vacuity_condition": "C at least the number of distinct keys",
+   "trivial_shortcuts": "a stream with no reuse (every policy scores zero)",
+   "cheat_control": "an organism given the future (Belady) bounds the score; random eviction bounds it below on the Zipf stream; on the scan stream LRU must equal random (its known failure) so a scan-resistant organism is distinguishable: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: bounded caching (Goldsborough 2016)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "lru-cache-goldsborough::one_entry_last_accessed_pointer_checked_before_the_hash_lookup",
+   "to": "lru-cache-goldsborough::hash_map_plus_recency_list_with_move_to_front_on_hit_and_evict_front_on_overflow",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "short-circuits the map",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lru-cache-goldsborough::expiry_by_age_checked_lazily_on_access_with_a_time_to_live_per_cache",
+   "to": "lru-cache-goldsborough::hash_map_plus_recency_list_with_move_to_front_on_hit_and_evict_front_on_overflow",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "turns a stale hit into a miss",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "lru-cache-goldsborough",
+   "relation": "reimplementation_of",
+   "to": "the LRU policy (Belady 1966 for the framing; the map+list structure is folklore)",
+   "note": "from the README",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "iterators, statistics and callbacks unread",
+   "TimedCache read at the check sites only",
+   "nothing ran"
+  ],
+  "note": "a small body; the author's one mechanism (last-accessed) is located and separated from the textbook",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

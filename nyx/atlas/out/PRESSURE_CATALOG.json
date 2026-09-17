@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:05Z",
- "n": 110,
+ "built": "2026-09-17T22:26Z",
+ "n": 119,
  "pressures": [
   {
    "pressure_id": "avida::P.a_program_must_copy_its_own_description_under_a_per_symbol_error_rate_while_cpu_time_is_rationed_by_a_score_it_can_raise_by_computing",
@@ -55,6 +55,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "bdwgc-8.2.6::P.live_memory_must_be_reclaimed_without_knowing_which_words_are_pointers_while_keeping_false_retention_and_collection_time_bounded_fractions_of_the_heap_and_the_mutator",
+   "source_fossil": "bdwgc-8.2.6",
+   "source_evidence": "mark.c; headers.c; alloc.c 309-456; blacklst.c",
+   "condition": "an organism manages a heap for a program that gives no type information and may hold pointers anywhere in registers, stacks and objects; it must free unreachable memory, never free reachable memory, and keep its own time and the memory it wrongly retains bounded",
+   "resource_or_constraint": "the heap; a per-word test budget",
+   "failure_condition": "freeing a reachable object (unsafe), or retention/pause growing with heap size",
+   "world_punishes": "treating every word as a pointer with no index (unbounded scan); treating none (leaks everything)",
+   "world_rewards": "a range filter plus an O(1) block index; black-listing false hits; allocation-proportional triggering",
+   "observable_consequence": "bytes falsely retained and GC time fraction vs heap size, on a program that stores random integers in large arrays (the conservative worst case), with black-listing on and off and with the free-space divisor varied",
+   "vacuity_condition": "a program that keeps no integers that look like addresses",
+   "trivial_shortcuts": "a precise collector with compiler cooperation (which the world must withhold)",
+   "cheat_control": "an organism given precise pointer maps must retain zero false bytes (the bound); with black-listing disabled false retention on the integer-array program must rise; with the divisor at 1 GC time must dominate: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: memory management for uncooperative languages (Boehm, Demers, Weiser 1988-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "biriscv-branch-predictor::P.the_next_action_must_be_guessed_before_its_condition_is_known_from_a_small_memory_of_past_outcomes_with_the_guess_itself_feeding_later_guesses",
    "source_fossil": "biriscv-branch-predictor",
    "source_evidence": "biriscv_npc.v; record tags speculation / hidden-state",
@@ -103,6 +120,57 @@
    "cheat_control": "an organism given the true delay per request must show zero spurious timeouts and zero stall; the ancestor's mean-only estimator with beta=2 must show spurious timeouts once the variance exceeds the mean: if the world cannot show that difference the pressure is absent",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: retransmission timeout estimation (the 4.2BSD form, before Jacobson 1988)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "bsd-tcp-4.3-reno-1990::P.a_sender_sharing_an_unknown_bottleneck_with_others_must_find_its_fair_rate_from_loss_alone_and_recover_from_a_single_loss_without_draining_the_pipe",
+   "source_fossil": "bsd-tcp-4.3-reno-1990",
+   "source_evidence": "tcp_input.c 790-900; tcp_timer.c 147-232; the record's lineage (Fall & Floyd 1996)",
+   "condition": "many organisms send through a bottleneck of unknown capacity; the only feedback is ACKs and their absence; a drained pipe costs a round trip of idle capacity; fairness and stability are scored",
+   "resource_or_constraint": "the bottleneck's capacity and queue; one RTT of feedback delay",
+   "failure_condition": "congestion collapse (goodput falls as load rises), or a single loss costing a timeout-length idle period",
+   "world_punishes": "sending the advertised window regardless of loss (4.2BSD); waiting for the timer after a loss (Tahoe without fast retransmit)",
+   "world_rewards": "multiplicative decrease on loss, additive increase between losses, retransmission on duplicate-ACK evidence with the window kept full",
+   "observable_consequence": "goodput and fairness index of N flows vs offered load, and time-to-recover after a single dropped segment, for the 1983, Tahoe and Reno rules on the same queue",
+   "vacuity_condition": "one flow with a known capacity",
+   "trivial_shortcuts": "explicit rate signalling from the bottleneck (which the world must withhold)",
+   "cheat_control": "an organism told the bottleneck rate must hold it with zero loss; the 1983 rule must collapse under N flows; Tahoe must show the timeout gap on a single loss that Reno closes: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: end-to-end congestion control (Jacobson 1988-1990)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "buddy-alloc-spaskalev::P.a_fixed_arena_must_serve_power_of_two_requests_with_bounded_time_per_operation_and_bounded_bookkeeping_while_keeping_large_blocks_available",
+   "source_fossil": "buddy-alloc-spaskalev",
+   "source_evidence": "buddy_tree_find_free; update_parent_chain; README's fragmentation claim",
+   "condition": "an organism allocates and frees blocks of varying sizes from a fixed arena; requests are rounded to powers of two; time per operation and metadata size are both scored; large requests must keep succeeding late in the trace",
+   "resource_or_constraint": "the arena; a few bits per block of metadata",
+   "failure_condition": "a large request fails while total free space would have sufficed (external fragmentation), or an operation costs more than O(log size)",
+   "world_punishes": "free lists that scatter small allocations across free subtrees; metadata that grows with the number of live blocks",
+   "world_rewards": "a summary per node and a descent that packs into busy subtrees",
+   "observable_consequence": "largest satisfiable request after a fixed alloc/free trace, and metadata bytes, vs a naive first-fit buddy (Knuth's) on the same trace",
+   "vacuity_condition": "all requests the same size",
+   "trivial_shortcuts": "an arena much larger than the live set",
+   "cheat_control": "an organism told the future trace can pack optimally (an upper bound); the naive buddy with the busier-child rule removed (go left always) must show more failures on an adversarial trace: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: memory allocation (Spaskalev 2021-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "c-cmaes-hansen::P.a_black_box_objective_that_is_ill_conditioned_rotated_and_noisy_in_ranking_must_be_minimised_from_ranks_alone_with_the_search_distribution_learning_the_problem_geometry_at_a_cost_bounded_by_the_evaluation_budget",
+   "source_fossil": "c-cmaes-hansen",
+   "source_evidence": "cmaes.c UpdateDistribution, Adapt_C2, TestForTermination; the diagonalCov and parameter-file switches",
+   "condition": "an organism sees only the ranking of lambda evaluated points per generation; the objective's Hessian is unknown, ill-conditioned and rotated; the budget is function evaluations; the score is evaluations to a target precision across a suite",
+   "resource_or_constraint": "lambda evaluations per generation; O(N^2) memory",
+   "failure_condition": "evaluations growing with the condition number (an isotropic search), or premature convergence from step-size collapse, or divergence",
+   "world_punishes": "fixed step sizes; diagonal-only covariance on rotated problems; success-rule step control on noisy rankings",
+   "world_rewards": "a covariance that whitens the selected steps; path-length step control; calibrated stopping",
+   "observable_consequence": "evaluations to target vs condition number on rotated ellipsoids, for the full update vs diagonal-only (the body's own diagonalCov switch) vs rank-one only (cmu = 0) vs no step-size adaptation (cs = 0)",
+   "vacuity_condition": "a separable, well-conditioned objective",
+   "trivial_shortcuts": "gradient access (which the world withholds)",
+   "cheat_control": "an organism given the Hessian must reach the target in evaluations independent of the condition number (the bound); the diagonal-only organism must show evaluations growing with the condition number on rotated ellipsoids and not on axis-aligned ones; cs = 0 must stall or diverge: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: derivative-free continuous optimisation (Hansen 1996-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1007,6 +1075,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "linpackd-netlib-1979::P.a_single_number_must_rank_machines_on_a_fixed_computation_while_the_machines_and_their_compilers_adapt_to_the_number",
+   "source_fossil": "linpackd-netlib-1979",
+   "source_evidence": "linpackd.f header notes (1992, 2003); the driver's residual and ops lines",
+   "condition": "a benchmark defines its score by a nominal operation count over measured time; the parties being scored control the kernels and the compiler; a wrong answer must not score",
+   "resource_or_constraint": "one fixed problem size and formula; a residual check",
+   "failure_condition": "the score rising without the useful work rising (elided loops, tuned kernels that change the algorithm), or a singular test matrix scoring",
+   "world_punishes": "timing code the compiler can prove dead; a generator with a short period",
+   "world_rewards": "a residual check normalised to machine epsilon; work the optimiser cannot remove",
+   "observable_consequence": "reported MFLOPS vs independently counted floating-point operations across compilers and optimisation levels, and the residn distribution over seeds",
+   "vacuity_condition": "a single fixed machine and compiler",
+   "trivial_shortcuts": "reporting the nominal count as the measured one (which is what the formula does: the pressure is that this is only honest while the work is really done)",
+   "cheat_control": "an organism with a compiler that elides dgesl must show MFLOPS above the hardware's peak (a detectable lie); the 1992-fixed generator must show zero singular matrices over many seeds where the old one showed some: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: machine performance measurement (Dongarra 1979-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "linux-tcp-congestion::P.shared_bottleneck_with_loss_as_the_only_signal",
    "source_fossil": "linux-tcp-congestion",
    "source_evidence": "record human_failure_condition; tcp_cubic.c 340-357",
@@ -1160,6 +1245,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "lru-cache-goldsborough::P.a_bounded_memory_must_answer_a_stream_of_key_lookups_with_a_hit_rate_close_to_the_offline_optimum_at_constant_cost_per_access",
+   "source_fossil": "lru-cache-goldsborough",
+   "source_evidence": "cache.hpp find; base-cache.hpp insert/_erase_lru",
+   "condition": "an organism holds C entries; keys arrive in a stream with temporal locality; a miss costs a fetch; per-access time must not grow with C or with the stream length",
+   "resource_or_constraint": "C slots; O(1) per access",
+   "failure_condition": "hit rate far below Belady's offline optimum on locality-bearing streams, or per-access cost growing with C",
+   "world_punishes": "FIFO and random eviction on reuse-heavy streams; LRU on scans larger than C",
+   "world_rewards": "recency ordering; scan resistance if the world includes scans",
+   "observable_consequence": "hit rate vs Belady's MIN on a Zipf stream, on a cyclic scan of length > C, and on their interleaving",
+   "vacuity_condition": "C at least the number of distinct keys",
+   "trivial_shortcuts": "a stream with no reuse (every policy scores zero)",
+   "cheat_control": "an organism given the future (Belady) bounds the score; random eviction bounds it below on the Zipf stream; on the scan stream LRU must equal random (its known failure) so a scan-resistant organism is distinguishable: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: bounded caching (Goldsborough 2016)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "md5-rfc1321::P.a_fixed_size_fingerprint_of_arbitrary_input_must_make_two_inputs_with_one_fingerprint_infeasible_to_construct_against_an_adversary_who_reads_the_design",
    "source_fossil": "md5-rfc1321",
    "source_evidence": "record disposition LOSER; RFC 1321 section 3",
@@ -1242,6 +1344,23 @@
    "cheat_control": "a run given the ordering/convergence boundary as an oracle must beat every fixed schedule; otherwise the world's reward does not depend on the schedule",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "minpack-netlib-1980::P.a_nonlinear_residual_must_be_minimised_from_a_poor_start_with_a_bounded_number_of_expensive_function_evaluations_and_no_line_search_oracle",
+   "source_fossil": "minpack-netlib-1980",
+   "source_evidence": "lmpar.f; lmder.f 330-440; hybrd.f 208-440; ex/ file01-23",
+   "condition": "an organism minimises ||F(x)|| (or solves F(x) = 0) where each F is expensive; the linear model is good only locally; the start may be far from the solution; the score is evaluations to a tolerance and robustness to bad starts",
+   "resource_or_constraint": "function evaluations; a fixed QR per Jacobian",
+   "failure_condition": "divergence from a poor start (pure Gauss-Newton), or evaluations wasted on a Jacobian that has not changed",
+   "world_punishes": "full steps regardless of model quality; re-evaluating the Jacobian every iteration",
+   "world_rewards": "a trust radius adapted by actual/predicted reduction; secant updates with a failure-triggered refresh",
+   "observable_consequence": "function evaluations and success rate over the More-Garbow-Hillstrom problem set (the ex/ drivers) for LM vs Gauss-Newton, and hybrid vs finite-difference Newton, from the standard and 10x starts",
+   "vacuity_condition": "a linear residual",
+   "trivial_shortcuts": "a start within the Newton basin",
+   "cheat_control": "an organism given the exact Hessian must reach the tolerance in the fewest iterations; Gauss-Newton without a region must diverge on some 10x starts; the hybrid with re-evaluation every step must use ~n times more evaluations at the same success: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: nonlinear least squares and equations (More, Garbow, Hillstrom 1980)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1534,6 +1653,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "spin-6.5.2-holzmann::P.a_reachability_or_cycle_question_over_an_exponential_interleaving_space_must_be_answered_within_fixed_memory_with_a_known_loss_of_completeness",
+   "source_fossil": "spin-6.5.2-holzmann",
+   "source_evidence": "pangen1.h new_state / bstore; pangen2.c proc_is_safe",
+   "condition": "an organism explores a product of asynchronous processes; the number of interleavings is exponential; memory is fixed; the score is errors found and (when none) the fraction of the space covered",
+   "resource_or_constraint": "the state store's memory; time",
+   "failure_condition": "a reachable error missed, or memory exhausted before the question is answered",
+   "world_punishes": "exploring every interleaving; storing every state fully",
+   "world_rewards": "independence-based pruning (POR), lossy stores with coverage estimates (bitstate), on-the-fly cycle detection",
+   "observable_consequence": "states stored and errors found vs memory budget on a family of models with a planted error at increasing depth; coverage estimate vs true coverage under bitstate",
+   "vacuity_condition": "a single sequential process",
+   "trivial_shortcuts": "a model small enough to store completely",
+   "cheat_control": "an organism given the interleaving-independence oracle (the POR classification) must find the planted error with the fewest states; the full-store organism must exhaust memory on the largest family member; a bitstate organism must report a coverage estimate that brackets the truth: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: protocol verification (SPIN, Holzmann 1989-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "spin-pathfinder-priority-inversion-1997::P.hard_deadline_with_shared_resource_across_priorities",
    "source_fossil": "spin-pathfinder-priority-inversion-1997",
    "source_evidence": "model comment lines 1-16 + record.human_failure_condition",
@@ -1786,6 +1922,23 @@
    "cheat_control": "a decoder handed the true input must show zero errors; the per-symbol (memoryless) baseline must show errors at any positive flip rate: the world must separate them or the redundancy pressure is absent",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: convolutional code decoding (Viterbi 1967)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "whitakers-words-ada::P.a_string_from_an_inflecting_language_must_be_mapped_to_lexicon_entries_plus_grammatical_features_when_most_splits_are_spurious_and_rare_phenomena_must_not_swamp_common_ones",
+   "source_fossil": "whitakers-words-ada",
+   "source_evidence": "Run_Inflections; Reduce_Stem_List; Pass; test/10_aeneid/expected.txt",
+   "condition": "an organism receives a word form; a lexicon of stems and a table of endings exist; the true analysis is one of many string-compatible splits; a small fraction of words need rewrites (syncope, enclitics, affixes)",
+   "resource_or_constraint": "lexicon lookups per word; a fixed table",
+   "failure_condition": "the true analysis missing from the output, or the output dominated by spurious splits",
+   "world_punishes": "accepting every split; running every repair on every word (spurious hits)",
+   "world_rewards": "agreement filtering with wildcards; ordered backoff",
+   "observable_consequence": "precision and recall of analyses against a hand-tagged corpus (the body ships expected outputs for the Aeneid: test/10_aeneid/expected.txt) with the repair ladder enabled, disabled and reordered",
+   "vacuity_condition": "an uninflected language",
+   "trivial_shortcuts": "a full-form lexicon",
+   "cheat_control": "an organism given the gold split must reach 100 percent; the ladder reordered (fixes first) must lower precision on the corpus; the ladder disabled must lower recall: the world must show the two failures in opposite directions",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: Latin morphological analysis (Whitaker 1993-2010)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

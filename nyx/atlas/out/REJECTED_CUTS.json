@@ -1,11 +1,11 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:05Z",
- "n": 203,
+ "built": "2026-09-17T22:26Z",
+ "n": 234,
  "by_reason": {
-  "OTHER": 69,
-  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 53,
-  "BELOW_MEANINGFUL_GRAIN": 9,
+  "OTHER": 86,
+  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 63,
+  "BELOW_MEANINGFUL_GRAIN": 13,
   "DUPLICATES_A_CONTROL": 2,
   "GENERIC_LANGUAGE_MECHANICS": 37,
   "EFFECT_FROM_ENVIRONMENT": 18,
@@ -55,6 +55,22 @@
    "fossil": "avida"
   },
   {
+   "candidate": "incremental and generational collection (dirty-page tracking in os_dep.c, GC_collect_a_little), the parallel marker (mark.c 807-1140: work stealing from a shared mark stack), finalisation (finalize.c), thread stop-the-world (pthread_stop_world.c, win32_threads.c), typed and gcj allocation, the malloc/realloc front ends, leak detection, dyn_load",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~40,000 lines); residue",
+   "note": "the parallel marker and the incremental dirty-bit scheme are each a mechanism family; a DEEP pass should take them separately",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bdwgc-8.2.6"
+  },
+  {
+   "candidate": "'garbage collector' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "marking, pointer identification, triggering and sweeping are four files with four separable policies",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bdwgc-8.2.6"
+  },
+  {
    "candidate": "the rest of the core (fetch, decode, issue, exec, LSU, caches, CSRs), the LFSR module body",
    "reason": "OTHER",
    "evidence": "NOT READ; residue",
@@ -77,6 +93,38 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "biriscv-branch-predictor"
+  },
+  {
+   "candidate": "the Reno TCP (slow start, congestion avoidance, fast retransmit, fast recovery) 'contained' in the tape",
+   "reason": "OTHER",
+   "evidence": "usr.tar.gz lists include/netinet headers and libdata/adb/tcp* debugger scripts only; no netinet/tcp_*.c; FORMAT names src.tar and srcsys.tar as tape files 5-6 and the vault holds files 1-4",
+   "note": "the record's lineage sentence is true of the TAPE and not of the BODY in the vault; the source is in bsd-tcp-4.3-reno-1990 (cut, DEEP); record defect for Techne: the vault body cannot carry the kernel it is described by",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-4.3-reno-distribution-tape-1990"
+  },
+  {
+   "candidate": "stand, miniroot, rootdump (filesystem images, 2.1-3.3 MB each uncompressed)",
+   "reason": "OTHER",
+   "evidence": "binary images; not readable as mechanism; runnable only under a VAX emulator (SIMH), which the base role lists as an M1/M2 docker world, not M3",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-4.3-reno-distribution-tape-1990"
+  },
+  {
+   "candidate": "usr.tar.gz contents (man pages 1,336 entries; share/doc 531; libdata; contrib/lib 410; games)",
+   "reason": "OTHER",
+   "evidence": "documentation and userland data; no mechanism-bearing source seen in the listing",
+   "note": "share/man/cat4/tcp.0 is the formatted manual page for the Reno TCP: a documentation fossil, not a body",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-4.3-reno-distribution-tape-1990"
+  },
+  {
+   "candidate": "'4.3BSD-Reno' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "a distribution is a container; its mechanisms live in the source bodies",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-4.3-reno-distribution-tape-1990"
   },
   {
    "candidate": "mbuf assembly, checksum, header template copy, option encoding (tcp_output.c 130-230)",
@@ -109,6 +157,78 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "bsd-tcp-4.2-1983"
+  },
+  {
+   "candidate": "RTT smoothing (tcp_xmit_timer), timer backoff with the srtt clobber at rxtshift > MAXRXTSHIFT/4 (tcp_timer.c 182-192), persist, keepalive, delayed ACK, the 500 ms tick",
+   "reason": "OTHER",
+   "evidence": "present here; cut as organs of bsd-tcp-4.2-1983 in this atlas (the RTT estimator now keeps a variance term, Jacobson 1988: NOT re-read)",
+   "note": "the variance-based RTO (srtt + 4 rttvar) is the one 1983-to-1990 change in the shared organs that this cut did not read; flagged for a DEEP pass",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-tcp-4.3-reno-1990"
+  },
+  {
+   "candidate": "tcp_reass, the state machine (SYN/FIN handling below 905), tcp_output.c's send decision, tcp_mss (path MTU / route metrics), tcp_subr, tcp_usrreq",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-tcp-4.3-reno-1990"
+  },
+  {
+   "candidate": "'TCP' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the 1983 cut's nine organs plus these three are separable and were added in two documented steps (Tahoe 1988, Reno 1990)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "bsd-tcp-4.3-reno-1990"
+  },
+  {
+   "candidate": "depth_for_size (1112-1128): ceiling power of two of the request and a trailing-zero count",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:buddy-alloc-spaskalev/upstream/tree/buddy_alloc.h:1112-1128",
+   "note": "the rounding is the buddy system's definition, not a mechanism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "buddy-alloc-spaskalev"
+  },
+  {
+   "candidate": "buddy_realloc / reallocarray, buddy_walk, reserve_range, resize/embed/grow/shrink, change tracking, the bitset helpers, tests.c and bench.c",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "buddy-alloc-spaskalev"
+  },
+  {
+   "candidate": "'buddy allocator' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the summary-tree encoding, the descent policy and the virtual-tail trick are separable (dlmalloc in this atlas holds a different allocator with none of them)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "buddy-alloc-spaskalev"
+  },
+  {
+   "candidate": "the eigen solver (Householder2 + QLalgo2, the tred2/tql2 lineage), Check_Eigen, the random generator, timings",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:1960-2400 (names)",
+   "note": "numerical substrate",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "c-cmaes-hansen"
+  },
+  {
+   "candidate": "parameter file reading and writing, signals file polling, resume from file, boundary_transformation.c, the examples, the plot scripts",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "c-cmaes-hansen"
+  },
+  {
+   "candidate": "'CMA-ES' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "sampling, the paths, the covariance update, the step-size rule and the stopping tests are separable and were published in three papers",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "c-cmaes-hansen"
   },
   {
    "candidate": "rulebld.c (compiling rules into the network), reteutil.c (beta memory structures, hashing), the alpha/pattern network, factmngr.c, deftemplates, the object system (COOL), the parser and I/O, the 340 other files",
@@ -863,6 +983,30 @@
    "fossil": "libfec-karn"
   },
   {
+   "candidate": "daxpy / ddot / dscal / idamax with their 'clean-up loop' unrolling by 4 and 5, epslon, dmxpy (a 16-way unrolled matrix-vector product)",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:linpackd-netlib-1979/upstream/linpackd.f:452-802",
+   "note": "the unrolling is the 1979 vector-machine idiom; a tuning, not a mechanism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "linpackd-netlib-1979"
+  },
+  {
+   "candidate": "dgesl (the triangular solves) past its head",
+   "reason": "OTHER",
+   "evidence": "NOT READ in full; the mirror of dgefa's structure",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "linpackd-netlib-1979"
+  },
+  {
+   "candidate": "'LINPACK' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the factorisation and the benchmark protocol are separable; the second is what survived (HPL)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "linpackd-netlib-1979"
+  },
+  {
    "candidate": "slow start / additive increase (tcp_slow_start, tcp_cong_avoid_ai)",
    "reason": "INHERITED_FROM_RUNTIME_OR_LIBRARY",
    "evidence": "tcp_cubic.c 325-338 calls tcp_slow_start and tcp_cong_avoid_ai; neither is in the body (kernel net/ipv4/tcp_cong.c); the fossil only chooses ca->cnt",
@@ -983,6 +1127,22 @@
    "fossil": "lmdb-0.9.31"
   },
   {
+   "candidate": "the ordered/unordered iterator classes, statistics.hpp (hit/miss counters), the callback manager, the Doxygen tree",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "lru-cache-goldsborough"
+  },
+  {
+   "candidate": "'LRU cache' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the recency structure, the last-accessed shortcut and the timed expiry are separable; the first is the textbook, the second is the author's",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "lru-cache-goldsborough"
+  },
+  {
    "candidate": "the reference C implementation in the appendix (MD5Init/Update/Final, byte-order handling), the test suite (mddriver), the executive summary and terminology sections",
    "reason": "OTHER",
    "evidence": "skimmed only; the appendix code implements the five steps above and is the natural Stage C body (it compiles anywhere with a C compiler -- not on M3)",
@@ -1069,6 +1229,30 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "minisom"
+  },
+  {
+   "candidate": "qrfac (Householder QR with column pivoting), qrsolv, r1updt, r1mpyq, qform, enorm (the overflow-safe norm), dpmpar (machine constants)",
+   "reason": "OTHER",
+   "evidence": "NOT READ; the linear-algebra substrate; enorm's three-accumulator scaling is a small mechanism of its own, unread",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minpack-netlib-1980"
+  },
+  {
+   "candidate": "lmdif (finite-difference LM), lmstr (row-wise storage), the *1 driver wrappers, chkder (Jacobian check), fdjac1/fdjac2, the ex/ drivers and file01-23 outputs",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "ex/ holds the test problems and reference outputs: an oracle for a Stage C run",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minpack-netlib-1980"
+  },
+  {
+   "candidate": "'Levenberg-Marquardt' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the damping search (lmpar) and the acceptance/radius logic (lmder) are separable; the latter is shared with the hybrid method",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "minpack-netlib-1980"
   },
   {
    "candidate": "LINPACK DGEFA/DGESL/DGBFA/DGBSL (LU factor and solve) and DUMACH (unit roundoff), opkda2.f",
@@ -1327,6 +1511,38 @@
    "fossil": "simple-kalman-denyssene"
   },
   {
+   "candidate": "the Promela front end (spin.y, spinlex.c, sym.c, structs.c, vars.c), the simulator (run.c, sched.c, dstep.c), guided/replay, the MSC/Tcl GUI",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spin-6.5.2-holzmann"
+  },
+  {
+   "candidate": "the LTL-to-Buchi translator (tl_*.c, ~5,000 lines)",
+   "reason": "OTHER",
+   "evidence": "NOT READ",
+   "note": "a distinct mechanism family (Gerth-Peled-Vardi-Wolper 1995 on-the-fly tableau); should be its own specimen or a DEEP pass",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spin-6.5.2-holzmann"
+  },
+  {
+   "candidate": "the minimised-automaton store (MA), multi-core (NCORE > 1, pangen6/7), the BFS and swarm variants, hash-compact",
+   "reason": "OTHER",
+   "evidence": "guards seen in pangen1.h; bodies NOT READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spin-6.5.2-holzmann"
+  },
+  {
+   "candidate": "'model checker' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "generation, search, store and reduction are separable and separately flagged in the generated text",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spin-6.5.2-holzmann"
+  },
+  {
    "candidate": "priority-inheritance option (the model's own switch)",
    "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
    "evidence": "record.behavioral_entry_point says 'toggle the priority-inheritance option in pathfinder.pml'; the file contains no such option, no #ifdef, no second mode; Techne's own recipe toggles nothing and verifies the model as-is",
@@ -1573,6 +1789,38 @@
    "note": "recurrence candidate: umdhmm-kanungo-1.02 (NOT_CUT) will hold the HMM form",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "viterbi-hmm-xukmin"
+  },
+  {
+   "candidate": "Order_Stems (610-687): a bubble sort of 1-5 records by MNPC, ending size, quality, dictionary kind",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:whitakers-words-ada/upstream/tree/src/words_engine/words_engine-word_package.adb:610-687",
+   "note": "a preference order, not a mechanism; the author calls it 'very sloppy'",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "whitakers-words-ada"
+  },
+  {
+   "candidate": "Dictionary_Search / Load_Pdl (320-505): the first-two-letters index into DICTLINE",
+   "reason": "OTHER",
+   "evidence": "NOT READ in full; residue",
+   "note": "the index is the run-time cost centre",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "whitakers-words-ada"
+  },
+  {
+   "candidate": "Apply_Prefix / Apply_Suffix bodies, Try_Tackons, Process_Packons, Process_Qu_Pronouns, the enclitic tables, the English-to-Latin side, list_package (output), the data files",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "whitakers-words-ada"
+  },
+  {
+   "candidate": "'Latin parser' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "enumeration, agreement and the repair ladder are three separable steps; the data files are a fourth thing",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "whitakers-words-ada"
   },
   {
    "candidate": "the callback vector raft_cbs_t (send, persist, log offer/pop, applylog) and the heap-function hooks",
