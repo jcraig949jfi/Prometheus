@@ -11,9 +11,9 @@ REM code : a DETACHED worktree at a recorded SHA (WORKING_CONTRACT s6);
 REM        nobody edits there; advanced only by an explicit, logged command
 REM state: D:\Prometheus-data\vivarium\var (flags, park records, the log)
 REM store: the CANONICAL PostgreSQL on M1 (viv/db.py proves the identity)
-REM engine: the production LEDGER eng_8a37a5d3, wherever it runs (Daedalus
-REM        ruling, comms #270); today expected at https://192.168.1.191:8811
-REM        after the move. The consumer's conformance gate halts on any other.
+REM engine: the production descriptor's ledger (deploy/PRODUCTION.draft.json:
+REM        eng_906356f7 at https://192.168.1.191:8811, Daedalus #329 / operator
+REM        Stage 3 s9). The consumer's production gate refuses any other.
 REM PEW  : M2, http://192.168.1.191:8377/api/v1 (Mnemosyne, since 2026-09-04)
 REM secrets: VIV_SFE_TOKEN / VIV_PEW_TOKEN come from the pinned worktree's
 REM        gitignored vivarium/config.local.json; NOTHING here.

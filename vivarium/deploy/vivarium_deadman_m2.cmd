@@ -20,6 +20,5 @@ cd /d "%VIV_WORKTREE%\vivarium"
 "D:\Prometheus\.venv-m2\Scripts\python.exe" -m viv.deadman ^
     --worker-id vivarium@m2 --task-name VivariumDeadmanM2 ^
     --launcher "D:\Prometheus-data\vivarium\vivarium_consumer_m2.cmd" ^
-    --expected-engine eng_8a37a5d305969034d488c43e ^
     --sfe-cacert "%VIV_WORKTREE%\SerendipityFoundry\SerendipityFoundryClient\config\m2.crt" ^
     --var-dir "%VIV_VAR_DIR%"

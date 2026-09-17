@@ -1,0 +1,112 @@
+{
+ "acceptance": {
+  "different profiles cannot alias": "yes: runtime/affordance/regime/grammar version/hash/any weight/qualification each change the id; catalog ids distinct",
+  "grammar mass profiles separately versioned from v0.4": "structurally yes: profile id carries grammar_version + grammar_hash + weight vector (test_different_grammar_weights_cannot_alias); NO G-/G+ minted -- frozen v0.4 is the only grammar in the catalog",
+  "hashes reproduce": "yes: 3/3 Archaeon regime strings byte-exact incl. one read from archaeon/campaign2/C2-SFE-02/PREREG.json",
+  "identities deterministic": "yes: recompute tests on both catalog and manifest",
+  "manifests reconstruct": "yes: registry (64) regenerates from recipe; manifest_hash == recipe_population_hash",
+  "no new ISA primitive": "yes: audit_identity FRESH tree 3ae4ee8b773e0fcf; runtime/grammar/affordances byte-identical",
+  "same profile + seed yields the same declared population": "yes: test_same_profile_and_seed_yield_the_same_declared_population"
+ },
+ "artifact_sha256_lf": {
+  "proteus/eval/FOUNDRY_PROFILE_CATALOG.json": "4f35e4b0522d090ba4436ed6dd5b858a13b200672eb8a30eb2f9dc5d6a2c6c1b",
+  "proteus/eval/REGISTRY_POPULATION_MANIFEST.json": "ec4504d90e05c2d355d3653290501230a43008cad7d80d371868062e8e4448b4",
+  "proteus/eval/foundry_profile.py": "baa05d2537be14f7ba218389986db8fc17edcd012b76cfe09c75a3879a6beac7",
+  "proteus/eval/population_manifest.py": "a516ebe4e3ad99bf77ed98aeb2c2e50f32221473fa42c2b79eadce7aab10f26d",
+  "proteus/integration/RESULT_MINT_ROUNDTRIP_TEST.json": "f69e46579265eed95006a6173f35f46b90d1de12c87b9f1167c1b6fbbd633de1",
+  "proteus/integration/run_mint_roundtrip_test.py": "e41ca711e2c36d36f32e16b719b02c8d62f6e7fb7b749a5c8cce858c1030763e",
+  "proteus/tests/test_foundry_profile.py": "b59cf6ab3689011ca5b1bb9ac9cb6a956e0ec2937401656ea9fd6e03957f51c8",
+  "proteus/tests/test_population_manifest.py": "515b40f1d38ff7df6e379fea4cbb649a902986ee9a413e0ecab1eeea63c25dd6"
+ },
+ "built_from": {
+  "base_sha": "4a6457fbb",
+  "branch": "proteus/boot-2026-09-17",
+  "dirty_tracked_before_commit": false,
+  "merged": "3f2920d6a",
+  "worktree": "Prometheus-worktrees/proteus-boot-2026-09-17"
+ },
+ "frozen_for_campaign_4": {
+  "affordance_hash": "f1607ee8be680acc33288a95c1a25c09ad4c799a47b0975381be8ca02d7638ce",
+  "campaign_regime_profile": "pfp1:625bc70456ebfa20",
+  "catalog_id": "42e4db36db259a16f82498e5de3df315683d7dc662e4a861c16ff5d4040eabe4",
+  "foundry_profile_schema": "proteus.foundry_profile.v1",
+  "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+  "grammar_version": "proteus.grammar.v0.4",
+  "population_manifest_schema": "proteus.population_manifest.v1",
+  "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0"
+ },
+ "gates": {
+  "audit_identity": "FRESH 3ae4ee8b773e0fcf",
+  "determinism_check": "matches committed registry: True",
+  "pytest proteus/tests": "354 passed, 2 skipped",
+  "quarantine": "STRING LAYER PASS"
+ },
+ "items": {
+  "PROTEUS-29 foundry_profile.v1": {
+   "catalog_id": "42e4db36db259a16f82498e5de3df315683d7dc662e4a861c16ff5d4040eabe4",
+   "profiles": {
+    "c1_c2_c3_instr1_16": {
+     "archaeon_regime_id": "instr1-16:6528b9dc",
+     "match": true,
+     "profile_id": "pfp1:625bc70456ebfa20",
+     "recorded_archaeon_id": "instr1-16:6528b9dc"
+    },
+    "c2_default_instr1_32": {
+     "archaeon_regime_id": "instr1-32:199105b4",
+     "match": true,
+     "profile_id": "pfp1:ecd4c13a4b7adf28",
+     "recorded_archaeon_id": "instr1-32:199105b4"
+    },
+    "registry_instr1_64": {
+     "archaeon_regime_id": "instr1-64:97ce0af8",
+     "match": true,
+     "profile_id": "pfp1:cff673bf3889d638",
+     "recorded_archaeon_id": "instr1-64:97ce0af8"
+    }
+   },
+   "status": "LANDED",
+   "tests": "proteus/tests/test_foundry_profile.py 10 passed (recompute, receipt join, seed/n invariance, no-alias incl. grammar weights, cheats)"
+  },
+  "PROTEUS-30 population_manifest.v1": {
+   "count": 64,
+   "foundry_profile": "pfp1:cff673bf3889d638",
+   "recipe_regenerates_base": true,
+   "registry_manifest_hash": "6acf3d993a3b55d6c21f0700303649b110019bc0855ffa650610fe8102e9c49b",
+   "registry_population_manifest_id": "03a3af5d1dad771c31c5ca410a9ddded2993c9cbf66019cd76767c246db3e107",
+   "status": "LANDED",
+   "tests": "proteus/tests/test_population_manifest.py 12 passed (same profile+seed => same population; L-008 defect refused; cheats)"
+  },
+  "PROTEUS-36 test-namespace mint rehearsal": {
+   "mint_id": "sha256:3888f447ad0bd45febc5d32c0d1a775259c3d10f5dc95acf942653e957fafe63",
+   "namespace": "test",
+   "player_id": "evca:r3:004f005f005f005f005fff5f005fff5f",
+   "prod_mint": "HELD until a real derivation request (PROTEUS-27)",
+   "service": "http://127.0.0.1:8377",
+   "status": "EXERCISED_AGAINST_LIVE_SERVICE",
+   "steps": [
+    "register",
+    "read_back",
+    "register_identical_again",
+    "register_differing"
+   ],
+   "verdict": "ROUNDTRIP_OK"
+  },
+  "anatomy handoff support": {
+   "blocker": "Archaeon has not yet published the reader / W0 / shelf manifests (comms 340)",
+   "ready": "proteus.eval.population_manifest.structural_descriptor (pure function of a manifest)",
+   "status": "BLOCKED_ON_INPUT"
+  }
+ },
+ "machine": "M2/SPECTREX5",
+ "not_done": [
+  "no prod mint",
+  "no grammar profile minted (Harmonia instrument question 341 open)",
+  "no anatomy (inputs absent)",
+  "no runtime/grammar/affordance change"
+ ],
+ "order": "PRE-CAMPAIGN-4 REPAIR ORDER s3 (roles/Proteus/prompts/2026-09-17_repair_order/00_OPERATOR_REPAIR_ORDER.md)",
+ "recorded_at": "2026-09-17T13:49:28Z",
+ "schema_version": "proteus.repair_receipt.v1",
+ "seat": "Proteus[m2-7d051790]",
+ "slip_recorded": "commit 6c531d4a5 was pushed while proteus/tests/test_workspace.py failed on the merged tree (the push chain read tail's exit code, not pytest's); the failing item was this seat's own writing entry point lacking the D-23 guard; fixed in the next commit; both SHAs kept"
+}

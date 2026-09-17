@@ -39,9 +39,14 @@ sys.path.insert(0, str(HERE))
 from ew import db as ewdb                              # noqa: E402
 from ew import workspace                               # noqa: E402
 
-READER_VERSION = "ew.campaign_ingest/1.1"   # 1.1: producer design factors in run strata; envelope refresh
+READER_VERSION = "ew.campaign_ingest/1.3"   # 1.1: design factors in run strata; 1.2: foundry_profile_scheme (Proteus #339); 1.3: campaign 4 directory, seed UNKNOWN until Archaeon names it
 CONTRACT_VERSION = "PEW_CAMPAIGN_INGESTION_CONTRACT v0.1 (2026-09-17)"
 UNKNOWN = "UNKNOWN"
+# Proteus #339: "instr1-16:6528b9dc" is ARCHAEON's rendering of a Proteus
+# foundry_manifest.v0 regime (minus seed/n) hashed by
+# archaeon.wse.reachability.foundry_id; kept VERBATIM as the identity, tagged
+# with the scheme so the P1 catalog can join it to the full profile.
+FOUNDRY_SCHEME = "archaeon.wse.reachability.foundry_id.v1"
 
 # T1: campaign identity comes from the committed PATH, cross-checked against
 # the campaign seed the producer stamped; RECEIPT.campaign is NOT trusted
@@ -55,8 +60,13 @@ CAMPAIGNS = {
     1: {"campaign_id": "cmp1", "seed": 20260917, "dir": "archaeon/campaign1"},
     2: {"campaign_id": "cmp2", "seed": 20260918, "dir": "archaeon/campaign2"},
     3: {"campaign_id": "cmp3", "seed": 20260920, "dir": "archaeon/campaign3"},
+    # Campaign 4: the directory is known, the seed is not yet (MNE-53). T1 then
+    # identifies a row by the producer's stamp, else the path; when Archaeon
+    # names the seed it is added here as reader 1.4 by explicit version
+    # transition (the frozen surface pins this map).
+    4: {"campaign_id": "cmp4", "seed": None, "dir": "archaeon/campaign4"},
 }
-SEED_TO_CAMPAIGN = {v["seed"]: v["campaign_id"] for v in CAMPAIGNS.values()}
+SEED_TO_CAMPAIGN = {v["seed"]: v["campaign_id"] for v in CAMPAIGNS.values() if v["seed"] is not None}
 DEFINITION_FILES = {
     "reachability": "archaeon/wse/reachability.py",
     "corridor": "archaeon/wse/corridor.py",
@@ -253,6 +263,7 @@ class Ingest:
                     censored=bool(row.get("summit_censored")) if row.get("summit_censored") is not None else None,
                     censoring_reason=("horizon G reached before summit" if row.get("summit_censored") else None),
                     strata={"cell": row.get("cell"), "value_bits": row.get("value_bits"), "foundry_profile": row.get("foundry"),
+                            "foundry_profile_scheme": FOUNDRY_SCHEME if row.get("foundry") else None,
                             "regime": row.get("regime"), "row_kind": row.get("kind"), "arm": src.get("arm"),
                             "budget_class": f"N{row.get('N')}G{row.get('G')}E{row.get('E')}",
                             "rng_label": row.get("rng_label"), "solve_threshold": row.get("solve_threshold"),
@@ -271,6 +282,7 @@ class Ingest:
                     first_summit_gen=init.get("first_summit_gen"), summit_candidate_gen=init.get("summit_candidate_gen"),
                     strata={"source_cell": row.get("source_cell"), "target_cell": row.get("target_cell"),
                             "edge_kind": row.get("kind"), "source_foundry": row.get("source_foundry"),
+                            "foundry_profile_scheme": FOUNDRY_SCHEME if row.get("source_foundry") else None,
                             "target_foundry": row.get("target_foundry"), "regime": row.get("regime"),
                             "source_budget": row.get("source_budget"), "target_budget": row.get("target_budget"),
                             "source_maturity": row.get("source_maturity")},

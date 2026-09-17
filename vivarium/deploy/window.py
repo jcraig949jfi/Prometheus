@@ -41,6 +41,7 @@ import datetime
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -80,6 +81,18 @@ def step_backup(data_dir: Path, out: dict) -> bool:
     ok = r.returncode == 0 and target.exists() and target.stat().st_size > 0
     out["backup"] = {"ok": ok, "path": str(target), "bytes": target.stat().st_size if target.exists() else 0,
                      "sha256": _sha(target) if ok else None, "stderr": (r.stderr or "")[-300:]}
+    if ok:
+        # VERIFY the backup: the archive lists, and it lists every viv table the
+        # migration touches (a dump that exists is not a dump that restores)
+        lst = subprocess.run([PG_DUMP.replace("pg_dump.exe", "pg_restore.exe"), "--list", str(target)],
+                             capture_output=True, text=True, env=env, timeout=600)
+        tables = sorted({ln.split(" TABLE ")[1].split()[1] for ln in lst.stdout.splitlines()
+                         if " TABLE " in ln and " TABLE DATA " not in ln})
+        need = {"research_experiment_queue", "research_experiment_events", "worker_heartbeat"}
+        out["backup"]["verify"] = {"ok": lst.returncode == 0 and need <= set(tables), "tables": tables,
+                                   "data_entries": sum(1 for ln in lst.stdout.splitlines() if " TABLE DATA " in ln)}
+        ok = out["backup"]["verify"]["ok"]
+        out["backup"]["ok"] = ok
     return ok
 
 
@@ -87,8 +100,9 @@ def step_drafts(out: dict) -> bool:
     r = subprocess.run([sys.executable, str(DRAFTS / "check_drafts.py")], capture_output=True, text=True,
                        cwd=str(VIVARIUM), timeout=600)
     text = (r.stdout or "") + (r.stderr or "")
-    ok = r.returncode == 0 and "BAD" not in text and "FAIL" not in text and text.count("  ok ") >= 15
-    out["drafts"] = {"ok": ok, "ok_lines": text.count("  ok "), "tail": text[-600:]}
+    bad = [ln for ln in text.splitlines() if ln.startswith("  BAD") or ln.startswith("  FAIL")]
+    ok = r.returncode == 0 and not bad and text.count("  ok ") >= 15
+    out["drafts"] = {"ok": ok, "ok_lines": text.count("  ok "), "bad_lines": bad, "tail": text[-600:]}
     return ok
 
 
@@ -225,7 +239,7 @@ def main(argv=None) -> int:
             ok = step_verify_old_rows(out, [s for s in a.sample.split(",") if s])
         elif step == "advance":
             prep = data_dir / ("prepare_m2-window-%s.json" % a.confirm)
-            r = subprocess.run([sys.executable, str(HERE / "prepare_m2.py"), "--sha", a.sha, "--advance", "--register",
+            r = subprocess.run([sys.executable, str(HERE / "prepare_m2.py"), "--sha", a.sha, "--advance",
                                 "--receipt", str(prep)],
                                capture_output=True, text=True, cwd=str(VIVARIUM), timeout=1800)
             try:
@@ -238,11 +252,21 @@ def main(argv=None) -> int:
         elif step == "tasks":
             cmd = data_dir / "vivarium_deliverer_m2.cmd"
             wt = (out.get("advance") or {}).get("worktree", {}).get("path") or r"D:\Prometheus-worktrees\vivarium-consumer"
-            cmd.write_text("@echo off\r\nset \"PATH=C:\\Program Files\\Git\\cmd;%PATH%\"\r\nset \"EW_DB_HOST=192.168.1.202\"\r\n"
-                           "set \"VIV_DB_HOST=192.168.1.202\"\r\nset \"VIV_VAR_DIR=%s\\var\"\r\ncd /d \"%s\\vivarium\"\r\n"
-                           "\"D:\\Prometheus\\.venv-m2\\Scripts\\python.exe\" -m viv.deliver --producer vivarium@m2 "
-                           "--task-name VivariumOutboxDelivererM2 --var-dir \"%s\\var\"\r\n" % (data_dir, wt, data_dir),
-                           encoding="utf-8")
+            var_dir = str(data_dir / "var")
+            launcher = "\r\n".join([
+                "@echo off",
+                "REM Vivarium outbox deliverer -- M2 one-shot fired by VivariumOutboxDelivererM2 every 5 min",
+                "REM (viv/deliver.py; PEW_OUTBOX_DESIGN.md). Written by deploy/window.py in window " + a.confirm + ".",
+                'set "PATH=C:\\Program Files\\Git\\cmd;%PATH%"',
+                'set "EW_DB_HOST=192.168.1.202"',
+                'set "VIV_DB_HOST=192.168.1.202"',
+                'set "VIV_VAR_DIR=' + var_dir + '"',
+                'set "VIV_PEW_BASE_URL=http://192.168.1.191:8377/api/v1"',
+                'cd /d "' + str(Path(wt) / "vivarium") + '"',
+                '"D:\\Prometheus\\.venv-m2\\Scripts\\python.exe" -m viv.deliver --producer vivarium@m2 '
+                '--task-name VivariumOutboxDelivererM2 --var-dir "' + var_dir + '"',
+                ""])
+            cmd.write_text(launcher, encoding="utf-8")
             r1 = subprocess.run(["schtasks", "/Create", "/F", "/TN", "VivariumOutboxDelivererM2", "/SC", "MINUTE", "/MO", "5",
                                  "/TR", 'cmd.exe /c "%s"' % cmd], capture_output=True, text=True, timeout=60)
             r2 = subprocess.run(["schtasks", "/Change", "/TN", "VivariumOutboxDelivererM2", "/DISABLE"],
@@ -256,7 +280,8 @@ def main(argv=None) -> int:
                                capture_output=True, text=True, cwd=str(wt / "vivarium"), timeout=120,
                                env=dict(os.environ, VIV_SFE_BASE_URL="https://192.168.1.191:8811",
                                         VIV_SFE_CACERT="SerendipityFoundry/SerendipityFoundryClient/config/m2.crt"))
-            text = (r.stdout or "") + (r.stderr or "")        # the CLI prints names/ids, never a token
+            text = (r.stdout or "") + (r.stderr or "")        # the CLI prints names/ids and a 10-char prefix
+            text = re.sub(r'"token_prefix": "[^"]*"', '"token_prefix": "<redacted>"', text)
             out["bootstrap"] = {"sfe": {"rc": r.returncode, "tail": text[-400:]},
                                 "pew": "PENDING -- writer registration is Mnemosyne's route; recorded, not attempted"}
             ok = r.returncode == 0

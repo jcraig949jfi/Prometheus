@@ -14,6 +14,7 @@ Gates (each named for the order's list):
     E5  late seq (2 after 3)                              -> accepted, late true, checkpoint stays 3
     E6  malformed (extra field)                           -> 422, nothing stored
     E7  unregistered identity cannot post events          -> 401, nothing stored
+    E8  replayed fact (same content id) under a NEW seq    -> duplicate, seq recorded, contiguous advances
     Q1  observations need a selector (400); bad stratum 422
     Q2  query by campaign / harness / attempt returns C3 rows
     Q3  query by stratum (jsonb containment) returns only that stratum
@@ -94,6 +95,18 @@ def main():
     evs2 = get("events", producer="release-check", stream=stream).json()
     gate("E7_unregistered_identity_cannot_post", r7.status_code == 401 and evs2["n"] == 3,
          f"{r7.status_code} stored={evs2['n']} (read-only scope refusal is tests/test_agent_identity.py cheat control)")
+
+    # E8 (Vivarium #335): a replayed step re-enqueues the SAME fact (same
+    # content-derived event_id) under a NEW sequence -> duplicate:true, one
+    # row, the new sequence recorded as delivered, no phantom gap.
+    r8 = post("events", ev(4, 3, eid=f"{stream}-3")).json()["results"]     # seq 4, payload of seq 3, id of seq 3
+    cps = {c["stream"]: c for c in get("ingestion/checkpoints", producer="release-check").json()["checkpoints"]}
+    evs3 = get("events", producer="release-check", stream=stream).json()
+    gate("E8_replayed_fact_new_seq_is_duplicate_and_seq_recorded",
+         r8["status"] == "duplicate" and r8.get("duplicate") is True and r8.get("seq_recorded") is True
+         and cps[stream]["last_seq"] == 4 and 4 in (cps[stream].get("duplicate_seqs") or []) and evs3["n"] == 3
+         and r8.get("contiguous_seq") == 4,
+         json.dumps(r8) + f" dup_seqs={cps[stream].get('duplicate_seqs')} rows={evs3['n']}")
 
     q0 = get("campaign/observations")
     q0b = get("campaign/observations", stratum="{not json")

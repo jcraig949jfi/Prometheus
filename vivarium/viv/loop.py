@@ -299,7 +299,9 @@ class Vivarium:
                 insecure=str(self.cfg.get("sfe_insecure", "")).strip().lower()
                          in ("1", "true", "yes", "on"),
                 worker_id=self.worker_id, log=self.log,
-                lease_s=float(self.cfg.get("sfe_lease_s", 120.0)))
+                lease_s=float(self.cfg.get("sfe_lease_s", 120.0)),
+                # session affinity keys, host-local, outside the repo (s14 canary)
+                session_store=os.path.join(self.var_dir, "sessions"))
         return self._runner
 
     def pew(self):
@@ -391,6 +393,14 @@ class Vivarium:
                 return fn()
             return self.attempts.step(conn, ctx, kind, fn, parts=list(parts),
                                       replayable=replayable, verify=verify)
+
+        def prior(kind, parts=()):
+            """A prior attempt's result for this key, or None (a READ; the
+            runner uses it to adopt the session a prior world lives in)."""
+            if ctx is None or not ctx.enabled:
+                return None
+            return self.attempts.prior_result(ctx, kind, list(parts))
+        record.prior = prior
         return record
 
     def _evaluate_gates(self, conn, row, phase: str) -> Optional[dict]:
