@@ -468,3 +468,21 @@ file_candidate / segment contract (1789479761855-0).
   git HEAD, refuses a second freeze; verify rc 1 on any edit (incl. deleting one recorded duplicate). 23 tests; planted
   raw-bytes pin caught. Suite rc 0: 1021 passed, 9 skipped. Self-disclosed: a mutation-check heredoc lost its backslashes
   and aborted before editing -- its "23 passed" was an unmutated run, redone with chr(92) (1 failed as intended).
+
+### R8 SCIENCE (G relaunched m1-d1dd222e, 17:07; clock r8 NNW 22:15:03)
+
+- ITEM 1 ROUTE B (3f0164e35): `primordial/metric/route_b.py` -> `primordial/ledger/qd/r8_route_b.json`. SURVIVAL_IMPOSSIBLE
+  for w1/w10/w7/w34 train128: ci_lo <= min_x f(x) (b four_policy; max(b,gate) gate_in). Active: w1 65.23 <= 170.47,
+  w10 13.75 <= 34.28, w7 184.62 <= 1482.5, w34 180.63 <= 336.52; four_policy margins 23.05/8.55/4.57/92.70. Cross-checked by
+  the production verdict code at every breakpoint; planted control (w13 learner withheld) stays UNRESOLVED. Route A: nothing
+  to run. Residue: reachable {HELD, CULLED} under gate_in|HOLD -- only the learner separates them.
+- ITEM 3 FREEZE (6806c6907): `primordial/ledger/qd/world_set_r8.json` body f630f9b3...3767, verify rc 0; L1 37 / L2 56 / L3 75 /
+  B 64 kept, 52 duplicates recorded. Capacity = G's preregistered draw count (25a6f84e2, 09:26).
+- ITEM 4 (a574e2728): L worlds have no gen_seed -> screen was not executable. `screen_r8.py` keys L entry i as 8000000+i,
+  resolved via the manifest in the G process (world_id + mech_hash refusal); cell = r16_cells.cell_job unchanged.
+  Predicate G-R8-SCREEN 1789593329740-0. Worker G pid 34152. 8 bootstrap jobs queued 17:16 (keys 8000008/11/36/30);
+  broker k*=2 held by C and D, G waiter rank 0.
+- 19:20 WORLD 1 W293076ad1f07d50f (L1 PARAM_PERTURB) complete: train8 HELD (floor 173 abstain, gate 205.98, ci [155.62,
+  163.30]); train128 HELD (ci [188.0, 196.99], learner 173.0 == abstain; four_policy would be SURVIVED, gate column holds
+  it). 20,251 CPU-s; G sustained 2.748 CPU-s/wall-s. Resize: 28,761 CPU-s left -> 1 world (world 2 REWIRE). Worlds 3-4
+  queue entries XDEL'd pre-delivery (audit R8_G_QUEUE_RESIZE_2026-09-16.json); 230 WHY_NOT_RUN filed.
