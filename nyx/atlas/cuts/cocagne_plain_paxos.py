@@ -63,6 +63,7 @@ c.pressure("progress_under_asynchrony_must_come_from_a_timing_layer_that_can_be_
     cost_class="CPU-scale", source_evidence="functional.py HeartbeatNode docstring and poll_liveness", purpose="PURPOSE: leader-based progress for Paxos (heartbeats)")
 
 c.ancestry("algorithm_from", "Lamport 1998 (The Part-Time Parliament) / 2001 (Paxos Made Simple); the heartbeat layer is the author's", note="from the docstrings; the record's lineage not re-read")
-c.residue("PARTIALLY_EXPLAINED", ["durable.py and external.py not read; practical.py read by structure only", "nothing ran; pure Python -> M3-native world candidate (ASK 1 to Techne in #358); the tests are the oracle", "the paxos-vs-raft recurrence (willemt-raft cut 09-17) is a reading-level claim"],
+c.residue("PARTIALLY_EXPLAINED", ["durable.py and external.py not read; practical.py read by structure only", "nothing ran; pure Python -> M3-native world candidate (ASK 1 to Techne in #358); the tests are the oracle",
+                                   "ANNOTATION 2026-09-17 ~22:00Z (SCOUT, NON-ADJUDICATIVE; the line above is kept): the body is PYTHON 2 ONLY. Under CPython 3.11 Acceptor.recv_prepare, Proposer.recv_promise and Learner.recv_accepted each raise TypeError on the first message because they compare a ProposalID with None ('>' unsupported); the tests use itertools.izip/assertEquals. It is NOT an M3-native world candidate as it stands; running it needs Python 2 or a SOURCE-level shim (a derived body). Reported to Techne with the record defect", "the paxos-vs-raft recurrence (willemt-raft cut 09-17) is a reading-level claim"],
           note="the three essential classes are accounted for line by line")
 c.save(state="COARSE")

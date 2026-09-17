@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T15:48Z",
- "n": 335,
+ "built": "2026-09-17T22:05Z",
+ "n": 371,
  "organs": [
   {
    "organ_id": "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
@@ -1251,6 +1251,633 @@
    }
   },
   {
+   "organ_id": "biriscv-branch-predictor::branch_target_buffer_fully_associative_on_the_fetch_pc_with_call_ret_jmp_type_bits_and_random_replacement",
+   "fossil_ancestry": "biriscv-branch-predictor",
+   "human_name": "btb_pc_q / btb_target_q / btb_is_*_q; the two lookup loops; btb_hit_r / btb_miss_r; u_lru (biriscv_npc_lfsr)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "32 entries each holding a branch PC, its last target and three type bits; the lookup compares every entry against the fetch PC (and, for a 64-bit fetch, against PC | 4 for the upper slot); on a resolved branch a hit updates the target (if taken) and type bits in place, a miss allocates an entry chosen by an LFSR (pseudo-random replacement, not LRU despite the instance name)",
+   "input": "pc_f_i (fetch), branch_request_i with source/target/type (resolve)",
+   "output": "btb_valid, target, type bits, upper-slot flag",
+   "state": "32 x (32+32+3) bits",
+   "update": "per resolved branch",
+   "assumptions": [
+    "a branch's target is usually the same next time (true for direct branches, false for indirect ones)",
+    "32 entries cover the hot loops"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+    "biriscv-branch-predictor::return_address_stack_with_a_speculative_pointer_beside_the_architectural_one",
+    "biriscv-branch-predictor::two_bit_saturating_counters_indexed_by_pc_or_by_gshare_xor_of_pc_and_global_history"
+   ],
+   "fitness_value_in_ancestor": "the target is known at fetch, one cycle before decode; without it a taken branch costs the pipeline depth",
+   "failure_landscape": "by reading: fully associative compare of 32 entries every cycle is the timing-critical path; random replacement can evict a hot loop's branch",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the BTB (Lee & Smith 1984); random replacement is the designer's area/timing choice",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:biriscv-branch-predictor/upstream/tree/src/core/biriscv_npc.v:btb_* blocks and u_lru"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the BTB registers, the two always @* lookup loops, the write block",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "biriscv-branch-predictor::two_bit_saturating_counters_indexed_by_pc_or_by_gshare_xor_of_pc_and_global_history",
+   "fossil_ancestry": "biriscv-branch-predictor",
+   "human_name": "bht_sat_q[512]; bht_wr_entry_w / bht_rd_entry_w; GSHARE_ENABLE; gshare_*_entry_w",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "512 two-bit counters initialised to 3 (strongly taken); a resolved taken branch increments its counter (saturating at 3), not-taken decrements (at 0); predict taken when the counter >= 2; the index is either PC bits (bimodal) or, with GSHARE_ENABLE, PC bits XOR the global history register; the read uses the SPECULATIVE history, the write uses the ARCHITECTURAL one at resolve time",
+   "input": "the fetch PC; the history; resolve events",
+   "output": "bht_predict_taken",
+   "state": "512 x 2 bits",
+   "update": "per resolved conditional branch",
+   "assumptions": [
+    "a branch's recent behaviour predicts its next outcome (bimodal) or its behaviour correlated with recent global outcomes does (gshare)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+    "biriscv-branch-predictor::speculative_shadow_state_updated_by_predictions_and_resynchronised_from_architectural_state_on_resolve",
+    "biriscv-branch-predictor::branch_target_buffer_fully_associative_on_the_fetch_pc_with_call_ret_jmp_type_bits_and_random_replacement"
+   ],
+   "fitness_value_in_ancestor": "hysteresis: one anomalous outcome does not flip the prediction; gshare captures correlated branches at the cost of aliasing",
+   "failure_landscape": "by reading: 512 entries alias heavily in large code; GSHARE is OFF by default in the parameter list, so the shipped configuration is bimodal",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the 2-bit counter (Smith 1981) and gshare (McFarling 1993)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:biriscv-branch-predictor/upstream/tree/src/core/biriscv_npc.v:global_history_*, gshare_*, bht_*"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the BHT and history registers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "biriscv-branch-predictor::return_address_stack_with_a_speculative_pointer_beside_the_architectural_one",
+   "fossil_ancestry": "biriscv-branch-predictor",
+   "human_name": "ras_stack_q[8], ras_index_q (speculative) / ras_index_real_q (architectural); ras_call_pred_w / ras_ret_pred_w",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "an 8-entry circular stack of return addresses; on a PREDICTED call (BTB says call) the fetch PC + 4 is pushed and the speculative pointer advanced; a predicted return pops it and supplies the target; on a RESOLVED call/return the architectural pointer moves and, for a call, the real return address is written; a resolved branch resets the speculative pointer from the architectural one, discarding the speculative pushes/pops of a mispredicted path; an entry equal to RAS_INVALID (bit 0 set) disables the prediction",
+   "input": "BTB type bits at fetch; resolve events",
+   "output": "the predicted return PC; a valid flag",
+   "state": "8 x 32 bits; two pointers",
+   "update": "per predicted and per resolved call/return",
+   "assumptions": [
+    "calls and returns nest (a stack); 8 deep covers the hot call depth"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+    "biriscv-branch-predictor::branch_target_buffer_fully_associative_on_the_fetch_pc_with_call_ret_jmp_type_bits_and_random_replacement",
+    "biriscv-branch-predictor::speculative_shadow_state_updated_by_predictions_and_resynchronised_from_architectural_state_on_resolve"
+   ],
+   "fitness_value_in_ancestor": "indirect returns, which the BTB cannot predict after a call from a new site, become predictable",
+   "failure_landscape": "by reading: overflow wraps silently (deep recursion mispredicts every return beyond 8); the invalid marker is bit 0 of the stored address, which relies on aligned return addresses",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the RAS (Kaeli & Emma 1991); the dual-pointer recovery scheme is the designer's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:biriscv-branch-predictor/upstream/tree/src/core/biriscv_npc.v:ras_* blocks"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the RAS registers and the four always blocks that touch them",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "biriscv-branch-predictor::speculative_shadow_state_updated_by_predictions_and_resynchronised_from_architectural_state_on_resolve",
+   "fossil_ancestry": "biriscv-branch-predictor",
+   "human_name": "global_history_q vs global_history_real_q; ras_index_q vs ras_index_real_q",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "two copies of the global history: the real one shifts in each RESOLVED outcome; the speculative one shifts in each PREDICTION as it is made (so back-to-back predictions see the effect of earlier predictions) and, on any resolve, is reloaded from the real one plus the resolved outcome; the RAS pointer follows the same pattern",
+   "input": "predictions; resolutions",
+   "output": "the history the predictor reads",
+   "state": "two 9-bit registers; two 3-bit pointers",
+   "update": "per prediction and per resolve",
+   "assumptions": [
+    "predictions are usually right, so the speculative copy is usually the truth one step early; when wrong, resynchronisation costs nothing beyond the pipeline flush that already happens"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "biriscv-branch-predictor::two_bit_saturating_counters_indexed_by_pc_or_by_gshare_xor_of_pc_and_global_history",
+    "biriscv-branch-predictor::return_address_stack_with_a_speculative_pointer_beside_the_architectural_one",
+    "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through"
+   ],
+   "fitness_value_in_ancestor": "prediction can proceed at fetch rate without waiting for resolution; the classic speculative-update problem solved by shadowing",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:biriscv-branch-predictor/upstream/tree/src/core/biriscv_npc.v:global_history_real_q / global_history_q; ras_index_real_* / ras_index_*"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the paired registers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+   "fossil_ancestry": "biriscv-branch-predictor",
+   "human_name": "assign next_pc_f_o / next_taken_f_o / pred_taken_w / pred_ntaken_w",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "next PC = the RAS top if the BTB says this is a return (and the entry is valid); else the BTB target if the BHT predicts taken or the BTB says unconditional jump; else the fall-through (PC aligned to 8 plus 8, i.e. the next 64-bit fetch pair); next_taken flags which of the two 32-bit slots redirects, so the decode stage can drop the instruction after a taken branch in the pair",
+   "input": "the four predictors' outputs; pc_f_i[2] (upper/lower slot)",
+   "output": "next_pc_f_o, next_taken_f_o",
+   "state": "none",
+   "update": "per fetch",
+   "assumptions": [
+    "returns are best served by the RAS, jumps are always taken, conditional branches by the BHT"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "biriscv-branch-predictor::branch_target_buffer_fully_associative_on_the_fetch_pc_with_call_ret_jmp_type_bits_and_random_replacement",
+    "biriscv-branch-predictor::two_bit_saturating_counters_indexed_by_pc_or_by_gshare_xor_of_pc_and_global_history",
+    "biriscv-branch-predictor::return_address_stack_with_a_speculative_pointer_beside_the_architectural_one",
+    "biriscv-branch-predictor::speculative_shadow_state_updated_by_predictions_and_resynchronised_from_architectural_state_on_resolve"
+   ],
+   "fitness_value_in_ancestor": "one mux; the priority encodes which predictor is trusted for which branch class",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:biriscv-branch-predictor/upstream/tree/src/core/biriscv_npc.v:the four assign statements at the end"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the assigns",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "bsd-tcp-4.2-1983::exponentially_smoothed_rtt_from_one_timed_segment_at_a_time",
    "fossil_ancestry": "bsd-tcp-4.2-1983",
    "human_name": "t_rtt / t_rtseq / t_srtt (tcp_input.c 485-492; tcp_output.c timing)",
@@ -2372,6 +2999,378 @@
     },
     "temporal_horizon": {
      "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression",
+   "fossil_ancestry": "clips-6.4.2-nasa",
+   "human_name": "NetworkAssert / NetworkAssertRight / EvaluateJoinExpression / PPDrive (drive.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a new partial match entering a join from the right (a new fact) is compared against the join's left beta memory, fetched by hash value so only bucket-mates are scanned; matching hash and no blocking marker lead to the join's compiled test expression (variable bindings across patterns); success drives the combined partial match to the child joins (PPDrive); negated and exists patterns instead add blocked links and retract dependents; the first join of a rule short-circuits (EmptyDrive); incremental reset can skip joins not being rebuilt",
+   "input": "a partial match from the alpha side; the join's left memory",
+   "output": "new partial matches downstream, or blocked links",
+   "state": "beta memories (per join, hashed), markers, blocked links",
+   "update": "per fact assert/retract",
+   "assumptions": [
+    "most joins fail early, so hashing the beta memory on the join's equality tests pays; state (partial matches) is retained between cycles so matching is incremental (the Rete premise: many rules, slowly changing facts)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+    "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching"
+   ],
+   "fitness_value_in_ancestor": "matching cost per fact change is proportional to the change, not to the rule base",
+   "failure_landscape": "by reading: beta memories can grow combinatorially on cross-product joins (the classic Rete failure); the DEVELOPER counters in the source measure exactly that",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Forgy 1982 Rete; the hashed beta memories are CLIPS 6.30's addition",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:clips-6.4.2-nasa/upstream/tree/clips_core_source_642/core/drive.c:84-330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "drive.c's assert path",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+   "fossil_ancestry": "clips-6.4.2-nasa",
+   "human_name": "AddActivation / PlaceActivation / salienceGroup / GetNextActivation (agenda.c); Strategy (depth, breadth, LEX, MEA, complexity, simplicity, random)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a complete match becomes an activation carrying the rule, the matched facts, a time tag and a salience (evaluated when defined, at activation, or every cycle per a setting); activations live in per-module agendas partitioned into salience groups (a linked list ordered by salience, reused per value); within a group a strategy orders them (default DEPTH: newest first; also breadth, LEX and MEA on fact recency, complexity/simplicity on rule size, random); Run takes the first",
+   "input": "complete matches",
+   "output": "the next rule to fire",
+   "state": "the agenda lists; salience groups",
+   "update": "per match and per fire",
+   "assumptions": [
+    "the programmer's salience says what matters; the strategy breaks ties; nothing about the facts' content beyond recency is used"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression",
+    "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching"
+   ],
+   "fitness_value_in_ancestor": "the only place 'which rule when' is decided; every expert-system control idiom is a salience/strategy pattern",
+   "failure_landscape": "by reading: salience is a global scalar, so control logic leaks into rule priorities (the well-known expert-system maintenance problem)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "OPS5's conflict-resolution strategies (Forgy) with CLIPS's salience groups as an efficiency structure",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:clips-6.4.2-nasa/upstream/tree/clips_core_source_642/core/agenda.c:100-330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "agenda.c's placement and retrieval",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching",
+   "fossil_ancestry": "clips-6.4.2-nasa",
+   "human_name": "Run() (engine.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "while activations remain and the run limit is not reached: take the first activation, mark the rule firing, evaluate its right-hand side (which asserts/retracts facts, re-entering the join network immediately), count the firing, handle garbage collection of transient values and the debugging watches; a re-entrant call is refused (AlreadyRunning)",
+   "input": "the agenda",
+   "output": "fired rules; changed facts",
+   "state": "the fact base; the agenda",
+   "update": "per cycle",
+   "assumptions": [
+    "a rule's actions change the world and the match is incremental, so the cycle is match-select-act with match amortised"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+    "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression"
+   ],
+   "fitness_value_in_ancestor": "the production-system loop; everything else exists to make its match step cheap",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:clips-6.4.2-nasa/upstream/tree/clips_core_source_642/core/engine.c:Run() head (read to the statistics block only)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "Run(); CANDIDATE because only the head was read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
      "basis": "READ"
     }
    }
@@ -15440,6 +16439,252 @@
    }
   },
   {
+   "organ_id": "gnu-apl-2.0::shift_reduce_over_token_classes_with_a_generated_phrase_table_matched_against_the_stack_top",
+   "fossil_ancestry": "gnu-apl-2.0",
+   "human_name": "Prefix::reduce_statements (900-935): grow (shift) / reduce; MAX_REDUCTION_LEN = 6; the phrase table (Prefix.def, generated by tools/phrase_gen)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "tokens of a statement are pushed right to left onto a stack; after each shift the top up to six token classes are looked up in a phrase table (hash or search tree, a compile-time choice); a matching phrase's reduce_* function replaces the matched tokens with one result token and returns an R_action (retry matching, shift, or done); the loop continues until the statement reduces to a single value or an error; the table is generated from a phrase list, not hand-written",
+   "input": "a token string (the compiled statement)",
+   "output": "a value token or an error with the PC rewound to the statement start",
+   "state": "the token stack; the PC into the body",
+   "update": "per token",
+   "assumptions": [
+    "APL's grammar is decidable on token CLASSES with six tokens of lookahead; the class of a name (function vs value) is known at run time, which is why the stack holds classes resolved late"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "gnu-apl-2.0::reduction_rules_as_named_functions_one_per_phrase_shape"
+   ],
+   "fitness_value_in_ancestor": "right-to-left evaluation, operators binding tighter than functions, and bracket indexing all fall out of the phrase order; no precedence table",
+   "failure_landscape": "by reading: an ambiguity that needs more than six tokens cannot be expressed; the R_action protocol lets a reduction re-classify a token and retry",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "LALR(1)-style parsing (the comment says so) applied to a language usually described as 'no parser needed'",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:gnu-apl-2.0/upstream/tree/apl-2.0/src/Prefix.cc:900-935; vault:gnu-apl-2.0/upstream/tree/apl-2.0/src/Prefix.def"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "reduce_statements and the phrase table",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "gnu-apl-2.0::reduction_rules_as_named_functions_one_per_phrase_shape",
+   "fossil_ancestry": "gnu-apl-2.0",
+   "human_name": "Prefix::reduce_A_F_B_ (dyadic), reduce_F_B_ (monadic), reduce_A_M_B_ / reduce_F_M__ (operators), reduce_V_ASS_B_ (assignment), reduce_LBRA_* (indexing), reduce_END_* / reduce_*_GOTO_* (statement end, branch), 40 in all",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each phrase shape has a function: A F B applies function F dyadically to values A and B; F B monadically; an operator M or D with its function operands builds a derived function token before application; V ASS B assigns; the bracket rules build index lists; the END and GOTO rules finish a statement or branch the PC; the rules call into the primitive implementations (Bif_*) and return how to continue",
+   "input": "the matched tokens",
+   "output": "one token",
+   "state": "none beyond the stack",
+   "update": "per reduction",
+   "assumptions": [
+    "every APL construct is one of ~40 shapes over 6 classes"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "gnu-apl-2.0::shift_reduce_over_token_classes_with_a_generated_phrase_table_matched_against_the_stack_top"
+   ],
+   "fitness_value_in_ancestor": "the language's semantics are a flat list of 40 cases, each readable in isolation",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:gnu-apl-2.0/upstream/tree/apl-2.0/src/Prefix.cc:1391-3191 (names and first lines)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the reduce_* functions; MEDIUM because bodies were not read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "gzip-1.2.4-1993::rolling_three_byte_hash_into_chains_of_prior_positions",
    "fossil_ancestry": "gzip-1.2.4-1993",
    "human_name": "UPDATE_HASH / INSERT_STRING / head[] / prev[]",
@@ -19290,6 +20535,996 @@
     },
     "representation_sensitivity": {
      "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "fossil_ancestry": "libcorrect-quiet",
+   "human_name": "convolutional_decode_inner (decode.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "per symbol the distances from the received symbol to every possible output are tabulated once (2^rate entries), then combined pairwise (pair_lookup) so that two successor states' branch distances come from one lookup; states are processed in butterflies (low, high = low + 2^(order-1)) and the survivor's predecessor is recorded as one bit of history; ties go to the low branch",
+   "input": "received symbols (hard bits or soft bytes); the previous error vector",
+   "output": "the new error vector and one history column",
+   "state": "two error buffers (swapped), the history buffer",
+   "update": "per symbol",
+   "assumptions": [
+    "the trellis has the shift-register structure (each state has exactly two predecessors differing in the high bit)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libcorrect-quiet::soft_decision_metrics_linear_or_quadratic_over_byte_confidences",
+    "libcorrect-quiet::bounded_sliding_traceback_from_the_current_best_state_with_periodic_renormalisation",
+    "libcorrect-quiet::warmup_and_tail_phases_that_exploit_the_known_zero_start_and_flush",
+    "libcorrect-quiet::reed_solomon_decoder_syndromes_error_locator_evaluator_and_erasures"
+   ],
+   "fitness_value_in_ancestor": "the inner loop touches memory in a pattern the SSE variant can vectorise; the pair lookup halves distance work",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libcorrect-quiet/upstream/tree/src/convolutional/decode.c:convolutional_decode_inner"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the inner function and pair_lookup use",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "libcorrect-quiet::soft_decision_metrics_linear_or_quadratic_over_byte_confidences",
+   "fossil_ancestry": "libcorrect-quiet",
+   "human_name": "metric_soft_distance_linear / _quadratic; soft_measurement (metric.c; decode.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a received bit is a byte 0..255 (0 = confident 0, 255 = confident 1); the branch metric is the sum over the symbol's bits of |soft - hard*255| (linear) or its square >> 3 (quadratic); hard decoding uses the Hamming distance; the choice is a runtime setting",
+   "input": "soft bytes or hard bits",
+   "output": "a distance per candidate output",
+   "state": "none",
+   "update": "per symbol",
+   "assumptions": [
+    "byte confidences are monotone in log-likelihood; quadratic is closer to Gaussian-channel ML, linear is cheaper"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs"
+   ],
+   "fitness_value_in_ancestor": "~2 dB of coding gain over hard decisions on an AWGN channel (the textbook figure; not measured here)",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libcorrect-quiet/upstream/tree/src/convolutional/metric.c; vault:libcorrect-quiet/upstream/tree/src/convolutional/decode.c:soft branches"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "metric.c and the soft_measurement switch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "SAMPLE",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "libcorrect-quiet::bounded_sliding_traceback_from_the_current_best_state_with_periodic_renormalisation",
+   "fossil_ancestry": "libcorrect-quiet",
+   "human_name": "history_buffer_process / _traceback / _search / _renormalize (history_buffer.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "history columns live in a ring of cap = min_traceback + group_length entries; when the ring is full, the best current state is found, the path is traced back min_traceback symbols without emitting (the unreliable recent part), and the remaining group is emitted in reverse; every renormalize_interval symbols the minimum path metric is subtracted from all states so the 16-bit metrics never overflow (the interval is computed from the maximum metric per symbol)",
+   "input": "the history ring, the error vector",
+   "output": "decoded bits in blocks",
+   "state": "the ring index/len, renormalize counter",
+   "update": "per symbol; emission per group",
+   "assumptions": [
+    "survivor paths merge within min_traceback symbols (about 5x the constraint length is the rule of thumb), so decoding from the best state is as good as from the true end state"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs"
+   ],
+   "fitness_value_in_ancestor": "constant memory for unbounded streams and bounded latency, unlike the toy decoder's full trellis",
+   "failure_landscape": "by reading: a min_traceback shorter than the merge depth emits wrong bits silently; the renormalisation interval is derived so overflow cannot happen, but it is computed from soft_max, so a wrong soft scale breaks it",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the sliding-window Viterbi of every hardware decoder; the renormalisation-by-minimum trick",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libcorrect-quiet/upstream/tree/src/convolutional/history_buffer.c"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "history_buffer.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "libcorrect-quiet::warmup_and_tail_phases_that_exploit_the_known_zero_start_and_flush",
+   "fossil_ancestry": "libcorrect-quiet",
+   "human_name": "convolutional_decode_warmup / _tail (decode.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for the first order-1 symbols only 2^(i+1) states are reachable from state 0, so only those are updated; for the last order-1 symbols the encoder is known to be flushing zeros, so successor states are visited with a stride (skip) that excludes impossible paths and the history is processed with the same stride",
+   "input": "the symbol index relative to the ends",
+   "output": "restricted state updates",
+   "state": "none",
+   "update": "at the two ends",
+   "assumptions": [
+    "the encoder starts at 0 and flushes to 0 (the same convention the toy body uses)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs"
+   ],
+   "fitness_value_in_ancestor": "fewer operations and no spurious survivors at the ends",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libcorrect-quiet/upstream/tree/src/convolutional/decode.c:convolutional_decode_warmup, convolutional_decode_tail"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two end-phase functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "libcorrect-quiet::reed_solomon_decoder_syndromes_error_locator_evaluator_and_erasures",
+   "fossil_ancestry": "libcorrect-quiet",
+   "human_name": "reed-solomon/decode.c: factorize_error_locator, find_error_evaluator, find_error_values, find_error_locations, decode, decode_with_erasures",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "by function names only: compute syndromes, find the error locator polynomial, factor it (Chien-style root search), compute the error evaluator and error values (Forney), optionally with known erasure positions -- the standard algebraic decoder; the Berlekamp-Massey or Euclid choice is not established by this reading",
+   "input": "a received codeword; optional erasure positions",
+   "output": "the corrected message or failure",
+   "state": "none",
+   "update": "per block",
+   "assumptions": [
+    "Galois field arithmetic from field.c (not read)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs"
+   ],
+   "fitness_value_in_ancestor": "burst-error correction paired with the convolutional inner code (the classic concatenated scheme)",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libcorrect-quiet/upstream/tree/src/reed-solomon/decode.c:function list"
+   },
+   "confidence": "LOW",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "reed-solomon/decode.c; CANDIDATE: names only",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "fossil_ancestry": "libdai-mooij",
+   "human_name": "BP::calcNewMessage / calcIncomingMessageProduct (bp.cpp 164-259)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for edge (variable i, factor I): multiply the factor by every message into I except the one from i (extrinsic), then sum out (SUMPROD) or max out (MAXPROD) every variable but i, normalise, store as the NEW message (not yet applied); in log domain the product is a sum with the max subtracted before exponentiation; a unary factor short-circuits to its own table",
+   "input": "the factor table; incoming messages",
+   "output": "a new message (a distribution over i's states)",
+   "state": "new-message buffer per edge",
+   "update": "per edge visit",
+   "assumptions": [
+    "the graph is a tree, or close enough that extrinsic products approximate marginals (the 'loopy' assumption)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+    "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message"
+   ],
+   "fitness_value_in_ancestor": "the sum-product rule in its general form, one code path for MAP (max) and marginals (sum)",
+   "failure_landscape": "by reading: on loopy graphs messages can oscillate or converge to wrong marginals; libDAI's damping (not read) and the schedules exist because of that",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Pearl 1988 / Kschischang, Frey & Loeliger 2001 sum-product",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libdai-mooij/upstream/tree/src/bp.cpp:164-259"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "ESTIMATES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "DISTRIBUTION",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "fossil_ancestry": "libdai-mooij",
+   "human_name": "BP::run (bp.cpp 261-353): PARALL, SEQRND, SEQMAX; findMaxResidual / updateResidual",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "PARALL: compute every new message from the old ones, then apply all (Jacobi); SEQRND: shuffle the edge list each iteration and compute-and-apply edge by edge (Gauss-Seidel in random order); SEQMAX: keep a priority queue of residuals (L-inf distance between a computed new message and the current one), always apply the edge with the largest residual, then recompute the residuals of the messages it influences",
+   "input": "the schedule setting; residuals",
+   "output": "the order of updates",
+   "state": "the residual heap (SEQMAX); the edge permutation",
+   "update": "per iteration",
+   "assumptions": [
+    "on loopy graphs the schedule changes both speed and WHETHER convergence happens; residual scheduling (Elidan, McGraw & Koller 2006) converges where parallel does not"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+    "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message"
+   ],
+   "fitness_value_in_ancestor": "the same messages under three orders, selectable at run time; the residual schedule is the library's edge over a textbook BP",
+   "failure_landscape": "by reading: SEQMAX's queue makes each update O(log E); the parallel schedule can oscillate with period 2 on bipartite structures",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libdai-mooij/upstream/tree/src/bp.cpp:261-353, 155-163, 463-472"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the schedule branches in run() and the residual helpers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "OSCILLATES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message",
+   "fossil_ancestry": "libdai-mooij",
+   "human_name": "BP::run: maxDiff over beliefV/beliefF vs _oldBeliefs; props.tol, maxiter, maxtime",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after each iteration every variable and factor belief is recomputed and compared (L-inf) with the previous iteration's; the largest change is the convergence measure; the loop stops when it falls below tol, or at maxiter, or at maxtime seconds; the final maxDiff is reported (and warned about) either way",
+   "input": "beliefs per iteration",
+   "output": "maxDiff; a stop decision",
+   "state": "_oldBeliefsV/F",
+   "update": "per iteration",
+   "assumptions": [
+    "belief stability is what the user cares about; messages may keep changing in ways that cancel"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+    "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual"
+   ],
+   "fitness_value_in_ancestor": "a stopping rule on the observable quantity, with three independent budgets",
+   "failure_landscape": "by reading: recomputing all beliefs per iteration costs as much as an iteration; on oscillation maxDiff never falls and the run ends by budget with a warning, not an error",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:libdai-mooij/upstream/tree/src/bp.cpp:304-352"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the tail of run()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
      "basis": "READ"
     },
     "temporal_horizon": {
@@ -31414,6 +33649,997 @@
    }
   },
   {
+   "organ_id": "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+   "fossil_ancestry": "pforth",
+   "human_name": "pfCatch (pf_inner.c): the while(!IsTokenPrimitive) loop, M_R_PUSH(InsPtr), the switch, ID_EXIT",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a token below a threshold is a primitive and is executed by a switch case; any other token is a secondary: the current instruction pointer is pushed on the return stack, the pointer is set to the secondary's body, and the next token is read; EXIT pops the return stack; the top of the data stack, the two stack pointers and the instruction pointer are cached in C registers for the whole run (LOAD/SAVE_REGISTERS around any call out)",
+   "input": "an execution token",
+   "output": "side effects on the two stacks and memory; a ThrowCode on error",
+   "state": "data stack, return stack, instruction pointer (all in the task struct)",
+   "update": "per token",
+   "assumptions": [
+    "secondaries contain only tokens (no machine code), so the same image runs on any C platform -- the 'portable' in the name",
+    "the return stack is shared with the program's own R> >R use"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+    "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack"
+   ],
+   "fitness_value_in_ancestor": "one C function is the whole VM; portability over speed",
+   "failure_landscape": "by reading: no bounds checks in the hot loop; a corrupted token past the switch falls to default",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "token threading (vs direct/indirect) chosen for portability; the register-caching macros are the author's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pf_inner.c:286-330, 381-386, 961-970"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "pfCatch's loop head, the descent loop, ID_EXIT and ID_EXECUTE",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack",
+   "fossil_ancestry": "pforth",
+   "human_name": "ID_BRANCH / ID_0BRANCH (M_BRANCH) / ID_LOOP_P and friends",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "BRANCH reads a cell offset after itself and adds it to the instruction pointer; 0BRANCH does so only if the popped top is zero; counted loops keep index and limit on the RETURN stack and LOOP increments, compares and branches back or skips the offset; IF/ELSE/THEN and DO/LOOP compile to these tokens with offsets patched at compile time",
+   "input": "the token stream",
+   "output": "a new instruction pointer",
+   "state": "the return stack (loop parameters)",
+   "update": "per control token",
+   "assumptions": [
+    "structured control compiles to a handful of branch primitives; the return stack doubles as loop-parameter storage (so R> inside a loop is a footgun the language accepts)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+    "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag"
+   ],
+   "fitness_value_in_ancestor": "no parser at run time; control is data",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pf_inner.c:513-518, 1465-1475"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the branch and loop cases",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "fossil_ancestry": "pforth",
+   "human_name": "ffInterpret / FindAndCompileOrExecute / ffColon / ffSemiColon / ffLiteral (pfcompil.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "read a whitespace-delimited word from the source; look it up in the dictionary; if found, execute it (interpret state) or append its token to the definition under construction (compile state), unless the word is IMMEDIATE, which executes even while compiling; if not found, try to parse a number and push it or compile a LITERAL token; ':' opens a definition (creates a header, sets compile state), ';' appends EXIT and closes it",
+   "input": "text",
+   "output": "executed effects or a new dictionary entry",
+   "state": "gVarState (compile/interpret), the dictionary pointer",
+   "update": "per word",
+   "assumptions": [
+    "the language extends itself: IMMEDIATE words run the compiler; there is no grammar beyond 'words separated by blanks'"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pforth::dictionary_as_a_linked_list_of_name_headers_searched_newest_first",
+    "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+    "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack"
+   ],
+   "fitness_value_in_ancestor": "the compiler is a few dozen lines because the inner interpreter is the compiler's target and the language's own words build the rest",
+   "failure_landscape": "by reading: an error mid-definition leaves the state flag cleared (the finally block) and the partial definition in the dictionary",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Moore's Forth outer interpreter; immediate words as the extension mechanism",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pfcompil.c:834-880, 594-731"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "ffInterpret and the colon/semicolon/literal functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "STRUCTURE",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pforth::dictionary_as_a_linked_list_of_name_headers_searched_newest_first",
+   "fossil_ancestry": "pforth",
+   "human_name": "CreateDicEntry / ffFindNFA / ffFind / NameToToken (pfcompil.c 64-160, 416-540)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each definition gets a header (name, flags, link to the previous header, the execution token); lookup walks the list from the newest entry, comparing names, so a redefinition shadows the old one without deleting it; the token is recovered from the header by fixed offsets",
+   "input": "a word name",
+   "output": "its token and flags, or not found",
+   "state": "the dictionary (a growing array of cells)",
+   "update": "per definition",
+   "assumptions": [
+    "linear search is fast enough for a few thousand words; newest-first gives redefinition semantics for free"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag"
+   ],
+   "fitness_value_in_ancestor": "the whole namespace in one structure the program can inspect and extend",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pfcompil.c:64-160, 416-540"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the dictionary functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "fossil_ancestry": "pyportfolioopt-1.5.5",
+   "human_name": "BaseConvexOptimizer._solve_cvxpy_opt_problem; min_volatility; efficient_risk/return; add_objective/add_constraint",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "weights are a cvxpy Variable; an objective (portfolio variance, negative return, quadratic utility) plus user constraints (sum to one, bounds, sector limits) form a Problem solved by whatever solver cvxpy picks; the result is accepted only if the status is optimal or optimal_inaccurate, else an OptimizationError; weights are rounded to 16 places and signed zeros removed",
+   "input": "expected returns, covariance, bounds, constraints",
+   "output": "a weight vector",
+   "state": "the cvxpy Problem object (kept for warm reuse)",
+   "update": "per solve",
+   "assumptions": [
+    "the objective is convex in the weights (variance is, return is linear); the solver's own status word is trusted (a Techne lesson: 'optimal_inaccurate' is accepted here)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
+    "pyportfolioopt-1.5.5::maximum_sharpe_by_the_cornuejols_tutuncu_variable_substitution"
+   ],
+   "fitness_value_in_ancestor": "any convex objective/constraint in a few lines; the solver does the numerics",
+   "failure_landscape": "by reading: optimal_inaccurate is accepted as success -- the base role's own SCS finding (status anti-correlated with accuracy) applies here directly",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/base_optimizer.py:280-318; vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/efficient_frontier/efficient_frontier.py:186-224"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the solve helper and the objective methods that call it",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pyportfolioopt-1.5.5::maximum_sharpe_by_the_cornuejols_tutuncu_variable_substitution",
+   "fossil_ancestry": "pyportfolioopt-1.5.5",
+   "human_name": "EfficientFrontier.max_sharpe (186-294)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the Sharpe ratio (return minus risk-free over volatility) is not convex; substitute w = y/k with k > 0: minimise y' Sigma y subject to (mu - rf)' y = 1 and sum(y) = k, and every existing linear constraint rewritten with its constant side multiplied by k; solve; recover w = y/k; the code warns that added non-linear objectives do not transform",
+   "input": "expected returns, covariance, risk-free rate",
+   "output": "the tangency portfolio",
+   "state": "none",
+   "update": "per solve",
+   "assumptions": [
+    "at least one asset beats the risk-free rate (checked); constraints are linear (inequalities and equalities are rewritten; anything else raises)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate"
+   ],
+   "fitness_value_in_ancestor": "a quadratic program instead of a non-convex ratio maximisation",
+   "failure_landscape": "by reading: the constraint rewriting inspects cvxpy's internal argument order (which side is the Constant) -- brittle across cvxpy versions",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Cornuejols & Tutuncu 2006, cited in the docstring",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/efficient_frontier/efficient_frontier.py:225-294"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "max_sharpe",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pyportfolioopt-1.5.5::covariance_shrinkage_toward_a_structured_target_with_an_estimated_intensity",
+   "fossil_ancestry": "pyportfolioopt-1.5.5",
+   "human_name": "CovarianceShrinkage.ledoit_wolf (constant_variance / single_factor / constant_correlation), shrunk_covariance, oracle_approximating (risk_models.py 356-600)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the sample covariance is blended with a target (a scaled identity, a one-factor market model, or a constant-correlation matrix) as (1-delta) S + delta F; delta is either fixed (shrunk_covariance) or estimated from the data by the Ledoit-Wolf formula (sklearn's for constant variance; the library's own for the other two targets) or the oracle-approximating estimator; the result is annualised by the frequency",
+   "input": "a returns matrix",
+   "output": "a positive-definite covariance estimate",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "the sample covariance's extreme eigenvalues are estimation noise; pulling toward a low-dimensional target trades bias for variance"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix"
+   ],
+   "fitness_value_in_ancestor": "the optimiser is notoriously an error maximiser on the raw sample covariance; shrinkage is the standard cure",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Ledoit & Wolf 2003/2004; the three targets are the paper's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/risk_models.py:356-600"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "class CovarianceShrinkage",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
+   "fossil_ancestry": "pyportfolioopt-1.5.5",
+   "human_name": "risk_models._is_positive_semidefinite / fix_nonpositive_semidefinite (32-100)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "check PSD by attempting a Cholesky factorisation (plus a tiny ridge); if it fails, either clip negative eigenvalues to zero and reconstruct (spectral) or add the most negative eigenvalue times identity (diagonal); warn the user; every risk model passes through this before the optimiser",
+   "input": "a symmetric matrix",
+   "output": "a PSD matrix",
+   "state": "none",
+   "update": "per risk-model call",
+   "assumptions": [
+    "a non-PSD sample matrix is numerical, not structural, so a small repair is honest"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pyportfolioopt-1.5.5::covariance_shrinkage_toward_a_structured_target_with_an_estimated_intensity",
+    "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate"
+   ],
+   "fitness_value_in_ancestor": "the convex solver requires PSD; without this the solver refuses with an obscure error",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/risk_models.py:32-100"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "python-control::quadratic_cost_gain_from_a_riccati_solution_with_optional_integrator_augmentation",
    "fossil_ancestry": "python-control",
    "human_name": "control.lqr / dlqr",
@@ -34268,6 +37494,253 @@
    }
   },
   {
+   "organ_id": "simple-kalman-denyssene::scalar_gain_as_estimate_error_over_estimate_plus_measurement_error",
+   "fossil_ancestry": "simple-kalman-denyssene",
+   "human_name": "updateEstimate line 1: K = err_est / (err_est + err_meas)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the gain is the ratio of the current estimate error to the sum of estimate and measurement errors; the estimate moves toward the measurement by K times the innovation; the estimate error shrinks by (1-K)",
+   "input": "a scalar measurement; the two error magnitudes",
+   "output": "the new estimate",
+   "state": "_last_estimate, _err_estimate, _kalman_gain",
+   "update": "per measurement",
+   "assumptions": [
+    "a random-walk state with no dynamics (no prediction step: the prior is the last estimate)",
+    "errors are treated as magnitudes, not variances (no squares anywhere)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "simple-kalman-denyssene::estimate_error_re_inflated_by_the_magnitude_of_the_last_correction_times_q"
+   ],
+   "fitness_value_in_ancestor": "three multiplications and one division per sample on an 8-bit microcontroller",
+   "failure_landscape": "by reading: with no process-noise growth the gain decays toward zero and the filter stops tracking; the next organ is the author's fix",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:simple-kalman-denyssene/upstream/tree/src/SimpleKalmanFilter.cpp:updateEstimate"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the first two statements of updateEstimate",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "ESTIMATES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "simple-kalman-denyssene::estimate_error_re_inflated_by_the_magnitude_of_the_last_correction_times_q",
+   "fossil_ancestry": "simple-kalman-denyssene",
+   "human_name": "updateEstimate line 3: err_est = (1-K) err_est + |last - current| * q",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after shrinking the estimate error by (1-K), the code ADDS q times the absolute change the update just made; a large correction (the signal is moving) inflates the error, which raises the next gain; a quiet signal lets the error and gain decay",
+   "input": "the innovation just applied; q",
+   "output": "the next estimate error",
+   "state": "_err_estimate",
+   "update": "per measurement",
+   "assumptions": [
+    "a big correction means the model was wrong, so trust the next measurement more: an adaptive heuristic standing in for a process-noise variance"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "simple-kalman-denyssene::scalar_gain_as_estimate_error_over_estimate_plus_measurement_error"
+   ],
+   "fitness_value_in_ancestor": "tracks steps without a tuned process model; the whole reason the library is popular",
+   "failure_landscape": "by reading: the error is driven by the FILTER'S OWN output change, so measurement noise that happens to move the estimate also inflates the error (a positive feedback that the true Kalman recursion does not have); no measurement",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the author's own device; the Kalman process noise Q is a constant added to the prior variance, not a term proportional to |innovation|",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:simple-kalman-denyssene/upstream/tree/src/SimpleKalmanFilter.cpp:updateEstimate (third statement)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the third statement",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "OSCILLATES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
    "fossil_ancestry": "spin-pathfinder-priority-inversion-1997",
    "human_name": "`provided (h_state == idle)` -- the scheduling rule",
@@ -36256,6 +39729,378 @@
    }
   },
   {
+   "organ_id": "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+   "fossil_ancestry": "swipl-9.2.9",
+   "human_name": "the 230 VMI() definitions in pl-vmi.c (H_* B_* A_* C_* I_* S_* T_*)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "clause heads compile to H_ instructions that unify incoming arguments against the head's structure (specialised per term type: atom, small int, var, first-var, functor, list, with FF/VF/VV variants); bodies compile to B_ instructions that build argument frames; A_ does compiled arithmetic; C_ handles in-clause control (or, if-then-else, soft cut, cuts); I_ handles predicate call/depart/exit, foreign determinate/nondeterminate calls, catch/throw, delimited continuations (reset/shift); S_ are per-predicate supervisors (static, dynamic, multifile, wrapped, undefined); T_ walk answer tries for tabling",
+   "input": "compiled clauses",
+   "output": "execution",
+   "state": "the local (frame) stack, global (term) stack, trail, choice-point chain",
+   "update": "per instruction",
+   "assumptions": [
+    "specialising instructions per term type and per variable-occurrence class (first/subsequent) is worth the instruction count (a JIT-free way to skip general unification)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists",
+    "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame"
+   ],
+   "fitness_value_in_ancestor": "the instruction set IS the engine's design record: every specialisation is a measured hot path made explicit",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Warren's Abstract Machine (1983) as the ancestor; SWI's set diverged from the WAM in the 1980s (its own documentation)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:swipl-9.2.9/upstream/tree/swipl-devel-9.2.9/src/pl-vmi.c:VMI inventory (grep)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the VMI list; MEDIUM because only names were read for most",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists",
+   "fossil_ancestry": "swipl-9.2.9",
+   "human_name": "I_DEPART vs I_CALL (pl-vmi.c 1967-2010, 2171-2280)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "I_CALL saves the current frame's state, allocates the next frame at lTop with the arguments already written there, and jumps to normal_call; I_DEPART is emitted for the last goal of a clause: if the newest choice point is older than the current frame (BFR <= FR) and the flag allows, the current frame is released (leaveDefinition) and the callee reuses its space, so tail-recursive predicates run in constant stack; watched frames and undefined predicates fall back to I_CALL semantics",
+   "input": "a call to a predicate as the last goal",
+   "output": "a frame reused or a new one",
+   "state": "FR, NFR, BFR, lTop",
+   "update": "per last call",
+   "assumptions": [
+    "a choice point newer than the frame pins the frame (it may be needed on backtracking); determinism is what makes the reuse safe"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+    "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame"
+   ],
+   "fitness_value_in_ancestor": "loops written as recursion do not grow the stack; the whole style of Prolog programming depends on it",
+   "failure_landscape": "by reading: a leftover choice point (a non-deterministic predicate earlier in the clause) silently disables the optimisation and the stack grows -- the classic Prolog performance trap, visible here as the BFR <= FR test",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the WAM's execute instruction; SWI's conditions (watched frames, undefined-procedure trapping) are its own",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:swipl-9.2.9/upstream/tree/swipl-devel-9.2.9/src/pl-vmi.c:1967-2010, 2171-2280"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "I_CALL, normal_call, I_DEPART",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame",
+   "fossil_ancestry": "swipl-9.2.9",
+   "human_name": "C_OR / I_CUT / I_EXIT (pl-vmi.c 2708-2830)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "C_OR pushes a jump choice point whose alternative is PC+skip (a disjunction's second branch), growing the local stack if needed; I_CUT discards every choice point newer than the current frame (nothing to do if BFR <= FR); I_EXIT leaves a clause: if newer alternatives exist the frame must stay for backtracking, else it is popped; the debugger hooks (ports) sit inside these instructions",
+   "input": "disjunctions and cuts in the clause",
+   "output": "a choice chain",
+   "state": "the choice-point chain (BFR), the trail",
+   "update": "per C_OR / cut / exit",
+   "assumptions": [
+    "backtracking is a chain walk to the newest choice point; the cut's semantics are 'newer than my frame'"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+    "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists"
+   ],
+   "fitness_value_in_ancestor": "disjunction and cut without predicate calls; the choice chain is the engine's search state",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:swipl-9.2.9/upstream/tree/swipl-devel-9.2.9/src/pl-vmi.c:2708-2830"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the three instructions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "tiny-aes-c::byte_substitution_from_one_256_entry_table",
    "fossil_ancestry": "tiny-aes-c",
    "human_name": "SubBytes / sbox (and InvSubBytes / rsbox)",
@@ -37867,6 +41712,628 @@
     },
     "representation_sensitivity": {
      "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "fossil_ancestry": "tscp-1.81-kerrigan-1997",
+   "human_name": "search() (search.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "depth-first negamax: at each node the moves are generated, ordered, and searched with the window (-beta, -alpha) negated; a score >= beta cuts the node; a score > alpha raises alpha and records the move into the principal variation; a repeated position (hash equal to any in the last fifty-move window) returns 0; being in check extends depth by one; no legal move is mate (-10000 + ply) or stalemate (0); the fifty-move rule returns 0",
+   "input": "alpha, beta, depth; the board",
+   "output": "a score; pv[] filled",
+   "state": "ply, the pv triangle, nodes",
+   "update": "per node",
+   "assumptions": [
+    "the evaluation is symmetric (negamax); alpha-beta's soundness needs a consistent ordering only for speed, not for correctness"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
+    "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+    "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+    "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms"
+   ],
+   "fitness_value_in_ancestor": "the effective branching factor drops from ~35 toward ~6 with good ordering",
+   "failure_landscape": "by reading: no transposition table, no null move, no futility: the 1997 minimum; the horizon effect is handled only by quiescence",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Knuth & Moore 1975 alpha-beta in negamax form; check extension as the one extension",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/search.c:search"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "search()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+   "fossil_ancestry": "tscp-1.81-kerrigan-1997",
+   "human_name": "quiesce() (search.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at depth 0 the static evaluation is taken as a lower bound (stand pat: if it is >= beta cut; if > alpha raise alpha); then only captures are generated and searched recursively with the same window, so the search stops at a quiet position instead of a mid-exchange one",
+   "input": "alpha, beta; the board",
+   "output": "a score",
+   "state": "the same pv triangle",
+   "update": "per leaf",
+   "assumptions": [
+    "the side to move can always decline to capture (stand pat) -- false in zugzwang but harmless in tactical exchanges"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+    "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms"
+   ],
+   "fitness_value_in_ancestor": "cures the horizon effect for exchanges: no evaluation is taken in the middle of a capture sequence",
+   "failure_landscape": "by reading: unbounded capture chains are possible in principle; MAX_PLY caps them",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/search.c:quiesce"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "quiesce()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
+   "fossil_ancestry": "tscp-1.81-kerrigan-1997",
+   "human_name": "think() / checkup() (search.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "search depth 1, 2, ... up to max_depth; before each iteration set follow_pv so the previous iteration's principal variation is searched first; every 1024 nodes checkup() compares the clock with stop_time and, if over, longjmps out of the recursion back into think(), which unwinds the move stack (takeback until ply 0) and keeps the last completed iteration's pv; mate scores stop the deepening early; an opening-book move short-circuits everything",
+   "input": "a time budget; max_depth",
+   "output": "the best move (pv[0][0])",
+   "state": "the pv triangle across iterations; history[]",
+   "update": "per iteration",
+   "assumptions": [
+    "a shallow completed search is worth more than a deep incomplete one; the previous pv is the best guess for ordering the next iteration"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+    "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort"
+   ],
+   "fitness_value_in_ancestor": "a fixed time budget with anytime behaviour; the ordering benefit makes deepening nearly free",
+   "failure_landscape": "by reading: longjmp abandons the current iteration's partial results entirely (no fail-soft use of the interrupted search)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/search.c:think, checkup"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "think() and checkup()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "EPISODE",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "fossil_ancestry": "tscp-1.81-kerrigan-1997",
+   "human_name": "sort_pv() / sort() / history[][] (search.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the pv move from the previous iteration gets +10,000,000; captures get MVV/LVA scores at generation (board.c); every move that raises alpha adds depth to history[from][to], and moves carry their history score; sort() does one selection-sort step per move searched, so only the moves actually visited are ordered",
+   "input": "the generated move list; pv[]; history[]",
+   "output": "the next move to search",
+   "state": "history (64x64 ints, reset per think)",
+   "update": "per node",
+   "assumptions": [
+    "moves that were good elsewhere in the tree are likely good here (the history heuristic, Schaeffer 1983)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+    "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp"
+   ],
+   "fitness_value_in_ancestor": "ordering is what makes alpha-beta cut; the incremental sort avoids sorting moves never searched",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/search.c:sort_pv, sort; history increments in search()"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two sort functions and the history array",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "PARAMETER",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms",
+   "fossil_ancestry": "tscp-1.81-kerrigan-1997",
+   "human_name": "eval() and its tables (eval.c 25-113 read; 113-398 by function list)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "material by piece_value[]; positional bonuses from 64-entry piece-square tables (pawn, knight, bishop, king, king-endgame) flipped for the dark side; pawn terms (doubled, isolated, backward, passed) from per-file pawn_rank arrays; king safety from the pawn shield in front of the king; the endgame king table switches on when material is low",
+   "input": "the board",
+   "output": "a score from the side to move's view",
+   "state": "none",
+   "update": "per leaf",
+   "assumptions": [
+    "a linear sum of hand-tuned terms approximates the game-theoretic value well enough for a shallow search"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+    "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw"
+   ],
+   "fitness_value_in_ancestor": "the only knowledge in the program; everything else is search",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "every number in the tables is the author's judgement",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tscp-1.81-kerrigan-1997/upstream/tree/tscp181/eval.c:25-113 (tables); eval() 113-398 by structure"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "eval.c; CANDIDATE because eval() itself was read by function list only",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
      "basis": "READ"
     },
     "temporal_horizon": {

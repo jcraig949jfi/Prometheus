@@ -129,20 +129,503 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:swipl-9.2.9/upstream/tree/swipl-devel-9.2.9/src/pl-vmi.c:1967-2010"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:swipl-9.2.9/upstream/tree/swipl-devel-9.2.9/src/pl-vmi.c:2171-2300"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:swipl-9.2.9/upstream/tree/swipl-devel-9.2.9/src/pl-vmi.c:2708-2830"
+   }
+  ],
+  "inspected_files": [
+   "src/pl-vmi.c: VMI inventory; I_CALL, I_DEPART, I_EXIT, C_OR, I_CUT bodies"
+  ],
+  "date": "2026-09-17T22:03Z",
+  "note": "a WAM-descended VM with 230 instructions in families: H_ (head unification), B_ (body argument construction), A_ (arithmetic), C_ (control: choice points, if-then-else, cuts), I_ (calls, exits, foreign calls, exceptions), S_ (supervisors per predicate kind), T_ (trie/tabling); the two mechanisms read are the frame/choice-point discipline and last-call optimisation",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:03Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/SWI-Prolog/swipl-devel/archive/refs/tags/V9.2.9.tar.gz sha256:adf85a87acb382d2c7a670f68f25736f9a737b97f731d8821358de68e6b84c77",
+   "payload_manifest_id": "techne tree_sha256 f025c50c8cb2bb360223ed5a80052a38cf2a1f4ee980efd2fb98a93e0ac6d78b (1869 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/swipl-devel-9.2.9/src/pl-vmi.c",
+     "payload_hash_read": "0699bf581b5996ef3d54a4a02dab9a75febcc94db490e1c7d9e91bca3df85874",
+     "techne_recorded_hash": "0699bf581b5996ef3d54a4a02dab9a75febcc94db490e1c7d9e91bca3df85874",
+     "match": true,
+     "refs": 6
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+   "fossil_ancestry": "swipl-9.2.9",
+   "human_name": "the 230 VMI() definitions in pl-vmi.c (H_* B_* A_* C_* I_* S_* T_*)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "clause heads compile to H_ instructions that unify incoming arguments against the head's structure (specialised per term type: atom, small int, var, first-var, functor, list, with FF/VF/VV variants); bodies compile to B_ instructions that build argument frames; A_ does compiled arithmetic; C_ handles in-clause control (or, if-then-else, soft cut, cuts); I_ handles predicate call/depart/exit, foreign determinate/nondeterminate calls, catch/throw, delimited continuations (reset/shift); S_ are per-predicate supervisors (static, dynamic, multifile, wrapped, undefined); T_ walk answer tries for tabling",
+   "input": "compiled clauses",
+   "output": "execution",
+   "state": "the local (frame) stack, global (term) stack, trail, choice-point chain",
+   "update": "per instruction",
+   "assumptions": [
+    "specialising instructions per term type and per variable-occurrence class (first/subsequent) is worth the instruction count (a JIT-free way to skip general unification)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists",
+    "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame"
+   ],
+   "fitness_value_in_ancestor": "the instruction set IS the engine's design record: every specialisation is a measured hot path made explicit",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Warren's Abstract Machine (1983) as the ancestor; SWI's set diverged from the WAM in the 1980s (its own documentation)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:swipl-9.2.9/upstream/tree/swipl-devel-9.2.9/src/pl-vmi.c:VMI inventory (grep)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the VMI list; MEDIUM because only names were read for most",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists",
+   "fossil_ancestry": "swipl-9.2.9",
+   "human_name": "I_DEPART vs I_CALL (pl-vmi.c 1967-2010, 2171-2280)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "I_CALL saves the current frame's state, allocates the next frame at lTop with the arguments already written there, and jumps to normal_call; I_DEPART is emitted for the last goal of a clause: if the newest choice point is older than the current frame (BFR <= FR) and the flag allows, the current frame is released (leaveDefinition) and the callee reuses its space, so tail-recursive predicates run in constant stack; watched frames and undefined predicates fall back to I_CALL semantics",
+   "input": "a call to a predicate as the last goal",
+   "output": "a frame reused or a new one",
+   "state": "FR, NFR, BFR, lTop",
+   "update": "per last call",
+   "assumptions": [
+    "a choice point newer than the frame pins the frame (it may be needed on backtracking); determinism is what makes the reuse safe"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+    "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame"
+   ],
+   "fitness_value_in_ancestor": "loops written as recursion do not grow the stack; the whole style of Prolog programming depends on it",
+   "failure_landscape": "by reading: a leftover choice point (a non-deterministic predicate earlier in the clause) silently disables the optimisation and the stack grows -- the classic Prolog performance trap, visible here as the BFR <= FR test",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the WAM's execute instruction; SWI's conditions (watched frames, undefined-procedure trapping) are its own",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:swipl-9.2.9/upstream/tree/swipl-devel-9.2.9/src/pl-vmi.c:1967-2010, 2171-2280"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "I_CALL, normal_call, I_DEPART",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame",
+   "fossil_ancestry": "swipl-9.2.9",
+   "human_name": "C_OR / I_CUT / I_EXIT (pl-vmi.c 2708-2830)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "C_OR pushes a jump choice point whose alternative is PC+skip (a disjunction's second branch), growing the local stack if needed; I_CUT discards every choice point newer than the current frame (nothing to do if BFR <= FR); I_EXIT leaves a clause: if newer alternatives exist the frame must stay for backtracking, else it is popped; the debugger hooks (ports) sit inside these instructions",
+   "input": "disjunctions and cuts in the clause",
+   "output": "a choice chain",
+   "state": "the choice-point chain (BFR), the trail",
+   "update": "per C_OR / cut / exit",
+   "assumptions": [
+    "backtracking is a chain walk to the newest choice point; the cut's semantics are 'newer than my frame'"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+    "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists"
+   ],
+   "fitness_value_in_ancestor": "disjunction and cut without predicate calls; the choice chain is the engine's search state",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:swipl-9.2.9/upstream/tree/swipl-devel-9.2.9/src/pl-vmi.c:2708-2830"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the three instructions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "pl-wam.c (the main loop, backtracking, exception unwinding), pl-comp.c (clause compilation), pl-tabling.c (SLG resolution / answer tries -- the most mechanism-rich unread module), pl-gc.c, pl-thread.c, libbf, the 1,860 other files",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~215,000 of 220,000 lines); residue",
+   "note": "pl-tabling.c should be its own specimen: tabled evaluation is a distinct mechanism family (the record's lineage tags name it)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "swipl-9.2.9"
+  },
+  {
+   "candidate": "'Prolog' / 'the WAM' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the instruction families, the frame discipline, the choice chain and tabling are separable; the vault's gnu-prolog-1.5.0 holds a different WAM to compare against",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "swipl-9.2.9"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "swipl-9.2.9::P.a_search_over_alternatives_must_retain_exactly_the_state_needed_to_resume_older_alternatives_and_discard_the_rest_as_soon_as_determinism_is_known",
+   "source_fossil": "swipl-9.2.9",
+   "source_evidence": "pl-vmi.c I_DEPART, C_OR, I_CUT",
+   "condition": "an organism explores alternatives depth-first with unification; each alternative may need the state at its creation; most calls turn out deterministic; memory is the cost",
+   "resource_or_constraint": "a frame stack and a choice chain",
+   "failure_condition": "stack growth on deterministic recursion, or a lost alternative",
+   "world_punishes": "keeping frames pinned by choice points that will never be taken; discarding a frame an alternative needed",
+   "world_rewards": "last-call reuse gated on the choice chain and cuts that trim it",
+   "observable_consequence": "stack size vs recursion depth on a deterministic loop with and without a spurious earlier choice point",
+   "vacuity_condition": "no alternatives (a functional language)",
+   "trivial_shortcuts": "unbounded memory",
+   "cheat_control": "a determinism oracle supplied by the world must give constant stack always; the ancestor with LCO disabled (the PLFLAG_LASTCALL flag in the code) must grow linearly: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: logic programming execution (SWI-Prolog, Wielemaker 1987-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+   "to": "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+   "to": "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame",
+   "to": "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "BFR <= FR",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "swipl-9.2.9",
+   "relation": "derived_from",
+   "to": "Warren 1983 (WAM); SWI-Prolog's own VM lineage from 1987; tabling from XSB (SLG resolution)",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "~98% of the source unread; the VM read as an inventory plus three instruction groups",
+   "tabling, GC and the compiler are each specimen-sized",
+   "nothing ran"
+  ],
+  "note": "a map, not a dissection; recorded as such",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

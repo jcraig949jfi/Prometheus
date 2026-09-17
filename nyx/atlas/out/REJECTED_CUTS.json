@@ -1,17 +1,17 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T15:48Z",
- "n": 181,
+ "built": "2026-09-17T22:05Z",
+ "n": 203,
  "by_reason": {
-  "OTHER": 60,
-  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 43,
-  "BELOW_MEANINGFUL_GRAIN": 8,
-  "GENERIC_LANGUAGE_MECHANICS": 36,
+  "OTHER": 69,
+  "NAME_HAS_NO_EXECUTABLE_BOUNDARY": 53,
+  "BELOW_MEANINGFUL_GRAIN": 9,
+  "DUPLICATES_A_CONTROL": 2,
+  "GENERIC_LANGUAGE_MECHANICS": 37,
   "EFFECT_FROM_ENVIRONMENT": 18,
   "INHERITED_FROM_RUNTIME_OR_LIBRARY": 11,
   "STATE_OBSERVATIONALLY_IRRELEVANT": 2,
-  "CANNOT_BE_ISOLATED": 2,
-  "DUPLICATES_A_CONTROL": 1
+  "CANNOT_BE_ISOLATED": 2
  },
  "rejected": [
   {
@@ -55,6 +55,30 @@
    "fossil": "avida"
   },
   {
+   "candidate": "the rest of the core (fetch, decode, issue, exec, LSU, caches, CSRs), the LFSR module body",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the record's tag 'hidden-state' is this module: the predictor is the core's only learned state",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "biriscv-branch-predictor"
+  },
+  {
+   "candidate": "the SUPPORT_BRANCH_PREDICTION = 0 branch (static fall-through)",
+   "reason": "DUPLICATES_A_CONTROL",
+   "evidence": "vault:biriscv-branch-predictor/upstream/tree/src/core/biriscv_npc.v:generate else branch",
+   "note": "the body ships its own negative control: prediction off",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "biriscv-branch-predictor"
+  },
+  {
+   "candidate": "'branch predictor' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "BTB, BHT, RAS and the shadow state are four memories with four update rules and four parameter switches",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "biriscv-branch-predictor"
+  },
+  {
    "candidate": "mbuf assembly, checksum, header template copy, option encoding (tcp_output.c 130-230)",
    "reason": "GENERIC_LANGUAGE_MECHANICS",
    "evidence": "packet construction; no decision",
@@ -85,6 +109,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "bsd-tcp-4.2-1983"
+  },
+  {
+   "candidate": "rulebld.c (compiling rules into the network), reteutil.c (beta memory structures, hashing), the alpha/pattern network, factmngr.c, deftemplates, the object system (COOL), the parser and I/O, the 340 other files",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~170,000 lines); residue",
+   "note": "rulebld.c is where node sharing between rules (Rete's other half) is decided; unread",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "clips-6.4.2-nasa"
+  },
+  {
+   "candidate": "'expert system shell' / 'Rete' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the join network, the agenda and the cycle are three files with three separable mechanisms; Rete names only the first",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "clips-6.4.2-nasa"
   },
   {
    "candidate": "JCL job streams (41 .jcl files)",
@@ -575,6 +615,22 @@
    "fossil": "glibc-rwlock-writer-starvation-2.36"
   },
   {
+   "candidate": "Value/Cell (the array model: shapes, ravel, cell types), the ~200 primitive functions and operators, the workspace (Archive), I/O and the )commands, the emacs/XML tooling",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~105,000 lines); residue",
+   "note": "the array model (Value.cc, 3,244 lines) is the other mechanism family of APL and is unread",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "gnu-apl-2.0"
+  },
+  {
+   "candidate": "'APL interpreter' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the evaluation-order machinery (this cut) and the array primitives (unread) are separable: the same parser could drive a different array model",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "gnu-apl-2.0"
+  },
+  {
    "candidate": "'gzip' as one organ",
    "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
    "evidence": "the matcher, the lazy policy, the window and the entropy coder are separate files with separate state; zlib later kept them separable",
@@ -725,6 +781,38 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "leveldb-1.23"
+  },
+  {
+   "candidate": "encode.c, lookup.c (pair table construction), bit.c (bit reader/writer), error_buffer.c, the SSE decode variant, the polynomial-search tools, the RS encoder and field arithmetic",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "lookup.c builds the pair_lookup the ACS organ depends on",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "libcorrect-quiet"
+  },
+  {
+   "candidate": "'libcorrect' / 'FEC' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "two codes, two decoders; the convolutional decoder alone is four separable mechanisms",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "libcorrect-quiet"
+  },
+  {
+   "candidate": "the other inference algorithms in libDAI (exact junction tree, mean field, TRW-BP, generalised BP, Gibbs, LC, ...), the factor graph / region graph data structures, the MATLAB/Python bindings, the tests",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~30,000 lines); residue",
+   "note": "the junction tree (exact) is the oracle for a Stage C world on small graphs, in the same body",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "libdai-mooij"
+  },
+  {
+   "candidate": "'belief propagation' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the message rule, the schedule and the stopping rule are separately replaceable; the vault's ldpc-codes-neal-2001 (cut 09-17) holds the same message rule with a fixed parallel schedule and a parity-check stopping rule",
+   "note": "RECURRENCE candidate R1: the sum-product message rule in ldpc dec.c iterprp vs bp.cpp calcNewMessage",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "libdai-mooij"
   },
   {
    "candidate": "MMX / SSE / SSE2 / AltiVec variants of every organ (viterbi*_mmx/sse/sse2/av, *bfly*.s, dotprod_*, peakval_*, sumsq_*)",
@@ -1087,6 +1175,46 @@
    "fossil": "particles-chopin-0.4"
   },
   {
+   "candidate": "the ~180 arithmetic/stack/memory/I/O primitives, pf_save.c (dictionary image save/load), pf_core.c, pf_words.c, the fth/ Forth sources, the C-call bridge (ID_CALL_C)",
+   "reason": "OTHER",
+   "evidence": "NOT READ; the primitives are the alphabet, not mechanisms",
+   "note": "pf_save.c is where the 'image' portability lives; unread",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pforth"
+  },
+  {
+   "candidate": "'Forth' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "inner interpreter, control primitives, outer interpreter and dictionary are four separable mechanisms; the vault's tinyscheme/femtolisp interpreters replace each differently",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pforth"
+  },
+  {
+   "candidate": "expected_returns.py (mean/EMA/CAPM return models), risk_models sample/semi/exp covariances, cov<->corr helpers",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/expected_returns.py; vault:pyportfolioopt-1.5.5/upstream/tree/pyportfolioopt-1.5.5/pypfopt/risk_models.py:101-355",
+   "note": "estimators that are one formula each; the shrinkage organ is where a mechanism lives",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pyportfolioopt-1.5.5"
+  },
+  {
+   "candidate": "black_litterman.py, cla.py, hierarchical_portfolio.py (HRP), discrete_allocation.py, the semivariance/CVaR/CDaR frontiers, plotting",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "cla.py (Markowitz's critical line algorithm) and HRP (Lopez de Prado) are the two mechanism-bearing modules left unread",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pyportfolioopt-1.5.5"
+  },
+  {
+   "candidate": "'portfolio optimisation' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the estimator (shrinkage), the transformation (Sharpe substitution), the repair (PSD) and the solver call are separable",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pyportfolioopt-1.5.5"
+  },
+  {
    "candidate": "the numerical core (Riccati, Lyapunov, Schur, ODE integration, pole placement)",
    "reason": "INHERITED_FROM_RUNTIME_OR_LIBRARY",
    "evidence": "vault:python-control/upstream/tree/control/mateqn.py:18,380,532,539,578; timeresp/nlsys via scipy -- every heavy computation is a call into scipy or slycot",
@@ -1181,6 +1309,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "reed-solomon-rockliff-1991"
+  },
+  {
+   "candidate": "the setters and getters, the Arduino include",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:simple-kalman-denyssene/upstream/tree/src/SimpleKalmanFilter.cpp:set*/get*",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "simple-kalman-denyssene"
+  },
+  {
+   "candidate": "'Kalman filter' as the name of this body",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "no prediction step, no variances, an adaptive error term: it is a scalar exponential smoother with an innovation-driven gain; the vault's filterpy-labbe and particles/kalman.py hold the actual recursion (recurrence test by execution is the natural Stage C)",
+   "note": "RECURRENCE candidate against kalman.py at R0 (name only) -- by reading the mechanisms DIFFER",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "simple-kalman-denyssene"
   },
   {
    "candidate": "priority-inheritance option (the model's own switch)",
@@ -1279,6 +1423,22 @@
    "fossil": "ssw-smith-waterman"
   },
   {
+   "candidate": "pl-wam.c (the main loop, backtracking, exception unwinding), pl-comp.c (clause compilation), pl-tabling.c (SLG resolution / answer tries -- the most mechanism-rich unread module), pl-gc.c, pl-thread.c, libbf, the 1,860 other files",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~215,000 of 220,000 lines); residue",
+   "note": "pl-tabling.c should be its own specimen: tabled evaluation is a distinct mechanism family (the record's lineage tags name it)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "swipl-9.2.9"
+  },
+  {
+   "candidate": "'Prolog' / 'the WAM' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the instruction families, the frame discipline, the choice chain and tabling are separable; the vault's gnu-prolog-1.5.0 holds a different WAM to compare against",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "swipl-9.2.9"
+  },
+  {
    "candidate": "'AES' as one organ",
    "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
    "evidence": "five mechanisms each in its own function with none sharing state; the modes are a sixth layer over the block function",
@@ -1333,6 +1493,22 @@
    "note": "",
    "cut_mode": "ANCESTRY_AWARE",
    "fossil": "tinycc"
+  },
+  {
+   "candidate": "move generation, make/unmake with the history stack, Zobrist hashing (board.c), the xboard protocol and book (main.c, book.c)",
+   "reason": "OTHER",
+   "evidence": "read by function list only; generic chess mechanics and I/O",
+   "note": "the Zobrist hash is the repetition detector's input (an organ elsewhere in the vault's hash lineage)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tscp-1.81-kerrigan-1997"
+  },
+  {
+   "candidate": "'chess engine' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "search, quiescence, deepening, ordering and evaluation are separately replaceable and are the axes along which every later engine differs",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tscp-1.81-kerrigan-1997"
   },
   {
    "candidate": "tb.v testbench",

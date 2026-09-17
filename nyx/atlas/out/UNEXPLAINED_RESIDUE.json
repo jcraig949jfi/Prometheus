@@ -1,10 +1,10 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T15:48Z",
+ "built": "2026-09-17T22:05Z",
  "by_state": {
-  "LARGE_RESIDUE": 5,
-  "PARTIALLY_EXPLAINED": 28,
-  "EXPLAINED_BY_CURRENT_CUT": 14,
+  "LARGE_RESIDUE": 8,
+  "EXPLAINED_BY_CURRENT_CUT": 16,
+  "PARTIALLY_EXPLAINED": 33,
   "CUT_INSTRUMENT_INSUFFICIENT": 1
  },
  "residue": [
@@ -20,6 +20,16 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "biriscv-branch-predictor",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "the core outside npc.v not read; the LFSR replacement body not read",
+    "nothing ran; the record says RUNNABLE_EMULATED (iverilog on M2), and the parameter switches make each organ its own ablation"
+   ],
+   "note": "every always block and assign in biriscv_npc.v is in an organ",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "bsd-tcp-4.2-1983",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -28,6 +38,17 @@
     "the Karn ambiguity (RTT sample spanning a retransmission) is a reading-level claim: t_rtt is not cleared at TCPT_REXMT in tcp_timer.c and tcp_output.c only starts a timer on new data; not run"
    ],
    "note": "the sender's rate-governing machinery is fully accounted for: window, retransmit timer, persist, SWS thresholds; the finding is what is NOT there",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "clips-6.4.2-nasa",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "only three of 345 files read",
+    "network construction and node sharing unread",
+    "nothing ran"
+   ],
+   "note": "the three mechanisms that define a production system are located; the engine's size is why this is COARSE",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -47,6 +68,7 @@
    "unexplained": [
     "durable.py and external.py not read; practical.py read by structure only",
     "nothing ran; pure Python -> M3-native world candidate (ASK 1 to Techne in #358); the tests are the oracle",
+    "ANNOTATION 2026-09-17 ~22:00Z (SCOUT, NON-ADJUDICATIVE; the line above is kept): the body is PYTHON 2 ONLY. Under CPython 3.11 Acceptor.recv_prepare, Proposer.recv_promise and Learner.recv_accepted each raise TypeError on the first message because they compare a ProposalID with None ('>' unsupported); the tests use itertools.izip/assertEquals. It is NOT an M3-native world candidate as it stands; running it needs Python 2 or a SOURCE-level shim (a derived body). Reported to Techne with the record defect",
     "the paxos-vs-raft recurrence (willemt-raft cut 09-17) is a reading-level claim"
    ],
    "note": "the three essential classes are accounted for line by line",
@@ -219,6 +241,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "gnu-apl-2.0",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "the array model and every primitive unread",
+    "the 40 reduce_* bodies unread",
+    "nothing ran"
+   ],
+   "note": "the evaluation-order mechanism is located; the rest is named",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "gzip-1.2.4-1993",
    "state": "PARTIALLY_EXPLAINED",
    "unexplained": [
@@ -279,6 +312,27 @@
     "nothing ran here; Techne's reopen harness is on M1"
    ],
    "note": "the write path (group commit, log, admission) and the version/compaction machinery are read",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "libcorrect-quiet",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the RS decoder is a CANDIDATE by names only",
+    "lookup.c (the pair table) not read",
+    "nothing ran; the vault holds libfec-karn (same lineage) and viterbi-hmm-xukmin (the toy) -- a three-body recurrence test on one code is the natural Stage E item"
+   ],
+   "note": "the convolutional decoder's four mechanisms are accounted for",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "libdai-mooij",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "only bp.cpp read; damping, the log-domain details and the belief computations for factors read by name",
+    "nothing ran; the body's junction tree is the oracle"
+   ],
+   "note": "the BP core's three mechanisms are accounted for",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -395,6 +449,27 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "pforth",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "the primitive set, the image save/load and the Forth-level system unread",
+    "nothing ran"
+   ],
+   "note": "the four interpreter mechanisms are located",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "pyportfolioopt-1.5.5",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "cla.py and HRP unread",
+    "the body needs cvxpy, absent on M3: NOT an M3-native world candidate as it stands (contradicts my #358 list, which named it from the record; corrected here)",
+    "nothing ran"
+   ],
+   "note": "the optimiser layer's four mechanisms are located",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "python-control",
    "state": "LARGE_RESIDUE",
    "unexplained": [
@@ -425,6 +500,15 @@
     "the silent pass-through on decoding failure is a reading claim; a Stage C run with tt + 1 injected errors would show it directly"
    ],
    "note": "every function of rs.c is assigned",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "simple-kalman-denyssene",
+   "state": "EXPLAINED_BY_CURRENT_CUT",
+   "unexplained": [
+    "nothing ran; 82 lines port to Python in minutes -- a candidate for an M3-native recurrence test against particles/kalman.py"
+   ],
+   "note": "every line is accounted for",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -461,6 +545,17 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "fossil_id": "swipl-9.2.9",
+   "state": "LARGE_RESIDUE",
+   "unexplained": [
+    "~98% of the source unread; the VM read as an inventory plus three instruction groups",
+    "tabling, GC and the compiler are each specimen-sized",
+    "nothing ran"
+   ],
+   "note": "a map, not a dissection; recorded as such",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "fossil_id": "tiny-aes-c",
    "state": "EXPLAINED_BY_CURRENT_CUT",
    "unexplained": [
@@ -479,6 +574,17 @@
     "nothing ran here"
    ],
    "note": "the architecture is confidently cut at subsystem grain; every organ below the value stack is CANDIDATE-quality evidence despite the ACCEPTED status of the ones whose entry points were read",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "fossil_id": "tscp-1.81-kerrigan-1997",
+   "state": "PARTIALLY_EXPLAINED",
+   "unexplained": [
+    "eval() body read by function list only (organ is CANDIDATE)",
+    "board.c and main.c not read line by line",
+    "nothing ran"
+   ],
+   "note": "search.c is accounted for line by line",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
