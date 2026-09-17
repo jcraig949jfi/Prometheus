@@ -1,9 +1,9 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:26Z",
- "n": 175,
+ "built": "2026-09-17T22:34Z",
+ "n": 176,
  "by_relation": {
-  "algorithm_from": 73,
+  "algorithm_from": 74,
   "derived_from": 10,
   "shares_ancestor_with": 43,
   "historical_version_of": 12,
@@ -886,6 +886,13 @@
    "to": "libdai-mooij",
    "note": "particle MCMC (PMMH) and belief propagation: two inference lineages; PMMH added to this specimen in batch 06 phase 5",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "particles-chopin-0.4",
+   "relation": "algorithm_from",
+   "to": "Gordon, Salmond & Smith 1993 (bootstrap filter); Del Moral 2004 (Feynman-Kac); Chopin & Papaspiliopoulos 2020 (the book this library accompanies)",
+   "note": "from the docstrings; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "particles-chopin-0.4",

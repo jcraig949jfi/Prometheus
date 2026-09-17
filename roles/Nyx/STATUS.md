@@ -1,6 +1,6 @@
 # Nyx status
 
-Currency: 2026-09-18 ~02:40 UTC (instance gandalf-9e21f277 on M3/GANDALF).
+Currency: 2026-09-18 ~04:15 UTC (instance gandalf-9e21f277 on M3/GANDALF).
 
 seat state: ACTIVE (this M3 instance; the M2 instance m2-0c0adfe1 closed down 2026-09-17, c60b78f17, and its
   'parked' STATUS is superseded by this file). Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3; Amendment 1
@@ -19,8 +19,10 @@ what it asserts (atlas, python -m nyx.atlas.build): census 121; cut 68 (COARSE 4
 pipeline objects: MECH-GZIP-LEVELTABLE-003 (frozen 5dbf46a2..., with Harmonia since 09-16, no return; NOT runnable on M3);
   MECH-PARTICLES-ESSTRIGGER-001 (frozen 5b8d6ae4...; RAN on M3 by Harmonia 2026-09-17: cheat/negative PASS, positive control FAIL
   -> PREDICTION_INDETERMINATE + PREDICTION_PACKET_CHALLENGE, #363; immutable); MECH-PARTICLES-ESSTRIGGER-002 (frozen 186047db...,
-  supersedes 001: positive control in the 1/N regime, I0 re-derived, W2 sigmaY=1.0 added as I4/I5; posted #364; ruler ready).
-gates (nyx/atlas/gates/LEDGER.json): cuts_created 68; cuts_returned_with_verdict 0; handoffs open 4 (Harmonia x2 -- gzip
+  supersedes 001; RAN on M3 by Harmonia, #382: all controls PASS; CUT_SUPPORTED on the boundary (a)/(b) on W1 and W2; claim (c) scheme ordering
+  PREDICTION_FAILED at 50 seeds + INDETERMINATE at 400 -> DROPPED from the cut (D' 2026-09-18), to be re-posed as MECH-PARTICLES-SCHEME-001
+  with a power statement; immutable).
+gates (nyx/atlas/gates/LEDGER.json): cuts_created 68; cuts_returned_with_verdict 1 (particles-chopin-0.4, CUT_SUPPORTED, #382); handoffs open 4 (Harmonia x2 -- gzip
   003 and particles 001; Techne x2 -- #296 first-pass return, #358 census/asks); returns received 7 (3 on 09-16; #360 ACK, #363 INDETERMINATE + CHALLENGE on 09-17; #377 Techne POET/ALife autopsy, ACCEPT, answered #379 with ASK 3-5).
 record defects for Techne (this block): the 4.3-Reno tape body lacks tape files 5-7 (record says it contains the Reno TCP;
   cut ORGAN0); viterbi-hmm-xukmin tags; ELIZA 1965 matcher outside the body.
@@ -30,8 +32,8 @@ incident (calibration ledger 2026-09-17): boot-time `git pull` moved the canonic
   hephaestus/src/closure_q045.py is in stash@{0} of C:\Prometheus, intact; pop it in a worktree.
 lane: nyx/ and roles/Nyx/ only.
 
-next executable action: assimilate Harmonia's return on 002 (D') when it arrives; meanwhile Stage A on positions 13, 18 and 41-50 of
-  the order; the operator's 2026-09-18 directive (roles/Nyx/prompts/2026-09-18_poet_alife_cut_into_bodies/) makes the POET /
+next executable action: Stage A on positions 41-50 of the order (bodies 9/10 MATCH; pari-gp ORIGIN_UNREACHABLE from this host) and 13, 18;
+  the next packet on the ruler is the POET PATA-EC one if its body lands (H5), else MECH-PARTICLES-SCHEME-001 with a power statement; the operator's 2026-09-18 directive (roles/Nyx/prompts/2026-09-18_poet_alife_cut_into_bodies/) makes the POET /
   Avida / Tierra / ASAL / TerraLingua cuts the priority THE MOMENT Techne lands the bodies (ASK 3 in #379): POET's discard
   boundary first, then Avida's SavePopulation path (extend the existing cut, before any run); refresh the census when they land; the paxos packet is
   OFF (body is Python-2-only, SCOUT 2026-09-17); the next M3-runnable packet candidate is Lenia (pure numpy) once Techne
