@@ -62,3 +62,11 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   length-matched randoms 1/10 (failed set mean 20.8 instructions vs 5.9);
   evolved_solved 8/10 = W0 sub-solution again. W3_K2 4-bit N100 G40 is
   REACHABLE (4/13), not unreachable. Ledger L2-027..L2-029. Next: C2-SFE-05.
+
+## 04:35-04:50 -- C2-SFE-05 (dry a01; engine a02 of record; CAPABLE_NEGATIVE: retention question posed at last)
+
+- 81 s; 1 world, 32 artifacts, 24 records, 0 errors. Streams capable 5/6 on
+  the sealed queries BEFORE freezing (W0 solver present in every capable
+  stream; source unsolved in 4 of them). top_k = behavioral = hybrid = 0.48
+  solve fraction (0/5 paired wins), uniform 0.28. Seed 6's W2_K2 stream held
+  W1_d4 0.96 / W1_d16 0.92 solvers: a corridor (L2-031). Next: C2-SFE-06.
