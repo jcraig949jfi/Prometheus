@@ -147,17 +147,484 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spdylay/upstream/tree/lib/spdylay_session.c:357-420"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spdylay/upstream/tree/lib/spdylay_session.c:1025-1097"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spdylay/upstream/tree/lib/spdylay_zlib.c:229-240"
+   }
+  ],
+  "inspected_files": [
+   "lib/spdylay_session.c 99-110, 202-206, 357-420, 1025-1097 (structure), 1745-2382 (names)",
+   "lib/spdylay_zlib.c 33-60, 229-240"
+  ],
+  "date": "2026-09-17T23:26Z",
+  "note": "the three SPDY ideas that HTTP/2 inherited, each visible as a data structure: streams multiplexed on one connection with a per-stream priority that orders a priority queue of outbound frames (control frames such as PING and SETTINGS jump the queue by fixed priorities; SYN_STREAMs keep insertion order at the lowest priority); header compression by deflate with a shared pre-seeded dictionary of common header names and values (one per protocol version); and per-stream plus per-connection flow-control windows updated by WINDOW_UPDATE frames",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:26Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/tatsuhiro-t/spdylay@ce6426b046722c06b0a004a82513f4f076719651",
+   "payload_manifest_id": "techne tree_sha256 29f832fd903ac6bcb4c1cf5eef7fa7d0d4b050f908250b5465db6f6788c57a75 (209 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/lib/spdylay_session.c",
+     "payload_hash_read": "a37f923c426e3f130edf87b5c64ea03ca5f09086204e97b88ad09c4c01af0825",
+     "techne_recorded_hash": "a37f923c426e3f130edf87b5c64ea03ca5f09086204e97b88ad09c4c01af0825",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/lib/spdylay_zlib.c",
+     "payload_hash_read": "8ff4dad6a0104d8791b8777aad49fbab29422698bda98ec1f289ce01b7c05851",
+     "techne_recorded_hash": "8ff4dad6a0104d8791b8777aad49fbab29422698bda98ec1f289ce01b7c05851",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "spdylay::outbound_frames_ordered_by_a_priority_queue_keyed_on_stream_priority_then_sequence_with_fixed_priorities_for_ping_and_settings_and_a_second_queue_for_stream_openings",
+   "fossil_ancestry": "spdylay",
+   "human_name": "spdylay_session_add_frame (357-420): item->seq, item->pri per frame type (PING SPDYLAY_OB_PRI_PING, SETTINGS -1, SYN_REPLY / RST_STREAM / HEADERS the stream's pri, SYN_STREAM lowest); ob_pq and ob_ss_pq (202-206); spdylay_outbound_item_compar (99); the pop logic 1025-1097",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every frame to send becomes an outbound item with a sequence number and a priority; the priority is the stream's for frames belonging to an open stream, a fixed high value for PING, a fixed value for SETTINGS, and the lowest for new SYN_STREAMs, which also go to a separate queue so that stream openings are sent in the order requested and never starve data; the sender pops the higher-priority head of the two queues (ties broken by sequence), so a client's priority hints translate directly into transmission order on the single TLS connection",
+   "input": "frames from the application and the protocol",
+   "output": "an ordered byte stream",
+   "state": "two priority queues; next_seq",
+   "update": "per frame",
+   "assumptions": [
+    "the application's priorities are meaningful; control frames must not wait behind data (a stalled PING would look like a dead connection)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spdylay::per_stream_and_per_connection_flow_control_windows_consumed_by_data_frames_and_replenished_by_window_update_frames",
+    "spdylay::header_blocks_compressed_by_deflate_with_a_pre_seeded_shared_dictionary_of_common_header_names_and_values_per_protocol_version"
+   ],
+   "fitness_value_in_ancestor": "head-of-line blocking of HTTP/1.1 removed without multiple connections; the priority model HTTP/2 refined into a dependency tree",
+   "failure_landscape": "by reading: priorities are absolute integers, so a low-priority stream can starve indefinitely behind a busy high one (HTTP/2's weighted tree was the answer); the two-queue split is a workaround for SYN_STREAM ordering",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "SPDY draft 2/3 (Google 2009-2012); RFC 7540 section 5.3 for the successor",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spdylay/upstream/tree/lib/spdylay_session.c:99-110, 202-206, 357-420, 1025-1097"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "add_frame, the compare function and the pop path",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "spdylay::header_blocks_compressed_by_deflate_with_a_pre_seeded_shared_dictionary_of_common_header_names_and_values_per_protocol_version",
+   "fossil_ancestry": "spdylay",
+   "human_name": "spdylay_zlib.c: spdy2_hd_dict (33), spdy3_hd_dict (48), spdylay_select_hd_dict (229-240); deflate / inflate with SetDictionary",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each direction of a session keeps a zlib stream for header blocks; the stream is primed with a fixed dictionary containing the header names and values that appear in nearly every request (methods, status codes, common header names, dates), so even the first request's headers compress well; SPDY/2 and SPDY/3 have different dictionaries; the compressor state persists across frames, so repeated headers cost almost nothing",
+   "input": "name/value header blocks",
+   "output": "compressed bytes",
+   "state": "the zlib streams (per direction)",
+   "update": "per header block",
+   "assumptions": [
+    "headers are highly redundant across requests; a shared prefix dictionary fixes the cold-start cost"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spdylay::outbound_frames_ordered_by_a_priority_queue_keyed_on_stream_priority_then_sequence_with_fixed_priorities_for_ping_and_settings_and_a_second_queue_for_stream_openings"
+   ],
+   "fitness_value_in_ancestor": "request headers shrink by most of their size; the mechanism HTTP/2 REPLACED (with HPACK) because compressing secrets alongside attacker-controlled bytes leaks them (CRIME, 2012)",
+   "failure_landscape": "by reading: the compression context is shared across streams of one connection, which is exactly the CRIME side channel; the body predates the fix",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "deflate with a preset dictionary (zlib's deflateSetDictionary)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spdylay/upstream/tree/lib/spdylay_zlib.c:33-60, 229-240"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "spdylay_zlib.c",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "spdylay::per_stream_and_per_connection_flow_control_windows_consumed_by_data_frames_and_replenished_by_window_update_frames",
+   "fossil_ancestry": "spdylay",
+   "human_name": "spdylay_session_on_window_update_received (1877), update_initial_window_size (1745), update_recv_window_size / recv_connection_window_size (2359-2382), predicate_window_update_send (708), add_window_update (2776)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each stream carries a send window decremented by the data it sends and a receive window decremented by what it receives; the receiver sends WINDOW_UPDATE when its consumed bytes cross a threshold, and the sender may not send data beyond its window; SPDY/3 added a connection-level window over all streams; a SETTINGS change of the initial window size adjusts every open stream's window by the difference",
+   "input": "DATA frames; WINDOW_UPDATE and SETTINGS frames",
+   "output": "permission to send",
+   "state": "window sizes per stream and per session",
+   "update": "per frame",
+   "assumptions": [
+    "receiver-driven credit is the right control when many streams share one TCP connection (TCP's own window is per connection, so one slow consumer would stall all)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spdylay::outbound_frames_ordered_by_a_priority_queue_keyed_on_stream_priority_then_sequence_with_fixed_priorities_for_ping_and_settings_and_a_second_queue_for_stream_openings"
+   ],
+   "fitness_value_in_ancestor": "one stalled stream no longer blocks the others; the same design in HTTP/2 section 6.9",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spdylay/upstream/tree/lib/spdylay_session.c:708, 1745-1877, 2359-2382, 2776 (names and signatures; bodies not read)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the window functions; CANDIDATE because read by name",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the frame encoder/decoder (spdylay_frame.c), the stream state machine (spdylay_stream.c), the receive path and its callbacks (mem_recv 2474-2738), NPN negotiation, the map / pq / buffer containers, the shrpx proxy and examples, the tests",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spdylay"
+  },
+  {
+   "candidate": "'SPDY' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "multiplexing with priorities, header compression and flow control are separable and HTTP/2 kept two, replaced one and refined the third",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spdylay"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "spdylay::P.many_request_response_streams_must_share_one_ordered_connection_such_that_a_slow_or_blocked_stream_does_not_delay_the_others_and_headers_repeated_on_every_request_cost_almost_nothing",
+   "source_fossil": "spdylay",
+   "source_evidence": "spdylay_session.c add_frame and the queues; spdylay_zlib.c dictionaries; the window functions",
+   "condition": "an organism carries N concurrent request/response exchanges over one reliable ordered byte stream; consumers drain at different rates; each exchange carries hundreds of bytes of mostly repeated headers; the score is page-load latency and bytes on the wire",
+   "resource_or_constraint": "one connection; a compression context per direction",
+   "failure_condition": "head-of-line blocking (one slow stream delays the rest) or header bytes dominating small requests",
+   "world_punishes": "one exchange at a time; per-request compression from a cold context",
+   "world_rewards": "multiplexed frames with priorities, per-stream credit windows, a persistent compressor with a seeded dictionary",
+   "observable_consequence": "page-load time and header bytes for a page of 50 resources over HTTP/1.1 (6 connections) vs SPDY over one connection, with one resource's consumer stalled",
+   "vacuity_condition": "one resource per page",
+   "trivial_shortcuts": "many parallel connections (which the world may cap, as browsers did)",
+   "cheat_control": "an organism with unlimited connections must match SPDY's latency at higher connection count; serial HTTP/1.1 must show the head-of-line delay; SPDY with the dictionary removed must show the cold-start header cost: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: multiplexed HTTP transport (Google SPDY 2009; spdylay 2012-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "spdylay::outbound_frames_ordered_by_a_priority_queue_keyed_on_stream_priority_then_sequence_with_fixed_priorities_for_ping_and_settings_and_a_second_queue_for_stream_openings",
+   "to": "spdylay::per_stream_and_per_connection_flow_control_windows_consumed_by_data_frames_and_replenished_by_window_update_frames",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "data frames wait for window",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spdylay::header_blocks_compressed_by_deflate_with_a_pre_seeded_shared_dictionary_of_common_header_names_and_values_per_protocol_version",
+   "to": "spdylay::outbound_frames_ordered_by_a_priority_queue_keyed_on_stream_priority_then_sequence_with_fixed_priorities_for_ping_and_settings_and_a_second_queue_for_stream_openings",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "compressed control frames enter the queue",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "spdylay",
@@ -165,10 +632,23 @@
    "to": "HTTP/2 (RFC 7540)",
    "note": "SPDY was the basis of the standard that replaced it [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "spdylay",
+   "relation": "algorithm_from",
+   "to": "SPDY drafts 2 and 3 (Google); superseded by HTTP/2 (RFC 7540), whose reference library nghttp2 is this author's successor to this body",
+   "note": "from the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "frame codec, stream states and the receive path unread",
+   "flow control read by name (CANDIDATE)",
+   "nothing ran"
+  ],
+  "note": "the three inherited ideas are located as data structures; the record's point (SPDY as the basis of HTTP/2) is visible in them",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

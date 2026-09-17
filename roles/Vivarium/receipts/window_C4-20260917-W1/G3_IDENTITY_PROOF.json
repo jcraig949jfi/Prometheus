@@ -1,22 +1,22 @@
 {
   "schema": "vivarium_g3_identity_proof.v1",
-  "at": "2026-09-17T19:20:50Z",
+  "at": "2026-09-17T23:18:18Z",
   "host": "SPECTREX5",
   "gate_item": "G3 Campaign-4 consumer identity live and its M2 B1 read grant valid",
   "checks": {
     "consumer_alive": {
       "ok": true,
       "worker_id": "vivarium@m2",
-      "pid": 3068,
+      "pid": 13896,
       "host": "SPECTREX5",
-      "heartbeat_age_s": 4.2,
+      "heartbeat_age_s": 1.9,
       "pid_is_live_python_here": true,
       "current_experiment": null
     },
     "build_pinned": {
       "ok": true,
-      "restart_receipt_base_sha": "08081c6ed2a3c4f32731164b94936f608c071f81",
-      "pinned_worktree_head": "08081c6ed2a3c4f32731164b94936f608c071f81",
+      "restart_receipt_base_sha": "ad222d147d55efe743f4f3283bed7764d70167bb",
+      "pinned_worktree_head": "ad222d147d55efe743f4f3283bed7764d70167bb",
       "restart_receipt_ok": true,
       "refuse": []
     },
@@ -53,21 +53,27 @@
       "meaning": "the consumer's token authenticates as the client that owns the worlds it creates; the marked test identity is refused on them"
     },
     "b1_read_grant_to_archaeon": {
-      "ok": false,
+      "ok": true,
       "direction": "OWNER = Vivarium grants; GRANTEE = Archaeon's engine client (config.json read_scopes[0].grantee)",
-      "grantee_configured": "cli_1029e9255a074157a1b3ba1e",
-      "engine_answer": "HTTP 404: {'error': 'not_found', 'message': 'unknown grantee', 'client_id': 'cli_1029e9255a074157a1b3ba1e'}",
-      "receipt": "D:\\Prometheus-data\\vivarium\\var\\scope_reconcile-2026-09-17T165004.49.json",
-      "at": "2026-09-17T16:50:04.492045+00:00",
+      "grantee_configured": "cli_6354da5b5955a711dcc0b2af",
+      "engine_answer": "granted",
+      "receipt": "D:\\Prometheus-data\\vivarium\\var\\scope_reconcile-2026-09-17T231514.87.json",
+      "at": "2026-09-17T23:15:14.873678+00:00",
+      "scope_id": "scp_4aff817e018de830f9193cbd",
+      "grant_id": "gnt_2006a1ac5b254962fbc1ed9d",
+      "grant_revoked_ts": null,
+      "worlds_in_scope": 26,
+      "name_prefix": "viv-",
+      "grantee_side_read_to_verify": "GET /v2/read/worlds?scope=scp_4aff817e018de830f9193cbd as the grantee (sfclient.read_worlds(scope=...)); expect 26 viv-* worlds; a 403/404 means the grant is not live",
       "what_closes_it": "Archaeon registers its Campaign-4 client on THIS ledger (P1) and tells Vivarium the client_id; Vivarium sets read_scopes[0].grantee to it (a committed, non-secret config change + pin advance); the next batch boundary grants every viv-* world. Not an engine-side action; not Daedalus's."
     }
   },
   "outbox": {
-    "PENDING": 146
+    "DELIVERED": 146
   },
   "ok_for_gate": {
     "identity_live": true,
-    "read_grant_valid": false
+    "read_grant_valid": true
   },
-  "digest": "sha256:04ab1be9bdbb8fe90d486adaa47a340e37dbb0e9fe003f73ee634552d475c13f"
+  "digest": "sha256:cbf7fc4716cd7438574d3ddd60a47e4a7e1aa5727218393f739244cb176c3109"
 }

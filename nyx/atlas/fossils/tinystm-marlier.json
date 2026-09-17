@@ -132,17 +132,498 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinystm-marlier/upstream/tree/src/stm_internal.h:40-70"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinystm-marlier/upstream/tree/src/stm_internal.h:165-250"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinystm-marlier/upstream/tree/src/stm_wbetl.h:38-110"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinystm-marlier/upstream/tree/src/stm_wbetl.h:852-930"
+   }
+  ],
+  "inspected_files": [
+   "src/stm_internal.h 40-70, 165-250",
+   "src/stm_wbetl.h 38-110, 852-930"
+  ],
+  "date": "2026-09-17T23:26Z",
+  "note": "software transactional memory with a global version clock: every memory word maps (by address hash) to a lock word that is either owned (pointing at the writer's write-set entry) or free and carrying the version at which the word was last committed; a transaction reads a word only if its version is within the transaction's validity range, and if not, tries to EXTEND the range to the current clock by re-validating its whole read set; at commit it takes a new timestamp from the clock, validates the read set once more (unless nothing else committed meanwhile), writes back its buffered values and releases the locks with the new version; three designs (write-back with locks taken at encounter or at commit, write-through) and four contention managers are compile-time switches",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:26Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/patrickmarlier/tinystm@02c10ccb26ef68845dc97e4a4e7fc81be02eed42",
+   "payload_manifest_id": "techne tree_sha256 9fd0d198dbefbcdb02daff6b26a88bc3417cd009f8e80dcfa84275bad04f4f8a (111 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/src/stm_internal.h",
+     "payload_hash_read": "104b4ca3f334c02e07911170abeaea04574ac78de26948e86f34356a5388825a",
+     "techne_recorded_hash": "104b4ca3f334c02e07911170abeaea04574ac78de26948e86f34356a5388825a",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/src/stm_wbetl.h",
+     "payload_hash_read": "a015e8c357972ea522d691b6082e17409458ac91647c3b7a40430708e7441174",
+     "techne_recorded_hash": "a015e8c357972ea522d691b6082e17409458ac91647c3b7a40430708e7441174",
+     "match": true,
+     "refs": 4
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter",
+   "fossil_ancestry": "tinystm-marlier",
+   "human_name": "stm_internal.h 165-250: OWNED_MASK, WRITE_MASK, INCARNATION_MASK, LOCK_GET_TIMESTAMP(l) = l >> LOCK_BITS, LOCK_GET_ADDR, LOCK_GET_INCARNATION; the lock array indexed by address hash; GET_CLOCK on a global counter",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a fixed array of lock words covers memory by hashing addresses to stripes; a word's low bit says whether it is owned by an in-flight writer, in which case the rest is a pointer to that writer's write-set entry (so a reader can find the owning transaction and, in write-through mode, the old value), otherwise the high bits are the version (the global clock value at the last commit that wrote the stripe) and a small incarnation count guards against a released-and-reacquired lock looking unchanged",
+   "input": "an address",
+   "output": "a lock word to read or CAS",
+   "state": "the lock array; the global clock",
+   "update": "per access and per commit",
+   "assumptions": [
+    "a global clock is cheap enough (one atomic increment per commit) and gives a total order of commits; striping trades false conflicts for table size"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinystm-marlier::read_set_validation_by_comparing_each_read_stripe_s_current_version_with_the_version_seen_and_snapshot_extension_that_moves_the_transaction_s_upper_bound_to_the_clock_when_validation_succeeds",
+    "tinystm-marlier::commit_that_takes_a_fresh_clock_value_validates_the_read_set_if_anyone_committed_since_start_writes_back_the_buffered_values_and_releases_each_lock_with_the_new_version"
+   ],
+   "fitness_value_in_ancestor": "validation is a comparison of integers, not a re-read of values (the time-based STM idea)",
+   "failure_landscape": "by reading: the clock is a contention point on many cores; hash collisions between unrelated addresses cause false aborts",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Riegel, Felber & Fetzer 2006 (LSA) and Dice, Shalev & Shavit 2006 (TL2): the two time-based designs this body generalises",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinystm-marlier/upstream/tree/src/stm_internal.h:165-250"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the lock-word macros and the clock",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinystm-marlier::read_set_validation_by_comparing_each_read_stripe_s_current_version_with_the_version_seen_and_snapshot_extension_that_moves_the_transaction_s_upper_bound_to_the_clock_when_validation_succeeds",
+   "fossil_ancestry": "tinystm-marlier",
+   "human_name": "stm_wbetl_validate (38-80): for each read entry, if the lock is owned by another transaction fail, else if its timestamp differs from the recorded version fail; stm_wbetl_extend (90-110): now = GET_CLOCK; if validate then tx->end = now",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a transaction records for every read the stripe's version; validation walks the read set and fails if any stripe is now owned by someone else or carries a different version; a transaction whose read would need a version newer than its current upper bound does not abort immediately but tries to extend: it reads the clock, validates, and if nothing it read has changed it adopts the new bound (its snapshot is still consistent as of now); commit validates once more unless the transaction's start equals the new timestamp minus one (nobody committed in between)",
+   "input": "the read set",
+   "output": "valid / invalid; a new end time",
+   "state": "tx->start, tx->end, the read set",
+   "update": "on a version miss and at commit",
+   "assumptions": [
+    "most reads of a long transaction stay valid, so extension avoids the aborts a fixed snapshot (TL2) would suffer; validation cost is linear in the read set, paid rarely"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter",
+    "tinystm-marlier::commit_that_takes_a_fresh_clock_value_validates_the_read_set_if_anyone_committed_since_start_writes_back_the_buffered_values_and_releases_each_lock_with_the_new_version"
+   ],
+   "fitness_value_in_ancestor": "longer transactions survive concurrent commits (LSA's advantage over TL2)",
+   "failure_landscape": "by reading: validation is O(read set) per extension, so a transaction that keeps missing pays quadratically; a conflict callback exists for tracking",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Riegel et al. 2006 (lazy snapshot algorithm)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinystm-marlier/upstream/tree/src/stm_wbetl.h:38-110, 895-905"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "validate, extend and the commit-time check",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tinystm-marlier::commit_that_takes_a_fresh_clock_value_validates_the_read_set_if_anyone_committed_since_start_writes_back_the_buffered_values_and_releases_each_lock_with_the_new_version",
+   "fossil_ancestry": "tinystm-marlier",
+   "human_name": "stm_wbetl_commit (852-930): t = FETCH_INC_CLOCK + 1; if start != t - 1 and !validate then rollback; write back the write set; release locks with LOCK_SET_TIMESTAMP(t); the read-only fast path under CM_MODULAR; the irrevocable-transaction gate",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "writes were buffered in the write set with their stripes locked at encounter time (write-back, encounter-time locking); at commit the transaction increments the global clock to obtain its commit timestamp; if any other commit happened since it started it re-validates its reads (else the snapshot cannot have been invalidated); on success it copies each buffered value to memory and stores the new timestamp into each stripe's lock word, which releases the lock and publishes the version in one store; on failure it rolls back (releasing locks with the old versions) and retries per the contention manager",
+   "input": "the write set; the clock",
+   "output": "a committed or aborted transaction",
+   "state": "the write set; the locks",
+   "update": "per commit",
+   "assumptions": [
+    "holding write locks from encounter to commit makes commit cheap and detects write-write conflicts early; the clock increment is the linearisation point"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tinystm-marlier::read_set_validation_by_comparing_each_read_stripe_s_current_version_with_the_version_seen_and_snapshot_extension_that_moves_the_transaction_s_upper_bound_to_the_clock_when_validation_succeeds",
+    "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter"
+   ],
+   "fitness_value_in_ancestor": "atomicity and isolation for arbitrary code with no lock discipline from the programmer",
+   "failure_landscape": "by reading: irrevocable (non-abortable) transactions need a global gate; long write sets hold locks long",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "TL2's commit with the LSA clock",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tinystm-marlier/upstream/tree/src/stm_wbetl.h:852-930"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "stm_wbetl_commit",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "CONTENDS",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the read paths (invisible and visible reads 162-555), the write path (556-780), rollback, the write-through (stm_wt.h) and commit-time-locking (stm_wbctl.h) designs, the contention managers (suicide, delay, backoff, modular), the modules (logging, statistics, ordering, callbacks), epoch garbage collection (gc.c), the ABI wrappers, the tests",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the contention-manager switch (CM_*) is a mechanism family of its own (who backs off, who wins)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinystm-marlier"
+  },
+  {
+   "candidate": "'transactional memory' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the lock encoding, validation/extension and commit are separable and the body ships three designs over the same pieces",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tinystm-marlier"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "tinystm-marlier::P.arbitrary_code_must_run_atomically_and_in_isolation_on_many_cores_without_programmer_locks_such_that_conflicting_transactions_detect_each_other_cheaply_and_long_read_mostly_transactions_are_not_starved_by_frequent_small_commits",
+   "source_fossil": "tinystm-marlier",
+   "source_evidence": "stm_internal.h lock words; stm_wbetl.h validate / extend / commit",
+   "condition": "an organism executes blocks of memory operations from many threads with atomicity and isolation; conflicts are rare but real; some transactions are long and read-mostly; the score is throughput and the abort rate vs a fine-grained lock baseline",
+   "resource_or_constraint": "a lock table; one global counter",
+   "failure_condition": "lost updates or torn reads (safety), or an abort rate that makes long transactions starve",
+   "world_punishes": "value-based validation (re-reading everything); a fixed snapshot for long readers; a global lock",
+   "world_rewards": "versioned stripes with a global clock, snapshot extension, encounter-time write locks",
+   "observable_consequence": "throughput and aborts on a red-black tree and a linked list benchmark vs threads, for TL2-style (no extension) vs LSA-style (extension), and vs fine-grained locks",
+   "vacuity_condition": "one thread",
+   "trivial_shortcuts": "a global lock (safe, no scaling)",
+   "cheat_control": "an organism with a global lock must show zero aborts and no scaling; the no-extension variant must show more aborts on long read-mostly transactions; the extension variant must reduce them at the cost of validation time: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: software transactional memory (Felber, Fetzer, Riegel 2008; TinySTM 1.0)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter",
+   "to": "tinystm-marlier::read_set_validation_by_comparing_each_read_stripe_s_current_version_with_the_version_seen_and_snapshot_extension_that_moves_the_transaction_s_upper_bound_to_the_clock_when_validation_succeeds",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinystm-marlier::read_set_validation_by_comparing_each_read_stripe_s_current_version_with_the_version_seen_and_snapshot_extension_that_moves_the_transaction_s_upper_bound_to_the_clock_when_validation_succeeds",
+   "to": "tinystm-marlier::commit_that_takes_a_fresh_clock_value_validates_the_read_set_if_anyone_committed_since_start_writes_back_the_buffered_values_and_releases_each_lock_with_the_new_version",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinystm-marlier::commit_that_takes_a_fresh_clock_value_validates_the_read_set_if_anyone_committed_since_start_writes_back_the_buffered_values_and_releases_each_lock_with_the_new_version",
+   "to": "tinystm-marlier::one_versioned_lock_word_per_address_stripe_holding_either_the_owner_write_entry_or_the_last_commit_timestamp_with_an_incarnation_counter",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "new versions",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "tinystm-marlier",
@@ -157,10 +638,22 @@
    "to": "concurrencykit-0.7.2",
    "note": "rival answers to multicore synchronization: transactions vs lock-free + backoff",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "tinystm-marlier",
+   "relation": "algorithm_from",
+   "to": "Shavit & Touitou 1995 (STM); Dice, Shalev & Shavit 2006 (TL2); Riegel, Felber & Fetzer 2006 (LSA); Felber, Fetzer & Riegel 2008 (TinySTM)",
+   "note": "from the record and the source comments",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "read/write paths, the other two designs and the contention managers unread",
+   "nothing ran"
+  ],
+  "note": "the three mechanisms of the default design are located; the design and CM switches are the atlas's next comparison set",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
