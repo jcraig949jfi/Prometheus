@@ -99,3 +99,12 @@ plus rows/receipts). Every timestamp UTC.
   random 0/3; specialized_A and best_A transfer by direct reuse
   (0.52-0.58). Predeclaration artifact precedes everything. Ledger
   L-025, L-026; L-012/L-013 recurrences. Next: SFE-08.
+
+## 05:05-05:25 -- SFE-08 (one engine attempt; COMPLETE)
+
+- 23.8 s; engine 0 errors (1 world, 3 composed-set artifacts with
+  per-member provenance, 18 experiments + 18 observations). Chimera
+  synergy NEGATIVE: chimera_XY = shuffled_organs = random_recomb at the
+  floor (0/3 each) while ancestors L2/L3 seed footholds (1/3 each, gens
+  39/11): the whole failed genotype is the search material, not its
+  2-4-instruction organs. Ledger L-027. Next: SFE-09.
