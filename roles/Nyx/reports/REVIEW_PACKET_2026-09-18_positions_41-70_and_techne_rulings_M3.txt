@@ -1,0 +1,188 @@
+================================================================================
+REVIEW PACKET -- Stage A positions 41-70, Techne's grade ruling applied, and
+the channel traffic of the same block -- Nyx (Chop Shop), 2026-09-18 (fourth
+packet of this instance)
+Commits of record: 21f4089c6 (positions 41-50), 13b88e709 (Techne #387
+assimilated: grade map), 93e4026d6 (positions 51-60), 9567f45dc (positions
+61-70), 5beb6bff3 (#384 reply + the third packet). All on origin/main
+(ancestor checks passed at each push).
+Author: Nyx, instance gandalf-9e21f277 (M3/GANDALF), model claude-fable-5-1
+Invoked by: operator, "Do that. Also watch the channel and commit. Techne is
+pulling down bodies from Alife, POET and more" (standing since 2026-09-17)
+================================================================================
+
+0. WHAT THIS PACKET IS
+   Thirty more source-reading dissections (positions 41-70 of the
+   preregistered order), one ruling from Techne applied to the atlas's
+   provenance grades, and two replies on the channel. No packet was written
+   and nothing ran. Conflict of interest, declared: I wrote every cut and
+   this report; the numbers are the build's own counts (E3) and Techne's
+   words (E1) where marked.
+
+1. CONTEXT
+   Nyx reads preserved code bodies and records their mechanisms as ORGANs
+   (with a mechanism, inputs, state, assumptions, failure landscape and
+   coverage cells) and the selection PRESSUREs they answer, in a validated
+   atlas of 121 fossils. A seeded order over the 91 bodies not yet cut was
+   preregistered on 2026-09-17; this packet covers its positions 41-70. The
+   five POET/ALife bodies the operator prioritised on 2026-09-18 have NOT
+   landed in the vault (Techne accepted the ask; due its next pass), so the
+   order continued. The one adjudicated cut (particles, 002) is unchanged.
+
+2. THE QUESTIONS THE WORK WAS ANSWERING
+   (a) "watch the channel and commit" (operator): answer every message
+       within R31 latencies; push every block.
+   (b) Amendment 3 N1: continue Stage A over the preregistered order until
+       the POET/ALife bodies land.
+   (c) Techne #387 ASK 2 ruling: how should archive-mirror bodies be graded?
+
+3. WHAT WAS DONE, STEP BY STEP
+   a. Positions 41-50 [E3, 21f4089c6]: 9/10 bodies MATCH; pari-gp-2.17
+      ORIGIN_UNREACHABLE (SSL certificate verification fails from this host:
+      a fetch defect); nine cuts: python-sgp4 (4 organs, COARSE), cJSON (3,
+      DEEP), Graphplan (4, DEEP), BuDDy (3, DEEP), backoff (3, DEEP), MiniSat
+      (5, DEEP), KISS FFT (3, DEEP), Go-Explore (4, COARSE), PAIP (5, COARSE).
+   b. Techne #387 [E1]: ASK 1 accepted (R36 world id next pass), ASK 2 RULED
+      (HISTORICAL_ARCHIVE_MIRROR is a source type, not a grade; the files a
+      cut reads are CONTEMPORARY_COPY with a tree-level RECONSTRUCTION caveat
+      for reassembled git histories), ASK 3 accepted (Tierra's licence read;
+      landings next pass in the order POET, ASAL, Tierra, TerraLingua), ASK 4
+      accepted (+ TECHNE-109 backfill), ASK 5 accepted (ETags for three .npz;
+      one TerraLingua experiment sized). Applied [E3, 13b88e709]: the grade
+      map now returns CONTEMPORARY_COPY for that source type with a basis
+      line citing the ruling; 13 cut fossils re-graded from UNKNOWN. I
+      applied the reasoning to all 22 archive-mirror records, not only the
+      three ruled on, and said so in the reply (#388) with an offer to
+      narrow it.
+   c. Positions 51-60 [E3, 93e4026d6]: 10/10 MATCH; ten cuts: E prover (2,
+      COARSE), BASIC games 1978 (2, COARSE), Cosell ELIZA 1969 (3, COARSE),
+      UMDHMM (3, DEEP), Arduino PID (4, DEEP), LINPACK library (1, COARSE:
+      the body is byte-identical to the benchmark body already cut, plus six
+      kernel files), Go deadlock fixtures (0 organs + 1 pressure, ORGAN0:
+      the detector under test is not in the body), self-tuning regulator (2,
+      DEEP), Spacewar 1962 (3, COARSE), do-mpc (4, COARSE).
+   d. Positions 61-70 [E3, 9567f45dc]: 10/10 MATCH; ten cuts: microKanren
+      (3, DEEP), PicoRV32 (3, COARSE), xv6 (3, DEEP), emcee (4, DEEP), 4.3BSD
+      1986 tape (ORGAN0), EISPACK (2, COARSE), 4.3-Tahoe TCP (3, DEEP), GNU
+      Prolog (2, COARSE), Espresso (3, COARSE), generic FIFO (3, DEEP).
+   e. Techne #384 (TECHNE-107) answered [E3, 5beb6bff3]: accepted as data;
+      the recurrence reading my #379 had cited is retracted in the ASAL
+      packet plan (Techne's own run reversed it).
+   f. Bodies 71-80 rematerialising at the time of writing.
+
+4. RESULTS
+   Atlas after the block (python -m nyx.atlas.build, E3):
+     inspected 97 / 121  (COARSE 58, DEEP 36, ORGAN0 3; NOT_CUT 24)
+     fragments 486 (430 ACCEPTED, 56 CANDIDATE); rejected candidates 300
+     pressures 147; composition edges 606; fingerprints 0; blind cuts 0
+     gates: cuts_created 97; cuts_returned_with_verdict 1 (unchanged);
+            returns_received 13; handoffs open 10
+   Before the block (third packet): inspected 68, fragments 402 (362
+   accepted), rejected 234, pressures 119, edges 525.
+   Provenance grades after the ruling: ORIGINAL_ARTIFACT 49,
+   CONTEMPORARY_COPY 13 (from UNKNOWN), LATER_TRANSCRIPTION 1, UNKNOWN 14
+   (source types PSEUDOCODE_PLUS_REFERENCE_IMPL 12, FAITHFUL_PORT 1,
+   LATER_SAME_LINEAGE_RELEASE 1: not covered by the ruling; a pending ask).
+
+   Findings by reading (E0; none adjudicated):
+   - The TCP congestion lineage is cut at all three source bodies. Tahoe
+     (1988) adds to 4.2 (1983) exactly Jacobson's three contributions and
+     lacks exactly Reno's two (the mss/8 increase term; fast recovery's
+     inflate/deflate), confirmed line by line.
+   - Three pure-Python bodies with self-contained oracles were found:
+     python-sgp4 (tcppver.out), backoff (its tests), emcee (an analytic
+     Gaussian). Each is an M3-runnable packet candidate behind the POET and
+     scheme packets.
+   - Record defects for Techne (not adjudicated): linpack-netlib-1979
+     duplicates linpackd-netlib-1979's file byte for byte and lacks the
+     library its lineage describes; both distribution tapes (1986, 1990)
+     lack the kernel-source tape files their records lean on; the Go
+     deadlock fixtures do not contain the detector; paip-lisp-norvig-1991
+     is at least eleven mechanism families in one specimen; go-explore
+     holds a second body (policy_based/); pari-gp's origin fails SSL from
+     this host.
+
+5. WHAT CHANGED IN THE REPOSITORY
+   nyx/atlas/cuts/: +29 cut scripts (positions 41-70 less pari-gp).
+   nyx/atlas/migrate_v1.py: grade_from_record maps HISTORICAL_ARCHIVE_MIRROR
+     to CONTEMPORARY_COPY; grade_basis_from_record writes the ruling's
+     citation and caveat. 13 fossils re-saved.
+   nyx/atlas/fossils/, nyx/atlas/out/: regenerated by the build.
+   nyx/atlas/gates/LEDGER.json: handoffs 18 (+3 batch rows), returns 13
+     (+1: #387).
+   nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json: receipt n = 70
+     (69 MATCH, 1 ORIGIN_UNREACHABLE).
+   roles/Nyx/prompts/2026-09-18_poet_alife_cut_into_bodies/: +2 replies
+     (#386 on #384; #388 on #387), MANIFEST rewritten.
+   roles/Nyx/STATUS.md, journal/2026-09-17.md: refreshed per block; the
+     STATUS defect line about the untranslated grade closed.
+   Memory: project note refreshed (Claude Code memory, not the repo).
+   Comms posted: #386, #388. Nothing scheduled. Cost: reading and writing
+   on one host; ~15 minutes of background clones.
+
+6. WHAT THIS DID NOT ESTABLISH
+   - No organ of positions 41-70 has been adjudicated; verdict count stays
+     at 1. Thirty cuts is atlas growth, not evidence.
+   - The grade extension to 19 records beyond Techne's three is my
+     inference from its reasoning; Techne has not confirmed it.
+   - The 14 UNKNOWN grades remain UNKNOWN; no ruling covers those source
+     types.
+   - Eleven cuts are COARSE inventory maps of large bodies (E prover, GNU
+     Prolog, Espresso, PicoRV32, xv6's other chapters, do-mpc, Go-Explore,
+     PAIP, EISPACK, Spacewar, Cosell ELIZA); most of each body is unread.
+   - Nothing of POET / Tierra / ASAL / TerraLingua has been cut: no body.
+   - The three M3-runnable candidates are candidates; no packet exists.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+   - A sed-derived close script for batch 7 failed its own marker search;
+     rewritten from scratch. Cost: one round.
+   - The first grade-count scan read the wrong JSON path and reported every
+     grade as None; corrected before anything was written. Cost: one round.
+   - Two lines of the third review packet exceeded 80 columns; fixed in the
+     batch-5 commit.
+   - Extending the grade ruling beyond its three named records without
+     asking first: flagged in the reply as reversible; if Techne narrows it,
+     19 fossils re-save.
+
+8. WHAT IS OWED, AND BY WHOM
+   Nyx: positions 71-91 (bodies 71-80 fetching), then 13, 18, 49; the POET
+     discard-boundary cut and the Avida SavePopulation read the moment the
+     bodies land; MECH-PARTICLES-SCHEME-001 with a power statement if the
+     POET body has not landed by the next tick; a new ask to Techne for the
+     14 UNKNOWN grades' source types (not yet posted).
+   Techne: ASK 3 landings (POET, ASAL, Tierra, TerraLingua); ASK 1 (R36
+     manifest); TECHNE-109 backfill; the record defects above; confirmation
+     or narrowing of the grade extension.
+   Harmonia: nothing on 002; the Avida ground-truth ruler it announced;
+     gzip 003 remains with it.
+   Operator: a compiler/docker host for the POET lineage, Avida .spop and
+     Tierra build; the TerraLingua LLM arm; the M3 virtualization decision.
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+   1. Ninety-seven cuts, one verdict. What inspected fraction should stop
+      Stage A until the verdict count rises, and who decides?
+   2. Is applying Techne's grade reasoning to 19 records it did not name a
+      reasonable populate-then-confirm step under R34, or an overreach that
+      should have waited? What would falsify "same reasoning applies"?
+   3. The ORGAN0 cuts (three tapes/fixtures) count as inspected. Should a
+      body with no readable mechanism be excluded from the numerator?
+   4. The Tahoe/Reno/4.2 comparison is the first three-body lineage read
+      line by line. What single preregistered observable would turn it from
+      a reading into a claim a bench could test on an emulated network?
+   5. What should we stop: the ten-per-block cadence, or the COARSE
+      inventory cuts of very large bodies (which add organs at MEDIUM
+      confidence and little else)?
+
+10. HOW TO REPRODUCE
+   Worktree at origin/main; set TECHNE_FOSSIL_VAULT to the vault root and
+   NYX_BODIES_RECEIPT to nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json.
+     python -m nyx.atlas.schema            -> 121 fossil files, 0 with problems
+     python -m pytest -q nyx/tests         -> 23 passed
+     python -m nyx.atlas.build             -> fossils_inspected 97; by_cut_state
+                                              COARSE 58 DEEP 36 NOT_CUT 24 ORGAN0 3
+     python -m nyx.atlas.cuts.<name>       -> re-saves one cut (deterministic)
+   Grade counts: read cut.provenance.provenance_grade_read over
+   nyx/atlas/fossils/*.json (49 / 13 / 1 / 14 as above).
+   Body identity: python -m techne.fossils.harvest verify <id> against the
+   receipt's tree_sha256 (70 rows, 69 MATCH).
+================================================================================
