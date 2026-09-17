@@ -637,11 +637,145 @@ class _WriteLockStats:
 
 WRITE_LOCK_STATS = _WriteLockStats()
 
+#: after a WAL reset the file is truncated to at most this (journal_size_limit)
+WAL_SIZE_LIMIT_BYTES = 64 * 1024 * 1024
+
+
+class Checkpointer:
+    """9.0.1: the ONE place WAL checkpoints happen -- a daemon thread with its
+    own connection, off every request.
+
+    Cadence: PRAGMA wal_checkpoint(PASSIVE) every `interval_s` (~2 s). PASSIVE
+    never blocks a reader or a writer; it backfills what it can. When the
+    passive result is CLEAN (busy == 0 and every frame backfilled) it follows
+    with wal_checkpoint(TRUNCATE), which resets and truncates the WAL file --
+    and which SQLite refuses (busy) rather than blocks if a reader still holds
+    the WAL, so it is only ever taken when safe. Measured motivation: under
+    continuous readers a WAL driven only by commit-time autocheckpoints never
+    restarted and grew to 344 MB against a 10 MB database (SFE_LONG_RUN_
+    REPORT.md s8).
+
+    Every tick writes its state (last_run_at, results, WAL/DB bytes, errors)
+    for /v2/health, so the next stall of this class is visible without a
+    debugger. A tick that raises is counted and the thread keeps going; the
+    thread dying is itself visible (alive=false, last_run_at ageing)."""
+
+    def __init__(self, db_path: str, *, interval_s: float = 2.0):
+        self.db_path = str(db_path)
+        self.interval_s = float(interval_s)
+        self._stop = threading.Event()
+        self._lock = threading.Lock()
+        self._thread: Optional[threading.Thread] = None
+        self.started_at = None
+        self.runs = 0
+        self.truncates = 0
+        self.errors = 0
+        self.last_error = None
+        self.last_run_at = None
+        self.last_passive = None      # (busy, log_frames, checkpointed)
+        self.last_truncate = None
+        self.max_wal_bytes_seen = 0
+        self.last_wal_bytes = None
+        self.last_db_bytes = None
+        self.last_tick_s = None
+
+    def start(self) -> "Checkpointer":
+        if self._thread is None:
+            self._thread = threading.Thread(target=self._run, name="sfe-checkpointer", daemon=True)
+            self.started_at = time.time()
+            self._thread.start()
+        return self
+
+    def stop(self, timeout: float = 5.0) -> None:
+        self._stop.set()
+        if self._thread is not None:
+            self._thread.join(timeout)
+
+    def alive(self) -> bool:
+        return self._thread is not None and self._thread.is_alive()
+
+    def tick(self, cx=None) -> dict:
+        """One checkpoint pass. Public so a test can drive it deterministically."""
+        own = cx is None
+        if own:
+            cx = self._connect()
+        t0 = time.monotonic()
+        out = {"passive": None, "truncate": None}
+        try:
+            out["passive"] = tuple(cx.execute("PRAGMA wal_checkpoint(PASSIVE)").fetchone())
+            busy, log_frames, backfilled = out["passive"]
+            if busy == 0 and log_frames == backfilled:
+                # clean: try to reset + truncate; refused (busy=1) if a reader
+                # holds the WAL, never blocked
+                out["truncate"] = tuple(cx.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone())
+            wal = self.db_path + "-wal"
+            import os
+            wal_bytes = os.path.getsize(wal) if os.path.exists(wal) else 0
+            db_bytes = os.path.getsize(self.db_path) if os.path.exists(self.db_path) else 0
+            with self._lock:
+                self.runs += 1
+                self.last_run_at = time.time()
+                self.last_passive = out["passive"]
+                if out["truncate"] is not None:
+                    self.last_truncate = out["truncate"]
+                    if out["truncate"][0] == 0:
+                        self.truncates += 1
+                self.last_wal_bytes = wal_bytes
+                self.last_db_bytes = db_bytes
+                self.max_wal_bytes_seen = max(self.max_wal_bytes_seen, wal_bytes)
+                self.last_tick_s = time.monotonic() - t0
+        except Exception as e:                                    # noqa: BLE001
+            with self._lock:
+                self.errors += 1
+                self.last_error = "%s: %s" % (type(e).__name__, e)
+                self.last_run_at = time.time()
+        finally:
+            if own:
+                cx.close()
+        return out
+
+    def _connect(self):
+        # busy handler OFF (timeout=0): PASSIVE never invokes it, and TRUNCATE
+        # must be REFUSED (busy=1) when a reader holds the WAL, not waited for
+        # -- measured 5.6 s of blocking with the default handler in the test
+        # that pins this.
+        cx = sqlite3.connect(self.db_path, timeout=0.0, isolation_level=None,
+                             check_same_thread=False)
+        cx.execute("PRAGMA busy_timeout=0")
+        cx.execute(f"PRAGMA journal_size_limit={WAL_SIZE_LIMIT_BYTES}")
+        return cx
+
+    def _run(self) -> None:
+        cx = self._connect()
+        try:
+            while not self._stop.wait(self.interval_s):
+                self.tick(cx)
+        finally:
+            cx.close()
+
+    def snapshot(self) -> dict:
+        with self._lock:
+            now = time.time()
+            return {"alive": self.alive(), "interval_s": self.interval_s,
+                    "started_at": self.started_at, "runs": self.runs,
+                    "last_run_at": self.last_run_at,
+                    "last_run_age_s": (None if self.last_run_at is None
+                                       else round(now - self.last_run_at, 1)),
+                    "last_passive": self.last_passive, "last_truncate": self.last_truncate,
+                    "truncates": self.truncates, "errors": self.errors,
+                    "last_error": self.last_error,
+                    "last_tick_s": None if self.last_tick_s is None else round(self.last_tick_s, 4),
+                    "wal_bytes": self.last_wal_bytes, "db_bytes": self.last_db_bytes,
+                    "max_wal_bytes_seen": self.max_wal_bytes_seen,
+                    "wal_size_limit_bytes": WAL_SIZE_LIMIT_BYTES,
+                    "request_path_autocheckpoint": 0}
+
 
 class Store:
     """A per-thread connection to the Gen-2 database. Open one per worker."""
 
-    def __init__(self, db_path: str, *, timeout: float = 30.0):
+    def __init__(self, db_path: str, *, timeout: float = 30.0,
+                 request_path: bool = True):
         self.db_path = str(db_path)
         Path(self.db_path).parent.mkdir(parents=True, exist_ok=True)
         self.blobs_dir = Path(self.db_path).parent / "blobs"
@@ -654,6 +788,17 @@ class Store:
         self._conn.execute("PRAGMA foreign_keys=ON")
         self._conn.execute("PRAGMA synchronous=NORMAL")
         self._conn.execute(f"PRAGMA busy_timeout={int(timeout * 1000)}")
+        # 9.0.1 (SFE_LONG_RUN_REPORT.md s7-s8). WAL MAINTENANCE LEAVES THE
+        # REQUEST PATH. A request-path handle never checkpoints: with the
+        # automatic checkpoint on, every COMMIT past 1000 WAL pages walked the
+        # WAL inside the request (measured: a worker blocked inside COMMIT
+        # behind a 344 MB WAL; 60 s request hangs). Checkpointing is the
+        # Checkpointer thread's job (below), on its own connection, off any
+        # request. journal_size_limit bounds the WAL FILE after a reset so it
+        # cannot sit at a high-water mark forever.
+        if request_path:
+            self._conn.execute("PRAGMA wal_autocheckpoint=0")
+        self._conn.execute(f"PRAGMA journal_size_limit={WAL_SIZE_LIMIT_BYTES}")
 
     # -- schema ------------------------------------------------------------
     def initialize(self) -> None:
