@@ -131,17 +131,634 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:463-610"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:1666-1691"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:1918-1965"
+   }
+  ],
+  "inspected_files": [
+   "walksat.c 358-372, 463-610, 1666-1691, 1918-1965, 214-218, 723-734"
+  ],
+  "date": "2026-09-17T23:26Z",
+  "note": "stochastic local search for SAT as three mechanisms: pick an unsatisfied clause at random and flip one of its variables; choose the variable by a heuristic over two incrementally maintained counts per variable (how many clauses a flip would break, how many it would make), with a noise probability of a random choice; and keep the counts exact after every flip by touching only the clauses containing the flipped variable. Novelty adds a tie-break on the variable's age so the search does not undo its last move",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:26Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://gitlab.com/HenryKautz/Walksat/-/archive/master/Walksat-master.tar.gz sha256:3f2cc50b5ca7e27927934dab5a2c4b1ca21e183fcd66df620a466ca488f997d0",
+   "payload_manifest_id": "techne tree_sha256 b65452d65d50b26e27f8185d7a0d430eca3c9dc6c34bd8df2ead372f8aba7bd2 (203 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/Walksat-master/Walksat_v53/walksat.c",
+     "payload_hash_read": "a12ae596278da9314d5394272d07a740c3d540efa42f64912328b006b2cc440a",
+     "techne_recorded_hash": "a12ae596278da9314d5394272d07a740c3d540efa42f64912328b006b2cc440a",
+     "match": true,
+     "refs": 7
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+   "fossil_ancestry": "walksat-v56",
+   "human_name": "flipatom (463-610): breakcount[] and makecount[] (166-167); for each clause of the flipped literal: a clause going true or false, or changing its number of true literals, adjusts the counts of the variables involved; the freebie list of variables with breakcount 0 and makecount > 0",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each clause knows how many of its literals are true and which one is the sole true literal when that number is one; flipping a variable walks its occurrence lists: a clause that becomes false increments the makecount of all its variables and removes the flipped one from breakcounts; a clause that goes from one true literal to two releases the break responsibility of the previously critical variable; a clause that goes from two to one makes the remaining true variable critical (its breakcount rises); variables with zero break and positive make are kept on a 'freebie' list because flipping them is always an improvement",
+   "input": "the variable to flip",
+   "output": "updated counts and the unsatisfied-clause list",
+   "state": "numtruelit per clause, breakcount, makecount, the false-clause list, the freebie list",
+   "update": "per flip",
+   "assumptions": [
+    "a variable's effect on the clause count is a local function of the clauses it occurs in; maintaining it incrementally makes a flip O(occurrences) rather than O(clauses)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+    "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips"
+   ],
+   "fitness_value_in_ancestor": "millions of flips per second; the reason local search became competitive on random and structured instances",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "GSAT's score maintenance (Selman, Levesque, Mitchell 1992); the break/make split is WalkSAT's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:463-610"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "flipatom and the count arrays",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+   "fossil_ancestry": "walksat-v56",
+   "human_name": "pickbest (1666-1691): tofix = false[random]; bestvalue = min breakcount over the clause; if (nofreebie || bestvalue > 0) and random < p then a random variable of the clause, else a random best",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "an unsatisfied clause is chosen uniformly; among its variables the ones with the smallest breakcount are collected; if some variable breaks nothing it is taken (a free move), otherwise with probability p (the noise) a uniformly random variable of the clause is flipped and with 1 - p one of the best; the clause is thereby satisfied at every step and the damage elsewhere is minimised or randomised",
+   "input": "the false-clause list and the counts",
+   "output": "a variable to flip",
+   "state": "none",
+   "update": "per flip",
+   "assumptions": [
+    "always satisfying the chosen clause focuses the walk; break count alone (not net gain) is the right score; noise is needed to escape local minima and the free-move exception costs nothing"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+    "walksat-v56::noise_adjusted_during_the_search_from_the_number_of_unsatisfied_clauses_with_two_rates"
+   ],
+   "fitness_value_in_ancestor": "the SKC rule (Selman, Kautz, Cohen 1994) that made WalkSAT beat GSAT and complete solvers on hard random 3-SAT",
+   "failure_landscape": "by reading: the optimal noise p depends on the instance (the reason the adaptive option exists); it cannot prove unsatisfiability",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Selman, Kautz & Cohen 1994",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:1666-1691"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "pickbest",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips",
+   "fossil_ancestry": "walksat-v56",
+   "human_name": "picknovelty (1918-1965): diff = makecount - breakcount; best and second best with age (changed[var]) as tie-break; youngest; 'if best != youngest return best; else with probability p second_best'; plus_flag (Novelty+: a 1 percent random walk) vs numflip % 100",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "in the chosen unsatisfied clause, variables are scored by net gain (make minus break), ties broken toward the older variable; if the best variable is not the one flipped most recently in the clause it is taken; if it is, the second best is taken with probability p; independently a random variable is taken every hundredth flip (or with probability 1 percent in the Novelty+ variant), which is what makes the walk provably able to leave any region",
+   "input": "the counts and the flip ages",
+   "output": "a variable",
+   "state": "changed[] (the last flip time per variable)",
+   "update": "per flip",
+   "assumptions": [
+    "flipping the variable just flipped back is the dominant failure of greedy walks; an age tie-break plus a probabilistic refusal is cheaper than a tabu list"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+    "walksat-v56::noise_adjusted_during_the_search_from_the_number_of_unsatisfied_clauses_with_two_rates"
+   ],
+   "fitness_value_in_ancestor": "Novelty (McAllester, Selman, Kautz 1997) and Novelty+ (Hoos 1999) outperform SKC on structured instances",
+   "failure_landscape": "by reading: without the periodic random walk Novelty can loop (Hoos's finding, which the plus variant fixes)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "McAllester, Selman & Kautz 1997; Hoos 1999",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:1918-1965"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "picknovelty",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "walksat-v56::noise_adjusted_during_the_search_from_the_number_of_unsatisfied_clauses_with_two_rates",
+   "fossil_ancestry": "walksat-v56",
+   "human_name": "-adaptive PHI THETA (214-218, 723-734): last_adaptive_objective, adaptive_phi 0.2, adaptive_theta 0.2; the update sites not read",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "starting at zero noise, the search watches the number of unsatisfied clauses; if it has not improved for a while (theta times the clause count) the noise is raised by phi of the remaining range, and on an improvement it is lowered faster; so the walk is greedy while progress is made and random when stuck",
+   "input": "the objective over time",
+   "output": "the noise p",
+   "state": "last_adaptive_objective, p",
+   "update": "per flip",
+   "assumptions": [
+    "the best static noise is instance-dependent and unknowable in advance; the objective's stagnation is a usable signal"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+    "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips"
+   ],
+   "fitness_value_in_ancestor": "removes the noise parameter from the user's hands (Hoos 2002)",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hoos 2002 (adaptive noise)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:walksat-v56/upstream/tree/Walksat-master/Walksat_v53/walksat.c:214-218, 723-734 (the option; the update code not read)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the adaptive option; CANDIDATE because the update site was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "pickrnovelty, picktabu, pickgsat, pickalternate, pickbigflip, the freebie list details, the hamming-distance instrumentation, the solution / statistics printing, the other programs in the v56 tree",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "walksat-v56"
+  },
+  {
+   "candidate": "'local search' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the count maintenance, the flip rules and the noise control are separable and separately published",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "walksat-v56"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "walksat-v56::P.a_satisfying_assignment_must_be_found_for_large_satisfiable_formulas_where_complete_search_is_too_slow_and_the_landscape_has_local_minima_that_a_greedy_walk_revisits",
+   "source_fossil": "walksat-v56",
+   "source_evidence": "walksat.c flipatom, pickbest, picknovelty, the adaptive option",
+   "condition": "an organism searches assignments of a satisfiable CNF by flipping variables; the score is time to a model over a suite of random and structured instances; unsatisfiable instances may be present (the organism cannot prove them, only time out)",
+   "resource_or_constraint": "flips per second; a noise setting",
+   "failure_condition": "cycling between the same assignments, or flips that cost O(clauses) each",
+   "world_punishes": "pure greedy (GSAT without noise); recomputing scores from scratch; flipping back the last move",
+   "world_rewards": "incremental counts, clause-focused random walk with noise, age-aware refusal, adaptive noise",
+   "observable_consequence": "median flips to a model on uf250 random 3-SAT and on a structured family, for GSAT, SKC at fixed p, Novelty+ and adaptive noise; the fraction of runs that cycle without the periodic random walk",
+   "vacuity_condition": "2-SAT or instances solved by unit propagation",
+   "trivial_shortcuts": "a complete solver on small instances (the world uses instances where CDCL is slower)",
+   "cheat_control": "an organism given a model must verify it in one pass; GSAT with zero noise must get stuck on the structured family where SKC succeeds; Novelty without the periodic walk must show cycling that Novelty+ removes: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: incomplete SAT solving by local search (Selman, Kautz, Cohen 1994; Kautz's distribution 2004-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+   "to": "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+   "to": "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+   "to": "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "flipatom",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips",
+   "to": "walksat-v56::break_and_make_counts_per_variable_kept_exact_by_updating_only_the_clauses_containing_the_flipped_variable",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::noise_adjusted_during_the_search_from_the_number_of_unsatisfied_clauses_with_two_rates",
+   "to": "walksat-v56::walksat_skc_flip_rule_choosing_from_a_random_unsatisfied_clause_the_variable_with_minimum_break_count_or_with_probability_p_a_random_variable_unless_a_zero_break_flip_exists",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "p",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "walksat-v56::noise_adjusted_during_the_search_from_the_number_of_unsatisfied_clauses_with_two_rates",
+   "to": "walksat-v56::novelty_rule_scoring_by_make_minus_break_and_refusing_the_most_recently_flipped_variable_unless_a_coin_at_p_says_otherwise_with_a_forced_random_walk_every_hundred_flips",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "walksat-v56",
@@ -156,10 +773,22 @@
    "to": "GSAT (Selman/Levesque/Mitchell 1992)",
    "note": "WalkSAT is the random-walk successor to GSAT",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "walksat-v56",
+   "relation": "algorithm_from",
+   "to": "GSAT (Selman, Levesque, Mitchell 1992); WalkSAT (Selman, Kautz, Cohen 1994); Novelty (McAllester et al. 1997); Novelty+ and adaptive noise (Hoos 1999, 2002); the atlas's minisat-2.2.0 and picosat-965 hold the complete rivals",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the other flip rules and the adaptive update site unread",
+   "nothing ran"
+  ],
+  "note": "the four mechanisms are located; a three-solver world (WalkSAT, MiniSat, PicoSAT) is now readable in this atlas",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

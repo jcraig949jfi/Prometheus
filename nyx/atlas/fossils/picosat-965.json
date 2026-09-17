@@ -130,17 +130,480 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picosat-965/upstream/tree/picosat-965/picosat.c:1579-1600"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picosat-965/upstream/tree/picosat-965/picosat.c:3449-3475"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picosat-965/upstream/tree/picosat-965/picosat.c:4810-4880"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picosat-965/upstream/tree/picosat-965/picosat.c:5874-5895"
+   }
+  ],
+  "inspected_files": [
+   "picosat.c inventory 1081-4880; 1579-1600; 3449-3475; 4810-4880; 5874-5895"
+  ],
+  "date": "2026-09-17T23:26Z",
+  "note": "a CDCL solver of the same family as MiniSat (cut DEEP in this atlas) read for its differences: phase saving is built in with a running statistic of how often the saved phase was flipped; propagation uses head/tail watches with separate implication lists for binary clauses (by inventory: setimpl, connect_head_tail, propl); the variable score is a float in a heap with rescoring on overflow; restarts follow the Luby sequence scaled by 100 conflicts (or a geometric schedule under a compile flag) and the learnt-clause limit grows by its own schedule; the solver can emit a proof trace and handles assumptions and all-different constraints",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:26Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "http://fmv.jku.at/picosat/picosat-965.tar.gz sha256:15169b4f28ba8f628f353f6f75a100845cdef4a2244f101a02b6e5a26e46a754",
+   "payload_manifest_id": "techne tree_sha256 e68ea1cb95417c291146d86d447b20a8a3b271c3b89b13e1648f38a4ff58cd94 (16 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/picosat-965/picosat.c",
+     "payload_hash_read": "6fb5f74c448e16ded9dfb4eadcc14eaf45ba0ca65ace96e8dac62ce071ad1d00",
+     "techne_recorded_hash": "6fb5f74c448e16ded9dfb4eadcc14eaf45ba0ca65ace96e8dac62ce071ad1d00",
+     "match": true,
+     "refs": 7
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "picosat-965::phase_saving_that_assigns_a_decision_variable_its_last_value_and_tracks_an_exponentially_decayed_count_of_saved_phase_flips",
+   "fossil_ancestry": "picosat-965",
+   "human_name": "assign_phase (1579-1600): new_phase from the literal's sign; if the variable was assigned before, sdflips -= sdflips / FFLIPPED and, when the phase differs, the flip statistic is bumped; v->phase saved; decide uses the saved phase (sdecide, not read)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "whenever a variable is assigned, its polarity is remembered; a later decision on that variable reuses the remembered polarity, so after a restart or a backjump the solver re-enters the region of the search space it was in (progress saving); a decayed counter of how often the saved phase is contradicted is kept as a health statistic",
+   "input": "assignments",
+   "output": "a saved polarity per variable",
+   "state": "v->phase, sdflips",
+   "update": "per assignment",
+   "assumptions": [
+    "partial assignments found before a restart are worth keeping (Pipatsrisawat & Darwiche 2007); the flip statistic is cheap diagnostics"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picosat-965::variable_scores_as_floats_in_a_heap_bumped_by_a_growing_increment_and_rescaled_on_overflow_with_decisions_taken_from_assumptions_first_then_by_score_or_at_random"
+   ],
+   "fitness_value_in_ancestor": "restarts stop throwing away work; one of the two changes (with Luby restarts) that made frequent restarting pay",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Pipatsrisawat & Darwiche 2007 (phase saving); MiniSat 2.2's polarity vector is the simpler form",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picosat-965/upstream/tree/picosat-965/picosat.c:1579-1600"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "assign_phase",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "picosat-965::luby_restarts_scaled_by_a_hundred_conflicts_with_a_geometric_alternative_and_a_learnt_clause_limit_on_its_own_growth_schedule",
+   "fossil_ancestry": "picosat-965",
+   "human_name": "luby (4830-4843), inc_lrestart (4856-4875): delta = 100 * luby(++lubycnt); lrestart = conflicts + delta; NLUBY: inc_drestart / inc_ddrestart geometric by FRESTART percent up to MAXRESTART; need_to_reduce (4810): nlclauses >= reduce_limit_on_lclauses; inc_lreduce (4550)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the next restart is scheduled at the current conflict count plus 100 times the next Luby number (1, 1, 2, 1, 1, 2, 4, ...); a compile-time alternative multiplies an interval by a percentage up to a cap (the older geometric scheme); independently, the learnt-clause database is reduced when its size crosses a limit that grows on its own schedule; reports mark the largest Luby deltas",
+   "input": "conflict counts",
+   "output": "restart and reduce events",
+   "state": "lubycnt, lrestart, the reduce limit",
+   "update": "per conflict",
+   "assumptions": [
+    "Luby's universal schedule bounds the loss from any fixed cutoff; decoupling the reduce schedule from restarts lets each be tuned"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picosat-965::variable_scores_as_floats_in_a_heap_bumped_by_a_growing_increment_and_rescaled_on_overflow_with_decisions_taken_from_assumptions_first_then_by_score_or_at_random"
+   ],
+   "fitness_value_in_ancestor": "robust performance without per-instance tuning",
+   "failure_landscape": "by reading: the 100-conflict unit is a constant; Glucose-style dynamic restarts (on LBD) came later",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Luby, Sinclair & Zuckerman 1993; Huang 2007",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picosat-965/upstream/tree/picosat-965/picosat.c:4810-4880"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the restart and reduce schedule functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "picosat-965::variable_scores_as_floats_in_a_heap_bumped_by_a_growing_increment_and_rescaled_on_overflow_with_decisions_taken_from_assumptions_first_then_by_score_or_at_random",
+   "fossil_ancestry": "picosat-965",
+   "human_name": "inc_score (3449-3475): r->score = addflt(score, vinc); hup; vrescore (3436), crescore (4436) for clauses; decide (5874-5895): adecide (assumptions), rdecide (random), sdecide (scored)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each variable has a rank record with a float score; a bump adds the current increment and sifts the record up the heap; the increment grows per conflict and everything is rescaled when it would overflow (the MiniSat trick in float form); clause activities likewise; a decision first satisfies pending assumptions, else with some probability picks a random variable, else the heap maximum; the saved phase gives the sign",
+   "input": "conflict participation",
+   "output": "the next decision",
+   "state": "scores, the heap, vinc",
+   "update": "per conflict / per decision",
+   "assumptions": [
+    "VSIDS; assumptions as a decision prefix make incremental solving (solve under assumptions) natural"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "picosat-965::phase_saving_that_assigns_a_decision_variable_its_last_value_and_tracks_an_exponentially_decayed_count_of_saved_phase_flips",
+    "picosat-965::luby_restarts_scaled_by_a_hundred_conflicts_with_a_geometric_alternative_and_a_learnt_clause_limit_on_its_own_growth_schedule"
+   ],
+   "fitness_value_in_ancestor": "incremental SAT for bounded model checking (the author's use)",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Chaff's VSIDS; MiniSat's assumptions interface",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:picosat-965/upstream/tree/picosat-965/picosat.c:3449-3475, 5874-5895 (sdecide / rdecide not read)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the scoring and decide functions; CANDIDATE because sdecide was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "propagation (bcp, propl, the head/tail watch scheme and binary implication lists: setimpl / connect_head_tail), conflict analysis (analyze, fanalyze), clause minimisation, the clause allocator and garbage collection, the proof trace (RUP / extended resolution output), the ADO extension, simplification, failed-literal probing, the API and the app",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~7,500 lines); residue",
+   "note": "the head/tail watch scheme with binary lists is the propagation variant that distinguishes this lineage from MiniSat's two-watched-literal + blocker; it is the DEEP item to read next",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "picosat-965"
+  },
+  {
+   "candidate": "'SAT solver' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the atlas's minisat cut names the five separable policies; this cut records where PicoSAT's differ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "picosat-965"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "picosat-965::P.a_cdcl_solver_used_incrementally_under_assumptions_must_restart_often_without_losing_its_partial_assignments_and_must_emit_a_checkable_proof_of_unsatisfiability",
+   "source_fossil": "picosat-965",
+   "source_evidence": "picosat.c assign_phase, the restart functions, decide; the trace functions by name",
+   "condition": "an organism answers a sequence of related SAT queries (bounded model checking) each under a set of assumed literals; frequent restarts are needed for heavy tails; an unsatisfiable answer must come with a proof a third party can check; the score is total time over the sequence and proof validity",
+   "resource_or_constraint": "time; proof size",
+   "failure_condition": "restarts that discard progress (time), or an UNSAT answer without a checkable proof",
+   "world_punishes": "restarting with fresh polarities; proofs reconstructed after the fact",
+   "world_rewards": "phase saving, Luby restarts, a trace recorded during search",
+   "observable_consequence": "time over a BMC unrolling sequence with phase saving on and off; proof check success rate on the UNSAT instances",
+   "vacuity_condition": "one query, satisfiable",
+   "trivial_shortcuts": "re-solving from scratch per query (correct, slow)",
+   "cheat_control": "an organism given the previous query's model as the initial phase must match phase saving's time; phase saving off must show the time penalty on the sequence; an UNSAT answer with tracing off must fail the proof check: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: incremental CDCL with proofs (Biere 2007-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "picosat-965::phase_saving_that_assigns_a_decision_variable_its_last_value_and_tracks_an_exponentially_decayed_count_of_saved_phase_flips",
+   "to": "picosat-965::variable_scores_as_floats_in_a_heap_bumped_by_a_growing_increment_and_rescaled_on_overflow_with_decisions_taken_from_assumptions_first_then_by_score_or_at_random",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the sign of a decision",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "picosat-965::luby_restarts_scaled_by_a_hundred_conflicts_with_a_geometric_alternative_and_a_learnt_clause_limit_on_its_own_growth_schedule",
+   "to": "picosat-965::variable_scores_as_floats_in_a_heap_bumped_by_a_growing_increment_and_rescaled_on_overflow_with_decisions_taken_from_assumptions_first_then_by_score_or_at_random",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "re-decide after restart",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "picosat-965",
@@ -148,10 +611,23 @@
    "to": "minisat-2.2.0",
    "note": "both are CDCL SAT solvers descending from the Chaff/GRASP CDCL line; DIFFERENT implementations",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "picosat-965",
+   "relation": "shares_ancestor_with",
+   "to": "minisat-2.2.0 (in this atlas): both descend from Chaff / GRASP; PicoSAT's own lineage continues in PrecoSAT and Lingeling",
+   "note": "from the record and the source",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "propagation, analysis, the proof trace and simplification unread",
+   "the scoring organ is CANDIDATE",
+   "nothing ran"
+  ],
+  "note": "an inventory cut that records the three places this solver differs from the atlas's MiniSat cut; the propagation scheme is the next read",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }
