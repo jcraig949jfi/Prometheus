@@ -1,66 +1,66 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:34Z",
- "organs": 402,
+ "built": "2026-09-17T22:48Z",
+ "organs": 436,
  "dims": {
   "input_topology": {
-   "read": 400,
+   "read": 434,
    "measured": 0,
    "unmeasured": 2,
    "values": {
-    "SEQUENCE": 66,
+    "SEQUENCE": 72,
     "MIXED": 9,
-    "EVENT": 67,
-    "VECTOR": 77,
-    "SCALAR": 75,
-    "GRAPH": 13,
-    "SET": 36,
-    "TREE": 7,
+    "EVENT": 70,
+    "VECTOR": 80,
+    "SCALAR": 81,
+    "GRAPH": 17,
+    "SET": 44,
+    "TREE": 10,
     "MATRIX": 26,
-    "STREAM": 24
+    "STREAM": 25
    },
    "vocabulary_unused": []
   },
   "output_topology": {
-   "read": 400,
+   "read": 434,
    "measured": 0,
    "unmeasured": 2,
    "values": {
-    "SCALAR": 73,
-    "SEQUENCE": 69,
-    "DECISION": 53,
-    "SET": 30,
-    "VECTOR": 73,
-    "EVENT": 45,
-    "TREE": 10,
+    "SCALAR": 79,
+    "SEQUENCE": 75,
+    "DECISION": 56,
+    "EVENT": 48,
+    "SET": 38,
+    "VECTOR": 78,
+    "TREE": 11,
+    "GRAPH": 3,
     "MATRIX": 30,
     "STREAM": 10,
-    "MIXED": 6,
-    "GRAPH": 1
+    "MIXED": 6
    },
    "vocabulary_unused": []
   },
   "state_amount": {
-   "read": 381,
+   "read": 415,
    "measured": 0,
    "unmeasured": 21,
    "values": {
-    "NONE": 90,
-    "CONSTANT": 172,
-    "LINEAR_IN_INPUT": 100,
-    "LOG": 4,
-    "SUPERLINEAR": 10,
-    "UNBOUNDED": 5
+    "NONE": 96,
+    "CONSTANT": 179,
+    "LINEAR_IN_INPUT": 113,
+    "LOG": 6,
+    "SUPERLINEAR": 13,
+    "UNBOUNDED": 8
    },
    "vocabulary_unused": []
   },
   "state_persistence": {
-   "read": 120,
+   "read": 126,
    "measured": 0,
-   "unmeasured": 282,
+   "unmeasured": 310,
    "values": {
-    "PER_EPISODE": 32,
-    "PERSISTENT": 55,
+    "PER_EPISODE": 35,
+    "PERSISTENT": 58,
     "DURABLE": 17,
     "PER_CALL": 16
    },
@@ -69,11 +69,11 @@
    ]
   },
   "feedback": {
-   "read": 38,
+   "read": 40,
    "measured": 0,
-   "unmeasured": 364,
+   "unmeasured": 396,
    "values": {
-    "CLOSED_LOOP": 26,
+    "CLOSED_LOOP": 28,
     "DELAYED_CLOSED_LOOP": 10,
     "OPEN_LOOP": 1,
     "NONE": 1
@@ -81,12 +81,12 @@
    "vocabulary_unused": []
   },
   "memory": {
-   "read": 106,
+   "read": 113,
    "measured": 0,
-   "unmeasured": 296,
+   "unmeasured": 323,
    "values": {
-    "SUMMARY_STATISTIC": 26,
-    "ARCHIVE": 7,
+    "SUMMARY_STATISTIC": 29,
+    "ARCHIVE": 11,
     "WINDOW": 24,
     "LAST_VALUE": 30,
     "FULL_HISTORY": 17,
@@ -95,65 +95,65 @@
    "vocabulary_unused": []
   },
   "stochasticity": {
-   "read": 222,
+   "read": 256,
    "measured": 0,
    "unmeasured": 180,
    "values": {
-    "DETERMINISTIC": 178,
-    "SEEDED_RANDOM": 34,
-    "ENVIRONMENT_RANDOM": 10
+    "DETERMINISTIC": 205,
+    "SEEDED_RANDOM": 40,
+    "ENVIRONMENT_RANDOM": 11
    },
    "vocabulary_unused": [
     "ADVERSARIAL"
    ]
   },
   "update_topology": {
-   "read": 162,
+   "read": 186,
    "measured": 0,
-   "unmeasured": 240,
+   "unmeasured": 250,
    "values": {
-    "SWEEP": 56,
-    "SINGLE_STEP": 23,
-    "PRIORITY": 7,
-    "RECURSIVE": 24,
-    "EVENT_DRIVEN": 46,
-    "PARALLEL_ROUNDS": 6
+    "SWEEP": 61,
+    "SINGLE_STEP": 24,
+    "PRIORITY": 10,
+    "EVENT_DRIVEN": 50,
+    "RECURSIVE": 34,
+    "PARALLEL_ROUNDS": 7
    },
    "vocabulary_unused": []
   },
   "order_sensitivity": {
-   "read": 38,
+   "read": 41,
    "measured": 0,
-   "unmeasured": 364,
+   "unmeasured": 395,
    "values": {
-    "SENSITIVE": 30,
+    "SENSITIVE": 33,
     "INVARIANT": 7,
     "PARTIALLY": 1
    },
    "vocabulary_unused": []
   },
   "resource_dependence": {
-   "read": 44,
+   "read": 46,
    "measured": 0,
-   "unmeasured": 358,
+   "unmeasured": 390,
    "values": {
     "SHARED_RESOURCE": 4,
     "COMPUTE": 9,
-    "MEMORY": 23,
-    "BANDWIDTH": 3,
-    "TIME": 5
+    "MEMORY": 24,
+    "TIME": 6,
+    "BANDWIDTH": 3
    },
    "vocabulary_unused": [
     "NONE"
    ]
   },
   "failure_mode": {
-   "read": 51,
+   "read": 53,
    "measured": 0,
-   "unmeasured": 351,
+   "unmeasured": 383,
    "values": {
-    "NONE_KNOWN": 5,
-    "DEGRADES": 9,
+    "NONE_KNOWN": 6,
+    "DEGRADES": 10,
     "CORRUPTS": 8,
     "COLLAPSES": 4,
     "STALLS": 14,
@@ -164,13 +164,13 @@
    "vocabulary_unused": []
   },
   "recovery": {
-   "read": 41,
+   "read": 47,
    "measured": 0,
-   "unmeasured": 361,
+   "unmeasured": 389,
    "values": {
-    "ROLLS_BACK": 19,
-    "RETRIES": 6,
-    "SELF_RESETS": 6,
+    "RETRIES": 7,
+    "ROLLS_BACK": 23,
+    "SELF_RESETS": 7,
     "NONE": 2,
     "EXTERNAL_RESET": 4,
     "DEGRADES_GRACEFULLY": 4
@@ -180,7 +180,7 @@
   "adaptation": {
    "read": 31,
    "measured": 0,
-   "unmeasured": 371,
+   "unmeasured": 405,
    "values": {
     "STRUCTURE": 6,
     "PARAMETER": 21,
@@ -192,7 +192,7 @@
   "competition": {
    "read": 41,
    "measured": 0,
-   "unmeasured": 361,
+   "unmeasured": 395,
    "values": {
     "CONTENDS": 14,
     "ARBITRATES": 22,
@@ -205,7 +205,7 @@
   "cooperation": {
    "read": 19,
    "measured": 0,
-   "unmeasured": 383,
+   "unmeasured": 417,
    "values": {
     "AGREES": 8,
     "COORDINATES": 7,
@@ -218,7 +218,7 @@
   "hidden_state": {
    "read": 23,
    "measured": 0,
-   "unmeasured": 379,
+   "unmeasured": 413,
    "values": {
     "ESTIMATES": 18,
     "IGNORES": 1,
@@ -231,7 +231,7 @@
   "uncertainty": {
    "read": 21,
    "measured": 0,
-   "unmeasured": 381,
+   "unmeasured": 415,
    "values": {
     "POINT": 14,
     "SAMPLE": 3,
@@ -243,12 +243,12 @@
    ]
   },
   "representation_sensitivity": {
-   "read": 41,
+   "read": 43,
    "measured": 0,
-   "unmeasured": 361,
+   "unmeasured": 393,
    "values": {
     "INVARIANT": 4,
-    "SENSITIVE": 37
+    "SENSITIVE": 39
    },
    "vocabulary_unused": [
     "UNKNOWN_BY_READ"
@@ -257,7 +257,7 @@
   "temporal_horizon": {
    "read": 41,
    "measured": 0,
-   "unmeasured": 361,
+   "unmeasured": 395,
    "values": {
     "EPISODE": 8,
     "WINDOW": 14,

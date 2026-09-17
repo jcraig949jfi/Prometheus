@@ -1,15 +1,15 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:34Z",
- "n": 176,
+ "built": "2026-09-17T22:48Z",
+ "n": 185,
  "by_relation": {
-  "algorithm_from": 74,
+  "algorithm_from": 79,
+  "reimplementation_of": 9,
   "derived_from": 10,
   "shares_ancestor_with": 43,
-  "historical_version_of": 12,
+  "historical_version_of": 13,
   "superseded_by": 14,
-  "reimplementation_of": 7,
-  "port_of": 1,
+  "port_of": 2,
   "forked_from": 1,
   "supersedes": 6,
   "rewrote": 2,
@@ -32,6 +32,13 @@
    "to": "Ethernet BEB (Metcalfe & Boggs 1976); Brooker 2015 jitter",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "backoff-2.2.1",
+   "relation": "reimplementation_of",
+   "to": "binary exponential backoff (Ethernet 1976; TCP RTO) with full jitter (Brooker 2015)",
+   "note": "from the record and the docstrings",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "basic-computer-games-1978",
@@ -167,6 +174,13 @@
    "basis": "SOURCE_READ"
   },
   {
+   "from": "buddy-bdd",
+   "relation": "algorithm_from",
+   "to": "Bryant 1986 (ROBDD, apply); Brace, Rudell, Bryant 1990 (unique table, cache); Rudell 1993 (sifting)",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "c-cmaes-hansen",
    "relation": "algorithm_from",
    "to": "Hansen & Ostermeier 1996/2001; Hansen, Muller, Koumoutsakos 2003; this C code is the author's and the ancestor of pycma",
@@ -179,6 +193,13 @@
    "to": "radamsa-0.6",
    "note": "PAIR: pressure generator <-> defended parser (humans regarded fuzzing as the corrective for parser bugs)",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "cjson-1.7.18",
+   "relation": "historical_version_of",
+   "to": "cJSON (Gamble 2009) as rewritten for 1.7 (2017) around parse_buffer after fuzzing findings",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "clips-6.4.2-nasa",
@@ -433,11 +454,25 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "go-explore-uber-2022",
+   "relation": "algorithm_from",
+   "to": "Ecoffet, Huizinga, Lehman, Stanley, Clune 2019 (arXiv) / 2021 (Nature); the archive idea descends from novelty search and MAP-Elites (Lehman & Stanley 2011; Mouret & Clune 2015)",
+   "note": "from the README and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "go-runtime-deadlock-fixtures-1.22",
    "relation": "shares_ancestor_with",
    "to": "spin-pathfinder-priority-inversion-1997",
    "note": "a deadlock found by execution + runtime detector vs one found by model checking",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "graphplan-blum-furst-1995",
+   "relation": "algorithm_from",
+   "to": "Blum & Furst 1995 (AI Journal 1997); the atlas's ff-planner-2.3 cut records FF as the successor that kept the graph as a heuristic and replaced extraction with forward search",
+   "note": "from the source and the FF cut in this atlas",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "gzip-1.2.4-1993",
@@ -515,6 +550,13 @@
    "to": "Cooley & Tukey 1965",
    "note": "mixed-radix FFT",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "kissfft-131.1.0",
+   "relation": "algorithm_from",
+   "to": "Cooley & Tukey 1965 (mixed radix); the strided recursive form",
+   "note": "from the README and the source",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "l1-adaptive-control-basics-xkhainguyen",
@@ -776,6 +818,13 @@
    "basis": "TECHNE_RECORD"
   },
   {
+   "from": "minisat-2.2.0",
+   "relation": "algorithm_from",
+   "to": "GRASP 1996 (learning); Chaff 2001 (watched literals, VSIDS); Een & Sorensson 2003 (MiniSat); Luby 1993 / Huang 2007 (restarts); Sorensson & Biere 2009 (minimisation)",
+   "note": "from the source comments and the record",
+   "basis": "SOURCE_READ"
+  },
+  {
    "from": "minisom",
    "relation": "algorithm_from",
    "to": "Kohonen 1982 / Kohonen 2013 (batch)",
@@ -858,6 +907,13 @@
    "to": "tinyscheme-1.42",
    "note": "Lisp family: programs vs language machine",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "paip-lisp-norvig-1991",
+   "relation": "reimplementation_of",
+   "to": "Newell & Simon's GPS; Weizenbaum's ELIZA; Robinson's unification; Prolog (Colmerauer / Warren); the classical searches",
+   "note": "the book's stated sources",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "pari-gp-2.17",
@@ -977,6 +1033,13 @@
    "to": "Hoots & Roehrich 1980; Vallado et al. 2006",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "python-sgp4-2.23",
+   "relation": "port_of",
+   "to": "Vallado, Crawford, Hujsak & Kelso 2006 C++ (embedded in extension/SGP4.cpp); Hoots & Roehrich 1980 Spacetrack Report 3",
+   "note": "from the docstrings and the record",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "radamsa-0.6",
