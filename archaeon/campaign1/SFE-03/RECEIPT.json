@@ -1,0 +1,96 @@
+{
+ "artifacts": {},
+ "campaign_seed": 20260917,
+ "effects": {
+  "footholds": {
+   "fresh": 0,
+   "random": 0,
+   "relevant": 0
+  },
+  "means": {
+   "fresh": 0.041666666666666664,
+   "random": 0.041666666666666664,
+   "relevant": 0.041666666666666664
+  },
+  "per_seed": {
+   "fresh": [
+    0.041666666666666664
+   ],
+   "random": [
+    0.041666666666666664
+   ],
+   "relevant": [
+    0.041666666666666664
+   ]
+  },
+  "random_minus_fresh": 0.0,
+  "relevant_minus_fresh": 0.0,
+  "relevant_minus_random": 0.0
+ },
+ "engine_path": false,
+ "errors": [],
+ "experiment": "SFE-03",
+ "imports": {},
+ "k": 2,
+ "packs": {
+  "random_s1": {
+   "n_episodes": 2,
+   "n_failed_of": [
+    6,
+    6
+   ],
+   "source_elite_reward": 0.0
+  },
+  "relevant_s1": {
+   "n_episodes": 2,
+   "n_failed_of": [
+    6,
+    6
+   ],
+   "source_elite_reward": 0.0
+  }
+ },
+ "relevance": {
+  "random": {
+   "relevant": false,
+   "rule": "all of K,D,ask_kind,ask_mode,op_mode,topology equal",
+   "same": {
+    "D": true,
+    "K": false,
+    "ask_kind": false,
+    "ask_mode": true,
+    "op_mode": true,
+    "topology": true
+   }
+  },
+  "relevant": {
+   "relevant": true,
+   "rule": "all of K,D,ask_kind,ask_mode,op_mode,topology equal",
+   "same": {
+    "D": true,
+    "K": true,
+    "ask_kind": true,
+    "ask_mode": true,
+    "op_mode": true,
+    "topology": true
+   }
+  }
+ },
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "timings": {
+  "sources_s": 0.1,
+  "targets_s": 0.3,
+  "total_s": 0.4
+ },
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "3a34d207ab2627815229a0ae43375b2e8ec839c3",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": true,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

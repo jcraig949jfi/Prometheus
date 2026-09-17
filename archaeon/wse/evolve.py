@@ -121,6 +121,7 @@ def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int
              init_pop: Optional[List[dict]] = None, branch: str = "B1_naive",
              ramp: bool = False, ramp_foothold: float = 0.30, curve_every: int = 0,
              ramp_mode: str = "best", chance: float = 0.0,
+             tabu: Optional[set] = None, tabu_retries: int = 1, tabu_key=None,
              curve_episodes: Optional[List[Episode]] = None, foundry: Optional[dict] = None) -> dict:
     """Evolve one cell. Returns the elite, its ancestry chain, the per-generation trace and
     (v0.2) the learning curve: held-out competence of the elite every `curve_every`
@@ -139,6 +140,7 @@ def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int
     scored = []
     best_so_far = 0.0
     mean_prev = 0.0
+    tabu_hits = [0]
     exp_episodes = 0
     exp_ticks = 0
     for g in range(G_):
@@ -185,6 +187,15 @@ def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int
             parent = _tournament(scored, rng, tournament)
             mate = _tournament(scored, rng, tournament)
             child, rec = descend(parent, rng.next_u64() & MASK62, mate=mate if mate is not parent else None)
+            # Campaign-1 SFE-01: FAILURE residue as a tabu set of genome tuples; a child whose
+            # genome is tabu is re-drawn (tabu_retries times); the residue prunes, never proposes.
+            if tabu:
+                tries = 0
+                kf = tabu_key or (lambda g: tuple(g))
+                while kf(child["manifest"]["genome"]) in tabu and tries < tabu_retries:
+                    child, rec = descend(parent, rng.next_u64() & MASK62, mate=mate if mate is not parent else None)
+                    tries += 1
+                    tabu_hits[0] += 1
             # A no-op mutation yields child_id == parent_id; recording it made the ancestry walk
             # a self-loop (v01 rows carry ancestry_depth 10000 = the cap, INVALID; results unaffected).
             if child["organism_id"] != parent["organism_id"] and child["organism_id"] not in records:
@@ -206,6 +217,8 @@ def run_cell(spec: WorldSpec, regime: Regime, campaign_seed: int, cell_seed: int
         "ancestry": chain, "trace": trace, "branch": branch, "learning_curve": curve,
         "experience_episodes": exp_episodes, "experience_ticks": exp_ticks,
         "final_population_ids": [z[1]["organism_id"] for z in scored[:elitism]],
+        "final_population": [{"fitness": z[0], "reward": z[2]["reward"], "manifest": z[1]["manifest"]} for z in scored],
+        "tabu_hits": tabu_hits[0],
         "final_elites": [z[1] for z in scored[:elitism]],
     }
 

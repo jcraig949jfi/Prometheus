@@ -20,3 +20,17 @@ plus rows/receipts). Every timestamp UTC.
   engine + own client; 4 h / 24 h timebox; standalone fallback labelled).
 - Substrate survey delegated (SFE client API, conformance gate, H0-H5
   harnesses, Vivarium executors callable directly, PEW write path).
+
+## 00:15-01:50 -- SFE-01 (two attempts; COMPLETE)
+
+- Gate: Harmonia's conformance_check.py vs live M2 with 20 declared
+  routes: CONFORMANT (68/68, 30 GET scoping probes match).
+- Attempt 1 (100 s): engine path clean except 3x 422 on POST failures
+  (L-006); science void: cell label seeded the RNG (L-008), exact-genome
+  tabu inert (L-007), my hash check wrong (L-009). Preserved as
+  RECEIPT_attempt1.json / rows_attempt1.json.
+- Attempt 2 (170 s, D-007/D-008): 0 errors, 12/12 imports hash-verified,
+  7/7 worlds TERMINATED. Components WEAK POSITIVE (2/3 footholds vs 0/3
+  random-segment control, 1/3 baseline), failures NULL/NEGATIVE,
+  interaction not estimable (n=3). Full record: SFE-01/RECORD.md.
+- Ledger L-001..L-013. Next: SFE-02.

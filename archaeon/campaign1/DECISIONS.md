@@ -46,3 +46,49 @@ row is labelled ENGINE_PATH=false so the instrument failure is
 separable from the science. | Directive VIII: separate scientific from
 instrument failures. | Alternative: mark the whole experiment BLOCKED and
 learn nothing about the science. | Revisit per experiment.
+
+D-005 | 2026-09-17 00:55 | SFE-01's SEARCH substrate is the WSE selection
+loop over Proteus players (archaeon/wse), not the cegis_boolean_v1 H0 kind
+of campaign_h1h0.py; the EXCHANGE substrate is the live engine (artifacts,
+import, knowledge frontier, experiments, observations, failures). |
+The H0 kind path needs the Vivarium consumer (PREPARED, NOT LAUNCHED; its
+two tokens were never carried to M2) and the Postgres queue; launching it
+is a separate engineering project (directive III). The WSE loop is
+replayable, seeded, tested (25 tests) and already produced the residue
+types H0 names (floor genotypes = failures; above-floor genome segments =
+components). | Alternative: launch the consumer and issue the H0 phase
+plan -- tabled as the "next version" of SFE-01. | Revisit when the
+consumer runs on M2 with its tokens.
+
+D-006 | 2026-09-17 00:55 | Residue semantics for SFE-01: FAILURES prune
+(a tabu set of floor genotypes; a tabu child is re-drawn once) and never
+propose; COMPONENTS propose (one 2-4-instruction segment of an above-
+floor source genotype spliced into each generation-0 genome) and never
+prune. Random-residue controls 10r/01r use the same mechanisms with
+random genotypes so "any perturbation helps" is separable. | The
+directive asks for combined gain and interaction to stay separable;
+mechanisms that could not be separated (e.g. seeding with whole source
+elites) would confound "component" with "transfer of a solver". |
+Alternative: whole-elite seeding (that is SSF's B2_transfer, already
+measured). | Revisit if 01 and 01r tie: then segments carry nothing and
+the component definition must change.
+
+D-007 | 2026-09-17 01:25 | SFE-01 attempt 2 uses COMMON RANDOM NUMBERS across
+the six cells (one branch label seeds the loop's RNG; the cell enters only
+through its residue). | Attempt 1 seeded the RNG with the cell label, so
+cells differed by random trajectory as well as by residue; with tabu hits
+= 0 the 10r control could not equal 00 as a control must. | Alternative:
+more seeds. | Revisit if a residue mechanism consumes RNG draws unevenly
+(it then diverges the streams after the first hit; reported as
+tabu_hits).
+
+D-008 | 2026-09-17 01:25 | FAILURE residue is keyed on the OPCODE SEQUENCE
+of a floor genotype (word mod 25 per instruction), not the exact 32-bit
+genome. | Attempt 1's exact-genome tabu never fired (tabu_hits 0 in 9/9
+residue rows): over 2^32-valued words an exact tabu is inert, so "failures
+help" was unmeasurable by construction. An opcode signature can fire on
+operand-only variants, the commonest mutation class (operand_perturbation
+19 %). | Alternative: behavioural signature (output sequence) -- costs an
+evaluation per child; deferred. | Revisit if tabu_hits stays 0: then the
+mutation grammar never revisits opcode sequences and the failure channel
+needs a different carrier.
