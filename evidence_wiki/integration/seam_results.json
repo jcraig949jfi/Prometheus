@@ -1,23 +1,32 @@
 {
- "ran_at": "2026-09-16T08:27:57",
+ "ran_at": "2026-09-17T06:52:00",
  "host": "127.0.0.1",
  "machine": "M2",
  "service": {
   "service": "mnemosyne-evidence-wiki",
   "status": "ok",
-  "schema_version": 4,
+  "schema_version": 5,
   "ontology_version": 2,
   "fossil_contract": "pew.fossil.v2",
-  "uptime_s": 82.7,
+  "uptime_s": 86.2,
   "search": {
    "ready": true,
    "loading": false,
    "error": null,
-   "load_seconds": 3.58,
-   "loaded_at": "2026-09-16T08:26:37"
+   "load_seconds": 3.7,
+   "loaded_at": "2026-09-17T06:50:35"
+  },
+  "store": {
+   "environment": "prometheus-canonical",
+   "db_system_id": "7628127204585430828",
+   "db_name": "prometheus_fire",
+   "db_host": "192.168.1.202",
+   "server_addr": "192.168.1.202/32",
+   "server_port": 5432,
+   "attested_at": "2026-09-17T06:50:31"
   },
   "workspace": {
-   "base_sha": "569a675f7b7dbd09fb1bcc8838efe26a17a9d701",
+   "base_sha": "e98d2ee8c9e134b8c92187f65ec92e92eb8cfccf",
    "branch": "HEAD",
    "worktree_path": "D:\\Prometheus-worktrees\\mnemosyne-pew\\evidence_wiki",
    "dirty": false,
@@ -29,16 +38,16 @@
  "n_pass": 12,
  "skipped": [],
  "all_pass": true,
- "bound_evidence_id": "E-2d82a59f70f4",
+ "bound_evidence_id": "E-b228f09998cc",
  "fixture_encounter": "TESTFIX-HARMONIA-ENC-0002",
  "fixture_run": "TESTFIX-RUN-0002",
- "real_sfe_encounter": "SEAM-evt_b0c876bd220fd9f402699a19",
+ "real_sfe_encounter": "SEAM-evt_6eb3e22d279d1dcd651a3014",
  "gates": [
   {
    "gate": "I_live_migration_state",
    "pass": true,
    "skipped": false,
-   "detail": "health.schema_version=4 contract=pew.fossil.v2 | {'fossil_pk': 'PRIMARY KEY (encounter_id, run_key)', 'evidence_fk': 'FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES ew.fossil_encounters(encounter_id, run_key)', 'evidence_cols': ['encounter_id', 'encounter_run_id', 'encounter_run_key']}"
+   "detail": "health.schema_version=5 contract=pew.fossil.v2 | {'fossil_pk': 'PRIMARY KEY (encounter_id, run_key)', 'evidence_fk': 'FOREIGN KEY (encounter_id, encounter_run_key) REFERENCES ew.fossil_encounters(encounter_id, run_key)', 'evidence_cols': ['encounter_id', 'encounter_run_id', 'encounter_run_key']}"
   },
   {
    "gate": "A_hash_semantics",
@@ -50,13 +59,13 @@
    "gate": "B_evidence_to_fossil_traversal",
    "pass": true,
    "skipped": false,
-   "detail": "evidence=E-2d82a59f70f4 -> {\"encounter_id\": \"TESTFIX-HARMONIA-ENC-0002\", \"run_id\": \"TESTFIX-RUN-0002\", \"world_id\": \"TESTFIX-WORLD-0002\", \"players\": [\"TESTFIX-PLAYER-0002\"], \"sfe_entry_hash\": \"sha256:7c44ef40bee6775773ea1c365f238e056dadb864747f03ab692b831a73067d60\", \"sfe_event_id\": \"evt_d1c585e3133da4f58554cf24\", \"sfe_event_seq\": 1}"
+   "detail": "evidence=E-b228f09998cc -> {\"encounter_id\": \"TESTFIX-HARMONIA-ENC-0002\", \"run_id\": \"TESTFIX-RUN-0002\", \"world_id\": \"TESTFIX-WORLD-0002\", \"players\": [\"TESTFIX-PLAYER-0002\"], \"sfe_entry_hash\": \"sha256:7c44ef40bee6775773ea1c365f238e056dadb864747f03ab692b831a73067d60\", \"sfe_event_id\": \"evt_d1c585e3133da4f58554cf24\", \"sfe_event_seq\": 1}"
   },
   {
    "gate": "C_reverse_query",
    "pass": true,
    "skipped": false,
-   "detail": "encounter -> 5 evidence row(s); contains E-2d82a59f70f4: True"
+   "detail": "encounter -> 6 evidence row(s); contains E-b228f09998cc: True"
   },
   {
    "gate": "D_unsupported_field_fails_closed",
@@ -98,7 +107,7 @@
    "gate": "H_independent_read_back",
    "pass": true,
    "skipped": false,
-   "detail": "direct SQL (never through the writing function): [{'evidence_id': 'E-2d82a59f70f4', 'encounter_id': 'TESTFIX-HARMONIA-ENC-0002', 'encounter_run_id': 'TESTFIX-RUN-0002', 'encounter_run_key': 'TESTFIX-RUN-0002'}]"
+   "detail": "direct SQL (never through the writing function): [{'evidence_id': 'E-b228f09998cc', 'encounter_id': 'TESTFIX-HARMONIA-ENC-0002', 'encounter_run_id': 'TESTFIX-RUN-0002', 'encounter_run_key': 'TESTFIX-RUN-0002'}]"
   },
   {
    "gate": "J_contract_is_self_describing",

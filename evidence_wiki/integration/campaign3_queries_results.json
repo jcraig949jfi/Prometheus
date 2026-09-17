@@ -1,0 +1,914 @@
+{
+ "ran_at": "2026-09-17T06:58:37",
+ "service": "http://127.0.0.1:8377/api/v1",
+ "answers": {
+  "Q1_delay_invariance_measurements": {
+   "question": "which measurements support the delay-invariance projection?",
+   "runs_of_record": 12,
+   "runs_general_on_trained_delays": 11,
+   "fields_read": [
+    "general_heldout",
+    "general_gen",
+    "general_gen_ladder",
+    "heldout_by_rung",
+    "rung_at_general",
+    "general_survives"
+   ],
+   "per_seed": [
+    {
+     "seed": 5,
+     "general_gen": 147,
+     "rung_at_general": 2,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    },
+    {
+     "seed": 10,
+     "general_gen": null,
+     "rung_at_general": null,
+     "general_heldout": 0,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 0.1875,
+      "R2": 0.0417,
+      "R3": 0.0625
+     }
+    },
+    {
+     "seed": 6,
+     "general_gen": 62,
+     "rung_at_general": 2,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    },
+    {
+     "seed": 1,
+     "general_gen": 99,
+     "rung_at_general": 1,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    },
+    {
+     "seed": 11,
+     "general_gen": 39,
+     "rung_at_general": 1,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    },
+    {
+     "seed": 4,
+     "general_gen": 86,
+     "rung_at_general": 1,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    },
+    {
+     "seed": 9,
+     "general_gen": 49,
+     "rung_at_general": 1,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    },
+    {
+     "seed": 8,
+     "general_gen": 109,
+     "rung_at_general": 1,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    },
+    {
+     "seed": 12,
+     "general_gen": 85,
+     "rung_at_general": 2,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    },
+    {
+     "seed": 7,
+     "general_gen": 47,
+     "rung_at_general": 1,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    },
+    {
+     "seed": 3,
+     "general_gen": 99,
+     "rung_at_general": 1,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    },
+    {
+     "seed": 2,
+     "general_gen": 41,
+     "rung_at_general": 0,
+     "general_heldout": 1,
+     "heldout_by_rung": {
+      "R0": 1.0,
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0
+     }
+    }
+   ],
+   "evidence_ids": [
+    "CO-032f194d397769da5c7f0ff566e6cd29",
+    "CO-19edb940d1da12dd25ece29c48507772",
+    "CO-2162c4bd6cee58cb2cffdb3c313ed029",
+    "CO-44cb23033be1cd6fca5771c070b9e439",
+    "CO-53ede3ae8a783bec034cdf0805a4a6e7",
+    "CO-5605c7cb65dcc2c3f178074cf58dd7f7",
+    "CO-5ff44414f6d76c43f2b473b817d02f89",
+    "CO-6f292ea7069acbcf49efe99b32072114",
+    "CO-a777a4ce8ba07774645c26fc0493f90a",
+    "CO-ab895bff1f32d21e13bb3c6e75e0fdc4",
+    "CO-ad68a11f84b3de31f5769cf0babab802",
+    "CO-d1c431531b4de2054c8b0c3447a5fed4"
+   ],
+   "not_answered_here": "why the ladder produces invariance (analysis, Archaeon)"
+  },
+  "Q1b_unseen_delay_measurements": {
+   "runs_at_d8_or_d16": 14,
+   "by_family_target": {
+    "None->W1_d16": 7,
+    "None->W1_d8": 7
+   },
+   "heldout_by_family_target": {
+    "None->W1_d8": [
+     0.0417,
+     0.0208,
+     0.0417,
+     0.125,
+     0.0833,
+     0.0417,
+     0.1042
+    ],
+    "None->W1_d16": [
+     0.0625,
+     0.0625,
+     0.0625,
+     0.0625,
+     0.0625,
+     1.0,
+     0.0625
+    ]
+   },
+   "evidence_ids": [
+    "CO-7de6689413276c547860628e458893da",
+    "CO-a22efdb7b50b85f8f1d090229ac40008",
+    "CO-1c388a976ea3bcdfe51f160f5a3cb227",
+    "CO-1fee4e731b0100c6374b30bd612a2309",
+    "CO-2e520837271d3f254bcbfe0abac81e16",
+    "CO-5ff31d13389aa85da0c8dc7a291154ee",
+    "CO-7576d87f8aad6c6a451a5f293df2d7ff",
+    "CO-793b5549fd253d843ed2f78334af3f12",
+    "CO-a1c8b4835404e8d0da95a93304046f18",
+    "CO-c3a13a01f1c4ae89927e7ca9d4c36f73",
+    "CO-e340f55df04fe86e3b0136924ed585f4",
+    "CO-e5faa58b15cea91dbc14fb28cb499d88",
+    "CO-ed16c6e60321cea1b16988f4b995a861",
+    "CO-ef2fd72c2fe37b2eec6c6dbd06b2954a"
+   ]
+  },
+  "Q2_present_before_delay1_selection": {
+   "question": "which evidence shows the organism promoted at delay 1 was already present?",
+   "fields_read": [
+    "hold_released_by",
+    "rung_at_general",
+    "general_gen",
+    "general_gen_ladder",
+    "reached_r0_by_rung_end",
+    "p_switched_at"
+   ],
+   "per_seed": [
+    {
+     "seed": 5,
+     "hold_released_by": "competence",
+     "rung_at_general": 2,
+     "general_gen": 147,
+     "general_gen_ladder": 50,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 10,
+     "hold_released_by": "competence",
+     "rung_at_general": null,
+     "general_gen": null,
+     "general_gen_ladder": null,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 6,
+     "hold_released_by": "competence",
+     "rung_at_general": 2,
+     "general_gen": 62,
+     "general_gen_ladder": 50,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 1,
+     "hold_released_by": "competence",
+     "rung_at_general": 1,
+     "general_gen": 99,
+     "general_gen_ladder": 40,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 11,
+     "hold_released_by": "competence",
+     "rung_at_general": 1,
+     "general_gen": 39,
+     "general_gen_ladder": 25,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 4,
+     "hold_released_by": "competence",
+     "rung_at_general": 1,
+     "general_gen": 86,
+     "general_gen_ladder": 35,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 9,
+     "hold_released_by": "competence",
+     "rung_at_general": 1,
+     "general_gen": 49,
+     "general_gen_ladder": 35,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 8,
+     "hold_released_by": "competence",
+     "rung_at_general": 1,
+     "general_gen": 109,
+     "general_gen_ladder": 28,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 12,
+     "hold_released_by": "competence",
+     "rung_at_general": 2,
+     "general_gen": 85,
+     "general_gen_ladder": 50,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 7,
+     "hold_released_by": "competence",
+     "rung_at_general": 1,
+     "general_gen": 47,
+     "general_gen_ladder": 25,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 3,
+     "hold_released_by": "competence",
+     "rung_at_general": 1,
+     "general_gen": 99,
+     "general_gen_ladder": 25,
+     "reached_r0_by_rung_end": 1
+    },
+    {
+     "seed": 2,
+     "hold_released_by": "competence",
+     "rung_at_general": 0,
+     "general_gen": 41,
+     "general_gen_ladder": 10,
+     "reached_r0_by_rung_end": 1
+    }
+   ],
+   "evidence_ids": [
+    "CO-032f194d397769da5c7f0ff566e6cd29",
+    "CO-19edb940d1da12dd25ece29c48507772",
+    "CO-2162c4bd6cee58cb2cffdb3c313ed029",
+    "CO-44cb23033be1cd6fca5771c070b9e439",
+    "CO-53ede3ae8a783bec034cdf0805a4a6e7",
+    "CO-5605c7cb65dcc2c3f178074cf58dd7f7",
+    "CO-5ff44414f6d76c43f2b473b817d02f89",
+    "CO-6f292ea7069acbcf49efe99b32072114",
+    "CO-a777a4ce8ba07774645c26fc0493f90a",
+    "CO-ab895bff1f32d21e13bb3c6e75e0fdc4",
+    "CO-ad68a11f84b3de31f5769cf0babab802",
+    "CO-d1c431531b4de2054c8b0c3447a5fed4"
+   ],
+   "note": "PEW carries the producer's per-run fields; 'already present' is the analyst's reading of rung_at_general == 1 with general_gen at the ladder release"
+  },
+  "Q3_imports_mature_vs_control_and_realized_dose": {
+   "question": "which runs used mature versus incompetent imports, and what was the realized dose?",
+   "runs": 238,
+   "quality_counts": {
+    "mature": 112,
+    "control": 112,
+    "none": 14
+   },
+   "intended_vs_realized_dose": [
+    {
+     "quality": "control",
+     "dose_intended": "1",
+     "dose_realized": "1",
+     "cap": "0.0",
+     "runs": 12
+    },
+    {
+     "quality": "control",
+     "dose_intended": "1",
+     "dose_realized": "1",
+     "cap": "0.05",
+     "runs": 12
+    },
+    {
+     "quality": "control",
+     "dose_intended": "1",
+     "dose_realized": "1",
+     "cap": "0.25",
+     "runs": 12
+    },
+    {
+     "quality": "control",
+     "dose_intended": "32",
+     "dose_realized": "32",
+     "cap": "0.0",
+     "runs": 12
+    },
+    {
+     "quality": "control",
+     "dose_intended": "32",
+     "dose_realized": "32",
+     "cap": "0.05",
+     "runs": 12
+    },
+    {
+     "quality": "control",
+     "dose_intended": "32",
+     "dose_realized": "32",
+     "cap": "0.25",
+     "runs": 12
+    },
+    {
+     "quality": "control",
+     "dose_intended": "4",
+     "dose_realized": "4",
+     "cap": "0.0",
+     "runs": 14
+    },
+    {
+     "quality": "control",
+     "dose_intended": "4",
+     "dose_realized": "4",
+     "cap": "0.05",
+     "runs": 12
+    },
+    {
+     "quality": "control",
+     "dose_intended": "4",
+     "dose_realized": "4",
+     "cap": "0.25",
+     "runs": 14
+    },
+    {
+     "quality": "mature",
+     "dose_intended": "1",
+     "dose_realized": "1",
+     "cap": "0.0",
+     "runs": 12
+    },
+    {
+     "quality": "mature",
+     "dose_intended": "1",
+     "dose_realized": "1",
+     "cap": "0.05",
+     "runs": 12
+    },
+    {
+     "quality": "mature",
+     "dose_intended": "1",
+     "dose_realized": "1",
+     "cap": "0.25",
+     "runs": 12
+    },
+    {
+     "quality": "mature",
+     "dose_intended": "32",
+     "dose_realized": "32",
+     "cap": "0.0",
+     "runs": 12
+    },
+    {
+     "quality": "mature",
+     "dose_intended": "32",
+     "dose_realized": "32",
+     "cap": "0.05",
+     "runs": 12
+    },
+    {
+     "quality": "mature",
+     "dose_intended": "32",
+     "dose_realized": "32",
+     "cap": "0.25",
+     "runs": 12
+    },
+    {
+     "quality": "mature",
+     "dose_intended": "4",
+     "dose_realized": "4",
+     "cap": "0.0",
+     "runs": 14
+    },
+    {
+     "quality": "mature",
+     "dose_intended": "4",
+     "dose_realized": "4",
+     "cap": "0.05",
+     "runs": 12
+    },
+    {
+     "quality": "mature",
+     "dose_intended": "4",
+     "dose_realized": "4",
+     "cap": "0.25",
+     "runs": 14
+    },
+    {
+     "quality": "none",
+     "dose_intended": "0",
+     "dose_realized": "0",
+     "cap": "0.0",
+     "runs": 14
+    }
+   ],
+   "intended_equals_realized_in_every_run": true,
+   "import_share_final_by_quality": {
+    "control": [
+     0,
+     0.86,
+     0.865,
+     0.88,
+     0.9,
+     0.92
+    ],
+    "mature": [
+     1.0
+    ],
+    "none": [
+     0
+    ]
+   },
+   "evidence_ids": [
+    "CO-3188a9f0f08aa47f020b37190dd59b8b",
+    "CO-370abf71209ce320f7f4b5864f40f9ca",
+    "CO-38b79cd29123a2c27b12a5c185e70433",
+    "CO-5f6e199c8b0b23817c0c742206109ae8",
+    "CO-7839adf5fe13740edbd5efac00699e26",
+    "CO-8c4b1fbdb7a472e749189627a6ba2da8",
+    "CO-90597b2f04fc9126506abe4dc97c144f",
+    "CO-90ea4adf721ba143a3554cf62ede5058",
+    "CO-ca0dd5f630dae4e3f870e1cc95634e6d",
+    "CO-e93947fab20f9bd15e2ab162ca2fb6fd",
+    "CO-00060f3025cc6f1d64a14a5db7b30739",
+    "CO-00ba8bc9e6378e1f8c6ad59fea9bc734",
+    "CO-00d41286bee14e9eb256dd22ca4343f6",
+    "CO-03de245f01557641aeb8cbc02d1117f0",
+    "CO-046a2cf29b4621b9028c15546dbb88c2",
+    "CO-05157b97db70ecc6c21b2c6a63484248",
+    "CO-0bc12fe32aaacbbdf14d3a6f39f4fa5a",
+    "CO-0bf0d9b1fab51c483e83a9e747c6ceac",
+    "CO-0c320e8f2c68bcb2b1523f804b585cdc",
+    "CO-0c3add08e7914055ee9cadd6edc0f8e6",
+    "CO-0d6c5980fe0906a5ea30ec37fa720ea8",
+    "CO-0d9debf45c0b7c78b123f25d818d32f8",
+    "CO-0fe252a3751a90d7dc84295b539f60ac",
+    "CO-0fe45399957df1a51a6f0eb42631642d",
+    "CO-108fd120af5c03b6654d6e4eaacbdb61",
+    "CO-1287a0db8e86922a85af1af577a9c4cf",
+    "CO-1356c22575b5d0ac02147a196f83bdd1",
+    "CO-1794cabecb76a3b8766ed7a0f99fda4f",
+    "CO-17e4a42712a4267c037f23a5ddb47f45",
+    "CO-180430e8ae192968d740b55d10e28b5f",
+    "CO-197f058cb1d4f0526386ea4e49fa7e1e",
+    "CO-1a497a91e587e7b37b2fc04cb1bc6a7b",
+    "CO-1a9631d5ef79ab5c701c09909ed7b3fb",
+    "CO-1af23fed6990780dadf950794e709bd4",
+    "CO-1b436f8689ffed82dbd988df1a03954a",
+    "CO-1bf3e696285d3fed9b6c1f17f8e5fe76",
+    "CO-1d63bae0ce260d70bc5c1ea69b4434fb",
+    "CO-1f2734b612d6e262ebd9a4c5535b8136",
+    "CO-1fcb32794d7f7780deddfbde88bef2d9",
+    "CO-1fcea4fb5d2348be4d7dffdca2c8dc73",
+    "CO-20adcb2d79956d8dc8fd64ae66dc5060",
+    "CO-218ce4e0c150e28c7d663d5948ca9887",
+    "CO-2211ebb556bb9668c1ca05458ccb9ad8",
+    "CO-23a17a2ff07865f4584a50336a8a9e52",
+    "CO-25b7b730044bbe23f6d0b9cc3ddc1cb1",
+    "CO-26009176c208206d7e71b0ca38327e0b",
+    "CO-2679f99853d23c3a8694118fe156bc47",
+    "CO-27473b4a25470d06bfdf56ac324075fd",
+    "CO-27fb07666c036eb9022012cb7eabd908",
+    "CO-2b2c6437c24bde7517c1b59e5436cd9e"
+   ],
+   "not_answered_here": "whether an import 'worked' (takeover_v1 is not built; capability benefit is a separate measurement)"
+  },
+  "Q4_censored_runs": {
+   "question": "which runs were censored before a confirmed summit?",
+   "cmp3_reachability_rows": 486,
+   "censored": 321,
+   "by_harness": {
+    "C3-SFE-03": {
+     "censored": 24,
+     "not_censored": 0
+    },
+    "C3-SFE-10": {
+     "censored": 104,
+     "not_censored": 124
+    },
+    "C3-SFE-08": {
+     "censored": 24,
+     "not_censored": 0
+    },
+    "C3-SFE-05": {
+     "censored": 60,
+     "not_censored": 0
+    },
+    "C3-SFE-07": {
+     "censored": 20,
+     "not_censored": 40
+    },
+    "C3-SFE-04": {
+     "censored": 65,
+     "not_censored": 1
+    },
+    "C3-SFE-01": {
+     "censored": 24,
+     "not_censored": 0
+    }
+   },
+   "horizons_G": [
+    60,
+    100,
+    112,
+    114,
+    122,
+    131,
+    135,
+    151,
+    159,
+    174,
+    181,
+    197,
+    300
+   ],
+   "example_evidence_ids": [
+    "CO-09537dc070665a03e0d549fc7130d182",
+    "CO-144b24fcefc6c358d8639bd2ab2f37a8",
+    "CO-1f1bebe48426a74c83cb8cc206fae221",
+    "CO-2d98c3f3d1c7997225dfe9f17dbfecca",
+    "CO-3e959d8f89f836131566677b2272f222",
+    "CO-42bed740e996eff07bc57251fa708db5",
+    "CO-48afcd025cc11f8cb88ba2eb1011975f",
+    "CO-522f321b7511fd82bab77d06a0123392",
+    "CO-5ce642be3ac6e465b568df23d74ab52c",
+    "CO-6c26c8db59b4df927d4717bb6db6a5e1",
+    "CO-761c8b0216b6fc05e5300ef01963c586",
+    "CO-799df2b7e46e71b064411557e0ffbd44",
+    "CO-80286fdc7eae1979fa29fca232eedc75",
+    "CO-82dadbf532318f52479b304ecde52fea",
+    "CO-8b9715a1fe83fedd42990072dc2e1ae0",
+    "CO-9225700caa27fe67c1e3c73c8f7ffc67",
+    "CO-a1e3b71724793f4c5a3e375be7c07017",
+    "CO-a3e4d44c1e2a56808bb4c11d3c2eddf9",
+    "CO-ae64539bad4b05dd917cbaa34d86d8a8",
+    "CO-b84026dd319a9720e41e6b8a1fd5a4e3"
+   ]
+  },
+  "Q5_basin_measurements_by_stratum": {
+   "question": "which basin measurements belong to each stratum?",
+   "runs": 142,
+   "strata": [
+    {
+     "table": "skelA",
+     "climber": "first_improvement",
+     "runs": 35
+    },
+    {
+     "table": "skelA",
+     "climber": "population",
+     "runs": 36
+    },
+    {
+     "table": "skelB",
+     "climber": "first_improvement",
+     "runs": 35
+    },
+    {
+     "table": "skelB",
+     "climber": "population",
+     "runs": 36
+    }
+   ],
+   "fields_read": [
+    "basin_share",
+    "deceptive_share",
+    "median_first_hit",
+    "table",
+    "climber",
+    "encoding"
+   ],
+   "within_stratum_example": {
+    "skelA/first_improvement": [
+     {
+      "encoding": "class_grouped",
+      "basin_share": 0.9846,
+      "median_first_hit": 13
+     },
+     {
+      "encoding": "identity",
+      "basin_share": 0.9838,
+      "median_first_hit": 13
+     },
+     {
+      "encoding": "perm_2",
+      "basin_share": 0.984,
+      "median_first_hit": 23
+     }
+    ],
+    "skelA/population": [
+     {
+      "encoding": "identity",
+      "basin_share": 0.9838,
+      "median_first_hit": 5
+     },
+     {
+      "encoding": "perm_2",
+      "basin_share": 0.984,
+      "median_first_hit": 14
+     },
+     {
+      "encoding": "perm_1",
+      "basin_share": 0.9847,
+      "median_first_hit": 3
+     }
+    ],
+    "skelB/first_improvement": [
+     {
+      "encoding": "class_grouped",
+      "basin_share": 0.9846,
+      "median_first_hit": 13
+     },
+     {
+      "encoding": "perm_2",
+      "basin_share": 0.984,
+      "median_first_hit": 23
+     },
+     {
+      "encoding": "perm_1",
+      "basin_share": 0.9847,
+      "median_first_hit": 54
+     }
+    ],
+    "skelB/population": [
+     {
+      "encoding": "perm_1",
+      "basin_share": 0.9847,
+      "median_first_hit": 3
+     },
+     {
+      "encoding": "identity",
+      "basin_share": 0.9838,
+      "median_first_hit": 5
+     },
+     {
+      "encoding": "class_grouped",
+      "basin_share": 0.9846,
+      "median_first_hit": 7
+     }
+    ]
+   },
+   "evidence_ids": [
+    "CO-0ababebcb9bc57c338ac5b3ea096e106",
+    "CO-0e2c24bcfc99bcad1be04db3b98567af",
+    "CO-32bce2e030b913082bdff4a3013d0d15",
+    "CO-43ae1ef9694389638a59ebd7bf8ba65b",
+    "CO-4e6434abded55283579035278426cef2",
+    "CO-51b23d82fac49d30ea359dfaf07db6be",
+    "CO-52afa204fd115702fbb34fe236dafd85",
+    "CO-787ac9198ebe9f77844853f0bec43572",
+    "CO-80220b9d3088a94cd39e07c459e4b255",
+    "CO-99e10f0ccd95e6898edae1f2644d27c8",
+    "CO-a2650aa4bf0e9a30e969f6e205283379",
+    "CO-b49b49f3fb28eee65d1b61b4422f89aa",
+    "CO-d08faad988857b220d544447c47d028e",
+    "CO-d0fff71f0fb0a517387a97d02503a30c",
+    "CO-d440519840fe79fd5877319828609e8f",
+    "CO-e92b7546bf81222c030691a583721c9d",
+    "CO-02acda828cc85c081ff4851fd924fad0",
+    "CO-0c4f829c954bac674b3e377af3a9f332",
+    "CO-176bbc58daa2b85f5f2c89a8c1bb546b",
+    "CO-18df94ee7d03f572ea23f9cdb0c73094",
+    "CO-1fb9c6ae3cec1ec3e0730021e2855a1f",
+    "CO-2a38421f49b99fa043578445dcab54f6",
+    "CO-3adb8cfcde4eb93e684de1702af801f3",
+    "CO-3d36ebdff2db2fda84a87160bf71412d",
+    "CO-428783d8443682dc6cbb2c0a8288e1d0",
+    "CO-43d664066008bdaa78c5e38a5a2e6f99",
+    "CO-55302171f87f81a13e8659150ca65877",
+    "CO-55621698316f1df1cf89fb4b0101fd46",
+    "CO-5bb16ee25bf6a8ade034161d202dae19",
+    "CO-5c1f85caa08c9d72e6416ad870f965ab",
+    "CO-5d8b03efd275cb52885b6b965b9ae96c",
+    "CO-5dc9ac34c8b4b77c7cbb368a8b861ba0",
+    "CO-602522e795eecb488809a223fbb9915c",
+    "CO-6c6a00c1fdbb3c9bfc3a1eed92b7700a",
+    "CO-88b94bd4724e692bb94424511139c543",
+    "CO-9ff8fa7c0a54da0b7122e1b39f485c9d",
+    "CO-a31e7e73d748508f917ae8353cd83406",
+    "CO-a56fc2c2164f7a4f35bde7605ddcb70d",
+    "CO-b1fcc225f5d2e78dd2a5a95cb1294860",
+    "CO-b32acde97422831de302aecd387d82f0",
+    "CO-b49781e90165ae271db9072fa679c7ee",
+    "CO-b5485bf35fa83a39815b79ec9f8ec6fa",
+    "CO-b7c0220ec8f34ecee8fbd703b57fd2f5",
+    "CO-b9a616f808daee05cdb5fa9b550b8991",
+    "CO-bcb5676989e0201949b553a75e89bef1",
+    "CO-bd08115ed6b0d95a059d15f68b587457",
+    "CO-bf880c7a43159ef0e3e5af271f0bb702",
+    "CO-bffb07b8ee5f92d94ccc5b235c268d3f",
+    "CO-c5b651921b929126d18924ff7b7dbcc9",
+    "CO-c6b0ab7eb3e24fc37b8db0c8e78b795d"
+   ],
+   "not_answered_here": "the pooled-vs-stratified rank correlation itself (analysis; D3-021/L3-029)"
+  },
+  "Q6_projection_versions": {
+   "question": "which projections changed definition or version?",
+   "registry": [
+    {
+     "name": "corridor_edge",
+     "version": "v1",
+     "status": "BUILT",
+     "thresholds": {
+      "none": "no threshold; pooled statistics only"
+     },
+     "code_identity": "archaeon.wse.corridor@a8954c14953f8cf3923cb979abb85f33d39aab76",
+     "rebuild_digest": "719fa5a1ec6f4045a1d8c6b17082e7dad79e7aa0d08afdea6c53a5579dda4ca7"
+    },
+    {
+     "name": "reach_level",
+     "version": "v0",
+     "status": "SUPERSEDED",
+     "thresholds": {
+      "FOOTHOLD_MIN": 0.5,
+      "heldout_confirmation": "none",
+      "FULL_SOLVE_TRAINING_MIN": 0.9
+     },
+     "code_identity": "archaeon.wse.reachability@bae94c23205a355d05e4bde27c2c9c96ca65ae22 (pre-C3, no level field)",
+     "rebuild_digest": "7037fbc41aff4f7d89b681b1d695b71b4b2cc820075eeb30b2a10657bc1cb0c2"
+    },
+    {
+     "name": "reach_level",
+     "version": "v1",
+     "status": "BUILT",
+     "thresholds": {
+      "SHELF_MIN": 0.45,
+      "SUMMIT_MIN": 0.9,
+      "FOOTHOLD_MIN": 0.5,
+      "summit_confirmed_by": "heldout >= SUMMIT_MIN (D3-006)"
+     },
+     "code_identity": "archaeon.wse.reachability@09558e0cbbc1a294e168aed30e49f5aeeb72bf9e",
+     "rebuild_digest": "e7625bfb967f7015151ddd73943b8f63ee6d1f6a1f15fbb0a5ea1db12946a1b9"
+    }
+   ]
+  },
+  "Q6b_v0_vs_v1_same_rows": {
+   "cross_tab_v0_v1": [
+    {
+     "v0": "FLOOR",
+     "v1": "FLOOR",
+     "rows": 676
+    },
+    {
+     "v0": "FLOOR",
+     "v1": "SHELF",
+     "rows": 30
+    },
+    {
+     "v0": "FOOTHOLD",
+     "v1": "SHELF",
+     "rows": 258
+    },
+    {
+     "v0": "FULL_SOLVE_TRAINING",
+     "v1": "SHELF",
+     "rows": 126
+    },
+    {
+     "v0": "FULL_SOLVE_TRAINING",
+     "v1": "SUMMIT",
+     "rows": 175
+    }
+   ],
+   "training_only_full_solves_not_confirmed_in_v1": 126
+  },
+  "Q7_attempts_resumes": {
+   "attempts": 29,
+   "resumed": [
+    {
+     "attempt_id": "C3-SFE-01/a03",
+     "resumed_from": 2,
+     "replayed_steps": 0
+    },
+    {
+     "attempt_id": "C3-SFE-02/a02",
+     "resumed_from": 1,
+     "replayed_steps": 0
+    },
+    {
+     "attempt_id": "C3-SFE-03/a04",
+     "resumed_from": 3,
+     "replayed_steps": 0
+    },
+    {
+     "attempt_id": "C3-SFE-04/a02",
+     "resumed_from": 1,
+     "replayed_steps": 0
+    },
+    {
+     "attempt_id": "C3-SFE-05/a02",
+     "resumed_from": 1,
+     "replayed_steps": 0
+    },
+    {
+     "attempt_id": "C3-SFE-06/a04",
+     "resumed_from": 3,
+     "replayed_steps": 0
+    },
+    {
+     "attempt_id": "C3-SFE-09/a02",
+     "resumed_from": 1,
+     "replayed_steps": 0
+    },
+    {
+     "attempt_id": "C3-SFE-09/a04",
+     "resumed_from": 3,
+     "replayed_steps": 29
+    },
+    {
+     "attempt_id": "C3-SFE-10/a04",
+     "resumed_from": 3,
+     "replayed_steps": 6
+    }
+   ],
+   "dispositions_candidate": {
+    "CAPABLE_NEGATIVE": 7,
+    "WEAK_POSITIVE": 3
+   }
+  }
+ }
+}
