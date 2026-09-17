@@ -66,14 +66,14 @@
    "basis": "TECHNE_RECORD"
   },
   "KNOWN_PREDECESSORS": {
-   "value": "UNKNOWN",
-   "basis": "UNKNOWN"
-  },
-  "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded: des-reference"
+    "supersedes: des-reference"
    ],
    "basis": "NYX_DERIVED"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
   },
   "KNOWN_RIVALS": {
    "value": "UNKNOWN",
@@ -134,28 +134,948 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tiny-aes-c/upstream/tree/aes.c"
+   }
+  ],
+  "inspected_files": [
+   "aes.c (all 572 lines; round functions by structure)"
+  ],
+  "date": "2026-09-16T12:26Z",
+  "note": "the DES successor in the same sample: same purpose, same three ingredient KINDS (substitution table, permutation, key schedule), but a substitution-permutation network needs explicit inverse round functions where DES's Feistel structure needed none -- a human-similar / mechanism-different pair for Stage E",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "UNKNOWN",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/kokke/tiny-AES-c@23856752fbd139da0b8ca6e471a13d5bcc99a08d",
+   "payload_manifest_id": "techne tree_sha256 ceac46bb10ea8f2bbab812bc39f49a65effb6fc3f0714a225015eeeeb32e05d0 (16 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/aes.c",
+     "payload_hash_read": "f7f78b44654efd3542b6886923dd05194286807ebcfeb078ea05d21fe901ee9e",
+     "techne_recorded_hash": "f7f78b44654efd3542b6886923dd05194286807ebcfeb078ea05d21fe901ee9e",
+     "match": true,
+     "refs": 7
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "tiny-aes-c::byte_substitution_from_one_256_entry_table",
+   "fossil_ancestry": "tiny-aes-c",
+   "human_name": "SubBytes / sbox (and InvSubBytes / rsbox)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each of the 16 state bytes is replaced by sbox[byte]; the inverse uses a second table; the table is the standard's (multiplicative inverse in GF(2^8) followed by an affine map, but stored as data here)",
+   "input": "16 bytes",
+   "output": "16 bytes",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "the table is the standard's data"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+    "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words"
+   ],
+   "fitness_value_in_ancestor": "the only non-linearity (compare des-reference::six_to_four_bit_substitution_from_eight_tables: eight 6->4 tables vs one 8->8 bijection)",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tiny-aes-c/upstream/tree/aes.c:79-97,251-264,371-381"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "SubBytes + sbox",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tiny-aes-c::row_rotation_of_the_4x4_state_by_row_index",
+   "fossil_ancestry": "tiny-aes-c",
+   "human_name": "ShiftRows / InvShiftRows",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "row r of the 4x4 byte state is rotated left by r positions (0, 1, 2, 3); a byte permutation with no arithmetic; the inverse rotates right",
+   "input": "16 bytes",
+   "output": "16 bytes",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse"
+   ],
+   "fitness_value_in_ancestor": "inter-column diffusion (compare des-reference::table_driven_bit_gather: bit-level table permutation vs byte-level rotation)",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tiny-aes-c/upstream/tree/aes.c:266-292,383-410"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "ShiftRows",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tiny-aes-c::column_mixing_by_a_fixed_matrix_over_gf_2_8_using_shift_and_conditional_reduce",
+   "fossil_ancestry": "tiny-aes-c",
+   "human_name": "MixColumns / xtime (and InvMixColumns / Multiply)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each column is multiplied by the circulant matrix (2 3 1 1) over GF(2^8) with the polynomial 0x11b; multiplication by 2 is xtime (shift left, XOR 0x1b if the top bit was set); by 3 is xtime XOR identity; the code computes it as Tmp (the XOR of the column) and four xtime terms; the inverse matrix (14 11 13 9) needs a general Multiply (a shift-and-add loop or macro)",
+   "input": "16 bytes",
+   "output": "16 bytes",
+   "state": "none",
+   "update": "none",
+   "assumptions": [
+    "GF(2^8) with the AES polynomial"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+    "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words"
+   ],
+   "fitness_value_in_ancestor": "intra-column diffusion; with ShiftRows, full diffusion in two rounds",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tiny-aes-c/upstream/tree/aes.c:294-336,350-369"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "MixColumns + xtime + Multiply",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words",
+   "fossil_ancestry": "tiny-aes-c",
+   "human_name": "KeyExpansion / Rcon",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the first Nk words are the key; each further word is the previous word, which every Nk words is rotated a byte, byte-substituted through the sbox, and XORed with Rcon[i/Nk] (powers of 2 in GF(2^8)) -- and for AES-256 substituted again at the half-way word -- XORed with the word Nk back; all Nr + 1 round keys are precomputed",
+   "input": "16/24/32-byte key",
+   "output": "4 * (Nr + 1) words",
+   "state": "RoundKey (in the ctx)",
+   "update": "once per key",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+    "tiny-aes-c::byte_substitution_from_one_256_entry_table",
+    "tiny-aes-c::column_mixing_by_a_fixed_matrix_over_gf_2_8_using_shift_and_conditional_reduce"
+   ],
+   "fitness_value_in_ancestor": "compare des-reference::subkey_schedule_by_rotating_two_halves: both rotate and select, AES adds the cipher's own non-linearity to the schedule",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tiny-aes-c/upstream/tree/aes.c:120-135,146-217"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "KeyExpansion + Rcon",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "fossil_ancestry": "tiny-aes-c",
+   "human_name": "Cipher / InvCipher / AddRoundKey",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "AddRoundKey(0); for rounds 1..Nr: SubBytes, ShiftRows, (MixColumns except in the last round), AddRoundKey(round); decryption is a DIFFERENT function applying the inverse steps in reverse order with the round keys backwards -- unlike a Feistel cipher, every step must be invertible and the inverse must be written",
+   "input": "16-byte block, round keys",
+   "output": "16-byte block",
+   "state": "state_t (4x4) during the call",
+   "update": "Nr rounds (10/12/14)",
+   "assumptions": [
+    "every round step is a bijection"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words",
+    "tiny-aes-c::byte_substitution_from_one_256_entry_table",
+    "tiny-aes-c::row_rotation_of_the_4x4_state_by_row_index",
+    "tiny-aes-c::column_mixing_by_a_fixed_matrix_over_gf_2_8_using_shift_and_conditional_reduce",
+    "tiny-aes-c::block_chaining_modes_ecb_cbc_and_a_counter_keystream"
+   ],
+   "fitness_value_in_ancestor": "compare des-reference::swap_halves_and_xor_keyed_function_into_one_half: DES gets decryption for free from structure; AES pays with InvCipher, InvSubBytes, InvShiftRows, InvMixColumns (about 120 lines of the 572)",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tiny-aes-c/upstream/tree/aes.c:237-249,413-466"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "Cipher + InvCipher + AddRoundKey",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "tiny-aes-c::block_chaining_modes_ecb_cbc_and_a_counter_keystream",
+   "fossil_ancestry": "tiny-aes-c",
+   "human_name": "AES_ECB_* / AES_CBC_*_buffer / AES_CTR_xcrypt_buffer",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "ECB: the block function per block; CBC: XOR each plaintext block with the previous ciphertext (the IV first) before encrypting, and after decrypting; CTR: encrypt the IV, XOR the result with the data byte by byte, increment the IV as a big-endian 128-bit counter with carry, regenerate every 16 bytes -- the block cipher becomes a stream cipher and the same function encrypts and decrypts (no InvCipher needed)",
+   "input": "a buffer, an IV",
+   "output": "the buffer transformed in place",
+   "state": "ctx->Iv (advances)",
+   "update": "per block / per byte",
+   "assumptions": [
+    "CBC: length is a multiple of 16; CTR: the IV never repeats under one key"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:tiny-aes-c/upstream/tree/aes.c:467-572"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the mode functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "'AES' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "five mechanisms each in its own function with none sharing state; the modes are a sixth layer over the block function",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tiny-aes-c"
+  },
+  {
+   "candidate": "the compile-time selection of key size and modes (#if AES256 / CBC / CTR / ECB, MULTIPLY_AS_A_FUNCTION)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:tiny-aes-c/upstream/tree/aes.c:45-75,98,199,338,467,489,535",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tiny-aes-c"
+  },
+  {
+   "candidate": "test.c (FIPS-197 known-answer vectors)",
+   "reason": "EFFECT_FROM_ENVIRONMENT",
+   "evidence": "the oracle Techne runs (record: 'make test')",
+   "note": "unlike des-reference, this fossil's shipped test IS a known-answer test",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "tiny-aes-c"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "tiny-aes-c::P.a_block_cipher_must_be_invertible_fast_and_diffuse_fully_in_few_rounds_on_8_bit_and_32_bit_machines",
+   "source_fossil": "tiny-aes-c",
+   "source_evidence": "the round structure; record entry point",
+   "condition": "the same key must encrypt and decrypt; every output bit must depend on every input and key bit after few rounds; the implementation must be small enough for smart cards and fast on desktops",
+   "resource_or_constraint": "code size; table size; rounds",
+   "failure_condition": "slow diffusion or a structural weakness",
+   "world_punishes": "bit-level permutations (slow in software); structures that need many rounds",
+   "world_rewards": "byte-oriented operations (table, rotation, small-field arithmetic) that diffuse in two rounds",
+   "observable_consequence": "avalanche vs round count (not measured); the FIPS vectors",
+   "vacuity_condition": "no adversary",
+   "trivial_shortcuts": "a fixed random permutation table (2^128 entries; impossible)",
+   "cheat_control": "the round-count sweep proposed for des-reference applies unchanged: a cipher with rounds reduced to 1 must FAIL an avalanche measure; if the world does not detect that, it is not measuring diffusion",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: confidentiality of 128-bit blocks (the DES replacement, 2001)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "tiny-aes-c::P.the_same_block_function_must_serve_streams_of_any_length_without_repeating_structure",
+   "source_fossil": "tiny-aes-c",
+   "source_evidence": "vault:tiny-aes-c/upstream/tree/aes.c:467-572",
+   "condition": "messages are not 16 bytes; identical blocks must not encrypt identically; sometimes decryption code cannot be afforded",
+   "resource_or_constraint": "code size on the decrypt side; an IV that must not repeat",
+   "failure_condition": "ECB's block-pattern leakage; a repeated CTR nonce",
+   "world_punishes": "ECB on structured data",
+   "world_rewards": "chaining (CBC) or a counter keystream (CTR, which also deletes the inverse cipher)",
+   "observable_consequence": "ciphertext of a repeated plaintext under each mode",
+   "vacuity_condition": "single-block messages",
+   "trivial_shortcuts": "none",
+   "cheat_control": "N/A",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words",
+   "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "round keys",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::byte_substitution_from_one_256_entry_table",
+   "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::row_rotation_of_the_4x4_state_by_row_index",
+   "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::column_mixing_by_a_fixed_matrix_over_gf_2_8_using_shift_and_conditional_reduce",
+   "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::byte_substitution_from_one_256_entry_table",
+   "to": "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "SubWord in the schedule",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::column_mixing_by_a_fixed_matrix_over_gf_2_8_using_shift_and_conditional_reduce",
+   "to": "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "Rcon = powers of 2 in the same field",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "to": "tiny-aes-c::block_chaining_modes_ecb_cbc_and_a_counter_keystream",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::block_chaining_modes_ecb_cbc_and_a_counter_keystream",
+   "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "CTR never calls InvCipher",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "tiny-aes-c::block_chaining_modes_ecb_cbc_and_a_counter_keystream",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "IV",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "tiny-aes-c",
-   "relation": "superseded",
+   "relation": "supersedes",
    "to": "des-reference",
-   "note": "AES replaced DES as the US standard",
+   "note": "Techne records 'AES replaced DES as the US standard' on both records (direction fixed by the note) [relation migrated superseded -> supersedes 2026-09-16 after Techne 1bb9965b4; direction from the note: AES replaced DES as the US standard]",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "tiny-aes-c",
+   "relation": "supersedes",
+   "to": "des-reference",
+   "note": "AES replaced DES as the US standard [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "avalanche and the DES structural comparison are unmeasured reading claims",
+   "nothing ran here; Techne's FIPS vectors are on M1"
+  ],
+  "note": "every function in aes.c is assigned to one of six mechanisms",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

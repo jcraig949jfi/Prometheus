@@ -127,20 +127,626 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:arduino-pid/upstream/tree/PID_v1.cpp:1-224"
+   }
+  ],
+  "inspected_files": [
+   "PID_v1.cpp 1-224"
+  ],
+  "date": "2026-09-17T23:01Z",
+  "note": "a PID whose engineering is in five small decisions, each a separate mechanism: a fixed sample time enforced by a clock check with gains pre-scaled by it; the integral kept as an accumulated OUTPUT term clamped to the output limits (anti-windup) rather than an accumulated error; the derivative taken on the measurement, not the error (no derivative kick on setpoint change); an optional proportional-on-measurement mode folded into the same accumulator; and bumpless transfer by initialising the accumulator from the current output when switching to automatic",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:01Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/br3ttb/Arduino-PID-Library@524a4268fc01e6ea397e7fc5b5d820741e9b662f",
+   "payload_manifest_id": "techne tree_sha256 f4b65bd9cdf08236942485491bb73de0c5e3e4d16a357450e4f21bc0932c902b (10 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/PID_v1.cpp",
+     "payload_hash_read": "cce422570a939aa02be303d8f42052384721d441194d86094c69f7dfa0566bd0",
+     "techne_recorded_hash": "cce422570a939aa02be303d8f42052384721d441194d86094c69f7dfa0566bd0",
+     "match": true,
+     "refs": 5
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
+   "fossil_ancestry": "arduino-pid",
+   "human_name": "Compute(): timeChange >= SampleTime gate; SetTunings: ki = Ki * SampleTimeInSec, kd = Kd / SampleTimeInSec; SetSampleTime rescales ki and kd by the ratio",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "Compute returns without acting unless at least SampleTime milliseconds have passed since the last computation; because the period is fixed, the integral gain is multiplied by it and the derivative gain divided by it once at tuning time, so the loop body has no dt arithmetic; changing the sample time rescales the two gains by the ratio so the user's Ki and Kd keep their meaning",
+   "input": "millis(); Kp, Ki, Kd; SampleTime",
+   "output": "internal kp, ki, kd",
+   "state": "lastTime, SampleTime",
+   "update": "per call / per retune",
+   "assumptions": [
+    "a fixed period is achievable on the target (the loop is called more often than the period); pre-scaling is cheaper than per-call division on an 8-bit micro"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+    "arduino-pid::derivative_on_measurement_and_optional_proportional_on_measurement_folded_into_the_accumulator"
+   ],
+   "fitness_value_in_ancestor": "a loop body of a dozen operations with correct units",
+   "failure_landscape": "by reading: if the loop is called less often than SampleTime the period is whatever the caller gives, and the pre-scaled gains are then wrong (the library does not measure the actual dt)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "discrete PID with a fixed period (any controls textbook)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:arduino-pid/upstream/tree/PID_v1.cpp:29-35, 54-62, 72-81"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the gate and the two rescalings",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+   "fossil_ancestry": "arduino-pid",
+   "human_name": "Compute(): outputSum += ki * error; clamp outputSum to [outMin, outMax]; SetOutputLimits re-clamps outputSum when limits change",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "instead of summing the error and multiplying by Ki at output time, the integral term is accumulated already multiplied (so retuning Ki does not jump the output) and is clamped to the same limits as the output; when the actuator saturates the accumulator cannot grow past the limit, so there is no wind-up to unwind; the final output is clamped again after adding the P and D terms",
+   "input": "ki * error per sample",
+   "output": "outputSum",
+   "state": "outputSum",
+   "update": "per sample",
+   "assumptions": [
+    "an actuator at its limit cannot benefit from a larger integral; clamping the term itself is simpler than back-calculation"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
+    "arduino-pid::bumpless_manual_to_automatic_transfer_by_initialising_the_accumulator_from_the_current_output_and_the_last_input_from_the_current_input",
+    "arduino-pid::derivative_on_measurement_and_optional_proportional_on_measurement_folded_into_the_accumulator"
+   ],
+   "fitness_value_in_ancestor": "no overshoot after saturation; retuning without a bump",
+   "failure_landscape": "by reading: clamping the sum to the output limits (not to limits minus the P term) means the sum can sit at the limit while the P term pushes the output beyond, which the final clamp absorbs",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "clamping anti-windup (Astrom & Hagglund); the 'accumulate ki*error' trick is the library's blog series",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:arduino-pid/upstream/tree/PID_v1.cpp:36-41, 86-95"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "outputSum's updates and clamps",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "NONE_KNOWN",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "arduino-pid::derivative_on_measurement_and_optional_proportional_on_measurement_folded_into_the_accumulator",
+   "fossil_ancestry": "arduino-pid",
+   "human_name": "Compute(): dInput = input - lastInput; output -= kd * dInput; if (!pOnE) outputSum -= kp * dInput; P_ON_E vs P_ON_M (pOnE)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the derivative term uses the change in the measured input, not in the error, so a step in the setpoint produces no derivative spike (derivative kick) while disturbances are still differentiated; with proportional-on-measurement the P term too is accumulated as -kp * dInput into outputSum (integrating the negative of the measurement's change), which removes the proportional jump on setpoint changes for processes where that is wanted",
+   "input": "input, lastInput",
+   "output": "the D (and optionally P) contribution",
+   "state": "lastInput",
+   "update": "per sample",
+   "assumptions": [
+    "setpoint changes are steps chosen by the user, disturbances are not; only the latter should be differentiated"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
+    "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits"
+   ],
+   "fitness_value_in_ancestor": "smooth response to setpoint changes with the same disturbance rejection",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "derivative on measurement is standard practice; P-on-M is the 2017 addition (the blog's 'Introducing Proportional on Measurement')",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:arduino-pid/upstream/tree/PID_v1.cpp:36-46, 56-58"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the dInput lines and the pOnE switch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "LAST_VALUE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "arduino-pid::bumpless_manual_to_automatic_transfer_by_initialising_the_accumulator_from_the_current_output_and_the_last_input_from_the_current_input",
+   "fossil_ancestry": "arduino-pid",
+   "human_name": "SetMode / Initialize(): outputSum = *myOutput; lastInput = *myInput; clamp; SetControllerDirection negates the gains in place",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "when the mode switches from manual to automatic the integral accumulator is set to whatever the output currently is (so the first automatic output equals the last manual one) and the derivative memory to the current input (so no spurious derivative); reversing the controller direction negates the three gains rather than the error",
+   "input": "the current output and input",
+   "output": "a consistent initial state",
+   "state": "outputSum, lastInput",
+   "update": "on mode change",
+   "assumptions": [
+    "the operator's manual output is the right starting point for the integral"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits"
+   ],
+   "fitness_value_in_ancestor": "no jump at hand-over, the property industrial controllers advertise",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "bumpless transfer (Astrom & Hagglund)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:arduino-pid/upstream/tree/PID_v1.cpp:101-116"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "SetMode and Initialize",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the getters, the two constructors, the Arduino include guard",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:arduino-pid/upstream/tree/PID_v1.cpp:1-27, 117-124",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "arduino-pid"
+  },
+  {
+   "candidate": "'PID' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the four decisions are separable and each has its own history (anti-windup, derivative kick, bumpless transfer, sample-time scaling)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "arduino-pid"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "arduino-pid::P.a_feedback_controller_on_a_saturating_actuator_must_track_setpoint_steps_without_overshoot_from_integral_wind_up_or_spikes_from_differentiating_the_step_and_must_hand_over_from_manual_control_without_a_jump",
+   "source_fossil": "arduino-pid",
+   "source_evidence": "PID_v1.cpp Compute, SetTunings, SetMode",
+   "condition": "an organism drives an actuator with hard limits toward a setpoint that steps; the process has lag; the loop runs at a fixed period on a small processor; hand-over from manual happens mid-run",
+   "resource_or_constraint": "the actuator's range; one multiply-add budget per sample",
+   "failure_condition": "overshoot after saturation, a derivative spike on a setpoint step, or a jump at hand-over",
+   "world_punishes": "a textbook PID (error-based integral and derivative, no limits)",
+   "world_rewards": "clamped output-space integral, derivative on measurement, initialisation from the current output",
+   "observable_consequence": "overshoot, settling time and peak actuator demand on a first-order-plus-lag plant with a saturated actuator, for the four organs enabled one at a time",
+   "vacuity_condition": "an unsaturated actuator and a constant setpoint",
+   "trivial_shortcuts": "feedforward from the setpoint (which the world withholds)",
+   "cheat_control": "an organism given the plant model (an exact inverse) must track with zero overshoot at zero derivative kick; the textbook PID must overshoot after saturation; derivative-on-error must spike on the step: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: embedded feedback control (Beauregard 2011-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
+   "to": "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
+   "to": "arduino-pid::derivative_on_measurement_and_optional_proportional_on_measurement_folded_into_the_accumulator",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "arduino-pid::bumpless_manual_to_automatic_transfer_by_initialising_the_accumulator_from_the_current_output_and_the_last_input_from_the_current_input",
+   "to": "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+   "to": "arduino-pid::derivative_on_measurement_and_optional_proportional_on_measurement_folded_into_the_accumulator",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "shared accumulator under P_ON_M",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "arduino-pid",
+   "relation": "reimplementation_of",
+   "to": "discrete PID with anti-windup and bumpless transfer (Astrom & Hagglund 1995); the accumulator-in-output-space form is the author's",
+   "note": "from the record and the author's blog as cited there",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "nothing unread of substance",
+   "nothing ran"
+  ],
+  "note": "224 lines; five decisions, four organs, all located",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

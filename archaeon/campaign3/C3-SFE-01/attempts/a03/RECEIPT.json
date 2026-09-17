@@ -1,0 +1,134 @@
+{
+ "artifacts": {},
+ "attempt": 3,
+ "attempt_id": "C3-SFE-01/a03",
+ "campaign": "cmp2",
+ "campaign_seed": 20260920,
+ "decisions": [
+  "D3-007: a summit is counted only when confirmed by a 48-episode held-out probe at the candidate generation (D3-006 applied); ladder points are read off one G=12 trace per seed"
+ ],
+ "disposition_candidate": {
+  "claim_ceiling": "negative at this budget/envelope",
+  "disposition": "CAPABLE_NEGATIVE",
+  "evidence": {
+   "control_mean": 0.0,
+   "effect": 0.0,
+   "min_effect": 0.1,
+   "n_control": 2,
+   "n_treatment": 2,
+   "paired": 2,
+   "paired_wins": 0,
+   "treatment_mean": 0.0
+  },
+  "reason": "assay capable and effect < min_effect",
+  "states": []
+ },
+ "engine": null,
+ "engine_path": false,
+ "errors": [],
+ "experiment": "C3-SFE-01",
+ "finished_at": "2026-09-17T05:25:35Z",
+ "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+ "imports": {},
+ "prereg_digest": "sha256:8414131a8a2a673d37edb740d2fd23a97b60ce8e7d66d2b29d43f547a9dfe4b6",
+ "purpose": "dry run",
+ "reachability_rows_appended": 0,
+ "records": {},
+ "replayed": [],
+ "resumed_from": 2,
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "shelf_source": {
+  "dry_run": true
+ },
+ "started_at": "2026-09-17T05:25:34Z",
+ "steps": {},
+ "summary": {
+  "fresh": {
+   "best": [
+    0.125,
+    0.125
+   ],
+   "candidates": 0,
+   "first_shelf": [
+    null,
+    null
+   ],
+   "first_summit": [
+    null,
+    null
+   ],
+   "heldout": [
+    0.083,
+    0.01
+   ],
+   "ladder": {},
+   "profiles": [
+    [],
+    []
+   ],
+   "residence": [
+    null,
+    null
+   ],
+   "shelf": 0,
+   "summit": 0,
+   "switches": [
+    0,
+    0
+   ]
+  },
+  "shelf": {
+   "best": [
+    0.125,
+    0.125
+   ],
+   "candidates": 0,
+   "first_shelf": [
+    null,
+    null
+   ],
+   "first_summit": [
+    null,
+    null
+   ],
+   "heldout": [
+    0.042,
+    0.01
+   ],
+   "ladder": {},
+   "profiles": [
+    [],
+    []
+   ],
+   "residence": [
+    null,
+    null
+   ],
+   "shelf": 0,
+   "summit": 0,
+   "switches": [
+    0,
+    0
+   ]
+  }
+ },
+ "teardown": {},
+ "timings": {
+  "fetch_s": 0.0,
+  "records_s": 0.0,
+  "scan_s": 0.27,
+  "total_s": 1.2
+ },
+ "typed_states": [],
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "6592f9d668312c739a4d6b12c55650e87b092a81",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "worlds": {}
+}

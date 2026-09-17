@@ -1,0 +1,751 @@
+[
+ {
+  "G": 6,
+  "arm": "baseline",
+  "best_train_g20": 0.0938,
+  "best_train_max": 0.09375,
+  "competence_heldout": 0.0417,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "opaque_io": 1.0
+   },
+   "distinct_opcodes": 1,
+   "instr": 1,
+   "n_regs": 10,
+   "opcode_hist": {
+    "OUT": 1
+   },
+   "persist": "none",
+   "tape_words": 16,
+   "tick_budget": 256,
+   "words": 4
+  },
+  "family": null,
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_summit_gen": null,
+  "foothold": 0,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.0625,
+   0.0208
+  ],
+  "import_share_final": 0.0,
+  "level": "FLOOR",
+  "seed": 1,
+  "shelf": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W2_K2",
+  "trace_best": [
+   0.0625,
+   0.09375,
+   0.0625,
+   0.0625,
+   0.03125,
+   0.03125
+  ],
+  "wall_s": 1.4,
+  "warnings": []
+ },
+ {
+  "G": 6,
+  "arm": "init_mature",
+  "best_train_g20": 0.5938,
+  "best_train_max": 0.59375,
+  "competence_heldout": 0.5417,
+  "elite_origins": [
+   "import"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.0625,
+    "comparison": 0.1875,
+    "control": 0.0625,
+    "halt_yield": 0.0625,
+    "logical": 0.25,
+    "opaque_io": 0.3125,
+    "read_write": 0.0625
+   },
+   "distinct_opcodes": 9,
+   "instr": 16,
+   "n_regs": 3,
+   "opcode_hist": {
+    "IN": 1,
+    "JNZ": 1,
+    "LT": 3,
+    "MOV": 1,
+    "MUL": 1,
+    "NOP": 1,
+    "OR": 2,
+    "OUT": 4,
+    "XOR": 2
+   },
+   "persist": "regs",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 64
+  },
+  "family": "delay_general",
+  "first_foothold_gen": 0,
+  "first_shelf_gen": 0,
+  "first_summit_gen": null,
+  "foothold": 1,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 4,
+   "position": "front",
+   "substitute_tag": "import",
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.5625,
+   0.5208
+  ],
+  "import_share_final": 1.0,
+  "level": "SHELF",
+  "seed": 1,
+  "shelf": 1,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W2_K2",
+  "trace_best": [
+   0.53125,
+   0.53125,
+   0.53125,
+   0.5625,
+   0.59375,
+   0.53125
+  ],
+  "wall_s": 2.1,
+  "warnings": []
+ },
+ {
+  "G": 6,
+  "arm": "init_control",
+  "best_train_g20": 0.1562,
+  "best_train_max": 0.15625,
+  "competence_heldout": 0.0625,
+  "elite_origins": [
+   "import",
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.0588,
+    "control": 0.1765,
+    "halt_yield": 0.1176,
+    "indirection": 0.1176,
+    "logical": 0.1176,
+    "opaque_io": 0.3529,
+    "read_write": 0.0588
+   },
+   "distinct_opcodes": 11,
+   "instr": 17,
+   "n_regs": 11,
+   "opcode_hist": {
+    "EQ": 1,
+    "IN": 2,
+    "INQ": 1,
+    "JNZ": 2,
+    "JZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "NOP": 2,
+    "OR": 2,
+    "OUT": 3,
+    "ST": 1
+   },
+   "persist": "regs",
+   "tape_words": 512,
+   "tick_budget": 256,
+   "words": 68
+  },
+  "family": "delay_general_permuted",
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_summit_gen": null,
+  "foothold": 0,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 4,
+   "position": "front",
+   "substitute_tag": "import",
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.0625,
+   0.0625
+  ],
+  "import_share_final": 1.0,
+  "level": "FLOOR",
+  "seed": 1,
+  "shelf": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W2_K2",
+  "trace_best": [
+   0.0625,
+   0.09375,
+   0.09375,
+   0.09375,
+   0.15625,
+   0.09375
+  ],
+  "wall_s": 1.9,
+  "warnings": []
+ },
+ {
+  "G": 6,
+  "arm": "baseline",
+  "best_train_g20": 0.1875,
+  "best_train_max": 0.1875,
+  "competence_heldout": 0.0625,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "opaque_io": 1.0
+   },
+   "distinct_opcodes": 1,
+   "instr": 1,
+   "n_regs": 10,
+   "opcode_hist": {
+    "OUT": 1
+   },
+   "persist": "none",
+   "tape_words": 16,
+   "tick_budget": 256,
+   "words": 4
+  },
+  "family": null,
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_summit_gen": null,
+  "foothold": 0,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.0625
+  ],
+  "import_share_final": 0.0,
+  "level": "FLOOR",
+  "seed": 1,
+  "shelf": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W3_K2",
+  "trace_best": [
+   0.0625,
+   0.0625,
+   0.1875,
+   0.0625,
+   0.0625,
+   0.125
+  ],
+  "wall_s": 0.8,
+  "warnings": []
+ },
+ {
+  "G": 6,
+  "arm": "init_mature",
+  "best_train_g20": 0.75,
+  "best_train_max": 0.75,
+  "competence_heldout": 0.5,
+  "elite_origins": [
+   "import",
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.0714,
+    "control": 0.0714,
+    "halt_yield": 0.1429,
+    "indirection": 0.0714,
+    "logical": 0.1429,
+    "opaque_io": 0.3571,
+    "read_write": 0.1429
+   },
+   "distinct_opcodes": 10,
+   "instr": 14,
+   "n_regs": 10,
+   "opcode_hist": {
+    "EQ": 1,
+    "IN": 2,
+    "INQ": 1,
+    "JNZ": 1,
+    "MOV": 2,
+    "NOP": 2,
+    "OR": 1,
+    "OUT": 2,
+    "SHL": 1,
+    "ST": 1
+   },
+   "persist": "regs",
+   "tape_words": 512,
+   "tick_budget": 256,
+   "words": 56
+  },
+  "family": "delay_general",
+  "first_foothold_gen": 0,
+  "first_shelf_gen": 0,
+  "first_summit_gen": null,
+  "foothold": 1,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 4,
+   "position": "front",
+   "substitute_tag": "import",
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.5
+  ],
+  "import_share_final": 1.0,
+  "level": "SHELF",
+  "seed": 1,
+  "shelf": 1,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W3_K2",
+  "trace_best": [
+   0.625,
+   0.75,
+   0.625,
+   0.6875,
+   0.6875,
+   0.75
+  ],
+  "wall_s": 1.7,
+  "warnings": []
+ },
+ {
+  "G": 6,
+  "arm": "init_control",
+  "best_train_g20": 0.1875,
+  "best_train_max": 0.1875,
+  "competence_heldout": 0.0625,
+  "elite_origins": [
+   "import"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.0625,
+    "comparison": 0.1875,
+    "control": 0.0625,
+    "halt_yield": 0.0625,
+    "logical": 0.25,
+    "opaque_io": 0.3125,
+    "read_write": 0.0625
+   },
+   "distinct_opcodes": 9,
+   "instr": 16,
+   "n_regs": 3,
+   "opcode_hist": {
+    "IN": 1,
+    "JNZ": 1,
+    "LT": 3,
+    "MOV": 1,
+    "MUL": 1,
+    "NOP": 1,
+    "OR": 2,
+    "OUT": 4,
+    "XOR": 2
+   },
+   "persist": "regs",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 64
+  },
+  "family": "delay_general_permuted",
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_summit_gen": null,
+  "foothold": 0,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 4,
+   "position": "front",
+   "substitute_tag": "import",
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.0625
+  ],
+  "import_share_final": 0.9833,
+  "level": "FLOOR",
+  "seed": 1,
+  "shelf": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W3_K2",
+  "trace_best": [
+   0.0625,
+   0.0625,
+   0.1875,
+   0.0625,
+   0.0625,
+   0.125
+  ],
+  "wall_s": 1.2,
+  "warnings": []
+ },
+ {
+  "G": 6,
+  "arm": "baseline",
+  "best_train_g20": 0.125,
+  "best_train_max": 0.125,
+  "competence_heldout": 0.0417,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "opaque_io": 1.0
+   },
+   "distinct_opcodes": 1,
+   "instr": 1,
+   "n_regs": 10,
+   "opcode_hist": {
+    "OUT": 1
+   },
+   "persist": "none",
+   "tape_words": 16,
+   "tick_budget": 256,
+   "words": 4
+  },
+  "family": null,
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_summit_gen": null,
+  "foothold": 0,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.0417,
+   0.0417
+  ],
+  "import_share_final": 0.0,
+  "level": "FLOOR",
+  "seed": 1,
+  "shelf": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W7_K2",
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.125,
+   0.0
+  ],
+  "wall_s": 0.8,
+  "warnings": []
+ },
+ {
+  "G": 6,
+  "arm": "init_mature",
+  "best_train_g20": 0.1875,
+  "best_train_max": 0.1875,
+  "competence_heldout": 0.2292,
+  "elite_origins": [
+   "import",
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.0588,
+    "control": 0.0588,
+    "halt_yield": 0.1176,
+    "indirection": 0.1176,
+    "logical": 0.2353,
+    "opaque_io": 0.2941,
+    "read_write": 0.1176
+   },
+   "distinct_opcodes": 11,
+   "instr": 17,
+   "n_regs": 10,
+   "opcode_hist": {
+    "IN": 2,
+    "INQ": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "LT": 1,
+    "MOV": 2,
+    "NOP": 2,
+    "OR": 3,
+    "OUT": 2,
+    "ST": 1,
+    "XOR": 1
+   },
+   "persist": "regs",
+   "tape_words": 512,
+   "tick_budget": 256,
+   "words": 68
+  },
+  "family": "delay_general",
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_summit_gen": null,
+  "foothold": 0,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 4,
+   "position": "front",
+   "substitute_tag": "import",
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.2292,
+   0.2292
+  ],
+  "import_share_final": 1.0,
+  "level": "FLOOR",
+  "seed": 1,
+  "shelf": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W7_K2",
+  "trace_best": [
+   0.1875,
+   0.1875,
+   0.1875,
+   0.125,
+   0.1875,
+   0.125
+  ],
+  "wall_s": 1.7,
+  "warnings": []
+ },
+ {
+  "G": 6,
+  "arm": "init_control",
+  "best_train_g20": 0.125,
+  "best_train_max": 0.125,
+  "competence_heldout": 0.0208,
+  "elite_origins": [
+   "import",
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.0625,
+    "comparison": 0.25,
+    "control": 0.125,
+    "halt_yield": 0.0625,
+    "logical": 0.25,
+    "opaque_io": 0.25
+   },
+   "distinct_opcodes": 10,
+   "instr": 16,
+   "n_regs": 3,
+   "opcode_hist": {
+    "EQ": 1,
+    "IN": 1,
+    "JMP": 1,
+    "JNZ": 1,
+    "LT": 3,
+    "MUL": 1,
+    "NOP": 1,
+    "OR": 2,
+    "OUT": 3,
+    "XOR": 2
+   },
+   "persist": "regs",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 64
+  },
+  "family": "delay_general_permuted",
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_summit_gen": null,
+  "foothold": 0,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 4,
+   "position": "front",
+   "substitute_tag": "import",
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.0208,
+   0.0208
+  ],
+  "import_share_final": 1.0,
+  "level": "FLOOR",
+  "seed": 1,
+  "shelf": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W7_K2",
+  "trace_best": [
+   0.03125,
+   0.09375,
+   0.0625,
+   0.09375,
+   0.125,
+   0.09375
+  ],
+  "wall_s": 1.2,
+  "warnings": []
+ },
+ {
+  "G": 6,
+  "arm": "baseline",
+  "best_train_g20": 0.125,
+  "best_train_max": 0.125,
+  "competence_heldout": 0.0417,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "opaque_io": 1.0
+   },
+   "distinct_opcodes": 1,
+   "instr": 1,
+   "n_regs": 10,
+   "opcode_hist": {
+    "OUT": 1
+   },
+   "persist": "none",
+   "tape_words": 16,
+   "tick_budget": 256,
+   "words": 4
+  },
+  "family": null,
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_summit_gen": null,
+  "foothold": 0,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.0417
+  ],
+  "import_share_final": 0.0,
+  "level": "FLOOR",
+  "seed": 1,
+  "shelf": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W1_d8",
+  "trace_best": [
+   0.0,
+   0.125,
+   0.0625,
+   0.0,
+   0.0,
+   0.0625
+  ],
+  "wall_s": 2.5,
+  "warnings": []
+ },
+ {
+  "G": 6,
+  "arm": "baseline",
+  "best_train_g20": 0.125,
+  "best_train_max": 0.125,
+  "competence_heldout": 0.0625,
+  "elite_origins": [
+   "gen0"
+  ],
+  "elite_summary": {
+   "category_shares": {
+    "opaque_io": 1.0
+   },
+   "distinct_opcodes": 1,
+   "instr": 1,
+   "n_regs": 10,
+   "opcode_hist": {
+    "OUT": 1
+   },
+   "persist": "none",
+   "tape_words": 16,
+   "tick_budget": 256,
+   "words": 4
+  },
+  "family": null,
+  "first_foothold_gen": null,
+  "first_shelf_gen": null,
+  "first_summit_gen": null,
+  "foothold": 0,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "heldout_per_ask": [
+   0.0625
+  ],
+  "import_share_final": 0.0,
+  "level": "FLOOR",
+  "seed": 1,
+  "shelf": 0,
+  "summit": 0,
+  "summit_candidate_gen": null,
+  "target": "W1_d16",
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0625,
+   0.0625,
+   0.125,
+   0.0
+  ],
+  "wall_s": 4.0,
+  "warnings": []
+ }
+]

@@ -130,18 +130,1061 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ssw-smith-waterman/upstream/tree/src/ssw.c"
+   }
+  ],
+  "inspected_files": [
+   "src/ssw.c 163-387, 860-960"
+  ],
+  "date": "2026-09-16T12:16Z",
+  "note": "a 1981 dynamic programme re-cut for 16-lane 8-bit SIMD: the anatomy is the striping, the lazy-F correction, the saturating-arithmetic bias trick and the overflow fallback; the DP recurrence itself is unchanged",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-16T17:24Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library@a66636b79ef36ac178122437053be0d8ef345271",
+   "payload_manifest_id": "techne tree_sha256 3d5056fdb387b085dce770a5e7b708c0401368793d2187dc74f3a2889830f5fb (42 files)",
+   "host_tree_matches_record": true,
+   "host": "M2 (SPECTREX5), bodies receipt nyx/atlas/samples/stageA_bodies_m2_2026-09-16.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/src/ssw.c",
+     "payload_hash_read": "17ab788a1c4c011c98c26e10ba51fa8e6cde0e7c41a98c3d1ef6aefdf8dc9779",
+     "techne_recorded_hash": "17ab788a1c4c011c98c26e10ba51fa8e6cde0e7c41a98c3d1ef6aefdf8dc9779",
+     "match": true,
+     "refs": 8
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "ssw-smith-waterman::query_profile_striped_so_lane_k_holds_query_positions_k_segLen_apart",
+   "fossil_ancestry": "ssw-smith-waterman",
+   "human_name": "qP_byte / qP_word",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each residue type nt and each segment i, pack 16 bytes: the substitution score of query position i + segNum * segLen against nt, plus a bias to keep it unsigned; positions past the query end get the bias alone; the profile is indexed by the reference residue so the inner loop does one aligned load per segment instead of a table lookup per cell",
+   "input": "query (numeric), substitution matrix, bias",
+   "output": "n * segLen SSE vectors",
+   "state": "none (built once per query)",
+   "update": "once per query",
+   "assumptions": [
+    "16 lanes of 8 bits (or 8 lanes of 16 bits)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+    "ssw-smith-waterman::start_position_by_rerunning_the_sweep_on_reversed_sequences_terminating_at_the_known_score"
+   ],
+   "fitness_value_in_ancestor": "the striped layout is what makes the vertical dependency (F) rare enough to fix lazily",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ssw-smith-waterman/upstream/tree/src/ssw.c:163-186"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "qP_byte (qP_word twin)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "fossil_ancestry": "ssw-smith-waterman",
+   "human_name": "sw_sse2_byte inner loop (H, E, F recurrences)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "per reference position: shift the last segment's H left one lane (the diagonal dependency across the stripe boundary), then for each segment: H = max(H_diag + profile - bias, E, F), store; E = max(E - gapE, H - gapO); F = max(F - gapE, H - gapO); all in saturating unsigned 8-bit so negatives clamp to 0 (the local-alignment floor comes free from the arithmetic) and the bias keeps mismatch scores representable; two H buffers alternate",
+   "input": "one reference residue, previous column H/E, profile",
+   "output": "a new column H/E and a running column max",
+   "state": "pvHStore, pvHLoad, pvE (segLen vectors each)",
+   "update": "per reference residue x per segment",
+   "assumptions": [
+    "gap open and extend are constant per column",
+    "scores + bias fit in 8 bits (else the fallback organ)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [
+    "ssw-smith-waterman::lazy_f_correction_loop_that_stops_when_no_lane_can_still_improve",
+    "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask"
+   ],
+   "composition_neighbors": [
+    "ssw-smith-waterman::query_profile_striped_so_lane_k_holds_query_positions_k_segLen_apart",
+    "ssw-smith-waterman::lazy_f_correction_loop_that_stops_when_no_lane_can_still_improve",
+    "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask",
+    "ssw-smith-waterman::overflow_detected_by_saturation_at_255_triggers_a_16_bit_recompute"
+   ],
+   "fitness_value_in_ancestor": "the whole throughput gain (record: 'millions of alignments')",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ssw-smith-waterman/upstream/tree/src/ssw.c:230-280"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the inner j loop of sw_sse2_byte",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ssw-smith-waterman::lazy_f_correction_loop_that_stops_when_no_lane_can_still_improve",
+   "fossil_ancestry": "ssw-smith-waterman",
+   "human_name": "Lazy_F loop",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after the segment sweep, F (a gap in the reference direction) was computed ignoring the dependency that wraps across lanes; shift F by one lane and re-sweep the segments, taking max(H, F) and re-deriving F, up to 16 times; exit early as soon as F - (H - gapO) is zero in every lane (movemask == 0xffff), i.e. no cell could still change; the comment records a fix taken from SWPS3 (no E update here, so an insertion cannot directly follow a deletion)",
+   "input": "vF, the stored column",
+   "output": "a corrected column",
+   "state": "none",
+   "update": "0-16 extra sweeps per column",
+   "assumptions": [
+    "F rarely propagates far, so the loop usually exits after one pass (the striping's premise)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ssw-smith-waterman/upstream/tree/src/ssw.c:281-297"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the k loop and its goto end",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask",
+   "fossil_ancestry": "ssw-smith-waterman",
+   "human_name": "vMaxScore / vMaxMark / maxColumn / bests[1]",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the column max is folded into vMaxScore; when it changes, the whole H column is copied to pvHmax and the reference position recorded; after the sweep the read end is the lowest striped index holding the max; per-column maxima (maxColumn[]) let a second-best alignment be found outside a window of maskLen around the best; a 'terminate' score stops the sweep early (used by the reverse pass)",
+   "input": "column maxima",
+   "output": "best score, ref end, read end; second best",
+   "state": "vMaxScore, vMaxMark, pvHmax, maxColumn[refLen]",
+   "update": "per column",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+    "ssw-smith-waterman::overflow_detected_by_saturation_at_255_triggers_a_16_bit_recompute",
+    "ssw-smith-waterman::start_position_by_rerunning_the_sweep_on_reversed_sequences_terminating_at_the_known_score"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ssw-smith-waterman/upstream/tree/src/ssw.c:298-387"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the tail of sw_sse2_byte",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 2,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ssw-smith-waterman::overflow_detected_by_saturation_at_255_triggers_a_16_bit_recompute",
+   "fossil_ancestry": "ssw-smith-waterman",
+   "human_name": "ssw_align: byte then word",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "run the 8-bit sweep; if bests[0].score == 255 (saturated) and a word profile exists, rerun with the 16-bit lanes (8 per vector); if no word profile, the result is flagged; the record names this as the guarded hazard",
+   "input": "the 8-bit result",
+   "output": "a trusted score",
+   "state": "none",
+   "update": "per alignment",
+   "assumptions": [
+    "a true score of exactly 255 is treated as overflow (a false-positive recompute, never a wrong answer)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask",
+    "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ssw-smith-waterman/upstream/tree/src/ssw.c:875-895"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the fallback branch of ssw_align",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "RETRIES",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ssw-smith-waterman::start_position_by_rerunning_the_sweep_on_reversed_sequences_terminating_at_the_known_score",
+   "fossil_ancestry": "ssw-smith-waterman",
+   "human_name": "seq_reverse + sw_sse2_*(ref_dir = 1, terminate = score1)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the forward sweep yields only the END of the best local alignment; reverse the query up to that end and sweep the reference backwards from the end, stopping the column loop as soon as a column reaches the known best score; that column is the alignment start; a lower score on the way back is flagged",
+   "input": "score1, ends",
+   "output": "ref_begin1, read_begin1",
+   "state": "none",
+   "update": "per alignment",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask",
+    "ssw-smith-waterman::banded_scalar_dp_over_the_located_window_to_recover_the_path",
+    "ssw-smith-waterman::query_profile_striped_so_lane_k_holds_query_positions_k_segLen_apart"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ssw-smith-waterman/upstream/tree/src/ssw.c:813-830,900-915"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "seq_reverse + the reverse call in ssw_align",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "ssw-smith-waterman::banded_scalar_dp_over_the_located_window_to_recover_the_path",
+   "fossil_ancestry": "ssw-smith-waterman",
+   "human_name": "banded_sw -> CIGAR",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "once both ends are known, a scalar DP with traceback runs inside a band around the diagonal of the window (widening the band if the score is not reproduced -- inferred from the flag handling, not read) and emits the CIGAR",
+   "input": "the window, score1, band_width",
+   "output": "a CIGAR path",
+   "state": "UNKNOWN",
+   "update": "UNKNOWN",
+   "assumptions": [
+    "UNKNOWN"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "ssw-smith-waterman::start_position_by_rerunning_the_sweep_on_reversed_sequences_terminating_at_the_known_score"
+   ],
+   "fitness_value_in_ancestor": "UNKNOWN",
+   "failure_landscape": "UNKNOWN",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:ssw-smith-waterman/upstream/tree/src/ssw.c:590-784 (unread), 930-960"
+   },
+   "confidence": "LOW",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "banded_sw",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "FULL_HISTORY",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the Smith-Waterman recurrence as a separate organ",
+   "reason": "CANNOT_BE_ISOLATED",
+   "evidence": "H/E/F max-plus recurrences are the inner loop's arithmetic (organ 2); there is no scalar reference in the body except banded_sw",
+   "note": "the 1981 algorithm is the ancestry; the executable boundary here is the striped sweep",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ssw-smith-waterman"
+  },
+  {
+   "candidate": "sse2neon.h, the C++ / Python / JNI wrappers, kseq.h, main.c",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "src/ file list: bindings, a FASTA reader, a driver",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ssw-smith-waterman"
+  },
+  {
+   "candidate": "sw_sse2_word as separate anatomy",
+   "reason": "OTHER",
+   "evidence": "same structure with 8 x 16-bit lanes, no bias needed (signed) -- assumed from the signature and the byte version; not diffed",
+   "note": "a lane-width parameter",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "ssw-smith-waterman"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "ssw-smith-waterman::P.millions_of_quadratic_alignments_must_fit_a_throughput_budget_on_wide_but_narrow_lanes",
+   "source_fossil": "ssw-smith-waterman",
+   "source_evidence": "record pressure; the striped loop",
+   "condition": "each alignment is O(m n) cells; the hardware offers 16 parallel 8-bit operations but a serial dependency runs along both axes of the table",
+   "resource_or_constraint": "SIMD width x lane precision; the vertical dependency",
+   "failure_condition": "the scalar cost; or a layout whose dependencies serialise the lanes",
+   "world_punishes": "lane-by-lane dependencies; scores that need more bits than a lane has",
+   "world_rewards": "a layout where the dependency across lanes is rare (striping) and a cheap correction when it is not (lazy F)",
+   "observable_consequence": "cells per second vs the scalar oracle (EMBOSS water, record)",
+   "vacuity_condition": "one alignment",
+   "trivial_shortcuts": "heuristic seed-and-extend (not the same optimum; the world must score exactness)",
+   "cheat_control": "an aligner given the optimum in advance must report it at zero cost; if the world scores it equal to SSW on identical outputs without charging time, throughput is not measured",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: read mapping in sequencing pipelines",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "ssw-smith-waterman::P.narrow_arithmetic_saturates_silently_and_the_wrong_answer_looks_like_a_right_one",
+   "source_fossil": "ssw-smith-waterman",
+   "source_evidence": "vault:ssw-smith-waterman/upstream/tree/src/ssw.c:875-895",
+   "condition": "8-bit lanes clamp at 255; a high-scoring pair returns 255 with no error",
+   "resource_or_constraint": "lane width",
+   "failure_condition": "a silently wrong optimum (record)",
+   "world_punishes": "trusting the narrow result",
+   "world_rewards": "treating the saturation value as a detector and recomputing wider",
+   "observable_consequence": "the record's entry point: a very high scoring pair",
+   "vacuity_condition": "scores always below 255",
+   "trivial_shortcuts": "always use 16-bit lanes (half the throughput)",
+   "cheat_control": "a pair whose true score is exactly 255 must still be recomputed; a world that never presents scores near the lane limit does not test this",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "ssw-smith-waterman::query_profile_striped_so_lane_k_holds_query_positions_k_segLen_apart",
+   "to": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "to": "ssw-smith-waterman::lazy_f_correction_loop_that_stops_when_no_lane_can_still_improve",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "F carried out of the segment loop",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::lazy_f_correction_loop_that_stops_when_no_lane_can_still_improve",
+   "to": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "corrected column",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "to": "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask",
+   "to": "ssw-smith-waterman::overflow_detected_by_saturation_at_255_triggers_a_16_bit_recompute",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "255 -> word rerun",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask",
+   "to": "ssw-smith-waterman::start_position_by_rerunning_the_sweep_on_reversed_sequences_terminating_at_the_known_score",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "score1 + ends",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::start_position_by_rerunning_the_sweep_on_reversed_sequences_terminating_at_the_known_score",
+   "to": "ssw-smith-waterman::banded_scalar_dp_over_the_located_window_to_recover_the_path",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "window",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::overflow_detected_by_saturation_at_255_triggers_a_16_bit_recompute",
+   "to": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "label": "retries",
+   "evidence": "SOURCE_READ",
+   "note": "16-bit lanes",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::query_profile_striped_so_lane_k_holds_query_positions_k_segLen_apart",
+   "to": "ssw-smith-waterman::start_position_by_rerunning_the_sweep_on_reversed_sequences_terminating_at_the_known_score",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "reversed profile",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
+  {
+   "from": "ssw-smith-waterman",
+   "relation": "algorithm_from",
+   "to": "Smith & Waterman 1981; Farrar 2007 (striped); SWPS3 (the lazy-F fix, named in the comment at 281)",
+   "note": "from the code's comments",
+   "basis": "SOURCE_READ"
+  },
   {
    "from": "ssw-smith-waterman",
    "relation": "algorithm_from",
@@ -151,7 +1194,13 @@
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "banded_sw (traceback) unread",
+   "the 16-bit twin assumed",
+   "nothing ran; Techne's EMBOSS agreement oracle is on M1"
+  ],
+  "note": "the forward SIMD sweep is fully read",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

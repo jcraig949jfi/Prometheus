@@ -47,6 +47,7 @@ from __future__ import annotations
 import json
 import os
 import secrets
+import queue
 import threading
 import time
 from typing import Any, Dict, Optional
@@ -59,6 +60,11 @@ def _now() -> float:
     return time.time()
 
 
+class _Flush:
+    def __init__(self, done: threading.Event):
+        self.done = done
+
+
 class Journal:
     """Append-only intent journal. One instance per process; thread-safe."""
 
@@ -69,6 +75,23 @@ class Journal:
         self.degraded = False
         self.degraded_reason: Optional[str] = None
         self.counts = {"intent": 0, "effected": 0, "refused": 0, "write_failures": 0}
+        # 9.0.1 (SFE_LONG_RUN_REPORT.md s12). The journal used to open, write
+        # and close the day file for EVERY line, under the lock, inside the
+        # response path of every mutating request. py-spy on a 21 s stall:
+        # two writers idle inside that open/write/close while a passive
+        # checkpoint saturated the disk -- every mutating request queued
+        # behind one small append. Now: the day file stays OPEN (one write +
+        # flush per line); `intent` is still written synchronously (it must
+        # be on disk before the handler touches the ledger); `effected` /
+        # `refused` are post-COMMIT bookkeeping and go through a writer
+        # thread -- the ledger is authoritative for effect, and the in-memory
+        # slot is updated immediately so attest()/open_intents() never lag.
+        self._fh = None
+        self._fh_path: Optional[str] = None
+        self._io_lock = threading.Lock()          # serializes writes to the open handle
+        self._q: "queue.SimpleQueue[Optional[str]]" = queue.SimpleQueue()
+        self._writer = threading.Thread(target=self._drain, name="sfe-a6-journal", daemon=True)
+        self._writer.start()
         try:
             # ONE level only: the default is <db dir>/incidents, whose parent
             # exists by construction. A missing parent means a misconfigured
@@ -88,7 +111,43 @@ class Journal:
         return os.path.join(self.directory,
                             time.strftime("%Y-%m-%d", time.gmtime()) + ".jsonl")
 
-    def _append(self, rec: Dict[str, Any]) -> None:
+    def _write_line(self, line: str) -> None:
+        """One line to the open day file; reopens on a new day. Caller holds
+        no lock: this runs on the writer thread, or under the lock for
+        intents. Failures degrade the journal (fail OPEN) as before."""
+        try:
+            path = self._path()
+            if self._fh is None or self._fh_path != path:
+                if self._fh is not None:
+                    self._fh.close()
+                self._fh = open(path, "a", encoding="ascii")
+                self._fh_path = path
+            self._fh.write(line + "\n")
+            self._fh.flush()
+        except OSError as e:
+            self.degraded = True
+            self.degraded_reason = "%s: %s" % (type(e).__name__, e)
+            self.counts["write_failures"] += 1
+
+    def _drain(self) -> None:
+        while True:
+            item = self._q.get()
+            if item is None:
+                return
+            if isinstance(item, _Flush):
+                item.done.set()
+                continue
+            with self._io_lock:
+                if not self.degraded:
+                    self._write_line(item)
+
+    def flush(self, timeout: float = 5.0) -> None:
+        """Block until every queued outcome line is on disk (tests, shutdown)."""
+        done = threading.Event()
+        self._q.put(_Flush(done))
+        done.wait(timeout)
+
+    def _append(self, rec: Dict[str, Any], *, sync: bool) -> None:
         line = json.dumps(rec, sort_keys=True, separators=(",", ":"))
         with self._lock:
             rid = rec["rid"]
@@ -100,28 +159,26 @@ class Journal:
             self.counts[rec["kind"]] = self.counts.get(rec["kind"], 0) + 1
             if self.degraded:
                 return
-            try:
-                with open(self._path(), "a", encoding="ascii") as fh:
-                    fh.write(line + "\n")
-            except OSError as e:
-                self.degraded = True
-                self.degraded_reason = "%s: %s" % (type(e).__name__, e)
-                self.counts["write_failures"] += 1
+        if sync:
+            with self._io_lock:
+                self._write_line(line)
+        else:
+            self._q.put(line)
 
     def intent(self, *, route: str, client: Optional[str] = None,
                idem_key: Optional[str] = None, rid: Optional[str] = None) -> str:
         rid = rid or ("req_" + secrets.token_hex(12))
         self._append({"kind": "intent", "rid": rid, "ts": _now(), "route": route,
-                      "client": client, "idem_key": idem_key})
+                      "client": client, "idem_key": idem_key}, sync=True)
         return rid
 
     def effected(self, rid: str, *, kind: str, ref: Optional[str] = None) -> None:
         """Only after the ledger's COMMIT returned. Relays, never infers."""
         self._append({"kind": "effected", "rid": rid, "ts": _now(),
-                      "effect_kind": kind, "ref": ref})
+                      "effect_kind": kind, "ref": ref}, sync=False)
 
     def refused(self, rid: str, *, reason: str) -> None:
-        self._append({"kind": "refused", "rid": rid, "ts": _now(), "reason": reason})
+        self._append({"kind": "refused", "rid": rid, "ts": _now(), "reason": reason}, sync=False)
 
     # -- reading ----------------------------------------------------------
     def lookup(self, rid: str) -> Dict[str, Any]:
@@ -155,7 +212,13 @@ class Journal:
                             found["outcome"] = rec
             except OSError:
                 continue
-            if found:
+            # Stop once BOTH halves are in hand, not at the first file that
+            # mentions the rid: a request whose intent landed before a UTC
+            # midnight and whose outcome landed after it has its two lines
+            # in two day files, and stopping at the newer one reported
+            # "no intent record" for a request that did reach the journal
+            # (found by the 9.0.1 day-rollover test).
+            if "intent" in found and "outcome" in found:
                 break
         return found
 

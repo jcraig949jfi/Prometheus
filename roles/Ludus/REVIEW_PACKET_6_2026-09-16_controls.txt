@@ -265,3 +265,14 @@ wrong order.
 END OF PACKET. The reviewer may answer "not worth continuing"; section 8
 says what that would have to look like.
 ================================================================================
+
+--------------------------------------------------------------------------------
+ANNOTATION 2026-09-16, later the same day (LUDUS-01 landed after this packet)
+--------------------------------------------------------------------------------
+The bench-verify rows above were run on the 2026-08-27 Martian Dice
+reconstruction (8,555 states). LUDUS-01 then corrected two rules from the
+published sheet (14,653 states). The controls were re-run on the audited
+world: 25 rows, 25 as predicted, unchanged in kind; the committed
+CONTROLS_2026-09-16.json now carries the 14,653-state readings (the one-ray
+cheat row still reads verified_internally=True either way). The original
+8,555-state readings are those printed in section 5.B above.

@@ -1,0 +1,162 @@
+{
+ "order": "PRE-CAMPAIGN-4 REPAIR ORDER s4 (PEW): finish the reader side and freeze the observation surface",
+ "seat": "Mnemosyne",
+ "instance": "m2-9c10ae00",
+ "at": "2026-09-17T09:59:25",
+ "deployed_build": "f46e821e0f2eddd12b31565eac78772af2d952df",
+ "service_pid": 19624,
+ "service_started": "2026-09-17T09:50:00-0400",
+ "stage3_replies_read": [
+  333,
+  334,
+  335,
+  336,
+  339,
+  342,
+  343,
+  345
+ ],
+ "repairs": {
+  "verify_timeout": {
+   "defect": "closure verify timeout 6 s vs measured engine stalls 5-13 s (Daedalus #345) -> fossils landed UNVERIFIED silently",
+   "fix": "EW_SFE_VERIFY_TIMEOUT default 30 s, one bounded retry on timeout, reason/attempts/timed_out recorded",
+   "test": "tests/test_verify_timeout.py 4/4 (positive, defect reproduced, retry, cheat)"
+  },
+  "content_duplicate_seq": {
+   "defect": "Vivarium content-derived event_id under a new seq would leave a phantom gap",
+   "fix": "migration 015 ingestion_checkpoints.duplicate_seqs; duplicate:true + contiguous_seq on every answer",
+   "test": "integration/campaign_release_check.py gate E8"
+  },
+  "foundry_scheme": {
+   "change": "reader 1.2 tags strata.foundry_profile_scheme; value verbatim (Proteus #339)",
+   "effect": "envelope refresh only"
+  },
+  "frozen_surface": {
+   "pinned": "docs/point_release/CAMPAIGN4_FROZEN_SURFACE.json",
+   "digest": "sha256:0ba00db3481f20a7705642c2287a9fba441adbbe66cc11983d8072cfd744fa1d",
+   "test": "tests/test_frozen_surface.py (drift fails; cheat moves digest)"
+  }
+ },
+ "migration_015": {
+  "migration": "015",
+  "target_db_system_id": "7628127204585430828",
+  "revision_before": 120890,
+  "revision_after": 120890,
+  "backup_id": "pewbk-20260917T070006-795ab1c4d323",
+  "restore_verdict": "RESTORE_VERIFIED",
+  "applied_by": "Mnemosyne @ SPECTREX5",
+  "finished_at": "2026-09-17T09:49:43",
+  "rehearsal": false
+ },
+ "acceptance": {
+  "batteries_after_restart": {
+   "pew": {
+    "pass": 17,
+    "fail": 0,
+    "skip": 0
+   },
+   "seam": {
+    "pass": 12,
+    "fail": 0,
+    "skip": 0
+   },
+   "closure": {
+    "pass": 19,
+    "fail": 0,
+    "skip": 0
+   },
+   "lineage": {
+    "pass": 14,
+    "fail": 0,
+    "skip": 1
+   },
+   "h0h5_refs": {
+    "pass": 16,
+    "fail": 0,
+    "skip": 0
+   }
+  },
+  "release_check": {
+   "all_pass": true,
+   "gates": 16,
+   "failed": []
+  },
+  "second_ingest_idempotent": {
+   "c3_a": {
+    "seen": 20288,
+    "new": 0,
+    "envelope_refreshed": 20288,
+    "conflicts": 0,
+    "reader": "ew.campaign_ingest/1.2"
+   },
+   "c3_b": {
+    "seen": 20288,
+    "new": 0,
+    "envelope_refreshed": 0,
+    "conflicts": 0,
+    "reader": "ew.campaign_ingest/1.2"
+   },
+   "c2": {
+    "seen": 6506,
+    "new": 0,
+    "envelope_refreshed": 5086,
+    "conflicts": 0,
+    "reader": "ew.campaign_ingest/1.2"
+   },
+   "c1": {
+    "seen": 2682,
+    "new": 0,
+    "envelope_refreshed": 1262,
+    "conflicts": 0,
+    "reader": "ew.campaign_ingest/1.2"
+   }
+  },
+  "rebuild_digests_stable": {
+   "reach_level/v1": {
+    "rebuild_equal": true,
+    "digest": "e7625bfb967f7015151ddd73943b8f63ee6d1f6a1f15fbb0a5ea1db12946a1b9"
+   },
+   "reach_level/v0": {
+    "rebuild_equal": true,
+    "digest": "7037fbc41aff4f7d89b681b1d695b71b4b2cc820075eeb30b2a10657bc1cb0c2"
+   },
+   "corridor_edge/v1": {
+    "rebuild_equal": true,
+    "digest": "719fa5a1ec6f4045a1d8c6b17082e7dad79e7aa0d08afdea6c53a5579dda4ca7"
+   }
+  },
+  "point_release_digests_for_comparison": {
+   "reach_level/v1": "e7625bfb967f7015151ddd73943b8f63ee6d1f6a1f15fbb0a5ea1db12946a1b9",
+   "reach_level/v0": "7037fbc41aff4f7d89b681b1d695b71b4b2cc820075eeb30b2a10657bc1cb0c2",
+   "corridor_edge/v1": "719fa5a1ec6f4045a1d8c6b17082e7dad79e7aa0d08afdea6c53a5579dda4ca7"
+  },
+  "campaign4_projection_versions": {
+   "reach_level": "v1",
+   "corridor_edge": "v1"
+  },
+  "superseded_kept": {
+   "reach_level": [
+    "v0"
+   ]
+  },
+  "post_015_restore": {
+   "VERDICT": "RESTORE_VERIFIED",
+   "backup_id": "pewbk-20260917T095257-3cd39c9aeab7",
+   "tables_live": 178,
+   "tables_restored": 178,
+   "total_rows_restored": 5797558,
+   "count_loss": {},
+   "chain_identical": true
+  }
+ },
+ "unit_tests": "36 passed, 2 skipped (live scripts opt-in)",
+ "not_done_by_order": [
+  "explanation surface",
+  "per-organism firehose",
+  "MNE-19",
+  "unproduced families (capability_observation table)",
+  "engine-record resolver MNE-48",
+  "takeover_v1/forgetting_v1 (Archaeon states thresholds)"
+ ],
+ "stop_condition": "Campaign 4 evidence can be ingested and queried under frozen reader/projection identities: reader 1.2, reach_level v1, corridor_edge v1, inbox pew.events.v1, schema 5 (014+015)"
+}

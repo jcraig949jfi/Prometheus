@@ -110,9 +110,34 @@ def main() -> int:
     scheme = "https" if tls else "http"
     print(f"Serendipity Foundry Engine listening on {scheme}://{args.host}:"
           f"{args.port}  db={args.db}")
-    uvicorn.run(app, host=args.host, port=args.port,
-                ssl_certfile=args.tls_cert, ssl_keyfile=args.tls_key,
-                proxy_headers=False, log_level="info")
+    # 9.0.1: uvicorn's access log writes stdout synchronously from the event
+    # loop thread (py-spy caught the loop in logging.flush during a stall).
+    # Route every log record through a queue to one writer thread; the loop
+    # only enqueues. Loss on a hard crash is acceptable for an access log
+    # (the ledger and the A6 journal are the evidence, not this file).
+    import logging
+    import logging.handlers
+    import queue as _queue
+    _q = _queue.SimpleQueue()
+    _stream = logging.StreamHandler(sys.stdout)
+    _stream.setFormatter(logging.Formatter("%(levelname)s:     %(message)s"))
+    _listener = logging.handlers.QueueListener(_q, _stream, respect_handler_level=False)
+    _listener.start()
+    log_config = {
+        "version": 1, "disable_existing_loggers": False,
+        "handlers": {"queue": {"class": "logging.handlers.QueueHandler", "queue": _q}},
+        "loggers": {"uvicorn": {"handlers": ["queue"], "level": "INFO", "propagate": False},
+                    "uvicorn.error": {"handlers": ["queue"], "level": "INFO", "propagate": False},
+                    "uvicorn.access": {"handlers": ["queue"], "level": "INFO", "propagate": False},
+                    "sfe": {"handlers": ["queue"], "level": "INFO", "propagate": False}},
+    }
+    try:
+        uvicorn.run(app, host=args.host, port=args.port,
+                    ssl_certfile=args.tls_cert, ssl_keyfile=args.tls_key,
+                    proxy_headers=False, log_level="info", log_config=log_config)
+    finally:
+        app.state.checkpointer.stop()
+        _listener.stop()
     return 0
 
 

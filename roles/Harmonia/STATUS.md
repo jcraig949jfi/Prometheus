@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-11 15:30 (Harmonia[m1-486e595f]). Updated at least every four hours of activity.
+Currency: 2026-09-17 22:40 UTC (Harmonia[gandalf-6cd1348b]; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -11,7 +11,65 @@ subjects and journal file. A block with no "closed" line is presumed live
 only if its journal has an entry within the last four hours (presence is
 derived from activity, never from a row).
 
-### Harmonia[m1-486e595f]  (M1 SKULLPORT, this update's author)
+### Harmonia[gandalf-6cd1348b]  (M3 GANDALF, operator label "Harmonia F", 2026-09-17, this update's author)
+
+    worktree   C:/prometheus-worktrees/harmonia-gandalf-6cd1348b-boot
+    branch     harmonia/gandalf-6cd1348b-boot-2026-09-17
+    base_sha   3a671820b
+    dirty      no at boot
+    session    6cd1348b-4f8c-49eb-ba66-1856958ab195 (harness); session_01VNxXZa6NHHXB7E4oMoSKrP (bridge)
+    opened     2026-09-17 15:18 UTC
+    comms      booted; sync 0 new / 0 queued; EW_DB_HOST=192.168.1.202 required (no local Postgres on M3)
+    host       NO fossil world on M3 (virtualization off in firmware, no WSL2 distro, Docker engine never ran;
+               operator ruling 09-17 10:45 local: go without it for now); no compilers. Reading-level and
+               records-level work only for the archaeology lane; every body-executing step routed to M2.
+    lane 2     MECHANISM ARCHAEOLOGY. particles: 001 returned INDETERMINATE + control-band challenge
+               (#363); 002 (186047db) RAN 22:25Z -> CUT_SUPPORTED on the boundary (I1 R=0 all seeds,
+               V ratio 17,039; I2 == I0; W2: I4 R med 51, I5 R 99, V ratio 1.32); claim (c) scheme
+               ordering CONFLICTING (50 seeds 0.51 excl. 1; 400 seeds 1.16 covers 1) -> returned to
+               Nyx for a power statement. Rulings RULING_PARTICLES_ESSTRIGGER_00{1,2}_2026-09-17.md.
+               ACK on #364 was ~6 h late (instance idle); recorded.
+    lane 3     POET/ALife STEERING (operator 2026-09-18 directive): steering note
+               archaeology/POET_ALIFE_BENCH_STEERING_2026-09-18.md posted #381; HARM-47..51; next
+               instruments on M3: ASAL level-1 ruler, Avida ancestry ground-truth ruler on example data.
+               gzip 003 (HARM-38..42): EXECUTION has no host program-wide; HARM-38 reading only.
+    journal    roles/Harmonia/journal/2026-09-17_gandalf-6cd1348b.md
+
+### Harmonia[m2-038758c6]  (M2 SPECTREX5, 2026-09-16, this update's author)
+
+    worktree   D:/Prometheus-worktrees/harmonia-m2-038758c6-boot
+    branch     harmonia/m2-038758c6-boot-2026-09-16
+    base_sha   b3e62a959
+    dirty      no at boot
+    session    038758c6-2210-4d29-8492-f1f69d463240 (harness); session_01APeC753MberhMK4TGqo6jD (bridge)
+    opened     2026-09-16 15:50 UTC
+    comms      booted; sync 6 new / 0 queued (#269 #270 #282 #288 #295 #301); EW_DB_HOST=192.168.1.202
+               required on M2 (WRONG_ENVIRONMENT otherwise, incident c84e26826cc12217)
+    measured   M2 engine 192.168.1.191:8811 UP as the twin eng_906356f7 (build 726275da, schema 8);
+               M1 192.168.1.202:8811 TIMEOUT. The ledger move (#270 steps 1-2) has not happened.
+    working    step-3 PRECHECK done: promote refuses on ledger only (exit 2, nothing written);
+               gate DRIFT on engine_instance_id only; CONFORMANT 68/68 with the twin id.
+               #295 answered: contract models required query + no responses; include_spec and
+               the two fields are invisible; the new build needs its own candidate.
+               #282 G1/G2 reproduced independently (diff < 1e-14); GO as computed; issue = operator.
+    superseded step 3 (promote 726275da) is MOOT: operator re-ruled in chat (SFE on M2 on its own
+               ledger); Daedalus a1dd1458c launched production eng_906356f7 build 4dbcd3fd and landed a
+               regenerated contract in roles/Harmonia/contracts/ under the operator's clearance;
+               the 726275da candidate is superseded. Not yet re-verified by this seat (HARM-43 open).
+    lane 2     MECHANISM ARCHAEOLOGY (Amendment 3 received from the operator in chat; RESPONSIBILITIES s8):
+               #309 claimed; ACK #316; ruler CALIBRATED on RS_CALIBRATION_PAIR_001 (R-ID-1/2 IDENTICAL,
+               R-DIV-1 DIVERGENT 1865/2000 + a 33/2000 word-level divergence nobody listed; controls
+               clean); RETURN 1 CUT_SUPPORTED + ACCEPT; RETURN 2 PREDICTION_PACKET_CHALLENGE on
+               MECH-GZIP-LEVELTABLE-002 (switch is at deflate.c:672, packet says 667; I2 unexecutable
+               as written); packet 003 requested from Nyx. R1 opens against 003.
+    2026-09-17 branch fast-forwarded to origin/main 3a671820b, no conflicts, nothing unpushed. #319: both
+               returns ACCEPTED, packet 003 frozen 5dbf46a2 (re-hashed here: matches); R1 OPEN. #341 Proteus
+               question UNANSWERED (HARM-44). Daedalus landed a schema-9 contract in my lane (fbfcfb276).
+    next       HARM-38 (grade gzip oracle sources), HARM-39 (oracle corpus in fw-01f8b51f); then HARM-43
+               (re-verify Daedalus's landed contract with my gate from this worktree); HARM-30/31 after.
+    journal    roles/Harmonia/journal/2026-09-16_m2-038758c6.md
+
+### Harmonia[m1-486e595f]  (M1 SKULLPORT; author of the 2026-09-11 update)
 
     worktree   F:/Prometheus-worktrees/harmonia-m1-486e595f-boot
     branch     harmonia/m1-486e595f-boot-2026-09-11
@@ -87,6 +145,9 @@ verbatim under roles/Harmonia/superseded/.
 
 ## What is current
 
+    lane 2 (2026-09-16)  Mechanism Archaeology Pipeline, Harmonia stage (R1-R4);
+                         equivalence ruler calibrated; FOSSIL-GZIP-001 at R1
+
     QR-1.1.0            H0-H5 qualification rules; contrast variance is
                         c' Sigma c, estimated per lane on a disjoint pilot
     AF-1.0.0            six adversarial fixtures, 6/6, no LLM in any path
@@ -108,5 +169,8 @@ verbatim under roles/Harmonia/superseded/.
 
 ## Last verified
 
+    2026-09-16  promote_candidate_contract.py and conformance_check.py run from
+                a linked worktree against the M2 twin: refuse / DRIFT on the
+                ledger identity only, CONFORMANT 68/68 once the identity matches
     2026-09-11  six gate states pass on the merged tree; guard refuses from
                 the canonical checkout and proceeds from a linked worktree

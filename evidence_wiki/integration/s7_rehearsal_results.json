@@ -1,0 +1,115 @@
+{
+ "stage": "S7",
+ "all_pass": true,
+ "precheck": true,
+ "commit": "15424485a72360636a7aa3deec40534685b5cbbe",
+ "reader_version": "ew.campaign_ingest/1.4",
+ "ingest_run1": {
+  "seen": 1420,
+  "new": 0,
+  "envelope_refreshed": 1420,
+  "conflicts": 0,
+  "streams": {
+   "archaeon/campaign2/REACHABILITY.jsonl": {
+    "blob": "ee55726b182b32a5ef82b39e13844361978cbe96",
+    "lines": 1265,
+    "seen": 0,
+    "new": 0
+   },
+   "archaeon/campaign3/CORRIDOR.jsonl": {
+    "blob": "f7defa55dede343d3a3ec0565e881b8bac9bd22f",
+    "lines": 155,
+    "seen": 0,
+    "new": 0
+   }
+  },
+  "write_log_payload_sha256": "5bb4d9a622bee3a353740b26bd1592954f67442b3b18dff8cc6cf4a00a24c58a"
+ },
+ "ingest_run2": {
+  "seen": 1420,
+  "new": 0,
+  "envelope_refreshed": 0,
+  "conflicts": 0,
+  "streams": {
+   "archaeon/campaign2/REACHABILITY.jsonl": {
+    "blob": "ee55726b182b32a5ef82b39e13844361978cbe96",
+    "lines": 1265,
+    "seen": 0,
+    "new": 0
+   },
+   "archaeon/campaign3/CORRIDOR.jsonl": {
+    "blob": "f7defa55dede343d3a3ec0565e881b8bac9bd22f",
+    "lines": 155,
+    "seen": 0,
+    "new": 0
+   }
+  },
+  "write_log_payload_sha256": "5bb4d9a622bee3a353740b26bd1592954f67442b3b18dff8cc6cf4a00a24c58a"
+ },
+ "campaign4_rows": {
+  "n": 0,
+  "harnesses": 0,
+  "attempts": 0,
+  "kinds": {}
+ },
+ "rebuild_digests": {
+  "reach_level/v1": "e7625bfb967f7015151ddd73943b8f63ee6d1f6a1f15fbb0a5ea1db12946a1b9",
+  "reach_level/v0": "7037fbc41aff4f7d89b681b1d695b71b4b2cc820075eeb30b2a10657bc1cb0c2",
+  "corridor_edge/v1": "719fa5a1ec6f4045a1d8c6b17082e7dad79e7aa0d08afdea6c53a5579dda4ca7"
+ },
+ "frozen_digests": {
+  "reach_level/v1": "e7625bfb967f7015151ddd73943b8f63ee6d1f6a1f15fbb0a5ea1db12946a1b9",
+  "reach_level/v0": "7037fbc41aff4f7d89b681b1d695b71b4b2cc820075eeb30b2a10657bc1cb0c2",
+  "corridor_edge/v1": "719fa5a1ec6f4045a1d8c6b17082e7dad79e7aa0d08afdea6c53a5579dda4ca7"
+ },
+ "vivarium_outbox": {
+  "checkpoint": null,
+  "events_stored": 0
+ },
+ "ran_at": "2026-09-17T18:58:34",
+ "seconds": 19.0,
+ "gates": [
+  {
+   "gate": "I1_ingest_campaign4",
+   "pass": true,
+   "skipped": false,
+   "detail": "commit 15424485a reader ew.campaign_ingest/1.4 seen 1420 new 0 conflicts 0 "
+  },
+  {
+   "gate": "I2_second_ingest_idempotent",
+   "pass": true,
+   "skipped": false,
+   "detail": "seen 1420 new 0 conflicts 0 "
+  },
+  {
+   "gate": "I3_campaign4_rows_present",
+   "pass": true,
+   "skipped": true,
+   "detail": "precheck: 0 campaign-4 rows (none expected yet); reader accepts the directory"
+  },
+  {
+   "gate": "R1_rebuild_equal_and_unchanged_from_frozen",
+   "pass": true,
+   "skipped": false,
+   "detail": "{\"reach_level/v1\": \"e7625bfb967f\", \"reach_level/v0\": \"7037fbc41aff\", \"corridor_edge/v1\": \"719fa5a1ec6f\"}"
+  },
+  {
+   "gate": "C1_release_check",
+   "pass": true,
+   "skipped": false,
+   "detail": "16/16 failed=[]"
+  },
+  {
+   "gate": "F1_frozen_surface_holds",
+   "pass": true,
+   "skipped": false,
+   "detail": "2 passed in 0.13s"
+  },
+  {
+   "gate": "X1_vivarium_outbox_reconciliation",
+   "pass": true,
+   "skipped": true,
+   "detail": "{\"checkpoint\": null, \"events_stored\": 0}"
+  }
+ ]
+}

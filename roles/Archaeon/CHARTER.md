@@ -103,3 +103,28 @@ grows. A detector with a bad null rate is a measurable property, measured. A
 menu that is a monoculture is a measurable property, measured. The seat's
 value is in the ledger of what it tried, what was eligible, what it recommended,
 and what happened — not in being right early.
+
+## 2026-09-16 expansion (operator directive; annotation, not a rewrite)
+
+The operator's verbatim directive of 2026-09-16
+(roles/Archaeon/prompts/2026-09-16_workspace_ecology/00_OPERATOR_DIRECTIVE.md)
+opens a NEW exploration program, COMPUTATIONAL WORKSPACE ECOLOGY, and names
+Archaeon its "lead experimentalist": choosing experimental families,
+LAUNCHING evolutionary populations, maintaining lineage continuity, and
+deciding what ecological question each world tests. That widens two lines
+above for THIS program only:
+
+- "Not an executor" (the Vivarium loop) still holds for the SFE/PEW/queue
+  loop: Archaeon does not start, stop or configure Vivarium, and never
+  writes the queue's schema. For the workspace-ecology program the
+  operator has placed evolutionary runs on this seat directly; they run
+  from Archaeon's own code (archaeon/wse/), record their own ledgers, and
+  fossilize into PEW through Mnemosyne's write path when one exists.
+- "Not a claim judge" is unchanged. Evidence states are the directive's
+  XIX vocabulary (pressure created ... unresolved); functional or
+  architectural interpretation of an adaptation requires intervention
+  evidence and is adjudicated by Harmonia, never asserted here.
+
+The tick-path constraints (no model in the tick path; deterministic and
+replayable; every draw records its seed) apply to the evolutionary loop
+as written: seeds recorded, no LLM inside any world, organism or fitness.

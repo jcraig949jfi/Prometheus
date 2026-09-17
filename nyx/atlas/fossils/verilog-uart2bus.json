@@ -129,20 +129,977 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/uart_rx.v"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/uart_tx.v"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/baud_gen.v"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/uart_parser.v"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/uart2bus_top.v"
+   }
+  ],
+  "inspected_files": [
+   "rtl/uart_rx.v, uart_tx.v, baud_gen.v, uart_parser.v, uart2bus_top.v (all)"
+  ],
+  "date": "2026-09-17T11:03Z",
+  "note": "a serial-line-to-register-bus bridge: five small synchronous mechanisms (a fractional rate generator, an oversampling receiver, a shift-register transmitter, a text/binary command parser, a request/grant bus handshake) with no processor",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T11:03Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/freecores/uart2bus@f85211ec749895de51a3eaaff620b17c00a5f41a",
+   "payload_manifest_id": "techne tree_sha256 3b41bf158603334d2b93d267637134759522d8c508cef6f700452585dc34da7a (46 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/verilog/rtl/uart_rx.v",
+     "payload_hash_read": "eca57ade813d467b6e6b5e183cef3783d6e5ee9fe8d3f545e09868b9d83590c4",
+     "techne_recorded_hash": "eca57ade813d467b6e6b5e183cef3783d6e5ee9fe8d3f545e09868b9d83590c4",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/verilog/rtl/uart_tx.v",
+     "payload_hash_read": "b39a57ce8d7a1752a5fecaa9c145666973c4684a626a2c6b80fffd676733ffcf",
+     "techne_recorded_hash": "b39a57ce8d7a1752a5fecaa9c145666973c4684a626a2c6b80fffd676733ffcf",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/verilog/rtl/baud_gen.v",
+     "payload_hash_read": "4e874c5bbf70b1d6356d7b143f9eadef823d69eabf69f4be2ffb9fec80e362a2",
+     "techne_recorded_hash": "4e874c5bbf70b1d6356d7b143f9eadef823d69eabf69f4be2ffb9fec80e362a2",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/verilog/rtl/uart_parser.v",
+     "payload_hash_read": "eacad9a1aa162a6f9c1ceaec175bb257eab22c48784376ceb9946f0faa4453e6",
+     "techne_recorded_hash": "eacad9a1aa162a6f9c1ceaec175bb257eab22c48784376ceb9946f0faa4453e6",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/verilog/rtl/uart2bus_top.v",
+     "payload_hash_read": "7462c0eefed77eba0906a4a90e290713c2bb1851d1d7986dd4388a4a2e32952c",
+     "techne_recorded_hash": "7462c0eefed77eba0906a4a90e290713c2bb1851d1d7986dd4388a4a2e32952c",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "verilog-uart2bus::fractional_rate_generator_by_add_subtract_accumulator",
+   "fossil_ancestry": "verilog-uart2bus",
+   "human_name": "baud_gen.v",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a 16-bit accumulator adds baud_freq each clock; when it reaches baud_limit it subtracts baud_limit and emits one ce_16 pulse; with baud_freq = 16*baud/gcd and baud_limit = clock/gcd - baud_freq the pulse rate is exactly 16*baud on average with bounded jitter (one clock); no division, no multiplier",
+   "input": "clock; two registers",
+   "output": "ce_16 (a clock-enable at 16x the bit rate)",
+   "state": "counter (16 bits)",
+   "update": "per clock",
+   "assumptions": [
+    "the ratio clock/(16*baud) is rational with a small gcd-reduced form; jitter of one clock per pulse is tolerable because the receiver oversamples 16x"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-uart2bus::oversampling_receiver_with_two_flop_synchroniser_start_detection_and_mid_bit_sampling",
+    "verilog-uart2bus::shift_register_transmitter_with_framing_bits_loaded_while_idle"
+   ],
+   "fitness_value_in_ancestor": "any baud rate from any clock with two registers; the classical Bresenham / DDS rate-division trick",
+   "failure_landscape": "UNKNOWN by run; by reading: when 16*baud does not divide the clock the pulses are unevenly spaced",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the header's gcd formula is the human's prior on how to fill the registers; the hardware does not know it",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/baud_gen.v"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "module baud_gen",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "STEP",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-uart2bus::oversampling_receiver_with_two_flop_synchroniser_start_detection_and_mid_bit_sampling",
+   "fossil_ancestry": "verilog-uart2bus",
+   "human_name": "uart_rx.v",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the asynchronous serial input is sampled through two flops (in_sync); a 4-bit counter runs on ce_16 whenever the receiver is busy or the line is low; it is held at zero while idle and high, so the count starts at the falling edge of a start bit; ce_1_mid (count 7) is the middle of each bit and samples the line into a shift register; the first mid-bit sample (of the start bit) sets busy; after 8 data bits the byte is presented with a one-clock new_rx_data pulse at the end of bit 8 (count 15); no stop-bit check, no parity, no framing error",
+   "input": "ser_in, ce_16",
+   "output": "rx_data, new_rx_data",
+   "state": "in_sync[2], count16, bit_count, data_buf, rx_busy",
+   "update": "per ce_16",
+   "assumptions": [
+    "the sender's rate is within the tolerance that 16x sampling and mid-bit alignment allow (a few percent)",
+    "a glitch on the line while idle starts a reception (the start bit is not re-verified at its middle)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-uart2bus::fractional_rate_generator_by_add_subtract_accumulator",
+    "verilog-uart2bus::dual_protocol_command_parser_selected_by_the_first_byte_with_a_text_line_state_machine_and_a_binary_length_prefixed_form"
+   ],
+   "fitness_value_in_ancestor": "rate recovery from the data itself: the counter phase-locks to each start bit",
+   "failure_landscape": "by reading: no stop-bit verification means a framing error is silently accepted; the byte after a noise glitch is garbage",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "16x oversampling with mid-bit sampling: the 8250-era convention",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/uart_rx.v"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "module uart_rx",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "ESTIMATES",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-uart2bus::shift_register_transmitter_with_framing_bits_loaded_while_idle",
+   "fossil_ancestry": "verilog-uart2bus",
+   "human_name": "uart_tx.v",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "while idle the 9-bit buffer is continuously loaded with {tx_data, 0} (data plus start bit) and the line is held high; new_tx_data sets busy; every 16 ce_16 the buffer shifts right with a 1 shifted in (the stop bit and idle level come for free); after 10 bit times busy clears; tx_busy is the only flow control",
+   "input": "tx_data, new_tx_data, ce_16",
+   "output": "ser_out, tx_busy",
+   "state": "data_buf[9], count16, bit_count, tx_busy",
+   "update": "per ce_16",
+   "assumptions": [
+    "the caller waits for tx_busy to fall before presenting the next byte (the parser's tx_end_p edge detector does exactly that)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-uart2bus::fractional_rate_generator_by_add_subtract_accumulator",
+    "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy"
+   ],
+   "fitness_value_in_ancestor": "the stop bit and idle state are the same value shifted in; nine flops and a counter",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/uart_tx.v"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "module uart_tx",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-uart2bus::dual_protocol_command_parser_selected_by_the_first_byte_with_a_text_line_state_machine_and_a_binary_length_prefixed_form",
+   "fossil_ancestry": "verilog-uart2bus",
+   "human_name": "uart_parser.v main_sm (MAIN_* states), data/addr nibble accumulation, bin_* flags",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a byte of 0x00 in IDLE enters the binary protocol (command byte with read/write/nop bits, auto-increment and status-reply flags, 16-bit address, length, then data bytes counted down to bin_last_byte); an 'r'/'R' or 'w'/'W' enters the text protocol (whitespace, hex data, whitespace, hex address, end of line), where hex characters are accumulated a nibble at a time into data_param/addr_param and any unexpected character parks the machine in EOL until a line end; the request fires on the first non-hex character after the address",
+   "input": "rx_data + new_rx_data",
+   "output": "read_op/write_op or bin_read_op/bin_write_op with address, data, count",
+   "state": "main_sm (4 bits), the parameter registers, the flags",
+   "update": "per received byte",
+   "assumptions": [
+    "0x00 never starts a text command; hex characters and whitespace are the only text tokens; a malformed line is discarded, not reported"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-uart2bus::oversampling_receiver_with_two_flop_synchroniser_start_detection_and_mid_bit_sampling",
+    "verilog-uart2bus::request_grant_bus_handshake_with_one_cycle_strobes_and_a_pipelined_read_return"
+   ],
+   "fitness_value_in_ancestor": "a human at a terminal and a program with a binary stream share one port; no firmware",
+   "failure_landscape": "by reading: a binary command with length 0 would count down from 0 through 255 (bin_last_byte tests for 1); a text line with more than 2 data or 4 address hex digits keeps only the last ones (shift-in)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the text grammar 'w DD AAAA' / 'r AAAA' is a designer's convention",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/uart_parser.v (main_sm case statement; data_param/addr_param/bin_byte_count blocks)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the main state machine and the parameter registers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "STALLS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-uart2bus::request_grant_bus_handshake_with_one_cycle_strobes_and_a_pipelined_read_return",
+   "fossil_ancestry": "verilog-uart2bus",
+   "human_name": "write_req/read_req -> int_req; int_gnt -> int_write/int_read; read_done/read_done_s/read_data_s",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a parsed command raises a request flag (int_req = write_req | read_req); when the bus owner grants (int_gnt) the strobe int_write or int_read is asserted for exactly one clock and the request cleared; a read's data is captured one clock after the strobe (read_done) and the transmit machine is kicked one clock later (read_done_s) so the register file has a cycle to answer; the address auto-increments after each binary transfer when the flag is set",
+   "input": "parsed commands, int_gnt, int_rd_data",
+   "output": "int_address, int_wr_data, int_write, int_read, int_req",
+   "state": "the request flags and the two-stage read pipeline",
+   "update": "per clock",
+   "assumptions": [
+    "the register file answers a read in one clock after int_read; a grant may be delayed indefinitely (the request holds)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-uart2bus::dual_protocol_command_parser_selected_by_the_first_byte_with_a_text_line_state_machine_and_a_binary_length_prefixed_form",
+    "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy"
+   ],
+   "fitness_value_in_ancestor": "the bridge can share the bus with other masters; timing of the register file is decoupled by one stage",
+   "failure_landscape": "UNKNOWN by run; by reading: a second command arriving before the grant overwrites the parameters (no queue)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/uart_parser.v (write_req/read_req blocks, int_address block, read_done block)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the bus-side always blocks",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "ARBITRATES",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "COORDINATES",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy",
+   "fossil_ancestry": "verilog-uart2bus",
+   "human_name": "tx_sm (TX_* states), tx_end_p = ~tx_busy & s_tx_busy, nibble-to-ASCII tables, the 0x5A status byte",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a text read replies with two hex characters then CR LF, each byte handed to the transmitter when the previous one's busy falls (tx_end_p, a one-clock edge pulse from a sampled tx_busy); a binary read sends raw bytes and re-requests the next address on each tx_end_p until the count is done; a status byte 0x5A is sent after binary commands when the flag asks, and always for NOP",
+   "input": "read_data_s, the op flags, tx_busy",
+   "output": "tx_data, new_tx_data",
+   "state": "tx_sm (3 bits), s_tx_busy",
+   "update": "per clock",
+   "assumptions": [
+    "the transmitter's busy signal is the only pacing; no FIFO"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "verilog-uart2bus::request_grant_bus_handshake_with_one_cycle_strobes_and_a_pipelined_read_return",
+    "verilog-uart2bus::shift_register_transmitter_with_framing_bits_loaded_while_idle"
+   ],
+   "fitness_value_in_ancestor": "multi-byte replies with one byte of buffering",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/uart_parser.v (tx_sm case statement; tx_end_p; tx_char table)"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the transmit-side always blocks",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "uart_top.v and uart2bus_top.v wiring, the D_BAUD_FREQ/D_BAUD_LIMIT constants, the CHAR_* defines",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:verilog-uart2bus/upstream/tree/verilog/rtl/uart2bus_top.v; the parser's define block",
+   "note": "instantiation and constants",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "verilog-uart2bus"
+  },
+  {
+   "candidate": "the testbenches and uart_tasks.v",
+   "reason": "OTHER",
+   "evidence": "not read; they are the world (iverilog) for a Stage C run, per the record's RUNNABLE_EMULATED",
+   "note": "an instrument, not a mechanism",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "verilog-uart2bus"
+  },
+  {
+   "candidate": "'UART' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the rate generator, receiver and transmitter share only ce_16; each is a separate module with its own state",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "verilog-uart2bus"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "verilog-uart2bus::P.a_bit_stream_with_no_clock_must_be_recovered_by_a_receiver_whose_own_clock_differs_by_a_few_percent",
+   "source_fossil": "verilog-uart2bus",
+   "source_evidence": "uart_rx.v (count16 held at 0 while idle and high; ce_1_mid at 7); baud_gen.v",
+   "condition": "symbols arrive at a nominal rate with no separate clock; the receiver has a local clock at an unrelated frequency; each symbol has a start marker; the receiver must sample near the middle of every bit for the length of a frame",
+   "resource_or_constraint": "a local oversampling factor (cost in clock rate); frame length over which drift accumulates",
+   "failure_condition": "a sampled bit lands on a transition (corruption) after drift accumulates, or a noise glitch is taken for a start",
+   "world_punishes": "both",
+   "world_rewards": "phase alignment at each start marker and a sampling point that tolerates the maximum drift over the frame",
+   "observable_consequence": "byte error rate vs rate mismatch percentage and vs glitch rate",
+   "vacuity_condition": "a shared clock line",
+   "trivial_shortcuts": "a world that transmits the clock; frames of one bit",
+   "cheat_control": "a receiver given the sender's clock must show zero errors at any mismatch; the ancestor must fail at a mismatch near 100/(16*10) percent per frame: the world must show the cliff or it is not exerting the drift pressure",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: asynchronous serial reception",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "verilog-uart2bus::P.one_channel_must_serve_a_human_typed_grammar_and_a_machine_binary_grammar_without_ambiguity",
+   "source_fossil": "verilog-uart2bus",
+   "source_evidence": "uart_parser.v main_sm (0x00 vs r/w in IDLE; MAIN_EOL)",
+   "condition": "the same byte stream may carry either protocol; the organism must decide from the first byte and parse both; malformed input must not wedge the parser",
+   "resource_or_constraint": "state bits; no buffering beyond one byte",
+   "failure_condition": "a byte value legal in both grammars, or a malformed line that leaves the parser stuck",
+   "world_punishes": "misparsed commands; a parser that never returns to idle",
+   "world_rewards": "a disambiguating first symbol and an error state that resynchronises on a delimiter",
+   "observable_consequence": "commands recovered per malformed line injected; wedges per 10^4 random bytes",
+   "vacuity_condition": "one grammar",
+   "trivial_shortcuts": "two channels",
+   "cheat_control": "a parser fed only well-formed input of one grammar must recover 100%; the ancestor fed a binary write whose data contains 'w' bytes must still parse it as binary (length-prefixed): if the world cannot pose that case it is not testing the ambiguity",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a dual text/binary UART-to-bus bridge",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "verilog-uart2bus::fractional_rate_generator_by_add_subtract_accumulator",
+   "to": "verilog-uart2bus::oversampling_receiver_with_two_flop_synchroniser_start_detection_and_mid_bit_sampling",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::fractional_rate_generator_by_add_subtract_accumulator",
+   "to": "verilog-uart2bus::shift_register_transmitter_with_framing_bits_loaded_while_idle",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::oversampling_receiver_with_two_flop_synchroniser_start_detection_and_mid_bit_sampling",
+   "to": "verilog-uart2bus::dual_protocol_command_parser_selected_by_the_first_byte_with_a_text_line_state_machine_and_a_binary_length_prefixed_form",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::dual_protocol_command_parser_selected_by_the_first_byte_with_a_text_line_state_machine_and_a_binary_length_prefixed_form",
+   "to": "verilog-uart2bus::request_grant_bus_handshake_with_one_cycle_strobes_and_a_pipelined_read_return",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::request_grant_bus_handshake_with_one_cycle_strobes_and_a_pipelined_read_return",
+   "to": "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "read_done_s + read_data_s",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy",
+   "to": "verilog-uart2bus::shift_register_transmitter_with_framing_bits_loaded_while_idle",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::shift_register_transmitter_with_framing_bits_loaded_while_idle",
+   "to": "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "tx_end_p",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy",
+   "to": "verilog-uart2bus::request_grant_bus_handshake_with_one_cycle_strobes_and_a_pipelined_read_return",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "binary read re-request per byte",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "verilog-uart2bus",
+   "relation": "algorithm_from",
+   "to": "the 16x-oversampling UART convention (8250-class devices); the 'uart2bus' OpenCores project (record lineage not re-read)",
+   "note": "from the module headers",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "uart_top.v not read (wiring only, by its size and role)",
+   "nothing ran; the bench/ directory holds a ready iverilog world (tb_txt / tb_bin) for a SCOUT or Stage C run",
+   "the two reading-level defects (length-0 binary count wrap; no stop-bit check) are unmeasured"
+  ],
+  "note": "every always block in the five RTL files is accounted for",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

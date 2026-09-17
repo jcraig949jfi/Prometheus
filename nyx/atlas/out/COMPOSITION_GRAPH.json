@@ -1,0 +1,4680 @@
+{
+ "schema": "nyx.atlas/0",
+ "built": "2026-09-17T23:02Z",
+ "n": 582,
+ "by_label": {
+  "feeds": 302,
+  "updates": 65,
+  "triggers": 44,
+  "competes": 26,
+  "gates": 61,
+  "restores": 15,
+  "predicts": 1,
+  "schedules": 11,
+  "suppresses": 8,
+  "forgets": 2,
+  "verifies": 2,
+  "transforms": 10,
+  "stores": 14,
+  "selects": 19,
+  "retries": 2
+ },
+ "edges": [
+  {
+   "from": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
+   "to": "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "arduino-pid::fixed_sample_time_enforced_by_a_clock_check_with_integral_and_derivative_gains_pre_scaled_by_the_period",
+   "to": "arduino-pid::derivative_on_measurement_and_optional_proportional_on_measurement_folded_into_the_accumulator",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "arduino-pid::bumpless_manual_to_automatic_transfer_by_initialising_the_accumulator_from_the_current_output_and_the_last_input_from_the_current_input",
+   "to": "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "arduino-pid::integral_kept_as_an_accumulated_output_term_clamped_to_the_output_limits",
+   "to": "arduino-pid::derivative_on_measurement_and_optional_proportional_on_measurement_folded_into_the_accumulator",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "shared accumulator under P_ON_M",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
+   "to": "avida::template_matching_by_complement_label_for_control_flow_and_for_finding_the_copy_loop",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::template_matching_by_complement_label_for_control_flow_and_for_finding_the_copy_loop",
+   "to": "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "h-search places the flow head; the copy loop jumps to it",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+   "to": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "DivideReset locks merit in",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::task_reward_as_consumed_resource_times_value_composed_by_add_mult_pow_across_reactions",
+   "to": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "bonus",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "to": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "priority = merit",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "to": "avida::head_based_self_copy_with_per_instruction_copy_error_insertion_deletion_and_slip",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "CPU cycles",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "to": "avida::task_reward_as_consumed_resource_times_value_composed_by_add_mult_pow_across_reactions",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "cycles to compute",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "to": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "to": "avida::cpu_time_allocated_in_proportion_to_merit_by_binary_decomposition_or_by_probability",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "new cell priority; killed cell removed",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::age_limit_death_with_gaussian_deviation_optionally_scaled_by_genome_length",
+   "to": "avida::offspring_placement_by_birth_method_that_kills_the_occupant_of_the_chosen_cell",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "the two deaths",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::merit_as_size_base_times_accumulated_task_bonus_locked_in_at_divide_and_inherited",
+   "to": "avida::divide_refused_unless_the_offspring_is_plausible_by_age_size_range_executed_fraction_and_copied_fraction",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "offspring inherits merit via the birth chamber",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "avida::divide_time_mutation_spectrum_per_site_binomial_or_per_divide_or_poisson",
+   "to": "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "every mutant is a legal program",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "backoff-2.2.1::wait_schedule_as_a_primed_generator_capped_at_a_maximum_and_advanced_by_sending_the_failure_value",
+   "to": "backoff-2.2.1::full_jitter_drawing_the_actual_wait_uniformly_from_zero_to_the_scheduled_wait",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "backoff-2.2.1::full_jitter_drawing_the_actual_wait_uniformly_from_zero_to_the_scheduled_wait",
+   "to": "backoff-2.2.1::retry_loop_terminated_by_a_giveup_predicate_a_try_count_or_a_wall_clock_budget_with_handlers_at_each_transition",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "backoff-2.2.1::retry_loop_terminated_by_a_giveup_predicate_a_try_count_or_a_wall_clock_budget_with_handlers_at_each_transition",
+   "to": "backoff-2.2.1::wait_schedule_as_a_primed_generator_capped_at_a_maximum_and_advanced_by_sending_the_failure_value",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "send(value)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bdwgc-8.2.6::pointer_identification_by_a_two_level_block_index_that_maps_any_word_to_a_block_header_or_to_nothing_with_interior_pointers_resolved_by_backward_search",
+   "to": "bdwgc-8.2.6::mark_loop_over_a_work_stack_of_ranges_and_descriptors_with_a_credit_budget_and_range_splitting",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "which words are pointers",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bdwgc-8.2.6::collection_triggered_when_bytes_allocated_since_the_last_gc_exceed_the_estimated_scan_work_over_a_divisor_and_heap_grown_with_a_slop_that_forces_a_gc_before_it_is_used",
+   "to": "bdwgc-8.2.6::mark_loop_over_a_work_stack_of_ranges_and_descriptors_with_a_credit_budget_and_range_splitting",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "starts a cycle",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bdwgc-8.2.6::mark_loop_over_a_work_stack_of_ranges_and_descriptors_with_a_credit_budget_and_range_splitting",
+   "to": "bdwgc-8.2.6::lazy_sweep_that_rebuilds_a_free_list_per_object_size_from_the_mark_bits_of_one_block_at_a_time_and_coalesces_free_large_blocks_with_their_neighbours",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "mark bits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bdwgc-8.2.6::lazy_sweep_that_rebuilds_a_free_list_per_object_size_from_the_mark_bits_of_one_block_at_a_time_and_coalesces_free_large_blocks_with_their_neighbours",
+   "to": "bdwgc-8.2.6::pointer_identification_by_a_two_level_block_index_that_maps_any_word_to_a_block_header_or_to_nothing_with_interior_pointers_resolved_by_backward_search",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "free blocks are non-pointers",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::branch_target_buffer_fully_associative_on_the_fetch_pc_with_call_ret_jmp_type_bits_and_random_replacement",
+   "to": "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::two_bit_saturating_counters_indexed_by_pc_or_by_gshare_xor_of_pc_and_global_history",
+   "to": "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::return_address_stack_with_a_speculative_pointer_beside_the_architectural_one",
+   "to": "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::branch_target_buffer_fully_associative_on_the_fetch_pc_with_call_ret_jmp_type_bits_and_random_replacement",
+   "to": "biriscv-branch-predictor::return_address_stack_with_a_speculative_pointer_beside_the_architectural_one",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "call/ret type bits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::speculative_shadow_state_updated_by_predictions_and_resynchronised_from_architectural_state_on_resolve",
+   "to": "biriscv-branch-predictor::two_bit_saturating_counters_indexed_by_pc_or_by_gshare_xor_of_pc_and_global_history",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "read index",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::speculative_shadow_state_updated_by_predictions_and_resynchronised_from_architectural_state_on_resolve",
+   "to": "biriscv-branch-predictor::return_address_stack_with_a_speculative_pointer_beside_the_architectural_one",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "pointer",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+   "to": "biriscv-branch-predictor::speculative_shadow_state_updated_by_predictions_and_resynchronised_from_architectural_state_on_resolve",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "predictions shift the speculative history",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::branch_target_buffer_fully_associative_on_the_fetch_pc_with_call_ret_jmp_type_bits_and_random_replacement",
+   "to": "biriscv-branch-predictor::two_bit_saturating_counters_indexed_by_pc_or_by_gshare_xor_of_pc_and_global_history",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "BHT is consulted only on a BTB hit",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::countdown_timer_array_swept_by_a_global_500ms_tick",
+   "to": "bsd-tcp-4.2-1983::retransmit_timer_as_beta_times_srtt_with_tabulated_backoff_and_a_ten_strike_drop",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::countdown_timer_array_swept_by_a_global_500ms_tick",
+   "to": "bsd-tcp-4.2-1983::persist_timer_probing_a_zero_window_with_a_forced_byte_and_its_own_backoff",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::countdown_timer_array_swept_by_a_global_500ms_tick",
+   "to": "bsd-tcp-4.2-1983::keepalive_by_a_deliberately_out_of_window_segment_with_an_idle_drop",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::countdown_timer_array_swept_by_a_global_500ms_tick",
+   "to": "bsd-tcp-4.2-1983::exponentially_smoothed_rtt_from_one_timed_segment_at_a_time",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "t_rtt++ per tick",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::exponentially_smoothed_rtt_from_one_timed_segment_at_a_time",
+   "to": "bsd-tcp-4.2-1983::retransmit_timer_as_beta_times_srtt_with_tabulated_backoff_and_a_ten_strike_drop",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::exponentially_smoothed_rtt_from_one_timed_segment_at_a_time",
+   "to": "bsd-tcp-4.2-1983::persist_timer_probing_a_zero_window_with_a_forced_byte_and_its_own_backoff",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::retransmit_timer_as_beta_times_srtt_with_tabulated_backoff_and_a_ten_strike_drop",
+   "to": "bsd-tcp-4.2-1983::send_amount_bounded_by_peer_advertised_window_only",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "snd_nxt = snd_una: the window is re-sent from its left edge",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::send_amount_bounded_by_peer_advertised_window_only",
+   "to": "bsd-tcp-4.2-1983::sender_silly_window_avoidance_by_three_thresholds",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::receiver_window_advertisement_with_quarter_buffer_floor_and_35_percent_update_trigger",
+   "to": "bsd-tcp-4.2-1983::send_amount_bounded_by_peer_advertised_window_only",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the peer's rwa is this side's snd_wnd",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::send_amount_bounded_by_peer_advertised_window_only",
+   "to": "bsd-tcp-4.2-1983::persist_timer_probing_a_zero_window_with_a_forced_byte_and_its_own_backoff",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "snd_wnd == 0",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::persist_timer_probing_a_zero_window_with_a_forced_byte_and_its_own_backoff",
+   "to": "bsd-tcp-4.2-1983::receiver_window_advertisement_with_quarter_buffer_floor_and_35_percent_update_trigger",
+   "label": "predicts",
+   "evidence": "SOURCE_READ",
+   "note": "a probe elicits an advertisement",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::delayed_acknowledgement_via_a_200ms_fast_timer_flag",
+   "to": "bsd-tcp-4.2-1983::receiver_window_advertisement_with_quarter_buffer_floor_and_35_percent_update_trigger",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::retransmit_timer_as_beta_times_srtt_with_tabulated_backoff_and_a_ten_strike_drop",
+   "to": "bsd-tcp-4.2-1983::persist_timer_probing_a_zero_window_with_a_forced_byte_and_its_own_backoff",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "mutually exclusive timers",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.2-1983::retransmit_timer_as_beta_times_srtt_with_tabulated_backoff_and_a_ten_strike_drop",
+   "to": "bsd-tcp-4.2-1983::exponentially_smoothed_rtt_from_one_timed_segment_at_a_time",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "no: a retransmission does NOT stop the RTT clock (read); recorded as the Karn ambiguity",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990::three_duplicate_acks_trigger_retransmission_and_window_halving_before_the_timer_then_inflate_the_window_per_further_duplicate_to_keep_the_pipe_full",
+   "to": "bsd-tcp-4.3-reno-1990::congestion_window_separate_from_the_advertised_window_opened_exponentially_below_a_threshold_and_linearly_above",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "sets ssthresh and cwnd",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990::header_prediction_fast_path_for_in_sequence_pure_acks_and_pure_data_that_skips_the_state_machine",
+   "to": "bsd-tcp-4.3-reno-1990::congestion_window_separate_from_the_advertised_window_opened_exponentially_below_a_threshold_and_linearly_above",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "fast path only when cwnd is not the constraint",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990::congestion_window_separate_from_the_advertised_window_opened_exponentially_below_a_threshold_and_linearly_above",
+   "to": "bsd-tcp-4.3-reno-1990::three_duplicate_acks_trigger_retransmission_and_window_halving_before_the_timer_then_inflate_the_window_per_further_duplicate_to_keep_the_pipe_full",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "the inflate/deflate arithmetic is on cwnd",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-alloc-spaskalev::root_to_leaf_descent_that_prefers_the_busier_child_that_still_fits_to_keep_large_blocks_whole",
+   "to": "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the chosen position is marked",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged",
+   "to": "buddy-alloc-spaskalev::root_to_leaf_descent_that_prefers_the_busier_child_that_still_fits_to_keep_large_blocks_whole",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "node summaries route the descent",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-alloc-spaskalev::non_power_of_two_arena_by_pre_marking_the_missing_tail_as_virtual_used_slots",
+   "to": "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator",
+   "to": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "every result node",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "to": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "longjmp on the node-count threshold",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "to": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "rewrites the table in place",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "to": "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator",
+   "label": "forgets",
+   "evidence": "SOURCE_READ",
+   "note": "cache cleared",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "to": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "selected points",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+   "to": "c-cmaes-hansen::covariance_adapted_by_a_rank_one_term_from_the_path_and_a_rank_mu_term_from_the_weighted_selected_steps_with_learning_rates_from_default_formulas_in_n_and_mu_eff",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "pc, hsig",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+   "to": "c-cmaes-hansen::step_size_multiplied_by_exp_of_the_normalised_excess_length_of_the_whitened_path_over_a_damping",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "ps",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::covariance_adapted_by_a_rank_one_term_from_the_path_and_a_rank_mu_term_from_the_weighted_selected_steps_with_learning_rates_from_default_formulas_in_n_and_mu_eff",
+   "to": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "C -> B, D",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::step_size_multiplied_by_exp_of_the_normalised_excess_length_of_the_whitened_path_over_a_damping",
+   "to": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::eleven_stopping_criteria_over_fitness_range_history_coordinate_wise_step_covariance_condition_and_numerical_effectiveness_each_appending_a_named_reason",
+   "to": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cjson-1.7.18::recursive_descent_over_a_bounded_buffer_with_a_bounds_predicate_on_every_access_and_a_constant_nesting_limit",
+   "to": "cjson-1.7.18::string_parsed_in_two_passes_measuring_escapes_before_one_exact_allocation_then_decoding_with_utf16_surrogate_handling",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cjson-1.7.18::recursive_descent_over_a_bounded_buffer_with_a_bounds_predicate_on_every_access_and_a_constant_nesting_limit",
+   "to": "cjson-1.7.18::number_copied_into_a_bounded_local_buffer_with_locale_decimal_point_substitution_then_strtod_with_integer_saturation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cjson-1.7.18::string_parsed_in_two_passes_measuring_escapes_before_one_exact_allocation_then_decoding_with_utf16_surrogate_handling",
+   "to": "cjson-1.7.18::recursive_descent_over_a_bounded_buffer_with_a_bounds_predicate_on_every_access_and_a_constant_nesting_limit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "object keys",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression",
+   "to": "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "complete matches",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+   "to": "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching",
+   "to": "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "asserts and retracts re-enter the network",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+   "to": "cobol-programming-course-omp::edited_move_formats_by_picture_at_assignment",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+   "to": "cobol-programming-course-omp::fixed_point_decimal_arithmetic_at_declared_scale",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::record_at_a_time_sequential_loop_with_an_at_end_flag",
+   "to": "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "READ fills the record area",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::record_at_a_time_sequential_loop_with_an_at_end_flag",
+   "to": "cobol-programming-course-omp::edited_move_formats_by_picture_at_assignment",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "WRITE-RECORD",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::named_paragraph_control_flow_by_perform",
+   "to": "cobol-programming-course-omp::record_at_a_time_sequential_loop_with_an_at_end_flag",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::byte_exact_record_layout_declared_by_level_numbers_and_pictures",
+   "to": "cobol-programming-course-omp::declared_ordered_table_searched_by_binary_or_linear_search_statement",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cobol-programming-course-omp::fixed_point_decimal_arithmetic_at_declared_scale",
+   "to": "cobol-programming-course-omp::edited_move_formats_by_picture_at_assignment",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "totals formatted at the end",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::totally_ordered_proposal_ids_as_a_counter_paired_with_the_node_uid",
+   "to": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "to": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "prepare / accept",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "to": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "promise with prior value",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "to": "cocagne-plain-paxos::learner_counts_accepted_messages_per_proposal_id_retracting_an_acceptor_that_moves_to_a_higher_id",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "accepted broadcast",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules",
+   "to": "cocagne-plain-paxos::proposer_adopts_the_highest_previously_accepted_value_from_a_quorum_of_promises_before_proposing",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "acquire leadership -> prepare",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::acceptor_promise_and_accept_rules_with_the_previously_accepted_value_returned_in_the_promise",
+   "to": "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "NACKs",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cocagne-plain-paxos::heartbeat_leadership_layered_on_top_without_changing_the_safety_rules",
+   "to": "cocagne-plain-paxos::totally_ordered_proposal_ids_as_a_counter_paired_with_the_node_uid",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "observe_proposal",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+   "to": "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
+   "to": "compact-4.2bsd-1983::sibling_property_repair_by_count_increment_and_block_leader_exchange",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "every encoded symbol is then uptree'd",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::sibling_property_repair_by_count_increment_and_block_leader_exchange",
+   "to": "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::escape_leaf_for_unseen_symbols_followed_by_the_raw_byte_and_a_split_insert",
+   "to": "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::escape_leaf_for_unseen_symbols_followed_by_the_raw_byte_and_a_split_insert",
+   "to": "compact-4.2bsd-1983::sibling_property_repair_by_count_increment_and_block_leader_exchange",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+   "to": "compact-4.2bsd-1983::escape_leaf_for_unseen_symbols_followed_by_the_raw_byte_and_a_split_insert",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "SEEN flag",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::in_band_end_symbol_instead_of_a_length_field",
+   "to": "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::keep_only_if_smaller_gate_with_a_two_byte_magic_and_a_percent_report",
+   "to": "compact-4.2bsd-1983::in_band_end_symbol_instead_of_a_length_field",
+   "label": "verifies",
+   "evidence": "SOURCE_READ",
+   "note": "oc vs ic after the flush",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "to": "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "free_ent",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+   "to": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "freeze at maxbits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving",
+   "to": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "clear_htab",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving",
+   "to": "compress-4.2.4-lzw::code_width_grows_from_9_bits_as_the_dictionary_fills_up_to_maxbits_then_freezes",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "back to 9 bits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compress-4.2.4-lzw::implicit_dictionary_as_prefix_code_plus_byte_keyed_by_hashing_never_transmitted",
+   "to": "compress-4.2.4-lzw::block_mode_dictionary_reset_when_the_compression_ratio_stops_improving",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "bytes_in/bytes_out",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "concurrencykit-0.7.2::exponential_backoff_by_spinning_a_doubling_count_of_barriers_up_to_a_ceiling",
+   "to": "concurrencykit-0.7.2::test_and_set_style_locks_with_backoff",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "wait between attempts",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "concurrencykit-0.7.2::ticket_lock_serving_fetch_and_add_numbers_in_order_on_one_shared_word",
+   "to": "concurrencykit-0.7.2::queue_lock_where_each_waiter_spins_on_its_own_node_linked_by_fetch_and_store",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "same contract, different spin location",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "concurrencykit-0.7.2::test_and_set_style_locks_with_backoff",
+   "to": "concurrencykit-0.7.2::ticket_lock_serving_fetch_and_add_numbers_in_order_on_one_shared_word",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "concurrencykit-0.7.2::epoch_based_reclamation_deferring_frees_until_every_active_reader_has_left_the_epoch",
+   "to": "concurrencykit-0.7.2::hazard_pointers_publishing_the_object_a_reader_is_about_to_touch",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "two reclamation disciplines for the same hazard",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "concurrencykit-0.7.2::epoch_based_reclamation_deferring_frees_until_every_active_reader_has_left_the_epoch",
+   "to": "concurrencykit-0.7.2::single_producer_single_consumer_ring_with_masked_indices_and_a_published_tail",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "a lock-free structure's frees go through epoch (ck_hp_fifo / epoch-protected structures by name)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "concurrencykit-0.7.2::epoch_based_reclamation_deferring_frees_until_every_active_reader_has_left_the_epoch",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "a stalled reader stops the epoch",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::redcode_assembler_with_labels_expressions_and_default_modifiers",
+   "to": "corewar-redcode::warrior_placement_at_random_offsets_with_minimum_separation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::warrior_placement_at_random_offsets_with_minimum_separation",
+   "to": "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::warrior_placement_at_random_offsets_with_minimum_separation",
+   "to": "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "initial task queues",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo",
+   "to": "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "pc",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+   "to": "corewar-redcode::opcode_and_modifier_dispatch_over_field_subsets",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::opcode_and_modifier_dispatch_over_field_subsets",
+   "to": "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::opcode_and_modifier_dispatch_over_field_subsets",
+   "to": "corewar-redcode::round_robin_over_warriors_each_popping_one_task_from_a_bounded_fifo",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "enqueue successors / none on DAT",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+   "to": "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "corewar-redcode::operand_resolution_with_pre_decrement_and_post_increment_side_effects",
+   "to": "corewar-redcode::circular_shared_memory_of_instructions_with_read_and_write_reach_limits",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "pre-decrement / post-increment",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cosell-eliza-bbn-lisp-1969::input_split_into_sentences_with_a_keyword_stack_ordered_by_a_priority_property_so_that_the_sentence_carrying_the_top_keyword_is_the_one_analysed",
+   "to": "cosell-eliza-bbn-lisp-1969::decomposition_rules_tried_per_keyword_with_a_cyclic_choice_among_reassembly_rules_and_a_memory_stack_consulted_when_no_keyword_matches",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "cosell-eliza-bbn-lisp-1969::host_language_semantics_re_created_by_a_compatibility_package_so_a_1969_listing_runs_unaltered",
+   "to": "cosell-eliza-bbn-lisp-1969::input_split_into_sentences_with_a_keyword_stack_ordered_by_a_priority_property_so_that_the_sentence_carrying_the_top_keyword_is_the_one_analysed",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the runtime",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "des-reference::subkey_schedule_by_rotating_two_halves",
+   "to": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "subkeys consumed one per round",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "des-reference::table_driven_bit_gather",
+   "to": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "E before the XOR, P after the S-boxes, IP/FP outside",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+   "to": "des-reference::six_to_four_bit_substitution_from_eight_tables",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "des-reference::six_to_four_bit_substitution_from_eight_tables",
+   "to": "des-reference::table_driven_bit_gather",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "des-reference::table_driven_bit_gather",
+   "to": "des-reference::subkey_schedule_by_rotating_two_halves",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "PC-1 and PC-2 are table gathers inside the schedule",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "des-reference::swap_halves_and_xor_keyed_function_into_one_half",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "mode flips the subkey order",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::boundary_tags_with_in_use_bits_folded_into_the_size_word",
+   "to": "dlmalloc::immediate_coalescing_on_free_with_top_and_dv_absorption",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::immediate_coalescing_on_free_with_top_and_dv_absorption",
+   "to": "dlmalloc::exact_size_small_bins_indexed_by_size_over_8_with_a_non_empty_bitmap",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::immediate_coalescing_on_free_with_top_and_dv_absorption",
+   "to": "dlmalloc::size_keyed_bitwise_tries_for_large_chunks_with_best_fit_by_leftmost_walk",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::immediate_coalescing_on_free_with_top_and_dv_absorption",
+   "to": "dlmalloc::designated_victim_as_the_preferred_source_for_small_requests_without_an_exact_fit",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::immediate_coalescing_on_free_with_top_and_dv_absorption",
+   "to": "dlmalloc::wilderness_top_chunk_grown_from_the_system_and_trimmed_back_with_self_disabling_autotrim",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::exact_size_small_bins_indexed_by_size_over_8_with_a_non_empty_bitmap",
+   "to": "dlmalloc::designated_victim_as_the_preferred_source_for_small_requests_without_an_exact_fit",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "split remainder -> dv",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::size_keyed_bitwise_tries_for_large_chunks_with_best_fit_by_leftmost_walk",
+   "to": "dlmalloc::designated_victim_as_the_preferred_source_for_small_requests_without_an_exact_fit",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "better-fit test",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::designated_victim_as_the_preferred_source_for_small_requests_without_an_exact_fit",
+   "to": "dlmalloc::wilderness_top_chunk_grown_from_the_system_and_trimmed_back_with_self_disabling_autotrim",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "dv before top",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::wilderness_top_chunk_grown_from_the_system_and_trimmed_back_with_self_disabling_autotrim",
+   "to": "dlmalloc::immediate_coalescing_on_free_with_top_and_dv_absorption",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "should_trim",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::usage_error_detection_by_address_range_in_use_bits_and_optional_footer_magic",
+   "to": "dlmalloc::immediate_coalescing_on_free_with_top_and_dv_absorption",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::boundary_tags_with_in_use_bits_folded_into_the_size_word",
+   "to": "dlmalloc::usage_error_detection_by_address_range_in_use_bits_and_optional_footer_magic",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dlmalloc::exact_size_small_bins_indexed_by_size_over_8_with_a_non_empty_bitmap",
+   "to": "dlmalloc::size_keyed_bitwise_tries_for_large_chunks_with_best_fit_by_leftmost_walk",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "tmalloc_small when no small bin fits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::coordinator.barrier_released_when_every_registered_worker_reports_it",
+   "to": "dmtcp-3.1.2::worker.checkpoint_thread_loop_anchored_by_a_saved_context",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "the request the ckpt thread waits for; barriers between phases",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::worker.checkpoint_thread_loop_anchored_by_a_saved_context",
+   "to": "dmtcp-3.1.2::worker.stop_every_other_thread_by_signal_with_rescan_until_quiescent",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::worker.stop_every_other_thread_by_signal_with_rescan_until_quiescent",
+   "to": "dmtcp-3.1.2::ckpt.memory_image_from_proc_self_maps_with_area_headers_and_zero_page_elision",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "image written only when all threads are suspended",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::worker.checkpoint_thread_loop_anchored_by_a_saved_context",
+   "to": "dmtcp-3.1.2::ckpt.memory_image_from_proc_self_maps_with_area_headers_and_zero_page_elision",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "ckpt thread context + TLS + sigstate go into the image",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::ckpt.memory_image_from_proc_self_maps_with_area_headers_and_zero_page_elision",
+   "to": "dmtcp-3.1.2::restart.self_relocating_restorer_unmaps_the_host_process_and_remaps_the_image",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "the image",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::restart.self_relocating_restorer_unmaps_the_host_process_and_remaps_the_image",
+   "to": "dmtcp-3.1.2::worker.checkpoint_thread_loop_anchored_by_a_saved_context",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "jump to savctx",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::interposition.preloaded_wrappers_resolving_the_real_call_by_dlsym",
+   "to": "dmtcp-3.1.2::virtualization.stable_virtual_ids_mapped_to_kernel_ids_and_remapped_after_restart",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "wrappers translate through the table",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::interposition.preloaded_wrappers_resolving_the_real_call_by_dlsym",
+   "to": "dmtcp-3.1.2::ipc.drain_kernel_socket_buffers_through_a_cookie_and_refill_after_resume",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "socket wrappers register connections",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::interposition.preloaded_wrappers_resolving_the_real_call_by_dlsym",
+   "to": "dmtcp-3.1.2::plugin.fixed_event_sequence_with_registered_hooks",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "CLOSE_FD / DUP_FD events",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::plugin.fixed_event_sequence_with_registered_hooks",
+   "to": "dmtcp-3.1.2::ipc.drain_kernel_socket_buffers_through_a_cookie_and_refill_after_resume",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "PRECHECKPOINT -> drain; RESUME/RESTART -> refill",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::plugin.fixed_event_sequence_with_registered_hooks",
+   "to": "dmtcp-3.1.2::ipc.reconnect_sockets_by_identifier_exchange_through_the_coordinator_name_service",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::coordinator.barrier_released_when_every_registered_worker_reports_it",
+   "to": "dmtcp-3.1.2::ipc.reconnect_sockets_by_identifier_exchange_through_the_coordinator_name_service",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "name service",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "dmtcp-3.1.2::restart.self_relocating_restorer_unmaps_the_host_process_and_remaps_the_image",
+   "to": "dmtcp-3.1.2::virtualization.stable_virtual_ids_mapped_to_kernel_ids_and_remapped_after_restart",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "new real ids after restart",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "dmtcp-3.1.2::restart.self_relocating_restorer_unmaps_the_host_process_and_remaps_the_image",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "ASLR / vdso placement decides whether the image can be mapped",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "do-mpc::continuous_model_discretised_by_orthogonal_collocation_on_finite_elements_with_legendre_or_radau_points_as_equality_constraints_of_the_nlp",
+   "to": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the dynamics as constraints",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "do-mpc::robust_multi_stage_mpc_by_a_scenario_tree_over_uncertain_parameter_combinations_branching_for_n_robust_stages_with_equal_weights_per_stage_and_optional_shared_inputs",
+   "to": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the scenario structure",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "do-mpc::moving_horizon_estimation_as_the_same_optimizer_with_a_stage_cost_on_measurement_and_model_residuals_plus_an_arrival_cost_on_the_window_start",
+   "to": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "x0 estimates",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "do-mpc::finite_horizon_nlp_built_symbolically_once_and_re_solved_every_step_with_the_first_input_applied_and_the_solver_warm_started_from_the_previous_solution",
+   "to": "do-mpc::moving_horizon_estimation_as_the_same_optimizer_with_a_stage_cost_on_measurement_and_model_residuals_plus_an_arrival_cost_on_the_window_start",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "shared Optimizer base",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eispack-netlib-1976::householder_reduction_to_tridiagonal_with_accumulated_transforms",
+   "to": "eispack-netlib-1976::implicit_ql_iteration_with_shift",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "d, e, z from tred2 into tql2",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eispack-netlib-1976::hypotenuse_by_convergent_rescaling",
+   "to": "eispack-netlib-1976::implicit_ql_iteration_with_shift",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "every rotation and the shift",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eispack-netlib-1976::implicit_ql_iteration_with_shift",
+   "to": "eispack-netlib-1976::selection_sort_of_eigenpairs",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eispack-netlib-1976::dispatch_on_whether_vectors_are_wanted",
+   "to": "eispack-netlib-1976::householder_reduction_to_tridiagonal_with_accumulated_transforms",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eispack-netlib-1976::dispatch_on_whether_vectors_are_wanted",
+   "to": "eispack-netlib-1976::implicit_ql_iteration_with_shift",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eispack-netlib-1976::deflate_where_addition_leaves_the_sum_unchanged",
+   "to": "eispack-netlib-1976::implicit_ql_iteration_with_shift",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "decides when a subproblem splits off",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eispack-netlib-1976::probe_machine_epsilon_by_arithmetic",
+   "to": "WHOLE_SYSTEM",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "epslon is in the body but NOT called by rs/tred2/tql2 -- it serves other EISPACK paths; here it is present, unused",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::script_as_data_with_keywords_precedences_substitutions_tags_and_rules",
+   "to": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::script_as_data_with_keywords_precedences_substitutions_tags_and_rules",
+   "to": "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "to": "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "keystack order",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+   "to": "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "MY -> create_memory",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::mid_square_hash_of_a_35_bit_sign_magnitude_word",
+   "to": "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "which transformation",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "to": "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "empty keystack + LIMIT == 4",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "to": "eliza-anthay-1966::no_match_fallbacks_cycled_by_the_same_counter",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::decomposition_pattern_match_with_wildcards_and_tag_classes_then_reassembly_by_index",
+   "to": "eliza-anthay-1966::keyword_scan_with_precedence_ordered_keystack_and_subclause_cut_at_delimiters",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "linkkey pushes a new keyword",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-anthay-1966::memory_queue_filled_on_a_keyword_and_recalled_only_when_a_counter_reads_four",
+   "to": "eliza-anthay-1966::no_match_fallbacks_cycled_by_the_same_counter",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "both answer a keyword-free turn",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "to": "eliza-weizenbaum-mad-slip-1965::clause_break_at_punctuation_or_BUT_keeping_the_side_that_holds_the_keyword",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::clause_break_at_punctuation_or_BUT_keeping_the_side_that_holds_the_keyword",
+   "to": "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "to": "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "to": "eliza-weizenbaum-mad-slip-1965::four_slot_memory_that_stores_a_transformed_earlier_sentence_and_replays_it_when_nothing_matches",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "the MEMORY keyword",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::four_slot_memory_that_stores_a_transformed_earlier_sentence_and_replays_it_when_nothing_matches",
+   "to": "eliza-weizenbaum-mad-slip-1965::fallbacks_for_no_keyword_and_no_match_with_a_four_way_rotating_stock_phrase",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "a stored line beats a NONE reply at LIMIT = 4",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::decomposition_and_reassembly_by_library_pattern_match_with_a_rotating_choice_among_reassemblies",
+   "to": "eliza-weizenbaum-mad-slip-1965::fallbacks_for_no_keyword_and_no_match_with_a_four_way_rotating_stock_phrase",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "no decomposition matched",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eliza-weizenbaum-mad-slip-1965::live_script_editor_reached_by_a_leading_plus_sign",
+   "to": "eliza-weizenbaum-mad-slip-1965::keyword_dictionary_hashed_into_32_buckets_with_per_keyword_precedence_and_substitution",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "eprover-2.6::clause_selection_by_round_robin_over_several_weighted_priority_queues_with_a_switch_schedule_per_queue",
+   "to": "eprover-2.6::given_clause_loop_processing_one_selected_clause_per_step_with_forward_simplification_backward_simplification_and_generation_into_the_unprocessed_set",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::fundamental_arguments_as_polynomials_in_t_reduced_modulo_a_turn",
+   "to": "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::two_part_julian_date_carried_through_every_interface",
+   "to": "erfa-2.0.1::fundamental_arguments_as_polynomials_in_t_reduced_modulo_a_turn",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "t from the two-part date",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
+   "to": "erfa-2.0.1::rotation_matrix_algebra_for_frame_changes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "nutation angles -> matrices",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::rotation_matrix_algebra_for_frame_changes",
+   "to": "erfa-2.0.1::fixed_pipeline_of_astrometric_corrections_over_a_precomputed_context",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "bpn matrix in the context",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::leap_second_table_with_a_pre_1972_drift_formula_and_a_validity_horizon",
+   "to": "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets",
+   "to": "erfa-2.0.1::fixed_pipeline_of_astrometric_corrections_over_a_precomputed_context",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "epoch in TT/TDB for the context",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::trigonometric_series_over_integer_combinations_of_fundamental_arguments_summed_smallest_first",
+   "to": "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "TDB - TT series",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "erfa-2.0.1::two_part_julian_date_carried_through_every_interface",
+   "to": "erfa-2.0.1::time_scale_graph_of_pairwise_conversions_by_constant_table_or_series_offsets",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::layered_reachability_fixpoint_over_facts_and_effects_ignoring_deletes",
+   "to": "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+   "to": "ff-planner-2.3::helpful_actions_as_the_first_level_achievers_of_first_level_subgoals_ordered_by_fewest_goal_deletes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::helpful_actions_as_the_first_level_achievers_of_first_level_subgoals_ordered_by_fewest_goal_deletes",
+   "to": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "which successors are generated",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+   "to": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "h value",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::backward_extraction_of_a_relaxed_plan_choosing_the_achiever_with_the_cheapest_preconditions",
+   "to": "ff-planner-2.3::goal_added_deletion_pruning_of_successors_whose_new_goal_the_relaxed_plan_would_delete",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the plan's delete effects",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::goal_added_deletion_pruning_of_successors_whose_new_goal_the_relaxed_plan_would_delete",
+   "to": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "to": "ff-planner-2.3::layered_reachability_fixpoint_over_facts_and_effects_ignoring_deletes",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "h evaluated at every expanded node",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::enforced_hill_climbing_committing_to_the_first_strictly_better_state_found_by_breadth_first_search",
+   "to": "ff-planner-2.3::complete_best_first_fallback_over_all_actions_when_the_local_search_fails",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "on failure",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ff-planner-2.3::layered_reachability_fixpoint_over_facts_and_effects_ignoring_deletes",
+   "to": "ff-planner-2.3::complete_best_first_fallback_over_all_actions_when_the_local_search_fails",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::factor_n_into_small_primes_preferring_4_then_2_then_3_then_5_with_2_moved_first",
+   "to": "fftpack-netlib::twiddle_table_per_factor_stage_from_cos_sin_of_multiples_of_two_pi_over_n",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::factor_n_into_small_primes_preferring_4_then_2_then_3_then_5_with_2_moved_first",
+   "to": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::twiddle_table_per_factor_stage_from_cos_sin_of_multiples_of_two_pi_over_n",
+   "to": "fftpack-netlib::radix_r_butterfly_pass_with_twiddle_multiply_on_all_but_the_first_output",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+   "to": "fftpack-netlib::radix_r_butterfly_pass_with_twiddle_multiply_on_all_but_the_first_output",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::real_sequence_transforms_by_pre_and_post_processing_around_a_half_length_or_real_fft",
+   "to": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "wrappers call RFFTF/RFFTB",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "fftpack-netlib::stage_driver_alternating_two_buffers_over_the_factor_list",
+   "to": "fftpack-netlib::real_sequence_transforms_by_pre_and_post_processing_around_a_half_length_or_real_fft",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "genann::single_contiguous_weight_array_with_bias_as_a_minus_one_input_and_layer_offsets_computed_on_the_fly",
+   "to": "genann::forward_pass_as_one_walk_over_the_weight_array_with_a_pluggable_activation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "genann::forward_pass_as_one_walk_over_the_weight_array_with_a_pluggable_activation",
+   "to": "genann::backpropagation_with_per_example_sgd_and_the_derivative_taken_from_the_stored_output",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "stored outputs are the derivative's input",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "genann::backpropagation_with_per_example_sgd_and_the_derivative_taken_from_the_stored_output",
+   "to": "genann::single_contiguous_weight_array_with_bias_as_a_minus_one_input_and_layer_offsets_computed_on_the_fly",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::reader_register_optimistic",
+   "to": "glibc-rwlock-writer-starvation-2.36::phase_word",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::primary_writer_election",
+   "to": "glibc-rwlock-writer-starvation-2.36::phase_word",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::explicit_phase_handover",
+   "to": "glibc-rwlock-writer-starvation-2.36::phase_word",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::arrival_gate_for_dominant_class",
+   "to": "glibc-rwlock-writer-starvation-2.36::phase_word",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::arrival_gate_for_dominant_class",
+   "to": "glibc-rwlock-writer-starvation-2.36::reader_register_optimistic",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "a gated reader never reaches the register step until the flag clears",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::explicit_phase_handover",
+   "to": "glibc-rwlock-writer-starvation-2.36::lazy_wake_flag",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "hand-over issues the wake only if the flag says someone may sleep",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "glibc-rwlock-writer-starvation-2.36::arrival_gate_for_dominant_class",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "kind flag enables the gate",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "glibc-rwlock-writer-starvation-2.36::writer_writer_token_pass",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "kind flag enables direct writer hand-over",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::primary_writer_election",
+   "to": "glibc-rwlock-writer-starvation-2.36::writer_writer_token_pass",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "registered losers of the election are the token's recipients",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "glibc-rwlock-writer-starvation-2.36::reader_register_optimistic",
+   "to": "glibc-rwlock-writer-starvation-2.36::explicit_phase_handover",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "the last reader out performs the hand-over",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gnu-apl-2.0::shift_reduce_over_token_classes_with_a_generated_phrase_table_matched_against_the_stack_top",
+   "to": "gnu-apl-2.0::reduction_rules_as_named_functions_one_per_phrase_shape",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gnu-apl-2.0::reduction_rules_as_named_functions_one_per_phrase_shape",
+   "to": "gnu-apl-2.0::shift_reduce_over_token_classes_with_a_generated_phrase_table_matched_against_the_stack_top",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the result token and the R_action",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation",
+   "to": "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the batch",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
+   "to": "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+   "to": "go-explore-uber-2022::cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "counters",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::cell_representation_refitted_during_the_run_by_searching_downscale_parameters_that_make_the_cell_count_distribution_match_a_target",
+   "to": "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "re-keys",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
+   "to": "go-explore-uber-2022::cell_representation_refitted_during_the_run_by_searching_downscale_parameters_that_make_the_cell_count_distribution_match_a_target",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "recent frames",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+   "to": "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+   "to": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+   "to": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::memoisation_of_unsolvable_goal_sets_per_layer_with_a_completeness_proof_from_a_levelled_graph_and_a_non_growing_table",
+   "to": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "to": "graphplan-blum-furst-1995::memoisation_of_unsolvable_goal_sets_per_layer_with_a_completeness_proof_from_a_levelled_graph_and_a_non_growing_table",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "failed sets",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gzip-1.2.4-1993::sliding_window_by_halving_copy_with_hash_chain_rebasing",
+   "to": "gzip-1.2.4-1993::rolling_three_byte_hash_into_chains_of_prior_positions",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "bytes; rebasing",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gzip-1.2.4-1993::rolling_three_byte_hash_into_chains_of_prior_positions",
+   "to": "gzip-1.2.4-1993::longest_match_walk_of_the_chain_with_a_length_bounded_early_exit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "hash_head",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gzip-1.2.4-1993::longest_match_walk_of_the_chain_with_a_length_bounded_early_exit",
+   "to": "gzip-1.2.4-1993::lazy_evaluation_deferring_a_match_by_one_byte_to_see_if_a_longer_one_starts_there",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gzip-1.2.4-1993::four_threshold_table_indexed_by_level",
+   "to": "gzip-1.2.4-1993::longest_match_walk_of_the_chain_with_a_length_bounded_early_exit",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "chain, nice, good",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gzip-1.2.4-1993::four_threshold_table_indexed_by_level",
+   "to": "gzip-1.2.4-1993::lazy_evaluation_deferring_a_match_by_one_byte_to_see_if_a_longer_one_starts_there",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "lazy",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gzip-1.2.4-1993::lazy_evaluation_deferring_a_match_by_one_byte_to_see_if_a_longer_one_starts_there",
+   "to": "gzip-1.2.4-1993::per_block_huffman_trees_from_tallied_frequencies_with_a_static_fallback_and_a_length_limit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "ct_tally",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gzip-1.2.4-1993::per_block_huffman_trees_from_tallied_frequencies_with_a_static_fallback_and_a_length_limit",
+   "to": "gzip-1.2.4-1993::lazy_evaluation_deferring_a_match_by_one_byte_to_see_if_a_longer_one_starts_there",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "flush when the buffer fills",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gzip-1.2.4-1993::per_block_huffman_trees_from_tallied_frequencies_with_a_static_fallback_and_a_length_limit",
+   "to": "gzip-1.2.4-1993::table_driven_decoding_with_two_level_huffman_lookup",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the format; inverse",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gzip-1.2.4-1993::lazy_evaluation_deferring_a_match_by_one_byte_to_see_if_a_longer_one_starts_there",
+   "to": "gzip-1.2.4-1993::rolling_three_byte_hash_into_chains_of_prior_positions",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "inserts skipped positions",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::self_awareness_score_scaling_own_timeouts_from_probe_outcomes",
+   "to": "hashicorp-memberlist-0.5.4::periodic_probe_of_one_random_member_with_indirect_ping_via_k_others_on_timeout",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "scales interval and timeout",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::periodic_probe_of_one_random_member_with_indirect_ping_via_k_others_on_timeout",
+   "to": "hashicorp-memberlist-0.5.4::self_awareness_score_scaling_own_timeouts_from_probe_outcomes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "deltas",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::periodic_probe_of_one_random_member_with_indirect_ping_via_k_others_on_timeout",
+   "to": "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "suspect broadcast",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "to": "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "confirmations arrive by gossip",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+   "to": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "dead broadcast",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+   "to": "hashicorp-memberlist-0.5.4::suspicion_timer_shrinking_logarithmically_with_independent_confirmations",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "a refutation cancels the timer",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "to": "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+   "to": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "alive with a higher incarnation",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::periodic_full_state_push_pull_over_tcp_with_a_random_peer",
+   "to": "hashicorp-memberlist-0.5.4::incarnation_numbers_letting_a_node_refute_its_own_suspicion",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "merge applies the same transitions",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hashicorp-memberlist-0.5.4::periodic_full_state_push_pull_over_tcp_with_a_random_peer",
+   "to": "hashicorp-memberlist-0.5.4::gossip_of_membership_changes_piggybacked_to_k_random_nodes_with_a_log_scaled_retransmit_limit",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "anti-entropy vs epidemic",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::hebbian_outer_product_weights_from_mean_subtracted_patterns_with_zero_diagonal",
+   "to": "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::hebbian_outer_product_weights_from_mean_subtracted_patterns_with_zero_diagonal",
+   "to": "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+   "to": "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100",
+   "to": "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+   "to": "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "stop",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::energy_function_as_the_stopping_rule",
+   "to": "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "hopfield-takyamamoto::synchronous_sign_threshold_update_of_all_units",
+   "to": "hopfield-takyamamoto::asynchronous_random_single_unit_updates_in_batches_of_100",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "indirect-self-tuning-regulator-liaosteve::recursive_least_squares_with_exponential_forgetting_over_a_regressor_of_the_last_two_outputs_and_inputs",
+   "to": "indirect-self-tuning-regulator-liaosteve::controller_polynomials_re_derived_every_sample_by_pole_placement_against_a_fixed_reference_model_in_two_variants_cancelling_or_keeping_the_plant_zero",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "indirect-self-tuning-regulator-liaosteve::controller_polynomials_re_derived_every_sample_by_pole_placement_against_a_fixed_reference_model_in_two_variants_cancelling_or_keeping_the_plant_zero",
+   "to": "indirect-self-tuning-regulator-liaosteve::recursive_least_squares_with_exponential_forgetting_over_a_regressor_of_the_last_two_outputs_and_inputs",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "u(t) enters the next regressor",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "kissfft-131.1.0::length_factorised_greedily_into_radix_4_then_2_then_odd_primes_with_the_remaining_cofactor_used_whole_past_the_square_root",
+   "to": "kissfft-131.1.0::recursive_decimation_in_time_computing_p_strided_sub_transforms_then_recombining_with_a_radix_specific_butterfly",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "kissfft-131.1.0::recursive_decimation_in_time_computing_p_strided_sub_transforms_then_recombining_with_a_radix_specific_butterfly",
+   "to": "kissfft-131.1.0::radix_specific_butterflies_reading_twiddles_from_one_table_at_the_stage_stride_with_a_generic_o_p_squared_fallback",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "kissfft-131.1.0::radix_specific_butterflies_reading_twiddles_from_one_table_at_the_stage_stride_with_a_generic_o_p_squared_fallback",
+   "to": "kissfft-131.1.0::recursive_decimation_in_time_computing_p_strided_sub_transforms_then_recombining_with_a_radix_specific_butterfly",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "in place",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::first_order_plant_with_a_scripted_piecewise_disturbance",
+   "to": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "x",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+   "to": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "x_hat",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "to": "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate",
+   "to": "l1-adaptive-control-basics-xkhainguyen::first_order_plant_with_a_scripted_piecewise_disturbance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::low_pass_filtered_cancellation_of_the_estimate",
+   "to": "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "l1-adaptive-control-basics-xkhainguyen::piecewise_constant_adaptive_law_solving_the_discretised_error_dynamics_for_the_disturbance",
+   "to": "l1-adaptive-control-basics-xkhainguyen::state_predictor_run_in_parallel_with_the_plant_using_the_current_disturbance_estimate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "sigma_hat",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ldpc-codes-neal-2001::probability_propagation_as_check_node_and_bit_node_sweeps_over_a_sparse_graph_with_early_stop_on_a_valid_codeword",
+   "to": "ldpc-codes-neal-2001::per_iteration_diagnostics_changed_bits_parity_errors_loglikelihood_expected_errors_entropy",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ldpc-codes-neal-2001::exhaustive_maximum_likelihood_decoding_as_the_oracle_for_small_codes",
+   "to": "ldpc-codes-neal-2001::probability_propagation_as_check_node_and_bit_node_sweeps_over_a_sparse_graph_with_early_stop_on_a_valid_codeword",
+   "label": "verifies",
+   "evidence": "SOURCE_READ",
+   "note": "the oracle for small codes",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::group_commit_where_the_front_writer_batches_the_queue_behind_it",
+   "to": "leveldb-1.23::write_ahead_log_of_batches_in_crc_framed_32k_blocks_before_any_in_memory_apply",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::write_ahead_log_of_batches_in_crc_framed_32k_blocks_before_any_in_memory_apply",
+   "to": "leveldb-1.23::sorted_in_memory_table_on_a_skip_list_with_sequence_numbered_internal_keys",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "apply after the log write",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::write_admission_by_memtable_size_and_level0_file_count_with_a_1ms_slowdown_then_a_stop",
+   "to": "leveldb-1.23::group_commit_where_the_front_writer_batches_the_queue_behind_it",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "admission before the batch",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::write_admission_by_memtable_size_and_level0_file_count_with_a_1ms_slowdown_then_a_stop",
+   "to": "leveldb-1.23::sorted_in_memory_table_on_a_skip_list_with_sequence_numbered_internal_keys",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "rotation freezes the memtable",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::sorted_in_memory_table_on_a_skip_list_with_sequence_numbered_internal_keys",
+   "to": "leveldb-1.23::leveled_sorted_files_with_a_compaction_score_from_size_per_level_and_a_seek_counter",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "flush = level-0 file",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::leveled_sorted_files_with_a_compaction_score_from_size_per_level_and_a_seek_counter",
+   "to": "leveldb-1.23::immutable_versions_of_the_file_set_with_reference_counts_and_a_manifest_log_of_edits",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "VersionEdit",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::immutable_versions_of_the_file_set_with_reference_counts_and_a_manifest_log_of_edits",
+   "to": "leveldb-1.23::leveled_sorted_files_with_a_compaction_score_from_size_per_level_and_a_seek_counter",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "Finalize scores the new version",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::leveled_sorted_files_with_a_compaction_score_from_size_per_level_and_a_seek_counter",
+   "to": "leveldb-1.23::write_admission_by_memtable_size_and_level0_file_count_with_a_1ms_slowdown_then_a_stop",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "level-0 count",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::leveled_sorted_files_with_a_compaction_score_from_size_per_level_and_a_seek_counter",
+   "to": "leveldb-1.23::sorted_string_table_of_prefix_compressed_blocks_with_an_index_and_optional_bloom_filter",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::immutable_versions_of_the_file_set_with_reference_counts_and_a_manifest_log_of_edits",
+   "to": "leveldb-1.23::sorted_string_table_of_prefix_compressed_blocks_with_an_index_and_optional_bloom_filter",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "files deleted only when unreferenced",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "leveldb-1.23::write_ahead_log_of_batches_in_crc_framed_32k_blocks_before_any_in_memory_apply",
+   "to": "leveldb-1.23::immutable_versions_of_the_file_set_with_reference_counts_and_a_manifest_log_of_edits",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "log numbers in the manifest",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libcorrect-quiet::soft_decision_metrics_linear_or_quadratic_over_byte_confidences",
+   "to": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "to": "libcorrect-quiet::bounded_sliding_traceback_from_the_current_best_state_with_periodic_renormalisation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libcorrect-quiet::warmup_and_tail_phases_that_exploit_the_known_zero_start_and_flush",
+   "to": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "which states at the ends",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libcorrect-quiet::bounded_sliding_traceback_from_the_current_best_state_with_periodic_renormalisation",
+   "to": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "renormalised metrics",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "to": "libcorrect-quiet::reed_solomon_decoder_syndromes_error_locator_evaluator_and_erasures",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "concatenation: inner code feeds outer, by design",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "to": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "to": "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message",
+   "to": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "stop",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "to": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "residuals",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::viterbi.expected_symbol_table_per_state_from_the_generator_polynomials",
+   "to": "libfec-karn::viterbi.add_compare_select_butterfly_over_ping_pong_metric_buffers",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::viterbi.add_compare_select_butterfly_over_ping_pong_metric_buffers",
+   "to": "libfec-karn::viterbi.traceback_by_stored_decision_bits_from_a_known_end_state",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "decision bits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::metrics.log_likelihood_ratio_table_from_a_gaussian_channel_model",
+   "to": "libfec-karn::fano.depth_first_tree_search_with_a_running_threshold_and_backtracking",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "mettab",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "libfec-karn::viterbi.add_compare_select_butterfly_over_ping_pong_metric_buffers",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "soft symbols",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "libfec-karn::fano.depth_first_tree_search_with_a_running_threshold_and_backtracking",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
+   "to": "libfec-karn::rs.systematic_encoding_by_lfsr_division_by_the_generator",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
+   "to": "libfec-karn::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+   "to": "libfec-karn::rs.iterative_locator_polynomial_from_syndromes_with_erasure_seed",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+   "to": "libfec-karn::rs.iterative_locator_polynomial_from_syndromes_with_erasure_seed",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "zero syndromes skip everything",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::rs.iterative_locator_polynomial_from_syndromes_with_erasure_seed",
+   "to": "libfec-karn::rs.exhaustive_root_search_over_the_field",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::rs.exhaustive_root_search_over_the_field",
+   "to": "libfec-karn::rs.error_magnitudes_from_evaluator_over_locator_derivative",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::rs.exhaustive_root_search_over_the_field",
+   "to": "libfec-karn::rs.error_magnitudes_from_evaluator_over_locator_derivative",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "root count mismatch aborts",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libfec-karn::fano.depth_first_tree_search_with_a_running_threshold_and_backtracking",
+   "to": "libfec-karn::viterbi",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "two decoders for the same code family; the hybrid test (hybridtest.c) runs Fano first and falls back to Viterbi -- read from the file name and header only",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linpackd-netlib-1979::gaussian_elimination_with_partial_pivoting_by_columns_delegating_to_three_vector_kernels",
+   "to": "linpackd-netlib-1979::benchmark_that_scores_a_machine_by_a_fixed_nominal_operation_count_over_measured_wall_time_and_validates_by_a_normalised_residual",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the timed work",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::cubic.running_minimum_of_rtt_samples",
+   "to": "linux-tcp-congestion::cubic.window_target_from_time_since_last_loss",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "delay_min added to t (259)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::cubic.running_minimum_of_rtt_samples",
+   "to": "linux-tcp-congestion::cubic.slow_start_exit_by_ack_train_length_or_delay_rise",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "baseline for both detectors",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::cubic.remembered_maximum_with_fast_convergence_decay",
+   "to": "linux-tcp-congestion::cubic.window_target_from_time_since_last_loss",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "last_max_cwnd -> origin and K at epoch start",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::cubic.remembered_maximum_with_fast_convergence_decay",
+   "to": "linux-tcp-congestion::cubic.window_target_from_time_since_last_loss",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "epoch_start=0 forces a new epoch",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::cubic.shadow_aimd_estimate_as_growth_floor",
+   "to": "linux-tcp-congestion::cubic.window_target_from_time_since_last_loss",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "caps cnt so the cubic curve is never slower than the AIMD shadow",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::cubic.slow_start_exit_by_ack_train_length_or_delay_rise",
+   "to": "linux-tcp-congestion::cubic",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "sets ssthresh = cwnd once; ends slow start in the kernel core",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "linux-tcp-congestion::cubic.remembered_maximum_with_fast_convergence_decay",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "kernel loss event -> ssthresh callback",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "linux-tcp-congestion::bbr.windowed_maximum_of_delivery_rate_samples",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "kernel rate_sample",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.windowed_maximum_of_delivery_rate_samples",
+   "to": "linux-tcp-congestion::bbr.window_from_bandwidth_delay_product_with_recovery_conservation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.windowed_maximum_of_delivery_rate_samples",
+   "to": "linux-tcp-congestion::bbr.pacing_rate_from_bandwidth_times_gain",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.windowed_maximum_of_delivery_rate_samples",
+   "to": "linux-tcp-congestion::bbr.mode_machine_with_bandwidth_plateau_detector",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "plateau detector reads max_bw per round",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.windowed_minimum_of_rtt_with_forced_low_inflight_probe",
+   "to": "linux-tcp-congestion::bbr.window_from_bandwidth_delay_product_with_recovery_conservation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "min_rtt in the BDP",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.windowed_minimum_of_rtt_with_forced_low_inflight_probe",
+   "to": "linux-tcp-congestion::bbr.mode_machine_with_bandwidth_plateau_detector",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "PROBE_RTT entry/exit",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.windowed_minimum_of_rtt_with_forced_low_inflight_probe",
+   "to": "linux-tcp-congestion::bbr.eight_phase_pacing_gain_cycle_with_inflight_gated_advance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "phase length = min_rtt",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.mode_machine_with_bandwidth_plateau_detector",
+   "to": "linux-tcp-congestion::bbr.eight_phase_pacing_gain_cycle_with_inflight_gated_advance",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "cycle runs only in PROBE_BW",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.mode_machine_with_bandwidth_plateau_detector",
+   "to": "linux-tcp-congestion::bbr.pacing_rate_from_bandwidth_times_gain",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "pacing_gain by mode",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.mode_machine_with_bandwidth_plateau_detector",
+   "to": "linux-tcp-congestion::bbr.window_from_bandwidth_delay_product_with_recovery_conservation",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "cwnd_gain by mode; full_bw_reached switches the cwnd rule",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.eight_phase_pacing_gain_cycle_with_inflight_gated_advance",
+   "to": "linux-tcp-congestion::bbr.pacing_rate_from_bandwidth_times_gain",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "pacing_gain per phase",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.long_term_rate_sampling_between_loss_bursts",
+   "to": "linux-tcp-congestion::bbr.eight_phase_pacing_gain_cycle_with_inflight_gated_advance",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "lt_use_bw pins the gain at 1.0 and later restarts the cycle",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.long_term_rate_sampling_between_loss_bursts",
+   "to": "linux-tcp-congestion::bbr.windowed_maximum_of_delivery_rate_samples",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "bbr_bw() returns lt_bw when lt_use_bw, else max_bw (223-231)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.windowed_maximum_of_excess_acked_beyond_expected",
+   "to": "linux-tcp-congestion::bbr.window_from_bandwidth_delay_product_with_recovery_conservation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "extra_acked added to target cwnd",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linux-tcp-congestion::bbr.windowed_maximum_of_delivery_rate_samples",
+   "to": "linux-tcp-congestion::bbr.windowed_maximum_of_excess_acked_beyond_expected",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "expected_acked = bw * elapsed",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "linux-tcp-congestion::bbr.window_from_bandwidth_delay_product_with_recovery_conservation",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "CA state transitions drive packet conservation",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "to": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "FROUT on exhaustion",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::root_set_declared_by_registration_lists_OBLIST_TEMLIS_ARYLIS_plus_the_live_stack",
+   "to": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "to": "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "the mark stack IS the PDL",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+   "to": "lisp-1-5-ibm7090-1962::root_set_declared_by_registration_lists_OBLIST_TEMLIS_ARYLIS_plus_the_live_stack",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "and the PDL is a root",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "to": "lisp-1-5-ibm7090-1962::side_bit_table_for_marking_full_word_space_and_sweeping_it_by_32_bit_words",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::side_bit_table_for_marking_full_word_space_and_sweeping_it_by_32_bit_words",
+   "to": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "full-word free list",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::recursive_mark_by_sign_bit_using_the_public_push_down_list_as_the_recursion_stack",
+   "to": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "sweep rebuilds the list",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::collection_yield_test_against_a_critical_word_number_with_a_typed_bad_exit",
+   "to": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::cons_budget_counter_that_traps_when_exhausted",
+   "to": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+   "to": "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+   "to": "lisp-1-5-ibm7090-1962::free_storage_as_a_singly_linked_free_list_threaded_by_the_sweep",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "PAIR/CONS of the a-list",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::evalquote_driver_reading_doublets_with_a_per_doublet_error_return_and_time_stamps",
+   "to": "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::evalquote_driver_reading_doublets_with_a_per_doublet_error_return_and_time_stamps",
+   "to": "lisp-1-5-ibm7090-1962::public_push_down_list_with_block_save_unsave_by_jump_into_a_move_table",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "TERPDL on error",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lisp-1-5-ibm7090-1962::cons_budget_counter_that_traps_when_exhausted",
+   "to": "lisp-1-5-ibm7090-1962::apply_dispatch_on_the_shape_of_the_function_object_with_environment_as_an_association_list",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "ERRORSET",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::reader_slots_in_shared_memory_holding_pid_and_snapshot_txnid",
+   "to": "lmdb-0.9.31::freed_pages_keyed_by_the_freeing_transaction_and_reused_only_below_the_oldest_reader",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "oldest reader txnid bounds reclamation",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::copy_on_write_page_touch_relinking_the_parent",
+   "to": "lmdb-0.9.31::freed_pages_keyed_by_the_freeing_transaction_and_reused_only_below_the_oldest_reader",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "old pgnos -> mt_free_pgs -> freeDB at commit",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::freed_pages_keyed_by_the_freeing_transaction_and_reused_only_below_the_oldest_reader",
+   "to": "lmdb-0.9.31::copy_on_write_page_touch_relinking_the_parent",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "page_alloc supplies the copy",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::copy_on_write_page_touch_relinking_the_parent",
+   "to": "lmdb-0.9.31::b_plus_tree_with_binary_search_split_and_rebalance",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "every tree mutation goes through touch first",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::b_plus_tree_with_binary_search_split_and_rebalance",
+   "to": "lmdb-0.9.31::single_writer_commit_in_a_fixed_order_freelist_then_pages_then_sync_then_meta",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "dirty pages",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::single_writer_commit_in_a_fixed_order_freelist_then_pages_then_sync_then_meta",
+   "to": "lmdb-0.9.31::two_meta_pages_alternating_by_transaction_id_parity",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "meta written last",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::two_meta_pages_alternating_by_transaction_id_parity",
+   "to": "lmdb-0.9.31::reader_slots_in_shared_memory_holding_pid_and_snapshot_txnid",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "a reader's snapshot is pick_meta at begin",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::whole_file_memory_map_as_the_read_path",
+   "to": "lmdb-0.9.31::b_plus_tree_with_binary_search_split_and_rebalance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "pages are pointers into the map",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::spill_dirty_pages_early_when_the_transaction_dirty_list_is_full",
+   "to": "lmdb-0.9.31::single_writer_commit_in_a_fixed_order_freelist_then_pages_then_sync_then_meta",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "spilled pages are already on disk at commit",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::spill_dirty_pages_early_when_the_transaction_dirty_list_is_full",
+   "to": "lmdb-0.9.31::copy_on_write_page_touch_relinking_the_parent",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "unspill on touch",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lmdb-0.9.31::single_writer_commit_in_a_fixed_order_freelist_then_pages_then_sync_then_meta",
+   "to": "lmdb-0.9.31::freed_pages_keyed_by_the_freeing_transaction_and_reused_only_below_the_oldest_reader",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "freelist_save",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lru-cache-goldsborough::one_entry_last_accessed_pointer_checked_before_the_hash_lookup",
+   "to": "lru-cache-goldsborough::hash_map_plus_recency_list_with_move_to_front_on_hit_and_evict_front_on_overflow",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "short-circuits the map",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lru-cache-goldsborough::expiry_by_age_checked_lazily_on_access_with_a_time_to_live_per_cache",
+   "to": "lru-cache-goldsborough::hash_map_plus_recency_list_with_move_to_front_on_hit_and_evict_front_on_overflow",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "turns a stale hit into a miss",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::length_padding_to_a_block_boundary_with_the_message_length_appended",
+   "to": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+   "to": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::message_word_schedule_and_rotation_constants_per_round",
+   "to": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::nothing_up_my_sleeve_constants_from_the_integer_part_of_2_32_abs_sin_i",
+   "to": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "to": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses",
+   "to": "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "conflict clause",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+   "to": "minisat-1.14-2006::variable_activity_bump_and_geometric_decay_with_rescale",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "bumps",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::first_uip_conflict_analysis_by_trail_walk",
+   "to": "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive",
+   "to": "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "backjump to out_btlevel",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::variable_activity_bump_and_geometric_decay_with_rescale",
+   "to": "minisat-1.14-2006::decide_the_top_activity_unassigned_variable_from_a_heap_with_rare_random_picks",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::decide_the_top_activity_unassigned_variable_from_a_heap_with_rare_random_picks",
+   "to": "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "decision pushed on the trail",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::assignment_trail_with_level_marks_and_reason_pointers",
+   "to": "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "qhead",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::restart_after_a_conflict_budget_growing_geometrically",
+   "to": "minisat-1.14-2006::propagate_analyze_backjump_learn_loop",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::restart_after_a_conflict_budget_growing_geometrically",
+   "to": "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "nof_learnts",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest",
+   "to": "minisat-1.14-2006::two_watched_literals_with_inline_binary_clauses",
+   "label": "forgets",
+   "evidence": "SOURCE_READ",
+   "note": "removed clauses leave the watch lists",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-1.14-2006::learnt_clause_minimisation_by_reason_subsumption_cheap_or_recursive",
+   "to": "minisat-1.14-2006::learnt_clause_deletion_halving_by_activity_with_a_floor_for_the_rest",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "learnt clause added with activity",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "to": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the conflict clause",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "to": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "bumps",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "to": "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "learnt clauses",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "to": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "decisions",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses",
+   "to": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "watch lists shrink",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisat-2.2.0::restarts_after_a_conflict_budget_from_the_luby_sequence_scaled_by_a_base_keeping_learnt_clauses_and_activities",
+   "to": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "re-decide from level 0",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::sample_sequencing_with_optional_winner_override",
+   "to": "minisom::winner_by_argmin_distance_over_the_lattice",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::winner_by_argmin_distance_over_the_lattice",
+   "to": "minisom::lattice_neighbourhood_kernel_around_the_winner",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "winner centres the kernel",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::time_indexed_decay_of_step_and_radius",
+   "to": "minisom::lattice_neighbourhood_kernel_around_the_winner",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "sigma(t)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::time_indexed_decay_of_step_and_radius",
+   "to": "minisom::online_pull_of_weights_toward_the_sample_scaled_by_kernel",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "eta(t)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::lattice_neighbourhood_kernel_around_the_winner",
+   "to": "minisom::online_pull_of_weights_toward_the_sample_scaled_by_kernel",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "kernel scales the pull per cell",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::sample_sequencing_with_optional_winner_override",
+   "to": "minisom::online_pull_of_weights_toward_the_sample_scaled_by_kernel",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::codebook_initialisation_random_or_pca_plane",
+   "to": "minisom::online_pull_of_weights_toward_the_sample_scaled_by_kernel",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "initial codebook the pulls act on",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::lattice_neighbourhood_kernel_around_the_winner",
+   "to": "minisom::batch_kernel_weighted_mean_replacement",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::time_indexed_decay_of_step_and_radius",
+   "to": "minisom::batch_kernel_weighted_mean_replacement",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::winner_by_argmin_distance_over_the_lattice",
+   "to": "minisom::batch_kernel_weighted_mean_replacement",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minisom::sample_sequencing_with_optional_winner_override",
+   "to": "minisom::winner_by_argmin_distance_over_the_lattice",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "fixed_points bypass the winner",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::damping_parameter_found_by_a_safeguarded_newton_iteration_on_the_scaled_step_length_minus_the_trust_radius_with_bracketing_bounds",
+   "to": "minpack-netlib-1980::step_accepted_by_the_ratio_of_actual_to_predicted_reduction_with_the_radius_shrunk_by_an_interpolated_factor_or_doubled",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::step_accepted_by_the_ratio_of_actual_to_predicted_reduction_with_the_radius_shrunk_by_an_interpolated_factor_or_doubled",
+   "to": "minpack-netlib-1980::damping_parameter_found_by_a_safeguarded_newton_iteration_on_the_scaled_step_length_minus_the_trust_radius_with_bracketing_bounds",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "delta and par back",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::dogleg_step_that_takes_the_gauss_newton_point_if_inside_the_region_else_the_cauchy_point_or_a_convex_combination_on_the_boundary",
+   "to": "minpack-netlib-1980::jacobian_kept_by_broyden_rank_one_updates_and_re_evaluated_by_finite_differences_only_after_two_consecutive_failures_or_stalled_progress",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::jacobian_kept_by_broyden_rank_one_updates_and_re_evaluated_by_finite_differences_only_after_two_consecutive_failures_or_stalled_progress",
+   "to": "minpack-netlib-1980::dogleg_step_that_takes_the_gauss_newton_point_if_inside_the_region_else_the_cauchy_point_or_a_convex_combination_on_the_boundary",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the secant R",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::nordsieck_history_array_of_scaled_derivatives",
+   "to": "odepack-netlib::predictor_by_pascal_triangle_summation_in_place",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::predictor_by_pascal_triangle_summation_in_place",
+   "to": "odepack-netlib::corrector_iteration_with_self_measured_convergence_rate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::iteration_matrix_construction_strategies_by_MITER",
+   "to": "odepack-netlib::corrector_iteration_with_self_measured_convergence_rate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::jacobian_refresh_policy_keyed_to_iteration_matrix_drift",
+   "to": "odepack-netlib::iteration_matrix_construction_strategies_by_MITER",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::corrector_iteration_with_self_measured_convergence_rate",
+   "to": "odepack-netlib::jacobian_refresh_policy_keyed_to_iteration_matrix_drift",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "a stale-P convergence failure forces a rebuild",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::corrector_iteration_with_self_measured_convergence_rate",
+   "to": "odepack-netlib::weighted_rms_local_error_test",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::weighted_rms_local_error_test",
+   "to": "odepack-netlib::step_and_order_selection_by_three_candidate_ratios_with_hysteresis_and_holdoff",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::weighted_rms_local_error_test",
+   "to": "odepack-netlib::failure_escalation_ladder_with_bounded_retreats",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::corrector_iteration_with_self_measured_convergence_rate",
+   "to": "odepack-netlib::failure_escalation_ladder_with_bounded_retreats",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::step_and_order_selection_by_three_candidate_ratios_with_hysteresis_and_holdoff",
+   "to": "odepack-netlib::nordsieck_history_array_of_scaled_derivatives",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "rescale on h change; add/drop a column on order change",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::failure_escalation_ladder_with_bounded_retreats",
+   "to": "odepack-netlib::nordsieck_history_array_of_scaled_derivatives",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::failure_escalation_ladder_with_bounded_retreats",
+   "to": "odepack-netlib::step_and_order_selection_by_three_candidate_ratios_with_hysteresis_and_holdoff",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "RHUP=0 and RH<=0.2 after failures",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::method_coefficient_generator_from_polynomial_recurrences",
+   "to": "odepack-netlib::corrector_iteration_with_self_measured_convergence_rate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::method_coefficient_generator_from_polynomial_recurrences",
+   "to": "odepack-netlib::step_and_order_selection_by_three_candidate_ratios_with_hysteresis_and_holdoff",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::nordsieck_history_array_of_scaled_derivatives",
+   "to": "odepack-netlib::dense_output_by_evaluating_the_history_polynomial",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::initial_step_size_from_tolerance_and_first_derivative_norm",
+   "to": "odepack-netlib::nordsieck_history_array_of_scaled_derivatives",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "first column scaling",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::corrector_iteration_with_self_measured_convergence_rate",
+   "to": "odepack-netlib::automatic_stiffness_switch_from_corrector_rate_lipschitz_estimate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "DLSODA only",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::automatic_stiffness_switch_from_corrector_rate_lipschitz_estimate",
+   "to": "odepack-netlib::method_coefficient_generator_from_polynomial_recurrences",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "DLSODA only",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "odepack-netlib::jacobian_refresh_policy_keyed_to_iteration_matrix_drift",
+   "to": "odepack-netlib::corrector_iteration_with_self_measured_convergence_rate",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "CRATE reset to 0.7 on rebuild",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "padasip-1.2.2::regressor_from_a_delay_line_of_a_scalar_history",
+   "to": "padasip-1.2.2::predict_error_update_loop_over_a_regressor_stream",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "padasip-1.2.2::predict_error_update_loop_over_a_regressor_stream",
+   "to": "padasip-1.2.2::gradient_step_mu_times_error_times_input",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "e, x",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "padasip-1.2.2::step_normalised_by_instantaneous_input_power",
+   "to": "padasip-1.2.2::gradient_step_mu_times_error_times_input",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "padasip-1.2.2::error_shaping_nonlinearity_replacing_e_in_the_gradient",
+   "to": "padasip-1.2.2::gradient_step_mu_times_error_times_input",
+   "label": "transforms",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "padasip-1.2.2::step_size_adapted_from_the_correlation_of_successive_errors_and_inputs",
+   "to": "padasip-1.2.2::gradient_step_mu_times_error_times_input",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "mu",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "padasip-1.2.2::recursive_inverse_correlation_matrix_with_forgetting",
+   "to": "padasip-1.2.2::predict_error_update_loop_over_a_regressor_stream",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "alternative dw",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "padasip-1.2.2::affine_projection_solving_over_a_window_of_recent_regressors",
+   "to": "padasip-1.2.2::predict_error_update_loop_over_a_regressor_stream",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "alternative dw",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "padasip-1.2.2::predict_error_update_loop_over_a_regressor_stream",
+   "to": "padasip-1.2.2::novelty_detection_from_the_magnitude_of_weight_changes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "w_history",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "padasip-1.2.2::gradient_step_mu_times_error_times_input",
+   "to": "padasip-1.2.2::recursive_inverse_correlation_matrix_with_forgetting",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "padasip-1.2.2::gradient_step_mu_times_error_times_input",
+   "to": "padasip-1.2.2::affine_projection_solving_over_a_window_of_recent_regressors",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution",
+   "to": "paip-lisp-norvig-1991::prolog_clauses_compiled_to_lisp_functions_in_continuation_passing_style_with_destructive_binding_and_a_trail_for_undo",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "paip-lisp-norvig-1991::pattern_matcher_with_single_and_segment_operators_dispatched_through_symbol_properties_and_a_rule_based_translator",
+   "to": "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "matching with vs without two-way variables",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "paip-lisp-norvig-1991::generic_tree_search_parameterised_by_a_combiner_that_yields_depth_first_breadth_first_best_first_and_beam_search",
+   "to": "paip-lisp-norvig-1991::means_ends_analysis_achieving_goals_by_operators_whose_add_list_contains_the_goal_with_a_goal_stack_for_loop_detection_and_a_second_version_that_orders_operators_by_unfulfilled_preconditions_and_tries_goal_orderings",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "the book contrasts them",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::model_as_an_interface_of_initial_kernel_transition_kernel_and_log_potential",
+   "to": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "to": "particles-chopin-0.4::effective_sample_size_from_log_weights_as_the_degeneracy_measure",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "via the model's trigger",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::effective_sample_size_from_log_weights_as_the_degeneracy_measure",
+   "to": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "rs_flag",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "to": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "scheme by name",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "to": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "A",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::srinivasan_sampling_process_pairwise_transfer_of_fractional_offspring_mass",
+   "to": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::killing_resampling_keeping_each_particle_with_probability_proportional_to_its_weight_over_the_max",
+   "to": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "to": "particles-chopin-0.4::log_likelihood_accumulated_from_the_log_mean_weight_with_a_correction_when_not_resampling",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::sequential_quasi_monte_carlo_by_hilbert_sorting_particles_and_resampling_with_a_sobol_point_set",
+   "to": "particles-chopin-0.4::propose_weight_resample_loop_as_an_iterator_with_history_and_summaries_as_side_channels",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "qmc flag replaces resample_move",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "particles-chopin-0.4::sequential_quasi_monte_carlo_by_hilbert_sorting_particles_and_resampling_with_a_sobol_point_set",
+   "to": "particles-chopin-0.4::resampling_as_inverse_cdf_over_ordered_uniforms_with_the_scheme_being_how_the_uniforms_are_drawn",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "reuses inverse_cdf",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::dictionary_as_a_linked_list_of_name_headers_searched_newest_first",
+   "to": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "to": "pforth::dictionary_as_a_linked_list_of_name_headers_searched_newest_first",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "to": "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "executes found words",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+   "to": "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "to": "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "compiles branch tokens with patched offsets",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::covariance_shrinkage_toward_a_structured_target_with_an_estimated_intensity",
+   "to": "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
+   "to": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::maximum_sharpe_by_the_cornuejols_tutuncu_variable_substitution",
+   "to": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "a rewritten problem",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "to": "pyportfolioopt-1.5.5::maximum_sharpe_by_the_cornuejols_tutuncu_variable_substitution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "y and k back",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-control::three_interconvertible_system_representations_with_a_common_timebase",
+   "to": "python-control::quadratic_cost_gain_from_a_riccati_solution_with_optional_integrator_augmentation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-control::quadratic_cost_gain_from_a_riccati_solution_with_optional_integrator_augmentation",
+   "to": "python-control::riccati_and_lyapunov_solvers_dispatched_to_slycot_or_scipy_with_shape_checking",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-control::riccati_and_lyapunov_solvers_dispatched_to_slycot_or_scipy_with_shape_checking",
+   "to": "python-control::quadratic_cost_gain_from_a_riccati_solution_with_optional_integrator_augmentation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "X, L, G",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-control::quadratic_cost_gain_from_a_riccati_solution_with_optional_integrator_augmentation",
+   "to": "python-control::block_diagram_interconnection_by_signal_name_matching",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "K closes the loop",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-control::block_diagram_interconnection_by_signal_name_matching",
+   "to": "python-control::time_response_by_discretisation_or_ode_integration_with_a_result_object",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-control::three_interconvertible_system_representations_with_a_common_timebase",
+   "to": "python-control::time_response_by_discretisation_or_ode_integration_with_a_result_object",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-control::pole_placement_by_ackermann_or_varga",
+   "to": "python-control::quadratic_cost_gain_from_a_riccati_solution_with_optional_integrator_augmentation",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "two gain designs",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "to": "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+   "to": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "to": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions",
+   "to": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions",
+   "to": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::byte_level_edits_at_a_random_position",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::byte_level_edits_at_a_random_position",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::sequence_repeat_and_delete_of_a_random_range",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::sequence_repeat_and_delete_of_a_random_range",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::line_level_list_operations_by_lifting_through_a_newline_split",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::line_level_list_operations_by_lifting_through_a_newline_split",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::tree_level_operations_over_a_partial_parse_by_balanced_delimiters",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::tree_level_operations_over_a_partial_parse_by_balanced_delimiters",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::lexed_string_regions_replaced_by_classic_badness",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::lexed_string_regions_replaced_by_classic_badness",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::textual_number_rewriting_with_interesting_deltas",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::textual_number_rewriting_with_interesting_deltas",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::splice_between_shared_suffixes_within_or_across_samples",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::splice_between_shared_suffixes_within_or_across_samples",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "to": "radamsa-0.6::utf8_overwide_encoding_and_funny_codepoint_insertion",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::utf8_overwide_encoding_and_funny_codepoint_insertion",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "delta",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::mutation_count_and_placement_pattern_once_many_burst_with_inverse_probability_walk",
+   "to": "radamsa-0.6::mutator_scheduler_by_score_times_priority_with_self_reported_delta_and_retry_on_no_change",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "how many / where",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "radamsa-0.6::tree_level_operations_over_a_partial_parse_by_balanced_delimiters",
+   "to": "radamsa-0.6::line_level_list_operations_by_lifting_through_a_newline_split",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "same list ops lifted to a different representation",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
+   "to": "reed-solomon-rockliff-1991::rs.generator_polynomial_from_consecutive_roots",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.generator_polynomial_from_consecutive_roots",
+   "to": "reed-solomon-rockliff-1991::rs.systematic_encoding_by_lfsr_division_by_the_generator",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.galois_field_log_antilog_tables_from_a_primitive_polynomial",
+   "to": "reed-solomon-rockliff-1991::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+   "to": "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.syndrome_evaluation_by_horner_at_consecutive_roots",
+   "to": "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "syn_error",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+   "to": "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.iterative_locator_polynomial_from_syndromes",
+   "to": "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "deg > tt -> give up",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field",
+   "to": "reed-solomon-rockliff-1991::rs.error_magnitudes_from_evaluator_over_locator_derivative",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "reed-solomon-rockliff-1991::rs.exhaustive_root_search_over_the_field",
+   "to": "reed-solomon-rockliff-1991::rs.error_magnitudes_from_evaluator_over_locator_derivative",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "count != degree -> give up",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "simple-kalman-denyssene::scalar_gain_as_estimate_error_over_estimate_plus_measurement_error",
+   "to": "simple-kalman-denyssene::estimate_error_re_inflated_by_the_magnitude_of_the_last_correction_times_q",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "simple-kalman-denyssene::estimate_error_re_inflated_by_the_magnitude_of_the_last_correction_times_q",
+   "to": "simple-kalman-denyssene::scalar_gain_as_estimate_error_over_estimate_plus_measurement_error",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+   "to": "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+   "to": "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+   "to": "spacewar-pdp1-1962::ship_motion_from_thrust_rotation_and_switch_selectable_star_gravity_with_a_table_based_sine_cosine_and_a_finite_torpedo_life",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "calls each calc routine",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::ship_motion_from_thrust_rotation_and_switch_selectable_star_gravity_with_a_table_based_sine_cosine_and_a_finite_torpedo_life",
+   "to": "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spin-6.5.2-holzmann::verifier_generated_as_c_source_per_model_with_the_algorithm_chosen_by_preprocessor_flags",
+   "to": "spin-6.5.2-holzmann::depth_first_search_over_a_flat_state_vector_with_a_visited_store_and_an_acceptance_cycle_check_by_seed_state_comparison",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the generated text IS the DFS",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spin-6.5.2-holzmann::bitstate_supertrace_that_stores_each_state_as_hfns_bits_in_a_bit_array_accepting_false_positives_as_lost_coverage",
+   "to": "spin-6.5.2-holzmann::depth_first_search_over_a_flat_state_vector_with_a_visited_store_and_an_acceptance_cycle_check_by_seed_state_comparison",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "old/new",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spin-6.5.2-holzmann::partial_order_reduction_by_statically_classifying_statements_as_safe_and_expanding_only_a_safe_process_when_one_exists",
+   "to": "spin-6.5.2-holzmann::depth_first_search_over_a_flat_state_vector_with_a_visited_store_and_an_acceptance_cycle_check_by_seed_state_comparison",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "successor set",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
+   "to": "spin-pathfinder-priority-inversion-1997::binary_mutex_test_and_set",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "the rule decides whether the process holding the lock may reach its release step",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spin-pathfinder-priority-inversion-1997::binary_mutex_test_and_set",
+   "to": "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "blocking on the lock puts high into 'waiting', which the rule reads as not-idle: the cycle that is the deadlock",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "in the lander the rule is the RTOS scheduler; here it is a clause",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "sqlite-3.49.1-amalgamation::sql_to_bytecode_compiler_from_a_lemon_lalr_parser_through_name_resolution_and_per_statement_generators",
+   "to": "sqlite-3.49.1-amalgamation::cost_based_join_planner_by_beam_search_over_loop_orders_in_log2_cost_units",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "select.c calls the planner",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "sqlite-3.49.1-amalgamation::cost_based_join_planner_by_beam_search_over_loop_orders_in_log2_cost_units",
+   "to": "sqlite-3.49.1-amalgamation::sql_to_bytecode_compiler_from_a_lemon_lalr_parser_through_name_resolution_and_per_statement_generators",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "plan -> loop code",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "sqlite-3.49.1-amalgamation::sql_to_bytecode_compiler_from_a_lemon_lalr_parser_through_name_resolution_and_per_statement_generators",
+   "to": "sqlite-3.49.1-amalgamation::register_based_bytecode_virtual_machine_with_188_opcodes_executed_by_one_switch",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "the program",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "sqlite-3.49.1-amalgamation::register_based_bytecode_virtual_machine_with_188_opcodes_executed_by_one_switch",
+   "to": "sqlite-3.49.1-amalgamation::b_tree_of_fixed_size_pages_with_overflow_chains_and_sibling_balancing",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "cursor ops",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "sqlite-3.49.1-amalgamation::b_tree_of_fixed_size_pages_with_overflow_chains_and_sibling_balancing",
+   "to": "sqlite-3.49.1-amalgamation::pager_with_rollback_journal_of_original_pages_synced_before_the_database_is_written",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "sqlite-3.49.1-amalgamation::pager_with_rollback_journal_of_original_pages_synced_before_the_database_is_written",
+   "to": "sqlite-3.49.1-amalgamation::write_ahead_log_of_new_pages_with_a_shared_memory_hash_index_and_periodic_checkpoint",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "in WAL mode frames replace the journal",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "sqlite-3.49.1-amalgamation::pager_with_rollback_journal_of_original_pages_synced_before_the_database_is_written",
+   "to": "sqlite-3.49.1-amalgamation::virtual_file_system_layer_with_advisory_locking_states",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "sqlite-3.49.1-amalgamation::write_ahead_log_of_new_pages_with_a_shared_memory_hash_index_and_periodic_checkpoint",
+   "to": "sqlite-3.49.1-amalgamation::virtual_file_system_layer_with_advisory_locking_states",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "sqlite-3.49.1-amalgamation::pager_with_rollback_journal_of_original_pages_synced_before_the_database_is_written",
+   "to": "sqlite-3.49.1-amalgamation::write_ahead_log_of_new_pages_with_a_shared_memory_hash_index_and_periodic_checkpoint",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "two durability disciplines selected per database",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::query_profile_striped_so_lane_k_holds_query_positions_k_segLen_apart",
+   "to": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "to": "ssw-smith-waterman::lazy_f_correction_loop_that_stops_when_no_lane_can_still_improve",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "F carried out of the segment loop",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::lazy_f_correction_loop_that_stops_when_no_lane_can_still_improve",
+   "to": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "corrected column",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "to": "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask",
+   "to": "ssw-smith-waterman::overflow_detected_by_saturation_at_255_triggers_a_16_bit_recompute",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "255 -> word rerun",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::running_maximum_with_end_position_capture_and_second_best_outside_a_mask",
+   "to": "ssw-smith-waterman::start_position_by_rerunning_the_sweep_on_reversed_sequences_terminating_at_the_known_score",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "score1 + ends",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::start_position_by_rerunning_the_sweep_on_reversed_sequences_terminating_at_the_known_score",
+   "to": "ssw-smith-waterman::banded_scalar_dp_over_the_located_window_to_recover_the_path",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "window",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::overflow_detected_by_saturation_at_255_triggers_a_16_bit_recompute",
+   "to": "ssw-smith-waterman::striped_dp_column_sweep_with_saturating_unsigned_arithmetic_and_bias",
+   "label": "retries",
+   "evidence": "SOURCE_READ",
+   "note": "16-bit lanes",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ssw-smith-waterman::query_profile_striped_so_lane_k_holds_query_positions_k_segLen_apart",
+   "to": "ssw-smith-waterman::start_position_by_rerunning_the_sweep_on_reversed_sequences_terminating_at_the_known_score",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "reversed profile",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+   "to": "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+   "to": "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame",
+   "to": "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "BFR <= FR",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words",
+   "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "round keys",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::byte_substitution_from_one_256_entry_table",
+   "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::row_rotation_of_the_4x4_state_by_row_index",
+   "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::column_mixing_by_a_fixed_matrix_over_gf_2_8_using_shift_and_conditional_reduce",
+   "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::byte_substitution_from_one_256_entry_table",
+   "to": "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "SubWord in the schedule",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::column_mixing_by_a_fixed_matrix_over_gf_2_8_using_shift_and_conditional_reduce",
+   "to": "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "Rcon = powers of 2 in the same field",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "to": "tiny-aes-c::block_chaining_modes_ecb_cbc_and_a_counter_keystream",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tiny-aes-c::block_chaining_modes_ecb_cbc_and_a_counter_keystream",
+   "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "CTR never calls InvCipher",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "ENVIRONMENT",
+   "to": "tiny-aes-c::block_chaining_modes_ecb_cbc_and_a_counter_keystream",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "IV",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::token_stream_with_macro_substitution_and_conditional_skipping_pulled_by_next",
+   "to": "tinycc::recursive_descent_over_declarations_statements_and_expressions_emitting_as_it_goes",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::recursive_descent_over_declarations_statements_and_expressions_emitting_as_it_goes",
+   "to": "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+   "to": "tinycc::constant_folding_and_type_promotion_inside_the_operator_dispatcher",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::constant_folding_and_type_promotion_inside_the_operator_dispatcher",
+   "to": "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "non-constant ops",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+   "to": "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "gv loads",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::recursive_descent_over_declarations_statements_and_expressions_emitting_as_it_goes",
+   "to": "tinycc::forward_jump_lists_patched_when_the_label_is_reached",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::forward_jump_lists_patched_when_the_label_is_reached",
+   "to": "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "patches displacements",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::per_target_instruction_emitters_behind_a_fixed_interface",
+   "to": "tinycc::elf_sections_symbols_and_relocations_built_in_memory_then_written_or_relocated_in_place",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "bytes into sections",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tinycc::value_stack_of_symbolic_operands_materialised_to_registers_on_demand",
+   "to": "tinycc::elf_sections_symbols_and_relocations_built_in_memory_then_written_or_relocated_in_place",
+   "label": "stores",
+   "evidence": "SOURCE_READ",
+   "note": "float constants into rodata; symbols",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
+   "to": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "to": "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "at depth 0",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "to": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "to": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "history",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
+   "to": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "previous pv",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms",
+   "to": "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms",
+   "to": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "at the ply caps",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors",
+   "to": "umdhmm-kanungo-1.02::baum_welch_re_estimation_from_gamma_and_xi_with_a_0_001_floor_on_every_probability_iterated_until_the_log_likelihood_gain_is_below_0_001",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02::baum_welch_re_estimation_from_gamma_and_xi_with_a_0_001_floor_on_every_probability_iterated_until_the_log_likelihood_gain_is_below_0_001",
+   "to": "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the re-estimated model",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "umdhmm-kanungo-1.02::forward_backward_with_per_step_scaling_so_the_log_likelihood_is_the_sum_of_log_scale_factors",
+   "to": "umdhmm-kanungo-1.02::viterbi_decoding_in_product_and_log_forms_with_backpointers_and_a_huge_negative_sentinel",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "posterior vs best path",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+   "to": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+   "to": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "to": "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "to": "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "twice: masked and unmasked",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+   "to": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::fixed_priority_grant_to_the_lowest_set_request_bit",
+   "to": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "to": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "to": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "to": "verilog-rr-arbiter::rotating_pointer_set_one_past_the_last_grant",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "pointer follows the registered grant",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "to": "verilog-rr-arbiter::registered_grant_that_deasserts_itself_the_next_cycle",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "self-deassert",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-rr-arbiter::rotate_requests_then_prioritise_then_unrotate_grants",
+   "to": "verilog-rr-arbiter::masked_priority_with_unmasked_fallback",
+   "label": "competes",
+   "evidence": "SOURCE_READ",
+   "note": "two compositions claimed equivalent (readme); not measured",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::fractional_rate_generator_by_add_subtract_accumulator",
+   "to": "verilog-uart2bus::oversampling_receiver_with_two_flop_synchroniser_start_detection_and_mid_bit_sampling",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::fractional_rate_generator_by_add_subtract_accumulator",
+   "to": "verilog-uart2bus::shift_register_transmitter_with_framing_bits_loaded_while_idle",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::oversampling_receiver_with_two_flop_synchroniser_start_detection_and_mid_bit_sampling",
+   "to": "verilog-uart2bus::dual_protocol_command_parser_selected_by_the_first_byte_with_a_text_line_state_machine_and_a_binary_length_prefixed_form",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::dual_protocol_command_parser_selected_by_the_first_byte_with_a_text_line_state_machine_and_a_binary_length_prefixed_form",
+   "to": "verilog-uart2bus::request_grant_bus_handshake_with_one_cycle_strobes_and_a_pipelined_read_return",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::request_grant_bus_handshake_with_one_cycle_strobes_and_a_pipelined_read_return",
+   "to": "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "read_done_s + read_data_s",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy",
+   "to": "verilog-uart2bus::shift_register_transmitter_with_framing_bits_loaded_while_idle",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::shift_register_transmitter_with_framing_bits_loaded_while_idle",
+   "to": "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "tx_end_p",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "verilog-uart2bus::reply_formatter_sequenced_by_the_falling_edge_of_transmitter_busy",
+   "to": "verilog-uart2bus::request_grant_bus_handshake_with_one_cycle_strobes_and_a_pipelined_read_return",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "binary read re-request per byte",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "viterbi-hmm-xukmin::shift_register_encoder_with_outputs_precomputed_per_state_and_input",
+   "to": "viterbi-hmm-xukmin::survivor_per_state_by_add_compare_select_with_hamming_branch_metric_and_traceback",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the output table is the branch metric's reference",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "whitakers-words-ada::all_suffix_splits_of_the_word_tried_against_an_inflection_table_partitioned_by_ending_length_and_last_letter",
+   "to": "whitakers-words-ada::candidate_survives_only_if_the_inflection_and_the_dictionary_entry_agree_in_part_of_speech_declension_and_stem_key_with_prefix_suffix_transformation_of_the_entry",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "whitakers-words-ada::fixed_ladder_of_repairs_each_re_running_the_core_analysis_and_stopping_at_the_first_that_yields_a_parse",
+   "to": "whitakers-words-ada::all_suffix_splits_of_the_word_tried_against_an_inflection_table_partitioned_by_ending_length_and_last_letter",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "each rung re-runs the core",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "whitakers-words-ada::candidate_survives_only_if_the_inflection_and_the_dictionary_entry_agree_in_part_of_speech_declension_and_stem_key_with_prefix_suffix_transformation_of_the_entry",
+   "to": "whitakers-words-ada::fixed_ladder_of_repairs_each_re_running_the_core_analysis_and_stopping_at_the_first_that_yields_a_parse",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "Pa_Last > 0 stops the ladder",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::randomised_election_timeout_redrawn_on_every_role_change",
+   "to": "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "candidate: term+1",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+   "to": "willemt-raft::grant_at_most_one_vote_per_term_and_only_to_a_candidate_whose_log_is_at_least_as_up_to_date",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::grant_at_most_one_vote_per_term_and_only_to_a_candidate_whose_log_is_at_least_as_up_to_date",
+   "to": "willemt-raft::leader_heartbeat_by_periodic_append_entries_and_lazy_apply_of_committed_entries",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "majority -> leader -> heartbeats",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::leader_heartbeat_by_periodic_append_entries_and_lazy_apply_of_committed_entries",
+   "to": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "to": "willemt-raft::randomised_election_timeout_redrawn_on_every_role_change",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "valid leader traffic resets the timer",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "to": "willemt-raft::per_follower_next_index_backoff_using_the_follower_reported_index",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "failure + current_idx",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::per_follower_next_index_backoff_using_the_follower_reported_index",
+   "to": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "label": "retries",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "to": "willemt-raft::commit_index_advanced_by_majority_match_only_for_entries_of_the_current_term",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "success + current_idx",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::commit_index_advanced_by_majority_match_only_for_entries_of_the_current_term",
+   "to": "willemt-raft::leader_heartbeat_by_periodic_append_entries_and_lazy_apply_of_committed_entries",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "commit_idx -> lazy apply",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+   "to": "willemt-raft::log_consistency_check_by_previous_entry_term_with_truncation_of_conflicting_suffix",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "willemt-raft::monotonic_term_with_unconditional_step_down_on_a_higher_term",
+   "to": "willemt-raft::commit_index_advanced_by_majority_match_only_for_entries_of_the_current_term",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "current-term entries only",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::two_watched_literals_bidirectional_scan",
+   "to": "zchaff-2007::implication_queue_with_antecedent_shortening",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::implication_queue_with_antecedent_shortening",
+   "to": "zchaff-2007::assignment_stack_per_level",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::implication_queue_with_antecedent_shortening",
+   "to": "zchaff-2007::first_uip_conflict_analysis",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::first_uip_conflict_analysis",
+   "to": "zchaff-2007::assignment_stack_per_level",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "backjump",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::first_uip_conflict_analysis",
+   "to": "zchaff-2007::literal_score_bump_with_galloping_reinsertion",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "the learned clause's literals get bumped",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::first_uip_conflict_analysis",
+   "to": "zchaff-2007::learned_clause_shrinking_by_level_gap",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "a long learned clause may be shrunk instead of kept",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::learned_clause_shrinking_by_level_gap",
+   "to": "zchaff-2007::assignment_stack_per_level",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::learned_clause_shrinking_by_level_gap",
+   "to": "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "forced decisions bypass the heuristic",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::learned_clause_shrinking_by_level_gap",
+   "to": "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+   "label": "suppresses",
+   "evidence": "SOURCE_READ",
+   "note": "no restart while shrinking",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::literal_score_bump_with_galloping_reinsertion",
+   "to": "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+   "to": "zchaff-2007::implication_queue_with_antecedent_shortening",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "a decision is an implication with no antecedent",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+   "to": "zchaff-2007::learned_clause_deletion_by_activity_and_size_with_age_split",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+   "to": "zchaff-2007::assignment_stack_per_level",
+   "label": "restores",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::learned_clause_deletion_by_activity_and_size_with_age_split",
+   "to": "zchaff-2007::decide_from_newest_unsatisfied_learned_clause_else_top_score",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "top_unsat_cls pointer resets over the surviving clauses",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::decide_deduce_analyze_loop",
+   "to": "zchaff-2007::restart_on_backtrack_count_with_pool_compaction",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "zchaff-2007::decide_deduce_analyze_loop",
+   "to": "zchaff-2007::literal_score_bump_with_galloping_reinsertion",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "decay every decay_period backtracks",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ]
+}

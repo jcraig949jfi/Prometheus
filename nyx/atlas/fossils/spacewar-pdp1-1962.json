@@ -107,7 +107,7 @@
   },
   "RUN_STATUS": {
    "value": {
-    "run": "SOURCE_ONLY",
+    "run": "RUNNABLE_EMULATED",
     "test": "NO_TESTS",
     "environment": {
      "machine": "DEC PDP-1",
@@ -118,7 +118,9 @@
      "os": "none -- the program owns the machine",
      "display": "Type 30 point-plotting CRT",
      "storage": "paper tape",
-     "runner": "none yet"
+     "runner": "docker prometheus-fossil-pdp1:display (open-simh pdp1 a1f57fa3 with SDL2 video + xvfb; simtools macro1 2d9a2d96), 2026-09-16; the headless :bookworm world is the negative control",
+     "world_status": "BEHAVIOR_REPRODUCED (2026-09-16, TECHNE-87b): with the Type 30 DPY device enabled under xvfb the 1962 program runs past its display I/O and draws -- frames 300k steps apart show the heavy star and both ships (85 and 120 lit pixels of 512x512, frames differ); with DPY disabled it stops at the IOH after its first display instruction. Frames kept under behaviour/ with their sha256 in the receipt. Run-to-run frame bytes vary (the program's random walk); the coordinate is the lit-pixel band and frame difference, not a fixed image.",
+     "scaffolding": "techne/fossils/specimens/spacewar-pdp1-1962/harness/prep_macro1.py (T3-T8, counted per run), macro_fiodec_jun63.txt (masswerk, sha256 8ff117912fd13ace8659c3b4fcfd57b66fb340bd5b832a6375adc27b6e7fef8e), spacewar_2b_2apr62.txt (masswerk, Landsteiner 2014 reconstruction, sha256 8e60bd3a950f0e05b570b79af1665488cdeb1f848b8b961d710f4fd4ae5f3349), run.ini"
     }
    },
    "basis": "TECHNE_RECORD"
@@ -145,23 +147,504 @@
    "value": {
     "intervention_ready": "unknown",
     "patch_intervention": "unknown",
-    "runnable": false
+    "runnable": true
    },
    "basis": "NYX_DERIVED"
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spacewar-pdp1-1962/upstream/spacewar_2b_25mar62.txt:572-782"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spacewar-pdp1-1962/upstream/spacewar_2b_25mar62.txt:819-1060"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spacewar-pdp1-1962/upstream/spacewar_2b_25mar62.txt:85-135"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spacewar-pdp1-1962/upstream/spacewar_2b_25mar62.txt:295-345"
+   }
+  ],
+  "inspected_files": [
+   "spacewar_2b_25mar62.txt: comments and labels 1-1099; sections 85-135, 295-345, 572-782, 819-1060 at control-flow level"
+  ],
+  "date": "2026-09-17T23:01Z",
+  "note": "a real-time simulation in a fixed instruction budget: every active object (two ships, torpedoes, explosions) is a row in parallel tables (x, y, dx, dy, angle, angular velocity, fuel, torpedoes, outline, and a POINTER TO ITS CALC ROUTINE); the main loop walks the tables, compares every pair for collision within an epsilon, then calls each object's calc routine to move and display it, and burns the remaining time budget so a frame takes constant time; an object changes behaviour by having its calc-routine pointer replaced (a ship that collides becomes an explosion with a duration count); the starfield is a background program; gravity toward the central star is a switch-selectable calc term",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:01Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "AUTHENTIC_TRANSCRIPTION",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://www.masswerk.at/spacewar/sources/spacewar_2b_25mar62.txt sha256:cc11e0e8939f190862c6cb64735006cf00c1293c0e96d145b17628bd4b9b5179",
+   "payload_manifest_id": "techne tree_sha256 66d682d8313e7afe0129b1b1183d87ecbf4861f5f8b5f17c6c6dfbdb6b8d5bc2 (1 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/spacewar_2b_25mar62.txt",
+     "payload_hash_read": "cc11e0e8939f190862c6cb64735006cf00c1293c0e96d145b17628bd4b9b5179",
+     "techne_recorded_hash": "cc11e0e8939f190862c6cb64735006cf00c1293c0e96d145b17628bd4b9b5179",
+     "match": true,
+     "refs": 7
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+   "fossil_ancestry": "spacewar-pdp1-1962",
+   "human_name": "main control routine 572-631 (the table set-up: mx1 x, my1 y, ma1 count, mb1 instruction count, mdx/mdy, mom angular velocity, mth angle, mal angular acceleration, mas, mfu fuel, mtr torpedoes, mot outline, mco control word, ml1 calc routine); 727-730 'yes, EXPLODE / replace calc routine with explosion / duration of explosion'; 993-998 'search for unused object'",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "nnn object slots hold one entry per table; a slot is active if its calc-routine word is non-zero; the ship, torpedo and explosion behaviours are separate routines and an object's identity IS which routine its slot points to; launching a torpedo finds an unused slot and fills it with the torpedo routine, a position and a life count; a collision overwrites the slot's routine with the explosion routine and sets a duration; when the duration or life count expires the slot is freed",
+   "input": "the tables",
+   "output": "the tables after one frame",
+   "state": "the parallel tables (nnn slots)",
+   "update": "per frame",
+   "assumptions": [
+    "a small fixed number of objects; dispatch through a stored address is cheaper than a type field and a switch on a 1962 machine"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+    "spacewar-pdp1-1962::ship_motion_from_thrust_rotation_and_switch_selectable_star_gravity_with_a_table_based_sine_cosine_and_a_finite_torpedo_life"
+   ],
+   "fitness_value_in_ancestor": "new object kinds are new routines; the main loop never changes (the comment 'here put more bells and whistles, like hyperspace')",
+   "failure_landscape": "by reading: no free slot means a halt (998 'hlt / no space for new objects')",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the earliest known instance of per-object behaviour dispatch in a game; the entity-table pattern",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spacewar-pdp1-1962/upstream/spacewar_2b_25mar62.txt:572-631, 727-730, 993-998"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the table definitions and the two pointer-replacement sites",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+   "fossil_ancestry": "spacewar-pdp1-1962",
+   "human_name": "683-782: the comparison loop (mx1/mx2 delta x, abs, epsilon me1/me2; 'yes, EXPLODE'), the calc-and-display loop (mq4 'routine for calculating spaceship or other object and displaying it'; mb1 'alter count of number of instructions'), 778-781 'display stars of the heavens / display massive star / use up rest of time of main loop / repeat whole works'",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "per frame: for every active object compare its x and y with every later active object; if both differences are under an epsilon (10000 octal, halved) both become explosions; then for every active object call its calc routine (which moves it, handles controls, draws its outline) and account the instructions it used; then draw the background starfield and the central star and spin in a counted loop until the frame's instruction budget is spent, so the simulation runs at a constant rate regardless of how many objects are active",
+   "input": "the tables; the console switches",
+   "output": "a drawn frame",
+   "state": "the frame counter mtc",
+   "update": "per frame",
+   "assumptions": [
+    "the machine is fast enough for the worst case within the budget; a constant frame time makes velocities meaningful"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+    "spacewar-pdp1-1962::ship_motion_from_thrust_rotation_and_switch_selectable_star_gravity_with_a_table_based_sine_cosine_and_a_finite_torpedo_life"
+   ],
+   "fitness_value_in_ancestor": "real-time interaction with deterministic physics on a 1962 machine",
+   "failure_landscape": "by reading: O(n^2) collision checks (fine for nnn objects); a frame that exceeds the budget slows the game rather than dropping objects",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the fixed-timestep game loop; this is among its first instances",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spacewar-pdp1-1962/upstream/spacewar_2b_25mar62.txt:683-782"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the main loop ml0 to 'repeat whole works'",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "spacewar-pdp1-1962::ship_motion_from_thrust_rotation_and_switch_selectable_star_gravity_with_a_table_based_sine_cosine_and_a_finite_torpedo_life",
+   "fossil_ancestry": "spacewar-pdp1-1962",
+   "human_name": "spaceship calc 838-945 (ss1/ss2; angular velocity, thrust along the heading, 'switch 2 for heavy star' 907, fuel mfu); the sine-cosine subroutine 85-135 (Adams Associates, a polynomial with quadrant folding); torpedo calc 819-835 and 1002-1035 (velocity = ship velocity plus muzzle velocity along the heading; 'life of torpedo' 300 frames; 'permit torp tubes to cool'); star collision 1042-1060 ('spaceship in star'; switch 5 to escape)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each frame a ship integrates angular velocity into its heading, adds thrust (fuel permitting) along the heading via sine and cosine of the angle, adds an inverse-square pull toward the central star when the heavy-star switch is on, and integrates velocity into position with wrap-around; a torpedo is launched with the ship's velocity plus a fixed speed along the heading and lives for a fixed count; a ship entering the star is destroyed unless a console switch extracts it; the sine/cosine routine is a shared subroutine with a calling sequence documented in the comments",
+   "input": "control words, the tables",
+   "output": "new positions and headings",
+   "state": "per-object rows",
+   "update": "per frame",
+   "assumptions": [
+    "first-order Euler integration at the frame rate is stable enough for play; gravity is optional because the 1961 version had none (Edwards added it)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+    "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer"
+   ],
+   "fitness_value_in_ancestor": "the orbital mechanics that made the game a game (the record: 'gravity by Dan Edwards')",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:spacewar-pdp1-1962/upstream/spacewar_2b_25mar62.txt:838-945, 85-135, 819-835, 1002-1060 (comments and labels; instruction bodies not read)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the ship and torpedo calc routines; CANDIDATE because read at comment level",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the outline compiler (295-345: compiles a ship's outline into display instructions), the background starfield (464-521, 'Expensive Planetarium'), the display and console I/O, the random number routine (65-84), the divide subroutine (243-292)",
+   "reason": "OTHER",
+   "evidence": "NOT READ beyond comments; the display substrate and utilities",
+   "note": "the outline compiler is a small code-generation mechanism of its own (it compiles data to code at run time)",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spacewar-pdp1-1962"
+  },
+  {
+   "candidate": "'Spacewar' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the entity tables, the frame loop and the physics are separable; hyperspace and gravity were added to the same loop by different people",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "spacewar-pdp1-1962"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "spacewar-pdp1-1962::P.several_interacting_bodies_with_player_input_must_be_simulated_and_drawn_at_a_constant_rate_on_a_machine_whose_entire_instruction_budget_per_frame_is_known_and_small",
+   "source_fossil": "spacewar-pdp1-1962",
+   "source_evidence": "the main control routine 572-782; the object tables",
+   "condition": "an organism updates and displays n moving objects, some created and destroyed at run time, within a fixed instruction budget per frame; velocities must mean the same thing whatever n is; behaviour differs per object kind",
+   "resource_or_constraint": "the frame's instruction count; nnn object slots",
+   "failure_condition": "frame time that varies with n (velocities change), or a dispatch cost that grows with the number of kinds",
+   "world_punishes": "a type switch per object; variable frame time",
+   "world_rewards": "a stored routine pointer per object and a burned remainder",
+   "observable_consequence": "frame time vs number of active objects, and per-object dispatch cost vs number of kinds, on a PDP-1 emulator",
+   "vacuity_condition": "one object kind and a fixed n",
+   "trivial_shortcuts": "a faster machine (which changes the game's speed unless the budget is enforced)",
+   "cheat_control": "an organism with unlimited instructions must show constant frame time at any n; the loop without the burn must show frame time falling as objects explode; a switch-based dispatch must show cost growing with kinds: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: real-time two-player simulation (Russell, Graetz, Wiitanen, Samson, Edwards 1961-62)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+   "to": "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+   "to": "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::fixed_time_frame_that_compares_every_pair_of_objects_for_collision_within_an_epsilon_then_runs_each_calc_routine_and_burns_the_remaining_budget",
+   "to": "spacewar-pdp1-1962::ship_motion_from_thrust_rotation_and_switch_selectable_star_gravity_with_a_table_based_sine_cosine_and_a_finite_torpedo_life",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "calls each calc routine",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spacewar-pdp1-1962::ship_motion_from_thrust_rotation_and_switch_selectable_star_gravity_with_a_table_based_sine_cosine_and_a_finite_torpedo_life",
+   "to": "spacewar-pdp1-1962::objects_as_rows_of_parallel_tables_each_carrying_a_pointer_to_its_own_calc_routine_so_behaviour_is_changed_by_swapping_the_pointer",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "spacewar-pdp1-1962",
@@ -169,10 +652,23 @@
    "to": "Bob Wyatt / E. E. Smith Lensman space opera (per Graetz)",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "spacewar-pdp1-1962",
+   "relation": "shares_ancestor_with",
+   "to": "no software ancestor; the earliest entity-table game loop in the atlas",
+   "note": "from the record; version 2B of 25 March 1962",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "instruction bodies unread (assembly read at comment level; the physics organ is CANDIDATE)",
+   "the outline compiler and starfield unread",
+   "nothing ran (needs a PDP-1 emulator, an M2 world)"
+  ],
+  "note": "the two structural mechanisms (entity tables with routine pointers; the fixed-budget frame) are located from comments and labels, which the listing carries generously",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

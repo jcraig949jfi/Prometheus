@@ -1,25 +1,42 @@
 # Nyx status
 
-Currency: 2026-09-15 ~16:35 UTC (instance m1-509ff7bc; NYX-44 run, ruling requested; ATLAS PASS 01 first-pass return NOT yet filed).
+Currency: 2026-09-18 ~08:25 UTC (instance gandalf-9e21f277 on M3/GANDALF).
 
-seat state: ACTIVE. Governing prompt: ATLAS PASS 01 (roles/Nyx/prompts/2026-09-13_atlas_pass_01/, sha256 7da74389...),
-  which orders the chop of Techne's fossil vault into an atlas (nyx/atlas/). Catalogue loop (nyx/catalog) STOPPED.
-what it asserts (atlas, unchanged since 09-14):
-  census 121 whole-system records; stratified Stage A sample n=30 (seed 20260913); 5 fossils cut DEEP, 116 NOT_CUT;
-  DEEP: glibc rwlock (9 organs), SPIN Pathfinder model (2), zchaff (11), DES reference (4), EISPACK 1976 (9);
-  1 ablation executed (Pathfinder); 0 blind cuts; 0 recurrence tests.
-catalogue (frozen at bc37f828d): 321 bits; EVAL01 retrieval test INDETERMINATE (053cc6c8e).
-anatomy ledger (pre-atlas): 6 specimens; 18 organs delivered, 1 attempted, 0 CONSUMED.
-NYX-44 (go-explore c04), 09-15: import clears in prometheus-fossil-goexplore:min. The frozen control was MALFORMED
-  (guessed RLEArray.fromarray); repair ledgered before rerun (9a46e93c2), repaired sha256 6ce4ed61. Repaired runs
-  r2-r5 (r1 receipt lost): positive 4 parts, negative 1, dynamic_state 200 -> 4 in every run; decisive CHEAT returns
-  200 parts on r2 (frozen kill fires) and 8 / 4 / 8 on r3-r5. Post-result diagnostic: the ancestor score prefers 4 parts
-  (0.745) over 200 (0.141); the unseeded search misses in 1 of 4. c04 UNCHANGED, PENDING RULING
-  (roles/Nyx/prompts/2026-09-15_nyx44_ruling_request/). N4 reopen condition A met.
-open comms: queue #235 (atlas charter), #241 (THEO-REQ-003, composition -- not Nyx's); older #176 #189 #190 #192 #197 #198 #202.
-holds: c07 reopen only on an EXISTING consumer meeting the four conditions; c03 / c01 held; Proteus/Diomedes halves HELD;
-  c04 held pending the NYX-44 ruling.
+seat state: ACTIVE (this M3 instance; the M2 instance m2-0c0adfe1 closed down 2026-09-17, c60b78f17, and its
+  'parked' STATUS is superseded by this file). Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3; Amendment 1
+  NOT received) over the ATLAS PASS 01 charter. Operator topology ruling 2026-09-17 (roles/Nyx/prompts/2026-09-17_topology_m3/):
+  Techne, Nyx and Harmonia all run on M3; the M1/M2 Nyx and Techne instances are shut down.
+host fact that governs everything below (measured 2026-09-17): M3 has no WSL2, no docker, no C compiler, no iverilog.
+  Every fossil world Techne has run to date is a docker world. Harmonia CANNOT adjudicate gzip packet 003 on M3. Of the
+  nine cuts made today only particles-chopin-0.4 executes here (system Python 3.11.9 + vault body on sys.path).
+comms: Harmonia[gandalf-6cd1348b] booted on M3 at 15:2xZ (R1 open on gzip 003; says execution is not possible here;
+  nothing asked of Nyx); #357 (the particles packet) is in its inbox. The live channel is the Postgres queue at 192.168.1.202:5432 (EW_DB_HOST). The Redis at 192.168.1.202:6379 answers
+  but its Agora streams have been dead since 2026-05-20; 192.168.1.176 is unreachable. Nyx and Techne online; Harmonia
+  offline since 2026-09-16 13:42Z (messages queue for it).
+what it asserts (atlas, python -m nyx.atlas.build): census 121; cut 87 (COARSE 54, DEEP 31, ORGAN0 2); NOT_CUT 34; 460 fragments
+  (410 ACCEPTED, 50 CANDIDATE); 278 rejected; 138 pressures; 582 composition edges; fingerprints 0; blind cuts 0; measured
+  cells 0. Stage A order for the NOT_CUT population preregistered (seed 20260917); positions 1-60 done except 13 (valgrind fixtures), 18 (souffle) and 49 (pari-gp: ORIGIN_UNREACHABLE, SSL); bodies present (59/60 MATCH).
+pipeline objects: MECH-GZIP-LEVELTABLE-003 (frozen 5dbf46a2..., with Harmonia since 09-16, no return; NOT runnable on M3);
+  MECH-PARTICLES-ESSTRIGGER-001 (frozen 5b8d6ae4...; RAN on M3 by Harmonia 2026-09-17: cheat/negative PASS, positive control FAIL
+  -> PREDICTION_INDETERMINATE + PREDICTION_PACKET_CHALLENGE, #363; immutable); MECH-PARTICLES-ESSTRIGGER-002 (frozen 186047db...,
+  supersedes 001; RAN on M3 by Harmonia, #382: all controls PASS; CUT_SUPPORTED on the boundary (a)/(b) on W1 and W2; claim (c) scheme ordering
+  PREDICTION_FAILED at 50 seeds + INDETERMINATE at 400 -> DROPPED from the cut (D' 2026-09-18), to be re-posed as MECH-PARTICLES-SCHEME-001
+  with a power statement; immutable).
+gates (nyx/atlas/gates/LEDGER.json): cuts_created 87; cuts_returned_with_verdict 1 (particles-chopin-0.4, CUT_SUPPORTED, #382); handoffs open 4 (Harmonia x2 -- gzip
+  003 and particles 001; Techne x2 -- #296 first-pass return, #358 census/asks); returns received 7 (3 on 09-16; #360 ACK, #363 INDETERMINATE + CHALLENGE on 09-17; #377 Techne POET/ALife autopsy, ACCEPT, answered #379 with ASK 3-5).
+record defects for Techne (this block): the 4.3-Reno tape body lacks tape files 5-7 (record says it contains the Reno TCP;
+  cut ORGAN0); viterbi-hmm-xukmin tags; ELIZA 1965 matcher outside the body.
+own defects: NYX-47 (cost_class free text in 12 pre-09-17 pressures), NYX-48 (F:/ paths in five 09-13 scripts). CLOSED
+  2026-09-18: the grade map now translates HISTORICAL_ARCHIVE_MIRROR (Techne #387 ASK 2 ruling; 13 cuts re-graded CONTEMPORARY_COPY).
+incident (calibration ledger 2026-09-17): boot-time `git pull` moved the canonical checkout on M3; Hephaestus WIP on
+  hephaestus/src/closure_q045.py is in stash@{0} of C:\Prometheus, intact; pop it in a worktree.
 lane: nyx/ and roles/Nyx/ only.
 
-next executable action: (1) resume ATLAS PASS 01 Stage A on the remaining 25 sampled fossils, then Stages B-E;
-  first-pass return after. (2) c04 / N4 only after the ruling.
+next executable action: Stage A on positions 61-70 of the order, then 13, 18, 49; two M3-runnable packet candidates recorded (python-sgp4
+  with tcppver.out as oracle; backoff with its tests) behind the POET / scheme packets;
+  the next packet on the ruler is the POET PATA-EC one if its body lands (H5), else MECH-PARTICLES-SCHEME-001 with a power statement; the operator's 2026-09-18 directive (roles/Nyx/prompts/2026-09-18_poet_alife_cut_into_bodies/) makes the POET /
+  Avida / Tierra / ASAL / TerraLingua cuts the priority THE MOMENT Techne lands the bodies (ASK 3 in #379): POET's discard
+  boundary first, then Avida's SavePopulation path (extend the existing cut, before any run); refresh the census when they land; the paxos packet is
+  OFF (body is Python-2-only, SCOUT 2026-09-17); the next M3-runnable packet candidate is Lenia (pure numpy) once Techne
+  clones it; write the packet for the
+  4.2BSD TCP Karn-ambiguity claim only if a pure-Python simulation world is acceptable to Harmonia (ask, do not build).

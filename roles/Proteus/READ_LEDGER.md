@@ -73,3 +73,42 @@ is deployment work carried out for Daedalus and committed under Daedalus's name 
   and record shape; the CA update rule itself was not read).
 - 2026-09-16 · `roles/Vivarium/INBOX_HERAKLES_CA_DENSITY_LIBRARY_ADDITIONS_2026-09-16.md` · whole
   · cross-seat mail on main naming `herakles.evca.derive` as built · ROLE MAIL.
+
+## 2026-09-17 -- point-release Stage 0 reads (directive section A; instance m2-7d051790)
+
+- 2026-09-17 - `archaeon/campaign1/CAMPAIGN_REPORT.md` (grep for organism/foundry/grammar lines
+  + sections 0, 7, 11), `archaeon/campaign2/CAMPAIGN_REPORT.md` (whole), `archaeon/campaign3/
+  CAMPAIGN_REPORT.md` (whole) - required reading A of the operator's point-release directive;
+  the reports describe cells (W0, W1_dN, W2_K2 ...) at the level of published results and
+  named world specs - PROGRAM / CAMPAIGN DOCUMENT. **Declared:** no world implementation,
+  physics, generator or cost table was opened; `archaeon/wse/worlds.py` was NOT read; the
+  campaigns are CLOSED (cb9135104), so no world was active in qualification.
+- 2026-09-17 - `archaeon/wse/evolve.py` lines 1-27 (module docstring), 44-57 (the FOUNDRY
+  dict), 160-200 (gen0/common_fill, the `proteus.foundry.generate` call sites) - to state
+  exactly how Proteus's generator is consumed and what the generation-0 regime dict is -
+  CONSUMER INTERFACE. Selection, evaluation and world binding in the same file were not read.
+- 2026-09-17 - `archaeon/wse/reachability.py` lines 30-52 (`foundry_id`, `default_foundry_id`)
+  - to answer Mnemosyne #327 ("whose identity is instr1-16:6528b9dc") by recomputation -
+  CONSUMER INTERFACE.
+- 2026-09-17 - `archaeon/campaign1/sfe01.py` line 47 (FOUNDRY_C1), `archaeon/campaign2/
+  c2base.py` line 36 (FOUNDRY_C2), `archaeon/campaign3/c3base.py` lines 15, 36 (imports
+  FOUNDRY_C2) - to catalog which regime ran in which campaign - CONSUMER INTERFACE.
+- 2026-09-17 - `SerendipityFoundry/SerendipityFoundryEngine/docs/point_release_2026-09/
+  SFE_POINT_RELEASE_REVIEW.md` (D4 block, Stage 3 asks), `evidence_wiki/docs/point_release/
+  PEW_CAMPAIGN_INGESTION_CONTRACT.md` (s2, s9), `evidence_wiki/ew/ontology.py` (vocabularies),
+  `evidence_wiki/migrations/005/006/013` (fossil_players columns), `roles/Vivarium/
+  point_release/IDENTITY_TRANSLATION_CONTRACT.md` (section D rows naming Proteus, A7),
+  `START_BUNDLE_SCHEMA.md` (s2-s3) - Stage 3 peer review as the directive requires - PEER
+  INTERFACE / SCHEMA. Not world-side.
+
+- 2026-09-17 - `evidence_wiki/docs/PROTEUS_MINT_WRITE_CONTRACT.md` (whole), `evidence_wiki/ew/client.py`
+  (register_fossil_player / get_fossil_player / token resolution lines), `evidence_wiki/ew/service.py`
+  (class FossilPlayerIn only), `archaeon/campaign2/C2-SFE-02/PREREG.json` (budget.foundry_id, a
+  receipt field) - PROTEUS-36 rehearsal against Mnemosyne's route and the receipt join test of
+  PROTEUS-29 - PEER INTERFACE / RECEIPT. Not world-side. Token file existence checked, contents
+  never read.
+
+- 2026-09-17 - `archaeon/campaign4/STARTING_POPULATION.json`, `SPECIMENS_FOR_PROTEUS.json` (whole;
+  the heldout_* behavioural columns stripped by the loader before use), `launch_gate.py`
+  g5_proteus (lines 154-178), `REHEARSAL_PLAN.md` s5-s6 - G5 mint, PROTEUS-37 anatomy, Q3 -
+  CONSUMER DECLARATION / ROLE MAIL. Not world-side; no cell protocol read.

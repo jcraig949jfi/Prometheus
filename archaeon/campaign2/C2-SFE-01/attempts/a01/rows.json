@@ -1,0 +1,361 @@
+[
+ {
+  "arm": "fresh",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1111,
+    "control": 0.1111,
+    "halt_yield": 0.2222,
+    "indirection": 0.1111,
+    "logical": 0.3333,
+    "read_write": 0.1111
+   },
+   "distinct_opcodes": 9,
+   "instr": 9,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "HALT": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "NOT": 1,
+    "SHR": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 36
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "k": 0,
+  "ops_per_episode": 16.0,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "transport_applied_gens": 0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "relevant",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1111,
+    "control": 0.1111,
+    "halt_yield": 0.2222,
+    "indirection": 0.1111,
+    "logical": 0.3333,
+    "read_write": 0.1111
+   },
+   "distinct_opcodes": 9,
+   "instr": 9,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "HALT": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "NOT": 1,
+    "SHR": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 36
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "k": 2,
+  "ops_per_episode": 16.0,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "transport_applied_gens": 6,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "random",
+  "competence_heldout": 0.0,
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.1111,
+    "control": 0.1111,
+    "halt_yield": 0.2222,
+    "indirection": 0.1111,
+    "logical": 0.3333,
+    "read_write": 0.1111
+   },
+   "distinct_opcodes": 9,
+   "instr": 9,
+   "n_regs": 6,
+   "opcode_hist": {
+    "EQ": 1,
+    "HALT": 1,
+    "JNZ": 1,
+    "LD": 1,
+    "MOV": 1,
+    "NOT": 1,
+    "SHR": 1,
+    "XOR": 1,
+    "YIELD": 1
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 256,
+   "words": 36
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "k": 2,
+  "ops_per_episode": 16.0,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 1,
+  "trace_best": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "train_last": 0.0,
+  "transport_applied_gens": 6,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "fresh",
+  "competence_heldout": 0.08333333333333333,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1333,
+    "comparison": 0.0667,
+    "control": 0.1333,
+    "halt_yield": 0.1333,
+    "indirection": 0.1333,
+    "logical": 0.1333,
+    "opaque_io": 0.2,
+    "read_write": 0.0667
+   },
+   "distinct_opcodes": 11,
+   "instr": 15,
+   "n_regs": 9,
+   "opcode_hist": {
+    "AND": 1,
+    "HALT": 2,
+    "IN": 1,
+    "JNZ": 1,
+    "JZ": 1,
+    "LT": 1,
+    "MOV": 1,
+    "MUL": 2,
+    "NOT": 1,
+    "OUT": 2,
+    "ST": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 60
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "k": 0,
+  "ops_per_episode": 20.0,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.25,
+   0.125,
+   0.0,
+   0.125,
+   0.25,
+   0.0
+  ],
+  "train_last": 0.0,
+  "transport_applied_gens": 0,
+  "wall_s": 0.1,
+  "warnings": []
+ },
+ {
+  "arm": "relevant",
+  "competence_heldout": 0.08333333333333333,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "halt_yield": 0.1875,
+    "indirection": 0.125,
+    "logical": 0.125,
+    "opaque_io": 0.1875,
+    "randomness": 0.0625,
+    "read_write": 0.0625
+   },
+   "distinct_opcodes": 11,
+   "instr": 16,
+   "n_regs": 16,
+   "opcode_hist": {
+    "ADD": 3,
+    "HALT": 1,
+    "INQ": 1,
+    "LD": 1,
+    "LDC": 1,
+    "MUL": 1,
+    "NOP": 2,
+    "OUT": 2,
+    "RND": 1,
+    "ST": 1,
+    "XOR": 2
+   },
+   "persist": "regs",
+   "tape_words": 128,
+   "tick_budget": 64,
+   "words": 64
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "k": 2,
+  "ops_per_episode": 56.0,
+  "persist": "regs",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.125,
+   0.0,
+   0.125,
+   0.25,
+   0.125,
+   0.0
+  ],
+  "train_last": 0.0,
+  "transport_applied_gens": 6,
+  "wall_s": 0.0,
+  "warnings": []
+ },
+ {
+  "arm": "random",
+  "competence_heldout": 0.08333333333333333,
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1333,
+    "comparison": 0.0667,
+    "control": 0.1333,
+    "halt_yield": 0.1333,
+    "indirection": 0.1333,
+    "logical": 0.1333,
+    "opaque_io": 0.2,
+    "read_write": 0.0667
+   },
+   "distinct_opcodes": 11,
+   "instr": 15,
+   "n_regs": 9,
+   "opcode_hist": {
+    "AND": 1,
+    "HALT": 2,
+    "IN": 1,
+    "JNZ": 1,
+    "JZ": 1,
+    "LT": 1,
+    "MOV": 1,
+    "MUL": 2,
+    "NOT": 1,
+    "OUT": 2,
+    "ST": 2
+   },
+   "persist": "tape",
+   "tape_words": 64,
+   "tick_budget": 64,
+   "words": 60
+  },
+  "first_solved_gen": null,
+  "gen0_provenance": {
+   "campaign_seed": 20260918,
+   "cell_seed": 2,
+   "fill": "wse.gen0",
+   "n": 20,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "k": 2,
+  "ops_per_episode": 20.0,
+  "persist": "tape",
+  "reached": 0,
+  "seed": 2,
+  "trace_best": [
+   0.25,
+   0.25,
+   0.25,
+   0.25,
+   0.375,
+   0.25
+  ],
+  "train_last": 0.25,
+  "transport_applied_gens": 6,
+  "wall_s": 0.1,
+  "warnings": []
+ }
+]

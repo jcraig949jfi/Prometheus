@@ -1,0 +1,168 @@
+{
+ "artifacts": {
+  "predeclaration": "sha256:1e951364a0178738ddaf31c529e4fcbdee9e4bcddd424936020961518caefe4c",
+  "set_best_A": "sha256:de17b5caa1be75f74ed95be7ee210a5f38bc4e26b4442ebec717418a96161469",
+  "set_failed_A": "sha256:33f3d89b24de4ddb50eb8cf5f00f58ebc4d39f1035d9790691016fe525a5ef91",
+  "set_random": "sha256:18906c14e8965bbf198b1453fd61be9c97c0805ecbf62b7d5d15561b0b8d25a2",
+  "set_specialized_A": "sha256:bafe40d13fa580572982732d96f7225a87d8a91ade0dd0f219deefdcf13f2bd9"
+ },
+ "campaign_seed": 20260917,
+ "engine_path": true,
+ "errors": [
+  {
+   "error": "EngineError(\"HTTP 403: {'error': 'SESSION_MISMATCH', 'message': 'this session does not own that world', 'world_id': 'wld_cde76926f9fc470a57bc5400', 'session_id': 'ses_d3ea1a7924bc72bada655da6'}\")",
+   "seed": "1",
+   "step": "fetch_failed_A"
+  },
+  {
+   "error": "EngineError(\"HTTP 403: {'error': 'SESSION_MISMATCH', 'message': 'this session does not own that world', 'world_id': 'wld_cde76926f9fc470a57bc5400', 'session_id': 'ses_d3ea1a7924bc72bada655da6'}\")",
+   "seed": "2",
+   "step": "fetch_failed_A"
+  },
+  {
+   "error": "EngineError(\"HTTP 403: {'error': 'SESSION_MISMATCH', 'message': 'this session does not own that world', 'world_id': 'wld_cde76926f9fc470a57bc5400', 'session_id': 'ses_d3ea1a7924bc72bada655da6'}\")",
+   "seed": "3",
+   "step": "fetch_failed_A"
+  },
+  {
+   "note": "no genomes fetched; failed_A EMPTY",
+   "step": "fetch_failed_A"
+  }
+ ],
+ "experiment": "SFE-07",
+ "hypothesis": "hyp_03c3551e6a163003e080c7de",
+ "predeclaration": {
+  "declared_at": 1789605796.0289357,
+  "exposure": {
+   "direct": "best held-out competence of any member on B (48 episodes)",
+   "evolved": "N=100 G=40 E=16 from the set, common RNG"
+  },
+  "sets": {
+   "best_A": "SFE-05 adaptive/on elites",
+   "failed_A": "SFE-01 cmp1.failures.v0 floor genotypes of W1_d1 (fetched from the engine)",
+   "random": "matched-count random genotypes",
+   "specialized_A": "SFE-05 fixed/on elites"
+  },
+  "world_B": {
+   "D": 1,
+   "K": 2,
+   "Kd": 0,
+   "ask_kind": "ASK",
+   "ask_mode": "one",
+   "ask_timing": "end",
+   "delay": 0,
+   "delays": [],
+   "expensive": 0,
+   "fanout": 1,
+   "interfere": false,
+   "interleave": "sequential",
+   "n_defs": 0,
+   "name": "W3_K2",
+   "noise_rate": 0.0,
+   "op_mode": "fixed",
+   "recycle": false,
+   "retire_rate": 0.0,
+   "topology": "streams",
+   "value_bits": 4,
+   "vocab": "train"
+  }
+ },
+ "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0",
+ "session_id": "ses_d3ea1a7924bc72bada655da6",
+ "set_sizes": {
+  "best_A": 3,
+  "failed_A": 0,
+  "random": 3,
+  "specialized_A": 3
+ },
+ "summary": {
+  "best_A": {
+   "direct_best": [
+    0.5208333333333334,
+    0.5208333333333334,
+    0.5416666666666666
+   ],
+   "evolved_heldout": [
+    0.5208333333333334,
+    0.5833333333333334,
+    0.6458333333333334
+   ],
+   "evolved_mean": 0.5833333333333334,
+   "footholds": 3
+  },
+  "random": {
+   "direct_best": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "evolved_heldout": [
+    0.020833333333333332,
+    0.0625,
+    0.10416666666666667
+   ],
+   "evolved_mean": 0.0625,
+   "footholds": 0
+  },
+  "specialized_A": {
+   "direct_best": [
+    0.5625,
+    0.5833333333333334,
+    0.5625
+   ],
+   "evolved_heldout": [
+    0.5625,
+    0.5833333333333334,
+    0.5625
+   ],
+   "evolved_mean": 0.5694444444444445,
+   "footholds": 3
+  }
+ },
+ "teardown": {
+  "B": "TERMINATED"
+ },
+ "timings": {
+  "exposure_s": 5.4,
+  "records_s": 2.4,
+  "startup_s": 0.36,
+  "teardown_s": 0.19,
+  "total_s": 9.3
+ },
+ "workspace": {
+  "allow_canonical_override": false,
+  "base_sha": "5e8871b2653304274fa6ebb00ab43ef230187374",
+  "branch": "archaeon/wse-2026-09-16",
+  "dirty": false,
+  "main_worktree": false,
+  "repo_id": "ffb3639d4beec02b8f2d3276404b836547898762",
+  "workspace_known": true,
+  "worktree_path": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16"
+ },
+ "world_B": {
+  "D": 1,
+  "K": 2,
+  "Kd": 0,
+  "ask_kind": "ASK",
+  "ask_mode": "one",
+  "ask_timing": "end",
+  "delay": 0,
+  "delays": [],
+  "expensive": 0,
+  "fanout": 1,
+  "interfere": false,
+  "interleave": "sequential",
+  "n_defs": 0,
+  "name": "W3_K2",
+  "noise_rate": 0.0,
+  "op_mode": "fixed",
+  "recycle": false,
+  "retire_rate": 0.0,
+  "topology": "streams",
+  "value_bits": 4,
+  "vocab": "train"
+ },
+ "worlds": {
+  "B": "wld_68237cf4b323ab0a26e15dda"
+ }
+}

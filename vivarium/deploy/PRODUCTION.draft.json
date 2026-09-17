@@ -1,0 +1,73 @@
+{
+  "_what_this_is": "Production descriptor Vivarium gates on (roles/Vivarium/point_release/PRODUCTION_DESCRIPTOR.md). 'draft' in the file name means: the SHARED <repo>/deploy/PRODUCTION.json (Daedalus/Hermes/Vivarium) has not been created; viv/production.py reads that file first when it exists and this one otherwise. The values here are the ones production ran on through window C4-20260917-W1 and are authoritative for Vivarium. No secrets: credential entries name FILES and KEYS only.",
+  "descriptor_version": "prometheus.production.v1",
+  "ruled_by": "operator",
+  "ruled_at": "2026-09-17T00:00:00Z",
+  "ruling_ref": "operator Stage 3 / implementation order 2026-09-17 s9 ('Campaigns 1-3 established the M2 production ledger in actual use'); Daedalus #329",
+  "hold": null,
+  "engine": {
+    "descriptor_ref": "SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOYED_BUILD_M2.json",
+    "endpoint": "https://192.168.1.191:8811",
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "schema_floor": 9,
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "cacert": "SerendipityFoundry/SerendipityFoundryClient/config/m2.crt",
+    "contract": "roles/Harmonia/contracts/sfe_contract.json",
+    "note": "schema_floor is the refusal; engine_source_hash is informational and follows Daedalus's deployments (bc8d3a0c = schema-9 point release 2026-09-17 06:57Z; 699ca0f9 = 9.0.1 request-path repair, deployed 2026-09-17 ~19:0xZ, comms 2983bd548). Daedalus pins the build in the shared descriptor when it lands."
+  },
+  "store": {
+    "environment": "prometheus-canonical",
+    "db_system_id": "7628127204585430828",
+    "db_name": "prometheus_fire",
+    "host_hint": "192.168.1.202",
+    "schemas": {
+      "queue": "viv",
+      "comms": "comms",
+      "ew": "ew"
+    },
+    "note": "shared cluster on M1 (operator topology ruling 2026-09-16); identity, not host, is the check (comms/environments.json)"
+  },
+  "pew": {
+    "endpoint": "http://192.168.1.191:8377/api/v1",
+    "namespace": "prod",
+    "fossil_contract": "pew.fossil.v2"
+  },
+  "consumers": {
+    "vivarium": {
+      "client_name": "vivarium",
+      "worker_id": "vivarium@m2",
+      "credential_file": "D:/Prometheus-worktrees/vivarium-consumer/vivarium/config.local.json",
+      "keys": [
+        "sfe_token"
+      ],
+      "optional_keys": [
+        "pew_token"
+      ],
+      "optional_note": "pew_token gates the DELIVERER (VivariumOutboxDelivererM2; the outbox holds without it), not the consumer; issued by Mnemosyne out of band (evidence_wiki agent_identities: sha256 committed, value delivered)",
+      "bootstrap": "python -m viv.cli sfe-identity --ensure  (registers the production client on the engine above if absent; refused if a client of that name already exists on this ledger)",
+      "dead_man_task": "VivariumDeadmanM2",
+      "deliverer_task": "VivariumOutboxDelivererM2",
+      "pinned_build": {
+        "sha": "08081c6ed2a3c4f32731164b94936f608c071f81",
+        "worktree": "D:/Prometheus-worktrees/vivarium-consumer",
+        "advanced_at": "2026-09-17T16:29:00Z",
+        "advanced_by": "vivarium/deploy/window.py --steps advance (window C4-20260917-W1); from now on the advance step rewrites this entry",
+        "attested_by": "the restart receipt var/restart-vivarium@m2.json (code.base_sha) written by the consumer at every start; roles/Vivarium/receipts/window_C4-20260917-W1/G3_IDENTITY_PROOF.json compares the two"
+      }
+    },
+    "archaeon": {
+      "client_name": "cmp<N>-archaeon",
+      "credential_file": "archaeon/campaign<N>/config.local.json",
+      "keys": [
+        "token",
+        "client_id"
+      ],
+      "note": "Archaeon registers per campaign (archaeon/campaign2/runner.py Engine.__init__)"
+    }
+  },
+  "machine": {
+    "role": "sfe-ecosystem",
+    "host": "SPECTREX5",
+    "note": "Postgres/Redis shared on M1; every other service on M2; no farm (operator 2026-09-16)"
+  }
+}

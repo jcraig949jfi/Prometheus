@@ -1,5 +1,18 @@
 # Running the Engine on M1 vs M2
 
+> **TOPOLOGY RULING (operator, 2026-09-16).** Postgres and Redis are the
+> shared substrate (on M1, the canonical store); **every other service runs
+> on exactly one machine, never both**. A farm is a future roadmap item and
+> to date does not merit it. The Serendipity Foundry Engine's machine is
+> **M2** from 2026-09-16. The M1 engine was stopped ~2026-09-15 20:15Z for the
+> move and is not coming back; its ledger (eng_8a37a5d3, the production
+> identity) is adopted on M2 by `deploy/adopt_m1_ledger.py` once the operator
+> lands the data dir here. Until that swap, the engine on M2 serves the twin
+> ledger eng_906356f7 and is NOT production (Daedalus ruling, comms #270).
+> Everything below that describes "two engines" is history from 2026-09-04
+> to 2026-09-15, kept so the shape of the move can be explained; the M1
+> column no longer describes a running service.
+
 Two Serendipity Foundry Engines are live as of 2026-09-04, one per machine.
 They are **separate engines with separate substrates** — not a cluster, not a
 replica pair, and not a failover. Nothing is shared between them.
@@ -80,6 +93,31 @@ The relocation itself is receipted in `deploy/M2_RELOCATE_2026-09-16/` (tool `de
 
 On M2 there is no service on `:8799` to protect — but there IS a local
 PostgreSQL on `:5432`; see the hazard below.
+
+## Backing up the ledger (9.0.1 and later): never a file copy
+
+Since 9.0.1 the engine holds its SQLite connections OPEN for the life of the
+process (a checkout/checkin pool with `wal_autocheckpoint=0`, plus the
+checkpointer thread), so `engine.db` on disk is NOT the ledger at any instant:
+committed pages sit in `engine.db-wal` until the checkpointer moves them, and a
+plain copy of `engine.db` (or of the db+wal pair mid-write) is a torn or stale
+snapshot that opens without error. A backup is one of:
+
+    # the SQLite backup API from another process -- consistent, no outage
+    python - <<'PY'
+    import sqlite3
+    src = sqlite3.connect("file:D:/Prometheus-data/sfe/engine.db?mode=ro", uri=True)
+    dst = sqlite3.connect("D:/Prometheus-data/sfe/backup/engine_<stamp>.db")
+    src.backup(dst); dst.close(); src.close()
+    PY
+
+    # or what release_v9.py preflight does: backup API, then re-open the copy
+    # and read it (schema_version, row counts) before calling it a backup
+
+Restoring is the reverse and needs the SERVICE STOPPED first (the restart
+discipline above), then the copy put in place with no `-wal`/`-shm` files
+beside it; `SFE_SCHEMA9_MIGRATION_RECEIPT.md` R1-R6 is the rehearsed
+sequence. `test_sfe_session_affinity.py`'s restore test pins the API path.
 
 ## Firewall on M2 — the same gotcha as M1, one machine over
 

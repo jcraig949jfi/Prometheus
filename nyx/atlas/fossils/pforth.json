@@ -87,7 +87,7 @@
    "value": {
     "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
     "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
-    "tree_sha256": "d376716f69fe50381a98d5880571f8eb34f9a4c1a6e2c3c277e7f6dd18dcc934"
+    "tree_sha256": "6750dcae553a47cee05f6d5bce91fbb767eece3cdd4631c35fc829f2d0f909c7"
    },
    "basis": "TECHNE_RECORD"
   },
@@ -130,20 +130,655 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pf_inner.c:286-330"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pf_inner.c:381-400, 513-518, 961-970, 1465-1475"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pfcompil.c:834-880"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pfcompil.c:51-131, 594-731"
+   }
+  ],
+  "inspected_files": [
+   "pf_inner.c pfCatch head + control-flow cases",
+   "pfcompil.c ffInterpret + function list"
+  ],
+  "date": "2026-09-17T22:03Z",
+  "note": "a token-threaded Forth: a word is either a primitive (a small integer dispatched by one switch) or a secondary (an address of a cell array of tokens); the inner loop descends into secondaries by pushing the instruction pointer, and the outer interpreter is the same loop with a text source and a compile/interpret state flag",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:03Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/philburk/pforth@e5617638c3a397c644fe82c6301711867a0ca1bf",
+   "payload_manifest_id": "techne tree_sha256 6750dcae553a47cee05f6d5bce91fbb767eece3cdd4631c35fc829f2d0f909c7 (123 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/csrc/pf_inner.c",
+     "payload_hash_read": "b6fc2dc192a31c24a1a13029f6e058543198078f29c88b51127a5619148735f7",
+     "techne_recorded_hash": "b6fc2dc192a31c24a1a13029f6e058543198078f29c88b51127a5619148735f7",
+     "match": true,
+     "refs": 4
+    },
+    {
+     "path": "upstream/tree/csrc/pfcompil.c",
+     "payload_hash_read": "22de56dbd7c6887c643c3baabda5de27212023989e605ff844c6446e35da54f4",
+     "techne_recorded_hash": "22de56dbd7c6887c643c3baabda5de27212023989e605ff844c6446e35da54f4",
+     "match": true,
+     "refs": 4
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+   "fossil_ancestry": "pforth",
+   "human_name": "pfCatch (pf_inner.c): the while(!IsTokenPrimitive) loop, M_R_PUSH(InsPtr), the switch, ID_EXIT",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a token below a threshold is a primitive and is executed by a switch case; any other token is a secondary: the current instruction pointer is pushed on the return stack, the pointer is set to the secondary's body, and the next token is read; EXIT pops the return stack; the top of the data stack, the two stack pointers and the instruction pointer are cached in C registers for the whole run (LOAD/SAVE_REGISTERS around any call out)",
+   "input": "an execution token",
+   "output": "side effects on the two stacks and memory; a ThrowCode on error",
+   "state": "data stack, return stack, instruction pointer (all in the task struct)",
+   "update": "per token",
+   "assumptions": [
+    "secondaries contain only tokens (no machine code), so the same image runs on any C platform -- the 'portable' in the name",
+    "the return stack is shared with the program's own R> >R use"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+    "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack"
+   ],
+   "fitness_value_in_ancestor": "one C function is the whole VM; portability over speed",
+   "failure_landscape": "by reading: no bounds checks in the hot loop; a corrupted token past the switch falls to default",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "token threading (vs direct/indirect) chosen for portability; the register-caching macros are the author's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pf_inner.c:286-330, 381-386, 961-970"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "pfCatch's loop head, the descent loop, ID_EXIT and ID_EXECUTE",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack",
+   "fossil_ancestry": "pforth",
+   "human_name": "ID_BRANCH / ID_0BRANCH (M_BRANCH) / ID_LOOP_P and friends",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "BRANCH reads a cell offset after itself and adds it to the instruction pointer; 0BRANCH does so only if the popped top is zero; counted loops keep index and limit on the RETURN stack and LOOP increments, compares and branches back or skips the offset; IF/ELSE/THEN and DO/LOOP compile to these tokens with offsets patched at compile time",
+   "input": "the token stream",
+   "output": "a new instruction pointer",
+   "state": "the return stack (loop parameters)",
+   "update": "per control token",
+   "assumptions": [
+    "structured control compiles to a handful of branch primitives; the return stack doubles as loop-parameter storage (so R> inside a loop is a footgun the language accepts)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+    "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag"
+   ],
+   "fitness_value_in_ancestor": "no parser at run time; control is data",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pf_inner.c:513-518, 1465-1475"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the branch and loop cases",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "fossil_ancestry": "pforth",
+   "human_name": "ffInterpret / FindAndCompileOrExecute / ffColon / ffSemiColon / ffLiteral (pfcompil.c)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "read a whitespace-delimited word from the source; look it up in the dictionary; if found, execute it (interpret state) or append its token to the definition under construction (compile state), unless the word is IMMEDIATE, which executes even while compiling; if not found, try to parse a number and push it or compile a LITERAL token; ':' opens a definition (creates a header, sets compile state), ';' appends EXIT and closes it",
+   "input": "text",
+   "output": "executed effects or a new dictionary entry",
+   "state": "gVarState (compile/interpret), the dictionary pointer",
+   "update": "per word",
+   "assumptions": [
+    "the language extends itself: IMMEDIATE words run the compiler; there is no grammar beyond 'words separated by blanks'"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pforth::dictionary_as_a_linked_list_of_name_headers_searched_newest_first",
+    "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+    "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack"
+   ],
+   "fitness_value_in_ancestor": "the compiler is a few dozen lines because the inner interpreter is the compiler's target and the language's own words build the rest",
+   "failure_landscape": "by reading: an error mid-definition leaves the state flag cleared (the finally block) and the partial definition in the dictionary",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Moore's Forth outer interpreter; immediate words as the extension mechanism",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pfcompil.c:834-880, 594-731"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "ffInterpret and the colon/semicolon/literal functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "STRUCTURE",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "pforth::dictionary_as_a_linked_list_of_name_headers_searched_newest_first",
+   "fossil_ancestry": "pforth",
+   "human_name": "CreateDicEntry / ffFindNFA / ffFind / NameToToken (pfcompil.c 64-160, 416-540)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each definition gets a header (name, flags, link to the previous header, the execution token); lookup walks the list from the newest entry, comparing names, so a redefinition shadows the old one without deleting it; the token is recovered from the header by fixed offsets",
+   "input": "a word name",
+   "output": "its token and flags, or not found",
+   "state": "the dictionary (a growing array of cells)",
+   "update": "per definition",
+   "assumptions": [
+    "linear search is fast enough for a few thousand words; newest-first gives redefinition semantics for free"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag"
+   ],
+   "fitness_value_in_ancestor": "the whole namespace in one structure the program can inspect and extend",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:pforth/upstream/tree/csrc/pfcompil.c:64-160, 416-540"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the dictionary functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "DURABLE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the ~180 arithmetic/stack/memory/I/O primitives, pf_save.c (dictionary image save/load), pf_core.c, pf_words.c, the fth/ Forth sources, the C-call bridge (ID_CALL_C)",
+   "reason": "OTHER",
+   "evidence": "NOT READ; the primitives are the alphabet, not mechanisms",
+   "note": "pf_save.c is where the 'image' portability lives; unread",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pforth"
+  },
+  {
+   "candidate": "'Forth' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "inner interpreter, control primitives, outer interpreter and dictionary are four separable mechanisms; the vault's tinyscheme/femtolisp interpreters replace each differently",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "pforth"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "pforth::P.a_language_must_be_extended_by_its_own_programs_at_run_time_with_no_parser_and_a_few_kilobytes_of_interpreter",
+   "source_fossil": "pforth",
+   "source_evidence": "pf_inner.c pfCatch; pfcompil.c ffInterpret",
+   "condition": "an organism must accept new named behaviours at run time, composed from existing ones, and run them at near-primitive speed, on a machine with tiny memory; no grammar beyond tokens and blanks",
+   "resource_or_constraint": "interpreter size; dictionary memory; one dispatch per token",
+   "failure_condition": "a definition that cannot be built from earlier ones, or a run-time cost per token that grows with program size",
+   "world_punishes": "parsers (size), tree-walking (speed), fixed vocabularies (no extension)",
+   "world_rewards": "threaded code with a self-extending dictionary and immediate words",
+   "observable_consequence": "interpreter size vs tokens per second vs number of user definitions",
+   "vacuity_condition": "a fixed program (compile once)",
+   "trivial_shortcuts": "a bigger machine",
+   "cheat_control": "a native-compiled version of the same program is the speed ceiling; a tree-walking interpreter of the same words is the floor: the world must place threaded code between them",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a portable, self-extending Forth (Burk 1994-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "pforth::dictionary_as_a_linked_list_of_name_headers_searched_newest_first",
+   "to": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "to": "pforth::dictionary_as_a_linked_list_of_name_headers_searched_newest_first",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "to": "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "executes found words",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+   "to": "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "to": "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "compiles branch tokens with patched offsets",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "pforth",
+   "relation": "algorithm_from",
+   "to": "Moore's Forth (1970); token threading as the portable variant",
+   "note": "from the code; not verified",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the primitive set, the image save/load and the Forth-level system unread",
+   "nothing ran"
+  ],
+  "note": "the four interpreter mechanisms are located",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

@@ -1,7 +1,7 @@
 # Harmonia backlog -- H0-H5 qualification
 
 Schema: `roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md`.
-Priority order. The first five are what I start today. 34 items.
+Priority order. The first five are what I start today. 49 items (HARM-37..51 added 2026-09-16 for the Mechanism Archaeology lane; see RESPONSIBILITIES.md s8).
 
 Seat scope: controls, units, qualification, and what the evidence permits. I
 own no execution and gate no release -- a scientific verdict and a software
@@ -68,6 +68,24 @@ HARM-32 | Audit every number quoted in my own rulings for the population it was 
 HARM-33 | Run the grant and verify Archaeon's read scope end to end once the credential exists | ENGINE | alpha | S | operator (harmonia-m2 credential) | rows, census and out-of-scope isolation verified, or a recorded reissue path
 HARM-34 | Rule whether a diagnostic alpha may ever be promoted to confirmatory evidence, and write the refusal into `validate_plan` | program | 1.0 | S | none | a test proving a DIAGNOSTIC plan cannot be relabelled CONFIRMATORY after its data is read
 
+## Mechanism Archaeology lane (added 2026-09-16; FOSSIL-GZIP-001, deliverable RESURRECTION-GZIP-001)
+
+HARM-37 | Calibrate the equivalence ruler on RS_CALIBRATION_PAIR_001 (Amendment 3 N3): an executing verifier that recovers errors-only agreement and the tt+1 Rockliff-silent / Karn -1 divergence, with self and mis-map controls | ARCHAEOLOGY | R1 | M | none | CLOSED 2026-09-16: roles/Harmonia/science/rs_ruler/ + RULING_RS_CALIBRATION_PAIR_001_2026-09-16.md; R-ID-1/R-ID-2 IDENTICAL, R-DIV-1 DIVERGENT 1865/2000, controls 0 false divergences
+HARM-38 | Grade the gzip oracle sources per R23 (EXECUTION in fw-01f8b51f; algorithm.doc/gzip.texi CONTEMPORARY_DOCUMENT; RFC 1951/1952 LATER same author; zlib configuration_table MODERN_REFERENCE_IMPLEMENTATION) and write ORACLE_SOURCES + ORACLE_PROVENANCE_GRADES into the resurrection packet, conflicts recorded | ARCHAEOLOGY | R1 | M | none | roles/Harmonia/archaeology/gzip/ORACLE_SOURCES.json with one row per datum: source, grade, artifact identity, method, uncertainty, conflicts
+HARM-39 | Build the gzip oracle corpus (CORPUS-A/CORPUS-B of packet 002/003: levels 1..9, ratio and min-of-5 time, produced-file hashes) by executing the fossil in its world; freeze corpus hashes before any surrogate runs | ARCHAEOLOGY | R1 | M | Techne's harness for fw-01f8b51f (exists: techne.fossils.harvest run) | oracle corpus + hashes committed BEFORE the surrogate commit; both controls of the packet (C-CHEAT-PRECOMPRESSED, C-POS-LEVEL-EXTREMES) executed on the fossil
+HARM-40 | Construct the smallest modern surrogate justified by the fossil (candidate: zlib deflate at pinned version, same author, same table; alternative: a minimal reimplementation) and record HARMONIA_SURROGATE_ID with hashes and the faithful/divergent ancestry | ARCHAEOLOGY | R2 | L | HARM-39 | surrogate identity + build receipt; the faithful branch preserved before any divergent descendant
+HARM-41 | Differential tests fossil vs surrogate on the oracle corpus; EQUIVALENCE_RESULT and DIVERGENCE_LEDGER with no disagreement removed by editorial decision; R3 where the intervention can be expressed on both | ARCHAEOLOGY | R2-R4 | L | HARM-40 | equivalence table per level and per corpus; divergence ledger with cause classes; the ruler's own controls re-run on the pair
+HARM-43 | Re-verify from this worktree the contract Daedalus landed at a1dd1458c (build 4dbcd3fd, eng_906356f7): run conformance_check.py plain and with both consumers' route sets against https://192.168.1.191:8811, diff the `landed` block against #256's promote conditions, and annotate candidates/726275da9c8d as SUPERSEDED | ENGINE | beta | S | none | gate outputs committed under contracts/verify_landed_2026-09-16/ and the candidate directory annotated
+HARM-44 | Answer Proteus #341: (1) audit the V0.5 detailed-balance instrument (d511974eb, fe27309f4: pairwise flux imbalance vs MC noise floor + occupancy TV at 2e6 steps) as the per-grammar-profile current measurement, or name the instrument instead; (2) rule R4 for a length-fixed profile: TRIVIALLY_SATISFIED vs NOT_APPLICABLE | H0H5 | beta | S | none | a ruling file with the two answers and what was read to give them; posted --kind ruling
+HARM-42 | H5: verify I1/I2/I3 of the packet can be expressed identically or equivalently on fossil and surrogate (SOURCE-level edits at deflate.c:225-245, :672, trees.c:987 and their surrogate counterparts); then adjudicate the packet (CUT_SUPPORTED / CUT_CHALLENGE / PREDICTION_FAILED / PREDICTION_INDETERMINATE) | ARCHAEOLOGY | R3 | L | packet 003 (Nyx; PREDICTION_PACKET_CHALLENGE returned 2026-09-16 on the 667/672 line defect), HARM-41 | the typed return with rows; RESURRECTION-GZIP-001 delivered
+HARM-45 | Adjudicate MECH-PARTICLES-ESSTRIGGER-003 if Nyx re-poses claim (c) (002 returned CUT_SUPPORTED on the boundary 2026-09-17; (c) CONFLICTING at 50 vs 400 seeds; power statement owed); ruler_002.py ready | ARCHAEOLOGY | R2-R3 | S | Nyx (packet 003 or a drop of (c)) | typed return within one tick of the freeze
+HARM-46 | Stage-A experimental-opportunity triage of the 39 cuts (operator ask 2026-09-17): per cut, reproduction / mutation / new-experiment candidates, world needed, oracle source, downstream consumer (Theophrastus cells, SFE queue via Archaeon, Nestor primordial receipt); a feasibility map, not a ranking (C8) | ARCHAEOLOGY | R1 | M | none for the reading | roles/Harmonia/archaeology/TRIAGE_STAGE_A_2026-09-17.md
+HARM-47 | POET (TECHNE-104): PATA-EC recomputation ruler + reconstructability meter over one traced lineage; basis-population ablation cell (P_t(E) != P_{t+k}(E)); preservation-cost shim as a DESCENDANT | ARCHAEOLOGY | R1-R3 | L | Techne lineage (M2); Nyx organs + packet | archaeology/poet/ ruler + controls; typed return; cell row draft
+HARM-48 | Avida (TECHNE-105): ANCESTRY GROUND-TRUTH RULER (recorded .spop graph vs genome-only reconstruction; controls: true ids -> recall 1.0, 10% scrambled -> falls, no reproduction -> empty); written first against converters-avida example data (instrument before specimen) | ARCHAEOLOGY | R1 | M | none for the instrument; Techne .spop (M2) for the specimen | archaeology/avida/ ruler passing its own controls; provenance-ablation curve when the .spop lands
+HARM-49 | Tierra (TECHNE-106): gene-bank admission-rule replay + threshold sweep | ARCHAEOLOGY | R1-R2 | M | Techne licence reading + build + one bank (M2) | replay agreement 1.0 on the fossil's own decisions; specimen-count vs threshold curve
+HARM-50 | ASAL (TECHNE-107): level-1 metric ruler reproducing Techne's four numbers (M3 now); level-2 through CLIP (order of cycle/noise/drift/Lenia; iid/drift ratio L2 over L1) when an install or host is authorised | ARCHAEOLOGY | R1-R2 | M | level 2: operator (torch + CLIP on M3, or M2); Techne .npz + CLIP id | archaeology/asal/ level-1 receipt; level-2 order + ratio with controls
+HARM-51 | TerraLingua (TECHNE-108): method-1 vs method-2 disagreement table + confidence calibration audit + scrambled-candidate control, graded in the Avida ruler's vocabulary | ARCHAEOLOGY | R1 | M | Techne one-experiment slice; operator for the LLM arm | archaeology/terralingua/ table + audit; no LLM call without the operator's yes
+
 ## Blocked, listed rather than hidden
 
     HARM-18  operator decision on d3.v2
@@ -77,6 +95,7 @@ HARM-34 | Rule whether a diagnostic alpha may ever be promoted to confirmatory e
     HARM-26  a scratch engine at live-7 build parity (Daedalus)
     HARM-33  the harmonia-m2 credential (operator), and F-6 (Daedalus)
     HARM-35  Daedalus A0 -- response models must exist before a contract can record them
+    HARM-42  packet 003 from Nyx (line 667 -> 672); HARM-41
 
 XL rows needing an operator decision, so the operator's queue is derivable:
 **HARM-18** only.

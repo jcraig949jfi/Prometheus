@@ -33,9 +33,9 @@
     "repo": "github.com/JeffBezanson/femtolisp"
   },
   "hashes": {
-    "tree_sha256": "2ce026b954ff3d073425706072e15e103038f30c475a57e15bd64a7009d6f788",
-    "n_files": 136,
-    "bytes": 3722804,
+    "tree_sha256": "29bbc9f1eb0c0ebdd3648e33a8d1c4f45a7598c3a6d6e898c8eca2aae6d3fad7",
+    "n_files": 112,
+    "bytes": 2653771,
     "artifacts": [
       {
         "filename": "https://github.com/JeffBezanson/femtolisp",
@@ -43,7 +43,7 @@
         "commit": "ec7601076a976f845bc05ad6bd3ed5b8cde58a97"
       }
     ],
-    "body_location": "F:\\Prometheus\\vault\\fossils\\femtolisp",
+    "body_location": "D:\\Prometheus\\vault\\fossils\\femtolisp",
     "hash_list": "techne/fossils/specimens/femtolisp/UPSTREAM_HASHES.txt"
   },
   "license": {
@@ -111,5 +111,33 @@
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / UPSTREAM_TESTS_PASS ; receipt techne/fossils/specimens/femtolisp/receipts/run-femtolisp-20260912T152717Z.json",
     "what_humans_used_it_for": "evaluate a Lisp by compiling s-expressions to a compact bytecode and running them on a stack VM with garbage collection -- small and fast enough to embed and to bootstrap a larger language"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "hashes_superseded": [
+    {
+      "tree_sha256": "2ce026b954ff3d073425706072e15e103038f30c475a57e15bd64a7009d6f788",
+      "n_files": 136,
+      "bytes": 3722804,
+      "artifacts": [
+        {
+          "filename": "https://github.com/JeffBezanson/femtolisp",
+          "sha256": null,
+          "commit": "ec7601076a976f845bc05ad6bd3ed5b8cde58a97"
+        }
+      ],
+      "body_location": "F:\\Prometheus\\vault\\fossils\\femtolisp",
+      "hash_list": "techne/fossils/specimens/femtolisp/UPSTREAM_HASHES.txt",
+      "superseded_utc": "20260916T134958Z",
+      "reason": "M2 rematerialize 2026-09-16: record hashed over a CRLF-converted checkout on M1 (and, where NOT_IN_ORIGIN > 0, build/interpreter residue); origin serves byte-exact upstream; see techne/fossils/REMATERIALIZE_M2_2026-09-16_run2_drift_classes.json",
+      "receipt": "techne/fossils/specimens/femtolisp/receipts/repin-femtolisp-20260916T134958Z.json",
+      "superseded_hash_list": "techne/fossils/specimens/femtolisp/UPSTREAM_HASHES.superseded-20260916.txt",
+      "class_counts": {
+        "SAME": 0,
+        "RECORD_IS_CRLF": 112,
+        "NOT_IN_ORIGIN": 24,
+        "FETCH_IS_CRLF": 0,
+        "OTHER": 0,
+        "ADDED": 0
+      }
+    }
+  ]
 }

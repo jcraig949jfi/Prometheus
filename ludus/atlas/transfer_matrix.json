@@ -1,7 +1,7 @@
 {
   "artifact": "LUDUS transfer matrix + atlas",
   "no_model_calls": true,
-  "ts_utc": "2026-08-27T08:16:05+00:00",
+  "ts_utc": "2026-09-16T12:40:07+00:00",
   "circuits": {
     "r0010": {
       "axis": "SELECT",
@@ -223,149 +223,149 @@
       "world": "MARTIAN_DICE",
       "genre": "push-your-luck / dice",
       "surface": "thirteen dice, flying saucers, tanks, and abducted livestock",
-      "rules_state": "HYPOTHESIZED",
+      "rules_state": "AUDITED_BY_SEAT",
       "declared_interfaces": [
         "STOP",
         "SELECT"
       ],
       "select_axis_is_live": true,
-      "n_states": 8555,
-      "optimal_ev": 2.093806,
-      "compile_and_solve_seconds": 1.8,
+      "n_states": 14653,
+      "optimal_ev": 3.110382,
+      "compile_and_solve_seconds": 0.8,
       "stop_axis": {
         "r0003": {
-          "ev": 2.067013,
-          "retention": 0.9872,
+          "ev": 2.915386,
+          "retention": 0.9373,
           "retention_by_partner": {
-            "optimal_select": 0.9872,
-            "greedy_select": 0.8655,
-            "one_ply_select": 0.9656
+            "optimal_select": 0.9368,
+            "greedy_select": 0.8447,
+            "one_ply_select": 0.9373
           },
-          "partner_spread": 0.1217,
+          "partner_spread": 0.0926,
           "transferable": true
         },
         "r0004": {
-          "ev": 0.482895,
-          "retention": 0.2306,
+          "ev": 3.032156,
+          "retention": 0.9749,
           "retention_by_partner": {
-            "optimal_select": 0.2306,
-            "greedy_select": 0.2052,
-            "one_ply_select": 0.2243
+            "optimal_select": 0.9749,
+            "greedy_select": 0.9041,
+            "one_ply_select": 0.9617
           },
-          "partner_spread": 0.0255,
+          "partner_spread": 0.0707,
           "transferable": false
         },
         "r0005": {
           "ev": 0.373241,
-          "retention": 0.1783,
+          "retention": 0.12,
           "retention_by_partner": {
-            "optimal_select": 0.1762,
-            "greedy_select": 0.1783,
-            "one_ply_select": 0.1783
+            "optimal_select": 0.1186,
+            "greedy_select": 0.12,
+            "one_ply_select": 0.12
           },
-          "partner_spread": 0.0021,
+          "partner_spread": 0.0014,
           "transferable": false
         },
         "r0007": {
-          "ev": 1.812581,
-          "retention": 0.8657,
+          "ev": 3.032156,
+          "retention": 0.9749,
           "retention_by_partner": {
-            "optimal_select": 0.8657,
-            "greedy_select": 0.7712,
-            "one_ply_select": 0.8477
+            "optimal_select": 0.9749,
+            "greedy_select": 0.9041,
+            "one_ply_select": 0.9617
           },
-          "partner_spread": 0.0945,
+          "partner_spread": 0.0707,
           "transferable": true
         },
         "r0015": {
-          "ev": 2.014177,
-          "retention": 0.962,
+          "ev": 3.09736,
+          "retention": 0.9958,
           "retention_by_partner": {
-            "optimal_select": 0.962,
-            "greedy_select": 0.8217,
-            "one_ply_select": 0.9406
+            "optimal_select": 0.9958,
+            "greedy_select": 0.9194,
+            "one_ply_select": 0.9817
           },
-          "partner_spread": 0.1403,
+          "partner_spread": 0.0764,
           "transferable": true
         },
         "r0006-fitted": {
-          "ev": 1.978289,
-          "retention": 0.9448,
-          "fitted_T": 3.0,
+          "ev": 3.069121,
+          "retention": 0.9867,
+          "fitted_T": 8.0,
           "transferable": false,
           "note": "swept per world; the bar a transferable circuit must clear"
         }
       },
       "select_axis": {
         "r0010": {
-          "ev": 1.819246,
-          "retention": 0.8689,
+          "ev": 2.869747,
+          "retention": 0.9226,
           "retention_by_partner": {
-            "myopic_stop": 0.8655,
-            "never_stop": 0.2052,
-            "optimal_stop": 0.8689
+            "myopic_stop": 0.8447,
+            "never_stop": 0.9041,
+            "optimal_stop": 0.9226
           },
-          "partner_spread": 0.6637,
+          "partner_spread": 0.0779,
           "transferable": true
         },
         "r0011": {
-          "ev": 0.524825,
-          "retention": 0.2507,
+          "ev": 1.238718,
+          "retention": 0.3983,
           "retention_by_partner": {
-            "myopic_stop": 0.2501,
-            "never_stop": 0.0195,
-            "optimal_stop": 0.2507
+            "myopic_stop": 0.3395,
+            "never_stop": 0.3716,
+            "optimal_stop": 0.3983
           },
-          "partner_spread": 0.2312,
+          "partner_spread": 0.0588,
           "transferable": true
         },
         "r0012": {
-          "ev": 2.040952,
-          "retention": 0.9748,
+          "ev": 3.066553,
+          "retention": 0.9859,
           "retention_by_partner": {
-            "myopic_stop": 0.9656,
-            "never_stop": 0.2243,
-            "optimal_stop": 0.9748
+            "myopic_stop": 0.9373,
+            "never_stop": 0.9617,
+            "optimal_stop": 0.9859
           },
-          "partner_spread": 0.7504,
+          "partner_spread": 0.0486,
           "transferable": true
         },
         "r0013": {
-          "ev": 1.548931,
-          "retention": 0.7398,
+          "ev": 0.810067,
+          "retention": 0.2604,
           "retention_by_partner": {
-            "myopic_stop": 0.7398,
-            "never_stop": 0.1705,
-            "optimal_stop": 0.7398
+            "myopic_stop": 0.2388,
+            "never_stop": 0.2602,
+            "optimal_stop": 0.2604
           },
-          "partner_spread": 0.5693,
+          "partner_spread": 0.0216,
           "transferable": false
         },
         "r0014": {
-          "ev": 1.68238,
-          "retention": 0.8035,
+          "ev": 2.728532,
+          "retention": 0.8772,
           "retention_by_partner": {
-            "myopic_stop": 0.8004,
-            "never_stop": 0.1834,
-            "optimal_stop": 0.8035
+            "myopic_stop": 0.8146,
+            "never_stop": 0.8594,
+            "optimal_stop": 0.8772
           },
-          "partner_spread": 0.6201,
+          "partner_spread": 0.0626,
           "transferable": true
         },
         "OPTIMAL": {
-          "ev": 2.067013,
-          "retention": 0.9872,
+          "ev": 2.913927,
+          "retention": 0.9368,
           "transferable": false
         }
       },
       "axis_decomposition": {
         "cheap_pair": "r0012+r0003",
-        "cheap_pair_retention": 0.9656,
-        "recovered_by_upgrading_SELECT_only": 0.0216,
-        "recovered_by_upgrading_STOP_only": 0.0091,
-        "total_residual": 0.0344
+        "cheap_pair_retention": 0.9373,
+        "recovered_by_upgrading_SELECT_only": -0.0005,
+        "recovered_by_upgrading_STOP_only": 0.0486,
+        "total_residual": 0.0627
       },
-      "wall_seconds": 98.0
+      "wall_seconds": 131.0
     },
     "CANT_STOP": {
       "world": "CANT_STOP",
@@ -3029,6 +3029,156 @@
         "total_residual": 1.0
       },
       "wall_seconds": 34.8
+    },
+    "MARTIAN_DICE_RECON_2026-08-27": {
+      "world": "MARTIAN_DICE_RECON_2026-08-27",
+      "genre": "push-your-luck / dice",
+      "surface": "thirteen dice, flying saucers, tanks, and abducted livestock",
+      "rules_state": "HYPOTHESIZED",
+      "declared_interfaces": [
+        "STOP",
+        "SELECT"
+      ],
+      "select_axis_is_live": true,
+      "n_states": 8555,
+      "optimal_ev": 2.093806,
+      "compile_and_solve_seconds": 1.8,
+      "stop_axis": {
+        "r0003": {
+          "ev": 2.067013,
+          "retention": 0.9872,
+          "retention_by_partner": {
+            "optimal_select": 0.9872,
+            "greedy_select": 0.8655,
+            "one_ply_select": 0.9656
+          },
+          "partner_spread": 0.1217,
+          "transferable": true
+        },
+        "r0004": {
+          "ev": 0.482895,
+          "retention": 0.2306,
+          "retention_by_partner": {
+            "optimal_select": 0.2306,
+            "greedy_select": 0.2052,
+            "one_ply_select": 0.2243
+          },
+          "partner_spread": 0.0255,
+          "transferable": false
+        },
+        "r0005": {
+          "ev": 0.373241,
+          "retention": 0.1783,
+          "retention_by_partner": {
+            "optimal_select": 0.1762,
+            "greedy_select": 0.1783,
+            "one_ply_select": 0.1783
+          },
+          "partner_spread": 0.0021,
+          "transferable": false
+        },
+        "r0007": {
+          "ev": 1.812581,
+          "retention": 0.8657,
+          "retention_by_partner": {
+            "optimal_select": 0.8657,
+            "greedy_select": 0.7712,
+            "one_ply_select": 0.8477
+          },
+          "partner_spread": 0.0945,
+          "transferable": true
+        },
+        "r0015": {
+          "ev": 2.014177,
+          "retention": 0.962,
+          "retention_by_partner": {
+            "optimal_select": 0.962,
+            "greedy_select": 0.8217,
+            "one_ply_select": 0.9406
+          },
+          "partner_spread": 0.1403,
+          "transferable": true
+        },
+        "r0006-fitted": {
+          "ev": 1.978289,
+          "retention": 0.9448,
+          "fitted_T": 3.0,
+          "transferable": false,
+          "note": "swept per world; the bar a transferable circuit must clear"
+        }
+      },
+      "select_axis": {
+        "r0010": {
+          "ev": 1.819246,
+          "retention": 0.8689,
+          "retention_by_partner": {
+            "myopic_stop": 0.8655,
+            "never_stop": 0.2052,
+            "optimal_stop": 0.8689
+          },
+          "partner_spread": 0.6637,
+          "transferable": true
+        },
+        "r0011": {
+          "ev": 0.524825,
+          "retention": 0.2507,
+          "retention_by_partner": {
+            "myopic_stop": 0.2501,
+            "never_stop": 0.0195,
+            "optimal_stop": 0.2507
+          },
+          "partner_spread": 0.2312,
+          "transferable": true
+        },
+        "r0012": {
+          "ev": 2.040952,
+          "retention": 0.9748,
+          "retention_by_partner": {
+            "myopic_stop": 0.9656,
+            "never_stop": 0.2243,
+            "optimal_stop": 0.9748
+          },
+          "partner_spread": 0.7504,
+          "transferable": true
+        },
+        "r0013": {
+          "ev": 1.548931,
+          "retention": 0.7398,
+          "retention_by_partner": {
+            "myopic_stop": 0.7398,
+            "never_stop": 0.1705,
+            "optimal_stop": 0.7398
+          },
+          "partner_spread": 0.5693,
+          "transferable": false
+        },
+        "r0014": {
+          "ev": 1.68238,
+          "retention": 0.8035,
+          "retention_by_partner": {
+            "myopic_stop": 0.8004,
+            "never_stop": 0.1834,
+            "optimal_stop": 0.8035
+          },
+          "partner_spread": 0.6201,
+          "transferable": true
+        },
+        "OPTIMAL": {
+          "ev": 2.067013,
+          "retention": 0.9872,
+          "transferable": false
+        }
+      },
+      "axis_decomposition": {
+        "cheap_pair": "r0012+r0003",
+        "cheap_pair_retention": 0.9656,
+        "recovered_by_upgrading_SELECT_only": 0.0216,
+        "recovered_by_upgrading_STOP_only": 0.0091,
+        "total_residual": 0.0344
+      },
+      "wall_seconds": 98.0,
+      "superseded": "2026-09-16 LUDUS-01: this column was computed on the 2026-08-27 reconstruction, which had two rules wrong against the published sheet (rays claimable once per turn; unclaimable roll scored as a bust). Kept verbatim for provenance; the live MARTIAN_DICE column is the audited world. Class MartianDiceRecon reproduces it (8555 states, EV 2.093806)."
     }
-  }
+  },
+  "merged_from": "2026-08-27T08:16:05+00:00"
 }

@@ -4,7 +4,7 @@ One knowledge substrate, many representations. The `ew` schema in
 prometheus_fire is authoritative; everything under evidence_wiki/derived/ is
 a rebuildable projection. See docs/ARCHITECTURE_V0.md.
 """
-SCHEMA_VERSION = 4          # 4: migration 007, evidence->fossil binding
+SCHEMA_VERSION = 5          # 4: migration 007, evidence->fossil binding; 5: migration 014, campaign ingestion (2026-09-17)
 ONTOLOGY_VERSION = 2
 # The shape Harmonia/Proteus/SFE code against. Bump when the fossil ingest or
 # query contract changes; docs/FIRST_INTEGRATION_EVIDENCE_CONTRACT.md is its

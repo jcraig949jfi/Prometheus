@@ -1,0 +1,480 @@
+{
+ "_what_this_is": "Campaign 4 synthetic end-to-end rehearsal receipt. REHEARSAL ONLY -- no scientific claim.",
+ "campaign_seed": 20260921,
+ "generated_at": "2026-09-17T23:08:28Z",
+ "generated_by": "Archaeon[m2-411504ab]",
+ "identity": {
+  "identity_file": "archaeon/campaign4/CAMPAIGN4_EXECUTION_IDENTITY.json",
+  "identity_file_digest": "sha256:440a012dc2658bf3daca7f1a0f34fed6dca9e77d89ca9e68892a93e97669f254",
+  "tuple": {
+   "archaeon": {
+    "campaign_seed": 20260921
+   },
+   "daedalus": {
+    "engine_instance_id": "eng_906356f7fb1da180131f9290",
+    "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+    "schema_version": 9
+   },
+   "pew": {
+    "reader_version": "ew.campaign_ingest/1.4",
+    "schema_version": 5
+   },
+   "proteus": {
+    "foundry_profile_id": "pfp1:625bc70456ebfa20",
+    "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832"
+   },
+   "vivarium": {
+    "build_commit": "08081c6ed"
+   }
+  }
+ },
+ "plan": "archaeon/campaign4/REHEARSAL_PLAN.md",
+ "preconditions": [
+  {
+   "blocks": [
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8"
+   ],
+   "id": "P1",
+   "owner": "operator / Daedalus",
+   "present": true,
+   "what": "campaign 4 engine credential (archaeon/campaign4/config.local.json)"
+  },
+  {
+   "blocks": [
+    "S3"
+   ],
+   "id": "P2",
+   "owner": "Daedalus",
+   "present": null,
+   "what": "B1 read grant re-issued for cli_2bb36261 on the M2 ledger"
+  },
+  {
+   "blocks": [
+    "S4",
+    "S5"
+   ],
+   "id": "P3",
+   "owner": "Daedalus + Vivarium",
+   "present": null,
+   "what": "~10 minute window for the deliberate mid-run engine restart"
+  },
+  {
+   "blocks": [
+    "S7"
+   ],
+   "id": "P4",
+   "owner": "Mnemosyne",
+   "present": null,
+   "what": "PEW ingest/rebuild/release-check leg"
+  },
+  {
+   "blocks": [],
+   "id": "P5",
+   "owner": "Archaeon",
+   "present": null,
+   "what": "Archaeon's five campaign-3 viv rows stay HELD (must not be swept in)"
+  }
+ ],
+ "stage_mode": "local",
+ "stages": [
+  {
+   "bundle_digest": "sha256:cc4e0464ee9ed2a8fff3ef79b6bff9780fb64f49eced38a01d0a59a363bea485",
+   "bundle_manifest": "archaeon/campaign4/rehearsal/bundle/MANIFEST.json",
+   "stage": "S1",
+   "status": "OK",
+   "units": 48
+  },
+  {
+   "all_valid": true,
+   "arm_collision_by_contract": true,
+   "arm_collision_note": "arms a and b differ only in QUEUE COLUMNS (arm_id, request_key), which viv/spec.py deliberately banishes from the sealed hash, so the pair shares one spec_hash and one derived world name. For this rehearsal that is correct and useful: the two arms are a REPLICATION PAIR, not a contrast, and the collision exercises the request-key path that keeps them distinct rows. CONSEQUENCE FOR CAMPAIGN 4: two arms that differ only in provenance are the same experiment; any real C4 contrast must differ in an EXECUTION INPUT or it will not be distinguishable in the sealed record.",
+   "distinct_spec_hashes": 24,
+   "rows": [
+    {
+     "arm": "a",
+     "seed": 1,
+     "spec_hash": "sha256:b1e4cb0310e93f507742e93a8d6accfd715377ef3ba678464200889589c3bd27",
+     "valid": true,
+     "world_name": "viv-b1e4cb0310e93f50"
+    },
+    {
+     "arm": "a",
+     "seed": 2,
+     "spec_hash": "sha256:67bccef64deff0030a524142d65ec16e401a129d43396653f08ebfb4f901a4e5",
+     "valid": true,
+     "world_name": "viv-67bccef64deff003"
+    },
+    {
+     "arm": "a",
+     "seed": 3,
+     "spec_hash": "sha256:7e75ed336a97090c672762572fd4de2e18dee66fa2c841e2fded0bd89a80d884",
+     "valid": true,
+     "world_name": "viv-7e75ed336a97090c"
+    },
+    {
+     "arm": "a",
+     "seed": 4,
+     "spec_hash": "sha256:65a5010d4228c66241afddd41653177c14ec3b0d73d5922847f22ee8a57580ee",
+     "valid": true,
+     "world_name": "viv-65a5010d4228c662"
+    },
+    {
+     "arm": "a",
+     "seed": 5,
+     "spec_hash": "sha256:c5d8715075cf6762a2c3d5cd2cad7fe129d7a6fd9db5668f044994742d4a36e8",
+     "valid": true,
+     "world_name": "viv-c5d8715075cf6762"
+    },
+    {
+     "arm": "a",
+     "seed": 6,
+     "spec_hash": "sha256:c8204a0bfb004320205254f0f2a81da0247e52048bf5eea0acaca10d44890215",
+     "valid": true,
+     "world_name": "viv-c8204a0bfb004320"
+    },
+    {
+     "arm": "a",
+     "seed": 7,
+     "spec_hash": "sha256:f7c0d9d3fa445aa999cc118eaf36f78161eef1c9831223322c9ad09686cd3e7d",
+     "valid": true,
+     "world_name": "viv-f7c0d9d3fa445aa9"
+    },
+    {
+     "arm": "a",
+     "seed": 8,
+     "spec_hash": "sha256:be056851f814b94310c1a71fb3aba13da62a337eba0b83f158e311769e991f82",
+     "valid": true,
+     "world_name": "viv-be056851f814b943"
+    },
+    {
+     "arm": "a",
+     "seed": 9,
+     "spec_hash": "sha256:c66fd655e92049f52684a42aeed47055852d9a641b60c86399a526ffdc70d8d4",
+     "valid": true,
+     "world_name": "viv-c66fd655e92049f5"
+    },
+    {
+     "arm": "a",
+     "seed": 10,
+     "spec_hash": "sha256:2d9a002241c87e88fc307ca273419938af7cb2c88e0452e2e0f95d8a196056e5",
+     "valid": true,
+     "world_name": "viv-2d9a002241c87e88"
+    },
+    {
+     "arm": "a",
+     "seed": 11,
+     "spec_hash": "sha256:01ee392f50a2b1d818cf97e830c76a3fb75f6f27d5c8b7073c0d43a44a014c4a",
+     "valid": true,
+     "world_name": "viv-01ee392f50a2b1d8"
+    },
+    {
+     "arm": "a",
+     "seed": 12,
+     "spec_hash": "sha256:6fc873aa717d1fd33a9f380f9cec0d387b86c1cf589d08608e1d16ec12e9b8b2",
+     "valid": true,
+     "world_name": "viv-6fc873aa717d1fd3"
+    },
+    {
+     "arm": "a",
+     "seed": 13,
+     "spec_hash": "sha256:a3403248807b3c07b810fd1275fc33fa98a8a4dafe4df7ab346d5c269e497628",
+     "valid": true,
+     "world_name": "viv-a3403248807b3c07"
+    },
+    {
+     "arm": "a",
+     "seed": 14,
+     "spec_hash": "sha256:df8dfc88e09477fe3908d49e5b8611f189ad04745f94ddef7c61c30dc3567c80",
+     "valid": true,
+     "world_name": "viv-df8dfc88e09477fe"
+    },
+    {
+     "arm": "a",
+     "seed": 15,
+     "spec_hash": "sha256:65831ceef90e8497c17539129b79d8041ed65a20448dbd10c7637032a94d2f2f",
+     "valid": true,
+     "world_name": "viv-65831ceef90e8497"
+    },
+    {
+     "arm": "a",
+     "seed": 16,
+     "spec_hash": "sha256:9830031d495bb9787411e4a124b2b2c93aec5a05567cc5332b989357d2b390d7",
+     "valid": true,
+     "world_name": "viv-9830031d495bb978"
+    },
+    {
+     "arm": "a",
+     "seed": 17,
+     "spec_hash": "sha256:20731b29b54407ff32368b4a308f5dd4f1a6ab54cbcb19866576dd96794d7f80",
+     "valid": true,
+     "world_name": "viv-20731b29b54407ff"
+    },
+    {
+     "arm": "a",
+     "seed": 18,
+     "spec_hash": "sha256:ca7de747e84e796dcd6baf81fb36d8fc16196e71f9f3d2c69e12dfb2ccd1b38d",
+     "valid": true,
+     "world_name": "viv-ca7de747e84e796d"
+    },
+    {
+     "arm": "a",
+     "seed": 19,
+     "spec_hash": "sha256:765b1045bf91b4d04d6a837358c4ecea226f88f6cb9bbfadd00d815da2bb443a",
+     "valid": true,
+     "world_name": "viv-765b1045bf91b4d0"
+    },
+    {
+     "arm": "a",
+     "seed": 20,
+     "spec_hash": "sha256:dd765439639559e6921d2f0a628b8e3bd5d636261ae215571999ab93c5a6241e",
+     "valid": true,
+     "world_name": "viv-dd765439639559e6"
+    },
+    {
+     "arm": "a",
+     "seed": 21,
+     "spec_hash": "sha256:7f2c20f6ab82ce465a5875141f2c8dbcd55508106becea8d52d60aff9c3b08c4",
+     "valid": true,
+     "world_name": "viv-7f2c20f6ab82ce46"
+    },
+    {
+     "arm": "a",
+     "seed": 22,
+     "spec_hash": "sha256:21409875dfd16de060c1ebbcc65446c7112a111b4b8ccc6b19a1f2fede4ce085",
+     "valid": true,
+     "world_name": "viv-21409875dfd16de0"
+    },
+    {
+     "arm": "a",
+     "seed": 23,
+     "spec_hash": "sha256:383597526666e30fa2ca3e82e4727621ac1a0c3759990cbf83bbd47c535f2265",
+     "valid": true,
+     "world_name": "viv-383597526666e30f"
+    },
+    {
+     "arm": "a",
+     "seed": 24,
+     "spec_hash": "sha256:960df396cb29c716b0247fa6fe26aaa39898885c678b23ab6869e25dcd3e1609",
+     "valid": true,
+     "world_name": "viv-960df396cb29c716"
+    },
+    {
+     "arm": "b",
+     "seed": 1,
+     "spec_hash": "sha256:b1e4cb0310e93f507742e93a8d6accfd715377ef3ba678464200889589c3bd27",
+     "valid": true,
+     "world_name": "viv-b1e4cb0310e93f50"
+    },
+    {
+     "arm": "b",
+     "seed": 2,
+     "spec_hash": "sha256:67bccef64deff0030a524142d65ec16e401a129d43396653f08ebfb4f901a4e5",
+     "valid": true,
+     "world_name": "viv-67bccef64deff003"
+    },
+    {
+     "arm": "b",
+     "seed": 3,
+     "spec_hash": "sha256:7e75ed336a97090c672762572fd4de2e18dee66fa2c841e2fded0bd89a80d884",
+     "valid": true,
+     "world_name": "viv-7e75ed336a97090c"
+    },
+    {
+     "arm": "b",
+     "seed": 4,
+     "spec_hash": "sha256:65a5010d4228c66241afddd41653177c14ec3b0d73d5922847f22ee8a57580ee",
+     "valid": true,
+     "world_name": "viv-65a5010d4228c662"
+    },
+    {
+     "arm": "b",
+     "seed": 5,
+     "spec_hash": "sha256:c5d8715075cf6762a2c3d5cd2cad7fe129d7a6fd9db5668f044994742d4a36e8",
+     "valid": true,
+     "world_name": "viv-c5d8715075cf6762"
+    },
+    {
+     "arm": "b",
+     "seed": 6,
+     "spec_hash": "sha256:c8204a0bfb004320205254f0f2a81da0247e52048bf5eea0acaca10d44890215",
+     "valid": true,
+     "world_name": "viv-c8204a0bfb004320"
+    },
+    {
+     "arm": "b",
+     "seed": 7,
+     "spec_hash": "sha256:f7c0d9d3fa445aa999cc118eaf36f78161eef1c9831223322c9ad09686cd3e7d",
+     "valid": true,
+     "world_name": "viv-f7c0d9d3fa445aa9"
+    },
+    {
+     "arm": "b",
+     "seed": 8,
+     "spec_hash": "sha256:be056851f814b94310c1a71fb3aba13da62a337eba0b83f158e311769e991f82",
+     "valid": true,
+     "world_name": "viv-be056851f814b943"
+    },
+    {
+     "arm": "b",
+     "seed": 9,
+     "spec_hash": "sha256:c66fd655e92049f52684a42aeed47055852d9a641b60c86399a526ffdc70d8d4",
+     "valid": true,
+     "world_name": "viv-c66fd655e92049f5"
+    },
+    {
+     "arm": "b",
+     "seed": 10,
+     "spec_hash": "sha256:2d9a002241c87e88fc307ca273419938af7cb2c88e0452e2e0f95d8a196056e5",
+     "valid": true,
+     "world_name": "viv-2d9a002241c87e88"
+    },
+    {
+     "arm": "b",
+     "seed": 11,
+     "spec_hash": "sha256:01ee392f50a2b1d818cf97e830c76a3fb75f6f27d5c8b7073c0d43a44a014c4a",
+     "valid": true,
+     "world_name": "viv-01ee392f50a2b1d8"
+    },
+    {
+     "arm": "b",
+     "seed": 12,
+     "spec_hash": "sha256:6fc873aa717d1fd33a9f380f9cec0d387b86c1cf589d08608e1d16ec12e9b8b2",
+     "valid": true,
+     "world_name": "viv-6fc873aa717d1fd3"
+    },
+    {
+     "arm": "b",
+     "seed": 13,
+     "spec_hash": "sha256:a3403248807b3c07b810fd1275fc33fa98a8a4dafe4df7ab346d5c269e497628",
+     "valid": true,
+     "world_name": "viv-a3403248807b3c07"
+    },
+    {
+     "arm": "b",
+     "seed": 14,
+     "spec_hash": "sha256:df8dfc88e09477fe3908d49e5b8611f189ad04745f94ddef7c61c30dc3567c80",
+     "valid": true,
+     "world_name": "viv-df8dfc88e09477fe"
+    },
+    {
+     "arm": "b",
+     "seed": 15,
+     "spec_hash": "sha256:65831ceef90e8497c17539129b79d8041ed65a20448dbd10c7637032a94d2f2f",
+     "valid": true,
+     "world_name": "viv-65831ceef90e8497"
+    },
+    {
+     "arm": "b",
+     "seed": 16,
+     "spec_hash": "sha256:9830031d495bb9787411e4a124b2b2c93aec5a05567cc5332b989357d2b390d7",
+     "valid": true,
+     "world_name": "viv-9830031d495bb978"
+    },
+    {
+     "arm": "b",
+     "seed": 17,
+     "spec_hash": "sha256:20731b29b54407ff32368b4a308f5dd4f1a6ab54cbcb19866576dd96794d7f80",
+     "valid": true,
+     "world_name": "viv-20731b29b54407ff"
+    },
+    {
+     "arm": "b",
+     "seed": 18,
+     "spec_hash": "sha256:ca7de747e84e796dcd6baf81fb36d8fc16196e71f9f3d2c69e12dfb2ccd1b38d",
+     "valid": true,
+     "world_name": "viv-ca7de747e84e796d"
+    },
+    {
+     "arm": "b",
+     "seed": 19,
+     "spec_hash": "sha256:765b1045bf91b4d04d6a837358c4ecea226f88f6cb9bbfadd00d815da2bb443a",
+     "valid": true,
+     "world_name": "viv-765b1045bf91b4d0"
+    },
+    {
+     "arm": "b",
+     "seed": 20,
+     "spec_hash": "sha256:dd765439639559e6921d2f0a628b8e3bd5d636261ae215571999ab93c5a6241e",
+     "valid": true,
+     "world_name": "viv-dd765439639559e6"
+    },
+    {
+     "arm": "b",
+     "seed": 21,
+     "spec_hash": "sha256:7f2c20f6ab82ce465a5875141f2c8dbcd55508106becea8d52d60aff9c3b08c4",
+     "valid": true,
+     "world_name": "viv-7f2c20f6ab82ce46"
+    },
+    {
+     "arm": "b",
+     "seed": 22,
+     "spec_hash": "sha256:21409875dfd16de060c1ebbcc65446c7112a111b4b8ccc6b19a1f2fede4ce085",
+     "valid": true,
+     "world_name": "viv-21409875dfd16de0"
+    },
+    {
+     "arm": "b",
+     "seed": 23,
+     "spec_hash": "sha256:383597526666e30fa2ca3e82e4727621ac1a0c3759990cbf83bbd47c535f2265",
+     "valid": true,
+     "world_name": "viv-383597526666e30f"
+    },
+    {
+     "arm": "b",
+     "seed": 24,
+     "spec_hash": "sha256:960df396cb29c716b0247fa6fe26aaa39898885c678b23ab6869e25dcd3e1609",
+     "valid": true,
+     "world_name": "viv-960df396cb29c716"
+    }
+   ],
+   "spec_version": 3,
+   "stage": "S2-validate",
+   "status": "OK",
+   "units": 48
+  },
+  {
+   "preconditions": [
+    "P2"
+   ],
+   "stage": "S3",
+   "status": "BLOCKED"
+  },
+  {
+   "preconditions": [
+    "P3"
+   ],
+   "stage": "S4",
+   "status": "BLOCKED"
+  },
+  {
+   "preconditions": [
+    "P3"
+   ],
+   "stage": "S5",
+   "status": "BLOCKED"
+  },
+  {
+   "preconditions": [],
+   "stage": "S6",
+   "status": "BLOCKED"
+  },
+  {
+   "preconditions": [
+    "P4"
+   ],
+   "stage": "S7",
+   "status": "BLOCKED"
+  },
+  {
+   "preconditions": [],
+   "stage": "S8",
+   "status": "BLOCKED"
+  }
+ ],
+ "wall_s": 0.8
+}

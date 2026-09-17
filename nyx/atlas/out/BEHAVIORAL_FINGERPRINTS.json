@@ -1,0 +1,419 @@
+{
+ "schema": "nyx.atlas/0",
+ "built": "2026-09-17T23:02Z",
+ "n": 2,
+ "receipts": [
+  {
+   "schema": "nyx.atlas/0/receipt",
+   "fossil": "spin-pathfinder-priority-inversion-1997",
+   "experiment": "ablate_rule_vs_mutex",
+   "runner": "docker",
+   "image": "prometheus-fossil-c:bookworm",
+   "started_utc": "2026-09-14T00:05:04Z",
+   "note": "Stage C ablation: spin-pathfinder-priority-inversion-1997 -- which of the two candidate mechanisms is the deadlock made of?\n\nPre-registered before running (this docstring is the prereg):\n  BASELINE  the model as preserved                       -> expect errors: 1 (invalid end state), as Techne's receipt shows\n  A1  REMOVE the priority rule (drop `provided (h_state == idle)`)   -> if the deadlock is the rule's, errors: 0\n  A2  REMOVE the mutex guard (mutex never busy: `mutex == free` always true, never set busy) -> errors: 0 predicted; mutual exclusion is lost (not measured here)\n  A3  REVERSE the rule (low runs only when high is NOT idle)          -> unknown; recorded either way\n  A4  WEAKEN the rule so a high task WAITING counts as yielding (`provided (h_state != running)`) -> the human story says a blocked high\n      task would let low run; if errors: 0 the model's deadlock lives in the rule's over-approximation, not in the mutex\n  CONTROL  a syntactically altered but semantically identical model (rename mtype constants) -> errors: 1\nOutcome measure: pan's 'errors: N' line. Exhaustive search on a 12-state model; no statistics needed.\nLEDGERED REPAIR after run 1 (receipt kept as *_run1_vacuous_indicator.json): the secondary indicator 'invalid end state' in stdout was\nvacuous -- pan prints 'invalid end states +' in its summary on every run; the indicator now matches the error line 'pan:N: invalid end state'.\nThe primary measure (errors count) and all six results are unchanged between run 1 and run 2.\n",
+   "copied": [
+    {
+     "from": "F:\\Prometheus\\vault\\fossils\\spin-pathfinder-priority-inversion-1997\\upstream\\tree\\Spin-version-6.5.2\\Src",
+     "to": "F:\\Prometheus\\vault\\nyx_atlas\\spin-pathfinder-priority-inversion-1997\\ablate_rule_vs_mutex\\Src",
+     "kind": "dir"
+    },
+    {
+     "from": "F:\\Prometheus\\vault\\fossils\\spin-pathfinder-priority-inversion-1997\\upstream\\tree\\Spin-version-6.5.2\\Examples\\pathfinder.pml",
+     "to": "F:\\Prometheus\\vault\\nyx_atlas\\spin-pathfinder-priority-inversion-1997\\ablate_rule_vs_mutex\\models\\baseline.pml",
+     "sha256": "e033056e36b0da6ec0872ddd7ef33ef827fadbf01f38c66689e9cbd9727ba317"
+    }
+   ],
+   "interventions": [
+    {
+     "file": "models/baseline.pml",
+     "sha256_before": "e033056e36b0da6ec0872ddd7ef33ef827fadbf01f38c66689e9cbd9727ba317",
+     "sha256_after": "e033056e36b0da6ec0872ddd7ef33ef827fadbf01f38c66689e9cbd9727ba317",
+     "what": "baseline"
+    },
+    {
+     "file": "models/A1_remove_priority_rule.pml",
+     "sha256_before": "638e4abb923e4915b5fa015654d721cc52f1ca45d2c0a3f9f1d8f32e7a24b5d6",
+     "sha256_after": "638e4abb923e4915b5fa015654d721cc52f1ca45d2c0a3f9f1d8f32e7a24b5d6",
+     "what": "A1_remove_priority_rule"
+    },
+    {
+     "file": "models/A2_remove_mutex_guard.pml",
+     "sha256_before": "646eb32c11f8f068d6bcbe588697cdf73bb2e642146e8834490b6ff80416ad39",
+     "sha256_after": "646eb32c11f8f068d6bcbe588697cdf73bb2e642146e8834490b6ff80416ad39",
+     "what": "A2_remove_mutex_guard"
+    },
+    {
+     "file": "models/A3_reverse_priority_rule.pml",
+     "sha256_before": "b810a89c07f5ddffb4510424d77581733f0598f17e48c73a2e3d16bc5f33737f",
+     "sha256_after": "b810a89c07f5ddffb4510424d77581733f0598f17e48c73a2e3d16bc5f33737f",
+     "what": "A3_reverse_priority_rule"
+    },
+    {
+     "file": "models/A4_waiting_high_yields.pml",
+     "sha256_before": "97577c805c38da86fb735d968a1762dbf7a0595cd366b49573f46d34684fea73",
+     "sha256_after": "97577c805c38da86fb735d968a1762dbf7a0595cd366b49573f46d34684fea73",
+     "what": "A4_waiting_high_yields"
+    },
+    {
+     "file": "models/CONTROL_rename_constants.pml",
+     "sha256_before": "75cec4f82d2e3c5ca71a1d386b4cfa84ac1de41bda2e37b47ec567fe6332eed4",
+     "sha256_after": "75cec4f82d2e3c5ca71a1d386b4cfa84ac1de41bda2e37b47ec567fe6332eed4",
+     "what": "CONTROL_rename_constants"
+    }
+   ],
+   "runs": [
+    {
+     "name": "build spin",
+     "cmd": "cd Src && make -s 2>&1 | grep -iE '\\berror' | head -3; test -x ./spin && echo built",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 11.67,
+     "stdout": {
+      "text": "built\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify baseline",
+     "cmd": "cd models && ../Src/spin -a baseline.pml 2>&1 | tail -1; gcc -O2 -w -o pan_baseline pan.c && ./pan_baseline 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.53,
+     "stdout": {
+      "text": "pan:1: invalid end state (at depth 4)\npan: wrote baseline.pml.trail\n\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 5, errors: 1\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify A1_remove_priority_rule",
+     "cmd": "cd models && ../Src/spin -a A1_remove_priority_rule.pml 2>&1 | tail -1; gcc -O2 -w -o pan_A1_remove_priority_rule pan.c && ./pan_A1_remove_priority_rule 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.51,
+     "stdout": {
+      "text": "\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 8, errors: 0\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify A2_remove_mutex_guard",
+     "cmd": "cd models && ../Src/spin -a A2_remove_mutex_guard.pml 2>&1 | tail -1; gcc -O2 -w -o pan_A2_remove_mutex_guard pan.c && ./pan_A2_remove_mutex_guard 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.51,
+     "stdout": {
+      "text": "\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 7, errors: 0\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify A3_reverse_priority_rule",
+     "cmd": "cd models && ../Src/spin -a A3_reverse_priority_rule.pml 2>&1 | tail -1; gcc -O2 -w -o pan_A3_reverse_priority_rule pan.c && ./pan_A3_reverse_priority_rule 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.41,
+     "stdout": {
+      "text": "\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 7, errors: 0\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify A4_waiting_high_yields",
+     "cmd": "cd models && ../Src/spin -a A4_waiting_high_yields.pml 2>&1 | tail -1; gcc -O2 -w -o pan_A4_waiting_high_yields pan.c && ./pan_A4_waiting_high_yields 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.48,
+     "stdout": {
+      "text": "\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 12, errors: 0\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify CONTROL_rename_constants",
+     "cmd": "cd models && ../Src/spin -a CONTROL_rename_constants.pml 2>&1 | tail -1; gcc -O2 -w -o pan_CONTROL_rename_constants pan.c && ./pan_CONTROL_rename_constants 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.51,
+     "stdout": {
+      "text": "pan:1: invalid end state (at depth 4)\npan: wrote CONTROL_rename_constants.pml.trail\n\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 5, errors: 1\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    }
+   ],
+   "finished_utc": "2026-09-14T00:05:25Z",
+   "fingerprint": {
+    "organ_candidates": [
+     "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
+     "spin-pathfinder-priority-inversion-1997::binary_mutex_test_and_set"
+    ],
+    "intervention": "remove / reverse / weaken one mechanism at a time; exhaustive verification",
+    "measure": "pan errors count (invalid end state = deadlock)",
+    "results": {
+     "baseline": {
+      "errors": 1,
+      "invalid_end_state": true,
+      "raw": "pan:1: invalid end state (at depth 4)\npan: wrote baseline.pml.trail\n\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 5, errors: 1\npan: elapsed time 0 seconds"
+     },
+     "A1_remove_priority_rule": {
+      "errors": 0,
+      "invalid_end_state": false,
+      "raw": "assertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 8, errors: 0\npan: elapsed time 0 seconds"
+     },
+     "A2_remove_mutex_guard": {
+      "errors": 0,
+      "invalid_end_state": false,
+      "raw": "assertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 7, errors: 0\npan: elapsed time 0 seconds"
+     },
+     "A3_reverse_priority_rule": {
+      "errors": 0,
+      "invalid_end_state": false,
+      "raw": "assertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 7, errors: 0\npan: elapsed time 0 seconds"
+     },
+     "A4_waiting_high_yields": {
+      "errors": 0,
+      "invalid_end_state": false,
+      "raw": "assertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 12, errors: 0\npan: elapsed time 0 seconds"
+     },
+     "CONTROL_rename_constants": {
+      "errors": 1,
+      "invalid_end_state": true,
+      "raw": "pan:1: invalid end state (at depth 4)\npan: wrote CONTROL_rename_constants.pml.trail\n\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 5, errors: 1\npan: elapsed time 0 seconds"
+     }
+    },
+    "reading": {
+     "rule_removed_kills_deadlock": true,
+     "mutex_removed_kills_deadlock": true,
+     "waiting_counts_as_yield_kills_deadlock": true,
+     "control_preserved": true
+    }
+   },
+   "controls": [
+    {
+     "name": "CONTROL_rename_constants",
+     "expect": "errors: 1",
+     "got": 1
+    }
+   ]
+  },
+  {
+   "schema": "nyx.atlas/0/receipt",
+   "fossil": "spin-pathfinder-priority-inversion-1997",
+   "experiment": "ablate_rule_vs_mutex",
+   "runner": "docker",
+   "image": "prometheus-fossil-c:bookworm",
+   "started_utc": "2026-09-14T00:04:18Z",
+   "note": "Stage C ablation: spin-pathfinder-priority-inversion-1997 -- which of the two candidate mechanisms is the deadlock made of?\n\nPre-registered before running (this docstring is the prereg):\n  BASELINE  the model as preserved                       -> expect errors: 1 (invalid end state), as Techne's receipt shows\n  A1  REMOVE the priority rule (drop `provided (h_state == idle)`)   -> if the deadlock is the rule's, errors: 0\n  A2  REMOVE the mutex guard (mutex never busy: `mutex == free` always true, never set busy) -> errors: 0 predicted; mutual exclusion is lost (not measured here)\n  A3  REVERSE the rule (low runs only when high is NOT idle)          -> unknown; recorded either way\n  A4  WEAKEN the rule so a high task WAITING counts as yielding (`provided (h_state != running)`) -> the human story says a blocked high\n      task would let low run; if errors: 0 the model's deadlock lives in the rule's over-approximation, not in the mutex\n  CONTROL  a syntactically altered but semantically identical model (rename mtype constants) -> errors: 1\nOutcome measure: pan's 'errors: N' line and 'invalid end state' presence. Exhaustive search on a 12-state model; no statistics needed.\n",
+   "copied": [
+    {
+     "from": "F:\\Prometheus\\vault\\fossils\\spin-pathfinder-priority-inversion-1997\\upstream\\tree\\Spin-version-6.5.2\\Src",
+     "to": "F:\\Prometheus\\vault\\nyx_atlas\\spin-pathfinder-priority-inversion-1997\\ablate_rule_vs_mutex\\Src",
+     "kind": "dir"
+    },
+    {
+     "from": "F:\\Prometheus\\vault\\fossils\\spin-pathfinder-priority-inversion-1997\\upstream\\tree\\Spin-version-6.5.2\\Examples\\pathfinder.pml",
+     "to": "F:\\Prometheus\\vault\\nyx_atlas\\spin-pathfinder-priority-inversion-1997\\ablate_rule_vs_mutex\\models\\baseline.pml",
+     "sha256": "e033056e36b0da6ec0872ddd7ef33ef827fadbf01f38c66689e9cbd9727ba317"
+    }
+   ],
+   "interventions": [
+    {
+     "file": "models/baseline.pml",
+     "sha256_before": "e033056e36b0da6ec0872ddd7ef33ef827fadbf01f38c66689e9cbd9727ba317",
+     "sha256_after": "e033056e36b0da6ec0872ddd7ef33ef827fadbf01f38c66689e9cbd9727ba317",
+     "what": "baseline"
+    },
+    {
+     "file": "models/A1_remove_priority_rule.pml",
+     "sha256_before": null,
+     "sha256_after": "638e4abb923e4915b5fa015654d721cc52f1ca45d2c0a3f9f1d8f32e7a24b5d6",
+     "what": "A1_remove_priority_rule"
+    },
+    {
+     "file": "models/A2_remove_mutex_guard.pml",
+     "sha256_before": null,
+     "sha256_after": "646eb32c11f8f068d6bcbe588697cdf73bb2e642146e8834490b6ff80416ad39",
+     "what": "A2_remove_mutex_guard"
+    },
+    {
+     "file": "models/A3_reverse_priority_rule.pml",
+     "sha256_before": null,
+     "sha256_after": "b810a89c07f5ddffb4510424d77581733f0598f17e48c73a2e3d16bc5f33737f",
+     "what": "A3_reverse_priority_rule"
+    },
+    {
+     "file": "models/A4_waiting_high_yields.pml",
+     "sha256_before": null,
+     "sha256_after": "97577c805c38da86fb735d968a1762dbf7a0595cd366b49573f46d34684fea73",
+     "what": "A4_waiting_high_yields"
+    },
+    {
+     "file": "models/CONTROL_rename_constants.pml",
+     "sha256_before": null,
+     "sha256_after": "75cec4f82d2e3c5ca71a1d386b4cfa84ac1de41bda2e37b47ec567fe6332eed4",
+     "what": "CONTROL_rename_constants"
+    }
+   ],
+   "runs": [
+    {
+     "name": "build spin",
+     "cmd": "cd Src && make -s 2>&1 | grep -iE '\\berror' | head -3; test -x ./spin && echo built",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 11.48,
+     "stdout": {
+      "text": "built\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify baseline",
+     "cmd": "cd models && ../Src/spin -a baseline.pml 2>&1 | tail -1; gcc -O2 -w -o pan_baseline pan.c && ./pan_baseline 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.47,
+     "stdout": {
+      "text": "pan:1: invalid end state (at depth 4)\npan: wrote baseline.pml.trail\n\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 5, errors: 1\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify A1_remove_priority_rule",
+     "cmd": "cd models && ../Src/spin -a A1_remove_priority_rule.pml 2>&1 | tail -1; gcc -O2 -w -o pan_A1_remove_priority_rule pan.c && ./pan_A1_remove_priority_rule 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.59,
+     "stdout": {
+      "text": "\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 8, errors: 0\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify A2_remove_mutex_guard",
+     "cmd": "cd models && ../Src/spin -a A2_remove_mutex_guard.pml 2>&1 | tail -1; gcc -O2 -w -o pan_A2_remove_mutex_guard pan.c && ./pan_A2_remove_mutex_guard 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.51,
+     "stdout": {
+      "text": "\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 7, errors: 0\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify A3_reverse_priority_rule",
+     "cmd": "cd models && ../Src/spin -a A3_reverse_priority_rule.pml 2>&1 | tail -1; gcc -O2 -w -o pan_A3_reverse_priority_rule pan.c && ./pan_A3_reverse_priority_rule 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.45,
+     "stdout": {
+      "text": "\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 7, errors: 0\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify A4_waiting_high_yields",
+     "cmd": "cd models && ../Src/spin -a A4_waiting_high_yields.pml 2>&1 | tail -1; gcc -O2 -w -o pan_A4_waiting_high_yields pan.c && ./pan_A4_waiting_high_yields 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.5,
+     "stdout": {
+      "text": "\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 12, errors: 0\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    },
+    {
+     "name": "verify CONTROL_rename_constants",
+     "cmd": "cd models && ../Src/spin -a CONTROL_rename_constants.pml 2>&1 | tail -1; gcc -O2 -w -o pan_CONTROL_rename_constants pan.c && ./pan_CONTROL_rename_constants 2>&1 | grep -E 'invalid end state|errors:|assertion|pan:' | head -6; rm -f pan.* *.trail",
+     "cwd": "",
+     "exit": 0,
+     "seconds": 1.49,
+     "stdout": {
+      "text": "pan:1: invalid end state (at depth 4)\npan: wrote CONTROL_rename_constants.pml.trail\n\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 5, errors: 1\npan: elapsed time 0 seconds\n"
+     },
+     "stderr": {
+      "text": ""
+     }
+    }
+   ],
+   "finished_utc": "2026-09-14T00:04:38Z",
+   "fingerprint": {
+    "organ_candidates": [
+     "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
+     "spin-pathfinder-priority-inversion-1997::binary_mutex_test_and_set"
+    ],
+    "intervention": "remove / reverse / weaken one mechanism at a time; exhaustive verification",
+    "measure": "pan errors count (invalid end state = deadlock)",
+    "results": {
+     "baseline": {
+      "errors": 1,
+      "invalid_end_state": true,
+      "raw": "pan:1: invalid end state (at depth 4)\npan: wrote baseline.pml.trail\n\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 5, errors: 1\npan: elapsed time 0 seconds"
+     },
+     "A1_remove_priority_rule": {
+      "errors": 0,
+      "invalid_end_state": true,
+      "raw": "assertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 8, errors: 0\npan: elapsed time 0 seconds"
+     },
+     "A2_remove_mutex_guard": {
+      "errors": 0,
+      "invalid_end_state": true,
+      "raw": "assertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 7, errors: 0\npan: elapsed time 0 seconds"
+     },
+     "A3_reverse_priority_rule": {
+      "errors": 0,
+      "invalid_end_state": true,
+      "raw": "assertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 7, errors: 0\npan: elapsed time 0 seconds"
+     },
+     "A4_waiting_high_yields": {
+      "errors": 0,
+      "invalid_end_state": true,
+      "raw": "assertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 12, errors: 0\npan: elapsed time 0 seconds"
+     },
+     "CONTROL_rename_constants": {
+      "errors": 1,
+      "invalid_end_state": true,
+      "raw": "pan:1: invalid end state (at depth 4)\npan: wrote CONTROL_rename_constants.pml.trail\n\tassertion violations\t+\n\tinvalid end states\t+\nState-vector 28 byte, depth reached 5, errors: 1\npan: elapsed time 0 seconds"
+     }
+    },
+    "reading": {
+     "rule_removed_kills_deadlock": true,
+     "mutex_removed_kills_deadlock": true,
+     "waiting_counts_as_yield_kills_deadlock": true,
+     "control_preserved": true
+    }
+   },
+   "controls": [
+    {
+     "name": "CONTROL_rename_constants",
+     "expect": "errors: 1",
+     "got": 1
+    }
+   ]
+  }
+ ]
+}

@@ -84,7 +84,7 @@
    "value": {
     "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
     "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
-    "tree_sha256": "742bea2d0389ebc0e94809dedb98db597d9eb7bc465a7af0efdb0bc3c417ffe4"
+    "tree_sha256": "6e15eb7bb0aaf9248a59bf1412f7a87f57a825756f9310caa70ead7c66131006"
    },
    "basis": "TECHNE_RECORD"
   },
@@ -126,20 +126,788 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:608-658"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:793-965"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:1531-1640"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:1881-1930"
+   }
+  ],
+  "inspected_files": [
+   "src/cmaes.c 608-658, 793-965, 1531-1640, 1881-1930, SupplementDefaults"
+  ],
+  "date": "2026-09-17T22:26Z",
+  "note": "the author's reference implementation: sample lambda points from N(m, sigma^2 C) via the eigen-decomposition C = B D^2 B'; rank the mu best; move the mean to their weighted average; accumulate two evolution paths (one whitened, for step size; one in C's coordinates, for covariance); adapt C by a rank-one term from the path and a rank-mu term from the selected steps; adapt sigma by comparing the whitened path's length with its expectation under random selection; the eigendecomposition is recomputed lazily; every constant has a default formula in N and mu_eff",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:26Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/CMA-ES/c-cmaes@4450d3deccf2aacb6aa955d8216cfc4461699c60",
+   "payload_manifest_id": "techne tree_sha256 6e15eb7bb0aaf9248a59bf1412f7a87f57a825756f9310caa70ead7c66131006 (19 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/src/cmaes.c",
+     "payload_hash_read": "d5825571e3f65777fd532d43acb2801c06e8e7d1dba341ca79ddd6d0580e3e0c",
+     "techne_recorded_hash": "d5825571e3f65777fd532d43acb2801c06e8e7d1dba341ca79ddd6d0580e3e0c",
+     "match": true,
+     "refs": 9
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
- "ancestry_edges": [],
+ "organs": [
+  {
+   "organ_id": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "fossil_ancestry": "c-cmaes-hansen",
+   "human_name": "cmaes_SamplePopulation (608-658): x = m + sigma B (D z); cmaes_UpdateEigensystem (1881-1930): skip if up to date, if gen < last + modulo, or if eigen time exceeds 20 percent of total; the diagonal-only phase (diagonalCov iterations)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each of lambda offspring draw z ~ N(0, I), scale by the eigenvalue square roots D, rotate by the eigenvectors B, scale by sigma and add the mean; the decomposition is recomputed only when flagged stale AND (a generation modulo has elapsed, default 1/(10 ccov N), OR when the eigen time is below 20 percent of the run's time); for the first diagonalCov generations (default 2 + 100 N / sqrt(lambda)) C is treated as diagonal and no decomposition happens; TestMinStdDevs inflates sigma until every coordinate's std exceeds a floor",
+   "input": "m, sigma, C",
+   "output": "lambda candidate points",
+   "state": "B, D (cached), the flags",
+   "update": "per generation",
+   "assumptions": [
+    "the O(N^3) decomposition can lag the O(N^2) covariance update by several generations without hurting progress; a diagonal start is cheaper and good enough early"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+    "c-cmaes-hansen::covariance_adapted_by_a_rank_one_term_from_the_path_and_a_rank_mu_term_from_the_weighted_selected_steps_with_learning_rates_from_default_formulas_in_n_and_mu_eff",
+    "c-cmaes-hansen::step_size_multiplied_by_exp_of_the_normalised_excess_length_of_the_whitened_path_over_a_damping",
+    "c-cmaes-hansen::eleven_stopping_criteria_over_fitness_range_history_coordinate_wise_step_covariance_condition_and_numerical_effectiveness_each_appending_a_named_reason"
+   ],
+   "fitness_value_in_ancestor": "the per-generation cost is O(N^2 lambda) except when the decomposition runs; the time cap makes the algorithm's overhead a bounded fraction",
+   "failure_landscape": "by reading: a stale decomposition samples from an outdated shape; the 20 percent rule is a wall-clock heuristic, so results differ between machines when it triggers",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hansen & Ostermeier 2001; the lazy update is the implementation's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:608-658, 1881-1930"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+   "fossil_ancestry": "c-cmaes-hansen",
+   "human_name": "cmaes_UpdateDistribution (860-905): rgBDz = sqrt(mueff) (m_new - m_old)/sigma; rgdTmp = D^-1 B' rgBDz; ps = (1-cs) ps + sqrt(cs(2-cs)) B rgdTmp; hsig = ||ps|| / sqrt(1-(1-cs)^(2 gen)) / chiN < 1.4 + 2/(N+1); pc = (1-cc) pc + hsig sqrt(cc(2-cc)) rgBDz",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the selected mean shift, scaled by sqrt(mu_eff)/sigma, is the per-generation evidence; the step-size path ps accumulates it after whitening (B D^-1 B') so that under random selection it is a standard normal vector of expected length chiN; the covariance path pc accumulates it unwhitened; hsig compares the normalised length of ps against a threshold and, when the path is too long (the mean is moving fast, typically early or after a jump), zeroes pc's update so the covariance does not learn a spurious direction; the initial-phase flag ends when ps's length statistic settles",
+   "input": "m_new, m_old, sigma, B, D",
+   "output": "ps, pc, hsig",
+   "state": "the two paths",
+   "update": "per generation",
+   "assumptions": [
+    "consecutive selected steps that point the same way are signal (the path grows); steps that cancel are noise (the path stays short); the whitened path's length under no selection is known, so it is a calibrated test statistic"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+    "c-cmaes-hansen::covariance_adapted_by_a_rank_one_term_from_the_path_and_a_rank_mu_term_from_the_weighted_selected_steps_with_learning_rates_from_default_formulas_in_n_and_mu_eff",
+    "c-cmaes-hansen::step_size_multiplied_by_exp_of_the_normalised_excess_length_of_the_whitened_path_over_a_damping"
+   ],
+   "fitness_value_in_ancestor": "step-size control without a success-rate rule; the covariance learns from correlations across generations, not only within one",
+   "failure_landscape": "by reading: the threshold constants (1.4 + 2/(N+1)) are tuned; the sqrt(1-(1-cs)^(2 gen)) bias correction matters only early; the flat-fitness escape multiplies sigma by exp(0.2 + cs/damps) with a warning",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hansen & Ostermeier 1996/2001 (cumulative step-size adaptation); Hansen 2016 tutorial for hsig",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:860-905"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the path block of UpdateDistribution",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "c-cmaes-hansen::covariance_adapted_by_a_rank_one_term_from_the_path_and_a_rank_mu_term_from_the_weighted_selected_steps_with_learning_rates_from_default_formulas_in_n_and_mu_eff",
+   "fossil_ancestry": "c-cmaes-hansen",
+   "human_name": "Adapt_C2 (927-965): C = (1 - c1 - cmu) C + c1 (pc pc' + (1-hsig) cc(2-cc) C) + cmu sum_k w_k y_k y_k'; SupplementDefaults: lambda = 4 + 3 ln N, mu = lambda/2, cs = (mueff+2)/(N+mueff+3), cc = 4/(N+4), ccov from 2/(N+1.414)^2 and (2 mueff - 1)/((N+2)^2 + mueff), damps = 1 + 2 max(0, sqrt((mueff-1)/(N+1)) - 1) + cs",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the lower triangle of C is blended: decayed by (1 - c1 - cmu), plus the outer product of the covariance path (with a variance-loss correction when hsig was zero), plus the weighted outer products of the mu selected steps (y_k = (x_k - m_old)/sigma); learning rates split a total ccov between the rank-one and rank-mu parts by 1/mucov; the decomposition is flagged stale; min/max diagonal are tracked for the termination tests; all constants come from formulas in N, mu_eff and lambda unless a parameter file overrides them",
+   "input": "pc, the selected steps, hsig",
+   "output": "C",
+   "state": "C (N x N)",
+   "update": "per generation",
+   "assumptions": [
+    "the selected steps' second moment, accumulated with a slow learning rate, estimates a covariance under which the successful steps become isotropic (the CMA principle); the defaults are the ones the literature validated"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+    "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget"
+   ],
+   "fitness_value_in_ancestor": "invariance under rotations and rescaling of the problem; ill-conditioned problems solved without derivative information",
+   "failure_landscape": "by reading: O(N^2) memory and O(N^3) decomposition bound N to a few hundred; the flat-fitness and TolUpX warnings are the implementation's own failure detectors",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hansen, Muller, Koumoutsakos 2003 (rank-mu); Hansen & Ostermeier 2001 (rank-one)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:927-965; SupplementDefaults"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "Adapt_C2 and the defaults",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "MATRIX",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "c-cmaes-hansen::step_size_multiplied_by_exp_of_the_normalised_excess_length_of_the_whitened_path_over_a_damping",
+   "fossil_ancestry": "c-cmaes-hansen",
+   "human_name": "cmaes_UpdateDistribution 921: sigma *= exp(((||ps||/chiN) - 1) cs/damps)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "sigma grows when the whitened path is longer than a random walk's expected length chiN (selected steps are correlated: the step is too small) and shrinks when shorter (steps cancel: too large); the exponent is scaled by cs/damps, damps defaulting to about 1 + cs for large N",
+   "input": "ps",
+   "output": "sigma",
+   "state": "sigma",
+   "update": "per generation",
+   "assumptions": [
+    "path length is a scale-free, rotation-invariant signal of step-size adequacy"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+    "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget"
+   ],
+   "fitness_value_in_ancestor": "log-linear convergence on the sphere at a rate independent of the initial sigma",
+   "failure_landscape": "by reading: in a dynamic environment the path's momentum is 'harmful' (the author's own #if 0 comment on the removed momentum fix)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hansen & Ostermeier 1996",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:921"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "one line plus the path organ",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "c-cmaes-hansen::eleven_stopping_criteria_over_fitness_range_history_coordinate_wise_step_covariance_condition_and_numerical_effectiveness_each_appending_a_named_reason",
+   "fossil_ancestry": "c-cmaes-hansen",
+   "human_name": "cmaes_TestForTermination (1531-1640): Fitness, TolFun (range over history and current), TolFunHist, TolX (sigma sqrt(C_ii) and sigma pc_i all below), TolUpX (sigma grew by a factor over the initial stds), ConditionNumber (maxEW >= minEW 1e14), NoEffectAxis (m unchanged by 0.1 sigma along an eigenvector), NoEffectCoord (m unchanged by 0.2 sigma along a coordinate), MaxFunEvals, MaxIter, Manual",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each criterion is tested independently and, if met, appends a human-readable line with the measured value to a shared string; the caller reads the string as 'stop' and the reasons; the two NoEffect tests probe floating-point resolution directly (x == x + fac * step) rather than a tolerance, and TolUpX detects divergence rather than convergence",
+   "input": "the state",
+   "output": "a reason string or empty",
+   "state": "none",
+   "update": "per generation",
+   "assumptions": [
+    "different failure modes need different detectors; a stop must say why so the user can restart with a changed setting (the restart strategies in example_restarts.c consume these reasons)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget"
+   ],
+   "fitness_value_in_ancestor": "the algorithm reports its own inapplicability (divergence, numerical exhaustion, flat fitness) instead of looping",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hansen's termination criteria as listed in the tutorial",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:1531-1640"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "TestForTermination",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "MIXED",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the eigen solver (Householder2 + QLalgo2, the tred2/tql2 lineage), Check_Eigen, the random generator, timings",
+   "reason": "BELOW_MEANINGFUL_GRAIN",
+   "evidence": "vault:c-cmaes-hansen/upstream/tree/src/cmaes.c:1960-2400 (names)",
+   "note": "numerical substrate",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "c-cmaes-hansen"
+  },
+  {
+   "candidate": "parameter file reading and writing, signals file polling, resume from file, boundary_transformation.c, the examples, the plot scripts",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "c-cmaes-hansen"
+  },
+  {
+   "candidate": "'CMA-ES' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "sampling, the paths, the covariance update, the step-size rule and the stopping tests are separable and were published in three papers",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "c-cmaes-hansen"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "c-cmaes-hansen::P.a_black_box_objective_that_is_ill_conditioned_rotated_and_noisy_in_ranking_must_be_minimised_from_ranks_alone_with_the_search_distribution_learning_the_problem_geometry_at_a_cost_bounded_by_the_evaluation_budget",
+   "source_fossil": "c-cmaes-hansen",
+   "source_evidence": "cmaes.c UpdateDistribution, Adapt_C2, TestForTermination; the diagonalCov and parameter-file switches",
+   "condition": "an organism sees only the ranking of lambda evaluated points per generation; the objective's Hessian is unknown, ill-conditioned and rotated; the budget is function evaluations; the score is evaluations to a target precision across a suite",
+   "resource_or_constraint": "lambda evaluations per generation; O(N^2) memory",
+   "failure_condition": "evaluations growing with the condition number (an isotropic search), or premature convergence from step-size collapse, or divergence",
+   "world_punishes": "fixed step sizes; diagonal-only covariance on rotated problems; success-rule step control on noisy rankings",
+   "world_rewards": "a covariance that whitens the selected steps; path-length step control; calibrated stopping",
+   "observable_consequence": "evaluations to target vs condition number on rotated ellipsoids, for the full update vs diagonal-only (the body's own diagonalCov switch) vs rank-one only (cmu = 0) vs no step-size adaptation (cs = 0)",
+   "vacuity_condition": "a separable, well-conditioned objective",
+   "trivial_shortcuts": "gradient access (which the world withholds)",
+   "cheat_control": "an organism given the Hessian must reach the target in evaluations independent of the condition number (the bound); the diagonal-only organism must show evaluations growing with the condition number on rotated ellipsoids and not on axis-aligned ones; cs = 0 must stall or diverge: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: derivative-free continuous optimisation (Hansen 1996-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "to": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "selected points",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+   "to": "c-cmaes-hansen::covariance_adapted_by_a_rank_one_term_from_the_path_and_a_rank_mu_term_from_the_weighted_selected_steps_with_learning_rates_from_default_formulas_in_n_and_mu_eff",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "pc, hsig",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+   "to": "c-cmaes-hansen::step_size_multiplied_by_exp_of_the_normalised_excess_length_of_the_whitened_path_over_a_damping",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "ps",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::covariance_adapted_by_a_rank_one_term_from_the_path_and_a_rank_mu_term_from_the_weighted_selected_steps_with_learning_rates_from_default_formulas_in_n_and_mu_eff",
+   "to": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "C -> B, D",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::step_size_multiplied_by_exp_of_the_normalised_excess_length_of_the_whitened_path_over_a_damping",
+   "to": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::eleven_stopping_criteria_over_fitness_range_history_coordinate_wise_step_covariance_condition_and_numerical_effectiveness_each_appending_a_named_reason",
+   "to": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "c-cmaes-hansen",
+   "relation": "algorithm_from",
+   "to": "Hansen & Ostermeier 1996/2001; Hansen, Muller, Koumoutsakos 2003; this C code is the author's and the ancestor of pycma",
+   "note": "from the source and the record",
+   "basis": "SOURCE_READ"
+  }
+ ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "eigen solver, I/O, boundary handling and restarts unread",
+   "nothing ran"
+  ],
+  "note": "the five mechanisms of the algorithm are located with their default constants; the body is small enough that a Stage C run needs only a C compiler",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

@@ -72,7 +72,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded: the SHA-2 family"
+    "superseded_by: the SHA-2 family"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -149,28 +149,764 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:md5-rfc1321/upstream/rfc1321.txt:119-295"
+   }
+  ],
+  "inspected_files": [
+   "rfc1321.txt section 3 (lines 119-295) in full; appendix code skimmed"
+  ],
+  "date": "2026-09-17T15:39Z",
+  "note": "a Merkle-Damgard construction with a four-round compression function; the organs are the padding rule, the chaining, the nonlinear round functions, the message-word schedule with rotation constants, and the sine-derived additive constants",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T15:39Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://www.ietf.org/rfc/rfc1321.txt sha256:284a79d148400d9cd2a423211d1103b5cef0fb9256a4cbe6d7ebe5197c3149dd",
+   "payload_manifest_id": "techne tree_sha256 2a63ad17b696314834ac04c79153ef9cd7c93ba4c0a62d32d43ee5e136d184ae (1 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/rfc1321.txt",
+     "payload_hash_read": "284a79d148400d9cd2a423211d1103b5cef0fb9256a4cbe6d7ebe5197c3149dd",
+     "techne_recorded_hash": "284a79d148400d9cd2a423211d1103b5cef0fb9256a4cbe6d7ebe5197c3149dd",
+     "match": true,
+     "refs": 6
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "md5-rfc1321::length_padding_to_a_block_boundary_with_the_message_length_appended",
+   "fossil_ancestry": "md5-rfc1321",
+   "human_name": "Steps 1-2 (3.1, 3.2)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "append a single 1 bit, then 0 bits until the length is 448 mod 512, then the 64-bit original length (low word first); padding is applied even when the length is already 448 mod 512, so every message has a distinct padded form",
+   "input": "a message of b bits",
+   "output": "a multiple of 512 bits",
+   "state": "none",
+   "update": "once",
+   "assumptions": [
+    "the length suffix is what prevents trivial extension of the padded message into another valid padded message (but not the length-extension attack on the digest itself)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition"
+   ],
+   "fitness_value_in_ancestor": "unambiguous parsing of the last block",
+   "failure_landscape": "by reading: the Merkle-Damgard length-extension property: knowing H(m) and |m| one can compute H(m || pad || m') without m",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:md5-rfc1321/upstream/rfc1321.txt:132-159"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "sections 3.1-3.2",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+   "fossil_ancestry": "md5-rfc1321",
+   "human_name": "Steps 3-5: the (A,B,C,D) buffer, the per-block save/add-back, the output",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "four 32-bit registers start at fixed constants; for each block the registers are saved, 64 operations mix the block in, then the saved values are ADDED back (feed-forward) so the compression function is not invertible from its output; the final registers are the digest",
+   "input": "the padded message blocks",
+   "output": "a 128-bit digest",
+   "state": "A,B,C,D (128 bits)",
+   "update": "per block",
+   "assumptions": [
+    "collision resistance of the whole follows from that of the compression function (Merkle 1989, Damgard 1989) -- the assumption that failed in practice"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "md5-rfc1321::length_padding_to_a_block_boundary_with_the_message_length_appended",
+    "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add"
+   ],
+   "fitness_value_in_ancestor": "streaming: a message of any length is hashed with 128 bits of state",
+   "failure_landscape": "the record's own: differential collisions in the compression function (Wang & Yu 2004) break the construction; the feed-forward does not help",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Merkle-Damgard; the four-register width chosen for 32-bit machines of 1991",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:md5-rfc1321/upstream/rfc1321.txt:160-183, 270-295"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "sections 3.3-3.5",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_CALL",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "CORRUPTS",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "fossil_ancestry": "md5-rfc1321",
+   "human_name": "Step 4: F, G, H, I; [abcd k s i] = a = b + ((a + f(b,c,d) + X[k] + T[i]) <<< s)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each of 64 operations updates one register from the other three: add a bitwise selector/majority/parity/xor-or function of (b,c,d), a message word X[k], and a table constant T[i]; rotate left by s; add b; the registers rotate roles (ABCD, DABC, CDAB, BCDA); rounds use F (if-then-else), G (a different selector), H (parity), I (y xor (x or not z))",
+   "input": "the block X[0..15], the four registers",
+   "output": "updated registers",
+   "state": "the registers",
+   "update": "64 times per block",
+   "assumptions": [
+    "the text's own claim: if the inputs' bits are independent and unbiased, each function's output bits are too",
+    "the mix of boolean functions, modular addition and rotation is 'ARX plus boolean' -- fast on 32-bit hardware"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+    "md5-rfc1321::message_word_schedule_and_rotation_constants_per_round",
+    "md5-rfc1321::nothing_up_my_sleeve_constants_from_the_integer_part_of_2_32_abs_sin_i"
+   ],
+   "fitness_value_in_ancestor": "speed on 1991 hardware with 'strong' mixing by the standards of the time",
+   "failure_landscape": "the differential path that breaks MD5 goes through these round functions' weak diffusion in rounds 1-2",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Rivest's design; the round functions are chosen for bitwise-parallel nonlinearity",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:md5-rfc1321/upstream/rfc1321.txt:184-269"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the four function definitions and the 64 operations",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "md5-rfc1321::message_word_schedule_and_rotation_constants_per_round",
+   "fossil_ancestry": "md5-rfc1321",
+   "human_name": "the k and s columns of the 64 operations (rounds: k = i, 5i+1, 3i+5, 7i mod 16; s = 7/12/17/22, 5/9/14/20, 4/11/16/23, 6/10/15/21)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each round visits all 16 message words once in a fixed permutation (identity, then strides 5, 3, 7 with offsets) and uses four rotation amounts cycling per operation; the schedule is a constant table, not derived from the message",
+   "input": "the round and operation index",
+   "output": "which word and which rotation",
+   "state": "none",
+   "update": "per operation",
+   "assumptions": [
+    "the four strides are coprime to 16 so every word is used exactly once per round"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add"
+   ],
+   "fitness_value_in_ancestor": "every message bit influences every round",
+   "failure_landscape": "by reading: a fixed schedule lets an attacker choose message differences that cancel across rounds",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:md5-rfc1321/upstream/rfc1321.txt:234-269"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the k, s columns",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "md5-rfc1321::nothing_up_my_sleeve_constants_from_the_integer_part_of_2_32_abs_sin_i",
+   "fossil_ancestry": "md5-rfc1321",
+   "human_name": "the table T[1..64]",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "T[i] = floor(2^32 x |sin(i)|), i in radians, i = 1..64; the constants are published as derived from a transcendental function so that no hidden structure can be suspected in their choice",
+   "input": "i",
+   "output": "a 32-bit constant",
+   "state": "none",
+   "update": "n/a",
+   "assumptions": [
+    "a publicly derivable constant is trusted more than an arbitrary one (a social mechanism encoded in arithmetic)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add"
+   ],
+   "fitness_value_in_ancestor": "trust in the design; breaks the symmetry between operations",
+   "failure_landscape": "none by reading",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the 'nothing up my sleeve' convention",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:md5-rfc1321/upstream/rfc1321.txt:210-215 and the appendix table"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the T table definition",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the reference C implementation in the appendix (MD5Init/Update/Final, byte-order handling), the test suite (mddriver), the executive summary and terminology sections",
+   "reason": "OTHER",
+   "evidence": "skimmed only; the appendix code implements the five steps above and is the natural Stage C body (it compiles anywhere with a C compiler -- not on M3)",
+   "note": "not rejected on the merits; unread this pass",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "md5-rfc1321"
+  },
+  {
+   "candidate": "'MD5' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "padding, chaining, rounds, schedule and constants are separately replaceable; SHA-1 keeps the first two and changes the rest",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "md5-rfc1321"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "md5-rfc1321::P.a_fixed_size_fingerprint_of_arbitrary_input_must_make_two_inputs_with_one_fingerprint_infeasible_to_construct_against_an_adversary_who_reads_the_design",
+   "source_fossil": "md5-rfc1321",
+   "source_evidence": "record disposition LOSER; RFC 1321 section 3",
+   "condition": "the organism maps any input to n bits; an adversary who knows the map fully tries to produce two inputs with the same output (collision) or an input for a given output (preimage); the organism's cost per input bit is bounded",
+   "resource_or_constraint": "n bits of state; a few operations per input word; the design is public",
+   "failure_condition": "a collision found in far fewer than 2^(n/2) trials",
+   "world_punishes": "linear diffusion, weak nonlinearity, message-independent schedules",
+   "world_rewards": "mixing that resists differential cancellation",
+   "observable_consequence": "trials to first collision under a differential search vs the birthday bound; MD5's own history (2^64 -> 2^24) is the measured failure",
+   "vacuity_condition": "no adversary (a checksum suffices)",
+   "trivial_shortcuts": "a world where the adversary cannot read the design",
+   "cheat_control": "an organism that is a random oracle (a world-supplied lookup) must show the birthday bound; MD5 must show the known 2^24 differential shortcut: if the world cannot distinguish them, it is not exerting the adversarial pressure",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: cryptographic message digest (Rivest 1992; broken Wang & Yu 2004)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "md5-rfc1321::length_padding_to_a_block_boundary_with_the_message_length_appended",
+   "to": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+   "to": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::message_word_schedule_and_rotation_constants_per_round",
+   "to": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::nothing_up_my_sleeve_constants_from_the_integer_part_of_2_32_abs_sin_i",
+   "to": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "md5-rfc1321::four_rounds_of_a_bitwise_nonlinear_function_plus_message_word_plus_constant_then_rotate_and_add",
+   "to": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "md5-rfc1321",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "the SHA-2 family",
-   "note": "deployment moved to SHA-256 after the collision results",
+   "note": "deployment moved to SHA-256 after the collision results [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "md5-rfc1321",
+   "relation": "historical_version_of",
+   "to": "MD4 (Rivest 1990) -> MD5 (1991-92); SHA-1 (1995) is the same construction with a different compression function",
+   "note": "from the RFC's own introduction and general knowledge; the record's lineage not re-read",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the appendix reference code and its byte-order/endianness handling not read line by line",
+   "the specific differential path that breaks MD5 is not in the body; the failure landscape cites the record's disposition"
+  ],
+  "note": "the specification's five steps are fully accounted for",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

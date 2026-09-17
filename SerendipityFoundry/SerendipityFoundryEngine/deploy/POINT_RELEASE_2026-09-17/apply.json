@@ -1,0 +1,145 @@
+{
+ "phase": "apply",
+ "at": "2026-09-17T10:50:59Z",
+ "commit": "1b9286292e3fb7755282a468f55bc97564ab9382",
+ "steps": [
+  {
+   "pin": {
+    "from": "dd10c9074822",
+    "to": "1b9286292e3f",
+    "rc": 0
+   }
+  },
+  {
+   "stop": "stopped 8140"
+  },
+  {
+   "watchdog": "",
+   "rc": 0
+  },
+  {
+   "repinned": "D:\\Prometheus-worktrees\\daedalus-boot-2026-09-16\\SerendipityFoundry\\SerendipityFoundryEngine\\deploy\\DEPLOYED_BUILD_M2.json"
+  }
+ ],
+ "checks": [
+  {
+   "check": "still nobody writing",
+   "pass": true,
+   "events_last_10min": 0
+  },
+  {
+   "check": "pinned worktree advanced",
+   "pass": true,
+   "head": "1b9286292e3f"
+  },
+  {
+   "check": "pinned tree reproduces the candidate hash",
+   "pass": true
+  },
+  {
+   "check": "engine answers after restart",
+   "pass": true,
+   "outage_s": 20.3
+  },
+  {
+   "check": "process is NEW (start time advanced, pid changed)",
+   "pass": true,
+   "before": "2026-09-16T17:22:44Z",
+   "after": "2026-09-17T10:51:30Z"
+  },
+  {
+   "check": "engine instance UNCHANGED (ledger state)",
+   "pass": true
+  },
+  {
+   "check": "source hash == candidate",
+   "pass": true,
+   "live": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153"
+  },
+  {
+   "check": "schema 9 live AND in the ledger",
+   "pass": true
+  },
+  {
+   "check": "route digest changed (4 routes added)",
+   "pass": true,
+   "before": 68,
+   "after": 72
+  },
+  {
+   "check": "ledger path and bind unchanged",
+   "pass": true,
+   "bind": "192.168.1.191"
+  },
+  {
+   "check": "no event lost across the migration",
+   "pass": true,
+   "events": 10995
+  },
+  {
+   "check": "capabilities advertises the release",
+   "pass": true
+  }
+ ],
+ "before": {
+  "recorded_at": "2026-09-17T10:51:03Z",
+  "process_start_utc": "2026-09-16T17:22:44Z",
+  "pid": 8140,
+  "bind": "192.168.1.191",
+  "cmdline": "\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"D:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"D:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"D:\\Prometheus-data\\sfe\\m2.key\" ",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "source_commit": "dd10c90748228fd99f994c068748379de0d474bc",
+  "schema_version": 8,
+  "route_digest": "sha256:ba14a1918e4d0222bb4df22f1b8f58114f4be9aecc7870d1568db25d0fdb3997",
+  "routes": 68,
+  "capabilities_features": null,
+  "ledger": {
+   "path": "D:\\Prometheus-data\\sfe\\engine.db",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "schema_version": 8,
+   "events": 10995
+  },
+  "endpoint": "https://192.168.1.191:8811",
+  "descriptor_pin": {
+   "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+   "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+  }
+ },
+ "outage_s": 20.3,
+ "after": {
+  "recorded_at": "2026-09-17T10:51:44Z",
+  "process_start_utc": "2026-09-17T10:51:30Z",
+  "pid": 5596,
+  "bind": "192.168.1.191",
+  "cmdline": "\"C:\\Users\\James\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" \"D:\\Prometheus-worktrees\\daedalus-sfengine\\SerendipityFoundry\\SerendipityFoundryEngine\\serve.py\" --db \"D:\\Prometheus-data\\sfe\\engine.db\" --host 192.168.1.191 --port 8811 --max-artifact-bytes 33554432 --tls-cert \"D:\\Prometheus-data\\sfe\\m2.crt\" --tls-key \"D:\\Prometheus-data\\sfe\\m2.key\" ",
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:bc8d3a0caea47efdc766aaa49abdba9a9d1a5ac9dc35f3b722d0aa3397e99153",
+  "source_commit": "1b9286292e3fb7755282a468f55bc97564ab9382",
+  "schema_version": 9,
+  "route_digest": "sha256:1e476859f79f901a5fac144c218479dbd28f5d3d4b782a3494bf3f2d082d59ae",
+  "routes": 72,
+  "capabilities_features": {
+   "logical_time": true,
+   "typed_termination": true,
+   "world_events": true,
+   "manifest_envelope": true,
+   "labels": true,
+   "artifact_list": true,
+   "cursor_pagination": true,
+   "fork_changed_fields": true
+  },
+  "ledger": {
+   "path": "D:\\Prometheus-data\\sfe\\engine.db",
+   "engine_instance_id": "eng_906356f7fb1da180131f9290",
+   "schema_version": 9,
+   "events": 10995
+  },
+  "endpoint": "https://192.168.1.191:8811",
+  "descriptor_pin": {
+   "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+   "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+  }
+ },
+ "ok": true
+}

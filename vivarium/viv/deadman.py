@@ -84,6 +84,7 @@ class Config:
     task_name: str = "VivariumDeadmanM2"
     launcher: Optional[str] = None            # cmd file; None -> no relaunch
     fresh_s: float = 900.0                    # MONITORS.md: 15 min
+    pid_grace_s: float = 60.0                 # younger than this: never pid-check (a launch settles)
     settle_s: float = 25.0                    # after launch, before re-read
     bound: int = 3
     accountable_seat: str = "Archaeon"
@@ -283,6 +284,17 @@ class Deadman:
         ev = {"age_s": round(age, 1), "pid": hb.get("pid"), "host": hb.get("host"),
               "current_experiment": hb.get("current_experiment")}
         if age < self.cfg.fresh_s:
+            # A heartbeat can be young and the process gone: the s14 canary
+            # killed the consumer mid-row and the dead-man read LIVE for the
+            # whole fresh_s (15 min) before it would even look at the pid.
+            # Past a short grace, a heartbeat FROM THIS HOST whose pid is not
+            # a live python here is DEAD now, not in 15 minutes.
+            same_host = (str(hb.get("host") or "").upper()
+                         == os.environ.get("COMPUTERNAME", "").upper())
+            if (age >= self.cfg.pid_grace_s and same_host and hb.get("pid")
+                    and not self._pid_alive(int(hb["pid"]), str(hb["host"]))):
+                return {"verdict": "DEAD", **ev,
+                        "note": "heartbeat young but its pid is gone from this host"}
             return {"verdict": "LIVE", **ev}
         if self._pid_alive(int(hb.get("pid") or 0), str(hb.get("host") or "")):
             return {"verdict": "BUSY", **ev,
@@ -435,7 +447,7 @@ def main(argv=None) -> int:
     ap.add_argument("--settle-s", type=float, default=25.0)
     ap.add_argument("--bound", type=int, default=3)
     ap.add_argument("--expected-engine", default=None,
-                    help="engine_instance_id the launch precondition requires")
+                    help="engine_instance_id the launch precondition requires (default: the production descriptor's)")
     ap.add_argument("--sfe-version-url", default=None)
     ap.add_argument("--sfe-cacert", default=None)
     ap.add_argument("--var-dir", default=None)
@@ -444,6 +456,14 @@ def main(argv=None) -> int:
     ap.add_argument("--no-launch", action="store_true",
                     help="observe and record only; never start anything")
     a = ap.parse_args(argv)
+    if a.expected_engine is None:
+        # PRODUCTION_DESCRIPTOR.md s3: the target comes from the descriptor,
+        # not a command line someone typed once
+        from . import production as _prod                    # noqa: PLC0415
+        try:
+            a.expected_engine = (_prod.load().get("engine") or {}).get("engine_instance_id")
+        except Exception:                                     # noqa: BLE001
+            a.expected_engine = None
     cfg = Config(worker_id=a.worker_id, task_name=a.task_name,
                  launcher=None if a.no_launch else a.launcher,
                  fresh_s=a.fresh_s, settle_s=a.settle_s, bound=a.bound,

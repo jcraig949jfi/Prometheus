@@ -34,9 +34,9 @@
     "ancestry": "UC Berkeley Espresso-II"
   },
   "hashes": {
-    "tree_sha256": "aa352802ae1a0b732878fb8e1b5d7511736f77360c7e55fe95ac132582a40a20",
-    "n_files": 302,
-    "bytes": 4642751,
+    "tree_sha256": "9c9a5c19ba973791cf5ded88526b14bd58c776acfdf1462f3a8fc7eebd05b6ab",
+    "n_files": 252,
+    "bytes": 3852998,
     "artifacts": [
       {
         "filename": "https://github.com/classabbyamp/espresso-logic",
@@ -44,7 +44,7 @@
         "commit": "85265139e9598852f9388d293658a1977a829a01"
       }
     ],
-    "body_location": "F:\\Prometheus\\vault\\fossils\\espresso-logic",
+    "body_location": "D:\\Prometheus\\vault\\fossils\\espresso-logic",
     "hash_list": "techne/fossils/specimens/espresso-logic/UPSTREAM_HASHES.txt"
   },
   "license": {
@@ -117,5 +117,33 @@
     "how_we_know_it_runs": "RUNNABLE_CONTAINER / TECHNE_SMOKE_HARNESS_PASS ; receipt techne/fossils/specimens/espresso-logic/receipts/run-espresso-logic-20260912T152917Z.json",
     "what_humans_used_it_for": "minimise a two-level Boolean function (a truth table / PLA) to the fewest product terms, so the circuit that implements it is smaller and faster"
   },
-  "seat": "Techne"
+  "seat": "Techne",
+  "hashes_superseded": [
+    {
+      "tree_sha256": "aa352802ae1a0b732878fb8e1b5d7511736f77360c7e55fe95ac132582a40a20",
+      "n_files": 302,
+      "bytes": 4642751,
+      "artifacts": [
+        {
+          "filename": "https://github.com/classabbyamp/espresso-logic",
+          "sha256": null,
+          "commit": "85265139e9598852f9388d293658a1977a829a01"
+        }
+      ],
+      "body_location": "F:\\Prometheus\\vault\\fossils\\espresso-logic",
+      "hash_list": "techne/fossils/specimens/espresso-logic/UPSTREAM_HASHES.txt",
+      "superseded_utc": "20260916T134958Z",
+      "reason": "M2 rematerialize 2026-09-16: record hashed over a CRLF-converted checkout on M1 (and, where NOT_IN_ORIGIN > 0, build/interpreter residue); origin serves byte-exact upstream; see techne/fossils/REMATERIALIZE_M2_2026-09-16_run2_drift_classes.json",
+      "receipt": "techne/fossils/specimens/espresso-logic/receipts/repin-espresso-logic-20260916T134958Z.json",
+      "superseded_hash_list": "techne/fossils/specimens/espresso-logic/UPSTREAM_HASHES.superseded-20260916.txt",
+      "class_counts": {
+        "SAME": 0,
+        "RECORD_IS_CRLF": 252,
+        "NOT_IN_ORIGIN": 50,
+        "FETCH_IS_CRLF": 0,
+        "OTHER": 0,
+        "ADDED": 0
+      }
+    }
+  ]
 }

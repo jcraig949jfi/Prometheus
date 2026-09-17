@@ -1,0 +1,216 @@
+{
+ "C3-SFE-01": {
+  "adequate_sample": true,
+  "assay_capable": true,
+  "attempted": true,
+  "attempts": 2,
+  "claim_ceiling": "negative at this budget/envelope",
+  "decisions": [
+   "D3-007: a summit is counted only when confirmed by a 48-episode held-out probe at the candidate generation (D3-006 applied); ladder points are read off one G=300 trace per seed"
+  ],
+  "engine_executed": true,
+  "experiment": "C3-SFE-01",
+  "intervention_applied": null,
+  "machine_defect": "",
+  "machine_repair": "",
+  "positive_control_passed": null,
+  "resumed": false,
+  "scientific_disposition": "CAPABLE_NEGATIVE",
+  "target_reached": true,
+  "telemetry_added": "",
+  "typed_states": []
+ },
+ "C3-SFE-02": {
+  "adequate_sample": true,
+  "assay_capable": true,
+  "attempted": true,
+  "attempts": 3,
+  "claim_ceiling": "negative at this budget/envelope",
+  "decisions": [
+   "D3-010: explanation flags E1-E5 are rules on class fractions (E1 summit adjacent but < 1%%; E2 second-stream gains only below the parent; E3 tradeoff >= 80%% of second-stream gains; E4 complementary profiles with 0 joins; E5 second_up < 0.5%% and basin 0)"
+  ],
+  "engine_executed": true,
+  "experiment": "C3-SFE-02",
+  "intervention_applied": null,
+  "machine_defect": "",
+  "machine_repair": "",
+  "positive_control_passed": null,
+  "resumed": false,
+  "scientific_disposition": "CAPABLE_NEGATIVE",
+  "target_reached": null,
+  "telemetry_added": "",
+  "typed_states": []
+ },
+ "C3-SFE-03": {
+  "adequate_sample": true,
+  "assay_capable": true,
+  "attempted": true,
+  "attempts": 5,
+  "claim_ceiling": "weak; not for propagation",
+  "decisions": [
+   "D3-008: generality = elite >= 0.75 on all four rungs at a probe (24 eval episodes each), confirmed at the end by 48 held-out episodes per rung; the primary is descriptive (rate and timing), not a comparison"
+  ],
+  "engine_executed": true,
+  "experiment": "C3-SFE-03",
+  "intervention_applied": null,
+  "machine_defect": "",
+  "machine_repair": "",
+  "positive_control_passed": true,
+  "resumed": false,
+  "scientific_disposition": "WEAK_POSITIVE",
+  "target_reached": null,
+  "telemetry_added": "",
+  "typed_states": []
+ },
+ "C3-SFE-04": {
+  "adequate_sample": true,
+  "assay_capable": true,
+  "attempted": true,
+  "attempts": 3,
+  "claim_ceiling": "weak; not for propagation",
+  "decisions": [
+   "D3-016: mature sources only -- W0 solvers harvested here (held-out >= 0.9) and C3-SFE-03 delay-general elites; the W2_K2 shelf material is excluded (not solved)",
+   "D3-017: edge selection is preregistered and cheap-first: a target is informative unless a mature family already solves it directly (>= 0.90 held-out)"
+  ],
+  "engine_executed": true,
+  "experiment": "C3-SFE-04",
+  "intervention_applied": null,
+  "machine_defect": "",
+  "machine_repair": "",
+  "positive_control_passed": null,
+  "resumed": false,
+  "scientific_disposition": "WEAK_POSITIVE",
+  "target_reached": null,
+  "telemetry_added": "",
+  "typed_states": []
+ },
+ "C3-SFE-05": {
+  "adequate_sample": true,
+  "assay_capable": true,
+  "attempted": true,
+  "attempts": 3,
+  "claim_ceiling": "negative at this budget/envelope",
+  "decisions": [
+   "D3-009: the then_0 arm switches p to 0 at the first probe where the elite is general (all rungs >= 0.75); revisit cost is charged in episodes, not rewarded"
+  ],
+  "engine_executed": true,
+  "experiment": "C3-SFE-05",
+  "intervention_applied": null,
+  "machine_defect": "",
+  "machine_repair": "",
+  "positive_control_passed": true,
+  "resumed": false,
+  "scientific_disposition": "CAPABLE_NEGATIVE",
+  "target_reached": null,
+  "telemetry_added": "",
+  "typed_states": []
+ },
+ "C3-SFE-06": {
+  "adequate_sample": true,
+  "assay_capable": true,
+  "attempted": true,
+  "attempts": 5,
+  "claim_ceiling": "weak; one evaluator family",
+  "decisions": [
+   "D3-021: the target level is chosen from the table's own score distribution (highest level reached by >= 0.1%% of genotypes) because a fixed 0.875 is reached by 9 of 390,625 genotypes and cannot be found at any affordable climb budget (a02 POSITIVE_CONTROL_FAILED); the level is fixed per table before any climbing and shared by every encoding",
+   "D3-011: basin share is the preregistered PRIMARY; the neighbourhood is +-1/+-2 in the encoding's opcode ordering (campaign 2's A_words geometry on the opcode word); two climbers unlike campaign 2's"
+  ],
+  "engine_executed": true,
+  "experiment": "C3-SFE-06",
+  "intervention_applied": null,
+  "machine_defect": "",
+  "machine_repair": "",
+  "positive_control_passed": true,
+  "resumed": false,
+  "scientific_disposition": "WEAK_POSITIVE",
+  "target_reached": null,
+  "telemetry_added": "",
+  "typed_states": []
+ },
+ "C3-SFE-07": {
+  "adequate_sample": true,
+  "assay_capable": true,
+  "attempted": true,
+  "attempts": 2,
+  "claim_ceiling": "negative at this budget/envelope",
+  "decisions": [
+   "D3-022: only C3-SFE-06 tables whose threshold is ABOVE CHANCE are used to choose the encodings (L3-030); skelB's target fell at 1/16 and its rows carry no search information",
+   "D3-018: the encodings are chosen by the preregistered rule (largest basin gap among pairs matched on accessible variation within 15%), from geometry measured by C3-SFE-06 BEFORE this run; no ordering was chosen on a known search time"
+  ],
+  "engine_executed": true,
+  "experiment": "C3-SFE-07",
+  "intervention_applied": null,
+  "machine_defect": "",
+  "machine_repair": "",
+  "positive_control_passed": true,
+  "resumed": false,
+  "scientific_disposition": "CAPABLE_NEGATIVE",
+  "target_reached": null,
+  "telemetry_added": "",
+  "typed_states": []
+ },
+ "C3-SFE-08": {
+  "adequate_sample": true,
+  "assay_capable": true,
+  "attempted": true,
+  "attempts": 2,
+  "claim_ceiling": "negative at this budget/envelope",
+  "decisions": [
+   "D3-019: both arms are read out on the SAME held-out battery with both readouts; levels (FLOOR/SHELF/SUMMIT) are always computed on per-ask credit so the arms are comparable"
+  ],
+  "engine_executed": true,
+  "experiment": "C3-SFE-08",
+  "intervention_applied": null,
+  "machine_defect": "",
+  "machine_repair": "",
+  "positive_control_passed": true,
+  "resumed": false,
+  "scientific_disposition": "CAPABLE_NEGATIVE",
+  "target_reached": null,
+  "telemetry_added": "",
+  "typed_states": []
+ },
+ "C3-SFE-09": {
+  "adequate_sample": true,
+  "assay_capable": true,
+  "attempted": true,
+  "attempts": 2,
+  "claim_ceiling": "negative at this budget/envelope",
+  "decisions": [
+   "D3-012: storage vs routing decided by clamps ONE STEP BEFORE the critical phase (self at t*-1 vs radius-3 neighbours at t*-1), each against the full single-site drop; coincidence by the site-alone readout under a permuted reset lattice"
+  ],
+  "engine_executed": true,
+  "experiment": "C3-SFE-09",
+  "intervention_applied": null,
+  "machine_defect": "",
+  "machine_repair": "",
+  "positive_control_passed": null,
+  "resumed": true,
+  "scientific_disposition": "CAPABLE_NEGATIVE",
+  "target_reached": null,
+  "telemetry_added": "",
+  "typed_states": []
+ },
+ "C3-SFE-10": {
+  "adequate_sample": true,
+  "assay_capable": true,
+  "attempted": true,
+  "attempts": 2,
+  "claim_ceiling": "negative at this budget/envelope",
+  "decisions": [
+   "D3-014: the matched control is the SAME instruction blocks permuted (length, opcode multiset, operands and VM knobs preserved; competence removed, verified < 0.25 held-out)",
+   "D3-015: injection at generation 0 after the first evaluation (inject replaces the worst-scored residents); the cap arm uses offspring_cap=0.25 on the 'import' origin"
+  ],
+  "engine_executed": true,
+  "experiment": "C3-SFE-10",
+  "intervention_applied": null,
+  "machine_defect": "",
+  "machine_repair": "",
+  "positive_control_passed": true,
+  "resumed": true,
+  "scientific_disposition": "CAPABLE_NEGATIVE",
+  "target_reached": null,
+  "telemetry_added": "",
+  "typed_states": []
+ }
+}

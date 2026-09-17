@@ -39,6 +39,18 @@
       "note": "Proteus #287 / ruling #268: writes minted rule-table players to fossil_players; value delivered out of band on M2 (~/.prometheus/ew_agent_tokens.json); never in git",
       "tracker": "R-5",
       "host_of_issue": "M2"
+    },
+    "vivarium": {
+      "scopes": [
+        "read",
+        "write"
+      ],
+      "token_sha256": "3c40d8dd7ff94cac06bbfa35cadd245287f89c77490ea6da42bf958f17bb0de5",
+      "issued": "2026-09-17",
+      "issued_by": "Mnemosyne",
+      "tracker": "R-7",
+      "host_of_issue": "M2",
+      "note": "Vivarium outbox deliverer (viv/deliver.py, agent header 'vivarium'): posts producer events to /api/v1/events and fossils; value delivered out of band on M2 (vivarium-consumer config.local.json pew_token + ~/.prometheus/ew_agent_tokens.json); never in git"
     }
   },
   "note_correction_2026-09-11": "The sentence 'DB is never exposed to the LAN' in `note` is FALSE as written and is kept only as the original text. Measured 2026-09-04 (Mnemosyne, closure packet s3 iv) and again 2026-09-11 from M2 by Coeus (comms #82): Postgres 5432 on M1 accepts connections from LAN peers with the committed credentials, bypassing ew.write_log attribution. Open item B2 in roles/Mnemosyne/todo_20260904.md (operator: scope inbound 5432 to named peers, or close it after re-pointing M2). Per-agent scoped tokens (agent_identities) added 2026-09-11; per-machine tokens are live; TLS is still not."

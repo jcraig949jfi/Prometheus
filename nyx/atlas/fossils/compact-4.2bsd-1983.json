@@ -72,7 +72,7 @@
   },
   "KNOWN_SUCCESSORS": {
    "value": [
-    "superseded: ncompress-5.0-lzw-1985"
+    "superseded_by: ncompress-5.0-lzw-1985"
    ],
    "basis": "NYX_DERIVED"
   },
@@ -148,23 +148,947 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "DEEP",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compact-4.2bsd-1983/upstream/compact.c"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compact-4.2bsd-1983/upstream/tree.c"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compact-4.2bsd-1983/upstream/compact.h"
+   }
+  ],
+  "inspected_files": [
+   "compact.h, compact.c, tree.c (all)",
+   "uncompact.c (skimmed)"
+  ],
+  "date": "2026-09-17T22:50Z",
+  "note": "an adaptive (one-pass, no header) Huffman coder from 1979: the model and the code are the same tree, updated after every symbol by a sibling-property repair; two reserved leaves (NC = not-yet-seen escape, EF = end) make the code self-describing",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T22:50Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
+   "source_object_id": "https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/Makefile sha256:4879c253db9e11ea40cc2a39c3df5a265cf1af8efd9981ece6d4580ff5682179; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/ccat.sh sha256:dd0f859958876e0a0fdf8b0b033f2922da8e1ea3ef59c98f05fa7e9886fe1b98; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/compact.c sha256:25aabb7398a4a4648dc646549bacecdc112769bc892c2ecb6f86da57e891f3af; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/compact.h sha256:36249c3e18988ff74dcbd32fc2689d73b8a0991f4ef6e373b24b4151320f5cb5; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/tree.c sha256:1cb5a8e00565c058afd0e06a884341dd088bfc9c2a3cfa03d8f14dcb8c07732e; https://raw.githubusercontent.com/dspinellis/unix-history-repo/BSD-4_2/usr/src/ucb/compact/uncompact.c sha256:076ef0682506bbdfbf076f53dcbec75867d3f83aab7683c39181e096d0eb169a",
+   "payload_manifest_id": "techne tree_sha256 6db5463f22da9d7b8194f94c008509d238d842c4e406660ee0facce947bb2f4d (6 files)",
+   "host_tree_matches_record": true,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/compact.c",
+     "payload_hash_read": "25aabb7398a4a4648dc646549bacecdc112769bc892c2ecb6f86da57e891f3af",
+     "techne_recorded_hash": "25aabb7398a4a4648dc646549bacecdc112769bc892c2ecb6f86da57e891f3af",
+     "match": true,
+     "refs": 5
+    },
+    {
+     "path": "upstream/tree.c",
+     "payload_hash_read": "1cb5a8e00565c058afd0e06a884341dd088bfc9c2a3cfa03d8f14dcb8c07732e",
+     "techne_recorded_hash": "1cb5a8e00565c058afd0e06a884341dd088bfc9c2a3cfa03d8f14dcb8c07732e",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/compact.h",
+     "payload_hash_read": "36249c3e18988ff74dcbd32fc2689d73b8a0991f4ef6e373b24b4151320f5cb5",
+     "techne_recorded_hash": "36249c3e18988ff74dcbd32fc2689d73b8a0991f4ef6e373b24b4151320f5cb5",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+   "fossil_ancestry": "compact-4.2bsd-1983",
+   "human_name": "struct node dict[258]; in[258] leaf index (compact.h)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "258 node slots hold a binary tree bottom-up: each node has a parent pointer with side flags (LLEAF/RLEAF say which children are leaves, FBIT which side this node is on), two child slots that are either node pointers or character codes, and TWO counts (one per child side); the leaf table in[] maps a byte to the node and side that holds it; 'bottom' is the newest node",
+   "input": "symbols",
+   "output": "a path from any leaf to the root (the code word, read parent by parent)",
+   "state": "dict[258], in[258], bottom",
+   "update": "per symbol (uptree) and per new symbol (insert)",
+   "assumptions": [
+    "at most 256 symbols plus NC and EF, so the array bound is static",
+    "the count belongs to the EDGE (parent, side), which is what lets a whole subtree be swapped by exchanging two child slots"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
+    "compact-4.2bsd-1983::sibling_property_repair_by_count_increment_and_block_leader_exchange",
+    "compact-4.2bsd-1983::escape_leaf_for_unseen_symbols_followed_by_the_raw_byte_and_a_split_insert"
+   ],
+   "fitness_value_in_ancestor": "the model and the code are one structure; encoding is a leaf-to-root walk, no code table is ever built",
+   "failure_landscape": "UNKNOWN by run; by reading: counts are longint and never rescaled, so after 2^31 symbols the ordering invariant breaks",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compact-4.2bsd-1983/upstream/compact.h:32-57"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the four structs and the three tables in compact.h",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "FULL_HISTORY",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
+   "fossil_ancestry": "compact-4.2bsd-1983",
+   "human_name": "encode() (compact.c 180-224)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "starting at the symbol's leaf, push the side bit of each parent edge onto a 16-bit-word stack until the root; then pop the stack emitting bits msb-first into a 16-bit output accumulator that is flushed two bytes at a time",
+   "input": "a symbol id (byte, NC or EF)",
+   "output": "its current code word, bit-serial",
+   "state": "d (16-bit accumulator), bits (fill count), the stack",
+   "update": "per symbol",
+   "assumptions": [
+    "code length <= 17*16 bits (stack[17]); the tree depth is bounded by the number of symbols"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+    "compact-4.2bsd-1983::sibling_property_repair_by_count_increment_and_block_leader_exchange",
+    "compact-4.2bsd-1983::in_band_end_symbol_instead_of_a_length_field"
+   ],
+   "fitness_value_in_ancestor": "no code table; the current tree IS the code",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compact-4.2bsd-1983/upstream/compact.c:180-224"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "encode()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "compact-4.2bsd-1983::sibling_property_repair_by_count_increment_and_block_leader_exchange",
+   "fossil_ancestry": "compact-4.2bsd-1983",
+   "human_name": "uptree() (tree.c 37-127) with the index list dir[514]",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after a symbol, increment the count on its leaf edge and walk toward the root; at each level, if the incremented count now exceeds the count of the next edge in the (implicit) ordered sibling list, exchange this edge's subtree with the LEADER of its count block (found through the index list dir/top, which chains one index record per distinct count value), fix the leaf/side flags, and continue from the leader's position; the index list is maintained so that equal-count edges form contiguous blocks (create an index when rc == sc+1, dispose one when rc > sc+1)",
+   "input": "the symbol's leaf",
+   "output": "a tree that again satisfies the sibling property (counts non-decreasing along the sibling order, parents above children)",
+   "state": "dir[514] index records, head/flist free list, per-edge top[] pointers",
+   "update": "per symbol, O(depth) exchanges",
+   "assumptions": [
+    "a Huffman tree is optimal iff it has the sibling property (Gallager 1978); maintaining it incrementally keeps the code optimal for the counts so far"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
+    "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+    "compact-4.2bsd-1983::escape_leaf_for_unseen_symbols_followed_by_the_raw_byte_and_a_split_insert"
+   ],
+   "fitness_value_in_ancestor": "one pass over the input; the decoder replays the same updates so no tree is transmitted",
+   "failure_landscape": "by reading: the exchange logic is written against a compiler quirk ('change code when Cory gets v. 7'); the pointer juggling through union treep is the fragile part",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Faller (1973) / Gallager (1978) sibling-property algorithm, implemented before Knuth's (1985) and Vitter's (1987) forms; the 'index list of count blocks' is McMaster's own device",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compact-4.2bsd-1983/upstream/tree.c:37-127"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "uptree() + exch() + the dir/top bookkeeping",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "FULL_HISTORY",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "STRUCTURE",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "compact-4.2bsd-1983::escape_leaf_for_unseen_symbols_followed_by_the_raw_byte_and_a_split_insert",
+   "fossil_ancestry": "compact-4.2bsd-1983",
+   "human_name": "NC / insert() (compact.c 118-131; tree.c 8-34)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a reserved leaf NC (code 0401) is always present; an unseen byte is sent as code(NC) then 8 raw bits; both sides then split the NC leaf: the old NC node becomes an internal node whose children are the new symbol (count 0) and a fresh NC; then uptree(NC) and uptree(symbol) run",
+   "input": "a byte with SEEN clear",
+   "output": "escape + literal; a grown tree",
+   "state": "in[c].flags SEEN/FBIT",
+   "update": "once per distinct byte",
+   "assumptions": [
+    "the alphabet is bytes, so 8 literal bits suffice; the new symbol enters with count 0 so its first code is long"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+    "compact-4.2bsd-1983::sibling_property_repair_by_count_increment_and_block_leader_exchange"
+   ],
+   "fitness_value_in_ancestor": "no header, no static model; the file starts compressing from byte two",
+   "failure_landscape": "UNKNOWN by run; by reading: the first occurrence of each of 256 bytes costs code(NC)+8 bits, so short or high-entropy files expand (the 'Does not save bytes' branch at compact.c 224-236 refuses to keep them)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compact-4.2bsd-1983/upstream/compact.c:118-131, 224-236; vault:compact-4.2bsd-1983/upstream/tree.c:8-34"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the else branch of the main loop and insert()",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "STRUCTURE",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "compact-4.2bsd-1983::in_band_end_symbol_instead_of_a_length_field",
+   "fossil_ancestry": "compact-4.2bsd-1983",
+   "human_name": "EF (0400) leaf; encode(EF) at end; bit flush",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a second reserved leaf EF is present from the start with count 1; the encoder ends the stream with code(EF) and pads the last 16-bit word; the decoder stops on EF, so no length is stored and the stream is self-terminating",
+   "input": "end of input",
+   "output": "the terminator code and a flushed word",
+   "state": "none",
+   "update": "once",
+   "assumptions": [
+    "EF's count stays 1 forever (it is never uptree'd until the end), so its code lengthens as the file grows -- the cost is paid once"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
+    "compact-4.2bsd-1983::keep_only_if_smaller_gate_with_a_two_byte_magic_and_a_percent_report"
+   ],
+   "fitness_value_in_ancestor": "streams can be piped; no seek-back to write a length",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compact-4.2bsd-1983/upstream/compact.c:146-160"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "encode(EF) and the flush",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "compact-4.2bsd-1983::keep_only_if_smaller_gate_with_a_two_byte_magic_and_a_percent_report",
+   "fossil_ancestry": "compact-4.2bsd-1983",
+   "human_name": "COMPACTED magic 017777; oc >= ic refusal (compact.c 60-70, 224-236)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the output starts with a two-byte magic (017777; 017437 is 'pack' and refused); at the end, if the output is not shorter the file is deleted and the input kept ('Does not save bytes'); otherwise the input is unlinked and a compression percentage is printed with an integer-scaling trick to avoid overflow",
+   "input": "ic, oc byte counts",
+   "output": "keep/discard; a report",
+   "state": "ic, oc",
+   "update": "per file",
+   "assumptions": [
+    "disk space is the fitness; a file that grew is a failure"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "compact-4.2bsd-1983::in_band_end_symbol_instead_of_a_length_field"
+   ],
+   "fitness_value_in_ancestor": "the tool never makes a file bigger",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:compact-4.2bsd-1983/upstream/compact.c:60-70, 224-250"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the magic check and the oc>=ic branch",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "argv/fopen/fstat/chmod/unlink plumbing and the error-exit ladder (goto closein/closeboth/fail)",
+   "reason": "GENERIC_LANGUAGE_MECHANICS",
+   "evidence": "vault:compact-4.2bsd-1983/upstream/compact.c:25-60, 236-270",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "compact-4.2bsd-1983"
+  },
+  {
+   "candidate": "byte-order union cio and the VAX/sun/pdp11 ifdefs",
+   "reason": "INHERITED_FROM_RUNTIME_OR_LIBRARY",
+   "evidence": "vault:compact-4.2bsd-1983/upstream/compact.h:1-30",
+   "note": "1983 portability; no behaviour",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "compact-4.2bsd-1983"
+  },
+  {
+   "candidate": "'adaptive Huffman coding' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the tree, the walk, the repair, the escape and the terminator are each separately replaceable (the LZW successor keeps none of them)",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "compact-4.2bsd-1983"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "compact-4.2bsd-1983::P.a_stream_must_be_encoded_in_one_pass_with_no_side_channel_and_the_decoder_must_reconstruct_the_model_from_the_stream_alone",
+   "source_fossil": "compact-4.2bsd-1983",
+   "source_evidence": "compact.c main loop 96-150; tree.c uptree; record domain 'superseded-design'",
+   "condition": "symbols arrive one at a time and each must be emitted before the next is seen; the receiver has no header, no table and no second pass; the score is output length",
+   "resource_or_constraint": "one pass; bounded memory (a fixed node table); the receiver's model may use only what has already been transmitted",
+   "failure_condition": "output longer than input, or a receiver that desynchronises",
+   "world_punishes": "expansion on short or high-entropy inputs (the escape cost); model updates the receiver cannot replay",
+   "world_rewards": "an organism whose model after k symbols is a deterministic function of those k symbols",
+   "observable_consequence": "compressed/uncompressed ratio as a function of input length on stationary and on drifting sources; desynchronisation count under injected errors",
+   "vacuity_condition": "a source with a known fixed distribution (a static code wins) or a two-pass budget",
+   "trivial_shortcuts": "transmitting the model as a header (forbidden by the condition); a fixed code tuned to the test corpus",
+   "cheat_control": "an organism handed the true source distribution must beat the ancestor on a stationary source and lose to it on a source that drifts after 10^4 symbols: if the world cannot show both, it is not exerting the one-pass/adaptivity pressure",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: adaptive Huffman file compression (McMaster 1979)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "compact-4.2bsd-1983::P.an_incrementally_maintained_ordering_must_stay_valid_after_every_single_count_increment",
+   "source_fossil": "compact-4.2bsd-1983",
+   "source_evidence": "tree.c 37-127",
+   "condition": "a structure orders items by counts that increase one at a time; after each increment the ordering invariant must hold before the next item is processed; repairs cost time per level",
+   "resource_or_constraint": "O(depth) per update; no batch rebuild allowed",
+   "failure_condition": "an invariant violation that goes unrepaired (a non-optimal code, or worse a decoder mismatch)",
+   "world_punishes": "rebuilding from scratch per symbol (time) and lazy repair (mismatch)",
+   "world_rewards": "a repair that touches only the path from the changed item to the root",
+   "observable_consequence": "repair operations per update vs invariant-check failures per update",
+   "vacuity_condition": "counts arrive in sorted order",
+   "trivial_shortcuts": "periodic full rebuild with the invariant checked only at rebuild time",
+   "cheat_control": "an organism that rebuilds fully after every increment must show zero violations at maximal cost; an organism that never repairs must show violations after the first out-of-order increment: the world must see both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: dynamic Huffman tree maintenance (Faller/Gallager)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+   "to": "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
+   "to": "compact-4.2bsd-1983::sibling_property_repair_by_count_increment_and_block_leader_exchange",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "every encoded symbol is then uptree'd",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::sibling_property_repair_by_count_increment_and_block_leader_exchange",
+   "to": "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::escape_leaf_for_unseen_symbols_followed_by_the_raw_byte_and_a_split_insert",
+   "to": "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::escape_leaf_for_unseen_symbols_followed_by_the_raw_byte_and_a_split_insert",
+   "to": "compact-4.2bsd-1983::sibling_property_repair_by_count_increment_and_block_leader_exchange",
+   "label": "triggers",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::code_tree_as_a_flat_array_of_nodes_with_parent_pointers_and_two_counts",
+   "to": "compact-4.2bsd-1983::escape_leaf_for_unseen_symbols_followed_by_the_raw_byte_and_a_split_insert",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "SEEN flag",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::in_band_end_symbol_instead_of_a_length_field",
+   "to": "compact-4.2bsd-1983::encode_by_walking_leaf_to_root_and_emitting_the_reversed_path",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "compact-4.2bsd-1983::keep_only_if_smaller_gate_with_a_two_byte_magic_and_a_percent_report",
+   "to": "compact-4.2bsd-1983::in_band_end_symbol_instead_of_a_length_field",
+   "label": "verifies",
+   "evidence": "SOURCE_READ",
+   "note": "oc vs ic after the flush",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "compact-4.2bsd-1983",
-   "relation": "superseded",
+   "relation": "superseded_by",
    "to": "ncompress-5.0-lzw-1985",
-   "note": "compress (LZW, 1984) displaced compact in BSD",
+   "note": "compress (LZW, 1984) displaced compact in BSD [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]",
    "basis": "TECHNE_RECORD"
   },
   {
@@ -173,10 +1097,29 @@
    "to": "Gallager 1978 (adaptive Huffman)",
    "note": "",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Faller 1973 / Gallager 1978 sibling-property adaptive Huffman",
+   "note": "from the source header ('Adaptive Huffman code ... On-line algorithm ... Colin L. McMaster 1979'); the record's lineage not re-read this pass",
+   "basis": "SOURCE_READ"
+  },
+  {
+   "from": "compact-4.2bsd-1983",
+   "relation": "algorithm_from",
+   "to": "Faller 1973 / Gallager 1978 sibling-property adaptive Huffman",
+   "note": "from the source header ('Adaptive Huffman code ... On-line algorithm ... Colin L. McMaster 1979'); the record's lineage not re-read this pass",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "EXPLAINED_BY_CURRENT_CUT",
+  "unexplained": [
+   "uncompact.c not read line by line (skimmed: the same tree code driven by input bits)",
+   "no claim about optimality or about the LZW comparison was run"
+  ],
+  "note": "every line of compact.c and tree.c is accounted for",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

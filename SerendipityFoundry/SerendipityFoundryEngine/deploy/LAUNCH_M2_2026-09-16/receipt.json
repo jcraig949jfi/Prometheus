@@ -1,0 +1,80 @@
+{
+ "launch": "SFE production on M2",
+ "at": "2026-09-16T17:25:41Z",
+ "operator_rulings": [
+  "SFE ecosystem runs on M2 (chat 12:0xZ)",
+  "Postgres+Redis shared; every other service on ONE machine (chat)",
+  "M1 ledger does not move; 'kicking the tires' (chat)",
+  "clear to launch on M2 (chat)"
+ ],
+ "version": {
+  "api": "v2",
+  "schema_version": 8,
+  "runtime": "serendipity-foundry-sfe",
+  "registration_open": true,
+  "session_enforcement": "advisory",
+  "science_profile": "warn",
+  "max_artifact_bytes": 33554432,
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+ },
+ "health": {
+  "api": "v2",
+  "schema_version": 8,
+  "measured_at": 1789579541.3557792,
+  "process": {
+   "started_at": 1789579364.9680276,
+   "uptime_s": 176.4,
+   "requests": 698,
+   "responses_5xx": 0,
+   "responses_4xx": 118
+  },
+  "ledger": {
+   "path": "D:\\Prometheus-data\\sfe\\engine.db",
+   "volume": "D:",
+   "last_event_ts": 1789579441.6123502,
+   "last_event_age_s": 99.7,
+   "events_last_hour": 752,
+   "experiments_committed_last_hour": 56,
+   "observations_last_hour": 54,
+   "work_items": {
+    "COMPLETED": 272,
+    "QUEUED": 3
+   }
+  },
+  "write_lock": {
+   "acquisitions": 515,
+   "failures": 0,
+   "max_wait_s": 0.141,
+   "waits_over_1s": 0,
+   "last_wait_s": 0.0,
+   "last_at": 1789579508.7544718
+  },
+  "attestation": {
+   "dir": "D:\\Prometheus-data\\sfe\\incidents",
+   "degraded": false,
+   "degraded_reason": null,
+   "counts": {
+    "intent": 523,
+    "effected": 501,
+    "refused": 22,
+    "write_failures": 0
+   },
+   "open_intents_over_60s": 0
+  },
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:4dbcd3fd249f0e2febef77b0a17379bca489a5fc7cfbd0251d1a68845bd72a4d",
+  "source_commit": "dd10c90748228fd99f994c068748379de0d474bc"
+ },
+ "steps": [
+  "pinned worktree advanced ccb26df01 -> dd10c9074; engine restarted through the watchdog 17:22:42Z",
+  "harness 12/12, isolation 7/7",
+  "scratch engine of the same tree on 127.0.0.1:8901 (eng_451698306d, disposable, stopped after)",
+  "generate_sfe_contract.py --base live M2 --probe-base scratch -> contract/ (4 artifacts; traps/bounds/policy identical to committed modulo stamps)",
+  "conformance_check.py: 0 plain, 0 with consumers' routes",
+  "landed roles/Harmonia/contracts/sfe_contract.json with a 'landed' provenance block; previous kept beside this receipt"
+ ],
+ "retracted": "comms #270's refusal of Vivarium's option (b): production is now eng_906356f7 by operator ruling; the 5 queued rows, the B1 grant, the 617-world scope and M1-minted tokens are on the M1 ledger, which is an archive",
+ "m1_ledger": "eng_8a37a5d3 at D:\\Prometheus-data\\sfe on SKULLPORT -- untouched, unreachable from M2, not production"
+}

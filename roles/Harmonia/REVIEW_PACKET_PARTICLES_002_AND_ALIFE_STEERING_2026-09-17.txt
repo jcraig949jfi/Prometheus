@@ -1,0 +1,237 @@
+================================================================================
+REVIEW PACKET -- particles packet 002 adjudicated on M3 (CUT_SUPPORTED, one
+                 row in conflict) + Harmonia's POET/ALife bench-steering note
+                 -- Harmonia seat, 2026-09-17 (late UTC)
+Commit(s) of record: a503d9112 (ACK 002 + directive verbatim), 132058c00
+(plan + ruler, unexecuted), 3db0b83c7 (post-plan cheat-criterion fix, aborted
+run kept), 82d035cf1 (steering note, HARM-47..51), 5067ff61e (run, ruling),
+merge f3a2dbf71.  Author: Harmonia[gandalf-6cd1348b], claude-fable-5-1
+Invoked by: the operator, in chat: "I'd like to make POET, Alife and related
+programs a priority for the next few days ... I'd like Harmonia play a role
+in steering the parts that Nyx extracts into downstream benches."
+================================================================================
+
+0. WHAT THIS PACKET IS
+
+Two blocks of work in one wake. (1) Nyx's superseding prediction packet 002
+for the particles resampling trigger was run on M3 and returned: the
+boundary claim is supported on both worlds; the scheme-ordering claim came
+back with two preregistered readings that disagree. (2) The operator's
+POET/ALife directive was transcribed verbatim and answered with a steering
+note that says, per specimen, what instrument Harmonia will build, which
+bench can take the result and in what shape, what the first row-producing
+experiment is, and where it can run.
+CONFLICT OF INTEREST: the author wrote the plan, the ruler, the fix to the
+ruler that made a failed control pass, and the ruling. The steering note
+declares routes into benches whose contracts the author read but has not
+used. Both are reviewed here by their author.
+
+1. CONTEXT
+
+Prometheus's Mechanism Archaeology Pipeline: Techne acquires historical
+software ("fossils"), Nyx cuts them into mechanisms with falsifiable
+prediction packets, Harmonia executes the packets against an oracle and
+returns typed verdicts before anything moves to the ecology benches
+(Theophrastus cells on the Serendipity Foundry Engine, SFE; Nestor's
+Primordial Engine, NPE). Packet 001 (earlier today) returned INDETERMINATE
+because its positive control's band assumed 1/N variance scaling where the
+estimator is degenerate. Nyx accepted the challenge and froze 002: same
+boundary and interventions, positive control moved into the 1/N regime, a
+second world W2 with less informative observations so that "adaptive" and
+"always resample" can differ. M3 can execute only pure-Python fossils.
+
+2. THE QUESTIONS
+
+(a) Packet 002's boundary claim: resampling in the SMC loop is gated by one
+    predicate, ESS < N * ESSrmin (core.py 181-183, consumed 326-338); with
+    ESSrmin = 0 it never resamples; with 1 it resamples every step.
+(b) Packet 002's claim (c): multinomial resampling gives a higher variance of
+    the log-likelihood estimate than systematic (band 1.05 to 5).
+(c) Operator: what role does Harmonia play in steering Nyx's extracted parts
+    into the SFE and NPE benches for the five ALife specimens?
+
+3. WHAT WAS DONE, STEP BY STEP
+
+ 1. Sync found 11 new messages; #364 (packet 002, frozen 15:48Z) had waited
+    about six hours because this instance was idle. Claimed; ACK #380 with
+    the latency miss stated (E3).
+ 2. Diffed 002 against 001 by dict: boundary, claim, I1-I3, kill rule,
+    cheat and negative controls identical; positive control, I0 bands,
+    W2/I4/I5, indeterminate list changed. Matches Nyx's statement (E3).
+ 3. Plan committed before the run (132058c00): bands copied; controls
+    first; I4's median R read first and W2 rows stopped if outside 5..95.
+ 4. Run 1 (002_20260917T222213Z): cheat control FAILED on the two W2 paths
+    with variance 1.0e-27. Cause verified: numpy variance of five identical
+    doubles is nonzero because the mean of five copies of -207.92313903599123
+    rounds by 3e-14. The aggregator's exact-zero test was the defect, not the
+    channel. Fix committed with the diff (3db0b83c7): per-seed identity of
+    the injected value. No intervention arm had run (E3).
+ 5. Run 2 (002_20260917T222509Z, 88.9 s, E3): all controls pass; all arms
+    read; results in section 4.
+ 6. Post-hoc, labelled: bootstrap intervals (20,000 resamples) and MAD
+    ratios for the variance ratios; kurtosis of the per-seed values (E3).
+ 7. Ruling, disposition #382 to Nyx (cc Techne, Theophrastus, Archaeon),
+    item 364 done, pushed.
+ 8. Directive transcribed verbatim with a manifest (my copy carries the
+    operator's opening paragraph; Nyx's earlier copy does not). Steering
+    note written and posted #381 to Nyx, Techne, Archaeon, Nestor,
+    Theophrastus; backlog rows HARM-47..51 opened.
+
+4. RESULTS (all E3; rows in
+   roles/Harmonia/science/particles_ruler/out/002_20260917T222509Z/rows.jsonl,
+   sha256 c10b46c8...)
+
+  control                         result  numbers
+  ------------------------------  ------  --------------------------------------
+  C-CHEAT-ORACLE-IN-THE-LOOP      PASS    RMSE = B = 0.0; injected value identical
+                                          in every seed on all six arm paths
+  C-POS-N-SCALING-IN-REGIME       PASS    V(200)/V(1000) = 10.02; band [2.5, 20];
+                                          F-interval [5.69, 17.65]
+  C-NEG-UNINFORMATIVE             PASS    R = 0 every seed; V ratio 1.000
+
+  arm  world N   scheme      ESSrmin  V         B          RMSE    R min/med/max
+  I0   W1   100  systematic  0.5      41.49     -8.9207    0.0740  99/99/99
+  I1   W1   100  systematic  0.0      7.069e+05 -5471.07   1.9710   0/ 0/ 0
+  I2   W1   100  systematic  1.0      41.49     -8.9207    0.0740  99/99/99
+  I3   W1   100  multinomial 0.5      21.26     -7.3843    0.0711  99/99/99
+  I0x  W1   100  systematic  0.5      31.61     -7.2593    0.0686  99/99/99  (400 seeds)
+  I3x  W1   100  multinomial 0.5      36.71     -7.4833    0.0713  99/99/99  (400 seeds)
+  I4   W2   100  systematic  0.5      3.068     -1.8640    0.1767  49/51/54
+  I5   W2   100  systematic  1.0      4.044     -1.4968    0.1694  99/99/99
+
+  Boundary readings: I1 R = 0 in all 50 seeds, V ratio 17,039, RMSE ratio
+  26.7 (in band). I2 R = 99 in all seeds and identical to I0 seed for seed,
+  as 002 predicted. I4 median R 51 (band 5..95): W2 delivered a contrast.
+  I5 R = 99 in all seeds, differs from I4 in every seed, V(I5)/V(I4) =
+  1.318 in [0.5, 3] (F-interval [0.75, 2.32]; bootstrap [0.77, 2.27]).
+  No kill condition fired. RETURN 1: CUT_SUPPORTED.
+
+  Claim (c), two preregistered readings:
+    I3  (50 seeds)   ratio 0.512, F-interval [0.29, 0.90], bootstrap [0.29, 0.87]
+                     -> below the band, interval excludes 1 -> PREDICTION_FAILED
+    I3x (400 seeds)  ratio 1.161, F-interval [0.95, 1.41], bootstrap [0.92, 1.46]
+                     -> in band but covers 1 -> INDETERMINATE
+  Excess kurtosis of the per-seed values is between -0.8 and 0.9: not heavy
+  tails. Seeds 1..50 are a subset on which multinomial's spread is half of
+  systematic's; seeds 51..400 pull the ratio to about 1.16. RETURN 2: the
+  conflict itself, returned to Nyx with a request for a power statement
+  (half-width about 0.27 at 400 seeds; roughly 1,600+ seeds for 0.13).
+
+  Steering note (no numbers; E0): per specimen, instrument + controls,
+  route, first run, host. POET: PATA-EC recomputation ruler and a
+  reconstructability meter; basis-population ablation as a Theophrastus
+  cell; preservation-cost shim as a descendant. Avida: ancestry ground-
+  truth ruler (recorded graph vs genome-only reconstruction, with cheat /
+  positive / negative controls), written first against example data.
+  Tierra: gene-bank admission-rule replay and threshold sweep. ASAL: two-
+  level ruler (metric alone, then through CLIP; the reading is the order of
+  cycle / noise / drift / Lenia and the iid-over-drift ratio at level 2 over
+  level 1). TerraLingua: disagreement table plus confidence calibration
+  audit, graded in the Avida ruler's vocabulary. Three fields carried and
+  never merged: HISTORY_MODE (the operator's five cases), NOVELTY_KIND (the
+  four-way inequality, per observable), PRESERVATION_COST (Techne's class).
+
+5. WHAT CHANGED IN THE REPOSITORY
+
+  roles/Harmonia/prompts/2026-09-18_poet_alife_steering/   directive verbatim + MANIFEST
+  roles/Harmonia/prompts/2026-09-17_particles_packet/      ACK_NYX_364, RETURN_NYX_364
+  roles/Harmonia/science/particles_ruler/PLAN_002_2026-09-17.md, ruler_002.py
+  roles/Harmonia/science/particles_ruler/out/002_20260917T222213Z/  aborted run
+  roles/Harmonia/science/particles_ruler/out/002_20260917T222509Z/  the run
+        (rows, results, receipt with RUNTIME_WITNESS, ledger, data_W1/W2.npz)
+  roles/Harmonia/rulings/RULING_PARTICLES_ESSTRIGGER_002_2026-09-17.md
+  roles/Harmonia/archaeology/POET_ALIFE_BENCH_STEERING_2026-09-18.md
+  roles/Harmonia/journal, STATUS (lane 3 added), BACKLOG (HARM-45 rewritten,
+        HARM-47..51 new)
+  Queue: #364 CLAIMED then DONE; posts #380 (ack), #381 (steering), #382
+  (disposition). About 110 s of CPU on M3. No external services.
+
+6. WHAT THIS DID NOT ESTABLISH
+
+- Claim (c): neither supported nor rejected; the two readings conflict and
+  the packet's own power note said this row would likely be indeterminate.
+- Nothing about the fossil's behaviour outside these two linear-Gaussian
+  worlds at N = 100, T = 100.
+- No R36 world identity exists for the M3-native Python world; asked of
+  Techne, not required for the verdict.
+- No ALife row exists. The steering note declares instruments; none is
+  built. Four of the five specimens need a host with a compiler or Docker
+  (POET lineage, Avida .spop, Tierra bank) or an authorised install (ASAL
+  through CLIP) or a key decision (TerraLingua's LLM arm).
+- NPE's intake contract lives only on unmerged branches; a route to it is a
+  drafted receipt, not a submission, until that changes.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+
+- ACK on #364 was about six hours late. The instance was idle between its
+  previous close-out and the operator's next wake; no sync ran. Cost: a
+  gate-latency miss on the pipeline's first M3 packet, recorded in the
+  return for Nyx's ledger.
+- The cheat-control criterion tested a floating-point variance for exact
+  zero. It passed at 3 seeds by luck of rounding and failed at 5. Cost: one
+  aborted run and a post-plan code change to the control's criterion, the
+  kind of change a reviewer may reasonably want to re-open the plan for.
+  The channel evidence (RMSE and bias exactly 0, every injected value
+  identical) is unchanged by the fix.
+- The 400-seed arms include seeds 1..50, so the two I3 readings are not
+  independent; the plan said "beside, never instead" and did not say they
+  would share seeds. A cleaner design uses seeds 51..450 for the extra arm.
+- The steering note is long. Its content per specimen is bounded to four
+  declarations, but a reviewer may find the bench-intake summary in
+  section 1 redundant with the benches' own documents.
+
+8. WHAT IS OWED, AND BY WHOM
+
+  Nyx       Stage D' on claim (c): re-pose with a power statement, or on a
+            world with a larger scheme effect, or drop it; answer H4/H5
+            (NOVELTY_KIND per observable; PATA-EC packet next if numpy-isolable)
+  Techne    R36 identity for the M3-native Python world; FOSSIL_PACKET.json
+            for particles-chopin-0.4; H1-H3 (per-specimen input files with
+            hashes; Python version and native deps in record.json; keep
+            HISTORY_MODE out of the catalog's novelty field)
+  Archaeon  H6 (Soup admission precedents; cell-row fields)
+  Nestor    H7 (is a receipt in primordial/core/contract.py's shape the right
+            handoff while primordial/ is off main?)
+  Harmonia  ASAL level-1 ruler on M3; Avida ground-truth ruler against
+            converters-avida example data; a sync cadence so no ACK is late
+            again while this instance is up
+  Operator  a host with Docker/compilers; ASAL level-2 install or host;
+            whether TerraLingua's LLM arm may spend
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+
+ 1. Was it right to fix the cheat-control criterion after it failed and
+    then proceed under the same plan, or should the plan have been re-issued
+    (PLAN_002b) before the second run? What would you require to accept the
+    fix as an aggregator repair rather than a criterion loosening?
+ 2. What would falsify RETURN 1 (CUT_SUPPORTED)? We name: any seed with R >
+    0 at ESSrmin = 0 or R < 98 at ESSrmin = 1 on either world. Is a 50-seed
+    exact-count reading enough for a boundary verdict, given it is cheap to
+    run 400 more?
+ 3. On the I3 conflict: should the 50-seed reading be reported as
+    PREDICTION_FAILED at all, when the 400-seed superset covers 1 and the
+    packet pre-declared the row underpowered? Our rule said "with power" and
+    the 50-seed interval excluded 1. Is that rule wrong?
+ 4. What should we stop? Candidate: extra-seed arms that reuse the
+    preregistered seeds. Candidate: adjudicating any variance-ratio row
+    whose packet lacks a power statement.
+ 5. Steering: is "four declarations per part (instrument, route, first run,
+    host) and no ranking" the right shape for Harmonia's role between Nyx
+    and the benches, or does it under-serve the operator's ask by refusing
+    to say which specimen matters most?
+
+10. HOW TO REPRODUCE
+
+  Host with CPython 3.11, numpy, scipy, numba, joblib, and the particles
+  v0.4 source tree (tree sha256 e27cbce2...):
+
+    cd roles/Harmonia/science/particles_ruler
+    python ruler_002.py --seeds 50 --x-seeds 400 --vault <path to particles-0.4>
+
+  Expected (deterministic per seed on the same numpy): all three controls
+  PASS with V(200)/V(1000) = 10.02; I1 R = 0 in every seed; I2 identical to
+  I0; I4 median R 51; I5 V ratio 1.318; I3 ratio 0.512 at 50 seeds and
+  1.161 at 400; return_type CUT_SUPPORTED; about 90 s. The post-hoc
+  bootstrap is the inline script recorded in the journal (seed 20260917,
+  20,000 resamples).
+================================================================================

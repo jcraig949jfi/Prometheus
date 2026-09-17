@@ -2,15 +2,16 @@
  "generated_for": "Archaeon and Vivarium, headless and inference-free",
  "generated_from": "the LIVE engine's /v2/openapi.json and /v2/version; session scoping DERIVED by probing a scratch engine of the identical build with a malformed session key",
  "engine": {
-  "base_url": "https://192.168.1.202:8811/v2",
+  "base_url": "https://192.168.1.191:8811/v2",
   "api": "v2",
-  "schema_version": 8,
-  "engine_instance_id": "eng_8a37a5d305969034d488c43e",
-  "engine_source_hash": "sha256:5380cb90f42dc83b4c6bd4710566e92c3ca2a3d154eacca1069cbc40d187876e",
-  "scoping_derived_against_instance": "eng_192d0c561da0ca77bd652916",
+  "schema_version": 9,
+  "engine_instance_id": "eng_906356f7fb1da180131f9290",
+  "engine_source_hash": "sha256:699ca0f952448b41555ad2658d0f6f5ef007d1f0bdcc6127395563f0a32264cc",
+  "scoping_derived_against_instance": "eng_b866ffac6d8b0b71efb4e938",
   "science_profile": "warn",
   "session_enforcement": "advisory",
-  "IDENTITY_RULE": "pin engine_source_hash, NEVER source_commit. source_commit is best-effort git metadata and is currently WRONG on M1 -- it names a commit that does not contain the running code. The hash is computed from the loaded source and is the build identity."
+  "IDENTITY_RULE": "pin engine_source_hash, NEVER source_commit. source_commit is best-effort git metadata and is currently WRONG on M1 -- it names a commit that does not contain the running code. The hash is computed from the loaded source and is the build identity.",
+  "pre_deploy": null
  },
  "auth": {
   "register": "POST /v2/clients {name} -> {client_id, token}; no auth required for this call only",
@@ -56,6 +57,14 @@
     "reason"
    ],
    "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/capabilities",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": false
   },
   {
    "method": "POST",
@@ -168,6 +177,14 @@
     "member_id"
    ],
    "requires_session_key": true
+  },
+  {
+   "method": "GET",
+   "path": "/v2/health",
+   "path_params": [],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": false
   },
   {
    "method": "POST",
@@ -403,6 +420,16 @@
    "requires_session_key": true
   },
   {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/artifacts",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
    "method": "POST",
    "path": "/v2/worlds/{wid}/artifacts",
    "path_params": [
@@ -484,6 +511,19 @@
    ],
    "required_query": [],
    "required_body": [],
+   "requires_session_key": true
+  },
+  {
+   "method": "POST",
+   "path": "/v2/worlds/{wid}/events",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [
+    "kind",
+    "payload"
+   ],
    "requires_session_key": true
   },
   {
@@ -648,6 +688,16 @@
    "requires_session_key": true
   },
   {
+   "method": "GET",
+   "path": "/v2/worlds/{wid}/manifest",
+   "path_params": [
+    "wid"
+   ],
+   "required_query": [],
+   "required_body": [],
+   "requires_session_key": true
+  },
+  {
    "method": "POST",
    "path": "/v2/worlds/{wid}/observations",
    "path_params": [
@@ -758,9 +808,9 @@
   }
  ],
  "route_counts": {
-  "total_get_post": 67,
-  "session_scoped": 61,
-  "exempt": 6
+  "total_get_post": 72,
+  "session_scoped": 64,
+  "exempt": 8
  },
  "vocabularies": {
   "outcome": [
@@ -840,5 +890,12 @@
   "off": "not computed, not recorded -- a real control arm",
   "warn": "computed, returned as science.profile_findings, sealed into the event chain, NEVER blocking. M1 runs this.",
   "strict": "same findings, but one contradicting a declaration you sealed fails the call"
+ },
+ "landed": {
+  "by": "Daedalus[m2-d6ecd70b]",
+  "at": "2026-09-17",
+  "authority": "operator PRE-CAMPAIGN-4 REPAIR ORDER s1 (9.0.1); routes unchanged (72), engine hash bc8d3a0c -> 699ca0f9; generated after the restart against live + a loopback scratch probe of the same build",
+  "receipt": "SerendipityFoundry/SerendipityFoundryEngine/deploy/RELEASE_9_0_1_2026-09-17/",
+  "previous": "SerendipityFoundry/SerendipityFoundryEngine/deploy/RELEASE_9_0_1_2026-09-17/sfe_contract.PREVIOUS_bc8d3a0c.json"
  }
 }

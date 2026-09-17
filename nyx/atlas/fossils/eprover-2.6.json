@@ -133,17 +133,372 @@
   }
  },
  "cut": {
-  "state": "NOT_CUT",
-  "mode": null,
-  "evidence": [],
-  "inspected_files": [],
-  "date": null,
-  "note": "census only; no source opened"
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eprover-2.6/upstream/tree/CONTROL/cco_proofproc.c:1560-1800"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eprover-2.6/upstream/tree/HEURISTICS/che_hcb.c:903-940"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eprover-2.6/upstream/tree/HEURISTICS/che_hcb.h:259-271"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eprover-2.6/upstream/tree/HEURISTICS/che_proofcontrol.c:35-90"
+   }
+  ],
+  "inspected_files": [
+   "CONTROL/cco_proofproc.c 1560-1800 (ProcessClause, Saturate)",
+   "HEURISTICS/che_hcb.c 903-940",
+   "HEURISTICS/che_hcb.h 259-271",
+   "HEURISTICS/che_proofcontrol.c 35-90"
+  ],
+  "date": "2026-09-17T23:01Z",
+  "note": "saturation as the given-clause loop: pick one unprocessed clause by a heuristic, simplify it against the processed set (forward contraction), use it to simplify the processed set (backward), then generate every inference between it and the processed set and put the children back into the unprocessed set; the loop runs until the empty clause appears, the unprocessed set empties, or a limit trips; the heuristic is a round-robin over several weighted priority queues so that a cheap clause order (FIFO) and a small-clause order interleave",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-17T23:01Z",
+   "migrated_from": "authored under nyx.atlas/1-provenance",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/eprover/eprover@3b7afc70fe77d3118bb95144c4735ca45f5f31cf",
+   "payload_manifest_id": "techne tree_sha256 fe9c8d0b1272629df58a27611190c4d4869b708c98f3539ffe12ef2a3eb42e2e (1472 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt nyx/atlas/samples/stageA_bodies_m3_2026-09-17.json",
+   "files_read": [
+    {
+     "path": "upstream/tree/CONTROL/cco_proofproc.c",
+     "payload_hash_read": "7f9013a6cf76f6611d5ffad7550432ab5991b57a6d4bc4a0c195c620d31313ce",
+     "techne_recorded_hash": "7f9013a6cf76f6611d5ffad7550432ab5991b57a6d4bc4a0c195c620d31313ce",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/HEURISTICS/che_hcb.c",
+     "payload_hash_read": "98c3e4ade7807905467a5ea926e76b698c5c4afcd69917be5a06d66c7b825111",
+     "techne_recorded_hash": "98c3e4ade7807905467a5ea926e76b698c5c4afcd69917be5a06d66c7b825111",
+     "match": true,
+     "refs": 2
+    },
+    {
+     "path": "upstream/tree/HEURISTICS/che_hcb.h",
+     "payload_hash_read": "458c7aea6268a7d2ddf8e03d0b80c3ca6f62400aede6aae98cc1d7ce25d75d51",
+     "techne_recorded_hash": "458c7aea6268a7d2ddf8e03d0b80c3ca6f62400aede6aae98cc1d7ce25d75d51",
+     "match": true,
+     "refs": 1
+    },
+    {
+     "path": "upstream/tree/HEURISTICS/che_proofcontrol.c",
+     "payload_hash_read": "b1af077a1ddf8fa7211636621efaa4c618b14610576bd693746d9dbb8145aadf",
+     "techne_recorded_hash": "b1af077a1ddf8fa7211636621efaa4c618b14610576bd693746d9dbb8145aadf",
+     "match": true,
+     "refs": 1
+    }
+   ],
+   "unresolved_refs": []
+  }
  },
- "organs": [],
- "rejected_cuts": [],
- "pressures": [],
- "composition_edges": [],
+ "organs": [
+  {
+   "organ_id": "eprover-2.6::given_clause_loop_processing_one_selected_clause_per_step_with_forward_simplification_backward_simplification_and_generation_into_the_unprocessed_set",
+   "fossil_ancestry": "eprover-2.6",
+   "human_name": "ProcessClause (1560-1700): select from state->unprocessed; ForwardContractClause; ClauseIsSemFalse / empty clause; eliminate_backward_rewritten / subsumed / unit_simplified; insert into processed_pos_rules / pos_eqns / neg_units / non_units by shape; generate_new_clauses; Saturate (1738-1800): the while over TimeIsUp, set sizes, step / proc / unproc / total / generated / term-bank limits, then cleanup_unprocessed_clauses and the periodic SATCheck",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each step removes the heuristically best clause from the unprocessed set, rewrites and simplifies it against the processed set (returning the empty clause if it collapses to a contradiction), removes processed clauses it now subsumes or rewrites, files it in one of four processed sub-sets by shape (oriented rewrite rule, unorientable equation, negative unit, non-unit) so later inferences can index by shape, and generates all inferences (superposition, paramodulation, resolution, factoring) between it and the processed set into the unprocessed set; the outer loop repeats while time and eight size/count limits allow, periodically grounding a sample of clauses for a SAT check",
+   "input": "a clause set",
+   "output": "the empty clause (proof) or a saturated set / limit",
+   "state": "processed (4 indexed sets), unprocessed (evaluated), the term bank, demodulator dates",
+   "update": "per given clause",
+   "assumptions": [
+    "completeness of the calculus requires every inference between processed clauses to be performed eventually (the Otter loop's invariant); simplification is allowed because superposition with orderings is a saturation calculus (Bachmair & Ganzinger)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eprover-2.6::clause_selection_by_round_robin_over_several_weighted_priority_queues_with_a_switch_schedule_per_queue"
+   ],
+   "fitness_value_in_ancestor": "the loop is complete for first-order logic with equality and stops on many satisfiable sets; every CASC-winning prover has this loop at its centre",
+   "failure_landscape": "by reading: the unprocessed set grows quadratically with the processed set (the limits exist because of it); the loop's power is entirely in which clause is chosen next",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Otter (McCune 1988) given-clause algorithm; E's 'DISCOUNT loop' variant (Denzinger et al. 1997) where the processed set is kept fully interreduced",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eprover-2.6/upstream/tree/CONTROL/cco_proofproc.c:1560-1800"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "ProcessClause and Saturate; MEDIUM because the inference and simplification bodies were not read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "eprover-2.6::clause_selection_by_round_robin_over_several_weighted_priority_queues_with_a_switch_schedule_per_queue",
+   "fossil_ancestry": "eprover-2.6",
+   "human_name": "HCBStandardClauseSelect (che_hcb.c 903-940): ClauseSetFindBest(set, current_eval); orphan removal; select_count vs select_switch[current_eval]; wrap at wfcb_no; DefaultWeightFunctions (che_proofcontrol.c 35-90): FIFOWeight, ClauseWeight, RefinedWeight, ConjectureRelativeSymbolWeight, OrientLMaxWeight ... combined as '5*X, 1*FIFO'",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "every unprocessed clause carries one evaluation per weight function (a heuristic control block holds a list of them); selection takes the best clause under the CURRENT function, then advances a counter; when the counter reaches that function's switch value the next function becomes current, wrapping around, so a specification like '5*symbol-weight, 1*FIFO' picks five clauses by weight for every one by age; clauses whose parents were deleted (orphans) are dropped on the way; weight functions range from clause size to conjecture-relative symbol weights that favour symbols occurring in the goal",
+   "input": "the unprocessed set with evaluations",
+   "output": "the next given clause",
+   "state": "current_eval, select_count",
+   "update": "per selection",
+   "assumptions": [
+    "no single ordering is good for all problems: small clauses first is strong but starves old clauses (incomplete in practice), age first is fair but slow; interleaving fixed ratios gets both"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "eprover-2.6::given_clause_loop_processing_one_selected_clause_per_step_with_forward_simplification_backward_simplification_and_generation_into_the_unprocessed_set"
+   ],
+   "fitness_value_in_ancestor": "fairness (every clause is eventually selected, via the FIFO share) with the strength of size-based orders",
+   "failure_landscape": "by reading: the ratios are tuned per problem class (the auto mode, che_new_autoschedule.c, chooses them from clause-set features: unread)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Schulz 2002 'E -- a brainiac theorem prover'; the pick-given ratio of Otter",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:eprover-2.6/upstream/tree/HEURISTICS/che_hcb.c:903-940; vault:eprover-2.6/upstream/tree/HEURISTICS/che_hcb.h:259-271; vault:eprover-2.6/upstream/tree/HEURISTICS/che_proofcontrol.c:35-90"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the HCB selection functions and the weight-function registry",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the inference rules and their indexing (superposition / paramodulation / equality resolution and factoring, CLAUSES/ and CONTROL/cco_*), term orderings (ORDERINGS/: KBO, LPO), the shared term bank and rewriting (TERMS/), literal selection strategies (che_litselection.c), clause-set features and the auto schedule (che_new_autoschedule.c), the PicoSAT-based SAT check, proof object extraction (PCL2/), the TPTP/CNF front end, the learning modules (LEARN/)",
+   "reason": "OTHER",
+   "evidence": "NOT READ (~290,000 lines); residue",
+   "note": "orderings + superposition are the calculus (Bachmair & Ganzinger 1994) and deserve a DEEP pass of their own; the term bank (perfect sharing) is a representation mechanism worth a cut",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eprover-2.6"
+  },
+  {
+   "candidate": "'theorem prover' / 'saturation' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the loop, the selection heuristic, the calculus, the orderings and the indexing are separable and separately switchable by options",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "eprover-2.6"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "eprover-2.6::P.a_refutation_must_be_found_in_an_infinite_space_of_derived_clauses_where_the_useful_derivation_is_a_vanishing_fraction_and_fairness_must_be_preserved_so_that_completeness_is_not_lost",
+   "source_fossil": "eprover-2.6",
+   "source_evidence": "cco_proofproc.c Saturate / ProcessClause; che_hcb.c; che_proofcontrol.c weight-function defaults",
+   "condition": "an organism derives consequences from a clause set; the set of derivable clauses is infinite; a proof exists among them; the score is proofs found within a time and memory budget on a problem library; the organism must also terminate on some satisfiable sets",
+   "resource_or_constraint": "time; the unprocessed set's memory",
+   "failure_condition": "starvation (a needed old clause never selected) or drowning (the useful clause buried under quadratic generation)",
+   "world_punishes": "pure FIFO (slow) and pure smallest-first (unfair); no simplification (drowning)",
+   "world_rewards": "interleaved queues, interreduction of the processed set, conjecture-directed weights",
+   "observable_consequence": "problems solved within the budget on a TPTP slice with the selection heuristic set to FIFO only, weight only, and the default mix; and with backward simplification disabled",
+   "vacuity_condition": "propositional or Horn problems solvable by unit propagation",
+   "trivial_shortcuts": "a proof oracle (the world withholds it)",
+   "cheat_control": "an organism given the proof's clauses as a watchlist (E has one: PreferWatchlist) must solve every problem quickly; FIFO-only must time out where the mix succeeds; the mix without simplification must exhaust memory on equational problems: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: first-order theorem proving with equality (Schulz 1998-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "eprover-2.6::clause_selection_by_round_robin_over_several_weighted_priority_queues_with_a_switch_schedule_per_queue",
+   "to": "eprover-2.6::given_clause_loop_processing_one_selected_clause_per_step_with_forward_simplification_backward_simplification_and_generation_into_the_unprocessed_set",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
  "ancestry_edges": [
   {
    "from": "eprover-2.6",
@@ -158,10 +513,23 @@
    "to": "cocagne-plain-paxos",
    "note": "both search, but for a proof vs for agreement -- different problems (Techne records the domain, not equivalence)",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "eprover-2.6",
+   "relation": "algorithm_from",
+   "to": "Robinson 1965 (resolution); McCune 1988 (Otter, given clause); Bachmair & Ganzinger 1994 (superposition); Denzinger et al. 1997 (DISCOUNT loop); Schulz 2002 (E)",
+   "note": "from the record and the source's DOC",
+   "basis": "SOURCE_READ"
   }
  ],
  "residue": {
-  "state": "NOT_CHECKED",
-  "unexplained": []
+  "state": "LARGE_RESIDUE",
+  "unexplained": [
+   "the calculus, orderings, indexing, term bank and auto-schedule unread (~97 percent of the body)",
+   "the two organs read are the control loop and its selector",
+   "nothing ran"
+  ],
+  "note": "a map with two mechanisms located; the prover's substance is in the residue",
+  "cut_mode": "ANCESTRY_AWARE"
  }
 }

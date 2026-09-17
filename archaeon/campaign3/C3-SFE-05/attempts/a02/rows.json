@@ -1,0 +1,3218 @@
+[
+ {
+  "adapt_gens": {
+   "R1": null,
+   "R2": null,
+   "R3": null
+  },
+  "arm": "p0.0",
+  "elite_manifest": {
+   "code_writable": true,
+   "genome": [
+    2170421984,
+    712856658,
+    281226609,
+    691358828,
+    476966547,
+    2937552824,
+    661468846,
+    1496828432,
+    3751661748,
+    539516752,
+    3254718739,
+    3714615132,
+    711020867,
+    100222499,
+    1621062383,
+    846866204
+   ],
+   "n_regs": 15,
+   "out_cap": 1,
+   "persist": "regs",
+   "schema_version": "proteus.player_manifest.v0",
+   "tape_words": 16,
+   "tick_budget": 64
+  },
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "comparison": 0.25,
+    "opaque_io": 0.5
+   },
+   "distinct_opcodes": 4,
+   "instr": 4,
+   "n_regs": 15,
+   "opcode_hist": {
+    "INQ": 1,
+    "LT": 1,
+    "MUL": 1,
+    "OUT": 1
+   },
+   "persist": "regs",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 16
+  },
+  "events": {
+   "R0": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.166667,
+    "recovered": null
+   },
+   "R1": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.125,
+    "recovered": null
+   },
+   "R2": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.083333,
+    "recovered": null
+   },
+   "R3": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.166667,
+    "recovered": null
+   }
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.0,
+  "final_r1": 0.041667,
+  "final_r2": 0.083333,
+  "final_r3": 0.166667,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "general_gen": null,
+  "general_gen_ladder": null,
+  "general_heldout": 0,
+  "general_survives": false,
+  "gens_run": 35,
+  "heldout_by_rung": {
+   "R0": 0.0625,
+   "R1": 0.0625,
+   "R2": 0.0833,
+   "R3": 0.0417
+  },
+  "hold_gens": 15,
+  "hold_released_by": "cap",
+  "ladder_start": 15,
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 0,
+    "hold": true,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "R0": 0.166667,
+    "R1": 0.125,
+    "R2": 0.0,
+    "R3": 0.041667,
+    "gen": 5,
+    "hold": true,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 10,
+    "hold": true,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 15,
+    "hold": false,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 16,
+    "hold": false,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 17,
+    "hold": false,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 18,
+    "hold": false,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 19,
+    "hold": false,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 20,
+    "hold": false,
+    "p": 0.0,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 21,
+    "hold": false,
+    "p": 0.0,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 22,
+    "hold": false,
+    "p": 0.0,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 23,
+    "hold": false,
+    "p": 0.0,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 24,
+    "hold": false,
+    "p": 0.0,
+    "rung": 1
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 25,
+    "hold": false,
+    "p": 0.0,
+    "rung": 2
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 26,
+    "hold": false,
+    "p": 0.0,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 27,
+    "hold": false,
+    "p": 0.0,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 28,
+    "hold": false,
+    "p": 0.0,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 29,
+    "hold": false,
+    "p": 0.0,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 30,
+    "hold": false,
+    "p": 0.0,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 31,
+    "hold": false,
+    "p": 0.0,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 32,
+    "hold": false,
+    "p": 0.0,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 33,
+    "hold": false,
+    "p": 0.0,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 34,
+    "hold": false,
+    "p": 0.0,
+    "rung": 3
+   }
+  ],
+  "p": 0.0,
+  "p_after_general": null,
+  "p_switched_at": null,
+  "peak_r0": 0.166667,
+  "peak_r3": 0.166667,
+  "persist": "regs",
+  "r3_rise_gens": null,
+  "reached_r0_by_rung_end": 0,
+  "recovered_r0_at": null,
+  "retention_r0": 0.0,
+  "revisit_cost_episodes": 0,
+  "rung_at_general": null,
+  "schedule": [
+   {
+    "best": 0.0625,
+    "gen": 0,
+    "hold": true,
+    "mean": 0.008333,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 2,
+    "hold": true,
+    "mean": 0.016667,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 5,
+    "hold": true,
+    "mean": 0.002083,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 6,
+    "hold": true,
+    "mean": 0.04375,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 8,
+    "hold": true,
+    "mean": 0.060417,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 9,
+    "hold": true,
+    "mean": 0.047917,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 10,
+    "hold": true,
+    "mean": 0.051042,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 11,
+    "hold": true,
+    "mean": 0.053125,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 12,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 13,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 14,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 15,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 16,
+    "hold": false,
+    "mean": 0.027083,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 17,
+    "hold": false,
+    "mean": 0.09375,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 18,
+    "hold": false,
+    "mean": 0.1125,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 19,
+    "hold": false,
+    "mean": 0.057292,
+    "p": 0.0,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 20,
+    "hold": false,
+    "mean": 0.004167,
+    "p": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.1875,
+    "gen": 21,
+    "hold": false,
+    "mean": 0.0125,
+    "p": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 22,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.0625,
+    "gen": 23,
+    "hold": false,
+    "mean": 0.002083,
+    "p": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.125,
+    "gen": 24,
+    "hold": false,
+    "mean": 0.039583,
+    "p": 0.0,
+    "rung": 1
+   },
+   {
+    "best": 0.125,
+    "gen": 25,
+    "hold": false,
+    "mean": 0.023958,
+    "p": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 26,
+    "hold": false,
+    "mean": 0.089583,
+    "p": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.1875,
+    "gen": 27,
+    "hold": false,
+    "mean": 0.144792,
+    "p": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.125,
+    "gen": 28,
+    "hold": false,
+    "mean": 0.06875,
+    "p": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.1875,
+    "gen": 29,
+    "hold": false,
+    "mean": 0.060417,
+    "p": 0.0,
+    "rung": 2
+   },
+   {
+    "best": 0.0625,
+    "gen": 30,
+    "hold": false,
+    "mean": 0.051042,
+    "p": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.1875,
+    "gen": 31,
+    "hold": false,
+    "mean": 0.153125,
+    "p": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.125,
+    "gen": 32,
+    "hold": false,
+    "mean": 0.002083,
+    "p": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.125,
+    "gen": 33,
+    "hold": false,
+    "mean": 0.045833,
+    "p": 0.0,
+    "rung": 3
+   },
+   {
+    "best": 0.0625,
+    "gen": 34,
+    "hold": false,
+    "mean": 0.048958,
+    "p": 0.0,
+    "rung": 3
+   }
+  ],
+  "seed": 1,
+  "transitions": [
+   20,
+   25,
+   30
+  ],
+  "wall_s": 4.6,
+  "warnings": []
+ },
+ {
+  "adapt_gens": {
+   "R1": null,
+   "R2": null,
+   "R3": null
+  },
+  "arm": "p0.05",
+  "elite_manifest": {
+   "code_writable": true,
+   "genome": [
+    3516904698,
+    3684199976,
+    1199625932,
+    1829995113,
+    2181770673,
+    1507974377,
+    246659403,
+    3082908102,
+    2881504717,
+    341402355,
+    2453015228,
+    1129315115,
+    4135773247,
+    3191998654,
+    559030293,
+    3638122500
+   ],
+   "n_regs": 8,
+   "out_cap": 1,
+   "persist": "all",
+   "schema_version": "proteus.player_manifest.v0",
+   "tape_words": 32,
+   "tick_budget": 16
+  },
+  "elite_summary": {
+   "category_shares": {
+    "comparison": 0.25,
+    "opaque_io": 0.75
+   },
+   "distinct_opcodes": 3,
+   "instr": 4,
+   "n_regs": 8,
+   "opcode_hist": {
+    "INQ": 1,
+    "LT": 1,
+    "OUT": 2
+   },
+   "persist": "all",
+   "tape_words": 32,
+   "tick_budget": 16,
+   "words": 16
+  },
+  "events": {
+   "R0": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.166667,
+    "recovered": null
+   },
+   "R1": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.125,
+    "recovered": null
+   },
+   "R2": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.083333,
+    "recovered": null
+   },
+   "R3": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.166667,
+    "recovered": null
+   }
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.0,
+  "final_r1": 0.041667,
+  "final_r2": 0.083333,
+  "final_r3": 0.166667,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "general_gen": null,
+  "general_gen_ladder": null,
+  "general_heldout": 0,
+  "general_survives": false,
+  "gens_run": 35,
+  "heldout_by_rung": {
+   "R0": 0.0625,
+   "R1": 0.0625,
+   "R2": 0.0833,
+   "R3": 0.0417
+  },
+  "hold_gens": 15,
+  "hold_released_by": "cap",
+  "ladder_start": 15,
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 0,
+    "hold": true,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "R0": 0.166667,
+    "R1": 0.125,
+    "R2": 0.0,
+    "R3": 0.041667,
+    "gen": 5,
+    "hold": true,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 10,
+    "hold": true,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 15,
+    "hold": false,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 16,
+    "hold": false,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 17,
+    "hold": false,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 18,
+    "hold": false,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 19,
+    "hold": false,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 20,
+    "hold": false,
+    "p": 0.05,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 21,
+    "hold": false,
+    "p": 0.05,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 22,
+    "hold": false,
+    "p": 0.05,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 23,
+    "hold": false,
+    "p": 0.05,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 24,
+    "hold": false,
+    "p": 0.05,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 25,
+    "hold": false,
+    "p": 0.05,
+    "rung": 2
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 26,
+    "hold": false,
+    "p": 0.05,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 27,
+    "hold": false,
+    "p": 0.05,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 28,
+    "hold": false,
+    "p": 0.05,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 29,
+    "hold": false,
+    "p": 0.05,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 30,
+    "hold": false,
+    "p": 0.05,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 31,
+    "hold": false,
+    "p": 0.05,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 32,
+    "hold": false,
+    "p": 0.05,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 33,
+    "hold": false,
+    "p": 0.05,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 34,
+    "hold": false,
+    "p": 0.05,
+    "rung": 3
+   }
+  ],
+  "p": 0.05,
+  "p_after_general": null,
+  "p_switched_at": null,
+  "peak_r0": 0.166667,
+  "peak_r3": 0.166667,
+  "persist": "all",
+  "r3_rise_gens": null,
+  "reached_r0_by_rung_end": 0,
+  "recovered_r0_at": null,
+  "retention_r0": 0.0,
+  "revisit_cost_episodes": 15,
+  "rung_at_general": null,
+  "schedule": [
+   {
+    "best": 0.0625,
+    "gen": 0,
+    "hold": true,
+    "mean": 0.008333,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 2,
+    "hold": true,
+    "mean": 0.016667,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 5,
+    "hold": true,
+    "mean": 0.002083,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 6,
+    "hold": true,
+    "mean": 0.04375,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 8,
+    "hold": true,
+    "mean": 0.060417,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 9,
+    "hold": true,
+    "mean": 0.047917,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 10,
+    "hold": true,
+    "mean": 0.051042,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 11,
+    "hold": true,
+    "mean": 0.053125,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 12,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 13,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 14,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 15,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 16,
+    "hold": false,
+    "mean": 0.027083,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 17,
+    "hold": false,
+    "mean": 0.09375,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 18,
+    "hold": false,
+    "mean": 0.1125,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 19,
+    "hold": false,
+    "mean": 0.057292,
+    "p": 0.05,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 20,
+    "hold": false,
+    "mean": 0.004167,
+    "p": 0.05,
+    "rung": 1
+   },
+   {
+    "best": 0.1875,
+    "gen": 21,
+    "hold": false,
+    "mean": 0.0125,
+    "p": 0.05,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 22,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.05,
+    "rung": 1
+   },
+   {
+    "best": 0.0625,
+    "gen": 23,
+    "hold": false,
+    "mean": 0.002083,
+    "p": 0.05,
+    "rung": 1
+   },
+   {
+    "best": 0.125,
+    "gen": 24,
+    "hold": false,
+    "mean": 0.039583,
+    "p": 0.05,
+    "rung": 1
+   },
+   {
+    "best": 0.0625,
+    "gen": 25,
+    "hold": false,
+    "mean": 0.022917,
+    "p": 0.05,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 26,
+    "hold": false,
+    "mean": 0.095833,
+    "p": 0.05,
+    "rung": 2
+   },
+   {
+    "best": 0.1875,
+    "gen": 27,
+    "hold": false,
+    "mean": 0.135417,
+    "p": 0.05,
+    "rung": 2
+   },
+   {
+    "best": 0.0625,
+    "gen": 28,
+    "hold": false,
+    "mean": 0.054167,
+    "p": 0.05,
+    "rung": 2
+   },
+   {
+    "best": 0.1875,
+    "gen": 29,
+    "hold": false,
+    "mean": 0.090625,
+    "p": 0.05,
+    "rung": 2
+   },
+   {
+    "best": 0.0625,
+    "gen": 30,
+    "hold": false,
+    "mean": 0.046875,
+    "p": 0.05,
+    "rung": 3
+   },
+   {
+    "best": 0.1875,
+    "gen": 31,
+    "hold": false,
+    "mean": 0.15625,
+    "p": 0.05,
+    "rung": 3
+   },
+   {
+    "best": 0.125,
+    "gen": 32,
+    "hold": false,
+    "mean": 0.004167,
+    "p": 0.05,
+    "rung": 3
+   },
+   {
+    "best": 0.125,
+    "gen": 33,
+    "hold": false,
+    "mean": 0.051042,
+    "p": 0.05,
+    "rung": 3
+   },
+   {
+    "best": 0.0625,
+    "gen": 34,
+    "hold": false,
+    "mean": 0.033333,
+    "p": 0.05,
+    "rung": 3
+   }
+  ],
+  "seed": 1,
+  "transitions": [
+   20,
+   25,
+   30
+  ],
+  "wall_s": 3.8,
+  "warnings": []
+ },
+ {
+  "adapt_gens": {
+   "R1": null,
+   "R2": null,
+   "R3": null
+  },
+  "arm": "p0.1",
+  "elite_manifest": {
+   "code_writable": false,
+   "genome": [
+    2493533935,
+    730239133,
+    2320983389,
+    901762337,
+    2181770673,
+    1507974377,
+    246659403,
+    3082899910,
+    2242144383,
+    522311091,
+    715406130,
+    1115300098,
+    3751661748,
+    539516752,
+    3254718739,
+    3714617180
+   ],
+   "n_regs": 16,
+   "out_cap": 1,
+   "persist": "regs",
+   "schema_version": "proteus.player_manifest.v0",
+   "tape_words": 16,
+   "tick_budget": 64
+  },
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "logical": 0.25,
+    "opaque_io": 0.5
+   },
+   "distinct_opcodes": 3,
+   "instr": 4,
+   "n_regs": 16,
+   "opcode_hist": {
+    "AND": 1,
+    "OUT": 2,
+    "SUB": 1
+   },
+   "persist": "regs",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 16
+  },
+  "events": {
+   "R0": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.166667,
+    "recovered": null
+   },
+   "R1": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.125,
+    "recovered": null
+   },
+   "R2": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.083333,
+    "recovered": null
+   },
+   "R3": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.166667,
+    "recovered": null
+   }
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.0,
+  "final_r1": 0.041667,
+  "final_r2": 0.083333,
+  "final_r3": 0.166667,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "general_gen": null,
+  "general_gen_ladder": null,
+  "general_heldout": 0,
+  "general_survives": false,
+  "gens_run": 35,
+  "heldout_by_rung": {
+   "R0": 0.0625,
+   "R1": 0.0625,
+   "R2": 0.0833,
+   "R3": 0.0417
+  },
+  "hold_gens": 15,
+  "hold_released_by": "cap",
+  "ladder_start": 15,
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 0,
+    "hold": true,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.166667,
+    "R1": 0.125,
+    "R2": 0.0,
+    "R3": 0.041667,
+    "gen": 5,
+    "hold": true,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 10,
+    "hold": true,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 15,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 16,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 17,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 18,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 19,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 20,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 21,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 22,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 23,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 24,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 25,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 26,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 27,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 28,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 29,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 30,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 31,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 32,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 33,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 34,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   }
+  ],
+  "p": 0.1,
+  "p_after_general": null,
+  "p_switched_at": null,
+  "peak_r0": 0.166667,
+  "peak_r3": 0.166667,
+  "persist": "regs",
+  "r3_rise_gens": null,
+  "reached_r0_by_rung_end": 0,
+  "recovered_r0_at": null,
+  "retention_r0": 0.0,
+  "revisit_cost_episodes": 30,
+  "rung_at_general": null,
+  "schedule": [
+   {
+    "best": 0.0625,
+    "gen": 0,
+    "hold": true,
+    "mean": 0.008333,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 2,
+    "hold": true,
+    "mean": 0.016667,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 5,
+    "hold": true,
+    "mean": 0.002083,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 6,
+    "hold": true,
+    "mean": 0.04375,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 8,
+    "hold": true,
+    "mean": 0.060417,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 9,
+    "hold": true,
+    "mean": 0.047917,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 10,
+    "hold": true,
+    "mean": 0.051042,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 11,
+    "hold": true,
+    "mean": 0.053125,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 12,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 13,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 14,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 15,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 16,
+    "hold": false,
+    "mean": 0.027083,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 17,
+    "hold": false,
+    "mean": 0.09375,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 18,
+    "hold": false,
+    "mean": 0.1125,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 19,
+    "hold": false,
+    "mean": 0.057292,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 20,
+    "hold": false,
+    "mean": 0.004167,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.1875,
+    "gen": 21,
+    "hold": false,
+    "mean": 0.015625,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 22,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.0625,
+    "gen": 23,
+    "hold": false,
+    "mean": 0.002083,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.125,
+    "gen": 24,
+    "hold": false,
+    "mean": 0.042708,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.125,
+    "gen": 25,
+    "hold": false,
+    "mean": 0.059375,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 26,
+    "hold": false,
+    "mean": 0.077083,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.1875,
+    "gen": 27,
+    "hold": false,
+    "mean": 0.11875,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.0625,
+    "gen": 28,
+    "hold": false,
+    "mean": 0.054167,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.1875,
+    "gen": 29,
+    "hold": false,
+    "mean": 0.125,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 30,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.1875,
+    "gen": 31,
+    "hold": false,
+    "mean": 0.14375,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.0625,
+    "gen": 32,
+    "hold": false,
+    "mean": 0.001042,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.125,
+    "gen": 33,
+    "hold": false,
+    "mean": 0.05,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.0625,
+    "gen": 34,
+    "hold": false,
+    "mean": 0.042708,
+    "p": 0.1,
+    "rung": 3
+   }
+  ],
+  "seed": 1,
+  "transitions": [
+   20,
+   25,
+   30
+  ],
+  "wall_s": 4.3,
+  "warnings": []
+ },
+ {
+  "adapt_gens": {
+   "R1": null,
+   "R2": null,
+   "R3": null
+  },
+  "arm": "p0.2",
+  "elite_manifest": {
+   "code_writable": true,
+   "genome": [
+    1450775838,
+    3300611069,
+    429772811,
+    3005147480,
+    4135773247,
+    3191998654,
+    559030293,
+    3638122493,
+    2181770657,
+    1507957993,
+    246659403,
+    3082899910,
+    1956448742,
+    3002947040,
+    3611289311,
+    717044196,
+    1450775838,
+    3300611069,
+    429772805,
+    1515769612,
+    2181770673,
+    1507974377,
+    246659403,
+    3082899910
+   ],
+   "n_regs": 8,
+   "out_cap": 1,
+   "persist": "all",
+   "schema_version": "proteus.player_manifest.v0",
+   "tape_words": 32,
+   "tick_budget": 16
+  },
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.1667,
+    "comparison": 0.1667,
+    "logical": 0.3333,
+    "opaque_io": 0.3333
+   },
+   "distinct_opcodes": 5,
+   "instr": 6,
+   "n_regs": 8,
+   "opcode_hist": {
+    "ADD": 1,
+    "INQ": 1,
+    "LT": 1,
+    "NOT": 2,
+    "OUT": 1
+   },
+   "persist": "all",
+   "tape_words": 32,
+   "tick_budget": 16,
+   "words": 24
+  },
+  "events": {
+   "R0": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.166667,
+    "recovered": null
+   },
+   "R1": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.125,
+    "recovered": null
+   },
+   "R2": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.083333,
+    "recovered": null
+   },
+   "R3": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.166667,
+    "recovered": null
+   }
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.0,
+  "final_r1": 0.0,
+  "final_r2": 0.083333,
+  "final_r3": 0.083333,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "general_gen": null,
+  "general_gen_ladder": null,
+  "general_heldout": 0,
+  "general_survives": false,
+  "gens_run": 35,
+  "heldout_by_rung": {
+   "R0": 0.0833,
+   "R1": 0.1667,
+   "R2": 0.0208,
+   "R3": 0.0417
+  },
+  "hold_gens": 15,
+  "hold_released_by": "cap",
+  "ladder_start": 15,
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 0,
+    "hold": true,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "R0": 0.166667,
+    "R1": 0.125,
+    "R2": 0.0,
+    "R3": 0.041667,
+    "gen": 5,
+    "hold": true,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 10,
+    "hold": true,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 15,
+    "hold": false,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 16,
+    "hold": false,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 17,
+    "hold": false,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 18,
+    "hold": false,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 19,
+    "hold": false,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 20,
+    "hold": false,
+    "p": 0.2,
+    "rung": 1
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 21,
+    "hold": false,
+    "p": 0.2,
+    "rung": 1
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 22,
+    "hold": false,
+    "p": 0.2,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 23,
+    "hold": false,
+    "p": 0.2,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 24,
+    "hold": false,
+    "p": 0.2,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 25,
+    "hold": false,
+    "p": 0.2,
+    "rung": 2
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 26,
+    "hold": false,
+    "p": 0.2,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 27,
+    "hold": false,
+    "p": 0.2,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 28,
+    "hold": false,
+    "p": 0.2,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 29,
+    "hold": false,
+    "p": 0.2,
+    "rung": 2
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.083333,
+    "gen": 30,
+    "hold": false,
+    "p": 0.2,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 31,
+    "hold": false,
+    "p": 0.2,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 32,
+    "hold": false,
+    "p": 0.2,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 33,
+    "hold": false,
+    "p": 0.2,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 34,
+    "hold": false,
+    "p": 0.2,
+    "rung": 3
+   }
+  ],
+  "p": 0.2,
+  "p_after_general": null,
+  "p_switched_at": null,
+  "peak_r0": 0.166667,
+  "peak_r3": 0.166667,
+  "persist": "all",
+  "r3_rise_gens": null,
+  "reached_r0_by_rung_end": 0,
+  "recovered_r0_at": null,
+  "retention_r0": 0.0,
+  "revisit_cost_episodes": 45,
+  "rung_at_general": null,
+  "schedule": [
+   {
+    "best": 0.0625,
+    "gen": 0,
+    "hold": true,
+    "mean": 0.008333,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 2,
+    "hold": true,
+    "mean": 0.016667,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 5,
+    "hold": true,
+    "mean": 0.002083,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 6,
+    "hold": true,
+    "mean": 0.04375,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 8,
+    "hold": true,
+    "mean": 0.060417,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 9,
+    "hold": true,
+    "mean": 0.047917,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 10,
+    "hold": true,
+    "mean": 0.051042,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 11,
+    "hold": true,
+    "mean": 0.053125,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 12,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 13,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 14,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 15,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 16,
+    "hold": false,
+    "mean": 0.027083,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 17,
+    "hold": false,
+    "mean": 0.09375,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 18,
+    "hold": false,
+    "mean": 0.1125,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 19,
+    "hold": false,
+    "mean": 0.057292,
+    "p": 0.2,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 20,
+    "hold": false,
+    "mean": 0.053125,
+    "p": 0.2,
+    "rung": 1
+   },
+   {
+    "best": 0.1875,
+    "gen": 21,
+    "hold": false,
+    "mean": 0.005208,
+    "p": 0.2,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 22,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.2,
+    "rung": 1
+   },
+   {
+    "best": 0.0625,
+    "gen": 23,
+    "hold": false,
+    "mean": 0.001042,
+    "p": 0.2,
+    "rung": 1
+   },
+   {
+    "best": 0.125,
+    "gen": 24,
+    "hold": false,
+    "mean": 0.042708,
+    "p": 0.2,
+    "rung": 1
+   },
+   {
+    "best": 0.125,
+    "gen": 25,
+    "hold": false,
+    "mean": 0.0375,
+    "p": 0.2,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 26,
+    "hold": false,
+    "mean": 0.076042,
+    "p": 0.2,
+    "rung": 2
+   },
+   {
+    "best": 0.1875,
+    "gen": 27,
+    "hold": false,
+    "mean": 0.088542,
+    "p": 0.2,
+    "rung": 2
+   },
+   {
+    "best": 0.0625,
+    "gen": 28,
+    "hold": false,
+    "mean": 0.016667,
+    "p": 0.2,
+    "rung": 2
+   },
+   {
+    "best": 0.1875,
+    "gen": 29,
+    "hold": false,
+    "mean": 0.071875,
+    "p": 0.2,
+    "rung": 2
+   },
+   {
+    "best": 0.125,
+    "gen": 30,
+    "hold": false,
+    "mean": 0.016667,
+    "p": 0.2,
+    "rung": 3
+   },
+   {
+    "best": 0.1875,
+    "gen": 31,
+    "hold": false,
+    "mean": 0.055208,
+    "p": 0.2,
+    "rung": 3
+   },
+   {
+    "best": 0.125,
+    "gen": 32,
+    "hold": false,
+    "mean": 0.014583,
+    "p": 0.2,
+    "rung": 3
+   },
+   {
+    "best": 0.125,
+    "gen": 33,
+    "hold": false,
+    "mean": 0.075,
+    "p": 0.2,
+    "rung": 3
+   },
+   {
+    "best": 0.0625,
+    "gen": 34,
+    "hold": false,
+    "mean": 0.022917,
+    "p": 0.2,
+    "rung": 3
+   }
+  ],
+  "seed": 1,
+  "transitions": [
+   20,
+   25,
+   30
+  ],
+  "wall_s": 3.5,
+  "warnings": []
+ },
+ {
+  "adapt_gens": {
+   "R1": null,
+   "R2": null,
+   "R3": null
+  },
+  "arm": "p0.1_then_0",
+  "elite_manifest": {
+   "code_writable": false,
+   "genome": [
+    2493533935,
+    730239133,
+    2320983389,
+    901762337,
+    2181770673,
+    1507974377,
+    246659403,
+    3082899910,
+    2242144383,
+    522311091,
+    715406130,
+    1115300098,
+    3751661748,
+    539516752,
+    3254718739,
+    3714617180
+   ],
+   "n_regs": 16,
+   "out_cap": 1,
+   "persist": "regs",
+   "schema_version": "proteus.player_manifest.v0",
+   "tape_words": 16,
+   "tick_budget": 64
+  },
+  "elite_summary": {
+   "category_shares": {
+    "arithmetic": 0.25,
+    "logical": 0.25,
+    "opaque_io": 0.5
+   },
+   "distinct_opcodes": 3,
+   "instr": 4,
+   "n_regs": 16,
+   "opcode_hist": {
+    "AND": 1,
+    "OUT": 2,
+    "SUB": 1
+   },
+   "persist": "regs",
+   "tape_words": 16,
+   "tick_budget": 64,
+   "words": 16
+  },
+  "events": {
+   "R0": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.166667,
+    "recovered": null
+   },
+   "R1": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.125,
+    "recovered": null
+   },
+   "R2": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.083333,
+    "recovered": null
+   },
+   "R3": {
+    "appeared": null,
+    "collapsed": null,
+    "peak": 0.166667,
+    "recovered": null
+   }
+  },
+  "fell_r0_at": null,
+  "final_r0": 0.0,
+  "final_r1": 0.041667,
+  "final_r2": 0.083333,
+  "final_r3": 0.166667,
+  "gen0_provenance": {
+   "campaign_seed": 20260920,
+   "cell_seed": 1,
+   "fill": "wse.gen0",
+   "n": 60,
+   "n_substituted": 0,
+   "verified_common": true
+  },
+  "general_gen": null,
+  "general_gen_ladder": null,
+  "general_heldout": 0,
+  "general_survives": false,
+  "gens_run": 35,
+  "heldout_by_rung": {
+   "R0": 0.0625,
+   "R1": 0.0625,
+   "R2": 0.0833,
+   "R3": 0.0417
+  },
+  "hold_gens": 15,
+  "hold_released_by": "cap",
+  "ladder_start": 15,
+  "matrix": [
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 0,
+    "hold": true,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.166667,
+    "R1": 0.125,
+    "R2": 0.0,
+    "R3": 0.041667,
+    "gen": 5,
+    "hold": true,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 10,
+    "hold": true,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 15,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 16,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 17,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 18,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 19,
+    "hold": false,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 20,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 21,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 22,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 23,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 24,
+    "hold": false,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.0,
+    "R2": 0.083333,
+    "R3": 0.083333,
+    "gen": 25,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 26,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 27,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 28,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 29,
+    "hold": false,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 30,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 31,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 32,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.083333,
+    "R1": 0.041667,
+    "R2": 0.041667,
+    "R3": 0.041667,
+    "gen": 33,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "R0": 0.0,
+    "R1": 0.041667,
+    "R2": 0.083333,
+    "R3": 0.166667,
+    "gen": 34,
+    "hold": false,
+    "p": 0.1,
+    "rung": 3
+   }
+  ],
+  "p": 0.1,
+  "p_after_general": 0.0,
+  "p_switched_at": null,
+  "peak_r0": 0.166667,
+  "peak_r3": 0.166667,
+  "persist": "regs",
+  "r3_rise_gens": null,
+  "reached_r0_by_rung_end": 0,
+  "recovered_r0_at": null,
+  "retention_r0": 0.0,
+  "revisit_cost_episodes": 30,
+  "rung_at_general": null,
+  "schedule": [
+   {
+    "best": 0.0625,
+    "gen": 0,
+    "hold": true,
+    "mean": 0.008333,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 1,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 2,
+    "hold": true,
+    "mean": 0.016667,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 3,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 4,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 5,
+    "hold": true,
+    "mean": 0.002083,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 6,
+    "hold": true,
+    "mean": 0.04375,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 7,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 8,
+    "hold": true,
+    "mean": 0.060417,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 9,
+    "hold": true,
+    "mean": 0.047917,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 10,
+    "hold": true,
+    "mean": 0.051042,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 11,
+    "hold": true,
+    "mean": 0.053125,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 12,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 13,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 14,
+    "hold": true,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0,
+    "gen": 15,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.0625,
+    "gen": 16,
+    "hold": false,
+    "mean": 0.027083,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 17,
+    "hold": false,
+    "mean": 0.09375,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 18,
+    "hold": false,
+    "mean": 0.1125,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 19,
+    "hold": false,
+    "mean": 0.057292,
+    "p": 0.1,
+    "rung": 0
+   },
+   {
+    "best": 0.125,
+    "gen": 20,
+    "hold": false,
+    "mean": 0.004167,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.1875,
+    "gen": 21,
+    "hold": false,
+    "mean": 0.015625,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.0,
+    "gen": 22,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.0625,
+    "gen": 23,
+    "hold": false,
+    "mean": 0.002083,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.125,
+    "gen": 24,
+    "hold": false,
+    "mean": 0.042708,
+    "p": 0.1,
+    "rung": 1
+   },
+   {
+    "best": 0.125,
+    "gen": 25,
+    "hold": false,
+    "mean": 0.059375,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.25,
+    "gen": 26,
+    "hold": false,
+    "mean": 0.077083,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.1875,
+    "gen": 27,
+    "hold": false,
+    "mean": 0.11875,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.0625,
+    "gen": 28,
+    "hold": false,
+    "mean": 0.054167,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.1875,
+    "gen": 29,
+    "hold": false,
+    "mean": 0.125,
+    "p": 0.1,
+    "rung": 2
+   },
+   {
+    "best": 0.0,
+    "gen": 30,
+    "hold": false,
+    "mean": 0.0,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.1875,
+    "gen": 31,
+    "hold": false,
+    "mean": 0.14375,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.0625,
+    "gen": 32,
+    "hold": false,
+    "mean": 0.001042,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.125,
+    "gen": 33,
+    "hold": false,
+    "mean": 0.05,
+    "p": 0.1,
+    "rung": 3
+   },
+   {
+    "best": 0.0625,
+    "gen": 34,
+    "hold": false,
+    "mean": 0.042708,
+    "p": 0.1,
+    "rung": 3
+   }
+  ],
+  "seed": 1,
+  "transitions": [
+   20,
+   25,
+   30
+  ],
+  "wall_s": 4.2,
+  "warnings": []
+ }
+]

@@ -1,0 +1,263 @@
+{
+ "_what_this_is": "Campaign 4 launch gate. Execution REFUSES until every blocking requirement is GREEN.",
+ "blocking_not_green": [
+  {
+   "id": "G1",
+   "owner": "Daedalus",
+   "status": "CLAIMED_NOT_PROVEN"
+  },
+  {
+   "id": "G2",
+   "owner": "Archaeon + Vivarium",
+   "status": "RED"
+  },
+  {
+   "id": "G3",
+   "owner": "Vivarium + Daedalus",
+   "status": "CLAIMED_NOT_PROVEN"
+  },
+  {
+   "id": "G5",
+   "owner": "Proteus + Archaeon",
+   "status": "RED"
+  }
+ ],
+ "campaign_may_start": false,
+ "checks": [
+  {
+   "blocks_launch": true,
+   "evidence": {
+    "acceptance_regime_selected_by": "longest campaign_rate regime (order-independent)",
+    "campaign_rate_regime": {
+     "calls_over_5s": 0,
+     "http_5xx": 0,
+     "regime": "R0_campaign_rate_writer_paced_reader",
+     "restart_s": 1.05,
+     "seconds": 331.8,
+     "wal_max_mb": 8
+    },
+    "campaign_rate_regimes": [
+     {
+      "calls_over_5s": 0,
+      "http_5xx": 0,
+      "regime": "R0_campaign_rate_writer_paced_reader",
+      "restart_s": 1.05,
+      "seconds": 331.8,
+      "wal_max_mb": 8
+     }
+    ],
+    "checks": {
+     "campaign_rate_run_outlasts_prior_defect_onset": false,
+     "crash_restart_recovery_measured": true,
+     "evidence_bound_to_901_build": true,
+     "no_5xx_any_regime": true,
+     "no_calls_over_5s_any_regime": true,
+     "regimes_parsed": true,
+     "wal_bounded_at_campaign_rate": true
+    },
+    "note": "the campaign-rate acceptance regime ran 331.8 s; the defect class it replaces first appeared about 840 s into the previous run, so this regime is too short to exclude its return",
+    "prior_defect_first_appeared_s": 840,
+    "receipt": "SerendipityFoundry/SerendipityFoundryEngine/docs/point_release_2026-09/SFE_901_REPAIR_RECEIPT.md",
+    "regimes": [
+     {
+      "calls_over_5s": 0,
+      "http_5xx": 0,
+      "regime": "R0_campaign_rate_writer_paced_reader",
+      "restart_s": 1.05,
+      "seconds": 331.8,
+      "wal_max_mb": 8
+     },
+     {
+      "calls_over_5s": 0,
+      "http_5xx": 0,
+      "regime": "R1_seq_writer_paced_reader",
+      "restart_s": 0.55,
+      "seconds": 127.9,
+      "wal_max_mb": 3321
+     },
+     {
+      "calls_over_5s": 0,
+      "http_5xx": 0,
+      "regime": "R3_two_writers_no_reader",
+      "restart_s": 4.86,
+      "seconds": 131.2,
+      "wal_max_mb": 3402
+     },
+     {
+      "calls_over_5s": 0,
+      "http_5xx": 0,
+      "regime": "R2_two_writers_tight_reader",
+      "restart_s": 9.71,
+      "seconds": 254.4,
+      "wal_max_mb": 3417
+     }
+    ]
+   },
+   "id": "G1",
+   "missing": [
+    "campaign_rate_run_outlasts_prior_defect_onset"
+   ],
+   "owner": "Daedalus",
+   "requirement": "campaign-rate long run on 9.0.1 + WAL bound + crash/restart recovery measured",
+   "status": "CLAIMED_NOT_PROVEN"
+  },
+  {
+   "blocks_launch": true,
+   "evidence": {
+    "preconditions": [
+     {
+      "blocks": [
+       "S3",
+       "S4",
+       "S5",
+       "S6",
+       "S7",
+       "S8"
+      ],
+      "id": "P1",
+      "owner": "operator / Daedalus",
+      "present": false,
+      "what": "campaign 4 engine credential (archaeon/campaign4/config.local.json)"
+     },
+     {
+      "blocks": [
+       "S3"
+      ],
+      "id": "P2",
+      "owner": "Daedalus",
+      "present": null,
+      "what": "B1 read grant re-issued for cli_2bb36261 on the M2 ledger"
+     },
+     {
+      "blocks": [
+       "S4",
+       "S5"
+      ],
+      "id": "P3",
+      "owner": "Daedalus + Vivarium",
+      "present": null,
+      "what": "~10 minute window for the deliberate mid-run engine restart"
+     },
+     {
+      "blocks": [
+       "S7"
+      ],
+      "id": "P4",
+      "owner": "Mnemosyne",
+      "present": null,
+      "what": "PEW ingest/rebuild/release-check leg"
+     },
+     {
+      "blocks": [],
+      "id": "P5",
+      "owner": "Archaeon",
+      "present": null,
+      "what": "Archaeon's five campaign-3 viv rows stay HELD (must not be swept in)"
+     }
+    ],
+    "receipt_digest": "sha256:bda6e9f316f0c2ec4ad92de86e32a5d8bf7158b79cbe80c99efee17da4dbae66",
+    "stage_status": {
+     "S1": "OK",
+     "S2-validate": "OK",
+     "S3": "BLOCKED",
+     "S4": "BLOCKED",
+     "S5": "BLOCKED",
+     "S6": "BLOCKED",
+     "S7": "BLOCKED",
+     "S8": "BLOCKED"
+    },
+    "stages_not_ok": [
+     "S3",
+     "S4",
+     "S5",
+     "S6",
+     "S7",
+     "S8"
+    ],
+    "stages_ok": [
+     "S1",
+     "S2-validate"
+    ]
+   },
+   "id": "G2",
+   "owner": "Archaeon + Vivarium",
+   "requirement": "synthetic C4 specimen travels the full chain incl. forced restart and a reproducible receipt",
+   "status": "RED"
+  },
+  {
+   "blocks_launch": true,
+   "evidence": {
+    "consumer_alive_claim": "Vivarium #368: consumer ALIVE on M2 (build 08081c6ed)",
+    "grant_defect_claim": "Vivarium #368 caveat: Archaeon's B1 read grant names an M1-ledger client; must be re-issued for the M2 ledger client",
+    "verifiable_from_here": false,
+    "why": "grant validity is engine-side authorization; proving it requires a campaign-4 engine identity this seat does not yet hold"
+   },
+   "id": "G3",
+   "owner": "Vivarium + Daedalus",
+   "requirement": "Campaign-4 consumer identity live and its M2 B1 read grant valid",
+   "status": "CLAIMED_NOT_PROVEN"
+  },
+  {
+   "blocks_launch": false,
+   "evidence": {
+    "claim": "Vivarium #368: 100+ outbox rows PENDING, deliverer HELD pending the writer identity",
+    "directive_consequence": "Campaign 4 MAY execute (the outbox is durable), but the final campaign disposition may not claim complete PEW closure until the backlog is delivered"
+   },
+   "id": "G4",
+   "owner": "Mnemosyne",
+   "requirement": "drain the Vivarium outbox if the PEW writer credential is available",
+   "status": "CONDITIONAL"
+  },
+  {
+   "blocks_launch": true,
+   "evidence": {
+    "archaeon_declaration_present": true,
+    "checks": {
+     "archaeon_declaration_present": true,
+     "declaration_digest_reproducible": true,
+     "declaration_has_canonical_rule": true,
+     "every_organism_has_ancestry": true,
+     "mint_binds_canonical_digest": false,
+     "mint_count_matches": true,
+     "organisms_present": true,
+     "proteus_catalog_present": true,
+     "proteus_mint_present": true
+    },
+    "mint_binds_digest": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4",
+    "mint_count": 57,
+    "mint_schema": "proteus.c4_starting_population_mint.v1",
+    "minted_by": "Proteus[m2-7d051790]",
+    "missing": [
+     "mint_binds_canonical_digest"
+    ],
+    "next_action": "Proteus remints over the canonical digest sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1 (the content is unchanged: same 57 organisms, same collapsed duplicate). The raw-byte digest it currently binds is a checkout artifact, not a population identity.",
+    "organisms_declared": 57,
+    "organisms_without_ancestry": 0,
+    "population_digest_declared": "sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1",
+    "population_digest_recomputed_here": "sha256:7f03cc8282b4b1e2d47ebf541d053c7e640732cc44b7ab20b82e3812d3e808c1",
+    "population_digest_rule_published": true,
+    "proteus_catalog_present": true,
+    "proteus_mint_present": true,
+    "superseded_raw_byte_digests": {
+     "crlf_worktree": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4",
+     "lf_worktree": "sha256:3c2ebfd9de7bd14409bda6a1417ca9ebc8fdc1521eea6301450863f0df9199b1",
+     "note": "same 57-organism content, two checkouts. Preserved as evidence of the identity-definition defect that this canonical rule repairs.",
+     "proteus_minted_over": "sha256:a3f9816fada5a5edde6ac1d56100df078944e50f30c53b6c52160026c06dd6a4"
+    }
+   },
+   "id": "G5",
+   "missing": [
+    "mint_binds_canonical_digest"
+   ],
+   "owner": "Proteus + Archaeon",
+   "requirement": "manifests + structural descriptors for the exact C4 starting organisms; no organism of unknown ancestry",
+   "status": "RED"
+  }
+ ],
+ "gate": "RED",
+ "generated_at": "2026-09-17T22:52:51Z",
+ "generated_by": "Archaeon[m2-411504ab]",
+ "read_at_commit": "15424485a72360636a7aa3deec40534685b5cbbe",
+ "read_at_ref": "origin/main",
+ "rule": "an item whose evidence cannot be READ is UNVERIFIED or CLAIMED_NOT_PROVEN and still blocks; a message is a claim, not proof."
+}
