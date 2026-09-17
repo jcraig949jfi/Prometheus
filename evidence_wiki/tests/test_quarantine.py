@@ -14,8 +14,17 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[2]
-SCAN_DIRS = ["archaeon/wse", "archaeon/campaign1", "archaeon/campaign2", "archaeon/campaign3",
-             "SerendipityFoundry/SerendipityFoundryEngine/sfe", "proteus"]
+# The EXECUTION path: Archaeon's search machine and campaign harnesses, the
+# engine, and the organism generator/evaluator/runtime. NOT proteus/integration
+# or proteus/mint: those are Proteus's one-way EXPORT to PEW (the mint round
+# trip through register_fossil_player, PROTEUS-36) -- data flowing INTO PEW is
+# the point; the quarantine forbids data flowing OUT of PEW into generation,
+# grammar, mutation or selection. Scope aligned with proteus/audits/quarantine.py
+# (foundry, eval) on 2026-09-17 after the fixture fired on the mint rehearsal.
+SCAN_DIRS = ["archaeon/wse", "archaeon/campaign1", "archaeon/campaign2", "archaeon/campaign3", "archaeon/campaign4",
+             "SerendipityFoundry/SerendipityFoundryEngine/sfe",
+             "proteus/foundry", "proteus/eval", "proteus/compose", "proteus/v0", "proteus/v0_3", "proteus/v0_4",
+             "proteus/v0_5", "proteus/v0_6", "proteus/v0_7"]
 FORBIDDEN = re.compile(r"^\s*(from\s+ew(\.|\s)|import\s+ew(\.|\s|$)|from\s+evidence_wiki|import\s+evidence_wiki)|:8377\b", re.M)
 
 

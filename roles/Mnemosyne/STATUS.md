@@ -1,6 +1,6 @@
 # Mnemosyne / PEW - status
 
-Currency: 2026-09-17 07:20 local (instance m2-9c10ae00; point release DEPLOYED). Updated at least
+Currency: 2026-09-17 10:05 local (instance m2-9c10ae00; pre-Campaign-4 repair DONE, surface FROZEN). Updated at least
 every four hours of activity. The 2026-09-11 status is superseded where it
 says the service runs on M1; everything else it recorded stands as history.
 
@@ -8,14 +8,14 @@ says the service runs on M1; everything else it recorded stands as history.
 
     PEW service      http://127.0.0.1:8377 on M2 (SPECTREX5), bound 0.0.0.0
                      so M2 seats use 127.0.0.1 and LAN peers 192.168.1.191
-                     schema 5 (migration 014, 2026-09-17), ontology 7 in
+                     schema 5 (migrations 014, 015, 2026-09-17), ontology 7 in
                      the registry (code constant still 2, MNE-19), contract
                      pew.fossil.v2, closure pew.closure.v0; the store is
                      ATTESTED before the port binds (health.store)
     serving from     the pinned worktree mnemosyne-pew (host convention
                      D:\Prometheus-worktrees\mnemosyne-pew\evidence_wiki)
-                     detached at 8665b1bdf, clean; workspace_known true;
-                     pid 19480 since 2026-09-17 07:07:30
+                     detached at f46e821e0, clean; workspace_known true;
+                     pid 19624 since 2026-09-17 09:50:00
     store            the CANONICAL store: PostgreSQL 17 prometheus_fire on
                      M1 (192.168.1.202), db_system_id 7628127204585430828,
                      attested by the service (S2) on every battery run
@@ -73,6 +73,25 @@ says the service runs on M1; everything else it recorded stands as history.
     base-role 11/11. Watchdog live tick: `ok  health 31ms  hybrid search
     83ms`. S2 cheat: naming the fork FAILS. Wrong-store startup: REFUSED
     (exit 1 before bind).
+
+## Pre-Campaign-4 repair (2026-09-17 09:xx; order s4) -- FROZEN
+
+    surface       docs/point_release/CAMPAIGN4_FROZEN_SURFACE.{md,json},
+                  digest sha256:0ba00db3481f...; tests/test_frozen_surface.py
+                  fails on any drift
+    frozen ids    schema 5 (014+015); reader ew.campaign_ingest/1.3; builder
+                  ew.projections/1.0; reach_level v1, corridor_edge v1 (v0
+                  SUPERSEDED, kept); inbox pew.events.v1; thresholds 0.5 /
+                  0.45 / 0.90 + held-out confirmation
+    repairs       closure verify timeout 6 s -> 30 s + one retry (Daedalus
+                  #345; a stall wrote UNVERIFIED silently); content-duplicate
+                  sequences recorded (Vivarium #335, migration 015);
+                  foundry_profile scheme tag (Proteus #339)
+    acceptance    batteries green after restart; release check 16/16;
+                  second ingest 0 new (C3/C2/C1); rebuild digests identical
+                  to the point-release build; post-015 restore qualified
+    receipt       docs/point_release/PEW_REPAIR_RECEIPT_2026-09-17.json;
+                  dispositions PEW_STAGE3_DISPOSITIONS.md
 
 ## Point release (2026-09-17; docs/point_release/PEW_RELEASE_PACKET.md)
 

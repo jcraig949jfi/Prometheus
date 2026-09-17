@@ -6,7 +6,7 @@
   {
    "gate": "C0_identity_attested",
    "pass": true,
-   "detail": "db_system_id=7628127204585430828 source_commit=8665b1bdf653 dirty=False"
+   "detail": "db_system_id=7628127204585430828 source_commit=87e2ab614d05 dirty=False"
   },
   {
    "gate": "C1_packet_read",
@@ -46,7 +46,7 @@
   {
    "gate": "C5_constraint_kinds",
    "pass": true,
-   "detail": "HARD=K-a51a9f74c24c ADVISORY=K-6bf5c6d12572"
+   "detail": "HARD=K-3261ce9cfcb1 ADVISORY=K-cf8f13c9ff0c"
   },
   {
    "gate": "C6_scope_mandatory",
@@ -61,7 +61,7 @@
   {
    "gate": "C8_refuted_not_active",
    "pass": true,
-   "detail": "REFUTED K-6bf5c6d12572 absent from status=PROPOSED listing (n_proposed=0)"
+   "detail": "REFUTED K-cf8f13c9ff0c absent from status=PROPOSED listing (n_proposed=0)"
   },
   {
    "gate": "C9_history_recoverable",
@@ -71,22 +71,22 @@
   {
    "gate": "C10_seal_written",
    "pass": true,
-   "detail": "seal=SEAL-79f438400cbf764c0de6cf44 inserted=True"
+   "detail": "seal=SEAL-990789c03c604048b1e1dcd0 inserted=True"
   },
   {
    "gate": "C11_seal_recoverable_sealed",
    "pass": true,
-   "detail": "seal_valid=True slots_absent=[] bound_fossil=CLOSURE-45093542-ENC"
+   "detail": "seal_valid=True slots_absent=[] bound_fossil=CLOSURE-505207fc-ENC"
   },
   {
    "gate": "C12_seal_idempotent",
    "pass": true,
-   "detail": "re-seal id=SEAL-79f438400cbf764c0de6cf44 inserted=False"
+   "detail": "re-seal id=SEAL-990789c03c604048b1e1dcd0 inserted=False"
   },
   {
    "gate": "C13_content_addressed_tamper_evident",
    "pass": true,
-   "detail": "changed-slot seal=SEAL-b753c18ad92619d097b65f56 != SEAL-79f438400cbf764c0de6cf44"
+   "detail": "changed-slot seal=SEAL-8e6840b5096a1bee8fb005d2 != SEAL-990789c03c604048b1e1dcd0"
   },
   {
    "gate": "C14_unknown_encounter_refused",
