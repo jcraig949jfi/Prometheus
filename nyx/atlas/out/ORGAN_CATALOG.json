@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:34Z",
- "n": 402,
+ "built": "2026-09-17T22:51Z",
+ "n": 436,
  "organs": [
   {
    "organ_id": "avida::nop_modified_instruction_set_where_three_nops_double_as_register_selectors_and_label_alphabet",
@@ -1246,6 +1246,378 @@
     },
     "temporal_horizon": {
      "value": "EPISODE",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "backoff-2.2.1::wait_schedule_as_a_primed_generator_capped_at_a_maximum_and_advanced_by_sending_the_failure_value",
+   "fossil_ancestry": "backoff-2.2.1",
+   "human_name": "_wait_gen.expo (factor * base ** n, then max_value forever), fibo, constant, runtime (value(ret_or_exc)); _common._init_wait_gen (send(None) to prime)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each schedule is a generator that first yields nothing (to absorb the priming send) and then yields waits on demand; expo yields factor * base^n while below the cap and the cap forever after; fibo likewise; constant iterates a value or an iterable; runtime receives the failed call's return value or exception through send() and computes the wait from it (e.g. a Retry-After header); the loop calls wait.send(value) once per failure",
+   "input": "base, factor, max_value; per failure, the value or exception",
+   "output": "seconds",
+   "state": "n (the failure count) inside the generator",
+   "update": "per failure",
+   "assumptions": [
+    "a generator is the right shape for a stateful schedule that may need the failure's content"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "backoff-2.2.1::full_jitter_drawing_the_actual_wait_uniformly_from_zero_to_the_scheduled_wait",
+    "backoff-2.2.1::retry_loop_terminated_by_a_giveup_predicate_a_try_count_or_a_wall_clock_budget_with_handlers_at_each_transition"
+   ],
+   "fitness_value_in_ancestor": "one interface for every schedule, including server-directed ones",
+   "failure_landscape": "by reading: expo with no cap grows without bound; the cap is the caller's responsibility",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "binary exponential backoff (Metcalfe & Boggs 1976); Retry-After (RFC 7231)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:backoff-2.2.1/upstream/tree/backoff-2.2.1/backoff/_wait_gen.py:1-89; vault:backoff-2.2.1/upstream/tree/backoff-2.2.1/backoff/_common.py:27-32"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "_wait_gen and the priming helper",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "backoff-2.2.1::full_jitter_drawing_the_actual_wait_uniformly_from_zero_to_the_scheduled_wait",
+   "fossil_ancestry": "backoff-2.2.1",
+   "human_name": "_jitter.full_jitter (random.uniform(0, value)); random_jitter (value + random()) as the pre-1.2 default; _common._next_wait applies it and clamps to the remaining max_time",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the scheduled wait is replaced by a uniform draw on [0, wait] (full jitter, the AWS 2015 analysis: lowest total work and contention among the jitter variants) or, in the older scheme, increased by up to one second; the result is then clamped so the sleep never exceeds the remaining wall-clock budget",
+   "input": "a scheduled wait; elapsed; max_time",
+   "output": "seconds to sleep",
+   "state": "none",
+   "update": "per failure",
+   "assumptions": [
+    "many clients retrying the same failure synchronise their retries unless the waits are randomised; spreading over the whole interval beats adding a small offset"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "backoff-2.2.1::wait_schedule_as_a_primed_generator_capped_at_a_maximum_and_advanced_by_sending_the_failure_value",
+    "backoff-2.2.1::retry_loop_terminated_by_a_giveup_predicate_a_try_count_or_a_wall_clock_budget_with_handlers_at_each_transition"
+   ],
+   "fitness_value_in_ancestor": "thundering-herd avoidance; expected wait halves relative to the schedule",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Brooker, AWS Architecture Blog 2015 'Exponential Backoff And Jitter'",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:backoff-2.2.1/upstream/tree/backoff-2.2.1/backoff/_jitter.py:6-26; vault:backoff-2.2.1/upstream/tree/backoff-2.2.1/backoff/_common.py:34-58"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two jitter functions and _next_wait",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "backoff-2.2.1::retry_loop_terminated_by_a_giveup_predicate_a_try_count_or_a_wall_clock_budget_with_handlers_at_each_transition",
+   "fossil_ancestry": "backoff-2.2.1",
+   "human_name": "_sync.retry_exception / retry_predicate (1-132): tries, elapsed, giveup(e), max_tries, max_time, StopIteration from the schedule, on_success / on_backoff / on_giveup handlers, raise_on_giveup",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "call the target; on the named exception (or a predicate on the return value) decide: give up if the give-up predicate says so, the try count is reached, or the elapsed time exceeds the budget (then call the give-up handlers and re-raise or return None); otherwise ask the schedule for the next wait (a schedule that is exhausted also gives up), call the backoff handlers with the details, sleep, retry; success calls its handlers and returns",
+   "input": "a callable and its arguments",
+   "output": "the result, or a raised exception after giving up",
+   "state": "tries, start time, the schedule",
+   "update": "per attempt",
+   "assumptions": [
+    "failures are transient with some probability; the caller can classify permanent ones (giveup) so they are not retried"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "backoff-2.2.1::full_jitter_drawing_the_actual_wait_uniformly_from_zero_to_the_scheduled_wait",
+    "backoff-2.2.1::wait_schedule_as_a_primed_generator_capped_at_a_maximum_and_advanced_by_sending_the_failure_value"
+   ],
+   "fitness_value_in_ancestor": "retry policy separated from the call site as a decorator",
+   "failure_landscape": "by reading: max_tries counts attempts, so max_tries = 1 means no retry; the elapsed check happens before the sleep, so the final sleep is clamped by _next_wait rather than skipped",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:backoff-2.2.1/upstream/tree/backoff-2.2.1/backoff/_sync.py:21-132"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two loop functions",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "ENVIRONMENT_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "TIME",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "RETRIES",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
      "basis": "READ"
     }
    }
@@ -4240,6 +4612,378 @@
    }
   },
   {
+   "organ_id": "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+   "fossil_ancestry": "buddy-bdd",
+   "human_name": "bdd_makenode (kernel.c 1258-1330): low == high -> low; NODEHASH chain walk; free-list pop; on exhaustion bdd_gbc, then reorder via longjmp if node usage crossed usednodes_nextreorder, then resize if free nodes fall below minfreenodes percent",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a node request (level, low, high) first returns low if the children are equal (the reduction rule), then walks the hash chain for an existing node with the same triple and returns its index; otherwise a node is taken from the free list; if none is free, garbage collect; if the collection reveals the node count has crossed the reorder trigger and reordering is enabled, abandon the current operation by longjmp to the operator entry (which restarts it after reordering); if free nodes are still scarce, grow the table and rehash",
+   "input": "(level, low, high)",
+   "output": "a node index",
+   "state": "the node array with hash chains and refcounts; the free list",
+   "update": "per node creation",
+   "assumptions": [
+    "hash-consing every node makes equality of functions equality of integers (the ROBDD canonicity theorem, Bryant 1986); the free/gc/resize/reorder ladder keeps the invariant under memory pressure"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator",
+    "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best"
+   ],
+   "fitness_value_in_ancestor": "satisfiability, equivalence and counting become O(1) or linear in the DAG; the table is the whole representation",
+   "failure_landscape": "by reading: the longjmp restart of an operation mid-recursion is the cost of reordering from inside makenode; the panic path returns 0 (false) with an error code when nothing can be freed",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Bryant 1986; the unique table with a free list and gc is Brace, Rudell, Bryant 1990 (the CUDD lineage)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-bdd/upstream/tree/buddy-2.4/src/kernel.c:1258-1330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "bdd_makenode and the gc/resize hooks it calls",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "MEMORY",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator",
+   "fossil_ancestry": "buddy-bdd",
+   "human_name": "apply_rec (bddop.c 539-644): the switch of terminal cases per applyop; oprres for constants; BddCache_lookup(applycache, APPLYHASH(l, r, applyop)); the three level cases; PUSHREF/POPREF around the recursive results",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for two BDDs and a Boolean operator: apply operator-specific terminal rules (l == r, a constant operand), then consult the cache for (l, r, op); on a miss recurse on the cofactors of whichever operand has the lower level (both if equal), build the result node through makenode, record it in the cache; intermediate results are pushed on a reference stack so a garbage collection inside the recursion cannot free them",
+   "input": "two node indices and an operator code",
+   "output": "a node index",
+   "state": "the computed cache (direct-mapped, overwritten on collision)",
+   "update": "per call",
+   "assumptions": [
+    "subproblems repeat (shared sub-DAGs), so caching bounds the work by |l| x |r| instead of the exponential recursion tree"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+    "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best"
+   ],
+   "fitness_value_in_ancestor": "every Boolean operation in time proportional to the product of the operand sizes",
+   "failure_landscape": "by reading: the cache is direct-mapped, so a collision drops an entry (bdd_setcacheratio tunes it); the cache is cleared on reordering",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Bryant 1986's Apply; the cache from Brace et al.",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-bdd/upstream/tree/buddy-2.4/src/bddop.c:539-644"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "apply_rec (ite_rec and the others share the pattern; not read)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "buddy-bdd::sifting_reorder_that_moves_each_variable_block_through_all_positions_by_in_place_adjacent_swaps_accepting_a_20_percent_growth_bound_and_returning_to_the_best",
+   "fossil_ancestry": "buddy-bdd",
+   "human_name": "reorder_sift_bestpos (reorder.c 468-572): maxAllowed = best/5 + best; direction by position; blockdown; bestpos; reorder_swap (1170-1233): the four cofactors f00..f11, reorder_makenode, in-place VAR/LOW/HIGH update, rehash",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for a variable (block): starting toward the nearer end, move it one level at a time (blockdown) as long as the total node count stays within 20 percent above the best seen (or a global cap), recording the best position; then sweep the other direction; finally move back to the best; an adjacent swap of levels v0 < v1 rewrites every v0 node in place as a v1 node over new v0 children built from the four grand-cofactors, so external references (indices) stay valid, and rehashes the node; dead nodes are reclaimed by a local gc afterwards",
+   "input": "the current order",
+   "output": "a new order with (locally) fewer nodes",
+   "state": "the node table, rewritten in place",
+   "update": "per reorder event",
+   "assumptions": [
+    "node count is unimodal enough along one variable's position that a bounded sweep finds a good position; keeping indices stable is worth the in-place rewrite"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "buddy-bdd::unique_table_that_returns_the_existing_node_for_equal_level_low_high_and_collapses_a_node_whose_children_are_equal",
+    "buddy-bdd::apply_recursion_on_the_lower_top_variable_with_terminal_rules_per_operator_and_a_computed_cache_keyed_by_both_operands_and_the_operator"
+   ],
+   "fitness_value_in_ancestor": "orders of magnitude in size for real circuits without user-chosen orders",
+   "failure_landscape": "by reading: reordering is O(n^2) swaps in the worst case and blocks all other work; the 20 percent slack is a heuristic constant",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Rudell 1993 (sifting); the in-place swap is Rudell's / CUDD's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:buddy-bdd/upstream/tree/buddy-2.4/src/reorder.c:468-572, 1170-1233"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the sift and swap functions (win2/win3 and random reorders are variants, not read)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
    "fossil_ancestry": "c-cmaes-hansen",
    "human_name": "cmaes_SamplePopulation (608-658): x = m + sigma B (D z); cmaes_UpdateEigensystem (1881-1930): skip if up to date, if gen < last + modulo, or if eigen time exceeds 20 percent of total; the diagonal-only phase (diagonalCov iterations)",
@@ -4805,6 +5549,376 @@
     },
     "memory": {
      "value": "WINDOW",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cjson-1.7.18::recursive_descent_over_a_bounded_buffer_with_a_bounds_predicate_on_every_access_and_a_constant_nesting_limit",
+   "fossil_ancestry": "cjson-1.7.18",
+   "human_name": "parse_buffer {content, length, offset, depth}; can_access_at_index / cannot_access_at_index / can_read; parse_value (1325-1380); parse_array / parse_object depth check (1459, 1619) against CJSON_NESTING_LIMIT",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "parse_value dispatches on the first byte (null/false/true by strncmp after a can_read check; string on a quote; number on '-' or a digit; array on '['; object on '{'); arrays and objects increment a depth counter and refuse beyond the limit (default 1000) before recursing; every read of buffer_at_offset is guarded by an offset-vs-length predicate; the top-level parser optionally requires the buffer to end after the value",
+   "input": "bytes and a length",
+   "output": "a tree or NULL with an error position",
+   "state": "the buffer cursor and depth",
+   "update": "per byte",
+   "assumptions": [
+    "input is hostile; the cost of a predicate per byte is acceptable"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cjson-1.7.18::string_parsed_in_two_passes_measuring_escapes_before_one_exact_allocation_then_decoding_with_utf16_surrogate_handling",
+    "cjson-1.7.18::number_copied_into_a_bounded_local_buffer_with_locale_decimal_point_substitution_then_strtod_with_integer_saturation"
+   ],
+   "fitness_value_in_ancestor": "a parser that can be fuzzed to completion without crashing, in one C file",
+   "failure_landscape": "by reading: the depth limit turns a stack overflow into a parse error; the history (the record names CVE-2019-11834) is the list of places a check was missing",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "recursive descent (any JSON reader); the bounded-buffer discipline is the 1.7 rewrite's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cjson-1.7.18/upstream/tree/cJSON-1.7.18/cJSON.c:1325-1380; 1614-1731; 294"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the parse_* family and the buffer predicates",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "NONE_KNOWN",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cjson-1.7.18::string_parsed_in_two_passes_measuring_escapes_before_one_exact_allocation_then_decoding_with_utf16_surrogate_handling",
+   "fossil_ancestry": "cjson-1.7.18",
+   "human_name": "parse_string (781-910): the measuring loop (skipped_bytes), allocation_length, the decode loop, utf16_literal_to_utf8 (660)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "first pass walks to the closing quote counting backslash escapes (and failing if a backslash is the last byte); the output is allocated once at the measured upper bound; second pass copies bytes and decodes escapes, with \\u sequences converted from UTF-16 (surrogate pairs) to UTF-8 by a helper that returns 0 on a malformed pair; on failure the partial output is freed and the error position recorded",
+   "input": "a quoted literal in the buffer",
+   "output": "a NUL-terminated UTF-8 string",
+   "state": "none",
+   "update": "per string",
+   "assumptions": [
+    "measuring first is cheaper than growing; an over-estimate by the escape count is acceptable"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cjson-1.7.18::recursive_descent_over_a_bounded_buffer_with_a_bounds_predicate_on_every_access_and_a_constant_nesting_limit"
+   ],
+   "fitness_value_in_ancestor": "no realloc, no overflow: the length is known before writing",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cjson-1.7.18/upstream/tree/cJSON-1.7.18/cJSON.c:781-910"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "parse_string + utf16_literal_to_utf8",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "cjson-1.7.18::number_copied_into_a_bounded_local_buffer_with_locale_decimal_point_substitution_then_strtod_with_integer_saturation",
+   "fossil_ancestry": "cjson-1.7.18",
+   "human_name": "parse_number (307-383): number_c_string[64], get_decimal_point, strtod, INT_MAX/INT_MIN saturation",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "up to 63 bytes of the number's character class (digits, sign, e/E, '.') are copied into a stack buffer, '.' replaced by the C locale's decimal point (so strtod works under any locale), NUL-terminated (the input need not be NUL-terminated), converted by strtod; no progress means a parse error; the integer field saturates at INT_MAX/INT_MIN rather than overflowing",
+   "input": "the buffer at a number",
+   "output": "valuedouble and valueint",
+   "state": "none",
+   "update": "per number",
+   "assumptions": [
+    "63 characters suffice for any number worth parsing (longer numbers are silently truncated: a known limitation)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "cjson-1.7.18::recursive_descent_over_a_bounded_buffer_with_a_bounds_predicate_on_every_access_and_a_constant_nesting_limit"
+   ],
+   "fitness_value_in_ancestor": "locale-proof and length-proof numeric parsing with the C library's converter",
+   "failure_landscape": "by reading: a 64+ character number parses as its prefix without error",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:cjson-1.7.18/upstream/tree/cJSON-1.7.18/cJSON.c:307-383"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "parse_number",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
      "basis": "READ"
     },
     "stochasticity": {
@@ -18543,6 +19657,1000 @@
    }
   },
   {
+   "organ_id": "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+   "fossil_ancestry": "go-explore-uber-2022",
+   "human_name": "class Cell (167-255): score, seen_times, chosen_times, chosen_since_new, action_times, trajectory_len, restore, traj_last, real_cell, cell_frame; self.grid (a dict keyed by the cell key); Discretizer / GridDimension (82-166) for domain-specific keys",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a cell key is a discretisation of the state (a downscaled, quantised frame, or domain attributes such as room and position); the archive maps keys to Cell records; a record stores the emulator state needed to return to the cell (restore), the best score reached there, the length of the trajectory that reached it, the id of its last experience step (for reconstructing trajectories from the experience arrays), and four counters used by selection and reset on update",
+   "input": "visited states with their emulator snapshots",
+   "output": "a growing map of cells",
+   "state": "the grid; the experience arrays",
+   "update": "per trajectory",
+   "assumptions": [
+    "returning to a state is possible (a deterministic emulator with save/restore) so exploration never has to re-learn how to get somewhere; a coarse key groups similar states so the archive stays small"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
+    "go-explore-uber-2022::cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation",
+    "go-explore-uber-2022::cell_representation_refitted_during_the_run_by_searching_downscale_parameters_that_make_the_cell_count_distribution_match_a_target"
+   ],
+   "fitness_value_in_ancestor": "the exploration frontier is stored, not re-discovered; detachment and derailment (the paper's two failure modes of intrinsic motivation) do not arise",
+   "failure_landscape": "by reading: the archive is only as good as the cell representation; the restore snapshot makes it emulator-bound (the policy_based/ directory exists because of that)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Ecoffet et al. 2019/2021; the archive is the paper's central object",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/robustified/goexplore_py/goexplore.py:167-255, 82-166"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "class Cell and the grid",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "STREAM",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "go-explore-uber-2022::cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation",
+   "fossil_ancestry": "go-explore-uber-2022",
+   "human_name": "randselectors.WeightedSelector (52-144): Weight(weight, power) for seen, chosen, action, room_cells, chosen_since_new; DirWeights; cell_update maintaining all_weights, cell_score, possible_scores and cached_pos_weights; choose_cell(grid, size)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each cell's selection weight is a product of terms of the form weight / (count + 1)^power over its counters (seen, chosen, chosen since it last produced a new cell, actions taken from it), optionally with domain terms (neighbouring cells in a direction, level, doors); weights are cached per cell and recomputed only for the cell that changed and for its possible neighbours (by score); a batch of cells is drawn proportionally to weight",
+   "input": "the archive's counters",
+   "output": "a batch of cell keys",
+   "state": "the weight caches",
+   "update": "per cell change",
+   "assumptions": [
+    "cells visited or chosen less often are more likely to lead somewhere new (a count-based novelty prior); the caches make selection cheap as the archive grows"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
+    "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts"
+   ],
+   "fitness_value_in_ancestor": "exploration effort spread over the frontier rather than concentrated where the score is",
+   "failure_landscape": "UNKNOWN by run; by reading: the weights' powers and constants are per-game settings (experiment_settings.py, 1,491 lines)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/robustified/goexplore_py/randselectors.py:52-144 (the formula lives in get_weight / choose_cell, NOT READ)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "WeightedSelector; CANDIDATE because the weight formula was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells",
+   "fossil_ancestry": "go-explore-uber-2022",
+   "human_name": "run_cycle (861-1011): selector.choose_cell; POOL.map(process_cell) restores and explores; the trajectory walk with seen_cells; should_accept_cell (1012-1020); the update block (restore, score, trajectory_len, traj_last, cell_frame); reset_cell_on_update",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "per cycle: draw a batch of cells; in worker processes restore each cell's snapshot and run the explorer (random actions) for a bounded number of steps recording every step's cell, reward and snapshot; back in the main process walk each trajectory: increment seen counts (once per cell per trajectory), append to the experience arrays, and when a step lands in a cell that is new, or has a higher score, or the same score with a shorter trajectory, overwrite that cell's record (snapshot, score, length, frame) and zero the start cell's chosen-since-new; optionally zero all counters of updated cells so they are re-explored",
+   "input": "a batch of cells",
+   "output": "an updated archive and appended experience",
+   "state": "the archive; frames counters",
+   "update": "per cycle",
+   "assumptions": [
+    "exploring from a returned-to state with random actions is enough to find new cells (the 'exploration is easy once you can return' claim); shorter trajectories to the same cell are preferable for later robustification"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "go-explore-uber-2022::cell_selection_by_weights_from_visit_counts_with_cached_per_cell_weights_and_neighbour_invalidation",
+    "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+    "go-explore-uber-2022::cell_representation_refitted_during_the_run_by_searching_downscale_parameters_that_make_the_cell_count_distribution_match_a_target"
+   ],
+   "fitness_value_in_ancestor": "Montezuma's Revenge and Pitfall solved by exploration alone (the paper's result); the archive's trajectories are the demonstrations for the second phase",
+   "failure_landscape": "by reading: the accept rule prefers score, so a longer trajectory with a higher score displaces a shorter one; ignore_death trims the last steps of a trajectory that ended in death",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the paper's Algorithm 1",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/robustified/goexplore_py/goexplore.py:861-1020"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "run_cycle and should_accept_cell",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "CLOSED_LOOP",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PARALLEL_ROUNDS",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "go-explore-uber-2022::cell_representation_refitted_during_the_run_by_searching_downscale_parameters_that_make_the_cell_count_distribution_match_a_target",
+   "fossil_ancestry": "go-explore-uber-2022",
+   "human_name": "try_split_frames / maybe_split_dynamic_state (464-693): random_recent_frames, get_dist_score (entropy normalised by a target length), geometric proposals for shape and pixel depth, the grid re-keying with counter carry-over (662-670)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a reservoir of recent frames is periodically re-discretised under candidate (shape, pixel-depth) parameters proposed geometrically around the current best; a candidate is scored by the entropy of the induced cell distribution penalised by its distance from a target number of cells; the best parameters replace the current ones and the archive is re-keyed, merging cells and carrying their counters and best records over",
+   "input": "recent frames; the current parameters",
+   "output": "new parameters and a re-keyed archive",
+   "state": "the reservoir; the parameters",
+   "update": "periodically",
+   "assumptions": [
+    "a good representation splits the visited states into neither too few nor too many cells; entropy against a target size is a usable proxy without domain knowledge"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "go-explore-uber-2022::archive_of_cells_keyed_by_a_coarse_state_representation_each_holding_the_best_score_trajectory_length_restorable_snapshot_and_visit_counts",
+    "go-explore-uber-2022::return_then_explore_cycle_that_restores_a_chosen_cell_explores_from_it_and_accepts_a_cell_on_a_new_key_or_a_higher_score_or_a_shorter_path_resetting_the_counters_of_updated_cells"
+   ],
+   "fitness_value_in_ancestor": "the domain-agnostic variant of the paper (no hand-made room/position key)",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:go-explore-uber-2022/upstream/tree/robustified/goexplore_py/goexplore.py:464-693 (structure; the scoring read at 470-495)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two functions; CANDIDATE because the proposal loop was skimmed",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+   "fossil_ancestry": "graphplan-blum-furst-1995",
+   "human_name": "create_graph_layer (371-440): copy facts forward, do_operator per op, make_noop_layer, set_uid, find_all_mutex_ops, find_mutex_facts, same_as_prev_flag / first_full_time; make_graph_piece (860-952) builds one action node with its precondition and effect edges",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at each time step the facts are copied to the next layer (linked prev/next), every operator is instantiated against the current facts (an action whose preconditions are pairwise mutex is not inserted: 'Avoiding'), a no-op action per fact is inserted FIRST so the planner tries persistence before change, ids are assigned, mutexes computed, and if the fact count and mutex count equal the previous layer's the graph has levelled off and later layers are copies (make_copy)",
+   "input": "ground operators, initial facts",
+   "output": "fact_table[t], op_table[t] with edges",
+   "state": "the layered graph (hash tables per layer)",
+   "update": "per layer",
+   "assumptions": [
+    "the reachable-fact set and its mutexes are a polynomial-size over-approximation of reachability that tightens the search (the Graphplan insight); levelling off is detectable by counts"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+    "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable"
+   ],
+   "fitness_value_in_ancestor": "a polynomial forward pass replaces most of the exponential backward search",
+   "failure_landscape": "by reading: the graph is built on GROUND actions (all instantiations), so large domains blow up here first (MAXNODES); delete effects are stored on the action as strings and consulted only for mutexes",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Blum & Furst 1995/1997 'Fast planning through planning graph analysis'",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/graphplan.c:371-440, 860-952"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "create_graph_layer and make_graph_piece",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+   "fossil_ancestry": "graphplan-blum-furst-1995",
+   "human_name": "find_all_mutex_ops / find_mutex_facts (called at 415-419; bodies not read); are_mutex; mark_exclusive / unmark_exclusive (planner.c 131-142)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "two actions at a layer are mutex if one deletes a precondition or effect of the other (interference) or if their preconditions are mutex (competing needs); two facts at a layer are mutex if every pair of their achievers is mutex; the relation is a per-layer bit vector (bvec_len) read by are_mutex; during extraction, choosing an action marks every action mutex with it as unavailable (mark_exclusive) and unmarks on backtrack",
+   "input": "the layer's actions and their precondition/effect/delete lists",
+   "output": "a symmetric relation per layer",
+   "state": "bit vectors",
+   "update": "per layer",
+   "assumptions": [
+    "binary exclusion captures most of what makes goal sets unachievable; higher-order exclusions are left to the search"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+    "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable"
+   ],
+   "fitness_value_in_ancestor": "the pruning that makes the backward search feasible and the reason the graph levels off",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the same paper",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/graphplan.c:415-419 (calls); vault:graphplan-blum-furst-1995/upstream/tree/Source/planner.c:131-142"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the two find_* functions and the marking; CANDIDATE because their bodies were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable",
+   "fossil_ancestry": "graphplan-blum-furst-1995",
+   "human_name": "basicplan (planner.c 191-330): goals_at[time][cindex]; in_edges loop with IS_MARKED skip; goals_still_possible; used / is_true counters; the undo block; action_set_is_minimal at the layer boundary",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at a layer, take the next unsatisfied goal (skipping goals already made true by chosen actions), try each achiever (no-ops first) that is not marked mutex with a prior choice: mark its exclusions, check every remaining goal still has an unmarked achiever, add its preconditions to the previous layer's goal set (counting uses so duplicates are shared), recurse to the next goal; when all goals at the layer are served, recurse to the previous layer with the new goal set; undo counters and marks on return; success at time 0",
+   "input": "a goal set at the last layer",
+   "output": "a plan (the used actions per layer) or failure",
+   "state": "goals_at arrays, marks, used/is_true counts",
+   "update": "per choice",
+   "assumptions": [
+    "the mutex relations in the graph make the chosen action set legal without further checking ('it does no other redundant checking')"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "graphplan-blum-furst-1995::pairwise_mutual_exclusion_between_actions_from_interference_and_competing_needs_and_between_facts_from_all_achievers_being_mutex",
+    "graphplan-blum-furst-1995::forward_construction_of_alternating_fact_and_action_layers_with_a_noop_per_fact_placed_first_until_the_fact_layer_stops_changing",
+    "graphplan-blum-furst-1995::memoisation_of_unsolvable_goal_sets_per_layer_with_a_completeness_proof_from_a_levelled_graph_and_a_non_growing_table"
+   ],
+   "fitness_value_in_ancestor": "a plan is a set of actions per layer, so parallel actions come for free",
+   "failure_landscape": "by reading: the search is exponential in the worst case; the memo table and the lower bound (do_lower) are the mitigations; the authors note a smallest-achiever-count goal ordering 'didn't generally help much'",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the same paper",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/planner.c:191-330"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "basicplan / runbasicplan",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "graphplan-blum-furst-1995::memoisation_of_unsolvable_goal_sets_per_layer_with_a_completeness_proof_from_a_levelled_graph_and_a_non_growing_table",
+   "fossil_ancestry": "graphplan-blum-furst-1995",
+   "human_name": "insert_bad / lookup_bad / PARTIALsubset_lookup (called at basicplan 232-241; bodies not read; random per-fact codes rand1 set at create_graph_layer 407); the completeness comment (planner.c 11-24); can_stop",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a goal set that fails at a layer is inserted in a per-layer hash table keyed by the sum of random per-fact codes; a later visit of the same set (or, with do_subsets, a superset of a known-bad set) fails immediately; once the graph has levelled off, if a full time step passes in which the table at the levelled layer does not grow, every plan would have to pass through a known-bad set and the problem is declared unsolvable (the argument in the file header)",
+   "input": "failed goal sets",
+   "output": "a fast 'no', and termination",
+   "state": "bad_table per layer",
+   "update": "per failure",
+   "assumptions": [
+    "goal sets recur across branches (they do: the same subgoals arise from different orderings); the random-code hash is collision-tolerant in practice"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "graphplan-blum-furst-1995::backward_goal_set_extraction_layer_by_layer_choosing_a_non_mutex_achiever_per_goal_with_a_proactive_check_that_remaining_goals_stay_achievable"
+   ],
+   "fitness_value_in_ancestor": "the planner terminates on unsolvable problems, which forward-search planners of the time did not",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the same paper (section on termination)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:graphplan-blum-furst-1995/upstream/tree/Source/planner.c:11-24, 232-241; vault:graphplan-blum-furst-1995/upstream/tree/Source/graphplan.c:407"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the bad_table functions and can_stop; CANDIDATE because the table code was not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "SUPERLINEAR",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "gzip-1.2.4-1993::rolling_three_byte_hash_into_chains_of_prior_positions",
    "fossil_ancestry": "gzip-1.2.4-1993",
    "human_name": "UPDATE_HASH / INSERT_STRING / head[] / prev[]",
@@ -20610,6 +22718,376 @@
     },
     "update_topology": {
      "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "kissfft-131.1.0::length_factorised_greedily_into_radix_4_then_2_then_odd_primes_with_the_remaining_cofactor_used_whole_past_the_square_root",
+   "fossil_ancestry": "kissfft-131.1.0",
+   "human_name": "kf_factor (307-336): p = 4 -> 2 -> 3, 5, 7, ...; if p > floor(sqrt(n)) then p = n; facbuf = p1, m1, p2, m2, ...",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "starting with 4, divide out that radix while it divides n, then fall to 2, then step through odd numbers; whenever the candidate exceeds the square root of the remainder, the remainder itself becomes the last radix (a prime, handled by the generic butterfly); the factor list is stored as (radix, sub-length) pairs consumed by the recursion",
+   "input": "n",
+   "output": "the factor list",
+   "state": "none",
+   "update": "at plan time",
+   "assumptions": [
+    "radix-4 stages are the cheapest per point among the hard-coded butterflies, so they are taken first; any n is allowed, with primes paying O(p^2) in the generic stage"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "kissfft-131.1.0::recursive_decimation_in_time_computing_p_strided_sub_transforms_then_recombining_with_a_radix_specific_butterfly"
+   ],
+   "fitness_value_in_ancestor": "arbitrary lengths with the best hard-coded stages used first",
+   "failure_landscape": "by reading: a large prime length costs O(n^2) (kiss_fft_next_fast_size exists so callers can pad to 2^a 3^b 5^c)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:kissfft-131.1.0/upstream/tree/kissfft-131.1.0/kiss_fft.c:307-336"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "kf_factor",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "kissfft-131.1.0::recursive_decimation_in_time_computing_p_strided_sub_transforms_then_recombining_with_a_radix_specific_butterfly",
+   "fossil_ancestry": "kissfft-131.1.0",
+   "human_name": "kf_work (236-306): p, m from the factor list; the m == 1 base case copies strided input; the recursive call with fstride * p; the switch to kf_bfly2/3/4/5/generic",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for a stage with radix p and sub-length m: if m is 1 copy the p strided input points; else call itself p times on input offset by k * stride to fill p contiguous blocks of m outputs (the sub-transforms), then apply the radix-p butterfly across the blocks; the stride multiplies by p at each level so the decimation is expressed by pointer arithmetic, not by a bit-reversal permutation",
+   "input": "strided input, the factor list, the twiddles",
+   "output": "the transform in place in Fout",
+   "state": "the recursion",
+   "update": "per call",
+   "assumptions": [
+    "Cooley-Tukey: a length p*m DFT is p DFTs of length m on decimated input followed by m radix-p DFTs with twiddles; recursion on the factor list makes mixed radix natural"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "kissfft-131.1.0::length_factorised_greedily_into_radix_4_then_2_then_odd_primes_with_the_remaining_cofactor_used_whole_past_the_square_root",
+    "kissfft-131.1.0::radix_specific_butterflies_reading_twiddles_from_one_table_at_the_stage_stride_with_a_generic_o_p_squared_fallback"
+   ],
+   "fitness_value_in_ancestor": "no bit reversal, no scratch beyond the output, one code path for every radix",
+   "failure_landscape": "by reading: recursion depth equals the number of factors (small); the OpenMP branch parallelises only the top level",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Cooley & Tukey 1965; the recursive strided form is common in small FFTs (also FFTW's codelets)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:kissfft-131.1.0/upstream/tree/kissfft-131.1.0/kiss_fft.c:236-306"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "kf_work",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LOG",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "kissfft-131.1.0::radix_specific_butterflies_reading_twiddles_from_one_table_at_the_stage_stride_with_a_generic_o_p_squared_fallback",
+   "fossil_ancestry": "kissfft-131.1.0",
+   "human_name": "kf_bfly2 (15-37): t = Fout2 * tw; Fout2 = Fout - t; Fout += t; tw advances by fstride; kiss_fft_alloc (337-370): twiddles[i] = exp(-2 pi i k / n) for the whole n; kf_bfly_generic (192, not read)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "one table of n twiddles for the full length is computed at plan time; a stage with stride s reads every s-th entry, which is exactly the twiddle set for that stage's sub-length; the radix-2 butterfly multiplies the second half by the twiddle and forms sum and difference in place; radices 3, 4 and 5 have hand-written equivalents; other primes use a generic loop that multiplies every input by every twiddle power (O(p^2)); the fixed-point build divides by the radix at each stage to prevent overflow (C_FIXDIV)",
+   "input": "p blocks of m points",
+   "output": "m radix-p transforms in place",
+   "state": "none",
+   "update": "per stage",
+   "assumptions": [
+    "the twiddles of every stage are a stride-subset of the length-n table (true because every sub-length divides n)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "kissfft-131.1.0::recursive_decimation_in_time_computing_p_strided_sub_transforms_then_recombining_with_a_radix_specific_butterfly"
+   ],
+   "fitness_value_in_ancestor": "one table, no per-stage tables, and the hot loops are a page of arithmetic",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:kissfft-131.1.0/upstream/tree/kissfft-131.1.0/kiss_fft.c:15-37, 337-370"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the bfly functions and the table setup (3/4/5/generic bodies not read)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
      "basis": "READ"
     },
     "order_sensitivity": {
@@ -31505,6 +33983,628 @@
    }
   },
   {
+   "organ_id": "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+   "fossil_ancestry": "minisat-2.2.0",
+   "human_name": "propagate (449-524): watches[p], Watcher{cref, blocker}, the false literal forced into c[1], the search for a new watch from k = 2, unit -> uncheckedEnqueue, conflict -> stop and copy remaining watches",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for each newly false literal p, scan the clauses watching ~p: if the watcher's cached blocker literal is true skip without reading the clause; otherwise ensure the false literal is in position 1, if position 0 is true keep the watch, else look for another non-false literal from position 2 on and move the watch there; if none exists the clause is unit (enqueue position 0 with this clause as reason) or conflicting (return it, having copied the remaining watchers); watches are never touched on backtracking",
+   "input": "the trail from qhead",
+   "output": "new assignments or a conflict clause",
+   "state": "watch lists per literal; the trail; qhead",
+   "update": "per assignment",
+   "assumptions": [
+    "two watches suffice to detect unit and conflict, and need no undo (Moskewicz et al. 2001); a cheap cached literal makes most watcher visits cost one lookup"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+    "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+    "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses"
+   ],
+   "fitness_value_in_ancestor": "propagation cost independent of clause length and of backtracking",
+   "failure_landscape": "by reading: the watcher lists are shrunk in place (a stable partition), so a long list with many satisfied clauses is still scanned; that is what the blocker mitigates",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Chaff's two-literal watching (2001); the blocker literal is MiniSat 2.2's own",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:449-524"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "propagate and the Watcher struct",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PER_EPISODE",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+   "fossil_ancestry": "minisat-2.2.0",
+   "human_name": "analyze (264-360): seen[], pathC, the reason chain via reason(var(p)), out_learnt[0] = ~p; ccmin_mode 2 with abstractLevel and litRedundant; out_btlevel from the max level among the rest",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "starting from the conflict clause, mark its literals; literals from the current decision level are counted (pathC), older ones go into the learnt clause; walk the trail backwards to the most recent marked literal, resolve with its reason clause, repeat until exactly one current-level literal remains (the first unique implication point), which negated becomes the asserting literal; then remove literals implied by others in the clause (recursive redundancy check with a level bitmask as a fast filter); the backjump level is the highest level among the remaining literals, so the learnt clause is unit there",
+   "input": "a conflict clause; the trail; reasons",
+   "output": "a learnt clause and a backtrack level",
+   "state": "seen[] (cleared after)",
+   "update": "per conflict",
+   "assumptions": [
+    "the first UIP gives short, quickly asserting clauses (empirically better than later cuts); minimisation pays for itself"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+    "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+    "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses"
+   ],
+   "fitness_value_in_ancestor": "every conflict yields a clause that forces a new assignment immediately after backjumping (non-chronological); the search never repeats the same failure",
+   "failure_landscape": "by reading: the learnt clause length is unbounded; the DB reduction exists because of it",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "GRASP (Marques-Silva & Sakallah 1996) for learning; Chaff for first UIP; Sorensson & Biere 2009 for minimisation",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:264-360"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "analyze (litRedundant's body not read)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks",
+   "fossil_ancestry": "minisat-2.2.0",
+   "human_name": "pickBranchLit (225-240): random_var_freq, order_heap.removeMin, polarity[]; Solver.h varBumpActivity / varDecayActivity (var_inc *= 1/var_decay; rescale at 1e100); analyze bumps every variable it sees",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each variable carries an activity; every variable touched during conflict analysis is bumped by the current increment; instead of decaying all activities after each conflict the increment itself grows by 1/var_decay (rescaling everything when it overflows), which is the same ordering at O(1) cost; decisions pop the maximum-activity unassigned variable from a heap, with a small probability of a random variable instead; the literal's sign comes from the polarity vector",
+   "input": "the conflict history",
+   "output": "the next decision literal",
+   "state": "activity[], the heap, polarity[]",
+   "update": "per conflict and per decision",
+   "assumptions": [
+    "variables recently involved in conflicts are the ones worth deciding on (locality of conflicts); recency should dominate frequency, hence exponential decay"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+    "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause",
+    "minisat-2.2.0::restarts_after_a_conflict_budget_from_the_luby_sequence_scaled_by_a_base_keeping_learnt_clauses_and_activities"
+   ],
+   "fitness_value_in_ancestor": "a decision heuristic that costs O(log n) per decision and adapts to the search",
+   "failure_landscape": "by reading: with var_decay near 1 the heuristic becomes frequency-based and stale; the random picks exist to escape",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Chaff's VSIDS (2001); the increment-growth trick is MiniSat's (Een & Sorensson 2003)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:225-240; vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.h:233-290"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "pickBranchLit and the activity helpers",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "SUMMARY_STATISTIC",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-2.2.0::learnt_clause_database_halved_by_activity_when_it_exceeds_a_geometrically_growing_limit_keeping_binary_and_reason_clauses",
+   "fossil_ancestry": "minisat-2.2.0",
+   "human_name": "reduceDB (525-545) with reduceDB_lt; search: learnts.size() - nAssigns() >= max_learnts; max_learnts *= learntsize_inc on the learntsize_adjust schedule; claBumpActivity / claDecayActivity",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "learnt clauses carry an activity bumped when they take part in a conflict; when the number of learnt clauses beyond the current assignment exceeds max_learnts, sort by activity (binary clauses last), delete the lower-activity half plus any below a threshold, never deleting binary clauses or clauses that are the reason for a current assignment; the limit starts at a fraction of the original clause count and grows geometrically on a schedule keyed to conflict counts",
+   "input": "the learnt list",
+   "output": "a shorter learnt list",
+   "state": "learnts, max_learnts, the adjust counters",
+   "update": "when the limit is hit",
+   "assumptions": [
+    "most learnt clauses stop being useful; recent usefulness (activity) predicts future usefulness; the database may grow slowly forever"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-2.2.0::first_uip_conflict_analysis_walking_the_trail_backwards_to_one_literal_of_the_current_level_then_minimising_the_learnt_clause_and_backjumping_to_its_second_highest_level",
+    "minisat-2.2.0::unit_propagation_by_two_watched_literals_per_clause_with_a_blocker_literal_that_avoids_touching_the_clause"
+   ],
+   "fitness_value_in_ancestor": "propagation stays fast as learning continues",
+   "failure_landscape": "by reading: activity is a poor proxy on some families (LBD replaced it in Glucose, 2009)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Chaff's deletion; the activity-based halving is MiniSat's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:525-545, 650-656"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "reduceDB and its trigger",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "ARCHIVE",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "minisat-2.2.0::restarts_after_a_conflict_budget_from_the_luby_sequence_scaled_by_a_base_keeping_learnt_clauses_and_activities",
+   "fossil_ancestry": "minisat-2.2.0",
+   "human_name": "solve_ (751-790): rest_base = luby(restart_inc, curr_restarts) or restart_inc^k; search(rest_base * restart_first); luby (734-743)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the search runs until a conflict budget is spent, then backtracks to level 0 (keeping every learnt clause and all activities) and starts again with a budget that follows the Luby sequence (1,1,2,1,1,2,4,...) times a base of 100 conflicts, or a geometric sequence if configured; because the state that matters (clauses, activities, polarities) survives, a restart is a re-ordering of decisions, not a fresh start",
+   "input": "conflict counts",
+   "output": "a new search episode",
+   "state": "curr_restarts",
+   "update": "per budget exhaustion",
+   "assumptions": [
+    "run-time distributions of CDCL are heavy-tailed, so restarting with a universal (Luby) schedule bounds the expected time within a log factor of the optimal fixed cutoff (Luby, Sinclair, Zuckerman 1993)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "minisat-2.2.0::decisions_by_variable_activity_bumped_at_every_conflict_and_decayed_by_growing_the_bump_with_a_heap_and_occasional_random_picks"
+   ],
+   "fitness_value_in_ancestor": "escapes from unlucky early decisions at no loss of learnt information",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Gomes et al. 1998 (restarts for heavy tails); Huang 2007 (Luby in SAT)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:minisat-2.2.0/upstream/tree/minisat/core/Solver.cc:734-790"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "solve_ and luby",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "EVENT",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "EVENT_DRIVEN",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "SELF_RESETS",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "minisom::winner_by_argmin_distance_over_the_lattice",
    "fossil_ancestry": "minisom",
    "human_name": "best matching unit (BMU) / competitive selection",
@@ -35622,6 +38722,622 @@
    }
   },
   {
+   "organ_id": "paip-lisp-norvig-1991::means_ends_analysis_achieving_goals_by_operators_whose_add_list_contains_the_goal_with_a_goal_stack_for_loop_detection_and_a_second_version_that_orders_operators_by_unfulfilled_preconditions_and_tries_goal_orderings",
+   "fossil_ancestry": "paip-lisp-norvig-1991",
+   "human_name": "gps.lisp GPS / achieve-all / achieve / apply-op / appropriate-p (42-93); version 2: achieve-all with orderings, achieve-each, appropriate-ops sorted by unmet preconditions (202-243)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a goal holds if it is in the state; else, unless it is already on the goal stack (a loop), try each operator whose add list contains it: achieve the operator's preconditions recursively with the goal pushed on the stack, then apply it (delete its del list, append its add list); all goals must be achieved AND still hold at the end; version 2 tries the goals in the given and the reversed order and sorts candidate operators by how many preconditions are unmet (the Sussman-anomaly and 'leaping before you look' fixes the book documents)",
+   "input": "a state (a list of conditions), goals, operators",
+   "output": "a new state containing executed actions, or nil",
+   "state": "the goal stack",
+   "update": "per goal",
+   "assumptions": [
+    "the world is a set of literals changed by add/delete lists (STRIPS); differences between state and goal select operators (Newell & Simon's GPS)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "paip-lisp-norvig-1991::generic_tree_search_parameterised_by_a_combiner_that_yields_depth_first_breadth_first_best_first_and_beam_search"
+   ],
+   "fitness_value_in_ancestor": "the first general problem solver, small enough to read; its failures (clobbered siblings, prerequisite loops, infinite regress) are named and reproduced in the same file",
+   "failure_landscape": "by reading: version 2's two orderings are not a complete search; the book says so",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Newell & Simon 1957-1972; STRIPS (Fikes & Nilsson 1971)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/gps.lisp:42-100, 202-243"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "gps.lisp",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "paip-lisp-norvig-1991::pattern_matcher_with_single_and_segment_operators_dispatched_through_symbol_properties_and_a_rule_based_translator",
+   "fossil_ancestry": "paip-lisp-norvig-1991",
+   "human_name": "patmatch.lisp pat-match (15), single-match / segment-match dispatch via (get symbol 'single-match) (32-40): ?is ?or ?and ?not ?* ?+ ?? ?if; segment-match with first-match-pos (110-136); rule-based-translator (169)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "a pattern is matched against input with a binding list; variables (?x) bind or must agree; operator patterns are looked up by their leading symbol's property (single-match for predicates and Boolean combinations, segment-match for ?* and friends, which try successive split points of the input, shortest first, and backtrack by returning fail); rule-based-translator applies the first rule whose pattern matches and substitutes the bindings into a response (ELIZA)",
+   "input": "a pattern, an input list, bindings",
+   "output": "bindings or fail",
+   "state": "none",
+   "update": "per match",
+   "assumptions": [
+    "extending the matcher by adding a property to a symbol is the right extension mechanism (data-driven dispatch)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution"
+   ],
+   "fitness_value_in_ancestor": "one matcher serves ELIZA, STUDENT and the rule systems in the book",
+   "failure_landscape": "by reading: segment matching is exponential in the number of segment variables",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Weizenbaum 1966 (ELIZA); the atlas's eliza-weizenbaum-mad-slip-1965 cut found the original matcher (YMATCH/ASSMBL) outside its body: this file is the readable descendant",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/patmatch.lisp:11-170"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "patmatch.lisp",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution",
+   "fossil_ancestry": "paip-lisp-norvig-1991",
+   "human_name": "unify.lisp unify / unify-variable / occurs-check / subst-bindings / unifier (11-60); *occurs-check* t",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "two terms unify if equal, or one is a variable (bind it after following existing bindings and, if enabled, checking the variable does not occur in the other term), or both are conses whose cars and cdrs unify in sequence with the bindings threaded through; substitution replaces bound variables recursively, reusing structure when nothing changes",
+   "input": "two terms, bindings",
+   "output": "extended bindings or fail",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "bindings as an association list are enough at this scale; the occurs check is a switch because Prolog omits it for speed"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "paip-lisp-norvig-1991::prolog_clauses_compiled_to_lisp_functions_in_continuation_passing_style_with_destructive_binding_and_a_trail_for_undo",
+    "paip-lisp-norvig-1991::pattern_matcher_with_single_and_segment_operators_dispatched_through_symbol_properties_and_a_rule_based_translator"
+   ],
+   "fitness_value_in_ancestor": "the core of the Prolog interpreter and compiler in the same book",
+   "failure_landscape": "by reading: without the occurs check, unifying ?x with (f ?x) builds a cyclic term",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Robinson 1965",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/unify.lisp:11-60"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "unify.lisp",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "paip-lisp-norvig-1991::prolog_clauses_compiled_to_lisp_functions_in_continuation_passing_style_with_destructive_binding_and_a_trail_for_undo",
+   "fossil_ancestry": "paip-lisp-norvig-1991",
+   "human_name": "prologc.lisp: prolog-compile / compile-clause / compile-call (66-107, 289-302); compile-unify / compile-unify-variable specialising unification at compile time (190-237); deref, unify!, set-binding!, undo-bindings! and the trail (14-64); top-level-prove, run-prolog",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "each predicate becomes a Lisp function taking its arguments and a continuation; each clause becomes a body that unifies the head arguments (with unification partly evaluated at compile time when a variable's status is known), calls the body goals with nested continuations, and undoes bindings on the trail before trying the next clause; variables are mutable structures set destructively (unify!) and dereferenced on read; the top level runs the goals with a continuation that prints solutions",
+   "input": "clauses",
+   "output": "compiled functions",
+   "state": "the trail; the variable bindings",
+   "update": "per compile / per proof",
+   "assumptions": [
+    "backtracking is cheapest as continuation calls plus a trail (the 'compile to the host language' route, not a WAM)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "paip-lisp-norvig-1991::unification_of_two_terms_under_a_binding_list_with_an_optional_occurs_check_and_recursive_substitution"
+   ],
+   "fitness_value_in_ancestor": "a Prolog compiler in a few hundred lines; the book's benchmark is zebra",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Warren 1983 (WAM) as the rival design; the atlas's swipl-9.2.9 cut holds the WAM lineage",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/prologc.lisp:14-345 (inventory; compile-unify read at the signature level)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "UNKNOWN",
+   "utility": "UNKNOWN",
+   "source_boundary": "prologc.lisp; CANDIDATE because bodies were skimmed",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "TREE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "ROLLS_BACK",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "paip-lisp-norvig-1991::generic_tree_search_parameterised_by_a_combiner_that_yields_depth_first_breadth_first_best_first_and_beam_search",
+   "fossil_ancestry": "paip-lisp-norvig-1991",
+   "human_name": "search.lisp tree-search (7); depth-first-search (prepend as combiner), breadth-first-search (append), best-first-search (sorter cost-fn), beam-search (sorter then truncate to beam-width) (19-68)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "tree-search keeps a list of states; it pops the first, returns it if it satisfies the goal, else generates successors and combines them with the remaining states by a supplied function; the four searches differ only in that function: new states first (depth), last (breadth), merged and sorted by cost (best-first), or sorted and cut to a width (beam)",
+   "input": "a start state, goal predicate, successor function, combiner",
+   "output": "a goal state or nil",
+   "state": "the frontier list",
+   "update": "per expansion",
+   "assumptions": [
+    "the frontier policy is the whole difference between the classical searches"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "paip-lisp-norvig-1991::means_ends_analysis_achieving_goals_by_operators_whose_add_list_contains_the_goal_with_a_goal_stack_for_loop_detection_and_a_second_version_that_orders_operators_by_unfulfilled_preconditions_and_tries_goal_orderings"
+   ],
+   "fitness_value_in_ancestor": "one function explains four algorithms",
+   "failure_landscape": "by reading: no visited set (graph-search is a later section)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Nilsson 1971 / Pearl 1984",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:paip-lisp-norvig-1991/upstream/tree/lisp/search.lisp:7-68"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "search.lisp 7-68",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "GRAPH",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "UNBOUNDED",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "PRIORITY",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
    "organ_id": "particles-chopin-0.4::model_as_an_interface_of_initial_kernel_transition_kernel_and_log_potential",
    "fossil_ancestry": "particles-chopin-0.4",
    "human_name": "class FeynmanKac (M0, M, logG; optional Gamma0/Gamma for QMC, logeta for APF, done, time_to_resample)",
@@ -38317,6 +42033,504 @@
     },
     "failure_mode": {
      "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+   "fossil_ancestry": "python-sgp4-2.23",
+   "human_name": "sgp4() 'update for secular gravity and atmospheric drag' block; satrec.isimp (sgp4init 1421-1423: perigee < 220 km -> isimp = 1 drops the d2..d4, t3cof..t5cof terms)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "at time tsince the mean anomaly, argument of perigee and node are advanced by their secular rates (J2, J4 gravity) and drag terms in powers of tsince up to t^5 whose coefficients were precomputed at initialisation; for perigees below 220 km the higher-order drag polynomial is switched off (isimp) because the series is not trusted there; below 156 km the density-model parameters s and qoms2t are altered (1429-1432)",
+   "input": "the initialised satrec; tsince in minutes",
+   "output": "mean elements at tsince",
+   "state": "none between calls (all coefficients precomputed)",
+   "update": "per call",
+   "assumptions": [
+    "the perturbation series truncated at these orders is the definition of the element set (Spacetrack Report 3, 1980); accuracy is measured against the same model's reference implementation, not against truth"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+    "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+    "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions"
+   ],
+   "fitness_value_in_ancestor": "milliseconds per propagation for every catalogued object; the element sets are only meaningful under this exact arithmetic",
+   "failure_landscape": "by reading: the 'sgp4fix' comments (divide-by-zero on inclination, tolerance changes, decay detection) are the recorded failure landscape of thirty years of use; every fix is a line comment",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Hoots & Roehrich 1980; Vallado et al. 2006 (the AIAA revision this port follows)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/propagation.py:1709-1750, 1421-1432"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the secular block; MEDIUM because the coefficient derivations were not read",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+   "fossil_ancestry": "python-sgp4-2.23",
+   "human_name": "sgp4init 1495-1499 (2 pi / no_unkozai >= 225 -> method 'd', isimp 1); _dscom, _dsinit, _dspace (secular resonance integration), _dpper (long-period periodics)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "for orbital periods of 225 minutes or more the near-earth model is insufficient: initialisation computes lunar and solar perturbation coefficients (_dscom, _dsinit) and flags synchronous or half-day resonances (irez); propagation then integrates the resonance terms numerically in fixed steps (_dspace) and adds long-period lunar-solar periodics to the elements (_dpper); the same call path serves both regimes with method == 'd' as the switch",
+   "input": "mean elements; tsince",
+   "output": "corrected elements",
+   "state": "the resonance integrator's state (atime, xli, xni) carried in satrec",
+   "update": "per call, stepping from the last integrated time",
+   "assumptions": [
+    "225 minutes is the boundary where third-body and resonance effects exceed the near-earth truncation error (an SDP4 convention, not derived here)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+    "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance"
+   ],
+   "fitness_value_in_ancestor": "one propagator for LEO and GEO catalogues",
+   "failure_landscape": "UNKNOWN by run; the tcppver oracle covers both regimes",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/propagation.py:1495-1499; 939-1131 (names only)"
+   },
+   "confidence": "MEDIUM",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the 'd' method path; CANDIDATE because the deep-space bodies were not read",
+   "status": "CANDIDATE",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "PERSISTENT",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SINGLE_STEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+   "fossil_ancestry": "python-sgp4-2.23",
+   "human_name": "sgp4() 'sgp4fix for kepler iteration': while fabs(tem5) >= 1.0e-12 and ktr <= 10",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the eccentric anomaly is found from the mean longitude by Newton's method on Kepler's equation in the (axnl, aynl) long-period form; the correction tem5 is clamped to +/-0.95 per step (the 'sgp4fix'); at most ten iterations, stopping when the correction is below 1e-12",
+   "input": "mean longitude, axnl, aynl",
+   "output": "eccentric anomaly (as sine and cosine)",
+   "state": "none",
+   "update": "per call",
+   "assumptions": [
+    "Newton converges in a few steps for e < 1; the clamp prevents divergence for near-parabolic cases (test_hyperbolic_orbit exists)"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "python-sgp4-2.23::deep_space_branch_selected_by_period_over_225_minutes_adding_lunar_solar_and_resonance_corrections",
+    "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee",
+    "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions"
+   ],
+   "fitness_value_in_ancestor": "fixed cost per call",
+   "failure_landscape": "by reading: ten iterations without convergence is silently accepted (no error code)",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/propagation.py:1868-1885"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the loop",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "RECURSIVE",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "python-sgp4-2.23::domain_checks_returning_numbered_error_codes_instead_of_positions",
+   "fossil_ancestry": "python-sgp4-2.23",
+   "human_name": "satrec.error 1-6: mean motion < 0 (2), eccentricity outside [1e-6, 1) (1), perturbed eccentricity out of range (3), semilatus rectum < 0 (4), mrt < 1 decayed (6)",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "after each stage the elements are range-checked; a violation sets an integer code and a message on the record and returns (false, false) instead of a position; code 6 (radius below one earth radius) marks a decayed object and is set but the position is still returned",
+   "input": "intermediate elements",
+   "output": "a code or nothing",
+   "state": "satrec.error",
+   "update": "per call",
+   "assumptions": [
+    "callers check the code; the propagator never raises"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "python-sgp4-2.23::kepler_equation_by_newton_iteration_capped_at_ten_steps_with_a_1e_12_tolerance",
+    "python-sgp4-2.23::closed_form_secular_update_of_mean_elements_in_powers_of_time_with_a_simplified_drag_branch_for_low_perigee"
+   ],
+   "fitness_value_in_ancestor": "a catalogue run does not stop on one bad element set",
+   "failure_landscape": "UNKNOWN by run",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "UNKNOWN",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:python-sgp4-2.23/upstream/tree/sgp4-2.23/sgp4/propagation.py:1770-1775, 1782-1790, 1837-1845, 1886-1892, 1948-1957"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the checks",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "VECTOR",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "DECISION",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "CONSTANT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "DEGRADES",
      "basis": "READ"
     },
     "recovery": {

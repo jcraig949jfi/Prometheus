@@ -159,14 +159,14 @@
    "usr.tar.gz listing (4,188 entries)",
    "record.json"
   ],
-  "date": "2026-09-17T22:26Z",
+  "date": "2026-09-17T22:50Z",
   "note": "a bootable-system fossil, not a program: the value the record assigns it ('the congestion-control lineage's BEFORE and AFTER both installable under one emulated VAX') depends on tape files the vault does not hold (src.tar, srcsys.tar per FORMAT lines 5-7), and on an emulator no seat has. No organ can be cut from filesystem images by reading; the source-level dissection of the Reno TCP is the bsd-tcp-4.3-reno-1990 cut in this atlas",
   "provenance": {
    "schema": "nyx.atlas/1-provenance",
-   "migrated_at": "2026-09-17T22:26Z",
+   "migrated_at": "2026-09-17T22:50Z",
    "migrated_from": "authored under nyx.atlas/1-provenance",
-   "provenance_grade_read": "UNKNOWN",
-   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "provenance_grade_read": "CONTEMPORARY_COPY",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade); HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY per FILE by Techne's #387 ASK 2 ruling (2026-09-18: a source type, not a grade); tree-level RECONSTRUCTION caveat where the mirror is a git history assembled after the fact (unix-history-repo); ruled for odepack-netlib / bsd-tcp-4.2-1983 / compact-4.2bsd-1983 and applied to the other archive-mirror records by the same reasoning until TECHNE-89 issues per-record blocks",
    "source_object_id": "https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/FORMAT sha256:fa1d15aae6491669b48a7d9c08e730c36076959056ffad70daccc4469da5d081; https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/stand.gz sha256:e49ead51a57868ae022511333824d0fcea28c0aea9aac76ae0f3e45d216613a9; https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/miniroot.gz sha256:1014a234a5ffd4074157eab1e72786df3c1c71ef6e707f04db898d0f6b0a4ffc; https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/rootdump.gz sha256:39c3ccc33d75b957bac4ab08f1f50e0cb7f0a072b2689dfbb3b4f52c2721ea6e; https://www.tuhs.org/Archive/Distributions/UCB/4BSD/4.3BSD-Reno/usr.tar.gz sha256:9be3cde8317b1d2a1106207d7a0fd2587ea2ae1f814fdd0a9bedbcd7d212b678",
    "payload_manifest_id": "techne tree_sha256 44e6e0bf76122e15fb11f5f1269bfac7c5e8f961201f983568144632241b6b4c (5 files)",
    "host_tree_matches_record": true,
@@ -234,6 +234,13 @@
    "to": "bsd-tcp-4.3-reno-1990",
    "note": "this tape CONTAINS that kernel",
    "basis": "TECHNE_RECORD"
+  },
+  {
+   "from": "bsd-4.3-reno-distribution-tape-1990",
+   "relation": "shares_ancestor_with",
+   "to": "bsd-tcp-4.3-reno-1990 (in this atlas): the tape is the system that shipped that TCP (the atlas has no CONTAINS relation; Techne owns the vocabulary); the vault's copy of the tape omits the source tape files",
+   "note": "by FORMAT and the tar listing",
+   "basis": "SOURCE_READ"
   },
   {
    "from": "bsd-4.3-reno-distribution-tape-1990",

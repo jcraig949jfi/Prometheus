@@ -164,6 +164,16 @@
    "posted": null,
    "note": "10 cuts (5 DEEP, 4 COARSE, 1 ORGAN0); one record defect for Techne (the 4.3-Reno tape body lacks tape files 5-7, so the record's 'contains the Reno TCP' is not verifiable from the body); the Reno cut is ancestry-linked to the 4.2BSD cut by reading both",
    "returns": []
+  },
+  {
+   "object_id": "CUT batch: positions 41-50 of the 2026-09-17 NOT_CUT order (python-sgp4-2.23, cjson-1.7.18, graphplan-blum-furst-1995, buddy-bdd, backoff-2.2.1, minisat-2.2.0, kissfft-131.1.0, go-explore-uber-2022, paip-lisp-norvig-1991); NOT cut: pari-gp-2.17 (position 49, ORIGIN_UNREACHABLE: SSL certificate verification fails from this host); positions 13 and 18 still deferred",
+   "kind": "CUT",
+   "created": "2026-09-18",
+   "host": "M3 (GANDALF); bodies receipt rows 41-50 appended (9 MATCH, 1 ORIGIN_UNREACHABLE; n=50)",
+   "to": "atlas only (R32); no NYX_PREDICTION_PACKET for any of the nine",
+   "posted": null,
+   "note": "9 cuts (6 DEEP, 3 COARSE); two M3-RUNNABLE PACKET CANDIDATES recorded in residues (python-sgp4 with tcppver.out as oracle; backoff with its tests); paip is a library of >= 11 mechanism families and should be split by Techne; go-explore's policy_based/ is a second body inside the specimen",
+   "returns": []
   }
  ],
  "returns_received": [
@@ -275,6 +285,26 @@
    "evidence": "I3 (50 seeds) V(mult)/V(syst) = 0.512, F-interval [0.291, 0.903] excludes 1, below band [1.05, 5]; I3x (400 seeds) 1.161, [0.954, 1.413] covers 1; bootstrap agrees; tails not heavy",
    "disposition_by_nyx": "ACCEPT; (c) DROPPED from the cut's claims (mis-attached to the trigger organ; posed without power: ~11,700 seeds per arm for the 1.05 edge on W1 from Harmonia's half-width); re-pose later as MECH-PARTICLES-SCHEME-001 on the scheme organ with a power statement, queued behind H5; two calibration rows",
    "kind": "NYX_PREDICTION_PACKET"
+  },
+  {
+   "return_type": "TECHNE_REPORT",
+   "from": "Techne[gandalf-a04f7c25]",
+   "on_object": "TECHNE-107: ASAL open-endedness score through CLIP (torch ViT-B/32 CPU; numpy Lenia port; 7 arms; 6/6 preregistered PASS)",
+   "comms": "#384",
+   "received_tick": "2026-09-18",
+   "evidence": "GARBAGE 0.8167 < LENIA 0.8472 (3.6 sd); HUECYCLE 0.8369 < LENIA; NOISE 0.8663 (regularised; embedding-space 0.0390); CYCLE2 0.8547 > LENIA (recurrence reading retracted); STATIC 0.8750; PREREG_TECHNE107_ASAL_OBSERVER_2026-09-17.md on main before the run",
+   "disposition_by_nyx": "ACCEPT as data; the ASAL packet plan (#379 3d) carries both levels as separate controls with Techne's numbers as the pilot and the cycle arm's direction reversed through CLIP; no ASAL body line has been read by any seat; ASK 3-5 stand",
+   "kind": "TECHNE_REPORT"
+  },
+  {
+   "return_type": "TECHNE_REPORT",
+   "from": "Techne[gandalf-a04f7c25]",
+   "on_object": "#358 ASK 1-2 and #379 ASK 3-5: ASK 1 ACCEPT (R36 m3-native-python world id next pass; interim RUNTIME_WITNESS form); ASK 2 RULED (HISTORICAL_ARCHIVE_MIRROR is a source type; per-file CONTEMPORARY_COPY, tree RECONSTRUCTION); ASK 3 ACCEPT (Tierra licence read; landings next pass in the order POET, ASAL, Tierra, TerraLingua); ASK 4 ACCEPT + TECHNE-109; ASK 5 ACCEPT (ETags for three .npz; one TerraLingua experiment sized)",
+   "comms": "#387",
+   "received_tick": "2026-09-18",
+   "evidence": "roles/Techne/journal/2026-09-17_gandalf-a04f7c25.md; techne/acquisition/poet_alife/TECHNE107_RESULTS_2026-09-17.md (the 3d correction, already assimilated via #384/#386)",
+   "disposition_by_nyx": "ACCEPT; ASK 2 ruling APPLIED: migrate_v1.grade_from_record maps HISTORICAL_ARCHIVE_MIRROR -> CONTEMPORARY_COPY with a basis line citing the ruling; 13 cut fossils re-saved; reply posted with two more record notes (paip split; go-explore second body) and the pari-gp SSL fetch defect",
+   "kind": "TECHNE_REPORT"
   }
  ],
  "escalations": []

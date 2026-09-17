@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T22:34Z",
- "n": 119,
+ "built": "2026-09-17T22:51Z",
+ "n": 128,
  "pressures": [
   {
    "pressure_id": "avida::P.a_program_must_copy_its_own_description_under_a_per_symbol_error_rate_while_cpu_time_is_rationed_by_a_score_it_can_raise_by_computing",
@@ -52,6 +52,23 @@
    "cheat_control": "an organism given a cell that is excluded from placement must never die and must not spread: the world must show both, or placement is not the death mechanism",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: population structure in digital evolution (Avida birth methods)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "backoff-2.2.1::P.many_clients_retrying_a_transient_failure_of_a_shared_resource_must_recover_quickly_without_synchronising_into_a_load_spike_or_retrying_forever",
+   "source_fossil": "backoff-2.2.1",
+   "source_evidence": "_wait_gen.py; _jitter.py; _sync.py; Brooker 2015 as cited in the body",
+   "condition": "N organisms hit a shared service that fails transiently; each decides when to retry; the score is time to recovery, total wasted calls and the peak concurrent retry load; some failures are permanent",
+   "resource_or_constraint": "the service's capacity; a wall-clock budget per client",
+   "failure_condition": "retries synchronised into a spike (the thundering herd), unbounded retrying of a permanent failure, or recovery slower than the failure's duration",
+   "world_punishes": "fixed intervals; no jitter; no give-up",
+   "world_rewards": "exponential schedules with full jitter and a give-up rule",
+   "observable_consequence": "peak retry load and time-to-recovery for N clients with fixed / exponential / exponential-plus-full-jitter schedules on the same outage trace (Brooker's simulation)",
+   "vacuity_condition": "one client",
+   "trivial_shortcuts": "a coordinator that schedules retries (which the world withholds)",
+   "cheat_control": "an organism told the outage's end time must retry exactly once at that time; N clients with no jitter must show a load spike at 2^k intervals; full jitter must flatten it: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: application-level retry (Fenner 2014-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -157,6 +174,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "buddy-bdd::P.boolean_functions_over_many_variables_must_be_stored_compared_and_combined_canonically_with_a_size_that_depends_on_a_variable_order_the_organism_must_choose_itself",
+   "source_fossil": "buddy-bdd",
+   "source_evidence": "kernel.c bdd_makenode; bddop.c apply_rec; reorder.c sift",
+   "condition": "an organism holds many Boolean functions (a circuit, a transition relation) and must answer equivalence and satisfiability and build new functions by AND/OR/NOT; memory is bounded; the representation's size can vary exponentially with the variable order",
+   "resource_or_constraint": "the node table; the order",
+   "failure_condition": "two equal functions stored differently (a missed equivalence), operations exponential in the DAG size, or a size blow-up under a bad order",
+   "world_punishes": "tree representations; uncached recursion; a fixed order",
+   "world_rewards": "hash-consing, a computed cache, and dynamic reordering",
+   "observable_consequence": "node count and operation time on ISCAS-style circuits and on the classic worst case (a multiplier) with reordering on and off",
+   "vacuity_condition": "functions of few variables",
+   "trivial_shortcuts": "an order supplied by the world (which it must withhold)",
+   "cheat_control": "an organism given the optimal order must show the minimum node count; a fixed-order organism on a permuted input must show the blow-up; sifting must recover within 20 percent of the given-order size: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: symbolic Boolean manipulation (Bryant 1986; Rudell 1993)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "c-cmaes-hansen::P.a_black_box_objective_that_is_ill_conditioned_rotated_and_noisy_in_ranking_must_be_minimised_from_ranks_alone_with_the_search_distribution_learning_the_problem_geometry_at_a_cost_bounded_by_the_evaluation_budget",
    "source_fossil": "c-cmaes-hansen",
    "source_evidence": "cmaes.c UpdateDistribution, Adapt_C2, TestForTermination; the diagonalCov and parameter-file switches",
@@ -171,6 +205,23 @@
    "cheat_control": "an organism given the Hessian must reach the target in evaluations independent of the condition number (the bound); the diagonal-only organism must show evaluations growing with the condition number on rotated ellipsoids and not on axis-aligned ones; cs = 0 must stall or diverge: the world must show all three",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: derivative-free continuous optimisation (Hansen 1996-)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "cjson-1.7.18::P.a_reader_of_a_recursive_text_format_must_accept_every_byte_sequence_without_memory_error_while_parsing_valid_input_at_linear_cost",
+   "source_fossil": "cjson-1.7.18",
+   "source_evidence": "cJSON.c parse_* family; the record's fuzzing pair with radamsa-0.6",
+   "condition": "an organism reads untrusted bytes into a tree; inputs include truncated, over-nested, escape-broken and locale-varying forms; a crash or out-of-bounds read is the failure; valid inputs must parse in linear time and bounded stack",
+   "resource_or_constraint": "stack depth; one allocation per node",
+   "failure_condition": "any out-of-bounds access, unbounded recursion or leak on failure",
+   "world_punishes": "reading past the length; recursing without a cap; allocating before measuring",
+   "world_rewards": "per-access bounds predicates; a depth constant; measure-then-allocate",
+   "observable_consequence": "crashes and sanitizer reports per million mutated inputs (the radamsa pair), and parse time vs input size on valid documents",
+   "vacuity_condition": "trusted, well-formed input only",
+   "trivial_shortcuts": "rejecting everything (which the valid-input score punishes)",
+   "cheat_control": "an organism given a validity oracle must accept exactly the valid inputs at zero crashes; the 1.7 parser with the depth check removed must crash on a 100,000-deep array: the world must show both",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: defensive JSON parsing (Gamble 2009-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -803,6 +854,40 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "go-explore-uber-2022::P.a_sparse_reward_environment_with_deceptive_local_rewards_must_be_explored_to_its_far_states_when_the_organism_can_save_and_restore_the_world_but_the_state_space_is_too_large_to_enumerate",
+   "source_fossil": "go-explore-uber-2022",
+   "source_evidence": "goexplore.py run_cycle; randselectors.py; the paper's ablations as cited in the README",
+   "condition": "an organism acts in a deterministic environment with save/restore; rewards are rare and locally misleading; the score is the number of distinct far states reached (and the best score) per environment step; the state space is huge but coarsely clusterable",
+   "resource_or_constraint": "environment steps; archive memory; the coarseness of the key",
+   "failure_condition": "detachment (forgetting how to reach a frontier) or derailment (failing to return before exploring), or an archive that grows without reaching new places",
+   "world_punishes": "intrinsic-motivation exploration that must re-traverse; keys too fine (no coverage) or too coarse (no frontier)",
+   "world_rewards": "an archive with restore, count-based selection, and a representation tuned to a target cell count",
+   "observable_consequence": "cells discovered and best score vs environment steps on Montezuma's Revenge with selection uniform vs count-weighted, and with the key fixed vs refitted",
+   "vacuity_condition": "dense rewards",
+   "trivial_shortcuts": "a state enumerator (which the world must make infeasible by size)",
+   "cheat_control": "an organism given the map of far states must reach them in the minimum steps; the archive with restore disabled (must re-traverse) must show derailment; uniform selection must show slower coverage than count-weighted: the world must show all three",
+   "cost_class": "GPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: hard-exploration reinforcement learning (Ecoffet et al. 2019-2021)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "graphplan-blum-furst-1995::P.a_goal_must_be_reached_by_a_sequence_of_actions_with_preconditions_and_effects_when_naive_backward_chaining_is_exponential_and_unsolvable_instances_must_be_recognised",
+   "source_fossil": "graphplan-blum-furst-1995",
+   "source_evidence": "graphplan.c create_graph_layer; planner.c basicplan and the completeness comment",
+   "condition": "an organism is given ground actions (preconditions, adds, deletes), an initial state and goals; it must return a valid (possibly parallel) plan or 'unsolvable'; instances include unsolvable ones",
+   "resource_or_constraint": "time and memory polynomial in the reachable facts for the forward phase; the backward phase is the exponential budget",
+   "failure_condition": "an invalid plan, a solvable instance missed, or non-termination on an unsolvable one",
+   "world_punishes": "plain backward chaining (no pruning; no termination proof); plain forward search (no goal focus)",
+   "world_rewards": "a reachability over-approximation with binary exclusions, memoised failures and a termination argument",
+   "observable_consequence": "nodes expanded and plans found on the 1995 benchmark set (rocket, blocks, logistics) with mutexes on/off and memoisation on/off; termination on unsolvable variants",
+   "vacuity_condition": "a domain with no deletes (the graph is exact and the plan is the first layer where goals appear)",
+   "trivial_shortcuts": "a domain-specific heuristic (which the world must withhold)",
+   "cheat_control": "an organism given a plan oracle must expand zero nodes; the extraction with mutexes disabled must expand exponentially more on rocket; with memoisation disabled the unsolvable variant must not terminate within the budget: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: STRIPS planning (Blum & Furst 1995)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "gzip-1.2.4-1993::P.repeated_substrings_in_a_stream_must_be_found_in_bounded_memory_and_time_per_byte",
    "source_fossil": "gzip-1.2.4-1993",
    "source_evidence": "the configuration table; record pressure",
@@ -902,6 +987,23 @@
    "cheat_control": "a recaller given the stored list must recover every pattern within its Hamming basin; if the world does not distinguish it from Hebbian recall above capacity, capacity is not being tested",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: associative memory (Hopfield 1982)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "kissfft-131.1.0::P.a_discrete_fourier_transform_of_arbitrary_length_must_be_computed_in_near_n_log_n_time_by_code_small_enough_to_be_read_and_verified_by_hand",
+   "source_fossil": "kissfft-131.1.0",
+   "source_evidence": "kiss_fft.c kf_factor, kf_work, kf_bfly2, kiss_fft_alloc",
+   "condition": "an organism must transform vectors of lengths chosen by the world (including odd and composite ones); the score is time per transform and the size of the organism (lines, tables) it needs; an O(n^2) DFT is the baseline",
+   "resource_or_constraint": "one twiddle table; no code generation",
+   "failure_condition": "O(n^2) on composite lengths, or a wrong result on a length with an odd factor",
+   "world_punishes": "power-of-two-only transforms; per-stage tables; bit-reversal bookkeeping",
+   "world_rewards": "mixed-radix recursion with strided twiddle reuse",
+   "observable_consequence": "time vs n for n in {2^k, 2^a 3^b 5^c, primes} against the direct DFT and against a generated-codelet FFT (FFTW) on the same host; max error vs the direct DFT",
+   "vacuity_condition": "n a power of two only",
+   "trivial_shortcuts": "padding to a power of two (which changes the transform)",
+   "cheat_control": "an organism given the direct DFT must match it to round-off; the organism on a prime length must show the O(p^2) fallback; a power-of-two length must show the radix-4 stages dominating: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: a readable FFT (Borgerding 2003-)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1313,6 +1415,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "minisat-2.2.0::P.a_satisfying_assignment_or_a_refutation_must_be_found_for_a_large_clause_set_whose_search_tree_is_exponential_and_whose_run_times_are_heavy_tailed",
+   "source_fossil": "minisat-2.2.0",
+   "source_evidence": "Solver.cc propagate, analyze, pickBranchLit, reduceDB, solve_",
+   "condition": "an organism searches assignments for a CNF with millions of clauses; a wrong early decision can cost the whole budget; the same sub-failures recur across branches; propagation must be cheap per assignment",
+   "resource_or_constraint": "time; memory for learnt clauses",
+   "failure_condition": "timeouts on instances solvable by learning and restarts; propagation cost growing with clause length or with backtracking; a learnt database that starves propagation",
+   "world_punishes": "chronological backtracking without learning; counting-based propagation; fixed decision orders; no restarts; unbounded learning",
+   "world_rewards": "watched literals, first-UIP learning with backjumping, activity-based decisions, bounded learnt sets, restart schedules",
+   "observable_consequence": "instances solved within a time budget on a standard set (SAT competition families) with each policy replaced by its naive predecessor one at a time",
+   "vacuity_condition": "2-SAT or Horn instances (linear time without any of this)",
+   "trivial_shortcuts": "instances with a planted solution and a known assignment (the world withholds it)",
+   "cheat_control": "an organism given the satisfying assignment must verify it in one propagation pass; DPLL without learning must fail the pigeonhole and industrial families where CDCL succeeds; CDCL without restarts must show the heavy tail across seeds: the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: propositional satisfiability (Een & Sorensson 2003-2010)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "minisom::P.a_bounded_lattice_must_represent_an_unlabelled_distribution",
    "source_fossil": "minisom",
    "source_evidence": "record human_environmental_pressure / failure condition; minisom.py 949-1009",
@@ -1466,6 +1585,23 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "pressure_id": "paip-lisp-norvig-1991::P.a_goal_must_be_reached_from_a_state_by_choosing_operators_from_their_effects_when_subgoals_interact_and_the_solver_must_not_loop_on_its_own_prerequisites",
+   "source_fossil": "paip-lisp-norvig-1991",
+   "source_evidence": "gps.lisp both versions and the examples in the file",
+   "condition": "an organism has operators with preconditions and add/delete lists and a conjunctive goal; achieving one goal can undo another (the Sussman anomaly); a precondition can require the goal being pursued (a loop)",
+   "resource_or_constraint": "recursion depth; operator applications",
+   "failure_condition": "a returned state that does not satisfy all goals, or non-termination",
+   "world_punishes": "achieving goals independently and not re-checking; no goal stack",
+   "world_rewards": "a final subset check, a goal stack, ordering by unmet preconditions",
+   "observable_consequence": "success on the blocks-world and monkey-and-bananas sets in the file (the book's test cases) for version 1 vs version 2",
+   "vacuity_condition": "independent goals",
+   "trivial_shortcuts": "a complete planner (Graphplan, in this atlas)",
+   "cheat_control": "an organism given the plan must reproduce the final state; version 1 must fail the Sussman anomaly where version 2 succeeds; both must fail the book's 'infinite regress' example (documented): the world must show all three",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: exposition of classical AI programs (Norvig 1991)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "pressure_id": "particles-chopin-0.4::P.a_population_must_track_a_hidden_moving_state_from_noisy_observations_when_weights_degenerate_geometrically",
    "source_fossil": "particles-chopin-0.4",
    "source_evidence": "core.py 315-415; resampling.py 166-190; record domain hidden-state/filtering/resampling",
@@ -1565,6 +1701,23 @@
    "cheat_control": "N/A",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: same",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "python-sgp4-2.23::P.positions_must_be_predicted_from_element_sets_that_are_only_defined_relative_to_the_predictor_so_the_predictor_must_reproduce_a_reference_implementation_bit_for_bit_rather_than_the_sky",
+   "source_fossil": "python-sgp4-2.23",
+   "source_evidence": "tests.py 557-582 (run_satellite_against_tcppver); the sgp4fix comments",
+   "condition": "an organism receives mean elements fitted by the reference model and must output positions; the score is agreement with the reference implementation's outputs (tcppver.out), not with observed positions; edge regimes (low perigee, deep space, near-parabolic) exist in the test set",
+   "resource_or_constraint": "milliseconds per call; no numerical integrator",
+   "failure_condition": "disagreement with the reference beyond the tolerance on any catalogue object, or an exception on a degenerate set",
+   "world_punishes": "a physically better propagator (it disagrees with the elements' definition)",
+   "world_rewards": "faithful reproduction of the truncated series and its fixes",
+   "observable_consequence": "max position error vs tcppver.out across SGP4-VER.TLE with each 'sgp4fix' reverted one at a time",
+   "vacuity_condition": "a single circular LEO object",
+   "trivial_shortcuts": "calling the C++ extension (the same arithmetic; the world must run the Python path)",
+   "cheat_control": "an organism handed tcppver.out must match exactly; a numerical two-body integrator must FAIL the comparison (it is more physical and less faithful): the world must show both, which is the point",
+   "cost_class": "CPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: TLE propagation (Vallado 2006 revision of SGP4/SDP4)",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
