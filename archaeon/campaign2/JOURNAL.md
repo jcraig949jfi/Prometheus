@@ -70,3 +70,11 @@ Prior: archaeon/campaign1/CAMPAIGN_REPORT.md (blob dc559de117e3f71845bb92b4871b4
   stream; source unsolved in 4 of them). top_k = behavioral = hybrid = 0.48
   solve fraction (0/5 paired wins), uniform 0.28. Seed 6's W2_K2 stream held
   W1_d4 0.96 / W1_d16 0.92 solvers: a corridor (L2-031). Next: C2-SFE-06.
+
+## 04:50-05:05 -- C2-SFE-06 (dry a01; engine a02 of record; WEAK_POSITIVE n=6, retention seeds 3)
+
+- 304 s; 1 world, 24 records, 0 errors. p0.0 peaked rung 0 in 3/6 and lost it
+  within 5 generations of the pressure moving (the shelf); p>=0.1 removed
+  the shelf and RAISED final delay-4 competence (0.36 -> 0.61-0.69). Delay-1
+  solutions were delay-invariant on arrival; the ladder reached W1_d4 in 4/6
+  seeds (corridor). Ledger L2-033..L2-035. Next: C2-SFE-07.
