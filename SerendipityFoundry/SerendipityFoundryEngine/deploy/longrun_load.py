@@ -104,7 +104,20 @@ class TimedApi(Api):
         return st, out
 
 
-def stall_watchdog(pid, stop, rec, threshold_s=4.0, max_dumps=6):
+def serving_pid(port):
+    """the pid that OWNS the listening socket (the venv python.exe is a launcher
+    stub whose child serves; py-spy on the stub says 'Failed to find python
+    version from target process')"""
+    try:
+        out = subprocess.run(["powershell", "-NoProfile", "-Command",
+                              "(Get-NetTCPConnection -State Listen -LocalPort %d -ErrorAction SilentlyContinue | Select -First 1).OwningProcess" % port],
+                             capture_output=True, text=True, timeout=15).stdout.strip()
+        return int(out) if out else None
+    except Exception:                                            # noqa: BLE001
+        return None
+
+
+def stall_watchdog(pid, stop, rec, threshold_s=4.0, max_dumps=6, port=None):
     """When any client request has been in flight longer than threshold_s,
     capture the ENGINE's thread stacks with py-spy (if installed) so a stall
     is diagnosed from the server side, not guessed from the client side."""
@@ -118,8 +131,9 @@ def stall_watchdog(pid, stop, rec, threshold_s=4.0, max_dumps=6):
             slow = [(r, now - t0) for (r, t0) in INFLIGHT.values() if now - t0 > threshold_s]
         if slow and now - last > threshold_s and len(dumps) < max_dumps and os.path.exists(spy):
             last = now
+            target = (serving_pid(port) if port else None) or pid
             try:
-                pr = subprocess.run([spy, "dump", "--pid", str(pid)], capture_output=True, text=True, timeout=20)
+                pr = subprocess.run([spy, "dump", "--pid", str(target)], capture_output=True, text=True, timeout=20)
                 out = pr.stdout + (("\nSTDERR: " + pr.stderr) if pr.stderr else "")
             except Exception as e:                                   # noqa: BLE001
                 out = "py-spy failed: %r" % e
@@ -262,7 +276,7 @@ def main():
     sstop = threading.Event()
     sth = threading.Thread(target=wal_sampler, args=(db, sapi, sstop, rec), daemon=True)
     sth.start()
-    wth = threading.Thread(target=stall_watchdog, args=(proc.pid, sstop, rec), daemon=True)
+    wth = threading.Thread(target=stall_watchdog, args=(proc.pid, sstop, rec), kwargs={"port": a.port}, daemon=True)
     wth.start()
     failures = []
     def _guard(fn):
