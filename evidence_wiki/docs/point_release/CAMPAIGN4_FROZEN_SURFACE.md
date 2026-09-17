@@ -7,15 +7,21 @@ twin: CAMPAIGN4_FROZEN_SURFACE.json, written by `python -m ew.frozen_surface
 moves the digest). Deployed build for these identities: f46e821e0 (pin
 mnemosyne-pew), service pid 19624 since 2026-09-17 09:50:00 -0400.
 
-    surface_digest        sha256:0ba00db3481f20a7705642c2287a9fba441adbbe66cc11983d8072cfd744fa1d
+    surface_digest        sha256:7dd501d9fd87d2f6aa38d5f333d2b5bd8b74f82ed57092c11ae1ef4a1a974d9a
     schema                5 (migrations 014, 015 applied to db_system_id 7628127204585430828)
     fossil contract       pew.fossil.v2 (unchanged)
-    reader                ew.campaign_ingest/1.3 (1.2 = foundry scheme tag; 1.3 = campaign 4 directory known, seed UNKNOWN until Archaeon names it, MNE-53)
+    reader                ew.campaign_ingest/1.4 (1.2 foundry scheme tag; 1.3 campaign 4
+                          directory; 1.4 C4 seed 20260921 named by Archaeon #370 -- the
+                          MNE-53 transition, explicit and re-pinned)
     ingestion contract    PEW_CAMPAIGN_INGESTION_CONTRACT v0.1 (2026-09-17)
-    campaign seed map     20260917 -> cmp1, 20260918 -> cmp2, 20260920 -> cmp3
-                          (campaign 4 will add its seed as a reader version;
-                          until then a cmp4 row is identified by its producer
-                          stamp / path, T1)
+    campaign seed map     20260917 -> cmp1, 20260918 -> cmp2, 20260920 -> cmp3,
+                          20260921 -> cmp4 (T1: seed decides; the receipt's
+                          campaign field is never trusted)
+    digest rule           surface_digest = sha256 over canonical JSON (sort_keys,
+                          separators (',',':'), default=str) of the object WITHOUT
+                          surface_digest and surface_digest_rule; the file's own
+                          sha256 is also a valid identity of the pin (Archaeon
+                          #370 Q1); stated inside the JSON as surface_digest_rule
     shared tables         archaeon/campaign2/REACHABILITY.jsonl (reachability),
                           archaeon/campaign3/CORRIDOR.jsonl (corridor)
     design factor keys    family, target, table, climber, encoding, quality,

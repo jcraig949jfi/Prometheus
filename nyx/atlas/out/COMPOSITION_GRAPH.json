@@ -1,21 +1,21 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-17T15:48Z",
- "n": 453,
+ "built": "2026-09-17T22:34Z",
+ "n": 525,
  "by_label": {
-  "feeds": 215,
+  "feeds": 265,
   "triggers": 42,
-  "updates": 53,
+  "updates": 58,
   "competes": 22,
+  "gates": 57,
   "restores": 15,
-  "gates": 42,
   "predicts": 1,
-  "schedules": 10,
+  "schedules": 11,
   "suppresses": 8,
   "verifies": 2,
   "transforms": 9,
   "stores": 14,
-  "selects": 17,
+  "selects": 18,
   "forgets": 1,
   "retries": 2
  },
@@ -133,6 +133,102 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "bdwgc-8.2.6::pointer_identification_by_a_two_level_block_index_that_maps_any_word_to_a_block_header_or_to_nothing_with_interior_pointers_resolved_by_backward_search",
+   "to": "bdwgc-8.2.6::mark_loop_over_a_work_stack_of_ranges_and_descriptors_with_a_credit_budget_and_range_splitting",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "which words are pointers",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bdwgc-8.2.6::collection_triggered_when_bytes_allocated_since_the_last_gc_exceed_the_estimated_scan_work_over_a_divisor_and_heap_grown_with_a_slop_that_forces_a_gc_before_it_is_used",
+   "to": "bdwgc-8.2.6::mark_loop_over_a_work_stack_of_ranges_and_descriptors_with_a_credit_budget_and_range_splitting",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "starts a cycle",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bdwgc-8.2.6::mark_loop_over_a_work_stack_of_ranges_and_descriptors_with_a_credit_budget_and_range_splitting",
+   "to": "bdwgc-8.2.6::lazy_sweep_that_rebuilds_a_free_list_per_object_size_from_the_mark_bits_of_one_block_at_a_time_and_coalesces_free_large_blocks_with_their_neighbours",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "mark bits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bdwgc-8.2.6::lazy_sweep_that_rebuilds_a_free_list_per_object_size_from_the_mark_bits_of_one_block_at_a_time_and_coalesces_free_large_blocks_with_their_neighbours",
+   "to": "bdwgc-8.2.6::pointer_identification_by_a_two_level_block_index_that_maps_any_word_to_a_block_header_or_to_nothing_with_interior_pointers_resolved_by_backward_search",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "free blocks are non-pointers",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::branch_target_buffer_fully_associative_on_the_fetch_pc_with_call_ret_jmp_type_bits_and_random_replacement",
+   "to": "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::two_bit_saturating_counters_indexed_by_pc_or_by_gshare_xor_of_pc_and_global_history",
+   "to": "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::return_address_stack_with_a_speculative_pointer_beside_the_architectural_one",
+   "to": "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::branch_target_buffer_fully_associative_on_the_fetch_pc_with_call_ret_jmp_type_bits_and_random_replacement",
+   "to": "biriscv-branch-predictor::return_address_stack_with_a_speculative_pointer_beside_the_architectural_one",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "call/ret type bits",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::speculative_shadow_state_updated_by_predictions_and_resynchronised_from_architectural_state_on_resolve",
+   "to": "biriscv-branch-predictor::two_bit_saturating_counters_indexed_by_pc_or_by_gshare_xor_of_pc_and_global_history",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "read index",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::speculative_shadow_state_updated_by_predictions_and_resynchronised_from_architectural_state_on_resolve",
+   "to": "biriscv-branch-predictor::return_address_stack_with_a_speculative_pointer_beside_the_architectural_one",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "pointer",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::next_pc_arbitration_by_fixed_priority_ras_then_bht_or_jmp_then_fall_through",
+   "to": "biriscv-branch-predictor::speculative_shadow_state_updated_by_predictions_and_resynchronised_from_architectural_state_on_resolve",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "predictions shift the speculative history",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "biriscv-branch-predictor::branch_target_buffer_fully_associative_on_the_fetch_pc_with_call_ret_jmp_type_bits_and_random_replacement",
+   "to": "biriscv-branch-predictor::two_bit_saturating_counters_indexed_by_pc_or_by_gshare_xor_of_pc_and_global_history",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "BHT is consulted only on a BTB hit",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "bsd-tcp-4.2-1983::countdown_timer_array_swept_by_a_global_500ms_tick",
    "to": "bsd-tcp-4.2-1983::retransmit_timer_as_beta_times_srtt_with_tabulated_backoff_and_a_ten_strike_drop",
    "label": "triggers",
@@ -242,6 +338,126 @@
    "label": "suppresses",
    "evidence": "SOURCE_READ",
    "note": "no: a retransmission does NOT stop the RTT clock (read); recorded as the Karn ambiguity",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990::three_duplicate_acks_trigger_retransmission_and_window_halving_before_the_timer_then_inflate_the_window_per_further_duplicate_to_keep_the_pipe_full",
+   "to": "bsd-tcp-4.3-reno-1990::congestion_window_separate_from_the_advertised_window_opened_exponentially_below_a_threshold_and_linearly_above",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "sets ssthresh and cwnd",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990::header_prediction_fast_path_for_in_sequence_pure_acks_and_pure_data_that_skips_the_state_machine",
+   "to": "bsd-tcp-4.3-reno-1990::congestion_window_separate_from_the_advertised_window_opened_exponentially_below_a_threshold_and_linearly_above",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "fast path only when cwnd is not the constraint",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "bsd-tcp-4.3-reno-1990::congestion_window_separate_from_the_advertised_window_opened_exponentially_below_a_threshold_and_linearly_above",
+   "to": "bsd-tcp-4.3-reno-1990::three_duplicate_acks_trigger_retransmission_and_window_halving_before_the_timer_then_inflate_the_window_per_further_duplicate_to_keep_the_pipe_full",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "the inflate/deflate arithmetic is on cwnd",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-alloc-spaskalev::root_to_leaf_descent_that_prefers_the_busier_child_that_still_fits_to_keep_large_blocks_whole",
+   "to": "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the chosen position is marked",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged",
+   "to": "buddy-alloc-spaskalev::root_to_leaf_descent_that_prefers_the_busier_child_that_still_fits_to_keep_large_blocks_whole",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "node summaries route the descent",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "buddy-alloc-spaskalev::non_power_of_two_arena_by_pre_marking_the_missing_tail_as_virtual_used_slots",
+   "to": "buddy-alloc-spaskalev::tree_of_largest_free_order_per_node_packed_in_a_bitset_with_upward_recompute_that_stops_when_unchanged",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "to": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "selected points",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+   "to": "c-cmaes-hansen::covariance_adapted_by_a_rank_one_term_from_the_path_and_a_rank_mu_term_from_the_weighted_selected_steps_with_learning_rates_from_default_formulas_in_n_and_mu_eff",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "pc, hsig",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::two_evolution_paths_cumulating_the_mean_shift_one_whitened_for_step_size_and_one_in_covariance_coordinates_with_a_stall_flag_that_suppresses_the_covariance_path_when_the_step_path_is_too_long",
+   "to": "c-cmaes-hansen::step_size_multiplied_by_exp_of_the_normalised_excess_length_of_the_whitened_path_over_a_damping",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "ps",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::covariance_adapted_by_a_rank_one_term_from_the_path_and_a_rank_mu_term_from_the_weighted_selected_steps_with_learning_rates_from_default_formulas_in_n_and_mu_eff",
+   "to": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "C -> B, D",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::step_size_multiplied_by_exp_of_the_normalised_excess_length_of_the_whitened_path_over_a_damping",
+   "to": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "c-cmaes-hansen::eleven_stopping_criteria_over_fitness_range_history_coordinate_wise_step_covariance_condition_and_numerical_effectiveness_each_appending_a_named_reason",
+   "to": "c-cmaes-hansen::sampling_from_the_search_distribution_through_its_eigen_decomposition_with_the_decomposition_recomputed_lazily_on_a_generation_or_time_budget",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression",
+   "to": "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "complete matches",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "clips-6.4.2-nasa::agenda_of_activations_ordered_by_salience_group_then_conflict_resolution_strategy",
+   "to": "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "clips-6.4.2-nasa::recognise_act_cycle_that_pops_an_activation_fires_its_actions_and_re_enters_matching",
+   "to": "clips-6.4.2-nasa::join_node_activation_from_the_right_with_hashed_left_memory_and_a_network_test_expression",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "asserts and retracts re-enter the network",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -1309,6 +1525,22 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "gnu-apl-2.0::shift_reduce_over_token_classes_with_a_generated_phrase_table_matched_against_the_stack_top",
+   "to": "gnu-apl-2.0::reduction_rules_as_named_functions_one_per_phrase_shape",
+   "label": "selects",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "gnu-apl-2.0::reduction_rules_as_named_functions_one_per_phrase_shape",
+   "to": "gnu-apl-2.0::shift_reduce_over_token_classes_with_a_generated_phrase_table_matched_against_the_stack_top",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the result token and the R_action",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "gzip-1.2.4-1993::sliding_window_by_halving_copy_with_hash_chain_rebasing",
    "to": "gzip-1.2.4-1993::rolling_three_byte_hash_into_chains_of_prior_positions",
    "label": "feeds",
@@ -1669,6 +1901,78 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "libcorrect-quiet::soft_decision_metrics_linear_or_quadratic_over_byte_confidences",
+   "to": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "to": "libcorrect-quiet::bounded_sliding_traceback_from_the_current_best_state_with_periodic_renormalisation",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libcorrect-quiet::warmup_and_tail_phases_that_exploit_the_known_zero_start_and_flush",
+   "to": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "which states at the ends",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libcorrect-quiet::bounded_sliding_traceback_from_the_current_best_state_with_periodic_renormalisation",
+   "to": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "renormalised metrics",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libcorrect-quiet::butterfly_add_compare_select_over_paired_states_with_precomputed_distance_pairs",
+   "to": "libcorrect-quiet::reed_solomon_decoder_syndromes_error_locator_evaluator_and_erasures",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "concatenation: inner code feeds outer, by design",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "to": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "label": "schedules",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "to": "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::convergence_declared_on_the_maximum_change_of_any_belief_not_of_any_message",
+   "to": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "stop",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "libdai-mooij::factor_to_variable_message_as_the_marginal_of_the_factor_times_all_other_incoming_messages",
+   "to": "libdai-mooij::three_message_schedules_parallel_random_sequential_and_maximum_residual",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "residuals",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "libfec-karn::viterbi.expected_symbol_table_per_state_from_the_generator_polynomials",
    "to": "libfec-karn::viterbi.add_compare_select_butterfly_over_ping_pong_metric_buffers",
    "label": "feeds",
@@ -1770,6 +2074,14 @@
    "label": "competes",
    "evidence": "SOURCE_READ",
    "note": "two decoders for the same code family; the hybrid test (hybridtest.c) runs Fano first and falls back to Viterbi -- read from the file name and header only",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "linpackd-netlib-1979::gaussian_elimination_with_partial_pivoting_by_columns_delegating_to_three_vector_kernels",
+   "to": "linpackd-netlib-1979::benchmark_that_scores_a_machine_by_a_fixed_nominal_operation_count_over_measured_wall_time_and_validates_by_a_normalised_residual",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the timed work",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -2157,6 +2469,22 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "lru-cache-goldsborough::one_entry_last_accessed_pointer_checked_before_the_hash_lookup",
+   "to": "lru-cache-goldsborough::hash_map_plus_recency_list_with_move_to_front_on_hit_and_evict_front_on_overflow",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "short-circuits the map",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "lru-cache-goldsborough::expiry_by_age_checked_lazily_on_access_with_a_time_to_live_per_cache",
+   "to": "lru-cache-goldsborough::hash_map_plus_recency_list_with_move_to_front_on_hit_and_evict_front_on_overflow",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "turns a stale hit into a miss",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "md5-rfc1321::length_padding_to_a_block_boundary_with_the_message_length_appended",
    "to": "md5-rfc1321::chained_compression_over_512_bit_blocks_with_feed_forward_addition",
    "label": "feeds",
@@ -2370,6 +2698,38 @@
    "label": "gates",
    "evidence": "SOURCE_READ",
    "note": "fixed_points bypass the winner",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::damping_parameter_found_by_a_safeguarded_newton_iteration_on_the_scaled_step_length_minus_the_trust_radius_with_bracketing_bounds",
+   "to": "minpack-netlib-1980::step_accepted_by_the_ratio_of_actual_to_predicted_reduction_with_the_radius_shrunk_by_an_interpolated_factor_or_doubled",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::step_accepted_by_the_ratio_of_actual_to_predicted_reduction_with_the_radius_shrunk_by_an_interpolated_factor_or_doubled",
+   "to": "minpack-netlib-1980::damping_parameter_found_by_a_safeguarded_newton_iteration_on_the_scaled_step_length_minus_the_trust_radius_with_bracketing_bounds",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "delta and par back",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::dogleg_step_that_takes_the_gauss_newton_point_if_inside_the_region_else_the_cauchy_point_or_a_convex_combination_on_the_boundary",
+   "to": "minpack-netlib-1980::jacobian_kept_by_broyden_rank_one_updates_and_re_evaluated_by_finite_differences_only_after_two_consecutive_failures_or_stalled_progress",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "minpack-netlib-1980::jacobian_kept_by_broyden_rank_one_updates_and_re_evaluated_by_finite_differences_only_after_two_consecutive_failures_or_stalled_progress",
+   "to": "minpack-netlib-1980::dogleg_step_that_takes_the_gauss_newton_point_if_inside_the_region_else_the_cauchy_point_or_a_convex_combination_on_the_boundary",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the secant R",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -2685,6 +3045,78 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "pforth::dictionary_as_a_linked_list_of_name_headers_searched_newest_first",
+   "to": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "to": "pforth::dictionary_as_a_linked_list_of_name_headers_searched_newest_first",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "to": "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "executes found words",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::token_threaded_inner_interpreter_descending_into_secondaries_by_pushing_the_instruction_pointer",
+   "to": "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pforth::outer_interpreter_that_reads_words_and_either_executes_or_compiles_them_by_a_state_flag",
+   "to": "pforth::control_flow_as_relative_branch_tokens_with_loop_indices_on_the_return_stack",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "compiles branch tokens with patched offsets",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::covariance_shrinkage_toward_a_structured_target_with_an_estimated_intensity",
+   "to": "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::positive_semidefinite_repair_by_spectral_or_diagonal_fix",
+   "to": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::maximum_sharpe_by_the_cornuejols_tutuncu_variable_substitution",
+   "to": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "a rewritten problem",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "pyportfolioopt-1.5.5::portfolio_objectives_as_convex_programs_handed_to_cvxpy_with_a_status_gate",
+   "to": "pyportfolioopt-1.5.5::maximum_sharpe_by_the_cornuejols_tutuncu_variable_substitution",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "y and k back",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "python-control::three_interconvertible_system_representations_with_a_common_timebase",
    "to": "python-control::quadratic_cost_gain_from_a_riccati_solution_with_optional_integrator_augmentation",
    "label": "feeds",
@@ -2957,6 +3389,46 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "simple-kalman-denyssene::scalar_gain_as_estimate_error_over_estimate_plus_measurement_error",
+   "to": "simple-kalman-denyssene::estimate_error_re_inflated_by_the_magnitude_of_the_last_correction_times_q",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "simple-kalman-denyssene::estimate_error_re_inflated_by_the_magnitude_of_the_last_correction_times_q",
+   "to": "simple-kalman-denyssene::scalar_gain_as_estimate_error_over_estimate_plus_measurement_error",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spin-6.5.2-holzmann::verifier_generated_as_c_source_per_model_with_the_algorithm_chosen_by_preprocessor_flags",
+   "to": "spin-6.5.2-holzmann::depth_first_search_over_a_flat_state_vector_with_a_visited_store_and_an_acceptance_cycle_check_by_seed_state_comparison",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the generated text IS the DFS",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spin-6.5.2-holzmann::bitstate_supertrace_that_stores_each_state_as_hfns_bits_in_a_bit_array_accepting_false_positives_as_lost_coverage",
+   "to": "spin-6.5.2-holzmann::depth_first_search_over_a_flat_state_vector_with_a_visited_store_and_an_acceptance_cycle_check_by_seed_state_comparison",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "old/new",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "spin-6.5.2-holzmann::partial_order_reduction_by_statically_classifying_statements_as_safe_and_expanding_only_a_safe_process_when_one_exists",
+   "to": "spin-6.5.2-holzmann::depth_first_search_over_a_flat_state_vector_with_a_visited_store_and_an_acceptance_cycle_check_by_seed_state_comparison",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "successor set",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "spin-pathfinder-priority-inversion-1997::fixed_priority_run_rule",
    "to": "spin-pathfinder-priority-inversion-1997::binary_mutex_test_and_set",
    "label": "gates",
@@ -3125,6 +3597,30 @@
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
+   "from": "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+   "to": "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "swipl-9.2.9::instruction_families_partitioning_unification_construction_control_call_supervision_and_tabling",
+   "to": "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "swipl-9.2.9::in_clause_choice_points_and_cut_as_operations_on_a_choice_chain_relative_to_the_frame",
+   "to": "swipl-9.2.9::last_call_optimisation_that_reuses_the_frame_when_no_newer_choice_point_exists",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "BFR <= FR",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
    "from": "tiny-aes-c::round_key_expansion_by_rotate_substitute_and_round_constant_every_nk_words",
    "to": "tiny-aes-c::substitution_permutation_rounds_with_key_xor_and_a_separately_coded_inverse",
    "label": "feeds",
@@ -3266,6 +3762,62 @@
    "label": "stores",
    "evidence": "SOURCE_READ",
    "note": "float constants into rodata; symbols",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
+   "to": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "to": "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "at depth 0",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "to": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "to": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "label": "updates",
+   "evidence": "SOURCE_READ",
+   "note": "history",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::iterative_deepening_with_a_time_check_that_unwinds_by_longjmp",
+   "to": "tscp-1.81-kerrigan-1997::move_ordering_by_principal_variation_then_history_heuristic_then_selection_sort",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "previous pv",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms",
+   "to": "tscp-1.81-kerrigan-1997::quiescence_search_over_captures_with_stand_pat",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "tscp-1.81-kerrigan-1997::static_evaluation_as_material_plus_piece_square_tables_plus_pawn_structure_and_king_safety_terms",
+   "to": "tscp-1.81-kerrigan-1997::negamax_alpha_beta_with_check_extension_and_repetition_draw",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "at the ply caps",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -3426,6 +3978,30 @@
    "label": "feeds",
    "evidence": "SOURCE_READ",
    "note": "the output table is the branch metric's reference",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "whitakers-words-ada::all_suffix_splits_of_the_word_tried_against_an_inflection_table_partitioned_by_ending_length_and_last_letter",
+   "to": "whitakers-words-ada::candidate_survives_only_if_the_inflection_and_the_dictionary_entry_agree_in_part_of_speech_declension_and_stem_key_with_prefix_suffix_transformation_of_the_entry",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "whitakers-words-ada::fixed_ladder_of_repairs_each_re_running_the_core_analysis_and_stopping_at_the_first_that_yields_a_parse",
+   "to": "whitakers-words-ada::all_suffix_splits_of_the_word_tried_against_an_inflection_table_partitioned_by_ending_length_and_last_letter",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "each rung re-runs the core",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "whitakers-words-ada::candidate_survives_only_if_the_inflection_and_the_dictionary_entry_agree_in_part_of_speech_declension_and_stem_key_with_prefix_suffix_transformation_of_the_entry",
+   "to": "whitakers-words-ada::fixed_ladder_of_repairs_each_re_running_the_core_analysis_and_stopping_at_the_first_that_yields_a_parse",
+   "label": "gates",
+   "evidence": "SOURCE_READ",
+   "note": "Pa_Last > 0 stops the ladder",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

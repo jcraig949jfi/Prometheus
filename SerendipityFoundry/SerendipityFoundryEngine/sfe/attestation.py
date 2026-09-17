@@ -212,7 +212,13 @@ class Journal:
                             found["outcome"] = rec
             except OSError:
                 continue
-            if found:
+            # Stop once BOTH halves are in hand, not at the first file that
+            # mentions the rid: a request whose intent landed before a UTC
+            # midnight and whose outcome landed after it has its two lines
+            # in two day files, and stopping at the newer one reported
+            # "no intent record" for a request that did reach the journal
+            # (found by the 9.0.1 day-rollover test).
+            if "intent" in found and "outcome" in found:
                 break
         return found
 
