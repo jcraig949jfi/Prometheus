@@ -716,10 +716,18 @@ class SfeRunner:
                 out.anchor = self._failure_anchor(wid, exp_id)
             except Exception:                       # noqa: BLE001, S110
                 pass
+            # A 4xx is the ENGINE'S ANSWER to a request of ours, not a
+            # transport failure: the s14 canary's 409 (one ORIGINAL observation
+            # per experiment) was classed ENGINE_TRANSPORT, which is the
+            # consumer's declared HALT class -- it parked and paged Daedalus
+            # for a defect that was Vivarium's. ENGINE_REJECTED fails the row,
+            # typed, and parks nothing. 5xx and socket errors stay transport.
+            status = getattr(exc, "status", None)
+            rejected = isinstance(status, int) and 400 <= status < 500
             raise ExecutionFailure(
                 "%s after the experiment was committed: %s"
                 % (type(exc).__name__, exc), partial=out,
-                failure_class="ENGINE_TRANSPORT") from exc
+                failure_class="ENGINE_REJECTED" if rejected else "ENGINE_TRANSPORT") from exc
 
     # -- preflight ---------------------------------------------------------
     def _release(self, c, reservations) -> list:
